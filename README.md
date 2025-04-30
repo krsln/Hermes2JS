@@ -22,8 +22,8 @@ python hbc_file_parser.py  index.android.bundle > outputParser.js
 Splitter
 
 ```shell
-python HermesAssembly2JS/Splitter/hasm_splitter.py --input Apps/Coachify/Output/output.hbc --output Apps/Coachify/Output/Sections
-python HermesAssembly2JS/Splitter/hasm_splitter.py --input Apps/Testy/Output/output.hbc --output Apps/Testy/Output/Sections
+python HermesAssembly2JS/Splitter/hermes_splitter.py --input Apps/Coachify/Output/output.hbc --output Apps/Coachify/Output/Sections
+python HermesAssembly2JS/Splitter/hermes_splitter.py --input Apps/Testy/Output/output.hbc --output Apps/Testy/Output/Sections
 ```
 
 Decompile
