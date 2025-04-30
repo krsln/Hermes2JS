@@ -8,7 +8,6 @@ https://www.decompiler.com/
 
 https://github.com/P1sec/hermes-dec
 
-
 ```shell
 #HermesDisassembler/hermes-dec-main/
 #Apps/xx/index.android.bundle
@@ -19,6 +18,15 @@ python hbc_file_parser.py  index.android.bundle > outputParser.js
 ```
 
 #### Step—3 -> HermesAssembly2JS
+
+Splitter
+
+```shell
+python HermesAssembly2JS/Splitter/hasm_splitter.py --input Apps/Coachify/Output/output.hbc --output Apps/Coachify/Output/Sections
+python HermesAssembly2JS/Splitter/hasm_splitter.py --input Apps/Testy/Output/output.hbc --output Apps/Testy/Output/Sections
+```
+
+Decompile
 
 https://www.politesi.polimi.it/retrieve/17e4c202-4d63-43f1-97d9-84a925bb9130/2023_05_Falvo.pdf
 
