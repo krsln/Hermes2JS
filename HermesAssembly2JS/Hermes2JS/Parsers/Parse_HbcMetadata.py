@@ -18,14 +18,14 @@ def Parse_HbcMetadata(metadata_line: str) -> dict:
     metadata_line = re.sub(r'^\s*=>\s*', '', metadata_line)  # Remove '=>' prefix
 
     # Extract function name, ID, and byte size
-    name_match = re.match(r'\[Function #(\d+) "([^"]+)" of (\d+) bytes]', metadata_line)
+    name_match = re.match(r'\[Function #(\d+) "([^"]*)" of (\d+) bytes]', metadata_line)
 
     if name_match:
         metadata['function_id'] = int(name_match.group(1))
-        metadata['function_name'] = name_match.group(2)
+        metadata['function_name'] = name_match.group(2) or f"func_{metadata['function_id']}"
         metadata['byte_size'] = int(name_match.group(3))
     else:
-        print("Warning: Function metadata not matched in:", metadata_line)
+        print('Could not parse metadata line "{}"'.format(metadata_line))
 
     # Extract everything after the initial function metadata (after ']')
     try:

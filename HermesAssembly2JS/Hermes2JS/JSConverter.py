@@ -61,7 +61,6 @@ class JSConverter:
         if bytecode_lines:
             analysis.stringTable = Parse_StringMap(bytecode_lines)
             analysis.functionTable = Parse_FunctionMap(bytecode_lines)
-            print(analysis.functionTable)
 
             results = Dispatcher(bytecode_lines, analysis)
 

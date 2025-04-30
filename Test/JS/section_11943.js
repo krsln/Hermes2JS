@@ -1,4 +1,4 @@
-function func_11943(param0, param1, param2, param3, param4, param5, param6, param7) {
+function function_11943(param0, param1, param2, param3, param4, param5, param6, param7) {
     // CODE -> <LoadParam>: <Reg8: 6, UInt8: 2>
     // USED -> r6 = param2
     // CODE -> <LoadParam>: <Reg8: 2, UInt8: 6>
