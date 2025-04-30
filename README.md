@@ -1,20 +1,25 @@
 # Hermes2JS
 
-## Usage
-
 #### Step—1
-https://www.decompiler.com/  
 
-#### Step—2 
-https://github.com/P1sec/hermes-dec  
+https://www.decompiler.com/
+
+#### Step—2 -> HermesDisassembler
+
+https://github.com/P1sec/hermes-dec
+
 
 ```shell
+#HermesDisassembler/hermes-dec-main/
+#Apps/xx/index.android.bundle
+#Apps/xx/Output
 python hbc_disassembler.py  index.android.bundle > output.hbc
 python hbc_decompiler.py  index.android.bundle > output.js
 python hbc_file_parser.py  index.android.bundle > outputParser.js
 ```
 
 #### Step—3 -> HermesAssembly2JS
+
 https://www.politesi.polimi.it/retrieve/17e4c202-4d63-43f1-97d9-84a925bb9130/2023_05_Falvo.pdf
 
 
