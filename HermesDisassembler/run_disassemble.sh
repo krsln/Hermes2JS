@@ -2,8 +2,8 @@
 #!/bin/zsh
 
 # Set target app directory name
-#Target_Dir="Coachify"
-Target_Dir="Testy"
+Target_Dir="Coachify"
+#Target_Dir="Testy"
 
 # Define paths
 BUNDLE="../Apps/$Target_Dir/index.android.bundle"

@@ -5,7 +5,7 @@ from pathlib import Path
 
 def HermesAssemblyFileSplitter(input_file, output_dir):
     """
-    Splits a .hasm file into separate files based on '===============' separators.
+    Splits a .hbc file into separate files based on '===============' separators.
     """
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -24,9 +24,9 @@ def HermesAssemblyFileSplitter(input_file, output_dir):
                 if stripped_line == '===============':
                     if current_section:
                         if function_number is not None:
-                            filename = f"function_{function_number}_{function_name or 'anonymous'}.hasm"
+                            filename = f"function_{function_number}_{function_name or 'anonymous'}.hbc"
                         else:
-                            filename = f"section_{section_count}.hasm"
+                            filename = f"section_{section_count}.hbc"
 
                         filename = "".join(c if c.isalnum() or c in '_-.' else '_' for c in filename)
                         output_path = output_dir / filename
@@ -55,9 +55,9 @@ def HermesAssemblyFileSplitter(input_file, output_dir):
             # Handle the last section
             if current_section:
                 if function_number is not None:
-                    filename = f"function_{function_number}_{function_name or 'anonymous'}.hasm"
+                    filename = f"function_{function_number}_{function_name or 'anonymous'}.hbc"
                 else:
-                    filename = f"section_{section_count}.hasm"
+                    filename = f"section_{section_count}.hbc"
 
                 filename = "".join(c if c.isalnum() or c in '_-.' else '_' for c in filename)
                 output_path = output_dir / filename

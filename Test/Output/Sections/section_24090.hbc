@@ -1,0 +1,42 @@
+
+=> [Function #24090 "onPress" of 157 bytes]: 1 params, frame size=15, env size=0, read index sz=6, write index sz=0, strict=0, exc handler=0, debug info=0  @ offset 0x0041c232
+
+Bytecode listing:
+
+==> 00000000: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 0>
+==> 00000007: <GetEnvironment>: <Reg8: 0, UInt8: 1>
+==> 0000000a: <JmpTrue>: <Addr8: 113, Reg8: 2>  # Address: 0000007b
+==> 0000000d: <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 10>
+==> 00000011: <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
+==> 00000016: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 158>  # String: 'prototype' (Identifier)
+==> 0000001b: <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
+==> 0000001f: <Mov>: <Reg8: 8, Reg8: 3>
+==> 00000022: <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
+==> 00000026: <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
+==> 0000002a: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 21914>  # String: 'trackJoinCompetitionList' (Identifier)
+==> 00000030: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 00000034: <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 11>
+==> 00000038: <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
+==> 0000003d: <LoadConstUndefined>: <Reg8: 3>
+==> 0000003f: <NewObjectWithBuffer>: <Reg8: 2, UInt16: 2, UInt16: 2, UInt16: 4743, UInt16: 24182>  # Object: {'message': 'You have joined the list', 'type': 'success'}
+==> 00000049: <Call2>: <Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 2>
+==> 0000004e: <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 4>
+==> 00000052: <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
+==> 00000057: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 14996>  # String: 'setItem' (Identifier)
+==> 0000005d: <LoadConstString>: <Reg8: 3, string_id: 5555>  # String: 'compjoin' (String)
+==> 00000061: <LoadConstString>: <Reg8: 2, string_id: 12320>  # String: 'true' (Identifier)
+==> 00000065: <Call3>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 2>
+==> 0000006b: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 3>
+==> 0000006f: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 5, string_id: 14155>  # String: 'goBack' (Identifier)
+==> 00000075: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000079: <Jmp>: <Addr8: 32>  # Address: 00000099
+==> 0000007b: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 12>
+==> 0000007f: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
+==> 00000084: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 6, string_id: 12341>  # String: 'open' (Identifier)
+==> 0000008a: <NewObjectWithBuffer>: <Reg8: 0, UInt16: 4, UInt16: 4, UInt16: 11077, UInt16: 9225>  # Object: {'title': 'Join Coachify AI Competition', 'message': 'Join Coachify AI Competition', 'url': 'https://coachify.ai/download?ref=compshare', 'subject': 'Join Coachify AI Competition'}
+==> 00000094: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000099: <LoadConstUndefined>: <Reg8: 0>
+==> 0000009b: <Ret>: <Reg8: 0>
+
+
