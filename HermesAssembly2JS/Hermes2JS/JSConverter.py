@@ -1,14 +1,13 @@
-import re
-from typing import List, Dict, Any, Optional
+from typing import List
 
-from Hermes2JS.Models.HermesAnalysis import HermesAnalysis
-from Hermes2JS.JSOpcodeDispatcher import JSOpcodeDispatcher
-from Hermes2JS.Models.OpcodeResult import OpcodeResult
-from Hermes2JS.Models.JSVariable import JSVariable
-from Hermes2JS.Models.OpcodeEntry import OpcodeEntry
-from Hermes2JS.Parsers.Parse_HasmMetadata import Parse_HasmMetadata
-from Hermes2JS.Parsers.Parse_Line import Parse_Line
-from Hermes2JS.Parsers.Parse_StringMap import Parse_StringMap
+from HermesAssembly2JS.Hermes2JS.JSOpcodeDispatcher import JSOpcodeDispatcher
+from HermesAssembly2JS.Hermes2JS.Models.HermesAnalysis import HermesAnalysis
+from HermesAssembly2JS.Hermes2JS.Models.JSVariable import JSVariable
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeEntry import OpcodeEntry
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeResult import OpcodeResult
+from HermesAssembly2JS.Hermes2JS.Parsers.Parse_HbcMetadata import Parse_HbcMetadata
+from HermesAssembly2JS.Hermes2JS.Parsers.Parse_Line import Parse_Line
+from HermesAssembly2JS.Hermes2JS.Parsers.Parse_StringMap import Parse_StringMap
 
 
 class JSConverter:
@@ -35,7 +34,7 @@ class JSConverter:
 
         # Parse the metadata from the first line
         try:
-            analysis.metadata = Parse_HasmMetadata(lines[0])
+            analysis.metadata = Parse_HbcMetadata(lines[0])
         except Exception as e:
             raise ValueError(f"Failed to parse metadata: {str(e)}")
 

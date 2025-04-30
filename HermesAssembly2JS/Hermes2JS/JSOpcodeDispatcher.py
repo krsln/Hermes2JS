@@ -1,27 +1,27 @@
 from typing import Optional, Dict
 from warnings import catch_warnings
 
-from Hermes2JS.Handlers.Call import Call1, Call2, Call3, Call4
-from Hermes2JS.Handlers.Construct import Construct
-from Hermes2JS.Handlers.Create import CreateThis
-from Hermes2JS.Handlers.Environment import GetEnvironment, LoadFromEnvironment
-from Hermes2JS.Handlers.Generators import StartGenerator, ResumeGenerator, CompleteGenerator, SaveGenerator
-from Hermes2JS.Handlers.GetById import GetByIdShort, GetById, GetByIdLong, TryGetById
-from Hermes2JS.Handlers.GetGlobalObject import GetGlobalObject
-from Hermes2JS.Handlers.Jmp import Jmp, JmpTrue, JmpFalse, JmpUndefined
-from Hermes2JS.Handlers.Load import LoadParam, LoadConstString, LoadConstUndefined
-from Hermes2JS.Handlers.Mov import Mov
-from Hermes2JS.Handlers.New import NewObjectWithBuffer, NewObjectWithBufferLong
-from Hermes2JS.Handlers.Put import PutNewOwnByIdShort
-from Hermes2JS.Handlers.Ret import Ret
-from Hermes2JS.Handlers.SelectObject import SelectObject
-from Hermes2JS.Handlers.Throw import Throw
+from HermesAssembly2JS.Hermes2JS.Handlers.Call import Call1, Call2, Call3, Call4
+from HermesAssembly2JS.Hermes2JS.Handlers.Construct import Construct
+from HermesAssembly2JS.Hermes2JS.Handlers.Create import CreateThis
+from HermesAssembly2JS.Hermes2JS.Handlers.Environment import GetEnvironment, LoadFromEnvironment
+from HermesAssembly2JS.Hermes2JS.Handlers.Generators import StartGenerator, ResumeGenerator, CompleteGenerator, SaveGenerator
+from HermesAssembly2JS.Hermes2JS.Handlers.GetById import GetByIdShort, GetById, GetByIdLong, TryGetById
+from HermesAssembly2JS.Hermes2JS.Handlers.GetGlobalObject import GetGlobalObject
+from HermesAssembly2JS.Hermes2JS.Handlers.Jmp import Jmp, JmpTrue, JmpFalse, JmpUndefined
+from HermesAssembly2JS.Hermes2JS.Handlers.Load import LoadParam, LoadConstString, LoadConstUndefined
+from HermesAssembly2JS.Hermes2JS.Handlers.Mov import Mov
+from HermesAssembly2JS.Hermes2JS.Handlers.New import NewObjectWithBuffer, NewObjectWithBufferLong
+from HermesAssembly2JS.Hermes2JS.Handlers.Put import PutNewOwnByIdShort
+from HermesAssembly2JS.Hermes2JS.Handlers.Ret import Ret
+from HermesAssembly2JS.Hermes2JS.Handlers.SelectObject import SelectObject
+from HermesAssembly2JS.Hermes2JS.Handlers.Throw import Throw
 
-from Hermes2JS.Models.HermesAnalysis import HermesAnalysis
-from Hermes2JS.Models.OpcodeResult import OpcodeResult
-from Hermes2JS.Models.JSVariable import JSVariable
-from Hermes2JS.Models.OpcodeEntry import OpcodeEntry
-from Hermes2JS.Models.OpcodeHandler import OpcodeHandler
+from HermesAssembly2JS.Hermes2JS.Models.HermesAnalysis import HermesAnalysis
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeResult import OpcodeResult
+from HermesAssembly2JS.Hermes2JS.Models.JSVariable import JSVariable
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeEntry import OpcodeEntry
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeHandler import OpcodeHandler
 
 
 class JSOpcodeDispatcher:

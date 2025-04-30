@@ -2,10 +2,10 @@ from abc import ABC, abstractmethod
 from re import Match
 from typing import Dict, Optional, List
 
-from Hermes2JS.Models.HermesAnalysis import HermesAnalysis
-from Hermes2JS.Models.JSVariable import JSVariable
-from Hermes2JS.Models.OpcodeResult import OpcodeResult
-from Hermes2JS.Models.OpcodeEntry import OpcodeEntry
+from HermesAssembly2JS.Hermes2JS.Models.HermesAnalysis import HermesAnalysis
+from HermesAssembly2JS.Hermes2JS.Models.JSVariable import JSVariable
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeResult import OpcodeResult
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeEntry import OpcodeEntry
 
 
 # Base class auto-registering all subclasses

@@ -1,7 +1,7 @@
 import os
 
-from Hermes2JS.FileOps import ProcessFile, GetFiles
-from Hermes2JS.Logger import logger
+from HermesAssembly2JS.Hermes2JS.FileOps import ProcessFile, GetFiles
+from HermesAssembly2JS.Hermes2JS.Logger import logger
 
 
 def main():

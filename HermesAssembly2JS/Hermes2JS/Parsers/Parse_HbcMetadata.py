@@ -1,7 +1,7 @@
 import re
 
 
-def Parse_HasmMetadata(metadata_line: str) -> dict:
+def Parse_HbcMetadata(metadata_line: str) -> dict:
     """
     Parse the metadata line of a .hbc file.
 

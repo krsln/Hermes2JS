@@ -1,11 +1,11 @@
 import json
 import re
 
-from Hermes2JS.Models.HermesAnalysis import HermesAnalysis
-from Hermes2JS.Models.OpcodeResult import OpcodeResult
-from Hermes2JS.Models.JSVariable import JSVariable
-from Hermes2JS.Models.OpcodeEntry import OpcodeEntry
-from Hermes2JS.Models.OpcodeHandler import OpcodeHandler
+from HermesAssembly2JS.Hermes2JS.Models.HermesAnalysis import HermesAnalysis
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeResult import OpcodeResult
+from HermesAssembly2JS.Hermes2JS.Models.JSVariable import JSVariable
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeEntry import OpcodeEntry
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeHandler import OpcodeHandler
 
 # /// Create a new own property on an object. This is similar to PutById, but
 # /// the destination must be an object, it only deals with own properties,

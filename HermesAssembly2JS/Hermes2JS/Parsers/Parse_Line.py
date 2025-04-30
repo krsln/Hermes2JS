@@ -1,6 +1,6 @@
 import re
 
-from Hermes2JS.Models.OpcodeEntry import OpcodeEntry
+from HermesAssembly2JS.Hermes2JS.Models.OpcodeEntry import OpcodeEntry
 
 
 def Parse_Line(line: str) -> OpcodeEntry | None:
