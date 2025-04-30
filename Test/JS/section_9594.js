@@ -1,8 +1,9 @@
 async function* anon_9594(param0, param1) {
+    // CODE -> <StartGenerator>: <>
     // CODE -> <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     r0 = await yield; // Resume generator
-    label_4:
     // CODE -> <JmpTrue>: <Addr8: 98, Reg8: 1>  # Address: 00000066
+    label_4:
     if (r1) {
         // CODE -> <GetEnvironment>: <Reg8: 1, UInt8: 4>
         r1 = getEnvironment(4);
@@ -46,12 +47,15 @@ async function* anon_9594(param0, param1) {
             // USED -> r2 = r1.data
             // CODE -> <GetById>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 12563>  # String: 'available' (Identifier)
             // USED -> r2 = r1.data.available
+            // CODE -> <CompleteGenerator>: <>
             // CODE -> <Ret>: <Reg8: 2>
             return r1.data.available;
+            // CODE -> <CompleteGenerator>: <>
         }
         label_99:
         // CODE -> <Ret>: <Reg8: 1>
         return r1;
+        // CODE -> <CompleteGenerator>: <>
     }
     label_102:
     // CODE -> <Ret>: <Reg8: 0>

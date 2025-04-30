@@ -7,6 +7,7 @@ from HermesAssembly2JS.Hermes2JS.Models.JSVariable import JSVariable
 from HermesAssembly2JS.Hermes2JS.Models.OpcodeEntry import OpcodeEntry
 from HermesAssembly2JS.Hermes2JS.Models.OpcodeHandler import OpcodeHandler
 
+
 # /// Create a new own property on an object. This is similar to PutById, but
 # /// the destination must be an object, it only deals with own properties,
 # /// ignoring the prototype chain, and the property must not already be defined.
@@ -53,7 +54,7 @@ class PutNewOwnByIdShort(OpcodeHandler):
 
         if not dest_var or not dest_var.value:
             return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
-                                                 f'// Error: No valid object found in r{dest_reg}'))
+                                                  f'// Error: No valid object found in r{dest_reg}'))
 
         # Retrieve the value from the analysis context
         value_var = self.GetVariableByReg(analysis.results, value_reg)
@@ -64,7 +65,7 @@ class PutNewOwnByIdShort(OpcodeHandler):
             obj = json.loads(dest_var.value.replace("'", '"')) if dest_var.value != '{}' else {}
         except json.JSONDecodeError:
             return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
-                                                 f'// Error: Invalid object format in r{dest_reg}: {dest_var.value}'))
+                                                  f'// Error: Invalid object format in r{dest_reg}: {dest_var.value}'))
 
         # Add the new property
         obj[prop_name] = value
@@ -77,5 +78,65 @@ class PutNewOwnByIdShort(OpcodeHandler):
         # Update the JSVariable for the destination object
         updated_var = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
         analysis.AddResult(entry, updated_var)
+
+        return OpcodeResult(entry, updated_var)
+
+
+# /// Set an object property by string index.
+# /// Arg1[stringtable[Arg4]] = Arg2.
+# DEFINE_OPCODE_4(PutById, Reg8, Reg8, UInt8, UInt16)
+# DEFINE_OPCODE_4(PutByIdLong, Reg8, Reg8, UInt8, UInt32)
+# OPERAND_STRING_ID(PutById, 4)
+# OPERAND_STRING_ID(PutByIdLong, 4)
+# Example: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 12270>  # String: 'fetchMovieDetails' (Identifier)
+class PutById(OpcodeHandler):
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        # Parse arguments: Reg8 (dest), Reg8 (value), UInt8 (cache), string_id
+        match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*UInt8:\s*(\d+),\s*string_id:\s*(\d+)', entry.args.strip())
+
+        if not match:
+            return self.InvalidArgs(entry)
+
+        dest_reg, value_reg, cache, string_id = map(int, match.groups())
+
+        # Extract property name from comment (e.g., String: 'fetchMovieDetails')
+        prop_name = ''
+        comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment)
+        if comment_match:
+            prop_name = comment_match.group(1)
+        else:
+            # Fallback to string table lookup
+            try:
+                prop_name = analysis.stringTable.get(str(string_id))
+            except (AttributeError, KeyError):
+                prop_name = f'string_{string_id}'  # Fallback if lookup fails
+
+        # Retrieve the destination object from the analysis context
+        dest_var = self.GetVariableByReg(analysis.results, dest_reg)
+        if not dest_var or not dest_var.value:
+            return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
+                                                  f'// Error: No valid object found in r{dest_reg}'))
+
+        # Retrieve the value from the analysis context
+        value_var = self.GetVariableByReg(analysis.results, value_reg)
+        value = value_var.value if value_var and value_var.value else 'undefined'
+
+        # Option 1: Update object as JSON-like string (like PutNewOwnByIdShort)
+        try:
+            obj = json.loads(dest_var.value.replace("'", '"')) if dest_var.value != '{}' else {}
+        except json.JSONDecodeError:
+            return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
+                                                  f'// Error: Invalid object format in r{dest_reg}: {dest_var.value}'))
+
+        # Update or set the property
+        obj[prop_name] = value
+        js_obj = "{ " + ", ".join(f'"{k}": {v}' for k, v in obj.items()) + " }"
+
+        # Update the JSVariable for the destination object
+        updated_var = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
+        analysis.AddResult(entry, updated_var)
+        print(updated_var)
 
         return OpcodeResult(entry, updated_var)

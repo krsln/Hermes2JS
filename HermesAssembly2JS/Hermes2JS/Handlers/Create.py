@@ -31,3 +31,30 @@ class CreateThis(OpcodeHandler):
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
+
+
+# /// Create a closure.
+# /// Arg1 is the register in which to store the closure.
+# /// Arg2 is the current environment as loaded by GetEnvironment 0.
+# /// Arg3 is index in the function table.
+# DEFINE_OPCODE_3(CreateClosure, Reg8, Reg8, UInt16)
+# DEFINE_OPCODE_3(CreateClosureLongIndex, Reg8, Reg8, UInt32)
+# OPERAND_FUNCTION_ID(CreateClosure, 3)
+# OPERAND_FUNCTION_ID(CreateClosureLongIndex, 3)
+# Example: <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 11944>  # Function: [#11944  of 37 bytes]: 1 params @ offset 0x0021917e
+class CreateClosure(OpcodeHandler):
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*function_id:\s*(\d+)', entry.args.strip())
+        if not match:
+            return self.InvalidArgs(entry)
+
+        dest, env, func_id = map(int, match.groups())
+        # Check metadata for function details
+        func_name = analysis.metadata.get(f"function_{func_id}", f"function_{func_id}")
+
+        variable = JSVariable(handler, entry.address, f'r{dest}', f"// Closure {func_name} with env r{env}")
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)

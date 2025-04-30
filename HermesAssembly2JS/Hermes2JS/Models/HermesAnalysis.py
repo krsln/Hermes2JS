@@ -103,6 +103,9 @@ class HermesAnalysis:
                 # Debug: Log each instruction
                 # print(f"Processing index={i}, addr={addr}, handler={handler}, value={variable.value if variable and variable.value else None}, goto={goto}")
 
+                if verbose:
+                    output.append(indent(indent_lvl) + f'// CODE -> {original_bytecode}')
+
                 # Close blocks if the current address is a jump target
                 while open_blocks and any(block["end_addr"] == addr for block in open_blocks):
                     for block in open_blocks[:]:
@@ -131,9 +134,6 @@ class HermesAnalysis:
                     continue  # Skip CompleteGenerator
                 elif variable and variable.value and not variable.value.startswith("//"):
                     line = variable.value.strip()
-
-                    if verbose:
-                        output.append(indent(indent_lvl) + f'// CODE -> {original_bytecode}')
 
                     # Handle special opcodes
                     if handler == "SaveGenerator":
@@ -167,6 +167,7 @@ class HermesAnalysis:
                             output.append(indent(indent_lvl) + formatted)
 
                         # Handle jumps for SaveGenerator
+
                 if goto is not None and handler == "SaveGenerator":
                     target_idx = next((j for j, r in enumerate(self.results) if r.Opcode.address == goto), i + 1)
                     # print(goto, target_idx)

@@ -19,6 +19,7 @@ def Parse_HbcMetadata(metadata_line: str) -> dict:
 
     # Extract function name, ID, and byte size
     name_match = re.match(r'\[Function #(\d+) "([^"]+)" of (\d+) bytes]', metadata_line)
+
     if name_match:
         metadata['function_id'] = int(name_match.group(1))
         metadata['function_name'] = name_match.group(2)

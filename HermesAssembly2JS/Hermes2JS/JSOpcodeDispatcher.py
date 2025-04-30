@@ -3,16 +3,17 @@ from warnings import catch_warnings
 
 from HermesAssembly2JS.Hermes2JS.Handlers.Call import Call1, Call2, Call3, Call4
 from HermesAssembly2JS.Hermes2JS.Handlers.Construct import Construct
-from HermesAssembly2JS.Hermes2JS.Handlers.Create import CreateThis
+from HermesAssembly2JS.Hermes2JS.Handlers.Create import CreateThis, CreateClosure
 from HermesAssembly2JS.Hermes2JS.Handlers.Environment import GetEnvironment, LoadFromEnvironment
-from HermesAssembly2JS.Hermes2JS.Handlers.Generators import StartGenerator, ResumeGenerator, CompleteGenerator, SaveGenerator
+from HermesAssembly2JS.Hermes2JS.Handlers.Generators import StartGenerator, ResumeGenerator, CompleteGenerator, \
+    SaveGenerator
 from HermesAssembly2JS.Hermes2JS.Handlers.GetById import GetByIdShort, GetById, GetByIdLong, TryGetById
 from HermesAssembly2JS.Hermes2JS.Handlers.GetGlobalObject import GetGlobalObject
 from HermesAssembly2JS.Hermes2JS.Handlers.Jmp import Jmp, JmpTrue, JmpFalse, JmpUndefined
 from HermesAssembly2JS.Hermes2JS.Handlers.Load import LoadParam, LoadConstString, LoadConstUndefined
 from HermesAssembly2JS.Hermes2JS.Handlers.Mov import Mov
 from HermesAssembly2JS.Hermes2JS.Handlers.New import NewObjectWithBuffer, NewObjectWithBufferLong
-from HermesAssembly2JS.Hermes2JS.Handlers.Put import PutNewOwnByIdShort
+from HermesAssembly2JS.Hermes2JS.Handlers.Put import PutNewOwnByIdShort, PutById
 from HermesAssembly2JS.Hermes2JS.Handlers.Ret import Ret
 from HermesAssembly2JS.Hermes2JS.Handlers.SelectObject import SelectObject
 from HermesAssembly2JS.Hermes2JS.Handlers.Throw import Throw
