@@ -38,10 +38,7 @@ class HermesAnalysis:
     #             self.variable_map[variable.name] = []
     #         self.variable_map[variable.name].append(variable)
 
-    def GenerateJS_OLD(self):
-        verbose = True
-        # verbose = False
-
+    def GenerateJS_OLD(self, verbose: bool = True):
         js_code = []
         for item in self.results:
             line = item.Opcode
@@ -67,12 +64,6 @@ class HermesAnalysis:
         return js_code
 
     def GenerateJS(self, verbose: bool = True) -> List[str]:
-        """
-        Generate structured JavaScript code from the analysis results.
-
-        Returns:
-            List[str]: The generated JavaScript code lines.
-        """
         output = []
         indent_lvl = 1  # Track indentation for nested blocks
         indent = lambda lvl: '    ' * lvl
@@ -81,95 +72,84 @@ class HermesAnalysis:
         return_points = set()  # Track return statements to avoid duplicates
         open_blocks = []  # Stack of open if blocks with their end addresses
 
-        def Formatter(used: bool, txt: str):
-            if not used:
-                return txt
-            return f'// USED -> {txt}' if verbose else ''
-
         i = 0
         try:
             while i < len(self.results):
                 item = self.results[i]
-                goto = item.GoTo
-
                 variable = item.Variable
-                handler = variable.handler
-                addr = variable.address
 
                 bytecode = item.Opcode.bytecode
                 # bytecode -> after first colon
                 original_bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
 
-                # Debug: Log each instruction
-                # print(f"Processing index={i}, addr={addr}, handler={handler}, value={variable.value if variable and variable.value else None}, goto={goto}")
-
-                if verbose:
-                    output.append(indent(indent_lvl) + f'// CODE -> {original_bytecode}')
-
                 # Close blocks if the current address is a jump target
-                while open_blocks and any(block["end_addr"] == addr for block in open_blocks):
+                while open_blocks and any(block["end_addr"] == variable.address for block in open_blocks):
                     for block in open_blocks[:]:
-                        if block["end_addr"] == addr:
+                        if block["end_addr"] == variable.address:
                             indent_lvl -= 1
                             output.append(indent(indent_lvl) + "}")
                             open_blocks.remove(block)
-                            # Debug: Log block closure
-                            # print(f"Closed block at addr={addr}, open_blocks={open_blocks}")
 
                 # Skip if already visited
                 if i in visited:
                     # Debug: Log skipped instruction
-                    print(f"Skipping visited index={i}, addr={addr}")
+                    print(f"Skipping visited index={i}, addr={variable.address}")
                     i += 1
                     continue
+
+                # -----------------------------------------------------
                 visited.add(i)
+                # -----------------------------------------------------
+                # -----------------------------------------------------
+
+                if verbose:
+                    output.append(indent(indent_lvl) + f'// CODE -> {original_bytecode}')
 
                 # Add label if the address is a jump target
-                if addr in self.gotoList:
-                    output.append(indent(indent_lvl) + f"label_{addr}:")
+                if variable.address in self.gotoList:
+                    output.append(indent(indent_lvl) + f"label_{variable.address}:")
 
-                # Handle instructions
-                if handler == "CompleteGenerator":
+                if variable.handler == "CompleteGenerator":
                     i += 1
                     continue  # Skip CompleteGenerator
-                elif variable and variable.value and not variable.value.startswith("//"):
-                    line = variable.value.strip()
+                else:
+                    valueRaw = variable.value.strip()
 
                     # Handle special opcodes
-                    if handler == "SaveGenerator":
+                    if variable.handler == "SaveGenerator":
                         # print(item)
-                        output.append(indent(indent_lvl) + f"await yield; // Resume at label_{goto}")
-                    elif handler == "ResumeGenerator":
-                        # print(item)
-                        formatted = Formatter(variable.used, item.result)
-                        if formatted != '':
-                            output.append(indent(indent_lvl) + f"{formatted}; // Resume generator")
-                    elif handler == "Ret" and addr not in return_points:
-                        return_points.add(addr)
-                        value = line.split("return ")[1].strip() if "return " in line else line
+                        output.append(indent(indent_lvl) + f"await yield; // Resume at label_{item.GoTo}")
+                    elif variable.handler == "ResumeGenerator":
+                        if not variable.used:
+                            output.append(indent(indent_lvl) + f'{item.result}; // Resume generator')
+                        elif verbose:
+                            output.append(indent(indent_lvl) + f'// USED -> {item.result}; // Resume generator')
+                    elif variable.handler == "Ret" and variable.address not in return_points:
+                        return_points.add(variable.address)
+                        value = valueRaw.split("return ")[1].strip() if "return " in valueRaw else valueRaw
                         output.append(indent(indent_lvl) + f"return {value}")
-                    elif "/* jump to" in line and goto is not None:
+                    elif "/* jump to" in valueRaw and item.GoTo is not None:
                         # Handle conditional jumps (e.g., JmpTrue)
                         try:
-                            condition = line.split("if (")[1].split(")")[0].strip()
+                            condition = valueRaw.split("if (")[1].split(")")[0].strip()
                             output.append(indent(indent_lvl) + f"if ({condition}) {{")
                             indent_lvl += 1
-                            open_blocks.append({"end_addr": goto, "start_idx": i})
-                            # Debug: Log conditional
-                            # print(f"Opened if block at addr={addr}, condition={condition}, end_addr={goto}")
+                            open_blocks.append({"end_addr": item.GoTo, "start_idx": i})
                         except IndexError:
                             # Malformed condition; emit as regular line
-                            output.append(indent(indent_lvl) + line)
+                            output.append(indent(indent_lvl) + valueRaw)
                     else:
                         # Regular instruction (e.g., assignments, calls)
-                        formatted = Formatter(variable.used, item.result)
-                        if formatted != '':
-                            output.append(indent(indent_lvl) + formatted)
+                        if not variable.used:
+                            output.append(indent(indent_lvl) + item.result)
+                        elif verbose:
+                            output.append(indent(indent_lvl) + f'// USED -> {item.result}')
 
-                        # Handle jumps for SaveGenerator
+                # -----------------------------------------------------
+                # -----------------------------------------------------
 
-                if goto is not None and handler == "SaveGenerator":
-                    target_idx = next((j for j, r in enumerate(self.results) if r.Opcode.address == goto), i + 1)
+                if item.GoTo is not None and variable.handler == "SaveGenerator":
+                    target_idx = next((j for j, r in enumerate(self.results) if r.Opcode.address == item.GoTo), i + 1)
                     # print(goto, target_idx)
                     if target_idx not in visited and target_idx < len(self.results):
                         # Debug: Log jump

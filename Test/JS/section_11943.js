@@ -44,9 +44,13 @@ function func_11943(param0, param1, param2, param3, param4, param5, param6, para
     // CODE -> <Call2>: <Reg8: 5, Reg8: 6, Reg8: 5, Reg8: 7>
     r5 = this.HermesInternal.concat.call(this, "Bearer ", "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc")
     // CODE -> <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 11944>  # Function: [#11944  of 37 bytes]: 1 params @ offset 0x0021917e
+    // USED -> r3 = // Closure function_11944 with env r1
     // CODE -> <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
+    r3 = // Closure function_11944 with env r1(undefined)
     // CODE -> <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 11948>  # Function: [#11948  of 37 bytes]: 1 params @ offset 0x002192a7
+    // USED -> r1 = // Closure function_11948 with env r1
     // CODE -> <Call1>: <Reg8: 1, Reg8: 1, Reg8: 0>
+    r1 = // Closure function_11948 with env r1(undefined)
     // CODE -> <Ret>: <Reg8: 0>
     return undefined;
 }

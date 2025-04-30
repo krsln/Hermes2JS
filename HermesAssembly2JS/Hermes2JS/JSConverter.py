@@ -61,7 +61,7 @@ class JSConverter:
             results = Dispatcher(bytecode_lines, analysis)
 
             # print(analysis)
-            # js_code.extend(analysis.GenerateJS_OLD())
+            # js_code.extend(analysis.GenerateJS_OLD(True))
             # js_code.append('\n\n//------------------------------------------------\n// new\n\n')
 
             js_code.extend(analysis.GenerateJS(True))

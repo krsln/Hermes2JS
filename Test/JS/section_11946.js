@@ -1,5 +1,6 @@
 async function* anon_11946(param0, param1) {
     // CODE -> <StartGenerator>: <>
+    // StartGenerator: prepare generator context and jump to next instruction
     // CODE -> <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     r0 = await yield; // Resume generator
     // CODE -> <JmpTrueLong>: <Addr32: 244, Reg8: 1>  # Address: 000000f8
@@ -31,8 +32,8 @@ async function* anon_11946(param0, param1) {
             r5 = this.HermesInternal.concat.call(this, "", r2.BASE_URL, "/discover/movie?sort_by=popularity.desc")
             // CODE -> <Jmp>: <Addr8: 41>  # Address: 00000067
             goto label_103;
-            // CODE -> <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 9415>  # String: 'encodeURIComponent' (Identifier)
         }
+        // CODE -> <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 9415>  # String: 'encodeURIComponent' (Identifier)
         label_64:
         // USED -> r4 = this.encodeURIComponent
         // CODE -> <LoadConstUndefined>: <Reg8: 3>
@@ -104,8 +105,8 @@ async function* anon_11946(param0, param1) {
                 // USED -> r2 = r3[r2]
                 // CODE -> <Throw>: <Reg8: 2>
                 r2 = throw r3[r2]
-                // CODE -> <GetById>: <Reg8: 2, Reg8: 1, UInt8: 12, string_id: 8033>  # String: 'json' (Identifier)
             }
+            // CODE -> <GetById>: <Reg8: 2, Reg8: 1, UInt8: 12, string_id: 8033>  # String: 'json' (Identifier)
             label_213:
             // USED -> r2 = r1.json
             // CODE -> <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
@@ -123,18 +124,18 @@ async function* anon_11946(param0, param1) {
                 // CODE -> <CompleteGenerator>: <>
                 // CODE -> <Ret>: <Reg8: 3>
                 return r2.results;
-                // CODE -> <CompleteGenerator>: <>
             }
+            // CODE -> <CompleteGenerator>: <>
             label_242:
             // CODE -> <Ret>: <Reg8: 2>
             return r2;
-            // CODE -> <CompleteGenerator>: <>
         }
+        // CODE -> <CompleteGenerator>: <>
         label_245:
         // CODE -> <Ret>: <Reg8: 1>
         return r1;
-        // CODE -> <CompleteGenerator>: <>
     }
+    // CODE -> <CompleteGenerator>: <>
     label_248:
     // CODE -> <Ret>: <Reg8: 0>
     return r0;

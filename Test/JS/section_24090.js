@@ -55,8 +55,8 @@ function onPress(param0) {
         r1 = r2.goBack.call(this, r2)
         // CODE -> <Jmp>: <Addr8: 32>  # Address: 00000099
         goto label_153;
-        // CODE -> <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 12>
     }
+    // CODE -> <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 12>
     label_123:
     r0 = r0[12]
     // CODE -> <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
