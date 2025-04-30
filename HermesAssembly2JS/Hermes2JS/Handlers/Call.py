@@ -54,7 +54,7 @@ class CallX(OpcodeHandler):
         use_call = True
         for arg in argList:
             if arg.startswith("this."):
-                print(arg)
+                # print(arg)
                 use_call = False
             else:
                 checked_args.append(arg)

@@ -1,0 +1,51 @@
+
+=> [Function #11943 "" of 191 bytes]: 8 params, frame size=21, env size=2, read index sz=4, write index sz=3, strict=0, exc handler=0, debug info=0  @ offset 0x002190bf
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 1>
+==> 00000002: <LoadParam>: <Reg8: 6, UInt8: 2>
+==> 00000005: <LoadParam>: <Reg8: 2, UInt8: 6>
+==> 00000008: <LoadParam>: <Reg8: 7, UInt8: 7>
+==> 0000000b: <LoadConstZero>: <Reg8: 0>
+==> 0000000d: <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 0>
+==> 00000011: <LoadConstUndefined>: <Reg8: 0>
+==> 00000013: <Call2>: <Reg8: 4, Reg8: 6, Reg8: 0, Reg8: 3>
+==> 00000018: <GetGlobalObject>: <Reg8: 5>
+==> 0000001a: <TryGetById>: <Reg8: 10, Reg8: 5, UInt8: 1, string_id: 29>  # String: 'Object' (Identifier)
+==> 00000020: <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 2, string_id: 132>  # String: 'defineProperty' (Identifier)
+==> 00000025: <NewObject>: <Reg8: 8>
+==> 00000027: <LoadConstTrue>: <Reg8: 3>
+==> 00000029: <PutNewOwnByIdShort>: <Reg8: 8, Reg8: 3, string_id: 252>  # String: 'value' (Identifier)
+==> 0000002d: <LoadConstString>: <Reg8: 3, string_id: 54>  # String: '__esModule' (Identifier)
+==> 00000031: <Call4>: <Reg8: 3, Reg8: 9, Reg8: 10, Reg8: 2, Reg8: 3, Reg8: 8>
+==> 00000038: <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 9175>  # String: 'TMDB_CONFIG' (Identifier)
+==> 0000003e: <PutById>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 12270>  # String: 'fetchMovieDetails' (Identifier)
+==> 00000044: <PutById>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 12271>  # String: 'fetchMovies' (Identifier)
+==> 0000004a: <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
+==> 0000004d: <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 3>
+==> 00000051: <Call2>: <Reg8: 3, Reg8: 6, Reg8: 0, Reg8: 3>
+==> 00000056: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
+==> 0000005b: <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 3>
+==> 0000005f: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 2, UInt16: 4412, UInt16: 6447>  # Object: {'BASE_URL': 'https://api.themoviedb.org/3', 'API_KEY': 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc'}
+==> 00000069: <LoadConstString>: <Reg8: 7, string_id: 4525>  # String: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc' (String)
+==> 0000006d: <NewObject>: <Reg8: 4>
+==> 0000006f: <LoadConstString>: <Reg8: 6, string_id: 4098>  # String: 'application/json' (String)
+==> 00000073: <PutNewOwnById>: <Reg8: 4, Reg8: 6, string_id: 6765>  # String: 'accept' (Identifier)
+==> 00000078: <TryGetById>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 15>  # String: 'HermesInternal' (Identifier)
+==> 0000007e: <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 4, string_id: 120>  # String: 'concat' (Identifier)
+==> 00000083: <LoadConstString>: <Reg8: 5, string_id: 1336>  # String: 'Bearer ' (String)
+==> 00000087: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 5, Reg8: 7>
+==> 0000008c: <PutNewOwnById>: <Reg8: 4, Reg8: 5, string_id: 8626>  # String: 'Authorization' (Identifier)
+==> 00000091: <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 4, string_id: 169>  # String: 'headers' (Identifier)
+==> 00000095: <PutById>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 9175>  # String: 'TMDB_CONFIG' (Identifier)
+==> 0000009b: <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 3>
+==> 0000009f: <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 11944>  # Function: [#11944  of 37 bytes]: 1 params @ offset 0x0021917e
+==> 000000a4: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
+==> 000000a8: <PutById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 12271>  # String: 'fetchMovies' (Identifier)
+==> 000000ae: <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 11948>  # Function: [#11948  of 37 bytes]: 1 params @ offset 0x002192a7
+==> 000000b3: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 0>
+==> 000000b7: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 12270>  # String: 'fetchMovieDetails' (Identifier)
+==> 000000bd: <Ret>: <Reg8: 0>
+
+
