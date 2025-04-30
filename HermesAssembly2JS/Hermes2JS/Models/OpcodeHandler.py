@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from re import Match
 from typing import Dict, Optional, List
 
 from HermesAssembly2JS.Hermes2JS.Models.HermesAnalysis import HermesAnalysis
