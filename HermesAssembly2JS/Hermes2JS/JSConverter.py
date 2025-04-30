@@ -5,6 +5,7 @@ from HermesAssembly2JS.Hermes2JS.Models.HermesAnalysis import HermesAnalysis
 from HermesAssembly2JS.Hermes2JS.Models.JSVariable import JSVariable
 from HermesAssembly2JS.Hermes2JS.Models.OpcodeEntry import OpcodeEntry
 from HermesAssembly2JS.Hermes2JS.Models.OpcodeResult import OpcodeResult
+from HermesAssembly2JS.Hermes2JS.Parsers.Parse_FunctionMap import Parse_FunctionMap
 from HermesAssembly2JS.Hermes2JS.Parsers.Parse_HbcMetadata import Parse_HbcMetadata
 from HermesAssembly2JS.Hermes2JS.Parsers.Parse_Line import Parse_Line
 from HermesAssembly2JS.Hermes2JS.Parsers.Parse_StringMap import Parse_StringMap
@@ -35,6 +36,7 @@ class JSConverter:
         # Parse the metadata from the first line
         try:
             analysis.metadata = Parse_HbcMetadata(lines[0])
+            analysis.metadataList.append(analysis.metadata)
         except Exception as e:
             raise ValueError(f"Failed to parse metadata: {str(e)}")
 
@@ -58,6 +60,9 @@ class JSConverter:
 
         if bytecode_lines:
             analysis.stringTable = Parse_StringMap(bytecode_lines)
+            analysis.functionTable = Parse_FunctionMap(bytecode_lines)
+            print(analysis.functionTable)
+
             results = Dispatcher(bytecode_lines, analysis)
 
             # print(analysis)

@@ -6,10 +6,15 @@ from HermesAssembly2JS.Hermes2JS.Models.OpcodeResult import OpcodeResult
 
 
 class HermesAnalysis:
+    metadataList: List[Dict[str, Any]]
     metadata: Dict[str, Any]
     stringTable: Dict[str, str]
+    functionTable: Dict[str, str]
 
-    def __init__(self, metadata: Dict[str, Any] = None, stringTable: Dict[str, str] = None):
+    def __init__(self,
+                 metadata: Dict[str, Any] = None,
+                 stringTable: Dict[str, str] = None,
+                 functionTable: Dict[str, str] = None):
         """
         Initialize the Hermes analysis context.
 
@@ -17,8 +22,10 @@ class HermesAnalysis:
             metadata (Dict[str, Any], optional): Metadata from .hbc file.
             stringTable (Dict[str, str], optional): String mappings for string_id.
         """
+        self.metadataList = []
         self.metadata = metadata if metadata is not None else {}
         self.stringTable = stringTable if stringTable is not None else {}
+        self.functionTable = functionTable if functionTable is not None else {}
 
         self.globalObjects: Optional[int] = None
         self.gotoList: List[int] = []

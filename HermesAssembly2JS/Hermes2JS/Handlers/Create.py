@@ -42,6 +42,7 @@ class CreateThis(OpcodeHandler):
 # OPERAND_FUNCTION_ID(CreateClosure, 3)
 # OPERAND_FUNCTION_ID(CreateClosureLongIndex, 3)
 # Example: <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 11944>  # Function: [#11944  of 37 bytes]: 1 params @ offset 0x0021917e
+# Example: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11947>  # Function: [#11947 fetchMovies of 29 bytes]: 2 params @ offset 0x00150430
 class CreateClosure(OpcodeHandler):
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
@@ -51,8 +52,9 @@ class CreateClosure(OpcodeHandler):
             return self.InvalidArgs(entry)
 
         dest, env, func_id = map(int, match.groups())
-        # Check metadata for function details
-        func_name = analysis.metadata.get(f"function_{func_id}", f"function_{func_id}")
+
+        # Look up the function name from metadataList
+        func_name = analysis.functionTable.get(str(func_id), f"function_{func_id}")
 
         variable = JSVariable(handler, entry.address, f'r{dest}', f"// Closure {func_name} with env r{env}")
         analysis.AddResult(entry, variable)

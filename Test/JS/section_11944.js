@@ -10,7 +10,7 @@ function func_11944(param0) {
     // CODE -> <Call2>: <Reg8: 1, Reg8: 3, Reg8: 2, Reg8: 1>
     r1 = r1.default.call(this, undefined, r1)
     // CODE -> <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11947>  # Function: [#11947 fetchMovies of 29 bytes]: 2 params @ offset 0x00150430
-    // USED -> r0 = // Closure function_11947 with env r0
+    // USED -> r0 = // Closure fetchMovies with env r0
     // CODE -> <Ret>: <Reg8: 0>
-    return // Closure function_11947 with env r0;
+    return // Closure fetchMovies with env r0;
 }
