@@ -9,12 +9,12 @@ https://www.decompiler.com/
 https://github.com/P1sec/hermes-dec
 
 ```shell
-#HermesDisassembler/hermes-dec-main/
-#Apps/xx/index.android.bundle
-#Apps/xx/Output
+# basic
 python hbc_disassembler.py  index.android.bundle > output.hbc
 python hbc_decompiler.py  index.android.bundle > output.js
 python hbc_file_parser.py  index.android.bundle > outputParser.js
+
+# goto HermesDisassembler/run_disassemble.sh
 ```
 
 #### Step—3 -> HermesAssembly2JS
@@ -24,9 +24,15 @@ Splitter
 ```shell
 python HermesAssembly2JS/Splitter/hermes_splitter.py --input Apps/Coachify/Output/output.hbc --output Apps/Coachify/Output/Sections
 python HermesAssembly2JS/Splitter/hermes_splitter.py --input Apps/Testy/Output/output.hbc --output Apps/Testy/Output/Sections
+
+# goto HermesAssembly2JS/Splitter.py
 ```
 
 Decompile
+
+```shell
+# goto HermesAssembly2JS/Converter.py
+```
 
 https://www.politesi.polimi.it/retrieve/17e4c202-4d63-43f1-97d9-84a925bb9130/2023_05_Falvo.pdf
 

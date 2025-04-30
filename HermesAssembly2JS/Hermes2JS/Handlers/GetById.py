@@ -9,9 +9,30 @@ from HermesAssembly2JS.Hermes2JS.Models.OpcodeHandler import OpcodeHandler
 arg_regex = r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*UInt8:\s*(\d+),\s*string_id:\s*(\d+)'
 
 
-# Get an object property by string table index.
-# Arg1 = Arg2[string_table[Arg4]]
-# Arg3 is a cache index used to speed up the above operation.
+# /// Get a property by value. Constants string values should instead use GetById.
+# /// Arg1 = Arg2[Arg3]
+# DEFINE_OPCODE_3(GetByVal, Reg8, Reg8, Reg8)
+# Example: <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 0>
+class GetByVal(OpcodeHandler):
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = re.match(r'^Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*Reg8:\s*(\d+)$', entry.args.strip())
+        if not match:
+            return self.InvalidArgs(entry, "Expected Reg8, Reg8, Reg8 arguments")
+
+        dest, base, prop = map(int, match.groups())
+
+        expression = f"r{dest} = r{base}[r{prop}]"
+        variable = JSVariable(handler, entry.address, f'r{dest}', expression)
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
+
+
+# /// Get an object property by string table index.
+# /// Arg1 = Arg2[stringtable[Arg4]]
+# /// Arg3 is a cache index used to speed up the above operation.
 # DEFINE_OPCODE_4(GetByIdShort, Reg8, Reg8, UInt8, UInt8)
 # DEFINE_OPCODE_4(GetById, Reg8, Reg8, UInt8, UInt16)
 # DEFINE_OPCODE_4(GetByIdLong, Reg8, Reg8, UInt8, UInt32)
@@ -47,20 +68,22 @@ class GetById(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-class GetByIdShort(GetById):
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        return super().Handle(analysis, entry)
+class GetByIdShort(GetById): pass
 
 
-class GetByIdLong(GetById):
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        return super().Handle(analysis, entry)
+class GetByIdLong(GetById): pass
 
 
-# Get an object property by string table index, or throw if not found.
-# This is similar to GetById, but intended for use with global variables
-# where Arg2 = GetGlobalObject.
+# /// This is similar to GetById, but intended for use with global variables
+# /// where Arg2 = GetGlobalObject.
+# DEFINE_OPCODE_4(TryGetById, Reg8, Reg8, UInt8, UInt16)
+# DEFINE_OPCODE_4(TryGetByIdLong, Reg8, Reg8, UInt8, UInt32)
+# OPERAND_STRING_ID(TryGetById, 4)
+# OPERAND_STRING_ID(TryGetByIdLong, 4)
 # Example: <TryGetById>: <Reg8: 14, Reg8: 13, UInt8: 8, string_id: 23>  # String: 'Math' (Identifier)
 class TryGetById(GetById):
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         return super().Handle(analysis, entry)
+
+
+class TryGetByIdLong(TryGetById): pass
