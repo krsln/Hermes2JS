@@ -1,4 +1,4 @@
-function function_11944(param0) {
+function func_11944(param0) {
     // CODE -> <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0);
     // CODE -> <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
