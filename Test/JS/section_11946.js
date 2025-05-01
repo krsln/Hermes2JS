@@ -100,7 +100,7 @@ async function* anon_11946(param0, param1) {
                 // CODE -> <Mov>: <Reg8: 12, Reg8: 3>
                 r12 = r3;
                 // CODE -> <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-                r2 = new r4(arg0, arg1);
+                r2 = new this.Error(arg0, arg1);
                 // CODE -> <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
                 // USED -> r2 = r3[r2]
                 // CODE -> <Throw>: <Reg8: 2>

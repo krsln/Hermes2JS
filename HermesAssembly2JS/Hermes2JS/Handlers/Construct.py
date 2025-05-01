@@ -23,10 +23,12 @@ class Construct(OpcodeHandler):
         args = [f"arg{i}" for i in range(arg_count)]
         args_str = ", ".join(args)
 
-        func_name = f'new r{func_reg}'
-        func_val = f"({args_str})"
+        func_name = self.GetValueByReg(analysis.results, func_reg)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{func_name}{func_val};", func_name, func_val)
+        const = f'new {func_name}'
+        const_val = f"({args_str})"
+
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{const}{const_val};", const, const_val)
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)

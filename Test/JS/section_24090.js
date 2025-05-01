@@ -18,7 +18,7 @@ function onPress(param0) {
         // CODE -> <Mov>: <Reg8: 8, Reg8: 3>
         r8 = r3;
         // CODE -> <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
-        r2 = new r2(arg0);
+        r2 = new r2.default(arg0);
         // CODE -> <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
         // USED -> r3 = r3[r2]
         // CODE -> <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 21914>  # String: 'trackJoinCompetitionList' (Identifier)
