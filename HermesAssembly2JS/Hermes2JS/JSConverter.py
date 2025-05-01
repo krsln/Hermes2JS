@@ -76,7 +76,9 @@ class JSConverter:
             # print(section_index, JSConverter._functionTable)
 
             results = Dispatcher(bytecode_lines, analysis)
-            # print(f"len(results): {len(results)}")
+            if len(results) != len(analysis.results):
+                print(
+                    f"Section: section_{section_index} \tresults: {len(results)} vs analysis.results: {len(analysis.results)}")
 
             # print(analysis)
             # js_code.extend(analysis.GenerateJS_OLD(True))
@@ -127,13 +129,14 @@ def Dispatcher(bytecode_lines: List[str], analysis: HermesAnalysis) -> List[Opco
                 result = OpcodeResult(newLine, JSVariable("", 0, "", f'// Unparsed: {line}'))
                 analysis.results.append(result)
 
+                print(f"Dispatcher | Unparsed {line}")
                 resList.append(result)
         except Exception as e:
             newLine = OpcodeEntry(bytecode=line, hex_address="", opcode="", args="", comment="")
             result = OpcodeResult(newLine, JSVariable("", 0, "", f'// Error: {str(e)}'))
             analysis.results.append(result)
 
-            # analysis.add_instruction(result)
+            print(f"Dispatcher | Exception {e}")
             resList.append(result)
 
     return resList

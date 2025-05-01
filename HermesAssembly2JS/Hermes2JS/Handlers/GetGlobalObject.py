@@ -18,7 +18,7 @@ class GetGlobalObject(OpcodeHandler):
         arg_match = re.match(r'Reg8:\s*(\d+)', entry.args.strip())
 
         if not arg_match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         global_reg = int(arg_match.group(1))
         analysis.globalObjects = global_reg

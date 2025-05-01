@@ -19,7 +19,7 @@ class GetByVal(OpcodeHandler):
 
         match = re.match(r'^Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*Reg8:\s*(\d+)$', entry.args.strip())
         if not match:
-            return self.InvalidArgs(entry, "Expected Reg8, Reg8, Reg8 arguments")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8, Reg8 arguments")
 
         dest, base, prop = map(int, match.groups())
 
@@ -48,15 +48,14 @@ class GetById(OpcodeHandler):
         arg_match = re.match(arg_regex, entry.args.strip())
 
         if not arg_match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg, obj_reg, _cache, string_id = map(int, arg_match.groups())
         prop_name = analysis.stringTable.get(str(string_id))
 
         if not prop_name:
-            return OpcodeResult(entry,
-                                JSVariable(handler, entry.address, "",
-                                           f'// Error: string_id {string_id} not found in StringMap'))
+            error = f'/* Error: string_id {string_id} not found in stringTable'
+            return self.Exception(analysis, entry, error)
 
         func_name = self.GetValueByReg(analysis.results, obj_reg)
         # obj_var = 'this' if analysis.globalObjects is not None and obj_reg == analysis.globalObjects else func_name

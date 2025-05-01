@@ -38,9 +38,21 @@ class OpcodeHandler(ABC):
         return cls.registry.get(opcode)
 
     @classmethod
-    def InvalidArgs(cls, line: OpcodeEntry, error_detail: str = "Invalid arguments") -> OpcodeResult:
-        error_msg = f"// Error: {cls.__name__} at address {line.address}: {error_detail}: {line.args}"
-        return OpcodeResult(line, JSVariable(cls.__name__, line.address, "", error_msg))
+    def InvalidArgs(cls, analysis: HermesAnalysis, entry: OpcodeEntry,
+                    error_detail: str = "Invalid arguments") -> OpcodeResult:
+        error_msg = f"// Error: {cls.__name__} at address {entry.address}: {error_detail}: {entry.args}"
+
+        variable = JSVariable(cls.__name__, entry.address, "", error_msg)
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
+
+    @classmethod
+    def Exception(cls, analysis: HermesAnalysis, entry: OpcodeEntry, error: str) -> OpcodeResult:
+        variable = JSVariable(cls.__name__, entry.address, "", error)
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
 
     @classmethod
     def GetFuncArgs(cls, results: List[OpcodeResult], args: list[int]) -> list[str]:

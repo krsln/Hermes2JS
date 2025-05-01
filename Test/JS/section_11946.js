@@ -63,6 +63,8 @@ async function* anon_11946(param0, param1) {
         r1 = r1[1]
         // CODE -> <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 7, string_id: 169>  # String: 'headers' (Identifier)
         // USED -> r1 = r1.headers
+        // CODE -> <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 1, string_id: 169>  # String: 'headers' (Identifier)
+        /* Error: Invalid object format in r3: { method: "GET" } */ undefined
         // CODE -> <LoadConstUndefined>: <Reg8: 1>
         // USED -> r1 = undefined
         // CODE -> <Call3>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 5, Reg8: 3>

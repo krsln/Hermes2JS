@@ -79,7 +79,7 @@ class Jmp(OpcodeHandler):
         try:
             addr_offset, _ = _parse_jump_args(entry, "Jmp")
         except ValueError as e:
-            return self.InvalidArgs(entry, str(e))
+            return self.InvalidArgs(analysis, entry, str(e))
 
         target_addr = entry.address + addr_offset
         analysis.gotoList.append(target_addr)
@@ -111,7 +111,7 @@ class JmpTrue(OpcodeHandler):
         try:
             addr_offset, reg = _parse_jump_args(entry, "Conditional")
         except ValueError as e:
-            return self.InvalidArgs(entry, str(e))
+            return self.InvalidArgs(analysis, entry, str(e))
 
         target_addr = entry.address + addr_offset
         analysis.gotoList.append(target_addr)
@@ -150,7 +150,7 @@ class JmpFalse(OpcodeHandler):
         try:
             addr_offset, reg = _parse_jump_args(entry, "Conditional")
         except ValueError as e:
-            return self.InvalidArgs(entry, str(e))
+            return self.InvalidArgs(analysis, entry, str(e))
 
         target_addr = entry.address + addr_offset
         analysis.gotoList.append(target_addr)
@@ -184,7 +184,7 @@ class JmpUndefined(OpcodeHandler):
         try:
             addr_offset, reg = _parse_jump_args(entry, "Conditional")
         except ValueError as e:
-            return self.InvalidArgs(entry, str(e))
+            return self.InvalidArgs(analysis, entry, str(e))
 
         target_addr = entry.address + addr_offset
         analysis.gotoList.append(target_addr)

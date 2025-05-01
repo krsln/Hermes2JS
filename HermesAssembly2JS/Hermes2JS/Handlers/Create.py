@@ -23,7 +23,7 @@ class CreateThis(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*Reg8:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest, func, new_target = map(int, match.groups())
 
@@ -49,7 +49,7 @@ class CreateClosure(OpcodeHandler):
 
         match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*function_id:\s*(\d+)', entry.args.strip())
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest, env, func_id = map(int, match.groups())
 

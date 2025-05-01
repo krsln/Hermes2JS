@@ -16,7 +16,7 @@ class StartGenerator(OpcodeHandler):
         handler = self.__class__.__name__
 
         if entry.args.strip() not in ('<>', ''):
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         variable = JSVariable(handler, entry.address, "",
                               f"// StartGenerator: prepare generator context and jump to next instruction")
@@ -41,7 +41,7 @@ class ResumeGenerator(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg, _flag_reg = map(int, match.groups())
 
@@ -60,7 +60,7 @@ class CompleteGenerator(OpcodeHandler):
         handler = self.__class__.__name__
 
         if entry.args.strip() not in ('<>', ''):
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         variable = JSVariable(handler, entry.address, "", f"// CompleteGenerator: No output needed")
         analysis.AddResult(entry, variable)
@@ -84,7 +84,7 @@ class SaveGenerator(OpcodeHandler):
         match = re.match(r'Addr8:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         addr = int(match.group(1))
         label = f"label_{addr}"
@@ -113,7 +113,7 @@ class CreateGenerator(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*function_id:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg, env_reg, function_id = map(int, match.groups())
 
@@ -143,7 +143,7 @@ class CreateGeneratorClosure(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*function_id:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg, env_reg, function_id = map(int, match.groups())
 

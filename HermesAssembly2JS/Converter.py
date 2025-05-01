@@ -20,7 +20,7 @@ def main():
 
     files = GetFiles(input_dir, output_dir)
     # files = GetFiles(input_dir, output_dir, start=9594, end=9600)
-    # files = GetFiles(input_dir, output_dir, start=11946, end=11946)
+    # files = GetFiles(input_dir, output_dir, start=11943, end=11943)
     if not files:
         logger.info("No .hbc files found.")
         return

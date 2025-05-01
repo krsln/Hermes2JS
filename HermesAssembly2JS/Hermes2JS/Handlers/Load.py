@@ -19,7 +19,7 @@ class LoadParam(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+),\s*UInt8:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg, param_index = map(int, match.groups())
 
@@ -42,7 +42,7 @@ class LoadConstString(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+),\s*string_id:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg = int(match.group(1))
         string_id = match.group(2)
@@ -73,7 +73,7 @@ class LoadConstX(OpcodeHandler, ABC):
 
         match = re.match(r'^Reg8:\s*(\d+)$', entry.args.strip())
         if not match:
-            return self.InvalidArgs(entry, "Expected Reg8 argument")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8 argument")
 
         dest = int(match.group(1))
 
@@ -124,7 +124,7 @@ class LoadConstUInt8(OpcodeHandler):
 
         match = re.match(r'^Reg8:\s*(\d+),\s*UInt8:\s*(\d+)$', entry.args.strip())
         if not match:
-            return self.InvalidArgs(entry, "Expected Reg8 and UInt8 arguments")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8 and UInt8 arguments")
 
         dest_reg, value = map(int, match.groups())
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', str(value))
@@ -139,7 +139,7 @@ class LoadConstInt(OpcodeHandler):
 
         match = re.match(r'^Reg8:\s*(\d+),\s*Imm32:\s*(-?\d+)$', entry.args.strip())
         if not match:
-            return self.InvalidArgs(entry, "Expected Reg8 and Imm32 arguments")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8 and Imm32 arguments")
 
         dest_reg, value = map(int, match.groups())
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', str(value))

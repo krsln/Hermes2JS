@@ -35,11 +35,11 @@ class CallX(OpcodeHandler):
         # Get precompiled regex for the number of arguments
         reg_pattern = self._REGEX_PATTERNS.get(self.num_args)
         if not reg_pattern:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         match = re.match(reg_pattern, entry.args.strip())
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         # Strip commas and convert to integers
         regs = [int(x.split(":")[1].strip()) for x in match.groups()]

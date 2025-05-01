@@ -15,7 +15,7 @@ class Construct(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*UInt8:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg, func_reg, arg_count = map(int, match.groups())
 

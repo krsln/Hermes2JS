@@ -14,7 +14,7 @@ class Mov(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest, src = map(int, match.groups())
 

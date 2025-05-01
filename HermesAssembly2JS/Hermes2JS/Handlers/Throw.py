@@ -20,7 +20,7 @@ class Throw(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg = int(match.group(1))
 

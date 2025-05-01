@@ -23,7 +23,7 @@ class PutById(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*UInt8:\s*(\d+),\s*string_id:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg, value_reg, cache, string_id = map(int, match.groups())
 
@@ -42,8 +42,8 @@ class PutById(OpcodeHandler):
         # Retrieve the destination object from the analysis context
         dest_var = self.GetVariableByReg(analysis.results, dest_reg)
         if not dest_var or not dest_var.value:
-            return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
-                                                  f'// Error: No valid object found in r{dest_reg}'))
+            error = f'/* Error: No valid object found in r{dest_reg}'
+            return self.Exception(analysis, entry, error)
 
         # Retrieve the value from the analysis context
         value_var = self.GetVariableByReg(analysis.results, value_reg)
@@ -53,8 +53,8 @@ class PutById(OpcodeHandler):
         try:
             obj = json.loads(dest_var.value.replace("'", '"')) if dest_var.value != '{}' else {}
         except json.JSONDecodeError:
-            return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
-                                                  f'// Error: Invalid object format in r{dest_reg}: {dest_var.value}'))
+            error = f'// Error: Invalid object format in r{dest_reg}: {dest_var.value}'
+            return self.Exception(analysis, entry, error)
 
         # Update or set the property
         obj[prop_name] = value
@@ -92,12 +92,9 @@ class PutNewOwnByIdX(OpcodeHandler):
         # Parse arguments: Reg8 (dest), Reg8 (value), string_id
         match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*string_id:\s*(\d+)', entry.args.strip())
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
-        dest_reg = int(match.group(1))
-        value_reg = int(match.group(2))
-        string_id = int(match.group(3))
-        # dest_reg, value_reg, string_id = map(int, match.groups())
+        dest_reg, value_reg, string_id = map(int, match.groups())
 
         # Extract property name from comment (e.g., String: 'headers')
         prop_name = None
@@ -114,17 +111,10 @@ class PutNewOwnByIdX(OpcodeHandler):
         # Retrieve the destination object from the analysis context
         dest_var = self.GetVariableByReg(analysis.results, dest_reg)
         if not dest_var or not dest_var.value:
-            return OpcodeResult(
-                entry,
-                JSVariable(
-                    handler,
-                    entry.address,
-                    f'r{dest_reg}',
-                    f'/* Error: No valid object in r{dest_reg} */ undefined'
-                )
-            )
+            error = f'/* Error: No valid object in r{dest_reg} */ undefined'
+            return self.Exception(analysis, entry, error)
 
-        # Retrieve the value from the analysis context
+            # Retrieve the value from the analysis context
         value_var = self.GetVariableByReg(analysis.results, value_reg)
         value = value_var.value if value_var and value_var.value else 'undefined'
 
@@ -141,15 +131,8 @@ class PutNewOwnByIdX(OpcodeHandler):
                         pairs = self._parse_object_pairs(obj_str)
                         obj = {k: v for k, v in pairs}
             except Exception as e:
-                return OpcodeResult(
-                    entry,
-                    JSVariable(
-                        handler,
-                        entry.address,
-                        f'r{dest_reg}',
-                        f'/* Error: Invalid object format in r{dest_reg}: {dest_var.value} */ undefined'
-                    )
-                )
+                error = f'/* Error: Invalid object format in r{dest_reg}: {dest_var.value} */ undefined'
+                return self.Exception(analysis, entry, error)
 
         # Add the new property
         obj[prop_name] = value
@@ -158,10 +141,10 @@ class PutNewOwnByIdX(OpcodeHandler):
         js_obj = self._format_object_literal(obj)
 
         # Update the JSVariable for the destination object
-        updated_var = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
-        analysis.AddResult(entry, updated_var)
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
+        analysis.AddResult(entry, variable)
 
-        return OpcodeResult(entry, updated_var)
+        return OpcodeResult(entry, variable)
 
     def _parse_object_pairs(obj_str: str) -> list[tuple[str, str]]:
         """

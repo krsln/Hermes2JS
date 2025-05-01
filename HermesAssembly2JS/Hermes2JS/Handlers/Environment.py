@@ -26,7 +26,7 @@ class CreateEnvironment(OpcodeHandler):
         # Match: "Reg8: x"
         match = re.match(r'^Reg8:\s*(\d+)$', entry.args.strip())
         if not match:
-            return self.InvalidArgs(entry, "Expected single Reg8 argument")
+            return self.InvalidArgs(analysis, entry, "Expected single Reg8 argument")
 
         dest_reg = int(match.group(1))
 
@@ -47,7 +47,7 @@ class GetEnvironment(OpcodeHandler):
         # This matches "Reg8: x, UInt8: y" with optional whitespace
         match = re.match(r'^Reg8:\s*(\d+),\s*UInt8:\s*(\d+)$', entry.args.strip())
         if not match:
-            return self.InvalidArgs(entry, "Expected Reg8 and UInt8 arguments")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8 and UInt8 arguments")
 
         dest_reg, env_index = [int(x) for x in match.groups()]
 
@@ -70,7 +70,7 @@ class LoadFromEnvironment(OpcodeHandler):
 
         match = re.match(r'^Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*UInt8:\s*(\d+)$', entry.args.strip())
         if not match:
-            return self.InvalidArgs(entry, "Expected two Reg8 and one UInt8 arguments")
+            return self.InvalidArgs(analysis, entry, "Expected two Reg8 and one UInt8 arguments")
 
         dest_reg, env_reg, index = [int(x) for x in match.groups()]
         env_value = self.GetValueByReg(analysis.results, env_reg)
@@ -107,7 +107,7 @@ class StoreToEnvironment(OpcodeHandler):
         # Try to match both UInt8 and UInt16 formats
         match = re.match(r'^Reg8:\s*(\d+),\s*UInt(?:8|16):\s*(\d+),\s*Reg8:\s*(\d+)$', args)
         if not match:
-            return self.InvalidArgs(entry, "Expected Reg8, UInt(8|16), Reg8 format")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8, UInt(8|16), Reg8 format")
 
         env_reg, index, value_reg = [int(x) for x in match.groups()]
 

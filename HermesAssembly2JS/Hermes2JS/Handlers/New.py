@@ -27,7 +27,7 @@ class NewObjectWithBuffer(OpcodeHandler):
         )
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg = int(match.group(1))
 
@@ -46,8 +46,8 @@ class NewObjectWithBuffer(OpcodeHandler):
                 print(f"Failed to parse: {obj_str}")
 
         if not parsed_obj:
-            return OpcodeResult(entry, JSVariable(handler, entry.address, "",
-                                                  f'// Warning: No valid object parsed from comment: {entry.comment}'))
+            error = f'// Warning: No valid object parsed from comment: {entry.comment}'
+            return self.Exception(analysis, entry, error)
 
         js_obj = "{ " + ", ".join(f'{k}: "{v}"' for k, v in parsed_obj.items()) + " }"
 
@@ -76,7 +76,7 @@ class NewObject(OpcodeHandler):
         match = re.match(r'Reg8:\s*(\d+)', entry.args.strip())
 
         if not match:
-            return self.InvalidArgs(entry)
+            return self.InvalidArgs(analysis, entry)
 
         dest_reg = int(match.group(1))
 
