@@ -10,11 +10,11 @@ function function_11943(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <LoadConstZero>: <Reg8: 0>
     r0 = 0
     // CODE -> <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 0>
-    // USED -> r3 = r3 = r7[r0]
+    // USED -> r3 = r7[r0]
     // CODE -> <LoadConstUndefined>: <Reg8: 0>
     // USED -> r0 = undefined
     // CODE -> <Call2>: <Reg8: 4, Reg8: 6, Reg8: 0, Reg8: 3>
-    r4 = param2.call(this, undefined, r3 = r7[r0])
+    r4 = param2.call(this, undefined, r7[r0])
     // CODE -> <GetGlobalObject>: <Reg8: 5>
     // USED -> r5 = this
     // CODE -> <TryGetById>: <Reg8: 10, Reg8: 5, UInt8: 1, string_id: 29>  # String: 'Object' (Identifier)
@@ -34,9 +34,9 @@ function function_11943(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
     r3 = 1
     // CODE -> <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 3>
-    // USED -> r3 = r3 = r7[r3]
+    // USED -> r3 = r7[r3]
     // CODE -> <Call2>: <Reg8: 3, Reg8: 6, Reg8: 0, Reg8: 3>
-    r3 = param2.call(this, undefined, r3 = r7[r3])
+    r3 = param2.call(this, undefined, r7[r3])
     // CODE -> <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
     r3 = r4.call(this, undefined, r3)
     // CODE -> <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 3>

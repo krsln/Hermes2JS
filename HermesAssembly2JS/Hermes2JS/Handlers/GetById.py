@@ -23,8 +23,8 @@ class GetByVal(OpcodeHandler):
 
         dest, base, prop = map(int, match.groups())
 
-        expression = f"r{dest} = r{base}[r{prop}]"
-        variable = JSVariable(handler, entry.address, f'r{dest}', expression)
+        value = f"r{base}[r{prop}]"
+        variable = JSVariable(handler, entry.address, f'r{dest}', value)
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
