@@ -69,8 +69,8 @@ def ProcessFile(section_index: int, file_path: str, output_dir: str) -> bool:
     # Read file content
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
-            hasm_content = f.read()
-        if not hasm_content.strip():
+            hbc_content = f.read()
+        if not hbc_content.strip():
             logger.error(f"File is empty: {file_path}")
             return False
     except Exception as e:
@@ -79,7 +79,7 @@ def ProcessFile(section_index: int, file_path: str, output_dir: str) -> bool:
 
     # Process content
     try:
-        js_code = JSConverter.convert(hasm_content, section_index)
+        js_code = JSConverter.convert(hbc_content, section_index)
     except Exception as e:
         logger.error(f"Error processing content of {file_path}: {str(e)}")
         return False
@@ -90,7 +90,7 @@ def ProcessFile(section_index: int, file_path: str, output_dir: str) -> bool:
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(js_code)
-        logger.info(f"Successfully wrote output to {output_path}")
+        logger.info(f"Successfully wrote output to {output_path}\n")
         return True
     except Exception as e:
         logger.error(f"Error writing to {output_path}: {str(e)}")

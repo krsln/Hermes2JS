@@ -12,6 +12,9 @@ from HermesAssembly2JS.Hermes2JS.Parsers.Parse_StringMap import Parse_StringMap
 
 
 class JSConverter:
+    # Class-level functionTable to store data across files
+    _functionTable = {}
+
     @staticmethod
     def convert(assembly_content: str, section_index: int) -> str:
         """
@@ -46,6 +49,9 @@ class JSConverter:
         if function_name.startswith('?anon_'):
             function_name = f'anon_{analysis.metadata.get("function_id", section_index)}'
 
+        # testFuncName = JSConverter._functionTable.get(str(section_index), None)
+        # print(testFuncName, function_name)
+
         param_count = analysis.metadata.get('param_count', 0)
         params = [f'param{i}' for i in range(param_count)]
 
@@ -60,9 +66,17 @@ class JSConverter:
 
         if bytecode_lines:
             analysis.stringTable = Parse_StringMap(bytecode_lines)
-            analysis.functionTable = Parse_FunctionMap(bytecode_lines)
+
+            # Update class-level functionTable instead of assigning to analysis
+            parsed_function_table = Parse_FunctionMap(bytecode_lines)
+            # Merge or update _functionTable (adjust merging logic based on your needs)
+            JSConverter._functionTable.update(parsed_function_table)
+            # Assign the class-level functionTable to analysis for local use
+            analysis.functionTable = JSConverter._functionTable
+            # print(section_index, JSConverter._functionTable)
 
             results = Dispatcher(bytecode_lines, analysis)
+            # print(f"len(results): {len(results)}")
 
             # print(analysis)
             # js_code.extend(analysis.GenerateJS_OLD(True))
