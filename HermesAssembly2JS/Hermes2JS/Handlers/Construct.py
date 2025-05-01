@@ -7,6 +7,15 @@ from HermesAssembly2JS.Hermes2JS.Models.OpcodeEntry import OpcodeEntry
 from HermesAssembly2JS.Hermes2JS.Models.OpcodeHandler import OpcodeHandler
 
 
+# /// Call a constructor, with semantics identical to Call.
+# /// Arg1 is the destination of the return value.
+# /// Arg2 is the closure to invoke.
+# /// Arg3 is the number of arguments, assumed to be found in reverse order
+# ///      from the end of the current frame. The first argument 'this'
+# ///      is assumed to be created with CreateThis.
+# DEFINE_OPCODE_3(Construct, Reg8, Reg8, UInt8)
+# DEFINE_RET_TARGET(Construct)
+# Example: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
 class Construct(OpcodeHandler):
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
