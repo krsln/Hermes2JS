@@ -38,7 +38,8 @@ class HermesAnalysis:
         # self.AddVariable(variable)
 
     def GenerateJS(self, verbose: bool = True) -> List[str]:
-        output = []
+        # Use a list of dictionaries instead of a plain list
+        output_dicts = []  # Each entry: {"content": str, "indent_lvl": int}
         indent_lvl = 1  # Track indentation for nested blocks
         indent = lambda lvl: '    ' * lvl
 
@@ -61,7 +62,7 @@ class HermesAnalysis:
                     for block in open_blocks[:]:
                         if block["end_addr"] == variable.address:
                             indent_lvl -= 1
-                            output.append(indent(indent_lvl) + "}")
+                            output_dicts.append({"content": "}", "indent_lvl": indent_lvl})
                             open_blocks.remove(block)
 
                 # Skip if already visited
@@ -76,11 +77,11 @@ class HermesAnalysis:
                 # -----------------------------------------------------
 
                 if verbose:
-                    output.append(indent(indent_lvl) + f'// CODE -> {original_bytecode}')
+                    output_dicts.append({"content": f'// CODE -> {original_bytecode}', "indent_lvl": indent_lvl})
 
                 # Add label if the address is a jump target
                 if variable.address in self.gotoList:
-                    output.append(indent(indent_lvl) + f"label_{variable.address}:")
+                    output_dicts.append({"content": f"label_{variable.address}:", "indent_lvl": indent_lvl})
 
                 if variable.handler == "CompleteGenerator":
                     i += 1
@@ -90,43 +91,42 @@ class HermesAnalysis:
 
                     # Handle special opcodes
                     if variable.handler == "SaveGenerator":
-                        # print(item)
-                        output.append(indent(indent_lvl) + f"// TODO: await yield; // Resume at label_{item.GoTo}")
+                        output_dicts.append({"content": f"// TODO: await yield; // Resume at label_{item.GoTo}",
+                                             "indent_lvl": indent_lvl})
                     elif variable.handler == "ResumeGenerator":
                         if not variable.used:
-                            output.append(indent(indent_lvl) + f'{item.result}; // Resume generator')
+                            output_dicts.append(
+                                {"content": f'{item.result}; // Resume generator', "indent_lvl": indent_lvl})
                         elif verbose:
-                            output.append(indent(indent_lvl) + f'// USED -> {item.result}; // Resume generator')
+                            output_dicts.append(
+                                {"content": f'// USED -> {item.result}; // Resume generator', "indent_lvl": indent_lvl})
                     elif variable.handler == "Ret" and variable.address not in return_points:
                         return_points.add(variable.address)
                         value = valueRaw.split("return ")[1].strip() if "return " in valueRaw else valueRaw
-                        output.append(indent(indent_lvl) + f"return {value}")
+                        output_dicts.append({"content": f"return {value}", "indent_lvl": indent_lvl})
                     elif "/* jump to" in valueRaw and item.GoTo is not None:
                         # Handle conditional jumps (e.g., JmpTrue)
                         try:
                             condition = valueRaw.split("if (")[1].split(")")[0].strip()
-                            output.append(indent(indent_lvl) + f"if ({condition}) {{")
+                            output_dicts.append({"content": f"if ({condition}) {{", "indent_lvl": indent_lvl})
                             indent_lvl += 1
                             open_blocks.append({"end_addr": item.GoTo, "start_idx": i})
                         except IndexError:
                             # Malformed condition; emit as regular line
-                            output.append(indent(indent_lvl) + valueRaw)
+                            output_dicts.append({"content": valueRaw, "indent_lvl": indent_lvl})
                     else:
                         # Regular instruction (e.g., assignments, calls)
                         if not variable.used:
-                            output.append(indent(indent_lvl) + item.result)
+                            output_dicts.append({"content": item.result, "indent_lvl": indent_lvl})
                         elif verbose:
-                            output.append(indent(indent_lvl) + f'// USED -> {item.result}')
+                            output_dicts.append({"content": f'// USED -> {item.result}', "indent_lvl": indent_lvl})
 
                 # -----------------------------------------------------
                 # -----------------------------------------------------
 
                 if item.GoTo is not None and variable.handler == "SaveGenerator":
                     target_idx = next((j for j, r in enumerate(self.results) if r.Opcode.address == item.GoTo), i + 1)
-                    # print(goto, target_idx)
                     if target_idx not in visited and target_idx < len(self.results):
-                        # Debug: Log jump
-                        # print(f"Jumping from addr={addr} to target_idx={target_idx}, goto={goto}")
                         i = target_idx
                         continue
 
@@ -138,8 +138,11 @@ class HermesAnalysis:
         # Close any remaining open blocks
         while open_blocks:
             indent_lvl -= 1
-            output.append(indent(indent_lvl) + "}")
+            output_dicts.append({"content": "}", "indent_lvl": indent_lvl})
             open_blocks.pop()
+
+        # Convert the list of dictionaries to a string array with proper indentation
+        output = [indent(item["indent_lvl"]) + item["content"] for item in output_dicts]
 
         return output
 
