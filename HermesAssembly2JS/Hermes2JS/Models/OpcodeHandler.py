@@ -53,7 +53,7 @@ class OpcodeHandler(ABC):
 
             matching_var = next((var.Variable for var in sorted_variables if var.Variable.name == f"r{r}"), None)
             if (matching_var
-                    and not matching_var.handler.startswith('Call')
+                    # and not matching_var.handler.startswith('Call')
                     and not matching_var.handler.endswith('Environment')
             ):
                 argList.append(matching_var.value)
@@ -72,7 +72,7 @@ class OpcodeHandler(ABC):
 
         if (variable
                 and variable.handler != 'ResumeGenerator'
-                and not variable.handler.startswith('Call')
+                # and not variable.handler.startswith('Call')
                 and not variable.handler.endswith('Environment')
         ):
             variable.used = True
@@ -90,7 +90,7 @@ class OpcodeHandler(ABC):
 
         if (variable
                 and variable.handler != 'ResumeGenerator'
-                and not variable.handler.startswith('Call')
+                # and not variable.handler.startswith('Call')
                 and not variable.handler.endswith('Environment')
         ):
             func_name = variable.value

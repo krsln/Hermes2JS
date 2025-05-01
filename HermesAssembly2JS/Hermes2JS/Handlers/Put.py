@@ -82,22 +82,24 @@ class PutById(OpcodeHandler):
 # OPERAND_STRING_ID(PutNewOwnByIdShort, 3)
 # OPERAND_STRING_ID(PutNewOwnById, 3)
 # OPERAND_STRING_ID(PutNewOwnByIdLong, 3)
+
+# Example: <PutNewOwnById>: <Reg8: 4, Reg8: 5, string_id: 8626>  # String: 'Authorization' (Identifier)
 # Example: <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 6, string_id: 158>  # String: 'method' (Identifier)
-class PutNewOwnByIdShort(OpcodeHandler):
+class PutNewOwnByIdX(OpcodeHandler):
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         # Parse arguments: Reg8 (dest), Reg8 (value), string_id
         match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*string_id:\s*(\d+)', entry.args.strip())
-
         if not match:
             return self.InvalidArgs(entry)
 
         dest_reg = int(match.group(1))
         value_reg = int(match.group(2))
         string_id = int(match.group(3))
+        # dest_reg, value_reg, string_id = map(int, match.groups())
 
-        # Extract property name from comment (e.g., String: 'method')
+        # Extract property name from comment (e.g., String: 'headers')
         prop_name = None
         comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment)
         if comment_match:
@@ -111,86 +113,49 @@ class PutNewOwnByIdShort(OpcodeHandler):
 
         # Retrieve the destination object from the analysis context
         dest_var = self.GetVariableByReg(analysis.results, dest_reg)
-
         if not dest_var or not dest_var.value:
-            return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
-                                                  f'// Error: No valid object found in r{dest_reg}'))
+            return OpcodeResult(
+                entry,
+                JSVariable(
+                    handler,
+                    entry.address,
+                    f'r{dest_reg}',
+                    f'/* Error: No valid object in r{dest_reg} */ undefined'
+                )
+            )
 
         # Retrieve the value from the analysis context
         value_var = self.GetVariableByReg(analysis.results, value_reg)
         value = value_var.value if value_var and value_var.value else 'undefined'
 
-        # Parse the destination object’s value as a JSON-like object
-        try:
-            obj = json.loads(dest_var.value.replace("'", '"')) if dest_var.value != '{}' else {}
-        except json.JSONDecodeError:
-            return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
-                                                  f'// Error: Invalid object format in r{dest_reg}: {dest_var.value}'))
-
-        # Add the new property
-        obj[prop_name] = value
-        # print(obj.items())
-
-        # Convert back to a JSON-like string
-        # js_obj = "{ " + ", ".join(f'"{k}": "{v}"' for k, v in obj.items()) + " }"
-        js_obj = "{ " + ", ".join(f'"{k}": {v}' for k, v in obj.items()) + " }"
-
-        # Update the JSVariable for the destination object
-        updated_var = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
-        analysis.AddResult(entry, updated_var)
-
-        return OpcodeResult(entry, updated_var)
-
-
-class PutNewOwnById(OpcodeHandler):
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
-        # Parse arguments: Reg8 (dest), Reg8 (value), string_id (UInt16)
-        match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*string_id:\s*(\d+)', entry.args.strip())
-
-        if not match:
-            return self.InvalidArgs(entry)
-
-        dest_reg = int(match.group(1))
-        value_reg = int(match.group(2))
-        string_id = int(match.group(3))
-
-        # Extract property name from comment (e.g., String: 'method')
-        prop_name = None
-        comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment)
-        if comment_match:
-            prop_name = comment_match.group(1)
-        else:
-            # Fallback to string table lookup
+        # Initialize or update the object state
+        obj = {}
+        if dest_var.value and dest_var.value != '{}':
+            # Try to parse the existing object, but avoid JSON for JavaScript-specific syntax
             try:
-                prop_name = analysis.stringTable.get(str(string_id))
-            except (AttributeError, KeyError):
-                prop_name = f'string_{string_id}'  # Fallback if lookup fails
-
-        # Retrieve the destination object from the analysis context
-        dest_var = self.GetVariableByReg(analysis.results, dest_reg)
-
-        if not dest_var or not dest_var.value:
-            return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
-                                                  f'// Error: No valid object found in r{dest_reg}'))
-
-        # Retrieve the value from the analysis context
-        value_var = self.GetVariableByReg(analysis.results, value_reg)
-        value = value_var.value if value_var and value_var.value else 'undefined'
-
-        # Parse the destination object’s value as a JSON-like object
-        try:
-            obj = json.loads(dest_var.value.replace("'", '"')) if dest_var.value != '{}' else {}
-        except json.JSONDecodeError:
-            return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
-                                                  f'// Error: Invalid object format in r{dest_reg}: {dest_var.value}'))
+                # Simple regex-based parsing for { key: value, ... } format
+                obj_str = dest_var.value.strip()
+                if obj_str.startswith('{') and obj_str.endswith('}'):
+                    obj_str = obj_str[1:-1].strip()
+                    if obj_str:
+                        pairs = self._parse_object_pairs(obj_str)
+                        obj = {k: v for k, v in pairs}
+            except Exception as e:
+                return OpcodeResult(
+                    entry,
+                    JSVariable(
+                        handler,
+                        entry.address,
+                        f'r{dest_reg}',
+                        f'/* Error: Invalid object format in r{dest_reg}: {dest_var.value} */ undefined'
+                    )
+                )
 
         # Add the new property
         obj[prop_name] = value
 
-        # Convert back to a JSON-like string
-        js_obj = "{ " + ", ".join(f'"{k}": {v}' for k, v in obj.items()) + " }"
+        # Generate the JavaScript object literal
+        js_obj = self._format_object_literal(obj)
 
         # Update the JSVariable for the destination object
         updated_var = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
@@ -198,59 +163,72 @@ class PutNewOwnById(OpcodeHandler):
 
         return OpcodeResult(entry, updated_var)
 
+    def _parse_object_pairs(obj_str: str) -> list[tuple[str, str]]:
+        """
+        Parse a JavaScript object literal string into key-value pairs.
+        This is a simple parser to handle { key: value, ... } formats.
+        """
+        pairs = []
+        current_key = ""
+        current_value = ""
+        in_key = True
+        in_quotes = False
+        buffer = []
+        i = 0
 
-class PutNewOwnByIdLong(OpcodeHandler):
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
+        while i < len(obj_str):
+            char = obj_str[i]
 
-        # Parse arguments: Reg8 (dest), Reg8 (value), string_id (UInt32)
-        match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*string_id:\s*(\d+)', entry.args.strip())
+            if char == '"' and obj_str[i - 1] != '\\':
+                in_quotes = not in_quotes
+                buffer.append(char)
+            elif char == ':' and not in_quotes:
+                if in_key:
+                    current_key = ''.join(buffer).strip()
+                    buffer = []
+                    in_key = False
+                else:
+                    buffer.append(char)
+            elif char == ',' and not in_quotes:
+                if not in_key:
+                    current_value = ''.join(buffer).strip()
+                    pairs.append((current_key, current_value))
+                    buffer = []
+                    in_key = True
+            else:
+                buffer.append(char)
+            i += 1
 
-        if not match:
-            return self.InvalidArgs(entry)
+        # Handle the last pair
+        if buffer and not in_key:
+            current_value = ''.join(buffer).strip()
+            pairs.append((current_key, current_value))
 
-        dest_reg = int(match.group(1))
-        value_reg = int(match.group(2))
-        string_id = int(match.group(3))
+        return pairs
 
-        # Extract property name from comment (e.g., String: 'method')
-        prop_name = None
-        comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment)
-        if comment_match:
-            prop_name = comment_match.group(1)
-        else:
-            # Fallback to string table lookup
-            try:
-                prop_name = analysis.stringTable.get(str(string_id))
-            except (AttributeError, KeyError):
-                prop_name = f'string_{string_id}'  # Fallback if lookup fails
+    @staticmethod
+    def _format_object_literal(obj: dict) -> str:
+        """
+        Format a dictionary as a JavaScript object literal, avoiding quotes for valid identifiers.
+        """
 
-        # Retrieve the destination object from the analysis context
-        dest_var = self.GetVariableByReg(analysis.results, dest_reg)
+        def is_valid_identifier(key: str) -> bool:
+            # Check if the key is a valid JavaScript identifier
+            return bool(re.match(r'^[a-zA-Z_$][a-zA-Z0-9_$]*$', key))
 
-        if not dest_var or not dest_var.value:
-            return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
-                                                  f'// Error: No valid object found in r{dest_reg}'))
+        parts = []
+        for key, value in obj.items():
+            # Only quote the key if it's not a valid identifier
+            formatted_key = key if is_valid_identifier(key) else f'"{key}"'
+            # Use the value as-is, assuming it's a valid JavaScript expression
+            parts.append(f'{formatted_key}: {value}')
+        return '{ ' + ', '.join(parts) + ' }'
 
-        # Retrieve the value from the analysis context
-        value_var = self.GetVariableByReg(analysis.results, value_reg)
-        value = value_var.value if value_var and value_var.value else 'undefined'
 
-        # Parse the destination object’s value as a JSON-like object
-        try:
-            obj = json.loads(dest_var.value.replace("'", '"')) if dest_var.value != '{}' else {}
-        except json.JSONDecodeError:
-            return OpcodeResult(entry, JSVariable(handler, entry.address, f'r{dest_reg}',
-                                                  f'// Error: Invalid object format in r{dest_reg}: {dest_var.value}'))
+class PutNewOwnByIdShort(PutNewOwnByIdX): pass
 
-        # Add the new property
-        obj[prop_name] = value
 
-        # Convert back to a JSON-like string
-        js_obj = "{ " + ", ".join(f'"{k}": {v}' for k, v in obj.items()) + " }"
+class PutNewOwnById(PutNewOwnByIdX): pass
 
-        # Update the JSVariable for the destination object
-        updated_var = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
-        analysis.AddResult(entry, updated_var)
 
-        return OpcodeResult(entry, updated_var)
+class PutNewOwnByIdLong(PutNewOwnByIdX): pass
