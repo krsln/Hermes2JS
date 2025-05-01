@@ -70,7 +70,7 @@ async function* anon_11946(param0, param1) {
         // CODE -> <Call3>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 5, Reg8: 3>
         // USED -> r1 = this.fetch(`${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent(param1.query)}`, { method: "GET", headers: r1.headers })
         // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 00000090
-        await yield; // Resume at label_4
+        // TODO: await yield; // Resume at label_4
         // CODE -> <Ret>: <Reg8: 1>
         return this.fetch(`${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent(param1.query)}`, { method: "GET", headers: r1.headers });
         // CODE -> <ResumeGenerator>: <Reg8: 1, Reg8: 3>
@@ -112,7 +112,7 @@ async function* anon_11946(param0, param1) {
             // CODE -> <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
             // USED -> r2 = r1.json.call(this, await yield)
             // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 000000e3
-            await yield; // Resume at label_4
+            // TODO: await yield; // Resume at label_4
             // CODE -> <Ret>: <Reg8: 2>
             return r1.json.call(this, await yield);
             // CODE -> <ResumeGenerator>: <Reg8: 2, Reg8: 3>

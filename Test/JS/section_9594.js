@@ -29,7 +29,7 @@ async function* anon_9594(param0, param1) {
         // CODE -> <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
         // USED -> r1 = r1.default.get(`https://coachify.ai/api/checkUsernameAvailable?username=${param1}`)
         // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 0000003a
-        await yield; // Resume at label_4
+        // TODO: await yield; // Resume at label_4
         // CODE -> <Ret>: <Reg8: 1>
         return r1.default.get(`https://coachify.ai/api/checkUsernameAvailable?username=${param1}`);
         // CODE -> <ResumeGenerator>: <Reg8: 1, Reg8: 3>

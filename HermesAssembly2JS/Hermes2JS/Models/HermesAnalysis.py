@@ -91,7 +91,7 @@ class HermesAnalysis:
                     # Handle special opcodes
                     if variable.handler == "SaveGenerator":
                         # print(item)
-                        output.append(indent(indent_lvl) + f"await yield; // Resume at label_{item.GoTo}")
+                        output.append(indent(indent_lvl) + f"// TODO: await yield; // Resume at label_{item.GoTo}")
                     elif variable.handler == "ResumeGenerator":
                         if not variable.used:
                             output.append(indent(indent_lvl) + f'{item.result}; // Resume generator')
