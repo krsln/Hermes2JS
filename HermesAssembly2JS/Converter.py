@@ -27,7 +27,7 @@ def main():
 
     logger.info(f"Found {len(files)} .hbc files in {input_dir}\n")
     for filename, section_index in files:
-        logger.info(f"Processing section #{section_index}: {filename}")
+        # logger.info(f"Processing section #{section_index}: {filename}")
         file_path = os.path.join(input_dir, filename)
         ProcessFile(section_index, file_path, output_dir)
 

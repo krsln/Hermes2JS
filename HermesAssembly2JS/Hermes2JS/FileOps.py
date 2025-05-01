@@ -64,7 +64,7 @@ def ProcessFile(section_index: int, file_path: str, output_dir: str) -> bool:
         logger.error(f"File does not exist: {file_path}")
         return False
 
-    logger.info(f"Processing {file_path}")
+    logger.info(f"Processing section #{section_index}: {file_path}")
 
     # Read file content
     try:
