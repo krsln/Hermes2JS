@@ -14,7 +14,7 @@ function function_11943(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <LoadConstUndefined>: <Reg8: 0>
     // USED -> r0 = undefined
     // CODE -> <Call2>: <Reg8: 4, Reg8: 6, Reg8: 0, Reg8: 3>
-    // USED -> r4 = param2.call(this, undefined, r7[r0])
+    // USED -> r4 = param2.call(this, r7[r0])
     // CODE -> <GetGlobalObject>: <Reg8: 5>
     // USED -> r5 = this
     // CODE -> <TryGetById>: <Reg8: 10, Reg8: 5, UInt8: 1, string_id: 29>  # String: 'Object' (Identifier)
@@ -30,7 +30,7 @@ function function_11943(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <LoadConstString>: <Reg8: 3, string_id: 54>  # String: '__esModule' (Identifier)
     // USED -> r3 = "__esModule"
     // CODE -> <Call4>: <Reg8: 3, Reg8: 9, Reg8: 10, Reg8: 2, Reg8: 3, Reg8: 8>
-    r3 = this.Object.defineProperty(param6, "__esModule", { value: true })
+    r3 = this.Object.defineProperty.call(this, param6, "__esModule", { value: true })
     // CODE -> <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 9175>  # String: 'TMDB_CONFIG' (Identifier)
     // USED -> r2 = { TMDB_CONFIG: undefined }
     // CODE -> <PutById>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 12270>  # String: 'fetchMovieDetails' (Identifier)
@@ -42,9 +42,9 @@ function function_11943(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 3>
     // USED -> r3 = r7[r3]
     // CODE -> <Call2>: <Reg8: 3, Reg8: 6, Reg8: 0, Reg8: 3>
-    // USED -> r3 = param2.call(this, undefined, r7[r3])
+    // USED -> r3 = param2.call(this, r7[r3])
     // CODE -> <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
-    r3 = param2.call(this, undefined, r7[r0]).call(this, undefined, param2.call(this, undefined, r7[r3]))
+    r3 = param2.call(this, r7[r0]).call(this, param2.call(this, r7[r3]))
     // CODE -> <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 3>
     r1 = setEnvSlot(0, r3)  // StoreToEnvironment: env=r1, slot=0, value=r3
     // CODE -> <NewObjectWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 2, UInt16: 4412, UInt16: 6447>  # Object: {'BASE_URL': 'https://api.themoviedb.org/3', 'API_KEY': 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc'}
@@ -76,15 +76,15 @@ function function_11943(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 11944>  # Function: [#11944  of 37 bytes]: 1 params @ offset 0x0021917e
     // USED -> r3 = function_11944 /* Closure with env r1 = undefined */
     // CODE -> <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-    // USED -> r3 = function_11944 /* Closure with env r1 = undefined */(undefined)
+    // USED -> r3 = function_11944 /* Closure with env r1 = undefined */()
     // CODE -> <PutById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 12271>  # String: 'fetchMovies' (Identifier)
-    // USED -> r2 = { TMDB_CONFIG: { BASE_URL: "https://api.themoviedb.org/3", API_KEY: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc", headers: { accept: "application/json", Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc` } }, fetchMovieDetails: undefined, fetchMovies: function_11944 /* Closure with env r1 = undefined */(undefined) }
+    // USED -> r2 = { TMDB_CONFIG: { BASE_URL: "https://api.themoviedb.org/3", API_KEY: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc", headers: { accept: "application/json", Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc` } }, fetchMovieDetails: undefined, fetchMovies: function_11944 /* Closure with env r1 = undefined */() }
     // CODE -> <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 11948>  # Function: [#11948  of 37 bytes]: 1 params @ offset 0x002192a7
     // USED -> r1 = function_11948 /* Closure with env r1 = undefined */
     // CODE -> <Call1>: <Reg8: 1, Reg8: 1, Reg8: 0>
-    // USED -> r1 = function_11948 /* Closure with env r1 = undefined */(undefined)
+    // USED -> r1 = function_11948 /* Closure with env r1 = undefined */()
     // CODE -> <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 12270>  # String: 'fetchMovieDetails' (Identifier)
-    r2 = { TMDB_CONFIG: { BASE_URL: "https://api.themoviedb.org/3", API_KEY: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc", headers: { accept: "application/json", Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc` } }, fetchMovieDetails: function_11948 /* Closure with env r1 = undefined */(undefined), fetchMovies: function_11944 /* Closure with env r1 = undefined */(undefined) }
+    r2 = { TMDB_CONFIG: { BASE_URL: "https://api.themoviedb.org/3", API_KEY: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc", headers: { accept: "application/json", Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc` } }, fetchMovieDetails: function_11948 /* Closure with env r1 = undefined */(), fetchMovies: function_11944 /* Closure with env r1 = undefined */() }
     // CODE -> <Ret>: <Reg8: 0>
     return undefined;
 }

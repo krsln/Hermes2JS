@@ -39,7 +39,7 @@ async function* anon_11946(param0, param1) {
         // CODE -> <LoadConstUndefined>: <Reg8: 3>
         // USED -> r3 = undefined
         // CODE -> <Call2>: <Reg8: 7, Reg8: 4, Reg8: 3, Reg8: 6>
-        // USED -> r7 = this.encodeURIComponent.call(this, undefined, param1.query)
+        // USED -> r7 = this.encodeURIComponent.call(this, param1.query)
         // CODE -> <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 15>  # String: 'HermesInternal' (Identifier)
         // USED -> r3 = this.HermesInternal
         // CODE -> <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 4, string_id: 120>  # String: 'concat' (Identifier)
@@ -49,7 +49,7 @@ async function* anon_11946(param0, param1) {
         // CODE -> <LoadConstString>: <Reg8: 3, string_id: 2228>  # String: '/search/movie?query=' (String)
         // USED -> r3 = "/search/movie?query="
         // CODE -> <Call4>: <Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 8, Reg8: 3, Reg8: 7>
-        // USED -> r5 = `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent.call(this, undefined, param1.query)}`
+        // USED -> r5 = `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent.call(this, param1.query)}`
         // CODE -> <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 6, string_id: 7603>  # String: 'fetch' (Identifier)
         label_103:
         // USED -> r4 = this.fetch
@@ -68,11 +68,11 @@ async function* anon_11946(param0, param1) {
         // CODE -> <LoadConstUndefined>: <Reg8: 1>
         // USED -> r1 = undefined
         // CODE -> <Call3>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 5, Reg8: 3>
-        // USED -> r1 = this.fetch.call(this, undefined, `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent.call(this, undefined, param1.query)}`, { method: "GET", headers: r1.headers })
+        // USED -> r1 = this.fetch.call(this, `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent.call(this, param1.query)}`, { method: "GET", headers: r1.headers })
         // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 00000090
         await yield; // Resume at label_4
         // CODE -> <Ret>: <Reg8: 1>
-        return this.fetch.call(this, undefined, `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent.call(this, undefined, param1.query)}`, { method: "GET", headers: r1.headers });
+        return this.fetch.call(this, `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent.call(this, param1.query)}`, { method: "GET", headers: r1.headers });
         // CODE -> <ResumeGenerator>: <Reg8: 1, Reg8: 3>
         // USED -> r1 = await yield; // Resume generator
         // CODE -> <JmpTrue>: <Addr8: 98, Reg8: 3>  # Address: 000000f5

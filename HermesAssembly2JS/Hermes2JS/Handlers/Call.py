@@ -68,18 +68,22 @@ class CallX(OpcodeHandler):
             analysis.AddResult(entry, variable)
             return OpcodeResult(entry, variable)
 
+        first_arg = argList[0] if argList else None
+        # Extract the base object from function name, e.g., "this.console" from "this.console.log"
+        func_parts = func_name.split(".")
+        base_object = ".".join(func_parts[:-1]) if len(func_parts) > 1 else None
+
+        explicit_receiver_passed = False
         checked_args = []
-        use_call = True
         for arg in argList:
-            if arg.startswith("this."):
-                # print(arg)
-                use_call = False
-            else:
-                checked_args.append(arg)
+            if arg == "undefined" or arg == base_object:
+                # If the first arg is "undefined" or it's the same as the function's base (e.g., "this.console")
+                explicit_receiver_passed = first_arg in ("undefined", base_object)
+                continue
+            checked_args.append(arg)
 
         args_str = ", ".join(r for r in checked_args)
-        if self.ShouldUseCall(func_variable) and use_call:
-            # Default behavior: use .call(this, ...)
+        if self.ShouldUseCall(func_variable) and not explicit_receiver_passed:
             func_val = f".call(this, {args_str})"
         else:
             func_val = f"({args_str})"
@@ -100,6 +104,10 @@ class CallX(OpcodeHandler):
         # If it's created by a CreateClosure handler, assume it doesn't need .call
         if variable.handler == 'CreateClosure':
             return False
+
+        # If func_name starts with "this.", assume it's a method needing `.call(this, ...)`
+        if variable.name and variable.name.startswith("this."):
+            return True
 
         # Otherwise, assume it's a property (this.console.log), needs .call
         return True
