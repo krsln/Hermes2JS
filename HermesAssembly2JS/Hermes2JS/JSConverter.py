@@ -80,10 +80,6 @@ class JSConverter:
                 print(
                     f"Section: section_{section_index} \tresults: {len(results)} vs analysis.results: {len(analysis.results)}")
 
-            # print(analysis)
-            # js_code.extend(analysis.GenerateJS_OLD(True))
-            # js_code.append('\n\n//------------------------------------------------\n// new\n\n')
-
             js_code.extend(analysis.GenerateJS(True))
             # js_code.extend(analysis.GenerateJS(False))
         else:

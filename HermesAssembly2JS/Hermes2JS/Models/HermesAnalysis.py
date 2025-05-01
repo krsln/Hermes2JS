@@ -37,39 +37,6 @@ class HermesAnalysis:
         self.results.append(OpcodeResult(entry, variable, goto))
         # self.AddVariable(variable)
 
-    # def AddVariable(self, variable: JSVariable):
-    #     """Add a variable, tracking multiple assignments."""
-    #     self.variables.append(variable)
-    #     if variable.name:
-    #         if variable.name not in self.variable_map:
-    #             self.variable_map[variable.name] = []
-    #         self.variable_map[variable.name].append(variable)
-
-    def GenerateJS_OLD(self, verbose: bool = True):
-        js_code = []
-        for item in self.results:
-            line = item.Opcode
-            result = item.result
-            goto = item.GoTo
-            bytecode = line.bytecode
-
-            if self.gotoList.count(line.address) > 0:
-                js_code.append(f'\nlabel_{line.address}:')
-
-            if verbose:
-                after_first_colon = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
-                js_code.append(f'    // CODE -> {after_first_colon}')
-
-            if not item.Variable.used:
-                js_code.append(f'    {result}')
-            elif verbose:
-                js_code.append(f'    // USED -> {result}')
-
-            if goto:
-                js_code.append(f'goto label_{goto};')
-
-        return js_code
-
     def GenerateJS(self, verbose: bool = True) -> List[str]:
         output = []
         indent_lvl = 1  # Track indentation for nested blocks
@@ -106,7 +73,6 @@ class HermesAnalysis:
 
                 # -----------------------------------------------------
                 visited.add(i)
-                # -----------------------------------------------------
                 # -----------------------------------------------------
 
                 if verbose:
