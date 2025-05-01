@@ -56,7 +56,18 @@ class CreateClosure(OpcodeHandler):
         # Look up the function name from metadataList
         func_name = analysis.functionTable.get(str(func_id), f"function_{func_id}")
 
-        variable = JSVariable(handler, entry.address, f'r{dest}', f"// Closure {func_name} with env r{env}")
+        # TODO: Get environment register value
+        env_var = self.GetVariableByReg(analysis.results, env)
+        env_value = env_var.value if env_var and env_var.value else 'undefined'
+        # print(env, env_value)
+
+        # Simplified closure representation
+        variable = JSVariable(
+            handler,
+            entry.address,
+            f'r{dest}',
+            f"{func_name} /* Closure with env r{env} = {env_value} */"
+        )
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)

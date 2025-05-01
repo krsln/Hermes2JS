@@ -64,19 +64,19 @@ async function* anon_11946(param0, param1) {
         // CODE -> <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 7, string_id: 169>  # String: 'headers' (Identifier)
         // USED -> r1 = r1.headers
         // CODE -> <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 1, string_id: 169>  # String: 'headers' (Identifier)
-        /* Error: Invalid object format in r3: { method: "GET" } */ undefined
+        // USED -> r3 = { method: "GET", headers: r1.headers }
         // CODE -> <LoadConstUndefined>: <Reg8: 1>
         // USED -> r1 = undefined
         // CODE -> <Call3>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 5, Reg8: 3>
-        // USED -> r1 = this.fetch.call(this, undefined, `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent.call(this, undefined, param1.query)}`, { method: "GET" })
+        // USED -> r1 = this.fetch.call(this, undefined, `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent.call(this, undefined, param1.query)}`, { method: "GET", headers: r1.headers })
         // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 00000090
         await yield; // Resume at label_4
         // CODE -> <Ret>: <Reg8: 1>
-        return this.fetch.call(this, undefined, `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent.call(this, undefined, param1.query)}`, { method: "GET" });
+        return this.fetch.call(this, undefined, `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent.call(this, undefined, param1.query)}`, { method: "GET", headers: r1.headers });
         // CODE -> <ResumeGenerator>: <Reg8: 1, Reg8: 3>
         // USED -> r1 = await yield; // Resume generator
         // CODE -> <JmpTrue>: <Addr8: 98, Reg8: 3>  # Address: 000000f5
-        if ({ method: "GET" }) {
+        if ({ method: "GET", headers: r1.headers }) {
             // CODE -> <GetById>: <Reg8: 3, Reg8: 1, UInt8: 8, string_id: 7823>  # String: 'ok' (Identifier)
             // USED -> r3 = r1.ok
             // CODE -> <JmpTrue>: <Addr8: 57, Reg8: 3>  # Address: 000000d5

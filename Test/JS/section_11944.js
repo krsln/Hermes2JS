@@ -16,7 +16,7 @@ function function_11944(param0) {
     // CODE -> <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 1>
     r0 = setEnvSlot(0, r1)  // StoreToEnvironment: env=r0, slot=0, value=r1
     // CODE -> <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11947>  # Function: [#11947 fetchMovies of 29 bytes]: 2 params @ offset 0x00150430
-    // USED -> r0 = // Closure fetchMovies with env r0
+    // USED -> r0 = fetchMovies /* Closure with env r0 = undefined */
     // CODE -> <Ret>: <Reg8: 0>
-    return // Closure fetchMovies with env r0;
+    return fetchMovies /* Closure with env r0 = undefined */;
 }

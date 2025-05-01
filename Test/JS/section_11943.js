@@ -32,11 +32,11 @@ function function_11943(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <Call4>: <Reg8: 3, Reg8: 9, Reg8: 10, Reg8: 2, Reg8: 3, Reg8: 8>
     r3 = this.Object.defineProperty(param6, "__esModule", { value: true })
     // CODE -> <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 9175>  # String: 'TMDB_CONFIG' (Identifier)
-    // Error: Invalid object format in r2: param6
+    // USED -> r2 = { TMDB_CONFIG: undefined }
     // CODE -> <PutById>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 12270>  # String: 'fetchMovieDetails' (Identifier)
-    // Error: Invalid object format in r2: param6
+    // USED -> r2 = { TMDB_CONFIG: undefined, fetchMovieDetails: undefined }
     // CODE -> <PutById>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 12271>  # String: 'fetchMovies' (Identifier)
-    // Error: Invalid object format in r2: param6
+    // USED -> r2 = { TMDB_CONFIG: undefined, fetchMovieDetails: undefined, fetchMovies: undefined }
     // CODE -> <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
     r3 = 1
     // CODE -> <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 3>
@@ -66,25 +66,25 @@ function function_11943(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <Call2>: <Reg8: 5, Reg8: 6, Reg8: 5, Reg8: 7>
     // USED -> r5 = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc`
     // CODE -> <PutNewOwnById>: <Reg8: 4, Reg8: 5, string_id: 8626>  # String: 'Authorization' (Identifier)
-    /* Error: Invalid object format in r4: { accept: "application/json" } */ undefined
+    // USED -> r4 = { accept: "application/json", Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc` }
     // CODE -> <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 4, string_id: 169>  # String: 'headers' (Identifier)
-    /* Error: Invalid object format in r3: { BASE_URL: "https://api.themoviedb.org/3", API_KEY: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc" } */ undefined
+    // USED -> r3 = { BASE_URL: "https://api.themoviedb.org/3", API_KEY: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc", headers: { accept: "application/json", Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc` } }
     // CODE -> <PutById>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 9175>  # String: 'TMDB_CONFIG' (Identifier)
-    // Error: Invalid object format in r2: param6
+    // USED -> r2 = { TMDB_CONFIG: { BASE_URL: "https://api.themoviedb.org/3", API_KEY: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc", headers: { accept: "application/json", Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc` } }, fetchMovieDetails: undefined, fetchMovies: undefined }
     // CODE -> <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 3>
     r1 = setEnvSlot(1, r3)  // StoreToEnvironment: env=r1, slot=1, value=r3
     // CODE -> <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 11944>  # Function: [#11944  of 37 bytes]: 1 params @ offset 0x0021917e
-    // USED -> r3 = // Closure function_11944 with env r1
+    // USED -> r3 = function_11944 /* Closure with env r1 = undefined */
     // CODE -> <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-    // USED -> r3 = // Closure function_11944 with env r1(undefined)
+    // USED -> r3 = function_11944 /* Closure with env r1 = undefined */(undefined)
     // CODE -> <PutById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 12271>  # String: 'fetchMovies' (Identifier)
-    // Error: Invalid object format in r2: param6
+    // USED -> r2 = { TMDB_CONFIG: { BASE_URL: "https://api.themoviedb.org/3", API_KEY: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc", headers: { accept: "application/json", Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc` } }, fetchMovieDetails: undefined, fetchMovies: function_11944 /* Closure with env r1 = undefined */(undefined) }
     // CODE -> <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 11948>  # Function: [#11948  of 37 bytes]: 1 params @ offset 0x002192a7
-    // USED -> r1 = // Closure function_11948 with env r1
+    // USED -> r1 = function_11948 /* Closure with env r1 = undefined */
     // CODE -> <Call1>: <Reg8: 1, Reg8: 1, Reg8: 0>
-    // USED -> r1 = // Closure function_11948 with env r1(undefined)
+    // USED -> r1 = function_11948 /* Closure with env r1 = undefined */(undefined)
     // CODE -> <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 12270>  # String: 'fetchMovieDetails' (Identifier)
-    // Error: Invalid object format in r2: param6
+    r2 = { TMDB_CONFIG: { BASE_URL: "https://api.themoviedb.org/3", API_KEY: "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc", headers: { accept: "application/json", Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc` } }, fetchMovieDetails: function_11948 /* Closure with env r1 = undefined */(undefined), fetchMovies: function_11944 /* Closure with env r1 = undefined */(undefined) }
     // CODE -> <Ret>: <Reg8: 0>
     return undefined;
 }
