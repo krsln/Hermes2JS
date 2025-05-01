@@ -25,7 +25,7 @@ async function* anon_9594(param0, param1) {
         // CODE -> <LoadParam>: <Reg8: 1, UInt8: 1>
         // USED -> r1 = param1
         // CODE -> <Call2>: <Reg8: 1, Reg8: 6, Reg8: 5, Reg8: 1>
-        r1 = this.HermesInternal.concat.call(this, "https://coachify.ai/api/checkUsernameAvailable?username=", param1)
+        r1 = `https://coachify.ai/api/checkUsernameAvailable?username=${param1}`
         // CODE -> <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
         r1 = r1.default.get.call(this, r1.default, r1)
         // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 0000003a

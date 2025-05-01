@@ -50,6 +50,24 @@ class CallX(OpcodeHandler):
 
         argList = self.GetFuncArgs(analysis.results, args)
 
+        # Special handling for HermesInternal.concat
+        if func_name == "this.HermesInternal.concat":
+            # Skip the first argument if it's an empty string
+            checked_args = [arg for arg in argList if arg != '""']
+            # Build a template literal
+            template_parts = []
+            for arg in checked_args:
+                # If the argument is a string literal, strip quotes for template literal
+                if arg.startswith('"') and arg.endswith('"'):
+                    template_parts.append(arg[1:-1])  # Remove quotes
+                else:
+                    template_parts.append(f"${{{arg}}}")  # Wrap variables/expressions in ${}
+            # Combine into a template literal
+            template_str = f"`{''.join(template_parts)}`"
+            variable = JSVariable(handler, entry.address, f'r{dest_reg}', template_str, func_name, template_str)
+            analysis.AddResult(entry, variable)
+            return OpcodeResult(entry, variable)
+
         checked_args = []
         use_call = True
         for arg in argList:
@@ -87,43 +105,58 @@ class CallX(OpcodeHandler):
         return True
 
 
-# # Call a function with one arg.
-# # Arg1 is the destination of the return value.
-# # Arg2 is the closure to invoke.
-# # Arg3 is the first argument.
-# Example: <Call1>: <Reg8: 8, Reg8: 6, Reg8: 7>
+# /// Call a function with one arg.
+# /// Arg1 is the destination of the return value.
+# /// Arg2 is the closure to invoke.
+# /// Arg3 is the first argument.
+# DEFINE_OPCODE_3(Call1, Reg8, Reg8, Reg8)
+# DEFINE_RET_TARGET(Call1)
 class Call1(CallX):
     num_args = 1
 
 
-# Call a function with two args.
-# Arg1 is the destination of the return value.
-# Arg2 is the closure to invoke.
-# Arg3 is the first argument.
-# Arg4 is the second argument.
-# Example: <Call2>: <Reg8: 6, Reg8: 4, Reg8: 0, Reg8: 3>
+# /// Call a function directly without a closure.
+# /// Arg1 is the destination of the return value.
+# /// Arg2 is the number of arguments, assumed to be found in reverse order
+# ///      from the end of the current frame. The first argument 'this'
+# ///      is assumed to be created with CreateThis.
+# /// Arg3 is index in the function table.
+# /// Note that we expect the variable-sized argument to be last.
+# DEFINE_OPCODE_3(CallDirect, Reg8, UInt8, UInt16)
+# OPERAND_FUNCTION_ID(CallDirect, 3)
+# DEFINE_RET_TARGET(CallDirect)
+#
+# /// Call a function with two args.
+# /// Arg1 is the destination of the return value.
+# /// Arg2 is the closure to invoke.
+# /// Arg3 is the first argument.
+# /// Arg4 is the second argument.
+# DEFINE_OPCODE_4(Call2, Reg8, Reg8, Reg8, Reg8)
+# DEFINE_RET_TARGET(Call2)
 class Call2(CallX):
     num_args = 2
 
 
-# Call a function with three args.
-# Arg1 is the destination of the return value.
-# Arg2 is the closure to invoke.
-# Arg3 is the first argument.
-# Arg4 is the second argument.
-# Arg5 is the third argument.
-# Example: <Call3>: <Reg8: 14, Reg8: 21, Reg8: 3, Reg8: 20, Reg8: 14>
+# /// Call a function with three args.
+# /// Arg1 is the destination of the return value.
+# /// Arg2 is the closure to invoke.
+# /// Arg3 is the first argument.
+# /// Arg4 is the second argument.
+# /// Arg5 is the third argument.
+# DEFINE_OPCODE_5(Call3, Reg8, Reg8, Reg8, Reg8, Reg8)
+# DEFINE_RET_TARGET(Call3)
 class Call3(CallX):
     num_args = 3
 
 
-# Call a function with four args.
-# Arg1 is the destination of the return value.
-# Arg2 is the closure to invoke.
-# Arg3 is the first argument.
-# Arg4 is the second argument.
-# Arg5 is the third argument.
-# Arg6 is the fourth argument.
-# Example: <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 5, Reg8: 2>
+# /// Call a function with four args.
+# /// Arg1 is the destination of the return value.
+# /// Arg2 is the closure to invoke.
+# /// Arg3 is the first argument.
+# /// Arg4 is the second argument.
+# /// Arg5 is the third argument.
+# /// Arg6 is the fourth argument.
+# DEFINE_OPCODE_6(Call4, Reg8, Reg8, Reg8, Reg8, Reg8, Reg8)
+# DEFINE_RET_TARGET(Call4)
 class Call4(CallX):
     num_args = 4

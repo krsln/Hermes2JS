@@ -58,7 +58,7 @@ function function_11943(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <LoadConstString>: <Reg8: 5, string_id: 1336>  # String: 'Bearer ' (String)
     // USED -> r5 = "Bearer "
     // CODE -> <Call2>: <Reg8: 5, Reg8: 6, Reg8: 5, Reg8: 7>
-    r5 = this.HermesInternal.concat.call(this, "Bearer ", "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc")
+    r5 = `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjMzNDRiMTkzMDI3NTY4MTkzMDQyYmI1MjRhYTg0MiIsIm5iZiI6MTczOTM0NzM3MC4wNDYwMDAyLCJzdWIiOiI2N2FjNTVhYTIxZDBhOTJkNGI5Yjk2M2EiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.yS6WPYjGcaxHkfsYrqmijak7A_NVuEawsL_mYKFdjEc`
     // CODE -> <PutNewOwnById>: <Reg8: 4, Reg8: 5, string_id: 8626>  # String: 'Authorization' (Identifier)
     // USED -> r4 = { "accept": application/json, "Authorization": undefined }
     // CODE -> <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 3>

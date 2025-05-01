@@ -29,7 +29,7 @@ async function* anon_11946(param0, param1) {
             // CODE -> <LoadConstString>: <Reg8: 3, string_id: 995>  # String: '/discover/movie?sort_by=popularity.desc' (String)
             // USED -> r3 = "/discover/movie?sort_by=popularity.desc"
             // CODE -> <Call3>: <Reg8: 5, Reg8: 5, Reg8: 4, Reg8: 8, Reg8: 3>
-            r5 = this.HermesInternal.concat.call(this, "", r2.BASE_URL, "/discover/movie?sort_by=popularity.desc")
+            r5 = `${r2.BASE_URL}/discover/movie?sort_by=popularity.desc`
             // CODE -> <Jmp>: <Addr8: 41>  # Address: 00000067
             goto label_103;
         }
@@ -49,7 +49,7 @@ async function* anon_11946(param0, param1) {
         // CODE -> <LoadConstString>: <Reg8: 3, string_id: 2228>  # String: '/search/movie?query=' (String)
         // USED -> r3 = "/search/movie?query="
         // CODE -> <Call4>: <Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 8, Reg8: 3, Reg8: 7>
-        r5 = this.HermesInternal.concat.call(this, "", r2.BASE_URL, "/search/movie?query=", r7)
+        r5 = `${r2.BASE_URL}/search/movie?query=${r7}`
         // CODE -> <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 6, string_id: 7603>  # String: 'fetch' (Identifier)
         label_103:
         // USED -> r4 = this.fetch
@@ -92,7 +92,7 @@ async function* anon_11946(param0, param1) {
                 // CODE -> <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: 'Failed to fetch movies: ' (String)
                 // USED -> r2 = "Failed to fetch movies: "
                 // CODE -> <Call2>: <Reg8: 11, Reg8: 3, Reg8: 2, Reg8: 5>
-                r11 = this.HermesInternal.concat.call(this, "Failed to fetch movies: ", r1.statusText)
+                r11 = `Failed to fetch movies: ${r1.statusText}`
                 // CODE -> <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 216>  # String: 'prototype' (Identifier)
                 r3 = this.Error.prototype
                 // CODE -> <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
