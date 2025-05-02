@@ -88,8 +88,9 @@ class HermesAnalysis:
                     i += 1
                     continue
 
-                # -----------------------------------------------------
                 visited.add(i)
+
+                # -----------------------------------------------------
                 # -----------------------------------------------------
 
                 if verbose:
@@ -107,7 +108,7 @@ class HermesAnalysis:
 
                     # Handle special opcodes
                     if variable.handler == "SaveGenerator":
-                        # print(outputList[len(outputList)-2])
+                        # print(outputList[len(outputList)-2].var)
                         output.indent = indent_lvl
                         output.content = f"// TODO: await yield; // Resume at label_{item.GoTo}"
                     elif variable.handler == "ResumeGenerator":
@@ -154,6 +155,9 @@ class HermesAnalysis:
             indent_lvl -= 1
             outputList.append(Output(indent_lvl, "}"))
             open_blocks.pop()
+
+        # -----------------------------------------------------
+        # -----------------------------------------------------
 
         result = []
         for item in outputList:
