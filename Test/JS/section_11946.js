@@ -94,9 +94,9 @@ async function* anon_11946(param0, param1) {
                 // CODE -> <Call2>: <Reg8: 11, Reg8: 3, Reg8: 2, Reg8: 5>
                 r11 = `Failed to fetch movies: ${r1.statusText}`
                 // CODE -> <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 216>  # String: 'prototype' (Identifier)
-                r3 = this.Error.prototype
+                // USED -> r3 = this.Error.prototype
                 // CODE -> <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
-                // USED -> r3 = createThis(r3, r4);
+                r3 = createThis(prototype=this.Error.prototype, constructor=this.Error)
                 // CODE -> <Mov>: <Reg8: 12, Reg8: 3>
                 r12 = r3;
                 // CODE -> <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
@@ -118,7 +118,7 @@ async function* anon_11946(param0, param1) {
             // CODE -> <ResumeGenerator>: <Reg8: 2, Reg8: 3>
             r2 = await yield; // Resume generator
             // CODE -> <JmpTrue>: <Addr8: 12, Reg8: 3>  # Address: 000000f2
-            if (createThis(r3, r4) {
+            if (createThis(prototype=this.Error.prototype, constructor=this.Error) {
                 // CODE -> <GetById>: <Reg8: 3, Reg8: 2, UInt8: 13, string_id: 9125>  # String: 'results' (Identifier)
                 // USED -> r3 = r2.results
                 // CODE -> <CompleteGenerator>: <>

@@ -12,9 +12,9 @@ function onPress(param0) {
         // CODE -> <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
         // USED -> r2 = r2.default
         // CODE -> <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 158>  # String: 'prototype' (Identifier)
-        r3 = r2.default.prototype
+        // USED -> r3 = r2.default.prototype
         // CODE -> <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
-        r3 = createThis(r3, r2);
+        r3 = createThis(prototype=r2.default.prototype, constructor=r2.default)
         // CODE -> <Mov>: <Reg8: 8, Reg8: 3>
         r8 = r3;
         // CODE -> <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>

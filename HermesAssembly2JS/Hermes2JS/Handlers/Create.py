@@ -27,7 +27,17 @@ class CreateThis(OpcodeHandler):
 
         dest, func, new_target = map(int, match.groups())
 
-        variable = JSVariable(handler, entry.address, f'r{dest}', f"createThis(r{func}, r{new_target});")
+        func_name = self.GetValueByReg(analysis.results, func) or f"r{func}"
+        new_target_name = self.GetValueByReg(analysis.results, new_target) or f"r{new_target}"
+
+        variable = JSVariable(
+            handler,
+            entry.address,
+            f'r{dest}',
+            f"createThis(prototype={func_name}, constructor={new_target_name})"
+        )
+
+        # variable = JSVariable(handler, entry.address, f'r{dest}', f"createThis({func_name}, {new_target_name});")
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)

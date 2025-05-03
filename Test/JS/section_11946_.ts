@@ -8,7 +8,7 @@ export const TMDB_CONFIG = {
 };
 
 // ---- JS
-
+// section_11946.js
 export const fetchMovies = async ({ query }) => {
   const endpoint = query
     ? `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
