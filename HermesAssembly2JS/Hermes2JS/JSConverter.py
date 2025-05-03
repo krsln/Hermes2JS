@@ -118,7 +118,14 @@ def Dispatcher(bytecode_lines: List[str], analysis: HermesAnalysis) -> List[Opco
             parsedLine = Parse_Line(line)
             if parsedLine:
                 dispatched = handler.Dispatch(parsedLine)
-                # print(dispatched)
+
+                # await control
+                if dispatched.Variable.handler == "SaveGenerator":
+                    prev = analysis.results[len(analysis.results) - 2]
+                    if prev.Variable.handler.startswith("Call"):
+                        prev.Variable.value = f"await {prev.Variable.value}"
+                        prev.result = f"{prev.Variable.name} = await {prev.Variable.value}"
+
                 resList.append(dispatched)
             else:
                 newLine = OpcodeEntry(bytecode=line, hex_address="", opcode="", args="", comment="")

@@ -68,11 +68,11 @@ async function* anon_11946(param0, param1) {
         // CODE -> <LoadConstUndefined>: <Reg8: 1>
         // USED -> r1 = undefined
         // CODE -> <Call3>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 5, Reg8: 3>
-        // USED -> r1 = this.fetch(`${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent(param1.query)}`, { method: "GET", headers: r1.headers })
+        // USED -> r1 = await await this.fetch(`${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent(param1.query)}`, { method: "GET", headers: r1.headers })
         // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 00000090
-        // TODO: await yield; // Resume at label_4
+        // await yield; // check: JSConverter.Dispatcher // Resume at label_4
         // CODE -> <Ret>: <Reg8: 1>
-        return this.fetch(`${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent(param1.query)}`, { method: "GET", headers: r1.headers });
+        return await this.fetch(`${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent(param1.query)}`, { method: "GET", headers: r1.headers });
         // CODE -> <ResumeGenerator>: <Reg8: 1, Reg8: 3>
         // USED -> r1 = await yield; // Resume generator
         // CODE -> <JmpTrue>: <Addr8: 98, Reg8: 3>  # Address: 000000f5
@@ -110,11 +110,11 @@ async function* anon_11946(param0, param1) {
             label_213:
             // USED -> r2 = r1.json
             // CODE -> <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
-            // USED -> r2 = r1.json.call(this, await yield)
+            // USED -> r2 = await await r1.json.call(this, await yield)
             // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 000000e3
-            // TODO: await yield; // Resume at label_4
+            // await yield; // check: JSConverter.Dispatcher // Resume at label_4
             // CODE -> <Ret>: <Reg8: 2>
-            return r1.json.call(this, await yield);
+            return await r1.json.call(this, await yield);
             // CODE -> <ResumeGenerator>: <Reg8: 2, Reg8: 3>
             r2 = await yield; // Resume generator
             // CODE -> <JmpTrue>: <Addr8: 12, Reg8: 3>  # Address: 000000f2

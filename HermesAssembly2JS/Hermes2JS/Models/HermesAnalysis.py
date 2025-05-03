@@ -108,9 +108,8 @@ class HermesAnalysis:
 
                     # Handle special opcodes
                     if variable.handler == "SaveGenerator":
-                        # print(outputList[len(outputList)-2].var)
                         output.indent = indent_lvl
-                        output.content = f"// TODO: await yield; // Resume at label_{item.GoTo}"
+                        output.content = f"// await yield; // check: JSConverter.Dispatcher // Resume at label_{item.GoTo}"
                     elif variable.handler == "ResumeGenerator":
                         output.indent = indent_lvl
                         output.content = f'{item.result}; // Resume generator'
