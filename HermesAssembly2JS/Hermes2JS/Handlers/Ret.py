@@ -6,7 +6,10 @@ from HermesAssembly2JS.Hermes2JS.Models.JSVariable import JSVariable
 from HermesAssembly2JS.Hermes2JS.Models.OpcodeEntry import OpcodeEntry
 from HermesAssembly2JS.Hermes2JS.Models.OpcodeHandler import OpcodeHandler
 
-
+# /// Return a value from the current function.
+# /// return Arg1;
+# DEFINE_OPCODE_1(Ret, Reg8)
+# Example: <Ret>: <Reg8: 1>
 class Ret(OpcodeHandler):
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         """Handle <Ret> opcode, returning the value from the specified register or performing the return action."""
