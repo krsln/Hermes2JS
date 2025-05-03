@@ -124,7 +124,7 @@ def Dispatcher(bytecode_lines: List[str], analysis: HermesAnalysis) -> List[Opco
                     prev = analysis.results[len(analysis.results) - 2]
                     if prev.Variable.handler.startswith("Call"):
                         prev.Variable.value = f"await {prev.Variable.value}"
-                        prev.result = f"{prev.Variable.name} = await {prev.Variable.value}"
+                        prev.result = f"{prev.Variable.name} = {prev.Variable.value}"
 
                 resList.append(dispatched)
             else:
