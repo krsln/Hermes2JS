@@ -57,7 +57,7 @@ function onPress(param0) {
         goto label_153;
     }
     // CODE -> <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 12>
-    label_123:
+    // label_123:
     r0 = r0[12]
     // CODE -> <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
     // USED -> r2 = r0.default
@@ -68,7 +68,7 @@ function onPress(param0) {
     // CODE -> <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     r0 = r0.default.open({ title: "Join Coachify AI Competition", message: "Join Coachify AI Competition", url: "https://coachify.ai/download?ref=compshare", subject: "Join Coachify AI Competition" })
     // CODE -> <LoadConstUndefined>: <Reg8: 0>
-    label_153:
+    // label_153:
     // USED -> r0 = undefined
     // CODE -> <Ret>: <Reg8: 0>
     return undefined;

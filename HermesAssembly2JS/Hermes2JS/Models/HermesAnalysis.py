@@ -169,7 +169,12 @@ class HermesAnalysis:
                 else:
                     result.append(f"{indent(item.indent)}{item.content}")
             else:
-                result.append(f"{indent(item.indent)}{item.content}")
+                if verbose and item.content.startswith("label_"):
+                    result.append(f"{indent(item.indent)}// {item.content}")
+                elif verbose is False and item.content.startswith("label_"):
+                    pass
+                else:
+                    result.append(f"{indent(item.indent)}{item.content}")
 
         return result
 

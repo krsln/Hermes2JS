@@ -4,7 +4,7 @@ async function* anon_11946(param0, param1) {
     // CODE -> <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     r0 = await yield; // Resume generator
     // CODE -> <JmpTrueLong>: <Addr32: 244, Reg8: 1>  # Address: 000000f8
-    label_4:
+    // label_4:
     if (r1) {
         // CODE -> <LoadParam>: <Reg8: 1, UInt8: 1>
         // USED -> r1 = param1
@@ -34,7 +34,7 @@ async function* anon_11946(param0, param1) {
             goto label_103;
         }
         // CODE -> <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 9415>  # String: 'encodeURIComponent' (Identifier)
-        label_64:
+        // label_64:
         // USED -> r4 = this.encodeURIComponent
         // CODE -> <LoadConstUndefined>: <Reg8: 3>
         // USED -> r3 = undefined
@@ -51,7 +51,7 @@ async function* anon_11946(param0, param1) {
         // CODE -> <Call4>: <Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 8, Reg8: 3, Reg8: 7>
         // USED -> r5 = `${r2.BASE_URL}/search/movie?query=${this.encodeURIComponent(param1.query)}`
         // CODE -> <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 6, string_id: 7603>  # String: 'fetch' (Identifier)
-        label_103:
+        // label_103:
         // USED -> r4 = this.fetch
         // CODE -> <NewObject>: <Reg8: 3>
         // USED -> r3 = {}
@@ -107,7 +107,7 @@ async function* anon_11946(param0, param1) {
                 r2 = throw r3[r2]
             }
             // CODE -> <GetById>: <Reg8: 2, Reg8: 1, UInt8: 12, string_id: 8033>  # String: 'json' (Identifier)
-            label_213:
+            // label_213:
             // USED -> r2 = r1.json
             // CODE -> <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
             // USED -> r2 = await await r1.json.call(this, await yield)
@@ -126,17 +126,17 @@ async function* anon_11946(param0, param1) {
                 return r2.results;
             }
             // CODE -> <CompleteGenerator>: <>
-            label_242:
+            // label_242:
             // CODE -> <Ret>: <Reg8: 2>
             return r2;
         }
         // CODE -> <CompleteGenerator>: <>
-        label_245:
+        // label_245:
         // CODE -> <Ret>: <Reg8: 1>
         return r1;
     }
     // CODE -> <CompleteGenerator>: <>
-    label_248:
+    // label_248:
     // CODE -> <Ret>: <Reg8: 0>
     return r0;
 }
