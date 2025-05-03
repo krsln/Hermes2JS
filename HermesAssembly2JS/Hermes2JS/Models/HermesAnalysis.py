@@ -164,6 +164,8 @@ class HermesAnalysis:
             if item.var is not None:
                 if verbose and item.used:
                     result.append(f"{indent(item.indent)}// USED -> {item.content}")
+                elif item.used:
+                    pass
                 else:
                     result.append(f"{indent(item.indent)}{item.content}")
             else:
