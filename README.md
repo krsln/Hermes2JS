@@ -51,3 +51,9 @@ https://github.com/facebook/hermes/blob/main/include/hermes/BCGen/HBC/BytecodeLi
 
 disassembled Hermes bytecode -> Reconstructing to JavaScript
 Hermes HASM to JavaScript Converter
+
+| Step                        | Done by            | Purpose                             |
+| --------------------------- | ------------------ | ----------------------------------- |
+| TypeScript/JSX → JavaScript | tsc / Babel        | Make code Hermes-compatible         |
+| JavaScript → Bytecode       | Hermes (`hermesc`) | Speed up startup & execution        |
+| Runtime Execution           | Hermes engine      | Run the compiled bytecode on device |
