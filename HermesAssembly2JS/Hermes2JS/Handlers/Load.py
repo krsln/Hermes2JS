@@ -147,3 +147,23 @@ class LoadConstInt(OpcodeHandler):
 
         return OpcodeResult(entry, variable)
 
+# /// Obtain the raw \c this value and coerce it to an object. Equivalent to:
+# /// \code
+# ///     LoadParam    Arg1, #0
+# ///     CoerceThisNS Arg1, Arg1
+# /// \endcode
+# DEFINE_OPCODE_1(LoadThisNS, Reg8)
+# Example: <LoadThisNS>: <Reg8: 4>
+class LoadThisNS(OpcodeHandler):
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+        match = re.match(r'^Reg8:\s*(\d+)$', entry.args.strip())
+
+        if not match:
+            return self.InvalidArgs(analysis, entry)
+
+        dest_reg = int(match.group(1))
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', 'this')
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
