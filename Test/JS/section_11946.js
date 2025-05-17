@@ -98,7 +98,7 @@ async function* anon_11946(param0, param1) {
                 // CODE -> <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
                 // USED -> r3 = createThis(prototype=this.Error.prototype, constructor=this.Error)
                 // CODE -> <Mov>: <Reg8: 12, Reg8: 3>
-                r12 = r3;
+                r12 = r3
                 // CODE -> <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
                 r2 = new this.Error(arg0, arg1);
                 // CODE -> <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>

@@ -1,0 +1,75 @@
+
+=> [Function #11950 "?anon_0_" of 240 bytes]: 2 params, frame size=25, env size=0, read index sz=13, write index sz=0, strict=0, exc handler=1, debug info=0  @ offset 0x002192d5
+  [Exception handlers: [start=0x11, end=0xc9, target=0xd2] ]
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 3>
+==> 00000004: <JmpTrueLong>: <Addr32: 233, Reg8: 3>  # Address: 000000ed
+==> 0000000a: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 0000000d: <LoadConstUndefined>: <Reg8: 6>
+==> 0000000f: <LoadConstUndefined>: <Reg8: 2>
+==> 00000011: <GetGlobalObject>: <Reg8: 3>
+==> 00000013: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 7603>  # String: 'fetch' (Identifier)
+==> 00000019: <GetEnvironment>: <Reg8: 4, UInt8: 2>
+==> 0000001c: <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 1>
+==> 00000020: <GetById>: <Reg8: 17, Reg8: 7, UInt8: 2, string_id: 6728>  # String: 'BASE_URL' (Identifier)
+==> 00000026: <Mov>: <Reg8: 15, Reg8: 1>
+==> 00000029: <GetById>: <Reg8: 13, Reg8: 7, UInt8: 3, string_id: 7508>  # String: 'API_KEY' (Identifier)
+==> 0000002f: <TryGetById>: <Reg8: 1, Reg8: 3, UInt8: 4, string_id: 15>  # String: 'HermesInternal' (Identifier)
+==> 00000035: <GetByIdShort>: <Reg8: 9, Reg8: 1, UInt8: 5, string_id: 120>  # String: 'concat' (Identifier)
+==> 0000003a: <LoadConstString>: <Reg8: 18, string_id: 6377>  # String: '' (Identifier)
+==> 0000003e: <LoadConstString>: <Reg8: 16, string_id: 1447>  # String: '/movie/' (String)
+==> 00000042: <LoadConstString>: <Reg8: 14, string_id: 2315>  # String: '?api_key=' (String)
+==> 00000046: <Call>: <Reg8: 4, Reg8: 9, UInt8: 6>
+==> 0000004a: <NewObject>: <Reg8: 1>
+==> 0000004c: <LoadConstString>: <Reg8: 8, string_id: 7782>  # String: 'GET' (Identifier)
+==> 00000050: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 8, string_id: 158>  # String: 'method' (Identifier)
+==> 00000054: <GetByIdShort>: <Reg8: 7, Reg8: 7, UInt8: 6, string_id: 169>  # String: 'headers' (Identifier)
+==> 00000059: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 7, string_id: 169>  # String: 'headers' (Identifier)
+==> 0000005d: <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
+==> 00000063: <SaveGenerator>: <Addr8: 4>  # Address: 00000067
+==> 00000065: <Ret>: <Reg8: 1>
+==> 00000067: <ResumeGenerator>: <Reg8: 1, Reg8: 4>
+==> 0000006a: <JmpTrue>: <Addr8: 101, Reg8: 4>  # Address: 000000cf
+==> 0000006d: <Mov>: <Reg8: 2, Reg8: 1>
+==> 00000070: <GetById>: <Reg8: 4, Reg8: 1, UInt8: 7, string_id: 7823>  # String: 'ok' (Identifier)
+==> 00000076: <JmpTrue>: <Addr8: 60, Reg8: 4>  # Address: 000000b2
+==> 00000079: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 8, string_id: 14>  # String: 'Error' (Identifier)
+==> 0000007f: <Mov>: <Reg8: 4, Reg8: 2>
+==> 00000082: <GetById>: <Reg8: 6, Reg8: 4, UInt8: 9, string_id: 9563>  # String: 'statusText' (Identifier)
+==> 00000088: <TryGetById>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 15>  # String: 'HermesInternal' (Identifier)
+==> 0000008e: <GetByIdShort>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 120>  # String: 'concat' (Identifier)
+==> 00000093: <LoadConstString>: <Reg8: 3, string_id: 556>  # String: 'Failed to fetch movie details: ' (String)
+==> 00000097: <Call2>: <Reg8: 17, Reg8: 4, Reg8: 3, Reg8: 6>
+==> 0000009c: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 10, string_id: 216>  # String: 'prototype' (Identifier)
+==> 000000a1: <CreateThis>: <Reg8: 4, Reg8: 4, Reg8: 5>
+==> 000000a5: <Mov>: <Reg8: 18, Reg8: 4>
+==> 000000a8: <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
+==> 000000ac: <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
+==> 000000b0: <Throw>: <Reg8: 3>
+==> 000000b2: <Mov>: <Reg8: 3, Reg8: 2>
+==> 000000b5: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 11, string_id: 8033>  # String: 'json' (Identifier)
+==> 000000bb: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 000000bf: <SaveGenerator>: <Addr8: 4>  # Address: 000000c3
+==> 000000c1: <Ret>: <Reg8: 2>
+==> 000000c3: <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+==> 000000c6: <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000cc
+==> 000000c9: <CompleteGenerator>: <>
+==> 000000ca: <Ret>: <Reg8: 2>
+==> 000000cc: <CompleteGenerator>: <>
+==> 000000cd: <Ret>: <Reg8: 2>
+==> 000000cf: <CompleteGenerator>: <>
+==> 000000d0: <Ret>: <Reg8: 1>
+==> 000000d2: <Catch>: <Reg8: 1>
+==> 000000d4: <GetGlobalObject>: <Reg8: 2>
+==> 000000d6: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 12, string_id: 122>  # String: 'console' (Identifier)
+==> 000000dc: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 13, string_id: 147>  # String: 'error' (Identifier)
+==> 000000e1: <LoadConstString>: <Reg8: 2, string_id: 2291>  # String: 'Error fetching movie details:' (String)
+==> 000000e5: <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 1>
+==> 000000eb: <Throw>: <Reg8: 1>
+==> 000000ed: <CompleteGenerator>: <>
+==> 000000ee: <Ret>: <Reg8: 0>
+
+

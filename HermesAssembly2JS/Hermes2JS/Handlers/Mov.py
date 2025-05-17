@@ -18,7 +18,7 @@ class Mov(OpcodeHandler):
 
         dest, src = map(int, match.groups())
 
-        variable = JSVariable(handler, entry.address, f'r{dest}', f"r{src};")
+        variable = JSVariable(handler, entry.address, f'r{dest}', f"r{src}")
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)

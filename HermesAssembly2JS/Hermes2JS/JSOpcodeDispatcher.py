@@ -27,5 +27,5 @@ class JSOpcodeDispatcher:
         if handler:
             return handler.Handle(self.Analysis, line)
         else:
-            print('TODO: NO HANDLER:\t', line.opcode)
+            print('TODO: NO HANDLER:\t', line.opcode, line)
             return OpcodeResult(line, JSVariable("-", line.address, "", f'// Unhandled opcode: {line.opcode}'))
