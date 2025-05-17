@@ -57,3 +57,9 @@ Hermes HASM to JavaScript Converter
 | TypeScript/JSX → JavaScript | tsc / Babel        | Make code Hermes-compatible         |
 | JavaScript → Bytecode       | Hermes (`hermesc`) | Speed up startup & execution        |
 | Runtime Execution           | Hermes engine      | Run the compiled bytecode on device |
+
+## Learn in hermes
+- if / else
+- ternary operator
+- throw
+- async / await
