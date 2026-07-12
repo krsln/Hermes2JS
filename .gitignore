@@ -1,4 +1,6 @@
 /.idea/
 
-/apps/Coachify/output
+/apps/testy/output
 /disassembler/hermes-dec-main/
+
+/vendor/

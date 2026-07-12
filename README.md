@@ -2,20 +2,25 @@
 
 #### Step—1 Disassemble
 
-goto Disassembler
-
-#### Step—2 -> Conversion
-
-Splitter
-
 ```shell
-python conversion/splitter/hermes_splitter.py --input apps/Coachify/output/output.hbc --output apps/Coachify/output/sections
-python conversion/splitter/hermes_splitter.py --input apps/Testy/output/output.hbc --output apps/Testy/output/sections
+chmod +x scripts/bootstrap.sh
+chmod +x scripts/disassemble.sh
 
-# goto conversion/splitter.py
+./scripts/bootstrap.sh
+./scripts/disassemble.sh testy
 ```
 
-Decompile
+#### Step—2 -> Splitter
+
+```shell
+python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o apps/testy/output/sections
+
+# Manifest & dry-run
+python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --manifest sections/manifest.json -v
+python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --dry-run -v
+```
+
+#### Step—3 -> Decompile
 
 ```shell
 # goto conversion/converter.py
