@@ -25,6 +25,10 @@ Map each instruction to JavaScript:
 - <JmpTrue> → if condition or goto-like label.
 - Generator ops (<StartGenerator>, <ResumeGenerator>) → function* and yield.
 
+## Learn in hermes
 
-
+- if / else
+- ternary operator
+- throw
+- async / await
 

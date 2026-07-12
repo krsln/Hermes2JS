@@ -10,7 +10,7 @@ chmod +x scripts/disassemble.sh
 ./scripts/disassemble.sh testy
 ```
 
-#### Step—2 -> Splitter
+#### Step—2 Split
 
 ```shell
 python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o apps/testy/output/sections
@@ -20,23 +20,19 @@ python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --
 python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --dry-run -v
 ```
 
-#### Step—3 -> Decompile
+#### Step—3 Decompile
 
 ```shell
 python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
 
+python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 
 python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```
 
-https://www.politesi.polimi.it/retrieve/17e4c202-4d63-43f1-97d9-84a925bb9130/2023_05_Falvo.pdf
-
-
-https://p1sec.github.io/hermes-dec/opcodes_table.html
 --
-business@Hell-MacBook-Pro hermes-dec-main % file index.android.bundle
-index.android.bundle: Hermes JavaScript bytecode, version 96
 
-Hermes Assembly (HASM)
+### Hermes Assembly (HASM)
+
 https://docs.rs/hermes_rs/latest/hermes_rs/all.html  
 https://docs.rs/hermes_rs/latest/hermes_rs/hermes/v96/index.html  
 https://docs.rs/hermes_rs/latest/src/hermes_rs/hermes/v96/mod.rs.html#3-210
@@ -52,9 +48,3 @@ Hermes HASM to JavaScript Converter
 | JavaScript → Bytecode       | Hermes (`hermesc`) | Speed up startup & execution        |
 | Runtime Execution           | Hermes engine      | Run the compiled bytecode on device |
 
-## Learn in hermes
-
-- if / else
-- ternary operator
-- throw
-- async / await

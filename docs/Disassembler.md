@@ -1,6 +1,9 @@
 # Hermes Disassembler
 
-https://github.com/P1sec/hermes-dec
+https://www.politesi.polimi.it/retrieve/17e4c202-4d63-43f1-97d9-84a925bb9130/2023_05_Falvo.pdf   
+https://github.com/P1sec/hermes-dec 
+https://p1sec.github.io/hermes-dec/opcodes_table.html   
+
 
 ## usage example
 
@@ -25,3 +28,8 @@ https://www.decompiler.com/
 ai.coachify.coachify.apk / resources / assets / index.android.bundle
 
 download the file :p
+
+```shell
+% file index.android.bundle
+index.android.bundle: Hermes JavaScript bytecode, version 96
+```
