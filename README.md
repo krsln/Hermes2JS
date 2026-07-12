@@ -23,7 +23,9 @@ python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --
 #### Step—3 -> Decompile
 
 ```shell
-# goto conversion/converter.py
+python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
+
+python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```
 
 https://www.politesi.polimi.it/retrieve/17e4c202-4d63-43f1-97d9-84a925bb9130/2023_05_Falvo.pdf
