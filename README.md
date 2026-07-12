@@ -1,37 +1,24 @@
 # Hermes2JS
 
-#### Step—1
+#### Step—1 Disassemble
 
-https://www.decompiler.com/
+goto Disassembler
 
-#### Step—2 -> HermesDisassembler
-
-https://github.com/P1sec/hermes-dec
-
-```shell
-# basic
-python hbc_disassembler.py  index.android.bundle > output.hbc
-python hbc_decompiler.py  index.android.bundle > output.js
-python hbc_file_parser.py  index.android.bundle > outputParser.js
-
-# goto HermesDisassembler/run_disassemble.sh
-```
-
-#### Step—3 -> HermesAssembly2JS
+#### Step—2 -> Conversion
 
 Splitter
 
 ```shell
-python HermesAssembly2JS/Splitter/hermes_splitter.py --input Apps/Coachify/Output/output.hbc --output Apps/Coachify/Output/Sections
-python HermesAssembly2JS/Splitter/hermes_splitter.py --input Apps/Testy/Output/output.hbc --output Apps/Testy/Output/Sections
+python conversion/splitter/hermes_splitter.py --input apps/Coachify/output/output.hbc --output apps/Coachify/output/sections
+python conversion/splitter/hermes_splitter.py --input apps/Testy/output/output.hbc --output apps/Testy/output/sections
 
-# goto HermesAssembly2JS/Splitter.py
+# goto conversion/splitter.py
 ```
 
 Decompile
 
 ```shell
-# goto HermesAssembly2JS/Converter.py
+# goto conversion/converter.py
 ```
 
 https://www.politesi.polimi.it/retrieve/17e4c202-4d63-43f1-97d9-84a925bb9130/2023_05_Falvo.pdf
@@ -53,12 +40,13 @@ disassembled Hermes bytecode -> Reconstructing to JavaScript
 Hermes HASM to JavaScript Converter
 
 | Step                        | Done by            | Purpose                             |
-| --------------------------- | ------------------ | ----------------------------------- |
+|-----------------------------|--------------------|-------------------------------------|
 | TypeScript/JSX → JavaScript | tsc / Babel        | Make code Hermes-compatible         |
 | JavaScript → Bytecode       | Hermes (`hermesc`) | Speed up startup & execution        |
 | Runtime Execution           | Hermes engine      | Run the compiled bytecode on device |
 
 ## Learn in hermes
+
 - if / else
 - ternary operator
 - throw
