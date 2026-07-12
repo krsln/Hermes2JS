@@ -1,0 +1,37 @@
+
+=> [Function #9594 "?anon_0_" of 105 bytes]: 2 params, frame size=15, strict=0, exc handler=0, debug info=0  @ offset 0x00282062
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000004: <JmpTrue>: <Addr8: 98, Reg8: 1>  # Address: 00000066
+==> 00000007: <GetEnvironment>: <Reg8: 1, UInt8: 4>
+==> 0000000a: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 16>
+==> 0000000e: <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
+==> 00000013: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 137>  # String: 'get' (Identifier)
+==> 00000018: <GetGlobalObject>: <Reg8: 2>
+==> 0000001a: <TryGetById>: <Reg8: 1, Reg8: 2, UInt8: 3, string_id: 21>  # String: 'HermesInternal' (Identifier)
+==> 00000020: <GetByIdShort>: <Reg8: 6, Reg8: 1, UInt8: 4, string_id: 98>  # String: 'concat' (Identifier)
+==> 00000025: <LoadConstString>: <Reg8: 5, string_id: 8724>  # String: 'https://coachify.ai/api/checkUsernameAvailable?username=' (String)
+==> 00000029: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 0000002c: <Call2>: <Reg8: 1, Reg8: 6, Reg8: 5, Reg8: 1>
+==> 00000031: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 00000036: <SaveGenerator>: <Addr8: 4>  # Address: 0000003a
+==> 00000038: <Ret>: <Reg8: 1>
+==> 0000003a: <ResumeGenerator>: <Reg8: 1, Reg8: 3>
+==> 0000003d: <JmpTrue>: <Addr8: 38, Reg8: 3>  # Address: 00000063
+==> 00000040: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 100>  # String: 'console' (Identifier)
+==> 00000046: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 6, string_id: 171>  # String: 'log' (Identifier)
+==> 0000004b: <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 7, string_id: 107>  # String: 'data' (Identifier)
+==> 00000050: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000055: <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 7, string_id: 107>  # String: 'data' (Identifier)
+==> 0000005a: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 12563>  # String: 'available' (Identifier)
+==> 00000060: <CompleteGenerator>: <>
+==> 00000061: <Ret>: <Reg8: 2>
+==> 00000063: <CompleteGenerator>: <>
+==> 00000064: <Ret>: <Reg8: 1>
+==> 00000066: <CompleteGenerator>: <>
+==> 00000067: <Ret>: <Reg8: 0>
+
+

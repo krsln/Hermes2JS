@@ -1,4 +1,6 @@
 /.idea/
 
-/Apps/
-/HermesDisassembler/hermes-dec-main/
+/apps/testy/output
+/disassembler/hermes-dec-main/
+
+/vendor/
