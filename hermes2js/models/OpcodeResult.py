@@ -1,7 +1,7 @@
 from typing import Optional
 
-from conversion.hermes2js.models.OpcodeEntry import OpcodeEntry
-from conversion.hermes2js.models.JSVariable import JSVariable
+from hermes2js.models.OpcodeEntry import OpcodeEntry
+from hermes2js.models.JSVariable import JSVariable
 
 
 class OpcodeResult:

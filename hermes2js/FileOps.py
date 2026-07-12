@@ -2,8 +2,8 @@ import os
 import re
 from typing import Tuple, Optional, List
 
-from conversion.hermes2js.JSConverter import JSConverter
-from conversion.hermes2js.Logger import logger
+from hermes2js.JSConverter import JSConverter
+from hermes2js.Logger import logger
 
 # Define the filename pattern for section_<number>.hbc
 filename_pattern = re.compile(r'section_(\d+)\.hbc')

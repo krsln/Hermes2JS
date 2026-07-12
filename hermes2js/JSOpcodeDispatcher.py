@@ -1,12 +1,12 @@
 from typing import Optional
 
-from conversion.hermes2js.handlers import Import_Handlers
+from hermes2js.handlers import Import_Handlers
 
-from conversion.hermes2js.models.HermesAnalysis import HermesAnalysis
-from conversion.hermes2js.models.JSVariable import JSVariable
-from conversion.hermes2js.models.OpcodeEntry import OpcodeEntry
-from conversion.hermes2js.models.OpcodeHandler import OpcodeHandler
-from conversion.hermes2js.models.OpcodeResult import OpcodeResult
+from hermes2js.models.HermesAnalysis import HermesAnalysis
+from hermes2js.models.JSVariable import JSVariable
+from hermes2js.models.OpcodeEntry import OpcodeEntry
+from hermes2js.models.OpcodeHandler import OpcodeHandler
+from hermes2js.models.OpcodeResult import OpcodeResult
 
 
 class JSOpcodeDispatcher:
