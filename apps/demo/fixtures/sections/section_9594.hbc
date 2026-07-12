@@ -1,5 +1,5 @@
 
-=> [Function #9594 "?anon_0_" of 105 bytes]: 2 params, frame size=15, env size=0, read index sz=8, write index sz=0, strict=0, exc handler=0, debug info=0  @ offset 0x00282062
+=> [Function #9594 "?anon_0_" of 105 bytes]: 2 params, frame size=15, strict=0, exc handler=0, debug info=0  @ offset 0x00282062
 
 Bytecode listing:
 

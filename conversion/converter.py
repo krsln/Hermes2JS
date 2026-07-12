@@ -7,8 +7,8 @@ from conversion.hermes2js.Logger import logger
 def main():
     """Main function to process specific section_<number>.hbc files."""
     logger.info("Starting .hbc to JavaScript conversion")
-    input_dir = "../apps/tests/fixtures/sections"
-    output_dir = "../apps/tests/fixtures/results"
+    input_dir = "../apps/demo/fixtures/sections"
+    output_dir = "../apps/demo/fixtures/results"
 
     # input_dir = "../apps/Testy/sections"
     # output_dir = "./apps/Testy/results"

@@ -1,5 +1,5 @@
 
-=> [Function #24090 "onPress" of 157 bytes]: 1 params, frame size=15, env size=0, read index sz=6, write index sz=0, strict=0, exc handler=0, debug info=0  @ offset 0x0041c232
+=> [Function #24090 "onPress" of 157 bytes]: 1 params, frame size=15, strict=0, exc handler=0, debug info=0  @ offset 0x0041c232
 
 Bytecode listing:
 

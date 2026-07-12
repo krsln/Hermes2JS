@@ -1,17 +1,17 @@
 
-=> [Function #11944 "" of 37 bytes]: 1 params, frame size=12, env size=1, read index sz=1, write index sz=0, strict=0, exc handler=0, debug info=0  @ offset 0x0021917e
+=> [Function #11944 "" of 37 bytes]: 1 params, frame size=12, strict=1, exc handler=0, debug info=0  @ offset 0x002b9be2
 
 Bytecode listing:
 
 ==> 00000000: <CreateEnvironment>: <Reg8: 0>
-==> 00000002: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000002: <GetEnvironment>: <Reg8: 1, UInt8: 1>
 ==> 00000005: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
-==> 00000009: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 131>  # String: 'default' (Identifier)
+==> 00000009: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
 ==> 0000000e: <LoadConstUndefined>: <Reg8: 2>
-==> 00000010: <CreateGeneratorClosure>: <Reg8: 1, Reg8: 0, function_id: 11945>  # Function: [#11945  of 9 bytes]: 2 params @ offset 0x002191a3
+==> 00000010: <CreateGeneratorClosure>: <Reg8: 1, Reg8: 0, function_id: 11946>  # Function: [#11946  of 9 bytes]: 3 params @ offset 0x002b9c07
 ==> 00000015: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 2, Reg8: 1>
 ==> 0000001a: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 1>
-==> 0000001e: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11947>  # Function: [#11947 fetchMovies of 29 bytes]: 2 params @ offset 0x00150430
+==> 0000001e: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11945>  # Function: [#11945 request of 30 bytes]: 3 params @ offset 0x00189110
 ==> 00000023: <Ret>: <Reg8: 0>
 
 
