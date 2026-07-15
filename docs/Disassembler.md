@@ -1,33 +1,29 @@
 # Hermes Disassembler
 
 https://www.politesi.polimi.it/retrieve/17e4c202-4d63-43f1-97d9-84a925bb9130/2023_05_Falvo.pdf   
-https://github.com/P1sec/hermes-dec 
-https://p1sec.github.io/hermes-dec/opcodes_table.html   
-
+https://github.com/P1sec/hermes-dec   
+https://p1sec.github.io/hermes-dec/opcodes_table.html
 
 ## usage example
 
 ```shell
 # basic
-python hbc_disassembler.py  index.android.bundle > output.hbc
-python hbc_decompiler.py  index.android.bundle > output.js
-python hbc_file_parser.py  index.android.bundle > outputParser.js
+echo "🔍 Disassembling..."
+python3 "hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py" "assets/index.android.bundle" > "output.hbc"
 
-# goto disassembler/run_disassemble.sh
+echo "🧩 Decompiling..."
+python3 "hermes-dec/src/hermes_dec/decompilation/hbc_decompiler.py" "assets/index.android.bundle" > "output.js"
+
+echo "📦 Parsing structure..."
+python3 "hermes-dec/src/hermes_dec/parsers/hbc_file_parser.py" "assets/index.android.bundle" > "outputParser.js"
 ```
 
 ## Test app
 
-Coachify AI: Workout Planner   
-https://apps.apple.com/tr/app/coachify-ai-workout-planner/id6449539939?l=tr  
-https://apkpure.com/coachify-ai/ai.coachify.coachify/download
-
-unzip
-https://www.decompiler.com/
-
-ai.coachify.coachify.apk / resources / assets / index.android.bundle
-
-download the file :p
+- Coach-ify AI: Workout Planner
+- unzip https://www.decompiler.com/
+- some.testy.apk / resources / assets / index.android.bundle
+- download the file :p
 
 ```shell
 % file index.android.bundle
