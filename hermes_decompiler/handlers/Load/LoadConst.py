@@ -142,3 +142,34 @@ class LoadConstString(OpcodeHandler):
 class LoadConstStringLongIndex(LoadConstString):
     """Long index variant."""
     pass
+
+
+class LoadConstDouble(OpcodeHandler):
+    """Load a floating-point constant."""
+
+    _PATTERN = re.compile(
+        r"^Reg8:\s*(\d+),\s*Double:\s*(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)$"
+    )
+
+    def Handle(
+            self,
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
+    ) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.InvalidArgs(
+                analysis,
+                entry,
+                "Expected Reg8 and Double arguments",
+            )
+
+        dest_reg = int(match.group(1))
+        value = match.group(2)
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value, )
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)

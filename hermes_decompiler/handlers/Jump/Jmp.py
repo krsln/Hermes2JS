@@ -58,6 +58,12 @@ class Jmp(OpcodeHandler):
         return OpcodeResult(entry, variable, goto=target_addr)
 
 
+# Long variants
+class JmpLong(Jmp):
+    """Unconditional long jump."""
+    pass
+
+
 # Conditional branches to Arg1 based on Arg2.
 # Example: <JmpTrue>: <Addr8: 8, Reg8: 9>  # Address: 00000044
 class JmpTrue(OpcodeHandler):
@@ -81,6 +87,11 @@ class JmpTrue(OpcodeHandler):
         analysis.AddResult(entry, variable, goto=target_addr)
 
         return OpcodeResult(entry, variable, goto=target_addr)
+
+
+class JmpTrueLong(JmpTrue):
+    """Conditional long jump if true."""
+    pass
 
 
 # Conditional branches to Arg1 based on Arg2.
@@ -108,6 +119,11 @@ class JmpFalse(OpcodeHandler):
         return OpcodeResult(entry, variable, goto=target_addr)
 
 
+class JmpFalseLong(JmpFalse):
+    """Conditional long jump if false."""
+    pass
+
+
 # Jump if the value is undefined.
 # Example: <JmpUndefined>: <Addr8: 18, Reg8: 0>  # Address: 00000043
 class JmpUndefined(OpcodeHandler):
@@ -133,17 +149,6 @@ class JmpUndefined(OpcodeHandler):
         return OpcodeResult(entry, variable, goto=target_addr)
 
 
-# Long variants
-class JmpLong(Jmp):
-    """Unconditional long jump."""
-    pass
-
-
-class JmpTrueLong(JmpTrue):
-    """Conditional long jump if true."""
-    pass
-
-
-class JmpFalseLong(JmpFalse):
-    """Conditional long jump if false."""
+class JmpUndefinedLong(JmpUndefined):
+    """Conditional long jump if undefined."""
     pass
