@@ -6,7 +6,7 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from ._shared_patterns import REG, UINT8, STRING_ID, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
 
 
 # /// Get a property by value. Constant string values should instead use GetById.

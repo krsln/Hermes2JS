@@ -7,66 +7,7 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from ._shared_patterns import REG, UINT8, sequence
-
-
-# Load a function parameter by index. Starts at 0 with 'this'.
-# Arg1 = Arg2 == 0 ? this : arguments[Arg2 - 1];
-# DEFINE_OPCODE_2(LoadParam, Reg8, UInt8)
-# Example: <LoadParam>: <Reg8: 1, UInt8: 1>
-class LoadParam(OpcodeHandler):
-    """Load function parameter (including this at index 0)."""
-    _PATTERN = sequence(REG, UINT8)
-
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.InvalidArgs(analysis, entry)
-
-        dest_reg, param_index = map(int, match.groups())
-
-        # param0 = this, others = paramN
-        value = 'this' if param_index == 0 else f"param{param_index}"
-
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
-        analysis.AddResult(entry, variable)
-
-        return OpcodeResult(entry, variable)
-
-
-# /// Load a constant string value by string table index.
-# DEFINE_OPCODE_2(LoadConstString, Reg8, UInt16)
-# DEFINE_OPCODE_2(LoadConstStringLongIndex, Reg8, UInt32)
-# OPERAND_STRING_ID(LoadConstString, 2)
-# OPERAND_STRING_ID(LoadConstStringLongIndex, 2)
-# Example: <LoadConstString>: <Reg8: 6, string_id: 4098>  # String: 'application/json' (String)
-class LoadConstString(OpcodeHandler):
-    """Load constant string from the string table."""
-    _PATTERN = sequence(REG, r'string_id:\s*(\d+)')
-
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.InvalidArgs(analysis, entry)
-
-        dest_reg, string_id = match.groups()
-
-        # Resolve string from table
-        const_value = analysis.stringTable.get(string_id, f'str_{string_id}')
-
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f'"{const_value}"')
-        analysis.AddResult(entry, variable)
-
-        return OpcodeResult(entry, variable)
-
-
-class LoadConstStringLongIndex(LoadConstString):
-    """Long index variant."""
-    pass
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
 
 
 # /// Load common constants.
@@ -170,16 +111,15 @@ class LoadConstInt(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-# /// Obtain the raw \c this value and coerce it to an object. Equivalent to:
-# /// \code
-# ///     LoadParam    Arg1, #0
-# ///     CoerceThisNS Arg1, Arg1
-# /// \endcode
-# DEFINE_OPCODE_1(LoadThisNS, Reg8)
-# Example: <LoadThisNS>: <Reg8: 4>
-class LoadThisNS(OpcodeHandler):
-    """Load and coerce `this` value."""
-    _PATTERN = sequence(REG)
+# /// Load a constant string value by string table index.
+# DEFINE_OPCODE_2(LoadConstString, Reg8, UInt16)
+# DEFINE_OPCODE_2(LoadConstStringLongIndex, Reg8, UInt32)
+# OPERAND_STRING_ID(LoadConstString, 2)
+# OPERAND_STRING_ID(LoadConstStringLongIndex, 2)
+# Example: <LoadConstString>: <Reg8: 6, string_id: 4098>  # String: 'application/json' (String)
+class LoadConstString(OpcodeHandler):
+    """Load constant string from the string table."""
+    _PATTERN = sequence(REG, r'string_id:\s*(\d+)')
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
@@ -188,9 +128,17 @@ class LoadThisNS(OpcodeHandler):
         if not match:
             return self.InvalidArgs(analysis, entry)
 
-        dest_reg = int(match.group(1))
+        dest_reg, string_id = match.groups()
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', 'this')
+        # Resolve string from table
+        const_value = analysis.stringTable.get(string_id, f'str_{string_id}')
+
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f'"{const_value}"')
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
+
+
+class LoadConstStringLongIndex(LoadConstString):
+    """Long index variant."""
+    pass

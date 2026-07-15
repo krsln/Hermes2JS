@@ -8,7 +8,7 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from ._shared_patterns import REG, UINT16, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
 
 
 # Create an object from a static map of values, as for var={'a': 3}.

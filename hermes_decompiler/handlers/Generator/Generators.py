@@ -6,7 +6,7 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from ._shared_patterns import REG, FUNCTION_ID, ADDR, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, ADDR, sequence
 
 # Pre-compiled patterns
 START_GENERATOR_PATTERN = re.compile(r'^(?:<>)?$')
@@ -108,77 +108,3 @@ class SaveGenerator(OpcodeHandler):
         analysis.AddResult(entry, variable, goto=addr)
 
         return OpcodeResult(entry, variable, goto=addr)
-
-
-# /// Create a generator.
-# /// Arg1 is the register in which to store the generator.
-# /// Arg2 is the current environment as loaded by GetEnvironment 0.
-# /// Arg3 is index in the function table.
-# DEFINE_OPCODE_3(CreateGenerator, Reg8, Reg8, UInt16)
-# DEFINE_OPCODE_3(CreateGeneratorLongIndex, Reg8, Reg8, UInt32)
-# OPERAND_FUNCTION_ID(CreateGenerator, 3)
-# OPERAND_FUNCTION_ID(CreateGeneratorLongIndex, 3)
-# Example: <CreateGenerator>: <Reg8: 0, Reg8: 0, function_id: 11946>  # Function: [#11946 ?anon_0_ of 251 bytes]: 2 params @ offset 0x002191ac
-class CreateGenerator(OpcodeHandler):
-    """Create a generator object."""
-    _PATTERN = sequence(REG, REG, FUNCTION_ID)
-
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.InvalidArgs(analysis, entry)
-
-        dest_reg, env_reg, function_id = map(int, match.groups())
-
-        func_name = analysis.functionTable.get(str(function_id), f"gen_{function_id}")
-
-        value = f"createGenerator(r{env_reg}, {func_name})"
-
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.AddResult(entry, variable)
-
-        return OpcodeResult(entry, variable)
-
-
-class CreateGeneratorLongIndex(CreateGenerator):
-    """Long index variant."""
-    pass
-
-
-# /// Create a closure for a GeneratorFunction.
-# /// Arg1 is the register in which to store the closure.
-# /// Arg2 is the current environment as loaded by GetEnvironment 0.
-# /// Arg3 is index in the function table.
-# DEFINE_OPCODE_3(CreateGeneratorClosure, Reg8, Reg8, UInt16)
-# DEFINE_OPCODE_3(CreateGeneratorClosureLongIndex, Reg8, Reg8, UInt32)
-# OPERAND_FUNCTION_ID(CreateGeneratorClosure, 3)
-# OPERAND_FUNCTION_ID(CreateGeneratorClosureLongIndex, 3)
-# Example: <CreateGeneratorClosure>: <Reg8: 1, Reg8: 0, function_id: 11945>  # Function: [#11945  of 9 bytes]: 2 params @ offset 0x002191a3
-class CreateGeneratorClosure(OpcodeHandler):
-    """Create a closure for a GeneratorFunction."""
-    _PATTERN = sequence(REG, REG, FUNCTION_ID)
-
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.InvalidArgs(analysis, entry)
-
-        dest_reg, env_reg, function_id = map(int, match.groups())
-
-        func_name = analysis.functionTable.get(str(function_id), f"gen_{function_id}")
-
-        value = f"createGeneratorClosure(r{env_reg}, {func_name})"
-
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.AddResult(entry, variable)
-
-        return OpcodeResult(entry, variable)
-
-
-class CreateGeneratorClosureLongIndex(CreateGeneratorClosure):
-    """Long index variant."""
-    pass

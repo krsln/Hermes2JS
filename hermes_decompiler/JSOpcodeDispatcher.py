@@ -1,6 +1,6 @@
 from typing import Optional
 
-from hermes_decompiler.handlers import Import_Handlers
+from hermes_decompiler.handlers import import_handlers
 
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -12,7 +12,7 @@ from hermes_decompiler.models.OpcodeResult import OpcodeResult
 class JSOpcodeDispatcher:
     def __init__(self):
         self.Analysis: Optional[HermesAnalysis] = None
-        Import_Handlers()
+        import_handlers()
         # self.Handlers = OpcodeHandler.registry  # Handler Auto-Registration
 
     def Dispatch(self, line: OpcodeEntry) -> OpcodeResult:

@@ -7,7 +7,7 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from ._shared_patterns import REG, UINT8, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
 
 
 # /// Call a constructor, with semantics identical to Call.

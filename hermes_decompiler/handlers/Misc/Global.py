@@ -4,7 +4,7 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from ._shared_patterns import REG, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
 # Get the global object (the object in which global variables are stored).
