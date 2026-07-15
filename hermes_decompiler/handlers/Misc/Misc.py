@@ -58,7 +58,7 @@ class DelByVal(OpcodeHandler):
 
         return OpcodeResult(entry, variable)
 
-# TODOs:
+# TODOs: 
 # DeclareGlobalVar GetPNameList GetNextPName
 # PutByVal AddEmptyString
 # GetArgumentsPropByVal GetArgumentsLength IsIn
