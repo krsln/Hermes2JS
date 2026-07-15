@@ -21,12 +21,7 @@ class Mov(OpcodeHandler):
         dest_reg, src_reg = map(int, match.groups())
 
         # Simply alias the source register
-        variable = JSVariable(
-            handler,
-            entry.address,
-            f'r{dest_reg}',
-            f"r{src_reg}"
-        )
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"r{src_reg}")
 
         analysis.AddResult(entry, variable)
         return OpcodeResult(entry, variable)

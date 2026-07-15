@@ -51,3 +51,13 @@ class JStrictEqual(JCompareX): operator = "==="
 
 
 class JStrictNotEqual(JCompareX): operator = "!=="
+
+
+class JStrictEqualLong(JStrictEqual):
+    """Jump if operands are strictly equal."""
+    pass
+
+
+class JStrictNotEqualLong(JStrictNotEqual):
+    """Jump if operands are not strictly equal."""
+    pass

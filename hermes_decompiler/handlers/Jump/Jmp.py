@@ -134,7 +134,16 @@ class JmpUndefined(OpcodeHandler):
 
 
 # Long variants
-class JmpTrueLong(JmpTrue): pass
+class JmpLong(Jmp):
+    """Unconditional long jump."""
+    pass
 
 
-class JmpFalseLong(JmpFalse): pass
+class JmpTrueLong(JmpTrue):
+    """Conditional long jump if true."""
+    pass
+
+
+class JmpFalseLong(JmpFalse):
+    """Conditional long jump if false."""
+    pass

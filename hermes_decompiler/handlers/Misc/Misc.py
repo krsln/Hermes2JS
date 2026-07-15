@@ -156,3 +156,13 @@ class DelByVal(OpcodeHandler):
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
+
+
+# DeclareGlobalVar
+# PutByVal
+# StrictEq
+# Not
+# IteratorBegin
+# IteratorNext
+# IteratorClose
+# NewObjectWithParent
