@@ -7,7 +7,7 @@ async function* anon_9956(param0, param1) {
     // label_4:
     if (r1) {
         // CODE -> <GetEnvironment>: <Reg8: 1, UInt8: 3>
-        r1 = getEnvironment(3);
+        r1 = getEnvironment(3)
         // CODE -> <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 16>
         r1 = r1[16]
         // CODE -> <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)

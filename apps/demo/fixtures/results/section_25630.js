@@ -12,7 +12,7 @@ function AcquisitionManager(param0, param1, param2) {
     // CODE -> <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 22128>  # String: '_publicPrefixUrl' (Identifier)
     // USED -> r1 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/" }
     // CODE -> <CreateEnvironment>: <Reg8: 2>
-    r2 = // Create new environment
+    r2 = createEnvironment()
     // CODE -> <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 25631>  # Function: [#25631  of 41 bytes]: 2 params @ offset 0x0044ff52
     // USED -> r2 = function_25631 /* Closure with env r2 = undefined */
     // CODE -> <PutById>: <Reg8: 1, Reg8: 2, UInt8: 3, string_id: 24002>  # String: 'isRecoverable' (Identifier)

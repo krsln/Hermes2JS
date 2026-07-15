@@ -1,10 +1,10 @@
 function onPress(param0) {
     // CODE -> <GetEnvironment>: <Reg8: 1, UInt8: 0>
-    r1 = getEnvironment(0);
+    r1 = getEnvironment(0)
     // CODE -> <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 0>
     r2 = r1[0]
     // CODE -> <GetEnvironment>: <Reg8: 0, UInt8: 1>
-    r0 = getEnvironment(1);
+    r0 = getEnvironment(1)
     // CODE -> <JmpTrue>: <Addr8: 113, Reg8: 2>  # Address: 0000007b
     if (r2) {
         // CODE -> <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 10>
