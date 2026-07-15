@@ -1,6 +1,7 @@
 import re
 from typing import Dict
 
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT16, sequence
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -12,19 +13,14 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 # If you want to support both .call() and direct call, you could check the previous instruction context
 # (e.g., if the function was fetched via .log, you may want to emit .call()).
 
-# “The difference [between direct and indirect call] is whether the function is a reference or a closure...
-# closures are typically created via a CreateClosure opcode...”
+# "The difference [between direct and indirect call] is whether the function is a reference or a closure...
+# closures are typically created via a CreateClosure opcode..."
 
 
 class CallX(OpcodeHandler):
-    # Precompiled regex patterns for each number of arguments
-    _REGEX_PATTERNS: Dict[int, re.Pattern] = {
-        1: re.compile(r'^(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)$'),
-        2: re.compile(r'^(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)$'),
-        3: re.compile(
-            r'^(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)$'),
-        4: re.compile(
-            r'^(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)\s*,\s*(Reg\d+:\s*\d+)$')
+    # One pattern per arity: dest + closure + N argument registers.
+    _REGEX_PATTERNS: Dict[int, "re.Pattern[str]"] = {
+        n: sequence(*([REG] * (n + 2))) for n in (1, 2, 3, 4)
     }
 
     num_args = 1  # to be overridden
@@ -41,14 +37,12 @@ class CallX(OpcodeHandler):
         if not match:
             return self.InvalidArgs(analysis, entry)
 
-        # Strip commas and convert to integers
-        regs = [int(x.split(":")[1].strip()) for x in match.groups()]
-        dest_reg, func_reg, *args = regs
+        dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
 
         func_variable = self.GetVariableByReg(analysis.results, func_reg)
         func_name = self.GetValueByReg(analysis.results, func_reg)
 
-        argList = self.GetFuncArgs(analysis.results, args)
+        argList = self.GetFuncArgs(analysis.results, arg_regs)
 
         # Special handling for HermesInternal.concat
         if func_name == "this.HermesInternal.concat":
@@ -116,32 +110,34 @@ class CallX(OpcodeHandler):
         return True
 
 
-# /// Call a function with one arg.
-# /// Arg1 is the destination of the return value.
-# /// Arg2 is the closure to invoke.
-# /// Arg3 is the first argument.
-# DEFINE_OPCODE_3(Call1, Reg8, Reg8, Reg8)
-# DEFINE_RET_TARGET(Call1)
-class Call1(CallX):
-    num_args = 1
-
-
 # /// Call a function directly without a closure.
 # /// Arg1 is the destination of the return value.
 # /// Arg2 is the number of arguments, assumed to be found in reverse order
 # ///      from the end of the current frame. The first argument 'this'
 # ///      is assumed to be created with CreateThis.
 # /// Arg3 is index in the function table.
-# /// Note that we expect the variable-sized argument to be last.
 # DEFINE_OPCODE_3(CallDirect, Reg8, UInt8, UInt16)
 # OPERAND_FUNCTION_ID(CallDirect, 3)
 # DEFINE_RET_TARGET(CallDirect)
 class CallDirect(OpcodeHandler):
+    """
+    Unlike CallX/Call, there is no closure register — the callee is
+    resolved statically via the function table. 'this' and the arguments
+    are expected to already sit in the registers immediately preceding
+    `dest_reg` (mirroring the func_reg-relative heuristic used for indirect
+    calls). This is a best-effort reconstruction: if the actual frame
+    layout diverges from this assumption, the recovered argument list may
+    be approximate — unresolved registers fall back to an `argN` placeholder
+    (logged as a warning) rather than aborting the batch.
+    """
+
+    _PATTERN = sequence(REG, UINT8, UINT16)
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         # Parse args: Reg8, UInt8, UInt16
-        match = re.match(r'^Reg(\d+):\s*(\d+),\s*UInt8:\s*(\d+),\s*UInt16:\s*(\d+)$', entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 
@@ -172,11 +168,15 @@ class CallDirect(OpcodeHandler):
 # DEFINE_RET_TARGET(Call)
 # Example: <Call>: <Reg8: 4, Reg8: 9, UInt8: 6>
 class Call(CallX):
+    """Same semantics as CallX but with a runtime-determined argument count
+    (UInt8) instead of a fixed arity."""
+
+    _PATTERN = sequence(REG, REG, UINT8)
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = re.match(r'^Reg8:\s*(\d+)\s*,\s*Reg8:\s*(\d+)\s*,\s*UInt8:\s*(\d+)$', entry.args.strip())
-
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 
@@ -185,18 +185,26 @@ class Call(CallX):
         arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
         argList = [self.GetValueByReg(analysis.results, r) for r in arg_regs]
         args_str = ", ".join(argList)
-        func_val = f"({args_str})" if not self.ShouldUseCall(self.GetVariableByReg(analysis.results, func_reg)) else f".call(this, {args_str})"
+        func_val = f"({args_str})" if not self.ShouldUseCall(
+            self.GetVariableByReg(analysis.results, func_reg)) else f".call(this, {args_str})"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{func_name}{func_val}", func_name, func_val)
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
 
-# /// Call a function with two args.
+
+# /// Call a function with one arg.
 # /// Arg1 is the destination of the return value.
 # /// Arg2 is the closure to invoke.
 # /// Arg3 is the first argument.
-# /// Arg4 is the second argument.
+# DEFINE_OPCODE_3(Call1, Reg8, Reg8, Reg8)
+# DEFINE_RET_TARGET(Call1)
+class Call1(CallX):
+    num_args = 1
+
+
+# /// Call a function with two args.
 # DEFINE_OPCODE_4(Call2, Reg8, Reg8, Reg8, Reg8)
 # DEFINE_RET_TARGET(Call2)
 class Call2(CallX):
@@ -204,11 +212,6 @@ class Call2(CallX):
 
 
 # /// Call a function with three args.
-# /// Arg1 is the destination of the return value.
-# /// Arg2 is the closure to invoke.
-# /// Arg3 is the first argument.
-# /// Arg4 is the second argument.
-# /// Arg5 is the third argument.
 # DEFINE_OPCODE_5(Call3, Reg8, Reg8, Reg8, Reg8, Reg8)
 # DEFINE_RET_TARGET(Call3)
 class Call3(CallX):
@@ -216,12 +219,6 @@ class Call3(CallX):
 
 
 # /// Call a function with four args.
-# /// Arg1 is the destination of the return value.
-# /// Arg2 is the closure to invoke.
-# /// Arg3 is the first argument.
-# /// Arg4 is the second argument.
-# /// Arg5 is the third argument.
-# /// Arg6 is the fourth argument.
 # DEFINE_OPCODE_6(Call4, Reg8, Reg8, Reg8, Reg8, Reg8, Reg8)
 # DEFINE_RET_TARGET(Call4)
 class Call4(CallX):
