@@ -63,11 +63,11 @@ async function* anon_11947(param0, param1, param2) {
                 // CODE -> <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 4, string_id: 158>  # String: 'prototype' (Identifier)
                 // USED -> r4 = this.Error.prototype
                 // CODE -> <CreateThis>: <Reg8: 7, Reg8: 4, Reg8: 8>
-                r7 = createThis(prototype=this.Error.prototype, constructor=this.Error)
+                // USED -> r7 = createThis(prototype=this.Error.prototype, constructor=this.Error)
                 // CODE -> <Mov>: <Reg8: 12, Reg8: 7>
                 r12 = r7
                 // CODE -> <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
-                r4 = new this.Error(arg0);
+                r4 = new this.Error(createThis(prototype=this.Error.prototype, constructor=this.Error));
                 // CODE -> <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
                 // USED -> r6 = r7[r4]
                 // CODE -> <Jmp>: <Addr8: 16>  # Address: 00000087
