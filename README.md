@@ -42,6 +42,7 @@ python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --
 ```shell
 python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
 
+python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ 
 python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 
 python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```
