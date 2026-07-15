@@ -107,7 +107,7 @@ function _request(param0, param1, param2) {
         // CODE -> <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
         // USED -> r2 = r21.transitional(r21.boolean)
         // CODE -> <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 17756>  # String: 'forcedJSONParsing' (Identifier)
-        // USED -> r15 = { forcedJSONParsing: r21.transitional(r21.boolean) }
+        // USED -> r15 = { silentJSONParsing: r21.transitional(r21.boolean), forcedJSONParsing: r21.transitional(r21.boolean) }
         // CODE -> <GetById>: <Reg8: 20, Reg8: 21, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
         // USED -> r20 = r21.transitional
         // CODE -> <GetById>: <Reg8: 2, Reg8: 21, UInt8: 7, string_id: 12635>  # String: 'boolean' (Identifier)
@@ -115,11 +115,11 @@ function _request(param0, param1, param2) {
         // CODE -> <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
         // USED -> r2 = r21.transitional(r21.boolean)
         // CODE -> <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 22889>  # String: 'clarifyTimeoutError' (Identifier)
-        // USED -> r15 = { clarifyTimeoutError: r21.transitional(r21.boolean) }
+        // USED -> r15 = { silentJSONParsing: r21.transitional(r21.boolean), forcedJSONParsing: r21.transitional(r21.boolean), clarifyTimeoutError: r21.transitional(r21.boolean) }
         // CODE -> <LoadConstFalse>: <Reg8: 2>
         // USED -> r2 = false
         // CODE -> <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 2>
-        r2 = r2.default.assertOptions(r2.default(param0.defaults).transitional, { clarifyTimeoutError: r21.transitional(r21.boolean) }, false)
+        r2 = r2.default.assertOptions(r2.default(param0.defaults).transitional, { silentJSONParsing: r21.transitional(r21.boolean), forcedJSONParsing: r21.transitional(r21.boolean), clarifyTimeoutError: r21.transitional(r21.boolean) }, false)
     }
     // CODE -> <LoadConstNull>: <Reg8: 2>
     // label_225:
@@ -153,11 +153,11 @@ function _request(param0, param1, param2) {
             // CODE -> <GetById>: <Reg8: 2, Reg8: 2, UInt8: 9, string_id: 12255>  # String: 'function' (Identifier)
             // USED -> r2 = r2.function
             // CODE -> <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 12525>  # String: 'serialize' (Identifier)
-            // USED -> r15 = { serialize: r2.function }
+            // USED -> r15 = { encode: r2.function, serialize: r2.function }
             // CODE -> <LoadConstTrue>: <Reg8: 2>
             // USED -> r2 = true
             // CODE -> <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 14, Reg8: 15, Reg8: 2>
-            r2 = r2.default.assertOptions(r2.default(param0.defaults).paramsSerializer, { serialize: r2.function }, true)
+            r2 = r2.default.assertOptions(r2.default(param0.defaults).paramsSerializer, { encode: r2.function, serialize: r2.function }, true)
             // CODE -> <Jmp>: <Addr8: 15>  # Address: 00000141
             goto label_321;
         }
@@ -221,11 +221,11 @@ function _request(param0, param1, param2) {
     // CODE -> <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
     // USED -> r2 = r19.spelling("withXSRFToken")
     // CODE -> <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 24724>  # String: 'withXsrfToken' (Identifier)
-    // USED -> r14 = { withXsrfToken: r19.spelling("withXSRFToken") }
+    // USED -> r14 = { baseUrl: r19.spelling("baseURL"), withXsrfToken: r19.spelling("withXSRFToken") }
     // CODE -> <LoadConstTrue>: <Reg8: 2>
     // USED -> r2 = true
     // CODE -> <Call4>: <Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 10, Reg8: 14, Reg8: 2>
-    r14 = r2.default.assertOptions({ paramsSerializer: { serialize: r2.default(param0.defaults).paramsSerializer }, allowAbsoluteUrls: param0.defaults.allowAbsoluteUrls }, { withXsrfToken: r19.spelling("withXSRFToken") }, true)
+    r14 = r2.default.assertOptions({ paramsSerializer: { serialize: r2.default(param0.defaults).paramsSerializer }, allowAbsoluteUrls: param0.defaults.allowAbsoluteUrls }, { baseUrl: r19.spelling("baseURL"), withXsrfToken: r19.spelling("withXSRFToken") }, true)
     // CODE -> <GetById>: <Reg8: 15, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
     // USED -> r15 = { paramsSerializer: { serialize: r2.default(param0.defaults).paramsSerializer }, allowAbsoluteUrls: param0.defaults.allowAbsoluteUrls }.method
     // CODE -> <JmpTrue>: <Addr8: 15, Reg8: 15>  # Address: 000001d2
