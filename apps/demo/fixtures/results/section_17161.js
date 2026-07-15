@@ -9,21 +9,21 @@ async function* anon_17161(param0, param1) {
     // CODE -> <JmpTrueLong>: <Addr32: 161, Reg8: 1>  # Address: 000000a8
     if (r1) {
         // CODE -> <GetGlobalObject>: <Reg8: 2>
-        // USED -> r2 = this
+        // USED -> r2 = globalThis
         // CODE -> <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 13438>  # String: 'fetch' (Identifier)
-        // USED -> r3 = this.fetch
+        // USED -> r3 = globalThis.fetch
         // CODE -> <LoadConstUndefined>: <Reg8: 1>
         // USED -> r1 = undefined
         // CODE -> <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
-        // USED -> r1 = await this.fetch(param1)
+        // USED -> r1 = await globalThis.fetch(param1)
         // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 00000020
         // await yield; // check: JSConverter.Dispatcher // Resume at label_4
         // CODE -> <Ret>: <Reg8: 1>
-        return await this.fetch(param1);
+        return await globalThis.fetch(param1);
         // CODE -> <ResumeGenerator>: <Reg8: 1, Reg8: 3>
         // USED -> r1 = await yield; // Resume generator
         // CODE -> <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
-        if (this.fetch) {
+        if (globalThis.fetch) {
             // CODE -> <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 14168>  # String: 'ok' (Identifier)
             // USED -> r3 = r1.ok
             // CODE -> <JmpTrue>: <Addr8: 93, Reg8: 3>  # Address: 0000008c
@@ -45,27 +45,27 @@ async function* anon_17161(param0, param1) {
                     }
                     // CODE -> <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)
                     // label_80:
-                    // USED -> r4 = this.Error
+                    // USED -> r4 = globalThis.Error
                     // CODE -> <GetById>: <Reg8: 6, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
                     // USED -> r6 = r1.status
                     // CODE -> <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 6, string_id: 21>  # String: 'HermesInternal' (Identifier)
-                    // USED -> r2 = this.HermesInternal
+                    // USED -> r2 = globalThis.HermesInternal
                     // CODE -> <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 7, string_id: 98>  # String: 'concat' (Identifier)
-                    // USED -> r5 = this.HermesInternal.concat
+                    // USED -> r5 = globalThis.HermesInternal.concat
                     // CODE -> <LoadConstString>: <Reg8: 3, string_id: 2430>  # String: 'Fetching ' (String)
                     // USED -> r3 = "Fetching "
                     // CODE -> <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: ' failed with status ' (String)
                     // USED -> r2 = " failed with status "
                     // CODE -> <Call4>: <Reg8: 10, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 2, Reg8: 6>
-                    r10 = `Fetching ${param1} failed with status ${r1.status}`
+                    r10 = globalThis.HermesInternal.concat.call(this, "Fetching ", param1, " failed with status ", r1.status)
                     // CODE -> <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
-                    // USED -> r3 = this.Error.prototype
+                    // USED -> r3 = globalThis.Error.prototype
                     // CODE -> <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
-                    // USED -> r3 = createThis(prototype=this.Error.prototype, constructor=this.Error)
+                    // USED -> r3 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)
                     // CODE -> <Mov>: <Reg8: 11, Reg8: 3>
                     r11 = r3
                     // CODE -> <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-                    r2 = new this.Error(" failed with status ", createThis(prototype=this.Error.prototype, constructor=this.Error));
+                    r2 = new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error));
                     // CODE -> <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
                     // USED -> r2 = r3[r2]
                     // CODE -> <Throw>: <Reg8: 2>
@@ -84,7 +84,7 @@ async function* anon_17161(param0, param1) {
             // CODE -> <ResumeGenerator>: <Reg8: 2, Reg8: 3>
             r2 = await yield; // Resume generator
             // CODE -> <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
-            if (createThis(prototype=this.Error.prototype, constructor=this.Error) {
+            if (createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error) {
                 // CODE -> <CompleteGenerator>: <>
                 // CODE -> <Ret>: <Reg8: 2>
                 return undefined_r2;

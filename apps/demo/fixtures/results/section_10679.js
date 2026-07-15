@@ -16,11 +16,11 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <StoreToEnvironment>: <Reg8: 3, UInt8: 7, Reg8: 0>
     r3 = setEnvSlot(7, r0)  // StoreToEnvironment: env=r3, slot=7, value=r0
     // CODE -> <GetGlobalObject>: <Reg8: 0>
-    // USED -> r0 = this
+    // USED -> r0 = globalThis
     // CODE -> <TryGetById>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 37>  # String: 'Object' (Identifier)
-    // USED -> r7 = this.Object
+    // USED -> r7 = globalThis.Object
     // CODE -> <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 2, string_id: 112>  # String: 'defineProperty' (Identifier)
-    // USED -> r4 = this.Object.defineProperty
+    // USED -> r4 = globalThis.Object.defineProperty
     // CODE -> <NewObject>: <Reg8: 1>
     // USED -> r1 = {}
     // CODE -> <LoadConstTrue>: <Reg8: 0>
@@ -30,7 +30,7 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE -> <LoadConstString>: <Reg8: 0, string_id: 65>  # String: '__esModule' (Identifier)
     // USED -> r0 = "__esModule"
     // CODE -> <Call4>: <Reg8: 0, Reg8: 4, Reg8: 7, Reg8: 2, Reg8: 0, Reg8: 1>
-    r0 = this.Object.defineProperty(param6, "__esModule", { value: true })
+    r0 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
     // CODE -> <LoadConstUndefined>: <Reg8: 0>
     // USED -> r0 = undefined
     // CODE -> <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)

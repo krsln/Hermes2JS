@@ -371,13 +371,13 @@ function _request(param0, param1, param2) {
         // CODE -> <Mov>: <Reg8: 5, Reg8: 14>
         r5 = r14
         // CODE -> <GetGlobalObject>: <Reg8: 9>
-        // USED -> r9 = this
+        // USED -> r9 = globalThis
         // CODE -> <TryGetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
-        // USED -> r16 = this.Promise
+        // USED -> r16 = globalThis.Promise
         // CODE -> <GetByIdShort>: <Reg8: 9, Reg8: 16, UInt8: 27, string_id: 208>  # String: 'resolve' (Identifier)
-        // USED -> r9 = this.Promise.resolve
+        // USED -> r9 = globalThis.Promise.resolve
         // CODE -> <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
-        r0 = this.Promise.resolve({ paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer }, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r2.default(this.defaults).headers.common, r17[r14]), r2.default(this.defaults).headers) })
+        r0 = globalThis.Promise.resolve({ paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer }, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r2.default(this.defaults).headers.common, r17[r14]), r2.default(this.defaults).headers) })
         // CODE -> <Mov>: <Reg8: 9, Reg8: 4>
         // USED -> r9 = r4
         // CODE -> <JNotLess>: <Addr8: 54, Reg8: 9, Reg8: 14>  # Address: 00000349
@@ -530,15 +530,15 @@ function _request(param0, param1, param2) {
                 // CODE -> <Catch>: <Reg8: 2>
                 // USED -> r2 = caughtException
                 // CODE -> <GetGlobalObject>: <Reg8: 0>
-                // USED -> r0 = this
+                // USED -> r0 = globalThis
                 // CODE -> <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
-                // USED -> r1 = this.Promise
+                // USED -> r1 = globalThis.Promise
                 // CODE -> <GetById>: <Reg8: 0, Reg8: 1, UInt8: 30, string_id: 13645>  # String: 'reject' (Identifier)
-                // USED -> r0 = this.Promise.reject
+                // USED -> r0 = globalThis.Promise.reject
                 // CODE -> <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
-                // USED -> r0 = this.Promise.reject(caughtException)
+                // USED -> r0 = globalThis.Promise.reject(caughtException)
                 // CODE -> <Ret>: <Reg8: 0>
-                return this.Promise.reject(caughtException);
+                return globalThis.Promise.reject(caughtException);
             }
         }
     }
