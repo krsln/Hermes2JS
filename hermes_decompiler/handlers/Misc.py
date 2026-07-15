@@ -6,8 +6,11 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-_BINARY_REG_PATTERN = re.compile(r'^Reg\d+:\s*(\d+),\s*Reg\d+:\s*(\d+),\s*Reg\d+:\s*(\d+)$')
-_UNARY_REG_PATTERN = re.compile(r'^Reg\d+:\s*(\d+),\s*Reg\d+:\s*(\d+)$')
+from ._shared_patterns import REG, sequence
+
+# Pre-compiled patterns
+_BINARY_REG_PATTERN = sequence(REG, REG, REG)
+_UNARY_REG_PATTERN = sequence(REG, REG)
 
 
 # /// Arg1 = Arg2 + Arg3.
@@ -20,6 +23,8 @@ _UNARY_REG_PATTERN = re.compile(r'^Reg\d+:\s*(\d+),\s*Reg\d+:\s*(\d+)$')
 # DEFINE_OPCODE_3(AddN, Reg8, Reg8, Reg8)
 # Example: <Add>: <Reg8: 2, Reg8: 0, Reg8: 1>
 class Add(OpcodeHandler):
+    """Arg1 = Arg2 + Arg3 (numeric or string concatenation)"""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
@@ -27,7 +32,7 @@ class Add(OpcodeHandler):
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
 
-        dest_reg, lhs_reg, rhs_reg = (int(x) for x in match.groups())
+        dest_reg, lhs_reg, rhs_reg = map(int, match.groups())
 
         lhs_val = self.GetValueByReg(analysis.results, lhs_reg) or f"r{lhs_reg}"
         rhs_val = self.GetValueByReg(analysis.results, rhs_reg) or f"r{rhs_reg}"
@@ -39,8 +44,8 @@ class Add(OpcodeHandler):
 
 
 class AddN(Add):
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        return super().Handle(analysis, entry)
+    """Numeric-only add (fast path). Same JS output as Add."""
+    pass
 
 
 # /// Arg1 = Arg2 + 1 (numeric increment).
@@ -52,6 +57,8 @@ class AddN(Add):
 # DEFINE_OPCODE_2(Inc, Reg8, Reg8)
 # Example: <Inc>: <Reg8: 3, Reg8: 3>
 class Inc(OpcodeHandler):
+    """Arg1 = Arg2 + 1"""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
@@ -59,7 +66,7 @@ class Inc(OpcodeHandler):
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected two Reg8 arguments")
 
-        dest_reg, src_reg = (int(x) for x in match.groups())
+        dest_reg, src_reg = map(int, match.groups())
         src_val = self.GetValueByReg(analysis.results, src_reg) or f"r{src_reg}"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{src_val} + 1")
@@ -75,6 +82,8 @@ class Inc(OpcodeHandler):
 # DEFINE_OPCODE_2(ToNumeric, Reg8, Reg8)
 # Example: <ToNumeric>: <Reg8: 1, Reg8: 0>
 class ToNumeric(OpcodeHandler):
+    """ToNumeric coercion (unary +)"""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
@@ -82,7 +91,7 @@ class ToNumeric(OpcodeHandler):
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected two Reg8 arguments")
 
-        dest_reg, src_reg = (int(x) for x in match.groups())
+        dest_reg, src_reg = map(int, match.groups())
         src_val = self.GetValueByReg(analysis.results, src_reg) or f"r{src_reg}"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"+{src_val}")
@@ -95,6 +104,8 @@ class ToNumeric(OpcodeHandler):
 # DEFINE_OPCODE_2(TypeOf, Reg8, Reg8)
 # Example: <TypeOf>: <Reg8: 1, Reg8: 0>
 class TypeOf(OpcodeHandler):
+    """typeof operator"""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
@@ -102,7 +113,7 @@ class TypeOf(OpcodeHandler):
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected two Reg8 arguments")
 
-        dest_reg, src_reg = (int(x) for x in match.groups())
+        dest_reg, src_reg = map(int, match.groups())
         src_val = self.GetValueByReg(analysis.results, src_reg) or f"r{src_reg}"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"typeof {src_val}")
@@ -115,6 +126,8 @@ class TypeOf(OpcodeHandler):
 # DEFINE_OPCODE_3(InstanceOf, Reg8, Reg8, Reg8)
 # Example: <InstanceOf>: <Reg8: 2, Reg8: 0, Reg8: 1>
 class InstanceOf(OpcodeHandler):
+    """instanceof operator"""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
@@ -122,7 +135,8 @@ class InstanceOf(OpcodeHandler):
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
 
-        dest_reg, lhs_reg, rhs_reg = (int(x) for x in match.groups())
+        dest_reg, lhs_reg, rhs_reg = map(int, match.groups())
+
         lhs_val = self.GetValueByReg(analysis.results, lhs_reg) or f"r{lhs_reg}"
         rhs_val = self.GetValueByReg(analysis.results, rhs_reg) or f"r{rhs_reg}"
 
@@ -136,6 +150,8 @@ class InstanceOf(OpcodeHandler):
 # DEFINE_OPCODE_3(DelByVal, Reg8, Reg8, Reg8)
 # Example: <DelByVal>: <Reg8: 2, Reg8: 0, Reg8: 1>
 class DelByVal(OpcodeHandler):
+    """delete obj[prop]"""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
@@ -143,7 +159,8 @@ class DelByVal(OpcodeHandler):
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
 
-        dest_reg, obj_reg, prop_reg = (int(x) for x in match.groups())
+        dest_reg, obj_reg, prop_reg = map(int, match.groups())
+
         obj_val = self.GetValueByReg(analysis.results, obj_reg) or f"r{obj_reg}"
         prop_val = self.GetValueByReg(analysis.results, prop_reg) or f"r{prop_reg}"
 
