@@ -1,4 +1,6 @@
 import re
+import json
+from typing import List
 
 from hermes_decompiler.Logger import logger
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
@@ -7,8 +9,15 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-_NEW_ARRAY_PATTERN = re.compile(r'^Reg\d+:\s*(\d+),\s*UInt16:\s*(\d+)$')
-_PUT_OWN_BY_INDEX_PATTERN = re.compile(r'^Reg\d+:\s*(\d+),\s*Reg\d+:\s*(\d+),\s*UInt(?:8|32):\s*(\d+)$')
+from ._shared_patterns import REG, UINT8, UINT32, UINT16, sequence
+
+# === Patterns ===
+NEW_ARRAY_PATTERN = sequence(REG, UINT16)
+NEW_ARRAY_WITH_BUFFER_PATTERN = sequence(REG, UINT16, UINT16, UINT16)
+
+# PutOwnByIndex 2 pattern (UInt8 ve UInt32)
+PUT_OWN_BY_INDEX_PATTERN = sequence(REG, REG, UINT8)
+PUT_OWN_BY_INDEX_L_PATTERN = sequence(REG, REG, UINT32)
 
 
 # /// Create a new, empty Array with a preallocation size hint.
@@ -18,14 +27,16 @@ _PUT_OWN_BY_INDEX_PATTERN = re.compile(r'^Reg\d+:\s*(\d+),\s*Reg\d+:\s*(\d+),\s*
 # DEFINE_OPCODE_2(NewArray, Reg8, UInt16)
 # Example: <NewArray>: <Reg8: 1, UInt16: 4>
 class NewArray(OpcodeHandler):
+    """Create a new, empty Array with a preallocation size hint."""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = _NEW_ARRAY_PATTERN.match(entry.args.strip())
+        match = NEW_ARRAY_PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected Reg8 and UInt16 arguments")
 
-        dest_reg, capacity_hint = (int(x) for x in match.groups())
+        dest_reg, capacity_hint = map(int, match.groups())
 
         js_array = "[]" if capacity_hint == 0 else f"[] /* capacity hint: {capacity_hint} */"
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
@@ -42,25 +53,29 @@ class NewArray(OpcodeHandler):
 # DEFINE_OPCODE_3(PutOwnByIndexL, Reg8, Reg8, UInt32)
 # Example: <PutOwnByIndex>: <Reg8: 1, Reg8: 2, UInt8: 0>
 class PutOwnByIndex(OpcodeHandler):
+    """Set an array element by (statically known) numeric index."""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = _PUT_OWN_BY_INDEX_PATTERN.match(entry.args.strip())
+        # Try both UInt8 and UInt32 variants
+        match = PUT_OWN_BY_INDEX_PATTERN.match(entry.args.strip()) or \
+                PUT_OWN_BY_INDEX_L_PATTERN.match(entry.args.strip())
+
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8 and UInt8/UInt32 arguments")
 
-        dest_reg, value_reg, index = (int(x) for x in match.groups())
+        dest_reg, value_reg, index = map(int, match.groups())
 
-        value_var = self.GetVariableByReg(analysis.results, value_reg)
-        value = value_var.value if value_var and value_var.value else 'undefined'
+        value = self._get_register_value(analysis, value_reg)
+        elements = self._parse_array_elements(
+            self.GetVariableByReg(analysis.results, dest_reg), handler, entry
+        )
 
-        dest_var = self.GetVariableByReg(analysis.results, dest_reg)
-        elements = self._parse_array_elements(dest_var.value if dest_var else None, handler, entry)
-
-        # Extend with `undefined` placeholders if the index is sparse/ahead
-        # of the currently known elements, then set/overwrite the slot.
+        # Extend array if needed
         if index >= len(elements):
             elements.extend(['undefined'] * (index - len(elements) + 1))
+
         elements[index] = value
 
         js_array = "[" + ", ".join(elements) + "]"
@@ -69,34 +84,68 @@ class PutOwnByIndex(OpcodeHandler):
 
         return OpcodeResult(entry, variable)
 
+    def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
+        var = self.GetVariableByReg(analysis.results, reg)
+        return var.value if var and var.value is not None else 'undefined'
+
     @staticmethod
-    def _parse_array_elements(current_value, handler: str, entry: OpcodeEntry) -> list:
-        """
-        Best-effort recovery of the element list from a previously emitted
-        array-literal string (e.g. produced by NewArray/NewArrayWithBuffer or
-        an earlier PutOwnByIndex). Falls back to an empty list if the prior
-        value isn't a recognizable array literal — this mirrors the
-        best-effort object-literal mutation approach used by PutById, with
-        the same caveat: nested arrays/objects containing top-level commas
-        inside strings are not handled by this simple split.
-        """
-        if not current_value:
+    def _parse_array_elements(dest_var, handler: str, entry: OpcodeEntry) -> List[str]:
+        if not dest_var or not dest_var.value:
             return []
 
-        text = current_value.split(" /* capacity hint:", 1)[0].strip()
+        text = dest_var.value.split(" /* capacity hint:", 1)[0].strip()
+
         if not (text.startswith('[') and text.endswith(']')):
             logger.warning(
-                f"{handler} at address {entry.address}: destination register did not "
-                f"contain a recognizable array literal ({current_value!r}); starting fresh"
+                f"{handler} at {entry.address}: Not a recognizable array literal. Starting fresh."
             )
             return []
 
         inner = text[1:-1].strip()
-        if not inner:
-            return []
-        return [part.strip() for part in inner.split(",")]
+        return [part.strip() for part in inner.split(",") if part.strip()]
 
 
 class PutOwnByIndexL(PutOwnByIndex):
+    """Long index variant (UInt32)."""
+    pass   # Artık aynı Handle metodu yeterli
+
+
+class NewArrayWithBuffer(OpcodeHandler):
+    """Create a new array from static buffer."""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        return super().Handle(analysis, entry)
+        handler = self.__class__.__name__
+
+        match = NEW_ARRAY_WITH_BUFFER_PATTERN.match(entry.args.strip())
+        if not match:
+            return self.InvalidArgs(analysis, entry)
+
+        dest_reg = int(match.group(1))
+
+        array_str = self._extract_array_from_comment(entry.comment)
+        if not array_str:
+            return self.Exception(analysis, entry, "// Warning: No array data in comment")
+
+        try:
+            clean_str = array_str.replace("'", '"')
+            parsed = json.loads(clean_str)
+            js_array = json.dumps(parsed, ensure_ascii=False)
+        except json.JSONDecodeError as e:
+            return self.Exception(analysis, entry, f"// Warning: JSON decode failed: {e}")
+
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
+
+    @staticmethod
+    def _extract_array_from_comment(comment: str) -> str:
+        if not comment:
+            return ""
+        match = re.search(r'Array:\s*(\[.*?])', comment, re.DOTALL)
+        return match.group(1) if match else ""
+
+
+class NewArrayWithBufferLong(NewArrayWithBuffer):
+    """Long variant."""
+    pass
