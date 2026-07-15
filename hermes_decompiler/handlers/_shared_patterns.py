@@ -1,7 +1,7 @@
 import re
 
 REG = r'Reg\d+:\s*(\d+)'
-ADDR = r'Addr\d+:\s*(\d+)'
+ADDR = r'Addr\d+:\s*(-?\d+)'
 UINT8 = r'UInt8:\s*(\d+)'
 UINT16 = r'UInt16:\s*(\d+)'
 UINT32 = r'UInt32:\s*(\d+)'

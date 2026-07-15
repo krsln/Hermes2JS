@@ -13,7 +13,6 @@ from ._shared_patterns import REG, sequence
 # Example: <Ret>: <Reg8: 1>
 class Ret(OpcodeHandler):
     """Return a value from the current function."""
-
     _PATTERN = sequence(REG)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:

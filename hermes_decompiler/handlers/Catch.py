@@ -1,10 +1,11 @@
 from hermes_decompiler.Logger import logger
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+
+from ._shared_patterns import REG, sequence
 
 
 # /// Catch an exception (the first instruction in an exception handler).
@@ -14,7 +15,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 class Catch(OpcodeHandler):
     """Marks the start of a catch block, binding the caught exception value
     to the destination register."""
-
     _PATTERN = sequence(REG)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:

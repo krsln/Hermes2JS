@@ -1,10 +1,18 @@
 import re
+from typing import Dict, List, Tuple, Any
 
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+
+from ._shared_patterns import REG, UINT8, STRING_ID, sequence
+
+# Patterns
+PUT_BY_ID_PATTERN = sequence(REG, REG, UINT8, STRING_ID)
+PUT_NEW_OWN_PATTERN = sequence(REG, REG, STRING_ID)
+PUT_GETTER_SETTER_PATTERN = sequence(REG, REG, REG, REG, UINT8)
 
 
 # /// Set an object property by string index.
@@ -15,83 +23,72 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 # OPERAND_STRING_ID(PutByIdLong, 4)
 # Example: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 12270>  # String: 'fetchMovieDetails' (Identifier)
 class PutById(OpcodeHandler):
+    """Set an object property by string index."""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        # Parse arguments: Reg8 (dest), Reg8 (value), UInt8 (cache), string_id
-        match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*UInt8:\s*(\d+),\s*string_id:\s*(\d+)', entry.args.strip())
+        match = PUT_BY_ID_PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 
-        dest_reg, value_reg, cache, string_id = map(int, match.groups())
+        dest_reg, value_reg, _cache, string_id = map(int, match.groups())
 
-        # Extract property name
-        prop_name = ''
-        comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment)
-        if comment_match:
-            prop_name = comment_match.group(1)
-        else:
-            try:
-                prop_name = analysis.stringTable.get(str(string_id))
-            except (AttributeError, KeyError):
-                prop_name = f'string_{string_id}'
+        prop_name = self._extract_property_name(analysis, entry, string_id)
+        value = self._get_register_value(analysis, value_reg)
 
-        # Retrieve the value
-        value_var = self.GetVariableByReg(analysis.results, value_reg)
-        value = value_var.value if value_var and value_var.value else 'undefined'
-
-        # Initialize object
-        obj = {}
-        # Retrieve the destination object
-        dest_var = self.GetVariableByReg(analysis.results, dest_reg)
-
-        if dest_var.value != '{}':
-            obj_str = dest_var.value.strip()
-            # Check if the value is an object literal
-            if not (obj_str.startswith('{') and obj_str.endswith('}')):
-                obj = {}
-            else:
-                try:
-                    # Parse object literal
-                    obj_str = obj_str[1:-1].strip()
-                    if obj_str:
-                        pairs = self._parse_object_pairs(self, obj_str)
-                        obj = {k: v for k, v in pairs}
-                except Exception as e:
-                    error = f'/* Error: Failed to parse object in r{dest_reg}: {dest_var.value} - {str(e)} */ undefined'
-                    return self.Exception(analysis, entry, error)
-
-        # Update or set the property
+        obj = self._parse_existing_object(analysis, dest_reg)
         obj[prop_name] = value
 
-        # Generate JavaScript object literal
         js_obj = self._format_object_literal(obj)
 
-        # Update the JSVariable
         updated_var = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
         analysis.AddResult(entry, updated_var)
 
         return OpcodeResult(entry, updated_var)
 
+    def _extract_property_name(self, analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int) -> str:
+        comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment or "")
+        if comment_match:
+            return comment_match.group(1)
+        try:
+            return analysis.stringTable.get(str(string_id), f'string_{string_id}')
+        except (AttributeError, KeyError, TypeError):
+            return f'string_{string_id}'
+
+    def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
+        var = self.GetVariableByReg(analysis.results, reg)
+        return var.value if var and var.value is not None else 'undefined'
+
+    def _parse_existing_object(self, analysis: HermesAnalysis, dest_reg: int) -> Dict[str, Any]:
+        dest_var = self.GetVariableByReg(analysis.results, dest_reg)
+        if not dest_var or dest_var.value in (None, '{}', ''):
+            return {}
+
+        obj_str = dest_var.value.strip()
+        if not (obj_str.startswith('{') and obj_str.endswith('}')):
+            return {}
+
+        try:
+            inner = obj_str[1:-1].strip()
+            return dict(PutById._parse_object_pairs(inner)) if inner else {}
+        except Exception as e:
+            print(f"[WARNING] Failed to parse object in r{dest_reg}: {e}")
+            return {}
+
     @staticmethod
-    def _parse_object_pairs(self, obj_str: str) -> list[tuple[str, str]]:
-        """
-        Parse a JavaScript object literal string into key-value pairs.
-        Handles valid identifiers, quoted keys, and complex string values.
-        """
-        pairs = []
+    def _parse_object_pairs(obj_str: str) -> List[Tuple[str, str]]:
+        pairs: List[Tuple[str, str]] = []
         if not obj_str:
             return pairs
 
-        # Split on commas outside of quotes
         parts = []
         buffer = []
-        in_quotes = False
-        in_template = False
+        in_quotes = in_template = False
         i = 0
         while i < len(obj_str):
             char = obj_str[i]
-            if char == '"' and (i == 0 or obj_str[i - 1] != '\\'):
+            if char in '"\'' and (i == 0 or obj_str[i - 1] != '\\'):
                 in_quotes = not in_quotes
                 buffer.append(char)
             elif char == '`' and (i == 0 or obj_str[i - 1] != '\\'):
@@ -106,26 +103,19 @@ class PutById(OpcodeHandler):
         if buffer:
             parts.append(''.join(buffer).strip())
 
-        # Process each key-value pair
         for part in parts:
-            match = re.match(r'^\s*([a-zA-Z_$][a-zA-Z0-9_$]*|\"[^\"]*\"|\`[^\`]*\`)\s*:\s*(.+?)\s*$', part)
-            if not match:
-                raise ValueError(f"Invalid key-value pair: {part}")
-            key, value = match.groups()
-            if key.startswith('"') and key.endswith('"') or key.startswith('`') and key.endswith('`'):
-                key = key[1:-1]
-            pairs.append((key, value))
-
+            match = re.match(r'^\s*([a-zA-Z_$][a-zA-Z0-9_$]*|["`][^"`]*["`])\s*:\s*(.+?)\s*$', part)
+            if match:
+                key, value = match.groups()
+                if key[0] in '"`':
+                    key = key[1:-1]
+                pairs.append((key, value))
         return pairs
 
     @staticmethod
-    def _format_object_literal(obj: dict) -> str:
-        """
-        Format a dictionary as a JavaScript object literal.
-        """
-
-        def is_valid_identifier(key: str) -> bool:
-            return bool(re.match(r'^[a-zA-Z_$][a-zA-Z0-9_$]*$', key))
+    def _format_object_literal(obj: Dict[str, Any]) -> str:
+        def is_valid_identifier(k: str) -> bool:
+            return bool(re.match(r'^[a-zA-Z_$][a-zA-Z0-9_$]*$', k))
 
         parts = []
         for key, value in obj.items():
@@ -134,7 +124,8 @@ class PutById(OpcodeHandler):
         return '{ ' + ', '.join(parts) + ' }'
 
 
-class PutByIdLong(PutById): pass
+class PutByIdLong(PutById):
+    pass
 
 
 # /// Create a new own property on an object. This is similar to PutById, but
@@ -151,138 +142,32 @@ class PutByIdLong(PutById): pass
 # OPERAND_STRING_ID(PutNewOwnByIdShort, 3)
 # OPERAND_STRING_ID(PutNewOwnById, 3)
 # OPERAND_STRING_ID(PutNewOwnByIdLong, 3)
-
 # Example: <PutNewOwnById>: <Reg8: 4, Reg8: 5, string_id: 8626>  # String: 'Authorization' (Identifier)
 # Example: <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 6, string_id: 158>  # String: 'method' (Identifier)
 class PutNewOwnByIdX(OpcodeHandler):
+    """Base class for PutNewOwnById* variants."""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        # Parse arguments: Reg8 (dest), Reg8 (value), string_id
-        match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*string_id:\s*(\d+)', entry.args.strip())
+        match = PUT_NEW_OWN_PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 
         dest_reg, value_reg, string_id = map(int, match.groups())
 
-        # Extract property name from comment (e.g., String: 'headers')
-        prop_name = None
-        comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment)
-        if comment_match:
-            prop_name = comment_match.group(1)
-        else:
-            # Fallback to string table lookup
-            try:
-                prop_name = analysis.stringTable.get(str(string_id))
-            except (AttributeError, KeyError):
-                prop_name = f'string_{string_id}'  # Fallback if lookup fails
+        prop_name = PutById._extract_property_name(self, analysis, entry, string_id)
+        value = PutById._get_register_value(self, analysis, value_reg)
 
-        # Retrieve the destination object from the analysis context
-        dest_var = self.GetVariableByReg(analysis.results, dest_reg)
-        if not dest_var or not dest_var.value:
-            error = f'/* Error: No valid object in r{dest_reg} */ undefined'
-            return self.Exception(analysis, entry, error)
-
-            # Retrieve the value from the analysis context
-        value_var = self.GetVariableByReg(analysis.results, value_reg)
-        value = value_var.value if value_var and value_var.value else 'undefined'
-
-        # Initialize or update the object state
-        obj = {}
-        if dest_var.value and dest_var.value != '{}':
-            obj_str = dest_var.value.strip()
-            if not (obj_str.startswith('{') and obj_str.endswith('}')):
-                error = f'/* Error: Invalid object format in r{dest_reg}: {dest_var.value} */ undefined'
-                return self.Exception(analysis, entry, error)
-            try:
-                obj_str = obj_str[1:-1].strip()
-                if obj_str:
-                    pairs = self._parse_object_pairs(self, obj_str)
-                    obj = {k: v for k, v in pairs}
-            except Exception as e:
-                error = f'/* Error: Invalid object format in r{dest_reg}: {dest_var.value} */ undefined'
-                return self.Exception(analysis, entry, error)
-
-        # Add the new property
+        obj = PutById._parse_existing_object(self, analysis, dest_reg)
         obj[prop_name] = value
 
-        # Generate the JavaScript object literal
-        js_obj = self._format_object_literal(obj)
+        js_obj = PutById._format_object_literal(obj)
 
-        # Update the JSVariable for the destination object
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
-
-    @staticmethod
-    def _parse_object_pairs(self, obj_str: str) -> list[tuple[str, str]]:
-        """
-        Parse a JavaScript object literal string into key-value pairs.
-        Handles valid identifiers, quoted keys, and complex string values, with validation.
-        """
-        pairs = []
-        obj_str = obj_str.strip()
-        if not obj_str:
-            return pairs
-
-        # Split on commas outside of quotes
-        parts = []
-        buffer = []
-        in_quotes = False
-        in_template = False
-        i = 0
-        while i < len(obj_str):
-            char = obj_str[i]
-            if char == '"' and (i == 0 or obj_str[i - 1] != '\\'):
-                in_quotes = not in_quotes
-                buffer.append(char)
-            elif char == '`' and (i == 0 or obj_str[i - 1] != '\\'):
-                in_template = not in_template
-                buffer.append(char)
-            elif char == ',' and not in_quotes and not in_template:
-                parts.append(''.join(buffer).strip())
-                buffer = []
-            else:
-                buffer.append(char)
-            i += 1
-        if buffer:
-            parts.append(''.join(buffer).strip())
-
-        # Process each key-value pair
-        for part in parts:
-            # Match key: value, where key can be identifier or quoted string
-            match = re.match(r'^\s*([a-zA-Z_$][a-zA-Z0-9_$]*|\"[^\"]*\"|\`[^\`]*\`)\s*:\s*(.+?)\s*$', part)
-            if not match:
-                raise ValueError(f"Invalid key-value pair: {part}")
-            key, value = match.groups()
-            # Remove quotes or backticks from key
-            if key.startswith('"') and key.endswith('"') or key.startswith('`') and key.endswith('`'):
-                key = key[1:-1]
-            # Validate value (basic check for unclosed quotes)
-            if value.startswith('"') and not value.endswith('"') and not value.endswith('`"'):
-                raise ValueError(f"Unclosed string in value: {value}")
-            pairs.append((key, value))
-
-        return pairs
-
-    @staticmethod
-    def _format_object_literal(obj: dict) -> str:
-        """
-        Format a dictionary as a JavaScript object literal, avoiding quotes for valid identifiers.
-        """
-
-        def is_valid_identifier(key: str) -> bool:
-            # Check if the key is a valid JavaScript identifier
-            return bool(re.match(r'^[a-zA-Z_$][a-zA-Z0-9_$]*$', key))
-
-        parts = []
-        for key, value in obj.items():
-            # Only quote the key if it's not a valid identifier
-            formatted_key = key if is_valid_identifier(key) else f'"{key}"'
-            # Use the value as-is, assuming it's a valid JavaScript expression
-            parts.append(f'{formatted_key}: {value}')
-        return '{ ' + ', '.join(parts) + ' }'
 
 
 class PutNewOwnByIdShort(PutNewOwnByIdX): pass
@@ -292,3 +177,38 @@ class PutNewOwnById(PutNewOwnByIdX): pass
 
 
 class PutNewOwnByIdLong(PutNewOwnByIdX): pass
+
+
+class PutOwnGetterSetterByVal(OpcodeHandler):
+    """Define getter/setter property."""
+
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = PUT_GETTER_SETTER_PATTERN.match(entry.args.strip())
+        if not match:
+            return self.InvalidArgs(analysis, entry, "Expected 4 Reg + UInt8")
+
+        obj_reg, key_reg, getter_reg, setter_reg, enumerable_flag = map(int, match.groups())
+
+        obj_val = self.GetValueByReg(analysis.results, obj_reg) or f"r{obj_reg}"
+        key_val = self.GetValueByReg(analysis.results, key_reg) or f"r{key_reg}"
+        getter_val = self.GetValueByReg(analysis.results, getter_reg)
+        setter_val = self.GetValueByReg(analysis.results, setter_reg)
+        enumerable = "true" if enumerable_flag else "false"
+
+        descriptor_parts = []
+        if getter_val is not None:
+            descriptor_parts.append(f"get: {getter_val}")
+        if setter_val is not None:
+            descriptor_parts.append(f"set: {setter_val}")
+        descriptor_parts.append(f"enumerable: {enumerable}")
+        descriptor_parts.append("configurable: true")
+
+        descriptor = "{ " + ", ".join(descriptor_parts) + " }"
+        value = f"Object.defineProperty({obj_val}, {key_val}, {descriptor})"
+
+        variable = JSVariable(handler, entry.address, f'r{obj_reg}', value)
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)

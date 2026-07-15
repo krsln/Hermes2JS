@@ -11,14 +11,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
 from ._shared_patterns import REG, UINT8, UINT32, UINT16, sequence
 
-# === Patterns ===
-NEW_ARRAY_PATTERN = sequence(REG, UINT16)
-NEW_ARRAY_WITH_BUFFER_PATTERN = sequence(REG, UINT16, UINT16, UINT16)
-
-# PutOwnByIndex 2 pattern (UInt8 ve UInt32)
-PUT_OWN_BY_INDEX_PATTERN = sequence(REG, REG, UINT8)
-PUT_OWN_BY_INDEX_L_PATTERN = sequence(REG, REG, UINT32)
-
 
 # /// Create a new, empty Array with a preallocation size hint.
 # /// Arg1 = new Array(); the capacity hint (Arg2) only affects the initial
@@ -28,11 +20,12 @@ PUT_OWN_BY_INDEX_L_PATTERN = sequence(REG, REG, UINT32)
 # Example: <NewArray>: <Reg8: 1, UInt16: 4>
 class NewArray(OpcodeHandler):
     """Create a new, empty Array with a preallocation size hint."""
+    _PATTERN = sequence(REG, UINT16)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = NEW_ARRAY_PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected Reg8 and UInt16 arguments")
 
@@ -54,13 +47,16 @@ class NewArray(OpcodeHandler):
 # Example: <PutOwnByIndex>: <Reg8: 1, Reg8: 2, UInt8: 0>
 class PutOwnByIndex(OpcodeHandler):
     """Set an array element by (statically known) numeric index."""
+    # PutOwnByIndex 2 pattern (UInt8 ve UInt32)
+    _PATTERN = sequence(REG, REG, UINT8)
+    _PATTERN_LONG = sequence(REG, REG, UINT32)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         # Try both UInt8 and UInt32 variants
-        match = PUT_OWN_BY_INDEX_PATTERN.match(entry.args.strip()) or \
-                PUT_OWN_BY_INDEX_L_PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip()) or \
+                self._PATTERN_LONG.match(entry.args.strip())
 
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8 and UInt8/UInt32 arguments")
@@ -107,16 +103,17 @@ class PutOwnByIndex(OpcodeHandler):
 
 class PutOwnByIndexL(PutOwnByIndex):
     """Long index variant (UInt32)."""
-    pass   # Artık aynı Handle metodu yeterli
+    pass
 
 
 class NewArrayWithBuffer(OpcodeHandler):
     """Create a new array from static buffer."""
+    _PATTERN = sequence(REG, UINT16, UINT16, UINT16)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = NEW_ARRAY_WITH_BUFFER_PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 

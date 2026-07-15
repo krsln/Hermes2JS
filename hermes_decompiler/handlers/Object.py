@@ -10,15 +10,9 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
 from ._shared_patterns import REG, UINT16, sequence
 
-# Pre-compiled patterns
-NEW_OBJECT_WITH_BUFFER_PATTERN = sequence(REG, UINT16, UINT16, UINT16, UINT16)
-NEW_OBJECT_PATTERN = sequence(REG)
-NEW_ARRAY_WITH_BUFFER_PATTERN = sequence(REG, UINT16, UINT16, UINT16)
-SELECT_PATTERN = sequence(REG, REG, REG)
-
 
 # Create an object from a static map of values, as for var={'a': 3}.
-# Any non-constant elements can be set afterwards with PutOwnByInd.
+# Any non-constant elements can be set afterward with PutOwnByInd.
 # Arg1 is the destination.
 # Arg2 is a preallocation size hint.
 # Arg3 is the number of static elements.
@@ -28,11 +22,12 @@ SELECT_PATTERN = sequence(REG, REG, REG)
 # Example: < NewObjectWithBuffer >: < Reg8: 2, UInt16: 2, UInt16: 2, UInt16: 4743, UInt16: 24182 >  # Object: {'message': 'You have joined the list', 'type': 'success'}
 class NewObjectWithBuffer(OpcodeHandler):
     """Create an object from a static map of values using buffer."""
+    _PATTERN = sequence(REG, UINT16, UINT16, UINT16, UINT16)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = NEW_OBJECT_WITH_BUFFER_PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 
@@ -98,11 +93,12 @@ class NewObjectWithBufferLong(NewObjectWithBuffer):
 
 class NewObject(OpcodeHandler):
     """Create a new empty object: {}"""
+    _PATTERN = sequence(REG)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = NEW_OBJECT_PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 
@@ -116,11 +112,12 @@ class NewObject(OpcodeHandler):
 
 class SelectObject(OpcodeHandler):
     """Select a property by dynamic key: obj[key]"""
+    _PATTERN = sequence(REG, REG, REG)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = SELECT_PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 

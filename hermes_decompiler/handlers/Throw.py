@@ -1,5 +1,3 @@
-import re
-
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -8,7 +6,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
 from ._shared_patterns import REG, sequence
 
-THROW_PATTERN = sequence(REG)
 
 # /// Throw an exception.
 # /// throw Arg1;
@@ -16,12 +13,13 @@ THROW_PATTERN = sequence(REG)
 # Example: <Throw>: <Reg8: 2>
 class Throw(OpcodeHandler):
     """Throw an exception."""
+    _PATTERN = sequence(REG)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         # Parse the Reg8 argument (e.g., "Reg8: 2")
-        match = THROW_PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 

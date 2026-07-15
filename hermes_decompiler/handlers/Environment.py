@@ -6,31 +6,26 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
+from ._shared_patterns import REG, UINT8, UINT16, sequence
 
-# CreateEnvironment
-# CreateInnerEnvironment
-# LoadFromEnvironment
-# LoadFromEnvironmentL
-# StoreNPToEnvironment
-# StoreNPToEnvironmentL
-# StoreToEnvironment
-# StoreToEnvironmentL
 
-# /// Create a new environment, to store values captured by closures.
+# /// Create a new environment to store values captured by closures.
 # DEFINE_OPCODE_1(CreateEnvironment, Reg8)
 # Example: <CreateEnvironment>: <Reg8: 1>
 class CreateEnvironment(OpcodeHandler):
+    """Create a new lexical environment for closures."""
+    _PATTERN = sequence(REG)
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        # Match: "Reg8: x"
-        match = re.match(r'^Reg8:\s*(\d+)$', entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected single Reg8 argument")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8 argument")
 
         dest_reg = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"// Create new environment")
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', "createEnvironment()")
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -41,17 +36,19 @@ class CreateEnvironment(OpcodeHandler):
 # DEFINE_OPCODE_2(GetEnvironment, Reg8, UInt8)
 # Example: <GetEnvironment>: <Reg8: 1, UInt8: 4>
 class GetEnvironment(OpcodeHandler):
+    """Get environment from N levels up the scope chain."""
+    _PATTERN = sequence(REG, UINT8)
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        # This matches "Reg8: x, UInt8: y" with optional whitespace
-        match = re.match(r'^Reg8:\s*(\d+),\s*UInt8:\s*(\d+)$', entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8 and UInt8 arguments")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8, UInt8 arguments")
 
-        dest_reg, env_index = [int(x) for x in match.groups()]
+        dest_reg, env_level = map(int, match.groups())
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"getEnvironment({env_index});")
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"getEnvironment({env_level})")
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -65,25 +62,30 @@ class GetEnvironment(OpcodeHandler):
 # DEFINE_OPCODE_3(LoadFromEnvironmentL, Reg8, Reg8, UInt16)
 # Example: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 16>
 class LoadFromEnvironment(OpcodeHandler):
+    """Load value from environment slot."""
+    _PATTERN = sequence(REG, REG, UINT8)
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = re.match(r'^Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*UInt8:\s*(\d+)$', entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected two Reg8 and one UInt8 arguments")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8, UInt8")
 
-        dest_reg, env_reg, index = [int(x) for x in match.groups()]
-        env_value = self.GetValueByReg(analysis.results, env_reg)
+        dest_reg, env_reg, slot = map(int, match.groups())
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{env_value}[{index}]")
+        env_value = self.GetValueByReg(analysis.results, env_reg) or f"r{env_reg}"
+
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{env_value}[{slot}]")
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
 
 
 class LoadFromEnvironmentL(LoadFromEnvironment):
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        return super().Handle(analysis, entry)
+    """Long index variant."""
+    _PATTERN = sequence(REG, REG, UINT16)
+    pass
 
 
 # /// Store a value in an environment.
@@ -97,27 +99,30 @@ class LoadFromEnvironmentL(LoadFromEnvironment):
 # DEFINE_OPCODE_3(StoreNPToEnvironmentL, Reg8, UInt16, Reg8)
 # Example:  <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 3>
 class StoreToEnvironment(OpcodeHandler):
+    """Store value into environment slot."""
+    _PATTERN = re.compile(
+        r'^Reg8:\s*(\d+),\s*UInt(?:8|16):\s*(\d+),\s*Reg8:\s*(\d+)$'
+    )
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        return self._handle_store_env(analysis, entry)
-
-    def _handle_store_env(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
-        args = entry.args.strip()
 
-        # Try to match both UInt8 and UInt16 formats
-        match = re.match(r'^Reg8:\s*(\d+),\s*UInt(?:8|16):\s*(\d+),\s*Reg8:\s*(\d+)$', args)
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8, UInt(8|16), Reg8 format")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8, UInt(8|16), Reg8")
 
-        env_reg, index, value_reg = [int(x) for x in match.groups()]
+        env_reg, slot, value_reg = map(int, match.groups())
 
-        comment = f"{handler}: env=r{env_reg}, slot={index}, value=r{value_reg}"
-        variable = JSVariable(handler, entry.address, f'r{env_reg}', f'setEnvSlot({index}, r{value_reg})  // {comment}')
+        value = self.GetValueByReg(analysis.results, value_reg) or f"r{value_reg}"
+
+        comment = f"{handler}: env=r{env_reg}, slot={slot}, value=r{value_reg}"
+        variable = JSVariable(handler, entry.address, f"r{env_reg}", f"setEnvSlot({slot}, {value})  /*{comment}*/")
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
 
 
+# Aliases for different variants
 class StoreToEnvironmentL(StoreToEnvironment): pass
 
 

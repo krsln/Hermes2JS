@@ -1,25 +1,18 @@
 import re
 from typing import Dict
 
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT16, sequence
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-
-# Note:
-# If you want to support both .call() and direct call, you could check the previous instruction context
-# (e.g., if the function was fetched via .log, you may want to emit .call()).
-
-# "The difference [between direct and indirect call] is whether the function is a reference or a closure...
-# closures are typically created via a CreateClosure opcode..."
+from ._shared_patterns import REG, UINT8, UINT16, sequence
 
 
 class CallX(OpcodeHandler):
     # One pattern per arity: dest + closure + N argument registers.
-    _REGEX_PATTERNS: Dict[int, "re.Pattern[str]"] = {
+    _PATTERN: Dict[int, "re.Pattern[str]"] = {
         n: sequence(*([REG] * (n + 2))) for n in (1, 2, 3, 4)
     }
 
@@ -29,7 +22,7 @@ class CallX(OpcodeHandler):
         handler = self.__class__.__name__
 
         # Get precompiled regex for the number of arguments
-        reg_pattern = self._REGEX_PATTERNS.get(self.num_args)
+        reg_pattern = self._PATTERN.get(self.num_args)
         if not reg_pattern:
             return self.InvalidArgs(analysis, entry)
 
@@ -120,17 +113,6 @@ class CallX(OpcodeHandler):
 # OPERAND_FUNCTION_ID(CallDirect, 3)
 # DEFINE_RET_TARGET(CallDirect)
 class CallDirect(OpcodeHandler):
-    """
-    Unlike CallX/Call, there is no closure register — the callee is
-    resolved statically via the function table. 'this' and the arguments
-    are expected to already sit in the registers immediately preceding
-    `dest_reg` (mirroring the func_reg-relative heuristic used for indirect
-    calls). This is a best-effort reconstruction: if the actual frame
-    layout diverges from this assumption, the recovered argument list may
-    be approximate — unresolved registers fall back to an `argN` placeholder
-    (logged as a warning) rather than aborting the batch.
-    """
-
     _PATTERN = sequence(REG, UINT8, UINT16)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -168,9 +150,8 @@ class CallDirect(OpcodeHandler):
 # DEFINE_RET_TARGET(Call)
 # Example: <Call>: <Reg8: 4, Reg8: 9, UInt8: 6>
 class Call(CallX):
-    """Same semantics as CallX but with a runtime-determined argument count
+    """The same semantics as CallX but with a runtime-determined argument count
     (UInt8) instead of a fixed arity."""
-
     _PATTERN = sequence(REG, REG, UINT8)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:

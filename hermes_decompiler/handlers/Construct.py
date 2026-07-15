@@ -1,12 +1,13 @@
 from typing import List
 
 from hermes_decompiler.Logger import logger
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+
+from ._shared_patterns import REG, UINT8, sequence
 
 
 # /// Call a constructor, with semantics identical to Call.
@@ -19,21 +20,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 # DEFINE_RET_TARGET(Construct)
 # Example: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
 class Construct(OpcodeHandler):
-    """
-    Reconstructs `new Callee(args)`.
-
-    Argument registers are recovered with the same func_reg-relative
-    heuristic Call/CallDirect use (see Call.py): best-effort, since we don't
-    track the real stack-frame pointer, so unresolved registers fall back to
-    an `argN` placeholder (logged as a warning) instead of raising.
-
-    Per the opcode's own documentation, the first of the `arg_count`
-    registers holds the `this` value produced by a preceding CreateThis —
-    that's a VM-internal detail, not a source-level constructor argument, so
-    it's dropped from the emitted argument list whenever it resolves to the
-    literal `"this"`.
-    """
-
     _PATTERN = sequence(REG, REG, UINT8)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -64,7 +50,7 @@ class Construct(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
     def _resolve_args(self, analysis: HermesAnalysis, entry: OpcodeEntry, handler: str,
-                       func_reg: int, arg_count: int) -> List[str]:
+                      func_reg: int, arg_count: int) -> List[str]:
         arg_regs = range(func_reg - arg_count, func_reg)
         args = []
         for offset, reg in enumerate(arg_regs):
