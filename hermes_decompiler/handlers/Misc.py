@@ -146,6 +146,32 @@ class InstanceOf(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
+# /// Arg1 = (Arg2 < Arg3), a boolean *value*.
+# /// Contrast with JLess in JmpCompare.py: that opcode performs the same
+# /// comparison but as a conditional *jump* — no boolean is ever
+# /// materialized into a register. This opcode is what backs a plain
+# /// expression like `const isSmaller = a < b;`.
+# DEFINE_OPCODE_3(Less, Reg8, Reg8, Reg8)
+# Example: <Less>: <Reg8: 0, Reg8: 93, Reg8: 0>
+class Less(OpcodeHandler):
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = _BINARY_REG_PATTERN.match(entry.args.strip())
+        if not match:
+            return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
+
+        dest_reg, lhs_reg, rhs_reg = (int(x) for x in match.groups())
+        lhs_val = self.GetValueByReg(analysis.results, lhs_reg) or f"r{lhs_reg}"
+        rhs_val = self.GetValueByReg(analysis.results, rhs_reg) or f"r{rhs_reg}"
+
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{lhs_val} < {rhs_val}")
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
+
+
+
 # /// Arg1 = delete Arg2[Arg3].
 # DEFINE_OPCODE_3(DelByVal, Reg8, Reg8, Reg8)
 # Example: <DelByVal>: <Reg8: 2, Reg8: 0, Reg8: 1>
