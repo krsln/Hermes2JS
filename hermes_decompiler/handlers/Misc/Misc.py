@@ -10,31 +10,6 @@ from hermes_decompiler.handlers._shared_patterns import REG, sequence
 _BINARY_REG_PATTERN = sequence(REG, REG, REG)
 _UNARY_REG_PATTERN = sequence(REG, REG)
 
-
-# /// Arg1 = (Arg2 instanceof Arg3).
-# DEFINE_OPCODE_3(InstanceOf, Reg8, Reg8, Reg8)
-# Example: <InstanceOf>: <Reg8: 2, Reg8: 0, Reg8: 1>
-class InstanceOf(OpcodeHandler):
-    """instanceof operator"""
-
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
-        match = _BINARY_REG_PATTERN.match(entry.args.strip())
-        if not match:
-            return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
-
-        dest_reg, lhs_reg, rhs_reg = map(int, match.groups())
-
-        lhs_val = self.GetValueByReg(analysis.results, lhs_reg) or f"r{lhs_reg}"
-        rhs_val = self.GetValueByReg(analysis.results, rhs_reg) or f"r{rhs_reg}"
-
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{lhs_val} instanceof {rhs_val}")
-        analysis.AddResult(entry, variable)
-
-        return OpcodeResult(entry, variable)
-
-
 # /// Arg1 = delete Arg2[Arg3].
 # DEFINE_OPCODE_3(DelByVal, Reg8, Reg8, Reg8)
 # Example: <DelByVal>: <Reg8: 2, Reg8: 0, Reg8: 1>
@@ -58,7 +33,7 @@ class DelByVal(OpcodeHandler):
 
         return OpcodeResult(entry, variable)
 
-# TODOs: 
+# TODOs:
 # DeclareGlobalVar GetPNameList GetNextPName
 # PutByVal AddEmptyString
 # GetArgumentsPropByVal GetArgumentsLength IsIn
