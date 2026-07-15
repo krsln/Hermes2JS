@@ -39,15 +39,17 @@ async function* anon_11947(param0, param1, param2) {
         // CODE -> <Ret>: <Reg8: 3>
         return r3;
         // CODE -> <Catch>: <Reg8: 7>
-        r7 = caughtException
+        // USED -> r7 = caughtException
         // CODE -> <Mov>: <Reg8: 1, Reg8: 7>
         // USED -> r1 = r7
         // CODE -> <GetGlobalObject>: <Reg8: 3>
         // USED -> r3 = this
         // CODE -> <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
         // USED -> r4 = this.Error
+        // CODE -> <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
+        // USED -> r4 = caughtException instanceof this.Error
         // CODE -> <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
-        if (!this.Error) {
+        if (!caughtException instanceof this.Error) {
             // CODE -> <NewObject>: <Reg8: 6>
             r6 = {}
             // CODE -> <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
@@ -93,6 +95,8 @@ async function* anon_11947(param0, param1, param2) {
                 // USED -> r9 = r7[r4].stack
                 // CODE -> <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
                 // USED -> r7 = r7[r4].stack.replace
+                // CODE -> <CreateRegExp>: <Reg8: 6, string_id: 7558, string_id: 11303, UInt32: 168>  # String: '^.+\\n' (String)  # String: '' (Identifier)
+                // Error: CreateRegExp at address 165: Expected Reg8 and three UInt32 arguments: Reg8: 6, string_id: 7558, string_id: 11303, UInt32: 168
                 // CODE -> <Call3>: <Reg8: 4, Reg8: 7, Reg8: 9, Reg8: 6, Reg8: 8>
                 r4 = r7[r4].stack.replace(r7[r4], "")
             }
@@ -133,6 +137,8 @@ async function* anon_11947(param0, param1, param2) {
                 // USED -> r7 = r2
                 // CODE -> <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
                 // USED -> r6 = r2.replace
+                // CODE -> <CreateRegExp>: <Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169>  # String: '^.+\\n.+\\n' (String)  # String: '' (Identifier)
+                // Error: CreateRegExp at address 254: Expected Reg8 and three UInt32 arguments: Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169
                 // CODE -> <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
                 // USED -> r3 = r2.replace(r1.stack, "")
                 // CODE -> <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>

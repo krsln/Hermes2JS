@@ -27,10 +27,12 @@ function _request(param0, param1, param2) {
     r13 = undefined
     // CODE -> <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
+    // CODE -> <TypeOf>: <Reg8: 14, Reg8: 6>
+    // USED -> r14 = typeof param1
     // CODE -> <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
     // USED -> r10 = "string"
     // CODE -> <JStrictEqual>: <Addr8: 18, Reg8: 14, Reg8: 10>  # Address: 0000003a
-    if (r14 === "string") {
+    if (typeof param1 === "string") {
         // CODE -> <Mov>: <Reg8: 14, Reg8: 6>
         // USED -> r14 = r6
         // CODE -> <JmpTrue>: <Addr8: 5, Reg8: 14>  # Address: 00000034
@@ -292,6 +294,8 @@ function _request(param0, param1, param2) {
     // USED -> r14 = r14.default.concat(r14.default.merge(r2.default(param0.defaults).headers.common, r17[r14]), r2.default(param0.defaults).headers)
     // CODE -> <PutById>: <Reg8: 10, Reg8: 14, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
     // USED -> r10 = { paramsSerializer: { serialize: r2.default(param0.defaults).paramsSerializer }, allowAbsoluteUrls: param0.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r2.default(param0.defaults).headers.common, r17[r14]), r2.default(param0.defaults).headers) }
+    // CODE -> <NewArray>: <Reg8: 14, UInt16: 0>
+    r14 = []
     // CODE -> <Mov>: <Reg8: 12, Reg8: 14>
     r12 = r14
     // CODE -> <StoreToEnvironment>: <Reg8: 9, UInt8: 2, Reg8: 14>
@@ -308,6 +312,8 @@ function _request(param0, param1, param2) {
     // USED -> r2 = unshiftRequestInterceptors /* Closure with env r9 = undefined */
     // CODE -> <Call2>: <Reg8: 2, Reg8: 14, Reg8: 15, Reg8: 2>
     r2 = param0.interceptors.request.forEach(unshiftRequestInterceptors /* Closure with env r9 = undefined */)
+    // CODE -> <NewArray>: <Reg8: 2, UInt16: 0>
+    r2 = []
     // CODE -> <Mov>: <Reg8: 3, Reg8: 2>
     r3 = r2
     // CODE -> <StoreToEnvironment>: <Reg8: 9, UInt8: 4, Reg8: 2>
@@ -337,25 +343,31 @@ function _request(param0, param1, param2) {
         // CODE -> <GetByIdShort>: <Reg8: 9, Reg8: 14, UInt8: 21, string_id: 87>  # String: 'bind' (Identifier)
         // USED -> r9 = r9.default.bind
         // CODE -> <Call2>: <Reg8: 9, Reg8: 9, Reg8: 14, Reg8: 8>
-        r9 = r9.default.bind(param0)
+        // USED -> r9 = r9.default.bind(param0)
+        // CODE -> <NewArray>: <Reg8: 15, UInt16: 2>
+        // USED -> r15 = [] /* capacity hint: 2 */
+        // CODE -> <PutOwnByIndex>: <Reg8: 15, Reg8: 9, UInt8: 0>
+        // USED -> r15 = [r9.default.bind(param0)]
+        // CODE -> <PutOwnByIndex>: <Reg8: 15, Reg8: 11, UInt8: 1>
+        // USED -> r15 = [r9.default.bind(param0), undefined]
         // CODE -> <GetById>: <Reg8: 16, Reg8: 15, UInt8: 22, string_id: 16801>  # String: 'unshift' (Identifier)
-        // USED -> r16 = param0.interceptors.response.unshift
+        // USED -> r16 = [r9.default.bind(param0), undefined].unshift
         // CODE -> <GetByIdShort>: <Reg8: 14, Reg8: 16, UInt8: 23, string_id: 86>  # String: 'apply' (Identifier)
-        // USED -> r14 = param0.interceptors.response.unshift.apply
+        // USED -> r14 = [r9.default.bind(param0), undefined].unshift.apply
         // CODE -> <Mov>: <Reg8: 9, Reg8: 12>
         // USED -> r9 = r12
         // CODE -> <Call3>: <Reg8: 9, Reg8: 14, Reg8: 16, Reg8: 15, Reg8: 9>
-        r9 = param0.interceptors.response.unshift.apply(param0.interceptors.response, r12)
+        r9 = [r9.default.bind(param0), undefined].unshift.apply([r9.default.bind(param0), undefined], r12)
         // CODE -> <GetByIdShort>: <Reg8: 16, Reg8: 15, UInt8: 24, string_id: 201>  # String: 'push' (Identifier)
-        // USED -> r16 = param0.interceptors.response.push
+        // USED -> r16 = [r9.default.bind(param0), undefined].push
         // CODE -> <GetByIdShort>: <Reg8: 14, Reg8: 16, UInt8: 23, string_id: 86>  # String: 'apply' (Identifier)
-        // USED -> r14 = param0.interceptors.response.push.apply
+        // USED -> r14 = [r9.default.bind(param0), undefined].push.apply
         // CODE -> <Mov>: <Reg8: 9, Reg8: 3>
         // USED -> r9 = r3
         // CODE -> <Call3>: <Reg8: 9, Reg8: 14, Reg8: 16, Reg8: 15, Reg8: 9>
-        r9 = param0.interceptors.response.push.apply(param0.interceptors.response, r3)
+        r9 = [r9.default.bind(param0), undefined].push.apply([r9.default.bind(param0), undefined], r3)
         // CODE -> <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
-        // USED -> r14 = param0.interceptors.response.length
+        // USED -> r14 = [r9.default.bind(param0), undefined].length
         // CODE -> <Mov>: <Reg8: 5, Reg8: 14>
         r5 = r14
         // CODE -> <GetGlobalObject>: <Reg8: 9>
@@ -369,7 +381,7 @@ function _request(param0, param1, param2) {
         // CODE -> <Mov>: <Reg8: 9, Reg8: 4>
         // USED -> r9 = r4
         // CODE -> <JNotLess>: <Addr8: 54, Reg8: 9, Reg8: 14>  # Address: 00000349
-        if (r4 >= param0.interceptors.response.length) {
+        if (r4 >= [r9.default.bind(param0) {
             // CODE -> <Mov>: <Reg8: 18, Reg8: 0>
             // USED -> r18 = r0
             // CODE -> <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
