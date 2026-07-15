@@ -96,9 +96,9 @@ async function* anon_11947(param0, param1, param2) {
                 // CODE -> <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
                 // USED -> r7 = r7[r4].stack.replace
                 // CODE -> <CreateRegExp>: <Reg8: 6, string_id: 7558, string_id: 11303, UInt32: 168>  # String: '^.+\\n' (String)  # String: '' (Identifier)
-                // Error: CreateRegExp at address 165: Expected Reg8 and three UInt32 arguments: Reg8: 6, string_id: 7558, string_id: 11303, UInt32: 168
+                // USED -> r6 = /^.+\\n/
                 // CODE -> <Call3>: <Reg8: 4, Reg8: 7, Reg8: 9, Reg8: 6, Reg8: 8>
-                r4 = r7[r4].stack.replace(r7[r4], "")
+                r4 = r7[r4].stack.replace(/^.+\\n/, "")
             }
             // CODE -> <Mov>: <Reg8: 2, Reg8: 4>
             // label_185:
@@ -138,11 +138,11 @@ async function* anon_11947(param0, param1, param2) {
                 // CODE -> <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
                 // USED -> r6 = r2.replace
                 // CODE -> <CreateRegExp>: <Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169>  # String: '^.+\\n.+\\n' (String)  # String: '' (Identifier)
-                // Error: CreateRegExp at address 254: Expected Reg8 and three UInt32 arguments: Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169
+                // USED -> r3 = /^.+\\n.+\\n/
                 // CODE -> <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
-                // USED -> r3 = r2.replace(r1.stack, "")
+                // USED -> r3 = r2.replace(/^.+\\n.+\\n/, "")
                 // CODE -> <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-                // USED -> r3 = globalThis.String(r1.stack).endsWith(r2.replace(r1.stack, ""))
+                // USED -> r3 = globalThis.String(r1.stack).endsWith(r2.replace(/^.+\\n.+\\n/, ""))
                 // CODE -> <JmpTrue>: <Addr8: 33, Reg8: 3>  # Address: 00000138
                 if (globalThis.String(r1.stack) {
                     // CODE -> <Mov>: <Reg8: 3, Reg8: 1>

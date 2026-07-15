@@ -2,10 +2,10 @@ import re
 
 from hermes_decompiler.Logger import logger
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 from ._shared_patterns import REG, FUNCTION_ID, sequence
 
@@ -115,8 +115,9 @@ class CreateClosureLongIndex(CreateClosure):
 # DEFINE_OPCODE_4(CreateRegExp, Reg8, UInt32, UInt32, UInt32)
 # Example: <CreateRegExp>: <Reg8: 0, UInt32: 12, UInt32: 13, UInt32: 0>  # String: '^\d+$'  String: 'g'
 class CreateRegExp(OpcodeHandler):
+    """Create a RegExp literal."""
     _PATTERN = re.compile(
-        r'^Reg\d+:\s*(\d+),\s*UInt32:\s*(\d+),\s*UInt32:\s*(\d+),\s*UInt32:\s*(\d+)$'
+        r'^Reg\d+:\s*(\d+),\s*(?:string_id|UInt32):\s*(\d+),\s*(?:string_id|UInt32):\s*(\d+),\s*(?:UInt32|Reg\d+):\s*(\d+)$'
     )
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -124,13 +125,19 @@ class CreateRegExp(OpcodeHandler):
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8 and three UInt32 arguments")
+            return self.InvalidArgs(
+                analysis, entry,
+                "Expected Reg8, (string_id|UInt32), (string_id|UInt32), UInt32"
+            )
 
-        dest_reg, pattern_id, flags_id = (int(match.group(i)) for i in (1, 2, 3))
+        dest_reg = int(match.group(1))
+        pattern_id = int(match.group(2))
+        flags_id = int(match.group(3))
 
         pattern, flags = self._resolve_pattern_and_flags(analysis, entry, pattern_id, flags_id)
+
         if pattern is None:
-            error = f'/* Error: could not resolve RegExp pattern (string_id {pattern_id}) */ undefined'
+            error = f'/* Error: could not resolve RegExp pattern (id {pattern_id}) */'
             return self.Exception(analysis, entry, error)
 
         js_regex = f"/{pattern}/{flags or ''}"
@@ -140,21 +147,17 @@ class CreateRegExp(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
     @staticmethod
-    def _resolve_pattern_and_flags(analysis, entry, pattern_id: int, flags_id: int):
-        """
-        Prefer the disassembler's own `String: '...'` comment annotations
-        (present on real Hermes dumps for CreateRegExp), falling back to a
-        stringTable lookup by id. Returns (pattern, flags), with either
-        element possibly None if it could not be resolved.
-        """
-        comment_matches = re.compile(r"String:\s*'([^']*)'").findall(entry.comment or "")
+    def _resolve_pattern_and_flags(analysis: HermesAnalysis, entry: OpcodeEntry,
+                                   pattern_id: int, flags_id: int):
+        """Prefer comment, fallback to stringTable."""
+        comment_matches = re.findall(r"String:\s*'([^']*)'", entry.comment or "")
         if len(comment_matches) >= 2:
             return comment_matches[0], comment_matches[1]
 
         pattern = analysis.stringTable.get(str(pattern_id))
         flags = analysis.stringTable.get(str(flags_id))
+
         if pattern is None:
-            logger.warning(
-                f"CreateRegExp at address {entry.address}: unresolved pattern string_id {pattern_id}"
-            )
+            logger.warning(f"CreateRegExp at {entry.address}: unresolved pattern id {pattern_id}")
+
         return pattern, flags
