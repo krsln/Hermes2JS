@@ -41,32 +41,50 @@ class JCompareX(OpcodeHandler):
 # Equality
 # ---------
 class JEqual(JCompareX): operator = "=="
+class JEqualLong(JEqual):  pass
+
 class JNotEqual(JCompareX):  operator = "!="
 class JNotEqualLong(JNotEqual):  pass
+
 class JStrictEqual(JCompareX): operator = "==="
 class JStrictEqualLong(JStrictEqual):  pass
+
 class JStrictNotEqual(JCompareX): operator = "!=="
 class JStrictNotEqualLong(JStrictNotEqual):  pass
-
 
 # Less
 # ----
 class JLess(JCompareX): operator = "<"
+class JLessN(JLess): pass
 class JLessLong(JLess): pass
-class JLessEqual(JCompareX): operator = "<="
-class JLessEqualLong(JLessEqual):  pass
-class JNotLess(JCompareX): operator = ">="
-class JNotLessLong(JNotLess): pass
-class JNotLessN(JNotLess): pass
-class JNotLessEqual(JCompareX):  operator = ">"
-class JNotLessEqualLong(JNotLessEqual):  pass
 
+class JLessEqual(JCompareX): operator = "<="
+class JLessEqualN(JLessEqual): pass
+class JLessEqualLong(JLessEqual):  pass
+
+class JNotLess(JCompareX): operator = ">="
+class JNotLessN(JNotLess): pass
+class JNotLessLong(JNotLess): pass
+
+class JNotLessEqual(JCompareX):  operator = ">"
+class JNotLessEqualN(JNotLessEqual): pass
+class JNotLessEqualLong(JNotLessEqual):  pass
 
 # Greater
 # -------
-class JGreater(JCompareX):   operator = ">"
-class JGreaterEqual(JCompareX):   operator = ">="
-class JNotGreater(JCompareX):  operator = "<="
-class JNotGreaterEqual(JCompareX):   operator = "<"
+class JGreater(JCompareX): operator = ">"
+class JGreaterN(JGreater): pass
+class JGreaterLong(JGreater): pass
+
+class JGreaterEqual(JCompareX): operator = ">="
+class JGreaterEqualN(JGreaterEqual): pass
+class JGreaterEqualLong(JGreaterEqual): pass
+
+class JNotGreater(JCompareX): operator = "<="
+class JNotGreaterN(JNotGreater): pass
+class JNotGreaterLong(JNotGreater): pass
+
+class JNotGreaterEqual(JCompareX): operator = "<"
 class JNotGreaterEqualN(JNotGreaterEqual):  pass
+class JNotGreaterEqualLong(JNotGreaterEqual): pass
 # @formatter:on
