@@ -1,14 +1,14 @@
 from typing import List
 
-from hermes2js.JSOpcodeDispatcher import JSOpcodeDispatcher
-from hermes2js.models.HermesAnalysis import HermesAnalysis
-from hermes2js.models.JSVariable import JSVariable
-from hermes2js.models.OpcodeEntry import OpcodeEntry
-from hermes2js.models.OpcodeResult import OpcodeResult
-from hermes2js.parsers.Parse_FunctionMap import Parse_FunctionMap
-from hermes2js.parsers.Parse_HbcMetadata import Parse_HbcMetadata
-from hermes2js.parsers.Parse_Line import Parse_Line
-from hermes2js.parsers.Parse_StringMap import Parse_StringMap
+from hermes_decompiler.JSOpcodeDispatcher import JSOpcodeDispatcher
+from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
+from hermes_decompiler.models.JSVariable import JSVariable
+from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.parsers.Parse_FunctionMap import Parse_FunctionMap
+from hermes_decompiler.parsers.Parse_HbcMetadata import Parse_HbcMetadata
+from hermes_decompiler.parsers.Parse_Line import Parse_Line
+from hermes_decompiler.parsers.Parse_StringMap import Parse_StringMap
 
 
 class JSConverter:

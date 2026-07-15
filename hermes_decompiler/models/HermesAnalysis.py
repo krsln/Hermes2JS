@@ -1,8 +1,8 @@
 from typing import Dict, Any, Optional, List
 
-from hermes2js.models.JSVariable import JSVariable
-from hermes2js.models.OpcodeEntry import OpcodeEntry
-from hermes2js.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.models.JSVariable import JSVariable
+from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 class Output:

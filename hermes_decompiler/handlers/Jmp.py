@@ -1,11 +1,11 @@
 import re
 from typing import Tuple, Optional
 
-from hermes2js.models.HermesAnalysis import HermesAnalysis
-from hermes2js.models.OpcodeResult import OpcodeResult
-from hermes2js.models.JSVariable import JSVariable
-from hermes2js.models.OpcodeEntry import OpcodeEntry
-from hermes2js.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.models.JSVariable import JSVariable
+from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
 _REGEX_PATTERNS = {
     "Jmp": re.compile(r'^Addr\d+:\s*(\d+)$'),

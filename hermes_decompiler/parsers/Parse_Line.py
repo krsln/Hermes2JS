@@ -1,6 +1,6 @@
 import re
 
-from hermes2js.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 
 
 def Parse_Line(line: str) -> OpcodeEntry | None:

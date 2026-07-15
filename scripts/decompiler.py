@@ -3,8 +3,8 @@
 from pathlib import Path
 import argparse
 
-from hermes2js.FileOps import GetFiles, ProcessFile
-from hermes2js.Logger import logger
+from hermes_decompiler.FileOps import GetFiles, ProcessFile
+from hermes_decompiler.Logger import logger
 
 
 def main() -> None:
