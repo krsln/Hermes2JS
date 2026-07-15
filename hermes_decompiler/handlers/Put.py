@@ -74,12 +74,12 @@ class PutById(OpcodeHandler):
         return OpcodeResult(entry, updated_var)
 
     @staticmethod
-    def _parse_object_pairs(self, obj_str: str) -> list[tuple[str, str]]:
+    def _parse_object_pairs(obj_str: str) -> List[Tuple[str, str]]:
         """
         Parse a JavaScript object literal string into key-value pairs.
         Handles valid identifiers, quoted keys, and complex string values.
         """
-        pairs = []
+        pairs: List[Tuple[str, str]] = []
         if not obj_str:
             return pairs
 
