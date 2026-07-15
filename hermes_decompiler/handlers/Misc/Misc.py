@@ -61,4 +61,5 @@ class DelByVal(OpcodeHandler):
 # TODOs:
 # DeclareGlobalVar
 # PutByVal
-# ToInt32
+#   AddEmptyString
+# GetArgumentsPropByVal LoadConstDouble GetArgumentsLength

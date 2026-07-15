@@ -12,12 +12,20 @@ from hermes_decompiler.handlers._shared_patterns import REG, sequence
 class UnaryOperator(OpcodeHandler):
     """Base class for unary register operations."""
 
-    _PATTERN = sequence(REG, REG)
+    _PATTERN: ClassVar = sequence(REG, REG)
 
-    prefix: ClassVar[str] = ""
-    suffix: ClassVar[str] = ""
+    def expression(self, value: str) -> str:
+        """
+        Return the JavaScript expression for the unary operation.
+        Subclasses should override this method.
+        """
+        return value
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def Handle(
+            self,
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
+    ) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
@@ -30,28 +38,43 @@ class UnaryOperator(OpcodeHandler):
 
         dest_reg, src_reg = map(int, match.groups())
 
-        src_val = self.GetValueByReg(
-            analysis.results,
-            src_reg,
-        ) or f"r{src_reg}"
-
-        variable = JSVariable(
-            handler,
-            entry.address,
-            f"r{dest_reg}",
-            f"{self.prefix}{src_val}{self.suffix}",
+        src_val = (
+                self.GetValueByReg(analysis.results, src_reg)
+                or f"r{src_reg}"
         )
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", self.expression(src_val), )
 
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
 
 
-# @formatter:off
-class Not(UnaryOperator): prefix = "!"
-class TypeOf(UnaryOperator): prefix = "typeof "
-class ToNumeric(UnaryOperator): prefix = "+"
+class Not(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f"!{value}"
 
-class Inc(UnaryOperator): suffix = " + 1"
-class Dec(UnaryOperator): suffix = " - 1"
-# @formatter:on
+
+class TypeOf(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f"typeof {value}"
+
+
+class ToNumeric(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f"+{value}"
+
+
+class Inc(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f"{value} + 1"
+
+
+class Dec(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f"{value} - 1"
+
+
+class ToInt32(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f"({value} | 0)"

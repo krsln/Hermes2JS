@@ -37,19 +37,39 @@ class BinaryOperator(OpcodeHandler):
 
 
 # @formatter:off
-class Mul(BinaryOperator): operator = "*"
+class Add(BinaryOperator): operator = "+"
+class AddN(Add): pass
 class Sub(BinaryOperator): operator = "-"
+class SubN(Sub): pass
+class Mul(BinaryOperator): operator = "*"
+class MulN(Mul): pass
+class Div(BinaryOperator): operator = "/"
+class DivN(Div): pass
 class Mod(BinaryOperator): operator = "%"
+class ModN(Mod): pass
+
 class BitAnd(BinaryOperator): operator = "&"
+class BitNot(BinaryOperator): operator = "~"
 class BitOr(BinaryOperator): operator = "|"
+class BitOrN(BitOr): pass
+class BitXor(BinaryOperator): operator = "^"
+class BitXorN(BitXor): pass
+
 class LShift(BinaryOperator): operator = "<<"
 class RShift(BinaryOperator): operator = ">>"
-class URShift(BinaryOperator): operator = ">>>"
+class URshift(BinaryOperator): operator = ">>>"
+
 class Less(BinaryOperator): operator = "<"
 class LessEq(BinaryOperator): operator = "<="
+class Greater(BinaryOperator): operator = ">"
+class GreaterEq(BinaryOperator): operator = ">="
 
 class Eq(BinaryOperator): operator = "=="
 class Neq(BinaryOperator): operator = "!="
 class StrictEq(BinaryOperator): operator = "==="
 class StrictNeq(BinaryOperator): operator = "!=="
 # @formatter:on
+
+class InstanceOf(BinaryOperator):
+    """instanceof operator."""
+    operator = "instanceof"
