@@ -1,34 +1,34 @@
-import re
-
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
+from hermes_decompiler.handlers._shared_patterns import REG, sequence
+
 # /// Return a value from the current function.
 # /// return Arg1;
 # DEFINE_OPCODE_1(Ret, Reg8)
 # Example: <Ret>: <Reg8: 1>
 class Ret(OpcodeHandler):
+    """Return a value from the current function."""
+
+    _PATTERN = sequence(REG)
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         """Handle <Ret> opcode, returning the value from the specified register or performing the return action."""
         handler = self.__class__.__name__
 
         # Check if the line contains specific return arguments.
-        arg_match = re.match(r'Reg8:\s*(\d+)', entry.args.strip())
-        if arg_match:
-            obj_reg = int(arg_match.group(1))  # Get the register
-
-            obj_val = self.GetValueByReg(analysis.results, obj_reg)
-            # print(obj_reg, obj_val)
-
-            variable = JSVariable(handler, entry.address, '', f"return {obj_val};")
-            analysis.AddResult(entry, variable)
-
-            return OpcodeResult(entry, variable)  # Return the value in that register
+        match = self._PATTERN.match(entry.args.strip())
+        if match:
+            reg = int(match.group(1))
+            value = self.GetValueByReg(analysis.results, reg)
+            return_stmt = f"return {value};"
         else:
-            variable = JSVariable(handler, entry.address, '', f"return;")  # If no arguments, just return with no value
-            analysis.AddResult(entry, variable)
+            return_stmt = "return;"
 
-            return OpcodeResult(entry, variable)
+        variable = JSVariable(handler, entry.address, '', return_stmt)
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
