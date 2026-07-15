@@ -1,5 +1,4 @@
-import re
-
+from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, sequence
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -7,25 +6,27 @@ from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
 
-# Call a constructor, with semantics identical to Call.
-# Arg1 is the destination of the return value.
-# Arg2 is the closure to invoke.
-# Arg3 is the number of arguments, assumed to be found in reverse order
-#      from the end of the current frame. The first argument 'this'
-#      is assumed to be created with CreateThis.
-# DEFINE_OPCODE_3(Construct, Reg8, Reg8, UInt8)
-# DEFINE_RET_TARGET(Construct)
+# /// Allocate the `this` object for a constructor call, ahead of the actual
+# /// Construct/CallDirect invocation that follows.
+# /// Arg1 is the destination register.
+# /// Arg2 is the closure (used to look up its .prototype).
+# /// Arg3 is the `new.target` (the constructor actually being `new`'d, which
+# ///      may differ from Arg2 in a derived-class / Reflect.construct call).
+# DEFINE_OPCODE_3(CreateThis, Reg8, Reg8, Reg8)
 # Example: <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
 class CreateThis(OpcodeHandler):
+    """Represents `this` object allocation prior to a constructor call."""
+
+    _PATTERN = sequence(REG, REG, REG)
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*Reg8:\s*(\d+)', entry.args.strip())
-
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
 
-        dest, func, new_target = map(int, match.groups())
+        dest, func, new_target = (int(x) for x in match.groups())
 
         func_name = self.GetValueByReg(analysis.results, func) or f"r{func}"
         new_target_name = self.GetValueByReg(analysis.results, new_target) or f"r{new_target}"
@@ -34,7 +35,7 @@ class CreateThis(OpcodeHandler):
             handler,
             entry.address,
             f'r{dest}',
-            f"createThis(prototype={func_name}, constructor={new_target_name})"
+            f"createThis(prototype={func_name}, constructor={new_target_name})",
         )
 
         # variable = JSVariable(handler, entry.address, f'r{dest}', f"createThis({func_name}, {new_target_name});")
@@ -54,19 +55,23 @@ class CreateThis(OpcodeHandler):
 # Example: <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 11944>  # Function: [#11944  of 37 bytes]: 1 params @ offset 0x0021917e
 # Example: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11947>  # Function: [#11947 fetchMovies of 29 bytes]: 2 params @ offset 0x00150430
 class CreateClosure(OpcodeHandler):
+    """Creates a closure bound to the given environment register, resolving
+    its display name from the function table (or a `function_N` fallback
+    if the id isn't in the table)."""
+
+    _PATTERN = sequence(REG, REG, FUNCTION_ID)
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = re.match(r'Reg8:\s*(\d+),\s*Reg8:\s*(\d+),\s*function_id:\s*(\d+)', entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8 and function_id arguments")
 
-        dest, env, func_id = map(int, match.groups())
+        dest, env, func_id = (int(x) for x in match.groups())
 
-        # Look up the function name from metadataList
         func_name = analysis.functionTable.get(str(func_id), f"function_{func_id}")
 
-        # TODO: Get environment register value
         env_var = self.GetVariableByReg(analysis.results, env)
         env_value = env_var.value if env_var and env_var.value else 'undefined'
         # print(env, env_value)
@@ -76,8 +81,22 @@ class CreateClosure(OpcodeHandler):
             handler,
             entry.address,
             f'r{dest}',
-            f"{func_name} /* Closure with env r{env} = {env_value} */"
+            f"{func_name} /* Closure with env r{env} = {env_value} */",
         )
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
+
+
+# The long-index variant only differs in the function_id operand's on-disk
+# width (UInt32 instead of UInt16); the disassembler still labels it
+# `function_id:` either way, so the shared FUNCTION_ID pattern already
+# covers both and no logic needs to change.
+#
+# NOTE: this class was documented in the header comment above but never
+# actually defined/registered in the original file — CreateClosureLongIndex
+# opcodes would have silently fallen through to "no handler found" during
+# dispatch. Added here to close that gap.
+class CreateClosureLongIndex(CreateClosure):
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        return super().Handle(analysis, entry)
