@@ -85,10 +85,8 @@ class NewObjectWithBuffer(OpcodeHandler):
 
 
 class NewObjectWithBufferLong(NewObjectWithBuffer):
-    """Long variant - reuses same logic."""
-
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        return super().Handle(analysis, entry)
+    """Long variant."""
+    pass
 
 
 class NewObject(OpcodeHandler):
@@ -105,6 +103,30 @@ class NewObject(OpcodeHandler):
         dest_reg = int(match.group(1))
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', "{}")
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
+
+
+# Example: <NewObjectWithParent>: <Reg8: 1, Reg8: 14>
+class NewObjectWithParent(OpcodeHandler):
+    """Create a new object with the specified prototype."""
+
+    _PATTERN = sequence(REG, REG)
+
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.InvalidArgs(analysis, entry)
+
+        dest_reg, parent_reg = map(int, match.groups())
+
+        parent = self.GetValueByReg(analysis.results, parent_reg) or f"r{parent_reg}"
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"Object.create({parent})")
+
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)

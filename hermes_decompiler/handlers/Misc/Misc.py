@@ -161,8 +161,5 @@ class DelByVal(OpcodeHandler):
 # DeclareGlobalVar
 # PutByVal
 # StrictEq
-# Not
-# IteratorBegin
-# IteratorNext
-# IteratorClose
-# NewObjectWithParent
+# Not Mod BitOr BitAnd Mul Sub Dec BitAnd
+# LShift URshift

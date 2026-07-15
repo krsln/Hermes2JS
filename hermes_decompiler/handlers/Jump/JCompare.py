@@ -37,27 +37,36 @@ class JCompareX(OpcodeHandler):
         return OpcodeResult(entry, variable, goto=target_addr)
 
 
-# Comparison classes
-class JLess(JCompareX): operator = "<"
-
-
-class JNotLess(JCompareX): operator = ">="
-
-
+# @formatter:off
+# Equality
+# ---------
 class JEqual(JCompareX): operator = "=="
-
-
+class JNotEqual(JCompareX):  operator = "!="
+class JNotEqualLong(JNotEqual):  pass
 class JStrictEqual(JCompareX): operator = "==="
-
-
+class JStrictEqualLong(JStrictEqual):  pass
 class JStrictNotEqual(JCompareX): operator = "!=="
+class JStrictNotEqualLong(JStrictNotEqual):  pass
 
 
-class JStrictEqualLong(JStrictEqual):
-    """Jump if operands are strictly equal."""
-    pass
+# Less
+# ----
+class JLess(JCompareX): operator = "<"
+class JLessLong(JLess): pass
+class JLessEqual(JCompareX): operator = "<="
+class JLessEqualLong(JLessEqual):  pass
+class JNotLess(JCompareX): operator = ">="
+class JNotLessLong(JNotLess): pass
+class JNotLessN(JNotLess): pass
+class JNotLessEqual(JCompareX):  operator = ">"
+class JNotLessEqualLong(JNotLessEqual):  pass
 
 
-class JStrictNotEqualLong(JStrictNotEqual):
-    """Jump if operands are not strictly equal."""
-    pass
+# Greater
+# -------
+class JGreater(JCompareX):   operator = ">"
+class JGreaterEqual(JCompareX):   operator = ">="
+class JNotGreater(JCompareX):  operator = "<="
+class JNotGreaterEqual(JCompareX):   operator = "<"
+class JNotGreaterEqualN(JNotGreaterEqual):  pass
+# @formatter:on
