@@ -2,7 +2,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE -> <StartGenerator>: <>
     // StartGenerator: prepare generator context and jump to next instruction
     // CODE -> <LoadParam>: <Reg8: 8, UInt8: 0>
-    // USED -> r8 = param0
+    // USED -> r8 = this
     // CODE -> <ResumeGenerator>: <Reg8: 0, Reg8: 5>
     // label_4:
     r0 = await yield; // Resume generator
@@ -19,13 +19,13 @@ async function* anon_11947(param0, param1, param2) {
         // CODE -> <LoadConstUndefined>: <Reg8: 2>
         r2 = undefined
         // CODE -> <GetById>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 17057>  # String: '_request' (Identifier)
-        // USED -> r7 = param0._request
+        // USED -> r7 = this._request
         // CODE -> <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
-        // USED -> r3 = await param0._request(param1, param2)
+        // USED -> r3 = await this._request(param1, param2)
         // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 00000029
         // await yield; // check: JSConverter.Dispatcher // Resume at label_4
         // CODE -> <Ret>: <Reg8: 3>
-        return await param0._request(param1, param2);
+        return await this._request(param1, param2);
         // CODE -> <ResumeGenerator>: <Reg8: 3, Reg8: 4>
         r3 = await yield; // Resume generator
         // CODE -> <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032

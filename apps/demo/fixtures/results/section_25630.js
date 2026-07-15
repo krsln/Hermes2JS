@@ -2,7 +2,7 @@ function AcquisitionManager(param0, param1, param2) {
     // CODE -> <LoadParam>: <Reg8: 0, UInt8: 2>
     // USED -> r0 = param2
     // CODE -> <LoadParam>: <Reg8: 1, UInt8: 0>
-    // USED -> r1 = param0
+    // USED -> r1 = this
     // CODE -> <LoadConstString>: <Reg8: 2, string_id: 8200>  # String: 'appcenter.ms' (String)
     // USED -> r2 = "appcenter.ms"
     // CODE -> <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 13564>  # String: 'BASE_URL_PART' (Identifier)
