@@ -387,11 +387,19 @@ function _request(param0, param1, param2) {
             // CODE -> <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
             // USED -> r17 = r0.then
             // CODE -> <Mov>: <Reg8: 9, Reg8: 4>
-            r9 = r4
+            // USED -> r9 = r4
+            // CODE -> <ToNumeric>: <Reg8: 14, Reg8: 9>
+            // USED -> r14 = +r4
+            // CODE -> <Inc>: <Reg8: 9, Reg8: 14>
+            // USED -> r9 = +r4 + 1
             // CODE -> <Mov>: <Reg8: 4, Reg8: 9>
             r4 = r9
             // CODE -> <GetByVal>: <Reg8: 16, Reg8: 15, Reg8: 14>
             // USED -> r16 = r15[r14]
+            // CODE -> <ToNumeric>: <Reg8: 9, Reg8: 9>
+            // USED -> r9 = ++r4 + 1
+            // CODE -> <Inc>: <Reg8: 14, Reg8: 9>
+            r14 = ++r4 + 1 + 1
             // CODE -> <Mov>: <Reg8: 4, Reg8: 14>
             r4 = r14
             // CODE -> <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
@@ -425,11 +433,19 @@ function _request(param0, param1, param2) {
         // CODE -> <Mov>: <Reg8: 10, Reg8: 12>
         r10 = r12
         // CODE -> <Mov>: <Reg8: 9, Reg8: 4>
-        r9 = r4
+        // USED -> r9 = r4
+        // CODE -> <ToNumeric>: <Reg8: 14, Reg8: 9>
+        // USED -> r14 = +r4
+        // CODE -> <Inc>: <Reg8: 9, Reg8: 14>
+        // USED -> r9 = +r4 + 1
         // CODE -> <Mov>: <Reg8: 4, Reg8: 9>
         r4 = r9
         // CODE -> <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 14>
         r13 = r10[r14]
+        // CODE -> <ToNumeric>: <Reg8: 9, Reg8: 9>
+        // USED -> r9 = ++r4 + 1
+        // CODE -> <Inc>: <Reg8: 4, Reg8: 9>
+        r4 = ++r4 + 1 + 1
         // CODE -> <GetByVal>: <Reg8: 7, Reg8: 10, Reg8: 9>
         r7 = r10[r9]
         // CODE -> <Mov>: <Reg8: 10, Reg8: 13>
@@ -481,11 +497,19 @@ function _request(param0, param1, param2) {
         // CODE -> <Mov>: <Reg8: 9, Reg8: 3>
         r9 = r3
         // CODE -> <Mov>: <Reg8: 1, Reg8: 4>
-        r1 = r4
+        // USED -> r1 = r4
+        // CODE -> <ToNumeric>: <Reg8: 2, Reg8: 1>
+        // USED -> r2 = +r4
+        // CODE -> <Inc>: <Reg8: 1, Reg8: 2>
+        // USED -> r1 = +r4 + 1
         // CODE -> <Mov>: <Reg8: 4, Reg8: 1>
         r4 = r1
         // CODE -> <GetByVal>: <Reg8: 6, Reg8: 9, Reg8: 2>
         // USED -> r6 = r9[r2]
+        // CODE -> <ToNumeric>: <Reg8: 1, Reg8: 1>
+        // USED -> r1 = ++r4 + 1
+        // CODE -> <Inc>: <Reg8: 2, Reg8: 1>
+        r2 = ++r4 + 1 + 1
         // CODE -> <Mov>: <Reg8: 4, Reg8: 2>
         r4 = r2
         // CODE -> <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>

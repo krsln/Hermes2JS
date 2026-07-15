@@ -148,13 +148,17 @@ async function* anon_11947(param0, param1, param2) {
                     // CODE -> <Mov>: <Reg8: 3, Reg8: 1>
                     // USED -> r3 = r1
                     // CODE -> <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-                    r4 = r1.stack
+                    // USED -> r4 = r1.stack
                     // CODE -> <Mov>: <Reg8: 5, Reg8: 2>
-                    r5 = r2
+                    // USED -> r5 = r2
                     // CODE -> <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
                     // USED -> r2 = "\n"
+                    // CODE -> <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
+                    // USED -> r2 = "\n" + r2
+                    // CODE -> <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
+                    // USED -> r2 = r1.stack + "\n" + r2
                     // CODE -> <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-                    r3 = { stack: "\n" }
+                    r3 = { stack: r1.stack + "\n" + r2 }
                 }
             }
             // CODE -> <Jmp>: <Addr8: 4>  # Address: 0000013c
