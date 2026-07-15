@@ -6,30 +6,34 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
+from ._shared_patterns import REG, sequence
+
+THROW_PATTERN = sequence(REG)
 
 # /// Throw an exception.
 # /// throw Arg1;
 # DEFINE_OPCODE_1(Throw, Reg8)
 # Example: <Throw>: <Reg8: 2>
 class Throw(OpcodeHandler):
+    """Throw an exception."""
+
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         # Parse the Reg8 argument (e.g., "Reg8: 2")
-        match = re.match(r'Reg8:\s*(\d+)', entry.args.strip())
-
+        match = THROW_PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 
-        dest_reg = int(match.group(1))
+        reg = int(match.group(1))
+        value = self._get_register_value(analysis, reg)
 
-        # Retrieve the value from the register
-        value_var = self.GetVariableByReg(analysis.results, dest_reg)
-        value = value_var.value if value_var and value_var.value else 'undefined'
-
-        # Create a JSVariable representing the throw operation
-        throw_value = f'throw {value}'
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', throw_value)
+        throw_stmt = f"throw {value}"
+        variable = JSVariable(handler, entry.address, f'r{reg}', throw_stmt)
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
+
+    def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
+        var = self.GetVariableByReg(analysis.results, reg)
+        return var.value if var and var.value is not None else 'undefined'
