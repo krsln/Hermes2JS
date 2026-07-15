@@ -256,10 +256,12 @@ function _request(param0, param1, param2) {
         // USED -> r19 = r14.default
         // CODE -> <GetByIdShort>: <Reg8: 18, Reg8: 19, UInt8: 16, string_id: 135>  # String: 'forEach' (Identifier)
         // USED -> r18 = r14.default.forEach
+        // CODE -> <NewArrayWithBuffer>: <Reg8: 15, UInt16: 7, UInt16: 7, UInt16: 21504>  # Array: ['delete', 'get', 'head', 'post', 'put', 'patch', 'common']
+        // USED -> r15 = ["delete", "get", "head", "post", "put", "patch", "common"]
         // CODE -> <CreateClosure>: <Reg8: 14, Reg8: 9, function_id: 11949>  # Function: [#11949  of 18 bytes]: 2 params @ offset 0x002ba16a
         // USED -> r14 = function_11949 /* Closure with env r9 = undefined */
         // CODE -> <Call3>: <Reg8: 14, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 14>
-        r14 = r14.default.forEach(r2.default(param0.defaults).headers.common, function_11949 /* Closure with env r9 = undefined */)
+        r14 = r14.default.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function_11949 /* Closure with env r9 = undefined */)
     }
     // CODE -> <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 10>
     // label_568:

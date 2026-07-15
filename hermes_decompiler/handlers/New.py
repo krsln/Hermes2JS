@@ -88,3 +88,48 @@ class NewObject(OpcodeHandler):
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
+
+
+# Example: <NewArrayWithBuffer>: <Reg8: 1, UInt16: 2, UInt16: 2, UInt16: 43068>  # Array: ['FILE_TYPE_REGULAR', 'FILE_TYPE_DIRECTORY']
+class NewArrayWithBuffer(OpcodeHandler):
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = re.match(
+            r'Reg8:\s*(\d+),\s*UInt16:\s*\d+,\s*UInt16:\s*\d+,\s*UInt16:\s*\d+',
+            entry.args.strip()
+        )
+
+        if not match:
+            return self.InvalidArgs(analysis, entry)
+
+        dest_reg = int(match.group(1))
+
+        # Extract Array: [...] from comment
+        array_match = re.search(r'Array:\s*(\[.*?])', entry.comment)
+
+        if not array_match:
+            error = f'// Warning: No valid array parsed from comment: {entry.comment}'
+            return self.Exception(analysis, entry, error)
+
+        array_str = array_match.group(1)
+
+        try:
+            # Convert single quotes to double quotes (same as NewObjectWithBuffer)
+            clean_str = array_str.replace("'", '"')
+            parsed_array = json.loads(clean_str)
+            js_array = json.dumps(parsed_array)  # e.g. ["FILE_TYPE_REGULAR", "FILE_TYPE_DIRECTORY"]
+        except json.JSONDecodeError:
+            error = f'// Warning: Failed to parse array: {array_str}'
+            return self.Exception(analysis, entry, error)
+
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
+
+
+class NewArrayWithBufferLong(NewArrayWithBuffer):
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        return super().Handle(analysis, entry)
+

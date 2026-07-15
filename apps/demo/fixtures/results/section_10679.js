@@ -43,8 +43,12 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     r1 = param2(r6[r1])
     // CODE -> <StoreToEnvironment>: <Reg8: 3, UInt8: 2, Reg8: 1>
     r3 = setEnvSlot(2, r1)  // StoreToEnvironment: env=r3, slot=2, value=r1
+    // CODE -> <NewArrayWithBuffer>: <Reg8: 1, UInt16: 9, UInt16: 9, UInt16: 43049>  # Array: ['MAIN_BUNDLE', 'CACHES_DIRECTORY', 'DOCUMENT_DIRECTORY', 'EXTERNAL_DIRECTORY', 'EXTERNAL_STORAGE_DIRECTORY', 'TEMP_DIRECTORY', 'LIBRARY_DIRECTORY', 'PICTURES_DIRECTORY', 'MOVIES_DIRECTORY']
+    r1 = ["MAIN_BUNDLE", "CACHES_DIRECTORY", "DOCUMENT_DIRECTORY", "EXTERNAL_DIRECTORY", "EXTERNAL_STORAGE_DIRECTORY", "TEMP_DIRECTORY", "LIBRARY_DIRECTORY", "PICTURES_DIRECTORY", "MOVIES_DIRECTORY"]
     // CODE -> <StoreToEnvironment>: <Reg8: 3, UInt8: 3, Reg8: 1>
     r3 = setEnvSlot(3, r1)  // StoreToEnvironment: env=r3, slot=3, value=r1
+    // CODE -> <NewArrayWithBuffer>: <Reg8: 1, UInt16: 2, UInt16: 2, UInt16: 43068>  # Array: ['FILE_TYPE_REGULAR', 'FILE_TYPE_DIRECTORY']
+    r1 = ["FILE_TYPE_REGULAR", "FILE_TYPE_DIRECTORY"]
     // CODE -> <StoreToEnvironment>: <Reg8: 3, UInt8: 4, Reg8: 1>
     r3 = setEnvSlot(4, r1)  // StoreToEnvironment: env=r3, slot=4, value=r1
     // CODE -> <NewObject>: <Reg8: 1>
