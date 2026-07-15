@@ -39,10 +39,10 @@ async function* anon_9956(param0, param1) {
         // CODE -> <CompleteGenerator>: <>
         // label_58:
         // CODE -> <Ret>: <Reg8: 1>
-        return r1;
+        return undefined_r1;
     }
     // CODE -> <CompleteGenerator>: <>
     // label_61:
     // CODE -> <Ret>: <Reg8: 0>
-    return r0;
+    return undefined_r0;
 }

@@ -32,12 +32,12 @@ async function* anon_11947(param0, param1, param2) {
         if (param1) {
             // CODE -> <CompleteGenerator>: <>
             // CODE -> <Ret>: <Reg8: 3>
-            return r3;
+            return undefined_r3;
         }
         // CODE -> <CompleteGenerator>: <>
         // label_50:
         // CODE -> <Ret>: <Reg8: 3>
-        return r3;
+        return undefined_r3;
         // CODE -> <Catch>: <Reg8: 7>
         // USED -> r7 = caughtException
         // CODE -> <Mov>: <Reg8: 1, Reg8: 7>
@@ -174,5 +174,5 @@ async function* anon_11947(param0, param1, param2) {
     // CODE -> <CompleteGenerator>: <>
     // label_318:
     // CODE -> <Ret>: <Reg8: 0>
-    return r0;
+    return undefined_r0;
 }

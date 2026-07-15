@@ -87,20 +87,20 @@ async function* anon_17161(param0, param1) {
             if (createThis(prototype=this.Error.prototype, constructor=this.Error) {
                 // CODE -> <CompleteGenerator>: <>
                 // CODE -> <Ret>: <Reg8: 2>
-                return r2;
+                return undefined_r2;
             }
             // CODE -> <CompleteGenerator>: <>
             // label_162:
             // CODE -> <Ret>: <Reg8: 2>
-            return r2;
+            return undefined_r2;
         }
         // CODE -> <CompleteGenerator>: <>
         // label_165:
         // CODE -> <Ret>: <Reg8: 1>
-        return r1;
+        return undefined_r1;
     }
     // CODE -> <CompleteGenerator>: <>
     // label_168:
     // CODE -> <Ret>: <Reg8: 0>
-    return r0;
+    return undefined_r0;
 }

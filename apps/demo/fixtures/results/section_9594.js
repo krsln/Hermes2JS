@@ -55,10 +55,10 @@ async function* anon_9594(param0, param1) {
         // CODE -> <CompleteGenerator>: <>
         // label_99:
         // CODE -> <Ret>: <Reg8: 1>
-        return r1;
+        return undefined_r1;
     }
     // CODE -> <CompleteGenerator>: <>
     // label_102:
     // CODE -> <Ret>: <Reg8: 0>
-    return r0;
+    return undefined_r0;
 }

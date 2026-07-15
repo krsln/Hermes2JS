@@ -4,7 +4,8 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
+from ._shared_patterns import REG, sequence
+
 
 # /// Return a value from the current function.
 # /// return Arg1;
@@ -23,7 +24,7 @@ class Ret(OpcodeHandler):
         match = self._PATTERN.match(entry.args.strip())
         if match:
             reg = int(match.group(1))
-            value = self.GetValueByReg(analysis.results, reg)
+            value = self._get_register_value(analysis, reg)
             return_stmt = f"return {value};"
         else:
             return_stmt = "return;"
@@ -32,3 +33,7 @@ class Ret(OpcodeHandler):
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
+
+    def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
+        var = self.GetVariableByReg(analysis.results, reg)
+        return var.value if var and var.value is not None else f'undefined_r{reg}'
