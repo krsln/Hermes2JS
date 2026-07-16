@@ -55,8 +55,9 @@ class JStrictNotEqualLong(JStrictNotEqual):  pass
 # Less
 # ----
 class JLess(JCompareX): operator = "<"
-class JLessN(JLess): pass
 class JLessLong(JLess): pass
+class JLessN(JLess): pass
+class JLessNLong(JLess): pass
 
 class JLessEqual(JCompareX): operator = "<="
 class JLessEqualN(JLessEqual): pass
