@@ -8,7 +8,7 @@ function _request(param0, param1, param2) {
     // CODE -> <CreateEnvironment>: <Reg8: 9>
     r9 = createEnvironment()
     // CODE -> <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
-    r9 = setEnvSlot(0, param2)  /*StoreToEnvironment: env=r9, slot=0, value=r2*/
+    r9[0] = param2;
     // CODE -> <LoadConstUndefined>: <Reg8: 11>
     // USED -> r11 = undefined
     // CODE -> <LoadConstUndefined>: <Reg8: 12>
@@ -42,7 +42,7 @@ function _request(param0, param1, param2) {
         }
         // CODE -> <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 14>
         // label_52:
-        r9 = setEnvSlot(0, {})  /*StoreToEnvironment: env=r9, slot=0, value=r14*/
+        r9[0] = {};
         // CODE -> <Jmp>: <Addr8: 20>  # Address: 0000004c
         goto label_76;
     }
@@ -54,7 +54,7 @@ function _request(param0, param1, param2) {
     }
     // CODE -> <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
     // label_63:
-    r9 = setEnvSlot(0, {})  /*StoreToEnvironment: env=r9, slot=0, value=r2*/
+    r9[0] = {};
     // CODE -> <PutById>: <Reg8: 2, Reg8: 6, UInt8: 1, string_id: 14158>  # String: 'url' (Identifier)
     r2 = { url: param1 }
     // CODE -> <Mov>: <Reg8: 14, Reg8: 2>
@@ -71,7 +71,7 @@ function _request(param0, param1, param2) {
     // CODE -> <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 2, Reg8: 14>
     // USED -> r10 = r2.default(this.defaults)
     // CODE -> <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 10>
-    r9 = setEnvSlot(0, r2.default(this.defaults))  /*StoreToEnvironment: env=r9, slot=0, value=r10*/
+    r9[0] = r2.default(this.defaults);
     // CODE -> <GetById>: <Reg8: 19, Reg8: 10, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
     // USED -> r19 = r2.default(this.defaults).transitional
     // CODE -> <GetById>: <Reg8: 14, Reg8: 10, UInt8: 4, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
@@ -79,7 +79,7 @@ function _request(param0, param1, param2) {
     // CODE -> <GetByIdShort>: <Reg8: 17, Reg8: 10, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
     // USED -> r17 = r2.default(this.defaults).headers
     // CODE -> <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 17>
-    r9 = setEnvSlot(1, r2.default(this.defaults).headers)  /*StoreToEnvironment: env=r9, slot=1, value=r17*/
+    r9[1] = r2.default(this.defaults).headers;
     // CODE -> <JStrictEqual>: <Addr8: 100, Reg8: 19, Reg8: 11>  # Address: 000000e1
     if (r2.default(this.defaults) {
         // CODE -> <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
@@ -299,9 +299,9 @@ function _request(param0, param1, param2) {
     // CODE -> <Mov>: <Reg8: 12, Reg8: 14>
     r12 = r14
     // CODE -> <StoreToEnvironment>: <Reg8: 9, UInt8: 2, Reg8: 14>
-    r9 = setEnvSlot(2, [])  /*StoreToEnvironment: env=r9, slot=2, value=r14*/
+    r9[2] = [];
     // CODE -> <StoreNPToEnvironment>: <Reg8: 9, UInt8: 3, Reg8: 2>
-    r9 = setEnvSlot(3, true)  /*StoreNPToEnvironment: env=r9, slot=3, value=r2*/
+    r9[3] = true;
     // CODE -> <GetById>: <Reg8: 2, Reg8: 8, UInt8: 18, string_id: 19835>  # String: 'interceptors' (Identifier)
     // USED -> r2 = this.interceptors
     // CODE -> <GetById>: <Reg8: 15, Reg8: 2, UInt8: 19, string_id: 11955>  # String: 'request' (Identifier)
@@ -317,7 +317,7 @@ function _request(param0, param1, param2) {
     // CODE -> <Mov>: <Reg8: 3, Reg8: 2>
     r3 = r2
     // CODE -> <StoreToEnvironment>: <Reg8: 9, UInt8: 4, Reg8: 2>
-    r9 = setEnvSlot(4, [])  /*StoreToEnvironment: env=r9, slot=4, value=r2*/
+    r9[4] = [];
     // CODE -> <GetById>: <Reg8: 2, Reg8: 8, UInt8: 18, string_id: 19835>  # String: 'interceptors' (Identifier)
     // USED -> r2 = this.interceptors
     // CODE -> <GetById>: <Reg8: 15, Reg8: 2, UInt8: 20, string_id: 11767>  # String: 'response' (Identifier)
