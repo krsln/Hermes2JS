@@ -1,6 +1,7 @@
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 from hermes_decompiler.handlers._shared_patterns import (
@@ -9,10 +10,8 @@ from hermes_decompiler.handlers._shared_patterns import (
     sequence,
 )
 
-from .Base import EnvironmentAccess
 
-
-class GetEnvironment(EnvironmentAccess):
+class GetEnvironment(OpcodeHandler):
     """
     Resolve an environment from the lexical scope chain.
 

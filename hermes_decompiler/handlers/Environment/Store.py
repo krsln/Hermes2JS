@@ -1,6 +1,7 @@
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 from hermes_decompiler.handlers._shared_patterns import (
@@ -10,10 +11,8 @@ from hermes_decompiler.handlers._shared_patterns import (
     sequence,
 )
 
-from .Base import EnvironmentAccess
 
-
-class StoreToEnvironment(EnvironmentAccess):
+class StoreToEnvironment(OpcodeHandler):
     """
     Store a value into a lexical environment.
 
@@ -28,9 +27,9 @@ class StoreToEnvironment(EnvironmentAccess):
             return self.InvalidArgs(analysis, entry)
 
         env_reg, slot, value_reg = map(int, match.groups())
-        env = self.ResolveEnvironment(analysis, env_reg)
-        value = self.ResolveValue(analysis, value_reg)
-        expression = f"{self.FormatSlot(env, slot)} = {value};"
+        env = self.GetValueByReg(analysis, env_reg)
+        value = self.GetValueByReg(analysis, value_reg)
+        expression = f"{env}[{slot}] = {value};"
 
         variable = JSVariable(self.__class__.__name__, entry.address, "", expression)
         analysis.AddResult(entry, variable)
