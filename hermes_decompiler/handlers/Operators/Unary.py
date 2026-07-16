@@ -78,3 +78,10 @@ class Dec(UnaryOperator):
 class ToInt32(UnaryOperator):
     def expression(self, value: str) -> str:
         return f"({value} | 0)"
+
+class AddEmptyString(UnaryOperator):
+    """Forces a ToString coercion via string concatenation — the idiomatic
+    cheap alternative to a full ToString/ToPrimitive call."""
+
+    def expression(self, value: str) -> str:
+        return f'"" + {value}'

@@ -35,3 +35,57 @@ class ReifyArguments(OpcodeHandler):
         print("MarkArgumentsObject", entry.address, dest_reg)
 
         return OpcodeResult(entry, variable)
+
+
+# /// Arg1 = arguments.length, without materializing a full arguments object
+# /// (that's what ReifyArguments is for — this is the cheap fast path).
+# /// Arg2 is the VM's internal "lazy register" tracking the current frame's
+# /// arguments; it doesn't correspond to a source-level value on its own.
+# ///
+# /// ⚠️ Operand layout reconstructed from general knowledge of Hermes's
+# /// arguments-object opcodes, not a verified disassembly sample — confirm
+# /// against a real `<GetArgumentsLength>` line before relying on this.
+# DEFINE_OPCODE_2(GetArgumentsLength, Reg8, Reg8)
+# Example: <GetArgumentsLength>: <Reg8: 1, Reg8: 0>
+class GetArgumentsLength(OpcodeHandler):
+    _PATTERN = sequence(REG, REG)
+
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.InvalidArgs(analysis, entry, "Expected two Reg8 arguments")
+
+        dest_reg, _lazy_reg = map(int, match.groups())
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", "arguments.length")
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
+
+
+# /// Arg1 = arguments[Arg2] — same fast-path idea as GetArgumentsLength:
+# /// index into the arguments frame without reifying a full object first.
+# /// Arg3 is the VM's lazy register for the current frame's arguments.
+# ///
+# /// ⚠️ Same verification caveat as GetArgumentsLength above.
+# DEFINE_OPCODE_3(GetArgumentsPropByVal, Reg8, Reg8, Reg8)
+# Example: <GetArgumentsPropByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
+class GetArgumentsPropByVal(OpcodeHandler):
+    _PATTERN = sequence(REG, REG, REG)
+
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
+
+        dest_reg, index_reg, _lazy_reg = map(int, match.groups())
+        index_val = self.GetValueByReg(analysis.results, index_reg) or f"r{index_reg}"
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"arguments[{index_val}]")
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)

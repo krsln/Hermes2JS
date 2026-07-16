@@ -10,6 +10,7 @@ from hermes_decompiler.handlers._shared_patterns import REG, sequence
 _BINARY_REG_PATTERN = sequence(REG, REG, REG)
 _UNARY_REG_PATTERN = sequence(REG, REG)
 
+
 # /// Arg1 = delete Arg2[Arg3].
 # DEFINE_OPCODE_3(DelByVal, Reg8, Reg8, Reg8)
 # Example: <DelByVal>: <Reg8: 2, Reg8: 0, Reg8: 1>
@@ -34,6 +35,4 @@ class DelByVal(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 # TODOs:
-# DeclareGlobalVar GetPNameList GetNextPName
-# PutByVal AddEmptyString
-# GetArgumentsPropByVal GetArgumentsLength IsIn
+# Negate SwitchImm DelById CallBuiltin

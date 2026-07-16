@@ -73,3 +73,8 @@ class StrictNeq(BinaryOperator): operator = "!=="
 class InstanceOf(BinaryOperator):
     """instanceof operator."""
     operator = "instanceof"
+
+
+class IsIn(BinaryOperator):
+    """`in` operator: Arg1 = (Arg2 in Arg3)."""
+    operator = "in"
