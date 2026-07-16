@@ -35,7 +35,7 @@ class DelById(OpcodeHandler):
             error = f'/* Error: string_id {string_id} not found in stringTable */ undefined'
             return self.Exception(analysis, entry, error)
 
-        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
+        obj_val = self.GetValueByReg(analysis, obj_reg)
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"delete {obj_val}.{prop_name}")
         analysis.AddResult(entry, variable)
@@ -69,8 +69,8 @@ class DelByVal(OpcodeHandler):
 
         dest_reg, obj_reg, prop_reg = map(int, match.groups())
 
-        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
-        prop_val = self.GetValueByReg(analysis, prop_reg) or f"r{prop_reg}"
+        obj_val = self.GetValueByReg(analysis, obj_reg)
+        prop_val = self.GetValueByReg(analysis, prop_reg)
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"delete {obj_val}[{prop_val}]")
         analysis.AddResult(entry, variable)

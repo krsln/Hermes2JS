@@ -42,34 +42,17 @@ class ConstructBase(OpcodeHandler, ABC):
     def Pattern(cls):
         return sequence(REG, REG, cls.ARG_PATTERN)
 
-    def Handle(
-            self,
-            analysis: HermesAnalysis,
-            entry: OpcodeEntry,
-    ) -> OpcodeResult:
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
         handler = self.__class__.__name__
 
         match = self.Pattern().match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(
-                analysis,
-                entry,
-                "Expected Reg8, Reg8, ArgCount",
-            )
+            return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8, ArgCount")
 
         dest_reg, func_reg, arg_count = map(int, match.groups())
-
-        constructor = (
-                self.GetValueByReg(analysis, func_reg)
-                or f"r{func_reg}"
-        )
-
-        args = self.ResolveArguments(
-            analysis,
-            func_reg,
-            arg_count,
-        )
+        constructor = (self.GetValueByReg(analysis, func_reg) or f"r{func_reg}")
+        args = self.ResolveArguments(analysis, func_reg, arg_count)
 
         expression = f"new {constructor}({', '.join(args)})"
 
@@ -86,12 +69,7 @@ class ConstructBase(OpcodeHandler, ABC):
 
         return OpcodeResult(entry, variable)
 
-    def ResolveArguments(
-            self,
-            analysis: HermesAnalysis,
-            func_reg: int,
-            arg_count: int,
-    ) -> list[str]:
+    def ResolveArguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> list[str]:
 
         values: list[str] = []
 
@@ -100,11 +78,7 @@ class ConstructBase(OpcodeHandler, ABC):
             value = self.GetValueByReg(analysis, reg)
 
             if value is None:
-                logger.warning(
-                    "%s: unresolved constructor argument r%d",
-                    self.__class__.__name__,
-                    reg,
-                )
+                logger.warning("%s: unresolved constructor argument r%d", self.__class__.__name__, reg)
                 value = f"r{reg}"
 
             values.append(value)
@@ -120,7 +94,6 @@ class Construct(ConstructBase):
     """
     Construct using UInt8 argument count.
     """
-
     ARG_PATTERN = UINT8
 
 
@@ -128,5 +101,4 @@ class ConstructLong(ConstructBase):
     """
     Construct using UInt32 argument count.
     """
-
     ARG_PATTERN = UINT32

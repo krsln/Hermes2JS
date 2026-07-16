@@ -65,7 +65,7 @@ class GetById(OpcodeHandler):
             return self.Exception(analysis, entry, error)
 
         # Get base object value
-        base_value = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
+        base_value = self.GetValueByReg(analysis, obj_reg)
 
         # Build property access
         js_expr = f"{base_value}.{prop_name}"
