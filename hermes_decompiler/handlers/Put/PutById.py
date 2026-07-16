@@ -9,24 +9,18 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
 
-# Patterns
-PUT_BY_ID_PATTERN = sequence(REG, REG, UINT8, STRING_ID)
 
-
-# /// Set an object property by string index.
-# /// Arg1[stringtable[Arg4]] = Arg2.
 # DEFINE_OPCODE_4(PutById, Reg8, Reg8, UInt8, UInt16)
 # DEFINE_OPCODE_4(PutByIdLong, Reg8, Reg8, UInt8, UInt32)
-# OPERAND_STRING_ID(PutById, 4)
-# OPERAND_STRING_ID(PutByIdLong, 4)
 # Example: <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 12270>  # String: 'fetchMovieDetails' (Identifier)
 class PutById(OpcodeHandler):
     """Set an object property by string index."""
+    _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        match = PUT_BY_ID_PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)
 

@@ -7,14 +7,8 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, sequence
 
 
-# /// Create a generator.
-# /// Arg1 is the register in which to store the generator.
-# /// Arg2 is the current environment as loaded by GetEnvironment 0.
-# /// Arg3 is index in the function table.
 # DEFINE_OPCODE_3(CreateGenerator, Reg8, Reg8, UInt16)
 # DEFINE_OPCODE_3(CreateGeneratorLongIndex, Reg8, Reg8, UInt32)
-# OPERAND_FUNCTION_ID(CreateGenerator, 3)
-# OPERAND_FUNCTION_ID(CreateGeneratorLongIndex, 3)
 # Example: <CreateGenerator>: <Reg8: 0, Reg8: 0, function_id: 11946>  # Function: [#11946 ?anon_0_ of 251 bytes]: 2 params @ offset 0x002191ac
 class CreateGenerator(OpcodeHandler):
     """Create a generator object."""
@@ -44,14 +38,8 @@ class CreateGeneratorLongIndex(CreateGenerator):
     pass
 
 
-# /// Create a closure for a GeneratorFunction.
-# /// Arg1 is the register in which to store the closure.
-# /// Arg2 is the current environment as loaded by GetEnvironment 0.
-# /// Arg3 is index in the function table.
 # DEFINE_OPCODE_3(CreateGeneratorClosure, Reg8, Reg8, UInt16)
 # DEFINE_OPCODE_3(CreateGeneratorClosureLongIndex, Reg8, Reg8, UInt32)
-# OPERAND_FUNCTION_ID(CreateGeneratorClosure, 3)
-# OPERAND_FUNCTION_ID(CreateGeneratorClosureLongIndex, 3)
 # Example: <CreateGeneratorClosure>: <Reg8: 1, Reg8: 0, function_id: 11945>  # Function: [#11945  of 9 bytes]: 2 params @ offset 0x002191a3
 class CreateGeneratorClosure(OpcodeHandler):
     """Create a closure for a GeneratorFunction."""

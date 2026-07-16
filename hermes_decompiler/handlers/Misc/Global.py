@@ -8,10 +8,7 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
 from hermes_decompiler.handlers._shared_patterns import REG, STRING_ID, sequence
 
-_IDENTIFIER_COMMENT_PATTERN = re.compile(r"String:\s*'([^']*)'\s*\(Identifier\)")
 
-
-# Get the global object (the object in which global variables are stored).
 # DEFINE_OPCODE_1(GetGlobalObject, Reg8)
 # Example: <GetGlobalObject>: <Reg8: 2>
 class GetGlobalObject(OpcodeHandler):
@@ -42,11 +39,7 @@ class GetGlobalObject(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-# /// Declare (hoist) a global variable by name, with no initial value —
-# /// equivalent to `var name;` at the top level. Emitted once per `var`
-# /// declaration found in global/eval scope during hoisting.
 # DEFINE_OPCODE_1(DeclareGlobalVar, UInt32)
-# OPERAND_STRING_ID(DeclareGlobalVar, 1)
 # Example: <DeclareGlobalVar>: <string_id: 4522>  # String: 'myGlobal' (Identifier)
 class DeclareGlobalVar(OpcodeHandler):
     """
@@ -76,7 +69,7 @@ class DeclareGlobalVar(OpcodeHandler):
 
     @staticmethod
     def _resolve_name(analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int):
-        comment_match = _IDENTIFIER_COMMENT_PATTERN.search(entry.comment or "")
+        comment_match = re.compile(r"String:\s*'([^']*)'\s*\(Identifier\)").search(entry.comment or "")
         if comment_match:
             return comment_match.group(1)
 

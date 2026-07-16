@@ -7,27 +7,9 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-# /// Set a property by value (dynamic key) — the "put" counterpart of
-# /// GetByVal, the same way PutById complements GetById.
-# /// Arg1[Arg2] = Arg3.
 # DEFINE_OPCODE_3(PutByVal, Reg8, Reg8, Reg8)
 # Example: <PutByVal>: <Reg8: 98, Reg8: 2, Reg8: 0>
 class PutByVal(OpcodeHandler):
-    """
-    Unlike PutById/PutOwnByIndex, the key here is a *register* (dynamic),
-    not a statically known string/index — so the mutation can't be safely
-    folded into a tracked object/array literal the way those do (there's no
-    way to know, at decompile time, which literal slot a runtime key
-    actually targets). This emits a standalone assignment statement instead.
-
-    Deliberately does NOT call analysis.AddResult keyed to `obj_reg`: doing
-    so would overwrite that register's tracked expression (used for later
-    `.prop`/`[key]` chaining) with this statement's text, corrupting any
-    subsequent access through the same register. The result is recorded
-    under an empty register key instead — a side-effect-only statement with
-    no downstream chainable value (same convention as Ret/Throw).
-    """
-
     _PATTERN = sequence(REG, REG, REG)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:

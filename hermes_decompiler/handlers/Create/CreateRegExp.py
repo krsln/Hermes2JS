@@ -8,12 +8,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
-# /// Create a RegExp literal.
-# /// Arg1 is the destination.
-# /// Arg2 is the string_id of the pattern.
-# /// Arg3 is the string_id of the flags.
-# /// Arg4 is an index into the regexp bytecode table (compiled matcher; not
-# ///      needed to reconstruct the source-level literal).
 # DEFINE_OPCODE_4(CreateRegExp, Reg8, UInt32, UInt32, UInt32)
 # Example: <CreateRegExp>: <Reg8: 0, UInt32: 12, UInt32: 13, UInt32: 0>  # String: '^\d+$'  String: 'g'
 class CreateRegExp(OpcodeHandler):

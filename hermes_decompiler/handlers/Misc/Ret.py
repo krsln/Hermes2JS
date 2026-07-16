@@ -7,8 +7,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-# /// Return a value from the current function.
-# /// return Arg1;
 # DEFINE_OPCODE_1(Ret, Reg8)
 # Example: <Ret>: <Reg8: 1>
 class Ret(OpcodeHandler):
@@ -16,10 +14,8 @@ class Ret(OpcodeHandler):
     _PATTERN = sequence(REG)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        """Handle <Ret> opcode, returning the value from the specified register or performing the return action."""
         handler = self.__class__.__name__
 
-        # Check if the line contains specific return arguments.
         match = self._PATTERN.match(entry.args.strip())
         if match:
             reg = int(match.group(1))

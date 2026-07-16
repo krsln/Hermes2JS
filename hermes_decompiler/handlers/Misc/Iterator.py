@@ -129,9 +129,6 @@ class GetPNameList(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-# /// Advance a for-in enumeration started by GetPNameList. Arg1 receives
-# /// the next property name, or `undefined` once enumeration is exhausted
-# /// (typically followed by a JmpUndefined to exit the loop).
 # DEFINE_OPCODE_5(GetNextPName, Reg8, Reg8, Reg8, Reg8, Reg8)
 class GetNextPName(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG, REG, REG)

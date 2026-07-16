@@ -11,13 +11,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
 
 
-# Create an object from a static map of values, as for var={'a': 3}.
-# Any non-constant elements can be set afterward with PutOwnByInd.
-# Arg1 is the destination.
-# Arg2 is a preallocation size hint.
-# Arg3 is the number of static elements.
-# Arg4 is the index in the object key buffer table.
-# Arg5 is the index in the object val buffer table.
 # DEFINE_OPCODE_5(NewObjectWithBuffer, Reg8, UInt16, UInt16, UInt16, UInt16)
 # Example: < NewObjectWithBuffer >: < Reg8: 2, UInt16: 2, UInt16: 2, UInt16: 4743, UInt16: 24182 >  # Object: {'message': 'You have joined the list', 'type': 'success'}
 class NewObjectWithBuffer(OpcodeHandler):
@@ -126,7 +119,6 @@ class NewObjectWithParent(OpcodeHandler):
         parent = self.GetValueByReg(analysis, parent_reg) or f"r{parent_reg}"
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"Object.create({parent})")
-
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -146,10 +138,8 @@ class SelectObject(OpcodeHandler):
         dest_reg, obj_reg, selector_reg = map(int, match.groups())
 
         variable = JSVariable(
-            handler,
-            entry.address,
-            f'r{dest_reg}',
-            f"r{obj_reg}[r{selector_reg}]"
+            handler, entry.address,
+            f'r{dest_reg}', f"r{obj_reg}[r{selector_reg}]"
         )
         analysis.AddResult(entry, variable)
 

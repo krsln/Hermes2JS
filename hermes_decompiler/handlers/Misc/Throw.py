@@ -7,8 +7,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-# /// Throw an exception.
-# /// throw Arg1;
 # DEFINE_OPCODE_1(Throw, Reg8)
 # Example: <Throw>: <Reg8: 2>
 class Throw(OpcodeHandler):
@@ -18,7 +16,6 @@ class Throw(OpcodeHandler):
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        # Parse the Reg8 argument (e.g., "Reg8: 2")
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry)

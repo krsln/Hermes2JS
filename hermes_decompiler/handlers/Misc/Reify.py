@@ -7,9 +7,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-# /// Create an actual 'arguments' array, if get-by-index and length isn't enough.
-# /// Arg1 is the lazy loaded register, which afterwards will contain a proper
-# ///      object that can be used by non-*Arguments* opcodes like Return.
 # DEFINE_OPCODE_1(ReifyArguments, Reg8)
 # Example: <ReifyArguments>: <Reg8: 0>
 class ReifyArguments(OpcodeHandler):
@@ -37,14 +34,6 @@ class ReifyArguments(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-# /// Arg1 = arguments.length, without materializing a full arguments object
-# /// (that's what ReifyArguments is for — this is the cheap fast path).
-# /// Arg2 is the VM's internal "lazy register" tracking the current frame's
-# /// arguments; it doesn't correspond to a source-level value on its own.
-# ///
-# /// ⚠️ Operand layout reconstructed from general knowledge of Hermes's
-# /// arguments-object opcodes, not a verified disassembly sample — confirm
-# /// against a real `<GetArgumentsLength>` line before relying on this.
 # DEFINE_OPCODE_2(GetArgumentsLength, Reg8, Reg8)
 # Example: <GetArgumentsLength>: <Reg8: 1, Reg8: 0>
 class GetArgumentsLength(OpcodeHandler):
@@ -65,11 +54,6 @@ class GetArgumentsLength(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-# /// Arg1 = arguments[Arg2] — same fast-path idea as GetArgumentsLength:
-# /// index into the arguments frame without reifying a full object first.
-# /// Arg3 is the VM's lazy register for the current frame's arguments.
-# ///
-# /// ⚠️ Same verification caveat as GetArgumentsLength above.
 # DEFINE_OPCODE_3(GetArgumentsPropByVal, Reg8, Reg8, Reg8)
 # Example: <GetArgumentsPropByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
 class GetArgumentsPropByVal(OpcodeHandler):

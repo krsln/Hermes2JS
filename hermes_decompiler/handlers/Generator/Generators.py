@@ -12,9 +12,6 @@ from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, ADDR, 
 START_GENERATOR_PATTERN = re.compile(r'^(?:<>)?$')
 
 
-# /// Start the generator by jumping to the next instruction to begin.
-# /// Restore the stack frame if this generator has previously been suspended.
-# DEFINE_OPCODE_0(StartGenerator)
 # Example: <StartGenerator>: <>
 class StartGenerator(OpcodeHandler):
     """Initialize generator execution."""
@@ -32,13 +29,6 @@ class StartGenerator(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-# /// Resume generator by performing one of the following user-requested actions:
-# /// - next(val): Set Arg1 to val, Arg2 to false, run next instruction
-# /// - return(val): Set Arg1 to val, Arg2 to true, run next instruction
-# /// - throw(val): Throw val as an error
-# /// Arg1 is the result provided by the user.
-# /// Arg2 is a boolean which is true if the user requested a return().
-# DEFINE_OPCODE_2(ResumeGenerator, Reg8, Reg8)
 # Example: <ResumeGenerator>: <Reg8: 0, Reg8: 2>
 class ResumeGenerator(OpcodeHandler):
     """Resume a suspended generator."""
@@ -60,8 +50,6 @@ class ResumeGenerator(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-# /// Set the generator status to complete, but do not return.
-# DEFINE_OPCODE_0(CompleteGenerator)
 # Example: <CompleteGenerator>: <>
 class CompleteGenerator(OpcodeHandler):
     """Mark generator as completed."""
@@ -78,15 +66,6 @@ class CompleteGenerator(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-# /// Unconditional branch to Arg1.
-# DEFINE_JUMP_1(Jmp)
-# /// Conditional branches to Arg1 based on Arg2.
-# DEFINE_JUMP_2(JmpTrue)
-# DEFINE_JUMP_2(JmpFalse)
-# /// Jump if the value is undefined.
-# DEFINE_JUMP_2(JmpUndefined)
-# /// Save the provided value, yield, and signal the VM to restart execution at the provided target.
-# DEFINE_JUMP_1(SaveGenerator)
 # Example: <SaveGenerator>: <Addr8: 4>  # Address: 00000095
 class SaveGenerator(OpcodeHandler):
     """Save generator state and yield."""

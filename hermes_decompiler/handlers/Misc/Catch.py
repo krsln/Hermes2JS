@@ -8,8 +8,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-# /// Catch an exception (the first instruction in an exception handler).
-# /// } catch(Arg1) {
 # DEFINE_OPCODE_1(Catch, Reg8)
 # Example: <Catch>: <Reg8: 1>
 class Catch(OpcodeHandler):
@@ -20,15 +18,12 @@ class Catch(OpcodeHandler):
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        # Parse arguments: expecting "Reg8: X"
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.InvalidArgs(analysis, entry, "Expected a single Reg8 argument")
 
-        # Extract destination register
         dest_reg = int(match.group(1))
 
-        # Create JSVariable for the caught exception
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', 'caughtException')
         analysis.AddResult(entry, variable)
 

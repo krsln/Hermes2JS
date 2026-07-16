@@ -94,7 +94,6 @@ class Jump(OpcodeHandler):
             return self.InvalidArgs(analysis, entry, str(e))
 
         target = entry.address + offset
-
         analysis.gotoList.append(target)
 
         variable = JSVariable(
@@ -103,7 +102,6 @@ class Jump(OpcodeHandler):
             "",
             f"goto label_{target};",
         )
-
         analysis.AddResult(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
@@ -135,9 +133,7 @@ class ConditionalJump(OpcodeHandler, ABC):
             return self.InvalidArgs(analysis, entry, str(e))
 
         target = entry.address + offset
-
         analysis.gotoList.append(target)
-
         value = self.GetValueByReg(analysis, reg)
 
         variable = JSVariable(
@@ -146,26 +142,22 @@ class ConditionalJump(OpcodeHandler, ABC):
             "",
             f"if ({self.BuildCondition(value)}) {{ /* jump to label_{target} */ }}"
         )
-
         analysis.AddResult(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
 
 
 class JmpTrue(ConditionalJump):
-
     def BuildCondition(self, value: str) -> str:
         return value
 
 
 class JmpFalse(ConditionalJump):
-
     def BuildCondition(self, value: str) -> str:
         return f"!{value}"
 
 
 class JmpUndefined(ConditionalJump):
-
     def BuildCondition(self, value: str) -> str:
         return f"{value} === undefined"
 
@@ -200,9 +192,7 @@ class BuiltinConditionalJump(OpcodeHandler, ABC):
             return self.InvalidArgs(analysis, entry, str(e))
 
         target = entry.address + offset
-
         analysis.gotoList.append(target)
-
         value = self.GetValueByReg(analysis, reg)
 
         variable = JSVariable(
@@ -211,20 +201,17 @@ class BuiltinConditionalJump(OpcodeHandler, ABC):
             "",
             f"if ({self.BuildCondition(value, builtin)}) {{ /* jump to label_{target} */ }}"
         )
-
         analysis.AddResult(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
 
 
 class JmpBuiltinIs(BuiltinConditionalJump):
-
     def BuildCondition(self, value: str, builtin: int) -> str:
         return f"{value} === builtin_{builtin}"
 
 
 class JmpBuiltinIsNot(BuiltinConditionalJump):
-
     def BuildCondition(self, value: str, builtin: int) -> str:
         return f"{value} !== builtin_{builtin}"
 
@@ -255,11 +242,8 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
             return self.InvalidArgs(analysis, entry, str(e))
 
         target = entry.address + offset
-
         analysis.gotoList.append(target)
-
         value = self.GetValueByReg(analysis, reg)
-
         type_name = TYPEOF_MAP.get(type_id, f"<{type_id}>")
 
         variable = JSVariable(
@@ -268,7 +252,6 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
             "",
             f"if ({self.BuildCondition(value, type_name)}) {{ /* jump to label_{target} */ }}"
         )
-
         analysis.AddResult(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)

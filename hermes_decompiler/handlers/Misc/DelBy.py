@@ -8,13 +8,7 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
 
-_IDENTIFIER_COMMENT_PATTERN = re.compile(r"String:\s*'([^']+)'\s*\(Identifier\)")
 
-
-# /// Delete an object property by string index.
-# /// Arg1 = delete Arg2[stringtable[Arg4]]
-# /// Arg3 is a cache index used to speed up the above operation (unused
-# /// here — decompilation only needs the resolved property name).
 # DEFINE_OPCODE_4(DelById, Reg8, Reg8, UInt8, UInt16)
 # OPERAND_STRING_ID(DelById, 4)
 # Example: <DelById>: <Reg8: 2, Reg8: 1, UInt8: 0, string_id: 158>  # String: 'cache' (Identifier)
@@ -44,7 +38,7 @@ class DelById(OpcodeHandler):
 
     @staticmethod
     def _resolve_property_name(analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int):
-        comment_match = _IDENTIFIER_COMMENT_PATTERN.search(entry.comment or "")
+        comment_match = re.compile(r"String:\s*'([^']+)'\s*\(Identifier\)").search(entry.comment or "")
         if comment_match:
             return comment_match.group(1)
         string_table = getattr(analysis, "stringTable", None)
@@ -53,7 +47,6 @@ class DelById(OpcodeHandler):
         return string_table.get(str(string_id))
 
 
-# /// Arg1 = delete Arg2[Arg3].
 # DEFINE_OPCODE_3(DelByVal, Reg8, Reg8, Reg8)
 # Example: <DelByVal>: <Reg8: 2, Reg8: 0, Reg8: 1>
 class DelByVal(OpcodeHandler):

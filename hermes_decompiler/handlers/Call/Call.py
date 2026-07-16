@@ -103,13 +103,7 @@ class CallX(OpcodeHandler):
         return True
 
 
-# /// Call a function.
-# /// Arg1 is the destination of the return value.
-# /// Arg2 is the closure to invoke.
-# /// Arg3 is the number of arguments, assumed to be found in reverse order
-# ///      from the end of the current frame.
 # DEFINE_OPCODE_3(Call, Reg8, Reg8, UInt8)
-# DEFINE_RET_TARGET(Call)
 # Example: <Call>: <Reg8: 4, Reg8: 9, UInt8: 6>
 class Call(CallX):
     """The same semantics as CallX but with a runtime-determined argument count

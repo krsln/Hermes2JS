@@ -7,8 +7,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
 
 
-# Load a function parameter by index. Starts at 0 with 'this'.
-# Arg1 = Arg2 == 0 ? this : arguments[Arg2 - 1];
 # DEFINE_OPCODE_2(LoadParam, Reg8, UInt8)
 # Example: <LoadParam>: <Reg8: 1, UInt8: 1>
 class LoadParam(OpcodeHandler):

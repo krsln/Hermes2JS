@@ -10,10 +10,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
 
 
-# /// Create a new, empty Array with a preallocation size hint.
-# /// Arg1 = new Array(); the capacity hint (Arg2) only affects the initial
-# /// backing-storage size and has no observable effect on the resulting
-# /// value, so it is recorded as a comment rather than emitted as code.
 # DEFINE_OPCODE_2(NewArray, Reg8, UInt16)
 # Example: <NewArray>: <Reg8: 1, UInt16: 4>
 class NewArray(OpcodeHandler):

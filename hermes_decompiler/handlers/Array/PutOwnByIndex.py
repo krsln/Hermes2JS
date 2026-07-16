@@ -10,10 +10,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT32, sequence
 
 
-# /// Set an array element by (statically known) numeric index.
-# /// Arg1[Arg3] = Arg2. This is an "own" property write on an object already
-# /// known to be an array — the counterpart of PutById for indexed access.
-# /// PutOwnByIndexL is the long-index (UInt32) variant of the same op.
 # DEFINE_OPCODE_3(PutOwnByIndex, Reg8, Reg8, UInt8)
 # DEFINE_OPCODE_3(PutOwnByIndexL, Reg8, Reg8, UInt32)
 # Example: <PutOwnByIndex>: <Reg8: 1, Reg8: 2, UInt8: 0>

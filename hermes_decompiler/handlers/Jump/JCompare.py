@@ -66,11 +66,7 @@ class JCompareX(OpcodeHandler):
 
         analysis.AddResult(entry, variable, goto=target)
 
-        return OpcodeResult(
-            entry,
-            variable,
-            goto=target,
-        )
+        return OpcodeResult(entry, variable, goto=target)
 
 
 # @formatter:off
