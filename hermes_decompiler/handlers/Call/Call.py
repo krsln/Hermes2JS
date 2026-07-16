@@ -137,32 +137,9 @@ class Call(CallX):
         return OpcodeResult(entry, variable)
 
 
-# /// Call a function with one arg.
-# /// Arg1 is the destination of the return value.
-# /// Arg2 is the closure to invoke.
-# /// Arg3 is the first argument.
-# DEFINE_OPCODE_3(Call1, Reg8, Reg8, Reg8)
-# DEFINE_RET_TARGET(Call1)
-class Call1(CallX):
-    num_args = 1
-
-
-# /// Call a function with two args.
-# DEFINE_OPCODE_4(Call2, Reg8, Reg8, Reg8, Reg8)
-# DEFINE_RET_TARGET(Call2)
-class Call2(CallX):
-    num_args = 2
-
-
-# /// Call a function with three args.
-# DEFINE_OPCODE_5(Call3, Reg8, Reg8, Reg8, Reg8, Reg8)
-# DEFINE_RET_TARGET(Call3)
-class Call3(CallX):
-    num_args = 3
-
-
-# /// Call a function with four args.
-# DEFINE_OPCODE_6(Call4, Reg8, Reg8, Reg8, Reg8, Reg8, Reg8)
-# DEFINE_RET_TARGET(Call4)
-class Call4(CallX):
-    num_args = 4
+# @formatter:off
+class Call1(CallX): num_args = 1
+class Call2(CallX): num_args = 2
+class Call3(CallX): num_args = 3
+class Call4(CallX): num_args = 4
+# @formatter:on
