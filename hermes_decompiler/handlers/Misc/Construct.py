@@ -32,7 +32,7 @@ class Construct(OpcodeHandler):
 
         dest_reg, func_reg, arg_count = (int(x) for x in match.groups())
 
-        func_name = self.GetValueByReg(analysis.results, func_reg)
+        func_name = self.GetValueByReg(analysis, func_reg)
         if func_name is None:
             logger.warning(f"{handler} at address {entry.address}: unresolved constructor register r{func_reg}")
             func_name = f"r{func_reg}"
@@ -54,7 +54,7 @@ class Construct(OpcodeHandler):
         arg_regs = range(func_reg - arg_count, func_reg)
         args = []
         for offset, reg in enumerate(arg_regs):
-            value = self.GetValueByReg(analysis.results, reg)
+            value = self.GetValueByReg(analysis, reg)
             if value is None:
                 logger.warning(
                     f"{handler} at address {entry.address}: unresolved argument register r{reg}; "

@@ -83,7 +83,7 @@ class GetArgumentsPropByVal(OpcodeHandler):
             return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
 
         dest_reg, index_reg, _lazy_reg = map(int, match.groups())
-        index_val = self.GetValueByReg(analysis.results, index_reg) or f"r{index_reg}"
+        index_val = self.GetValueByReg(analysis, index_reg) or f"r{index_reg}"
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"arguments[{index_val}]")
         analysis.AddResult(entry, variable)

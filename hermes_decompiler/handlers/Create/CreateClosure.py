@@ -35,7 +35,7 @@ class CreateClosure(OpcodeHandler):
 
         func_name = analysis.functionTable.get(str(func_id), f"function_{func_id}")
 
-        env_var = self.GetVariableByReg(analysis.results, env)
+        env_var = self.GetVariableByReg(analysis, env)
         env_value = env_var.value if env_var and env_var.value else 'undefined'
         # print(env, env_value)
 

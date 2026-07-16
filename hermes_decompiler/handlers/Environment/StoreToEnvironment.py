@@ -32,7 +32,7 @@ class StoreToEnvironment(OpcodeHandler):
 
         env_reg, slot, value_reg = map(int, match.groups())
 
-        value = self.GetValueByReg(analysis.results, value_reg) or f"r{value_reg}"
+        value = self.GetValueByReg(analysis, value_reg) or f"r{value_reg}"
 
         comment = f"{handler}: env=r{env_reg}, slot={slot}, value=r{value_reg}"
         variable = JSVariable(handler, entry.address, f"r{env_reg}", f"setEnvSlot({slot}, {value})  /*{comment}*/")

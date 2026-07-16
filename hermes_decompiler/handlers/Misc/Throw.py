@@ -33,5 +33,5 @@ class Throw(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
     def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
-        var = self.GetVariableByReg(analysis.results, reg)
+        var = self.GetVariableByReg(analysis, reg)
         return var.value if var and var.value is not None else 'undefined'

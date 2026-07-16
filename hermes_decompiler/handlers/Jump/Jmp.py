@@ -80,7 +80,7 @@ class JmpTrue(OpcodeHandler):
         target_addr = entry.address + addr_offset
         analysis.gotoList.append(target_addr)
 
-        condition = self.GetValueByReg(analysis.results, reg) or f"r{reg}"
+        condition = self.GetValueByReg(analysis, reg) or f"r{reg}"
         value = f"if ({condition}) {{ /* jump to label_{target_addr} */ }}"
 
         variable = JSVariable(handler, entry.address, "", value)
@@ -110,7 +110,7 @@ class JmpFalse(OpcodeHandler):
         target_addr = entry.address + addr_offset
         analysis.gotoList.append(target_addr)
 
-        condition = self.GetValueByReg(analysis.results, reg) or f"r{reg}"
+        condition = self.GetValueByReg(analysis, reg) or f"r{reg}"
         value = f"if (!{condition}) {{ /* jump to label_{target_addr} */ }}"
 
         variable = JSVariable(handler, entry.address, "", value)
@@ -140,7 +140,7 @@ class JmpUndefined(OpcodeHandler):
         target_addr = entry.address + addr_offset
         analysis.gotoList.append(target_addr)
 
-        condition = self.GetValueByReg(analysis.results, reg) or f"r{reg}"
+        condition = self.GetValueByReg(analysis, reg) or f"r{reg}"
         value = f"if ({condition} === undefined) {{ /* jump to label_{target_addr} */ }}"
 
         variable = JSVariable(handler, entry.address, "", value)

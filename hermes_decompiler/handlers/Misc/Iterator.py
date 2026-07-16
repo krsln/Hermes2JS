@@ -21,10 +21,7 @@ class IteratorBegin(OpcodeHandler):
 
         iterator_reg, iterable_reg = map(int, match.groups())
 
-        iterable = self.GetValueByReg(
-            analysis.results,
-            iterable_reg
-        ) or f"r{iterable_reg}"
+        iterable = self.GetValueByReg(analysis, iterable_reg) or f"r{iterable_reg}"
 
         variable = JSVariable(
             handler,
@@ -52,17 +49,9 @@ class IteratorNext(OpcodeHandler):
 
         result_reg, iterator_reg, _ = map(int, match.groups())
 
-        iterator = self.GetValueByReg(
-            analysis.results,
-            iterator_reg
-        ) or f"r{iterator_reg}"
+        iterator = self.GetValueByReg(analysis, iterator_reg) or f"r{iterator_reg}"
 
-        variable = JSVariable(
-            handler,
-            entry.address,
-            f"r{result_reg}",
-            f"{iterator}.next()"
-        )
+        variable = JSVariable(handler, entry.address, f"r{result_reg}", f"{iterator}.next()")
 
         analysis.AddResult(entry, variable)
 
@@ -84,16 +73,11 @@ class IteratorClose(OpcodeHandler):
         iterator_reg = int(match.group(1))
 
         iterator = self.GetValueByReg(
-            analysis.results,
+            analysis,
             iterator_reg
         ) or f"r{iterator_reg}"
 
-        variable = JSVariable(
-            handler,
-            entry.address,
-            "",
-            f"{iterator}.return()"
-        )
+        variable = JSVariable(handler, entry.address, "", f"{iterator}.return()")
 
         analysis.AddResult(entry, variable)
 
@@ -135,12 +119,11 @@ class GetPNameList(OpcodeHandler):
             return self.InvalidArgs(analysis, entry, "Expected four Reg8 arguments")
 
         dest_reg, obj_reg, _index_reg, _size_reg = map(int, match.groups())
-        obj_val = self.GetValueByReg(analysis.results, obj_reg) or f"r{obj_reg}"
+        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
 
         variable = JSVariable(
             handler, entry.address, f"r{dest_reg}",
-            f"Object.keys({obj_val}) /* for-in property list */",
-        )
+            f"Object.keys({obj_val}) /* for-in property list */", )
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -161,7 +144,7 @@ class GetNextPName(OpcodeHandler):
             return self.InvalidArgs(analysis, entry, "Expected five Reg8 arguments")
 
         dest_reg, list_reg, _obj_reg, _index_reg, _size_reg = map(int, match.groups())
-        list_val = self.GetValueByReg(analysis.results, list_reg) or f"r{list_reg}"
+        list_val = self.GetValueByReg(analysis, list_reg) or f"r{list_reg}"
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"{list_val}.next() /* for-in step */")
         analysis.AddResult(entry, variable)

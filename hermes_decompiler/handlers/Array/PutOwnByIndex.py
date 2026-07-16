@@ -37,7 +37,7 @@ class PutOwnByIndex(OpcodeHandler):
 
         value = self._get_register_value(analysis, value_reg)
         elements = self._parse_array_elements(
-            self.GetVariableByReg(analysis.results, dest_reg), handler, entry
+            self.GetVariableByReg(analysis, dest_reg), handler, entry
         )
 
         # Extend array if needed
@@ -53,7 +53,7 @@ class PutOwnByIndex(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
     def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
-        var = self.GetVariableByReg(analysis.results, reg)
+        var = self.GetVariableByReg(analysis, reg)
         return var.value if var and var.value is not None else 'undefined'
 
     @staticmethod

@@ -29,8 +29,8 @@ class CreateThis(OpcodeHandler):
 
         dest, func, new_target = (int(x) for x in match.groups())
 
-        func_name = self.GetValueByReg(analysis.results, func) or f"r{func}"
-        new_target_name = self.GetValueByReg(analysis.results, new_target) or f"r{new_target}"
+        func_name = self.GetValueByReg(analysis, func) or f"r{func}"
+        new_target_name = self.GetValueByReg(analysis, new_target) or f"r{new_target}"
 
         variable = JSVariable(
             handler,

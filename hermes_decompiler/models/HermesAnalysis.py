@@ -36,6 +36,7 @@ class HermesAnalysis:
             metadata (Dict[str, Any], optional): Metadata from .hbc file.
             stringTable (Dict[str, str], optional): String mappings for string_id.
         """
+        self.registers: dict[str, JSVariable] = {}
         self.metadataList = []
         self.metadata = metadata if metadata is not None else {}
         self.stringTable = stringTable if stringTable is not None else {}
@@ -48,8 +49,11 @@ class HermesAnalysis:
 
     def AddResult(self, entry: OpcodeEntry, variable: JSVariable, goto: Optional[int] = None):
         """Add a variable, tracking multiple assignments."""
-        self.results.append(OpcodeResult(entry, variable, goto))
-        # self.AddVariable(variable)
+        result = OpcodeResult(entry, variable, goto)
+        self.results.append(result)
+
+        if variable.name:
+            self.registers[variable.name] = variable
 
     def GenerateJS(self, verbose: bool = True) -> List[str]:
         outputList: List[Output] = []

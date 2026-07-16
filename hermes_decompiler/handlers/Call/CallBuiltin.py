@@ -47,7 +47,7 @@ class CallBuiltin(OpcodeHandler):
         arg_start = dest_reg - arg_count
         args = []
         for offset, reg in enumerate(range(arg_start, dest_reg)):
-            value = self.GetValueByReg(analysis.results, reg)
+            value = self.GetValueByReg(analysis, reg)
             args.append(value if value is not None else f"arg{offset}")
 
         args_str = ", ".join(args)

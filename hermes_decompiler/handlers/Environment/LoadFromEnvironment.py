@@ -27,7 +27,7 @@ class LoadFromEnvironment(OpcodeHandler):
 
         dest_reg, env_reg, slot = map(int, match.groups())
 
-        env_value = self.GetValueByReg(analysis.results, env_reg) or f"r{env_reg}"
+        env_value = self.GetValueByReg(analysis, env_reg) or f"r{env_reg}"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{env_value}[{slot}]")
         analysis.AddResult(entry, variable)

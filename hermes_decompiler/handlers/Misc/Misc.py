@@ -26,8 +26,8 @@ class DelByVal(OpcodeHandler):
 
         dest_reg, obj_reg, prop_reg = map(int, match.groups())
 
-        obj_val = self.GetValueByReg(analysis.results, obj_reg) or f"r{obj_reg}"
-        prop_val = self.GetValueByReg(analysis.results, prop_reg) or f"r{prop_reg}"
+        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
+        prop_val = self.GetValueByReg(analysis, prop_reg) or f"r{prop_reg}"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"delete {obj_val}[{prop_val}]")
         analysis.AddResult(entry, variable)

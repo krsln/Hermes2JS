@@ -39,7 +39,7 @@ class UnaryOperator(OpcodeHandler):
         dest_reg, src_reg = map(int, match.groups())
 
         src_val = (
-                self.GetValueByReg(analysis.results, src_reg)
+                self.GetValueByReg(analysis, src_reg)
                 or f"r{src_reg}"
         )
 

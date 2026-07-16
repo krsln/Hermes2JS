@@ -26,8 +26,8 @@ class JCompareX(OpcodeHandler):
         target_addr = entry.address + addr_offset
         analysis.gotoList.append(target_addr)
 
-        lhs_val = self.GetValueByReg(analysis.results, lhs_reg) or f"r{lhs_reg}"
-        rhs_val = self.GetValueByReg(analysis.results, rhs_reg) or f"r{rhs_reg}"
+        lhs_val = self.GetValueByReg(analysis, lhs_reg) or f"r{lhs_reg}"
+        rhs_val = self.GetValueByReg(analysis, rhs_reg) or f"r{rhs_reg}"
 
         value = f"if ({lhs_val} {self.operator} {rhs_val}) {{ /* jump to label_{target_addr} */ }}"
 

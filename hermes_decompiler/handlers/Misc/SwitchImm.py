@@ -47,7 +47,7 @@ class SwitchImm(OpcodeHandler):
             return self.InvalidArgs(analysis, entry, "Expected a leading Reg8 selector argument")
 
         selector_reg = int(selector_match.group(1))
-        selector_val = self.GetValueByReg(analysis.results, selector_reg) or f"r{selector_reg}"
+        selector_val = self.GetValueByReg(analysis, selector_reg) or f"r{selector_reg}"
 
         target_addrs = []
         for offset_str in _ADDR_TOKEN_PATTERN.findall(args):

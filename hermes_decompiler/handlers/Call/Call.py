@@ -32,10 +32,10 @@ class CallX(OpcodeHandler):
 
         dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
 
-        func_variable = self.GetVariableByReg(analysis.results, func_reg)
-        func_name = self.GetValueByReg(analysis.results, func_reg)
+        func_variable = self.GetVariableByReg(analysis, func_reg)
+        func_name = self.GetValueByReg(analysis, func_reg)
 
-        argList = self.GetFuncArgs(analysis.results, arg_regs)
+        argList = self.GetFuncArgs(analysis, arg_regs)
 
         # Special handling for HermesInternal.concat
         if func_name == "this.HermesInternal.concat":
@@ -124,12 +124,17 @@ class Call(CallX):
             return self.InvalidArgs(analysis, entry)
 
         dest_reg, func_reg, num_args = map(int, match.groups())
-        func_name = self.GetValueByReg(analysis.results, func_reg)
+        func_name = self.GetValueByReg(analysis, func_reg)
         arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
-        argList = [self.GetValueByReg(analysis.results, r) for r in arg_regs]
+        # argList = [self.GetValueByReg(analysis, r) for r in arg_regs]
+        argList = [
+            f"r{r}"
+            for r in arg_regs
+        ]
         args_str = ", ".join(argList)
+
         func_val = f"({args_str})" if not self.ShouldUseCall(
-            self.GetVariableByReg(analysis.results, func_reg)) else f".call(this, {args_str})"
+            self.GetVariableByReg(analysis, func_reg)) else f".call(this, {args_str})"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{func_name}{func_val}", func_name, func_val)
         analysis.AddResult(entry, variable)

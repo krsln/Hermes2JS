@@ -65,7 +65,7 @@ class GetById(OpcodeHandler):
             return self.Exception(analysis, entry, error)
 
         # Get base object value
-        base_value = self.GetValueByReg(analysis.results, obj_reg) or f"r{obj_reg}"
+        base_value = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
 
         # Build property access
         js_expr = f"{base_value}.{prop_name}"
@@ -151,7 +151,7 @@ class DelById(OpcodeHandler):
             error = f'/* Error: string_id {string_id} not found in stringTable */ undefined'
             return self.Exception(analysis, entry, error)
 
-        obj_val = self.GetValueByReg(analysis.results, obj_reg) or f"r{obj_reg}"
+        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"delete {obj_val}.{prop_name}")
         analysis.AddResult(entry, variable)

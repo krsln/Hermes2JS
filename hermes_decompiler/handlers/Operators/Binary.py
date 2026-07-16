@@ -27,8 +27,8 @@ class BinaryOperator(OpcodeHandler):
 
         dest, lhs, rhs = map(int, match.groups())
 
-        lhs_val = self.GetValueByReg(analysis.results, lhs) or f"r{lhs}"
-        rhs_val = self.GetValueByReg(analysis.results, rhs) or f"r{rhs}"
+        lhs_val = self.GetValueByReg(analysis, lhs) or f"r{lhs}"
+        rhs_val = self.GetValueByReg(analysis, rhs) or f"r{rhs}"
 
         variable = JSVariable(handler, entry.address, f"r{dest}", f"{lhs_val} {self.operator} {rhs_val}")
         analysis.AddResult(entry, variable)

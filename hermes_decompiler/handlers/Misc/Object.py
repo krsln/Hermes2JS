@@ -123,7 +123,7 @@ class NewObjectWithParent(OpcodeHandler):
 
         dest_reg, parent_reg = map(int, match.groups())
 
-        parent = self.GetValueByReg(analysis.results, parent_reg) or f"r{parent_reg}"
+        parent = self.GetValueByReg(analysis, parent_reg) or f"r{parent_reg}"
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"Object.create({parent})")
 

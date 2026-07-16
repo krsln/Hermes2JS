@@ -55,11 +55,11 @@ class PutById(OpcodeHandler):
             return f'string_{string_id}'
 
     def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
-        var = self.GetVariableByReg(analysis.results, reg)
+        var = self.GetVariableByReg(analysis, reg)
         return var.value if var and var.value is not None else 'undefined'
 
     def _parse_existing_object(self, analysis: HermesAnalysis, dest_reg: int) -> Dict[str, Any]:
-        dest_var = self.GetVariableByReg(analysis.results, dest_reg)
+        dest_var = self.GetVariableByReg(analysis, dest_reg)
         if not dest_var or dest_var.value in (None, '{}', ''):
             return {}
 

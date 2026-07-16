@@ -39,9 +39,9 @@ class PutByVal(OpcodeHandler):
 
         obj_reg, key_reg, value_reg = map(int, match.groups())
 
-        obj_val = self.GetValueByReg(analysis.results, obj_reg) or f"r{obj_reg}"
-        key_val = self.GetValueByReg(analysis.results, key_reg) or f"r{key_reg}"
-        value_val = self.GetValueByReg(analysis.results, value_reg) or f"r{value_reg}"
+        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
+        key_val = self.GetValueByReg(analysis, key_reg) or f"r{key_reg}"
+        value_val = self.GetValueByReg(analysis, value_reg) or f"r{value_reg}"
 
         statement = f"{obj_val}[{key_val}] = {value_val}"
         variable = JSVariable(handler, entry.address, "", statement)

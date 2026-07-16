@@ -55,37 +55,32 @@ class OpcodeHandler(ABC):
         return OpcodeResult(entry, variable)
 
     @classmethod
-    def GetFuncArgs(cls, results: List[OpcodeResult], args: list[int]) -> list[str]:
-        sorted_variables = sorted(results, key=lambda x: x.Variable.address, reverse=True)
+    def GetFuncArgs(cls, analysis: HermesAnalysis, regs: list[int]) -> list[str]:
+        args = []
 
-        argList = []
-        for r in args:
-            if not isinstance(r, int):
-                raise ValueError(f"Expected integer register, got {r}")
+        for reg in regs:
+            variable = analysis.registers.get(f"r{reg}")
 
-            matching_var = next((var.Variable for var in sorted_variables if var.Variable.name == f"r{r}"), None)
-            if (matching_var
-                    # and not matching_var.handler.startswith('Call')
-                    and not matching_var.handler.endswith('Environment')
+            if (
+                    variable
+                    and variable.handler != "ResumeGenerator"
+                    and not variable.handler.endswith("Environment")
             ):
-                argList.append(matching_var.value)
-                matching_var.used = True
+                variable.used = True
+                args.append(variable.value)
             else:
-                argList.append(f"r{r}")
+                args.append(f"r{reg}")
 
-        return argList
+        return args
 
     @classmethod
-    def GetVariableByReg(cls, results: List[OpcodeResult], obj_reg: int) -> JSVariable | None:
-        sorted_variables = sorted(results, key=lambda x: x.Variable.address, reverse=True)
+    def GetVariableByReg(cls, analysis: HermesAnalysis, reg: int) -> JSVariable | None:
+        variable = analysis.registers.get(f"r{reg}")
 
-        func_name = f"r{obj_reg}"
-        variable = next((var.Variable for var in sorted_variables if var.Variable.name == func_name), None)
-
-        if (variable
-                and variable.handler != 'ResumeGenerator'
-                # and not variable.handler.startswith('Call')
-                and not variable.handler.endswith('Environment')
+        if (
+                variable
+                and variable.handler != "ResumeGenerator"
+                and not variable.handler.endswith("Environment")
         ):
             variable.used = True
             return variable
@@ -93,19 +88,16 @@ class OpcodeHandler(ABC):
         return None
 
     @classmethod
-    def GetValueByReg(cls, results: List[OpcodeResult], obj_reg: int) -> str:
-        # sorted_variables = sorted(results, key=lambda x: getattr(x.Variable, 'address', 0), reverse=True)
-        sorted_variables = sorted(results, key=lambda x: x.Variable.address, reverse=True)
+    def GetValueByReg(cls, analysis: HermesAnalysis, reg: int) -> str:
 
-        func_name = f"r{obj_reg}"
-        variable = next((var.Variable for var in sorted_variables if var.Variable.name == func_name), None)
+        variable = analysis.registers.get(f"r{reg}")
 
-        if (variable
-                and variable.handler != 'ResumeGenerator'
-                # and not variable.handler.startswith('Call')
-                and not variable.handler.endswith('Environment')
+        if (
+                variable
+                and variable.handler != "ResumeGenerator"
+                and not variable.handler.endswith("Environment")
         ):
-            func_name = variable.value
             variable.used = True
+            return variable.value
 
-        return func_name
+        return f"r{reg}"
