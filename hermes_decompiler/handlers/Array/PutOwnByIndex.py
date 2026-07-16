@@ -7,7 +7,7 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT32, UINT16, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT32, sequence
 
 
 # /// Set an array element by (statically known) numeric index.

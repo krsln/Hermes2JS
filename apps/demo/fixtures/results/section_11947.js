@@ -67,7 +67,7 @@ async function* anon_11947(param0, param1, param2) {
                 // CODE -> <Mov>: <Reg8: 12, Reg8: 7>
                 r12 = r7
                 // CODE -> <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
-                r4 = new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error));
+                r4 = new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))
                 // CODE -> <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
                 // USED -> r6 = r7[r4]
                 // CODE -> <Jmp>: <Addr8: 16>  # Address: 00000087
