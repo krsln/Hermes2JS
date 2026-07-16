@@ -1,0 +1,674 @@
+
+=> [Function #11362 "binl_md5" of 2390 bytes]: 3 params, frame size=134, strict=1, exc handler=0, debug info=0  @ offset 0x002a82cd
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 98, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 1, UInt8: 2>
+==> 00000006: <LoadConstUInt8>: <Reg8: 97, UInt8: 5>
+==> 00000009: <RShift>: <Reg8: 2, Reg8: 1, Reg8: 97>
+==> 0000000d: <GetByVal>: <Reg8: 3, Reg8: 98, Reg8: 2>
+==> 00000011: <LoadConstUInt8>: <Reg8: 0, UInt8: 32>
+==> 00000014: <Mod>: <Reg8: 4, Reg8: 1, Reg8: 0>
+==> 00000018: <LoadConstUInt8>: <Reg8: 0, UInt8: 128>
+==> 0000001b: <LShift>: <Reg8: 0, Reg8: 0, Reg8: 4>
+==> 0000001f: <BitOr>: <Reg8: 0, Reg8: 3, Reg8: 0>
+==> 00000023: <PutByVal>: <Reg8: 98, Reg8: 2, Reg8: 0>
+==> 00000027: <LoadConstUInt8>: <Reg8: 0, UInt8: 64>
+==> 0000002a: <Add>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 0000002e: <LoadConstUInt8>: <Reg8: 96, UInt8: 9>
+==> 00000031: <URshift>: <Reg8: 0, Reg8: 0, Reg8: 96>
+==> 00000035: <LoadConstUInt8>: <Reg8: 95, UInt8: 4>
+==> 00000038: <LShift>: <Reg8: 0, Reg8: 0, Reg8: 95>
+==> 0000003c: <LoadConstUInt8>: <Reg8: 94, UInt8: 14>
+==> 0000003f: <AddN>: <Reg8: 0, Reg8: 0, Reg8: 94>
+==> 00000043: <PutByVal>: <Reg8: 98, Reg8: 0, Reg8: 1>
+==> 00000047: <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
+==> 0000004c: <LoadConstZero>: <Reg8: 93>
+==> 0000004e: <Less>: <Reg8: 0, Reg8: 93, Reg8: 0>
+==> 00000052: <LoadConstInt>: <Reg8: 9, Imm32: 1732584193>
+==> 00000058: <LoadConstInt>: <Reg8: 8, Imm32: -271733879>
+==> 0000005e: <LoadConstInt>: <Reg8: 7, Imm32: -1732584194>
+==> 00000064: <LoadConstInt>: <Reg8: 6, Imm32: 271733878>
+==> 0000006a: <GetEnvironment>: <Reg8: 92, UInt8: 0>
+==> 0000006d: <LoadConstUndefined>: <Reg8: 91>
+==> 0000006f: <LoadConstUInt8>: <Reg8: 90, UInt8: 7>
+==> 00000072: <LoadConstInt>: <Reg8: 89, Imm32: -680876936>
+==> 00000078: <LoadConstUInt8>: <Reg8: 88, UInt8: 1>
+==> 0000007b: <LoadConstUInt8>: <Reg8: 87, UInt8: 12>
+==> 0000007e: <LoadConstInt>: <Reg8: 86, Imm32: -389564586>
+==> 00000084: <LoadConstUInt8>: <Reg8: 85, UInt8: 2>
+==> 00000087: <LoadConstUInt8>: <Reg8: 84, UInt8: 17>
+==> 0000008a: <LoadConstInt>: <Reg8: 83, Imm32: 606105819>
+==> 00000090: <LoadConstUInt8>: <Reg8: 82, UInt8: 3>
+==> 00000093: <LoadConstUInt8>: <Reg8: 81, UInt8: 22>
+==> 00000096: <LoadConstInt>: <Reg8: 80, Imm32: -1044525330>
+==> 0000009c: <LoadConstInt>: <Reg8: 79, Imm32: -176418897>
+==> 000000a2: <LoadConstInt>: <Reg8: 78, Imm32: 1200080426>
+==> 000000a8: <LoadConstUInt8>: <Reg8: 77, UInt8: 6>
+==> 000000ab: <LoadConstInt>: <Reg8: 76, Imm32: -1473231341>
+==> 000000b1: <LoadConstInt>: <Reg8: 75, Imm32: -45705983>
+==> 000000b7: <LoadConstUInt8>: <Reg8: 74, UInt8: 8>
+==> 000000ba: <LoadConstInt>: <Reg8: 73, Imm32: 1770035416>
+==> 000000c0: <LoadConstInt>: <Reg8: 72, Imm32: -1958414417>
+==> 000000c6: <LoadConstUInt8>: <Reg8: 71, UInt8: 10>
+==> 000000c9: <LoadConstInt>: <Reg8: 70, Imm32: -42063>
+==> 000000cf: <LoadConstUInt8>: <Reg8: 69, UInt8: 11>
+==> 000000d2: <LoadConstInt>: <Reg8: 68, Imm32: -1990404162>
+==> 000000d8: <LoadConstInt>: <Reg8: 67, Imm32: 1804603682>
+==> 000000de: <LoadConstUInt8>: <Reg8: 66, UInt8: 13>
+==> 000000e1: <LoadConstInt>: <Reg8: 65, Imm32: -40341101>
+==> 000000e7: <LoadConstInt>: <Reg8: 64, Imm32: -1502002290>
+==> 000000ed: <LoadConstUInt8>: <Reg8: 63, UInt8: 15>
+==> 000000f0: <LoadConstInt>: <Reg8: 62, Imm32: 1236535329>
+==> 000000f6: <LoadConstInt>: <Reg8: 61, Imm32: -165796510>
+==> 000000fc: <LoadConstInt>: <Reg8: 60, Imm32: -1069501632>
+==> 00000102: <LoadConstInt>: <Reg8: 59, Imm32: 643717713>
+==> 00000108: <LoadConstUInt8>: <Reg8: 58, UInt8: 20>
+==> 0000010b: <LoadConstInt>: <Reg8: 57, Imm32: -373897302>
+==> 00000111: <LoadConstInt>: <Reg8: 56, Imm32: -701558691>
+==> 00000117: <LoadConstInt>: <Reg8: 55, Imm32: 38016083>
+==> 0000011d: <LoadConstInt>: <Reg8: 54, Imm32: -660478335>
+==> 00000123: <LoadConstInt>: <Reg8: 53, Imm32: -405537848>
+==> 00000129: <LoadConstInt>: <Reg8: 52, Imm32: 568446438>
+==> 0000012f: <LoadConstInt>: <Reg8: 51, Imm32: -1019803690>
+==> 00000135: <LoadConstInt>: <Reg8: 50, Imm32: -187363961>
+==> 0000013b: <LoadConstInt>: <Reg8: 49, Imm32: 1163531501>
+==> 00000141: <LoadConstInt>: <Reg8: 48, Imm32: -1444681467>
+==> 00000147: <LoadConstInt>: <Reg8: 47, Imm32: -51403784>
+==> 0000014d: <LoadConstInt>: <Reg8: 46, Imm32: 1735328473>
+==> 00000153: <LoadConstInt>: <Reg8: 45, Imm32: -1926607734>
+==> 00000159: <LoadConstInt>: <Reg8: 44, Imm32: -378558>
+==> 0000015f: <LoadConstInt>: <Reg8: 43, Imm32: -2022574463>
+==> 00000165: <LoadConstUInt8>: <Reg8: 42, UInt8: 16>
+==> 00000168: <LoadConstInt>: <Reg8: 41, Imm32: 1839030562>
+==> 0000016e: <LoadConstUInt8>: <Reg8: 40, UInt8: 23>
+==> 00000171: <LoadConstInt>: <Reg8: 39, Imm32: -35309556>
+==> 00000177: <LoadConstInt>: <Reg8: 38, Imm32: -1530992060>
+==> 0000017d: <LoadConstInt>: <Reg8: 37, Imm32: 1272893353>
+==> 00000183: <LoadConstInt>: <Reg8: 36, Imm32: -155497632>
+==> 00000189: <LoadConstInt>: <Reg8: 35, Imm32: -1094730640>
+==> 0000018f: <LoadConstInt>: <Reg8: 34, Imm32: 681279174>
+==> 00000195: <LoadConstInt>: <Reg8: 33, Imm32: -358537222>
+==> 0000019b: <LoadConstInt>: <Reg8: 32, Imm32: -722521979>
+==> 000001a1: <LoadConstInt>: <Reg8: 31, Imm32: 76029189>
+==> 000001a7: <LoadConstInt>: <Reg8: 30, Imm32: -640364487>
+==> 000001ad: <LoadConstInt>: <Reg8: 29, Imm32: -421815835>
+==> 000001b3: <LoadConstInt>: <Reg8: 28, Imm32: 530742520>
+==> 000001b9: <LoadConstInt>: <Reg8: 27, Imm32: -995338651>
+==> 000001bf: <LoadConstInt>: <Reg8: 26, Imm32: -198630844>
+==> 000001c5: <LoadConstInt>: <Reg8: 25, Imm32: 1126891415>
+==> 000001cb: <LoadConstInt>: <Reg8: 24, Imm32: -1416354905>
+==> 000001d1: <LoadConstUInt8>: <Reg8: 23, UInt8: 21>
+==> 000001d4: <LoadConstInt>: <Reg8: 22, Imm32: -57434055>
+==> 000001da: <LoadConstInt>: <Reg8: 21, Imm32: 1700485571>
+==> 000001e0: <LoadConstInt>: <Reg8: 20, Imm32: -1894986606>
+==> 000001e6: <LoadConstInt>: <Reg8: 19, Imm32: -1051523>
+==> 000001ec: <LoadConstInt>: <Reg8: 18, Imm32: -2054922799>
+==> 000001f2: <LoadConstInt>: <Reg8: 17, Imm32: 1873313359>
+==> 000001f8: <LoadConstInt>: <Reg8: 16, Imm32: -30611744>
+==> 000001fe: <LoadConstInt>: <Reg8: 15, Imm32: -1560198380>
+==> 00000204: <LoadConstInt>: <Reg8: 14, Imm32: 1309151649>
+==> 0000020a: <LoadConstInt>: <Reg8: 13, Imm32: -145523070>
+==> 00000210: <LoadConstInt>: <Reg8: 12, Imm32: -1120210379>
+==> 00000216: <LoadConstInt>: <Reg8: 11, Imm32: 718787259>
+==> 0000021c: <LoadConstInt>: <Reg8: 10, Imm32: -343485551>
+==> 00000222: <LoadConstZero>: <Reg8: 5>
+==> 00000224: <Mov>: <Reg8: 4, Reg8: 9>
+==> 00000227: <Mov>: <Reg8: 3, Reg8: 8>
+==> 0000022a: <Mov>: <Reg8: 2, Reg8: 7>
+==> 0000022d: <Mov>: <Reg8: 1, Reg8: 6>
+==> 00000230: <JmpFalseLong>: <Addr32: 1808, Reg8: 0>  # Address: 00000940
+==> 00000236: <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 10>
+==> 0000023a: <Add>: <Reg8: 114, Reg8: 5, Reg8: 93>
+==> 0000023e: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
+==> 00000242: <LoadConstUndefined>: <Reg8: 127>
+==> 00000244: <Mov>: <Reg8: 126, Reg8: 9>
+==> 00000247: <Mov>: <Reg8: 125, Reg8: 8>
+==> 0000024a: <Mov>: <Reg8: 124, Reg8: 7>
+==> 0000024d: <Mov>: <Reg8: 123, Reg8: 6>
+==> 00000250: <Mov>: <Reg8: 121, Reg8: 90>
+==> 00000253: <Mov>: <Reg8: 120, Reg8: 89>
+==> 00000256: <Call>: <Reg8: 99, Reg8: 119, UInt8: 8>
+==> 0000025a: <Add>: <Reg8: 107, Reg8: 5, Reg8: 88>
+==> 0000025e: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
+==> 00000262: <Mov>: <Reg8: 126, Reg8: 6>
+==> 00000265: <Mov>: <Reg8: 125, Reg8: 99>
+==> 00000268: <Mov>: <Reg8: 124, Reg8: 8>
+==> 0000026b: <Mov>: <Reg8: 123, Reg8: 7>
+==> 0000026e: <Mov>: <Reg8: 121, Reg8: 87>
+==> 00000271: <Mov>: <Reg8: 120, Reg8: 86>
+==> 00000274: <Call>: <Reg8: 104, Reg8: 119, UInt8: 8>
+==> 00000278: <Add>: <Reg8: 100, Reg8: 5, Reg8: 85>
+==> 0000027c: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
+==> 00000280: <Mov>: <Reg8: 126, Reg8: 7>
+==> 00000283: <Mov>: <Reg8: 125, Reg8: 104>
+==> 00000286: <Mov>: <Reg8: 124, Reg8: 99>
+==> 00000289: <Mov>: <Reg8: 123, Reg8: 8>
+==> 0000028c: <Mov>: <Reg8: 121, Reg8: 84>
+==> 0000028f: <Mov>: <Reg8: 120, Reg8: 83>
+==> 00000292: <Call>: <Reg8: 101, Reg8: 119, UInt8: 8>
+==> 00000296: <Add>: <Reg8: 109, Reg8: 5, Reg8: 82>
+==> 0000029a: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
+==> 0000029e: <Mov>: <Reg8: 126, Reg8: 8>
+==> 000002a1: <Mov>: <Reg8: 125, Reg8: 101>
+==> 000002a4: <Mov>: <Reg8: 124, Reg8: 104>
+==> 000002a7: <Mov>: <Reg8: 123, Reg8: 99>
+==> 000002aa: <Mov>: <Reg8: 121, Reg8: 81>
+==> 000002ad: <Mov>: <Reg8: 120, Reg8: 80>
+==> 000002b0: <Call>: <Reg8: 103, Reg8: 119, UInt8: 8>
+==> 000002b4: <Add>: <Reg8: 102, Reg8: 5, Reg8: 95>
+==> 000002b8: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
+==> 000002bc: <Mov>: <Reg8: 126, Reg8: 99>
+==> 000002bf: <Mov>: <Reg8: 125, Reg8: 103>
+==> 000002c2: <Mov>: <Reg8: 124, Reg8: 101>
+==> 000002c5: <Mov>: <Reg8: 123, Reg8: 104>
+==> 000002c8: <Mov>: <Reg8: 121, Reg8: 90>
+==> 000002cb: <Mov>: <Reg8: 120, Reg8: 79>
+==> 000002ce: <Call>: <Reg8: 99, Reg8: 119, UInt8: 8>
+==> 000002d2: <Add>: <Reg8: 111, Reg8: 5, Reg8: 97>
+==> 000002d6: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
+==> 000002da: <Mov>: <Reg8: 126, Reg8: 104>
+==> 000002dd: <Mov>: <Reg8: 125, Reg8: 99>
+==> 000002e0: <Mov>: <Reg8: 124, Reg8: 103>
+==> 000002e3: <Mov>: <Reg8: 123, Reg8: 101>
+==> 000002e6: <Mov>: <Reg8: 121, Reg8: 87>
+==> 000002e9: <Mov>: <Reg8: 120, Reg8: 78>
+==> 000002ec: <Call>: <Reg8: 105, Reg8: 119, UInt8: 8>
+==> 000002f0: <Add>: <Reg8: 104, Reg8: 5, Reg8: 77>
+==> 000002f4: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
+==> 000002f8: <Mov>: <Reg8: 126, Reg8: 101>
+==> 000002fb: <Mov>: <Reg8: 125, Reg8: 105>
+==> 000002fe: <Mov>: <Reg8: 124, Reg8: 99>
+==> 00000301: <Mov>: <Reg8: 123, Reg8: 103>
+==> 00000304: <Mov>: <Reg8: 121, Reg8: 84>
+==> 00000307: <Mov>: <Reg8: 120, Reg8: 76>
+==> 0000030a: <Call>: <Reg8: 101, Reg8: 119, UInt8: 8>
+==> 0000030e: <Add>: <Reg8: 113, Reg8: 5, Reg8: 90>
+==> 00000312: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
+==> 00000316: <Mov>: <Reg8: 126, Reg8: 103>
+==> 00000319: <Mov>: <Reg8: 125, Reg8: 101>
+==> 0000031c: <Mov>: <Reg8: 124, Reg8: 105>
+==> 0000031f: <Mov>: <Reg8: 123, Reg8: 99>
+==> 00000322: <Mov>: <Reg8: 121, Reg8: 81>
+==> 00000325: <Mov>: <Reg8: 120, Reg8: 75>
+==> 00000328: <Call>: <Reg8: 110, Reg8: 119, UInt8: 8>
+==> 0000032c: <Add>: <Reg8: 106, Reg8: 5, Reg8: 74>
+==> 00000330: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
+==> 00000334: <Mov>: <Reg8: 126, Reg8: 99>
+==> 00000337: <Mov>: <Reg8: 125, Reg8: 110>
+==> 0000033a: <Mov>: <Reg8: 124, Reg8: 101>
+==> 0000033d: <Mov>: <Reg8: 123, Reg8: 105>
+==> 00000340: <Mov>: <Reg8: 121, Reg8: 90>
+==> 00000343: <Mov>: <Reg8: 120, Reg8: 73>
+==> 00000346: <Call>: <Reg8: 103, Reg8: 119, UInt8: 8>
+==> 0000034a: <Add>: <Reg8: 0, Reg8: 5, Reg8: 96>
+==> 0000034e: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
+==> 00000352: <Mov>: <Reg8: 126, Reg8: 105>
+==> 00000355: <Mov>: <Reg8: 125, Reg8: 103>
+==> 00000358: <Mov>: <Reg8: 124, Reg8: 110>
+==> 0000035b: <Mov>: <Reg8: 123, Reg8: 101>
+==> 0000035e: <Mov>: <Reg8: 121, Reg8: 87>
+==> 00000361: <Mov>: <Reg8: 120, Reg8: 72>
+==> 00000364: <Call>: <Reg8: 112, Reg8: 119, UInt8: 8>
+==> 00000368: <Add>: <Reg8: 108, Reg8: 5, Reg8: 71>
+==> 0000036c: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
+==> 00000370: <Mov>: <Reg8: 126, Reg8: 101>
+==> 00000373: <Mov>: <Reg8: 125, Reg8: 112>
+==> 00000376: <Mov>: <Reg8: 124, Reg8: 103>
+==> 00000379: <Mov>: <Reg8: 123, Reg8: 110>
+==> 0000037c: <Mov>: <Reg8: 121, Reg8: 84>
+==> 0000037f: <Mov>: <Reg8: 120, Reg8: 70>
+==> 00000382: <Call>: <Reg8: 105, Reg8: 119, UInt8: 8>
+==> 00000386: <Add>: <Reg8: 99, Reg8: 5, Reg8: 69>
+==> 0000038a: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
+==> 0000038e: <Mov>: <Reg8: 126, Reg8: 110>
+==> 00000391: <Mov>: <Reg8: 125, Reg8: 105>
+==> 00000394: <Mov>: <Reg8: 124, Reg8: 112>
+==> 00000397: <Mov>: <Reg8: 123, Reg8: 103>
+==> 0000039a: <Mov>: <Reg8: 121, Reg8: 81>
+==> 0000039d: <Mov>: <Reg8: 120, Reg8: 68>
+==> 000003a0: <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
+==> 000003a4: <Add>: <Reg8: 110, Reg8: 5, Reg8: 87>
+==> 000003a8: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
+==> 000003ac: <Mov>: <Reg8: 126, Reg8: 103>
+==> 000003af: <Mov>: <Reg8: 125, Reg8: 115>
+==> 000003b2: <Mov>: <Reg8: 124, Reg8: 105>
+==> 000003b5: <Mov>: <Reg8: 123, Reg8: 112>
+==> 000003b8: <Mov>: <Reg8: 121, Reg8: 90>
+==> 000003bb: <Mov>: <Reg8: 120, Reg8: 67>
+==> 000003be: <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
+==> 000003c2: <Add>: <Reg8: 101, Reg8: 5, Reg8: 66>
+==> 000003c6: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
+==> 000003ca: <Mov>: <Reg8: 126, Reg8: 112>
+==> 000003cd: <Mov>: <Reg8: 125, Reg8: 118>
+==> 000003d0: <Mov>: <Reg8: 124, Reg8: 115>
+==> 000003d3: <Mov>: <Reg8: 123, Reg8: 105>
+==> 000003d6: <Mov>: <Reg8: 121, Reg8: 87>
+==> 000003d9: <Mov>: <Reg8: 120, Reg8: 65>
+==> 000003dc: <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
+==> 000003e0: <Add>: <Reg8: 112, Reg8: 5, Reg8: 94>
+==> 000003e4: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
+==> 000003e8: <Mov>: <Reg8: 126, Reg8: 105>
+==> 000003eb: <Mov>: <Reg8: 125, Reg8: 117>
+==> 000003ee: <Mov>: <Reg8: 124, Reg8: 118>
+==> 000003f1: <Mov>: <Reg8: 123, Reg8: 115>
+==> 000003f4: <Mov>: <Reg8: 121, Reg8: 84>
+==> 000003f7: <Mov>: <Reg8: 120, Reg8: 64>
+==> 000003fa: <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
+==> 000003fe: <Add>: <Reg8: 105, Reg8: 5, Reg8: 63>
+==> 00000402: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
+==> 00000406: <Mov>: <Reg8: 126, Reg8: 115>
+==> 00000409: <Mov>: <Reg8: 125, Reg8: 116>
+==> 0000040c: <Mov>: <Reg8: 124, Reg8: 117>
+==> 0000040f: <Mov>: <Reg8: 123, Reg8: 118>
+==> 00000412: <Mov>: <Reg8: 121, Reg8: 81>
+==> 00000415: <Mov>: <Reg8: 120, Reg8: 62>
+==> 00000418: <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
+==> 0000041c: <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 11>
+==> 00000420: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
+==> 00000424: <Mov>: <Reg8: 126, Reg8: 118>
+==> 00000427: <Mov>: <Reg8: 125, Reg8: 115>
+==> 0000042a: <Mov>: <Reg8: 124, Reg8: 116>
+==> 0000042d: <Mov>: <Reg8: 123, Reg8: 117>
+==> 00000430: <Mov>: <Reg8: 121, Reg8: 97>
+==> 00000433: <Mov>: <Reg8: 120, Reg8: 61>
+==> 00000436: <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
+==> 0000043a: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
+==> 0000043e: <Mov>: <Reg8: 126, Reg8: 117>
+==> 00000441: <Mov>: <Reg8: 125, Reg8: 118>
+==> 00000444: <Mov>: <Reg8: 124, Reg8: 115>
+==> 00000447: <Mov>: <Reg8: 123, Reg8: 116>
+==> 0000044a: <Mov>: <Reg8: 121, Reg8: 96>
+==> 0000044d: <Mov>: <Reg8: 120, Reg8: 60>
+==> 00000450: <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
+==> 00000454: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
+==> 00000458: <Mov>: <Reg8: 126, Reg8: 116>
+==> 0000045b: <Mov>: <Reg8: 125, Reg8: 117>
+==> 0000045e: <Mov>: <Reg8: 124, Reg8: 118>
+==> 00000461: <Mov>: <Reg8: 123, Reg8: 115>
+==> 00000464: <Mov>: <Reg8: 121, Reg8: 94>
+==> 00000467: <Mov>: <Reg8: 120, Reg8: 59>
+==> 0000046a: <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
+==> 0000046e: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
+==> 00000472: <Mov>: <Reg8: 126, Reg8: 115>
+==> 00000475: <Mov>: <Reg8: 125, Reg8: 116>
+==> 00000478: <Mov>: <Reg8: 124, Reg8: 117>
+==> 0000047b: <Mov>: <Reg8: 123, Reg8: 118>
+==> 0000047e: <Mov>: <Reg8: 121, Reg8: 58>
+==> 00000481: <Mov>: <Reg8: 120, Reg8: 57>
+==> 00000484: <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
+==> 00000488: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
+==> 0000048c: <Mov>: <Reg8: 126, Reg8: 118>
+==> 0000048f: <Mov>: <Reg8: 125, Reg8: 115>
+==> 00000492: <Mov>: <Reg8: 124, Reg8: 116>
+==> 00000495: <Mov>: <Reg8: 123, Reg8: 117>
+==> 00000498: <Mov>: <Reg8: 121, Reg8: 97>
+==> 0000049b: <Mov>: <Reg8: 120, Reg8: 56>
+==> 0000049e: <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
+==> 000004a2: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
+==> 000004a6: <Mov>: <Reg8: 126, Reg8: 117>
+==> 000004a9: <Mov>: <Reg8: 125, Reg8: 118>
+==> 000004ac: <Mov>: <Reg8: 124, Reg8: 115>
+==> 000004af: <Mov>: <Reg8: 123, Reg8: 116>
+==> 000004b2: <Mov>: <Reg8: 121, Reg8: 96>
+==> 000004b5: <Mov>: <Reg8: 120, Reg8: 55>
+==> 000004b8: <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
+==> 000004bc: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
+==> 000004c0: <Mov>: <Reg8: 126, Reg8: 116>
+==> 000004c3: <Mov>: <Reg8: 125, Reg8: 117>
+==> 000004c6: <Mov>: <Reg8: 124, Reg8: 118>
+==> 000004c9: <Mov>: <Reg8: 123, Reg8: 115>
+==> 000004cc: <Mov>: <Reg8: 121, Reg8: 94>
+==> 000004cf: <Mov>: <Reg8: 120, Reg8: 54>
+==> 000004d2: <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
+==> 000004d6: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
+==> 000004da: <Mov>: <Reg8: 126, Reg8: 115>
+==> 000004dd: <Mov>: <Reg8: 125, Reg8: 116>
+==> 000004e0: <Mov>: <Reg8: 124, Reg8: 117>
+==> 000004e3: <Mov>: <Reg8: 123, Reg8: 118>
+==> 000004e6: <Mov>: <Reg8: 121, Reg8: 58>
+==> 000004e9: <Mov>: <Reg8: 120, Reg8: 53>
+==> 000004ec: <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
+==> 000004f0: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
+==> 000004f4: <Mov>: <Reg8: 126, Reg8: 118>
+==> 000004f7: <Mov>: <Reg8: 125, Reg8: 115>
+==> 000004fa: <Mov>: <Reg8: 124, Reg8: 116>
+==> 000004fd: <Mov>: <Reg8: 123, Reg8: 117>
+==> 00000500: <Mov>: <Reg8: 121, Reg8: 97>
+==> 00000503: <Mov>: <Reg8: 120, Reg8: 52>
+==> 00000506: <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
+==> 0000050a: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
+==> 0000050e: <Mov>: <Reg8: 126, Reg8: 117>
+==> 00000511: <Mov>: <Reg8: 125, Reg8: 118>
+==> 00000514: <Mov>: <Reg8: 124, Reg8: 115>
+==> 00000517: <Mov>: <Reg8: 123, Reg8: 116>
+==> 0000051a: <Mov>: <Reg8: 121, Reg8: 96>
+==> 0000051d: <Mov>: <Reg8: 120, Reg8: 51>
+==> 00000520: <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
+==> 00000524: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
+==> 00000528: <Mov>: <Reg8: 126, Reg8: 116>
+==> 0000052b: <Mov>: <Reg8: 125, Reg8: 117>
+==> 0000052e: <Mov>: <Reg8: 124, Reg8: 118>
+==> 00000531: <Mov>: <Reg8: 123, Reg8: 115>
+==> 00000534: <Mov>: <Reg8: 121, Reg8: 94>
+==> 00000537: <Mov>: <Reg8: 120, Reg8: 50>
+==> 0000053a: <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
+==> 0000053e: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
+==> 00000542: <Mov>: <Reg8: 126, Reg8: 115>
+==> 00000545: <Mov>: <Reg8: 125, Reg8: 116>
+==> 00000548: <Mov>: <Reg8: 124, Reg8: 117>
+==> 0000054b: <Mov>: <Reg8: 123, Reg8: 118>
+==> 0000054e: <Mov>: <Reg8: 121, Reg8: 58>
+==> 00000551: <Mov>: <Reg8: 120, Reg8: 49>
+==> 00000554: <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
+==> 00000558: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
+==> 0000055c: <Mov>: <Reg8: 126, Reg8: 118>
+==> 0000055f: <Mov>: <Reg8: 125, Reg8: 115>
+==> 00000562: <Mov>: <Reg8: 124, Reg8: 116>
+==> 00000565: <Mov>: <Reg8: 123, Reg8: 117>
+==> 00000568: <Mov>: <Reg8: 121, Reg8: 97>
+==> 0000056b: <Mov>: <Reg8: 120, Reg8: 48>
+==> 0000056e: <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
+==> 00000572: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
+==> 00000576: <Mov>: <Reg8: 126, Reg8: 117>
+==> 00000579: <Mov>: <Reg8: 125, Reg8: 118>
+==> 0000057c: <Mov>: <Reg8: 124, Reg8: 115>
+==> 0000057f: <Mov>: <Reg8: 123, Reg8: 116>
+==> 00000582: <Mov>: <Reg8: 121, Reg8: 96>
+==> 00000585: <Mov>: <Reg8: 120, Reg8: 47>
+==> 00000588: <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
+==> 0000058c: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
+==> 00000590: <Mov>: <Reg8: 126, Reg8: 116>
+==> 00000593: <Mov>: <Reg8: 125, Reg8: 117>
+==> 00000596: <Mov>: <Reg8: 124, Reg8: 118>
+==> 00000599: <Mov>: <Reg8: 123, Reg8: 115>
+==> 0000059c: <Mov>: <Reg8: 121, Reg8: 94>
+==> 0000059f: <Mov>: <Reg8: 120, Reg8: 46>
+==> 000005a2: <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
+==> 000005a6: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
+==> 000005aa: <Mov>: <Reg8: 126, Reg8: 115>
+==> 000005ad: <Mov>: <Reg8: 125, Reg8: 116>
+==> 000005b0: <Mov>: <Reg8: 124, Reg8: 117>
+==> 000005b3: <Mov>: <Reg8: 123, Reg8: 118>
+==> 000005b6: <Mov>: <Reg8: 121, Reg8: 58>
+==> 000005b9: <Mov>: <Reg8: 120, Reg8: 45>
+==> 000005bc: <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
+==> 000005c0: <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 12>
+==> 000005c4: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
+==> 000005c8: <Mov>: <Reg8: 126, Reg8: 118>
+==> 000005cb: <Mov>: <Reg8: 125, Reg8: 115>
+==> 000005ce: <Mov>: <Reg8: 124, Reg8: 116>
+==> 000005d1: <Mov>: <Reg8: 123, Reg8: 117>
+==> 000005d4: <Mov>: <Reg8: 121, Reg8: 95>
+==> 000005d7: <Mov>: <Reg8: 120, Reg8: 44>
+==> 000005da: <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
+==> 000005de: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
+==> 000005e2: <Mov>: <Reg8: 126, Reg8: 117>
+==> 000005e5: <Mov>: <Reg8: 125, Reg8: 118>
+==> 000005e8: <Mov>: <Reg8: 124, Reg8: 115>
+==> 000005eb: <Mov>: <Reg8: 123, Reg8: 116>
+==> 000005ee: <Mov>: <Reg8: 121, Reg8: 69>
+==> 000005f1: <Mov>: <Reg8: 120, Reg8: 43>
+==> 000005f4: <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
+==> 000005f8: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
+==> 000005fc: <Mov>: <Reg8: 126, Reg8: 116>
+==> 000005ff: <Mov>: <Reg8: 125, Reg8: 117>
+==> 00000602: <Mov>: <Reg8: 124, Reg8: 118>
+==> 00000605: <Mov>: <Reg8: 123, Reg8: 115>
+==> 00000608: <Mov>: <Reg8: 121, Reg8: 42>
+==> 0000060b: <Mov>: <Reg8: 120, Reg8: 41>
+==> 0000060e: <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
+==> 00000612: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
+==> 00000616: <Mov>: <Reg8: 126, Reg8: 115>
+==> 00000619: <Mov>: <Reg8: 125, Reg8: 116>
+==> 0000061c: <Mov>: <Reg8: 124, Reg8: 117>
+==> 0000061f: <Mov>: <Reg8: 123, Reg8: 118>
+==> 00000622: <Mov>: <Reg8: 121, Reg8: 40>
+==> 00000625: <Mov>: <Reg8: 120, Reg8: 39>
+==> 00000628: <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
+==> 0000062c: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
+==> 00000630: <Mov>: <Reg8: 126, Reg8: 118>
+==> 00000633: <Mov>: <Reg8: 125, Reg8: 115>
+==> 00000636: <Mov>: <Reg8: 124, Reg8: 116>
+==> 00000639: <Mov>: <Reg8: 123, Reg8: 117>
+==> 0000063c: <Mov>: <Reg8: 121, Reg8: 95>
+==> 0000063f: <Mov>: <Reg8: 120, Reg8: 38>
+==> 00000642: <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
+==> 00000646: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
+==> 0000064a: <Mov>: <Reg8: 126, Reg8: 117>
+==> 0000064d: <Mov>: <Reg8: 125, Reg8: 118>
+==> 00000650: <Mov>: <Reg8: 124, Reg8: 115>
+==> 00000653: <Mov>: <Reg8: 123, Reg8: 116>
+==> 00000656: <Mov>: <Reg8: 121, Reg8: 69>
+==> 00000659: <Mov>: <Reg8: 120, Reg8: 37>
+==> 0000065c: <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
+==> 00000660: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
+==> 00000664: <Mov>: <Reg8: 126, Reg8: 116>
+==> 00000667: <Mov>: <Reg8: 125, Reg8: 117>
+==> 0000066a: <Mov>: <Reg8: 124, Reg8: 118>
+==> 0000066d: <Mov>: <Reg8: 123, Reg8: 115>
+==> 00000670: <Mov>: <Reg8: 121, Reg8: 42>
+==> 00000673: <Mov>: <Reg8: 120, Reg8: 36>
+==> 00000676: <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
+==> 0000067a: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
+==> 0000067e: <Mov>: <Reg8: 126, Reg8: 115>
+==> 00000681: <Mov>: <Reg8: 125, Reg8: 116>
+==> 00000684: <Mov>: <Reg8: 124, Reg8: 117>
+==> 00000687: <Mov>: <Reg8: 123, Reg8: 118>
+==> 0000068a: <Mov>: <Reg8: 121, Reg8: 40>
+==> 0000068d: <Mov>: <Reg8: 120, Reg8: 35>
+==> 00000690: <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
+==> 00000694: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
+==> 00000698: <Mov>: <Reg8: 126, Reg8: 118>
+==> 0000069b: <Mov>: <Reg8: 125, Reg8: 115>
+==> 0000069e: <Mov>: <Reg8: 124, Reg8: 116>
+==> 000006a1: <Mov>: <Reg8: 123, Reg8: 117>
+==> 000006a4: <Mov>: <Reg8: 121, Reg8: 95>
+==> 000006a7: <Mov>: <Reg8: 120, Reg8: 34>
+==> 000006aa: <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
+==> 000006ae: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
+==> 000006b2: <Mov>: <Reg8: 126, Reg8: 117>
+==> 000006b5: <Mov>: <Reg8: 125, Reg8: 118>
+==> 000006b8: <Mov>: <Reg8: 124, Reg8: 115>
+==> 000006bb: <Mov>: <Reg8: 123, Reg8: 116>
+==> 000006be: <Mov>: <Reg8: 121, Reg8: 69>
+==> 000006c1: <Mov>: <Reg8: 120, Reg8: 33>
+==> 000006c4: <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
+==> 000006c8: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
+==> 000006cc: <Mov>: <Reg8: 126, Reg8: 116>
+==> 000006cf: <Mov>: <Reg8: 125, Reg8: 117>
+==> 000006d2: <Mov>: <Reg8: 124, Reg8: 118>
+==> 000006d5: <Mov>: <Reg8: 123, Reg8: 115>
+==> 000006d8: <Mov>: <Reg8: 121, Reg8: 42>
+==> 000006db: <Mov>: <Reg8: 120, Reg8: 32>
+==> 000006de: <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
+==> 000006e2: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
+==> 000006e6: <Mov>: <Reg8: 126, Reg8: 115>
+==> 000006e9: <Mov>: <Reg8: 125, Reg8: 116>
+==> 000006ec: <Mov>: <Reg8: 124, Reg8: 117>
+==> 000006ef: <Mov>: <Reg8: 123, Reg8: 118>
+==> 000006f2: <Mov>: <Reg8: 121, Reg8: 40>
+==> 000006f5: <Mov>: <Reg8: 120, Reg8: 31>
+==> 000006f8: <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
+==> 000006fc: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
+==> 00000700: <Mov>: <Reg8: 126, Reg8: 118>
+==> 00000703: <Mov>: <Reg8: 125, Reg8: 115>
+==> 00000706: <Mov>: <Reg8: 124, Reg8: 116>
+==> 00000709: <Mov>: <Reg8: 123, Reg8: 117>
+==> 0000070c: <Mov>: <Reg8: 121, Reg8: 95>
+==> 0000070f: <Mov>: <Reg8: 120, Reg8: 30>
+==> 00000712: <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
+==> 00000716: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
+==> 0000071a: <Mov>: <Reg8: 126, Reg8: 117>
+==> 0000071d: <Mov>: <Reg8: 125, Reg8: 118>
+==> 00000720: <Mov>: <Reg8: 124, Reg8: 115>
+==> 00000723: <Mov>: <Reg8: 123, Reg8: 116>
+==> 00000726: <Mov>: <Reg8: 121, Reg8: 69>
+==> 00000729: <Mov>: <Reg8: 120, Reg8: 29>
+==> 0000072c: <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
+==> 00000730: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
+==> 00000734: <Mov>: <Reg8: 126, Reg8: 116>
+==> 00000737: <Mov>: <Reg8: 125, Reg8: 117>
+==> 0000073a: <Mov>: <Reg8: 124, Reg8: 118>
+==> 0000073d: <Mov>: <Reg8: 123, Reg8: 115>
+==> 00000740: <Mov>: <Reg8: 121, Reg8: 42>
+==> 00000743: <Mov>: <Reg8: 120, Reg8: 28>
+==> 00000746: <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
+==> 0000074a: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
+==> 0000074e: <Mov>: <Reg8: 126, Reg8: 115>
+==> 00000751: <Mov>: <Reg8: 125, Reg8: 116>
+==> 00000754: <Mov>: <Reg8: 124, Reg8: 117>
+==> 00000757: <Mov>: <Reg8: 123, Reg8: 118>
+==> 0000075a: <Mov>: <Reg8: 121, Reg8: 40>
+==> 0000075d: <Mov>: <Reg8: 120, Reg8: 27>
+==> 00000760: <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
+==> 00000764: <LoadFromEnvironment>: <Reg8: 103, Reg8: 92, UInt8: 13>
+==> 00000768: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
+==> 0000076c: <Mov>: <Reg8: 126, Reg8: 118>
+==> 0000076f: <Mov>: <Reg8: 125, Reg8: 115>
+==> 00000772: <Mov>: <Reg8: 124, Reg8: 116>
+==> 00000775: <Mov>: <Reg8: 123, Reg8: 117>
+==> 00000778: <Mov>: <Reg8: 121, Reg8: 77>
+==> 0000077b: <Mov>: <Reg8: 120, Reg8: 26>
+==> 0000077e: <Call>: <Reg8: 114, Reg8: 103, UInt8: 8>
+==> 00000782: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
+==> 00000786: <Mov>: <Reg8: 126, Reg8: 117>
+==> 00000789: <Mov>: <Reg8: 125, Reg8: 114>
+==> 0000078c: <Mov>: <Reg8: 124, Reg8: 115>
+==> 0000078f: <Mov>: <Reg8: 123, Reg8: 116>
+==> 00000792: <Mov>: <Reg8: 121, Reg8: 71>
+==> 00000795: <Mov>: <Reg8: 120, Reg8: 25>
+==> 00000798: <Call>: <Reg8: 113, Reg8: 103, UInt8: 8>
+==> 0000079c: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
+==> 000007a0: <Mov>: <Reg8: 126, Reg8: 116>
+==> 000007a3: <Mov>: <Reg8: 125, Reg8: 113>
+==> 000007a6: <Mov>: <Reg8: 124, Reg8: 114>
+==> 000007a9: <Mov>: <Reg8: 123, Reg8: 115>
+==> 000007ac: <Mov>: <Reg8: 121, Reg8: 63>
+==> 000007af: <Mov>: <Reg8: 120, Reg8: 24>
+==> 000007b2: <Call>: <Reg8: 112, Reg8: 103, UInt8: 8>
+==> 000007b6: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
+==> 000007ba: <Mov>: <Reg8: 126, Reg8: 115>
+==> 000007bd: <Mov>: <Reg8: 125, Reg8: 112>
+==> 000007c0: <Mov>: <Reg8: 124, Reg8: 113>
+==> 000007c3: <Mov>: <Reg8: 123, Reg8: 114>
+==> 000007c6: <Mov>: <Reg8: 121, Reg8: 23>
+==> 000007c9: <Mov>: <Reg8: 120, Reg8: 22>
+==> 000007cc: <Call>: <Reg8: 111, Reg8: 103, UInt8: 8>
+==> 000007d0: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
+==> 000007d4: <Mov>: <Reg8: 126, Reg8: 114>
+==> 000007d7: <Mov>: <Reg8: 125, Reg8: 111>
+==> 000007da: <Mov>: <Reg8: 124, Reg8: 112>
+==> 000007dd: <Mov>: <Reg8: 123, Reg8: 113>
+==> 000007e0: <Mov>: <Reg8: 121, Reg8: 77>
+==> 000007e3: <Mov>: <Reg8: 120, Reg8: 21>
+==> 000007e6: <Call>: <Reg8: 110, Reg8: 103, UInt8: 8>
+==> 000007ea: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
+==> 000007ee: <Mov>: <Reg8: 126, Reg8: 113>
+==> 000007f1: <Mov>: <Reg8: 125, Reg8: 110>
+==> 000007f4: <Mov>: <Reg8: 124, Reg8: 111>
+==> 000007f7: <Mov>: <Reg8: 123, Reg8: 112>
+==> 000007fa: <Mov>: <Reg8: 121, Reg8: 71>
+==> 000007fd: <Mov>: <Reg8: 120, Reg8: 20>
+==> 00000800: <Call>: <Reg8: 109, Reg8: 103, UInt8: 8>
+==> 00000804: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
+==> 00000808: <Mov>: <Reg8: 126, Reg8: 112>
+==> 0000080b: <Mov>: <Reg8: 125, Reg8: 109>
+==> 0000080e: <Mov>: <Reg8: 124, Reg8: 110>
+==> 00000811: <Mov>: <Reg8: 123, Reg8: 111>
+==> 00000814: <Mov>: <Reg8: 121, Reg8: 63>
+==> 00000817: <Mov>: <Reg8: 120, Reg8: 19>
+==> 0000081a: <Call>: <Reg8: 108, Reg8: 103, UInt8: 8>
+==> 0000081e: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
+==> 00000822: <Mov>: <Reg8: 126, Reg8: 111>
+==> 00000825: <Mov>: <Reg8: 125, Reg8: 108>
+==> 00000828: <Mov>: <Reg8: 124, Reg8: 109>
+==> 0000082b: <Mov>: <Reg8: 123, Reg8: 110>
+==> 0000082e: <Mov>: <Reg8: 121, Reg8: 23>
+==> 00000831: <Mov>: <Reg8: 120, Reg8: 18>
+==> 00000834: <Call>: <Reg8: 107, Reg8: 103, UInt8: 8>
+==> 00000838: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
+==> 0000083c: <Mov>: <Reg8: 126, Reg8: 110>
+==> 0000083f: <Mov>: <Reg8: 125, Reg8: 107>
+==> 00000842: <Mov>: <Reg8: 124, Reg8: 108>
+==> 00000845: <Mov>: <Reg8: 123, Reg8: 109>
+==> 00000848: <Mov>: <Reg8: 121, Reg8: 77>
+==> 0000084b: <Mov>: <Reg8: 120, Reg8: 17>
+==> 0000084e: <Call>: <Reg8: 106, Reg8: 103, UInt8: 8>
+==> 00000852: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
+==> 00000856: <Mov>: <Reg8: 126, Reg8: 109>
+==> 00000859: <Mov>: <Reg8: 125, Reg8: 106>
+==> 0000085c: <Mov>: <Reg8: 124, Reg8: 107>
+==> 0000085f: <Mov>: <Reg8: 123, Reg8: 108>
+==> 00000862: <Mov>: <Reg8: 121, Reg8: 71>
+==> 00000865: <Mov>: <Reg8: 120, Reg8: 16>
+==> 00000868: <Call>: <Reg8: 105, Reg8: 103, UInt8: 8>
+==> 0000086c: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
+==> 00000870: <Mov>: <Reg8: 126, Reg8: 108>
+==> 00000873: <Mov>: <Reg8: 125, Reg8: 105>
+==> 00000876: <Mov>: <Reg8: 124, Reg8: 106>
+==> 00000879: <Mov>: <Reg8: 123, Reg8: 107>
+==> 0000087c: <Mov>: <Reg8: 121, Reg8: 63>
+==> 0000087f: <Mov>: <Reg8: 120, Reg8: 15>
+==> 00000882: <Call>: <Reg8: 104, Reg8: 103, UInt8: 8>
+==> 00000886: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
+==> 0000088a: <Mov>: <Reg8: 126, Reg8: 107>
+==> 0000088d: <Mov>: <Reg8: 125, Reg8: 104>
+==> 00000890: <Mov>: <Reg8: 124, Reg8: 105>
+==> 00000893: <Mov>: <Reg8: 123, Reg8: 106>
+==> 00000896: <Mov>: <Reg8: 121, Reg8: 23>
+==> 00000899: <Mov>: <Reg8: 120, Reg8: 14>
+==> 0000089c: <Call>: <Reg8: 101, Reg8: 103, UInt8: 8>
+==> 000008a0: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
+==> 000008a4: <Mov>: <Reg8: 126, Reg8: 106>
+==> 000008a7: <Mov>: <Reg8: 125, Reg8: 101>
+==> 000008aa: <Mov>: <Reg8: 124, Reg8: 104>
+==> 000008ad: <Mov>: <Reg8: 123, Reg8: 105>
+==> 000008b0: <Mov>: <Reg8: 121, Reg8: 77>
+==> 000008b3: <Mov>: <Reg8: 120, Reg8: 13>
+==> 000008b6: <Call>: <Reg8: 102, Reg8: 103, UInt8: 8>
+==> 000008ba: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
+==> 000008be: <Mov>: <Reg8: 126, Reg8: 105>
+==> 000008c1: <Mov>: <Reg8: 125, Reg8: 102>
+==> 000008c4: <Mov>: <Reg8: 124, Reg8: 101>
+==> 000008c7: <Mov>: <Reg8: 123, Reg8: 104>
+==> 000008ca: <Mov>: <Reg8: 121, Reg8: 71>
+==> 000008cd: <Mov>: <Reg8: 120, Reg8: 12>
+==> 000008d0: <Call>: <Reg8: 99, Reg8: 103, UInt8: 8>
+==> 000008d4: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
+==> 000008d8: <Mov>: <Reg8: 126, Reg8: 104>
+==> 000008db: <Mov>: <Reg8: 125, Reg8: 99>
+==> 000008de: <Mov>: <Reg8: 124, Reg8: 102>
+==> 000008e1: <Mov>: <Reg8: 123, Reg8: 101>
+==> 000008e4: <Mov>: <Reg8: 121, Reg8: 63>
+==> 000008e7: <Mov>: <Reg8: 120, Reg8: 11>
+==> 000008ea: <Call>: <Reg8: 100, Reg8: 103, UInt8: 8>
+==> 000008ee: <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
+==> 000008f2: <Mov>: <Reg8: 126, Reg8: 101>
+==> 000008f5: <Mov>: <Reg8: 125, Reg8: 100>
+==> 000008f8: <Mov>: <Reg8: 124, Reg8: 99>
+==> 000008fb: <Mov>: <Reg8: 123, Reg8: 102>
+==> 000008fe: <Mov>: <Reg8: 121, Reg8: 23>
+==> 00000901: <Mov>: <Reg8: 120, Reg8: 10>
+==> 00000904: <Call>: <Reg8: 101, Reg8: 103, UInt8: 8>
+==> 00000908: <LoadFromEnvironment>: <Reg8: 0, Reg8: 92, UInt8: 14>
+==> 0000090c: <Call3>: <Reg8: 9, Reg8: 0, Reg8: 91, Reg8: 102, Reg8: 9>
+==> 00000912: <Call3>: <Reg8: 8, Reg8: 0, Reg8: 91, Reg8: 101, Reg8: 8>
+==> 00000918: <Call3>: <Reg8: 7, Reg8: 0, Reg8: 91, Reg8: 100, Reg8: 7>
+==> 0000091e: <Call3>: <Reg8: 6, Reg8: 0, Reg8: 91, Reg8: 99, Reg8: 6>
+==> 00000924: <Add>: <Reg8: 5, Reg8: 5, Reg8: 42>
+==> 00000928: <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
+==> 0000092d: <Mov>: <Reg8: 4, Reg8: 9>
+==> 00000930: <Mov>: <Reg8: 3, Reg8: 8>
+==> 00000933: <Mov>: <Reg8: 2, Reg8: 7>
+==> 00000936: <Mov>: <Reg8: 1, Reg8: 6>
+==> 00000939: <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
+==> 00000940: <NewArray>: <Reg8: 0, UInt16: 4>
+==> 00000944: <PutOwnByIndex>: <Reg8: 0, Reg8: 4, UInt8: 0>
+==> 00000948: <PutOwnByIndex>: <Reg8: 0, Reg8: 3, UInt8: 1>
+==> 0000094c: <PutOwnByIndex>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 00000950: <PutOwnByIndex>: <Reg8: 0, Reg8: 1, UInt8: 3>
+==> 00000954: <Ret>: <Reg8: 0>
+
+

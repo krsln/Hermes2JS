@@ -44,6 +44,6 @@ python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fix
 
 python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ 
 python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 999 
-python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1000 --end 1999 
+
 python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```

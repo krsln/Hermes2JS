@@ -60,7 +60,30 @@ class TypeOf(UnaryOperator):
         return f"typeof {value}"
 
 
+class ToInt32(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f"({value} | 0)"
+
+
 class ToNumeric(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f"+{value}"
+
+
+class ToNumber(UnaryOperator):
+    """
+    Arg1 = ToNumber(Arg2). Emitted as unary `+`, the same representation
+    already used for ToNumeric above. The two opcodes differ in real JS
+    semantics (ToNumber rejects BigInt with a TypeError; ToNumeric passes
+    BigInt through unchanged) — but `+value` is actually the *spec-accurate*
+    source-level operator for ToNumber specifically (unary `+` in real JS
+    calls ToNumber, and does throw on BigInt), whereas reusing it for
+    ToNumeric is the looser approximation of the two. Both are kept as the
+    same textual form here for readability; if BigInt-precision matters for
+    your use case, ToNumeric should be distinguished (e.g. wrapped in a
+    `/* numeric */` comment) rather than sharing this class.
+    """
+
     def expression(self, value: str) -> str:
         return f"+{value}"
 
@@ -75,9 +98,12 @@ class Dec(UnaryOperator):
         return f"{value} - 1"
 
 
-class ToInt32(UnaryOperator):
+class Negate(UnaryOperator):
+    """Arg1 = -Arg2 (unary minus)."""
+
     def expression(self, value: str) -> str:
-        return f"({value} | 0)"
+        return f"-{value}"
+
 
 class AddEmptyString(UnaryOperator):
     """Forces a ToString coercion via string concatenation — the idiomatic

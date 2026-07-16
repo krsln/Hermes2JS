@@ -64,11 +64,13 @@ class JLessEqualLong(JLessEqual):  pass
 
 class JNotLess(JCompareX): operator = ">="
 class JNotLessN(JNotLess): pass
+class JNotLessNLong(JNotLess): pass
 class JNotLessLong(JNotLess): pass
 
 class JNotLessEqual(JCompareX):  operator = ">"
 class JNotLessEqualN(JNotLessEqual): pass
-class JNotLessEqualLong(JNotLessEqual):  pass
+class JNotLessEqualLong(JNotLessEqual): pass
+class JNotLessEqualNLong(JNotLessEqual): pass
 
 # Greater
 # -------
@@ -86,5 +88,6 @@ class JNotGreaterLong(JNotGreater): pass
 
 class JNotGreaterEqual(JCompareX): operator = "<"
 class JNotGreaterEqualN(JNotGreaterEqual):  pass
+class JNotGreaterEqualNLong(JNotGreaterEqual): pass
 class JNotGreaterEqualLong(JNotGreaterEqual): pass
 # @formatter:on
