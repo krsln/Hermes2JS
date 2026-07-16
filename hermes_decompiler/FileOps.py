@@ -1,5 +1,6 @@
 import os
 import re
+import traceback
 from typing import Tuple, Optional, List
 
 from hermes_decompiler.JSConverter import JSConverter
@@ -81,6 +82,7 @@ def ProcessFile(section_index: int, file_path: str, output_dir: str) -> bool:
     try:
         js_code = JSConverter.convert(hbc_content, section_index)
     except Exception as e:
+        traceback.print_exc()
         logger.error(f"Error processing content of {file_path}: {str(e)}")
         return False
 
