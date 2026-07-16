@@ -82,9 +82,10 @@ def ProcessFile(section_index: int, file_path: str, output_dir: str) -> bool:
     try:
         js_code = JSConverter.convert(hbc_content, section_index)
     except Exception as e:
-        traceback.print_exc()
         logger.error(f"Error processing content of {file_path}: {str(e)}")
-        return False
+        traceback.print_exc()
+        raise
+        # return False
 
     # Write output
     os.makedirs(output_dir, exist_ok=True)
