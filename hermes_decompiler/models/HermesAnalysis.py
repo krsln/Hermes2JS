@@ -3,6 +3,9 @@ from typing import Dict, Any, Optional, List
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.Logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class Output:
@@ -32,9 +35,11 @@ class HermesAnalysis:
         """
         Initialize the Hermes analysis context.
 
-        Args:
-            metadata (Dict[str, Any], optional): Metadata from .hbc file.
-            stringTable (Dict[str, str], optional): String mappings for string_id.
+        This object is created fresh per `JSConverter.convert()` call and is
+        the sole owner of state for one conversion pass (registers, results,
+        string/function tables). It should never be reused or shared across
+        conversions - see core/registry.py for how cross-section data
+        (function names) is shared explicitly instead.
         """
         self.registers: dict[str, JSVariable] = {}
         self.metadataList = []
@@ -87,8 +92,7 @@ class HermesAnalysis:
 
                 # Skip if already visited
                 if i in visited:
-                    # Debug: Log skipped instruction
-                    print(f"Skipping visited index={i}, addr={variable.address}")
+                    logger.debug("Skipping visited index=%s, addr=%s", i, variable.address)
                     i += 1
                     continue
 
@@ -132,6 +136,7 @@ class HermesAnalysis:
                             open_blocks.append({"end_addr": item.GoTo, "start_idx": i})
                         except IndexError:
                             # Malformed condition; emit as regular line
+                            logger.warning("Malformed jump condition at address %s: %r", variable.address, valueRaw)
                             outputList.append(Output(indent_lvl, valueRaw))
                     else:
                         # Regular instruction (e.g., assignments, calls)
@@ -150,8 +155,9 @@ class HermesAnalysis:
 
                 i += 1
         except Exception as e:
-            print('GenerateJS', e)
-            print(self.results[i].to_dict())
+            logger.error("GenerateJS failed at index=%s: %s", i, e, exc_info=True)
+            if 0 <= i < len(self.results):
+                logger.error("Failing result: %s", self.results[i].to_dict())
 
         # Close any remaining open blocks
         while open_blocks:
@@ -164,7 +170,6 @@ class HermesAnalysis:
 
         result = []
         for item in outputList:
-            # print(item.content, item.used)
             if item.var is not None:
                 if verbose and item.used:
                     result.append(f"{indent(item.indent)}// USED -> {item.content}")

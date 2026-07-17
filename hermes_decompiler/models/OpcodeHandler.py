@@ -5,31 +5,33 @@ from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.Logger import get_logger
+
+logger = get_logger(__name__)
 
 
-# Base class auto-registering all subclasses
 class OpcodeHandler(ABC):
-    """Abstract base class for handling Hermes bytecode opcodes."""
+    """
+    Abstract base class for handling Hermes bytecode opcodes.
+
+    Note on the `registry` dict: unlike `JSConverter._functionTable`, this
+    class-level dict is *not* per-conversion mutable state - it's a
+    write-once-at-import-time registry of stateless handler singletons
+    (one instance per opcode, populated via __init_subclass__). That's a
+    legitimate use of class-level storage and is left as-is.
+    """
     registry: Dict[str, 'OpcodeHandler'] = {}
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
         if cls.__name__ != "OpcodeHandler":
-            # Register a singleton instance of the handler
             OpcodeHandler.registry[cls.__name__] = cls()
 
     @abstractmethod
     def Handle(self, analysis: HermesAnalysis, line: OpcodeEntry) -> OpcodeResult:
         """
-        Process a Hermes bytecode opcode and produce a corresponding JavaScript variable or result.
-
-        Args:
-            analysis (HermesAnalysis): The analysis context containing variables and state.
-            line (OpcodeEntry): The opcode entry to process, including opcode name and arguments.
-
-        Returns:
-            OpcodeResult: The result of processing the opcode, including the processed line and
-                         a JSVariable (or error information if processing fails).
+        Process a Hermes bytecode opcode and produce a corresponding JavaScript
+        variable or result.
         """
         pass
 
@@ -39,8 +41,9 @@ class OpcodeHandler(ABC):
 
     @classmethod
     def InvalidArgs(cls, analysis: HermesAnalysis, entry: OpcodeEntry,
-                    error_detail: str = "Invalid arguments") -> OpcodeResult:
+                     error_detail: str = "Invalid arguments") -> OpcodeResult:
         error_msg = f"// Error: {cls.__name__} at address {entry.address}: {error_detail}: {entry.args}"
+        logger.warning("%s at address %s: %s (args=%r)", cls.__name__, entry.address, error_detail, entry.args)
 
         variable = JSVariable(cls.__name__, entry.address, "", error_msg)
         analysis.AddResult(entry, variable)
@@ -49,6 +52,8 @@ class OpcodeHandler(ABC):
 
     @classmethod
     def Exception(cls, analysis: HermesAnalysis, entry: OpcodeEntry, error: str) -> OpcodeResult:
+        logger.error("%s raised at address %s: %s", cls.__name__, entry.address, error)
+
         variable = JSVariable(cls.__name__, entry.address, "", error)
         analysis.AddResult(entry, variable)
 
@@ -89,7 +94,6 @@ class OpcodeHandler(ABC):
 
     @classmethod
     def GetValueByReg(cls, analysis: HermesAnalysis, reg: int) -> str:
-
         variable = analysis.registers.get(f"r{reg}")
 
         if (
