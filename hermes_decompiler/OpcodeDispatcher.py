@@ -89,7 +89,7 @@ class OpcodeDispatcher:
 
                 # Special case for generator pattern
                 if result.Variable.handler == "SaveGenerator":
-                    OpcodeDispatcher._handle_generator_await(analysis, result)
+                    OpcodeDispatcher._handle_generator_await(analysis)
 
                 results.append(result)
             except NoHandlerError as e:
@@ -116,7 +116,7 @@ class OpcodeDispatcher:
         return results
 
     @staticmethod
-    def _handle_generator_await(analysis: HermesAnalysis, result: OpcodeResult) -> None:
+    def _handle_generator_await(analysis: HermesAnalysis) -> None:
         """Special handling for generator yield patterns."""
         if len(analysis.results) < 2:
             return
