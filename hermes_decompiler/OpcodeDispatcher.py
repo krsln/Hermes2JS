@@ -121,8 +121,7 @@ class OpcodeDispatcher:
         if len(analysis.results) < 2:
             return
 
-        if result.Variable.handler == "SaveGenerator":
-            prev = analysis.results[len(analysis.results) - 2]
-            if prev.Variable.handler.startswith("Call"):
-                prev.Variable.value = f"await {prev.Variable.value}"
-                prev.result = f"{prev.Variable.name} = {prev.Variable.value}"
+        prev = analysis.results[len(analysis.results) - 2]
+        if prev.Variable.handler.startswith("Call"):
+            prev.Variable.value = f"await {prev.Variable.value}"
+            prev.result = f"{prev.Variable.name} = {prev.Variable.value}"
