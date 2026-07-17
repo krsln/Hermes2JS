@@ -1,69 +1,104 @@
-from typing import List
+from abc import ABC
+from typing import ClassVar
 
 from hermes_decompiler.Logger import logger
+
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
+from hermes_decompiler.handlers._shared_patterns import (
+    REG,
+    UINT8,
+    UINT32,
+    sequence,
+)
 
 
-# /// Call a constructor, with semantics identical to Call.
-# /// Arg1 is the destination of the return value.
-# /// Arg2 is the closure to invoke.
-# /// Arg3 is the number of arguments, assumed to be found in reverse order
-# ///      from the end of the current frame. The first argument 'this'
-# ///      is assumed to be created with CreateThis.
-# DEFINE_OPCODE_3(Construct, Reg8, Reg8, UInt8)
-# DEFINE_RET_TARGET(Construct)
-# Example: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-class Construct(OpcodeHandler):
-    _PATTERN = sequence(REG, REG, UINT8)
+class ConstructBase(OpcodeHandler, ABC):
+    """
+    Base implementation for Construct opcodes.
+
+    Hermes semantics:
+
+        dest = new closure(arg1, arg2, ...)
+
+    Arguments are stored immediately before the closure register.
+
+    Example:
+
+        Construct r2, r8, 3
+
+    Means
+
+        r2 = new r8(r5, r6, r7)
+    """
+
+    ARG_PATTERN: ClassVar[str] = UINT8
+
+    @classmethod
+    def Pattern(cls):
+        return sequence(REG, REG, cls.ARG_PATTERN)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+
         handler = self.__class__.__name__
 
-        # Match: Reg8 (dest), Reg8 (closure to invoke), UInt8 (arg count)
-        match = self._PATTERN.match(entry.args.strip())
+        match = self.Pattern().match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8, UInt8 arguments")
+            return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8, ArgCount")
 
-        dest_reg, func_reg, arg_count = (int(x) for x in match.groups())
+        dest_reg, func_reg, arg_count = map(int, match.groups())
+        constructor = (self.GetValueByReg(analysis, func_reg) or f"r{func_reg}")
+        args = self.ResolveArguments(analysis, func_reg, arg_count)
 
-        func_name = self.GetValueByReg(analysis.results, func_reg)
-        if func_name is None:
-            logger.warning(f"{handler} at address {entry.address}: unresolved constructor register r{func_reg}")
-            func_name = f"r{func_reg}"
+        expression = f"new {constructor}({', '.join(args)})"
 
-        # Reverse-order args: usually preloaded into registers before this
-        args = self._resolve_args(analysis, entry, handler, func_reg, arg_count)
-        args_str = ", ".join(args)
+        variable = JSVariable(
+            handler,
+            entry.address,
+            f"r{dest_reg}",
+            expression,
+            f"new {constructor}",
+            f"({', '.join(args)})",
+        )
 
-        const = f"new {func_name}"
-        const_val = f"({args_str})"
-
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{const}{const_val};", const, const_val)
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
 
-    def _resolve_args(self, analysis: HermesAnalysis, entry: OpcodeEntry, handler: str,
-                      func_reg: int, arg_count: int) -> List[str]:
-        arg_regs = range(func_reg - arg_count, func_reg)
-        args = []
-        for offset, reg in enumerate(arg_regs):
-            value = self.GetValueByReg(analysis.results, reg)
+    def ResolveArguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> list[str]:
+
+        values: list[str] = []
+
+        for reg in range(func_reg - arg_count, func_reg):
+
+            value = self.GetValueByReg(analysis, reg)
+
             if value is None:
-                logger.warning(
-                    f"{handler} at address {entry.address}: unresolved argument register r{reg}; "
-                    f"using placeholder arg{offset}"
-                )
-                value = f"arg{offset}"
-            args.append(value)
+                logger.warning("%s: unresolved constructor argument r%d", self.__class__.__name__, reg)
+                value = f"r{reg}"
 
-        if args and args[0] == "this":
-            args = args[1:]
+            values.append(value)
 
-        return args
+        # Hermes CreateThis inserts an implicit "this"
+        if values and values[0] == "this":
+            values = values[1:]
+
+        return values
+
+
+class Construct(ConstructBase):
+    """
+    Construct using UInt8 argument count.
+    """
+    ARG_PATTERN = UINT8
+
+
+class ConstructLong(ConstructBase):
+    """
+    Construct using UInt32 argument count.
+    """
+    ARG_PATTERN = UINT32

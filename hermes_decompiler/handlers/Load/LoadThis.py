@@ -4,14 +4,9 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-# /// Obtain the raw \c this value and coerce it to an object. Equivalent to:
-# /// \code
-# ///     LoadParam    Arg1, #0
-# ///     CoerceThisNS Arg1, Arg1
-# /// \endcode
 # DEFINE_OPCODE_1(LoadThisNS, Reg8)
 # Example: <LoadThisNS>: <Reg8: 4>
 class LoadThisNS(OpcodeHandler):

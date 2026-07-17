@@ -7,12 +7,6 @@ from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-# /// Allocate the `this` object for a constructor call, ahead of the actual
-# /// Construct/CallDirect invocation that follows.
-# /// Arg1 is the destination register.
-# /// Arg2 is the closure (used to look up its .prototype).
-# /// Arg3 is the `new.target` (the constructor actually being `new`'d, which
-# ///      may differ from Arg2 in a derived-class / Reflect.construct call).
 # DEFINE_OPCODE_3(CreateThis, Reg8, Reg8, Reg8)
 # Example: <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
 class CreateThis(OpcodeHandler):
@@ -29,14 +23,12 @@ class CreateThis(OpcodeHandler):
 
         dest, func, new_target = (int(x) for x in match.groups())
 
-        func_name = self.GetValueByReg(analysis.results, func) or f"r{func}"
-        new_target_name = self.GetValueByReg(analysis.results, new_target) or f"r{new_target}"
+        func_name = self.GetValueByReg(analysis, func) or f"r{func}"
+        new_target_name = self.GetValueByReg(analysis, new_target) or f"r{new_target}"
 
         variable = JSVariable(
-            handler,
-            entry.address,
-            f'r{dest}',
-            f"createThis(prototype={func_name}, constructor={new_target_name})",
+            handler, entry.address,
+            f'r{dest}', f"createThis(prototype={func_name}, constructor={new_target_name})",
         )
 
         # variable = JSVariable(handler, entry.address, f'r{dest}', f"createThis({func_name}, {new_target_name});")

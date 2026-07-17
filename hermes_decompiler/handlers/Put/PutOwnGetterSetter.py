@@ -24,10 +24,10 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
 
         obj_reg, key_reg, getter_reg, setter_reg, enumerable_flag = map(int, match.groups())
 
-        obj_val = self.GetValueByReg(analysis.results, obj_reg) or f"r{obj_reg}"
-        key_val = self.GetValueByReg(analysis.results, key_reg) or f"r{key_reg}"
-        getter_val = self.GetValueByReg(analysis.results, getter_reg)
-        setter_val = self.GetValueByReg(analysis.results, setter_reg)
+        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
+        key_val = self.GetValueByReg(analysis, key_reg) or f"r{key_reg}"
+        getter_val = self.GetValueByReg(analysis, getter_reg)
+        setter_val = self.GetValueByReg(analysis, setter_reg)
         enumerable = "true" if enumerable_flag else "false"
 
         descriptor_parts = []

@@ -1,145 +1,89 @@
-from typing import List
+from typing import Optional
 
-from hermes_decompiler.JSOpcodeDispatcher import JSOpcodeDispatcher
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.parsers.Parse_FunctionMap import Parse_FunctionMap
-from hermes_decompiler.parsers.Parse_HbcMetadata import Parse_HbcMetadata
-from hermes_decompiler.parsers.Parse_Line import Parse_Line
-from hermes_decompiler.parsers.Parse_StringMap import Parse_StringMap
+from hermes_decompiler.core.pipeline import ConversionState, Pipeline
+from hermes_decompiler.models.FunctionTableRegistry import FunctionTableRegistry
+from hermes_decompiler.core.stages import (
+    MetadataStage,
+    SignatureStage,
+    BytecodeExtractionStage,
+    SymbolTableStage,
+    DispatchStage,
+    CodeGenStage,
+)
 
 
 class JSConverter:
-    # Class-level functionTable to store data across files
-    _functionTable = {}
+    """
+    Convert .hbc assembly content to JavaScript code.
+
+    Unlike the previous implementation, JSConverter holds NO state of its
+    own (no `_functionTable` class attribute). Every call is fully
+    self-contained: a fresh HermesAnalysis is created internally, and any
+    cross-section knowledge (e.g., resolving function names across multiple
+    section_<n>.hbc files) must be passed in explicitly via
+    `function_registry`. This makes concurrent/parallel conversion safe and
+    keeps tests from bleeding state into one another.
+    """
 
     @staticmethod
-    def convert(assembly_content: str, section_index: int) -> str:
+    def convert(
+        assembly_content: str,
+        section_index: int,
+        *,
+        function_registry: Optional[FunctionTableRegistry] = None,
+        strict: bool = False,
+        verbose: bool = True,
+    ) -> str:
         """
-        Convert .hbc assembly content to JavaScript code.
-
         Args:
-            assembly_content (str): The .hbc assembly content.
-            section_index (int): The section index for naming anonymous functions.
+            assembly_content: The .hbc assembly content.
+            section_index: The section index for naming anonymous functions.
+            function_registry: Optional shared registry for resolving
+                function names across multiple sections. Pass the same
+                instance across a batch of `convert()` calls (see
+                FileOps) if you need that; omit it for a fully isolated,
+                single-section conversion.
+            strict: If True, raise immediately on the first opcode
+                dispatch failure instead of emitting an inline `// Error:`
+                comment and continuing.
+            verbose: If True, annotate generated JS with `// CODE ->`
+                source comments.
 
         Returns:
-            str: The generated JavaScript code.
+            The generated JavaScript code.
 
         Raises:
-            ValueError: If the assembly content is invalid or metadata is missing.
+            ValueError: If the assembly content is empty or metadata is
+                unparseable (preserved for backwards compatibility with
+                callers catching ValueError, e.g. FileOps).
         """
         if not assembly_content.strip():
             raise ValueError("Empty assembly content")
 
         lines = assembly_content.strip().split('\n')
-        analysis = HermesAnalysis()
+        state = ConversionState(
+            section_index=section_index,
+            lines=lines,
+            function_registry=function_registry,
+        )
 
-        # Parse the metadata from the first line
+        pipeline = Pipeline([
+            MetadataStage(),
+            SignatureStage(),
+            BytecodeExtractionStage(),
+            SymbolTableStage(),
+            DispatchStage(strict=strict),
+            CodeGenStage(verbose=verbose),
+        ])
+
         try:
-            analysis.metadata = Parse_HbcMetadata(lines[0])
-            analysis.metadataList.append(analysis.metadata)
+            state = pipeline.run(state)
         except Exception as e:
-            raise ValueError(f"Failed to parse metadata: {str(e)}")
+            # Preserve the original public contract: callers of convert()
+            # historically only needed to catch ValueError for bad input.
+            from hermes_decompiler.core.exceptions import MetadataParseError
+            if isinstance(e, MetadataParseError):
+                raise ValueError(str(e)) from e
+            raise
 
-        # ----
-        # Generate JavaScript function signature
-        function_name = analysis.metadata.get('function_name', f'func_{section_index}')
-        if function_name.startswith('?anon_'):
-            function_name = f'anon_{analysis.metadata.get("function_id", section_index)}'
-
-        # testFuncName = JSConverter._functionTable.get(str(section_index), None)
-        # print(testFuncName, function_name)
-
-        param_count = analysis.metadata.get('param_count', 0)
-        params = [f'param{i}' for i in range(param_count)]
-
-        # Check if the function is async (detect if <StartGenerator> is in the content)
-        is_async = '<StartGenerator>' in ''.join(lines)  # Check for generator start indicator
-        js_code = [f'{"async function* " if is_async else "function "}{function_name}({", ".join(params)}) {{']
-        # ----
-
-        # Placeholder for bytecode parsing
-        bytecode_start = next((i for i, line in enumerate(lines) if "Bytecode listing" in line), -1)
-        bytecode_lines = lines[bytecode_start + 1:] if bytecode_start >= 0 else []
-
-        if bytecode_lines:
-            analysis.stringTable = Parse_StringMap(bytecode_lines)
-
-            # Update class-level functionTable instead of assigning to analysis
-            parsed_function_table = Parse_FunctionMap(bytecode_lines)
-            # Merge or update _functionTable (adjust merging logic based on your needs)
-            JSConverter._functionTable.update(parsed_function_table)
-            # Assign the class-level functionTable to analysis for local use
-            analysis.functionTable = JSConverter._functionTable
-            # print(section_index, JSConverter._functionTable)
-
-            results = Dispatcher(bytecode_lines, analysis)
-            if len(results) != len(analysis.results):
-                print(
-                    f"Section: section_{section_index} \tresults: {len(results)} vs analysis.results: {len(analysis.results)}")
-
-            js_code.extend(analysis.GenerateJS(True))
-            # js_code.extend(analysis.GenerateJS(False))
-        else:
-            js_code.append('    // No bytecode provided')
-
-        # for var in analysis.variables:
-        #     print(var)
-
-        # Close function
-        js_code.append('}')
-
-        return '\n'.join(js_code)
-
-
-def Dispatcher(bytecode_lines: List[str], analysis: HermesAnalysis) -> List[OpcodeResult]:
-    """
-    Dispatch bytecode lines to opcode handlers.
-
-    Args:
-        bytecode_lines (List[str]): The bytecode lines to process.
-        analysis (HermesAnalysis): The analysis context.
-
-    Returns:
-        List[OpcodeResult]: The processed opcode results.
-    """
-    handler = JSOpcodeDispatcher()
-    handler.Analysis = analysis
-
-    resList: List[OpcodeResult] = []
-
-    # Preprocess lines
-    cleaned_lines = [line.strip() for line in bytecode_lines if line.strip()]
-
-    for line in cleaned_lines:
-        try:
-            parsedLine = Parse_Line(line)
-            if parsedLine:
-                dispatched = handler.Dispatch(parsedLine)
-
-                # await control
-                if dispatched.Variable.handler == "SaveGenerator":
-                    prev = analysis.results[len(analysis.results) - 2]
-                    if prev.Variable.handler.startswith("Call"):
-                        prev.Variable.value = f"await {prev.Variable.value}"
-                        prev.result = f"{prev.Variable.name} = {prev.Variable.value}"
-
-                resList.append(dispatched)
-            else:
-                newLine = OpcodeEntry(bytecode=line, hex_address="", opcode="", args="", comment="")
-                result = OpcodeResult(newLine, JSVariable("", 0, "", f'// Unparsed: {line}'))
-                analysis.results.append(result)
-
-                print(f"Dispatcher | Unparsed {line}")
-                resList.append(result)
-        except Exception as e:
-            newLine = OpcodeEntry(bytecode=line, hex_address="", opcode="", args="", comment="")
-            result = OpcodeResult(newLine, JSVariable("", 0, "", f'// Error: {str(e)}'))
-            analysis.results.append(result)
-
-            print(f"Dispatcher | Exception {e}")
-            resList.append(result)
-
-    return resList
+        return '\n'.join(state.js_lines)

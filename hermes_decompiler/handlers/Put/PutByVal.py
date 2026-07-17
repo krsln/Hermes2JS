@@ -7,28 +7,26 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-# DEFINE_OPCODE_1(Throw, Reg8)
-# Example: <Throw>: <Reg8: 2>
-class Throw(OpcodeHandler):
-    """Throw an exception."""
-    _PATTERN = sequence(REG)
+# DEFINE_OPCODE_3(PutByVal, Reg8, Reg8, Reg8)
+# Example: <PutByVal>: <Reg8: 98, Reg8: 2, Reg8: 0>
+class PutByVal(OpcodeHandler):
+    _PATTERN = sequence(REG, REG, REG)
 
     def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
 
-        reg = int(match.group(1))
-        value = self._get_register_value(analysis, reg)
+        obj_reg, key_reg, value_reg = map(int, match.groups())
 
-        throw_stmt = f"throw {value}"
-        variable = JSVariable(handler, entry.address, f'r{reg}', throw_stmt)
+        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
+        key_val = self.GetValueByReg(analysis, key_reg) or f"r{key_reg}"
+        value_val = self.GetValueByReg(analysis, value_reg) or f"r{value_reg}"
+
+        statement = f"{obj_val}[{key_val}] = {value_val}"
+        variable = JSVariable(handler, entry.address, "", statement)
         analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)
-
-    def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
-        var = self.GetVariableByReg(analysis, reg)
-        return var.value if var and var.value is not None else 'undefined'

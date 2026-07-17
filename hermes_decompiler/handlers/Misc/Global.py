@@ -1,13 +1,14 @@
+import re
+
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, STRING_ID, sequence
 
 
-# Get the global object (the object in which global variables are stored).
 # DEFINE_OPCODE_1(GetGlobalObject, Reg8)
 # Example: <GetGlobalObject>: <Reg8: 2>
 class GetGlobalObject(OpcodeHandler):
@@ -36,3 +37,43 @@ class GetGlobalObject(OpcodeHandler):
 
         analysis.AddResult(entry, variable)
         return OpcodeResult(entry, variable)
+
+
+# DEFINE_OPCODE_1(DeclareGlobalVar, UInt32)
+# Example: <DeclareGlobalVar>: <string_id: 4522>  # String: 'myGlobal' (Identifier)
+class DeclareGlobalVar(OpcodeHandler):
+    """
+    Side-effect-only opcode — no destination register, so the resulting
+    statement is recorded under an empty register key (same convention as
+    Ret/Throw/PutByVal for statements with no downstream chainable value).
+    """
+    _PATTERN = sequence(STRING_ID)
+
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.InvalidArgs(analysis, entry, "Expected a single string_id argument")
+
+        string_id = int(match.group(1))
+        var_name = self._resolve_name(analysis, entry, string_id)
+        if var_name is None:
+            error = f'/* Error: string_id {string_id} not found in stringTable */ undefined'
+            return self.Exception(analysis, entry, error)
+
+        variable = JSVariable(handler, entry.address, "", f"var {var_name};")
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
+
+    @staticmethod
+    def _resolve_name(analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int):
+        comment_match = re.compile(r"String:\s*'([^']*)'\s*\(Identifier\)").search(entry.comment or "")
+        if comment_match:
+            return comment_match.group(1)
+
+        string_table = getattr(analysis, "stringTable", None)
+        if string_table is None:
+            return None
+        return string_table.get(str(string_id))

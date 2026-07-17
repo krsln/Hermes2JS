@@ -7,13 +7,9 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT32, UINT16, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT32, sequence
 
 
-# /// Set an array element by (statically known) numeric index.
-# /// Arg1[Arg3] = Arg2. This is an "own" property write on an object already
-# /// known to be an array — the counterpart of PutById for indexed access.
-# /// PutOwnByIndexL is the long-index (UInt32) variant of the same op.
 # DEFINE_OPCODE_3(PutOwnByIndex, Reg8, Reg8, UInt8)
 # DEFINE_OPCODE_3(PutOwnByIndexL, Reg8, Reg8, UInt32)
 # Example: <PutOwnByIndex>: <Reg8: 1, Reg8: 2, UInt8: 0>
@@ -37,7 +33,7 @@ class PutOwnByIndex(OpcodeHandler):
 
         value = self._get_register_value(analysis, value_reg)
         elements = self._parse_array_elements(
-            self.GetVariableByReg(analysis.results, dest_reg), handler, entry
+            self.GetVariableByReg(analysis, dest_reg), handler, entry
         )
 
         # Extend array if needed
@@ -53,7 +49,7 @@ class PutOwnByIndex(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
     def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
-        var = self.GetVariableByReg(analysis.results, reg)
+        var = self.GetVariableByReg(analysis, reg)
         return var.value if var and var.value is not None else 'undefined'
 
     @staticmethod

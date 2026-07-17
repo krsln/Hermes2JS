@@ -39,7 +39,7 @@ class UnaryOperator(OpcodeHandler):
         dest_reg, src_reg = map(int, match.groups())
 
         src_val = (
-                self.GetValueByReg(analysis.results, src_reg)
+                self.GetValueByReg(analysis, src_reg)
                 or f"r{src_reg}"
         )
 
@@ -60,7 +60,17 @@ class TypeOf(UnaryOperator):
         return f"typeof {value}"
 
 
+class ToInt32(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f"({value} | 0)"
+
+
 class ToNumeric(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f"+{value}"
+
+
+class ToNumber(UnaryOperator):
     def expression(self, value: str) -> str:
         return f"+{value}"
 
@@ -75,6 +85,11 @@ class Dec(UnaryOperator):
         return f"{value} - 1"
 
 
-class ToInt32(UnaryOperator):
+class Negate(UnaryOperator):
     def expression(self, value: str) -> str:
-        return f"({value} | 0)"
+        return f"-{value}"
+
+
+class AddEmptyString(UnaryOperator):
+    def expression(self, value: str) -> str:
+        return f'"" + {value}'

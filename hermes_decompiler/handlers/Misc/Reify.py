@@ -7,9 +7,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-# /// Create an actual 'arguments' array, if get-by-index and length isn't enough.
-# /// Arg1 is the lazy loaded register, which afterwards will contain a proper
-# ///      object that can be used by non-*Arguments* opcodes like Return.
 # DEFINE_OPCODE_1(ReifyArguments, Reg8)
 # Example: <ReifyArguments>: <Reg8: 0>
 class ReifyArguments(OpcodeHandler):
@@ -33,5 +30,46 @@ class ReifyArguments(OpcodeHandler):
         # Optionally, mark the creation of the argument object in analysis.
         # analysis.MarkArgumentsObject(entry.address, dest_reg)
         print("MarkArgumentsObject", entry.address, dest_reg)
+
+        return OpcodeResult(entry, variable)
+
+
+# DEFINE_OPCODE_2(GetArgumentsLength, Reg8, Reg8)
+# Example: <GetArgumentsLength>: <Reg8: 1, Reg8: 0>
+class GetArgumentsLength(OpcodeHandler):
+    _PATTERN = sequence(REG, REG)
+
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.InvalidArgs(analysis, entry, "Expected two Reg8 arguments")
+
+        dest_reg, _lazy_reg = map(int, match.groups())
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", "arguments.length")
+        analysis.AddResult(entry, variable)
+
+        return OpcodeResult(entry, variable)
+
+
+# DEFINE_OPCODE_3(GetArgumentsPropByVal, Reg8, Reg8, Reg8)
+# Example: <GetArgumentsPropByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
+class GetArgumentsPropByVal(OpcodeHandler):
+    _PATTERN = sequence(REG, REG, REG)
+
+    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
+
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
+
+        dest_reg, index_reg, _lazy_reg = map(int, match.groups())
+        index_val = self.GetValueByReg(analysis, index_reg) or f"r{index_reg}"
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"arguments[{index_val}]")
+        analysis.AddResult(entry, variable)
 
         return OpcodeResult(entry, variable)

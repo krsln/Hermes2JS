@@ -9,8 +9,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
 
 
-# /// Get a property by value. Constant string values should instead use GetById.
-# /// Arg1 = Arg2[Arg3]
 # DEFINE_OPCODE_3(GetByVal, Reg8, Reg8, Reg8)
 # Example: <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 0>
 class GetByVal(OpcodeHandler):
@@ -34,15 +32,9 @@ class GetByVal(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-# /// Get an object property by string table index.
-# /// Arg1 = Arg2[stringtable[Arg4]]
-# /// Arg3 is a cache index used to speed up the above operation.
 # DEFINE_OPCODE_4(GetByIdShort, Reg8, Reg8, UInt8, UInt8)
 # DEFINE_OPCODE_4(GetById, Reg8, Reg8, UInt8, UInt16)
 # DEFINE_OPCODE_4(GetByIdLong, Reg8, Reg8, UInt8, UInt32)
-# OPERAND_STRING_ID(GetByIdShort, 4)
-# OPERAND_STRING_ID(GetById, 4)
-# OPERAND_STRING_ID(GetByIdLong, 4)
 # Example: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 158>  # String: 'prototype' (Identifier)
 # Example: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 21914>  # String: 'trackJoinCompetitionList' (Identifier)
 class GetById(OpcodeHandler):
@@ -65,7 +57,7 @@ class GetById(OpcodeHandler):
             return self.Exception(analysis, entry, error)
 
         # Get base object value
-        base_value = self.GetValueByReg(analysis.results, obj_reg) or f"r{obj_reg}"
+        base_value = self.GetValueByReg(analysis, obj_reg)
 
         # Build property access
         js_expr = f"{base_value}.{prop_name}"

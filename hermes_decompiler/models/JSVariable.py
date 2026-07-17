@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Optional, Dict, Any
 
 
 class JSVariable:
@@ -38,7 +38,7 @@ class JSVariable:
             f"function_base={self.function_base}, function_call={self.function_call}, used={self.used})"
         )
 
-    def to_dict(self) -> Dict[str, any]:
+    def to_dict(self) -> Dict[str, Any]:
         """Converts the JSVariable to a dictionary for serialization."""
         return {
             "handler": self.handler,

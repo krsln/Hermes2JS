@@ -21,7 +21,7 @@ async function* anon_17161(param0, param1) {
         // CODE -> <Ret>: <Reg8: 1>
         return await globalThis.fetch(param1);
         // CODE -> <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-        // USED -> r1 = await yield; // Resume generator
+        r1 = await yield; // Resume generator
         // CODE -> <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
         if (globalThis.fetch) {
             // CODE -> <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 14168>  # String: 'ok' (Identifier)
@@ -65,7 +65,7 @@ async function* anon_17161(param0, param1) {
                     // CODE -> <Mov>: <Reg8: 11, Reg8: 3>
                     r11 = r3
                     // CODE -> <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-                    r2 = new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error));
+                    r2 = new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))
                     // CODE -> <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
                     // USED -> r2 = r3[r2]
                     // CODE -> <Throw>: <Reg8: 2>
@@ -76,11 +76,11 @@ async function* anon_17161(param0, param1) {
             // label_140:
             // USED -> r2 = r1.text
             // CODE -> <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
-            // USED -> r2 = await r1.text.call(this, await yield)
+            // USED -> r2 = await r1.text()
             // CODE -> <SaveGenerator>: <Addr8: 4>  # Address: 00000099
             // await yield; // check: JSConverter.Dispatcher // Resume at label_4
             // CODE -> <Ret>: <Reg8: 2>
-            return await r1.text.call(this, await yield);
+            return await r1.text();
             // CODE -> <ResumeGenerator>: <Reg8: 2, Reg8: 3>
             r2 = await yield; // Resume generator
             // CODE -> <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2

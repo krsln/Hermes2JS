@@ -32,10 +32,10 @@ class CallX(OpcodeHandler):
 
         dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
 
-        func_variable = self.GetVariableByReg(analysis.results, func_reg)
-        func_name = self.GetValueByReg(analysis.results, func_reg)
+        func_variable = self.GetVariableByReg(analysis, func_reg)
+        func_name = self.GetValueByReg(analysis, func_reg)
 
-        argList = self.GetFuncArgs(analysis.results, arg_regs)
+        argList = self.GetFuncArgs(analysis, arg_regs)
 
         # Special handling for HermesInternal.concat
         if func_name == "this.HermesInternal.concat":
@@ -103,13 +103,7 @@ class CallX(OpcodeHandler):
         return True
 
 
-# /// Call a function.
-# /// Arg1 is the destination of the return value.
-# /// Arg2 is the closure to invoke.
-# /// Arg3 is the number of arguments, assumed to be found in reverse order
-# ///      from the end of the current frame.
 # DEFINE_OPCODE_3(Call, Reg8, Reg8, UInt8)
-# DEFINE_RET_TARGET(Call)
 # Example: <Call>: <Reg8: 4, Reg8: 9, UInt8: 6>
 class Call(CallX):
     """The same semantics as CallX but with a runtime-determined argument count
@@ -124,12 +118,17 @@ class Call(CallX):
             return self.InvalidArgs(analysis, entry)
 
         dest_reg, func_reg, num_args = map(int, match.groups())
-        func_name = self.GetValueByReg(analysis.results, func_reg)
+        func_name = self.GetValueByReg(analysis, func_reg)
         arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
-        argList = [self.GetValueByReg(analysis.results, r) for r in arg_regs]
+        # argList = [self.GetValueByReg(analysis, r) for r in arg_regs]
+        argList = [
+            f"r{r}"
+            for r in arg_regs
+        ]
         args_str = ", ".join(argList)
+
         func_val = f"({args_str})" if not self.ShouldUseCall(
-            self.GetVariableByReg(analysis.results, func_reg)) else f".call(this, {args_str})"
+            self.GetVariableByReg(analysis, func_reg)) else f".call(this, {args_str})"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{func_name}{func_val}", func_name, func_val)
         analysis.AddResult(entry, variable)
@@ -137,32 +136,9 @@ class Call(CallX):
         return OpcodeResult(entry, variable)
 
 
-# /// Call a function with one arg.
-# /// Arg1 is the destination of the return value.
-# /// Arg2 is the closure to invoke.
-# /// Arg3 is the first argument.
-# DEFINE_OPCODE_3(Call1, Reg8, Reg8, Reg8)
-# DEFINE_RET_TARGET(Call1)
-class Call1(CallX):
-    num_args = 1
-
-
-# /// Call a function with two args.
-# DEFINE_OPCODE_4(Call2, Reg8, Reg8, Reg8, Reg8)
-# DEFINE_RET_TARGET(Call2)
-class Call2(CallX):
-    num_args = 2
-
-
-# /// Call a function with three args.
-# DEFINE_OPCODE_5(Call3, Reg8, Reg8, Reg8, Reg8, Reg8)
-# DEFINE_RET_TARGET(Call3)
-class Call3(CallX):
-    num_args = 3
-
-
-# /// Call a function with four args.
-# DEFINE_OPCODE_6(Call4, Reg8, Reg8, Reg8, Reg8, Reg8, Reg8)
-# DEFINE_RET_TARGET(Call4)
-class Call4(CallX):
-    num_args = 4
+# @formatter:off
+class Call1(CallX): num_args = 1
+class Call2(CallX): num_args = 2
+class Call3(CallX): num_args = 3
+class Call4(CallX): num_args = 4
+# @formatter:on

@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
 from pathlib import Path
+import logging
 import argparse
 
 from hermes_decompiler.FileOps import GetFiles, ProcessFile
-from hermes_decompiler.Logger import logger
+from hermes_decompiler.Logger import logger,get_logger
 
+# handler = logging.StreamHandler()
+# handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"))
+# logging.getLogger("hermes_decompiler").addHandler(handler)
+# logging.getLogger("hermes_decompiler").setLevel(logging.INFO)
 
 def main() -> None:
     parser = argparse.ArgumentParser(
