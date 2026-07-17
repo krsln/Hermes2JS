@@ -3,7 +3,7 @@ from hermes_decompiler.core.exceptions import MetadataParseError
 from hermes_decompiler.parsers.metadata_parser import parse_hbc_metadata
 from hermes_decompiler.parsers.string_table_parser import parse_string_map
 from hermes_decompiler.parsers.function_table_parser import parse_function_map
-from hermes_decompiler.JSOpcodeDispatcher import OpcodeDispatcher
+from hermes_decompiler.OpcodeDispatcher import OpcodeDispatcher
 from hermes_decompiler.Logger import get_logger
 
 logger = get_logger(__name__)
