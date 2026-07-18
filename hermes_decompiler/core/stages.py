@@ -1,10 +1,10 @@
+from hermes_decompiler.Logger import get_logger
 from hermes_decompiler.core.pipeline import ConversionState, Stage
 from hermes_decompiler.core.exceptions import MetadataParseError
+from hermes_decompiler.dispatch.Dispatcher import OpcodeDispatcher
 from hermes_decompiler.parsers.metadata_parser import parse_hbc_metadata
 from hermes_decompiler.parsers.string_table_parser import parse_string_map
 from hermes_decompiler.parsers.function_table_parser import parse_function_map
-from hermes_decompiler.OpcodeDispatcher import OpcodeDispatcher
-from hermes_decompiler.Logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -88,7 +88,7 @@ class DispatchStage(Stage):
         if not state.bytecode_lines:
             return state
 
-        results = OpcodeDispatcher.DispatchAll(state.bytecode_lines, state.analysis, strict=self._strict)
+        results = OpcodeDispatcher.dispatch_all(state.bytecode_lines, state.analysis, strict=self._strict)
         if len(results) != len(state.analysis.results):
             logger.warning(
                 "Section section_%s: Dispatcher returned %s results but analysis.results has %s",
