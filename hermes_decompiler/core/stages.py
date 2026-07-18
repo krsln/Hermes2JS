@@ -1,6 +1,6 @@
 from hermes_decompiler.Logger import get_logger
 from hermes_decompiler.core.pipeline import ConversionState, Stage
-from hermes_decompiler.models.Exceptions import MetadataParseError
+from hermes_decompiler.core.exceptions import MetadataParseError
 from hermes_decompiler.dispatch.Dispatcher import OpcodeDispatcher
 from hermes_decompiler.parsers.metadata_parser import parse_hbc_metadata
 from hermes_decompiler.parsers.string_table_parser import parse_string_map

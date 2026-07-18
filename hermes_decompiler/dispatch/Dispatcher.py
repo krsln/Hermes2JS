@@ -6,7 +6,7 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.Exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
+from hermes_decompiler.core.exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
 from hermes_decompiler.Logger import get_logger
 
 logger = get_logger(__name__)

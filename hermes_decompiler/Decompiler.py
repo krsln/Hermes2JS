@@ -81,7 +81,7 @@ class Decompiler:
         except Exception as e:
             # Preserve the original public contract: callers of convert()
             # historically only needed to catch ValueError for bad input.
-            from hermes_decompiler.models.Exceptions import MetadataParseError
+            from hermes_decompiler.core.exceptions import MetadataParseError
             if isinstance(e, MetadataParseError):
                 raise ValueError(str(e)) from e
             raise
