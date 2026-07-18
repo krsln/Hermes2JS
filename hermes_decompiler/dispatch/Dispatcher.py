@@ -6,7 +6,7 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.core.exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
+from hermes_decompiler.models.Exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
 from hermes_decompiler.Logger import get_logger
 
 logger = get_logger(__name__)
@@ -30,7 +30,7 @@ class OpcodeDispatcher:
             raise AnalysisContextError("Analysis context cannot be None")
         self.Analysis = analysis
 
-    def Dispatch(self, entry: OpcodeEntry) -> OpcodeResult:
+    def dispatch(self, entry: OpcodeEntry) -> OpcodeResult:
         """
             Dispatch a single opcode to its handler.
 
@@ -49,7 +49,7 @@ class OpcodeDispatcher:
             raise OpcodeDispatchError(entry.opcode, entry.bytecode, e) from e
 
     @staticmethod
-    def DispatchAll(bytecode_lines: List[str], analysis: HermesAnalysis, *, strict: bool = False) \
+    def dispatch_all(bytecode_lines: List[str], analysis: HermesAnalysis, *, strict: bool = False) \
             -> list[OpcodeResult]:
         """
             Process all bytecode lines with error resilience.
@@ -85,7 +85,7 @@ class OpcodeDispatcher:
                 continue
 
             try:
-                result = dispatcher.Dispatch(parsed)
+                result = dispatcher.dispatch(parsed)
 
                 # Special case for generator pattern
                 if result.Variable.handler == "SaveGenerator":

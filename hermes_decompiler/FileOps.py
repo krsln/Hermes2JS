@@ -2,7 +2,7 @@ import os
 import re
 from typing import Tuple, Optional, List
 
-from hermes_decompiler.JSConverter import JSConverter
+from hermes_decompiler.Decompiler import Decompiler
 from hermes_decompiler.models.FunctionTableRegistry import FunctionTableRegistry
 from hermes_decompiler.Logger import get_logger
 
@@ -78,7 +78,7 @@ def ProcessFile(
         return False
 
     try:
-        js_code = JSConverter.convert(hbc_content, section_index, function_registry=function_registry)
+        js_code = Decompiler.convert(hbc_content, section_index, function_registry=function_registry)
     except ValueError:
         # Bad/unparseable input for this specific section - log and let the
         # caller decide whether to continue with the rest of the batch.

@@ -12,7 +12,7 @@ from hermes_decompiler.core.stages import (
 )
 
 
-class JSConverter:
+class Decompiler:
     """
     Convert .hbc assembly content to JavaScript code.
 
@@ -27,12 +27,12 @@ class JSConverter:
 
     @staticmethod
     def convert(
-        assembly_content: str,
-        section_index: int,
-        *,
-        function_registry: Optional[FunctionTableRegistry] = None,
-        strict: bool = False,
-        verbose: bool = True,
+            assembly_content: str,
+            section_index: int,
+            *,
+            function_registry: Optional[FunctionTableRegistry] = None,
+            strict: bool = False,
+            verbose: bool = True,
     ) -> str:
         """
         Args:
@@ -81,7 +81,7 @@ class JSConverter:
         except Exception as e:
             # Preserve the original public contract: callers of convert()
             # historically only needed to catch ValueError for bad input.
-            from hermes_decompiler.core.exceptions import MetadataParseError
+            from hermes_decompiler.models.Exceptions import MetadataParseError
             if isinstance(e, MetadataParseError):
                 raise ValueError(str(e)) from e
             raise
