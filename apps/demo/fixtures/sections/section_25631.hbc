@@ -1,0 +1,17 @@
+
+=> [Function #25631 "" of 41 bytes]: 2 params, frame size=3, strict=1, exc handler=0, debug info=0  @ offset 0x0044ff52
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadConstInt>: <Reg8: 0, Imm32: 500>
+==> 00000009: <GreaterEq>: <Reg8: 0, Reg8: 2, Reg8: 0>
+==> 0000000d: <JmpTrue>: <Addr8: 13, Reg8: 0>  # Address: 0000001a
+==> 00000010: <LoadConstInt>: <Reg8: 1, Imm32: 408>
+==> 00000016: <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
+==> 0000001a: <JmpTrue>: <Addr8: 13, Reg8: 0>  # Address: 00000027
+==> 0000001d: <LoadConstInt>: <Reg8: 1, Imm32: 429>
+==> 00000023: <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
+==> 00000027: <Ret>: <Reg8: 0>
+
+

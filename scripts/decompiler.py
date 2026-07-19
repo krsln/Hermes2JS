@@ -5,7 +5,7 @@ import logging
 import argparse
 
 from hermes_decompiler.FileOps import GetFiles, ProcessFile
-from hermes_decompiler.Logger import logger,get_logger
+from hermes_decompiler.Logger import logger, get_logger
 
 # handler = logging.StreamHandler()
 # handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"))
@@ -45,12 +45,27 @@ def main() -> None:
         help="Last section number to process.",
     )
 
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Fail on first opcode error",
+    )
+
+    parser.add_argument(
+        "--no-verbose",
+        action="store_false",
+        dest="verbose",
+        help="Disable source comments",
+    )
+
+    parser.set_defaults(verbose=True)
+
     args = parser.parse_args()
 
     input_dir = args.input.resolve()
     output_dir = args.output.resolve()
 
-    logger.info("Starting .hbc to JavaScript conversion")
+    logger.info("Starting .hbc to JavaScript conversion. Verbose: %s | Strict: %s", args.verbose, args.strict)
 
     if not input_dir.exists():
         logger.error("Input directory does not exist: %s", input_dir)
@@ -73,7 +88,7 @@ def main() -> None:
 
     for filename, section_index in files:
         file_path = input_dir / filename
-        ProcessFile(section_index, str(file_path), str(output_dir))
+        ProcessFile(section_index, str(file_path), str(output_dir), args.verbose, args.strict)
 
     logger.info("Conversion completed successfully")
 

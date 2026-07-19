@@ -67,6 +67,8 @@ python scripts/decompiler.py -i <sections_dir> -o <results_dir> [options]
 
 ```shell
 python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
+python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --no-verbose
+python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --strict
 ```
 
 **Examples**

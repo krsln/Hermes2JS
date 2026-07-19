@@ -62,18 +62,7 @@ class SymbolTableStage(Stage):
             return state
 
         state.analysis.stringTable = parse_string_map(state.bytecode_lines)
-
-        parsed_function_table = parse_function_map(state.bytecode_lines)
-
-        if state.function_registry is not None:
-            # Explicit, caller-provided cross-section sharing (see
-            # core/registry.py) instead of hidden class-level state.
-            state.function_registry.merge(parsed_function_table)
-            state.analysis.functionTable = state.function_registry.snapshot()
-        else:
-            # No registry supplied: this conversion is self-contained and
-            # only knows about functions referenced within its own section.
-            state.analysis.functionTable = parsed_function_table
+        state.analysis.functionTable = parse_function_map(state.bytecode_lines)
 
         return state
 
