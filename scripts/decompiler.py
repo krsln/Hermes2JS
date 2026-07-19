@@ -47,17 +47,18 @@ def main() -> None:
 
     parser.add_argument(
         "--strict",
-        type=bool,
-        default=False,
-        help="raise immediately on the first opcode dispatch failure",
+        action="store_true",
+        help="Fail on first opcode error",
     )
 
     parser.add_argument(
-        "--verbose",
-        type=bool,
-        default=True,
-        help="annotate generated JS with `// CODE ->`source comments",
+        "--no-verbose",
+        action="store_false",
+        dest="verbose",
+        help="Disable source comments",
     )
+
+    parser.set_defaults(verbose=True)
 
     args = parser.parse_args()
 
