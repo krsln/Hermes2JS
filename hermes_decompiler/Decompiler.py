@@ -24,11 +24,8 @@ class Decompiler:
 
     @staticmethod
     def convert(
-            assembly_content: str,
-            section_index: int,
-            *,
-            strict: bool = False,
-            verbose: bool = True,
+            assembly_content: str, section_index: int,
+            *, strict: bool = False, verbose: bool = True,
     ) -> str:
         """
         Args:

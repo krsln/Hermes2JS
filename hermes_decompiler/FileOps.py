@@ -38,7 +38,7 @@ def GetFiles(input_dir: str, output_dir: str, start: Optional[int] = None, end: 
     return files
 
 
-def ProcessFile(section_index: int, file_path: str, output_dir: str) -> bool:
+def ProcessFile(section_index: int, file_path: str, output_dir: str, verbose: bool, strict: bool) -> bool:
     """
     Process a .hbc file by reading its content, converting it to JavaScript, and writing to output_dir.
 
@@ -46,6 +46,9 @@ def ProcessFile(section_index: int, file_path: str, output_dir: str) -> bool:
         section_index: Section index of the file (e.g., 9594 for section_9594.hbc).
         file_path: Path to the .hbc file.
         output_dir: Directory to store the output .js file.
+        verbose: If True, annotate generated JS with `// CODE ->`source comments.
+        strict: If True, rise immediately on the first opcode
+                dispatch failure
 
     Returns:
         bool: True if the file was processed and written successfully, False otherwise.
@@ -67,7 +70,7 @@ def ProcessFile(section_index: int, file_path: str, output_dir: str) -> bool:
         return False
 
     try:
-        js_code = Decompiler.convert(hbc_content, section_index)
+        js_code = Decompiler.convert(hbc_content, section_index, verbose=verbose, strict=strict)
     except ValueError:
         # Bad/unparseable input for this specific section - log and let the
         # caller decide whether to continue with the rest of the batch.
