@@ -1,7 +1,4 @@
-from typing import Optional
-
 from hermes_decompiler.core.pipeline import ConversionState, Pipeline
-from hermes_decompiler.models.FunctionTableRegistry import FunctionTableRegistry
 from hermes_decompiler.core.stages import (
     MetadataStage,
     SignatureStage,
@@ -30,7 +27,6 @@ class Decompiler:
             assembly_content: str,
             section_index: int,
             *,
-            function_registry: Optional[FunctionTableRegistry] = None,
             strict: bool = False,
             verbose: bool = True,
     ) -> str:
@@ -38,11 +34,6 @@ class Decompiler:
         Args:
             assembly_content: The .hbc assembly content.
             section_index: The section index for naming anonymous functions.
-            function_registry: Optional shared registry for resolving
-                function names across multiple sections. Pass the same
-                instance across a batch of `convert()` calls (see
-                FileOps) if you need that; omit it for a fully isolated,
-                single-section conversion.
             strict: If True, raise immediately on the first opcode
                 dispatch failure instead of emitting an inline `// Error:`
                 comment and continuing.
@@ -61,11 +52,7 @@ class Decompiler:
             raise ValueError("Empty assembly content")
 
         lines = assembly_content.strip().split('\n')
-        state = ConversionState(
-            section_index=section_index,
-            lines=lines,
-            function_registry=function_registry,
-        )
+        state = ConversionState(section_index=section_index, lines=lines)
 
         pipeline = Pipeline([
             MetadataStage(),

@@ -3,7 +3,6 @@ import re
 from typing import Tuple, Optional, List
 
 from hermes_decompiler.Decompiler import Decompiler
-from hermes_decompiler.models.FunctionTableRegistry import FunctionTableRegistry
 from hermes_decompiler.Logger import get_logger
 
 logger = get_logger(__name__)
@@ -39,13 +38,7 @@ def GetFiles(input_dir: str, output_dir: str, start: Optional[int] = None, end: 
     return files
 
 
-def ProcessFile(
-        section_index: int,
-        file_path: str,
-        output_dir: str,
-        *,
-        function_registry: Optional[FunctionTableRegistry] = None,
-) -> bool:
+def ProcessFile(section_index: int, file_path: str, output_dir: str) -> bool:
     """
     Process a .hbc file by reading its content, converting it to JavaScript, and writing to output_dir.
 
@@ -53,10 +46,6 @@ def ProcessFile(
         section_index: Section index of the file (e.g., 9594 for section_9594.hbc).
         file_path: Path to the .hbc file.
         output_dir: Directory to store the output .js file.
-        function_registry: Optional shared FunctionTableRegistry. Pass the
-            SAME instance across all files in a batch (see
-            ProcessDirectory below) if you want function names resolved
-            across sections; omit for fully independent conversions.
 
     Returns:
         bool: True if the file was processed and written successfully, False otherwise.
@@ -78,7 +67,7 @@ def ProcessFile(
         return False
 
     try:
-        js_code = Decompiler.convert(hbc_content, section_index, function_registry=function_registry)
+        js_code = Decompiler.convert(hbc_content, section_index)
     except ValueError:
         # Bad/unparseable input for this specific section - log and let the
         # caller decide whether to continue with the rest of the batch.

@@ -9,17 +9,15 @@ without pulling in a dependency for something this small.
 """
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import List
 
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.FunctionTableRegistry import FunctionTableRegistry
 
 
 @dataclass
 class ConversionState:
     section_index: int
     lines: List[str]
-    function_registry: Optional[FunctionTableRegistry] = None
 
     analysis: HermesAnalysis = field(default_factory=HermesAnalysis)
     function_name: str = ""
