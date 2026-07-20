@@ -3,9 +3,15 @@ from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 class BasicBlockBuilder:
+    """
+    Builds linear BasicBlocks from a list of OpcodeResults.
+
+    Blocks are split according to the classical compiler leader algorithm.
+    """
 
     @classmethod
     def build(cls, results: list[OpcodeResult]) -> list[BasicBlock]:
+
         if not results:
             return []
 
@@ -13,50 +19,52 @@ class BasicBlockBuilder:
 
         return cls._build_blocks(results, leaders)
 
-    @staticmethod
-    def _find_leaders(results: list[OpcodeResult]) -> set[int]:
+    @classmethod
+    def _find_leaders(
+        cls,
+        results: list[OpcodeResult],
+    ) -> set[int]:
+        """
+        Determine every instruction that begins a BasicBlock.
 
-        leaders = {
+        Leaders are:
+
+            • first instruction
+
+            • jump targets
+
+            • instruction immediately after a jump
+
+            • catch handlers (future)
+        """
+
+        leaders: set[int] = {
             results[0].opcode.address,
         }
 
         for index, result in enumerate(results):
 
             #
-            # jump target
+            # explicit jump target
             #
-
             if result.goto is not None:
                 leaders.add(result.goto)
 
             #
-            # instruction after branch
+            # instruction after jump
             #
-
-            if (
-                    result.goto is not None
-                    or result.handler in {
-                "Ret",
-                "Throw",
-            }
-            ):
+            if result.goto is not None:
 
                 if index + 1 < len(results):
                     leaders.add(
                         results[index + 1].opcode.address
                     )
 
-            #
-            # Catch starts a block
-            #
-
-            if result.handler == "Catch":
-                leaders.add(result.opcode.address)
-
         return leaders
 
-    @staticmethod
+    @classmethod
     def _build_blocks(
+        cls,
         results: list[OpcodeResult],
         leaders: set[int],
     ) -> list[BasicBlock]:
@@ -69,13 +77,22 @@ class BasicBlockBuilder:
 
             address = result.opcode.address
 
+            #
+            # new block begins
+            #
             if address in leaders:
 
                 if current is not None:
-                    current.end_addr = current.instructions[-1].opcode.address
+
+                    current.end_addr = (
+                        current.instructions[-1].opcode.address
+                    )
+
                     blocks.append(current)
 
-                current = BasicBlock(start_addr=address)
+                current = BasicBlock(
+                    start_addr=address,
+                )
 
             if current is None:
                 continue
@@ -83,7 +100,11 @@ class BasicBlockBuilder:
             current.instructions.append(result)
 
         if current is not None:
-            current.end_addr = current.instructions[-1].opcode.address
+
+            current.end_addr = (
+                current.instructions[-1].opcode.address
+            )
+
             blocks.append(current)
 
         return blocks

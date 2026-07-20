@@ -1,6 +1,7 @@
 from typing import Dict, Any, Optional, List
 
 from hermes_decompiler.cfg import BasicBlockBuilder, ControlFlowGraphBuilder, CFGValidator
+from hermes_decompiler.cfg.CFGAnalysis import CFGAnalysis
 from hermes_decompiler.emitter.JavaScriptEmitter import JavaScriptEmitter
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -67,18 +68,36 @@ class HermesAnalysis:
 
     def generate_js(self, verbose: bool = False) -> list[str]:
 
+        #
+        # CFG
+        #
+
         blocks = BasicBlockBuilder.build(self.results)
 
         cfg = ControlFlowGraphBuilder.build(blocks)
 
-        CFGValidator.validate(cfg)
+        #
+        # Analyses
+        #
 
-        region = RegionBuilder.build(cfg)
+        analysis = CFGAnalysis(
+            cfg=cfg,
+            metadata=self.metadata,
+        )
 
-        emitter = JavaScriptEmitter()
+        #
+        # Regions
+        #
+
+        region = RegionBuilder.build(analysis)
+
+        #
+        # Emit
+        #
+
+        emitter = JavaScriptEmitter(verbose)
 
         return emitter.emit(region)
-
     def generate_js_OLD(self, verbose: bool = True) -> List[str]:
         outputList: List[Output] = []
 

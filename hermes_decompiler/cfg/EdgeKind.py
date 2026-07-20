@@ -3,15 +3,15 @@ from enum import Enum, auto
 
 class EdgeKind(Enum):
     """
-    Type of control-flow transition between two basic blocks.
+    Semantic type of a Control Flow Graph edge.
     """
 
     FALLTHROUGH = auto()
 
-    JUMP = auto()
+    TRUE_BRANCH = auto()
 
-    TRUE = auto()
+    FALSE_BRANCH = auto()
 
-    FALSE = auto()
+    UNCONDITIONAL = auto()
 
     EXCEPTION = auto()

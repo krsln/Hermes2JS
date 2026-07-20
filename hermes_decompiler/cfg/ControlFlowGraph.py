@@ -31,6 +31,20 @@ class ControlFlowGraph:
     def get_block(self, address: int) -> BasicBlock | None:
         return self.blocks.get(address)
 
+    @property
+    def exit_blocks(self) -> list[BasicBlock]:
+        return [
+            block
+            for block in self
+            if not block.outgoing
+        ]
+
+    def ordered_blocks(self) -> list[BasicBlock]:
+        return sorted(
+            self.blocks.values(),
+            key=lambda block: block.start_addr,
+        )
+
     def __iter__(self):
         return iter(self.blocks.values())
 
