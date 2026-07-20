@@ -50,19 +50,18 @@ class RegionBuilder:
             return None
 
         last = header.instructions[-1] if header.instructions else None
-        condition = "true"
         if last and last.handler.startswith(("JmpTrue", "JmpFalse")):
+            # Better condition extraction
             value = last.value
             if "if (" in value:
                 condition = value.split("if (", 1)[1].split(")", 1)[0].strip()
+            else:
+                condition = value.replace("/* jump to", "").strip() or "true"
+        else:
+            condition = "true"
 
-        # Better then_region: follow true branch
-        true_target = next((e.target for e in header.outgoing if e.kind == EdgeKind.TRUE_BRANCH), None)
-        then_blocks = []
-        if true_target:
-            target_block = analysis.cfg.get_block(true_target)
-            if target_block:
-                then_blocks = [target_block]
+        then_region = SequenceRegion(
+            blocks=[b for b in analysis.reverse_post_order if b.start_addr > header.start_addr][:5])  # heuristic
+        else_region = None
 
-        then_region = SequenceRegion(blocks=then_blocks)
-        return IfRegion.from_header(header, condition, then_region)
+        return IfRegion.from_header(header, condition, then_region, else_region)

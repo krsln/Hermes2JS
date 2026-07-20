@@ -86,8 +86,8 @@ class JavaScriptEmitter(RegionVisitor):
 
     def _emit_block(self, block) -> None:
         for result in block.instructions:
-            if result.handler in ("JmpTrue", "JmpFalse", "JmpTrueLong"):
-                continue  # condition already handled in IfRegion
+            if result.handler.startswith("Jmp") and "jump to" in result.value:
+                continue  # skip raw jump
 
             if self.verbose:
                 bytecode = result.opcode.bytecode
