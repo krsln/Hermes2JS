@@ -44,27 +44,35 @@ class RegionBuilder:
 
     @classmethod
     def _try_build_if(
-        cls,
-        cfg: ControlFlowGraph,
-        block: BasicBlock,
+            cls,
+            cfg: ControlFlowGraph,
+            block: BasicBlock,
     ) -> IfRegion | None:
 
-        if not block.is_conditional:
+        if not cls._is_if_candidate(block):
             return None
 
-        successors = list(block.successors)
+        successors = cfg.successors(block)
 
         if len(successors) != 2:
             return None
 
-        then_block = cfg.get_block(successors[0])
-        else_block = cfg.get_block(successors[1])
-
-        if then_block is None or else_block is None:
-            return None
-
         return IfRegion(
             condition=ConditionExtractor.extract(block.last),
-            then_region=BlockRegion(then_block),
-            else_region=BlockRegion(else_block),
+            then_region=BlockRegion(successors[0]),
+            else_region=BlockRegion(successors[1]),
         )
+
+    @classmethod
+    def _is_if_candidate(cls, block: BasicBlock) -> bool:
+        """
+        Return True if the block looks like an if-statement header.
+        """
+
+        if not block.is_conditional:
+            return False
+
+        if block.last.goto is None:
+            return False
+
+        return True

@@ -4,16 +4,17 @@ from hermes_decompiler.models.OpcodeResult import OpcodeResult
 class ConditionExtractor:
     """
     Extracts high-level conditions from conditional jump instructions.
-
-    This is intentionally isolated so support for additional Hermes
-    jump opcodes can be added without affecting CFG reconstruction.
     """
 
-    @staticmethod
-    def extract(opcode: OpcodeResult) -> str:
+    @classmethod
+    def extract(cls, opcode: OpcodeResult) -> str:
+
         value = opcode.value.strip()
 
-        if "if (" in value:
-            return value.split("if (", 1)[1].split(")", 1)[0]
+        if value.startswith("if ("):
+            return value[4:value.rfind(")")]
+
+        if value.startswith("if (!"):
+            return value[5:value.rfind(")")]
 
         return value

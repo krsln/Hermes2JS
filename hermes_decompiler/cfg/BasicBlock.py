@@ -9,11 +9,7 @@ from hermes_decompiler.models.OpcodeResult import OpcodeResult
 @dataclass(slots=True)
 class BasicBlock:
     """
-    Linear sequence of instructions with a single entry point and
-    single exit.
-
-    Basic blocks are produced directly from bytecode before any
-    high-level control-flow reconstruction.
+    Linear sequence of instructions with a single entry point.
     """
 
     start_addr: int
@@ -39,9 +35,21 @@ class BasicBlock:
         return self.instructions[-1]
 
     @property
+    def successor_count(self) -> int:
+        return len(self.successors)
+
+    @property
+    def predecessor_count(self) -> int:
+        return len(self.predecessors)
+
+    @property
     def is_conditional(self) -> bool:
-        return len(self.successors) == 2
+        return self.successor_count == 2
 
     @property
     def is_unconditional(self) -> bool:
-        return len(self.successors) == 1
+        return self.successor_count == 1
+
+    @property
+    def is_terminal(self) -> bool:
+        return self.successor_count == 0

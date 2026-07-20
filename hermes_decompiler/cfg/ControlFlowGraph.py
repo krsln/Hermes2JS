@@ -1,4 +1,6 @@
-from dataclasses import dataclass, field
+from __future__ import annotations
+
+from dataclasses import dataclass
 
 from hermes_decompiler.cfg.BasicBlock import BasicBlock
 
@@ -6,41 +8,28 @@ from hermes_decompiler.cfg.BasicBlock import BasicBlock
 @dataclass(slots=True)
 class ControlFlowGraph:
     """
-    Represents the Control Flow Graph (CFG) of a single Hermes function.
+    Control Flow Graph consisting of BasicBlocks.
     """
 
-    blocks: list[BasicBlock] = field(default_factory=list)
-
-    @property
-    def entry_block(self) -> BasicBlock | None:
-        return self.blocks[0] if self.blocks else None
-
-    @property
-    def exit_blocks(self) -> list[BasicBlock]:
-        return [b for b in self.blocks if not b.successors]
+    blocks: dict[int, BasicBlock]
+    entry: BasicBlock
 
     def get_block(self, address: int) -> BasicBlock | None:
-        return next(
-            (b for b in self.blocks if b.start_addr == address),
-            None,
-        )
+        return self.blocks.get(address)
 
-    def get_next_block(self, block: BasicBlock) -> BasicBlock | None:
-        try:
-            index = self.blocks.index(block)
-        except ValueError:
-            return None
+    def contains(self, address: int) -> bool:
+        return address in self.blocks
 
-        if index + 1 >= len(self.blocks):
-            return None
+    def successors(self, block: BasicBlock) -> list[BasicBlock]:
+        return [
+            self.blocks[address]
+            for address in block.successors
+            if address in self.blocks
+        ]
 
-        return self.blocks[index + 1]
-
-    def __iter__(self):
-        return iter(self.blocks)
-
-    def __len__(self):
-        return len(self.blocks)
-
-    def __getitem__(self, index: int) -> BasicBlock:
-        return self.blocks[index]
+    def predecessors(self, block: BasicBlock) -> list[BasicBlock]:
+        return [
+            self.blocks[address]
+            for address in block.predecessors
+            if address in self.blocks
+        ]
