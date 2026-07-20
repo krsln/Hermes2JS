@@ -6,6 +6,10 @@ from abc import ABC, abstractmethod
 class RegionVisitor(ABC):
 
     @abstractmethod
+    def visit_block(self, region):
+        raise NotImplementedError
+
+    @abstractmethod
     def visit_sequence(self, region):
         raise NotImplementedError
 
@@ -14,9 +18,17 @@ class RegionVisitor(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    def visit_if_else(self, region):
+        raise NotImplementedError
+
+    @abstractmethod
     def visit_loop(self, region):
         raise NotImplementedError
 
     @abstractmethod
     def visit_try(self, region):
+        raise NotImplementedError
+
+    @abstractmethod
+    def visit_goto(self, region):
         raise NotImplementedError

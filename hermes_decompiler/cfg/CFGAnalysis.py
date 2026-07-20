@@ -9,6 +9,9 @@ from hermes_decompiler.cfg.analysis.ImmediateDominatorAnalysis import (
 from hermes_decompiler.cfg.analysis.PostDominatorAnalysis import (
     PostDominatorAnalysis,
 )
+from hermes_decompiler.cfg.analysis.ImmediatePostDominatorAnalysis import (
+    ImmediatePostDominatorAnalysis,
+)
 from hermes_decompiler.cfg.analysis.LoopAnalysis import LoopAnalysis
 from hermes_decompiler.cfg.analysis.ExceptionAnalysis import ExceptionAnalysis
 
@@ -30,6 +33,7 @@ class CFGAnalysis:
         self._dominators = None
         self._immediate_dominators = None
         self._post_dominators = None
+        self._immediate_post_dominators = None
         self._loops = None
         self._exceptions = None
 
@@ -77,6 +81,26 @@ class CFGAnalysis:
             )
 
         return self._post_dominators
+
+    @property
+    def immediate_post_dominators(self):
+        """
+        block.id -> the immediate post-dominator of that block, i.e.
+        the merge point where its outgoing branches reconverge.
+
+        This is what RegionBuilder uses to decide where an IfRegion /
+        IfElseRegion ends and the enclosing sequence resumes.
+        """
+
+        if self._immediate_post_dominators is None:
+            self._immediate_post_dominators = (
+                ImmediatePostDominatorAnalysis.build(
+                    self.cfg,
+                    self.post_dominators,
+                )
+            )
+
+        return self._immediate_post_dominators
 
     @property
     def loops(self):

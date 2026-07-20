@@ -92,7 +92,6 @@ class CFGValidator:
         ]
 
         if unreachable:
-
             raise ValueError(
                 "Unreachable BasicBlocks: "
                 + ", ".join(map(str, unreachable))
