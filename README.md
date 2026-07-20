@@ -6,11 +6,18 @@ Takes an already-built Hermes bytecode bundle from a React Native app
 (`index.android.bundle`), disassembles it, splits it into one file per
 function, and reconstructs each function as readable JavaScript.
 
-```
-index.android.bundle      scripts/disassemble.sh        scripts/hermes_splitter.py        scripts/decompiler.py
-(prebuilt Hermes    ───────────────────────►   output.hbc     ───────────────────►   sections/*.hbc   ─────────►   results/*.js
- bytecode bundle,        (vendor/hermes-dec,        (+ output.js,                    (one file per
- built elsewhere)         Python toolkit)            outputParser.js)                  function)
+```text
+┌────────────────────────┐      scripts/disassemble.sh       ┌────────────┐
+│  index.android.bundle  │ ────────────────────────────────► │ output.hbc │
+│                        │    (vendor/hermes-dec, Python)    └─────┬──────┘
+│ (Prebuilt Hermes BC)   │                                         │
+└────────────────────────┘                                         │
+                                                                   ▼
+┌────────────────────────┐      scripts/decompiler.py        scripts/hermes_splitter.py
+│     results/*.js       │ ◄───────────────────────────────  sections/*.hbc
+│                        │       (one file per function)     
+│ (Decompiled JS source) │
+└────────────────────────┘
 ```
 
 > **Important**
