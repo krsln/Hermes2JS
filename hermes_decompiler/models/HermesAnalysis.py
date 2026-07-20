@@ -76,9 +76,9 @@ class HermesAnalysis:
         try:
             while i < len(self.results):
                 item = self.results[i]
-                variable = item.Variable
+                variable = item.variable
 
-                bytecode = item.Opcode.bytecode
+                bytecode = item.opcode.bytecode
                 # bytecode -> after first colon
                 original_bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
 
@@ -119,7 +119,7 @@ class HermesAnalysis:
                     # Handle special opcodes
                     if variable.handler == "SaveGenerator":
                         output.indent = indent_lvl
-                        output.content = f"// await yield; // check: JSConverter.Dispatcher // Resume at label_{item.GoTo}"
+                        output.content = f"// await yield; // check: JSConverter.Dispatcher // Resume at label_{item.goto}"
                     elif variable.handler == "ResumeGenerator":
                         output.indent = indent_lvl
                         output.content = f'{item.result}; // Resume generator'
@@ -128,14 +128,14 @@ class HermesAnalysis:
                         value = valueRaw.split("return ")[1].strip() if "return " in valueRaw else valueRaw
                         output.indent = indent_lvl
                         output.content = f"return {value}"
-                    elif "/* jump to" in valueRaw and item.GoTo is not None:
+                    elif "/* jump to" in valueRaw and item.goto is not None:
                         # Handle conditional jumps (e.g., JmpTrue)
                         try:
                             condition = valueRaw.split("if (")[1].split(")")[0].strip()
                             output.indent = indent_lvl
                             output.content = f"if ({condition}) {{"
                             indent_lvl += 1
-                            open_blocks.append({"end_addr": item.GoTo, "start_idx": i})
+                            open_blocks.append({"end_addr": item.goto, "start_idx": i})
                         except IndexError:
                             # Malformed condition; emit as regular line
                             logger.warning("Malformed jump condition at address %s: %r", variable.address, valueRaw)
@@ -149,8 +149,8 @@ class HermesAnalysis:
                 # -----------------------------------------------------
                 outputList.append(output)
 
-                if item.GoTo is not None and variable.handler == "SaveGenerator":
-                    target_idx = next((j for j, r in enumerate(self.results) if r.Opcode.address == item.GoTo), i + 1)
+                if item.goto is not None and variable.handler == "SaveGenerator":
+                    target_idx = next((j for j, r in enumerate(self.results) if r.opcode.address == item.goto), i + 1)
                     if target_idx not in visited and target_idx < len(self.results):
                         i = target_idx
                         continue

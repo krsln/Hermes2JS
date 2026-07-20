@@ -88,7 +88,7 @@ class OpcodeDispatcher:
                 result = dispatcher.dispatch(parsed)
 
                 # Special case for generator pattern
-                if result.Variable.handler == "SaveGenerator":
+                if result.variable.handler == "SaveGenerator":
                     OpcodeDispatcher._handle_generator_await(analysis)
 
                 results.append(result)
@@ -122,6 +122,6 @@ class OpcodeDispatcher:
             return
 
         prev = analysis.results[len(analysis.results) - 2]
-        if prev.Variable.handler.startswith("Call"):
-            prev.Variable.value = f"await {prev.Variable.value}"
-            prev.result = f"{prev.Variable.name} = {prev.Variable.value}"
+        if prev.variable.handler.startswith("Call"):
+            prev.variable.value = f"await {prev.variable.value}"
+            prev.result = f"{prev.variable.name} = {prev.variable.value}"

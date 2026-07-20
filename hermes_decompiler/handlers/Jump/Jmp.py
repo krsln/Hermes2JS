@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from typing import Tuple
 
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
+from hermes_decompiler.models.Enums import FlowType
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
@@ -104,7 +105,7 @@ class Jump(OpcodeHandler):
         )
         analysis.add_result(entry, variable, goto=target)
 
-        return OpcodeResult(entry, variable, goto=target)
+        return OpcodeResult(entry, variable, goto=target, flow=FlowType.JUMP)
 
 
 class Jmp(Jump):
@@ -144,7 +145,7 @@ class ConditionalJump(OpcodeHandler, ABC):
         )
         analysis.add_result(entry, variable, goto=target)
 
-        return OpcodeResult(entry, variable, goto=target)
+        return OpcodeResult(entry, variable, goto=target, flow=FlowType.CONDITIONAL_JUMP)
 
 
 class JmpTrue(ConditionalJump):
@@ -203,7 +204,7 @@ class BuiltinConditionalJump(OpcodeHandler, ABC):
         )
         analysis.add_result(entry, variable, goto=target)
 
-        return OpcodeResult(entry, variable, goto=target)
+        return OpcodeResult(entry, variable, goto=target, flow=FlowType.CONDITIONAL_JUMP)
 
 
 class JmpBuiltinIs(BuiltinConditionalJump):
@@ -254,7 +255,7 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
         )
         analysis.add_result(entry, variable, goto=target)
 
-        return OpcodeResult(entry, variable, goto=target)
+        return OpcodeResult(entry, variable, goto=target, flow=FlowType.CONDITIONAL_JUMP)
 
 
 class JmpTypeOfIs(TypeOfConditionalJump):

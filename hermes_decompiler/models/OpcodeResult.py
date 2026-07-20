@@ -5,29 +5,42 @@ from hermes_decompiler.models.JSVariable import JSVariable
 
 
 class OpcodeResult:
-    Opcode: OpcodeEntry
-    Variable: JSVariable
-
+    opcode: OpcodeEntry
+    variable: JSVariable
     result: str
-    GoTo: Optional[int]
+    goto: Optional[int]
 
-    def __init__(self,   opcode: OpcodeEntry, val: JSVariable, goto: Optional[int] = None):
-        self.Opcode = opcode
-        self.Variable = val
-        if val.name:
-            self.result = f'{val.name} = {val.value}'
+    def __init__(
+            self,
+            opcode: OpcodeEntry,
+            variable: JSVariable,
+            goto: Optional[int] = None
+    ):
+        self.opcode = opcode
+        self.variable = variable
+        self.goto = goto
+
+        if variable.name:
+            self.result = f'{variable.name} = {variable.value}'
         else:
-            self.result = f'{val.value}'
-        self.GoTo = goto
+            self.result = f'{variable.value}'
+
+    @property
+    def handler(self) -> str:
+        return self.variable.handler
+
+    @property
+    def value(self) -> str:
+        return self.variable.value
 
     def __str__(self):
-        return f"OpcodeResult(Opcode={self.Opcode}, Variable='{self.Variable}',Result='{self.result}', GoTo='{self.GoTo}')"
+        return f"OpcodeResult(Opcode={self.opcode}, Variable='{self.variable}',Result='{self.result}', GoTo='{self.goto}')"
 
     def to_dict(self):
         """Converts the OpcodeResult object to a dictionary."""
         return {
-            "Opcode": self.Opcode.to_dict(),
-            "Variable": self.Variable.to_dict(),  # Serialize JSVariable
+            "Opcode": self.opcode.to_dict(),
+            "Variable": self.variable.to_dict(),  # Serialize JSVariable
             "result": self.result,
-            "GoTo": self.GoTo,
+            "GoTo": self.goto,
         }
