@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from hermes_decompiler.analysis.Region import Region
 from hermes_decompiler.cfg.CFGAnalysis import CFGAnalysis
 from hermes_decompiler.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.analysis.regions.SequenceRegion import SequenceRegion
