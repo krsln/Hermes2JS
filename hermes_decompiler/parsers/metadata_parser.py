@@ -8,6 +8,9 @@ _NAME_RE = re.compile(r'\[Function #(\d+) "([^"]*)" of (\d+) bytes]')
 _PARAMS_RE = re.compile(r'(\d+) params')
 _OFFSET_RE = re.compile(r'@ offset (0x[0-9a-fA-F]+)')
 _KV_RE = re.compile(r'(.+)=(\d+)')
+_EXCEPTION_HANDLER_RE = re.compile(
+    r"\[start=(0x[0-9a-fA-F]+),\s*end=(0x[0-9a-fA-F]+),\s*target=(0x[0-9a-fA-F]+)]"
+)
 
 
 def parse_hbc_metadata(metadata_line: str) -> dict:
@@ -73,3 +76,33 @@ def parse_hbc_metadata(metadata_line: str) -> dict:
             logger.warning("Unrecognized metadata segment: %r", segment)
 
     return metadata
+
+
+def parse_exception_handlers(line: str) -> list[dict[str, int]]:
+    """
+    Parse a Hermes exception handler line.
+
+    Example:
+        [Exception handlers: [start=0x19, end=0x2f, target=0x35]
+                             [start=0xbc, end=0x138, target=0x13a] ]
+
+    Returns:
+        [
+            {"start": 25, "end": 47, "target": 53},
+            {"start": 188, "end": 312, "target": 314},
+        ]
+    """
+
+    handlers = []
+
+    if not line:
+        return handlers
+
+    for start, end, target in _EXCEPTION_HANDLER_RE.findall(line):
+        handlers.append({
+            "start": int(start, 16),
+            "end": int(end, 16),
+            "target": int(target, 16),
+        })
+
+    return handlers

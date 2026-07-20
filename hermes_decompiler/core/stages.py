@@ -2,7 +2,7 @@ from hermes_decompiler.Logger import get_logger
 from hermes_decompiler.core.pipeline import ConversionState, Stage
 from hermes_decompiler.core.exceptions import MetadataParseError
 from hermes_decompiler.dispatch.Dispatcher import OpcodeDispatcher
-from hermes_decompiler.parsers.metadata_parser import parse_hbc_metadata
+from hermes_decompiler.parsers.metadata_parser import parse_hbc_metadata, parse_exception_handlers
 from hermes_decompiler.parsers.string_table_parser import parse_string_map
 from hermes_decompiler.parsers.function_table_parser import parse_function_map
 
@@ -17,8 +17,15 @@ class MetadataStage(Stage):
             raise MetadataParseError("No lines to parse metadata from")
 
         try:
-            state.analysis.metadata = parse_hbc_metadata(state.lines[0])
-            state.analysis.metadataList.append(state.analysis.metadata)
+            metadata = parse_hbc_metadata(state.lines[0])
+
+            metadata["exception_handlers"] = []
+
+            if len(state.lines) > 1 and state.lines[1].strip().startswith("[Exception handlers:"):
+                metadata["exception_handlers"] = parse_exception_handlers(state.lines[1])
+
+            state.analysis.metadata = metadata
+            state.analysis.metadataList.append(metadata)
         except Exception as e:
             raise MetadataParseError(f"Failed to parse metadata: {e}") from e
 

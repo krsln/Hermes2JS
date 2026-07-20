@@ -10,10 +10,9 @@ class ExceptionAnalysis:
 
     @classmethod
     def build(
-        cls,
-        metadata: dict,
+            cls,
+            metadata: dict,
     ) -> list[ExceptionRegion]:
-
         handlers = metadata.get(
             "exception_handlers",
             [],
