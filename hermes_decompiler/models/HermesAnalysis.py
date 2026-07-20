@@ -140,7 +140,7 @@ class HermesAnalysis:
                 # -----------------------------------------------------
 
                 if verbose:
-                    outputList.append(Output(indent_lvl, f'// CODE -> {original_bytecode}'))
+                    outputList.append(Output(indent_lvl, f'// CODE → {original_bytecode}'))
 
                 # Add label if the address is a jump target
                 if variable.address in self.gotoList:
@@ -210,7 +210,7 @@ class HermesAnalysis:
         for item in outputList:
             if item.var is not None:
                 if verbose and item.used:
-                    result.append(f"{indent(item.indent)}// USED -> {item.content}")
+                    result.append(f"{indent(item.indent)}// USED → {item.content}")
                 elif item.used:
                     pass
                 else:
