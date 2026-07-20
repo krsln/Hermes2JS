@@ -1,42 +1,32 @@
 from hermes_decompiler.cfg.BasicBlock import BasicBlock
-from hermes_decompiler.cfg.ControlFlowGraph import ControlFlowGraph
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 class BasicBlockBuilder:
 
     @classmethod
-    def build(cls, results: list[OpcodeResult]) -> ControlFlowGraph:
+    def build(cls, results: list[OpcodeResult]) -> list[BasicBlock]:
         """
-        Construct a Control Flow Graph (CFG) from a linear opcode sequence.
+        Build linear BasicBlocks from opcode results.
         """
         if not results:
-            return ControlFlowGraph()
+            return []
 
         leaders = cls._find_leaders(results)
 
-        blocks = cls._build_blocks(results, leaders)
-
-        cfg = ControlFlowGraph(blocks)
-
-        cls._connect_blocks(cfg)
-
-        return cfg
+        return cls._build_blocks(results, leaders)
 
     @staticmethod
     def _find_leaders(results: list[OpcodeResult]) -> set[int]:
-        """
-        Return instruction addresses that begin a basic block.
-        """
         leaders = {
-            results[0].Opcode.address,
+            results[0].opcode.address,
         }
 
         #
-        # Next step:
-        # - Jump targets
-        # - Catch handlers
-        # - Instructions following jumps/returns
+        # TODO
+        #   jump targets
+        #   catch handlers
+        #   instruction after jump
         #
 
         return leaders
@@ -53,32 +43,20 @@ class BasicBlockBuilder:
 
         for result in results:
 
-            addr = result.Opcode.address
+            addr = result.opcode.address
 
             if addr in leaders:
 
                 if current is not None:
-                    current.end_addr = current.instructions[-1].Opcode.address
+                    current.end_addr = current.instructions[-1].opcode.address
                     blocks.append(current)
 
                 current = BasicBlock(start_addr=addr)
 
-            if current is None:
-                continue
-
             current.instructions.append(result)
 
         if current is not None:
-            current.end_addr = current.instructions[-1].Opcode.address
+            current.end_addr = current.instructions[-1].opcode.address
             blocks.append(current)
 
         return blocks
-
-    @classmethod
-    def _connect_blocks(cls, cfg: ControlFlowGraph) -> None:
-        """
-        Connect basic blocks with control-flow edges.
-
-        (Implemented in the next step.)
-        """
-        pass

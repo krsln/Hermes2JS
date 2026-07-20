@@ -1,5 +1,4 @@
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.Enums import FlowType
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -29,4 +28,4 @@ class Throw(OpcodeHandler):
         variable = JSVariable(handler, entry.address, f'r{value_reg}', throw_stmt)
         analysis.add_result(entry, variable)
 
-        return OpcodeResult(entry, variable, flow=FlowType.THROW)
+        return OpcodeResult(entry, variable)

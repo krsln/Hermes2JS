@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from hermes_decompiler.cfg.BasicBlock import BasicBlock
-from hermes_decompiler.cfg.regions.Region import Region
+from hermes_decompiler.regions.Region import Region
 
 
 @dataclass(slots=True)

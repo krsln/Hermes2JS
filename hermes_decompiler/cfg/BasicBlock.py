@@ -13,7 +13,7 @@ class BasicBlock:
     """
 
     start_addr: int
-    end_addr: int
+    end_addr: int = 0
 
     instructions: list[OpcodeResult] = field(default_factory=list)
 

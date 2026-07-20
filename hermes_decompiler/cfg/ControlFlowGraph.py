@@ -1,35 +1,20 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from hermes_decompiler.cfg.BasicBlock import BasicBlock
 
 
 @dataclass(slots=True)
 class ControlFlowGraph:
-    """
-    Control Flow Graph consisting of BasicBlocks.
-    """
-
     blocks: dict[int, BasicBlock]
     entry: BasicBlock
 
-    def get_block(self, address: int) -> BasicBlock | None:
-        return self.blocks.get(address)
+    @classmethod
+    def from_blocks(cls, blocks: list[BasicBlock]) -> "ControlFlowGraph":
+        block_map = {b.start_addr: b for b in blocks}
 
-    def contains(self, address: int) -> bool:
-        return address in self.blocks
-
-    def successors(self, block: BasicBlock) -> list[BasicBlock]:
-        return [
-            self.blocks[address]
-            for address in block.successors
-            if address in self.blocks
-        ]
-
-    def predecessors(self, block: BasicBlock) -> list[BasicBlock]:
-        return [
-            self.blocks[address]
-            for address in block.predecessors
-            if address in self.blocks
-        ]
+        return cls(
+            blocks=block_map,
+            entry=blocks[0],
+        )

@@ -1,5 +1,4 @@
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.Enums import FlowType
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -28,7 +27,7 @@ class Ret(OpcodeHandler):
         variable = JSVariable(handler, entry.address, '', return_stmt)
         analysis.add_result(entry, variable)
 
-        return OpcodeResult(entry, variable, flow=FlowType.RETURN)
+        return OpcodeResult(entry, variable)
 
     def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
         var = self.get_register_variable(analysis, reg)
