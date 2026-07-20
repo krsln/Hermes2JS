@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from hermes_decompiler.cfg import BasicBlock
+from hermes_decompiler.cfg.CFGAnalysis import CFGAnalysis
 from hermes_decompiler.regions.Region import Region
 
 
