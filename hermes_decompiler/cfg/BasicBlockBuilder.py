@@ -15,16 +15,43 @@ class BasicBlockBuilder:
 
     @staticmethod
     def _find_leaders(results: list[OpcodeResult]) -> set[int]:
+
         leaders = {
             results[0].opcode.address,
         }
 
-        #
-        # TODO
-        # Jump targets
-        # Catch handlers
-        # Fallthrough after jumps
-        #
+        for index, result in enumerate(results):
+
+            #
+            # jump target
+            #
+
+            if result.goto is not None:
+                leaders.add(result.goto)
+
+            #
+            # instruction after branch
+            #
+
+            if (
+                    result.goto is not None
+                    or result.handler in {
+                "Ret",
+                "Throw",
+            }
+            ):
+
+                if index + 1 < len(results):
+                    leaders.add(
+                        results[index + 1].opcode.address
+                    )
+
+            #
+            # Catch starts a block
+            #
+
+            if result.handler == "Catch":
+                leaders.add(result.opcode.address)
 
         return leaders
 

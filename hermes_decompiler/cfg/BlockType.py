@@ -1,12 +1,23 @@
-from enum import Enum
+from enum import Enum, auto
 
 
 class BlockType(Enum):
-    NORMAL = "normal"
+    ENTRY = auto()
 
-    IF = "if"
-    LOOP = "loop"
+    NORMAL = auto()
 
-    TRY = "try"
-    CATCH = "catch"
-    FINALLY = "finally"
+    IF = auto()
+
+    LOOP_HEADER = auto()
+
+    LOOP_BODY = auto()
+
+    SWITCH = auto()
+
+    TRY = auto()
+
+    CATCH = auto()
+
+    FINALLY = auto()
+
+    EXIT = auto()

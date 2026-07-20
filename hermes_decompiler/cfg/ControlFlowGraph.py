@@ -8,42 +8,31 @@ from hermes_decompiler.cfg.BasicBlock import BasicBlock
 @dataclass(slots=True)
 class ControlFlowGraph:
     """
-    Directed control-flow graph.
+    Control Flow Graph.
+
+    Owns all BasicBlocks of a function.
     """
 
     blocks: dict[int, BasicBlock]
 
-    entry: BasicBlock
-
     @classmethod
-    def from_blocks(
-        cls,
-        blocks: list[BasicBlock],
-    ) -> "ControlFlowGraph":
-
-        mapping = {
-            block.start_addr: block
-            for block in blocks
-        }
-
+    def from_blocks(cls, blocks: list[BasicBlock]) -> "ControlFlowGraph":
         return cls(
-            blocks=mapping,
-            entry=blocks[0],
+            {
+                block.start_addr: block
+                for block in blocks
+            }
         )
+
+    @property
+    def entry(self) -> BasicBlock:
+        return next(iter(self.blocks.values()))
 
     def get_block(self, address: int) -> BasicBlock | None:
         return self.blocks.get(address)
 
-    def successors(self, block: BasicBlock) -> list[BasicBlock]:
-        return [
-            self.blocks[address]
-            for address in block.successors
-            if address in self.blocks
-        ]
+    def __iter__(self):
+        return iter(self.blocks.values())
 
-    def predecessors(self, block: BasicBlock) -> list[BasicBlock]:
-        return [
-            self.blocks[address]
-            for address in block.predecessors
-            if address in self.blocks
-        ]
+    def __len__(self):
+        return len(self.blocks)

@@ -1,6 +1,6 @@
 from typing import Dict, Any, Optional, List
 
-from hermes_decompiler.cfg import BasicBlockBuilder, ControlFlowGraphBuilder
+from hermes_decompiler.cfg import BasicBlockBuilder, ControlFlowGraphBuilder, CFGValidator
 from hermes_decompiler.emitter.JavaScriptEmitter import JavaScriptEmitter
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -70,6 +70,8 @@ class HermesAnalysis:
         blocks = BasicBlockBuilder.build(self.results)
 
         cfg = ControlFlowGraphBuilder.build(blocks)
+
+        CFGValidator.validate(cfg)
 
         region = RegionBuilder.build(cfg)
 

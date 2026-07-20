@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 
 from hermes_decompiler.cfg.BlockType import BlockType
+from hermes_decompiler.cfg.CFGEdge import CFGEdge
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
@@ -15,8 +16,8 @@ class BasicBlock:
 
     instructions: list[OpcodeResult] = field(default_factory=list)
 
-    predecessors: set[int] = field(default_factory=set)
-    successors: set[int] = field(default_factory=set)
+    incoming: list[CFGEdge] = field(default_factory=list)
+    outgoing: list[CFGEdge] = field(default_factory=list)
 
     block_type: BlockType = BlockType.NORMAL
 
