@@ -1,13 +1,13 @@
 from typing import Dict, Any, Optional, List
 
-from hermes_decompiler.cfg import BasicBlockBuilder, ControlFlowGraphBuilder, CFGValidator
+from hermes_decompiler.analysis.RegionBuilder import RegionBuilder
+from hermes_decompiler.cfg import BasicBlockBuilder, ControlFlowGraphBuilder
 from hermes_decompiler.cfg.CFGAnalysis import CFGAnalysis
 from hermes_decompiler.emitter.JavaScriptEmitter import JavaScriptEmitter
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.Logger import get_logger
-from hermes_decompiler.regions.RegionBuilder import RegionBuilder
 
 logger = get_logger(__name__)
 
