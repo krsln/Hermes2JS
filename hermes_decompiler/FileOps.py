@@ -11,7 +11,7 @@ logger = get_logger(__name__)
 filename_pattern = re.compile(r'section_(\d+)\.hbc')
 
 
-def GetFiles(input_dir: str, output_dir: str, start: Optional[int] = None, end: Optional[int] = None) -> List[
+def get_section_files(input_dir: str, output_dir: str, start: Optional[int] = None, end: Optional[int] = None) -> List[
     Tuple[str, int]]:
     """
     Retrieve and sort .hbc files from input_dir that match the section_<number>.hbc pattern
@@ -38,9 +38,9 @@ def GetFiles(input_dir: str, output_dir: str, start: Optional[int] = None, end: 
     return files
 
 
-def ProcessFile(section_index: int, file_path: str, output_dir: str, verbose: bool, strict: bool) -> bool:
+def process_section(section_index: int, file_path: str, output_dir: str, verbose: bool, strict: bool) -> bool:
     """
-    Process a .hbc file by reading its content, converting it to JavaScript, and writing to output_dir.
+    Process a *.hbc file by reading its content, converting it to JavaScript, and writing to output_dir.
 
     Args:
         section_index: Section index of the file (e.g., 9594 for section_9594.hbc).

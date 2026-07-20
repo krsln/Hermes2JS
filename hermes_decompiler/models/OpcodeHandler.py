@@ -1,5 +1,6 @@
+import re
 from abc import ABC, abstractmethod
-from typing import Dict, Optional, List
+from typing import Dict, Optional
 
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -28,49 +29,64 @@ class OpcodeHandler(ABC):
             OpcodeHandler.registry[cls.__name__] = cls()
 
     @abstractmethod
-    def Handle(self, analysis: HermesAnalysis, line: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         """
         Process a Hermes bytecode opcode and produce a corresponding JavaScript
         variable or result.
         """
-        pass
+        ...
+        # raise NotImplementedError
 
     @classmethod
-    def GetHandler(cls, opcode: str) -> Optional['OpcodeHandler']:
+    def get_handler(cls, opcode: str) -> Optional['OpcodeHandler']:
         return cls.registry.get(opcode)
 
     @classmethod
-    def InvalidArgs(cls, analysis: HermesAnalysis, entry: OpcodeEntry,
-                     error_detail: str = "Invalid arguments") -> OpcodeResult:
+    def build_invalid_args_result(cls, analysis: HermesAnalysis, entry: OpcodeEntry,
+                                  error_detail: str = "Invalid arguments") -> OpcodeResult:
         error_msg = f"// Error: {cls.__name__} at address {entry.address}: {error_detail}: {entry.args}"
         logger.warning("%s at address %s: %s (args=%r)", cls.__name__, entry.address, error_detail, entry.args)
 
         variable = JSVariable(cls.__name__, entry.address, "", error_msg)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
     @classmethod
-    def Exception(cls, analysis: HermesAnalysis, entry: OpcodeEntry, error: str) -> OpcodeResult:
+    def build_exception_result(cls, analysis: HermesAnalysis, entry: OpcodeEntry, error: str) -> OpcodeResult:
         logger.error("%s raised at address %s: %s", cls.__name__, entry.address, error)
 
         variable = JSVariable(cls.__name__, entry.address, "", error)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
+    @staticmethod
+    def resolve_property_name(analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int, ) -> str:
+        """
+        Resolve a property name from the Hermes string table, falling back
+        to the disassembler comment when necessary.
+        """
+
+        prop_name = analysis.stringTable.get(str(string_id))
+        if prop_name:
+            return prop_name
+
+        comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment or "")
+
+        if comment_match:
+            return comment_match.group(1)
+
+        return f"string_{string_id}"
+
     @classmethod
-    def GetFuncArgs(cls, analysis: HermesAnalysis, regs: list[int]) -> list[str]:
+    def resolve_function_args(cls, analysis: HermesAnalysis, regs: list[int]) -> list[str]:
         args = []
 
         for reg in regs:
-            variable = analysis.registers.get(f"r{reg}")
+            variable = cls._get_register_variable(analysis, reg)
 
-            if (
-                    variable
-                    and variable.handler != "ResumeGenerator"
-                    and not variable.handler.endswith("Environment")
-            ):
+            if variable:
                 variable.used = True
                 args.append(variable.value)
             else:
@@ -79,7 +95,27 @@ class OpcodeHandler(ABC):
         return args
 
     @classmethod
-    def GetVariableByReg(cls, analysis: HermesAnalysis, reg: int) -> JSVariable | None:
+    def get_register_variable(cls, analysis: HermesAnalysis, reg: int) -> JSVariable | None:
+        variable = cls._get_register_variable(analysis, reg)
+
+        if not variable:
+            return None
+
+        variable.used = True
+        return variable
+
+    @classmethod
+    def get_register_value(cls, analysis: HermesAnalysis, reg: int) -> str:
+        variable = cls._get_register_variable(analysis, reg)
+
+        if not variable:
+            return f"r{reg}"
+
+        variable.used = True
+        return variable.value
+
+    @classmethod
+    def _get_register_variable(cls, analysis: HermesAnalysis, reg: int) -> JSVariable | None:
         variable = analysis.registers.get(f"r{reg}")
 
         if (
@@ -87,21 +123,6 @@ class OpcodeHandler(ABC):
                 and variable.handler != "ResumeGenerator"
                 and not variable.handler.endswith("Environment")
         ):
-            variable.used = True
             return variable
 
         return None
-
-    @classmethod
-    def GetValueByReg(cls, analysis: HermesAnalysis, reg: int) -> str:
-        variable = analysis.registers.get(f"r{reg}")
-
-        if (
-                variable
-                and variable.handler != "ResumeGenerator"
-                and not variable.handler.endswith("Environment")
-        ):
-            variable.used = True
-            return variable.value
-
-        return f"r{reg}"

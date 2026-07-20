@@ -23,14 +23,11 @@ class OpcodeEntry:
     @staticmethod
     def _safe_parse_address(hex_address: str) -> int:
         """
-        Parse a hex offset string to an int, defaulting to 0 instead of
-        raising. This matters for synthetic entries created for unparsed
-        or errored lines, where no real address is known yet - the old
-        code passed hex_address="" in exactly that situation, which made
-        `int("", 16)` raise ValueError *inside the except block that was
-        supposed to be handling a different error*, aborting the whole
-        conversion.
+        Safely convert a hexadecimal address string to an integer.
+
+        Returns 0 if the input is empty or invalid.
         """
+
         if not hex_address:
             return 0
         try:

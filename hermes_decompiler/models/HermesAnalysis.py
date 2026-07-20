@@ -28,10 +28,12 @@ class HermesAnalysis:
     stringTable: Dict[str, str]
     functionTable: Dict[str, str]
 
-    def __init__(self,
-                 metadata: Dict[str, Any] = None,
-                 stringTable: Dict[str, str] = None,
-                 functionTable: Dict[str, str] = None):
+    def __init__(
+            self,
+            metadata: Optional[dict[str, Any]] = None,
+            stringTable: Optional[dict[str, str]] = None,
+            functionTable: Optional[dict[str, str]] = None,
+    ) -> None:
         """
         Initialize the Hermes analysis context.
 
@@ -52,7 +54,7 @@ class HermesAnalysis:
 
         self.results: List[OpcodeResult] = []
 
-    def AddResult(self, entry: OpcodeEntry, variable: JSVariable, goto: Optional[int] = None):
+    def add_result(self, entry: OpcodeEntry, variable: JSVariable, goto: Optional[int] = None):
         """Add a variable, tracking multiple assignments."""
         result = OpcodeResult(entry, variable, goto)
         self.results.append(result)
@@ -60,7 +62,7 @@ class HermesAnalysis:
         if variable.name:
             self.registers[variable.name] = variable
 
-    def GenerateJS(self, verbose: bool = True) -> List[str]:
+    def generate_js(self, verbose: bool = True) -> List[str]:
         outputList: List[Output] = []
 
         indent_lvl = 1  # Track indentation for nested blocks

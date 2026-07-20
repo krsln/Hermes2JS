@@ -9,17 +9,17 @@ from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, sequen
 
 # DEFINE_OPCODE_3(CreateGenerator, Reg8, Reg8, UInt16)
 # DEFINE_OPCODE_3(CreateGeneratorLongIndex, Reg8, Reg8, UInt32)
-# Example: <CreateGenerator>: <Reg8: 0, Reg8: 0, function_id: 11946>  # Function: [#11946 ?anon_0_ of 251 bytes]: 2 params @ offset 0x002191ac
+# Example: <CreateGenerator>: <Reg8: 0, Reg8: 0, function_id: 11946> # Function: [#11946 ?anon_0_ of 251 bytes]: 2 params @ offset 0x002191ac
 class CreateGenerator(OpcodeHandler):
     """Create a generator object."""
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, env_reg, function_id = map(int, match.groups())
 
@@ -28,7 +28,7 @@ class CreateGenerator(OpcodeHandler):
         value = f"createGenerator(r{env_reg}, {func_name})"
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -45,12 +45,12 @@ class CreateGeneratorClosure(OpcodeHandler):
     """Create a closure for a GeneratorFunction."""
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, env_reg, function_id = map(int, match.groups())
 
@@ -59,7 +59,7 @@ class CreateGeneratorClosure(OpcodeHandler):
         value = f"createGeneratorClosure(r{env_reg}, {func_name})"
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 

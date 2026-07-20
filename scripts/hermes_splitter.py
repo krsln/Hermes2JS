@@ -10,10 +10,10 @@ Hermes disassembler.
 Features
 --------
 - Streaming I/O (no need to hold the whole input in memory).
-- Safe, collision-free filename generation (sanitization + de-duplication).
+- Safe, collision-free filename generation (sanitization and deduplication).
 - Optional JSON manifest describing every section that was written
   (source line range, function number/name, output path).
-- Dry-run mode to preview what would be written without touching disk.
+- Dry-run mode to preview what would be written without touching the disk.
 - Configurable separator pattern and output naming.
 - Structured logging with adjustable verbosity instead of bare `print`.
 - Clear, non-zero exit codes on failure for CI/script-friendly usage.
@@ -41,7 +41,7 @@ log = logging.getLogger(LOGGER_NAME)
 
 DEFAULT_SEPARATOR = "==============="
 FUNCTION_HEADER_RE = re.compile(
-    r'^\[Function #(?P<number>\d+)\s+"(?P<name>[^"]*)"\s+of\s+\d+\s+bytes\]'
+    r'^\[Function #(?P<number>\d+)\s+"(?P<name>[^"]*)"\s+of\s+\d+\s+bytes]'
 )
 # Anything outside this set is replaced with '_' when building filenames.
 SAFE_CHARS_RE = re.compile(r"[^A-Za-z0-9_\-.]")
@@ -80,17 +80,17 @@ def sanitize_filename(name: str, max_len: int = MAX_FILENAME_LEN) -> str:
     return cleaned
 
 
-def unique_path(directory: Path, filename: str, extension: str) -> Path:
-    """Return a non-colliding path, appending _1, _2, ... on duplicates."""
-    candidate = directory / f"{filename}{extension}"
-    if not candidate.exists():
-        return candidate
-    n = 1
-    while True:
-        candidate = directory / f"{filename}_{n}{extension}"
-        if not candidate.exists():
-            return candidate
-        n += 1
+# def unique_path(directory: Path, filename: str, extension: str) -> Path:
+#     """Return a non-colliding path, appending _1, _2, ... on duplicates."""
+#     candidate = directory / f"{filename}{extension}"
+#     if not candidate.exists():
+#         return candidate
+#     n = 1
+#     while True:
+#         candidate = directory / f"{filename}_{n}{extension}"
+#         if not candidate.exists():
+#             return candidate
+#         n += 1
 
 
 def iter_sections(input_path: Path, separator: str):
@@ -188,7 +188,8 @@ def split_file(
             written += 1
             continue
 
-        out_path = unique_path(out_dir, base_name, extension)
+        # out_path = unique_path(out_dir, base_name, extension)
+        out_path = out_dir / f"{base_name}{extension}"
         try:
             out_path.write_text("".join(section.lines), encoding="utf-8")
         except OSError as exc:

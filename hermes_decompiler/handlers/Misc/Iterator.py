@@ -12,16 +12,16 @@ class IteratorBegin(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         iterator_reg, iterable_reg = map(int, match.groups())
 
-        iterable = self.GetValueByReg(analysis, iterable_reg) or f"r{iterable_reg}"
+        iterable = self.get_register_value(analysis, iterable_reg) or f"r{iterable_reg}"
 
         variable = JSVariable(
             handler,
@@ -30,7 +30,7 @@ class IteratorBegin(OpcodeHandler):
             f"GetIterator({iterable})"
         )
 
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -40,20 +40,20 @@ class IteratorNext(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         result_reg, iterator_reg, _ = map(int, match.groups())
 
-        iterator = self.GetValueByReg(analysis, iterator_reg) or f"r{iterator_reg}"
+        iterator = self.get_register_value(analysis, iterator_reg) or f"r{iterator_reg}"
 
         variable = JSVariable(handler, entry.address, f"r{result_reg}", f"{iterator}.next()")
 
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -63,34 +63,34 @@ class IteratorClose(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         iterator_reg = int(match.group(1))
 
-        iterator = self.GetValueByReg(
+        iterator = self.get_register_value(
             analysis,
             iterator_reg
         ) or f"r{iterator_reg}"
 
         variable = JSVariable(handler, entry.address, "", f"{iterator}.return()")
 
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
 
-# CFG (control-flow graph) analizinde
+# CFG (control-flow graph) ->
 # IteratorBegin
 # IteratorNext
 # JmpTrue
 # IteratorClose
 #
-# kalıbını yakalayıp
+# to
 #
 # for (const item of iterable)
 
@@ -111,20 +111,20 @@ class IteratorClose(OpcodeHandler):
 class GetPNameList(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected four Reg8 arguments")
+            return self.build_invalid_args_result(analysis, entry, "Expected four Reg8 arguments")
 
         dest_reg, obj_reg, _index_reg, _size_reg = map(int, match.groups())
-        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
+        obj_val = self.get_register_value(analysis, obj_reg) or f"r{obj_reg}"
 
         variable = JSVariable(
             handler, entry.address, f"r{dest_reg}",
             f"Object.keys({obj_val}) /* for-in property list */", )
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -133,17 +133,17 @@ class GetPNameList(OpcodeHandler):
 class GetNextPName(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG, REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected five Reg8 arguments")
+            return self.build_invalid_args_result(analysis, entry, "Expected five Reg8 arguments")
 
         dest_reg, list_reg, _obj_reg, _index_reg, _size_reg = map(int, match.groups())
-        list_val = self.GetValueByReg(analysis, list_reg) or f"r{list_reg}"
+        list_val = self.get_register_value(analysis, list_reg) or f"r{list_reg}"
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"{list_val}.next() /* for-in step */")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

@@ -14,17 +14,17 @@ class CreateThis(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
+            return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
         dest, func, new_target = (int(x) for x in match.groups())
 
-        func_name = self.GetValueByReg(analysis, func) or f"r{func}"
-        new_target_name = self.GetValueByReg(analysis, new_target) or f"r{new_target}"
+        func_name = self.get_register_value(analysis, func) or f"r{func}"
+        new_target_name = self.get_register_value(analysis, new_target) or f"r{new_target}"
 
         variable = JSVariable(
             handler, entry.address,
@@ -32,6 +32,6 @@ class CreateThis(OpcodeHandler):
         )
 
         # variable = JSVariable(handler, entry.address, f'r{dest}', f"createThis({func_name}, {new_target_name});")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

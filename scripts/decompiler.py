@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
 from pathlib import Path
-import logging
 import argparse
 
-from hermes_decompiler.FileOps import GetFiles, ProcessFile
-from hermes_decompiler.Logger import logger, get_logger
+from hermes_decompiler.FileOps import get_section_files, process_section
+from hermes_decompiler.Logger import logger
+
 
 # handler = logging.StreamHandler()
 # handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"))
@@ -73,7 +73,7 @@ def main() -> None:
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    files = GetFiles(
+    files = get_section_files(
         str(input_dir),
         str(output_dir),
         start=args.start,
@@ -88,7 +88,7 @@ def main() -> None:
 
     for filename, section_index in files:
         file_path = input_dir / filename
-        ProcessFile(section_index, str(file_path), str(output_dir), args.verbose, args.strict)
+        process_section(section_index, str(file_path), str(output_dir), args.verbose, args.strict)
 
     logger.info("Conversion completed successfully")
 

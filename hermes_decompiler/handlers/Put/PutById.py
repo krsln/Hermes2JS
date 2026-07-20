@@ -17,43 +17,31 @@ class PutById(OpcodeHandler):
     """Set an object property by string index."""
     _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, value_reg, _cache, string_id = map(int, match.groups())
 
-        prop_name = self._extract_property_name(analysis, entry, string_id)
-        value = self._get_register_value(analysis, value_reg)
+        prop_name = self.resolve_property_name(analysis, entry, string_id)
+        reg_var = self.get_register_variable(analysis, value_reg)
+        reg_value = reg_var.value if reg_var and reg_var.value is not None else 'undefined'
 
-        obj = self._parse_existing_object(analysis, dest_reg)
-        obj[prop_name] = value
+        obj = self.parse_existing_object(analysis, dest_reg)
+        obj[prop_name] = reg_value
 
         js_obj = self._format_object_literal(obj)
 
         updated_var = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
-        analysis.AddResult(entry, updated_var)
+        analysis.add_result(entry, updated_var)
 
         return OpcodeResult(entry, updated_var)
 
-    def _extract_property_name(self, analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int) -> str:
-        comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment or "")
-        if comment_match:
-            return comment_match.group(1)
-        try:
-            return analysis.stringTable.get(str(string_id), f'string_{string_id}')
-        except (AttributeError, KeyError, TypeError):
-            return f'string_{string_id}'
-
-    def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
-        var = self.GetVariableByReg(analysis, reg)
-        return var.value if var and var.value is not None else 'undefined'
-
-    def _parse_existing_object(self, analysis: HermesAnalysis, dest_reg: int) -> Dict[str, Any]:
-        dest_var = self.GetVariableByReg(analysis, dest_reg)
+    def parse_existing_object(self, analysis: HermesAnalysis, dest_reg: int) -> Dict[str, Any]:
+        dest_var = self.get_register_variable(analysis, dest_reg)
         if not dest_var or dest_var.value in (None, '{}', ''):
             return {}
 

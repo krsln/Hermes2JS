@@ -98,7 +98,7 @@ class CodeGenStage(Stage):
         state.js_lines = [header]
 
         if state.bytecode_lines:
-            state.js_lines.extend(state.analysis.GenerateJS(self._verbose))
+            state.js_lines.extend(state.analysis.generate_js(self._verbose))
         else:
             state.js_lines.append('    // No bytecode provided')
 

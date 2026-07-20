@@ -12,21 +12,21 @@ from hermes_decompiler.handlers._shared_patterns import REG, sequence
 class PutByVal(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
+            return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
         obj_reg, key_reg, value_reg = map(int, match.groups())
 
-        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
-        key_val = self.GetValueByReg(analysis, key_reg) or f"r{key_reg}"
-        value_val = self.GetValueByReg(analysis, value_reg) or f"r{value_reg}"
+        obj_val = self.get_register_value(analysis, obj_reg) or f"r{obj_reg}"
+        key_val = self.get_register_value(analysis, key_reg) or f"r{key_reg}"
+        value_val = self.get_register_value(analysis, value_reg) or f"r{value_reg}"
 
         statement = f"{obj_val}[{key_val}] = {value_val}"
         variable = JSVariable(handler, entry.address, "", statement)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

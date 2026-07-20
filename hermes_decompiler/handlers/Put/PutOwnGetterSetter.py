@@ -15,19 +15,19 @@ PUT_GETTER_SETTER_PATTERN = sequence(REG, REG, REG, REG, UINT8)
 class PutOwnGetterSetterByVal(OpcodeHandler):
     """Define getter/setter property."""
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = PUT_GETTER_SETTER_PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected 4 Reg + UInt8")
+            return self.build_invalid_args_result(analysis, entry, "Expected 4 Reg + UInt8")
 
         obj_reg, key_reg, getter_reg, setter_reg, enumerable_flag = map(int, match.groups())
 
-        obj_val = self.GetValueByReg(analysis, obj_reg) or f"r{obj_reg}"
-        key_val = self.GetValueByReg(analysis, key_reg) or f"r{key_reg}"
-        getter_val = self.GetValueByReg(analysis, getter_reg)
-        setter_val = self.GetValueByReg(analysis, setter_reg)
+        obj_val = self.get_register_value(analysis, obj_reg) or f"r{obj_reg}"
+        key_val = self.get_register_value(analysis, key_reg) or f"r{key_reg}"
+        getter_val = self.get_register_value(analysis, getter_reg)
+        setter_val = self.get_register_value(analysis, setter_reg)
         enumerable = "true" if enumerable_flag else "false"
 
         descriptor_parts = []
@@ -42,6 +42,6 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
         value = f"Object.defineProperty({obj_val}, {key_val}, {descriptor})"
 
         variable = JSVariable(handler, entry.address, f'r{obj_reg}', value)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

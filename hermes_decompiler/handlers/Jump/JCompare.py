@@ -40,17 +40,17 @@ class JCompareX(OpcodeHandler):
 
     operator: ClassVar[str] = "=="
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry, ) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry, ) -> OpcodeResult:
         try:
             offset, lhs_reg, rhs_reg = _parse_compare(entry)
         except ValueError as exc:
-            return self.InvalidArgs(analysis, entry, str(exc))
+            return self.build_invalid_args_result(analysis, entry, str(exc))
 
         target = entry.address + offset
         analysis.gotoList.append(target)
 
-        lhs = self.GetValueByReg(analysis, lhs_reg) or f"r{lhs_reg}"
-        rhs = self.GetValueByReg(analysis, rhs_reg) or f"r{rhs_reg}"
+        lhs = self.get_register_value(analysis, lhs_reg) or f"r{lhs_reg}"
+        rhs = self.get_register_value(analysis, rhs_reg) or f"r{rhs_reg}"
 
         expression = (
             f"if ({lhs} {self.operator} {rhs}) "
@@ -64,7 +64,7 @@ class JCompareX(OpcodeHandler):
             expression,
         )
 
-        analysis.AddResult(entry, variable, goto=target)
+        analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
 

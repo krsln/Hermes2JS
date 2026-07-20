@@ -13,13 +13,14 @@ index.android.bundle      scripts/disassemble.sh        scripts/hermes_splitter.
  built elsewhere)         Python toolkit)            outputParser.js)                  function)
 ```
 
-> This repo does **not** compile JS/TS to Hermes bytecode — it starts from a
-> bundle that was already built (e.g. by a React Native release build with
-> Hermes enabled). See the table at the bottom for what happens upstream.
+> **Important**
 >
-> Output is a best-effort reconstruction, not a byte-for-byte reversal of the
-> original source. Variable names, comments, and original formatting are not
-> recoverable).
+> Hermes2JS is a decompiler, **not** a compiler. It accepts existing Hermes
+> bytecode as input and reconstructs an equivalent JavaScript representation.
+>
+> Because Hermes bytecode does not preserve all source-level information,
+> the generated output is a best-effort approximation and should not be
+> expected to match the original source code exactly.
 
 ## Sources
 

@@ -16,48 +16,48 @@ class NewArray(OpcodeHandler):
     """Create a new, empty Array with a preallocation size hint."""
     _PATTERN = sequence(REG, UINT16)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8 and UInt16 arguments")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8 and UInt16 arguments")
 
         dest_reg, capacity_hint = map(int, match.groups())
 
         js_array = "[]" if capacity_hint == 0 else f"[] /* capacity hint: {capacity_hint} */"
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
 
 class NewArrayWithBuffer(OpcodeHandler):
-    """Create a new array from static buffer."""
+    """Create a new array from a static buffer."""
     _PATTERN = sequence(REG, UINT16, UINT16, UINT16)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg = int(match.group(1))
 
         array_str = self._extract_array_from_comment(entry.comment)
         if not array_str:
-            return self.Exception(analysis, entry, "// Warning: No array data in comment")
+            return self.build_exception_result(analysis, entry, "// Warning: No array data in comment")
 
         try:
             clean_str = array_str.replace("'", '"')
             parsed = json.loads(clean_str)
             js_array = json.dumps(parsed, ensure_ascii=False)
         except json.JSONDecodeError as e:
-            return self.Exception(analysis, entry, f"// Warning: JSON decode failed: {e}")
+            return self.build_exception_result(analysis, entry, f"// Warning: JSON decode failed: {e}")
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 

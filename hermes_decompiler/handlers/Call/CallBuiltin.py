@@ -12,12 +12,12 @@ from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
 class CallBuiltin(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8, UINT8)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8, UInt8, UInt8 arguments")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8, UInt8 arguments")
 
         dest_reg, builtin_id, arg_count = map(int, match.groups())
 
@@ -27,13 +27,13 @@ class CallBuiltin(OpcodeHandler):
         arg_start = dest_reg - arg_count
         args = []
         for offset, reg in enumerate(range(arg_start, dest_reg)):
-            value = self.GetValueByReg(analysis, reg)
+            value = self.get_register_value(analysis, reg)
             args.append(value if value is not None else f"arg{offset}")
 
         args_str = ", ".join(args)
         func_val = f"({args_str})"
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"{func_name}{func_val}", func_name, func_val)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

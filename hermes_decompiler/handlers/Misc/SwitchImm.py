@@ -10,25 +10,25 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 class SwitchImm(OpcodeHandler):
     _PATTERN = re.compile(r'^Reg\d+:\s*(\d+)')
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
         args = entry.args.strip()
 
         selector_match = self._PATTERN.match(args)
         if not selector_match:
-            return self.InvalidArgs(analysis, entry, "Expected a leading Reg8 selector argument")
+            return self.build_invalid_args_result(analysis, entry, "Expected a leading Reg8 selector argument")
 
         selector_reg = int(selector_match.group(1))
-        selector_val = self.GetValueByReg(analysis, selector_reg) or f"r{selector_reg}"
+        selector_val = self.get_register_value(analysis, selector_reg) or f"r{selector_reg}"
 
-        target_addrs = []
+        target_addr_list = []
         for offset_str in re.compile(r'Addr\d+:\s*(-?\d+)').findall(args):
             target_addr = entry.address + int(offset_str)
             analysis.gotoList.append(target_addr)
-            target_addrs.append(target_addr)
+            target_addr_list.append(target_addr)
 
-        if target_addrs:
-            targets = ", ".join(f"label_{addr}" for addr in target_addrs)
+        if target_addr_list:
+            targets = ", ".join(f"label_{addr}" for addr in target_addr_list)
             value = (
                 f"/* TODO: SwitchImm({selector_val}) — jump table not reconstructed; "
                 f"candidate targets: {targets} */"
@@ -40,6 +40,6 @@ class SwitchImm(OpcodeHandler):
             )
 
         variable = JSVariable(handler, entry.address, "", value)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

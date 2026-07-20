@@ -1,5 +1,3 @@
-import re
-
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -15,19 +13,19 @@ class GetByVal(OpcodeHandler):
     """Get property by dynamic value: obj[key]"""
     _PATTERN = sequence(REG, REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8, Reg8 arguments")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, Reg8 arguments")
 
         dest_reg, base_reg, prop_reg = map(int, match.groups())
 
         value = f"r{base_reg}[r{prop_reg}]"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -41,52 +39,33 @@ class GetById(OpcodeHandler):
     """Get property by string ID: obj[propName]"""
     _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
         # Resolve property name
-        prop_name = self._get_property_name(analysis, entry, string_id)
+        prop_name = self.resolve_property_name(analysis, entry, string_id)
         if not prop_name:
             error = f'/* Error: string_id {string_id} not found in stringTable */'
-            return self.Exception(analysis, entry, error)
+            return self.build_exception_result(analysis, entry, error)
 
         # Get base object value
-        base_value = self.GetValueByReg(analysis, obj_reg)
+        base_value = self.get_register_value(analysis, obj_reg)
 
         # Build property access
         js_expr = f"{base_value}.{prop_name}"
 
         variable = JSVariable(
-            handler,
-            entry.address,
-            f'r{dest_reg}',
-            js_expr,
-            base_value,
-            f".{prop_name}"
-        )
-        analysis.AddResult(entry, variable)
+            handler, entry.address,
+            f'r{dest_reg}', js_expr, base_value, f".{prop_name}")
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
-
-    def _get_property_name(self, analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int) -> str:
-        """Resolve the property name from a string table or comment."""
-        # Try the string table first
-        prop_name = analysis.stringTable.get(str(string_id))
-        if prop_name:
-            return prop_name
-
-        # Fallback: try to extract from comment
-        comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment or "")
-        if comment_match:
-            return comment_match.group(1)
-
-        return f'str_{string_id}'
 
 
 class GetByIdShort(GetById):
@@ -103,7 +82,7 @@ class GetByIdLong(GetById):
 # DEFINE_OPCODE_4(TryGetByIdLong, Reg8, Reg8, UInt8, UInt32)
 # OPERAND_STRING_ID(TryGetById, 4)
 # OPERAND_STRING_ID(TryGetByIdLong, 4)
-# Example: <TryGetById>: <Reg8: 14, Reg8: 13, UInt8: 8, string_id: 23>  # String: 'Math' (Identifier)
+# Example: <TryGetById>: <Reg8: 14, Reg8: 13, UInt8: 8, string_id: 23> # String: 'Math' (Identifier)
 class TryGetById(GetById):
     """TryGetById - similar to GetById, often used with global-object."""
     pass

@@ -23,14 +23,14 @@ class GetEnvironment(OpcodeHandler):
 
     _PATTERN = sequence(REG, UINT8)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, level = map(int, match.groups())
 
         variable = JSVariable(self.__class__.__name__, entry.address, f"r{dest_reg}", f"getEnvironment({level})")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

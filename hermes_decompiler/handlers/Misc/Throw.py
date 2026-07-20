@@ -13,22 +13,19 @@ class Throw(OpcodeHandler):
     """Throw an exception."""
     _PATTERN = sequence(REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
-        reg = int(match.group(1))
-        value = self._get_register_value(analysis, reg)
+        value_reg = int(match.group(1))
+        reg_var = self.get_register_variable(analysis, value_reg)
+        reg_value = reg_var.value if reg_var and reg_var.value is not None else 'undefined'
 
-        throw_stmt = f"throw {value}"
-        variable = JSVariable(handler, entry.address, f'r{reg}', throw_stmt)
-        analysis.AddResult(entry, variable)
+        throw_stmt = f"throw {reg_value}"
+        variable = JSVariable(handler, entry.address, f'r{value_reg}', throw_stmt)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
-
-    def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
-        var = self.GetVariableByReg(analysis, reg)
-        return var.value if var and var.value is not None else 'undefined'

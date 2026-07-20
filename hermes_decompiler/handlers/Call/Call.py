@@ -18,24 +18,24 @@ class CallX(OpcodeHandler):
 
     num_args = 1  # to be overridden
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         # Get precompiled regex for the number of arguments
         reg_pattern = self._PATTERN.get(self.num_args)
         if not reg_pattern:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         match = re.match(reg_pattern, entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
 
-        func_variable = self.GetVariableByReg(analysis, func_reg)
-        func_name = self.GetValueByReg(analysis, func_reg)
+        func_variable = self.get_register_variable(analysis, func_reg)
+        func_name = self.get_register_value(analysis, func_reg)
 
-        argList = self.GetFuncArgs(analysis, arg_regs)
+        argList = self.resolve_function_args(analysis, arg_regs)
 
         # Special handling for HermesInternal.concat
         if func_name == "this.HermesInternal.concat":
@@ -52,7 +52,7 @@ class CallX(OpcodeHandler):
             # Combine into a template literal
             template_str = f"`{''.join(template_parts)}`"
             variable = JSVariable(handler, entry.address, f'r{dest_reg}', template_str, func_name, template_str)
-            analysis.AddResult(entry, variable)
+            analysis.add_result(entry, variable)
             return OpcodeResult(entry, variable)
 
         first_arg = argList[0] if argList else None
@@ -70,25 +70,25 @@ class CallX(OpcodeHandler):
             checked_args.append(arg)
 
         args_str = ", ".join(r for r in checked_args)
-        if self.ShouldUseCall(func_variable) and not explicit_receiver_passed:
+        if self.should_use_call(func_variable) and not explicit_receiver_passed:
             func_val = f".call(this, {args_str})"
         else:
             func_val = f"({args_str})"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{func_name}{func_val}", func_name, func_val)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
     @staticmethod
-    def ShouldUseCall(variable: JSVariable) -> bool:
+    def should_use_call(variable: JSVariable | None) -> bool:
         """
         Decide if we should emit `.call(this, ...)` based on the variable info.
         """
         if not variable:
             return True  # fallback safety
 
-        # If it's created by a CreateClosure handler, assume it doesn't need .call
+        # If it's created by a CreateClosure handler, assume it doesn't need it .call
         if variable.handler == 'CreateClosure':
             return False
 
@@ -110,15 +110,15 @@ class Call(CallX):
     (UInt8) instead of a fixed arity."""
     _PATTERN = sequence(REG, REG, UINT8)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, func_reg, num_args = map(int, match.groups())
-        func_name = self.GetValueByReg(analysis, func_reg)
+        func_name = self.get_register_value(analysis, func_reg)
         arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
         # argList = [self.GetValueByReg(analysis, r) for r in arg_regs]
         argList = [
@@ -127,11 +127,11 @@ class Call(CallX):
         ]
         args_str = ", ".join(argList)
 
-        func_val = f"({args_str})" if not self.ShouldUseCall(
-            self.GetVariableByReg(analysis, func_reg)) else f".call(this, {args_str})"
+        func_val = f"({args_str})" if not self.should_use_call(
+            self.get_register_variable(analysis, func_reg)) else f".call(this, {args_str})"
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{func_name}{func_val}", func_name, func_val)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 

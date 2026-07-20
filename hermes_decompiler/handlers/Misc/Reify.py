@@ -12,20 +12,17 @@ from hermes_decompiler.handlers._shared_patterns import REG, sequence
 class ReifyArguments(OpcodeHandler):
     _PATTERN = sequence(REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         # Parse arguments: expecting "Reg8: X"
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8 argument")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8 argument")
 
-        # Extract destination register
         dest_reg = int(match.group(1))
-
-        # Create JSVariable for the arguments object
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', 'arguments')
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         # Optionally, mark the creation of the argument object in analysis.
         # analysis.MarkArgumentsObject(entry.address, dest_reg)
@@ -39,17 +36,17 @@ class ReifyArguments(OpcodeHandler):
 class GetArgumentsLength(OpcodeHandler):
     _PATTERN = sequence(REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected two Reg8 arguments")
+            return self.build_invalid_args_result(analysis, entry, "Expected two Reg8 arguments")
 
         dest_reg, _lazy_reg = map(int, match.groups())
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", "arguments.length")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -59,17 +56,17 @@ class GetArgumentsLength(OpcodeHandler):
 class GetArgumentsPropByVal(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected three Reg8 arguments")
+            return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
         dest_reg, index_reg, _lazy_reg = map(int, match.groups())
-        index_val = self.GetValueByReg(analysis, index_reg) or f"r{index_reg}"
+        index_val = self.get_register_value(analysis, index_reg) or f"r{index_reg}"
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"arguments[{index_val}]")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

@@ -11,16 +11,16 @@ class Mov(OpcodeHandler):
     """Move value between registers: rX = rY"""
     _PATTERN = sequence(REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, src_reg = map(int, match.groups())
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"r{src_reg}")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

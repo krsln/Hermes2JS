@@ -16,12 +16,12 @@ class CreateRegExp(OpcodeHandler):
         r'^Reg\d+:\s*(\d+),\s*(?:string_id|UInt32):\s*(\d+),\s*(?:string_id|UInt32):\s*(\d+),\s*(?:UInt32|Reg\d+):\s*(\d+)$'
     )
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(
+            return self.build_invalid_args_result(
                 analysis, entry,
                 "Expected Reg8, (string_id|UInt32), (string_id|UInt32), UInt32"
             )
@@ -34,11 +34,11 @@ class CreateRegExp(OpcodeHandler):
 
         if pattern is None:
             error = f'/* Error: could not resolve RegExp pattern (id {pattern_id}) */'
-            return self.Exception(analysis, entry, error)
+            return self.build_exception_result(analysis, entry, error)
 
         js_regex = f"/{pattern}/{flags or ''}"
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_regex)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 

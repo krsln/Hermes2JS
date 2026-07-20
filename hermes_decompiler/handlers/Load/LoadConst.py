@@ -23,17 +23,17 @@ class LoadSimpleConst(OpcodeHandler):
     _PATTERN = sequence(REG)
     CONSTANT: ClassVar[str]
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8 argument")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8 argument")
 
         register = int(match.group(1))
 
         variable = JSVariable(handler, entry.address, f"r{register}", self.CONSTANT)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -54,18 +54,18 @@ class LoadConstEmpty(LoadSimpleConst): CONSTANT = "empty"
 class LoadConstUInt8(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8, UInt8")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8")
 
         register = int(match.group(1))
         value = match.group(2)
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -73,18 +73,18 @@ class LoadConstUInt8(OpcodeHandler):
 class LoadConstInt(OpcodeHandler):
     _PATTERN = re.compile(r"^Reg8:\s*(\d+),\s*Imm32:\s*(-?\d+)$")
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8, Imm32")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Imm32")
 
         register = int(match.group(1))
         value = match.group(2)
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -92,18 +92,18 @@ class LoadConstInt(OpcodeHandler):
 class LoadConstDouble(OpcodeHandler):
     _PATTERN = re.compile(r"^Reg8:\s*(\d+),\s*Double:\s*(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)$")
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8, Double")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Double")
 
         register = int(match.group(1))
         value = match.group(2)
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -119,12 +119,12 @@ class LoadConstString(OpcodeHandler):
     def ResolveString(analysis: HermesAnalysis, string_id: str) -> str:
         return analysis.stringTable.get(string_id, f"str_{string_id}")
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8, string_id")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, string_id")
 
         register = int(match.group(1))
         string_id = match.group(2)
@@ -132,7 +132,7 @@ class LoadConstString(OpcodeHandler):
         value = f'"{self.ResolveString(analysis, string_id)}"'
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 

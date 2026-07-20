@@ -6,7 +6,7 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, ADDR, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, ADDR, sequence
 
 # Pre-compiled patterns
 START_GENERATOR_PATTERN = re.compile(r'^(?:<>)?$')
@@ -16,15 +16,15 @@ START_GENERATOR_PATTERN = re.compile(r'^(?:<>)?$')
 class StartGenerator(OpcodeHandler):
     """Initialize generator execution."""
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         if not START_GENERATOR_PATTERN.match(entry.args.strip()):
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         variable = JSVariable(handler, entry.address, "",
                               f"// StartGenerator: prepare generator context and jump to next instruction")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -34,34 +34,34 @@ class ResumeGenerator(OpcodeHandler):
     """Resume a suspended generator."""
     _PATTERN = sequence(REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, _flag_reg = map(int, match.groups())
 
-        # Generate JavaScript: e.g., 'r0 = await yield;'
+        # Generate JavaScript: e.g., 'r0 = await yield'
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"await yield")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
 
 # Example: <CompleteGenerator>: <>
 class CompleteGenerator(OpcodeHandler):
-    """Mark generator as completed."""
+    """Mark the generator as completed."""
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         if not START_GENERATOR_PATTERN.match(entry.args.strip()):
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         variable = JSVariable(handler, entry.address, "", f"// CompleteGenerator: No output needed")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -71,12 +71,12 @@ class SaveGenerator(OpcodeHandler):
     """Save generator state and yield."""
     _PATTERN = sequence(ADDR)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         addr = int(match.group(1))
         label = f"label_{addr}"
@@ -84,6 +84,6 @@ class SaveGenerator(OpcodeHandler):
 
         variable = JSVariable(handler, entry.address, "",
                               f'yield {label};  // SaveGenerator: suspend and jump to {addr}')
-        analysis.AddResult(entry, variable, goto=addr)
+        analysis.add_result(entry, variable, goto=addr)
 
         return OpcodeResult(entry, variable, goto=addr)

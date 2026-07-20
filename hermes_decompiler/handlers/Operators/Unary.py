@@ -21,7 +21,7 @@ class UnaryOperator(OpcodeHandler):
         """
         return value
 
-    def Handle(
+    def handle(
             self,
             analysis: HermesAnalysis,
             entry: OpcodeEntry,
@@ -30,22 +30,18 @@ class UnaryOperator(OpcodeHandler):
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(
-                analysis,
-                entry,
-                "Expected two Reg8 arguments",
-            )
+            return self.build_invalid_args_result(analysis, entry, "Expected two Reg8 arguments")
 
         dest_reg, src_reg = map(int, match.groups())
 
         src_val = (
-                self.GetValueByReg(analysis, src_reg)
+                self.get_register_value(analysis, src_reg)
                 or f"r{src_reg}"
         )
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", self.expression(src_val), )
 
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 

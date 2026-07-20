@@ -1,14 +1,14 @@
 import re
 from typing import Dict, List
 
-_FUNC_RE = re.compile(r'\[#(\d+)(?:\s+(\w+))?\s+of\s+\d+\s+bytes\]')
+_FUNC_RE = re.compile(r'\[#(\d+)(?:\s+(\w+))?\s+of\s+\d+\s+bytes]')
 
 
 def parse_function_map(lines: List[str]) -> Dict[str, str]:
     """
     Parse function references like:
         [#11947 fetchMovies of 29 bytes]
-        [#11944  of 37 bytes]   (anonymous)
+        [#11944 of 37 bytes] (anonymous)
     """
     function_map: Dict[str, str] = {}
     for line in lines:

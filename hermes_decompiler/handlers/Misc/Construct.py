@@ -42,16 +42,16 @@ class ConstructBase(OpcodeHandler, ABC):
     def Pattern(cls):
         return sequence(REG, REG, cls.ARG_PATTERN)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
         handler = self.__class__.__name__
 
         match = self.Pattern().match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8, ArgCount")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, ArgCount")
 
         dest_reg, func_reg, arg_count = map(int, match.groups())
-        constructor = (self.GetValueByReg(analysis, func_reg) or f"r{func_reg}")
+        constructor = (self.get_register_value(analysis, func_reg) or f"r{func_reg}")
         args = self.ResolveArguments(analysis, func_reg, arg_count)
 
         expression = f"new {constructor}({', '.join(args)})"
@@ -65,7 +65,7 @@ class ConstructBase(OpcodeHandler, ABC):
             f"({', '.join(args)})",
         )
 
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -75,7 +75,7 @@ class ConstructBase(OpcodeHandler, ABC):
 
         for reg in range(func_reg - arg_count, func_reg):
 
-            value = self.GetValueByReg(analysis, reg)
+            value = self.get_register_value(analysis, reg)
 
             if value is None:
                 logger.warning("%s: unresolved constructor argument r%d", self.__class__.__name__, reg)

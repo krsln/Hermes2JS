@@ -13,7 +13,7 @@ class Ret(OpcodeHandler):
     """Return a value from the current function."""
     _PATTERN = sequence(REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
@@ -25,10 +25,10 @@ class Ret(OpcodeHandler):
             return_stmt = "return;"
 
         variable = JSVariable(handler, entry.address, '', return_stmt)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
     def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
-        var = self.GetVariableByReg(analysis, reg)
+        var = self.get_register_variable(analysis, reg)
         return var.value if var and var.value is not None else f'undefined_r{reg}'

@@ -21,18 +21,18 @@ class StoreToEnvironment(OpcodeHandler):
 
     _PATTERN = sequence(REG, UINT8, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         env_reg, slot, value_reg = map(int, match.groups())
-        env = self.GetValueByReg(analysis, env_reg)
-        value = self.GetValueByReg(analysis, value_reg)
+        env = self.get_register_value(analysis, env_reg)
+        value = self.get_register_value(analysis, value_reg)
         expression = f"{env}[{slot}] = {value};"
 
         variable = JSVariable(self.__class__.__name__, entry.address, "", expression)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 

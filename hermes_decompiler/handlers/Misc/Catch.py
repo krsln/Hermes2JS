@@ -15,17 +15,17 @@ class Catch(OpcodeHandler):
     to the destination register."""
     _PATTERN = sequence(REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected a single Reg8 argument")
+            return self.build_invalid_args_result(analysis, entry, "Expected a single Reg8 argument")
 
         dest_reg = int(match.group(1))
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', 'caughtException')
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         logger.debug(f"{handler}: catch block starts at address {entry.address}, binds r{dest_reg}")
         # TODO: if/when `analysis` grows structured exception-handler-range

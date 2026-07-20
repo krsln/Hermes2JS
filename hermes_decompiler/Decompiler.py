@@ -32,10 +32,8 @@ class Decompiler:
             assembly_content: The .hbc assembly content.
             section_index: The section index for naming anonymous functions.
             strict: If True, raise immediately on the first opcode
-                dispatch failure instead of emitting an inline `// Error:`
-                comment and continuing.
-            verbose: If True, annotate generated JS with `// CODE ->`
-                source comments.
+                dispatch failure instead of emitting an inline `// Error: ...` comment and continuing.
+            verbose: If True, annotate generated JS with `// CODE ->` source comments.
 
         Returns:
             The generated JavaScript code.
@@ -43,7 +41,7 @@ class Decompiler:
         Raises:
             ValueError: If the assembly content is empty or metadata is
                 unparseable (preserved for backwards compatibility with
-                callers catching ValueError, e.g. FileOps).
+                callers catching ValueError, e.g., FileOps).
         """
         if not assembly_content.strip():
             raise ValueError("Empty assembly content")

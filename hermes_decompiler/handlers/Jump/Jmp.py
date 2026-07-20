@@ -86,12 +86,12 @@ def _parse_typeof(entry: OpcodeEntry) -> Tuple[int, int, int]:
 class Jump(OpcodeHandler):
     """Base class for unconditional jumps."""
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
         try:
             offset = _parse_jump(entry)
         except ValueError as e:
-            return self.InvalidArgs(analysis, entry, str(e))
+            return self.build_invalid_args_result(analysis, entry, str(e))
 
         target = entry.address + offset
         analysis.gotoList.append(target)
@@ -102,7 +102,7 @@ class Jump(OpcodeHandler):
             "",
             f"goto label_{target};",
         )
-        analysis.AddResult(entry, variable, goto=target)
+        analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
 
@@ -125,16 +125,16 @@ class ConditionalJump(OpcodeHandler, ABC):
     def BuildCondition(self, value: str) -> str:
         ...
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
         try:
             offset, reg = _parse_conditional(entry)
         except ValueError as e:
-            return self.InvalidArgs(analysis, entry, str(e))
+            return self.build_invalid_args_result(analysis, entry, str(e))
 
         target = entry.address + offset
         analysis.gotoList.append(target)
-        value = self.GetValueByReg(analysis, reg)
+        value = self.get_register_value(analysis, reg)
 
         variable = JSVariable(
             self.__class__.__name__,
@@ -142,7 +142,7 @@ class ConditionalJump(OpcodeHandler, ABC):
             "",
             f"if ({self.BuildCondition(value)}) {{ /* jump to label_{target} */ }}"
         )
-        analysis.AddResult(entry, variable, goto=target)
+        analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
 
@@ -181,38 +181,38 @@ class JmpUndefinedLong(JmpUndefined):
 class BuiltinConditionalJump(OpcodeHandler, ABC):
 
     @abstractmethod
-    def BuildCondition(self, value: str, builtin: int) -> str:
+    def build_condition(self, value: str, builtin: int) -> str:
         ...
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
         try:
             offset, builtin, reg = _parse_builtin(entry)
         except ValueError as e:
-            return self.InvalidArgs(analysis, entry, str(e))
+            return self.build_invalid_args_result(analysis, entry, str(e))
 
         target = entry.address + offset
         analysis.gotoList.append(target)
-        value = self.GetValueByReg(analysis, reg)
+        value = self.get_register_value(analysis, reg)
 
         variable = JSVariable(
             self.__class__.__name__,
             entry.address,
             "",
-            f"if ({self.BuildCondition(value, builtin)}) {{ /* jump to label_{target} */ }}"
+            f"if ({self.build_condition(value, builtin)}) {{ /* jump to label_{target} */ }}"
         )
-        analysis.AddResult(entry, variable, goto=target)
+        analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
 
 
 class JmpBuiltinIs(BuiltinConditionalJump):
-    def BuildCondition(self, value: str, builtin: int) -> str:
+    def build_condition(self, value: str, builtin: int) -> str:
         return f"{value} === builtin_{builtin}"
 
 
 class JmpBuiltinIsNot(BuiltinConditionalJump):
-    def BuildCondition(self, value: str, builtin: int) -> str:
+    def build_condition(self, value: str, builtin: int) -> str:
         return f"{value} !== builtin_{builtin}"
 
 
@@ -234,16 +234,16 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
     def BuildCondition(self, value: str, type_name: str) -> str:
         ...
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
         try:
             offset, reg, type_id = _parse_typeof(entry)
         except ValueError as e:
-            return self.InvalidArgs(analysis, entry, str(e))
+            return self.build_invalid_args_result(analysis, entry, str(e))
 
         target = entry.address + offset
         analysis.gotoList.append(target)
-        value = self.GetValueByReg(analysis, reg)
+        value = self.get_register_value(analysis, reg)
         type_name = TYPEOF_MAP.get(type_id, f"<{type_id}>")
 
         variable = JSVariable(
@@ -252,7 +252,7 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
             "",
             f"if ({self.BuildCondition(value, type_name)}) {{ /* jump to label_{target} */ }}"
         )
-        analysis.AddResult(entry, variable, goto=target)
+        analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
 

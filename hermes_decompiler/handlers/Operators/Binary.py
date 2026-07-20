@@ -14,24 +14,20 @@ class BinaryOperator(OpcodeHandler):
 
     operator = "+"
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(
-                analysis,
-                entry,
-                "Expected three Reg8 arguments"
-            )
+            return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
         dest, lhs, rhs = map(int, match.groups())
 
-        lhs_val = self.GetValueByReg(analysis, lhs) or f"r{lhs}"
-        rhs_val = self.GetValueByReg(analysis, rhs) or f"r{rhs}"
+        lhs_val = self.get_register_value(analysis, lhs) or f"r{lhs}"
+        rhs_val = self.get_register_value(analysis, rhs) or f"r{rhs}"
 
         variable = JSVariable(handler, entry.address, f"r{dest}", f"{lhs_val} {self.operator} {rhs_val}")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 

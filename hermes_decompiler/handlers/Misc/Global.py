@@ -15,12 +15,12 @@ class GetGlobalObject(OpcodeHandler):
     """Get the global object (global scope)."""
     _PATTERN = sequence(REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         global_reg = int(match.group(1))
 
@@ -35,7 +35,7 @@ class GetGlobalObject(OpcodeHandler):
         # or `this` at top-level. Using `globalThis` is more accurate.
         variable = JSVariable(handler, entry.address, f'r{global_reg}', f"globalThis")
 
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
         return OpcodeResult(entry, variable)
 
 
@@ -49,31 +49,35 @@ class DeclareGlobalVar(OpcodeHandler):
     """
     _PATTERN = sequence(STRING_ID)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected a single string_id argument")
+            return self.build_invalid_args_result(analysis, entry, "Expected a single string_id argument")
 
         string_id = int(match.group(1))
-        var_name = self._resolve_name(analysis, entry, string_id)
+        var_name = self._get_property_name(analysis, entry, string_id)
         if var_name is None:
             error = f'/* Error: string_id {string_id} not found in stringTable */ undefined'
-            return self.Exception(analysis, entry, error)
+            return self.build_exception_result(analysis, entry, error)
 
         variable = JSVariable(handler, entry.address, "", f"var {var_name};")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
     @staticmethod
-    def _resolve_name(analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int):
-        comment_match = re.compile(r"String:\s*'([^']*)'\s*\(Identifier\)").search(entry.comment or "")
+    def _get_property_name(analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int) -> str:
+        """Resolve the property name from a string table or comment."""
+        # Try the string table first
+        prop_name = analysis.stringTable.get(str(string_id))
+        if prop_name:
+            return prop_name
+
+        # Fallback: try to extract from comment
+        comment_match = re.search(r"String:\s*'([^']*)'\s*\(Identifier\)", entry.comment or "")
         if comment_match:
             return comment_match.group(1)
 
-        string_table = getattr(analysis, "stringTable", None)
-        if string_table is None:
-            return None
-        return string_table.get(str(string_id))
+        return f'str_{string_id}'

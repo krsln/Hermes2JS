@@ -18,33 +18,30 @@ class CreateClosure(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry, "Expected Reg8, Reg8 and function_id arguments")
+            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8 and function_id arguments")
 
-        dest, env, func_id = (int(x) for x in match.groups())
+        dest_reg, value_reg, func_id = (int(x) for x in match.groups())
 
         func_name = analysis.functionTable.get(str(func_id), f"function_{func_id}")
-
-        env_var = self.GetVariableByReg(analysis, env)
-        env_value = env_var.value if env_var and env_var.value else 'undefined'
+        reg_var = self.get_register_variable(analysis, value_reg)
+        reg_value = reg_var.value if reg_var and reg_var.value is not None else 'undefined'
         # print(env, env_value)
 
         # Simplified closure representation
         variable = JSVariable(
-            handler,
-            entry.address,
-            f'r{dest}',
-            f"{func_name} /* Closure with env r{env} = {env_value} */",
+            handler, entry.address,
+            f'r{dest_reg}', f"{func_name} /* Closure with env r{value_reg} = {reg_value} */",
         )
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
 
 class CreateClosureLongIndex(CreateClosure):
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        return super().Handle(analysis, entry)
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        return super().handle(analysis, entry)

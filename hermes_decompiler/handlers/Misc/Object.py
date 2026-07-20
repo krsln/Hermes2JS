@@ -17,12 +17,12 @@ class NewObjectWithBuffer(OpcodeHandler):
     """Create an object from a static map of values using buffer."""
     _PATTERN = sequence(REG, UINT16, UINT16, UINT16, UINT16)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg = int(match.group(1))
 
@@ -30,17 +30,18 @@ class NewObjectWithBuffer(OpcodeHandler):
 
         if not parsed_obj:
             error = f'// Warning: No valid object parsed from comment: {entry.comment}'
-            return self.Exception(analysis, entry, error)
+            return self.build_exception_result(analysis, entry, error)
 
         # Format as JS object literal
         js_obj = self._format_object_literal(parsed_obj)
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
-    def _parse_object_from_comment(self, comment: str) -> Dict[str, Any]:
+    @staticmethod
+    def _parse_object_from_comment(comment: str) -> Dict[str, Any]:
         """Extract and parse Object: {...} from opcode comment."""
         if not comment:
             return {}
@@ -86,17 +87,17 @@ class NewObject(OpcodeHandler):
     """Create a new empty object: {}"""
     _PATTERN = sequence(REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg = int(match.group(1))
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', "{}")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -107,19 +108,19 @@ class NewObjectWithParent(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, parent_reg = map(int, match.groups())
 
-        parent = self.GetValueByReg(analysis, parent_reg) or f"r{parent_reg}"
+        parent = self.get_register_value(analysis, parent_reg) or f"r{parent_reg}"
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"Object.create({parent})")
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
@@ -128,12 +129,12 @@ class SelectObject(OpcodeHandler):
     """Select a property by dynamic key: obj[key]"""
     _PATTERN = sequence(REG, REG, REG)
 
-    def Handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.InvalidArgs(analysis, entry)
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, obj_reg, selector_reg = map(int, match.groups())
 
@@ -141,6 +142,6 @@ class SelectObject(OpcodeHandler):
             handler, entry.address,
             f'r{dest_reg}', f"r{obj_reg}[r{selector_reg}]"
         )
-        analysis.AddResult(entry, variable)
+        analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
