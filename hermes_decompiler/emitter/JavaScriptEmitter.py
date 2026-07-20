@@ -1,39 +1,27 @@
-from __future__ import annotations
-
-from hermes_decompiler.regions.RegionVisitor import RegionVisitor
+from hermes_decompiler.regions.SequenceRegion import SequenceRegion
 
 
-class JavaScriptEmitter(RegionVisitor):
+class JavaScriptEmitter:
 
-    def __init__(self, verbose: bool = False):
-        self.verbose = verbose
-        self.lines: list[str] = []
-        self.indent = 0
+    def __init__(self):
+        self._lines: list[str] = []
 
-    def emit(self, region):
+    def emit(self, region) -> list[str]:
         region.accept(self)
-        return self.lines
+        return self._lines
 
-    def visit_sequence(self, region):
+    def visit_sequence(
+        self,
+        region: SequenceRegion,
+    ) -> None:
 
         for block in region.blocks:
 
-            if self.verbose:
-                self.lines.append(
-                    f"// BasicBlock {block.start_addr}"
-                )
+            self._lines.append(
+                f"// BasicBlock {block.start_addr}"
+            )
 
             for instruction in block.instructions:
-                self.lines.append(
-                    "    " * self.indent +
+                self._lines.append(
                     instruction.result
                 )
-
-    def visit_if(self, region):
-        raise NotImplementedError
-
-    def visit_loop(self, region):
-        raise NotImplementedError
-
-    def visit_try(self, region):
-        raise NotImplementedError

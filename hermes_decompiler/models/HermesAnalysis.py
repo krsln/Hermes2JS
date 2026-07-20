@@ -65,7 +65,7 @@ class HermesAnalysis:
         if variable.name:
             self.registers[variable.name] = variable
 
-    def generate_js(self, verbose: bool = False):
+    def generate_js(self, verbose: bool = False) -> list[str]:
 
         blocks = BasicBlockBuilder.build(self.results)
 
@@ -73,7 +73,7 @@ class HermesAnalysis:
 
         region = RegionBuilder.build(cfg)
 
-        emitter = JavaScriptEmitter(verbose)
+        emitter = JavaScriptEmitter()
 
         return emitter.emit(region)
 
