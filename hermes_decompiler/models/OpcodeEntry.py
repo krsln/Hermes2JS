@@ -1,4 +1,5 @@
 import re
+import ast
 from dataclasses import dataclass
 
 from hermes_decompiler.Logger import get_logger
@@ -7,22 +8,29 @@ logger = get_logger(__name__)
 
 # ==> 00000394: <Jmp>: <Addr8: 18>  # Address: 000003a6
 _TARGET_ADDRESS_RE = re.compile(r"Address:\s*([0-9A-Fa-f]+)")
+
 # ==> 00000010: <CreateGeneratorClosure>: <Reg8: 1, Reg8: 0, function_id: 11946>  # Function: [#11946  of 9 bytes]: 3 params @ offset 0x002b9c07
 _FUNCTION_RE = re.compile(
     r'Function:\s*\[#(\d+)\s+"?([^"]*)"?\s+of\s+(\d+)\s+bytes]'
     r'(?:\s*:\s*(\d+)\s+params)?'
     r'(?:\s*@\s*offset\s*(0x[0-9A-Fa-f]+))?'
 )
+
 # ==> 00000009: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 86>  # String: 'apply' (Identifier)
 _IDENTIFIER_RE = re.compile(
     r"String:\s*'([^']*)'\s*\(Identifier\)"
 )
+
 # ==> 00000196: <LoadConstString>: <Reg8: 11, string_id: 4>  # String: 'Generator functions may not be called on executing generators' (String)
 _STRING_RE = re.compile(
     r"String:\s*'([^']*)'\s*\(String\)"
 )
+
 # ==> 0000007d: <CreateRegExp>: <Reg8: 2, string_id: 7509, string_id: 11399, UInt32: 199>  # String: '\\(eval code' (String)  # String: 'g' (Identifier)
 _REGEX_STRINGS_RE = re.compile(r"String:\s*'([^']*)'")
+
+# ==> 000001a8: <NewArrayWithBuffer>: <Reg8: 14, UInt16: 5, UInt16: 5, UInt16: 46337>  # Array: ['hsl', 'hsv', 'hsl', 'hwb', 'hcg']
+_ARRAY_RE = re.compile(r"Array:\s*(\[.*])")
 
 
 @dataclass(slots=True)
@@ -46,6 +54,7 @@ class OpcodeEntry:
     target_address: int | None = None
     identifier_name: str | None = None
     string_literal: str | None = None
+    array_literal: list | None = None
     function: FunctionReference | None = None
 
     def __init__(self, bytecode: str, hex_address: str, comment: str = "", opcode: str = "", args: str = ""):
@@ -70,6 +79,12 @@ class OpcodeEntry:
 
         if match := _STRING_RE.search(self.comment):
             self.string_literal = match.group(1)
+
+        if match := _ARRAY_RE.search(self.comment):
+            try:
+                self.array_literal = ast.literal_eval(match.group(1))
+            except (SyntaxError, ValueError):
+                logger.warning("Invalid array literal: %r", self.comment)
 
         if match := _FUNCTION_RE.search(self.comment):
             self.function = FunctionReference(

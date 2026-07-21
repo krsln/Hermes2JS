@@ -1,4 +1,3 @@
-import re
 import json
 
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
@@ -45,28 +44,15 @@ class NewArrayWithBuffer(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        array_str = self._extract_array_from_comment(entry.comment)
-        if not array_str:
+        if entry.array_literal is None:
             return self.build_exception_result(analysis, entry, "// Warning: No array data in comment")
 
-        try:
-            clean_str = array_str.replace("'", '"')
-            parsed = json.loads(clean_str)
-            js_array = json.dumps(parsed, ensure_ascii=False)
-        except json.JSONDecodeError as e:
-            return self.build_exception_result(analysis, entry, f"// Warning: JSON decode failed: {e}")
+        js_array = json.dumps(entry.array_literal, ensure_ascii=False)
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
-
-    @staticmethod
-    def _extract_array_from_comment(comment: str) -> str:
-        if not comment:
-            return ""
-        match = re.search(r'Array:\s*(\[.*?])', comment, re.DOTALL)
-        return match.group(1) if match else ""
 
 
 class NewArrayWithBufferLong(NewArrayWithBuffer):
