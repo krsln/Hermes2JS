@@ -72,10 +72,10 @@ class OpcodeHandler(ABC):
         if prop_name:
             return prop_name
 
-        comment_match = re.search(r"String:\s*'([^']+)'\s*\(Identifier\)", entry.comment or "")
+        identifier = entry.identifier_name
 
-        if comment_match:
-            return comment_match.group(1)
+        if identifier is not None:
+            return identifier
 
         return f"string_{string_id}"
 

@@ -4,6 +4,7 @@ from hermes_decompiler.Logger import get_logger
 logger = get_logger(__name__)
 
 _TARGET_ADDRESS_RE = re.compile(r"Address:\s*([0-9A-Fa-f]+)")
+_STRING_IDENTIFIER_RE = re.compile(r"String:\s*'([^']*)'\s*\(Identifier\)")
 
 
 class OpcodeEntry:
@@ -42,6 +43,24 @@ class OpcodeEntry:
 
         return int(match.group(1), 16)
 
+    @property
+    def identifier_name(self) -> str | None:
+        """
+        Returns the identifier name embedded in the disassembler comment.
+
+        Example:
+            # String: 'captureStackTrace' (Identifier)
+        """
+
+        if not self.comment:
+            return None
+
+        match = _STRING_IDENTIFIER_RE.search(self.comment)
+        if not match:
+            return None
+
+        return match.group(1)
+    
     @staticmethod
     def _safe_parse_address(hex_address: str) -> int:
         """
