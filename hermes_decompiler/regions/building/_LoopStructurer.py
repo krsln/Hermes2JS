@@ -117,7 +117,7 @@ class LoopStructurer:
             header_id,
             stop_id=latch_id,
             bound=body,
-            active_loop_header=header_id,
+            suppress_loop_header=header_id,
         )
         body_region.regions.append(self._a.block_region(latch_block))
 
@@ -163,7 +163,7 @@ class LoopStructurer:
             header_id,
             stop_id=None,
             bound=body,
-            active_loop_header=header_id,
+            suppress_loop_header=header_id,
         )
 
         exit_targets = self._exit_targets(body)
