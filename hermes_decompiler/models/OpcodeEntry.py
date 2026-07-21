@@ -5,16 +5,19 @@ from hermes_decompiler.Logger import get_logger
 
 logger = get_logger(__name__)
 
+# ==> 00000394: <Jmp>: <Addr8: 18>  # Address: 000003a6
 _TARGET_ADDRESS_RE = re.compile(r"Address:\s*([0-9A-Fa-f]+)")
+# ==> 00000010: <CreateGeneratorClosure>: <Reg8: 1, Reg8: 0, function_id: 11946>  # Function: [#11946  of 9 bytes]: 3 params @ offset 0x002b9c07
 _FUNCTION_RE = re.compile(
     r'Function:\s*\[#(\d+)\s+"?([^"]*)"?\s+of\s+(\d+)\s+bytes]'
     r'(?:\s*:\s*(\d+)\s+params)?'
     r'(?:\s*@\s*offset\s*(0x[0-9A-Fa-f]+))?'
 )
+# ==> 00000009: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 86>  # String: 'apply' (Identifier)
 _IDENTIFIER_RE = re.compile(
     r"String:\s*'([^']*)'\s*\(Identifier\)"
 )
-
+# ==> 00000196: <LoadConstString>: <Reg8: 11, string_id: 4>  # String: 'Generator functions may not be called on executing generators' (String)
 _STRING_RE = re.compile(
     r"String:\s*'([^']*)'\s*\(String\)"
 )
