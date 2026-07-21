@@ -44,18 +44,30 @@ class LoopStructurer:
 
     def build(self, header_id: int) -> tuple[LoopRegion, int | None]:
 
-        body = self._a.loops_by_header[header_id]
-        header_block = self._a.cfg.get_block(header_id)
+        # Mark this header as "in progress" for the whole time we're
+        # constructing it - including everything structure_range()
+        # recurses into below - so if the body's traversal walks back
+        # into this same header (irreducible/overlapping loop bodies,
+        # e.g. header 158's body also containing header 29 while we're
+        # still building 29), it gets treated as an ordinary block
+        # instead of re-triggering build() and recursing forever. See
+        # the in-progress-set comment in _StructuralAnalyzer.__init__.
+        self._a._loop_headers_in_progress.add(header_id)
+        try:
+            body = self._a.loops_by_header[header_id]
+            header_block = self._a.cfg.get_block(header_id)
 
-        while_result = self._try_while(header_id, header_block, body)
-        if while_result is not None:
-            return while_result
+            while_result = self._try_while(header_id, header_block, body)
+            if while_result is not None:
+                return while_result
 
-        do_while_result = self._try_do_while(header_id, body)
-        if do_while_result is not None:
-            return do_while_result
+            do_while_result = self._try_do_while(header_id, body)
+            if do_while_result is not None:
+                return do_while_result
 
-        return self._build_infinite(header_id, body)
+            return self._build_infinite(header_id, body)
+        finally:
+            self._a._loop_headers_in_progress.discard(header_id)
 
     # ------------------------------------------------------------
 
@@ -70,12 +82,14 @@ class LoopStructurer:
         if len(in_body) != 1 or len(out_body) != 1:
             return None
 
+        # print("WHILE", header_id, "entry=", in_body[0].target, "exit=", out_body[0].target )
         condition = self._a.extract_condition(header_block)
 
         body_region, _ = self._a.structure_range(
             in_body[0].target,
             stop_id=header_id,
             bound=body,
+            active_loop_header=header_id,
         )
 
         region = LoopRegion(kind=LoopKind.WHILE, condition=condition, body=body_region)
@@ -103,7 +117,7 @@ class LoopStructurer:
             header_id,
             stop_id=latch_id,
             bound=body,
-            suppress_loop_header=header_id,
+            active_loop_header=header_id,
         )
         body_region.regions.append(self._a.block_region(latch_block))
 
@@ -149,7 +163,7 @@ class LoopStructurer:
             header_id,
             stop_id=None,
             bound=body,
-            suppress_loop_header=header_id,
+            active_loop_header=header_id,
         )
 
         exit_targets = self._exit_targets(body)

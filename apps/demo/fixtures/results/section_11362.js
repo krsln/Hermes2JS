@@ -1323,7 +1323,7 @@ function binl_md5(param0, param1, param2) {
             // USED → r1 = r6
             // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
             if (0 + 16 < param1.length) { /* jump to label_566 */ }
-            goto label_566;  // unstructured control flow, needs review
+            continue;
         }
     }
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
