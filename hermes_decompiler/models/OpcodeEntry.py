@@ -4,7 +4,13 @@ from hermes_decompiler.Logger import get_logger
 logger = get_logger(__name__)
 
 _TARGET_ADDRESS_RE = re.compile(r"Address:\s*([0-9A-Fa-f]+)")
-_STRING_IDENTIFIER_RE = re.compile(r"String:\s*'([^']*)'\s*\(Identifier\)")
+_IDENTIFIER_RE = re.compile(
+    r"String:\s*'([^']*)'\s*\(Identifier\)"
+)
+
+_STRING_RE = re.compile(
+    r"String:\s*'([^']*)'\s*\(String\)"
+)
 
 
 class OpcodeEntry:
@@ -55,12 +61,23 @@ class OpcodeEntry:
         if not self.comment:
             return None
 
-        match = _STRING_IDENTIFIER_RE.search(self.comment)
+        match = _IDENTIFIER_RE.search(self.comment)
         if not match:
             return None
 
         return match.group(1)
-    
+
+    @property
+    def string_literal(self) -> str | None:
+        if not self.comment:
+            return None
+
+        match = _STRING_RE.search(self.comment)
+        if not match:
+            return None
+
+        return match.group(1)
+
     @staticmethod
     def _safe_parse_address(hex_address: str) -> int:
         """

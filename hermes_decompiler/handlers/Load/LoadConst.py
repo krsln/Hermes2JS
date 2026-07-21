@@ -116,8 +116,21 @@ class LoadConstString(OpcodeHandler):
     _PATTERN = sequence(REG, r"string_id:\s*(\d+)")
 
     @staticmethod
-    def ResolveString(analysis: HermesAnalysis, string_id: str) -> str:
-        return analysis.stringTable.get(string_id, f"str_{string_id}")
+    def resolve_string(
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
+            string_id: str,
+    ) -> str:
+
+        value = analysis.stringTable.get(string_id)
+        if value is not None:
+            return value
+
+        string_literal = entry.string_literal
+        if string_literal is not None:
+            return string_literal
+
+        return f"str_{string_id}"
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
@@ -129,7 +142,7 @@ class LoadConstString(OpcodeHandler):
         register = int(match.group(1))
         string_id = match.group(2)
 
-        value = f'"{self.ResolveString(analysis, string_id)}"'
+        value = f'"{self.resolve_string(analysis, entry, string_id)}"'
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
         analysis.add_result(entry, variable)
