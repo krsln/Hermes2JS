@@ -57,27 +57,12 @@ class DeclareGlobalVar(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected a single string_id argument")
 
         string_id = int(match.group(1))
-        var_name = self._get_property_name(analysis, entry, string_id)
-        if var_name is None:
+        prop_name = self.resolve_property_name(analysis, entry, string_id)
+        if prop_name is None:
             error = f'/* Error: string_id {string_id} not found in stringTable */ undefined'
             return self.build_exception_result(analysis, entry, error)
 
-        variable = JSVariable(handler, entry.address, "", f"var {var_name};")
+        variable = JSVariable(handler, entry.address, "", f"var {prop_name};")
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
-
-    @staticmethod
-    def _get_property_name(analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int) -> str:
-        """Resolve the property name from a string table or comment."""
-        # Try the string table first
-        prop_name = analysis.stringTable.get(str(string_id))
-        if prop_name:
-            return prop_name
-
-        # Fallback: try to extract from comment
-        comment_match = re.search(r"String:\s*'([^']*)'\s*\(Identifier\)", entry.comment or "")
-        if comment_match:
-            return comment_match.group(1)
-
-        return f'str_{string_id}'

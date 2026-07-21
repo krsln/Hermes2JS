@@ -1,6 +1,5 @@
 import re
 
-from hermes_decompiler.Logger import logger
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -26,11 +25,9 @@ class CreateRegExp(OpcodeHandler):
                 "Expected Reg8, (string_id|UInt32), (string_id|UInt32), UInt32"
             )
 
-        dest_reg = int(match.group(1))
-        pattern_id = int(match.group(2))
-        flags_id = int(match.group(3))
+        dest_reg, pattern_id, flags_id, _ = map(int, match.groups())
 
-        pattern, flags = self._resolve_pattern_and_flags(analysis, entry, pattern_id, flags_id)
+        pattern, flags = entry.resolve_pattern_and_flags()
 
         if pattern is None:
             error = f'/* Error: could not resolve RegExp pattern (id {pattern_id}) */'
@@ -41,19 +38,3 @@ class CreateRegExp(OpcodeHandler):
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
-
-    @staticmethod
-    def _resolve_pattern_and_flags(analysis: HermesAnalysis, entry: OpcodeEntry,
-                                   pattern_id: int, flags_id: int):
-        """Prefer comment, fallback to stringTable."""
-        comment_matches = re.findall(r"String:\s*'([^']*)'", entry.comment or "")
-        if len(comment_matches) >= 2:
-            return comment_matches[0], comment_matches[1]
-
-        pattern = analysis.stringTable.get(str(pattern_id))
-        flags = analysis.stringTable.get(str(flags_id))
-
-        if pattern is None:
-            logger.warning(f"CreateRegExp at {entry.address}: unresolved pattern id {pattern_id}")
-
-        return pattern, flags

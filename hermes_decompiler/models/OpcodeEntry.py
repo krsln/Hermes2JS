@@ -18,6 +18,8 @@ _IDENTIFIER_RE = re.compile(
 _STRING_RE = re.compile(
     r"String:\s*'([^']*)'\s*\(String\)"
 )
+# ==> 0000007d: <CreateRegExp>: <Reg8: 2, string_id: 7509, string_id: 11399, UInt32: 199>  # String: '\\(eval code' (String)  # String: 'g' (Identifier)
+_REGEX_STRINGS_RE = re.compile(r"String:\s*'([^']*)'")
 
 
 @dataclass(slots=True)
@@ -74,6 +76,14 @@ class OpcodeEntry:
                 param_count=int(match.group(4)) if match.group(4) else None,
                 offset=match.group(5),
             )
+
+    def resolve_pattern_and_flags(self) -> tuple[str | None, str | None]:
+        matches = _REGEX_STRINGS_RE.findall(self.comment)
+
+        if len(matches) >= 2:
+            return matches[0], matches[1]
+
+        return None, None
 
     @staticmethod
     def _safe_parse_address(hex_address: str) -> int:
