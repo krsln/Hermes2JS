@@ -3,8 +3,6 @@ from hermes_decompiler.core.pipeline import ConversionState, Stage
 from hermes_decompiler.core.exceptions import MetadataParseError
 from hermes_decompiler.dispatch.Dispatcher import OpcodeDispatcher
 from hermes_decompiler.parsers.metadata_parser import parse_hbc_metadata, parse_exception_handlers
-from hermes_decompiler.parsers.string_table_parser import parse_string_map
-from hermes_decompiler.parsers.function_table_parser import parse_function_map
 
 logger = get_logger(__name__)
 
@@ -58,19 +56,6 @@ class BytecodeExtractionStage(Stage):
     def run(self, state: ConversionState) -> ConversionState:
         start = next((i for i, line in enumerate(state.lines) if "Bytecode listing" in line), -1)
         state.bytecode_lines = state.lines[start + 1:] if start >= 0 else []
-        return state
-
-
-# TODO: Remove this stage & remove analysis.stringTable|functionTable from ConversionState
-class SymbolTableStage(Stage):
-    """Populates the string table and (optionally shared) function table."""
-
-    def run(self, state: ConversionState) -> ConversionState:
-        if not state.bytecode_lines:
-            return state
-
-        state.analysis.stringTable = parse_string_map(state.bytecode_lines)
-
         return state
 
 

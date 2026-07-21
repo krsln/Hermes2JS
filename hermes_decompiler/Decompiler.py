@@ -3,7 +3,6 @@ from hermes_decompiler.core.stages import (
     MetadataStage,
     SignatureStage,
     BytecodeExtractionStage,
-    SymbolTableStage,
     DispatchStage,
     CodeGenStage,
 )
@@ -53,7 +52,6 @@ class Decompiler:
             MetadataStage(),
             SignatureStage(),
             BytecodeExtractionStage(),
-            SymbolTableStage(),
             DispatchStage(strict=strict),
             CodeGenStage(verbose=verbose),
         ])

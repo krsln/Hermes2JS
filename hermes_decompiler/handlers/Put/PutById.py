@@ -26,7 +26,7 @@ class PutById(OpcodeHandler):
 
         dest_reg, value_reg, _cache, string_id = map(int, match.groups())
 
-        prop_name = self.resolve_property_name(analysis, entry, string_id)
+        prop_name = entry.identifier_name or f"string_{string_id}"
         reg_var = self.get_register_variable(analysis, value_reg)
         reg_value = reg_var.value if reg_var and reg_var.value is not None else 'undefined'
 

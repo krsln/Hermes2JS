@@ -48,13 +48,7 @@ class GetById(OpcodeHandler):
 
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
-        # Resolve property name
-        prop_name = self.resolve_property_name(analysis, entry, string_id)
-        if not prop_name:
-            error = f'/* Error: string_id {string_id} not found in stringTable */'
-            return self.build_exception_result(analysis, entry, error)
-
-        # Get base object value
+        prop_name = entry.identifier_name or f"string_{string_id}"
         base_value = self.get_register_value(analysis, obj_reg)
 
         # Build property access

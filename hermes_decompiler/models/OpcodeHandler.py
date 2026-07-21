@@ -61,24 +61,6 @@ class OpcodeHandler(ABC):
 
         return OpcodeResult(entry, variable)
 
-    @staticmethod
-    def resolve_property_name(analysis: HermesAnalysis, entry: OpcodeEntry, string_id: int, ) -> str:
-        """
-        Resolve a property name from the Hermes string table, falling back
-        to the disassembler comment when necessary.
-        """
-
-        prop_name = analysis.stringTable.get(str(string_id))
-        if prop_name:
-            return prop_name
-
-        identifier = entry.identifier_name
-
-        if identifier is not None:
-            return identifier
-
-        return f"string_{string_id}"
-
     @classmethod
     def resolve_function_args(cls, analysis: HermesAnalysis, regs: list[int]) -> list[str]:
         args = []

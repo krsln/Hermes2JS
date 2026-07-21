@@ -57,10 +57,7 @@ class DeclareGlobalVar(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected a single string_id argument")
 
         string_id = int(match.group(1))
-        prop_name = self.resolve_property_name(analysis, entry, string_id)
-        if prop_name is None:
-            error = f'/* Error: string_id {string_id} not found in stringTable */ undefined'
-            return self.build_exception_result(analysis, entry, error)
+        prop_name = entry.identifier_name or f"string_{string_id}"
 
         variable = JSVariable(handler, entry.address, "", f"var {prop_name};")
         analysis.add_result(entry, variable)

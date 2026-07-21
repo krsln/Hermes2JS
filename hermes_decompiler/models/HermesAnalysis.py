@@ -29,7 +29,6 @@ class Output:
 class HermesAnalysis:
     metadataList: List[Dict[str, Any]]
     metadata: Dict[str, Any]
-    stringTable: Dict[str, str]
 
     def __init__(
             self,
@@ -48,7 +47,6 @@ class HermesAnalysis:
         self.registers: dict[str, JSVariable] = {}
         self.metadataList = []
         self.metadata = metadata if metadata is not None else {}
-        self.stringTable = stringTable if stringTable is not None else {}
 
         self.globalObjects: Optional[int] = None
         self.gotoList: List[int] = []
@@ -116,7 +114,6 @@ class HermesAnalysis:
         """Convert the HermesAnalysis object to a dictionary."""
         return {
             "metadata": self.metadata,
-            "stringMap": self.stringTable,
             "globalObjects": self.globalObjects,
             "gotoList": self.gotoList,
             "results": [var.to_dict() for var in self.results],

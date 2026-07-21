@@ -22,11 +22,7 @@ class DelById(OpcodeHandler):
 
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
-        prop_name = self.resolve_property_name(analysis, entry, string_id)
-        if prop_name is None:
-            error = f'/* Error: string_id {string_id} not found in stringTable */ undefined'
-            return self.build_exception_result(analysis, entry, error)
-
+        prop_name = entry.identifier_name or f"string_{string_id}"
         obj_val = self.get_register_value(analysis, obj_reg)
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"delete {obj_val}.{prop_name}")
