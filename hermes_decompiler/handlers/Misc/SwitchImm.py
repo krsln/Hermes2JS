@@ -40,6 +40,15 @@ class SwitchImm(OpcodeHandler):
             )
 
         variable = JSVariable(handler, entry.address, "", value)
-        analysis.add_result(entry, variable)
 
-        return OpcodeResult(entry, variable)
+        # `extra_gotos` wires every case target into the CFG as a real
+        # edge (see ControlFlowGraphBuilder._connect / BasicBlockBuilder
+        # leader-finding). Without this, any case block only reachable
+        # via the switch (not also a fallthrough/other jump target) is
+        # structurally unreachable and trips CFGValidator - it doesn't
+        # yet reconstruct a `switch { }` statement (that's SwitchRegion,
+        # not implemented), but it does stop the CFG from silently
+        # dropping those blocks.
+        analysis.add_result(entry, variable, extra_gotos=target_addr_list)
+
+        return OpcodeResult(entry, variable, extra_gotos=target_addr_list)

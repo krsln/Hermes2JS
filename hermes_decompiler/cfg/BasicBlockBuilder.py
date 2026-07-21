@@ -31,9 +31,11 @@ class BasicBlockBuilder:
 
             • first instruction
 
-            • jump targets
+            • jump targets (single `goto`, or any of `extra_gotos` -
+              the latter covers SwitchImm's multiple case targets)
 
-            • instruction immediately after a jump
+            • instruction immediately after an instruction with a
+              `goto` and/or `extra_gotos`
 
             • catch handlers (future)
         """
@@ -44,21 +46,21 @@ class BasicBlockBuilder:
 
         for index, result in enumerate(results):
 
-            #
-            # explicit jump target
-            #
+            has_targets = result.goto is not None or bool(result.extra_gotos)
+
             if result.goto is not None:
                 leaders.add(result.goto)
 
-            #
-            # instruction after jump
-            #
-            if result.goto is not None:
+            for extra_target in result.extra_gotos:
+                leaders.add(extra_target)
 
-                if index + 1 < len(results):
-                    leaders.add(
-                        results[index + 1].opcode.address
-                    )
+            #
+            # instruction after a jump (single- or multi-target)
+            #
+            if has_targets and index + 1 < len(results):
+                leaders.add(
+                    results[index + 1].opcode.address
+                )
 
         return leaders
 

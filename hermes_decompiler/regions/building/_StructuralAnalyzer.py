@@ -16,6 +16,7 @@ from hermes_decompiler.regions.model.GotoRegion import GotoRegion, ControlTransf
 from hermes_decompiler.regions.building._MergePointResolver import MergePointResolver
 from hermes_decompiler.regions.building._LoopStructurer import LoopStructurer
 from hermes_decompiler.regions.building._TryStructurer import TryStructurer
+from hermes_decompiler.regions.building._ControlFlowEdges import control_flow_edges
 
 logger = get_logger(__name__)
 
@@ -96,10 +97,10 @@ class StructuralAnalyzer:
         check naturally excludes it without needing a handler
         allowlist here too.
         """
-        if len(block.outgoing) != 2:
+        if len(control_flow_edges(block)) != 2:
             return False
 
-        kinds = {edge.kind for edge in block.outgoing}
+        kinds = {edge.kind for edge in control_flow_edges(block)}
         return kinds == {EdgeKind.TRUE_BRANCH, EdgeKind.FALSE_BRANCH}
 
     def extract_condition(self, block) -> str:
@@ -126,6 +127,7 @@ class StructuralAnalyzer:
         stop_id: int | None,
         bound: set[int] | None = None,
         suppress_loop_header: int | None = None,
+        suppress_exception_start: int | None = None,
     ) -> tuple[SequenceRegion, int | None]:
         """
         Structure blocks starting at `start_id`, stopping when `stop_id`
@@ -143,6 +145,14 @@ class StructuralAnalyzer:
         AT the header - without the suppression, the first block visited
         would immediately re-trigger `LoopStructurer.build()` for the
         same header and recurse forever.
+
+        `suppress_exception_start` is the same mechanism for
+        TryStructurer: a try body legitimately starts AT the block
+        that begins its own exception region, so without suppressing
+        it on that first visit, `_try_structurer.build()` would
+        immediately re-trigger itself for the same start address and
+        recurse forever (this was a real bug caught by testing against
+        production .hbc input, not a hypothetical).
 
         Returns `(region, next_id)` where `next_id` is where control
         resumes after this region - equal to `stop_id` on a clean
@@ -183,7 +193,7 @@ class StructuralAnalyzer:
                 current_id = None
                 break
 
-            is_suppressed = first_iteration and current_id == suppress_loop_header
+            is_suppressed = first_iteration and current_id in (suppress_loop_header, suppress_exception_start)
             first_iteration = False
 
             if not is_suppressed and current_id in self.loops_by_header:
@@ -192,7 +202,7 @@ class StructuralAnalyzer:
                 current_id = next_id
                 continue
 
-            if current_id in self.exceptions_by_start:
+            if not is_suppressed and current_id in self.exceptions_by_start:
                 try_region, next_id = self._try_structurer.build(current_id)
                 children.append(try_region)
                 current_id = next_id
@@ -214,8 +224,8 @@ class StructuralAnalyzer:
 
     def _structure_if(self, block, bound: set[int] | None) -> tuple[Region, int | None]:
 
-        then_edge = next(e for e in block.outgoing if e.kind == EdgeKind.TRUE_BRANCH)
-        else_edge = next(e for e in block.outgoing if e.kind == EdgeKind.FALSE_BRANCH)
+        then_edge = next(e for e in control_flow_edges(block) if e.kind == EdgeKind.TRUE_BRANCH)
+        else_edge = next(e for e in control_flow_edges(block) if e.kind == EdgeKind.FALSE_BRANCH)
 
         condition = self.extract_condition(block)
         merge = self.merge_of(block.id)
@@ -246,25 +256,28 @@ class StructuralAnalyzer:
 
     def _successor_after(self, block, bound: set[int] | None) -> int | None:
 
-        if len(block.outgoing) == 0:
+        edges = control_flow_edges(block)
+
+        if len(edges) == 0:
             return None
 
-        if len(block.outgoing) == 1:
-            target = block.outgoing[0].target
+        if len(edges) == 1:
+            target = edges[0].target
 
         else:
-            # More than one outgoing edge on a block we didn't
-            # classify as an if-header - most likely SwitchImm (see
-            # ControlFlowGraphBuilder._falls_through TODO: switch
-            # targets aren't wired into the CFG as real edges yet).
-            # Following the first edge keeps the pipeline alive but
-            # this is a known gap, not a supported case.
+            # More than one *normal* outgoing edge on a block we didn't
+            # classify as an if-header - most likely SwitchImm. Its
+            # case targets are wired as real edges now (see
+            # ControlFlowGraphBuilder._connect / extra_gotos), but
+            # SwitchRegion structuring itself doesn't exist yet, so we
+            # fall back to following the first edge, which keeps the
+            # pipeline alive without reconstructing the switch shape.
             logger.debug(
-                "Unstructured multi-successor block %s (%d outgoing edges); "
+                "Unstructured multi-successor block %s (%d normal outgoing edges); "
                 "following the first one",
-                block.id, len(block.outgoing),
+                block.id, len(edges),
             )
-            target = block.outgoing[0].target
+            target = edges[0].target
 
         if bound is not None and target not in bound:
             return None

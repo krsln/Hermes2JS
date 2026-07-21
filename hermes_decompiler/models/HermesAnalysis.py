@@ -58,9 +58,23 @@ class HermesAnalysis:
 
         self.results: List[OpcodeResult] = []
 
-    def add_result(self, entry: OpcodeEntry, variable: JSVariable, goto: Optional[int] = None):
-        """Add a variable, tracking multiple assignments."""
-        result = OpcodeResult(entry, variable, goto)
+    def add_result(
+            self,
+            entry: OpcodeEntry,
+            variable: JSVariable,
+            goto: Optional[int] = None,
+            extra_gotos: Optional[List[int]] = None,
+    ):
+        """
+        Add a variable, tracking multiple assignments.
+
+        `extra_gotos` is for instructions with more than one possible
+        jump target that isn't a plain fallthrough - today that's only
+        SwitchImm (one target per case label). See OpcodeResult for
+        why this is a separate parameter instead of making `goto` a
+        list.
+        """
+        result = OpcodeResult(entry, variable, goto, extra_gotos)
         self.results.append(result)
 
         if variable.name:
@@ -74,7 +88,7 @@ class HermesAnalysis:
 
         blocks = BasicBlockBuilder.build(self.results)
 
-        cfg = ControlFlowGraphBuilder.build(blocks)
+        cfg = ControlFlowGraphBuilder.build(blocks, metadata=self.metadata)
 
         #
         # Analyses

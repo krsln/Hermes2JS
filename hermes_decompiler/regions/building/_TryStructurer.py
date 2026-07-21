@@ -35,10 +35,20 @@ class TryStructurer:
 
         exception_region = self._a.exceptions_by_start[start_id]
 
+        # `end` is a byte offset from Hermes metadata and isn't
+        # guaranteed to land exactly on a BasicBlock leader address
+        # (the boundary between "last try-body instruction" and
+        # "first post-try instruction" doesn't necessarily coincide
+        # with a jump target). Resolve it to the actual block id that
+        # structure_range's `current_id != stop_id` comparison needs,
+        # or the try body would just run past it.
+        stop_id = self._resolve_stop_block(exception_region.end)
+
         try_body, _ = self._a.structure_range(
             start_id,
-            stop_id=exception_region.end,
+            stop_id=stop_id,
             bound=None,
+            suppress_exception_start=start_id,
         )
 
         handler_id = exception_region.handler
@@ -60,6 +70,22 @@ class TryStructurer:
         )
 
         return region, merge
+
+    def _resolve_stop_block(self, end_addr: int) -> int | None:
+        """
+        Find the block id that should act as `stop_id` for a try body
+        ending at `end_addr`: the block if `end_addr` is exactly a
+        leader, otherwise the next block starting at or after it.
+        None if `end_addr` is past every block (try range extends to
+        the end of the function).
+        """
+
+        candidates = sorted(
+            block.start_addr for block in self._a.cfg
+            if block.start_addr >= end_addr
+        )
+
+        return candidates[0] if candidates else None
 
     def _exception_var_name(self, handler_id: int) -> str:
 

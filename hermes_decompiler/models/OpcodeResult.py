@@ -9,16 +9,34 @@ class OpcodeResult:
     variable: JSVariable
     result: str
     goto: Optional[int]
+    extra_gotos: list[int]
 
     def __init__(
             self,
             opcode: OpcodeEntry,
             variable: JSVariable,
-            goto: Optional[int] = None
+            goto: Optional[int] = None,
+            extra_gotos: Optional[list[int]] = None,
     ):
+        """
+        Args:
+            goto: single jump target, used by unconditional/conditional
+                jumps (Jmp*, SaveGenerator's resume address, ...).
+            extra_gotos: ADDITIONAL jump targets beyond `goto`, for
+                instructions with more than one possible successor that
+                isn't expressible as a single fallthrough - currently
+                only SwitchImm (one target per case label). Kept
+                separate from `goto` rather than making `goto` a list,
+                so every existing single-target call site (Jmp.py,
+                the whole conditional-jump family, BasicBlockBuilder's
+                leader-finding `result.goto is not None` checks, etc.)
+                keeps working unchanged; only the few call sites that
+                actually need multiple targets opt in.
+        """
         self.opcode = opcode
         self.variable = variable
         self.goto = goto
+        self.extra_gotos = extra_gotos or []
 
         if variable.name:
             self.result = f'{variable.name} = {variable.value}'
@@ -43,4 +61,5 @@ class OpcodeResult:
             "Variable": self.variable.to_dict(),  # Serialize JSVariable
             "result": self.result,
             "GoTo": self.goto,
+            "ExtraGoTos": self.extra_gotos,
         }

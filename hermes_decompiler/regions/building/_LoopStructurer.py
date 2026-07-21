@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.regions.model.LoopRegion import LoopKind, LoopRegion
+from hermes_decompiler.regions.building._ControlFlowEdges import control_flow_edges
 
 
 class LoopStructurer:
@@ -63,8 +64,8 @@ class LoopStructurer:
         if not self._a.is_if_header(header_block):
             return None
 
-        in_body = [e for e in header_block.outgoing if e.target in body]
-        out_body = [e for e in header_block.outgoing if e.target not in body]
+        in_body = [e for e in control_flow_edges(header_block) if e.target in body]
+        out_body = [e for e in control_flow_edges(header_block) if e.target not in body]
 
         if len(in_body) != 1 or len(out_body) != 1:
             return None
@@ -89,7 +90,7 @@ class LoopStructurer:
         latch_block = self._a.cfg.get_block(latch_id)
         condition = self._a.extract_condition(latch_block)
 
-        exit_edges = [e for e in latch_block.outgoing if e.target not in body]
+        exit_edges = [e for e in control_flow_edges(latch_block) if e.target not in body]
         if len(exit_edges) != 1:
             return None
 
@@ -132,7 +133,7 @@ class LoopStructurer:
             if block is None:
                 continue
 
-            targets = {e.target for e in block.outgoing}
+            targets = {e.target for e in control_flow_edges(block)}
 
             if header_id in targets and self._a.is_if_header(block):
                 candidates.append(block_id)
@@ -168,7 +169,7 @@ class LoopStructurer:
             if block is None:
                 continue
 
-            for edge in block.outgoing:
+            for edge in control_flow_edges(block):
 
                 if edge.target not in body and edge.target not in targets:
                     targets.append(edge.target)
