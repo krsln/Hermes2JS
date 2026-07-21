@@ -37,7 +37,7 @@ class ControlFlowGraphBuilder:
 
         cls._connect(cfg)
         cls._connect_exceptions(cfg, metadata)
-        cls._heal_unreachable(cfg)
+        cls._prune_and_heal_unreachable(cfg)
 
         CFGValidator.validate(cfg)
 
@@ -169,22 +169,114 @@ class ControlFlowGraphBuilder:
         return None
 
     @classmethod
-    def _heal_unreachable(cls, cfg: ControlFlowGraph):
+    def _prune_and_heal_unreachable(cls, cfg: ControlFlowGraph):
         """
-        Safety net: after normal + exception-edge wiring, anything
-        still unreachable from entry gets a synthetic edge from entry
-        instead of crashing the whole conversion in CFGValidator.
+        After normal + exception-edge wiring, anything still
+        unreachable from entry falls into one of two buckets:
 
-        This is intentionally loud (logger.warning per block) rather
-        than silent - a healed block signals a jump/target pattern
-        this builder doesn't understand yet (a candidate: generator
-        resume points from SaveGenerator/ResumeGenerator, not yet
-        audited the way Jmp.py and SwitchImm.py were). The resulting
-        JS for a healed block will likely be structured wrong (it'll
-        show up dangling at the top level rather than nested inside
-        whatever construct actually reaches it) - treat the warning as
-        a todo list, not as "handled".
+        1. EXPECTED dead code: the block immediately following a
+           `SaveGenerator`-terminated block in program order. Since
+           `_falls_through` now correctly excludes `SaveGenerator`,
+           nothing links to that block anymore - which is *correct*,
+           because it's the throwaway `Ret` Hermes always emits right
+           after a generator suspend point (see `_falls_through`
+           docstring). These are silently dropped from the graph
+           (debug-level log only) rather than patched in, so they don't
+           show up as dangling/misplaced code in the emitted JS.
+
+        2. UNKNOWN unreachable blocks: anything else. These get a
+           synthetic edge from entry so conversion doesn't crash, with
+           a loud `logger.warning` - this is the actual safety net for
+           jump patterns this builder doesn't understand yet.
         """
+
+        reachable = cls._reachable_ids(cfg)
+        unreachable_ids = {block.id for block in cfg} - reachable
+
+        if not unreachable_ids:
+            return
+
+        prunable = cls._expand_prunable(cfg, cls._generator_dead_code_roots(cfg) & unreachable_ids, unreachable_ids)
+
+        for block_id in prunable:
+            cfg.blocks.pop(block_id, None)
+            logger.debug(
+                "Dropping BasicBlock %s: unreachable dead code left behind by "
+                "a SaveGenerator resume-point split (expected - Hermes emits a "
+                "throwaway Ret after every generator suspend point that real "
+                "execution never reaches).",
+                block_id,
+            )
+
+        for block_id in unreachable_ids - prunable:
+
+            block = cfg.get_block(block_id)
+
+            if block is None:
+                continue
+
+            logger.warning(
+                "BasicBlock %s is unreachable from entry after normal/exception/"
+                "switch/generator edge wiring. Patching in a synthetic edge from "
+                "entry so conversion doesn't crash - the emitted JS for this "
+                "block is likely structurally wrong and needs investigation.",
+                block_id,
+            )
+            cls._connect_edge(cfg.entry, block, EdgeKind.UNCONDITIONAL)
+
+    @staticmethod
+    def _generator_dead_code_roots(cfg: ControlFlowGraph) -> set[int]:
+        """
+        Block ids that physically follow a `SaveGenerator`-terminated
+        block, in program order - the set of "expected orphan" roots.
+        """
+
+        ordered = sorted(cfg, key=lambda block: block.start_addr)
+        roots: set[int] = set()
+
+        for index, block in enumerate(ordered):
+
+            if not block.instructions:
+                continue
+
+            if block.instructions[-1].handler == "SaveGenerator" and index + 1 < len(ordered):
+                roots.add(ordered[index + 1].id)
+
+        return roots
+
+    @staticmethod
+    def _expand_prunable(cfg: ControlFlowGraph, roots: set[int], unreachable_ids: set[int]) -> set[int]:
+        """
+        Expand `roots` to every block reachable from them *within the
+        unreachable set* - covers the (currently hypothetical, but
+        cheap to handle) case where the dead code after a
+        SaveGenerator is more than a single `Ret` instruction.
+        """
+
+        prunable: set[int] = set()
+        stack = list(roots)
+
+        while stack:
+
+            current = stack.pop()
+
+            if current in prunable:
+                continue
+
+            prunable.add(current)
+            block = cfg.get_block(current)
+
+            if block is None:
+                continue
+
+            for edge in block.outgoing:
+                if edge.target in unreachable_ids and edge.target not in prunable:
+                    stack.append(edge.target)
+
+        return prunable
+
+    @staticmethod
+    def _reachable_ids(cfg: ControlFlowGraph) -> set[int]:
 
         visited: set[int] = set()
         queue = deque([cfg.entry])
@@ -199,21 +291,7 @@ class ControlFlowGraphBuilder:
                 if target is not None:
                     queue.append(target)
 
-        for block in cfg:
-
-            if block.id in visited or block is cfg.entry:
-                continue
-
-            logger.warning(
-                "BasicBlock %s is unreachable from entry after normal/exception/"
-                "switch edge wiring. Patching in a synthetic edge from entry so "
-                "conversion doesn't crash - the emitted JS for this block is "
-                "likely structurally wrong and needs investigation (check for "
-                "generator resume points or other jump patterns this builder "
-                "doesn't wire into the CFG yet).",
-                block.id,
-            )
-            cls._connect_edge(cfg.entry, block, EdgeKind.UNCONDITIONAL)
+        return visited
 
     @staticmethod
     def _connect_edge(
@@ -262,6 +340,24 @@ class ControlFlowGraphBuilder:
         worth confirming against a real disassembly of a `switch`
         statement before relying on the exact shape of SwitchRegion
         output.
+
+        `SaveGenerator` is also non-falling, and for a different reason
+        than the others: its `goto` is not a real branch target in the
+        if/loop sense, it's "where execution resumes after this
+        generator suspend point". Hermes always emits a `Ret` as the
+        very next physical instruction after `SaveGenerator` (this is
+        how the low-level generator .next() call actually returns
+        control to its driver) - that `Ret` is bytecode plumbing, never
+        reached by the logical async-function control flow once the
+        function resumes at `goto`. BUG FIX (was): SaveGenerator wasn't
+        in this set, so that `Ret` got a spurious FALLTHROUGH edge in
+        addition to the real resume-point edge, giving the block 2
+        successors and making the region builder pick one of them
+        arbitrarily - in practice this both dropped the real
+        `return await ...` path and corrupted the dominator tree enough
+        to make an unrelated `if` upstream get misdetected as a loop.
+        See ControlFlowGraphBuilder._prune_generator_dead_code for what
+        happens to that now-orphaned `Ret` block.
         """
 
         non_falling = {
@@ -270,6 +366,7 @@ class ControlFlowGraphBuilder:
             "CompleteGenerator",
             "Jmp",
             "JmpLong",
+            "SaveGenerator",
         }
 
         return result.handler not in non_falling
