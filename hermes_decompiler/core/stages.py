@@ -70,7 +70,6 @@ class SymbolTableStage(Stage):
             return state
 
         state.analysis.stringTable = parse_string_map(state.bytecode_lines)
-        state.analysis.functionTable = parse_function_map(state.bytecode_lines)
 
         return state
 

@@ -23,7 +23,11 @@ class CreateGenerator(OpcodeHandler):
 
         dest_reg, env_reg, function_id = map(int, match.groups())
 
-        func_name = analysis.functionTable.get(str(function_id), f"gen_{function_id}")
+        func_name = (
+            entry.function.name
+            if entry.function and entry.function.name
+            else f"function_{function_id}"
+        )
 
         value = f"createGenerator(r{env_reg}, {func_name})"
 
@@ -54,7 +58,11 @@ class CreateGeneratorClosure(OpcodeHandler):
 
         dest_reg, env_reg, function_id = map(int, match.groups())
 
-        func_name = analysis.functionTable.get(str(function_id), f"gen_{function_id}")
+        func_name = (
+            entry.function.name
+            if entry.function and entry.function.name
+            else f"function_{function_id}"
+        )
 
         value = f"createGeneratorClosure(r{env_reg}, {func_name})"
 

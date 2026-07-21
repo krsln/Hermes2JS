@@ -30,13 +30,11 @@ class HermesAnalysis:
     metadataList: List[Dict[str, Any]]
     metadata: Dict[str, Any]
     stringTable: Dict[str, str]
-    functionTable: Dict[str, str]
 
     def __init__(
             self,
             metadata: Optional[dict[str, Any]] = None,
             stringTable: Optional[dict[str, str]] = None,
-            functionTable: Optional[dict[str, str]] = None,
     ) -> None:
         """
         Initialize the Hermes analysis context.
@@ -51,7 +49,6 @@ class HermesAnalysis:
         self.metadataList = []
         self.metadata = metadata if metadata is not None else {}
         self.stringTable = stringTable if stringTable is not None else {}
-        self.functionTable = functionTable if functionTable is not None else {}
 
         self.globalObjects: Optional[int] = None
         self.gotoList: List[int] = []
@@ -81,7 +78,6 @@ class HermesAnalysis:
             self.registers[variable.name] = variable
 
     def generate_js(self, verbose: bool = False) -> list[str]:
-
         #
         # CFG
         #

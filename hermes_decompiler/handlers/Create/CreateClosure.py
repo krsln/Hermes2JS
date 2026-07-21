@@ -27,12 +27,11 @@ class CreateClosure(OpcodeHandler):
 
         dest_reg, value_reg, func_id = (int(x) for x in match.groups())
 
-        func_name = f"function_{func_id}"
-
-        if entry.function is not None and entry.function.name:
-            func_name = entry.function.name
-        else:
-            func_name = analysis.functionTable.get(str(func_id), func_name)
+        func_name = (
+            entry.function.name
+            if entry.function and entry.function.name
+            else f"function_{func_id}"
+        )
 
         reg_var = self.get_register_variable(analysis, value_reg)
         reg_value = reg_var.value if reg_var and reg_var.value is not None else 'undefined'

@@ -23,7 +23,12 @@ class CallDirect(OpcodeHandler):
         arg_count = int(match.group(3))
         func_index = int(match.group(4))
 
-        func_name = analysis.functionTable.get(str(func_index), f"function_{func_index}")
+        func_name = (
+            entry.function.name
+            if entry.function and entry.function.name
+            else f"function_{func_index}"
+        )
+
         args = [f"arg{i}" for i in range(arg_count)]
         args_str = ", ".join(args)
         func_val = f"{func_name}({args_str})"
