@@ -70,13 +70,13 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <PutNewOwnById>: <Reg8: 1, Reg8: 4, string_id: 12734>  # String: 'SDK_VERSION' (Identifier)
     // USED → r1 = { SDK_VERSION: param2(r6[r4]) }
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 3, function_id: 10681>  # Function: [#10681 get FilePath of 65 bytes]: 1 params @ offset 0x00294e9a
-    // USED → r4 = function_10681 /* Closure with env r3 = undefined */
+    // USED → r4 = get FilePath /* Closure with env r3 = undefined */
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5066>  # String: 'FilePath' (String)
     // USED → r3 = "FilePath"
     // CODE → <PutOwnGetterSetterByVal>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 0, UInt8: 1>
-    // USED → r1 = Object.defineProperty({ SDK_VERSION: param2(r6[r4]) }, "FilePath", { get: function_10681 /* Closure with env r3 = undefined */, set: undefined, enumerable: true, configurable: true })
+    // USED → r1 = Object.defineProperty({ SDK_VERSION: param2(r6[r4]) }, "FilePath", { get: get FilePath /* Closure with env r3 = undefined */, set: undefined, enumerable: true, configurable: true })
     // CODE → <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    r2 = { default: Object.defineProperty({ SDK_VERSION: param2(r6[r4]) }, "FilePath", { get: function_10681 /* Closure with env r3 = undefined */, set: undefined, enumerable: true, configurable: true }) }
+    r2 = { default: Object.defineProperty({ SDK_VERSION: param2(r6[r4]) }, "FilePath", { get: get FilePath /* Closure with env r3 = undefined */, set: undefined, enumerable: true, configurable: true }) }
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

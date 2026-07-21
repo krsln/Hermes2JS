@@ -4,8 +4,11 @@ async function* anon_9594(param0, param1) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     r0 = await yield; // Resume generator
     // CODE → <JmpTrue>: <Addr8: 98, Reg8: 1>  # Address: 00000066
-    // label_4:
     if (r1) {
+        // CODE → <CompleteGenerator>: <>
+        // CODE → <Ret>: <Reg8: 0>
+        return undefined_r0;
+    } else {
         // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 4>
         r1 = getEnvironment(4)
         // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 16>
@@ -29,13 +32,15 @@ async function* anon_9594(param0, param1) {
         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
         // USED → r1 = await r1.default.get(globalThis.HermesInternal.concat.call(this, "https://coachify.ai/api/checkUsernameAvailable?username=", param1))
         // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003a
-        // await yield; // check: JSConverter.Dispatcher // Resume at label_4
-        // CODE → <Ret>: <Reg8: 1>
-        return await r1.default.get(globalThis.HermesInternal.concat.call(this, "https://coachify.ai/api/checkUsernameAvailable?username=", param1));
+        // await yield; // Resume at label_58
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
         r1 = await yield; // Resume generator
         // CODE → <JmpTrue>: <Addr8: 38, Reg8: 3>  # Address: 00000063
         if (r1.default.get) {
+            // CODE → <CompleteGenerator>: <>
+            // CODE → <Ret>: <Reg8: 1>
+            return undefined_r1;
+        } else {
             // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 100>  # String: 'console' (Identifier)
             // USED → r4 = globalThis.console
             // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 6, string_id: 171>  # String: 'log' (Identifier)
@@ -52,13 +57,5 @@ async function* anon_9594(param0, param1) {
             // CODE → <Ret>: <Reg8: 2>
             return r1.data.available;
         }
-        // CODE → <CompleteGenerator>: <>
-        // label_99:
-        // CODE → <Ret>: <Reg8: 1>
-        return undefined_r1;
     }
-    // CODE → <CompleteGenerator>: <>
-    // label_102:
-    // CODE → <Ret>: <Reg8: 0>
-    return undefined_r0;
 }
