@@ -126,18 +126,17 @@ class JavaScriptEmitter(RegionVisitor):
         handler = variable.handler
 
         if handler == "CompleteGenerator":
+            self._verboseCode(result)
             return
 
         if handler in _STRUCTURAL_JUMP_HANDLERS:
             # Already represented by the enclosing IfRegion/IfElseRegion
             # /LoopRegion/fallthrough - emitting it again would
             # duplicate the control flow as text.
-            if self.verbose:
-                self._write(f"// CODE → {self._original_bytecode(result)}")
+            self._verboseCode(result)
             return
 
-        if self.verbose:
-            self._write(f"// CODE → {self._original_bytecode(result)}")
+        self._verboseCode(result)
 
         if handler == "SaveGenerator":
             self._write(f"// await yield; // Resume at label_{result.goto}")
@@ -167,6 +166,9 @@ class JavaScriptEmitter(RegionVisitor):
         return bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
 
     # ------------------------------------------------------------
+    def _verboseCode(self, result):
+        if self.verbose:
+            self._write(f"// CODE → {self._original_bytecode(result)}")
 
     def _nested(self, region):
         self._depth += 1
