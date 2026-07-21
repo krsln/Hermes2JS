@@ -61,6 +61,7 @@ class BytecodeExtractionStage(Stage):
         return state
 
 
+# TODO: Remove this stage & remove analysis.stringTable|functionTable from ConversionState
 class SymbolTableStage(Stage):
     """Populates the string table and (optionally shared) function table."""
 
