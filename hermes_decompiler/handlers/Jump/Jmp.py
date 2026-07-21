@@ -36,6 +36,7 @@ TYPEOF_MAP = {
 # Parsers
 # --------------------------------------------------------------------------
 
+
 def _parse_jump(entry: OpcodeEntry) -> int:
     match = _JMP_PATTERN.match(entry.args.strip())
     if not match:
@@ -93,7 +94,10 @@ class Jump(OpcodeHandler):
         except ValueError as e:
             return self.build_invalid_args_result(analysis, entry, str(e))
 
-        target = entry.address + offset
+        target = entry.target_address
+        if target is None:
+            target = entry.address + offset
+
         analysis.gotoList.append(target)
 
         variable = JSVariable(
@@ -132,7 +136,10 @@ class ConditionalJump(OpcodeHandler, ABC):
         except ValueError as e:
             return self.build_invalid_args_result(analysis, entry, str(e))
 
-        target = entry.address + offset
+        target = entry.target_address
+        if target is None:
+            target = entry.address + offset
+
         analysis.gotoList.append(target)
         value = self.get_register_value(analysis, reg)
 
@@ -191,7 +198,10 @@ class BuiltinConditionalJump(OpcodeHandler, ABC):
         except ValueError as e:
             return self.build_invalid_args_result(analysis, entry, str(e))
 
-        target = entry.address + offset
+        target = entry.target_address
+        if target is None:
+            target = entry.address + offset
+
         analysis.gotoList.append(target)
         value = self.get_register_value(analysis, reg)
 
@@ -241,7 +251,10 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
         except ValueError as e:
             return self.build_invalid_args_result(analysis, entry, str(e))
 
-        target = entry.address + offset
+        target = entry.target_address
+        if target is None:
+            target = entry.address + offset
+
         analysis.gotoList.append(target)
         value = self.get_register_value(analysis, reg)
         type_name = TYPEOF_MAP.get(type_id, f"<{type_id}>")

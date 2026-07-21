@@ -1,6 +1,9 @@
+import re
 from hermes_decompiler.Logger import get_logger
 
 logger = get_logger(__name__)
+
+_TARGET_ADDRESS_RE = re.compile(r"Address:\s*([0-9A-Fa-f]+)")
 
 
 class OpcodeEntry:
@@ -19,6 +22,25 @@ class OpcodeEntry:
         self.comment = comment
         self.opcode = opcode
         self.args = args
+
+    @property
+    def target_address(self) -> int | None:
+        """
+        Returns the absolute target address embedded in the disassembler
+        comment, if present.
+
+        Example:
+            # Address: 00000099
+        """
+
+        if not self.comment:
+            return None
+
+        match = _TARGET_ADDRESS_RE.search(self.comment)
+        if not match:
+            return None
+
+        return int(match.group(1), 16)
 
     @staticmethod
     def _safe_parse_address(hex_address: str) -> int:

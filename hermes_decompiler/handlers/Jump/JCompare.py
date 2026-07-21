@@ -46,7 +46,10 @@ class JCompareX(OpcodeHandler):
         except ValueError as exc:
             return self.build_invalid_args_result(analysis, entry, str(exc))
 
-        target = entry.address + offset
+        target = entry.target_address
+        if target is None:
+            target = entry.address + offset
+
         analysis.gotoList.append(target)
 
         lhs = self.get_register_value(analysis, lhs_reg) or f"r{lhs_reg}"

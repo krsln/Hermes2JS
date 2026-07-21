@@ -80,7 +80,10 @@ class SaveGenerator(OpcodeHandler):
 
         offset = int(match.group(1))
 
-        target = entry.address + offset
+        target = entry.target_address
+        if target is None:
+            target = entry.address + offset
+
         analysis.gotoList.append(target)
         label = f"label_{target}"
 
