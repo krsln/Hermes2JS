@@ -4,7 +4,7 @@ from typing import ClassVar
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.models.OpcodeEntry import OpcodeEntry, _STRING_RE
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
@@ -115,23 +115,6 @@ class LoadConstDouble(OpcodeHandler):
 class LoadConstString(OpcodeHandler):
     _PATTERN = sequence(REG, r"string_id:\s*(\d+)")
 
-    @staticmethod
-    def resolve_string(
-            analysis: HermesAnalysis,
-            entry: OpcodeEntry,
-            string_id: str,
-    ) -> str:
-
-        value = analysis.stringTable.get(string_id)
-        if value is not None:
-            return value
-
-        string_literal = entry.string_literal
-        if string_literal is not None:
-            return string_literal
-
-        return f"str_{string_id}"
-
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
@@ -142,9 +125,15 @@ class LoadConstString(OpcodeHandler):
         register = int(match.group(1))
         string_id = match.group(2)
 
-        value = f'"{self.resolve_string(analysis, entry, string_id)}"'
+        resolved = entry.string_literal
 
-        variable = JSVariable(handler, entry.address, f"r{register}", value)
+        if resolved is None:
+            resolved = entry.identifier_name
+
+        if resolved is None:
+            resolved = f"str_{string_id}"
+
+        variable = JSVariable(handler, entry.address, f"r{register}", f'"{resolved}"')
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
