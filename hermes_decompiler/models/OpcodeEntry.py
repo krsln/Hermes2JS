@@ -1,9 +1,16 @@
 import re
+from dataclasses import dataclass
+
 from hermes_decompiler.Logger import get_logger
 
 logger = get_logger(__name__)
 
 _TARGET_ADDRESS_RE = re.compile(r"Address:\s*([0-9A-Fa-f]+)")
+_FUNCTION_RE = re.compile(
+    r'Function:\s*\[#(\d+)\s+"?([^"]*)"?\s+of\s+(\d+)\s+bytes]'
+    r'(?:\s*:\s*(\d+)\s+params)?'
+    r'(?:\s*@\s*offset\s*(0x[0-9A-Fa-f]+))?'
+)
 _IDENTIFIER_RE = re.compile(
     r"String:\s*'([^']*)'\s*\(Identifier\)"
 )
@@ -11,6 +18,15 @@ _IDENTIFIER_RE = re.compile(
 _STRING_RE = re.compile(
     r"String:\s*'([^']*)'\s*\(String\)"
 )
+
+
+@dataclass(slots=True)
+class FunctionReference:
+    id: int
+    name: str
+    byte_size: int
+    param_count: int | None = None
+    offset: str | None = None
 
 
 class OpcodeEntry:
@@ -22,6 +38,11 @@ class OpcodeEntry:
     opcode: str = ""
     args: str = ""
 
+    target_address: int | None = None
+    identifier_name: str | None = None
+    string_literal: str | None = None
+    function: FunctionReference | None = None
+
     def __init__(self, bytecode: str, hex_address: str, comment: str = "", opcode: str = "", args: str = ""):
         self.bytecode = bytecode
         self.offset = hex_address
@@ -29,54 +50,30 @@ class OpcodeEntry:
         self.comment = comment
         self.opcode = opcode
         self.args = args
+        self._parse_comment()
 
-    @property
-    def target_address(self) -> int | None:
-        """
-        Returns the absolute target address embedded in the disassembler
-        comment, if present.
-
-        Example:
-            # Address: 00000099
-        """
+    def _parse_comment(self):
 
         if not self.comment:
-            return None
+            return
 
-        match = _TARGET_ADDRESS_RE.search(self.comment)
-        if not match:
-            return None
+        if match := _TARGET_ADDRESS_RE.search(self.comment):
+            self.target_address = int(match.group(1), 16)
 
-        return int(match.group(1), 16)
+        if match := _IDENTIFIER_RE.search(self.comment):
+            self.identifier_name = match.group(1)
 
-    @property
-    def identifier_name(self) -> str | None:
-        """
-        Returns the identifier name embedded in the disassembler comment.
+        if match := _STRING_RE.search(self.comment):
+            self.string_literal = match.group(1)
 
-        Example:
-            # String: 'captureStackTrace' (Identifier)
-        """
-
-        if not self.comment:
-            return None
-
-        match = _IDENTIFIER_RE.search(self.comment)
-        if not match:
-            return None
-
-        return match.group(1)
-
-    @property
-    def string_literal(self) -> str | None:
-        if not self.comment:
-            return None
-
-        match = _STRING_RE.search(self.comment)
-        if not match:
-            return None
-
-        return match.group(1)
+        if match := _FUNCTION_RE.search(self.comment):
+            self.function = FunctionReference(
+                id=int(match.group(1)),
+                name=match.group(2),
+                byte_size=int(match.group(3)),
+                param_count=int(match.group(4)) if match.group(4) else None,
+                offset=match.group(5),
+            )
 
     @staticmethod
     def _safe_parse_address(hex_address: str) -> int:
