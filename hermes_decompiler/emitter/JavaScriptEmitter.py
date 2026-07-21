@@ -42,7 +42,7 @@ class JavaScriptEmitter(RegionVisitor):
     def __init__(self, verbose: bool = False):
         self.verbose = verbose
         self._lines: list[str] = []
-        self._depth = 0
+        self._depth = 1
         self._return_points: set[int] = set()
 
     def emit(self, region) -> list[str]:
@@ -132,6 +132,8 @@ class JavaScriptEmitter(RegionVisitor):
             # Already represented by the enclosing IfRegion/IfElseRegion
             # /LoopRegion/fallthrough - emitting it again would
             # duplicate the control flow as text.
+            if self.verbose:
+                self._write(f"// CODE → {self._original_bytecode(result)}")
             return
 
         if self.verbose:

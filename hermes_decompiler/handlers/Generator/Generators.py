@@ -78,12 +78,14 @@ class SaveGenerator(OpcodeHandler):
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
-        addr = int(match.group(1))
-        label = f"label_{addr}"
-        analysis.gotoList.append(addr)  # TODO: ??
+        offset = int(match.group(1))
+
+        target = entry.address + offset
+        analysis.gotoList.append(target)
+        label = f"label_{target}"
 
         variable = JSVariable(handler, entry.address, "",
-                              f'yield {label};  // SaveGenerator: suspend and jump to {addr}')
-        analysis.add_result(entry, variable, goto=addr)
+                              f'yield {label};  // SaveGenerator: suspend and jump to {target}')
+        analysis.add_result(entry, variable, goto=target)
 
-        return OpcodeResult(entry, variable, goto=addr)
+        return OpcodeResult(entry, variable, goto=target)
