@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hermes_decompiler.regions_new.models.Regions import InstructionRegion, LoopRegion, SequenceRegion
+from hermes_decompiler.regions_new.models.Regions import InstructionRegion, LoopRegion, SequenceRegion, IfRegion
 
 
 class JSRenderer:
@@ -20,6 +20,9 @@ class JSRenderer:
         if isinstance(region, SequenceRegion):
             self._render_sequence(region, output, indent)
 
+        elif isinstance(region, IfRegion):
+            self._render_if(region, output, indent)
+
         elif isinstance(region, InstructionRegion):
             self._render_instruction(region, output, indent)
 
@@ -35,6 +38,24 @@ class JSRenderer:
 
         for child in region.children:
             self._render(child, output, indent)
+
+    def _render_if(self, region, output, indent):
+
+        output.append(
+            "    " * indent +
+            f"if ({region.condition}) {{"
+        )
+
+        self._render(
+            region.true_region,
+            output,
+            indent + 1
+        )
+
+        output.append(
+            "    " * indent +
+            "}"
+        )
 
     def _render_instruction(self, region, output, indent):
         block = region.block

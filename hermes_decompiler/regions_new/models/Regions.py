@@ -18,11 +18,11 @@ class LoopRegion(Region):
 
         self.loop = natural_loop
 
-        self.children: list[Region] = []
+        self.header = natural_loop.header
+        self.members = natural_loop.members
+        self.exits = natural_loop.exits
 
-    def append(self, region):
-        region.parent = self
-        self.children.append(region)
+        self.children = []
 
 
 class SequenceRegion(Region):
@@ -43,3 +43,38 @@ class InstructionRegion(Region):
         super().__init__()
 
         self.block = block
+
+
+class IfRegion(Region):
+
+    def __init__(
+            self,
+            condition,
+            true_region,
+            false_region=None
+    ):
+        super().__init__()
+
+        self.condition = condition
+        self.true_region = true_region
+        self.false_region = false_region
+
+        true_region.parent = self
+
+        if false_region:
+            false_region.parent = self
+
+
+class ConditionalRegion(Region):
+
+    def __init__(
+            self,
+            condition,
+            true_region,
+            false_region=None
+    ):
+        super().__init__()
+
+        self.condition = condition
+        self.true_region = true_region
+        self.false_region = false_region

@@ -1,7 +1,7 @@
-from hermes_decompiler.regions_new.models.Regions import SequenceRegion, InstructionRegion, LoopRegion
-
 from hermes_decompiler.regions_new.models.Regions import (
-    SequenceRegion, InstructionRegion, LoopRegion
+    SequenceRegion,
+    InstructionRegion,
+    LoopRegion
 )
 
 
@@ -25,66 +25,46 @@ class LoopStructurer:
         if not self.cfg.loop_analysis:
             return
 
-        loops = sorted(self.cfg.loop_analysis.loops.values(), key=lambda l: l.header.id)
+        loops = sorted(
+            self.cfg.loop_analysis.loops.values(),
+            key=lambda x: x.header.id
+        )
 
         for loop in loops:
-            self._insert_loop_region(loop)
+            self._wrap_loop(loop)
 
-    def _insert_loop_region(self, natural_loop):
-        """Sırayı bozmadan loop'u sar"""
+    def _wrap_loop(self, natural_loop):
+
         loop_region = LoopRegion(natural_loop)
         body = SequenceRegion()
 
-        # Header bul ve LoopRegion ile değiştir
-        header_found = False
         new_children = []
 
+        for child in self.root.children:
+
+            if not isinstance(child, InstructionRegion):
+                new_children.append(child)
+                continue
+
+            block = child.block
+
+            if block in natural_loop.members:
+
+                body.append(child)
+
+            else:
+
+                new_children.append(child)
+
         if body.children:
-            loop_region.append(body)
+            loop_region.children.append(body)
 
-        def traverse(region):
-            nonlocal header_found
-            if isinstance(region, SequenceRegion):
-                i = 0
-                while i < len(region.children):
-                    child = region.children[i]
-                    if isinstance(child, InstructionRegion):
-                        if child.block == natural_loop.header and not header_found:
-                            # Header'ı loop region ile değiştir
-                            loop_region.append(child)  # header as first child
-                            region.children[i] = loop_region
-                            header_found = True
-                            i += 1
-                            continue
+            new_children.insert(
+                0,
+                loop_region
+            )
 
-                        # Loop member ise body'ye taşı
-                        if child.block.id in [b.id for b in natural_loop.members]:
-                            body.append(child)
-                            # Orijinalden kaldır
-                            del region.children[i]
-                            continue
-
-                    else:
-                        traverse(child)
-                    i += 1
-
-        traverse(self.root)
-
-        # Body'yi loop'a ekle
-        if body.children:
-            loop_region.append(body)
-
-        # Kalan temizlik
-        self._cleanup_empty_sequences(self.root)
-
-    def _cleanup_empty_sequences(self, region):
-        if isinstance(region, SequenceRegion):
-            region.children = [c for c in region.children if not (isinstance(c, SequenceRegion) and not c.children)]
-            for child in region.children:
-                self._cleanup_empty_sequences(child)
-        elif hasattr(region, 'children'):
-            for child in region.children:
-                self._cleanup_empty_sequences(child)
+        self.root.children = new_children
 
 
 class IfStructurer:
@@ -114,6 +94,7 @@ class IfStructurer:
         if hasattr(region, 'children'):
             for c in region.children:
                 self._structure_conditionals(c)
+
 
 class SwitchStructurer:
     def __init__(self, root, cfg):
