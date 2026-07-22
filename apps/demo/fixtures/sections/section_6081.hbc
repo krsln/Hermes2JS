@@ -1,0 +1,60 @@
+
+=> [Function #6081 "processColorsInProps" of 185 bytes]: 2 params, frame size=25, strict=1, exc handler=1, debug info=0  @ offset 0x0021cf69
+  [Exception handlers: [start=0x65, end=0x95, target=0x97] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 10, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 0>
+==> 00000005: <LoadConstUndefined>: <Reg8: 7>
+==> 00000007: <LoadConstUndefined>: <Reg8: 8>
+==> 00000009: <LoadConstUndefined>: <Reg8: 9>
+==> 0000000b: <Mov>: <Reg8: 5, Reg8: 10>
+==> 0000000e: <GetEnvironment>: <Reg8: 1, UInt8: 1>
+==> 00000011: <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 3>
+==> 00000016: <JmpUndefinedLong>: <Addr32: 161, Reg8: 6>  # Address: 000000b7
+==> 0000001c: <GetNextPName>: <Reg8: 2, Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 3>
+==> 00000022: <JmpUndefinedLong>: <Addr32: 149, Reg8: 2>  # Address: 000000b7
+==> 00000028: <Mov>: <Reg8: 13, Reg8: 2>
+==> 0000002b: <Mov>: <Reg8: 7, Reg8: 13>
+==> 0000002e: <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 17>
+==> 00000032: <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 148>  # String: 'includes' (Identifier)
+==> 00000037: <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 13>
+==> 0000003c: <JmpTrue>: <Addr8: 98, Reg8: 11>  # Address: 0000009e
+==> 0000003f: <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 18>
+==> 00000043: <Mov>: <Reg8: 11, Reg8: 7>
+==> 00000046: <GetByVal>: <Reg8: 11, Reg8: 12, Reg8: 11>
+==> 0000004a: <JmpFalse>: <Addr8: -46, Reg8: 11>  # Address: 0000001c
+==> 0000004d: <Mov>: <Reg8: 11, Reg8: 7>
+==> 00000050: <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 11>
+==> 00000054: <Mov>: <Reg8: 11, Reg8: 13>
+==> 00000057: <IteratorBegin>: <Reg8: 12, Reg8: 11>
+==> 0000005a: <IteratorNext>: <Reg8: 14, Reg8: 12, Reg8: 11>
+==> 0000005e: <Mov>: <Reg8: 13, Reg8: 12>
+==> 00000061: <JStrictEqual>: <Addr8: -69, Reg8: 13, Reg8: 0>  # Address: 0000001c
+==> 00000065: <Mov>: <Reg8: 8, Reg8: 14>
+==> 00000068: <LoadFromEnvironment>: <Reg8: 15, Reg8: 1, UInt8: 18>
+==> 0000006c: <Mov>: <Reg8: 13, Reg8: 7>
+==> 0000006f: <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 13>
+==> 00000073: <Mov>: <Reg8: 9, Reg8: 13>
+==> 00000076: <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 13>
+==> 0000007a: <JStrictEqual>: <Addr8: 27, Reg8: 13, Reg8: 0>  # Address: 00000095
+==> 0000007e: <Mov>: <Reg8: 15, Reg8: 8>
+==> 00000081: <Mov>: <Reg8: 14, Reg8: 9>
+==> 00000084: <LoadFromEnvironment>: <Reg8: 16, Reg8: 1, UInt8: 36>
+==> 00000088: <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 14>
+==> 0000008c: <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
+==> 00000091: <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
+==> 00000095: <Jmp>: <Addr8: -59>  # Address: 0000005a
+==> 00000097: <Catch>: <Reg8: 11>
+==> 00000099: <IteratorClose>: <Reg8: 12, UInt8: 1>
+==> 0000009c: <Throw>: <Reg8: 11>
+==> 0000009e: <Mov>: <Reg8: 12, Reg8: 7>
+==> 000000a1: <LoadFromEnvironment>: <Reg8: 13, Reg8: 1, UInt8: 36>
+==> 000000a5: <GetByVal>: <Reg8: 11, Reg8: 10, Reg8: 12>
+==> 000000a9: <Call2>: <Reg8: 11, Reg8: 13, Reg8: 0, Reg8: 11>
+==> 000000ae: <PutByVal>: <Reg8: 10, Reg8: 12, Reg8: 11>
+==> 000000b2: <JmpLong>: <Addr32: -150>  # Address: 0000001c
+==> 000000b7: <Ret>: <Reg8: 0>
+
+
