@@ -1,28 +1,26 @@
 from __future__ import annotations
 
-from hermes_decompiler.regions_new.cfg.CFG import CFG
-from hermes_decompiler.regions_new.models.InstructionRegion import InstructionRegion
-from hermes_decompiler.regions_new.models.SequenceRegion import SequenceRegion
+from hermes_decompiler.regions_new.building.IfStructurer import IfStructurer
+from hermes_decompiler.regions_new.building.LoopStructurer import LoopStructurer
+from hermes_decompiler.regions_new.building.SequenceStructurer import SequenceStructurer
+from hermes_decompiler.regions_new.building.SwitchStructurer import SwitchStructurer
+from hermes_decompiler.regions_new.building.TryStructurer import TryStructurer
 
 
 class StructuralAnalyzer:
-    """
-    Converts CFG into a Region tree.
 
-    Phase-1:
-        CFG -> SequenceRegion
-    """
+    def __init__(self, cfg):
 
-    def __init__(self, cfg: CFG):
         self.cfg = cfg
 
-    def build(self) -> SequenceRegion:
-        root = SequenceRegion()
+    def build(self):
 
-        for block in self.cfg.blocks:
-            for instruction in block.instructions:
-                root.children.append(
-                    InstructionRegion(instruction)
-                )
+        LoopStructurer(self.cfg).run()
 
-        return root
+        IfStructurer(self.cfg).run()
+
+        SwitchStructurer(self.cfg).run()
+
+        TryStructurer(self.cfg).run()
+
+        return SequenceStructurer(self.cfg).run()
