@@ -8,6 +8,9 @@ from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.Logger import get_logger
 from hermes_decompiler.regions.building.RegionBuilder import RegionBuilder
+from hermes_decompiler.regions_new.building.StructuralAnalyzer import StructuralAnalyzer
+from hermes_decompiler.regions_new.cfg.CFG import CFG
+from hermes_decompiler.regions_new.render.JSRenderer import JSRenderer
 
 logger = get_logger(__name__)
 
@@ -76,7 +79,7 @@ class HermesAnalysis:
             self.registers[variable.name] = variable
 
     def generate_js(self, verbose: bool = False) -> list[str]:
-        return self.generate_js_v2(verbose)
+        return self.generate_js_v1_new(verbose)
 
     def generate_js_v2(self, verbose: bool = False) -> list[str]:
         #
@@ -236,6 +239,17 @@ class HermesAnalysis:
                     result.append(f"{indent(item.indent)}{item.content}")
 
         return result
+
+    def generate_js_v1_new(self, verbose=False):
+        cfg = CFG.from_results(self.results)
+
+        analyzer = StructuralAnalyzer(cfg)
+
+        root = analyzer.build()
+
+        renderer = JSRenderer(verbose)
+
+        return renderer.render(root)
 
     def __str__(self):
         return f"HermesAnalysis(globalObjects={self.globalObjects}, gotoList={self.gotoList}, results={[var.to_dict() for var in self.results]})"
