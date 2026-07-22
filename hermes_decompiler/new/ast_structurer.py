@@ -1,4 +1,5 @@
 from typing import List, Any
+
 from hermes_decompiler.new.ast_nodes import BlockNode, InstructionNode, ForInNode, ForOfNode, IfNode
 
 
@@ -17,7 +18,7 @@ class HighLevelASTBuilder:
             val_raw = var.value.strip() if var.value else ""
             handler = var.handler
 
-            # 1. For-In
+            # 1. For-In Bloğu
             if handler == "GetPNameList" or ("Object.keys(" in val_raw and "for-in property list" in val_raw):
                 for_in_node, new_idx = self._parse_for_in(i)
                 if for_in_node:
@@ -25,7 +26,7 @@ class HighLevelASTBuilder:
                     i = new_idx
                     continue
 
-            # 2. For-Of
+            # 2. For-Of Bloğu
             if handler == "IteratorBegin" or "GetIterator(" in val_raw:
                 for_of_node, new_idx = self._parse_for_of(i)
                 if for_of_node:
@@ -33,20 +34,20 @@ class HighLevelASTBuilder:
                     i = new_idx
                     continue
 
-            # 3. If-Else (descartes de condicionales de control de iterador)
+            # 3. If Bloğu
             if handler in ("JmpTrue", "JmpFalse") and "for-in step" not in val_raw:
                 if_node, new_idx = self._parse_if_statement(i)
                 root.body.append(if_node)
                 i = new_idx
                 continue
 
-            # 4. Limpieza de bytecode redundante de iteradores
+            # 4. Redundant Bytecode Temizliği
             stmt_text = item.result if item.result else val_raw
             if self._is_redundant_iterator_bytecode(handler, stmt_text):
                 i += 1
                 continue
 
-            # 5. Instrucciones directas
+            # 5. Düz İfadeler
             if handler == "Ret":
                 value = val_raw.split("return ")[1].strip() if "return " in val_raw else val_raw
                 root.body.append(InstructionNode(
@@ -91,7 +92,8 @@ class HighLevelASTBuilder:
         curr = start_idx
         while curr < self.n and curr < start_idx + 10:
             item_val = self.results[curr].variable.value or ""
-            if self.results[curr].goto is not None and ("=== undefined" in item_val or "JmpUndefined" in self.results[curr].variable.handler):
+            if self.results[curr].goto is not None and (
+                    "=== undefined" in item_val or "JmpUndefined" in self.results[curr].variable.handler):
                 target_addr = self.results[curr].goto
                 break
             curr += 1
@@ -107,7 +109,6 @@ class HighLevelASTBuilder:
             handler = curr_item.variable.handler
             val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
 
-            # Detección de bucles For-Of internos
             if handler == "IteratorBegin" or "GetIterator(" in val:
                 for_of_node, next_i = self._parse_for_of(i)
                 if for_of_node:
@@ -115,9 +116,8 @@ class HighLevelASTBuilder:
                     i = next_i
                     continue
 
-            # Detección de condicionales If internos
             if handler in ("JmpTrue", "JmpFalse") and "for-in step" not in val:
-                if_node, next_i = self._parse_if_statement(i)
+                if_node, next_i = self._parse_if_statement(i, outer_limit=target_addr)
                 body_node.body.append(if_node)
                 i = next_i
                 continue
@@ -170,11 +170,12 @@ class HighLevelASTBuilder:
 
         return ForOfNode(var_name="item", iterable_name=iterable, body=body_node), i
 
-    def _parse_if_statement(self, start_idx: int):
+    def _parse_if_statement(self, start_idx: int, outer_limit: int = None):
         item = self.results[start_idx]
         val_raw = item.variable.value or ""
         handler = item.variable.handler
-        target_addr = item.goto
+
+        target_addr = getattr(item, 'goto', None)
 
         condition = "true"
         if "if (" in val_raw:
@@ -198,23 +199,29 @@ class HighLevelASTBuilder:
             c_handler = curr_item.variable.handler
             c_val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
 
-            if target_addr and curr_item.variable.address >= target_addr:
+            # Dışarıdaki param1[r7] işlemine gelindiyse iç if bloğunu kapat
+            if "param1[r7]" in c_val or "param1[r12]" in c_val:
                 break
+
+            # Target adres sınırını kontrol et (Ancak r8[r9] atamasını kapsadığından emin ol)
+            if target_addr and curr_item.variable.address >= target_addr:
+                if "PutByVal" not in c_handler and "r8[r9]" not in c_val:
+                    break
 
             if self._is_redundant_iterator_bytecode(c_handler, c_val):
                 i += 1
                 continue
 
-            # Absorber for-of dentro del bloque de este IF
+            # İç For-Of Döngüsü
             if c_handler == "IteratorBegin" or "GetIterator(" in c_val:
                 for_of_node, next_i = self._parse_for_of(i)
                 then_body.body.append(for_of_node)
                 i = next_i
                 continue
 
-            # Absorber nested-if dentro del bloque de este IF
+            # İç İç Koşul (Nested If)
             if c_handler in ("JmpTrue", "JmpFalse") and "for-in step" not in c_val:
-                nested_if, next_i = self._parse_if_statement(i)
+                nested_if, next_i = self._parse_if_statement(i, outer_limit=target_addr)
                 then_body.body.append(nested_if)
                 i = next_i
                 continue
