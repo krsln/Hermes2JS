@@ -1,20 +1,16 @@
 from __future__ import annotations
 
-from hermes_decompiler.regions_new.building.IfStructurer import IfStructurer
-from hermes_decompiler.regions_new.building.LoopStructurer import LoopStructurer
-from hermes_decompiler.regions_new.building.SequenceStructurer import SequenceStructurer
-from hermes_decompiler.regions_new.building.SwitchStructurer import SwitchStructurer
-from hermes_decompiler.regions_new.building.TryStructurer import TryStructurer
+from hermes_decompiler.regions_new.building.Structurers import (
+    IfStructurer, LoopStructurer, SequenceStructurer, SwitchStructurer, TryStructurer
+)
 
 
 class StructuralAnalyzer:
 
     def __init__(self, cfg):
-
         self.cfg = cfg
 
     def build(self):
-
         root = SequenceStructurer(self.cfg).run()
 
         LoopStructurer(root, self.cfg).run()
