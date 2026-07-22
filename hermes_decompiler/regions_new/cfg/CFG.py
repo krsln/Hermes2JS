@@ -55,7 +55,7 @@ class CFG:
         self.post_dominator_tree.compute()
 
     def compute_loops(self):
-        from .LoopAnalysis import LoopAnalysis
+        from hermes_decompiler.regions_new.cfg.LoopAnalysis import LoopAnalysis
 
         self.loop_analysis = LoopAnalysis(self)
 

@@ -1,40 +1,22 @@
-from __future__ import annotations
-
-from typing import List, Tuple
-
-from .CFG import CFG
-from .BasicBlock import BasicBlock
+from hermes_decompiler.regions_new.cfg.NaturalLoop import NaturalLoop
 
 
 class LoopAnalysis:
 
-    """
-    Loop analysis.
-
-    Stage-1
-
-        Detect back edges.
-
-    Natural loop discovery will be added
-    in the next stage.
-    """
-
-    def __init__(self, cfg: CFG):
+    def __init__(self, cfg):
 
         self.cfg = cfg
 
-        self.back_edges: List[Tuple[BasicBlock, BasicBlock]] = []
+        self.back_edges = []
 
-    # ---------------------------------------------------------
+        self.loops: list[NaturalLoop] = []
 
     def compute(self):
 
-        self.back_edges.clear()
-
         tree = self.cfg.dominator_tree
 
-        if tree is None:
-            return
+        self.back_edges.clear()
+        self.loops.clear()
 
         for tail in self.cfg.blocks:
 
@@ -42,17 +24,14 @@ class LoopAnalysis:
 
                 if header is tail:
                     continue
-                #
-                # Back edge:
-                #
-                # header dominates tail
-                #
 
                 if tree.dominates(header, tail):
 
-                    self.back_edges.append(
-                        (
-                            tail,
-                            header,
-                        )
+                    self.back_edges.append((tail, header))
+
+                    loop = NaturalLoop(
+                        header=header,
+                        tail=tail,
                     )
+
+                    self.loops.append(loop)

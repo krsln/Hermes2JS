@@ -249,6 +249,10 @@ class HermesAnalysis:
         cfg.compute_post_dominators()
         cfg.compute_loops()
 
+        for loop in cfg.loop_analysis.loops:
+            print()
+            print(loop)
+
         # for tail, header in cfg.loop_analysis.back_edges:
         #     print()
         #     print("Back Edge")
