@@ -1,6 +1,11 @@
 **control data /fixtures**
 
 ```shell
+tree -I '__pycache__|__init__.py' hermes_decompiler/regions_new
+
+```
+```shell
+
 python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
 
 python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --no-verbose
