@@ -76,6 +76,9 @@ class HermesAnalysis:
             self.registers[variable.name] = variable
 
     def generate_js(self, verbose: bool = False) -> list[str]:
+        return self.generate_js_v1(verbose)
+
+    def generate_js_v2(self, verbose: bool = False) -> list[str]:
         #
         # CFG
         #
@@ -107,7 +110,7 @@ class HermesAnalysis:
 
         return emitter.emit(region)
 
-    def generate_js_old(self, verbose: bool = True) -> List[str]:
+    def generate_js_v1(self, verbose: bool = True) -> List[str]:
         outputList: List[Output] = []
 
         indent_lvl = 1  # Track indentation for nested blocks
