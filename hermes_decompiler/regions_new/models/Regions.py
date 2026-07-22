@@ -38,9 +38,10 @@ class SequenceRegion(Region):
         self.children.append(node)
 
 
-class LoopRegion:
+class LoopRegion(Region):
 
     def __init__(self, loop):
+        super().__init__()
         self.header_block = loop.header
 
         self.condition = None

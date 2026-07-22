@@ -1337,7 +1337,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
     r0 = globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
     r0 = throw globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
-    // Loop (while)
+    // Loop
         // Block 1
         r54 = r43
         r41 = r54

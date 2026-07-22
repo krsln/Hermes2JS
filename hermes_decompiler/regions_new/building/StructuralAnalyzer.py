@@ -1,8 +1,11 @@
-from __future__ import annotations
-
-from hermes_decompiler.regions_new.building.LoopConditionExtractor import LoopConditionExtractor
+from hermes_decompiler.regions_new.building.RegionGraph import RegionGraph
+from hermes_decompiler.regions_new.building.StatementBuilder import StatementBuilder
 from hermes_decompiler.regions_new.building.Structurers import (
-    IfStructurer, LoopStructurer, SequenceStructurer, SwitchStructurer, TryStructurer
+    SequenceStructurer,
+    LoopStructurer,
+    IfStructurer,
+    SwitchStructurer,
+    TryStructurer,
 )
 
 
@@ -12,13 +15,16 @@ class StructuralAnalyzer:
         self.cfg = cfg
 
     def build(self):
+
         root = SequenceStructurer(self.cfg).run()
 
-        LoopStructurer(root, self.cfg).run()
-        LoopConditionExtractor(root).run()
-        IfStructurer(root, self.cfg).run()
+        graph = RegionGraph(root)
 
-        # SwitchStructurer(root, self.cfg).run()
-        # TryStructurer(root, self.cfg).run()
+        LoopStructurer(graph, self.cfg).run()
+        IfStructurer(graph, self.cfg).run()
+        SwitchStructurer(graph, self.cfg).run()
+        TryStructurer(graph, self.cfg).run()
+
+        StatementBuilder().build(root)
 
         return root

@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from hermes_decompiler.regions_new.cfg.BasicBlock import BasicBlock
+from hermes_decompiler.regions_new.building.RegionGraph import RegionGraph
 from hermes_decompiler.regions_new.models.Regions import (
     SequenceRegion,
     LoopRegion,
-    IfRegion,
+    Region,
 )
 
 
@@ -13,14 +13,8 @@ class SequenceStructurer:
     def __init__(self, cfg):
         self.cfg = cfg
 
-    def run(self) -> SequenceRegion:
-
+    def run(self):
         root = SequenceRegion()
-
-        #
-        # Şimdilik Sequence.children içine BasicBlock koyuyoruz.
-        # StatementBuilder daha sonra bunları Statement'a dönüştürecek.
-        #
         root.children.extend(self.cfg.blocks)
 
         return root
@@ -28,8 +22,8 @@ class SequenceStructurer:
 
 class LoopStructurer:
 
-    def __init__(self, root: SequenceRegion, cfg):
-        self.root = root
+    def __init__(self, graph: RegionGraph, cfg):
+        self.graph = graph
         self.cfg = cfg
 
     def run(self):
@@ -39,71 +33,66 @@ class LoopStructurer:
 
         loops = sorted(
             self.cfg.loop_analysis.loops.values(),
-            key=lambda loop: len(loop.members),
+            key=lambda l: len(l.members),
             reverse=True,
         )
 
         for loop in loops:
             self._wrap_loop(loop)
 
-    # ---------------------------------------------------------
-
     def _wrap_loop(self, loop):
 
         region = LoopRegion(loop)
 
         #
-        # Header ayrı tutuluyor.
+        # Header bilgisi
         #
         region.header_block = loop.header
 
-        new_children = []
+        #
+        # Önce header'ın sahibi bulunur.
+        #
+        owner = self.graph.owner(loop.header)
 
-        for child in self.root.children:
+        if owner is None:
+            return
 
-            #
-            # Nested region'lara şimdilik dokunmuyoruz.
-            #
-            if not isinstance(child, BasicBlock):
-                new_children.append(child)
+        #
+        # Header'ın yerine LoopRegion koy.
+        #
+        self.graph.replace_block(
+            loop.header,
+            region,
+        )
+
+        #
+        # Header artık loop body'sinin ilk elemanı.
+        #
+        region.body.children.append(loop.header)
+
+        self.graph.block_owner[loop.header] = region.body
+
+        #
+        # Diğer loop blocklarını body'ye taşı.
+        #
+        for block in sorted(loop.members, key=lambda b: b.id):
+
+            if block is loop.header:
                 continue
 
-            if child == loop.header:
-                continue
-
-            if child in loop.members:
-                region.body.children.append(child)
-            else:
-                new_children.append(child)
-
-        #
-        # Header'ın bulunduğu yere insert ediyoruz.
-        #
-        insert_index = 0
-
-        for i, child in enumerate(self.root.children):
-            if child == loop.header:
-                insert_index = i
-                break
-
-        new_children.insert(insert_index, region)
-
-        self.root.children = new_children
-
-        #
-        # Header artık body'nin ilk bloğu.
-        #
-        region.body.children.insert(0, loop.header)
+            self.graph.move(
+                block,
+                region.body,
+            )
 
 
 class IfStructurer:
 
-    def __init__(self, root: SequenceRegion, cfg):
-        self.root = root
+    def __init__(self, graph, cfg):
+        self.graph = graph
         self.cfg = cfg
 
     def run(self):
-
         #
         # Şimdilik placeholder.
         #
@@ -115,8 +104,8 @@ class IfStructurer:
 
 class SwitchStructurer:
 
-    def __init__(self, root, cfg):
-        self.root = root
+    def __init__(self, graph, cfg):
+        self.graph = graph
         self.cfg = cfg
 
     def run(self):
@@ -125,8 +114,8 @@ class SwitchStructurer:
 
 class TryStructurer:
 
-    def __init__(self, root, cfg):
-        self.root = root
+    def __init__(self, graph, cfg):
+        self.graph = graph
         self.cfg = cfg
 
     def run(self):

@@ -15,12 +15,7 @@ function function_12825(param0, param1, param2, param3, param4) {
     r2 = " callback, continuing anyway…"
     // Block 5
     return r10.pop()(r7) === false;
-    // Loop (while)
-        // Block 4
-        r1 = r0
-        if (!r0) { /* jump to label_39 */ }
-    // EndLoop
-    // Loop (while)
+    // Loop
         // Block 1
         r1 = r10
         r1 = r10.length
@@ -33,19 +28,21 @@ function function_12825(param0, param1, param2, param3, param4) {
         r1 = r10.pop()(r7)
         r0 = r10.pop()(r7) === false
         goto label_122;
-        // Block 3
-        r12 = caughtException
-        r11 = r9
-        r13 = r9.error
-        r14 = r8
-        r1 = globalThis.HermesInternal
-        r1 = globalThis.HermesInternal.concat
-        r1 = globalThis.HermesInternal.concat.call(this, "Error occurred in ", r8, " callback, continuing anyway…")
-        r1 = r9.error(globalThis.HermesInternal.concat.call(this, "Error occurred in ", r8, " callback, continuing anyway…"))
-        r1 = r9.error
-        r1 = r9.error(caughtException)
-        // Block 4
-        r1 = r0
-        if (!r0) { /* jump to label_39 */ }
+        // Loop
+            // Block 4
+            r1 = r0
+            if (!r0) { /* jump to label_39 */ }
+            // Block 3
+            r12 = caughtException
+            r11 = r9
+            r13 = r9.error
+            r14 = r8
+            r1 = globalThis.HermesInternal
+            r1 = globalThis.HermesInternal.concat
+            r1 = globalThis.HermesInternal.concat.call(this, "Error occurred in ", r8, " callback, continuing anyway…")
+            r1 = r9.error(globalThis.HermesInternal.concat.call(this, "Error occurred in ", r8, " callback, continuing anyway…"))
+            r1 = r9.error
+            r1 = r9.error(caughtException)
+        // EndLoop
     // EndLoop
 }

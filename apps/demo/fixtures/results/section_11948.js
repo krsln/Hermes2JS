@@ -272,7 +272,7 @@ function _request(param0, param1, param2) {
     r0 = globalThis.Promise.reject
     r0 = globalThis.Promise.reject(caughtException)
     return globalThis.Promise.reject(caughtException);
-    // Loop (while)
+    // Loop
         // Block 33
         r6 = r6[6]
         r7 = r6.default

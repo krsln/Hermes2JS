@@ -255,7 +255,6 @@ class HermesAnalysis:
         #     print(loop)
 
         root = StructuralAnalyzer(cfg).build()
-        StatementBuilder().build(root)
         renderer = JSRenderer(verbose)
 
         return renderer.render(root)

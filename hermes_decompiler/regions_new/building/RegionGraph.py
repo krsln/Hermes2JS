@@ -29,7 +29,7 @@ class RegionGraph:
 
                     self.block_owner[child] = region
 
-                elif isinstance(child, Region):
+                else:
 
                     self._index(child)
 
@@ -44,7 +44,12 @@ class RegionGraph:
         if getattr(region, "else_body", None):
             self._index(region.else_body)
 
-    # ---------------------------------------------------------
+    def owner(
+            self,
+            block: BasicBlock,
+    ) -> SequenceRegion | None:
+
+        return self.block_owner.get(block)
 
     def detach(self, block: BasicBlock):
 
@@ -57,7 +62,27 @@ class RegionGraph:
 
         del self.block_owner[block]
 
-    # ---------------------------------------------------------
+    def append(
+            self,
+            sequence: SequenceRegion,
+            block: BasicBlock,
+    ):
+
+        sequence.children.append(block)
+
+        self.block_owner[block] = sequence
+
+    def move(
+            self,
+            block: BasicBlock,
+            sequence: SequenceRegion,
+    ):
+
+        self.detach(block)
+
+        sequence.children.append(block)
+
+        self.block_owner[block] = sequence
 
     def insert_before(
             self,
@@ -73,21 +98,41 @@ class RegionGraph:
 
         region.parent = owner
 
-    # ---------------------------------------------------------
+    def replace(self, old, new):
 
-    def append_to(
+        owner = old.parent
+
+        idx = owner.children.index(old)
+
+        owner.children[idx] = new
+
+        new.parent = owner
+
+    def replace_block(
             self,
-            sequence: SequenceRegion,
-            block: BasicBlock,
-    ):
+            old: BasicBlock,
+            new: Region,
+    ) -> None:
 
-        sequence.children.append(block)
+        owner = self.owner(old)
 
-        self.block_owner[block] = sequence
+        if owner is None:
+            raise RuntimeError("Block has no owner")
+
+        idx = owner.children.index(old)
+
+        owner.children[idx] = new
+
+        new.parent = owner
+
+        #
+        # Header artık owner'da değil.
+        #
+        del self.block_owner[old]
 
     # ---------------------------------------------------------
-
-    def replace(
+    # ---------------------------------------------------------
+    def replace__(
             self,
             old: Region,
             new: Region,
@@ -104,34 +149,9 @@ class RegionGraph:
 
         new.parent = owner
 
-    # ---------------------------------------------------------
-
-    def move(
-            self,
-            block: BasicBlock,
-            sequence: SequenceRegion,
-    ):
-
-        self.detach(block)
-
-        self.append_to(sequence, block)
-
-    # ---------------------------------------------------------
-
     def blocks(self):
 
         return list(self.block_owner.keys())
-
-    # ---------------------------------------------------------
-
-    def owner(
-            self,
-            block: BasicBlock,
-    ) -> SequenceRegion | None:
-
-        return self.block_owner.get(block)
-
-    # ---------------------------------------------------------
 
     def contains(
             self,
