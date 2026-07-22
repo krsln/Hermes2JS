@@ -1,5 +1,4 @@
 from typing import List, Any
-
 from hermes_decompiler.new.ast_nodes import BlockNode, InstructionNode, ForInNode, ForOfNode, IfNode
 
 
@@ -9,10 +8,6 @@ class HighLevelASTBuilder:
         self.n = len(results)
 
     def build(self) -> BlockNode:
-        """
-        Bytecode akışını baştan sona tarayarak For-In, For-Of, If-Else ve
-        Düz İfadeleri içeren AST Ağacını (BlockNode) inşa eder.
-        """
         root = BlockNode()
         i = 0
 
@@ -22,9 +17,7 @@ class HighLevelASTBuilder:
             val_raw = var.value.strip() if var.value else ""
             handler = var.handler
 
-            # -------------------------------------------------------------
-            # 1. PATTERN: For-In Döngüsü Algılama
-            # -------------------------------------------------------------
+            # 1. For-In
             if handler == "GetPNameList" or ("Object.keys(" in val_raw and "for-in property list" in val_raw):
                 for_in_node, new_idx = self._parse_for_in(i)
                 if for_in_node:
@@ -32,9 +25,7 @@ class HighLevelASTBuilder:
                     i = new_idx
                     continue
 
-            # -------------------------------------------------------------
-            # 2. PATTERN: For-Of / Iterator Döngüsü Algılama
-            # -------------------------------------------------------------
+            # 2. For-Of
             if handler == "IteratorBegin" or "GetIterator(" in val_raw:
                 for_of_node, new_idx = self._parse_for_of(i)
                 if for_of_node:
@@ -42,26 +33,20 @@ class HighLevelASTBuilder:
                     i = new_idx
                     continue
 
-            # -------------------------------------------------------------
-            # 3. PATTERN: If/Else Koşullu Dallanma Algılama
-            # -------------------------------------------------------------
-            if handler in ("JmpTrue", "JmpFalse", "JStrictEqual") or "/* jump to" in val_raw:
+            # 3. If-Else (Sadece iterator step DIŞINDAKİ jump'lar)
+            if handler in ("JmpTrue", "JmpFalse") and "for-in step" not in val_raw:
                 if_node, new_idx = self._parse_if_statement(i)
                 root.body.append(if_node)
                 i = new_idx
                 continue
 
-            # -------------------------------------------------------------
-            # 4. Redundant / Iterator Gürültülerini Filtrele
-            # -------------------------------------------------------------
+            # 4. Redundant Iterator gürültülerini filtrele
             stmt_text = item.result if item.result else val_raw
             if self._is_redundant_iterator_bytecode(handler, stmt_text):
                 i += 1
                 continue
 
-            # -------------------------------------------------------------
-            # 5. Düz İfadeler ve Return İfadeleri
-            # -------------------------------------------------------------
+            # 5. Düz İfadeler
             if handler == "Ret":
                 value = val_raw.split("return ")[1].strip() if "return " in val_raw else val_raw
                 root.body.append(InstructionNode(
@@ -81,15 +66,15 @@ class HighLevelASTBuilder:
         return root
 
     def _is_redundant_iterator_bytecode(self, handler: str, val_raw: str) -> bool:
-        # SADECE gerçek mantıksal JmpTrue / JmpFalse 'if' üretsin.
-        # Iterator bitiş atlamalarını (JmpUndefined, JStrictEqual) 'if' yapma!
+        # Iterator / Loop kontrol gürültüleri
         if handler in ("JmpUndefined", "JmpUndefinedLong", "JStrictEqual"):
             return True
 
         if handler in ("Catch", "IteratorClose", "Throw"):
             return True
 
-        if "GetNextPName" in val_raw or "GetIterator(" in val_raw or "for-in step" in val_raw:
+        # For-in ve For-of adımları IF OLMAMALI!
+        if "GetNextPName" in val_raw or "GetIterator(" in val_raw or "for-in step" in val_raw or "for-in property list" in val_raw:
             return True
 
         if handler in ("Jmp", "JmpLong") or "goto label_" in val_raw:
@@ -108,10 +93,12 @@ class HighLevelASTBuilder:
             except IndexError:
                 pass
 
+        # Target address (Döngünün bittiği adresi bul)
         target_addr = None
         curr = start_idx
-        while curr < self.n and curr < start_idx + 5:
-            if self.results[curr].goto is not None and "=== undefined" in (self.results[curr].variable.value or ""):
+        while curr < self.n and curr < start_idx + 10:
+            item_val = self.results[curr].variable.value or ""
+            if self.results[curr].goto is not None and ("=== undefined" in item_val or "JmpUndefined" in self.results[curr].variable.handler):
                 target_addr = self.results[curr].goto
                 break
             curr += 1
@@ -127,7 +114,8 @@ class HighLevelASTBuilder:
             handler = curr_item.variable.handler
             val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
 
-            if handler in ("JmpTrue", "JmpFalse") or "/* jump to" in val:
+            # Gerçek bir koşul (if) mi yoksa iterator step mi?
+            if handler in ("JmpTrue", "JmpFalse") and "for-in step" not in val:
                 if_node, next_i = self._parse_if_statement(i)
                 body_node.body.append(if_node)
                 i = next_i
@@ -187,24 +175,17 @@ class HighLevelASTBuilder:
         handler = item.variable.handler
         target_addr = item.goto
 
-        # Koşul metnini temiz şekilde yakala
         condition = "true"
         if "if (" in val_raw:
             try:
-                # 'if (' ile ')' arasındaki net ifadeyi çek
                 raw_cond = val_raw.split("if (")[1]
-                # Parantez dengesine dikkat ederek kapatmayı bul
                 cond_body = raw_cond.rsplit(")", 1)[0] if ")" in raw_cond else raw_cond
-                # '/* jump to...' yorumlarını temizle
                 condition = cond_body.split("/*")[0].strip()
             except Exception:
                 condition = "true"
         elif item.variable.used:
             condition = item.variable.used.split("=")[-1].strip()
 
-        # Hermes Mantığı:
-        # JmpTrue -> Koşul doğruysa ATLAR (demek ki if bloğunun çalışması için koşulun DEĞİLİ lazımdır: !(cond))
-        # JmpFalse -> Koşul yanlışsa ATLAR (demek ki if bloğu koşul SAĞLANDIĞINDA çalışır: cond)
         if handler == "JmpTrue":
             condition = f"!({condition})"
 
@@ -212,40 +193,29 @@ class HighLevelASTBuilder:
         else_body = BlockNode()
         i = start_idx + 1
 
-        is_in_else = False
-
         while i < self.n:
             curr_item = self.results[i]
             c_handler = curr_item.variable.handler
             c_val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
 
-            # Target adrese ulaştıysak if/else bloğu tamamlanmıştır
             if target_addr and curr_item.variable.address >= target_addr:
                 break
 
-            # Iterator gürültülerini atla
             if self._is_redundant_iterator_bytecode(c_handler, c_val):
                 i += 1
                 continue
 
-            # İç 'if' tespiti
             if c_handler in ("JmpTrue", "JmpFalse") and "for-in step" not in c_val:
                 nested_if, next_i = self._parse_if_statement(i)
-                if is_in_else:
-                    else_body.body.append(nested_if)
-                else:
-                    then_body.body.append(nested_if)
+                then_body.body.append(nested_if)
                 i = next_i
                 continue
 
-            target_node = else_body if is_in_else else then_body
-            target_node.body.append(InstructionNode(
+            then_body.body.append(InstructionNode(
                 statement=c_val,
                 original_bytecode=curr_item.opcode.bytecode,
                 used=curr_item.variable.used
             ))
             i += 1
 
-        if len(else_body.body) > 0:
-            return IfNode(condition=condition, then_branch=then_body, else_branch=else_body), i
         return IfNode(condition=condition, then_branch=then_body), i

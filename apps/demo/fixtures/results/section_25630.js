@@ -35,14 +35,12 @@ function AcquisitionManager(param0, param1, param2) {
     // USED → r2 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl.slice(-1)
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 592>  # String: '/' (String)
     // USED → r3 = "/"
-    if ({ BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl.slice(-1) {
-        // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 22212>  # String: '_serverUrl' (Identifier)
-        // USED → r2 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl
-        // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 3>
-        // USED → r2 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl + "/"
-        // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 5, string_id: 22212>  # String: '_serverUrl' (Identifier)
-        // USED → r1 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl + "/" }
-    }
+    // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 22212>  # String: '_serverUrl' (Identifier)
+    // USED → r2 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl
+    // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 3>
+    // USED → r2 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl + "/"
+    // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 5, string_id: 22212>  # String: '_serverUrl' (Identifier)
+    // USED → r1 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl + "/" }
     // CODE → <GetById>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 19645>  # String: 'appVersion' (Identifier)
     // USED → r2 = param2.appVersion
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 6, string_id: 19644>  # String: '_appVersion' (Identifier)

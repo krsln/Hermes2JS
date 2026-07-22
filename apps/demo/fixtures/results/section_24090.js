@@ -5,7 +5,7 @@ function onPress(param0) {
     r2 = r1[0]
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 1>
     r0 = getEnvironment(1)
-    if (r2) {
+    if (!(r2)) {
         // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 10>
         r2 = r0[10]
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
@@ -52,8 +52,6 @@ function onPress(param0) {
         // USED → r1 = r2.goBack
         // CODE → <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
         r1 = r2.goBack()
-        // CODE → <Jmp>: <Addr8: 32>  # Address: 00000099
-        goto label_153;
     }
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 12>
     r0 = r0[12]

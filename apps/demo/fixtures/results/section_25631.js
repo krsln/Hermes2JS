@@ -5,13 +5,13 @@ function function_25631(param0, param1) {
     // USED → r0 = 500
     // CODE → <GreaterEq>: <Reg8: 0, Reg8: 2, Reg8: 0>
     // USED → r0 = param1 >= 500
-    if (param1 >= 500) {
+    if (!(param1 >= 500)) {
         // CODE → <LoadConstInt>: <Reg8: 1, Imm32: 408>
         // USED → r1 = 408
         // CODE → <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
         // USED → r0 = param1 === 408
     }
-    if (param1 === 408) {
+    if (!(param1 === 408)) {
         // CODE → <LoadConstInt>: <Reg8: 1, Imm32: 429>
         // USED → r1 = 429
         // CODE → <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>

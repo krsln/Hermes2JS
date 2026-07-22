@@ -42,10 +42,6 @@ function function_12825(param0, param1, param2, param3, param4) {
         // USED → r1 = r10.pop()(r7)
         // CODE → <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
         // USED → r0 = r10.pop()(r7) === false
-        // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
-        goto label_122;
-        // CODE → <Catch>: <Reg8: 12>
-        // USED → r12 = caughtException
         // CODE → <Mov>: <Reg8: 11, Reg8: 9>
         // USED → r11 = r9
         // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
@@ -66,8 +62,8 @@ function function_12825(param0, param1, param2, param3, param4) {
         r1 = r9.error(caughtException)
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
         // USED → r1 = r0
-        // CODE → <JmpFalse>: <Addr8: -86, Reg8: 1>  # Address: 00000027
-        if (!r0) { /* jump to label_39 */ }
+        if (!r0) {
+        }
     }
     // CODE → <Ret>: <Reg8: 0>
     return r10.pop()(r7) === false;

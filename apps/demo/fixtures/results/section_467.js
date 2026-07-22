@@ -1550,8 +1550,6 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         r54 = r43
         // CODE → <Mov>: <Reg8: 41, Reg8: 54>
         // USED → r41 = r54
-        // CODE → <GetNextPName>: <Reg8: 45, Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
-        // USED → r45 = Object.keys(r50) /* for-in property list */.next() /* for-in step */
         // CODE → <Mov>: <Reg8: 44, Reg8: 45>
         // USED → r44 = r45
         // CODE → <GetByIdShort>: <Reg8: 52, Reg8: 50, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
@@ -1560,26 +1558,32 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
         r43 = r54
+        if (!{ ResponderEventPlugin: { _getResponder: _getResponder) {
+        }
         // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
         // USED → r52 = r50[r44]
         // CODE → <GetByIdShort>: <Reg8: 53, Reg8: 51, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
         // USED → r53 = {}.hasOwnProperty
         // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
         // USED → r53 = {}.hasOwnProperty(r45)
+        if (!{}.hasOwnProperty(r45)) {
+            // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
+            // USED → r53 = r51[r44]
+            // CODE → <Mov>: <Reg8: 43, Reg8: 54>
+            r43 = r54
+            // CODE → <Mov>: <Reg8: 42, Reg8: 52>
+            r42 = r52
+        }
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
         // USED → r53 = r51[r44]
-        // CODE → <Mov>: <Reg8: 43, Reg8: 54>
-        r43 = r54
-        // CODE → <Mov>: <Reg8: 42, Reg8: 52>
-        r42 = r52
-        // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-        // USED → r53 = r51[r44]
-        // CODE → <PutByVal>: <Reg8: 51, Reg8: 44, Reg8: 52>
-        {}[r45] = r50[r44]
-        // CODE → <LoadConstTrue>: <Reg8: 43>
-        r43 = true
-        // CODE → <Mov>: <Reg8: 42, Reg8: 52>
-        r42 = r52
+        if (!(r51[r44])) {
+            // CODE → <PutByVal>: <Reg8: 51, Reg8: 44, Reg8: 52>
+            {}[r45] = r50[r44]
+            // CODE → <LoadConstTrue>: <Reg8: 43>
+            r43 = true
+            // CODE → <Mov>: <Reg8: 42, Reg8: 52>
+            r42 = r52
+        }
         // CODE → <TryGetById>: <Reg8: 43, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
         // USED → r43 = globalThis.Error
         // CODE → <LoadConstString>: <Reg8: 42, string_id: 558>  # String: '`.' (String)
@@ -1749,10 +1753,10 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // USED → r16 = "function"
     // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
     // USED → r42 = typeof globalThis.queueMicrotask
-    if ("function" !== typeof globalThis.queueMicrotask) {
-        // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
-        // USED → r41 = globalThis.queueMicrotask
-    }
+    // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 16, Reg8: 42>  # Address: 0000103e
+    if ("function" !== typeof globalThis.queueMicrotask) { /* jump to label_4158 */ }
+    // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
+    // USED → r41 = globalThis.queueMicrotask
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 54, Reg8: 41>
     r1[54] = globalThis.queueMicrotask;
     // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 821>  # Function: [#821 getFiberCurrentPropsFromNode$1 of 17 bytes]: 2 params @ offset 0x00189a6d
@@ -1987,12 +1991,12 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // USED → r39 = globalThis.Object.is
     // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
     // USED → r39 = typeof globalThis.Object.is
-    if ("function" !== typeof globalThis.Object.is) {
-        // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-        // USED → r39 = globalThis.Object
-        // CODE → <GetById>: <Reg8: 38, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
-        // USED → r38 = globalThis.Object.is
-    }
+    // CODE → <JStrictNotEqual>: <Addr8: 16, Reg8: 16, Reg8: 39>  # Address: 0000127e
+    if ("function" !== typeof globalThis.Object.is) { /* jump to label_4734 */ }
+    // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
+    // USED → r39 = globalThis.Object
+    // CODE → <GetById>: <Reg8: 38, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
+    // USED → r38 = globalThis.Object.is
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
     r1[73] = globalThis.Object.is;
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
@@ -2359,342 +2363,326 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // USED → r17 = param2(r19[r17]).ReactFiberErrorDialog.showErrorDialog
     // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
     // USED → r17 = typeof param2(r19[r17]).ReactFiberErrorDialog.showErrorDialog
-    if ("function" !== typeof param2(r19[r17]) {
-        // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-        // USED → r17 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 121, Reg8: 17>
-        r1[121] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
-        // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-        // USED → r18 = globalThis.Error
-        // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
-        // USED → r17 = "str_6991"
-        // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-        // USED → r17 = globalThis.Error("str_6991")
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
-        r1[122] = globalThis.Error("str_6991");
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
-        r1[123] = false;
-        // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
-        // USED → r17 = { dehydrated: null, treeContext: null, retryLane: 0 }
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
-        r1[124] = { dehydrated: null, treeContext: null, retryLane: 0 };
-        // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
-        // USED → r15 = createCursor /* Closure with env r1 = undefined */(null)
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
-        r1[125] = createCursor /* Closure with env r1 = undefined */(null);
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 126, Reg8: 11>
-        r1[126] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 127, Reg8: 11>
-        r1[127] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 128, Reg8: 11>
-        r1[128] = null;
-        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-        // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 129, Reg8: 15>
-        r1[129] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 130, Reg8: 12>
-        r1[130] = false;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
-        r1[131] = false;
-        // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-        // USED → r15 = globalThis.WeakSet
-        // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-        // USED → r15 = typeof globalThis.WeakSet
-        // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
-        if ("function" === typeof globalThis.WeakSet) { /* jump to label_5669 */ }
-        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
-        r15 = globalThis.Set
-        // CODE → <Jmp>: <Addr8: 8>  # Address: 0000162b
-        goto label_5675;
-        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-        // USED → r15 = globalThis.WeakSet
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
-        r1[132] = globalThis.WeakSet;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
-        r1[133] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
-        r1[134] = false;
-        // CODE → <LoadConstInt>: <Reg8: 15, Imm32: 8192>
-        // USED → r15 = 8192
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
-        r1[135] = 8192;
-        // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-        // USED → r15 = globalThis.WeakMap
-        // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-        // USED → r15 = typeof globalThis.WeakMap
-        // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
-        if ("function" === typeof globalThis.WeakMap) { /* jump to label_5717 */ }
-        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-        r15 = globalThis.Map
-        // CODE → <Jmp>: <Addr8: 8>  # Address: 0000165b
-        goto label_5723;
-        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-        // USED → r15 = globalThis.WeakMap
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
-        r1[136] = globalThis.WeakMap;
-        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-        // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
-        r1[137] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
-        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-        // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
-        r1[138] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
-        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-        // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
-        r1[139] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
-        r1[140] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
-        r1[141] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 142, Reg8: 11>
-        r1[142] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 143, Reg8: 10>
-        r1[143] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 144, Reg8: 10>
-        r1[144] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 145, Reg8: 11>
-        r1[145] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 146, Reg8: 12>
-        r1[146] = false;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 147, Reg8: 10>
-        r1[147] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 148, Reg8: 10>
-        r1[148] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 149, Reg8: 11>
-        r1[149] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 150, Reg8: 10>
-        r1[150] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 151, Reg8: 10>
-        r1[151] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 152, Reg8: 10>
-        r1[152] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 153, Reg8: 10>
-        r1[153] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 154, Reg8: 11>
-        r1[154] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 155, Reg8: 11>
-        r1[155] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 156, Reg8: 12>
-        r1[156] = false;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
-        r1[157] = 0;
-        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
-        // USED → r15 = globalThis.Infinity
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
-        r1[158] = globalThis.Infinity;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
-        r1[159] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
-        r1[160] = false;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 161, Reg8: 11>
-        r1[161] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 162, Reg8: 11>
-        r1[162] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 163, Reg8: 12>
-        r1[163] = false;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 164, Reg8: 11>
-        r1[164] = null;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 165, Reg8: 10>
-        r1[165] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 166, Reg8: 10>
-        r1[166] = 0;
-        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 167, Reg8: 11>
-        r1[167] = null;
-        // CODE → <CreateClosure>: <Reg8: 10, Reg8: 1, function_id: 848>  # Function: [#848 batchedUpdatesImpl of 178 bytes]: 3 params @ offset 0x0018a193
-        // USED → r10 = batchedUpdatesImpl /* Closure with env r1 = undefined */
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
-        r1[207] = batchedUpdatesImpl /* Closure with env r1 = undefined */;
-        // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-        // USED → r10 = globalThis.Map
-        // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-        // USED → r12 = globalThis.Map.prototype
-        // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
-        r12 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
-        // CODE → <Mov>: <Reg8: 57, Reg8: 12>
-        r57 = r12
-        // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
-        r10 = new globalThis.Map("undefined")
-        // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
-        // USED → r10 = r12[r10]
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
-        r1[168] = r12[r10];
-        // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
-        // USED → r12 = { findFiberByHostInstance: null, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
-        // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-        // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
-        // CODE → <LoadConstString>: <Reg8: 10, string_id: 1866>  # String: '18.3.0-canary-9372c6311-20240315' (String)
-        // USED → r10 = "18.3.0-canary-9372c6311-20240315"
-        // CODE → <NewObject>: <Reg8: 8>
-        // USED → r8 = {}
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-        // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 15, Reg8: 1, function_id: 849>  # Function: [#849 getInspectorDataForViewTag of 21 bytes]: 1 params @ offset 0x0018a245
-        // USED → r15 = getInspectorDataForViewTag /* Closure with env r1 = undefined */
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12857>  # String: 'getInspectorDataForViewTag' (Identifier)
-        // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
-        // USED → r16 = function_850 /* Closure with env r1 = undefined */
-        // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
-        // USED → r15 = function_850 /* Closure with env r1 = undefined */.bind
-        // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
-        // USED → r15 = function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */)
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-        // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) }
-        // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-        // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }
-        // CODE → <NewObject>: <Reg8: 8>
-        // USED → r8 = {}
-        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
-        // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.bundleType
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
-        // USED → r8 = { bundleType: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.bundleType }
-        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
-        // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.version
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
-        // USED → r8 = { bundleType: 0, version: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.version, rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
-        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-        // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererPackageName
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererPackageName, rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
-        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-        // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererConfig
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererConfig, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null }
-        // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-        // USED → r14 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher }
-        // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
-        // USED → r14 = findHostInstanceByFiber /* Closure with env r1 = undefined */
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */ }
-        // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-        // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.findFiberByHostInstance
-        // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
-        if ({ findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.findFiberByHostInstance) { /* jump to label_6101 */ }
+    // CODE → <JStrictNotEqualLong>: <Addr32: 774, Reg8: 16, Reg8: 17>  # Address: 000018b9
+    if ("function" !== typeof param2(r19[r17]).ReactFiberErrorDialog.showErrorDialog) { /* jump to label_6329 */ }
+    // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
+    // USED → r17 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 121, Reg8: 17>
+    r1[121] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+    // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
+    // USED → r18 = globalThis.Error
+    // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
+    // USED → r17 = "str_6991"
+    // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
+    // USED → r17 = globalThis.Error("str_6991")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
+    r1[122] = globalThis.Error("str_6991");
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
+    r1[123] = false;
+    // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
+    // USED → r17 = { dehydrated: null, treeContext: null, retryLane: 0 }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
+    r1[124] = { dehydrated: null, treeContext: null, retryLane: 0 };
+    // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
+    // USED → r15 = createCursor /* Closure with env r1 = undefined */(null)
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
+    r1[125] = createCursor /* Closure with env r1 = undefined */(null);
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 126, Reg8: 11>
+    r1[126] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 127, Reg8: 11>
+    r1[127] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 128, Reg8: 11>
+    r1[128] = null;
+    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
+    // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 129, Reg8: 15>
+    r1[129] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 130, Reg8: 12>
+    r1[130] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
+    r1[131] = false;
+    // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
+    // USED → r15 = globalThis.WeakSet
+    // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
+    // USED → r15 = typeof globalThis.WeakSet
+    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
+    r15 = globalThis.Set
+    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
+    // USED → r15 = globalThis.WeakSet
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
+    r1[132] = globalThis.WeakSet;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
+    r1[133] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
+    r1[134] = false;
+    // CODE → <LoadConstInt>: <Reg8: 15, Imm32: 8192>
+    // USED → r15 = 8192
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
+    r1[135] = 8192;
+    // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+    // USED → r15 = globalThis.WeakMap
+    // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
+    // USED → r15 = typeof globalThis.WeakMap
+    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
+    r15 = globalThis.Map
+    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+    // USED → r15 = globalThis.WeakMap
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
+    r1[136] = globalThis.WeakMap;
+    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
+    // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
+    r1[137] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
+    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
+    // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
+    r1[138] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
+    // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
+    r1[139] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
+    r1[140] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
+    r1[141] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 142, Reg8: 11>
+    r1[142] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 143, Reg8: 10>
+    r1[143] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 144, Reg8: 10>
+    r1[144] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 145, Reg8: 11>
+    r1[145] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 146, Reg8: 12>
+    r1[146] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 147, Reg8: 10>
+    r1[147] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 148, Reg8: 10>
+    r1[148] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 149, Reg8: 11>
+    r1[149] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 150, Reg8: 10>
+    r1[150] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 151, Reg8: 10>
+    r1[151] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 152, Reg8: 10>
+    r1[152] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 153, Reg8: 10>
+    r1[153] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 154, Reg8: 11>
+    r1[154] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 155, Reg8: 11>
+    r1[155] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 156, Reg8: 12>
+    r1[156] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
+    r1[157] = 0;
+    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
+    // USED → r15 = globalThis.Infinity
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
+    r1[158] = globalThis.Infinity;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
+    r1[159] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
+    r1[160] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 161, Reg8: 11>
+    r1[161] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 162, Reg8: 11>
+    r1[162] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 163, Reg8: 12>
+    r1[163] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 164, Reg8: 11>
+    r1[164] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 165, Reg8: 10>
+    r1[165] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 166, Reg8: 10>
+    r1[166] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 167, Reg8: 11>
+    r1[167] = null;
+    // CODE → <CreateClosure>: <Reg8: 10, Reg8: 1, function_id: 848>  # Function: [#848 batchedUpdatesImpl of 178 bytes]: 3 params @ offset 0x0018a193
+    // USED → r10 = batchedUpdatesImpl /* Closure with env r1 = undefined */
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
+    r1[207] = batchedUpdatesImpl /* Closure with env r1 = undefined */;
+    // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
+    // USED → r10 = globalThis.Map
+    // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
+    // USED → r12 = globalThis.Map.prototype
+    // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
+    r12 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
+    // CODE → <Mov>: <Reg8: 57, Reg8: 12>
+    r57 = r12
+    // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
+    r10 = new globalThis.Map("undefined")
+    // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
+    // USED → r10 = r12[r10]
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
+    r1[168] = r12[r10];
+    // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
+    // USED → r12 = { findFiberByHostInstance: null, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
+    // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+    // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
+    // CODE → <LoadConstString>: <Reg8: 10, string_id: 1866>  # String: '18.3.0-canary-9372c6311-20240315' (String)
+    // USED → r10 = "18.3.0-canary-9372c6311-20240315"
+    // CODE → <NewObject>: <Reg8: 8>
+    // USED → r8 = {}
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
+    // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 15, Reg8: 1, function_id: 849>  # Function: [#849 getInspectorDataForViewTag of 21 bytes]: 1 params @ offset 0x0018a245
+    // USED → r15 = getInspectorDataForViewTag /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12857>  # String: 'getInspectorDataForViewTag' (Identifier)
+    // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
+    // USED → r16 = function_850 /* Closure with env r1 = undefined */
+    // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
+    // USED → r15 = function_850 /* Closure with env r1 = undefined */.bind
+    // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
+    // USED → r15 = function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */)
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
+    // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) }
+    // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+    // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }
+    // CODE → <NewObject>: <Reg8: 8>
+    // USED → r8 = {}
+    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
+    // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.bundleType
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
+    // USED → r8 = { bundleType: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.bundleType }
+    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
+    // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.version
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
+    // USED → r8 = { bundleType: 0, version: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.version, rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
+    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
+    // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererPackageName
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererPackageName, rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
+    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+    // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererConfig
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererConfig, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null }
+    // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
+    // USED → r14 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher }
+    // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
+    // USED → r14 = findHostInstanceByFiber /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */ }
+    // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+    // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.findFiberByHostInstance
+    if (!({ findFiberByHostInstance: getInstanceFromNode)) {
         // CODE → <Mov>: <Reg8: 12, Reg8: 13>
         // USED → r12 = r13
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13 }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
-        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null }
-        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
-        r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
-        // CODE → <Mov>: <Reg8: 7, Reg8: 8>
-        // USED → r7 = r8
-        // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-        // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
-        // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
-        // USED → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
-        // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
-        if ("undefined" === typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__) { /* jump to label_6205 */ }
-        // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-        // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
-        // CODE → <Mov>: <Reg8: 6, Reg8: 8>
-        // USED → r6 = r8
-        // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
-        // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled
-        // CODE → <JmpTrue>: <Addr8: 38, Reg8: 8>  # Address: 0000183d
-        if (globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) { /* jump to label_6205 */ }
+    }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13 }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
+    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null }
+    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
+    r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
+    // CODE → <Mov>: <Reg8: 7, Reg8: 8>
+    // USED → r7 = r8
+    // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
+    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+    // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
+    // USED → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+    // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
+    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+    // CODE → <Mov>: <Reg8: 6, Reg8: 8>
+    // USED → r6 = r8
+    // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
+    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled
+    if (!(globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled)) {
         // CODE → <Mov>: <Reg8: 8, Reg8: 6>
         // USED → r8 = r6
         // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
         // USED → r8 = r6.supportsFiber
-        // CODE → <JmpFalse>: <Addr8: 26, Reg8: 8>  # Address: 0000183d
-        if (!r6.supportsFiber) { /* jump to label_6205 */ }
-        // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
-        // USED → r8 = r8.inject
-        // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-        // USED → r7 = r8.inject()
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
-        r1[31] = r8.inject();
-        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
-        r1[32] = r8;
-        // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
-        goto label_6205;
-        // CODE → <Catch>: <Reg8: 6>
-        r6 = caughtException
-        // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 852>  # Function: [#852  of 60 bytes]: 3 params @ offset 0x0018a28d
-        // USED → r6 = function_852 /* Closure with env r1 = undefined */
-        // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 7, string_id: 18089>  # String: 'createPortal' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 853>  # Function: [#853  of 172 bytes]: 4 params @ offset 0x0018a2c9
-        // USED → r6 = function_853 /* Closure with env r1 = undefined */
-        // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 8, string_id: 11552>  # String: 'dispatchCommand' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 854>  # Function: [#854  of 82 bytes]: 2 params @ offset 0x0018a375
-        // USED → r6 = function_854 /* Closure with env r1 = undefined */
-        // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 9, string_id: 12842>  # String: 'findHostInstance_DEPRECATED' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */ }
-        // CODE → <PutById>: <Reg8: 3, Reg8: 5, UInt8: 10, string_id: 18319>  # String: 'findNodeHandle' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */ }
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 855>  # Function: [#855  of 30 bytes]: 2 params @ offset 0x0018a3c7
-        // USED → r4 = function_855 /* Closure with env r1 = undefined */
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 12, string_id: 23506>  # String: 'getNodeFromInternalInstanceHandle' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 856>  # Function: [#856  of 115 bytes]: 2 params @ offset 0x0018a3e5
-        // USED → r4 = function_856 /* Closure with env r1 = undefined */
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 13, string_id: 19508>  # String: 'getPublicInstanceFromInternalInstanceHandle' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 857>  # Function: [#857  of 21 bytes]: 1 params @ offset 0x0018a458
-        // USED → r4 = function_857 /* Closure with env r1 = undefined */
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 14, string_id: 19860>  # String: 'isChildPublicInstance' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 858>  # Function: [#858  of 267 bytes]: 5 params @ offset 0x0018a46d
-        // USED → r4 = function_858 /* Closure with env r1 = undefined */
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 15, string_id: 11830>  # String: 'render' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 859>  # Function: [#859  of 161 bytes]: 3 params @ offset 0x0018a578
-        // USED → r4 = function_859 /* Closure with env r1 = undefined */
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 16, string_id: 13824>  # String: 'sendAccessibilityEvent' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 860>  # Function: [#860  of 56 bytes]: 2 params @ offset 0x0018a619
-        // USED → r4 = function_860 /* Closure with env r1 = undefined */
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 17, string_id: 17701>  # String: 'stopSurface' (Identifier)
-        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */ }
-        // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 862>  # Function: [#862  of 21 bytes]: 2 params @ offset 0x0018a66d
-        // USED → r1 = function_862 /* Closure with env r1 = undefined */
-        // CODE → <PutById>: <Reg8: 3, Reg8: 1, UInt8: 18, string_id: 24466>  # String: 'unmountComponentAtNode' (Identifier)
-        r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */, unmountComponentAtNode: function_862 /* Closure with env r1 = undefined */ }
-        // CODE → <Ret>: <Reg8: 2>
-        return undefined;
+        if (!r6.supportsFiber) {
+            // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
+            // USED → r8 = r8.inject
+            // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
+            // USED → r7 = r8.inject()
+            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
+            r1[31] = r8.inject();
+            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
+            r1[32] = r8;
+        }
     }
+    // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 852>  # Function: [#852  of 60 bytes]: 3 params @ offset 0x0018a28d
+    // USED → r6 = function_852 /* Closure with env r1 = undefined */
+    // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 7, string_id: 18089>  # String: 'createPortal' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 853>  # Function: [#853  of 172 bytes]: 4 params @ offset 0x0018a2c9
+    // USED → r6 = function_853 /* Closure with env r1 = undefined */
+    // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 8, string_id: 11552>  # String: 'dispatchCommand' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 854>  # Function: [#854  of 82 bytes]: 2 params @ offset 0x0018a375
+    // USED → r6 = function_854 /* Closure with env r1 = undefined */
+    // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 9, string_id: 12842>  # String: 'findHostInstance_DEPRECATED' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */ }
+    // CODE → <PutById>: <Reg8: 3, Reg8: 5, UInt8: 10, string_id: 18319>  # String: 'findNodeHandle' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */ }
+    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 855>  # Function: [#855  of 30 bytes]: 2 params @ offset 0x0018a3c7
+    // USED → r4 = function_855 /* Closure with env r1 = undefined */
+    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 12, string_id: 23506>  # String: 'getNodeFromInternalInstanceHandle' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 856>  # Function: [#856  of 115 bytes]: 2 params @ offset 0x0018a3e5
+    // USED → r4 = function_856 /* Closure with env r1 = undefined */
+    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 13, string_id: 19508>  # String: 'getPublicInstanceFromInternalInstanceHandle' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 857>  # Function: [#857  of 21 bytes]: 1 params @ offset 0x0018a458
+    // USED → r4 = function_857 /* Closure with env r1 = undefined */
+    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 14, string_id: 19860>  # String: 'isChildPublicInstance' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 858>  # Function: [#858  of 267 bytes]: 5 params @ offset 0x0018a46d
+    // USED → r4 = function_858 /* Closure with env r1 = undefined */
+    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 15, string_id: 11830>  # String: 'render' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 859>  # Function: [#859  of 161 bytes]: 3 params @ offset 0x0018a578
+    // USED → r4 = function_859 /* Closure with env r1 = undefined */
+    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 16, string_id: 13824>  # String: 'sendAccessibilityEvent' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 860>  # Function: [#860  of 56 bytes]: 2 params @ offset 0x0018a619
+    // USED → r4 = function_860 /* Closure with env r1 = undefined */
+    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 17, string_id: 17701>  # String: 'stopSurface' (Identifier)
+    // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 862>  # Function: [#862  of 21 bytes]: 2 params @ offset 0x0018a66d
+    // USED → r1 = function_862 /* Closure with env r1 = undefined */
+    // CODE → <PutById>: <Reg8: 3, Reg8: 1, UInt8: 18, string_id: 24466>  # String: 'unmountComponentAtNode' (Identifier)
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */, unmountComponentAtNode: function_862 /* Closure with env r1 = undefined */ }
+    // CODE → <Ret>: <Reg8: 2>
+    return undefined;
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r1 = globalThis.Error
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4985>  # String: 'Expected ReactFiberErrorDialog.showErrorDialog to be a function.' (String)
     // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     // USED → r0 = globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
-    // CODE → <Throw>: <Reg8: 0>
-    r0 = throw globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
 }
