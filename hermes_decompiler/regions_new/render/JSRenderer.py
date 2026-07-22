@@ -11,7 +11,7 @@ class JSRenderer:
     def render(self, root):
         output = []
 
-        self._render(root, output, 0)
+        self._render(root, output, 1)
 
         return output
 
@@ -38,23 +38,12 @@ class JSRenderer:
 
     def _render_instruction(self, region, output, indent):
         block = region.block
+
         if self.verbose:
             output.append(f"{'    ' * indent}// Block {block.id}")
 
         for result in block.instructions:
             line = result.result.strip()
-
-            # Gereksiz yorumları temizle
-            line = line.replace(" /* for-in property list */", "")
-            line = line.replace(" /* for-in step */", "")
-
-            # if koşullarını düzelt
-            if "if (" in line and "{ /* jump to" in line:
-                line = line.replace("{ /* jump to", "{ // jump to")
-
-            # goto'ları tamamen kaldır (structured code'da gerek yok)
-            if line.startswith("// goto label_"):
-                continue
 
             if result.result:
                 output.append(("    " * indent) + line)
