@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import inspect
 import re
 
 from hermes_decompiler.Logger import get_logger
@@ -213,14 +212,8 @@ class StructuralAnalyzer:
     def _branch_region(self, target: int, merge: int | None, bound: set[int] | None,
                        active_loop_header: int | None, ) -> Region:
 
-        if merge is None:
-            return SequenceRegion([GotoRegion(ControlTransferKind.GOTO, label=f"label_{target}")])
-
-        if target in self.loops_by_header:
+        if active_loop_header is not None and target == active_loop_header:
             return SequenceRegion(regions=[GotoRegion(ControlTransferKind.CONTINUE)])
-
-        # if active_loop_header is not None and target == active_loop_header:
-        #     return SequenceRegion(regions=[GotoRegion(ControlTransferKind.CONTINUE)])
 
         if bound is not None and target not in bound:
             return SequenceRegion(regions=[GotoRegion(ControlTransferKind.BREAK)])
