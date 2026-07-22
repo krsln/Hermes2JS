@@ -22,7 +22,7 @@ class JSRenderer:
             self._render_sequence(region, output, indent)
 
         elif isinstance(region, InstructionRegion):
-            self._render_instruction(region, output, indent)
+            self._render_instruction(region.block, output, indent)
 
         else:
             raise TypeError(f"Unsupported region: {type(region).__name__}")
@@ -35,5 +35,5 @@ class JSRenderer:
     def _render_instruction(self, region, output, indent):
 
         output.append(
-            ("    " * indent) + region.result.result
+            ("    " * indent) + region.result
         )
