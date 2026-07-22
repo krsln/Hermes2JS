@@ -1,16 +1,26 @@
 from __future__ import annotations
 
+from ._IterativeSetAnalysis import _IterativeSetAnalysis
 
-class PostDominatorTree:
 
-    def __init__(self, cfg):
+class PostDominatorTree(_IterativeSetAnalysis):
 
-        self.cfg = cfg
-
-    def compute(self):
+    def roots(self):
 
         #
-        # next PR
+        # all exits
         #
 
-        return
+        return [
+
+            b
+
+            for b in self.cfg.blocks
+
+            if not b.successors
+
+        ]
+
+    def neighbors(self, block):
+
+        return block.successors

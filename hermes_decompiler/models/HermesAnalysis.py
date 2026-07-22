@@ -244,17 +244,12 @@ class HermesAnalysis:
         from hermes_decompiler.regions_new.render.JSRenderer import JSRenderer
 
         cfg = CFG.from_results(self.results)
-
         cfg.verify()
-
         cfg.compute_dominators()
-
         cfg.compute_post_dominators()
 
         analyzer = StructuralAnalyzer(cfg)
-
         root = analyzer.build()
-
         renderer = JSRenderer(verbose=verbose)
 
         return renderer.render(root)
