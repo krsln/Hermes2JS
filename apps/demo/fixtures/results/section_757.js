@@ -20,17 +20,17 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // Block 2
         r11 = r0.updateQueue
         r6 = r11
-        if (null === r0.updateQueue) { /* jump to 158 */ }
+        if (null === r0.updateQueue) { /* jump to label_158 */ }
         // Block 3
         r11 = r6
         r11 = r6.stores
         r6 = r11
-        if (null === r6.stores) { /* jump to 158 */ }
+        if (null === r6.stores) { /* jump to label_158 */ }
         // Block 4
         r7 = 0
         r11 = r6
         r11 = r6.length
-        if (0 >= r6.length) { /* jump to 158 */ }
+        if (0 >= r6.length) { /* jump to label_158 */ }
         // Block 5
         r13 = r6
         r11 = r7
@@ -43,42 +43,42 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         r13 = r9()
         r11 = r8
         r11 = r14(r9(), r8)
-        if (r14(r9() { /* jump to 137 */ }
+        if (r14(r9(), r8)) { /* jump to label_137 */ }
         // Block 7
         r11 = r7
         r13 = r7 + 1
         r7 = r13
         r11 = r6
         r11 = r6.length
-        if (r7 + 1 < r6.length) { /* jump to 86 */ }
+        if (r7 + 1 < r6.length) { /* jump to label_86 */ }
         // Block 8
         r6 = r0.child
         r11 = r0.subtreeFlags
         r11 = r0.subtreeFlags & 16384
-        if (!r0.subtreeFlags & 16384) { /* jump to 183 */ }
+        if (!r0.subtreeFlags & 16384) { /* jump to label_183 */ }
         // Block 9
         r11 = r6
-        if (null !== r6) { /* jump to 277 */ }
+        if (null !== r6) { /* jump to label_277 */ }
         // Block 10
-        if (r0 === param1) { /* jump to 273 */ }
+        if (r0 === param1) { /* jump to label_273 */ }
         // Block 11
         r13 = r0.sibling
         r14 = r12
         r11 = r14
-        if (null !== r0.sibling) { /* jump to 243 */ }
+        if (null !== r0.sibling) { /* jump to label_243 */ }
         // Block 12
         r15 = r12.return
         r13 = r14
-        if (null === r12.return) { /* jump to 269 */ }
+        if (null === r12.return) { /* jump to label_269 */ }
         // Block 13
         r15 = r14.return
-        if (r14.return === param1) { /* jump to 269 */ }
+        if (r14.return === param1) { /* jump to label_269 */ }
         // Block 14
         r15 = r14.return
         r13 = r14.return.sibling
         r14 = r15
         r11 = r14
-        if (null === r14.return.sibling) { /* jump to 202 */ }
+        if (null === r14.return.sibling) { /* jump to label_202 */ }
         // Block 15
         r14 = r14.sibling
         r13 = r14.return

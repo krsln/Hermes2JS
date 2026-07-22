@@ -39,7 +39,7 @@ function function_12825(param0, param1, param2, param3, param4) {
         r1 = r9.error(caughtException)
         // Block 4
         r1 = r0
-        if (!r0) { /* jump to 39 */ }
+        if (!r0) { /* jump to label_39 */ }
     // EndLoop
     // Block 5
     return r10.pop()(r7) === false;

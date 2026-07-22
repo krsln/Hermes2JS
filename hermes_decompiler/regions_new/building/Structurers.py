@@ -16,18 +16,21 @@ class SequenceStructurer:
         return root
 
 
+
 class LoopStructurer:
+
     def __init__(self, root, cfg):
         self.root = root
         self.cfg = cfg
 
     def run(self):
+
         if not self.cfg.loop_analysis:
             return
 
         loops = sorted(
             self.cfg.loop_analysis.loops.values(),
-            key=lambda x: x.header.id
+            key=lambda loop: loop.header.id
         )
 
         for loop in loops:
@@ -36,9 +39,10 @@ class LoopStructurer:
     def _wrap_loop(self, natural_loop):
 
         loop_region = LoopRegion(natural_loop)
-        body = SequenceRegion()
 
         new_children = []
+
+        header_index = None
 
         for child in self.root.children:
 
@@ -48,21 +52,35 @@ class LoopStructurer:
 
             block = child.block
 
+            # Header
+            if block == natural_loop.header:
+
+                header_index = len(new_children)
+
+                loop_region.header = child
+
+                continue
+
+            # Loop body
             if block in natural_loop.members:
 
-                body.append(child)
+                loop_region.body.append(child)
 
-            else:
+                continue
 
-                new_children.append(child)
+            # Outside loop
+            new_children.append(child)
 
-        if body.children:
-            loop_region.children.append(body)
+        if loop_region.header is None:
+            return
 
-            new_children.insert(
-                0,
-                loop_region
-            )
+        if header_index is None:
+            header_index = len(new_children)
+
+        new_children.insert(
+            header_index,
+            loop_region
+        )
 
         self.root.children = new_children
 

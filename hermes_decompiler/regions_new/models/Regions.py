@@ -13,16 +13,22 @@ class Region(ABC):
 
 class LoopRegion(Region):
 
-    def __init__(self, natural_loop):
+    def __init__(self, loop):
         super().__init__()
 
-        self.loop = natural_loop
+        self.loop = loop
 
-        self.header = natural_loop.header
-        self.members = natural_loop.members
-        self.exits = natural_loop.exits
+        self.header = None
 
-        self.children = []
+        self.body = SequenceRegion()
+
+        self.exits = list(loop.exits)
+
+        self.latches = list(loop.latches)
+
+        self.condition = None
+
+        self.loop_kind = None
 
 
 class SequenceRegion(Region):

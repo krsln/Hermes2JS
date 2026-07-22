@@ -19,12 +19,12 @@ function processColorsInProps(param0, param1) {
         r12 = r1[17]
         r11 = r12.includes
         r11 = r12.includes(r2)
-        if (r12.includes(r2) { /* jump to 158 */ }
+        if (r12.includes(r2)) { /* jump to label_158 */ }
         // Block 3
         r12 = r1[18]
         r11 = r7
         r11 = r12[r11]
-        if (!r12[r11]) { /* jump to 28 */ }
+        if (!r12[r11]) { /* jump to label_28 */ }
         // Block 4
         r11 = r7
         r13 = r10[r11]
@@ -33,7 +33,7 @@ function processColorsInProps(param0, param1) {
         // Block 5
         r14 = GetIterator(r13).next()
         r13 = r12
-        if (r12 === undefined) { /* jump to 28 */ }
+        if (r12 === undefined) { /* jump to label_28 */ }
         // Block 6
         r8 = r14
         r15 = r1[18]
@@ -41,7 +41,7 @@ function processColorsInProps(param0, param1) {
         r13 = r15[r13]
         r9 = r13
         r13 = r14[r13]
-        if (r14[r13] === undefined) { /* jump to 149 */ }
+        if (r14[r13] === undefined) { /* jump to label_149 */ }
         // Block 7
         r15 = r8
         r14 = r9

@@ -73,9 +73,8 @@ class JSRenderer:
         if self.verbose:
             output.append(f"{'    ' * indent}// Loop (header={region.loop.header.id})")
 
-        # Body'yi render et
-        for child in region.children:
-            self._render(child, output, indent + 1)
+        self._render(region.header, output, indent + 1)
+        self._render(region.body, output, indent + 1)
 
         if self.verbose:
             output.append(f"{'    ' * indent}// EndLoop")
