@@ -1545,1208 +1545,1156 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r42 = undefined
     // CODE → <LoadConstFalse>: <Reg8: 41>
     r41 = false
-    // CODE → <GetPNameList>: <Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
-    // USED → r49 = Object.keys(r50) /* for-in property list */
-    // CODE → <JmpUndefined>: <Addr8: 115, Reg8: 49>  # Address: 00000ecd
-    if (Object.keys(r50) {
+    for (const key in r50) {
         // CODE → <Mov>: <Reg8: 54, Reg8: 43>
-        // label_3677:
         r54 = r43
         // CODE → <Mov>: <Reg8: 41, Reg8: 54>
         // USED → r41 = r54
         // CODE → <GetNextPName>: <Reg8: 45, Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
         // USED → r45 = Object.keys(r50) /* for-in property list */.next() /* for-in step */
-        // CODE → <JmpUndefined>: <Addr8: 100, Reg8: 45>  # Address: 00000ecd
-        if (Object.keys(r50) {
-            // CODE → <Mov>: <Reg8: 44, Reg8: 45>
-            // USED → r44 = r45
-            // CODE → <GetByIdShort>: <Reg8: 52, Reg8: 50, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-            // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty
-            // CODE → <Call2>: <Reg8: 52, Reg8: 52, Reg8: 50, Reg8: 44>
-            // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)
-            // CODE → <Mov>: <Reg8: 43, Reg8: 54>
-            r43 = r54
-            // CODE → <JmpFalse>: <Addr8: -31, Reg8: 52>  # Address: 00000e5d
-            if (!{ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45) {
-                // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
-                // USED → r52 = r50[r44]
-                // CODE → <GetByIdShort>: <Reg8: 53, Reg8: 51, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-                // USED → r53 = {}.hasOwnProperty
-                // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
-                // USED → r53 = {}.hasOwnProperty(r45)
-                // CODE → <JmpFalse>: <Addr8: 17, Reg8: 53>  # Address: 00000e9e
-                if (!{}.hasOwnProperty(r45) {
-                    // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-                    // USED → r53 = r51[r44]
-                    // CODE → <Mov>: <Reg8: 43, Reg8: 54>
-                    r43 = r54
-                    // CODE → <Mov>: <Reg8: 42, Reg8: 52>
-                    r42 = r52
-                    // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
-                    if (r51[r44] === r50[r44]) {
-                    }
-                    // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-                    // label_3742:
-                    // USED → r53 = r51[r44]
-                    // CODE → <JmpTrue>: <Addr8: 14, Reg8: 53>  # Address: 00000eb0
-                    if (r51[r44]) {
-                        // CODE → <PutByVal>: <Reg8: 51, Reg8: 44, Reg8: 52>
-                        {}[r45] = r50[r44]
-                        // CODE → <LoadConstTrue>: <Reg8: 43>
-                        r43 = true
-                        // CODE → <Mov>: <Reg8: 42, Reg8: 52>
-                        r42 = r52
-                        // CODE → <Jmp>: <Addr8: -81>  # Address: 00000e5d
-                        goto label_3677;
-                    }
-                    // CODE → <TryGetById>: <Reg8: 43, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-                    // label_3760:
-                    // USED → r43 = globalThis.Error
-                    // CODE → <LoadConstString>: <Reg8: 42, string_id: 558>  # String: '`.' (String)
-                    // USED → r42 = "`."
-                    // CODE → <Add>: <Reg8: 44, Reg8: 44, Reg8: 42>
-                    // USED → r44 = r45 + "`."
-                    // CODE → <LoadConstString>: <Reg8: 42, string_id: 4924>  # String: 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `' (String)
-                    // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `"
-                    // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
-                    // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`."
-                    // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
-                    // USED → r42 = globalThis.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.")
-                    // CODE → <Throw>: <Reg8: 42>
-                    r42 = throw globalThis.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.")
-                }
-            }
-            // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
-            // label_3789:
-            if (!r54) {
-                // CODE → <Call1>: <Reg8: 16, Reg8: 16, Reg8: 2>
-                r16 = recomputePluginOrdering /* Closure with env r1 = undefined */()
-            }
-            // CODE → <NewObject>: <Reg8: 16>
-            // label_3796:
-            // USED → r16 = {}
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 25, Reg8: 16>
-            r1[25] = {};
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 26, Reg8: 11>
-            r1[26] = null;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 27, Reg8: 10>
-            r1[27] = 0;
-            // CODE → <NewObject>: <Reg8: 16>
-            // USED → r16 = {}
-            // CODE → <PutNewOwnById>: <Reg8: 16, Reg8: 37, string_id: 24472>  # String: 'unsafelyIgnoreFunctions' (Identifier)
-            // USED → r16 = { unsafelyIgnoreFunctions: true }
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 28, Reg8: 16>
-            r1[28] = { unsafelyIgnoreFunctions: true };
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 29, Reg8: 12>
-            r1[29] = false;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
-            r1[30] = null;
-            // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 14, string_id: 21563>  # String: '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED' (Identifier)
-            // USED → r14 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 11>
-            r1[31] = null;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
-            r1[32] = null;
-            // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-            // USED → r16 = globalThis.Math
-            // CODE → <GetById>: <Reg8: 16, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
-            // USED → r16 = globalThis.Math.clz32
-            // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00000f1e
-            if (!globalThis.Math.clz32) {
-                // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-                // USED → r16 = globalThis.Math
-                // CODE → <GetById>: <Reg8: 9, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
-                // USED → r9 = globalThis.Math.clz32
-            }
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 33, Reg8: 9>
-            // label_3870:
-            r1[33] = globalThis.Math.clz32;
-            // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-            // USED → r9 = globalThis.Math
-            // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 17, string_id: 171>  # String: 'log' (Identifier)
-            // USED → r9 = globalThis.Math.log
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 34, Reg8: 9>
-            r1[34] = globalThis.Math.log;
-            // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-            // USED → r9 = globalThis.Math
-            // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 18, string_id: 21154>  # String: 'LN2' (Identifier)
-            // USED → r9 = globalThis.Math.LN2
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 35, Reg8: 9>
-            r1[35] = globalThis.Math.LN2;
-            // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 128>
-            // USED → r9 = 128
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 36, Reg8: 9>
-            r1[36] = 128;
-            // CODE → <LoadConstInt>: <Reg8: 9, Imm32: 4194304>
-            // USED → r9 = 4194304
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 37, Reg8: 9>
-            r1[37] = 4194304;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 38, Reg8: 10>
-            r1[38] = 0;
-            // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 19, string_id: 24093>  # String: 'nativeFabricUIManager' (Identifier)
-            // USED → r9 = globalThis.nativeFabricUIManager
-            // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 20, string_id: 15507>  # String: 'createNode' (Identifier)
-            // USED → r16 = globalThis.nativeFabricUIManager.createNode
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 39, Reg8: 16>
-            r1[39] = globalThis.nativeFabricUIManager.createNode;
-            // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 21, string_id: 22912>  # String: 'cloneNodeWithNewChildren' (Identifier)
-            // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewChildren
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 40, Reg8: 16>
-            r1[40] = globalThis.nativeFabricUIManager.cloneNodeWithNewChildren;
-            // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 22, string_id: 22913>  # String: 'cloneNodeWithNewChildrenAndProps' (Identifier)
-            // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 41, Reg8: 16>
-            r1[41] = globalThis.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps;
-            // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 23, string_id: 22914>  # String: 'cloneNodeWithNewProps' (Identifier)
-            // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewProps
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 42, Reg8: 16>
-            r1[42] = globalThis.nativeFabricUIManager.cloneNodeWithNewProps;
-            // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 24, string_id: 23048>  # String: 'createChildSet' (Identifier)
-            // USED → r16 = globalThis.nativeFabricUIManager.createChildSet
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 43, Reg8: 16>
-            r1[43] = globalThis.nativeFabricUIManager.createChildSet;
-            // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 25, string_id: 22565>  # String: 'appendChild' (Identifier)
-            // USED → r16 = globalThis.nativeFabricUIManager.appendChild
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 44, Reg8: 16>
-            r1[44] = globalThis.nativeFabricUIManager.appendChild;
-            // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 22566>  # String: 'appendChildToSet' (Identifier)
-            // USED → r16 = globalThis.nativeFabricUIManager.appendChildToSet
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 45, Reg8: 16>
-            r1[45] = globalThis.nativeFabricUIManager.appendChildToSet;
-            // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 27, string_id: 22962>  # String: 'completeRoot' (Identifier)
-            // USED → r16 = globalThis.nativeFabricUIManager.completeRoot
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 46, Reg8: 16>
-            r1[46] = globalThis.nativeFabricUIManager.completeRoot;
-            // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 28, string_id: 20376>  # String: 'registerEventHandler' (Identifier)
-            // USED → r16 = globalThis.nativeFabricUIManager.registerEventHandler
-            // CODE → <GetById>: <Reg8: 41, Reg8: 9, UInt8: 29, string_id: 24474>  # String: 'unstable_DiscreteEventPriority' (Identifier)
-            // USED → r41 = globalThis.nativeFabricUIManager.unstable_DiscreteEventPriority
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 47, Reg8: 41>
-            r1[47] = globalThis.nativeFabricUIManager.unstable_DiscreteEventPriority;
-            // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 30, string_id: 24484>  # String: 'unstable_getCurrentEventPriority' (Identifier)
-            // USED → r9 = globalThis.nativeFabricUIManager.unstable_getCurrentEventPriority
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 48, Reg8: 9>
-            r1[48] = globalThis.nativeFabricUIManager.unstable_getCurrentEventPriority;
-            // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
-            // USED → r9 = r19[r17]
-            // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
-            // USED → r9 = param2(r19[r17])
-            // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-            // USED → r9 = param2(r19[r17]).ReactNativeViewConfigRegistry
-            // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 31, string_id: 137>  # String: 'get' (Identifier)
-            // USED → r9 = param2(r19[r17]).ReactNativeViewConfigRegistry.get
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 49, Reg8: 9>
-            r1[49] = param2(r19[r17]).ReactNativeViewConfigRegistry.get;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
-            r1[50] = 2;
-            // CODE → <JmpFalse>: <Addr8: 13, Reg8: 16>  # Address: 00000fef
-            if (!globalThis.nativeFabricUIManager.registerEventHandler) {
-                // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
-                // USED → r9 = dispatchEvent /* Closure with env r1 = undefined */
-                // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
-                r9 = globalThis.nativeFabricUIManager.registerEventHandler(dispatchEvent /* Closure with env r1 = undefined */)
-            }
-            // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 32, string_id: 214>  # String: 'setTimeout' (Identifier)
-            // label_4079:
-            // USED → r41 = globalThis.setTimeout
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 51, Reg8: 41>
-            r1[51] = globalThis.setTimeout;
-            // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 33, string_id: 12162>  # String: 'clearTimeout' (Identifier)
-            // USED → r9 = globalThis.clearTimeout
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 52, Reg8: 9>
-            r1[52] = globalThis.clearTimeout;
-            // CODE → <GetById>: <Reg8: 16, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
-            // USED → r16 = globalThis.RN$enableMicrotasksInReact
-            // CODE → <LoadConstString>: <Reg8: 9, string_id: 610>  # String: 'undefined' (String)
-            // USED → r9 = "undefined"
-            // CODE → <TypeOf>: <Reg8: 16, Reg8: 16>
-            // USED → r16 = typeof globalThis.RN$enableMicrotasksInReact
-            // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
-            // USED → r16 = "undefined" !== typeof globalThis.RN$enableMicrotasksInReact
-            // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00001023
-            if (!"undefined" !== typeof globalThis.RN$enableMicrotasksInReact) {
-                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
-                // USED → r42 = globalThis.RN$enableMicrotasksInReact
-                // CODE → <Not>: <Reg8: 42, Reg8: 42>
-                // USED → r42 = !globalThis.RN$enableMicrotasksInReact
-                // CODE → <Not>: <Reg8: 16, Reg8: 42>
-                // USED → r16 = !!globalThis.RN$enableMicrotasksInReact
-            }
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 53, Reg8: 16>
-            // label_4131:
-            r1[53] = !!globalThis.RN$enableMicrotasksInReact;
-            // CODE → <GetById>: <Reg8: 42, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
-            // USED → r42 = globalThis.queueMicrotask
-            // CODE → <LoadConstString>: <Reg8: 16, string_id: 12255>  # String: 'function' (Identifier)
-            // USED → r16 = "function"
-            // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
-            // USED → r42 = typeof globalThis.queueMicrotask
-            // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 16, Reg8: 42>  # Address: 0000103e
-            if ("function" !== typeof globalThis.queueMicrotask) {
-                // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
-                // USED → r41 = globalThis.queueMicrotask
-            }
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 54, Reg8: 41>
-            // label_4158:
-            r1[54] = globalThis.queueMicrotask;
-            // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 821>  # Function: [#821 getFiberCurrentPropsFromNode$1 of 17 bytes]: 2 params @ offset 0x00189a6d
-            // USED → r41 = getFiberCurrentPropsFromNode$1 /* Closure with env r1 = undefined */
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 41>
-            r1[5] = getFiberCurrentPropsFromNode$1 /* Closure with env r1 = undefined */;
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 6, Reg8: 8>
-            r1[6] = getInstanceFromNode /* Closure with env r1 = undefined */;
-            // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 822>  # Function: [#822 getNodeFromInstance$1 of 49 bytes]: 2 params @ offset 0x00189a7e
-            // USED → r41 = getNodeFromInstance$1 /* Closure with env r1 = undefined */
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 7, Reg8: 41>
-            r1[7] = getNodeFromInstance$1 /* Closure with env r1 = undefined */;
-            // CODE → <GetById>: <Reg8: 42, Reg8: 40, UInt8: 36, string_id: 15132>  # String: 'injection' (Identifier)
-            // USED → r42 = { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }.injection
-            // CODE → <GetById>: <Reg8: 41, Reg8: 42, UInt8: 37, string_id: 21100>  # String: 'injectGlobalResponderHandler' (Identifier)
-            // USED → r41 = { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }.injection.injectGlobalResponderHandler
-            // CODE → <NewObject>: <Reg8: 40>
-            // USED → r40 = {}
-            // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 823>  # Function: [#823 onChange of 122 bytes]: 4 params @ offset 0x00189aaf
-            // USED → r43 = onChange /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 43, string_id: 15401>  # String: 'onChange' (Identifier)
-            // USED → r40 = { onChange: onChange /* Closure with env r1 = undefined */ }
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            r40 = { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }.injection.injectGlobalResponderHandler({ onChange: onChange /* Closure with env r1 = undefined */ })
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 3815>  # String: 'react.element' (String)
-            // USED → r40 = "react.element"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.element")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 55, Reg8: 40>
-            r1[55] = globalThis.Symbol.for("react.element");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 5553>  # String: 'react.portal' (String)
-            // USED → r40 = "react.portal"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.portal")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 56, Reg8: 40>
-            r1[56] = globalThis.Symbol.for("react.portal");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 5930>  # String: 'react.fragment' (String)
-            // USED → r40 = "react.fragment"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.fragment")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 57, Reg8: 40>
-            r1[57] = globalThis.Symbol.for("react.fragment");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 6410>  # String: 'react.strict_mode' (String)
-            // USED → r40 = "react.strict_mode"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.strict_mode")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 58, Reg8: 40>
-            r1[58] = globalThis.Symbol.for("react.strict_mode");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 5628>  # String: 'react.profiler' (String)
-            // USED → r40 = "react.profiler"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.profiler")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 59, Reg8: 40>
-            r1[59] = globalThis.Symbol.for("react.profiler");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 2499>  # String: 'react.provider' (String)
-            // USED → r40 = "react.provider"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.provider")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 60, Reg8: 40>
-            r1[60] = globalThis.Symbol.for("react.provider");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 8244>  # String: 'react.consumer' (String)
-            // USED → r40 = "react.consumer"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.consumer")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 61, Reg8: 40>
-            r1[61] = globalThis.Symbol.for("react.consumer");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 4944>  # String: 'react.context' (String)
-            // USED → r40 = "react.context"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.context")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 62, Reg8: 40>
-            r1[62] = globalThis.Symbol.for("react.context");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 7930>  # String: 'react.forward_ref' (String)
-            // USED → r40 = "react.forward_ref"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.forward_ref")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 63, Reg8: 40>
-            r1[63] = globalThis.Symbol.for("react.forward_ref");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 6421>  # String: 'react.suspense' (String)
-            // USED → r40 = "react.suspense"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.suspense")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 64, Reg8: 40>
-            r1[64] = globalThis.Symbol.for("react.suspense");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 6422>  # String: 'react.suspense_list' (String)
-            // USED → r40 = "react.suspense_list"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.suspense_list")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 65, Reg8: 40>
-            r1[65] = globalThis.Symbol.for("react.suspense_list");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 410>  # String: 'react.memo' (String)
-            // USED → r40 = "react.memo"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.memo")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 66, Reg8: 40>
-            r1[66] = globalThis.Symbol.for("react.memo");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 10762>  # String: 'react.lazy' (String)
-            // USED → r40 = "react.lazy"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.lazy")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 67, Reg8: 40>
-            r1[67] = globalThis.Symbol.for("react.lazy");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 6222>  # String: 'react.scope' (String)
-            // USED → r40 = "react.scope"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            r40 = globalThis.Symbol.for("react.scope")
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 6531>  # String: 'react.debug_trace_mode' (String)
-            // USED → r40 = "react.debug_trace_mode"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            r40 = globalThis.Symbol.for("react.debug_trace_mode")
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 5577>  # String: 'react.offscreen' (String)
-            // USED → r40 = "react.offscreen"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            // USED → r40 = globalThis.Symbol.for("react.offscreen")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 68, Reg8: 40>
-            r1[68] = globalThis.Symbol.for("react.offscreen");
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 4905>  # String: 'react.legacy_hidden' (String)
-            // USED → r40 = "react.legacy_hidden"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            r40 = globalThis.Symbol.for("react.legacy_hidden")
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 2166>  # String: 'react.cache' (String)
-            // USED → r40 = "react.cache"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            r40 = globalThis.Symbol.for("react.cache")
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 8982>  # String: 'react.tracing_marker' (String)
-            // USED → r40 = "react.tracing_marker"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            r40 = globalThis.Symbol.for("react.tracing_marker")
-            // CODE → <TryGetById>: <Reg8: 40, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r40 = globalThis.Symbol
-            // CODE → <GetById>: <Reg8: 40, Reg8: 40, UInt8: 40, string_id: 13658>  # String: 'iterator' (Identifier)
-            // USED → r40 = globalThis.Symbol.iterator
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 69, Reg8: 40>
-            r1[69] = globalThis.Symbol.iterator;
-            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-            // USED → r42 = globalThis.Symbol
-            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-            // USED → r41 = globalThis.Symbol.for
-            // CODE → <LoadConstString>: <Reg8: 40, string_id: 10511>  # String: 'react.client.reference' (String)
-            // USED → r40 = "react.client.reference"
-            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-            r40 = globalThis.Symbol.for("react.client.reference")
-            // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-            // USED → r40 = []
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
-            r1[70] = [];
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 71, Reg8: 39>
-            r1[71] = -1;
-            // CODE → <NewObject>: <Reg8: 39>
-            // USED → r39 = {}
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 72, Reg8: 39>
-            r1[72] = {};
-            // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-            // USED → r39 = globalThis.Object
-            // CODE → <GetById>: <Reg8: 39, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
-            // USED → r39 = globalThis.Object.is
-            // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
-            // USED → r39 = typeof globalThis.Object.is
-            // CODE → <JStrictNotEqual>: <Addr8: 16, Reg8: 16, Reg8: 39>  # Address: 0000127e
-            if ("function" !== typeof globalThis.Object.is) {
-                // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-                // USED → r39 = globalThis.Object
-                // CODE → <GetById>: <Reg8: 38, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
-                // USED → r38 = globalThis.Object.is
-            }
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
-            // label_4734:
-            r1[73] = globalThis.Object.is;
-            // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-            // USED → r38 = createCursor /* Closure with env r1 = undefined */(null)
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 74, Reg8: 38>
-            r1[74] = createCursor /* Closure with env r1 = undefined */(null);
-            // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-            // USED → r38 = createCursor /* Closure with env r1 = undefined */(null)
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 75, Reg8: 38>
-            r1[75] = createCursor /* Closure with env r1 = undefined */(null);
-            // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-            // USED → r38 = createCursor /* Closure with env r1 = undefined */(null)
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 76, Reg8: 38>
-            r1[76] = createCursor /* Closure with env r1 = undefined */(null);
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 77, Reg8: 11>
-            r1[77] = null;
-            // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
-            // USED → r38 = []
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 78, Reg8: 38>
-            r1[78] = [];
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 79, Reg8: 10>
-            r1[79] = 0;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 80, Reg8: 10>
-            r1[80] = 0;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 81, Reg8: 11>
-            r1[81] = null;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 82, Reg8: 11>
-            r1[82] = null;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 83, Reg8: 12>
-            r1[83] = false;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 84, Reg8: 12>
-            r1[84] = false;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 85, Reg8: 12>
-            r1[85] = false;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 86, Reg8: 10>
-            r1[86] = 0;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 87, Reg8: 12>
-            r1[87] = false;
-            // CODE → <TryGetById>: <Reg8: 38, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-            // USED → r38 = globalThis.Object
-            // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-            // USED → r38 = globalThis.Object.prototype
-            // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-            // USED → r38 = globalThis.Object.prototype.hasOwnProperty
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 88, Reg8: 38>
-            r1[88] = globalThis.Object.prototype.hasOwnProperty;
-            // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-            // USED → r39 = globalThis.Error
-            // CODE → <LoadConstString>: <Reg8: 38, string_id: 3625>  # String: "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`" (String)
-            // USED → r38 = "str_3625"
-            // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-            // USED → r38 = globalThis.Error("str_3625")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 89, Reg8: 38>
-            r1[89] = globalThis.Error("str_3625");
-            // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-            // USED → r39 = globalThis.Error
-            // CODE → <LoadConstString>: <Reg8: 38, string_id: 6775>  # String: "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React." (String)
-            // USED → r38 = "str_6775"
-            // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-            // USED → r38 = globalThis.Error("str_6775")
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
-            r1[90] = globalThis.Error("str_6775");
-            // CODE → <NewObject>: <Reg8: 38>
-            // USED → r38 = {}
-            // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
-            // USED → r39 = then /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 38, Reg8: 39, string_id: 231>  # String: 'then' (Identifier)
-            // USED → r38 = { then: then /* Closure with env r1 = undefined */ }
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 91, Reg8: 38>
-            r1[91] = { then: then /* Closure with env r1 = undefined */ };
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 92, Reg8: 11>
-            r1[92] = null;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 93, Reg8: 11>
-            r1[93] = null;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 94, Reg8: 10>
-            r1[94] = 0;
-            // CODE → <Call2>: <Reg8: 37, Reg8: 20, Reg8: 2, Reg8: 37>
-            // USED → r37 = createChildReconciler /* Closure with env r1 = undefined */(true)
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 95, Reg8: 37>
-            r1[95] = createChildReconciler /* Closure with env r1 = undefined */(true);
-            // CODE → <Call2>: <Reg8: 20, Reg8: 20, Reg8: 2, Reg8: 12>
-            // USED → r20 = createChildReconciler /* Closure with env r1 = undefined */(false)
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 96, Reg8: 20>
-            r1[96] = createChildReconciler /* Closure with env r1 = undefined */(false);
-            // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-            // USED → r20 = createCursor /* Closure with env r1 = undefined */(null)
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 97, Reg8: 20>
-            r1[97] = createCursor /* Closure with env r1 = undefined */(null);
-            // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-            // USED → r20 = createCursor /* Closure with env r1 = undefined */(0)
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 98, Reg8: 20>
-            r1[98] = createCursor /* Closure with env r1 = undefined */(0);
-            // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-            // USED → r20 = createCursor /* Closure with env r1 = undefined */(null)
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 99, Reg8: 20>
-            r1[99] = createCursor /* Closure with env r1 = undefined */(null);
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 100, Reg8: 11>
-            r1[100] = null;
-            // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-            // USED → r20 = createCursor /* Closure with env r1 = undefined */(0)
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 101, Reg8: 20>
-            r1[101] = createCursor /* Closure with env r1 = undefined */(0);
-            // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-            // USED → r20 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 102, Reg8: 20>
-            r1[102] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
-            // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-            // USED → r20 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 103, Reg8: 20>
-            r1[103] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 104, Reg8: 10>
-            r1[104] = 0;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 105, Reg8: 11>
-            r1[105] = null;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 106, Reg8: 11>
-            r1[106] = null;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 107, Reg8: 11>
-            r1[107] = null;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 108, Reg8: 12>
-            r1[108] = false;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 109, Reg8: 12>
-            r1[109] = false;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 110, Reg8: 12>
-            r1[110] = false;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 111, Reg8: 10>
-            r1[111] = 0;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 112, Reg8: 11>
-            r1[112] = null;
-            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 113, Reg8: 10>
-            r1[113] = 0;
-            // CODE → <CreateClosure>: <Reg8: 20, Reg8: 1, function_id: 825>  # Function: [#825 createFunctionComponentUpdateQueue of 12 bytes]: 1 params @ offset 0x00189b29
-            // USED → r20 = createFunctionComponentUpdateQueue /* Closure with env r1 = undefined */
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 114, Reg8: 20>
-            r1[114] = createFunctionComponentUpdateQueue /* Closure with env r1 = undefined */;
-            // CODE → <NewObject>: <Reg8: 20>
-            // USED → r20 = {}
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 228>  # String: 'useContext' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 243>  # String: 'useEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 230>  # String: 'useMemo' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 12216>  # String: 'useReducer' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 244>  # String: 'useRef' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 246>  # String: 'useState' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */, useDeferredValue: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24665>  # String: 'useTransition' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */, useDeferredValue: throwInvalidHookError /* Closure with env r1 = undefined */, useTransition: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */, useDeferredValue: throwInvalidHookError /* Closure with env r1 = undefined */, useTransition: throwInvalidHookError /* Closure with env r1 = undefined */, useSyncExternalStore: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24594>  # String: 'useId' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */, useDeferredValue: throwInvalidHookError /* Closure with env r1 = undefined */, useTransition: throwInvalidHookError /* Closure with env r1 = undefined */, useSyncExternalStore: throwInvalidHookError /* Closure with env r1 = undefined */, useId: throwInvalidHookError /* Closure with env r1 = undefined */ }
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 115, Reg8: 20>
-            r1[115] = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */, useDeferredValue: throwInvalidHookError /* Closure with env r1 = undefined */, useTransition: throwInvalidHookError /* Closure with env r1 = undefined */, useSyncExternalStore: throwInvalidHookError /* Closure with env r1 = undefined */, useId: throwInvalidHookError /* Closure with env r1 = undefined */ };
-            // CODE → <NewObject>: <Reg8: 20>
-            // USED → r20 = {}
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 36, Reg8: 1, function_id: 826>  # Function: [#826 useCallback of 49 bytes]: 3 params @ offset 0x00189b35
-            // USED → r36 = useCallback /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 243>  # String: 'useEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 827>  # Function: [#827 useImperativeHandle of 90 bytes]: 4 params @ offset 0x00189b66
-            // USED → r35 = useImperativeHandle /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 828>  # Function: [#828 useLayoutEffect of 33 bytes]: 3 params @ offset 0x00189bc0
-            // USED → r35 = useLayoutEffect /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 829>  # Function: [#829 useInsertionEffect of 30 bytes]: 3 params @ offset 0x00189be1
-            // USED → r35 = useInsertionEffect /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 830>  # Function: [#830 useMemo of 64 bytes]: 3 params @ offset 0x00189bff
-            // USED → r35 = useMemo /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 230>  # String: 'useMemo' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 831>  # Function: [#831 useReducer of 139 bytes]: 4 params @ offset 0x00189c3f
-            // USED → r35 = useReducer /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 12216>  # String: 'useReducer' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 832>  # Function: [#832 useRef of 31 bytes]: 2 params @ offset 0x00189cca
-            // USED → r35 = useRef /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 244>  # String: 'useRef' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 833>  # Function: [#833 useState of 72 bytes]: 2 params @ offset 0x00189ce9
-            // USED → r35 = useState /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 246>  # String: 'useState' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 834>  # Function: [#834 useDeferredValue of 34 bytes]: 3 params @ offset 0x00189d31
-            // USED → r35 = useDeferredValue /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 835>  # Function: [#835 useTransition of 79 bytes]: 1 params @ offset 0x00189d53
-            // USED → r35 = useTransition /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24665>  # String: 'useTransition' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 836>  # Function: [#836 useSyncExternalStore of 239 bytes]: 3 params @ offset 0x00189da2
-            // USED → r35 = useSyncExternalStore /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: useSyncExternalStore /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 837>  # Function: [#837 useId of 83 bytes]: 1 params @ offset 0x00189e91
-            // USED → r35 = useId /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24594>  # String: 'useId' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: useSyncExternalStore /* Closure with env r1 = undefined */, useId: useId /* Closure with env r1 = undefined */ }
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 116, Reg8: 20>
-            r1[116] = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: useSyncExternalStore /* Closure with env r1 = undefined */, useId: useId /* Closure with env r1 = undefined */ };
-            // CODE → <NewObject>: <Reg8: 20>
-            // USED → r20 = {}
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 12216>  # String: 'useReducer' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 838>  # Function: [#838 useState of 22 bytes]: 1 params @ offset 0x00189ee4
-            // USED → r34 = useState /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 34, string_id: 246>  # String: 'useState' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 839>  # Function: [#839 useDeferredValue of 42 bytes]: 3 params @ offset 0x00189efa
-            // USED → r34 = useDeferredValue /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 840>  # Function: [#840 useTransition of 78 bytes]: 1 params @ offset 0x00189f24
-            // USED → r34 = useTransition /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24665>  # String: 'useTransition' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */, useId: updateId /* Closure with env r1 = undefined */ }
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 117, Reg8: 20>
-            r1[117] = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */, useId: updateId /* Closure with env r1 = undefined */ };
-            // CODE → <NewObject>: <Reg8: 20>
-            // USED → r20 = {}
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 25, string_id: 12216>  # String: 'useReducer' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 24, Reg8: 1, function_id: 841>  # Function: [#841 useState of 22 bytes]: 1 params @ offset 0x00189f72
-            // USED → r24 = useState /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 246>  # String: 'useState' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 842>  # Function: [#842 useDeferredValue of 75 bytes]: 3 params @ offset 0x00189f88
-            // USED → r23 = useDeferredValue /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 843>  # Function: [#843 useTransition of 78 bytes]: 1 params @ offset 0x00189fd3
-            // USED → r23 = useTransition /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24665>  # String: 'useTransition' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */ }
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
-            // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */, useId: updateId /* Closure with env r1 = undefined */ }
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 118, Reg8: 20>
-            r1[118] = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */, useId: updateId /* Closure with env r1 = undefined */ };
-            // CODE → <NewObject>: <Reg8: 20>
-            // USED → r20 = {}
-            // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 844>  # Function: [#844 isMounted of 34 bytes]: 2 params @ offset 0x0018a021
-            // USED → r21 = isMounted /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 16785>  # String: 'isMounted' (Identifier)
-            // USED → r20 = { isMounted: isMounted /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 845>  # Function: [#845 enqueueSetState of 109 bytes]: 4 params @ offset 0x0018a043
-            // USED → r21 = enqueueSetState /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22773>  # String: 'enqueueSetState' (Identifier)
-            // USED → r20 = { isMounted: isMounted /* Closure with env r1 = undefined */, enqueueSetState: enqueueSetState /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 846>  # Function: [#846 enqueueReplaceState of 118 bytes]: 4 params @ offset 0x0018a0b0
-            // USED → r21 = enqueueReplaceState /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22685>  # String: 'enqueueReplaceState' (Identifier)
-            // USED → r20 = { isMounted: isMounted /* Closure with env r1 = undefined */, enqueueSetState: enqueueSetState /* Closure with env r1 = undefined */, enqueueReplaceState: enqueueReplaceState /* Closure with env r1 = undefined */ }
-            // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 847>  # Function: [#847 enqueueForceUpdate of 109 bytes]: 3 params @ offset 0x0018a126
-            // USED → r21 = enqueueForceUpdate /* Closure with env r1 = undefined */
-            // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 17151>  # String: 'enqueueForceUpdate' (Identifier)
-            // USED → r20 = { isMounted: isMounted /* Closure with env r1 = undefined */, enqueueSetState: enqueueSetState /* Closure with env r1 = undefined */, enqueueReplaceState: enqueueReplaceState /* Closure with env r1 = undefined */, enqueueForceUpdate: enqueueForceUpdate /* Closure with env r1 = undefined */ }
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 119, Reg8: 20>
-            r1[119] = { isMounted: isMounted /* Closure with env r1 = undefined */, enqueueSetState: enqueueSetState /* Closure with env r1 = undefined */, enqueueReplaceState: enqueueReplaceState /* Closure with env r1 = undefined */, enqueueForceUpdate: enqueueForceUpdate /* Closure with env r1 = undefined */ };
-            // CODE → <TryGetById>: <Reg8: 20, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-            // USED → r20 = globalThis.WeakMap
-            // CODE → <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-            // USED → r21 = globalThis.WeakMap.prototype
-            // CODE → <CreateThis>: <Reg8: 21, Reg8: 21, Reg8: 20>
-            r21 = createThis(prototype=globalThis.WeakMap.prototype, constructor=globalThis.WeakMap)
-            // CODE → <Mov>: <Reg8: 57, Reg8: 21>
-            r57 = r21
-            // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
-            r20 = new globalThis.WeakMap(param7)
-            // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
-            // USED → r20 = r21[r20]
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>
-            r1[120] = r21[r20];
-            // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
-            // USED → r17 = r19[r17]
-            // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-            // USED → r17 = param2(r19[r17])
-            // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
-            // USED → r17 = param2(r19[r17]).ReactFiberErrorDialog
-            // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
-            // USED → r17 = param2(r19[r17]).ReactFiberErrorDialog.showErrorDialog
-            // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
-            // USED → r17 = typeof param2(r19[r17]).ReactFiberErrorDialog.showErrorDialog
-            // CODE → <JStrictNotEqualLong>: <Addr32: 774, Reg8: 16, Reg8: 17>  # Address: 000018b9
-            if ("function" !== typeof param2(r19[r17]) {
-                // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-                // USED → r17 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 121, Reg8: 17>
-                r1[121] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
-                // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-                // USED → r18 = globalThis.Error
-                // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
-                // USED → r17 = "str_6991"
-                // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-                // USED → r17 = globalThis.Error("str_6991")
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
-                r1[122] = globalThis.Error("str_6991");
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
-                r1[123] = false;
-                // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
-                // USED → r17 = { dehydrated: null, treeContext: null, retryLane: 0 }
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
-                r1[124] = { dehydrated: null, treeContext: null, retryLane: 0 };
-                // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
-                // USED → r15 = createCursor /* Closure with env r1 = undefined */(null)
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
-                r1[125] = createCursor /* Closure with env r1 = undefined */(null);
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 126, Reg8: 11>
-                r1[126] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 127, Reg8: 11>
-                r1[127] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 128, Reg8: 11>
-                r1[128] = null;
-                // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-                // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 129, Reg8: 15>
-                r1[129] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 130, Reg8: 12>
-                r1[130] = false;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
-                r1[131] = false;
-                // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-                // USED → r15 = globalThis.WeakSet
-                // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-                // USED → r15 = typeof globalThis.WeakSet
-                // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
-                if ("function" === typeof globalThis.WeakSet) {
-                    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
-                    r15 = globalThis.Set
-                    // CODE → <Jmp>: <Addr8: 8>  # Address: 0000162b
-                    goto label_5675;
-                }
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-                // label_5669:
-                // USED → r15 = globalThis.WeakSet
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
-                // label_5675:
-                r1[132] = globalThis.WeakSet;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
-                r1[133] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
-                r1[134] = false;
-                // CODE → <LoadConstInt>: <Reg8: 15, Imm32: 8192>
-                // USED → r15 = 8192
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
-                r1[135] = 8192;
-                // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-                // USED → r15 = globalThis.WeakMap
-                // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-                // USED → r15 = typeof globalThis.WeakMap
-                // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
-                if ("function" === typeof globalThis.WeakMap) {
-                    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-                    r15 = globalThis.Map
-                    // CODE → <Jmp>: <Addr8: 8>  # Address: 0000165b
-                    goto label_5723;
-                }
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-                // label_5717:
-                // USED → r15 = globalThis.WeakMap
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
-                // label_5723:
-                r1[136] = globalThis.WeakMap;
-                // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-                // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
-                r1[137] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
-                // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-                // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
-                r1[138] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
-                // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-                // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
-                r1[139] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
-                r1[140] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
-                r1[141] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 142, Reg8: 11>
-                r1[142] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 143, Reg8: 10>
-                r1[143] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 144, Reg8: 10>
-                r1[144] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 145, Reg8: 11>
-                r1[145] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 146, Reg8: 12>
-                r1[146] = false;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 147, Reg8: 10>
-                r1[147] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 148, Reg8: 10>
-                r1[148] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 149, Reg8: 11>
-                r1[149] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 150, Reg8: 10>
-                r1[150] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 151, Reg8: 10>
-                r1[151] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 152, Reg8: 10>
-                r1[152] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 153, Reg8: 10>
-                r1[153] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 154, Reg8: 11>
-                r1[154] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 155, Reg8: 11>
-                r1[155] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 156, Reg8: 12>
-                r1[156] = false;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
-                r1[157] = 0;
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
-                // USED → r15 = globalThis.Infinity
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
-                r1[158] = globalThis.Infinity;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
-                r1[159] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
-                r1[160] = false;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 161, Reg8: 11>
-                r1[161] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 162, Reg8: 11>
-                r1[162] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 163, Reg8: 12>
-                r1[163] = false;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 164, Reg8: 11>
-                r1[164] = null;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 165, Reg8: 10>
-                r1[165] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 166, Reg8: 10>
-                r1[166] = 0;
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 167, Reg8: 11>
-                r1[167] = null;
-                // CODE → <CreateClosure>: <Reg8: 10, Reg8: 1, function_id: 848>  # Function: [#848 batchedUpdatesImpl of 178 bytes]: 3 params @ offset 0x0018a193
-                // USED → r10 = batchedUpdatesImpl /* Closure with env r1 = undefined */
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
-                r1[207] = batchedUpdatesImpl /* Closure with env r1 = undefined */;
-                // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-                // USED → r10 = globalThis.Map
-                // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-                // USED → r12 = globalThis.Map.prototype
-                // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
-                r12 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
-                // CODE → <Mov>: <Reg8: 57, Reg8: 12>
-                r57 = r12
-                // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
-                r10 = new globalThis.Map("undefined")
-                // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
-                // USED → r10 = r12[r10]
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
-                r1[168] = r12[r10];
-                // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
-                // USED → r12 = { findFiberByHostInstance: null, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
-                // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-                // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
-                // CODE → <LoadConstString>: <Reg8: 10, string_id: 1866>  # String: '18.3.0-canary-9372c6311-20240315' (String)
-                // USED → r10 = "18.3.0-canary-9372c6311-20240315"
-                // CODE → <NewObject>: <Reg8: 8>
-                // USED → r8 = {}
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-                // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 15, Reg8: 1, function_id: 849>  # Function: [#849 getInspectorDataForViewTag of 21 bytes]: 1 params @ offset 0x0018a245
-                // USED → r15 = getInspectorDataForViewTag /* Closure with env r1 = undefined */
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12857>  # String: 'getInspectorDataForViewTag' (Identifier)
-                // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
-                // USED → r16 = function_850 /* Closure with env r1 = undefined */
-                // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
-                // USED → r15 = function_850 /* Closure with env r1 = undefined */.bind
-                // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
-                // USED → r15 = function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */)
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-                // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) }
-                // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-                // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }
-                // CODE → <NewObject>: <Reg8: 8>
-                // USED → r8 = {}
-                // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
-                // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.bundleType
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
-                // USED → r8 = { bundleType: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.bundleType }
-                // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
-                // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.version
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
-                // USED → r8 = { bundleType: 0, version: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.version, rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
-                // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-                // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererPackageName
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererPackageName, rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
-                // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-                // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererConfig
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererConfig, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null }
-                // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-                // USED → r14 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher }
-                // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
-                // USED → r14 = findHostInstanceByFiber /* Closure with env r1 = undefined */
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */ }
-                // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-                // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.findFiberByHostInstance
-                // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
-                if ({ findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) {
-                    // CODE → <Mov>: <Reg8: 12, Reg8: 13>
-                    // USED → r12 = r13
-                }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-                // label_6101:
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13 }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
-                // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
-                r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
-                // CODE → <Mov>: <Reg8: 7, Reg8: 8>
-                // USED → r7 = r8
-                // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-                // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
-                // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
-                // USED → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
-                // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
-                if ("undefined" === typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
-                    // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-                    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
-                    // CODE → <Mov>: <Reg8: 6, Reg8: 8>
-                    // USED → r6 = r8
-                    // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
-                    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled
-                    // CODE → <JmpTrue>: <Addr8: 38, Reg8: 8>  # Address: 0000183d
-                    if (globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) {
-                        // CODE → <Mov>: <Reg8: 8, Reg8: 6>
-                        // USED → r8 = r6
-                        // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
-                        // USED → r8 = r6.supportsFiber
-                        // CODE → <JmpFalse>: <Addr8: 26, Reg8: 8>  # Address: 0000183d
-                        if (!r6.supportsFiber) {
-                            // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
-                            // USED → r8 = r8.inject
-                            // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-                            // USED → r7 = r8.inject()
-                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
-                            r1[31] = r8.inject();
-                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
-                            r1[32] = r8;
-                            // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
-                            goto label_6205;
-                            // CODE → <Catch>: <Reg8: 6>
-                            r6 = caughtException
-                        }
-                    }
-                }
-                // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 852>  # Function: [#852  of 60 bytes]: 3 params @ offset 0x0018a28d
-                // label_6205:
-                // USED → r6 = function_852 /* Closure with env r1 = undefined */
-                // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 7, string_id: 18089>  # String: 'createPortal' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 853>  # Function: [#853  of 172 bytes]: 4 params @ offset 0x0018a2c9
-                // USED → r6 = function_853 /* Closure with env r1 = undefined */
-                // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 8, string_id: 11552>  # String: 'dispatchCommand' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 854>  # Function: [#854  of 82 bytes]: 2 params @ offset 0x0018a375
-                // USED → r6 = function_854 /* Closure with env r1 = undefined */
-                // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 9, string_id: 12842>  # String: 'findHostInstance_DEPRECATED' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */ }
-                // CODE → <PutById>: <Reg8: 3, Reg8: 5, UInt8: 10, string_id: 18319>  # String: 'findNodeHandle' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */ }
-                // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 855>  # Function: [#855  of 30 bytes]: 2 params @ offset 0x0018a3c7
-                // USED → r4 = function_855 /* Closure with env r1 = undefined */
-                // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 12, string_id: 23506>  # String: 'getNodeFromInternalInstanceHandle' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 856>  # Function: [#856  of 115 bytes]: 2 params @ offset 0x0018a3e5
-                // USED → r4 = function_856 /* Closure with env r1 = undefined */
-                // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 13, string_id: 19508>  # String: 'getPublicInstanceFromInternalInstanceHandle' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 857>  # Function: [#857  of 21 bytes]: 1 params @ offset 0x0018a458
-                // USED → r4 = function_857 /* Closure with env r1 = undefined */
-                // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 14, string_id: 19860>  # String: 'isChildPublicInstance' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 858>  # Function: [#858  of 267 bytes]: 5 params @ offset 0x0018a46d
-                // USED → r4 = function_858 /* Closure with env r1 = undefined */
-                // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 15, string_id: 11830>  # String: 'render' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 859>  # Function: [#859  of 161 bytes]: 3 params @ offset 0x0018a578
-                // USED → r4 = function_859 /* Closure with env r1 = undefined */
-                // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 16, string_id: 13824>  # String: 'sendAccessibilityEvent' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 860>  # Function: [#860  of 56 bytes]: 2 params @ offset 0x0018a619
-                // USED → r4 = function_860 /* Closure with env r1 = undefined */
-                // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 17, string_id: 17701>  # String: 'stopSurface' (Identifier)
-                // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */ }
-                // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 862>  # Function: [#862  of 21 bytes]: 2 params @ offset 0x0018a66d
-                // USED → r1 = function_862 /* Closure with env r1 = undefined */
-                // CODE → <PutById>: <Reg8: 3, Reg8: 1, UInt8: 18, string_id: 24466>  # String: 'unmountComponentAtNode' (Identifier)
-                r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */, unmountComponentAtNode: function_862 /* Closure with env r1 = undefined */ }
-                // CODE → <Ret>: <Reg8: 2>
-                return undefined;
-            }
-            // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-            // label_6329:
-            // USED → r1 = globalThis.Error
-            // CODE → <LoadConstString>: <Reg8: 0, string_id: 4985>  # String: 'Expected ReactFiberErrorDialog.showErrorDialog to be a function.' (String)
-            // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
-            // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-            // USED → r0 = globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
-            // CODE → <Throw>: <Reg8: 0>
-            r0 = throw globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
-        }
+        // CODE → <Mov>: <Reg8: 44, Reg8: 45>
+        // USED → r44 = r45
+        // CODE → <GetByIdShort>: <Reg8: 52, Reg8: 50, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
+        // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty
+        // CODE → <Call2>: <Reg8: 52, Reg8: 52, Reg8: 50, Reg8: 44>
+        // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)
+        // CODE → <Mov>: <Reg8: 43, Reg8: 54>
+        r43 = r54
+        // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
+        // USED → r52 = r50[r44]
+        // CODE → <GetByIdShort>: <Reg8: 53, Reg8: 51, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
+        // USED → r53 = {}.hasOwnProperty
+        // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
+        // USED → r53 = {}.hasOwnProperty(r45)
+        // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
+        // USED → r53 = r51[r44]
+        // CODE → <Mov>: <Reg8: 43, Reg8: 54>
+        r43 = r54
+        // CODE → <Mov>: <Reg8: 42, Reg8: 52>
+        r42 = r52
+        // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
+        // USED → r53 = r51[r44]
+        // CODE → <PutByVal>: <Reg8: 51, Reg8: 44, Reg8: 52>
+        {}[r45] = r50[r44]
+        // CODE → <LoadConstTrue>: <Reg8: 43>
+        r43 = true
+        // CODE → <Mov>: <Reg8: 42, Reg8: 52>
+        r42 = r52
+        // CODE → <TryGetById>: <Reg8: 43, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
+        // USED → r43 = globalThis.Error
+        // CODE → <LoadConstString>: <Reg8: 42, string_id: 558>  # String: '`.' (String)
+        // USED → r42 = "`."
+        // CODE → <Add>: <Reg8: 44, Reg8: 44, Reg8: 42>
+        // USED → r44 = r45 + "`."
+        // CODE → <LoadConstString>: <Reg8: 42, string_id: 4924>  # String: 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `' (String)
+        // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `"
+        // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
+        // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`."
+        // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
+        // USED → r42 = globalThis.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.")
     }
+    if (!r54) {
+        // CODE → <Call1>: <Reg8: 16, Reg8: 16, Reg8: 2>
+        r16 = recomputePluginOrdering /* Closure with env r1 = undefined */()
+    }
+    // CODE → <NewObject>: <Reg8: 16>
+    // USED → r16 = {}
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 25, Reg8: 16>
+    r1[25] = {};
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 26, Reg8: 11>
+    r1[26] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 27, Reg8: 10>
+    r1[27] = 0;
+    // CODE → <NewObject>: <Reg8: 16>
+    // USED → r16 = {}
+    // CODE → <PutNewOwnById>: <Reg8: 16, Reg8: 37, string_id: 24472>  # String: 'unsafelyIgnoreFunctions' (Identifier)
+    // USED → r16 = { unsafelyIgnoreFunctions: true }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 28, Reg8: 16>
+    r1[28] = { unsafelyIgnoreFunctions: true };
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 29, Reg8: 12>
+    r1[29] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
+    r1[30] = null;
+    // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 14, string_id: 21563>  # String: '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED' (Identifier)
+    // USED → r14 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 11>
+    r1[31] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
+    r1[32] = null;
+    // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
+    // USED → r16 = globalThis.Math
+    // CODE → <GetById>: <Reg8: 16, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
+    // USED → r16 = globalThis.Math.clz32
+    if (!globalThis.Math.clz32) {
+        // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
+        // USED → r16 = globalThis.Math
+        // CODE → <GetById>: <Reg8: 9, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
+        // USED → r9 = globalThis.Math.clz32
+    }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 33, Reg8: 9>
+    r1[33] = globalThis.Math.clz32;
+    // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
+    // USED → r9 = globalThis.Math
+    // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 17, string_id: 171>  # String: 'log' (Identifier)
+    // USED → r9 = globalThis.Math.log
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 34, Reg8: 9>
+    r1[34] = globalThis.Math.log;
+    // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
+    // USED → r9 = globalThis.Math
+    // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 18, string_id: 21154>  # String: 'LN2' (Identifier)
+    // USED → r9 = globalThis.Math.LN2
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 35, Reg8: 9>
+    r1[35] = globalThis.Math.LN2;
+    // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 128>
+    // USED → r9 = 128
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 36, Reg8: 9>
+    r1[36] = 128;
+    // CODE → <LoadConstInt>: <Reg8: 9, Imm32: 4194304>
+    // USED → r9 = 4194304
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 37, Reg8: 9>
+    r1[37] = 4194304;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 38, Reg8: 10>
+    r1[38] = 0;
+    // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 19, string_id: 24093>  # String: 'nativeFabricUIManager' (Identifier)
+    // USED → r9 = globalThis.nativeFabricUIManager
+    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 20, string_id: 15507>  # String: 'createNode' (Identifier)
+    // USED → r16 = globalThis.nativeFabricUIManager.createNode
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 39, Reg8: 16>
+    r1[39] = globalThis.nativeFabricUIManager.createNode;
+    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 21, string_id: 22912>  # String: 'cloneNodeWithNewChildren' (Identifier)
+    // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewChildren
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 40, Reg8: 16>
+    r1[40] = globalThis.nativeFabricUIManager.cloneNodeWithNewChildren;
+    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 22, string_id: 22913>  # String: 'cloneNodeWithNewChildrenAndProps' (Identifier)
+    // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 41, Reg8: 16>
+    r1[41] = globalThis.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps;
+    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 23, string_id: 22914>  # String: 'cloneNodeWithNewProps' (Identifier)
+    // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewProps
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 42, Reg8: 16>
+    r1[42] = globalThis.nativeFabricUIManager.cloneNodeWithNewProps;
+    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 24, string_id: 23048>  # String: 'createChildSet' (Identifier)
+    // USED → r16 = globalThis.nativeFabricUIManager.createChildSet
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 43, Reg8: 16>
+    r1[43] = globalThis.nativeFabricUIManager.createChildSet;
+    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 25, string_id: 22565>  # String: 'appendChild' (Identifier)
+    // USED → r16 = globalThis.nativeFabricUIManager.appendChild
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 44, Reg8: 16>
+    r1[44] = globalThis.nativeFabricUIManager.appendChild;
+    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 22566>  # String: 'appendChildToSet' (Identifier)
+    // USED → r16 = globalThis.nativeFabricUIManager.appendChildToSet
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 45, Reg8: 16>
+    r1[45] = globalThis.nativeFabricUIManager.appendChildToSet;
+    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 27, string_id: 22962>  # String: 'completeRoot' (Identifier)
+    // USED → r16 = globalThis.nativeFabricUIManager.completeRoot
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 46, Reg8: 16>
+    r1[46] = globalThis.nativeFabricUIManager.completeRoot;
+    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 28, string_id: 20376>  # String: 'registerEventHandler' (Identifier)
+    // USED → r16 = globalThis.nativeFabricUIManager.registerEventHandler
+    // CODE → <GetById>: <Reg8: 41, Reg8: 9, UInt8: 29, string_id: 24474>  # String: 'unstable_DiscreteEventPriority' (Identifier)
+    // USED → r41 = globalThis.nativeFabricUIManager.unstable_DiscreteEventPriority
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 47, Reg8: 41>
+    r1[47] = globalThis.nativeFabricUIManager.unstable_DiscreteEventPriority;
+    // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 30, string_id: 24484>  # String: 'unstable_getCurrentEventPriority' (Identifier)
+    // USED → r9 = globalThis.nativeFabricUIManager.unstable_getCurrentEventPriority
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 48, Reg8: 9>
+    r1[48] = globalThis.nativeFabricUIManager.unstable_getCurrentEventPriority;
+    // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
+    // USED → r9 = r19[r17]
+    // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
+    // USED → r9 = param2(r19[r17])
+    // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
+    // USED → r9 = param2(r19[r17]).ReactNativeViewConfigRegistry
+    // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 31, string_id: 137>  # String: 'get' (Identifier)
+    // USED → r9 = param2(r19[r17]).ReactNativeViewConfigRegistry.get
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 49, Reg8: 9>
+    r1[49] = param2(r19[r17]).ReactNativeViewConfigRegistry.get;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
+    r1[50] = 2;
+    if (!globalThis.nativeFabricUIManager.registerEventHandler) {
+        // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
+        // USED → r9 = dispatchEvent /* Closure with env r1 = undefined */
+        // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
+        r9 = globalThis.nativeFabricUIManager.registerEventHandler(dispatchEvent /* Closure with env r1 = undefined */)
+    }
+    // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 32, string_id: 214>  # String: 'setTimeout' (Identifier)
+    // USED → r41 = globalThis.setTimeout
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 51, Reg8: 41>
+    r1[51] = globalThis.setTimeout;
+    // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 33, string_id: 12162>  # String: 'clearTimeout' (Identifier)
+    // USED → r9 = globalThis.clearTimeout
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 52, Reg8: 9>
+    r1[52] = globalThis.clearTimeout;
+    // CODE → <GetById>: <Reg8: 16, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
+    // USED → r16 = globalThis.RN$enableMicrotasksInReact
+    // CODE → <LoadConstString>: <Reg8: 9, string_id: 610>  # String: 'undefined' (String)
+    // USED → r9 = "undefined"
+    // CODE → <TypeOf>: <Reg8: 16, Reg8: 16>
+    // USED → r16 = typeof globalThis.RN$enableMicrotasksInReact
+    // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
+    // USED → r16 = "undefined" !== typeof globalThis.RN$enableMicrotasksInReact
+    if (!"undefined" !== typeof globalThis.RN$enableMicrotasksInReact) {
+        // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
+        // USED → r42 = globalThis.RN$enableMicrotasksInReact
+        // CODE → <Not>: <Reg8: 42, Reg8: 42>
+        // USED → r42 = !globalThis.RN$enableMicrotasksInReact
+        // CODE → <Not>: <Reg8: 16, Reg8: 42>
+        // USED → r16 = !!globalThis.RN$enableMicrotasksInReact
+    }
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 53, Reg8: 16>
+    r1[53] = !!globalThis.RN$enableMicrotasksInReact;
+    // CODE → <GetById>: <Reg8: 42, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
+    // USED → r42 = globalThis.queueMicrotask
+    // CODE → <LoadConstString>: <Reg8: 16, string_id: 12255>  # String: 'function' (Identifier)
+    // USED → r16 = "function"
+    // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
+    // USED → r42 = typeof globalThis.queueMicrotask
+    if ("function" !== typeof globalThis.queueMicrotask) {
+        // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
+        // USED → r41 = globalThis.queueMicrotask
+    }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 54, Reg8: 41>
+    r1[54] = globalThis.queueMicrotask;
+    // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 821>  # Function: [#821 getFiberCurrentPropsFromNode$1 of 17 bytes]: 2 params @ offset 0x00189a6d
+    // USED → r41 = getFiberCurrentPropsFromNode$1 /* Closure with env r1 = undefined */
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 41>
+    r1[5] = getFiberCurrentPropsFromNode$1 /* Closure with env r1 = undefined */;
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 6, Reg8: 8>
+    r1[6] = getInstanceFromNode /* Closure with env r1 = undefined */;
+    // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 822>  # Function: [#822 getNodeFromInstance$1 of 49 bytes]: 2 params @ offset 0x00189a7e
+    // USED → r41 = getNodeFromInstance$1 /* Closure with env r1 = undefined */
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 7, Reg8: 41>
+    r1[7] = getNodeFromInstance$1 /* Closure with env r1 = undefined */;
+    // CODE → <GetById>: <Reg8: 42, Reg8: 40, UInt8: 36, string_id: 15132>  # String: 'injection' (Identifier)
+    // USED → r42 = { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }.injection
+    // CODE → <GetById>: <Reg8: 41, Reg8: 42, UInt8: 37, string_id: 21100>  # String: 'injectGlobalResponderHandler' (Identifier)
+    // USED → r41 = { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }.injection.injectGlobalResponderHandler
+    // CODE → <NewObject>: <Reg8: 40>
+    // USED → r40 = {}
+    // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 823>  # Function: [#823 onChange of 122 bytes]: 4 params @ offset 0x00189aaf
+    // USED → r43 = onChange /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 43, string_id: 15401>  # String: 'onChange' (Identifier)
+    // USED → r40 = { onChange: onChange /* Closure with env r1 = undefined */ }
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    r40 = { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }.injection.injectGlobalResponderHandler({ onChange: onChange /* Closure with env r1 = undefined */ })
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 3815>  # String: 'react.element' (String)
+    // USED → r40 = "react.element"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.element")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 55, Reg8: 40>
+    r1[55] = globalThis.Symbol.for("react.element");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 5553>  # String: 'react.portal' (String)
+    // USED → r40 = "react.portal"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.portal")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 56, Reg8: 40>
+    r1[56] = globalThis.Symbol.for("react.portal");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 5930>  # String: 'react.fragment' (String)
+    // USED → r40 = "react.fragment"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.fragment")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 57, Reg8: 40>
+    r1[57] = globalThis.Symbol.for("react.fragment");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 6410>  # String: 'react.strict_mode' (String)
+    // USED → r40 = "react.strict_mode"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.strict_mode")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 58, Reg8: 40>
+    r1[58] = globalThis.Symbol.for("react.strict_mode");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 5628>  # String: 'react.profiler' (String)
+    // USED → r40 = "react.profiler"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.profiler")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 59, Reg8: 40>
+    r1[59] = globalThis.Symbol.for("react.profiler");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 2499>  # String: 'react.provider' (String)
+    // USED → r40 = "react.provider"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.provider")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 60, Reg8: 40>
+    r1[60] = globalThis.Symbol.for("react.provider");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 8244>  # String: 'react.consumer' (String)
+    // USED → r40 = "react.consumer"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.consumer")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 61, Reg8: 40>
+    r1[61] = globalThis.Symbol.for("react.consumer");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 4944>  # String: 'react.context' (String)
+    // USED → r40 = "react.context"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.context")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 62, Reg8: 40>
+    r1[62] = globalThis.Symbol.for("react.context");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 7930>  # String: 'react.forward_ref' (String)
+    // USED → r40 = "react.forward_ref"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.forward_ref")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 63, Reg8: 40>
+    r1[63] = globalThis.Symbol.for("react.forward_ref");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 6421>  # String: 'react.suspense' (String)
+    // USED → r40 = "react.suspense"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.suspense")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 64, Reg8: 40>
+    r1[64] = globalThis.Symbol.for("react.suspense");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 6422>  # String: 'react.suspense_list' (String)
+    // USED → r40 = "react.suspense_list"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.suspense_list")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 65, Reg8: 40>
+    r1[65] = globalThis.Symbol.for("react.suspense_list");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 410>  # String: 'react.memo' (String)
+    // USED → r40 = "react.memo"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.memo")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 66, Reg8: 40>
+    r1[66] = globalThis.Symbol.for("react.memo");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 10762>  # String: 'react.lazy' (String)
+    // USED → r40 = "react.lazy"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.lazy")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 67, Reg8: 40>
+    r1[67] = globalThis.Symbol.for("react.lazy");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 6222>  # String: 'react.scope' (String)
+    // USED → r40 = "react.scope"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    r40 = globalThis.Symbol.for("react.scope")
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 6531>  # String: 'react.debug_trace_mode' (String)
+    // USED → r40 = "react.debug_trace_mode"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    r40 = globalThis.Symbol.for("react.debug_trace_mode")
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 5577>  # String: 'react.offscreen' (String)
+    // USED → r40 = "react.offscreen"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    // USED → r40 = globalThis.Symbol.for("react.offscreen")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 68, Reg8: 40>
+    r1[68] = globalThis.Symbol.for("react.offscreen");
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 4905>  # String: 'react.legacy_hidden' (String)
+    // USED → r40 = "react.legacy_hidden"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    r40 = globalThis.Symbol.for("react.legacy_hidden")
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 2166>  # String: 'react.cache' (String)
+    // USED → r40 = "react.cache"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    r40 = globalThis.Symbol.for("react.cache")
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 8982>  # String: 'react.tracing_marker' (String)
+    // USED → r40 = "react.tracing_marker"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    r40 = globalThis.Symbol.for("react.tracing_marker")
+    // CODE → <TryGetById>: <Reg8: 40, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r40 = globalThis.Symbol
+    // CODE → <GetById>: <Reg8: 40, Reg8: 40, UInt8: 40, string_id: 13658>  # String: 'iterator' (Identifier)
+    // USED → r40 = globalThis.Symbol.iterator
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 69, Reg8: 40>
+    r1[69] = globalThis.Symbol.iterator;
+    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+    // USED → r42 = globalThis.Symbol
+    // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+    // USED → r41 = globalThis.Symbol.for
+    // CODE → <LoadConstString>: <Reg8: 40, string_id: 10511>  # String: 'react.client.reference' (String)
+    // USED → r40 = "react.client.reference"
+    // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+    r40 = globalThis.Symbol.for("react.client.reference")
+    // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
+    // USED → r40 = []
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
+    r1[70] = [];
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 71, Reg8: 39>
+    r1[71] = -1;
+    // CODE → <NewObject>: <Reg8: 39>
+    // USED → r39 = {}
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 72, Reg8: 39>
+    r1[72] = {};
+    // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
+    // USED → r39 = globalThis.Object
+    // CODE → <GetById>: <Reg8: 39, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
+    // USED → r39 = globalThis.Object.is
+    // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
+    // USED → r39 = typeof globalThis.Object.is
+    if ("function" !== typeof globalThis.Object.is) {
+        // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
+        // USED → r39 = globalThis.Object
+        // CODE → <GetById>: <Reg8: 38, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
+        // USED → r38 = globalThis.Object.is
+    }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
+    r1[73] = globalThis.Object.is;
+    // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
+    // USED → r38 = createCursor /* Closure with env r1 = undefined */(null)
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 74, Reg8: 38>
+    r1[74] = createCursor /* Closure with env r1 = undefined */(null);
+    // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
+    // USED → r38 = createCursor /* Closure with env r1 = undefined */(null)
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 75, Reg8: 38>
+    r1[75] = createCursor /* Closure with env r1 = undefined */(null);
+    // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
+    // USED → r38 = createCursor /* Closure with env r1 = undefined */(null)
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 76, Reg8: 38>
+    r1[76] = createCursor /* Closure with env r1 = undefined */(null);
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 77, Reg8: 11>
+    r1[77] = null;
+    // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
+    // USED → r38 = []
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 78, Reg8: 38>
+    r1[78] = [];
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 79, Reg8: 10>
+    r1[79] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 80, Reg8: 10>
+    r1[80] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 81, Reg8: 11>
+    r1[81] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 82, Reg8: 11>
+    r1[82] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 83, Reg8: 12>
+    r1[83] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 84, Reg8: 12>
+    r1[84] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 85, Reg8: 12>
+    r1[85] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 86, Reg8: 10>
+    r1[86] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 87, Reg8: 12>
+    r1[87] = false;
+    // CODE → <TryGetById>: <Reg8: 38, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
+    // USED → r38 = globalThis.Object
+    // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
+    // USED → r38 = globalThis.Object.prototype
+    // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
+    // USED → r38 = globalThis.Object.prototype.hasOwnProperty
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 88, Reg8: 38>
+    r1[88] = globalThis.Object.prototype.hasOwnProperty;
+    // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
+    // USED → r39 = globalThis.Error
+    // CODE → <LoadConstString>: <Reg8: 38, string_id: 3625>  # String: "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`" (String)
+    // USED → r38 = "str_3625"
+    // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
+    // USED → r38 = globalThis.Error("str_3625")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 89, Reg8: 38>
+    r1[89] = globalThis.Error("str_3625");
+    // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
+    // USED → r39 = globalThis.Error
+    // CODE → <LoadConstString>: <Reg8: 38, string_id: 6775>  # String: "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React." (String)
+    // USED → r38 = "str_6775"
+    // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
+    // USED → r38 = globalThis.Error("str_6775")
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
+    r1[90] = globalThis.Error("str_6775");
+    // CODE → <NewObject>: <Reg8: 38>
+    // USED → r38 = {}
+    // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
+    // USED → r39 = then /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 38, Reg8: 39, string_id: 231>  # String: 'then' (Identifier)
+    // USED → r38 = { then: then /* Closure with env r1 = undefined */ }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 91, Reg8: 38>
+    r1[91] = { then: then /* Closure with env r1 = undefined */ };
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 92, Reg8: 11>
+    r1[92] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 93, Reg8: 11>
+    r1[93] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 94, Reg8: 10>
+    r1[94] = 0;
+    // CODE → <Call2>: <Reg8: 37, Reg8: 20, Reg8: 2, Reg8: 37>
+    // USED → r37 = createChildReconciler /* Closure with env r1 = undefined */(true)
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 95, Reg8: 37>
+    r1[95] = createChildReconciler /* Closure with env r1 = undefined */(true);
+    // CODE → <Call2>: <Reg8: 20, Reg8: 20, Reg8: 2, Reg8: 12>
+    // USED → r20 = createChildReconciler /* Closure with env r1 = undefined */(false)
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 96, Reg8: 20>
+    r1[96] = createChildReconciler /* Closure with env r1 = undefined */(false);
+    // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
+    // USED → r20 = createCursor /* Closure with env r1 = undefined */(null)
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 97, Reg8: 20>
+    r1[97] = createCursor /* Closure with env r1 = undefined */(null);
+    // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
+    // USED → r20 = createCursor /* Closure with env r1 = undefined */(0)
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 98, Reg8: 20>
+    r1[98] = createCursor /* Closure with env r1 = undefined */(0);
+    // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
+    // USED → r20 = createCursor /* Closure with env r1 = undefined */(null)
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 99, Reg8: 20>
+    r1[99] = createCursor /* Closure with env r1 = undefined */(null);
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 100, Reg8: 11>
+    r1[100] = null;
+    // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
+    // USED → r20 = createCursor /* Closure with env r1 = undefined */(0)
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 101, Reg8: 20>
+    r1[101] = createCursor /* Closure with env r1 = undefined */(0);
+    // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
+    // USED → r20 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 102, Reg8: 20>
+    r1[102] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
+    // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
+    // USED → r20 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 103, Reg8: 20>
+    r1[103] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 104, Reg8: 10>
+    r1[104] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 105, Reg8: 11>
+    r1[105] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 106, Reg8: 11>
+    r1[106] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 107, Reg8: 11>
+    r1[107] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 108, Reg8: 12>
+    r1[108] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 109, Reg8: 12>
+    r1[109] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 110, Reg8: 12>
+    r1[110] = false;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 111, Reg8: 10>
+    r1[111] = 0;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 112, Reg8: 11>
+    r1[112] = null;
+    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 113, Reg8: 10>
+    r1[113] = 0;
+    // CODE → <CreateClosure>: <Reg8: 20, Reg8: 1, function_id: 825>  # Function: [#825 createFunctionComponentUpdateQueue of 12 bytes]: 1 params @ offset 0x00189b29
+    // USED → r20 = createFunctionComponentUpdateQueue /* Closure with env r1 = undefined */
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 114, Reg8: 20>
+    r1[114] = createFunctionComponentUpdateQueue /* Closure with env r1 = undefined */;
+    // CODE → <NewObject>: <Reg8: 20>
+    // USED → r20 = {}
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 228>  # String: 'useContext' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 243>  # String: 'useEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 230>  # String: 'useMemo' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 12216>  # String: 'useReducer' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 244>  # String: 'useRef' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 246>  # String: 'useState' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24567>  # String: 'useDebugValue' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */, useDeferredValue: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24665>  # String: 'useTransition' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */, useDeferredValue: throwInvalidHookError /* Closure with env r1 = undefined */, useTransition: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */, useDeferredValue: throwInvalidHookError /* Closure with env r1 = undefined */, useTransition: throwInvalidHookError /* Closure with env r1 = undefined */, useSyncExternalStore: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24594>  # String: 'useId' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */, useDeferredValue: throwInvalidHookError /* Closure with env r1 = undefined */, useTransition: throwInvalidHookError /* Closure with env r1 = undefined */, useSyncExternalStore: throwInvalidHookError /* Closure with env r1 = undefined */, useId: throwInvalidHookError /* Closure with env r1 = undefined */ }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 115, Reg8: 20>
+    r1[115] = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: throwInvalidHookError /* Closure with env r1 = undefined */, useContext: throwInvalidHookError /* Closure with env r1 = undefined */, useEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useImperativeHandle: throwInvalidHookError /* Closure with env r1 = undefined */, useInsertionEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useLayoutEffect: throwInvalidHookError /* Closure with env r1 = undefined */, useMemo: throwInvalidHookError /* Closure with env r1 = undefined */, useReducer: throwInvalidHookError /* Closure with env r1 = undefined */, useRef: throwInvalidHookError /* Closure with env r1 = undefined */, useState: throwInvalidHookError /* Closure with env r1 = undefined */, useDebugValue: throwInvalidHookError /* Closure with env r1 = undefined */, useDeferredValue: throwInvalidHookError /* Closure with env r1 = undefined */, useTransition: throwInvalidHookError /* Closure with env r1 = undefined */, useSyncExternalStore: throwInvalidHookError /* Closure with env r1 = undefined */, useId: throwInvalidHookError /* Closure with env r1 = undefined */ };
+    // CODE → <NewObject>: <Reg8: 20>
+    // USED → r20 = {}
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 36, Reg8: 1, function_id: 826>  # Function: [#826 useCallback of 49 bytes]: 3 params @ offset 0x00189b35
+    // USED → r36 = useCallback /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 243>  # String: 'useEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 827>  # Function: [#827 useImperativeHandle of 90 bytes]: 4 params @ offset 0x00189b66
+    // USED → r35 = useImperativeHandle /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 828>  # Function: [#828 useLayoutEffect of 33 bytes]: 3 params @ offset 0x00189bc0
+    // USED → r35 = useLayoutEffect /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 829>  # Function: [#829 useInsertionEffect of 30 bytes]: 3 params @ offset 0x00189be1
+    // USED → r35 = useInsertionEffect /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 830>  # Function: [#830 useMemo of 64 bytes]: 3 params @ offset 0x00189bff
+    // USED → r35 = useMemo /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 230>  # String: 'useMemo' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 831>  # Function: [#831 useReducer of 139 bytes]: 4 params @ offset 0x00189c3f
+    // USED → r35 = useReducer /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 12216>  # String: 'useReducer' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 832>  # Function: [#832 useRef of 31 bytes]: 2 params @ offset 0x00189cca
+    // USED → r35 = useRef /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 244>  # String: 'useRef' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 833>  # Function: [#833 useState of 72 bytes]: 2 params @ offset 0x00189ce9
+    // USED → r35 = useState /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 246>  # String: 'useState' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 834>  # Function: [#834 useDeferredValue of 34 bytes]: 3 params @ offset 0x00189d31
+    // USED → r35 = useDeferredValue /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 835>  # Function: [#835 useTransition of 79 bytes]: 1 params @ offset 0x00189d53
+    // USED → r35 = useTransition /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24665>  # String: 'useTransition' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 836>  # Function: [#836 useSyncExternalStore of 239 bytes]: 3 params @ offset 0x00189da2
+    // USED → r35 = useSyncExternalStore /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: useSyncExternalStore /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 837>  # Function: [#837 useId of 83 bytes]: 1 params @ offset 0x00189e91
+    // USED → r35 = useId /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24594>  # String: 'useId' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: useSyncExternalStore /* Closure with env r1 = undefined */, useId: useId /* Closure with env r1 = undefined */ }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 116, Reg8: 20>
+    r1[116] = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: useCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: mountEffect /* Closure with env r1 = undefined */, useImperativeHandle: useImperativeHandle /* Closure with env r1 = undefined */, useLayoutEffect: useLayoutEffect /* Closure with env r1 = undefined */, useInsertionEffect: useInsertionEffect /* Closure with env r1 = undefined */, useMemo: useMemo /* Closure with env r1 = undefined */, useReducer: useReducer /* Closure with env r1 = undefined */, useRef: useRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: useSyncExternalStore /* Closure with env r1 = undefined */, useId: useId /* Closure with env r1 = undefined */ };
+    // CODE → <NewObject>: <Reg8: 20>
+    // USED → r20 = {}
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 12216>  # String: 'useReducer' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 838>  # Function: [#838 useState of 22 bytes]: 1 params @ offset 0x00189ee4
+    // USED → r34 = useState /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 34, string_id: 246>  # String: 'useState' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 839>  # Function: [#839 useDeferredValue of 42 bytes]: 3 params @ offset 0x00189efa
+    // USED → r34 = useDeferredValue /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 840>  # Function: [#840 useTransition of 78 bytes]: 1 params @ offset 0x00189f24
+    // USED → r34 = useTransition /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24665>  # String: 'useTransition' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */, useId: updateId /* Closure with env r1 = undefined */ }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 117, Reg8: 20>
+    r1[117] = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: updateReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */, useId: updateId /* Closure with env r1 = undefined */ };
+    // CODE → <NewObject>: <Reg8: 20>
+    // USED → r20 = {}
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 25, string_id: 12216>  # String: 'useReducer' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 24, Reg8: 1, function_id: 841>  # Function: [#841 useState of 22 bytes]: 1 params @ offset 0x00189f72
+    // USED → r24 = useState /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 246>  # String: 'useState' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 842>  # Function: [#842 useDeferredValue of 75 bytes]: 3 params @ offset 0x00189f88
+    // USED → r23 = useDeferredValue /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 843>  # Function: [#843 useTransition of 78 bytes]: 1 params @ offset 0x00189fd3
+    // USED → r23 = useTransition /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24665>  # String: 'useTransition' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */ }
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
+    // USED → r20 = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */, useId: updateId /* Closure with env r1 = undefined */ }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 118, Reg8: 20>
+    r1[118] = { readContext: readContext /* Closure with env r1 = undefined */, use: use /* Closure with env r1 = undefined */, useCallback: updateCallback /* Closure with env r1 = undefined */, useContext: readContext /* Closure with env r1 = undefined */, useEffect: updateEffect /* Closure with env r1 = undefined */, useImperativeHandle: updateImperativeHandle /* Closure with env r1 = undefined */, useInsertionEffect: updateInsertionEffect /* Closure with env r1 = undefined */, useLayoutEffect: updateLayoutEffect /* Closure with env r1 = undefined */, useMemo: updateMemo /* Closure with env r1 = undefined */, useReducer: rerenderReducer /* Closure with env r1 = undefined */, useRef: updateRef /* Closure with env r1 = undefined */, useState: useState /* Closure with env r1 = undefined */, useDebugValue: mountDebugValue /* Closure with env r1 = undefined */, useDeferredValue: useDeferredValue /* Closure with env r1 = undefined */, useTransition: useTransition /* Closure with env r1 = undefined */, useSyncExternalStore: updateSyncExternalStore /* Closure with env r1 = undefined */, useId: updateId /* Closure with env r1 = undefined */ };
+    // CODE → <NewObject>: <Reg8: 20>
+    // USED → r20 = {}
+    // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 844>  # Function: [#844 isMounted of 34 bytes]: 2 params @ offset 0x0018a021
+    // USED → r21 = isMounted /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 16785>  # String: 'isMounted' (Identifier)
+    // USED → r20 = { isMounted: isMounted /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 845>  # Function: [#845 enqueueSetState of 109 bytes]: 4 params @ offset 0x0018a043
+    // USED → r21 = enqueueSetState /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22773>  # String: 'enqueueSetState' (Identifier)
+    // USED → r20 = { isMounted: isMounted /* Closure with env r1 = undefined */, enqueueSetState: enqueueSetState /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 846>  # Function: [#846 enqueueReplaceState of 118 bytes]: 4 params @ offset 0x0018a0b0
+    // USED → r21 = enqueueReplaceState /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22685>  # String: 'enqueueReplaceState' (Identifier)
+    // USED → r20 = { isMounted: isMounted /* Closure with env r1 = undefined */, enqueueSetState: enqueueSetState /* Closure with env r1 = undefined */, enqueueReplaceState: enqueueReplaceState /* Closure with env r1 = undefined */ }
+    // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 847>  # Function: [#847 enqueueForceUpdate of 109 bytes]: 3 params @ offset 0x0018a126
+    // USED → r21 = enqueueForceUpdate /* Closure with env r1 = undefined */
+    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 17151>  # String: 'enqueueForceUpdate' (Identifier)
+    // USED → r20 = { isMounted: isMounted /* Closure with env r1 = undefined */, enqueueSetState: enqueueSetState /* Closure with env r1 = undefined */, enqueueReplaceState: enqueueReplaceState /* Closure with env r1 = undefined */, enqueueForceUpdate: enqueueForceUpdate /* Closure with env r1 = undefined */ }
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 119, Reg8: 20>
+    r1[119] = { isMounted: isMounted /* Closure with env r1 = undefined */, enqueueSetState: enqueueSetState /* Closure with env r1 = undefined */, enqueueReplaceState: enqueueReplaceState /* Closure with env r1 = undefined */, enqueueForceUpdate: enqueueForceUpdate /* Closure with env r1 = undefined */ };
+    // CODE → <TryGetById>: <Reg8: 20, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+    // USED → r20 = globalThis.WeakMap
+    // CODE → <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
+    // USED → r21 = globalThis.WeakMap.prototype
+    // CODE → <CreateThis>: <Reg8: 21, Reg8: 21, Reg8: 20>
+    r21 = createThis(prototype=globalThis.WeakMap.prototype, constructor=globalThis.WeakMap)
+    // CODE → <Mov>: <Reg8: 57, Reg8: 21>
+    r57 = r21
+    // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
+    r20 = new globalThis.WeakMap(param7)
+    // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
+    // USED → r20 = r21[r20]
+    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>
+    r1[120] = r21[r20];
+    // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
+    // USED → r17 = r19[r17]
+    // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
+    // USED → r17 = param2(r19[r17])
+    // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
+    // USED → r17 = param2(r19[r17]).ReactFiberErrorDialog
+    // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
+    // USED → r17 = param2(r19[r17]).ReactFiberErrorDialog.showErrorDialog
+    // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
+    // USED → r17 = typeof param2(r19[r17]).ReactFiberErrorDialog.showErrorDialog
+    if ("function" !== typeof param2(r19[r17]) {
+        // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
+        // USED → r17 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 121, Reg8: 17>
+        r1[121] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+        // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
+        // USED → r18 = globalThis.Error
+        // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
+        // USED → r17 = "str_6991"
+        // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
+        // USED → r17 = globalThis.Error("str_6991")
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
+        r1[122] = globalThis.Error("str_6991");
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
+        r1[123] = false;
+        // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
+        // USED → r17 = { dehydrated: null, treeContext: null, retryLane: 0 }
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
+        r1[124] = { dehydrated: null, treeContext: null, retryLane: 0 };
+        // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
+        // USED → r15 = createCursor /* Closure with env r1 = undefined */(null)
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
+        r1[125] = createCursor /* Closure with env r1 = undefined */(null);
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 126, Reg8: 11>
+        r1[126] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 127, Reg8: 11>
+        r1[127] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 128, Reg8: 11>
+        r1[128] = null;
+        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
+        // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 129, Reg8: 15>
+        r1[129] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 130, Reg8: 12>
+        r1[130] = false;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
+        r1[131] = false;
+        // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
+        // USED → r15 = globalThis.WeakSet
+        // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
+        // USED → r15 = typeof globalThis.WeakSet
+        // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
+        if ("function" === typeof globalThis.WeakSet) { /* jump to label_5669 */ }
+        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
+        r15 = globalThis.Set
+        // CODE → <Jmp>: <Addr8: 8>  # Address: 0000162b
+        goto label_5675;
+        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
+        // USED → r15 = globalThis.WeakSet
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
+        r1[132] = globalThis.WeakSet;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
+        r1[133] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
+        r1[134] = false;
+        // CODE → <LoadConstInt>: <Reg8: 15, Imm32: 8192>
+        // USED → r15 = 8192
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
+        r1[135] = 8192;
+        // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+        // USED → r15 = globalThis.WeakMap
+        // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
+        // USED → r15 = typeof globalThis.WeakMap
+        // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
+        if ("function" === typeof globalThis.WeakMap) { /* jump to label_5717 */ }
+        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
+        r15 = globalThis.Map
+        // CODE → <Jmp>: <Addr8: 8>  # Address: 0000165b
+        goto label_5723;
+        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+        // USED → r15 = globalThis.WeakMap
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
+        r1[136] = globalThis.WeakMap;
+        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
+        // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
+        r1[137] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
+        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
+        // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
+        r1[138] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
+        // USED → r15 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
+        r1[139] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
+        r1[140] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
+        r1[141] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 142, Reg8: 11>
+        r1[142] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 143, Reg8: 10>
+        r1[143] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 144, Reg8: 10>
+        r1[144] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 145, Reg8: 11>
+        r1[145] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 146, Reg8: 12>
+        r1[146] = false;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 147, Reg8: 10>
+        r1[147] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 148, Reg8: 10>
+        r1[148] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 149, Reg8: 11>
+        r1[149] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 150, Reg8: 10>
+        r1[150] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 151, Reg8: 10>
+        r1[151] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 152, Reg8: 10>
+        r1[152] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 153, Reg8: 10>
+        r1[153] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 154, Reg8: 11>
+        r1[154] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 155, Reg8: 11>
+        r1[155] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 156, Reg8: 12>
+        r1[156] = false;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
+        r1[157] = 0;
+        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
+        // USED → r15 = globalThis.Infinity
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
+        r1[158] = globalThis.Infinity;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
+        r1[159] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
+        r1[160] = false;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 161, Reg8: 11>
+        r1[161] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 162, Reg8: 11>
+        r1[162] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 163, Reg8: 12>
+        r1[163] = false;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 164, Reg8: 11>
+        r1[164] = null;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 165, Reg8: 10>
+        r1[165] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 166, Reg8: 10>
+        r1[166] = 0;
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 167, Reg8: 11>
+        r1[167] = null;
+        // CODE → <CreateClosure>: <Reg8: 10, Reg8: 1, function_id: 848>  # Function: [#848 batchedUpdatesImpl of 178 bytes]: 3 params @ offset 0x0018a193
+        // USED → r10 = batchedUpdatesImpl /* Closure with env r1 = undefined */
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
+        r1[207] = batchedUpdatesImpl /* Closure with env r1 = undefined */;
+        // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
+        // USED → r10 = globalThis.Map
+        // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
+        // USED → r12 = globalThis.Map.prototype
+        // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
+        r12 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
+        // CODE → <Mov>: <Reg8: 57, Reg8: 12>
+        r57 = r12
+        // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
+        r10 = new globalThis.Map("undefined")
+        // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
+        // USED → r10 = r12[r10]
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
+        r1[168] = r12[r10];
+        // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
+        // USED → r12 = { findFiberByHostInstance: null, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
+        // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+        // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
+        // CODE → <LoadConstString>: <Reg8: 10, string_id: 1866>  # String: '18.3.0-canary-9372c6311-20240315' (String)
+        // USED → r10 = "18.3.0-canary-9372c6311-20240315"
+        // CODE → <NewObject>: <Reg8: 8>
+        // USED → r8 = {}
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
+        // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 15, Reg8: 1, function_id: 849>  # Function: [#849 getInspectorDataForViewTag of 21 bytes]: 1 params @ offset 0x0018a245
+        // USED → r15 = getInspectorDataForViewTag /* Closure with env r1 = undefined */
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12857>  # String: 'getInspectorDataForViewTag' (Identifier)
+        // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
+        // USED → r16 = function_850 /* Closure with env r1 = undefined */
+        // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
+        // USED → r15 = function_850 /* Closure with env r1 = undefined */.bind
+        // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
+        // USED → r15 = function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */)
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
+        // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) }
+        // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+        // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }
+        // CODE → <NewObject>: <Reg8: 8>
+        // USED → r8 = {}
+        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
+        // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.bundleType
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
+        // USED → r8 = { bundleType: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.bundleType }
+        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
+        // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.version
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
+        // USED → r8 = { bundleType: 0, version: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.version, rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
+        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
+        // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererPackageName
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererPackageName, rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
+        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+        // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererConfig
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererConfig, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null }
+        // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
+        // USED → r14 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher }
+        // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
+        // USED → r14 = findHostInstanceByFiber /* Closure with env r1 = undefined */
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */ }
+        // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+        // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.findFiberByHostInstance
+        // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
+        if ({ findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.findFiberByHostInstance) { /* jump to label_6101 */ }
+        // CODE → <Mov>: <Reg8: 12, Reg8: 13>
+        // USED → r12 = r13
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13 }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
+        // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
+        r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: r13, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
+        // CODE → <Mov>: <Reg8: 7, Reg8: 8>
+        // USED → r7 = r8
+        // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
+        // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+        // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
+        // USED → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+        // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
+        if ("undefined" === typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__) { /* jump to label_6205 */ }
+        // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
+        // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+        // CODE → <Mov>: <Reg8: 6, Reg8: 8>
+        // USED → r6 = r8
+        // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
+        // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled
+        // CODE → <JmpTrue>: <Addr8: 38, Reg8: 8>  # Address: 0000183d
+        if (globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) { /* jump to label_6205 */ }
+        // CODE → <Mov>: <Reg8: 8, Reg8: 6>
+        // USED → r8 = r6
+        // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
+        // USED → r8 = r6.supportsFiber
+        // CODE → <JmpFalse>: <Addr8: 26, Reg8: 8>  # Address: 0000183d
+        if (!r6.supportsFiber) { /* jump to label_6205 */ }
+        // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
+        // USED → r8 = r8.inject
+        // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
+        // USED → r7 = r8.inject()
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
+        r1[31] = r8.inject();
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
+        r1[32] = r8;
+        // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
+        goto label_6205;
+        // CODE → <Catch>: <Reg8: 6>
+        r6 = caughtException
+        // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 852>  # Function: [#852  of 60 bytes]: 3 params @ offset 0x0018a28d
+        // USED → r6 = function_852 /* Closure with env r1 = undefined */
+        // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 7, string_id: 18089>  # String: 'createPortal' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 853>  # Function: [#853  of 172 bytes]: 4 params @ offset 0x0018a2c9
+        // USED → r6 = function_853 /* Closure with env r1 = undefined */
+        // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 8, string_id: 11552>  # String: 'dispatchCommand' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 854>  # Function: [#854  of 82 bytes]: 2 params @ offset 0x0018a375
+        // USED → r6 = function_854 /* Closure with env r1 = undefined */
+        // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 9, string_id: 12842>  # String: 'findHostInstance_DEPRECATED' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */ }
+        // CODE → <PutById>: <Reg8: 3, Reg8: 5, UInt8: 10, string_id: 18319>  # String: 'findNodeHandle' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */ }
+        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 855>  # Function: [#855  of 30 bytes]: 2 params @ offset 0x0018a3c7
+        // USED → r4 = function_855 /* Closure with env r1 = undefined */
+        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 12, string_id: 23506>  # String: 'getNodeFromInternalInstanceHandle' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 856>  # Function: [#856  of 115 bytes]: 2 params @ offset 0x0018a3e5
+        // USED → r4 = function_856 /* Closure with env r1 = undefined */
+        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 13, string_id: 19508>  # String: 'getPublicInstanceFromInternalInstanceHandle' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 857>  # Function: [#857  of 21 bytes]: 1 params @ offset 0x0018a458
+        // USED → r4 = function_857 /* Closure with env r1 = undefined */
+        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 14, string_id: 19860>  # String: 'isChildPublicInstance' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 858>  # Function: [#858  of 267 bytes]: 5 params @ offset 0x0018a46d
+        // USED → r4 = function_858 /* Closure with env r1 = undefined */
+        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 15, string_id: 11830>  # String: 'render' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 859>  # Function: [#859  of 161 bytes]: 3 params @ offset 0x0018a578
+        // USED → r4 = function_859 /* Closure with env r1 = undefined */
+        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 16, string_id: 13824>  # String: 'sendAccessibilityEvent' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 860>  # Function: [#860  of 56 bytes]: 2 params @ offset 0x0018a619
+        // USED → r4 = function_860 /* Closure with env r1 = undefined */
+        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 17, string_id: 17701>  # String: 'stopSurface' (Identifier)
+        // USED → r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */ }
+        // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 862>  # Function: [#862  of 21 bytes]: 2 params @ offset 0x0018a66d
+        // USED → r1 = function_862 /* Closure with env r1 = undefined */
+        // CODE → <PutById>: <Reg8: 3, Reg8: 1, UInt8: 18, string_id: 24466>  # String: 'unmountComponentAtNode' (Identifier)
+        r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */, unmountComponentAtNode: function_862 /* Closure with env r1 = undefined */ }
+        // CODE → <Ret>: <Reg8: 2>
+        return undefined;
+    }
+    // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
+    // USED → r1 = globalThis.Error
+    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4985>  # String: 'Expected ReactFiberErrorDialog.showErrorDialog to be a function.' (String)
+    // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
+    // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+    // USED → r0 = globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
+    // CODE → <Throw>: <Reg8: 0>
+    r0 = throw globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
 }

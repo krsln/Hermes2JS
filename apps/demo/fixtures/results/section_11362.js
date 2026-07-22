@@ -229,10 +229,8 @@ function binl_md5(param0, param1, param2) {
     r2 = r7
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
     r1 = r6
-    // CODE → <JmpFalseLong>: <Addr32: 1808, Reg8: 0>  # Address: 00000940
     if (!0 < param1.length) {
         // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 10>
-        // label_566:
         r119 = r92[10]
         // CODE → <Add>: <Reg8: 114, Reg8: 5, Reg8: 93>
         r114 = 0 + 0
@@ -1321,20 +1319,18 @@ function binl_md5(param0, param1, param2) {
         // CODE → <Mov>: <Reg8: 1, Reg8: 6>
         // USED → r1 = r6
         // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
-        if (0 + 16 < param1.length) {
-        }
-        // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
-        // label_2368:
-        // USED → r0 = [] /* capacity hint: 4 */
-        // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 4, UInt8: 0>
-        // USED → r0 = [r9]
-        // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 3, UInt8: 1>
-        // USED → r0 = [r9, r8]
-        // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 2, UInt8: 2>
-        // USED → r0 = [r9, r8, r7]
-        // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 1, UInt8: 3>
-        // USED → r0 = [r9, r8, r7, r6]
-        // CODE → <Ret>: <Reg8: 0>
-        return [r9, r8, r7, r6];
+        if (0 + 16 < param1.length) { /* jump to label_566 */ }
     }
+    // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
+    // USED → r0 = [] /* capacity hint: 4 */
+    // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 4, UInt8: 0>
+    // USED → r0 = [r9]
+    // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 3, UInt8: 1>
+    // USED → r0 = [r9, r8]
+    // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 2, UInt8: 2>
+    // USED → r0 = [r9, r8, r7]
+    // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 1, UInt8: 3>
+    // USED → r0 = [r9, r8, r7, r6]
+    // CODE → <Ret>: <Reg8: 0>
+    return [r9, r8, r7, r6];
 }

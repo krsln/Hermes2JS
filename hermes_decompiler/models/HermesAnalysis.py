@@ -7,9 +7,8 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.Logger import get_logger
-from hermes_decompiler.new.CFGBuilder import CFGBuilder
-from hermes_decompiler.new.CodeEmitter import CodeEmitter
-from hermes_decompiler.new.ControlFlowStructuring import ControlFlowStructuring
+from hermes_decompiler.new.ast_structurer import HighLevelASTBuilder
+from hermes_decompiler.new.code_emitter import HighLevelCodeEmitter
 from hermes_decompiler.regions.building.RegionBuilder import RegionBuilder
 
 logger = get_logger(__name__)
@@ -115,27 +114,24 @@ class HermesAnalysis:
 
     def generate_js_v1_beta(self, verbose: bool = False) -> List[str]:
         """
-        CFG (Control Flow Graph) tabanlı ve AST destekli robust JS kod üreteci.
+        Hermes bytecode pattern matching ve High-Level AST destekli robust JS kod üreteci.
+        (Yaklaşım B: High-Level AST Structuring)
         """
         if not self.results:
             return []
 
         try:
-            # 1. Aşama: Basic Block'ları Oluştur ve CFG Bağlantılarını Kur
-            cfg_builder = CFGBuilder(results=self.results, goto_list=self.gotoList)
-            blocks = cfg_builder.build()
+            # 1. Aşama: Bytecode akışını analiz edip High-Level AST (for..in, for..of, if/else) düğümlerini oluştur
+            builder = HighLevelASTBuilder(results=self.results)
+            ast_root = builder.build()
 
-            # 2. Aşama: CFG Yapısını AST (Abstract Syntax Tree) Yapısına Dönüştür
-            structurer = ControlFlowStructuring(blocks=blocks, results=self.results)
-            ast_root = structurer.structure_cfg()
-
-            # 3. Aşama: AST Üzerinden Kod Üretimi (Code Emission)
-            emitter = CodeEmitter(verbose=verbose)
+            # 2. Aşama: Oluşturulan AST'yi girintili ve temiz JS satırlarına dönüştür
+            emitter = HighLevelCodeEmitter(verbose=verbose)
             return emitter.emit(ast_root)
 
         except Exception as e:
-            logger.error("CFG-based GenerateJS failed: %s", e, exc_info=True)
-            # Fallback olarak eski metoda düşmek isterseniz:
+            logger.error("High-Level AST GenerateJS failed: %s", e, exc_info=True)
+            # Fallback olarak flat/goto tabanlı eski koda düşmek istersen:
             # return self.generate_js_v1(verbose)
             raise e
 

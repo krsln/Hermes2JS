@@ -26,11 +26,9 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 11214>  # String: ' callback, continuing anyway…' (String)
     // USED → r2 = " callback, continuing anyway…"
     // CODE → <Mov>: <Reg8: 1, Reg8: 10>
-    // label_39:
     // USED → r1 = r10
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 139>  # String: 'length' (Identifier)
     // USED → r1 = r10.length
-    // CODE → <JmpFalse>: <Addr8: 81, Reg8: 1>  # Address: 00000080
     if (!r10.length) {
         // CODE → <Mov>: <Reg8: 11, Reg8: 10>
         // USED → r11 = r10
@@ -67,13 +65,10 @@ function function_12825(param0, param1, param2, param3, param4) {
         // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>
         r1 = r9.error(caughtException)
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-        // label_122:
         // USED → r1 = r0
         // CODE → <JmpFalse>: <Addr8: -86, Reg8: 1>  # Address: 00000027
-        if (!r0) {
-        }
-        // CODE → <Ret>: <Reg8: 0>
-        // label_128:
-        return r10.pop()(r7) === false;
+        if (!r0) { /* jump to label_39 */ }
     }
+    // CODE → <Ret>: <Reg8: 0>
+    return r10.pop()(r7) === false;
 }

@@ -1,9 +1,9 @@
 from typing import List
 
-from hermes_decompiler.new.ASTNode import ASTNode, BlockNode, InstructionNode, IfNode, LoopNode
+from hermes_decompiler.new.ast_nodes import ASTNode, BlockNode, InstructionNode, IfNode, ForOfNode, ForInNode
 
 
-class CodeEmitter:
+class HighLevelCodeEmitter:
     def __init__(self, verbose: bool = True, indent_step: int = 4):
         self.verbose = verbose
         self.indent_step = indent_step
@@ -36,9 +36,18 @@ class CodeEmitter:
                 if node.statement:
                     lines.append(f"{indent}{node.statement}")
 
+        elif isinstance(node, ForInNode):
+            lines.append(f"{indent}for (const {node.var_name} in {node.object_name}) {{")
+            self._visit(node.body, level + 1, lines)
+            lines.append(f"{indent}}}")
+
+        elif isinstance(node, ForOfNode):
+            lines.append(f"{indent}for (const {node.var_name} of {node.iterable_name}) {{")
+            self._visit(node.body, level + 1, lines)
+            lines.append(f"{indent}}}")
+
         elif isinstance(node, IfNode):
             lines.append(f"{indent}if ({node.condition}) {{")
-            # İçerideki komutlar 1 seviye daha sağa kaydırılır
             self._visit(node.then_branch, level + 1, lines)
             if node.else_branch:
                 lines.append(f"{indent}}} else {{")
