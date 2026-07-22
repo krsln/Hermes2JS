@@ -76,7 +76,7 @@ class HermesAnalysis:
             self.registers[variable.name] = variable
 
     def generate_js(self, verbose: bool = False) -> list[str]:
-        return self.generate_js_v1(verbose)
+        return self.generate_js_v1_new(verbose)
 
     def generate_js_v2(self, verbose: bool = False) -> list[str]:
         #
@@ -249,8 +249,8 @@ class HermesAnalysis:
         cfg.compute_post_dominators()
         cfg.compute_loops()
 
+        print("=== LOOPS FOUND ===")
         for loop in cfg.loop_analysis.loops.values():
-            print()
             print(loop)
 
         analyzer = StructuralAnalyzer(cfg)
