@@ -37,7 +37,6 @@ class StatementBuilder:
             self.build(region.body)
 
     # ---------------------------------------------------------
-
     def _build_sequence(self, region: SequenceRegion):
 
         new_children = []
@@ -59,11 +58,11 @@ class StatementBuilder:
                         )
                     )
 
-                else:
-                    self.build(child)
+                # BasicBlock artık tree'de kalmıyor.
+                continue
 
             #
-            # Nested Region
+            # Nested region
             #
             self.build(child)
 
