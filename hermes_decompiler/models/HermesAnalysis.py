@@ -7,8 +7,6 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.Logger import get_logger
-from hermes_decompiler.new.ast_structurer import HighLevelASTBuilder
-from hermes_decompiler.new.code_emitter import HighLevelCodeEmitter
 from hermes_decompiler.regions.building.RegionBuilder import RegionBuilder
 
 logger = get_logger(__name__)
@@ -78,7 +76,7 @@ class HermesAnalysis:
             self.registers[variable.name] = variable
 
     def generate_js(self, verbose: bool = False) -> list[str]:
-        return self.generate_js_v1_beta(verbose)
+        return self.generate_js_v2(verbose)
 
     def generate_js_v2(self, verbose: bool = False) -> list[str]:
         #
@@ -111,29 +109,6 @@ class HermesAnalysis:
         emitter = JavaScriptEmitter(verbose)
 
         return emitter.emit(region)
-
-    def generate_js_v1_beta(self, verbose: bool = False) -> List[str]:
-        """
-        Hermes bytecode pattern matching ve High-Level AST destekli robust JS kod üreteci.
-        (Yaklaşım B: High-Level AST Structuring)
-        """
-        if not self.results:
-            return []
-
-        try:
-            # 1. Aşama: Bytecode akışını analiz edip High-Level AST (for..in, for..of, if/else) düğümlerini oluştur
-            builder = HighLevelASTBuilder(results=self.results)
-            ast_root = builder.build()
-
-            # 2. Aşama: Oluşturulan AST'yi girintili ve temiz JS satırlarına dönüştür
-            emitter = HighLevelCodeEmitter(verbose=verbose)
-            return emitter.emit(ast_root)
-
-        except Exception as e:
-            logger.error("High-Level AST GenerateJS failed: %s", e, exc_info=True)
-            # Fallback olarak flat/goto tabanlı eski koda düşmek istersen:
-            # return self.generate_js_v1(verbose)
-            raise e
 
     def generate_js_v1(self, verbose: bool = True) -> List[str]:
         outputList: List[Output] = []
