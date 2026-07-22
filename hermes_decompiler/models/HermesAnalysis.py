@@ -249,9 +249,8 @@ class HermesAnalysis:
         cfg.compute_post_dominators()
         cfg.compute_loops()
 
-        print("=== LOOPS FOUND ===")
-        for loop in cfg.loop_analysis.loops.values():
-            print(loop)
+        # for loop in cfg.loop_analysis.loops.values():
+        #     print(loop)
 
         analyzer = StructuralAnalyzer(cfg)
         root = analyzer.build()

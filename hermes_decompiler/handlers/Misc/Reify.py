@@ -25,8 +25,7 @@ class ReifyArguments(OpcodeHandler):
         analysis.add_result(entry, variable)
 
         # Optionally, mark the creation of the argument object in analysis.
-        # analysis.MarkArgumentsObject(entry.address, dest_reg)
-        print("MarkArgumentsObject", entry.address, dest_reg)
+        # print("MarkArgumentsObject", entry.address, dest_reg)
 
         return OpcodeResult(entry, variable)
 
