@@ -38,7 +38,62 @@ class LoopStructurer:
         )
 
         for loop in loops:
-            self._wrap_loop(loop)
+            if loop.parent is None:
+                self._build_loop(loop, self.graph.root)
+
+    def _build_loop(
+            self,
+            loop,
+            parent_sequence: SequenceRegion,
+    ):
+
+        region = LoopRegion(loop)
+
+        #
+        # Header owner
+        #
+        owner = self.graph.owner(loop.header)
+
+        if owner is None:
+            return
+
+        #
+        # Header'ın yerine region koy
+        #
+        self.graph.replace_block(loop.header, region)
+
+        #
+        # Header body'nin ilk elemanı
+        #
+        region.body.children.append(loop.header)
+        self.graph.block_owner[loop.header] = region.body
+
+        #
+        # Child loop'lara ait block'ları şimdilik atla
+        #
+        child_members = set()
+
+        for child in loop.children:
+            child_members |= child.members
+
+        #
+        # Kalan block'lar
+        #
+        for block in sorted(loop.members, key=lambda b: b.id):
+
+            if block is loop.header:
+                continue
+
+            if block in child_members:
+                continue
+
+            self.graph.move(block, region.body)
+
+        #
+        # Nested loop'ları oluştur
+        #
+        for child in sorted(loop.children, key=lambda l: l.header.id):
+            self._build_loop(child, region.body)
 
     def _wrap_loop(self, loop):
 

@@ -45,8 +45,22 @@ class NaturalLoop:
     def exit_blocks(self) -> list[BasicBlock]:
         return sorted(self.exits, key=lambda b: b.id)
 
-    def __str__(self):
+    @property
+    def is_top_level(self) -> bool:
+        return self.parent is None
 
+    @property
+    def depth(self) -> int:
+        depth = 0
+        current = self.parent
+
+        while current is not None:
+            depth += 1
+            current = current.parent
+
+        return depth
+
+    def __str__(self):
         return (
             f"NaturalLoop("
             f"header={self.header.id}, "

@@ -31,6 +31,8 @@ class LoopAnalysis:
 
         self._compute_exits()
 
+        self._compute_nesting()
+
     def _merge_back_edge(
             self,
             header,
@@ -86,3 +88,50 @@ class LoopAnalysis:
 
                     if succ not in loop.members:
                         loop.exits.add(succ)
+
+    def _compute_nesting(self):
+
+        loops = list(self.loops.values())
+
+        #
+        # önce temizle
+        #
+        for loop in loops:
+            loop.parent = None
+            loop.children.clear()
+
+        #
+        # her loop için en küçük kapsayan parent'ı bul
+        #
+        for child in loops:
+
+            best_parent = None
+            best_size = None
+
+            for parent in loops:
+
+                if parent is child:
+                    continue
+
+                #
+                # child tamamen parent'ın içinde mi?
+                #
+                if not child.members.issubset(parent.members):
+                    continue
+
+                #
+                # kendisiyle aynı loop değil
+                #
+                if len(child.members) == len(parent.members):
+                    continue
+
+                #
+                # en küçük kapsayan parent
+                #
+                if best_parent is None or len(parent.members) < best_size:
+                    best_parent = parent
+                    best_size = len(parent.members)
+
+            if best_parent is not None:
+                child.parent = best_parent
+                best_parent.children.append(child)
