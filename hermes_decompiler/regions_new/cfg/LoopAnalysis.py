@@ -30,8 +30,19 @@ class LoopAnalysis:
                 self._merge_back_edge(header, tail)
 
         self._compute_exits()
-
         self._compute_nesting()
+
+        # print("\n=== Natural Loops ===")
+        # for loop in sorted(
+        #         self.loops.values(),
+        #         key=lambda l: l.header.id
+        # ):
+        #     print(
+        #         f"header={loop.header.id} "
+        #         f"parent={loop.parent.header.id if loop.parent else None} "
+        #         f"children={[c.header.id for c in loop.children]} "
+        #         f"members={[b.id for b in loop.blocks]}"
+        #     )
 
     def _merge_back_edge(
             self,

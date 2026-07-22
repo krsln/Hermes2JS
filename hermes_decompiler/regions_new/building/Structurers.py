@@ -31,15 +31,17 @@ class LoopStructurer:
         if self.cfg.loop_analysis is None:
             return
 
-        loops = sorted(
-            self.cfg.loop_analysis.loops.values(),
-            key=lambda l: len(l.members),
-            reverse=True,
-        )
+        roots = [
+            loop
+            for loop in self.cfg.loop_analysis.loops.values()
+            if loop.parent is None
+        ]
 
-        for loop in loops:
-            if loop.parent is None:
-                self._build_loop(loop, self.graph.root)
+        for loop in roots:
+            self._build_loop(
+                loop,
+                self.graph.root,
+            )
 
     def _build_loop(
             self,
@@ -94,51 +96,6 @@ class LoopStructurer:
         #
         for child in sorted(loop.children, key=lambda l: l.header.id):
             self._build_loop(child, region.body)
-
-    def _wrap_loop(self, loop):
-
-        region = LoopRegion(loop)
-
-        #
-        # Header bilgisi
-        #
-        region.header_block = loop.header
-
-        #
-        # Önce header'ın sahibi bulunur.
-        #
-        owner = self.graph.owner(loop.header)
-
-        if owner is None:
-            return
-
-        #
-        # Header'ın yerine LoopRegion koy.
-        #
-        self.graph.replace_block(
-            loop.header,
-            region,
-        )
-
-        #
-        # Header artık loop body'sinin ilk elemanı.
-        #
-        region.body.children.append(loop.header)
-
-        self.graph.block_owner[loop.header] = region.body
-
-        #
-        # Diğer loop blocklarını body'ye taşı.
-        #
-        for block in sorted(loop.members, key=lambda b: b.id):
-
-            if block is loop.header:
-                continue
-
-            self.graph.move(
-                block,
-                region.body,
-            )
 
 
 class IfStructurer:

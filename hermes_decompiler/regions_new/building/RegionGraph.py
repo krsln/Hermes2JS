@@ -130,10 +130,6 @@ class RegionGraph:
         #
         del self.block_owner[old]
 
-    @staticmethod
-    def sequence_of(region: Region) -> SequenceRegion | None:
-        return region.parent
-
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     def replace__(
