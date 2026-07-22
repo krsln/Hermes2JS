@@ -62,13 +62,14 @@ async function* anon_11947(param0, param1, param2) {
         r4 = new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))
         // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
         // USED → r6 = r7[r4]
+    } else {
+        // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
+        // USED → r7 = globalThis.Error.captureStackTrace
+        // CODE → <Mov>: <Reg8: 4, Reg8: 6>
+        // USED → r4 = r6
+        // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
+        r4 = globalThis.Error.captureStackTrace(r6)
     }
-    // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
-    // USED → r7 = globalThis.Error.captureStackTrace
-    // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-    // USED → r4 = r6
-    // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
-    r4 = globalThis.Error.captureStackTrace(r6)
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
     // USED → r4 = r6
     // CODE → <GetById>: <Reg8: 7, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
@@ -100,45 +101,46 @@ async function* anon_11947(param0, param1, param2) {
         // USED → r4 = r2
         // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
         r6 = { stack: r2 }
-    }
-    // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = r2
-    if (!r2) {
-        // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
-        // USED → r4 = globalThis.String
-        // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-        // USED → r3 = r1
-        // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-        // USED → r3 = r1.stack
-        // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
-        // USED → r5 = globalThis.String(r1.stack)
-        // CODE → <GetById>: <Reg8: 4, Reg8: 5, UInt8: 8, string_id: 19080>  # String: 'endsWith' (Identifier)
-        // USED → r4 = globalThis.String(r1.stack).endsWith
-        // CODE → <Mov>: <Reg8: 7, Reg8: 2>
-        // USED → r7 = r2
-        // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
-        // USED → r6 = r2.replace
-        // CODE → <CreateRegExp>: <Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169>  # String: '^.+\\n.+\\n' (String)  # String: '' (Identifier)
-        // USED → r3 = /^.+\\n.+\\n/
-        // CODE → <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
-        // USED → r3 = r2.replace(/^.+\\n.+\\n/, "")
-        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-        // USED → r3 = globalThis.String(r1.stack).endsWith(r2.replace(/^.+\\n.+\\n/, ""))
-        if (!(globalThis.String(r1.stack).endsWith(r2.replace(/^.+\\n.+\\n/, "")))) {
+    } else {
+        // CODE → <Mov>: <Reg8: 4, Reg8: 2>
+        // USED → r4 = r2
+        if (!r2) {
+            // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
+            // USED → r4 = globalThis.String
             // CODE → <Mov>: <Reg8: 3, Reg8: 1>
             // USED → r3 = r1
-            // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-            // USED → r4 = r1.stack
-            // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-            // USED → r5 = r2
-            // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
-            // USED → r2 = "\n"
-            // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
-            // USED → r2 = "\n" + r2
-            // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
-            // USED → r2 = r1.stack + "\n" + r2
-            // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-            r3 = { stack: r1.stack + "\n" + r2 }
+            // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
+            // USED → r3 = r1.stack
+            // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
+            // USED → r5 = globalThis.String(r1.stack)
+            // CODE → <GetById>: <Reg8: 4, Reg8: 5, UInt8: 8, string_id: 19080>  # String: 'endsWith' (Identifier)
+            // USED → r4 = globalThis.String(r1.stack).endsWith
+            // CODE → <Mov>: <Reg8: 7, Reg8: 2>
+            // USED → r7 = r2
+            // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
+            // USED → r6 = r2.replace
+            // CODE → <CreateRegExp>: <Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169>  # String: '^.+\\n.+\\n' (String)  # String: '' (Identifier)
+            // USED → r3 = /^.+\\n.+\\n/
+            // CODE → <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
+            // USED → r3 = r2.replace(/^.+\\n.+\\n/, "")
+            // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+            // USED → r3 = globalThis.String(r1.stack).endsWith(r2.replace(/^.+\\n.+\\n/, ""))
+            if (!(globalThis.String(r1.stack).endsWith(r2.replace(/^.+\\n.+\\n/, "")))) {
+                // CODE → <Mov>: <Reg8: 3, Reg8: 1>
+                // USED → r3 = r1
+                // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
+                // USED → r4 = r1.stack
+                // CODE → <Mov>: <Reg8: 5, Reg8: 2>
+                // USED → r5 = r2
+                // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
+                // USED → r2 = "\n"
+                // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
+                // USED → r2 = "\n" + r2
+                // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
+                // USED → r2 = r1.stack + "\n" + r2
+                // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
+                r3 = { stack: r1.stack + "\n" + r2 }
+            }
         }
     }
     // CODE → <Ret>: <Reg8: 0>

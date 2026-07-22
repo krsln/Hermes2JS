@@ -42,6 +42,7 @@ function function_12825(param0, param1, param2, param3, param4) {
         // USED → r1 = r10.pop()(r7)
         // CODE → <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
         // USED → r0 = r10.pop()(r7) === false
+    } else {
         // CODE → <Mov>: <Reg8: 11, Reg8: 9>
         // USED → r11 = r9
         // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
@@ -60,10 +61,10 @@ function function_12825(param0, param1, param2, param3, param4) {
         // USED → r1 = r9.error
         // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>
         r1 = r9.error(caughtException)
-        // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-        // USED → r1 = r0
-        if (!r0) {
-        }
+    }
+    // CODE → <Mov>: <Reg8: 1, Reg8: 0>
+    // USED → r1 = r0
+    if (!r0) {
     }
     // CODE → <Ret>: <Reg8: 0>
     return r10.pop()(r7) === false;

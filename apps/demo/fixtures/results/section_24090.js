@@ -52,17 +52,18 @@ function onPress(param0) {
         // USED → r1 = r2.goBack
         // CODE → <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
         r1 = r2.goBack()
+    } else {
+        // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 12>
+        r0 = r0[12]
+        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
+        // USED → r2 = r0.default
+        // CODE → <GetById>: <Reg8: 1, Reg8: 2, UInt8: 6, string_id: 12341>  # String: 'open' (Identifier)
+        // USED → r1 = r0.default.open
+        // CODE → <NewObjectWithBuffer>: <Reg8: 0, UInt16: 4, UInt16: 4, UInt16: 11077, UInt16: 9225>  # Object: {'title': 'Join Coachify AI Competition', 'message': 'Join Coachify AI Competition', 'url': 'https://coachify.ai/download?ref=compshare', 'subject': 'Join Coachify AI Competition'}
+        // USED → r0 = { title: "Join Coachify AI Competition", message: "Join Coachify AI Competition", url: "https://coachify.ai/download?ref=compshare", subject: "Join Coachify AI Competition" }
+        // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+        r0 = r0.default.open({ title: "Join Coachify AI Competition", message: "Join Coachify AI Competition", url: "https://coachify.ai/download?ref=compshare", subject: "Join Coachify AI Competition" })
     }
-    // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 12>
-    r0 = r0[12]
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r2 = r0.default
-    // CODE → <GetById>: <Reg8: 1, Reg8: 2, UInt8: 6, string_id: 12341>  # String: 'open' (Identifier)
-    // USED → r1 = r0.default.open
-    // CODE → <NewObjectWithBuffer>: <Reg8: 0, UInt16: 4, UInt16: 4, UInt16: 11077, UInt16: 9225>  # Object: {'title': 'Join Coachify AI Competition', 'message': 'Join Coachify AI Competition', 'url': 'https://coachify.ai/download?ref=compshare', 'subject': 'Join Coachify AI Competition'}
-    // USED → r0 = { title: "Join Coachify AI Competition", message: "Join Coachify AI Competition", url: "https://coachify.ai/download?ref=compshare", subject: "Join Coachify AI Competition" }
-    // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = r0.default.open({ title: "Join Coachify AI Competition", message: "Join Coachify AI Competition", url: "https://coachify.ai/download?ref=compshare", subject: "Join Coachify AI Competition" })
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined
     // CODE → <Ret>: <Reg8: 0>

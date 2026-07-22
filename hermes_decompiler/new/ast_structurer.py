@@ -66,20 +66,14 @@ class HighLevelASTBuilder:
         return root
 
     def _is_redundant_iterator_bytecode(self, handler: str, val_raw: str) -> bool:
-        # Iterator / Loop kontrol gürültüleri
         if handler in ("JmpUndefined", "JmpUndefinedLong", "JStrictEqual"):
             return True
-
         if handler in ("Catch", "IteratorClose", "Throw"):
             return True
-
-        # For-in ve For-of adımları IF OLMAMALI!
         if "GetNextPName" in val_raw or "GetIterator(" in val_raw or "for-in step" in val_raw or "for-in property list" in val_raw:
             return True
-
         if handler in ("Jmp", "JmpLong") or "goto label_" in val_raw:
             return True
-
         return False
 
     def _parse_for_in(self, start_idx: int):
@@ -183,39 +177,70 @@ class HighLevelASTBuilder:
                 condition = cond_body.split("/*")[0].strip()
             except Exception:
                 condition = "true"
-        elif item.variable.used:
-            condition = item.variable.used.split("=")[-1].strip()
 
+        # JmpFalse -> Koşul doğruysa ALTTAKİ koda girer (Condition)
+        # JmpTrue -> Koşul yanlışsa ALTTAKİ koda girer (!(Condition))
         if handler == "JmpTrue":
             condition = f"!({condition})"
 
         then_body = BlockNode()
         else_body = BlockNode()
+
+        # Jmp/JmpLong ile Else adresi yakalama
+        else_target_addr = None
         i = start_idx + 1
+        is_in_else = False
 
         while i < self.n:
             curr_item = self.results[i]
             c_handler = curr_item.variable.handler
             c_val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
 
-            if target_addr and curr_item.variable.address >= target_addr:
+            # If/Else bloğunun tamamen bittiği adres
+            if else_target_addr and curr_item.variable.address >= else_target_addr:
                 break
+            elif not is_in_else and target_addr and curr_item.variable.address >= target_addr:
+                # If bloğu bitti, Else bloğuna geçiş kontrolü
+                is_in_else = True
+                if not else_target_addr:
+                    break
+
+            # İçteki For-Of döngüsü yakalama
+            if c_handler == "IteratorBegin" or "GetIterator(" in c_val:
+                for_of_node, next_i = self._parse_for_of(i)
+                target_node = else_body if is_in_else else then_body
+                target_node.body.append(for_of_node)
+                i = next_i
+                continue
+
+            # İçteki If/Else yakalama
+            if c_handler in ("JmpTrue", "JmpFalse") and "for-in step" not in c_val:
+                # Eğer then_body'nin son adımı Jmp/JmpLong ise bu else geçişidir
+                nested_if, next_i = self._parse_if_statement(i)
+                target_node = else_body if is_in_else else then_body
+                target_node.body.append(nested_if)
+                i = next_i
+                continue
+
+            # Else geçiş sıçraması (Then bloğunun sonundaki Jmp)
+            if not is_in_else and c_handler in ("Jmp", "JmpLong") and curr_item.goto:
+                else_target_addr = curr_item.goto
+                is_in_else = True
+                i += 1
+                continue
 
             if self._is_redundant_iterator_bytecode(c_handler, c_val):
                 i += 1
                 continue
 
-            if c_handler in ("JmpTrue", "JmpFalse") and "for-in step" not in c_val:
-                nested_if, next_i = self._parse_if_statement(i)
-                then_body.body.append(nested_if)
-                i = next_i
-                continue
-
-            then_body.body.append(InstructionNode(
+            target_node = else_body if is_in_else else then_body
+            target_node.body.append(InstructionNode(
                 statement=c_val,
                 original_bytecode=curr_item.opcode.bytecode,
                 used=curr_item.variable.used
             ))
             i += 1
 
+        if len(else_body.body) > 0:
+            return IfNode(condition=condition, then_branch=then_body, else_branch=else_body), i
         return IfNode(condition=condition, then_branch=then_body), i
