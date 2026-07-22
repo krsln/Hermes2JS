@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from hermes_decompiler.regions_new.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.regions_new.models.Regions import (
     SequenceRegion,
     LoopRegion,
@@ -26,6 +27,8 @@ class JSRenderer:
 
     def render(self, root):
 
+        self.dump(root)
+
         output = []
 
         self._render_region(root, output, 1)
@@ -33,6 +36,51 @@ class JSRenderer:
         return output
 
     # ---------------------------------------------------------
+    def _render_block(
+            self,
+            block: BasicBlock,
+            output,
+            indent,
+    ):
+
+        if self.verbose:
+            output.append(
+                f"{'    ' * indent}// Block {block.id}"
+            )
+
+        for result in block.instructions:
+            self._render_instruction(
+                result,
+                output,
+                indent,
+            )
+
+    def _render_instruction(
+            self,
+            result,
+            output,
+            indent,
+    ):
+
+        prefix = "    " * indent
+
+        if self.verbose and hasattr(result, "comment"):
+            if result.comment:
+                output.append(
+                    prefix + "// " + result.comment
+                )
+
+        if hasattr(result, "result"):
+
+            output.append(
+                prefix + result.result
+            )
+
+        else:
+
+            output.append(
+                prefix + str(result)
+            )
 
     def _render_region(
             self,
@@ -57,12 +105,18 @@ class JSRenderer:
 
     # ---------------------------------------------------------
 
-    def _render_sequence(self, region, output, indent):
-
+    def _render_sequence(
+            self,
+            region,
+            output,
+            indent,
+    ):
         current_block = None
 
+        #
+        # Önce bu sequence içindeki statements
+        #
         for stmt in region.statements:
-
             if (
                     self.verbose
                     and hasattr(stmt, "block")
@@ -73,10 +127,21 @@ class JSRenderer:
                     f"{'    ' * indent}// Block {current_block.id}"
                 )
 
-            self._render_statement(stmt, output, indent)
+            self._render_statement(
+                stmt,
+                output,
+                indent,
+            )
 
+        #
+        # Sonra nested regions
+        #
         for child in region.children:
-            self._render_region(child, output, indent)
+            self._render_region(
+                child,
+                output,
+                indent,
+            )
 
     # ---------------------------------------------------------
 
@@ -86,6 +151,11 @@ class JSRenderer:
             output,
             indent,
     ):
+        print(
+            "RENDER LOOP BODY",
+            len(region.body.children),
+            len(region.body.statements)
+        )
 
         if self.verbose:
 
@@ -166,7 +236,6 @@ class JSRenderer:
         prefix = "    " * indent
 
         if isinstance(stmt, InstructionStatement):
-
             output.append(
                 prefix + stmt.result.result
             )
@@ -222,3 +291,17 @@ class JSRenderer:
             # raise TypeError(
             #     f"Unsupported statement: {type(stmt).__name__}"
             # )
+
+    def dump(self, region, indent=0):
+
+        print(
+            " " * indent,
+            type(region).__name__,
+            "children=",
+            len(getattr(region, "children", [])),
+            "statements=",
+            len(getattr(region, "statements", []))
+        )
+
+        for child in getattr(region, "children", []):
+            self.dump(child, indent + 4)

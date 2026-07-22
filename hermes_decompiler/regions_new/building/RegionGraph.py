@@ -70,6 +70,8 @@ class RegionGraph:
 
         sequence.children.append(block)
 
+        block.parent = sequence
+
         self.block_owner[block] = sequence
 
     def move(
@@ -80,9 +82,7 @@ class RegionGraph:
 
         self.detach(block)
 
-        sequence.children.append(block)
-
-        self.block_owner[block] = sequence
+        self.append(sequence, block)
 
     def insert_before(
             self,

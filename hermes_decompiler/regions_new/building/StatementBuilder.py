@@ -17,6 +17,13 @@ class StatementBuilder:
 
     def build(self, region):
 
+        print(
+            "BUILD",
+            type(region).__name__,
+            "children=",
+            len(getattr(region, "children", [])),
+        )
+
         if isinstance(region, SequenceRegion):
             self._build_sequence(region)
 
@@ -37,15 +44,12 @@ class StatementBuilder:
             self.build(region.body)
 
     # ---------------------------------------------------------
-    def _build_sequence(self, region: SequenceRegion):
+    def _build_sequence(self, region):
 
         new_children = []
 
         for child in region.children:
 
-            #
-            # BasicBlock -> Statements
-            #
             if isinstance(child, BasicBlock):
 
                 for index, result in enumerate(child.instructions):
@@ -58,12 +62,8 @@ class StatementBuilder:
                         )
                     )
 
-                # BasicBlock artık tree'de kalmıyor.
-                continue
+                continue  # <-- önemli
 
-            #
-            # Nested region
-            #
             self.build(child)
 
             new_children.append(child)
