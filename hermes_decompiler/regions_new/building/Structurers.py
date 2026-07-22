@@ -1,5 +1,7 @@
-from hermes_decompiler.regions_new.models.Regions import SequenceRegion, InstructionRegion
-
+from hermes_decompiler.regions_new.models.Regions import (
+    SequenceRegion, InstructionRegion, LoopRegion
+)
+from hermes_decompiler.regions_new.cfg.NaturalLoop import NaturalLoop
 
 class IfStructurer:
 
