@@ -1,18 +1,41 @@
+from __future__ import annotations
+
+
 class CFGVerifier:
 
     def __init__(self, cfg):
 
         self.cfg = cfg
 
+    # ---------------------------------------------------------
+
     def verify(self):
 
         self._verify_entry()
-        self._verify_edges()
+
         self._verify_blocks()
+
+        self._verify_edges()
+
+    # ---------------------------------------------------------
 
     def _verify_entry(self):
 
-        assert self.cfg.entry is not None
+        if self.cfg.entry is None:
+            raise ValueError("CFG has no entry block.")
+
+    # ---------------------------------------------------------
+
+    def _verify_blocks(self):
+
+        for block in self.cfg.blocks:
+
+            if not block.instructions:
+                raise ValueError(
+                    f"Empty basic block: {block.id}"
+                )
+
+    # ---------------------------------------------------------
 
     def _verify_edges(self):
 
@@ -20,14 +43,16 @@ class CFGVerifier:
 
             for succ in block.successors:
 
-                assert block in succ.predecessors
+                if block not in succ.predecessors:
+
+                    raise ValueError(
+                        f"Broken edge: {block.id} -> {succ.id}"
+                    )
 
             for pred in block.predecessors:
 
-                assert block in pred.successors
+                if block not in pred.successors:
 
-    def _verify_blocks(self):
-
-        for block in self.cfg.blocks:
-
-            assert len(block.instructions) > 0
+                    raise ValueError(
+                        f"Broken edge: {pred.id} -> {block.id}"
+                    )

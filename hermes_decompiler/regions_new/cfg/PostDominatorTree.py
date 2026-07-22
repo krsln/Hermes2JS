@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 class PostDominatorTree:
 
     def __init__(self, cfg):
@@ -6,4 +9,8 @@ class PostDominatorTree:
 
     def compute(self):
 
-        pass
+        #
+        # next PR
+        #
+
+        return
