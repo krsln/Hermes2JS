@@ -44,12 +44,20 @@ class OpcodeResult:
             self.result = f'{variable.value}'
 
     @property
+    def address(self) -> int:
+        return self.opcode.address
+
+    @property
     def handler(self) -> str:
         return self.variable.handler
 
     @property
     def value(self) -> str:
         return self.variable.value
+
+    @property
+    def is_return(self) -> bool:
+        return self.variable.handler == "Ret"
 
     def __str__(self):
         return f"OpcodeResult(Opcode={self.opcode}, Variable='{self.variable}',Result='{self.result}', GoTo='{self.goto}')"

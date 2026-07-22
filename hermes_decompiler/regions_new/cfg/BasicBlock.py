@@ -6,13 +6,6 @@ from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 class BasicBlock:
-    """
-    Basic Control Flow Graph block.
-
-    Phase-1:
-        - Contains a linear list of instructions.
-        - CFG edges will be added later.
-    """
 
     def __init__(self, block_id: int):
         self.id = block_id
@@ -23,11 +16,8 @@ class BasicBlock:
 
         self.successors: List["BasicBlock"] = []
 
-    def add_instruction(self, result: OpcodeResult) -> None:
+    def add_instruction(self, result: OpcodeResult):
         self.instructions.append(result)
-
-    def __repr__(self) -> str:
-        return f"BasicBlock(id={self.id}, instructions={len(self.instructions)})"
 
     @property
     def first(self):
@@ -39,3 +29,12 @@ class BasicBlock:
 
     def __len__(self):
         return len(self.instructions)
+
+    def __repr__(self):
+        return f"Block({self.id})"
+
+    def __hash__(self):
+        return hash(self.id)
+
+    def __eq__(self, other):
+        return isinstance(other, BasicBlock) and self.id == other.id

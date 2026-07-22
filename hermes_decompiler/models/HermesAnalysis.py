@@ -242,10 +242,13 @@ class HermesAnalysis:
 
     def generate_js_v1_new(self, verbose: bool = False) -> List[str]:
         cfg = CFG.from_results(self.results)
+        # cfg.dump()
 
-        analyzer = StructuralAnalyzer(cfg)
+        # cfg.verify()
+        # cfg.compute_dominators()
+        # cfg.compute_post_dominators()
 
-        root = analyzer.build()
+        root = StructuralAnalyzer(cfg).build()
 
         renderer = JSRenderer(verbose)
 
