@@ -8,8 +8,8 @@ from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.Logger import get_logger
 from hermes_decompiler.regions.building.RegionBuilder import RegionBuilder
-from hermes_decompiler.regions_new.building.StructuralAnalyzer import StructuralAnalyzer
 from hermes_decompiler.regions_new.cfg.CFG import CFG
+from hermes_decompiler.regions_new.building.StructuralAnalyzer import StructuralAnalyzer
 from hermes_decompiler.regions_new.render.JSRenderer import JSRenderer
 
 logger = get_logger(__name__)
@@ -240,7 +240,7 @@ class HermesAnalysis:
 
         return result
 
-    def generate_js_v1_new(self, verbose=False):
+    def generate_js_v1_new(self, verbose: bool = False) -> List[str]:
         cfg = CFG.from_results(self.results)
 
         analyzer = StructuralAnalyzer(cfg)
