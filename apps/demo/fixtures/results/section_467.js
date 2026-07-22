@@ -775,6 +775,37 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r41 = false
     r49 = Object.keys(r50) /* for-in property list */
     if (Object.keys(r50) /* for-in property list */ === undefined) { /* jump to label_3789 */ }
+    // Loop
+        // Block 1
+        r54 = r43
+        r41 = r54
+        r45 = Object.keys(r50) /* for-in property list */.next() /* for-in step */
+        if (Object.keys(r50) /* for-in property list */.next() /* for-in step */ === undefined) { /* jump to label_3789 */ }
+        // Block 2
+        r44 = r45
+        r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty
+        r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)
+        r43 = r54
+        if (!{ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)) { /* jump to label_3677 */ }
+        // Block 3
+        r52 = r50[r44]
+        r53 = {}.hasOwnProperty
+        r53 = {}.hasOwnProperty(r45)
+        if (!{}.hasOwnProperty(r45)) { /* jump to label_3742 */ }
+        // Block 4
+        r53 = r51[r44]
+        r43 = r54
+        r42 = r52
+        if (r51[r44] === r50[r44]) { /* jump to label_3677 */ }
+        // Block 5
+        r53 = r51[r44]
+        if (r51[r44]) { /* jump to label_3760 */ }
+        // Block 6
+        {}[r45] = r50[r44]
+        r43 = true
+        r42 = r52
+        goto label_3677;
+    // EndLoop
     // Block 7
     r43 = globalThis.Error
     r42 = "`."
@@ -1332,42 +1363,6 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r1[31] = r8.inject();
     r1[32] = r8;
     goto label_6205;
-    // Block 35
-    r1 = globalThis.Error
-    r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
-    r0 = globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
-    r0 = throw globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
-    // Loop
-        // Block 1
-        r54 = r43
-        r41 = r54
-        r45 = Object.keys(r50) /* for-in property list */.next() /* for-in step */
-        if (Object.keys(r50) /* for-in property list */.next() /* for-in step */ === undefined) { /* jump to label_3789 */ }
-        // Block 2
-        r44 = r45
-        r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty
-        r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)
-        r43 = r54
-        if (!{ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)) { /* jump to label_3677 */ }
-        // Block 3
-        r52 = r50[r44]
-        r53 = {}.hasOwnProperty
-        r53 = {}.hasOwnProperty(r45)
-        if (!{}.hasOwnProperty(r45)) { /* jump to label_3742 */ }
-        // Block 4
-        r53 = r51[r44]
-        r43 = r54
-        r42 = r52
-        if (r51[r44] === r50[r44]) { /* jump to label_3677 */ }
-        // Block 5
-        r53 = r51[r44]
-        if (r51[r44]) { /* jump to label_3760 */ }
-        // Block 6
-        {}[r45] = r50[r44]
-        r43 = true
-        r42 = r52
-        goto label_3677;
-    // EndLoop
     // Loop
         // Block 34
         r6 = function_852 /* Closure with env r1 = undefined */
@@ -1396,4 +1391,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // Block 33
         r6 = caughtException
     // EndLoop
+    // Block 35
+    r1 = globalThis.Error
+    r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
+    r0 = globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
+    r0 = throw globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
 }

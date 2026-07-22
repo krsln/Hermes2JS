@@ -248,6 +248,23 @@ function _request(param0, param1, param2) {
     if (r4 < r5) { /* jump to label_866 */ }
     // Block 31
     goto label_934;
+    // Loop
+        // Block 33
+        r6 = r6[6]
+        r7 = r6.default
+        r6 = r6.default.call
+        r0 = r6.default.call(this, r13(r1))
+        r4 = 0
+        r1 = r3
+        r1 = r3.length
+        r5 = r1
+        if (0 >= r3.length) { /* jump to label_1024 */ }
+        // Block 32
+        r10 = caughtException
+        r9 = r7
+        r7 = r7.call
+        r7 = r7.call(this, caughtException)
+    // EndLoop
     // Block 34
     r8 = r0
     r7 = r0.then
@@ -272,21 +289,4 @@ function _request(param0, param1, param2) {
     r0 = globalThis.Promise.reject
     r0 = globalThis.Promise.reject(caughtException)
     return globalThis.Promise.reject(caughtException);
-    // Loop
-        // Block 33
-        r6 = r6[6]
-        r7 = r6.default
-        r6 = r6.default.call
-        r0 = r6.default.call(this, r13(r1))
-        r4 = 0
-        r1 = r3
-        r1 = r3.length
-        r5 = r1
-        if (0 >= r3.length) { /* jump to label_1024 */ }
-        // Block 32
-        r10 = caughtException
-        r9 = r7
-        r7 = r7.call
-        r7 = r7.call(this, caughtException)
-    // EndLoop
 }

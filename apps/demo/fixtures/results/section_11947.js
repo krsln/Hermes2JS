@@ -93,13 +93,13 @@ async function* anon_11947(param0, param1, param2) {
     r3 = { stack: r1.stack + "\n" + r2 }
     // Block 16
     goto label_316;
-    // Block 19
-    // CompleteGenerator: No output needed
-    return undefined_r0;
     // Loop
         // Block 18
         r1 = throw r7
         // Block 17
         r2 = caughtException
     // EndLoop
+    // Block 19
+    // CompleteGenerator: No output needed
+    return undefined_r0;
 }
