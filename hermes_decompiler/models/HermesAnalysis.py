@@ -244,9 +244,9 @@ class HermesAnalysis:
         cfg = CFG.from_results(self.results)
         # cfg.dump()
 
-        # cfg.verify()
-        # cfg.compute_dominators()
-        # cfg.compute_post_dominators()
+        cfg.verify()
+        cfg.compute_dominators()
+        cfg.compute_post_dominators()
 
         root = StructuralAnalyzer(cfg).build()
 

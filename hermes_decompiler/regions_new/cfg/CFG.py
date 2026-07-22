@@ -1,49 +1,34 @@
 from __future__ import annotations
 
-from typing import List
-
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
-from .BasicBlock import BasicBlock
-
 
 class CFG:
 
     def __init__(self):
-        self.blocks: List[BasicBlock] = []
-
-        self.entry: BasicBlock | None = None
+        self.blocks = []
+        self.entry = None
 
         self.dominator_tree = None
+        self.post_dominator_tree = None
 
     @classmethod
-    def from_results(cls, results: List[OpcodeResult]) -> "CFG":
+    def from_results(cls, results):
         from .CFGBuilder import CFGBuilder
+
+        return CFGBuilder().build(results)
+
+    def verify(self):
+        from .CFGVerifier import CFGVerifier
+
+        CFGVerifier(self).verify()
+
+    def compute_dominators(self):
         from .DominatorTree import DominatorTree
 
-        cfg = CFGBuilder().build(results)
+        self.dominator_tree = DominatorTree(self)
+        self.dominator_tree.compute()
 
-        cfg.dominator_tree = DominatorTree(cfg)
+    def compute_post_dominators(self):
+        from .PostDominatorTree import PostDominatorTree
 
-        cfg.dominator_tree.compute()
-
-        return cfg
-
-    def dump(self):
-        for block in self.blocks:
-            print(f"\nBlock {block.id}")
-
-            print(
-                "  preds:",
-                [b.id for b in block.predecessors]
-            )
-
-            print(
-                "  succs:",
-                [b.id for b in block.successors]
-            )
-
-            print(
-                "  instructions:",
-                [i.address for i in block.instructions]
-            )
+        self.post_dominator_tree = PostDominatorTree(self)
+        self.post_dominator_tree.compute()
