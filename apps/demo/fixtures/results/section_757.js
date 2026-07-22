@@ -11,7 +11,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     r2 = 0
     r1 = getEnvironment(0)
     r0 = r10
-    // Loop (header=1)
+    // Loop (while: !r10.flags & 16384)
         // Block 1
         r11 = r10.flags
         r11 = r10.flags & 16384

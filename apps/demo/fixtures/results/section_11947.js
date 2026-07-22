@@ -93,7 +93,7 @@ async function* anon_11947(param0, param1, param2) {
     r3 = { stack: r1.stack + "\n" + r2 }
     // Block 16
     goto label_316;
-    // Loop (header=18)
+    // Loop
         // Block 18
         r1 = throw r7
         // Block 17

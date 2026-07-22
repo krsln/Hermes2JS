@@ -775,7 +775,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r41 = false
     r49 = Object.keys(r50) /* for-in property list */
     if (Object.keys(r50) { /* jump to 3789 */ }
-    // Loop (header=1)
+    // Loop (while: Object.keys(r50) /* for-in property list */.next() /* for-in step */ === undefined)
         // Block 1
         r54 = r43
         r41 = r54
@@ -1363,7 +1363,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r1[31] = r8.inject();
     r1[32] = r8;
     goto label_6205;
-    // Loop (header=34)
+    // Loop
         // Block 34
         r6 = function_852 /* Closure with env r1 = undefined */
         r3 = { createPortal: function_852 /* Closure with env r1 = undefined */ }

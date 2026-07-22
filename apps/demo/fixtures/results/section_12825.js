@@ -13,7 +13,7 @@ function function_12825(param0, param1, param2, param3, param4) {
     r4 = globalThis
     r3 = "Error occurred in "
     r2 = " callback, continuing anyway…"
-    // Loop (header=1)
+    // Loop (while: !r10.length)
         // Block 1
         r1 = r10
         r1 = r10.length

@@ -9,7 +9,7 @@ function processColorsInProps(param0, param1) {
     r1 = getEnvironment(1)
     r6 = Object.keys(r10) /* for-in property list */
     if (Object.keys(r10) { /* jump to 183 */ }
-    // Loop (header=1)
+    // Loop (while: Object.keys(r10) /* for-in property list */.next() /* for-in step */ === undefined)
         // Block 1
         r2 = Object.keys(r10) /* for-in property list */.next() /* for-in step */
         if (Object.keys(r10) /* for-in property list */.next() /* for-in step */ === undefined) { /* jump to label_183 */ }

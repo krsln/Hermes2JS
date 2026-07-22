@@ -248,7 +248,7 @@ function _request(param0, param1, param2) {
     if (r4 < r5) { /* jump to 866 */ }
     // Block 31
     goto label_934;
-    // Loop (header=33)
+    // Loop (while: 0 >= r3.length)
         // Block 33
         r6 = r6[6]
         r7 = r6.default

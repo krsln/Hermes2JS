@@ -70,10 +70,20 @@ class JSRenderer:
                 output.append(("    " * indent) + line)
 
     def _render_loop(self, region, output, indent):
+
         if self.verbose:
-            output.append(f"{'    ' * indent}// Loop (header={region.loop.header.id})")
+
+            if region.condition:
+                output.append(
+                    f"{'    ' * indent}// Loop ({region.loop_kind}: {region.condition})"
+                )
+            else:
+                output.append(
+                    f"{'    ' * indent}// Loop"
+                )
 
         self._render(region.header, output, indent + 1)
+
         self._render(region.body, output, indent + 1)
 
         if self.verbose:
