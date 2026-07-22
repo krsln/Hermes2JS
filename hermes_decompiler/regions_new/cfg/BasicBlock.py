@@ -28,3 +28,14 @@ class BasicBlock:
 
     def __repr__(self) -> str:
         return f"BasicBlock(id={self.id}, instructions={len(self.instructions)})"
+
+    @property
+    def first(self):
+        return self.instructions[0]
+
+    @property
+    def last(self):
+        return self.instructions[-1]
+
+    def __len__(self):
+        return len(self.instructions)

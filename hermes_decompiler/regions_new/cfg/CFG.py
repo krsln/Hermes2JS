@@ -8,17 +8,6 @@ from .BasicBlock import BasicBlock
 
 
 class CFG:
-    """
-    Control Flow Graph.
-
-    Phase-1:
-
-        results
-            ↓
-        one BasicBlock
-
-    Later this will split blocks using jump targets.
-    """
 
     def __init__(self):
         self.blocks: List[BasicBlock] = []
@@ -27,14 +16,6 @@ class CFG:
 
     @classmethod
     def from_results(cls, results: List[OpcodeResult]) -> "CFG":
-        cfg = cls()
+        from .CFGBuilder import CFGBuilder
 
-        block = BasicBlock(0)
-
-        for result in results:
-            block.add_instruction(result)
-
-        cfg.blocks.append(block)
-        cfg.entry = block
-
-        return cfg
+        return CFGBuilder().build(results)
