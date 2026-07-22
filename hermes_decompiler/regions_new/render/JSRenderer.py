@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-from hermes_decompiler.regions_new.models.InstructionRegion import InstructionRegion
-from hermes_decompiler.regions_new.models.LoopRegion import LoopRegion
-from hermes_decompiler.regions_new.models.SequenceRegion import SequenceRegion
+from hermes_decompiler.regions_new.models.Regions import InstructionRegion, LoopRegion, SequenceRegion
 
 
 class JSRenderer:
