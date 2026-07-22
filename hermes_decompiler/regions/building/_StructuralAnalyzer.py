@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import inspect
 import re
 
 from hermes_decompiler.Logger import get_logger
@@ -154,8 +155,8 @@ class StructuralAnalyzer:
             #       see the in-progress-set comment in __init__.
             is_suppressed_start = first_iteration and current_id in (suppress_loop_header, suppress_exception_start)
             is_in_progress = (
-                current_id in self._loop_headers_in_progress
-                or current_id in self._exception_starts_in_progress
+                    current_id in self._loop_headers_in_progress
+                    or current_id in self._exception_starts_in_progress
             )
             is_suppressed = is_suppressed_start or is_in_progress
             first_iteration = False
@@ -212,8 +213,14 @@ class StructuralAnalyzer:
     def _branch_region(self, target: int, merge: int | None, bound: set[int] | None,
                        active_loop_header: int | None, ) -> Region:
 
-        if active_loop_header is not None and target == active_loop_header:
+        if merge is None:
+            return SequenceRegion([GotoRegion(ControlTransferKind.GOTO, label=f"label_{target}")])
+
+        if target in self.loops_by_header:
             return SequenceRegion(regions=[GotoRegion(ControlTransferKind.CONTINUE)])
+
+        # if active_loop_header is not None and target == active_loop_header:
+        #     return SequenceRegion(regions=[GotoRegion(ControlTransferKind.CONTINUE)])
 
         if bound is not None and target not in bound:
             return SequenceRegion(regions=[GotoRegion(ControlTransferKind.BREAK)])
