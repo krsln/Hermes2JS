@@ -251,7 +251,19 @@ class HermesAnalysis:
 
         for loop in cfg.loop_analysis.loops:
             print()
-            print(loop)
+
+            print(
+                f"Loop header={loop.header.id}"
+            )
+
+            print(
+                f"tail={loop.tail.id}"
+            )
+
+            print(
+                "members:",
+                [b.id for b in loop.blocks]
+            )
 
         # for tail, header in cfg.loop_analysis.back_edges:
         #     print()

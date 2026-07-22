@@ -9,7 +9,7 @@ class LoopAnalysis:
 
         self.back_edges = []
 
-        self.loops: list[NaturalLoop] = []
+        self.loops = []
 
     def compute(self):
 
@@ -25,13 +25,41 @@ class LoopAnalysis:
                 if header is tail:
                     continue
 
-                if tree.dominates(header, tail):
+                if not tree.dominates(header, tail):
+                    continue
 
-                    self.back_edges.append((tail, header))
+                self.back_edges.append((tail, header))
 
-                    loop = NaturalLoop(
-                        header=header,
-                        tail=tail,
-                    )
+                loop = self._build_loop(header, tail)
 
-                    self.loops.append(loop)
+                self.loops.append(loop)
+
+    def _build_loop(self, header, tail):
+
+        loop = NaturalLoop(
+            header=header,
+            tail=tail,
+        )
+
+        loop.members.add(header)
+        loop.members.add(tail)
+
+        loop.latches.add(tail)
+
+        stack = [tail]
+
+        while stack:
+
+            block = stack.pop()
+
+            for pred in block.predecessors:
+
+                if pred in loop.members:
+                    continue
+
+                loop.members.add(pred)
+
+                if pred != header:
+                    stack.append(pred)
+
+        return loop
