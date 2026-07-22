@@ -7,6 +7,9 @@ from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.Logger import get_logger
+from hermes_decompiler.new.CFGBuilder import CFGBuilder
+from hermes_decompiler.new.CodeEmitter import CodeEmitter
+from hermes_decompiler.new.ControlFlowStructuring import ControlFlowStructuring
 from hermes_decompiler.regions.building.RegionBuilder import RegionBuilder
 
 logger = get_logger(__name__)
@@ -109,6 +112,32 @@ class HermesAnalysis:
         emitter = JavaScriptEmitter(verbose)
 
         return emitter.emit(region)
+
+    def generate_js_v1_beta(self, verbose: bool = False) -> List[str]:
+        """
+        CFG (Control Flow Graph) tabanlı ve AST destekli robust JS kod üreteci.
+        """
+        if not self.results:
+            return []
+
+        try:
+            # 1. Aşama: Basic Block'ları Oluştur ve CFG Bağlantılarını Kur
+            cfg_builder = CFGBuilder(results=self.results, goto_list=self.gotoList)
+            blocks = cfg_builder.build()
+
+            # 2. Aşama: CFG Yapısını AST (Abstract Syntax Tree) Yapısına Dönüştür
+            structurer = ControlFlowStructuring(blocks=blocks)
+            ast_root = structurer.structure_cfg()
+
+            # 3. Aşama: AST Üzerinden Kod Üretimi (Code Emission)
+            emitter = CodeEmitter(verbose=verbose)
+            return emitter.emit(ast_root)
+
+        except Exception as e:
+            logger.error("CFG-based GenerateJS failed: %s", e, exc_info=True)
+            # Fallback olarak eski metoda düşmek isterseniz:
+            # return self.generate_js_v1(verbose)
+            raise e
 
     def generate_js_v1(self, verbose: bool = True) -> List[str]:
         outputList: List[Output] = []
