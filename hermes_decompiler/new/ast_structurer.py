@@ -9,6 +9,10 @@ class HighLevelASTBuilder:
         self.n = len(results)
 
     def build(self) -> BlockNode:
+        """
+        Bytecode akışını baştan sona tarayarak For-In, For-Of, If-Else ve
+        Düz İfadeleri içeren AST Ağacını (BlockNode) inşa eder.
+        """
         root = BlockNode()
         i = 0
 
@@ -19,7 +23,7 @@ class HighLevelASTBuilder:
             handler = var.handler
 
             # -------------------------------------------------------------
-            # PATTERN 1: For-In Döngüsü Algılama (GetPNameList + GetNextPName)
+            # 1. PATTERN: For-In Döngüsü Algılama
             # -------------------------------------------------------------
             if handler == "GetPNameList" or ("Object.keys(" in val_raw and "for-in property list" in val_raw):
                 for_in_node, new_idx = self._parse_for_in(i)
@@ -29,7 +33,7 @@ class HighLevelASTBuilder:
                     continue
 
             # -------------------------------------------------------------
-            # PATTERN 2: For-Of / Iterator Döngüsü Algılama (IteratorBegin)
+            # 2. PATTERN: For-Of / Iterator Döngüsü Algılama
             # -------------------------------------------------------------
             if handler == "IteratorBegin" or "GetIterator(" in val_raw:
                 for_of_node, new_idx = self._parse_for_of(i)
@@ -39,16 +43,24 @@ class HighLevelASTBuilder:
                     continue
 
             # -------------------------------------------------------------
-            # PATTERN 3: Standart If/Else Yapıları
+            # 3. PATTERN: If/Else Koşullu Dallanma Algılama
             # -------------------------------------------------------------
-            if "/* jump to" in val_raw and item.goto is not None:
+            if handler in ("JmpTrue", "JmpFalse", "JStrictEqual") or "/* jump to" in val_raw:
                 if_node, new_idx = self._parse_if_statement(i)
                 root.body.append(if_node)
                 i = new_idx
                 continue
 
             # -------------------------------------------------------------
-            # DÜZ İFADELER VEYA RETURN
+            # 4. Redundant / Iterator Gürültülerini Filtrele
+            # -------------------------------------------------------------
+            stmt_text = item.result if item.result else val_raw
+            if self._is_redundant_iterator_bytecode(handler, stmt_text):
+                i += 1
+                continue
+
+            # -------------------------------------------------------------
+            # 5. Düz İfadeler ve Return İfadeleri
             # -------------------------------------------------------------
             if handler == "Ret":
                 value = val_raw.split("return ")[1].strip() if "return " in val_raw else val_raw
@@ -58,7 +70,6 @@ class HighLevelASTBuilder:
                     used=var.used
                 ))
             elif handler not in ("CompleteGenerator", "SaveGenerator"):
-                stmt_text = item.result if item.result else val_raw
                 root.body.append(InstructionNode(
                     statement=stmt_text,
                     original_bytecode=item.opcode.bytecode,
@@ -68,6 +79,20 @@ class HighLevelASTBuilder:
             i += 1
 
         return root
+
+    def _is_redundant_iterator_bytecode(self, handler: str, val_raw: str) -> bool:
+        # JmpTrue, JmpFalse gibi KOŞULLU jump'lar silinmez (IfNode yapar)
+        if handler in ("JmpTrue", "JmpFalse", "JmpUndefined", "JStrictEqual"):
+            return False
+
+        if handler in ("Catch", "IteratorClose", "Throw"):
+            return True
+        if "GetNextPName" in val_raw or "GetIterator(" in val_raw:
+            return True
+        if handler in ("Jmp", "JmpLong") or "goto label_" in val_raw:
+            return True
+
+        return False
 
     def _parse_for_in(self, start_idx: int):
         first_item = self.results[start_idx]
@@ -99,7 +124,12 @@ class HighLevelASTBuilder:
             handler = curr_item.variable.handler
             val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
 
-            # 🔴 FILTRE BURADA ÇAĞRILIYOR: Redundant satırları atla
+            if handler in ("JmpTrue", "JmpFalse") or "/* jump to" in val:
+                if_node, next_i = self._parse_if_statement(i)
+                body_node.body.append(if_node)
+                i = next_i
+                continue
+
             if self._is_redundant_iterator_bytecode(handler, val):
                 i += 1
                 continue
@@ -111,8 +141,7 @@ class HighLevelASTBuilder:
             ))
             i += 1
 
-        node = ForInNode(var_name="key", object_name=obj_name, body=body_node)
-        return node, i
+        return ForInNode(var_name="key", object_name=obj_name, body=body_node), i
 
     def _parse_for_of(self, start_idx: int):
         first_item = self.results[start_idx]
@@ -133,7 +162,6 @@ class HighLevelASTBuilder:
             handler = curr_item.variable.handler
             val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
 
-            # 🔴 FILTRE BURADA ÇAĞRILIYOR: Catch/IteratorClose/Throw görünce döngü gövdesini bitir
             if self._is_redundant_iterator_bytecode(handler, val):
                 if handler == "Throw":
                     i += 1
@@ -148,50 +176,50 @@ class HighLevelASTBuilder:
             ))
             i += 1
 
-        node = ForOfNode(var_name="item", iterable_name=iterable, body=body_node)
-        return node, i
+        return ForOfNode(var_name="item", iterable_name=iterable, body=body_node), i
 
     def _parse_if_statement(self, start_idx: int):
         item = self.results[start_idx]
         val_raw = item.variable.value or ""
+        handler = item.variable.handler
+        target_addr = item.goto
 
         condition = "true"
-        try:
-            condition = val_raw.split("if (")[1].split(")")[0].strip()
-        except IndexError:
-            pass
+        if "if (" in val_raw:
+            try:
+                condition = val_raw.split("if (")[1].split(")")[0].strip()
+            except IndexError:
+                pass
 
-        target_addr = item.goto
+        if handler == "JmpTrue":
+            condition = f"!({condition})"
+
         then_body = BlockNode()
         i = start_idx + 1
 
-        while i < self.n and self.results[i].variable.address < target_addr:
+        while i < self.n:
             curr_item = self.results[i]
-            stmt = curr_item.result if curr_item.result else (curr_item.variable.value or "")
+            if target_addr and curr_item.variable.address >= target_addr:
+                break
+
+            c_handler = curr_item.variable.handler
+            c_val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
+
+            if c_handler in ("JmpTrue", "JmpFalse") or "/* jump to" in c_val:
+                nested_if, next_i = self._parse_if_statement(i)
+                then_body.body.append(nested_if)
+                i = next_i
+                continue
+
+            if self._is_redundant_iterator_bytecode(c_handler, c_val):
+                i += 1
+                continue
+
             then_body.body.append(InstructionNode(
-                statement=stmt,
+                statement=c_val,
                 original_bytecode=curr_item.opcode.bytecode,
                 used=curr_item.variable.used
             ))
             i += 1
 
         return IfNode(condition=condition, then_branch=then_body), i
-
-    def _is_redundant_iterator_bytecode(self, handler: str, val_raw: str) -> bool:
-        """
-        Hermes'in iterator / for-of / for-in için ürettiği alt seviye kontrol,
-        exception handling ve ham jump satırlarını filtreler.
-        """
-        # 1. Iterator Kapatma ve Catch/Throw blokları
-        if handler in ("Catch", "IteratorClose", "Throw"):
-            return True
-
-        # 2. Döngü adımı atlama ifadeleri (High-level döngüye dönüştüğü için gereksiz)
-        if "GetNextPName" in val_raw or "GetIterator(" in val_raw:
-            return True
-
-        # 3. Ham goto/label atlamaları
-        if "goto label_" in val_raw or "/* jump to" in val_raw:
-            return True
-
-        return False
