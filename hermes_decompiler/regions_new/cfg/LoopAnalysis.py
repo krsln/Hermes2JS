@@ -9,13 +9,12 @@ class LoopAnalysis:
 
         self.back_edges = []
 
-        self.loops = []
+        self.loops: dict[int, NaturalLoop] = {}
 
     def compute(self):
 
         tree = self.cfg.dominator_tree
 
-        self.back_edges.clear()
         self.loops.clear()
 
         for tail in self.cfg.blocks:
@@ -28,23 +27,36 @@ class LoopAnalysis:
                 if not tree.dominates(header, tail):
                     continue
 
-                self.back_edges.append((tail, header))
+                self._merge_back_edge(header, tail)
 
-                loop = self._build_loop(header, tail)
+        self._compute_exits()
 
-                self.loops.append(loop)
+    def _merge_back_edge(
+            self,
+            header,
+            tail,
+    ):
 
-    def _build_loop(self, header, tail):
+        loop = self.loops.get(header.id)
 
-        loop = NaturalLoop(
-            header=header,
-            tail=tail,
-        )
+        if loop is None:
+            loop = NaturalLoop(header=header)
 
-        loop.members.add(header)
-        loop.members.add(tail)
+            self.loops[header.id] = loop
 
         loop.latches.add(tail)
+
+        members = self._discover_members(header, tail)
+
+        loop.members.update(members)
+
+    def _discover_members(
+            self,
+            header,
+            tail,
+    ):
+
+        members = {header, tail}
 
         stack = [tail]
 
@@ -54,12 +66,23 @@ class LoopAnalysis:
 
             for pred in block.predecessors:
 
-                if pred in loop.members:
+                if pred in members:
                     continue
 
-                loop.members.add(pred)
+                members.add(pred)
 
                 if pred != header:
                     stack.append(pred)
 
-        return loop
+        return members
+
+    def _compute_exits(self):
+
+        for loop in self.loops.values():
+
+            for block in loop.members:
+
+                for succ in block.successors:
+
+                    if succ not in loop.members:
+                        loop.exits.add(succ)

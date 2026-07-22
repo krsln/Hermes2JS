@@ -249,30 +249,9 @@ class HermesAnalysis:
         cfg.compute_post_dominators()
         cfg.compute_loops()
 
-        for loop in cfg.loop_analysis.loops:
+        for loop in cfg.loop_analysis.loops.values():
             print()
-
-            print(
-                f"Loop header={loop.header.id}"
-            )
-
-            print(
-                f"tail={loop.tail.id}"
-            )
-
-            print(
-                "members:",
-                [b.id for b in loop.blocks]
-            )
-
-        # for tail, header in cfg.loop_analysis.back_edges:
-        #     print()
-        #     print("Back Edge")
-        #     print("header:", header.id, "tail:", tail.id)
-        #     print(
-        #         "header succ:", [b.id for b in header.successors],
-        #         "tail succ:", [b.id for b in tail.successors]
-        #     )
+            print(loop)
 
         analyzer = StructuralAnalyzer(cfg)
         root = analyzer.build()
