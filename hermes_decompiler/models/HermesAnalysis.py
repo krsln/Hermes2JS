@@ -79,7 +79,7 @@ class HermesAnalysis:
             self.registers[variable.name] = variable
 
     def generate_js(self, verbose: bool = False) -> list[str]:
-        return self.generate_js_v1(verbose)
+        return self.generate_js_v2(verbose)
 
     def generate_js_v2(self, verbose: bool = False) -> list[str]:
         #
