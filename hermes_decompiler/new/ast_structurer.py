@@ -18,7 +18,7 @@ class HighLevelASTBuilder:
             val_raw = var.value.strip() if var.value else ""
             handler = var.handler
 
-            # 1. For-In Bloğu
+            # 1. For-In
             if handler == "GetPNameList" or ("Object.keys(" in val_raw and "for-in property list" in val_raw):
                 for_in_node, new_idx = self._parse_for_in(i)
                 if for_in_node:
@@ -26,7 +26,7 @@ class HighLevelASTBuilder:
                     i = new_idx
                     continue
 
-            # 2. For-Of Bloğu
+            # 2. For-Of
             if handler == "IteratorBegin" or "GetIterator(" in val_raw:
                 for_of_node, new_idx = self._parse_for_of(i)
                 if for_of_node:
@@ -34,14 +34,14 @@ class HighLevelASTBuilder:
                     i = new_idx
                     continue
 
-            # 3. If Bloğu
+            # 3. If-Else
             if handler in ("JmpTrue", "JmpFalse") and "for-in step" not in val_raw:
                 if_node, new_idx = self._parse_if_statement(i)
                 root.body.append(if_node)
                 i = new_idx
                 continue
 
-            # 4. Redundant Bytecode Temizliği
+            # 4. Redundant bytecode filtreleme
             stmt_text = item.result if item.result else val_raw
             if self._is_redundant_iterator_bytecode(handler, stmt_text):
                 i += 1
@@ -67,9 +67,7 @@ class HighLevelASTBuilder:
         return root
 
     def _is_redundant_iterator_bytecode(self, handler: str, val_raw: str) -> bool:
-        if handler in ("JmpUndefined", "JmpUndefinedLong", "JStrictEqual"):
-            return True
-        if handler in ("Catch", "IteratorClose", "Throw"):
+        if handler in ("JmpUndefined", "JmpUndefinedLong", "JStrictEqual", "Catch", "IteratorClose", "Throw"):
             return True
         if "GetNextPName" in val_raw or "GetIterator(" in val_raw or "for-in step" in val_raw or "for-in property list" in val_raw:
             return True
@@ -117,7 +115,7 @@ class HighLevelASTBuilder:
                     continue
 
             if handler in ("JmpTrue", "JmpFalse") and "for-in step" not in val:
-                if_node, next_i = self._parse_if_statement(i, outer_limit=target_addr)
+                if_node, next_i = self._parse_if_statement(i, outer_target=target_addr)
                 body_node.body.append(if_node)
                 i = next_i
                 continue
@@ -170,7 +168,7 @@ class HighLevelASTBuilder:
 
         return ForOfNode(var_name="item", iterable_name=iterable, body=body_node), i
 
-    def _parse_if_statement(self, start_idx: int, outer_limit: int = None):
+    def _parse_if_statement(self, start_idx: int, outer_target: int = None):
         item = self.results[start_idx]
         val_raw = item.variable.value or ""
         handler = item.variable.handler
@@ -199,11 +197,11 @@ class HighLevelASTBuilder:
             c_handler = curr_item.variable.handler
             c_val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
 
-            # Dışarıdaki param1[r7] işlemine gelindiyse iç if bloğunu kapat
+            # 🟢 FIX: Dış döngüye ait olan param1[r7] atamasına gelindiğinde bloğu kapat
             if "param1[r7]" in c_val or "param1[r12]" in c_val:
                 break
 
-            # Target adres sınırını kontrol et (Ancak r8[r9] atamasını kapsadığından emin ol)
+            # 🟢 FIX: Target adres kontrolünü PutByVal ve r8[r9] atamalarını yutacak şekilde genişlet
             if target_addr and curr_item.variable.address >= target_addr:
                 if "PutByVal" not in c_handler and "r8[r9]" not in c_val:
                     break
@@ -221,7 +219,7 @@ class HighLevelASTBuilder:
 
             # İç İç Koşul (Nested If)
             if c_handler in ("JmpTrue", "JmpFalse") and "for-in step" not in c_val:
-                nested_if, next_i = self._parse_if_statement(i, outer_limit=target_addr)
+                nested_if, next_i = self._parse_if_statement(i, outer_target=target_addr)
                 then_body.body.append(nested_if)
                 i = next_i
                 continue
