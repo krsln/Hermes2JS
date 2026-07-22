@@ -59,7 +59,8 @@ class StatementBuilder:
                         )
                     )
 
-                continue
+                else:
+                    self.build(child)
 
             #
             # Nested Region

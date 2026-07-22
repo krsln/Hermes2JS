@@ -66,7 +66,7 @@ class JSRenderer:
             if (
                     self.verbose
                     and hasattr(stmt, "block")
-                    and stmt.block != current_block
+                    and stmt.block is not current_block
             ):
                 current_block = stmt.block
                 output.append(
