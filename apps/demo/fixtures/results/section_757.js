@@ -27,7 +27,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // USED → r11 = r10.flags & 16384
     // CODE → <Mov>: <Reg8: 12, Reg8: 0>
     // USED → r12 = r0
-    if (!r10.flags & 16384) {
+    if (r10.flags & 16384) {
         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 2, string_id: 108>  # String: 'updateQueue' (Identifier)
         // USED → r11 = r0.updateQueue
         // CODE → <Mov>: <Reg8: 6, Reg8: 11>
@@ -93,7 +93,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // USED → r11 = r0.subtreeFlags
     // CODE → <BitAnd>: <Reg8: 11, Reg8: 11, Reg8: 3>
     // USED → r11 = r0.subtreeFlags & 16384
-    if (!r0.subtreeFlags & 16384) {
+    if (r0.subtreeFlags & 16384) {
         // CODE → <Mov>: <Reg8: 11, Reg8: 6>
         // USED → r11 = r6
         // CODE → <JStrictNotEqual>: <Addr8: 98, Reg8: 4, Reg8: 11>  # Address: 00000115

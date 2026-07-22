@@ -142,14 +142,13 @@ function _request(param0, param1, param2) {
         // USED → r2 = true
         // CODE → <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 14, Reg8: 15, Reg8: 2>
         r2 = r2.default.assertOptions(r2.default(this.defaults).paramsSerializer, { encode: r2.function, serialize: r2.function }, true)
-    } else {
-        // CODE → <NewObject>: <Reg8: 2>
-        // USED → r2 = {}
-        // CODE → <PutNewOwnById>: <Reg8: 2, Reg8: 14, string_id: 12525>  # String: 'serialize' (Identifier)
-        // USED → r2 = { serialize: r2.default(this.defaults).paramsSerializer }
-        // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 2, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
-        // USED → r10 = { paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer } }
     }
+    // CODE → <NewObject>: <Reg8: 2>
+    // USED → r2 = {}
+    // CODE → <PutNewOwnById>: <Reg8: 2, Reg8: 14, string_id: 12525>  # String: 'serialize' (Identifier)
+    // USED → r2 = { serialize: r2.default(this.defaults).paramsSerializer }
+    // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 2, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
+    // USED → r10 = { paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer } }
     // CODE → <GetById>: <Reg8: 2, Reg8: 10, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
     // USED → r2 = { paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer } }.allowAbsoluteUrls
     // CODE → <JStrictNotEqual>: <Addr8: 48, Reg8: 2, Reg8: 11>  # Address: 00000177
@@ -220,7 +219,7 @@ function _request(param0, param1, param2) {
     // USED → r10 = { paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer }, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls, method: "get".toLowerCase() }
     // CODE → <Mov>: <Reg8: 16, Reg8: 17>
     // USED → r16 = r17
-    if (!r17) {
+    if (r17) {
         // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
         r14 = r6[3]
         // CODE → <GetByIdShort>: <Reg8: 19, Reg8: 14, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
@@ -236,7 +235,7 @@ function _request(param0, param1, param2) {
         // CODE → <Call3>: <Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 14>
         // USED → r16 = r14.default.merge(r2.default(this.defaults).headers.common, r17[r14])
     }
-    if (!r2.default(this.defaults).headers) {
+    if (r2.default(this.defaults).headers) {
         // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
         r14 = r6[3]
         // CODE → <GetByIdShort>: <Reg8: 19, Reg8: 14, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)

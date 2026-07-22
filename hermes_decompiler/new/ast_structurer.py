@@ -33,20 +33,20 @@ class HighLevelASTBuilder:
                     i = new_idx
                     continue
 
-            # 3. If-Else (Sadece iterator step DIŞINDAKİ jump'lar)
+            # 3. If-Else (descartes de condicionales de control de iterador)
             if handler in ("JmpTrue", "JmpFalse") and "for-in step" not in val_raw:
                 if_node, new_idx = self._parse_if_statement(i)
                 root.body.append(if_node)
                 i = new_idx
                 continue
 
-            # 4. Redundant Iterator gürültülerini filtrele
+            # 4. Limpieza de bytecode redundante de iteradores
             stmt_text = item.result if item.result else val_raw
             if self._is_redundant_iterator_bytecode(handler, stmt_text):
                 i += 1
                 continue
 
-            # 5. Düz İfadeler
+            # 5. Instrucciones directas
             if handler == "Ret":
                 value = val_raw.split("return ")[1].strip() if "return " in val_raw else val_raw
                 root.body.append(InstructionNode(
@@ -87,7 +87,6 @@ class HighLevelASTBuilder:
             except IndexError:
                 pass
 
-        # Target address (Döngünün bittiği adresi bul)
         target_addr = None
         curr = start_idx
         while curr < self.n and curr < start_idx + 10:
@@ -108,7 +107,15 @@ class HighLevelASTBuilder:
             handler = curr_item.variable.handler
             val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
 
-            # Gerçek bir koşul (if) mi yoksa iterator step mi?
+            # Detección de bucles For-Of internos
+            if handler == "IteratorBegin" or "GetIterator(" in val:
+                for_of_node, next_i = self._parse_for_of(i)
+                if for_of_node:
+                    body_node.body.append(for_of_node)
+                    i = next_i
+                    continue
+
+            # Detección de condicionales If internos
             if handler in ("JmpTrue", "JmpFalse") and "for-in step" not in val:
                 if_node, next_i = self._parse_if_statement(i)
                 body_node.body.append(if_node)
@@ -178,69 +185,45 @@ class HighLevelASTBuilder:
             except Exception:
                 condition = "true"
 
-        # JmpFalse -> Koşul doğruysa ALTTAKİ koda girer (Condition)
-        # JmpTrue -> Koşul yanlışsa ALTTAKİ koda girer (!(Condition))
-        if handler == "JmpTrue":
+        if handler == "JmpFalse" and condition.startswith("!"):
+            condition = condition[1:].strip()
+        elif handler == "JmpTrue" and not condition.startswith("!"):
             condition = f"!({condition})"
 
         then_body = BlockNode()
-        else_body = BlockNode()
-
-        # Jmp/JmpLong ile Else adresi yakalama
-        else_target_addr = None
         i = start_idx + 1
-        is_in_else = False
 
         while i < self.n:
             curr_item = self.results[i]
             c_handler = curr_item.variable.handler
             c_val = curr_item.result if curr_item.result else (curr_item.variable.value or "")
 
-            # If/Else bloğunun tamamen bittiği adres
-            if else_target_addr and curr_item.variable.address >= else_target_addr:
+            if target_addr and curr_item.variable.address >= target_addr:
                 break
-            elif not is_in_else and target_addr and curr_item.variable.address >= target_addr:
-                # If bloğu bitti, Else bloğuna geçiş kontrolü
-                is_in_else = True
-                if not else_target_addr:
-                    break
-
-            # İçteki For-Of döngüsü yakalama
-            if c_handler == "IteratorBegin" or "GetIterator(" in c_val:
-                for_of_node, next_i = self._parse_for_of(i)
-                target_node = else_body if is_in_else else then_body
-                target_node.body.append(for_of_node)
-                i = next_i
-                continue
-
-            # İçteki If/Else yakalama
-            if c_handler in ("JmpTrue", "JmpFalse") and "for-in step" not in c_val:
-                # Eğer then_body'nin son adımı Jmp/JmpLong ise bu else geçişidir
-                nested_if, next_i = self._parse_if_statement(i)
-                target_node = else_body if is_in_else else then_body
-                target_node.body.append(nested_if)
-                i = next_i
-                continue
-
-            # Else geçiş sıçraması (Then bloğunun sonundaki Jmp)
-            if not is_in_else and c_handler in ("Jmp", "JmpLong") and curr_item.goto:
-                else_target_addr = curr_item.goto
-                is_in_else = True
-                i += 1
-                continue
 
             if self._is_redundant_iterator_bytecode(c_handler, c_val):
                 i += 1
                 continue
 
-            target_node = else_body if is_in_else else then_body
-            target_node.body.append(InstructionNode(
+            # Absorber for-of dentro del bloque de este IF
+            if c_handler == "IteratorBegin" or "GetIterator(" in c_val:
+                for_of_node, next_i = self._parse_for_of(i)
+                then_body.body.append(for_of_node)
+                i = next_i
+                continue
+
+            # Absorber nested-if dentro del bloque de este IF
+            if c_handler in ("JmpTrue", "JmpFalse") and "for-in step" not in c_val:
+                nested_if, next_i = self._parse_if_statement(i)
+                then_body.body.append(nested_if)
+                i = next_i
+                continue
+
+            then_body.body.append(InstructionNode(
                 statement=c_val,
                 original_bytecode=curr_item.opcode.bytecode,
                 used=curr_item.variable.used
             ))
             i += 1
 
-        if len(else_body.body) > 0:
-            return IfNode(condition=condition, then_branch=then_body, else_branch=else_body), i
         return IfNode(condition=condition, then_branch=then_body), i

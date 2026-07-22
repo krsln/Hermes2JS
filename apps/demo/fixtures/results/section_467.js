@@ -1558,7 +1558,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
         r43 = r54
-        if (!{ ResponderEventPlugin: { _getResponder: _getResponder) {
+        if ({ ResponderEventPlugin: { _getResponder: _getResponder) {
         }
         // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
         // USED → r52 = r50[r44]
@@ -1566,7 +1566,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // USED → r53 = {}.hasOwnProperty
         // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
         // USED → r53 = {}.hasOwnProperty(r45)
-        if (!{}.hasOwnProperty(r45)) {
+        if ({}.hasOwnProperty(r45)) {
             // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
             // USED → r53 = r51[r44]
             // CODE → <Mov>: <Reg8: 43, Reg8: 54>
@@ -1597,7 +1597,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
         // USED → r42 = globalThis.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.")
     }
-    if (!r54) {
+    if (r54) {
         // CODE → <Call1>: <Reg8: 16, Reg8: 16, Reg8: 2>
         r16 = recomputePluginOrdering /* Closure with env r1 = undefined */()
     }
@@ -1629,7 +1629,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // USED → r16 = globalThis.Math
     // CODE → <GetById>: <Reg8: 16, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
     // USED → r16 = globalThis.Math.clz32
-    if (!globalThis.Math.clz32) {
+    if (globalThis.Math.clz32) {
         // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
         // USED → r16 = globalThis.Math
         // CODE → <GetById>: <Reg8: 9, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
@@ -1715,7 +1715,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r1[49] = param2(r19[r17]).ReactNativeViewConfigRegistry.get;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
     r1[50] = 2;
-    if (!globalThis.nativeFabricUIManager.registerEventHandler) {
+    if (globalThis.nativeFabricUIManager.registerEventHandler) {
         // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
         // USED → r9 = dispatchEvent /* Closure with env r1 = undefined */
         // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
@@ -1737,7 +1737,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // USED → r16 = typeof globalThis.RN$enableMicrotasksInReact
     // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
     // USED → r16 = "undefined" !== typeof globalThis.RN$enableMicrotasksInReact
-    if (!"undefined" !== typeof globalThis.RN$enableMicrotasksInReact) {
+    if ("undefined" !== typeof globalThis.RN$enableMicrotasksInReact) {
         // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
         // USED → r42 = globalThis.RN$enableMicrotasksInReact
         // CODE → <Not>: <Reg8: 42, Reg8: 42>
@@ -2622,7 +2622,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // USED → r8 = r6
         // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
         // USED → r8 = r6.supportsFiber
-        if (!r6.supportsFiber) {
+        if (r6.supportsFiber) {
             // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
             // USED → r8 = r8.inject
             // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
