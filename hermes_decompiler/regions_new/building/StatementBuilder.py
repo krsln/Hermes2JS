@@ -52,8 +52,10 @@ class StatementBuilder:
 
             if isinstance(child, BasicBlock):
 
+                statements = []
+
                 for index, result in enumerate(child.instructions):
-                    region.statements.append(
+                    statements.append(
                         InstructionStatement(
                             parent=region,
                             block=child,
@@ -62,9 +64,12 @@ class StatementBuilder:
                         )
                     )
 
-                continue  # <-- önemli
+                region.items.extend(statements)
 
-            self.build(child)
+            else:
+
+                self.build(child)
+                region.items.append(child)
 
             new_children.append(child)
 

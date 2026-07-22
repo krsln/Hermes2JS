@@ -30,6 +30,7 @@ class SequenceRegion(Region):
 
         self.children: list[BasicBlock | Region] = []
         self.statements: list[Statement] = []
+        self.items = []
 
     def append(self, node):
         if isinstance(node, Region):

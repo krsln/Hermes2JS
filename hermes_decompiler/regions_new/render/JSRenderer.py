@@ -4,7 +4,7 @@ from hermes_decompiler.regions_new.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.regions_new.models.Regions import (
     SequenceRegion,
     LoopRegion,
-    IfRegion,
+    IfRegion, Region,
 )
 
 from hermes_decompiler.regions_new.models.Statements import (
@@ -105,43 +105,34 @@ class JSRenderer:
 
     # ---------------------------------------------------------
 
-    def _render_sequence(
-            self,
-            region,
-            output,
-            indent,
-    ):
+    def _render_sequence(self, region, output, indent):
         current_block = None
+        for item in region.items:
 
-        #
-        # Önce bu sequence içindeki statements
-        #
-        for stmt in region.statements:
-            if (
-                    self.verbose
-                    and hasattr(stmt, "block")
-                    and stmt.block is not current_block
-            ):
-                current_block = stmt.block
-                output.append(
-                    f"{'    ' * indent}// Block {current_block.id}"
+            if isinstance(item, Region):
+
+                self._render_region(
+                    item,
+                    output,
+                    indent
                 )
 
-            self._render_statement(
-                stmt,
-                output,
-                indent,
-            )
+            else:
+                if (
+                        self.verbose
+                        and hasattr(item, "block")
+                        and item.block is not current_block
+                ):
+                    current_block = item.block
+                    output.append(
+                        f"{'    ' * indent}// Block {current_block.id}"
+                    )
 
-        #
-        # Sonra nested regions
-        #
-        for child in region.children:
-            self._render_region(
-                child,
-                output,
-                indent,
-            )
+                self._render_statement(
+                    item,
+                    output,
+                    indent
+                )
 
     # ---------------------------------------------------------
 
