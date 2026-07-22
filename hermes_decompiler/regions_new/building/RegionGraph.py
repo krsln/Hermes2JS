@@ -130,6 +130,15 @@ class RegionGraph:
         #
         del self.block_owner[old]
 
+    def remove_block_reference(
+            self,
+            block: BasicBlock,
+    ):
+        owner = self.block_owner.get(block)
+
+        if owner and block in owner.children:
+            owner.children.remove(block)
+
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     def replace__(
