@@ -2,7 +2,7 @@ async function* anon_9594(param0, param1) {
     // Block 0
     // StartGenerator: prepare generator context and jump to next instruction
     r0 = await yield
-    if (r1) { /* jump to 102 */ }
+    if (r1) { /* jump to label_102 */ }
     // Block 1
     r1 = getEnvironment(4)
     r1 = r1[16]
@@ -20,7 +20,7 @@ async function* anon_9594(param0, param1) {
     return await r1.default.get(globalThis.HermesInternal.concat.call(this, "https://coachify.ai/api/checkUsernameAvailable?username=", param1));
     // Block 3
     r1 = await yield
-    if (r1.default.get) { /* jump to 99 */ }
+    if (r1.default.get) { /* jump to label_99 */ }
     // Block 4
     r4 = globalThis.console
     r3 = globalThis.console.log

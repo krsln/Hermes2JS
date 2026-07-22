@@ -242,8 +242,10 @@ class HermesAnalysis:
         from hermes_decompiler.regions_new.cfg.CFG import CFG
         from hermes_decompiler.regions_new.building.StructuralAnalyzer import StructuralAnalyzer
         from hermes_decompiler.regions_new.render.JSRenderer import JSRenderer
+        from hermes_decompiler.regions_new.building.StatementBuilder import StatementBuilder
 
         cfg = CFG.from_results(self.results)
+
         cfg.verify()
         cfg.compute_dominators()
         cfg.compute_post_dominators()
@@ -252,9 +254,9 @@ class HermesAnalysis:
         # for loop in cfg.loop_analysis.loops.values():
         #     print(loop)
 
-        analyzer = StructuralAnalyzer(cfg)
-        root = analyzer.build()
-        renderer = JSRenderer(verbose=verbose)
+        root = StructuralAnalyzer(cfg).build()
+        StatementBuilder().build(root)
+        renderer = JSRenderer(verbose)
 
         return renderer.render(root)
 

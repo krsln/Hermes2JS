@@ -8,8 +8,25 @@ function processColorsInProps(param0, param1) {
     r5 = r10
     r1 = getEnvironment(1)
     r6 = Object.keys(r10) /* for-in property list */
-    if (Object.keys(r10) { /* jump to 183 */ }
-    // Loop (while: Object.keys(r10) /* for-in property list */.next() /* for-in step */ === undefined)
+    if (Object.keys(r10) /* for-in property list */ === undefined) { /* jump to label_183 */ }
+    // Block 11
+    return undefined;
+    // Loop
+        // Block 10
+        r12 = r7
+        r13 = r1[36]
+        r11 = r10[r12]
+        r11 = r13(r10[r12])
+        param1[r7] = r13(r10[r12])
+        goto label_28;
+    // EndLoop
+    // Loop (while)
+        // Block 5
+        r14 = GetIterator(r13).next()
+        r13 = r12
+        if (r12 === undefined) { /* jump to label_28 */ }
+    // EndLoop
+    // Loop (while)
         // Block 1
         r2 = Object.keys(r10) /* for-in property list */.next() /* for-in step */
         if (Object.keys(r10) /* for-in property list */.next() /* for-in step */ === undefined) { /* jump to label_183 */ }
@@ -63,6 +80,4 @@ function processColorsInProps(param0, param1) {
         param1[r7] = r13(r10[r12])
         goto label_28;
     // EndLoop
-    // Block 11
-    return undefined;
 }

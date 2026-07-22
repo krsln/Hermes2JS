@@ -16,17 +16,17 @@ function _request(param0, param1, param2) {
     r7 = undefined
     r14 = typeof param1
     r10 = "string"
-    if (typeof param1 === "string") { /* jump to 58 */ }
+    if (typeof param1 === "string") { /* jump to label_58 */ }
     // Block 1
     r14 = r6
-    if (r6) { /* jump to 52 */ }
+    if (r6) { /* jump to label_52 */ }
     // Block 2
     r14 = {}
     // Block 3
     r9[0] = {};
     goto label_76;
     // Block 4
-    if (param2) { /* jump to 63 */ }
+    if (param2) { /* jump to label_63 */ }
     // Block 5
     r2 = {}
     // Block 6
@@ -44,7 +44,7 @@ function _request(param0, param1, param2) {
     r14 = r2.default(this.defaults).paramsSerializer
     r17 = r2.default(this.defaults).headers
     r9[1] = r2.default(this.defaults).headers;
-    if (r2.default(this.defaults) { /* jump to 225 */ }
+    if (r2.default(this.defaults).transitional === undefined) { /* jump to label_225 */ }
     // Block 8
     r2 = r6[9]
     r18 = r2.default
@@ -67,13 +67,13 @@ function _request(param0, param1, param2) {
     r2 = r2.default.assertOptions(r2.default(this.defaults).transitional, { silentJSONParsing: r21.transitional(r21.boolean), forcedJSONParsing: r21.transitional(r21.boolean), clarifyTimeoutError: r21.transitional(r21.boolean) }, false)
     // Block 9
     r2 = null
-    if (r2.default(this.defaults) { /* jump to 321 */ }
+    if (r2.default(this.defaults).paramsSerializer == null) { /* jump to label_321 */ }
     // Block 10
     r2 = r6[3]
     r15 = r2.default
     r2 = r2.default.isFunction
     r2 = r2.default.isFunction(r2.default(this.defaults).paramsSerializer)
-    if (r2.default.isFunction(r2.default(this.defaults) { /* jump to 308 */ }
+    if (r2.default.isFunction(r2.default(this.defaults).paramsSerializer)) { /* jump to label_308 */ }
     // Block 11
     r2 = r6[9]
     r18 = r2.default
@@ -93,11 +93,11 @@ function _request(param0, param1, param2) {
     r10 = { paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer } }
     // Block 13
     r2 = { paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer } }.allowAbsoluteUrls
-    if ({ paramsSerializer: { serialize: r2.default(this.defaults) { /* jump to 375 */ }
+    if ({ paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer } }.allowAbsoluteUrls !== undefined) { /* jump to label_375 */ }
     // Block 14
     r2 = this.defaults
     r2 = this.defaults.allowAbsoluteUrls
-    if (this.defaults.allowAbsoluteUrls !== undefined) { /* jump to 357 */ }
+    if (this.defaults.allowAbsoluteUrls !== undefined) { /* jump to label_357 */ }
     // Block 15
     r2 = true
     r10 = { paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer }, allowAbsoluteUrls: true }
@@ -123,12 +123,12 @@ function _request(param0, param1, param2) {
     r2 = true
     r14 = r2.default.assertOptions({ paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer }, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls }, { baseUrl: r19.spelling("baseURL"), withXsrfToken: r19.spelling("withXSRFToken") }, true)
     r15 = { paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer }, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls }.method
-    if ({ paramsSerializer: { serialize: r2.default(this.defaults) { /* jump to 466 */ }
+    if ({ paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer }, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls }.method) { /* jump to label_466 */ }
     // Block 18
     r14 = this.defaults
     r15 = this.defaults.method
     // Block 19
-    if (this.defaults.method) { /* jump to 473 */ }
+    if (this.defaults.method) { /* jump to label_473 */ }
     // Block 20
     r15 = "get"
     // Block 21
@@ -136,7 +136,7 @@ function _request(param0, param1, param2) {
     r14 = "get".toLowerCase()
     r10 = { paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer }, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls, method: "get".toLowerCase() }
     r16 = r17
-    if (!r17) { /* jump to 532 */ }
+    if (!r17) { /* jump to label_532 */ }
     // Block 22
     r14 = r6[3]
     r19 = r14.default
@@ -146,7 +146,7 @@ function _request(param0, param1, param2) {
     r14 = r17[r14]
     r16 = r14.default.merge(r2.default(this.defaults).headers.common, r17[r14])
     // Block 23
-    if (!r2.default(this.defaults) { /* jump to 568 */ }
+    if (!r2.default(this.defaults).headers) { /* jump to label_568 */ }
     // Block 24
     r14 = r6[3]
     r19 = r14.default
@@ -180,7 +180,7 @@ function _request(param0, param1, param2) {
     r2 = 0
     r4 = 0
     r9 = r9[3]
-    if (r9) { /* jump to 846 */ }
+    if (r9) { /* jump to label_846 */ }
     // Block 26
     r9 = r6[6]
     r14 = r9.default
@@ -204,7 +204,7 @@ function _request(param0, param1, param2) {
     r9 = globalThis.Promise.resolve
     r0 = globalThis.Promise.resolve({ paramsSerializer: { serialize: r2.default(this.defaults).paramsSerializer }, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r2.default(this.defaults).headers.common, r17[r14]), r2.default(this.defaults).headers) })
     r9 = r4
-    if (r4 >= [r9.default.bind(this) { /* jump to 841 */ }
+    if (r4 >= [r9.default.bind(this), undefined].length) { /* jump to label_841 */ }
     // Block 27
     r18 = r0
     r17 = r0.then
@@ -219,7 +219,7 @@ function _request(param0, param1, param2) {
     r9 = r15[r9]
     r0 = r0.then(r15[r14], r15[r9])
     r9 = r5
-    if (++r4 + 1 + 1 < r5) { /* jump to 791 */ }
+    if (++r4 + 1 + 1 < r5) { /* jump to label_791 */ }
     // Block 28
     r9 = r0
     return r0;
@@ -229,7 +229,7 @@ function _request(param0, param1, param2) {
     r5 = r9
     r1 = r10
     r4 = 0
-    if (0 >= r12.length) { /* jump to 934 */ }
+    if (0 >= r12.length) { /* jump to label_934 */ }
     // Block 30
     r10 = r12
     r9 = r4
@@ -245,10 +245,34 @@ function _request(param0, param1, param2) {
     r1 = r13(r1)
     r10 = r4
     r9 = r5
-    if (r4 < r5) { /* jump to 866 */ }
+    if (r4 < r5) { /* jump to label_866 */ }
     // Block 31
     goto label_934;
-    // Loop (while: 0 >= r3.length)
+    // Block 34
+    r8 = r0
+    r7 = r0.then
+    r9 = r3
+    r1 = r4
+    r2 = +r4
+    r1 = +r4 + 1
+    r4 = r1
+    r6 = r9[r2]
+    r1 = ++r4 + 1
+    r2 = ++r4 + 1 + 1
+    r4 = r2
+    r1 = r9[r1]
+    r0 = r0.then(r9[r2], r9[r1])
+    r1 = r5
+    if (++r4 + 1 + 1 < r5) { /* jump to label_971 */ }
+    // Block 35
+    return r0.then(r9[r2], r9[r1]);
+    r2 = caughtException
+    r0 = globalThis
+    r1 = globalThis.Promise
+    r0 = globalThis.Promise.reject
+    r0 = globalThis.Promise.reject(caughtException)
+    return globalThis.Promise.reject(caughtException);
+    // Loop (while)
         // Block 33
         r6 = r6[6]
         r7 = r6.default
@@ -265,28 +289,4 @@ function _request(param0, param1, param2) {
         r7 = r7.call
         r7 = r7.call(this, caughtException)
     // EndLoop
-    // Block 34
-    r8 = r0
-    r7 = r0.then
-    r9 = r3
-    r1 = r4
-    r2 = +r4
-    r1 = +r4 + 1
-    r4 = r1
-    r6 = r9[r2]
-    r1 = ++r4 + 1
-    r2 = ++r4 + 1 + 1
-    r4 = r2
-    r1 = r9[r1]
-    r0 = r0.then(r9[r2], r9[r1])
-    r1 = r5
-    if (++r4 + 1 + 1 < r5) { /* jump to 971 */ }
-    // Block 35
-    return r0.then(r9[r2], r9[r1]);
-    r2 = caughtException
-    r0 = globalThis
-    r1 = globalThis.Promise
-    r0 = globalThis.Promise.reject
-    r0 = globalThis.Promise.reject(caughtException)
-    return globalThis.Promise.reject(caughtException);
 }

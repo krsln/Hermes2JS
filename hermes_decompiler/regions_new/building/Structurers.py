@@ -1,132 +1,133 @@
+from __future__ import annotations
+
+from hermes_decompiler.regions_new.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.regions_new.models.Regions import (
     SequenceRegion,
-    InstructionRegion,
-    LoopRegion
+    LoopRegion,
+    IfRegion,
 )
 
 
 class SequenceStructurer:
+
     def __init__(self, cfg):
         self.cfg = cfg
 
-    def run(self):
-        root = SequenceRegion()
-        for block in self.cfg.blocks:
-            root.append(InstructionRegion(block))
-        return root
+    def run(self) -> SequenceRegion:
 
+        root = SequenceRegion()
+
+        #
+        # Şimdilik Sequence.children içine BasicBlock koyuyoruz.
+        # StatementBuilder daha sonra bunları Statement'a dönüştürecek.
+        #
+        root.children.extend(self.cfg.blocks)
+
+        return root
 
 
 class LoopStructurer:
 
-    def __init__(self, root, cfg):
+    def __init__(self, root: SequenceRegion, cfg):
         self.root = root
         self.cfg = cfg
 
     def run(self):
 
-        if not self.cfg.loop_analysis:
+        if self.cfg.loop_analysis is None:
             return
 
         loops = sorted(
             self.cfg.loop_analysis.loops.values(),
-            key=lambda loop: loop.header.id
+            key=lambda loop: len(loop.members),
+            reverse=True,
         )
 
         for loop in loops:
             self._wrap_loop(loop)
 
-    def _wrap_loop(self, natural_loop):
+    # ---------------------------------------------------------
 
-        loop_region = LoopRegion(natural_loop)
+    def _wrap_loop(self, loop):
+
+        region = LoopRegion(loop)
+
+        #
+        # Header ayrı tutuluyor.
+        #
+        region.header_block = loop.header
 
         new_children = []
 
-        header_index = None
-
         for child in self.root.children:
 
-            if not isinstance(child, InstructionRegion):
+            #
+            # Nested region'lara şimdilik dokunmuyoruz.
+            #
+            if not isinstance(child, BasicBlock):
                 new_children.append(child)
                 continue
 
-            block = child.block
-
-            # Header
-            if block == natural_loop.header:
-
-                header_index = len(new_children)
-
-                loop_region.header = child
-
+            if child == loop.header:
                 continue
 
-            # Loop body
-            if block in natural_loop.members:
+            if child in loop.members:
+                region.body.children.append(child)
+            else:
+                new_children.append(child)
 
-                loop_region.body.append(child)
+        #
+        # Header'ın bulunduğu yere insert ediyoruz.
+        #
+        insert_index = 0
 
-                continue
+        for i, child in enumerate(self.root.children):
+            if child == loop.header:
+                insert_index = i
+                break
 
-            # Outside loop
-            new_children.append(child)
-
-        if loop_region.header is None:
-            return
-
-        if header_index is None:
-            header_index = len(new_children)
-
-        new_children.insert(
-            header_index,
-            loop_region
-        )
+        new_children.insert(insert_index, region)
 
         self.root.children = new_children
 
+        #
+        # Header artık body'nin ilk bloğu.
+        #
+        region.body.children.insert(0, loop.header)
+
 
 class IfStructurer:
-    def __init__(self, root, cfg):
+
+    def __init__(self, root: SequenceRegion, cfg):
         self.root = root
         self.cfg = cfg
 
     def run(self):
-        self._structure_conditionals(self.root)
 
-    def _structure_conditionals(self, region):
-        if isinstance(region, SequenceRegion):
-            i = 0
-            while i < len(region.children):
-                child = region.children[i]
-                if isinstance(child, InstructionRegion):
-                    last = child.block.last
-                    val = last.variable.value
-                    if "if (" in val and last.goto is not None:
-                        # Basit if tespit
-                        cond = val.split("if (")[1].split(")")[0]
-                        # Şimdilik sadece yorum ekle
-                        if "// if" not in child.block.instructions[-1].result:
-                            child.block.instructions[-1].result = f"if ({cond}) {{ /* jump to {last.goto} */ }}"
-                i += 1
-
-        if hasattr(region, 'children'):
-            for c in region.children:
-                self._structure_conditionals(c)
+        #
+        # Şimdilik placeholder.
+        #
+        # StatementBuilder geldikten sonra
+        # gerçek IfRegion oluşturacağız.
+        #
+        return
 
 
 class SwitchStructurer:
+
     def __init__(self, root, cfg):
         self.root = root
         self.cfg = cfg
 
     def run(self):
-        pass  # TODO
+        return
 
 
 class TryStructurer:
+
     def __init__(self, root, cfg):
         self.root = root
         self.cfg = cfg
 
     def run(self):
-        pass  # IteratorClose vb. için önemli
+        return

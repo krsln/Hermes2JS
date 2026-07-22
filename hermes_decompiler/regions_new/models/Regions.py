@@ -1,34 +1,26 @@
 from __future__ import annotations
 
 from abc import ABC
+from enum import Enum
+from typing import TYPE_CHECKING
 
 from hermes_decompiler.regions_new.cfg.BasicBlock import BasicBlock
+
+if TYPE_CHECKING:
+    from hermes_decompiler.regions_new.models.Statements import Statement
 
 
 class Region(ABC):
 
     def __init__(self):
-        self.parent: "Region | None" = None
+        self.parent: Region | None = None
 
 
-class LoopRegion(Region):
-
-    def __init__(self, loop):
-        super().__init__()
-
-        self.loop = loop
-
-        self.header = None
-
-        self.body = SequenceRegion()
-
-        self.exits = list(loop.exits)
-
-        self.latches = list(loop.latches)
-
-        self.condition = None
-
-        self.loop_kind = None
+class LoopKind(Enum):
+    WHILE = "while"
+    DO_WHILE = "do_while"
+    FOR = "for"
+    ENDLESS = "endless"
 
 
 class SequenceRegion(Region):
@@ -36,51 +28,58 @@ class SequenceRegion(Region):
     def __init__(self):
         super().__init__()
 
-        self.children: list[Region] = []
+        self.children: list[BasicBlock | Region] = []
+        self.statements: list[Statement] = []
 
-    def append(self, region: Region):
-        region.parent = self
-        self.children.append(region)
+    def append(self, node):
+        if isinstance(node, Region):
+            node.parent = self
+
+        self.children.append(node)
 
 
-class InstructionRegion(Region):
+class LoopRegion:
 
-    def __init__(self, block: BasicBlock):
-        super().__init__()
+    def __init__(self, loop):
+        self.header_block = loop.header
 
-        self.block = block
+        self.condition = None
+        self.loop_kind = None
+        self.body = SequenceRegion()
+
+        self.exits = list(loop.exits)
+        self.latches = list(loop.latches)
+
+    @property
+    def header(self):
+        return self.header_block
 
 
 class IfRegion(Region):
 
-    def __init__(
-            self,
-            condition,
-            true_region,
-            false_region=None
-    ):
+    def __init__(self):
         super().__init__()
 
-        self.condition = condition
-        self.true_region = true_region
-        self.false_region = false_region
+        self.condition: str = ""
 
-        true_region.parent = self
+        self.then_body = SequenceRegion()
 
-        if false_region:
-            false_region.parent = self
+        self.else_body: SequenceRegion | None = None
 
 
-class ConditionalRegion(Region):
+class CatchRegion(Region):
 
-    def __init__(
-            self,
-            condition,
-            true_region,
-            false_region=None
-    ):
+    def __init__(self):
         super().__init__()
 
-        self.condition = condition
-        self.true_region = true_region
-        self.false_region = false_region
+        self.exception: str | None = None
+
+        self.body = SequenceRegion()
+
+
+class FinallyRegion(Region):
+
+    def __init__(self):
+        super().__init__()
+
+        self.body = SequenceRegion()

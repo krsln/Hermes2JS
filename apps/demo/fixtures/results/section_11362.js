@@ -115,7 +115,7 @@ function binl_md5(param0, param1, param2) {
     r3 = r8
     r2 = r7
     r1 = r6
-    if (!0 < param1.length) { /* jump to 2368 */ }
+    if (!0 < param1.length) { /* jump to label_2368 */ }
     // Block 1
     r119 = r92[10]
     r114 = 0 + 0
@@ -661,7 +661,7 @@ function binl_md5(param0, param1, param2) {
     r3 = r8
     r2 = r7
     r1 = r6
-    if (0 + 16 < param1.length) { /* jump to 566 */ }
+    if (0 + 16 < param1.length) { /* jump to label_566 */ }
     // Block 2
     r0 = [] /* capacity hint: 4 */
     r0 = [r9]

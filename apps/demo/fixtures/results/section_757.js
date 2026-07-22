@@ -11,7 +11,41 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     r2 = 0
     r1 = getEnvironment(0)
     r0 = r10
-    // Loop (while: !r10.flags & 16384)
+    // Block 6
+    r11 = false
+    return false;
+    // Block 16
+    r11 = true
+    return true;
+    // Block 17
+    r11 = true
+    return true;
+    // Block 19
+    r0 = caughtException
+    r0 = false
+    return false;
+    // Loop (while)
+        // Block 5
+        r13 = r6
+        r11 = r7
+        r11 = r13[r11]
+        r8 = r11
+        r9 = r13[r11].getSnapshot
+        r8 = r13[r11].value
+        r14 = r1[73]
+        r11 = r9
+        r13 = r9()
+        r11 = r8
+        r11 = r14(r9(), r8)
+        if (r14(r9(), r8)) { /* jump to label_137 */ }
+    // EndLoop
+    // Loop (while)
+        // Block 12
+        r15 = r12.return
+        r13 = r14
+        if (null === r12.return) { /* jump to label_269 */ }
+    // EndLoop
+    // Loop (while)
         // Block 1
         r11 = r10.flags
         r11 = r10.flags & 16384
@@ -91,17 +125,4 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         r0 = r11
         goto label_29;
     // EndLoop
-    // Block 6
-    r11 = false
-    return false;
-    // Block 16
-    r11 = true
-    return true;
-    // Block 17
-    r11 = true
-    return true;
-    // Block 19
-    r0 = caughtException
-    r0 = false
-    return false;
 }

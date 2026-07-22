@@ -33,15 +33,15 @@ class LoopConditionExtractor:
 
     def _extract(self, loop):
 
-        if loop.header is None:
+        if loop.header_block is None:
             return
 
-        block = loop.header.block
+        header = loop.header_block
 
-        if not block.instructions:
+        if header is None:
             return
 
-        last = block.instructions[-1]
+        last = header.last
 
         text = last.result
 
