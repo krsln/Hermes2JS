@@ -18,7 +18,7 @@ r3 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/",
 r2 = -1
 r2 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl.slice(-1)
 r3 = "/"
-if ({ BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl.slice(-1) === "/") { /* jump to label_106 */ }
+if ({ BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl.slice(-1) { // jump to 106 */ }
 // Block 1
 r2 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl
 r2 = { BASE_URL_PART: "appcenter.ms", _publicPrefixUrl: "v0.1/public/codepush/", isRecoverable: function_25631 /* Closure with env r2 = undefined */, _httpRequester: param1, _serverUrl: param2.serverUrl }._serverUrl + "/"

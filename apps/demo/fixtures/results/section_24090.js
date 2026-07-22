@@ -3,7 +3,7 @@ function onPress(param0) {
 r1 = getEnvironment(0)
 r2 = r1[0]
 r0 = getEnvironment(1)
-if (r2) { /* jump to label_123 */ }
+if (r2) { // jump to 123 */ }
 // Block 1
 r2 = r0[10]
 r2 = r2.default

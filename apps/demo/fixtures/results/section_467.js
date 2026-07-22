@@ -773,37 +773,39 @@ r37 = true
 r43 = false
 r42 = undefined
 r41 = false
-r49 = Object.keys(r50) /* for-in property list */
-if (Object.keys(r50) /* for-in property list */ === undefined) { /* jump to label_3789 */ }
-// Block 1
-r54 = r43
-r41 = r54
-r45 = Object.keys(r50) /* for-in property list */.next() /* for-in step */
-if (Object.keys(r50) /* for-in property list */.next() /* for-in step */ === undefined) { /* jump to label_3789 */ }
-// Block 2
-r44 = r45
-r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty
-r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)
-r43 = r54
-if (!{ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)) { /* jump to label_3677 */ }
-// Block 3
-r52 = r50[r44]
-r53 = {}.hasOwnProperty
-r53 = {}.hasOwnProperty(r45)
-if (!{}.hasOwnProperty(r45)) { /* jump to label_3742 */ }
-// Block 4
-r53 = r51[r44]
-r43 = r54
-r42 = r52
-if (r51[r44] === r50[r44]) { /* jump to label_3677 */ }
-// Block 5
-r53 = r51[r44]
-if (r51[r44]) { /* jump to label_3760 */ }
-// Block 6
-{}[r45] = r50[r44]
-r43 = true
-r42 = r52
-goto label_3677;
+r49 = Object.keys(r50)
+if (Object.keys(r50) { // jump to 3789 */ }
+// Loop (header=1)
+    // Block 1
+    r54 = r43
+    r41 = r54
+    r45 = Object.keys(r50).next()
+    if (Object.keys(r50).next() === undefined) { // jump to label_3789 */ }
+    // Block 2
+    r44 = r45
+    r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty
+    r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45)
+    r43 = r54
+    if (!{ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(r45) { // jump to 3677 */ }
+    // Block 3
+    r52 = r50[r44]
+    r53 = {}.hasOwnProperty
+    r53 = {}.hasOwnProperty(r45)
+    if (!{}.hasOwnProperty(r45) { // jump to 3742 */ }
+    // Block 4
+    r53 = r51[r44]
+    r43 = r54
+    r42 = r52
+    if (r51[r44] === r50[r44]) { // jump to 3677 */ }
+    // Block 5
+    r53 = r51[r44]
+    if (r51[r44]) { // jump to 3760 */ }
+    // Block 6
+    {}[r45] = r50[r44]
+    r43 = true
+    r42 = r52
+    goto label_3677;
+// EndLoop
 // Block 7
 r43 = globalThis.Error
 r42 = "`."
@@ -813,7 +815,7 @@ r42 = "EventPluginRegistry: Cannot inject two different event plugins using the 
 r42 = globalThis.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.")
 r42 = throw globalThis.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.")
 // Block 8
-if (!r54) { /* jump to label_3796 */ }
+if (!r54) { // jump to 3796 */ }
 // Block 9
 r16 = recomputePluginOrdering /* Closure with env r1 = undefined */()
 // Block 10
@@ -831,7 +833,7 @@ r1[31] = null;
 r1[32] = null;
 r16 = globalThis.Math
 r16 = globalThis.Math.clz32
-if (!globalThis.Math.clz32) { /* jump to label_3870 */ }
+if (!globalThis.Math.clz32) { // jump to 3870 */ }
 // Block 11
 r16 = globalThis.Math
 r9 = globalThis.Math.clz32
@@ -876,7 +878,7 @@ r9 = param2(r19[r17]).ReactNativeViewConfigRegistry
 r9 = param2(r19[r17]).ReactNativeViewConfigRegistry.get
 r1[49] = param2(r19[r17]).ReactNativeViewConfigRegistry.get;
 r1[50] = 2;
-if (!globalThis.nativeFabricUIManager.registerEventHandler) { /* jump to label_4079 */ }
+if (!globalThis.nativeFabricUIManager.registerEventHandler) { // jump to 4079 */ }
 // Block 13
 r9 = dispatchEvent /* Closure with env r1 = undefined */
 r9 = globalThis.nativeFabricUIManager.registerEventHandler(dispatchEvent /* Closure with env r1 = undefined */)
@@ -889,7 +891,7 @@ r16 = globalThis.RN$enableMicrotasksInReact
 r9 = "undefined"
 r16 = typeof globalThis.RN$enableMicrotasksInReact
 r16 = "undefined" !== typeof globalThis.RN$enableMicrotasksInReact
-if (!"undefined" !== typeof globalThis.RN$enableMicrotasksInReact) { /* jump to label_4131 */ }
+if (!"undefined" !== typeof globalThis.RN$enableMicrotasksInReact) { // jump to 4131 */ }
 // Block 15
 r42 = globalThis.RN$enableMicrotasksInReact
 r42 = !globalThis.RN$enableMicrotasksInReact
@@ -899,7 +901,7 @@ r1[53] = !!globalThis.RN$enableMicrotasksInReact;
 r42 = globalThis.queueMicrotask
 r16 = "function"
 r42 = typeof globalThis.queueMicrotask
-if ("function" !== typeof globalThis.queueMicrotask) { /* jump to label_4158 */ }
+if ("function" !== typeof globalThis.queueMicrotask) { // jump to 4158 */ }
 // Block 17
 r41 = globalThis.queueMicrotask
 // Block 18
@@ -1020,7 +1022,7 @@ r1[72] = {};
 r39 = globalThis.Object
 r39 = globalThis.Object.is
 r39 = typeof globalThis.Object.is
-if ("function" !== typeof globalThis.Object.is) { /* jump to label_4734 */ }
+if ("function" !== typeof globalThis.Object.is) { // jump to 4734 */ }
 // Block 19
 r39 = globalThis.Object
 r38 = globalThis.Object.is
@@ -1208,7 +1210,7 @@ r17 = param2(r19[r17])
 r17 = param2(r19[r17]).ReactFiberErrorDialog
 r17 = param2(r19[r17]).ReactFiberErrorDialog.showErrorDialog
 r17 = typeof param2(r19[r17]).ReactFiberErrorDialog.showErrorDialog
-if ("function" !== typeof param2(r19[r17]).ReactFiberErrorDialog.showErrorDialog) { /* jump to label_6329 */ }
+if ("function" !== typeof param2(r19[r17]) { // jump to 6329 */ }
 // Block 21
 r17 = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
 r1[121] = param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
@@ -1230,7 +1232,7 @@ r1[130] = false;
 r1[131] = false;
 r15 = globalThis.WeakSet
 r15 = typeof globalThis.WeakSet
-if ("function" === typeof globalThis.WeakSet) { /* jump to label_5669 */ }
+if ("function" === typeof globalThis.WeakSet) { // jump to 5669 */ }
 // Block 22
 r15 = globalThis.Set
 goto label_5675;
@@ -1244,7 +1246,7 @@ r15 = 8192
 r1[135] = 8192;
 r15 = globalThis.WeakMap
 r15 = typeof globalThis.WeakMap
-if ("function" === typeof globalThis.WeakMap) { /* jump to label_5717 */ }
+if ("function" === typeof globalThis.WeakMap) { // jump to 5717 */ }
 // Block 25
 r15 = globalThis.Map
 goto label_5723;
@@ -1331,7 +1333,7 @@ r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPacka
 r14 = findHostInstanceByFiber /* Closure with env r1 = undefined */
 r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[r0]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */ }
 r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.findFiberByHostInstance
-if ({ findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.findFiberByHostInstance) { /* jump to label_6101 */ }
+if ({ findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) { // jump to 6101 */ }
 // Block 28
 r12 = r13
 // Block 29
@@ -1345,48 +1347,50 @@ r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPacka
 r7 = r8
 r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
 r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
-if ("undefined" === typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__) { /* jump to label_6205 */ }
+if ("undefined" === typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__) { // jump to 6205 */ }
 // Block 30
 r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
 r6 = r8
 r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled
-if (globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) { /* jump to label_6205 */ }
+if (globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) { // jump to 6205 */ }
 // Block 31
 r8 = r6
 r8 = r6.supportsFiber
-if (!r6.supportsFiber) { /* jump to label_6205 */ }
+if (!r6.supportsFiber) { // jump to 6205 */ }
 // Block 32
 r8 = r8.inject
 r7 = r8.inject()
 r1[31] = r8.inject();
 r1[32] = r8;
 goto label_6205;
-// Block 33
-r6 = caughtException
-// Block 34
-r6 = function_852 /* Closure with env r1 = undefined */
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */ }
-r6 = function_853 /* Closure with env r1 = undefined */
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */ }
-r6 = function_854 /* Closure with env r1 = undefined */
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */ }
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */ }
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */ }
-r4 = function_855 /* Closure with env r1 = undefined */
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */ }
-r4 = function_856 /* Closure with env r1 = undefined */
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */ }
-r4 = function_857 /* Closure with env r1 = undefined */
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */ }
-r4 = function_858 /* Closure with env r1 = undefined */
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */ }
-r4 = function_859 /* Closure with env r1 = undefined */
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */ }
-r4 = function_860 /* Closure with env r1 = undefined */
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */ }
-r1 = function_862 /* Closure with env r1 = undefined */
-r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */, unmountComponentAtNode: function_862 /* Closure with env r1 = undefined */ }
-return undefined;
+// Loop (header=34)
+    // Block 34
+    r6 = function_852 /* Closure with env r1 = undefined */
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */ }
+    r6 = function_853 /* Closure with env r1 = undefined */
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */ }
+    r6 = function_854 /* Closure with env r1 = undefined */
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */ }
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */ }
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */ }
+    r4 = function_855 /* Closure with env r1 = undefined */
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */ }
+    r4 = function_856 /* Closure with env r1 = undefined */
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */ }
+    r4 = function_857 /* Closure with env r1 = undefined */
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */ }
+    r4 = function_858 /* Closure with env r1 = undefined */
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */ }
+    r4 = function_859 /* Closure with env r1 = undefined */
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */ }
+    r4 = function_860 /* Closure with env r1 = undefined */
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */ }
+    r1 = function_862 /* Closure with env r1 = undefined */
+    r3 = { createPortal: function_852 /* Closure with env r1 = undefined */, dispatchCommand: function_853 /* Closure with env r1 = undefined */, findHostInstance_DEPRECATED: function_854 /* Closure with env r1 = undefined */, findNodeHandle: findNodeHandle /* Closure with env r1 = undefined */, getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getNodeFromInternalInstanceHandle: function_855 /* Closure with env r1 = undefined */, getPublicInstanceFromInternalInstanceHandle: function_856 /* Closure with env r1 = undefined */, isChildPublicInstance: function_857 /* Closure with env r1 = undefined */, render: function_858 /* Closure with env r1 = undefined */, sendAccessibilityEvent: function_859 /* Closure with env r1 = undefined */, stopSurface: function_860 /* Closure with env r1 = undefined */, unmountComponentAtNode: function_862 /* Closure with env r1 = undefined */ }
+    return undefined;
+    // Block 33
+    r6 = caughtException
+// EndLoop
 // Block 35
 r1 = globalThis.Error
 r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."

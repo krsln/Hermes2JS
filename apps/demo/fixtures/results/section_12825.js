@@ -13,32 +13,34 @@ r10 = param1.slice()
 r4 = globalThis
 r3 = "Error occurred in "
 r2 = " callback, continuing anyway…"
-// Block 1
-r1 = r10
-r1 = r10.length
-if (!r10.length) { /* jump to label_128 */ }
-// Block 2
-r11 = r10
-r1 = r10.pop
-r11 = r10.pop()
-r1 = r7
-r1 = r10.pop()(r7)
-r0 = r10.pop()(r7) === false
-goto label_122;
-// Block 3
-r12 = caughtException
-r11 = r9
-r13 = r9.error
-r14 = r8
-r1 = globalThis.HermesInternal
-r1 = globalThis.HermesInternal.concat
-r1 = globalThis.HermesInternal.concat.call(this, "Error occurred in ", r8, " callback, continuing anyway…")
-r1 = r9.error(globalThis.HermesInternal.concat.call(this, "Error occurred in ", r8, " callback, continuing anyway…"))
-r1 = r9.error
-r1 = r9.error(caughtException)
-// Block 4
-r1 = r0
-if (!r0) { /* jump to label_39 */ }
+// Loop (header=1)
+    // Block 1
+    r1 = r10
+    r1 = r10.length
+    if (!r10.length) { // jump to label_128 */ }
+    // Block 2
+    r11 = r10
+    r1 = r10.pop
+    r11 = r10.pop()
+    r1 = r7
+    r1 = r10.pop()(r7)
+    r0 = r10.pop()(r7) === false
+    goto label_122;
+    // Block 3
+    r12 = caughtException
+    r11 = r9
+    r13 = r9.error
+    r14 = r8
+    r1 = globalThis.HermesInternal
+    r1 = globalThis.HermesInternal.concat
+    r1 = globalThis.HermesInternal.concat.call(this, "Error occurred in ", r8, " callback, continuing anyway…")
+    r1 = r9.error(globalThis.HermesInternal.concat.call(this, "Error occurred in ", r8, " callback, continuing anyway…"))
+    r1 = r9.error
+    r1 = r9.error(caughtException)
+    // Block 4
+    r1 = r0
+    if (!r0) { // jump to 39 */ }
+// EndLoop
 // Block 5
 return r10.pop()(r7) === false;
 }

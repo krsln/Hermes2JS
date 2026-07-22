@@ -14,11 +14,9 @@ class StructuralAnalyzer:
         root = SequenceStructurer(self.cfg).run()
 
         LoopStructurer(root, self.cfg).run()
-
         IfStructurer(root, self.cfg).run()
 
-        SwitchStructurer(root, self.cfg).run()
-
-        TryStructurer(root, self.cfg).run()
+        # SwitchStructurer(root, self.cfg).run()
+        # TryStructurer(root, self.cfg).run()
 
         return root
