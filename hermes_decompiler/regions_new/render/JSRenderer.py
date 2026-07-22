@@ -4,7 +4,7 @@ from hermes_decompiler.regions_new.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.regions_new.models.Regions import (
     SequenceRegion,
     LoopRegion,
-    IfRegion, Region,
+    IfRegion, Region, LoopKind,
 )
 
 from hermes_decompiler.regions_new.models.Statements import (
@@ -142,24 +142,16 @@ class JSRenderer:
             output,
             indent,
     ):
+        kind = region.loop_kind
         if self.verbose:
+            output.append(f"{'    ' * indent}// Loop ({kind})")
 
-            if region.loop_kind:
-                kind = region.loop_kind
+        if kind == LoopKind.WHILE:
+            cond = region.condition or "true"
+            output.append(f"{indent}while ({cond}) {{")
 
-                if hasattr(kind, "value"):
-                    kind = kind.value
-
-                if kind is None:
-                    kind = "loop"
-
-                output.append(f"{'    ' * indent}// Loop ({kind})")
-
-            else:
-
-                output.append(
-                    f"{'    ' * indent}// Loop"
-                )
+        elif kind == LoopKind.DO_WHILE:
+            output.append(f"{indent}do {{")
 
         self._render_region(
             region.body,
@@ -168,9 +160,7 @@ class JSRenderer:
         )
 
         if self.verbose:
-            output.append(
-                f"{'    ' * indent}// EndLoop"
-            )
+            output.append(f"{'    ' * indent}// EndLoop")
 
     # ---------------------------------------------------------
 

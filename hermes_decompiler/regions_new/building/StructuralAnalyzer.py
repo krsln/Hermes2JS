@@ -1,3 +1,4 @@
+from hermes_decompiler.regions_new.building.LoopConditionExtractor import LoopConditionExtractor
 from hermes_decompiler.regions_new.building.RegionGraph import RegionGraph
 from hermes_decompiler.regions_new.building.StatementBuilder import StatementBuilder
 from hermes_decompiler.regions_new.building.Structurers import (
@@ -22,6 +23,9 @@ class StructuralAnalyzer:
 
         LoopStructurer(graph, self.cfg).run()
         IfStructurer(graph, self.cfg).run()
+
+        LoopConditionExtractor(graph.root).run()
+
         SwitchStructurer(graph, self.cfg).run()
         TryStructurer(graph, self.cfg).run()
 
