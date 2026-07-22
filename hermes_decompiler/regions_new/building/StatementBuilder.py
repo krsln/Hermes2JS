@@ -17,13 +17,6 @@ class StatementBuilder:
 
     def build(self, region):
 
-        print(
-            "BUILD",
-            type(region).__name__,
-            "children=",
-            len(getattr(region, "children", [])),
-        )
-
         if isinstance(region, SequenceRegion):
             self._build_sequence(region)
 

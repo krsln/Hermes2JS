@@ -142,12 +142,6 @@ class JSRenderer:
             output,
             indent,
     ):
-        print(
-            "RENDER LOOP BODY",
-            len(region.body.children),
-            len(region.body.statements)
-        )
-
         if self.verbose:
 
             if region.loop_kind:
