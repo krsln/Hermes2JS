@@ -97,9 +97,7 @@ class LoopStructurer:
         child_members = set()
 
         for child in loop.children:
-            child_members.update(
-                child.members
-            )
+            child_members.update(child.members)
 
         #
         # Normal blokları taşı
@@ -124,10 +122,7 @@ class LoopStructurer:
                 loop.children,
                 key=lambda l: l.header.id
         ):
-            self._build_loop(
-                child,
-                region.body
-            )
+            self._build_loop(child, region.body)
 
     def _dump(self, region, indent=0):
 

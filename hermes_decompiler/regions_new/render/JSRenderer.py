@@ -27,7 +27,7 @@ class JSRenderer:
 
     def render(self, root):
 
-        self.dump(root)
+        # self.dump(root)
 
         output = []
 

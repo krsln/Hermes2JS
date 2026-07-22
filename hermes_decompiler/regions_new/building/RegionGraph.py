@@ -139,6 +139,13 @@ class RegionGraph:
         if owner and block in owner.children:
             owner.children.remove(block)
 
+    def extract_block(self, block):
+        owner = self.owner(block)
+
+        if owner:
+            owner.children.remove(block)
+
+        del self.block_owner[block]
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     def replace__(
