@@ -1596,6 +1596,8 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`."
         // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
         // USED → r42 = globalThis.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.")
+        // CODE → <Throw>: <Reg8: 42>
+        r42 = throw globalThis.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.")
     }
     if (r54) {
         // CODE → <Call1>: <Reg8: 16, Reg8: 16, Reg8: 2>
@@ -2685,4 +2687,6 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     // USED → r0 = globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
+    // CODE → <Throw>: <Reg8: 0>
+    r0 = throw globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
 }

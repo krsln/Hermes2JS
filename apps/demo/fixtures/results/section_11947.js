@@ -141,6 +141,8 @@ async function* anon_11947(param0, param1, param2) {
             r3 = { stack: r1.stack + "\n" + r2 }
         }
     }
+    // CODE → <Throw>: <Reg8: 1>
+    r1 = throw r7
     // CODE → <Ret>: <Reg8: 0>
     return undefined_r0;
 }

@@ -65,6 +65,8 @@ function processColorsInProps(param0, param1) {
             // USED → r13 = r16(r15[r14])
             // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
             r8[r9] = r16(r15[r14])
+            // CODE → <Throw>: <Reg8: 11>
+            r11 = throw caughtException
         }
         // CODE → <Mov>: <Reg8: 12, Reg8: 7>
         // USED → r12 = r7

@@ -61,6 +61,8 @@ async function* anon_17161(param0, param1) {
             r2 = new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))
             // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
             // USED → r2 = r3[r2]
+            // CODE → <Throw>: <Reg8: 2>
+            r2 = throw r3[r2]
         }
     }
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
