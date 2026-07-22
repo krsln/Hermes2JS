@@ -79,7 +79,7 @@ class HermesAnalysis:
             self.registers[variable.name] = variable
 
     def generate_js(self, verbose: bool = False) -> list[str]:
-        return self.generate_js_v2(verbose)
+        return self.generate_js_v1_beta(verbose)
 
     def generate_js_v2(self, verbose: bool = False) -> list[str]:
         #
@@ -126,7 +126,7 @@ class HermesAnalysis:
             blocks = cfg_builder.build()
 
             # 2. Aşama: CFG Yapısını AST (Abstract Syntax Tree) Yapısına Dönüştür
-            structurer = ControlFlowStructuring(blocks=blocks)
+            structurer = ControlFlowStructuring(blocks=blocks, results=self.results)
             ast_root = structurer.structure_cfg()
 
             # 3. Aşama: AST Üzerinden Kod Üretimi (Code Emission)

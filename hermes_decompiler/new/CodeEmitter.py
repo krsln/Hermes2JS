@@ -10,7 +10,6 @@ class CodeEmitter:
 
     def emit(self, ast: ASTNode) -> List[str]:
         lines: List[str] = []
-        # Fonksiyon gövdesi için başlangıç seviyesi (level=1)
         self._visit(ast, level=1, lines=lines)
         return lines
 
@@ -22,7 +21,6 @@ class CodeEmitter:
                 self._visit(stmt, level, lines)
 
         elif isinstance(node, InstructionNode):
-            # 1. Bytecode Yorum Satırı (Verbose Modu Açıksa)
             if self.verbose and node.original_bytecode:
                 bytecode_clean = (
                     node.original_bytecode.split(":", 1)[1].strip()
@@ -31,7 +29,6 @@ class CodeEmitter:
                 )
                 lines.append(f"{indent}// CODE → {bytecode_clean}")
 
-            # 2. USED Satırları veya Normal İfadeler
             if node.used:
                 if self.verbose and node.statement:
                     lines.append(f"{indent}// USED → {node.statement}")
@@ -41,14 +38,9 @@ class CodeEmitter:
 
         elif isinstance(node, IfNode):
             lines.append(f"{indent}if ({node.condition}) {{")
+            # İçerideki komutlar 1 seviye daha sağa kaydırılır
             self._visit(node.then_branch, level + 1, lines)
             if node.else_branch:
                 lines.append(f"{indent}}} else {{")
                 self._visit(node.else_branch, level + 1, lines)
-            lines.append(f"{indent}}}")
-
-        elif isinstance(node, LoopNode):
-            cond_str = node.condition if node.condition else "true"
-            lines.append(f"{indent}while ({cond_str}) {{")
-            self._visit(node.body, level + 1, lines)
             lines.append(f"{indent}}}")

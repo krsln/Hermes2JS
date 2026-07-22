@@ -1,64 +1,91 @@
-from typing import List, Set
+from typing import List, Set, Any
 
 from hermes_decompiler.new.ASTNode import ASTNode, BlockNode, InstructionNode, IfNode
 from hermes_decompiler.new.cfg_models import BasicBlock
 
 
 class ControlFlowStructuring:
-    def __init__(self, blocks: List[BasicBlock]):
+    def __init__(self, blocks: List[BasicBlock], results: List[Any]):
         self.blocks = blocks
-        self.visited_blocks: Set[int] = set()
+        self.results = results
+        self.addr_to_result = {r.variable.address: r for r in results}
 
     def structure_cfg(self) -> ASTNode:
         root_block = BlockNode()
-        for block in self.blocks:
-            if block.id in self.visited_blocks:
+        i = 0
+        n = len(self.results)
+
+        while i < n:
+            item = self.results[i]
+            var = item.variable
+            val_raw = var.value.strip() if var.value else ""
+
+            # Handler filtreleri
+            if var.handler == "CompleteGenerator":
+                i += 1
                 continue
 
-            node = self._structure_block(block)
-            root_block.body.append(node)
+            # Return Komutu
+            if var.handler == "Ret":
+                value = val_raw.split("return ")[1].strip() if "return " in val_raw else val_raw
+                root_block.body.append(InstructionNode(
+                    statement=f"return {value};",
+                    original_bytecode=item.opcode.bytecode,
+                    used=var.used
+                ))
+                i += 1
+                continue
 
-        return root_block
+            # Jmp / JmpLong (Koşulsuz Atlama / Loop Back)
+            if var.handler in ("Jmp", "JmpLong") and item.goto is not None:
+                root_block.body.append(InstructionNode(
+                    statement=f"goto label_{item.goto};",
+                    original_bytecode=item.opcode.bytecode,
+                    used=var.used
+                ))
+                i += 1
+                continue
 
-    def _structure_block(self, block: BasicBlock) -> ASTNode:
-        self.visited_blocks.add(block.id)
-        block_ast = BlockNode()
-
-        # Blok içindeki normal talimatları ekle
-        for item in block.results:
-            var = item.variable
-            val_raw = var.value.strip()
-
-            # Koşullu Atlama Kontrolü (If Structure)
+            # Koşullu Atlama (If/Else Yapısı)
             if "/* jump to" in val_raw and item.goto is not None:
                 condition = self._extract_condition(val_raw)
-
-                # Successor'lardan jump hedefini bul
                 then_body = BlockNode()
-                else_body = None
 
-                # Simplified block structuring for jump condition
-                if_node = IfNode(
+                # Atlama hedefine (goto) kadar olan talimatları 'then' bloğuna topla
+                target_addr = item.goto
+                i += 1  # 'if' satırını geç
+
+                while i < n and self.results[i].variable.address < target_addr:
+                    inner_item = self.results[i]
+                    inner_var = inner_item.variable
+                    inner_raw = inner_var.value.strip() if inner_var.value else ""
+
+                    stmt_text = inner_item.result if inner_item.result else inner_raw
+                    then_body.body.append(InstructionNode(
+                        statement=stmt_text,
+                        original_bytecode=inner_item.opcode.bytecode,
+                        used=inner_var.used
+                    ))
+                    i += 1
+
+                # Oluşturulan dolu 'then' bloğunu IfNode olarak ekle
+                root_block.body.append(IfNode(
                     condition=condition,
                     then_branch=then_body,
-                    else_branch=else_body
-                )
-                block_ast.body.append(if_node)
-            elif var.handler == "Ret":
-                value = val_raw.split("return ")[1].strip() if "return " in val_raw else val_raw
-                block_ast.body.append(InstructionNode(
-                    statement=f"return {value}",
-                    original_bytecode=item.opcode.bytecode,
-                    used=var.used
+                    else_branch=None
                 ))
-            else:
-                block_ast.body.append(InstructionNode(
-                    statement=item.result,
-                    original_bytecode=item.opcode.bytecode,
-                    used=var.used
-                ))
+                continue
 
-        return block_ast
+            # Normal Talimatlar (Assignments, Calls vb.)
+            stmt_text = item.result if item.result else val_raw
+            root_block.body.append(InstructionNode(
+                statement=stmt_text,
+                original_bytecode=item.opcode.bytecode,
+                used=var.used
+            ))
+            i += 1
+
+        return root_block
 
     @staticmethod
     def _extract_condition(raw: str) -> str:
