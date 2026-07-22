@@ -4,6 +4,7 @@ from abc import ABC
 
 
 class Region(ABC):
-    """
-    Base class of every structured region.
-    """
+
+    def __init__(self):
+
+        self.parent: "Region | None" = None

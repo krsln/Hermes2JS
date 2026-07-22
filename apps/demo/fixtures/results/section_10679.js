@@ -1,4 +1,5 @@
 function function_10679(param0, param1, param2, param3, param4, param5, param6, param7) {
+// Block 0
 r3 = createEnvironment()
 r5 = param2
 r2 = param6

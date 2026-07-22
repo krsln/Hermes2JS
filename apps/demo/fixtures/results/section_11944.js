@@ -1,4 +1,5 @@
 function function_11944(param0) {
+// Block 0
 r0 = createEnvironment()
 r1 = getEnvironment(1)
 r1 = r1[0]

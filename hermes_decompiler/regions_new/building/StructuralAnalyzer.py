@@ -15,12 +15,14 @@ class StructuralAnalyzer:
 
     def build(self):
 
-        LoopStructurer(self.cfg).run()
+        root = SequenceStructurer(self.cfg).run()
 
-        IfStructurer(self.cfg).run()
+        LoopStructurer(root, self.cfg).run()
 
-        SwitchStructurer(self.cfg).run()
+        IfStructurer(root, self.cfg).run()
 
-        TryStructurer(self.cfg).run()
+        SwitchStructurer(root, self.cfg).run()
 
-        return SequenceStructurer(self.cfg).run()
+        TryStructurer(root, self.cfg).run()
+
+        return root
