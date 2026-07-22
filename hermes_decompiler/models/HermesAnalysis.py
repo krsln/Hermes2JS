@@ -247,6 +247,16 @@ class HermesAnalysis:
         cfg.verify()
         cfg.compute_dominators()
         cfg.compute_post_dominators()
+        cfg.compute_loops()
+
+        # for tail, header in cfg.loop_analysis.back_edges:
+        #     print()
+        #     print("Back Edge")
+        #     print("header:", header.id, "tail:", tail.id)
+        #     print(
+        #         "header succ:", [b.id for b in header.successors],
+        #         "tail succ:", [b.id for b in tail.successors]
+        #     )
 
         analyzer = StructuralAnalyzer(cfg)
         root = analyzer.build()

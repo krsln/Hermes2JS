@@ -11,6 +11,7 @@ class CFG:
 
     def __init__(self):
 
+        self.loop_analysis = None
         self.blocks: List[BasicBlock] = []
 
         self.entry: Optional[BasicBlock] = None
@@ -52,3 +53,10 @@ class CFG:
         self.post_dominator_tree = PostDominatorTree(self)
 
         self.post_dominator_tree.compute()
+
+    def compute_loops(self):
+        from .LoopAnalysis import LoopAnalysis
+
+        self.loop_analysis = LoopAnalysis(self)
+
+        self.loop_analysis.compute()
