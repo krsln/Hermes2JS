@@ -7,12 +7,24 @@ from dataclasses import dataclass
 
 class Value(ABC):
 
+    @property
+    def inlineable(self) -> bool:
+        return True
+
     @abstractmethod
     def render(self) -> str:
-        raise NotImplementedError()
+        ...
 
     def __str__(self):
         return self.render()
+
+
+@dataclass(frozen=True)
+class RegisterValue(Value):
+    register: int
+
+    def render(self):
+        return f"r{self.register}"
 
 
 @dataclass(frozen=True)
@@ -33,13 +45,7 @@ class ConstantValue(Value):
         return str(self.value)
 
 
-@dataclass(frozen=True)
-class RegisterValue(Value):
-    register: int
-
-    def render(self):
-        return f"r{self.register}"
-
+# --------------
 
 @dataclass(frozen=True)
 class UnknownValue(Value):
