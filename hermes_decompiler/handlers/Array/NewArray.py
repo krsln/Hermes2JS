@@ -1,5 +1,6 @@
 import json
 
+from hermes_decompiler.ir.Values import ArrayValue, ConstantValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -24,8 +25,13 @@ class NewArray(OpcodeHandler):
 
         dest_reg, capacity_hint = map(int, match.groups())
 
-        js_array = "[]" if capacity_hint == 0 else f"[] /* capacity hint: {capacity_hint} */"
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
+        # value = "[]" if capacity_hint == 0 else f"[] /* capacity hint: {capacity_hint} */"
+        value = ArrayValue(
+            elements=[],
+            capacity_hint=capacity_hint if capacity_hint else None,
+        )
+
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -47,9 +53,15 @@ class NewArrayWithBuffer(OpcodeHandler):
         if entry.array_literal is None:
             return self.build_exception_result(analysis, entry, "// Warning: No array data in comment")
 
-        js_array = json.dumps(entry.array_literal, ensure_ascii=False)
+        # value = json.dumps(entry.array_literal, ensure_ascii=False)
+        elements = [
+            ConstantValue(v)
+            for v in entry.array_literal
+        ]
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
+        value = ArrayValue(elements)
+
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

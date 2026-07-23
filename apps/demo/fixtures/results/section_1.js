@@ -111,7 +111,7 @@ function function_1(param0, param1) {
     // CODE → <NewArray>: <Reg8: 3, UInt16: 0>
     // USED → r3 = []
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 7, Reg8: 3>
-    createEnvironment()[7] = r3
+    createEnvironment()[7] = []
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 5, string_id: 26>  # String: 'Map' (Identifier)
     // USED → r1 = r1.Map
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 158>  # String: 'prototype' (Identifier)

@@ -101,3 +101,19 @@ class RegExpValue(Value):
 
     def render(self):
         return f"/{self.pattern}/{self.flags}"
+
+
+@dataclass
+class ArrayValue(Value):
+    elements: list[Value]
+    capacity_hint: int | None = None
+
+    def render(self):
+        rendered = ", ".join(e.render() for e in self.elements)
+
+        text = f"[{rendered}]"
+
+        if self.capacity_hint:
+            text += f" /* capacity hint: {self.capacity_hint} */"
+
+        return text

@@ -1277,7 +1277,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewArray>: <Reg8: 17, UInt16: 0>
     // USED → r17 = []
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 10, Reg8: 17>
-    createEnvironment()[10] = r17
+    createEnvironment()[10] = []
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 4, UInt16: 4, UInt16: 250, UInt16: 141>  # Object: {'touchBank': null, 'numberActiveTouches': 0, 'indexOfSingleActiveTouch': 4294967295, 'mostRecentTimeStamp': 0}
     // USED → r37 = { touchBank: null, numberActiveTouches: 0, indexOfSingleActiveTouch: 4294967295, mostRecentTimeStamp: 0 }
     // CODE → <PutById>: <Reg8: 37, Reg8: 17, UInt8: 5, string_id: 21537>  # String: 'touchBank' (Identifier)
@@ -1473,7 +1473,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewArray>: <Reg8: 17, UInt16: 0>
     // USED → r17 = []
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 20, Reg8: 17>
-    createEnvironment()[20] = r17
+    createEnvironment()[20] = []
     // CODE → <NewObject>: <Reg8: 17>
     // USED → r17 = {}
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 21, Reg8: 17>
@@ -1515,9 +1515,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewArrayWithBuffer>: <Reg8: 37, UInt16: 2, UInt16: 2, UInt16: 40903>  # Array: ['ResponderEventPlugin', 'ReactNativeBridgeEventPlugin']
     // USED → r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]
     // CODE → <Call2>: <Reg8: 37, Reg8: 41, Reg8: 42, Reg8: 37>
-    // USED → r37 = r0.Array.prototype.slice.call(r0.Array.prototype.slice, r37)
+    // USED → r37 = r0.Array.prototype.slice.call(r0.Array.prototype.slice, ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"])
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 37>
-    createEnvironment()[18] = r0.Array.prototype.slice.call(r0.Array.prototype.slice, r37)
+    createEnvironment()[18] = r0.Array.prototype.slice.call(r0.Array.prototype.slice, ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"])
     // CODE → <Call1>: <Reg8: 37, Reg8: 16, Reg8: 2>
     r37 = recomputePluginOrdering /* Closure with env r1 = createEnvironment() */(undefined)
     // CODE → <NewObject>: <Reg8: 50>
@@ -2013,7 +2013,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = []
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
-    createEnvironment()[70] = r40
+    createEnvironment()[70] = []
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 71, Reg8: 39>
     createEnvironment()[71] = -1
     // CODE → <NewObject>: <Reg8: 39>
@@ -2053,7 +2053,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
     // USED → r38 = []
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 78, Reg8: 38>
-    createEnvironment()[78] = r38
+    createEnvironment()[78] = []
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 79, Reg8: 10>
     createEnvironment()[79] = 0
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 80, Reg8: 10>
