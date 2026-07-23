@@ -97,6 +97,22 @@ class OpcodeHandler(ABC):
         return variable.value
 
     @classmethod
+    def get_register_value_new(cls, analysis: HermesAnalysis, reg: int) -> Value:
+        variable = cls._get_register_variable(analysis, reg)
+
+        if not variable:
+            return RegisterValue(reg)
+
+        variable.used = True
+
+        if isinstance(variable.value, Value):
+            value = variable.value
+        else:
+            value = RegisterValue(reg)
+
+        return value
+
+    @classmethod
     def _get_register_variable(cls, analysis: HermesAnalysis, reg: int) -> JSVariable | None:
         variable = analysis.registers.get(f"r{reg}")
 

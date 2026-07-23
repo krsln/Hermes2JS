@@ -1,3 +1,4 @@
+from hermes_decompiler.ir.Expressions import IndexExpression, MemberExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -22,9 +23,12 @@ class GetByVal(OpcodeHandler):
 
         dest_reg, base_reg, prop_reg = map(int, match.groups())
 
-        value = f"r{base_reg}[r{prop_reg}]"
+        # value = f"r{base_reg}[r{prop_reg}]"
+        value_object = self.get_register_value_new(analysis, base_reg)
+        value_index = self.get_register_value_new(analysis, prop_reg)
+        expression = IndexExpression(object=value_object, index=value_index)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', expression)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

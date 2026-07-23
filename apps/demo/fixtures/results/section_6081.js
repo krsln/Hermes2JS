@@ -42,14 +42,14 @@ function processColorsInProps(param0, param1) {
         // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 18>
         r12 = r1[18]
         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
-        r11 = HermesPropertyIterator(param1).next()
+        // USED → r11 = HermesPropertyIterator(param1).next()
         // CODE → <GetByVal>: <Reg8: 11, Reg8: 12, Reg8: 11>
         // USED → r11 = r12[r11]
         // CODE → <JmpFalse>: <Addr8: -46, Reg8: 11>  # Address: 0000001c
         if (!r12[r11]) { /* jump to label_28 */ }
         // ──────────────── Block 4 ──────────────── 
         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
-        r11 = HermesPropertyIterator(param1).next()
+        // USED → r11 = HermesPropertyIterator(param1).next()
         // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 11>
         // USED → r13 = r10[r11]
         // CODE → <Mov>: <Reg8: 11, Reg8: 13>
@@ -71,15 +71,15 @@ function processColorsInProps(param0, param1) {
             // CODE → <LoadFromEnvironment>: <Reg8: 15, Reg8: 1, UInt8: 18>
             r15 = r1[18]
             // CODE → <Mov>: <Reg8: 13, Reg8: 7>
-            r13 = HermesPropertyIterator(param1).next()
+            // USED → r13 = HermesPropertyIterator(param1).next()
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 13>
             // USED → r13 = r15[r13]
             // CODE → <Mov>: <Reg8: 9, Reg8: 13>
             // USED → r9 = r15[r13]
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 13>
-            // USED → r13 = r14[r13]
+            // USED → r13 = r14[r15[r13]]
             // CODE → <JStrictEqual>: <Addr8: 27, Reg8: 13, Reg8: 0>  # Address: 00000095
-            if (r14[r13] === undefined) { /* jump to label_149 */ }
+            if (r14[r15[r13]] === undefined) { /* jump to label_149 */ }
             // ──────────────── Block 7 ──────────────── 
             // CODE → <Mov>: <Reg8: 15, Reg8: 8>
             // USED → r15 = GetIterator(r10[r11]).next()
@@ -88,11 +88,11 @@ function processColorsInProps(param0, param1) {
             // CODE → <LoadFromEnvironment>: <Reg8: 16, Reg8: 1, UInt8: 36>
             r16 = r1[36]
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 14>
-            // USED → r13 = r15[r14]
+            // USED → r13 = r15[r15[r13]]
             // CODE → <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
-            // USED → r13 = r16(r15[r14])
+            // USED → r13 = r16(r15[r15[r13]])
             // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
-            GetIterator(r10[r11]).next()[r15[r13]] = r16(r15[r14])
+            GetIterator(r10[r11]).next()[r15[r13]] = r16(r15[r15[r13]])
             // ──────────────── Block 8 ──────────────── 
             // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
             goto label_90;

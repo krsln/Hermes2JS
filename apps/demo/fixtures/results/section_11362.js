@@ -236,7 +236,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 10>
     r119 = r92[10]
     // CODE → <Add>: <Reg8: 114, Reg8: 5, Reg8: 93>
-    r114 = 0 + 0
+    // USED → r114 = 0 + 0
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
     r122 = r98[r114]
     // CODE → <LoadConstUndefined>: <Reg8: 127>
@@ -256,7 +256,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 99, Reg8: 119, UInt8: 8>
     // USED → r99 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 107, Reg8: 5, Reg8: 88>
-    r107 = 0 + 1
+    // USED → r107 = 0 + 1
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
     r122 = r98[r107]
     // CODE → <Mov>: <Reg8: 126, Reg8: 6>
@@ -274,7 +274,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 104, Reg8: 119, UInt8: 8>
     // USED → r104 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 100, Reg8: 5, Reg8: 85>
-    r100 = 0 + 2
+    // USED → r100 = 0 + 2
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
     r122 = r98[r100]
     // CODE → <Mov>: <Reg8: 126, Reg8: 7>
@@ -292,7 +292,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 101, Reg8: 119, UInt8: 8>
     // USED → r101 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 109, Reg8: 5, Reg8: 82>
-    r109 = 0 + 3
+    // USED → r109 = 0 + 3
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
     r122 = r98[r109]
     // CODE → <Mov>: <Reg8: 126, Reg8: 8>
@@ -310,7 +310,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 103, Reg8: 119, UInt8: 8>
     // USED → r103 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 102, Reg8: 5, Reg8: 95>
-    r102 = 0 + 4
+    // USED → r102 = 0 + 4
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
     r122 = r98[r102]
     // CODE → <Mov>: <Reg8: 126, Reg8: 99>
@@ -328,7 +328,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 99, Reg8: 119, UInt8: 8>
     // USED → r99 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 111, Reg8: 5, Reg8: 97>
-    r111 = 0 + 5
+    // USED → r111 = 0 + 5
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
     r122 = r98[r111]
     // CODE → <Mov>: <Reg8: 126, Reg8: 104>
@@ -346,7 +346,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 105, Reg8: 119, UInt8: 8>
     // USED → r105 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 104, Reg8: 5, Reg8: 77>
-    r104 = 0 + 6
+    // USED → r104 = 0 + 6
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
     r122 = r98[r104]
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
@@ -364,7 +364,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 101, Reg8: 119, UInt8: 8>
     // USED → r101 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 113, Reg8: 5, Reg8: 90>
-    r113 = 0 + 7
+    // USED → r113 = 0 + 7
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
     r122 = r98[r113]
     // CODE → <Mov>: <Reg8: 126, Reg8: 103>
@@ -382,7 +382,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 110, Reg8: 119, UInt8: 8>
     // USED → r110 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 106, Reg8: 5, Reg8: 74>
-    r106 = 0 + 8
+    // USED → r106 = 0 + 8
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
     r122 = r98[r106]
     // CODE → <Mov>: <Reg8: 126, Reg8: 99>
@@ -400,7 +400,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 103, Reg8: 119, UInt8: 8>
     // USED → r103 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 0, Reg8: 5, Reg8: 96>
-    r0 = 0 + 9
+    // USED → r0 = 0 + 9
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
     r122 = r98[r0]
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
@@ -418,7 +418,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 112, Reg8: 119, UInt8: 8>
     // USED → r112 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 108, Reg8: 5, Reg8: 71>
-    r108 = 0 + 10
+    // USED → r108 = 0 + 10
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
     r122 = r98[r108]
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
@@ -436,7 +436,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 105, Reg8: 119, UInt8: 8>
     // USED → r105 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 99, Reg8: 5, Reg8: 69>
-    r99 = 0 + 11
+    // USED → r99 = 0 + 11
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
     r122 = r98[r99]
     // CODE → <Mov>: <Reg8: 126, Reg8: 110>
@@ -454,7 +454,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // USED → r115 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 110, Reg8: 5, Reg8: 87>
-    r110 = 0 + 12
+    // USED → r110 = 0 + 12
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
     r122 = r98[r110]
     // CODE → <Mov>: <Reg8: 126, Reg8: 103>
@@ -472,7 +472,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // USED → r118 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 101, Reg8: 5, Reg8: 66>
-    r101 = 0 + 13
+    // USED → r101 = 0 + 13
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
     r122 = r98[r101]
     // CODE → <Mov>: <Reg8: 126, Reg8: 112>
@@ -490,7 +490,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // USED → r117 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 112, Reg8: 5, Reg8: 94>
-    r112 = 0 + 14
+    // USED → r112 = 0 + 14
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
     r122 = r98[r112]
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
@@ -508,7 +508,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // USED → r116 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <Add>: <Reg8: 105, Reg8: 5, Reg8: 63>
-    r105 = 0 + 15
+    // USED → r105 = 0 + 15
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
     r122 = r98[r105]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>

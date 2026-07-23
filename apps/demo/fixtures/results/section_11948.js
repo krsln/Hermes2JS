@@ -263,7 +263,7 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 15, Reg8: 17, UInt8: 15, string_id: 12528>  # String: 'common' (Identifier)
     // USED → r15 = r2.default(this.defaults, { url: param1 }).headers.common
     // CODE → <GetById>: <Reg8: 14, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
-    r14 = { paramsSerializer: { serialize: r2.default(this.defaults, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls, method: "get".toLowerCase() }.method
+    // USED → r14 = { paramsSerializer: { serialize: r2.default(this.defaults, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls, method: "get".toLowerCase() }.method
     // CODE → <GetByVal>: <Reg8: 14, Reg8: 17, Reg8: 14>
     // USED → r14 = r17[r14]
     // CODE → <Call3>: <Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 14>
@@ -433,7 +433,7 @@ function _request(param0, param1, param2) {
     if (0 >= [].length) { /* jump to label_934 */ }
     // ──────────────── Block 30 ──────────────── 
     // CODE → <Mov>: <Reg8: 10, Reg8: 12>
-    r10 = []
+    // USED → r10 = []
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
     // USED → r9 = 0
     // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
@@ -503,7 +503,7 @@ function _request(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
     // USED → r7 = r6.default.call(this, r10[r14]({ paramsSerializer: { serialize: r2.default(this.defaults, allowAbsoluteUrls: this.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r2.default(this.defaults, { url: param1 }).headers.common, r17[r14]), r2.default(this.defaults, { url: param1 }).headers) })).then
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
-    r9 = []
+    // USED → r9 = []
     // CODE → <Mov>: <Reg8: 1, Reg8: 4>
     // USED → r1 = 0
     // CODE → <ToNumeric>: <Reg8: 2, Reg8: 1>

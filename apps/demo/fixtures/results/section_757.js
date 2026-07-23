@@ -105,32 +105,32 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // CODE → <JmpLong>: <Addr32: -260>  # Address: 0000001d
         goto label_29;
         // LOOP → START (while)
-        while (r14(r13[r11].getSnapshot(), r13[r11].value)) {
+        while (r14(r13[0].getSnapshot(), r13[0].value)) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → <Mov>: <Reg8: 13, Reg8: 6>
-            r13 = param1.updateQueue.stores
+            // USED → r13 = param1.updateQueue.stores
             // CODE → <Mov>: <Reg8: 11, Reg8: 7>
-            r11 = 0
+            // USED → r11 = 0
             // CODE → <GetByVal>: <Reg8: 11, Reg8: 13, Reg8: 11>
-            // USED → r11 = r13[r11]
+            // USED → r11 = r13[0]
             // CODE → <Mov>: <Reg8: 8, Reg8: 11>
-            r8 = r13[r11]
+            r8 = r13[0]
             // CODE → <GetById>: <Reg8: 9, Reg8: 11, UInt8: 5, string_id: 23581>  # String: 'getSnapshot' (Identifier)
-            // USED → r9 = r13[r11].getSnapshot
+            // USED → r9 = r13[0].getSnapshot
             // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 11, UInt8: 6, string_id: 249>  # String: 'value' (Identifier)
-            // USED → r8 = r13[r11].value
+            // USED → r8 = r13[0].value
             // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 1, UInt8: 73>
             r14 = r1[73]
             // CODE → <Mov>: <Reg8: 11, Reg8: 9>
-            // USED → r11 = r13[r11].getSnapshot
+            // USED → r11 = r13[0].getSnapshot
             // CODE → <Call1>: <Reg8: 13, Reg8: 11, Reg8: 5>
-            // USED → r13 = r13[r11].getSnapshot()
+            // USED → r13 = r13[0].getSnapshot()
             // CODE → <Mov>: <Reg8: 11, Reg8: 8>
-            // USED → r11 = r13[r11].value
+            // USED → r11 = r13[0].value
             // CODE → <Call3>: <Reg8: 11, Reg8: 14, Reg8: 5, Reg8: 13, Reg8: 11>
-            // USED → r11 = r14(r13[r11].getSnapshot(), r13[r11].value)
+            // USED → r11 = r14(r13[0].getSnapshot(), r13[0].value)
             // CODE → <JmpTrue>: <Addr8: 7, Reg8: 11>  # Address: 00000089
-            if (r14(r13[r11].getSnapshot(), r13[r11].value)) { /* jump to label_137 */ }
+            if (r14(r13[0].getSnapshot(), r13[0].value)) { /* jump to label_137 */ }
             // ──────────────── Block 7 ──────────────── 
             // CODE → <Mov>: <Reg8: 11, Reg8: 7>
             // USED → r11 = 0
