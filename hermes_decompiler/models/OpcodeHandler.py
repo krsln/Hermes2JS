@@ -88,13 +88,12 @@ class OpcodeHandler(ABC):
         if not variable:
             return RegisterValue(reg)
 
-        variable.used = True
-
         if isinstance(variable.value, Value):
             value = variable.value
         else:
             value = RegisterValue(reg)
 
+        variable.used = True
         return value
 
     @classmethod

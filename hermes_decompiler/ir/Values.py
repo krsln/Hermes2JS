@@ -65,3 +65,9 @@ class UndefinedValue(Value):
 class EmptyValue(Value):
     def render(self):
         return "<empty>"
+
+
+@dataclass(frozen=True)
+class IdentifierValue(str):
+    def render(self):
+        return str

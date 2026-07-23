@@ -1,3 +1,5 @@
+from hermes_decompiler.ir.Expressions import IndexExpression, CallExpression
+from hermes_decompiler.ir.Values import ConstantValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -27,10 +29,12 @@ class LoadFromEnvironment(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, env_reg, slot = map(int, match.groups())
-        env = self.get_register_value(analysis, env_reg)
-        expression = f"{env}[{slot}]"
+        reg_value = self.get_register_value(analysis, env_reg)
 
-        variable = JSVariable(self.__class__.__name__, entry.address, f"r{dest_reg}", expression)
+        value = f"{reg_value}[{slot}]"
+        # value = IndexExpression(CallExpression(reg_value,), ConstantValue(slot))
+
+        variable = JSVariable(self.__class__.__name__, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

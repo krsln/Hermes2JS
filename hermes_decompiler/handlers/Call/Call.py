@@ -39,21 +39,12 @@ class CallX(OpcodeHandler):
         func_name = self.get_register_value(analysis, func_reg)
         func_name_str = str(func_name)
 
-        # arg_list = []
-        # for reg in arg_regs:
-        #     variable = self._get_register_variable(analysis, reg)
-        #     if variable:
-        #         variable.used = True
-        #         arg_list.append(variable.value)
-        #     else:
-        #         print(RegisterValue(reg))
-        #         arg_list.append(RegisterValue(reg))
+        print(callee, func_name)
 
         arg_list = [
             self.get_register_value_new(analysis, reg)
             for reg in arg_regs
         ]
-        value = CallExpression(callee=callee, arguments=arg_list)
 
         # Special handling for HermesInternal.concat
         if func_name_str == "this.HermesInternal.concat":
@@ -95,6 +86,7 @@ class CallX(OpcodeHandler):
             func_val = f"({args_str})"
 
         value = f"{func_name}{func_val}"
+        # value = CallExpression(callee=callee, arguments=checked_args)
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
@@ -139,6 +131,7 @@ class Call(CallX):
 
         dest_reg, func_reg, num_args = map(int, match.groups())
         func_name = self.get_register_value_new(analysis, func_reg)
+
         arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
         arg_list = [f"r{r}" for r in arg_regs]
         args_str = ", ".join(arg_list)
