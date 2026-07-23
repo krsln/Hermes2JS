@@ -11,7 +11,8 @@ class UnaryExpression(Value):
     operand: Value
 
     def render(self):
-        return f"{self.operator}{self.operand.render()}"
+        space = " " if self.operator.isalpha() else ""
+        return f"{self.operator}{space}{self.operand.render()}"
 
 
 @dataclass(frozen=True)

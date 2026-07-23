@@ -1,6 +1,7 @@
 from typing import ClassVar
 
-from hermes_decompiler.ir.Expressions import UnaryExpression
+from hermes_decompiler.ir.Expressions import UnaryExpression, BinaryExpression
+from hermes_decompiler.ir.Values import Value, ConstantValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -15,12 +16,12 @@ class UnaryOperator(OpcodeHandler):
 
     _PATTERN: ClassVar = sequence(REG, REG)
 
-    def expression(self, value: str) -> str:
+    def expression(self, value: Value) -> Value:
         """
         Return the JavaScript expression for the unary operation.
         Subclasses should override this method.
         """
-        return value
+        return UnaryExpression(operator="", operand=value)
 
     def handle(
             self,
@@ -35,58 +36,54 @@ class UnaryOperator(OpcodeHandler):
 
         dest_reg, src_reg = map(int, match.groups())
 
-        src_val = self.get_register_value(analysis, src_reg)
+        src_val = self.get_register_value_new(analysis, src_reg)
 
-        value = self.expression(src_val)
-        # value = UnaryExpression(operator="!", operand=value)
-
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", self.expression(src_val))
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
 
 class Not(UnaryOperator):
-    def expression(self, value: str) -> str:
-        return f"!{value}"
+    def expression(self, value: Value) -> UnaryExpression:
+        return UnaryExpression(operator="!", operand=value)
 
 
 class TypeOf(UnaryOperator):
-    def expression(self, value: str) -> str:
-        return f"typeof {value}"
+    def expression(self, value: Value):
+        return UnaryExpression(operator="typeof ", operand=value)
 
 
 class ToInt32(UnaryOperator):
-    def expression(self, value: str) -> str:
-        return f"({value} | 0)"
+    def expression(self, value: Value):
+        return BinaryExpression(left=value, operator="|", right=ConstantValue(0))
 
 
 class ToNumeric(UnaryOperator):
-    def expression(self, value: str) -> str:
-        return f"+{value}"
+    def expression(self, value):
+        return UnaryExpression(operator="+", operand=value)
 
 
 class ToNumber(UnaryOperator):
-    def expression(self, value: str) -> str:
-        return f"+{value}"
+    def expression(self, value: Value):
+        return UnaryExpression(operator="+", operand=value)
 
 
 class Inc(UnaryOperator):
-    def expression(self, value: str) -> str:
-        return f"{value} + 1"
+    def expression(self, value: Value):
+        return BinaryExpression(left=value, operator="+", right=ConstantValue(1))
 
 
 class Dec(UnaryOperator):
-    def expression(self, value: str) -> str:
-        return f"{value} - 1"
+    def expression(self, value: Value):
+        return BinaryExpression(left=value, operator="-", right=ConstantValue(1))
 
 
 class Negate(UnaryOperator):
-    def expression(self, value: str) -> str:
-        return f"-{value}"
+    def expression(self, value: Value):
+        return UnaryExpression(operator="-", operand=value)
 
 
 class AddEmptyString(UnaryOperator):
-    def expression(self, value: str) -> str:
-        return f'"" + {value}'
+    def expression(self, value: Value):
+        return BinaryExpression(left=ConstantValue(""), operator="+", right=value)

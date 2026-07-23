@@ -1767,9 +1767,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 16, Reg8: 16>
     // USED → r16 = typeof r0.RN$enableMicrotasksInReact
     // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
-    // USED → r16 = "undefined" !== r16
+    // USED → r16 = "undefined" !== typeof r0.RN$enableMicrotasksInReact
     // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00001023
-    if (!"undefined" !== r16) { /* jump to label_4131 */ }
+    if (!"undefined" !== typeof r0.RN$enableMicrotasksInReact) { /* jump to label_4131 */ }
     // ──────────────── Block 15 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
     // USED → r42 = r0.RN$enableMicrotasksInReact

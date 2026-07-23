@@ -29,11 +29,11 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <TypeOf>: <Reg8: 14, Reg8: 6>
-    // USED → r14 = typeof param1
+    // USED → r14 = typeof r6
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
     // USED → r10 = "string"
     // CODE → <JStrictEqual>: <Addr8: 18, Reg8: 14, Reg8: 10>  # Address: 0000003a
-    if (typeof param1 === "string") { /* jump to label_58 */ }
+    if (typeof r6 === "string") { /* jump to label_58 */ }
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 14, Reg8: 6>
     // USED → r14 = param1
@@ -398,7 +398,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
     r4 = +0 + 1
     // CODE → <GetByVal>: <Reg8: 16, Reg8: 15, Reg8: 14>
-    // USED → r16 = r15[r14]
+    // USED → r16 = r15[+0]
     // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
     // USED → r9 = ++0 + 1
     // CODE → <Inc>: <Reg8: 14, Reg8: 9>
@@ -406,18 +406,18 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 14>
     r4 = ++0 + 1 + 1
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
-    // USED → r9 = r15[r9]
+    // USED → r9 = r15[++0 + 1]
     // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
-    // USED → r0 = r18.then.call(this, r9.Promise.resolve({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }), r15[r14], r15[r9])
+    // USED → r0 = r18.then.call(this, r9.Promise.resolve({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }), r15[+0], r15[++0 + 1])
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
     // USED → r9 = r15.length
     // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
     if (++0 + 1 + 1 < r15.length) { /* jump to label_791 */ }
     // ──────────────── Block 28 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 0>
-    // USED → r9 = r18.then.call(this, r9.Promise.resolve({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }), r15[r14], r15[r9])
+    // USED → r9 = r18.then.call(this, r9.Promise.resolve({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }), r15[+0], r15[++0 + 1])
     // CODE → <Ret>: <Reg8: 9>
-    return r18.then.call(this, r9.Promise.resolve({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }), r15[r14], r15[r9]);
+    return r18.then.call(this, r9.Promise.resolve({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }), r15[+0], r15[++0 + 1]);
     // ──────────────── Block 29 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
     // USED → r9 = []
@@ -443,19 +443,19 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
     r4 = +0 + 1
     // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 14>
-    // USED → r13 = r10[r14]
+    // USED → r13 = r10[+0]
     // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
     // USED → r9 = ++0 + 1
     // CODE → <Inc>: <Reg8: 4, Reg8: 9>
     // USED → r4 = ++0 + 1 + 1
     // CODE → <GetByVal>: <Reg8: 7, Reg8: 10, Reg8: 9>
-    // USED → r7 = r10[r9]
+    // USED → r7 = r10[++0 + 1]
     // CODE → <Mov>: <Reg8: 10, Reg8: 13>
-    // USED → r10 = r10[r14]
+    // USED → r10 = r10[+0]
     // CODE → <Mov>: <Reg8: 9, Reg8: 1>
     // USED → r9 = { paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }
     // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
-    // USED → r1 = r10[r14]({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) })
+    // USED → r1 = r10[+0]({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) })
     // CODE → <Mov>: <Reg8: 10, Reg8: 4>
     // USED → r10 = ++0 + 1 + 1
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
@@ -475,7 +475,7 @@ function _request(param0, param1, param2) {
         // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
         // USED → r6 = r6.default.call
         // CODE → <Call3>: <Reg8: 0, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1>
-        // USED → r0 = r6.default.call(this, r10[r14]({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }))
+        // USED → r0 = r6.default.call(this, r10[+0]({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }))
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0
         // CODE → <Mov>: <Reg8: 1, Reg8: 3>
@@ -490,16 +490,16 @@ function _request(param0, param1, param2) {
         // CODE → <Catch>: <Reg8: 10>
         // USED → r10 = caughtException
         // CODE → <Mov>: <Reg8: 9, Reg8: 7>
-        // USED → r9 = r10[r9]
+        // USED → r9 = r10[++0 + 1]
         // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
-        // USED → r7 = r10[r9].call
+        // USED → r7 = r10[++0 + 1].call
         // CODE → <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
-        r7 = r10[r9].call(this, caughtException)
+        r7 = r10[++0 + 1].call(this, caughtException)
     }
     // LOOP → END
     // ──────────────── Block 34 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 0>
-    // USED → r8 = r6.default.call(this, r10[r14]({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }))
+    // USED → r8 = r6.default.call(this, r10[+0]({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) }))
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
     // USED → r7 = r8.then
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
@@ -513,7 +513,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
     r4 = +0 + 1
     // CODE → <GetByVal>: <Reg8: 6, Reg8: 9, Reg8: 2>
-    // USED → r6 = r9[r2]
+    // USED → r6 = r9[+0]
     // CODE → <ToNumeric>: <Reg8: 1, Reg8: 1>
     // USED → r1 = ++0 + 1
     // CODE → <Inc>: <Reg8: 2, Reg8: 1>
@@ -521,16 +521,16 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
     r4 = ++0 + 1 + 1
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>
-    // USED → r1 = r9[r1]
+    // USED → r1 = r9[++0 + 1]
     // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
-    // USED → r0 = r8.then.call(this, r6.default.call(this, r10[r14]({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) })), r9[r2], r9[r1])
+    // USED → r0 = r8.then.call(this, r6.default.call(this, r10[+0]({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) })), r9[+0], r9[++0 + 1])
     // CODE → <Mov>: <Reg8: 1, Reg8: 5>
     // USED → r1 = r1.length
     // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
     if (++0 + 1 + 1 < r1.length) { /* jump to label_971 */ }
     // ──────────────── Block 35 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
-    return r8.then.call(this, r6.default.call(this, r10[r14]({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) })), r9[r2], r9[r1]);
+    return r8.then.call(this, r6.default.call(this, r10[+0]({ paramsSerializer: { serialize: r10.paramsSerializer }, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls, method: "get".toLowerCase(), headers: r14.default.concat(r14.default.merge(r10.headers.common, r10.headers[r10.method]), r10.headers) })), r9[+0], r9[++0 + 1]);
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException
     // CODE → <GetGlobalObject>: <Reg8: 0>
