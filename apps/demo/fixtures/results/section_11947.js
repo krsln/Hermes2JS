@@ -46,7 +46,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Catch>: <Reg8: 7>
     // USED → r7 = caughtException
     // CODE → <Mov>: <Reg8: 1, Reg8: 7>
-    // USED → r1 = r7
+    // USED → r1 = caughtException
     // CODE → <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
@@ -72,7 +72,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <CreateThis>: <Reg8: 7, Reg8: 4, Reg8: 8>
     // USED → r7 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>
-    r12 = r7
+    r12 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)
     // CODE → <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
     r4 = new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))
     // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
@@ -83,20 +83,20 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
     // USED → r7 = globalThis.Error.captureStackTrace
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-    // USED → r4 = r6
+    // USED → r4 = r7[r4]
     // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
-    r4 = globalThis.Error.captureStackTrace(r6)
+    r4 = globalThis.Error.captureStackTrace(r7[r4])
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-    // USED → r4 = r6
+    // USED → r4 = r7[r4]
     // CODE → <GetById>: <Reg8: 7, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r7 = r6.stack
+    // USED → r7 = r7[r4].stack
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 11303>  # String: '' (Identifier)
     // USED → r8 = ""
     // CODE → <Mov>: <Reg8: 4, Reg8: 8>
-    r4 = r8
+    r4 = ""
     // CODE → <JmpFalse>: <Addr8: 34, Reg8: 7>  # Address: 000000b9
-    if (!r6.stack) { /* jump to label_185 */ }
+    if (!r7[r4].stack) { /* jump to label_185 */ }
     // ──────────────── Block 10 ──────────────── 
     // CODE → <GetById>: <Reg8: 9, Reg8: 6, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
     // USED → r9 = r7[r4].stack
@@ -105,68 +105,68 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <CreateRegExp>: <Reg8: 6, string_id: 7558, string_id: 11303, UInt32: 168>  # String: '^.+\\n' (String)  # String: '' (Identifier)
     // USED → r6 = /^.+\\n/
     // CODE → <Call3>: <Reg8: 4, Reg8: 7, Reg8: 9, Reg8: 6, Reg8: 8>
-    r4 = r7[r4].stack.replace(/^.+\\n/, "")
+    // USED → r4 = r7[r4].stack.replace(/^.+\\n/, "")
     // ──────────────── Block 11 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-    r2 = r4
+    // USED → r2 = r7[r4].stack.replace(/^.+\\n/, "")
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-    // USED → r4 = r1
+    // USED → r4 = caughtException
     // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r4 = r1.stack
+    // USED → r4 = caughtException.stack
     // CODE → <JmpTrue>: <Addr8: 17, Reg8: 4>  # Address: 000000d6
-    if (r1.stack) { /* jump to label_214 */ }
+    if (caughtException.stack) { /* jump to label_214 */ }
     // ──────────────── Block 12 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 1>
-    // USED → r6 = r1
+    // USED → r6 = caughtException
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = r2
+    // USED → r4 = r7[r4].stack.replace(/^.+\\n/, "")
     // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r6 = { stack: r2 }
+    r6 = { stack: r7[r4].stack.replace(/^.+\\n/, "") }
     // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
     goto label_312;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = r2
+    // USED → r4 = r7[r4].stack.replace(/^.+\\n/, "")
     // CODE → <JmpFalse>: <Addr8: 95, Reg8: 4>  # Address: 00000138
-    if (!r2) { /* jump to label_312 */ }
+    if (!r7[r4].stack.replace(/^.+\\n/, "")) { /* jump to label_312 */ }
     // ──────────────── Block 14 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
     // USED → r4 = globalThis.String
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-    // USED → r3 = r1
+    // USED → r3 = caughtException
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r3 = r1.stack
+    // USED → r3 = caughtException.stack
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r5 = globalThis.String(r1.stack)
+    // USED → r5 = globalThis.String(caughtException.stack)
     // CODE → <GetById>: <Reg8: 4, Reg8: 5, UInt8: 8, string_id: 19080>  # String: 'endsWith' (Identifier)
-    // USED → r4 = globalThis.String(r1.stack).endsWith
+    // USED → r4 = globalThis.String(caughtException.stack).endsWith
     // CODE → <Mov>: <Reg8: 7, Reg8: 2>
-    // USED → r7 = r2
+    // USED → r7 = r7[r4].stack.replace(/^.+\\n/, "")
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
-    // USED → r6 = r2.replace
+    // USED → r6 = r7[r4].stack.replace(/^.+\\n/, "").replace
     // CODE → <CreateRegExp>: <Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169>  # String: '^.+\\n.+\\n' (String)  # String: '' (Identifier)
     // USED → r3 = /^.+\\n.+\\n/
     // CODE → <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
-    // USED → r3 = r2.replace(/^.+\\n.+\\n/, "")
+    // USED → r3 = r7[r4].stack.replace(/^.+\\n/, "").replace(/^.+\\n.+\\n/, "")
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r3 = globalThis.String(r1.stack).endsWith(r2.replace(/^.+\\n.+\\n/, ""))
+    // USED → r3 = globalThis.String(caughtException.stack).endsWith(r7[r4].stack.replace(/^.+\\n/, "").replace(/^.+\\n.+\\n/, ""))
     // CODE → <JmpTrue>: <Addr8: 33, Reg8: 3>  # Address: 00000138
-    if (globalThis.String(r1.stack).endsWith(r2.replace(/^.+\\n.+\\n/, ""))) { /* jump to label_312 */ }
+    if (globalThis.String(caughtException.stack).endsWith(r7[r4].stack.replace(/^.+\\n/, "").replace(/^.+\\n.+\\n/, ""))) { /* jump to label_312 */ }
     // ──────────────── Block 15 ──────────────── 
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-    // USED → r3 = r1
+    // USED → r3 = caughtException
     // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r4 = r1.stack
+    // USED → r4 = caughtException.stack
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-    // USED → r5 = r2
+    // USED → r5 = r7[r4].stack.replace(/^.+\\n/, "")
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
     // USED → r2 = "\n"
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = "\n" + r2
+    // USED → r2 = "\n" + r7[r4].stack.replace(/^.+\\n/, "")
     // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
-    // USED → r2 = r1.stack + "\n" + r2
+    // USED → r2 = caughtException.stack + "\n" + r7[r4].stack.replace(/^.+\\n/, "")
     // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r3 = { stack: r1.stack + "\n" + r2 }
+    r3 = { stack: caughtException.stack + "\n" + r7[r4].stack.replace(/^.+\\n/, "") }
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
     goto label_316;
@@ -174,7 +174,7 @@ async function* anon_11947(param0, param1, param2) {
     while (true) {
         // ──────────────── Block 18 ──────────────── 
         // CODE → <Throw>: <Reg8: 1>
-        r1 = throw r7
+        r1 = throw caughtException
         // ──────────────── Block 17 ──────────────── 
         // CODE → <Catch>: <Reg8: 2>
         r2 = caughtException

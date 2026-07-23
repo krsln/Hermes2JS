@@ -1,7 +1,8 @@
-import re
 from abc import ABC, abstractmethod
 from typing import Dict, Optional
 
+from hermes_decompiler.ir.RegisterValue import RegisterValue
+from hermes_decompiler.ir.Value import Value
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
@@ -87,11 +88,11 @@ class OpcodeHandler(ABC):
         return variable
 
     @classmethod
-    def get_register_value(cls, analysis: HermesAnalysis, reg: int) -> str:
+    def get_register_value(cls, analysis: HermesAnalysis, reg: int) -> str | Value:
         variable = cls._get_register_variable(analysis, reg)
 
         if not variable:
-            return f"r{reg}"
+            return RegisterValue(reg)
 
         variable.used = True
         return variable.value

@@ -57,7 +57,7 @@ class CallX(OpcodeHandler):
 
         first_arg = argList[0] if argList else None
         # Extract the base object from function name, e.g., "this.console" from "this.console.log"
-        func_parts = func_name.split(".")
+        func_parts = str(func_name).split(".")
         base_object = ".".join(func_parts[:-1]) if len(func_parts) > 1 else None
 
         explicit_receiver_passed = False

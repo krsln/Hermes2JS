@@ -16,9 +16,9 @@ function onPress(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r3 = r2.default.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    r3 = createThis(prototype=r2.default.prototype, constructor=r2.default)
+    // USED → r3 = createThis(prototype=r2.default.prototype, constructor=r2.default)
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
-    r8 = r3
+    r8 = createThis(prototype=r2.default.prototype, constructor=r2.default)
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
     r2 = new r2.default(r1)
     // CODE → <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>

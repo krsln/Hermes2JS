@@ -52,16 +52,17 @@ class ConstructBase(OpcodeHandler, ABC):
 
         dest_reg, func_reg, arg_count = map(int, match.groups())
         constructor = (self.get_register_value(analysis, func_reg) or f"r{func_reg}")
-        args = self.ResolveArguments(analysis, func_reg, arg_count)
+        constructor_str = constructor if isinstance(constructor, str) else constructor.render()
+        args = self.resolve_arguments(analysis, func_reg, arg_count)
 
-        expression = f"new {constructor}({', '.join(args)})"
+        expression = f"new {constructor_str}({', '.join(args)})"
 
         variable = JSVariable(
             handler,
             entry.address,
             f"r{dest_reg}",
             expression,
-            f"new {constructor}",
+            f"new {constructor_str}",
             f"({', '.join(args)})",
         )
 
@@ -69,19 +70,16 @@ class ConstructBase(OpcodeHandler, ABC):
 
         return OpcodeResult(entry, variable)
 
-    def ResolveArguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> list[str]:
+    def resolve_arguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> list[str]:
 
         values: list[str] = []
 
         for reg in range(func_reg - arg_count, func_reg):
 
             value = self.get_register_value(analysis, reg)
+            value_str = value if isinstance(value, str) else value.render()
 
-            if value is None:
-                logger.warning("%s: unresolved constructor argument r%d", self.__class__.__name__, reg)
-                value = f"r{reg}"
-
-            values.append(value)
+            values.append(value_str)
 
         # Hermes CreateThis inserts an implicit "this"
         if values and values[0] == "this":

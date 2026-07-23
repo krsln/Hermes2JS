@@ -8,3 +8,6 @@ class Value(ABC):
     @abstractmethod
     def render(self) -> str:
         raise NotImplementedError()
+
+    def __str__(self):
+        return self.render()

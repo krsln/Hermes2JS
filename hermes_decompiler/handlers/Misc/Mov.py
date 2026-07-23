@@ -20,7 +20,14 @@ class Mov(OpcodeHandler):
 
         dest_reg, src_reg = map(int, match.groups())
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"r{src_reg}")
+        src = self.get_register_value(analysis, src_reg)
+
+        if isinstance(src, JSVariable):
+            value = src.value
+        else:
+            value = src
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

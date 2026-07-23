@@ -117,9 +117,9 @@ function function_1(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r3 = globalThis.Map.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 1>
-    r3 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
+    // USED → r3 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
     // CODE → <Mov>: <Reg8: 14, Reg8: 3>
-    r14 = r3
+    r14 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
     // CODE → <Construct>: <Reg8: 1, Reg8: 1, UInt8: 1>
     r1 = new globalThis.Map(undefined)
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 3, Reg8: 1>
