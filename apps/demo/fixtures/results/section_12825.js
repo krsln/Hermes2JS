@@ -71,7 +71,7 @@ function function_12825(param0, param1, param2, param3, param4) {
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 98>  # String: 'concat' (Identifier)
             // USED → r1 = r4.HermesInternal.concat
             // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 14, Reg8: 2>
-            // USED → r1 = r4.HermesInternal.concat.call(this, "Error occurred in ", r14, " callback, continuing anyway\u2026")
+            // USED → r1 = r4.HermesInternal.concat("Error occurred in ", r14, " callback, continuing anyway\u2026")
             // CODE → <Call2>: <Reg8: 1, Reg8: 13, Reg8: 11, Reg8: 1>
             r1 = r11.error(r1)
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)

@@ -85,8 +85,9 @@ class CallX(OpcodeHandler):
         else:
             func_val = f"({args_str})"
 
-        value = f"{func_name}{func_val}"
-        # value = CallExpression(callee=callee, arguments=checked_args)
+        value = f"{func_name}({args_str})"
+        # value = CallExpression(callee=callee, arguments=arg_list)
+
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
@@ -137,7 +138,8 @@ class Call(CallX):
         args_str = ", ".join(arg_list)
 
         func_val = f"({args_str})" if not self.should_use_call(
-            self.get_register_variable(analysis, func_reg)) else f".call(this, {args_str})"
+            self.get_register_variable(analysis, func_reg)) \
+            else f".call(this, {args_str})"
 
         value = f"{func_name}{func_val}"
         # value = CallExpression(callee=func_name, arguments=arg_list)

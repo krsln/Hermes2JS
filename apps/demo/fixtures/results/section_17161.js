@@ -62,7 +62,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: ' failed with status ' (String)
     // USED → r2 = " failed with status "
     // CODE → <Call4>: <Reg8: 10, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 2, Reg8: 6>
-    r10 = r2.HermesInternal.concat.call(this, "Fetching ", r7, " failed with status ", r1.status)
+    r10 = r2.HermesInternal.concat("Fetching ", r7, " failed with status ", r1.status)
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r3 = r2.Error.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
