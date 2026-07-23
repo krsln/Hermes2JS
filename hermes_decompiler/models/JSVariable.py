@@ -1,5 +1,8 @@
 from typing import Optional, Dict, Any
 
+from hermes_decompiler.ir.Value import Value
+
+RenderableValue = str | Value
 
 class JSVariable:
     """Represents a variable or register in Hermes bytecode analysis."""
@@ -9,7 +12,7 @@ class JSVariable:
             handler: str,
             address: int,
             name: str,
-            value: str,
+            value: RenderableValue,
             function_base: Optional[str] = None,
             function_call: Optional[str] = None,
     ):
@@ -32,10 +35,23 @@ class JSVariable:
 
         self.used = False
 
+    @property
+    def rendered(self) -> str:
+        if hasattr(self.value, "render"):
+            return self.value.render()
+
+        return str(self.value)
+
     def __str__(self) -> str:
         return (
-            f"JSVariable(address={self.address}, handler={self.handler}, name={self.name}, value={self.value}, "
-            f"function_base={self.function_base}, function_call={self.function_call}, used={self.used})"
+            f"JSVariable("
+            f"address={self.address}, "
+            f"handler={self.handler}, "
+            f"name={self.name}, "
+            f"value={self.rendered}, "
+            f"function_base={self.function_base}, "
+            f"function_call={self.function_call}, "
+            f"used={self.used})"
         )
 
     def to_dict(self) -> Dict[str, Any]:
