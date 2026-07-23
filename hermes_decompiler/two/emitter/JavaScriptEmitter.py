@@ -340,7 +340,7 @@ class JavaScriptEmitter(RegionVisitor):
 
         if variable.used:
             if self.verbose:
-                self._write(f"// USED -> {result.result}")
+                self._write(f"// USED → {result.result}")
             return
 
         self._write(result.result)
@@ -354,7 +354,7 @@ class JavaScriptEmitter(RegionVisitor):
 
     def _verbose_code(self, result):
         if self.verbose:
-            self._write(f"// CODE -> {self._original_bytecode(result)}")
+            self._write(f"// CODE → {self._original_bytecode(result)}")
 
     def _nested(self, region):
         """
