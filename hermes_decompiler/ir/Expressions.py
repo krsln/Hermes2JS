@@ -6,7 +6,6 @@ from dataclasses import dataclass
 from .Values import Value
 
 
-@dataclass(frozen=True)
 class Expression(Value, ABC):
     pass
 
@@ -79,10 +78,20 @@ class CallExpression(Expression):
     callee: Value
     arguments: list[Value]
 
+    # None => normal çağrı
+    this_arg: Value | None = None
+
     def render(self):
         args = ", ".join(arg.render() for arg in self.arguments)
-        return f"{self.callee.render()}({args})"
 
+        if self.this_arg is not None:
+            values = [self.this_arg.render()]
+            if args:
+                values.append(args)
+
+            return f"{self.callee.render()}.call({', '.join(values)})"
+
+        return f"{self.callee.render()}({args})"
 
 @dataclass(frozen=True)
 class IteratorNextExpression(Expression):
