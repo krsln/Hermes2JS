@@ -68,6 +68,8 @@ class EmptyValue(Value):
 
 
 @dataclass(frozen=True)
-class IdentifierValue(str):
-    def render(self):
-        return str
+class IdentifierValue(Value):
+    name: str
+
+    def render(self) -> str:
+        return self.name
