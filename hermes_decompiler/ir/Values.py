@@ -77,9 +77,19 @@ class IdentifierValue(Value):
 @dataclass(frozen=True)
 class ClosureValue(Value):
     name: str
-    comment: str | None = None
+    environment_register: int | None
+    environment: Value | None
 
     def render(self):
-        if self.comment:
-            return f"{self.name} /* {self.comment} */"
+        if self.environment_register is not None:
+            return (
+                f"{self.name} "
+                f"/* Closure with env r{self.environment_register} = "
+                f"{self.environment.render()} */"
+            )
+        if self.environment:
+            return (
+                f"{self.name} "
+                f"/* Closure with env {self.environment.render()} */"
+            )
         return self.name

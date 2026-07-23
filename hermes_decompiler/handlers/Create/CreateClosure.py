@@ -36,7 +36,7 @@ class CreateClosure(OpcodeHandler):
         )
 
         # value = f"{func_name} /* Closure with env r{value_reg} = {reg_value} */"
-        value = ClosureValue(name=f"{func_name}", comment=f"Closure with env r{value_reg} = {reg_value}")
+        value = ClosureValue(name=f"{func_name}", environment_register=value_reg, environment=reg_value)
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
