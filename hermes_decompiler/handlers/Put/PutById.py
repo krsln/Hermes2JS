@@ -45,7 +45,7 @@ class PutById(OpcodeHandler):
         if not dest_var or dest_var.value in (None, '{}', ''):
             return {}
 
-        obj_str = dest_var.value.strip()
+        obj_str = str(dest_var.value).strip()
         if not (obj_str.startswith('{') and obj_str.endswith('}')):
             return {}
 

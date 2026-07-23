@@ -24,9 +24,9 @@ function onPress(param0) {
     // CODE → <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
     // USED → r3 = r3[r2]
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 21914>  # String: 'trackJoinCompetitionList' (Identifier)
-    // USED → r2 = r3[r2].trackJoinCompetitionList
+    // USED → r2 = r3.trackJoinCompetitionList
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    r2 = r3[r2].trackJoinCompetitionList()
+    r2 = r3.trackJoinCompetitionList.call(this, r3[r2])
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 11>
     r2 = r0[11]
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)

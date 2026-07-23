@@ -26,9 +26,9 @@ class GetByVal(OpcodeHandler):
         # value = f"r{base_reg}[r{prop_reg}]"
         value_object = self.get_register_value_new(analysis, base_reg)
         value_index = self.get_register_value_new(analysis, prop_reg)
-        expression = IndexExpression(object=value_object, index=value_index)
+        value = IndexExpression(object=value_object, index=value_index)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', expression)
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -53,14 +53,14 @@ class GetById(OpcodeHandler):
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
         prop_name = entry.identifier_name or f"string_{string_id}"
-        base_value = self.get_register_value(analysis, obj_reg)
+        value_object = self.get_register_value_new(analysis, obj_reg)
+        function_base = str(value_object)
 
         # Build property access
-        js_expr = f"{base_value}.{prop_name}"
+        # value = f"{base_value}.{prop_name}"
+        value = MemberExpression(object=value_object, property=prop_name)
 
-        variable = JSVariable(
-            handler, entry.address,
-            f'r{dest_reg}', js_expr, base_value, f".{prop_name}")
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value, function_base, f".{prop_name}")
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

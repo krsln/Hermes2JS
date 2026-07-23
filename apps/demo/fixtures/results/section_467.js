@@ -1189,11 +1189,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
-    // USED → r11 = globalThis.Array
+    // USED → r11 = r0.Array
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 2, string_id: 1>  # String: 'isArray' (Identifier)
-    // USED → r11 = globalThis.Array.isArray
+    // USED → r11 = r0.Array.isArray
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 11>
-    r1[2] = globalThis.Array.isArray;
+    r1[2] = r0.Array.isArray;
     // CODE → <LoadConstFalse>: <Reg8: 12>
     // USED → r12 = false
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 12>
@@ -1209,13 +1209,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 7, Reg8: 11>
     r1[7] = null;
     // CODE → <TryGetById>: <Reg8: 37, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-    // USED → r37 = globalThis.Object
+    // USED → r37 = r0.Object
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 37, UInt8: 4, string_id: 62>  # String: 'assign' (Identifier)
-    // USED → r41 = globalThis.Object.assign
+    // USED → r41 = r0.Object.assign
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 8, Reg8: 41>
-    r1[8] = globalThis.Object.assign;
+    r1[8] = r0.Object.assign;
     // CODE → <GetByIdShort>: <Reg8: 40, Reg8: 39, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r40 = SyntheticEvent /* Closure with env r1 = undefined */.prototype
+    // USED → r40 = r39.prototype
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {}
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 805>  # Function: [#805 preventDefault of 82 bytes]: 1 params @ offset 0x00188f55
@@ -1237,7 +1237,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12543>  # String: 'destructor' (Identifier)
     // USED → r37 = { preventDefault: preventDefault /* Closure with env r1 = undefined */, stopPropagation: stopPropagation /* Closure with env r1 = undefined */, persist: persist /* Closure with env r1 = undefined */, isPersistent: functionThatReturnsFalse /* Closure with env r1 = undefined */, destructor: destructor /* Closure with env r1 = undefined */ }
     // CODE → <Call3>: <Reg8: 37, Reg8: 41, Reg8: 2, Reg8: 40, Reg8: 37>
-    r37 = globalThis.Object.assign(SyntheticEvent /* Closure with env r1 = undefined */.prototype, { preventDefault: preventDefault /* Closure with env r1 = undefined */, stopPropagation: stopPropagation /* Closure with env r1 = undefined */, persist: persist /* Closure with env r1 = undefined */, isPersistent: functionThatReturnsFalse /* Closure with env r1 = undefined */, destructor: destructor /* Closure with env r1 = undefined */ })
+    r37 = r0.Object.assign(r39.prototype, { preventDefault: preventDefault /* Closure with env r1 = undefined */, stopPropagation: stopPropagation /* Closure with env r1 = undefined */, persist: persist /* Closure with env r1 = undefined */, isPersistent: functionThatReturnsFalse /* Closure with env r1 = undefined */, destructor: destructor /* Closure with env r1 = undefined */ })
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 9, UInt16: 9, UInt16: 194, UInt16: 115>  # Object: {'type': null, 'target': null, 'currentTarget': null, 'eventPhase': null, 'bubbles': null, 'cancelable': null, 'timeStamp': null, 'defaultPrevented': null, 'isTrusted': null}
     // USED → r37 = { type: null, target: null, currentTarget: null, eventPhase: null, bubbles: null, cancelable: null, timeStamp: null, defaultPrevented: null, isTrusted: null }
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 809>  # Function: [#809 currentTarget of 4 bytes]: 1 params @ offset 0x00188e5c
@@ -1257,7 +1257,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Call2>: <Reg8: 17, Reg8: 17, Reg8: 2, Reg8: 39>
     r17 = addEventPoolingTo /* Closure with env r1 = undefined */({ Interface: { type: null, target: null, currentTarget: currentTarget /* Closure with env r1 = undefined */, eventPhase: null, bubbles: null, cancelable: null, timeStamp: timeStamp /* Closure with env r1 = undefined */, defaultPrevented: null, isTrusted: null }, extend: function_811 /* Closure with env r1 = undefined */ })
     // CODE → <GetById>: <Reg8: 37, Reg8: 39, UInt8: 6, string_id: 14224>  # String: 'extend' (Identifier)
-    // USED → r37 = { Interface: { type: null, target: null, currentTarget: currentTarget /* Closure with env r1 = undefined */, eventPhase: null, bubbles: null, cancelable: null, timeStamp: timeStamp /* Closure with env r1 = undefined */, defaultPrevented: null, isTrusted: null }, extend: function_811 /* Closure with env r1 = undefined */ }.extend
+    // USED → r37 = r39.extend
     // CODE → <NewObject>: <Reg8: 17>
     // USED → r17 = {}
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 814>  # Function: [#814 touchHistory of 4 bytes]: 1 params @ offset 0x00188e5c
@@ -1265,9 +1265,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 40, string_id: 21539>  # String: 'touchHistory' (Identifier)
     // USED → r17 = { touchHistory: touchHistory /* Closure with env r1 = undefined */ }
     // CODE → <Call2>: <Reg8: 17, Reg8: 37, Reg8: 39, Reg8: 17>
-    // USED → r17 = { Interface: { type: null, target: null, currentTarget: currentTarget /* Closure with env r1 = undefined */, eventPhase: null, bubbles: null, cancelable: null, timeStamp: timeStamp /* Closure with env r1 = undefined */, defaultPrevented: null, isTrusted: null }, extend: function_811 /* Closure with env r1 = undefined */ }.extend({ touchHistory: touchHistory /* Closure with env r1 = undefined */ })
+    // USED → r17 = r39.extend.call(this, { Interface: { type: null, target: null, currentTarget: currentTarget /* Closure with env r1 = undefined */, eventPhase: null, bubbles: null, cancelable: null, timeStamp: timeStamp /* Closure with env r1 = undefined */, defaultPrevented: null, isTrusted: null }, extend: function_811 /* Closure with env r1 = undefined */ }, { touchHistory: touchHistory /* Closure with env r1 = undefined */ })
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 17>
-    r1[9] = { Interface: { type: null, target: null, currentTarget: currentTarget /* Closure with env r1 = undefined */, eventPhase: null, bubbles: null, cancelable: null, timeStamp: timeStamp /* Closure with env r1 = undefined */, defaultPrevented: null, isTrusted: null }, extend: function_811 /* Closure with env r1 = undefined */ }.extend({ touchHistory: touchHistory /* Closure with env r1 = undefined */ });
+    r1[9] = r39.extend.call(this, { Interface: { type: null, target: null, currentTarget: currentTarget /* Closure with env r1 = undefined */, eventPhase: null, bubbles: null, cancelable: null, timeStamp: timeStamp /* Closure with env r1 = undefined */, defaultPrevented: null, isTrusted: null }, extend: function_811 /* Closure with env r1 = undefined */ }, { touchHistory: touchHistory /* Closure with env r1 = undefined */ });
     // CODE → <NewArrayWithBuffer>: <Reg8: 42, UInt16: 1, UInt16: 1, UInt16: 40883>  # Array: ['topTouchStart']
     // USED → r42 = ["topTouchStart"]
     // CODE → <NewArrayWithBuffer>: <Reg8: 41, UInt16: 1, UInt16: 1, UInt16: 40892>  # Array: ['topTouchMove']
@@ -1489,35 +1489,35 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
     // USED → r37 = param2(r19[2])
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = param2(r19[2]).ReactNativeViewConfigRegistry
+    // USED → r37 = r37.ReactNativeViewConfigRegistry
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 8, string_id: 22641>  # String: 'customBubblingEventTypes' (Identifier)
-    // USED → r37 = param2(r19[2]).ReactNativeViewConfigRegistry.customBubblingEventTypes
+    // USED → r37 = r37.ReactNativeViewConfigRegistry.customBubblingEventTypes
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 23, Reg8: 37>
-    r1[23] = param2(r19[2]).ReactNativeViewConfigRegistry.customBubblingEventTypes;
+    r1[23] = r37.ReactNativeViewConfigRegistry.customBubblingEventTypes;
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
     // USED → r37 = r19[2]
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
     // USED → r37 = param2(r19[2])
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = param2(r19[2]).ReactNativeViewConfigRegistry
+    // USED → r37 = r37.ReactNativeViewConfigRegistry
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 9, string_id: 21940>  # String: 'customDirectEventTypes' (Identifier)
-    // USED → r37 = param2(r19[2]).ReactNativeViewConfigRegistry.customDirectEventTypes
+    // USED → r37 = r37.ReactNativeViewConfigRegistry.customDirectEventTypes
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 24, Reg8: 37>
-    r1[24] = param2(r19[2]).ReactNativeViewConfigRegistry.customDirectEventTypes;
+    r1[24] = r37.ReactNativeViewConfigRegistry.customDirectEventTypes;
     // CODE → <TryGetById>: <Reg8: 37, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
-    // USED → r37 = globalThis.Array
+    // USED → r37 = r0.Array
     // CODE → <GetByIdShort>: <Reg8: 37, Reg8: 37, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r37 = globalThis.Array.prototype
+    // USED → r37 = r0.Array.prototype
     // CODE → <GetByIdShort>: <Reg8: 42, Reg8: 37, UInt8: 10, string_id: 217>  # String: 'slice' (Identifier)
-    // USED → r42 = globalThis.Array.prototype.slice
+    // USED → r42 = r0.Array.prototype.slice
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 11, string_id: 91>  # String: 'call' (Identifier)
-    // USED → r41 = globalThis.Array.prototype.slice.call
+    // USED → r41 = r0.Array.prototype.slice.call
     // CODE → <NewArrayWithBuffer>: <Reg8: 37, UInt16: 2, UInt16: 2, UInt16: 40903>  # Array: ['ResponderEventPlugin', 'ReactNativeBridgeEventPlugin']
     // USED → r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]
     // CODE → <Call2>: <Reg8: 37, Reg8: 41, Reg8: 42, Reg8: 37>
-    // USED → r37 = globalThis.Array.prototype.slice.call(["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"])
+    // USED → r37 = r0.Array.prototype.slice.call(["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"])
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 37>
-    r1[18] = globalThis.Array.prototype.slice.call(["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]);
+    r1[18] = r0.Array.prototype.slice.call(["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]);
     // CODE → <Call1>: <Reg8: 37, Reg8: 16, Reg8: 2>
     r37 = recomputePluginOrdering /* Closure with env r1 = undefined */()
     // CODE → <NewObject>: <Reg8: 50>
@@ -1565,22 +1565,22 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Mov>: <Reg8: 44, Reg8: 45>
         // USED → r44 = HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next()
         // CODE → <GetByIdShort>: <Reg8: 52, Reg8: 50, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-        // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty
+        // USED → r52 = r50.hasOwnProperty
         // CODE → <Call2>: <Reg8: 52, Reg8: 52, Reg8: 50, Reg8: 44>
-        // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next())
+        // USED → r52 = r50.hasOwnProperty.call(this, { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }, HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next())
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
         r43 = false
         // CODE → <JmpFalse>: <Addr8: -31, Reg8: 52>  # Address: 00000e5d
-        if (!{ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty(HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next())) { /* jump to label_3677 */ }
+        if (!r50.hasOwnProperty.call(this, { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }, HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next())) { /* jump to label_3677 */ }
         // ──────────────── Block 3 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
         // USED → r52 = r50[r44]
         // CODE → <GetByIdShort>: <Reg8: 53, Reg8: 51, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-        // USED → r53 = {}.hasOwnProperty
+        // USED → r53 = r51.hasOwnProperty
         // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
-        // USED → r53 = {}.hasOwnProperty(HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next())
+        // USED → r53 = r51.hasOwnProperty.call(this, {}, HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next())
         // CODE → <JmpFalse>: <Addr8: 17, Reg8: 53>  # Address: 00000e9e
-        if (!{}.hasOwnProperty(HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next())) { /* jump to label_3742 */ }
+        if (!r51.hasOwnProperty.call(this, {}, HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next())) { /* jump to label_3742 */ }
         // ──────────────── Block 4 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
         // USED → r53 = r51[r44]
@@ -1608,7 +1608,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 43, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r43 = globalThis.Error
+    // USED → r43 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 558>  # String: '`.' (String)
     // USED → r42 = "`."
     // CODE → <Add>: <Reg8: 44, Reg8: 44, Reg8: 42>
@@ -1618,9 +1618,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
     // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next() + "`."
     // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
-    // USED → r42 = globalThis.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next() + "`.")
+    // USED → r42 = r0.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next() + "`.")
     // CODE → <Throw>: <Reg8: 42>
-    r42 = throw globalThis.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next() + "`.")
+    r42 = throw r0.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }).next() + "`.")
     // ──────────────── Block 8 ──────────────── 
     // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
     if (!false) { /* jump to label_3796 */ }
@@ -1647,37 +1647,37 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
     r1[30] = null;
     // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 14, string_id: 21563>  # String: '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED' (Identifier)
-    // USED → r14 = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
+    // USED → r14 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 11>
     r1[31] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
     r1[32] = null;
     // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-    // USED → r16 = globalThis.Math
+    // USED → r16 = r0.Math
     // CODE → <GetById>: <Reg8: 16, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
-    // USED → r16 = globalThis.Math.clz32
+    // USED → r16 = r0.Math.clz32
     // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00000f1e
-    if (!globalThis.Math.clz32) { /* jump to label_3870 */ }
+    if (!r0.Math.clz32) { /* jump to label_3870 */ }
     // ──────────────── Block 11 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-    // USED → r16 = globalThis.Math
+    // USED → r16 = r0.Math
     // CODE → <GetById>: <Reg8: 9, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
-    // USED → r9 = globalThis.Math.clz32
+    // USED → r9 = r0.Math.clz32
     // ──────────────── Block 12 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 33, Reg8: 9>
-    r1[33] = globalThis.Math.clz32;
+    r1[33] = r0.Math.clz32;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-    // USED → r9 = globalThis.Math
+    // USED → r9 = r0.Math
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 17, string_id: 171>  # String: 'log' (Identifier)
-    // USED → r9 = globalThis.Math.log
+    // USED → r9 = r0.Math.log
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 34, Reg8: 9>
-    r1[34] = globalThis.Math.log;
+    r1[34] = r0.Math.log;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-    // USED → r9 = globalThis.Math
+    // USED → r9 = r0.Math
     // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 18, string_id: 21154>  # String: 'LN2' (Identifier)
-    // USED → r9 = globalThis.Math.LN2
+    // USED → r9 = r0.Math.LN2
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 35, Reg8: 9>
-    r1[35] = globalThis.Math.LN2;
+    r1[35] = r0.Math.LN2;
     // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 128>
     // USED → r9 = 128
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 36, Reg8: 9>
@@ -1689,111 +1689,111 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 38, Reg8: 10>
     r1[38] = 0;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 19, string_id: 24093>  # String: 'nativeFabricUIManager' (Identifier)
-    // USED → r9 = globalThis.nativeFabricUIManager
+    // USED → r9 = r0.nativeFabricUIManager
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 20, string_id: 15507>  # String: 'createNode' (Identifier)
-    // USED → r16 = globalThis.nativeFabricUIManager.createNode
+    // USED → r16 = r0.nativeFabricUIManager.createNode
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 39, Reg8: 16>
-    r1[39] = globalThis.nativeFabricUIManager.createNode;
+    r1[39] = r0.nativeFabricUIManager.createNode;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 21, string_id: 22912>  # String: 'cloneNodeWithNewChildren' (Identifier)
-    // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewChildren
+    // USED → r16 = r0.nativeFabricUIManager.cloneNodeWithNewChildren
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 40, Reg8: 16>
-    r1[40] = globalThis.nativeFabricUIManager.cloneNodeWithNewChildren;
+    r1[40] = r0.nativeFabricUIManager.cloneNodeWithNewChildren;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 22, string_id: 22913>  # String: 'cloneNodeWithNewChildrenAndProps' (Identifier)
-    // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps
+    // USED → r16 = r0.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 41, Reg8: 16>
-    r1[41] = globalThis.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps;
+    r1[41] = r0.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 23, string_id: 22914>  # String: 'cloneNodeWithNewProps' (Identifier)
-    // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewProps
+    // USED → r16 = r0.nativeFabricUIManager.cloneNodeWithNewProps
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 42, Reg8: 16>
-    r1[42] = globalThis.nativeFabricUIManager.cloneNodeWithNewProps;
+    r1[42] = r0.nativeFabricUIManager.cloneNodeWithNewProps;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 24, string_id: 23048>  # String: 'createChildSet' (Identifier)
-    // USED → r16 = globalThis.nativeFabricUIManager.createChildSet
+    // USED → r16 = r0.nativeFabricUIManager.createChildSet
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 43, Reg8: 16>
-    r1[43] = globalThis.nativeFabricUIManager.createChildSet;
+    r1[43] = r0.nativeFabricUIManager.createChildSet;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 25, string_id: 22565>  # String: 'appendChild' (Identifier)
-    // USED → r16 = globalThis.nativeFabricUIManager.appendChild
+    // USED → r16 = r0.nativeFabricUIManager.appendChild
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 44, Reg8: 16>
-    r1[44] = globalThis.nativeFabricUIManager.appendChild;
+    r1[44] = r0.nativeFabricUIManager.appendChild;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 22566>  # String: 'appendChildToSet' (Identifier)
-    // USED → r16 = globalThis.nativeFabricUIManager.appendChildToSet
+    // USED → r16 = r0.nativeFabricUIManager.appendChildToSet
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 45, Reg8: 16>
-    r1[45] = globalThis.nativeFabricUIManager.appendChildToSet;
+    r1[45] = r0.nativeFabricUIManager.appendChildToSet;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 27, string_id: 22962>  # String: 'completeRoot' (Identifier)
-    // USED → r16 = globalThis.nativeFabricUIManager.completeRoot
+    // USED → r16 = r0.nativeFabricUIManager.completeRoot
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 46, Reg8: 16>
-    r1[46] = globalThis.nativeFabricUIManager.completeRoot;
+    r1[46] = r0.nativeFabricUIManager.completeRoot;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 28, string_id: 20376>  # String: 'registerEventHandler' (Identifier)
-    // USED → r16 = globalThis.nativeFabricUIManager.registerEventHandler
+    // USED → r16 = r0.nativeFabricUIManager.registerEventHandler
     // CODE → <GetById>: <Reg8: 41, Reg8: 9, UInt8: 29, string_id: 24474>  # String: 'unstable_DiscreteEventPriority' (Identifier)
-    // USED → r41 = globalThis.nativeFabricUIManager.unstable_DiscreteEventPriority
+    // USED → r41 = r0.nativeFabricUIManager.unstable_DiscreteEventPriority
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 47, Reg8: 41>
-    r1[47] = globalThis.nativeFabricUIManager.unstable_DiscreteEventPriority;
+    r1[47] = r0.nativeFabricUIManager.unstable_DiscreteEventPriority;
     // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 30, string_id: 24484>  # String: 'unstable_getCurrentEventPriority' (Identifier)
-    // USED → r9 = globalThis.nativeFabricUIManager.unstable_getCurrentEventPriority
+    // USED → r9 = r0.nativeFabricUIManager.unstable_getCurrentEventPriority
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 48, Reg8: 9>
-    r1[48] = globalThis.nativeFabricUIManager.unstable_getCurrentEventPriority;
+    r1[48] = r0.nativeFabricUIManager.unstable_getCurrentEventPriority;
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
     // USED → r9 = r19[2]
     // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
     // USED → r9 = param2(r19[2])
     // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r9 = param2(r19[2]).ReactNativeViewConfigRegistry
+    // USED → r9 = r9.ReactNativeViewConfigRegistry
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 31, string_id: 137>  # String: 'get' (Identifier)
-    // USED → r9 = param2(r19[2]).ReactNativeViewConfigRegistry.get
+    // USED → r9 = r9.ReactNativeViewConfigRegistry.get
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 49, Reg8: 9>
-    r1[49] = param2(r19[2]).ReactNativeViewConfigRegistry.get;
+    r1[49] = r9.ReactNativeViewConfigRegistry.get;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
     r1[50] = 2;
     // CODE → <JmpFalse>: <Addr8: 13, Reg8: 16>  # Address: 00000fef
-    if (!globalThis.nativeFabricUIManager.registerEventHandler) { /* jump to label_4079 */ }
+    if (!r0.nativeFabricUIManager.registerEventHandler) { /* jump to label_4079 */ }
     // ──────────────── Block 13 ──────────────── 
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
     // USED → r9 = dispatchEvent /* Closure with env r1 = undefined */
     // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
-    r9 = globalThis.nativeFabricUIManager.registerEventHandler(dispatchEvent /* Closure with env r1 = undefined */)
+    r9 = r0.nativeFabricUIManager.registerEventHandler(dispatchEvent /* Closure with env r1 = undefined */)
     // ──────────────── Block 14 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 32, string_id: 214>  # String: 'setTimeout' (Identifier)
-    // USED → r41 = globalThis.setTimeout
+    // USED → r41 = r0.setTimeout
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 51, Reg8: 41>
-    r1[51] = globalThis.setTimeout;
+    r1[51] = r0.setTimeout;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 33, string_id: 12162>  # String: 'clearTimeout' (Identifier)
-    // USED → r9 = globalThis.clearTimeout
+    // USED → r9 = r0.clearTimeout
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 52, Reg8: 9>
-    r1[52] = globalThis.clearTimeout;
+    r1[52] = r0.clearTimeout;
     // CODE → <GetById>: <Reg8: 16, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
-    // USED → r16 = globalThis.RN$enableMicrotasksInReact
+    // USED → r16 = r0.RN$enableMicrotasksInReact
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 610>  # String: 'undefined' (String)
     // USED → r9 = "undefined"
     // CODE → <TypeOf>: <Reg8: 16, Reg8: 16>
-    // USED → r16 = typeof globalThis.RN$enableMicrotasksInReact
+    // USED → r16 = typeof r0.RN$enableMicrotasksInReact
     // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
-    // USED → r16 = "undefined" !== typeof globalThis.RN$enableMicrotasksInReact
+    // USED → r16 = "undefined" !== typeof r0.RN$enableMicrotasksInReact
     // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00001023
-    if (!"undefined" !== typeof globalThis.RN$enableMicrotasksInReact) { /* jump to label_4131 */ }
+    if (!"undefined" !== typeof r0.RN$enableMicrotasksInReact) { /* jump to label_4131 */ }
     // ──────────────── Block 15 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
-    // USED → r42 = globalThis.RN$enableMicrotasksInReact
+    // USED → r42 = r0.RN$enableMicrotasksInReact
     // CODE → <Not>: <Reg8: 42, Reg8: 42>
-    // USED → r42 = !globalThis.RN$enableMicrotasksInReact
+    // USED → r42 = !r0.RN$enableMicrotasksInReact
     // CODE → <Not>: <Reg8: 16, Reg8: 42>
-    // USED → r16 = !!globalThis.RN$enableMicrotasksInReact
+    // USED → r16 = !!r0.RN$enableMicrotasksInReact
     // ──────────────── Block 16 ──────────────── 
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 53, Reg8: 16>
-    r1[53] = !!globalThis.RN$enableMicrotasksInReact;
+    r1[53] = !!r0.RN$enableMicrotasksInReact;
     // CODE → <GetById>: <Reg8: 42, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
-    // USED → r42 = globalThis.queueMicrotask
+    // USED → r42 = r0.queueMicrotask
     // CODE → <LoadConstString>: <Reg8: 16, string_id: 12255>  # String: 'function' (Identifier)
     // USED → r16 = "function"
     // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
-    // USED → r42 = typeof globalThis.queueMicrotask
+    // USED → r42 = typeof r0.queueMicrotask
     // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 16, Reg8: 42>  # Address: 0000103e
-    if ("function" !== typeof globalThis.queueMicrotask) { /* jump to label_4158 */ }
+    if ("function" !== typeof r0.queueMicrotask) { /* jump to label_4158 */ }
     // ──────────────── Block 17 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
-    // USED → r41 = globalThis.queueMicrotask
+    // USED → r41 = r0.queueMicrotask
     // ──────────────── Block 18 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 54, Reg8: 41>
-    r1[54] = globalThis.queueMicrotask;
+    r1[54] = r0.queueMicrotask;
     // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 821>  # Function: [#821 getFiberCurrentPropsFromNode$1 of 17 bytes]: 2 params @ offset 0x00189a6d
     // USED → r41 = getFiberCurrentPropsFromNode$1 /* Closure with env r1 = undefined */
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 41>
@@ -1805,9 +1805,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 7, Reg8: 41>
     r1[7] = getNodeFromInstance$1 /* Closure with env r1 = undefined */;
     // CODE → <GetById>: <Reg8: 42, Reg8: 40, UInt8: 36, string_id: 15132>  # String: 'injection' (Identifier)
-    // USED → r42 = { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }.injection
+    // USED → r42 = r40.injection
     // CODE → <GetById>: <Reg8: 41, Reg8: 42, UInt8: 37, string_id: 21100>  # String: 'injectGlobalResponderHandler' (Identifier)
-    // USED → r41 = { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }.injection.injectGlobalResponderHandler
+    // USED → r41 = r40.injection.injectGlobalResponderHandler
     // CODE → <NewObject>: <Reg8: 40>
     // USED → r40 = {}
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 823>  # Function: [#823 onChange of 122 bytes]: 4 params @ offset 0x00189aaf
@@ -1815,201 +1815,201 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 43, string_id: 15401>  # String: 'onChange' (Identifier)
     // USED → r40 = { onChange: onChange /* Closure with env r1 = undefined */ }
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }.injection.injectGlobalResponderHandler({ onChange: onChange /* Closure with env r1 = undefined */ })
+    r40 = r40.injection.injectGlobalResponderHandler({ onChange: onChange /* Closure with env r1 = undefined */ })
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 3815>  # String: 'react.element' (String)
     // USED → r40 = "react.element"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.element")
+    // USED → r40 = r0.Symbol.for("react.element")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 55, Reg8: 40>
-    r1[55] = globalThis.Symbol.for("react.element");
+    r1[55] = r0.Symbol.for("react.element");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5553>  # String: 'react.portal' (String)
     // USED → r40 = "react.portal"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.portal")
+    // USED → r40 = r0.Symbol.for("react.portal")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 56, Reg8: 40>
-    r1[56] = globalThis.Symbol.for("react.portal");
+    r1[56] = r0.Symbol.for("react.portal");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5930>  # String: 'react.fragment' (String)
     // USED → r40 = "react.fragment"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.fragment")
+    // USED → r40 = r0.Symbol.for("react.fragment")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 57, Reg8: 40>
-    r1[57] = globalThis.Symbol.for("react.fragment");
+    r1[57] = r0.Symbol.for("react.fragment");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6410>  # String: 'react.strict_mode' (String)
     // USED → r40 = "react.strict_mode"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.strict_mode")
+    // USED → r40 = r0.Symbol.for("react.strict_mode")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 58, Reg8: 40>
-    r1[58] = globalThis.Symbol.for("react.strict_mode");
+    r1[58] = r0.Symbol.for("react.strict_mode");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5628>  # String: 'react.profiler' (String)
     // USED → r40 = "react.profiler"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.profiler")
+    // USED → r40 = r0.Symbol.for("react.profiler")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 59, Reg8: 40>
-    r1[59] = globalThis.Symbol.for("react.profiler");
+    r1[59] = r0.Symbol.for("react.profiler");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 2499>  # String: 'react.provider' (String)
     // USED → r40 = "react.provider"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.provider")
+    // USED → r40 = r0.Symbol.for("react.provider")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 60, Reg8: 40>
-    r1[60] = globalThis.Symbol.for("react.provider");
+    r1[60] = r0.Symbol.for("react.provider");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 8244>  # String: 'react.consumer' (String)
     // USED → r40 = "react.consumer"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.consumer")
+    // USED → r40 = r0.Symbol.for("react.consumer")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 61, Reg8: 40>
-    r1[61] = globalThis.Symbol.for("react.consumer");
+    r1[61] = r0.Symbol.for("react.consumer");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 4944>  # String: 'react.context' (String)
     // USED → r40 = "react.context"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.context")
+    // USED → r40 = r0.Symbol.for("react.context")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 62, Reg8: 40>
-    r1[62] = globalThis.Symbol.for("react.context");
+    r1[62] = r0.Symbol.for("react.context");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 7930>  # String: 'react.forward_ref' (String)
     // USED → r40 = "react.forward_ref"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.forward_ref")
+    // USED → r40 = r0.Symbol.for("react.forward_ref")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 63, Reg8: 40>
-    r1[63] = globalThis.Symbol.for("react.forward_ref");
+    r1[63] = r0.Symbol.for("react.forward_ref");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6421>  # String: 'react.suspense' (String)
     // USED → r40 = "react.suspense"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.suspense")
+    // USED → r40 = r0.Symbol.for("react.suspense")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 64, Reg8: 40>
-    r1[64] = globalThis.Symbol.for("react.suspense");
+    r1[64] = r0.Symbol.for("react.suspense");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6422>  # String: 'react.suspense_list' (String)
     // USED → r40 = "react.suspense_list"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.suspense_list")
+    // USED → r40 = r0.Symbol.for("react.suspense_list")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 65, Reg8: 40>
-    r1[65] = globalThis.Symbol.for("react.suspense_list");
+    r1[65] = r0.Symbol.for("react.suspense_list");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 410>  # String: 'react.memo' (String)
     // USED → r40 = "react.memo"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.memo")
+    // USED → r40 = r0.Symbol.for("react.memo")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 66, Reg8: 40>
-    r1[66] = globalThis.Symbol.for("react.memo");
+    r1[66] = r0.Symbol.for("react.memo");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 10762>  # String: 'react.lazy' (String)
     // USED → r40 = "react.lazy"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.lazy")
+    // USED → r40 = r0.Symbol.for("react.lazy")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 67, Reg8: 40>
-    r1[67] = globalThis.Symbol.for("react.lazy");
+    r1[67] = r0.Symbol.for("react.lazy");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6222>  # String: 'react.scope' (String)
     // USED → r40 = "react.scope"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = globalThis.Symbol.for("react.scope")
+    r40 = r0.Symbol.for("react.scope")
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6531>  # String: 'react.debug_trace_mode' (String)
     // USED → r40 = "react.debug_trace_mode"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = globalThis.Symbol.for("react.debug_trace_mode")
+    r40 = r0.Symbol.for("react.debug_trace_mode")
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5577>  # String: 'react.offscreen' (String)
     // USED → r40 = "react.offscreen"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = globalThis.Symbol.for("react.offscreen")
+    // USED → r40 = r0.Symbol.for("react.offscreen")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 68, Reg8: 40>
-    r1[68] = globalThis.Symbol.for("react.offscreen");
+    r1[68] = r0.Symbol.for("react.offscreen");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 4905>  # String: 'react.legacy_hidden' (String)
     // USED → r40 = "react.legacy_hidden"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = globalThis.Symbol.for("react.legacy_hidden")
+    r40 = r0.Symbol.for("react.legacy_hidden")
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 2166>  # String: 'react.cache' (String)
     // USED → r40 = "react.cache"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = globalThis.Symbol.for("react.cache")
+    r40 = r0.Symbol.for("react.cache")
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 8982>  # String: 'react.tracing_marker' (String)
     // USED → r40 = "react.tracing_marker"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = globalThis.Symbol.for("react.tracing_marker")
+    r40 = r0.Symbol.for("react.tracing_marker")
     // CODE → <TryGetById>: <Reg8: 40, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r40 = globalThis.Symbol
+    // USED → r40 = r0.Symbol
     // CODE → <GetById>: <Reg8: 40, Reg8: 40, UInt8: 40, string_id: 13658>  # String: 'iterator' (Identifier)
-    // USED → r40 = globalThis.Symbol.iterator
+    // USED → r40 = r0.Symbol.iterator
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 69, Reg8: 40>
-    r1[69] = globalThis.Symbol.iterator;
+    r1[69] = r0.Symbol.iterator;
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = globalThis.Symbol
+    // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = globalThis.Symbol.for
+    // USED → r41 = r0.Symbol.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 10511>  # String: 'react.client.reference' (String)
     // USED → r40 = "react.client.reference"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = globalThis.Symbol.for("react.client.reference")
+    r40 = r0.Symbol.for("react.client.reference")
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = []
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
@@ -2021,21 +2021,21 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 72, Reg8: 39>
     r1[72] = {};
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-    // USED → r39 = globalThis.Object
+    // USED → r39 = r0.Object
     // CODE → <GetById>: <Reg8: 39, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
-    // USED → r39 = globalThis.Object.is
+    // USED → r39 = r0.Object.is
     // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
-    // USED → r39 = typeof globalThis.Object.is
+    // USED → r39 = typeof r0.Object.is
     // CODE → <JStrictNotEqual>: <Addr8: 16, Reg8: 16, Reg8: 39>  # Address: 0000127e
-    if ("function" !== typeof globalThis.Object.is) { /* jump to label_4734 */ }
+    if ("function" !== typeof r0.Object.is) { /* jump to label_4734 */ }
     // ──────────────── Block 19 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-    // USED → r39 = globalThis.Object
+    // USED → r39 = r0.Object
     // CODE → <GetById>: <Reg8: 38, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
-    // USED → r38 = globalThis.Object.is
+    // USED → r38 = r0.Object.is
     // ──────────────── Block 20 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
-    r1[73] = globalThis.Object.is;
+    r1[73] = r0.Object.is;
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
     // USED → r38 = createCursor /* Closure with env r1 = undefined */(null)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 74, Reg8: 38>
@@ -2073,29 +2073,29 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 87, Reg8: 12>
     r1[87] = false;
     // CODE → <TryGetById>: <Reg8: 38, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-    // USED → r38 = globalThis.Object
+    // USED → r38 = r0.Object
     // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r38 = globalThis.Object.prototype
+    // USED → r38 = r0.Object.prototype
     // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-    // USED → r38 = globalThis.Object.prototype.hasOwnProperty
+    // USED → r38 = r0.Object.prototype.hasOwnProperty
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 88, Reg8: 38>
-    r1[88] = globalThis.Object.prototype.hasOwnProperty;
+    r1[88] = r0.Object.prototype.hasOwnProperty;
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r39 = globalThis.Error
+    // USED → r39 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 38, string_id: 3625>  # String: "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`" (String)
     // USED → r38 = "str_3625"
     // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-    // USED → r38 = globalThis.Error("str_3625")
+    // USED → r38 = r0.Error("str_3625")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 89, Reg8: 38>
-    r1[89] = globalThis.Error("str_3625");
+    r1[89] = r0.Error("str_3625");
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r39 = globalThis.Error
+    // USED → r39 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 38, string_id: 6775>  # String: "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React." (String)
     // USED → r38 = "str_6775"
     // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-    // USED → r38 = globalThis.Error("str_6775")
+    // USED → r38 = r0.Error("str_6775")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
-    r1[90] = globalThis.Error("str_6775");
+    r1[90] = r0.Error("str_6775");
     // CODE → <NewObject>: <Reg8: 38>
     // USED → r38 = {}
     // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
@@ -2137,13 +2137,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 101, Reg8: 20>
     r1[101] = createCursor /* Closure with env r1 = undefined */(0);
     // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-    // USED → r20 = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+    // USED → r20 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 102, Reg8: 20>
-    r1[102] = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
+    r1[102] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
     // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-    // USED → r20 = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+    // USED → r20 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 103, Reg8: 20>
-    r1[103] = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+    r1[103] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 104, Reg8: 10>
     r1[104] = 0;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 105, Reg8: 11>
@@ -2377,15 +2377,15 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 119, Reg8: 20>
     r1[119] = { isMounted: isMounted /* Closure with env r1 = undefined */, enqueueSetState: enqueueSetState /* Closure with env r1 = undefined */, enqueueReplaceState: enqueueReplaceState /* Closure with env r1 = undefined */, enqueueForceUpdate: enqueueForceUpdate /* Closure with env r1 = undefined */ };
     // CODE → <TryGetById>: <Reg8: 20, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-    // USED → r20 = globalThis.WeakMap
+    // USED → r20 = r0.WeakMap
     // CODE → <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r21 = globalThis.WeakMap.prototype
+    // USED → r21 = r0.WeakMap.prototype
     // CODE → <CreateThis>: <Reg8: 21, Reg8: 21, Reg8: 20>
-    // USED → r21 = createThis(prototype=globalThis.WeakMap.prototype, constructor=globalThis.WeakMap)
+    // USED → r21 = createThis(prototype=r0.WeakMap.prototype, constructor=r0.WeakMap)
     // CODE → <Mov>: <Reg8: 57, Reg8: 21>
-    r57 = createThis(prototype=globalThis.WeakMap.prototype, constructor=globalThis.WeakMap)
+    r57 = createThis(prototype=r0.WeakMap.prototype, constructor=r0.WeakMap)
     // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
-    r20 = new globalThis.WeakMap(param7)
+    r20 = new r0.WeakMap(param7)
     // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
     // USED → r20 = r21[r20]
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>
@@ -2395,26 +2395,26 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
     // USED → r17 = param2(r19[2])
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
-    // USED → r17 = param2(r19[2]).ReactFiberErrorDialog
+    // USED → r17 = r17.ReactFiberErrorDialog
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
-    // USED → r17 = param2(r19[2]).ReactFiberErrorDialog.showErrorDialog
+    // USED → r17 = r17.ReactFiberErrorDialog.showErrorDialog
     // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
-    // USED → r17 = typeof param2(r19[2]).ReactFiberErrorDialog.showErrorDialog
+    // USED → r17 = typeof r17.ReactFiberErrorDialog.showErrorDialog
     // CODE → <JStrictNotEqualLong>: <Addr32: 774, Reg8: 16, Reg8: 17>  # Address: 000018b9
-    if ("function" !== typeof param2(r19[2]).ReactFiberErrorDialog.showErrorDialog) { /* jump to label_6329 */ }
+    if ("function" !== typeof r17.ReactFiberErrorDialog.showErrorDialog) { /* jump to label_6329 */ }
     // ──────────────── Block 21 ──────────────── 
     // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-    // USED → r17 = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+    // USED → r17 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 121, Reg8: 17>
-    r1[121] = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+    r1[121] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
     // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r18 = globalThis.Error
+    // USED → r18 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
     // USED → r17 = "str_6991"
     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-    // USED → r17 = globalThis.Error("str_6991")
+    // USED → r17 = r0.Error("str_6991")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
-    r1[122] = globalThis.Error("str_6991");
+    r1[122] = r0.Error("str_6991");
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
     r1[123] = false;
     // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
@@ -2432,30 +2432,30 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 128, Reg8: 11>
     r1[128] = null;
     // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-    // USED → r15 = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+    // USED → r15 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 129, Reg8: 15>
-    r1[129] = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+    r1[129] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 130, Reg8: 12>
     r1[130] = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
     r1[131] = false;
     // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-    // USED → r15 = globalThis.WeakSet
+    // USED → r15 = r0.WeakSet
     // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-    // USED → r15 = typeof globalThis.WeakSet
+    // USED → r15 = typeof r0.WeakSet
     // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
-    if ("function" === typeof globalThis.WeakSet) { /* jump to label_5669 */ }
+    if ("function" === typeof r0.WeakSet) { /* jump to label_5669 */ }
     // ──────────────── Block 22 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
-    r15 = globalThis.Set
+    r15 = r0.Set
     // CODE → <Jmp>: <Addr8: 8>  # Address: 0000162b
     goto label_5675;
     // ──────────────── Block 23 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-    // USED → r15 = globalThis.WeakSet
+    // USED → r15 = r0.WeakSet
     // ──────────────── Block 24 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
-    r1[132] = globalThis.WeakSet;
+    r1[132] = r0.WeakSet;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
     r1[133] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
@@ -2465,34 +2465,34 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
     r1[135] = 8192;
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-    // USED → r15 = globalThis.WeakMap
+    // USED → r15 = r0.WeakMap
     // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-    // USED → r15 = typeof globalThis.WeakMap
+    // USED → r15 = typeof r0.WeakMap
     // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
-    if ("function" === typeof globalThis.WeakMap) { /* jump to label_5717 */ }
+    if ("function" === typeof r0.WeakMap) { /* jump to label_5717 */ }
     // ──────────────── Block 25 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-    r15 = globalThis.Map
+    r15 = r0.Map
     // CODE → <Jmp>: <Addr8: 8>  # Address: 0000165b
     goto label_5723;
     // ──────────────── Block 26 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-    // USED → r15 = globalThis.WeakMap
+    // USED → r15 = r0.WeakMap
     // ──────────────── Block 27 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
-    r1[136] = globalThis.WeakMap;
+    r1[136] = r0.WeakMap;
     // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-    // USED → r15 = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+    // USED → r15 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
-    r1[137] = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
+    r1[137] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
     // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-    // USED → r15 = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+    // USED → r15 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
-    r1[138] = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+    r1[138] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
     // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-    // USED → r15 = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+    // USED → r15 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
-    r1[139] = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+    r1[139] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
     r1[140] = 0;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
@@ -2530,9 +2530,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
     r1[157] = 0;
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
-    // USED → r15 = globalThis.Infinity
+    // USED → r15 = r0.Infinity
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
-    r1[158] = globalThis.Infinity;
+    r1[158] = r0.Infinity;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
     r1[159] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
@@ -2556,15 +2556,15 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
     r1[207] = batchedUpdatesImpl /* Closure with env r1 = undefined */;
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-    // USED → r10 = globalThis.Map
+    // USED → r10 = r0.Map
     // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r12 = globalThis.Map.prototype
+    // USED → r12 = r0.Map.prototype
     // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
-    // USED → r12 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
+    // USED → r12 = createThis(prototype=r0.Map.prototype, constructor=r0.Map)
     // CODE → <Mov>: <Reg8: 57, Reg8: 12>
-    r57 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
+    r57 = createThis(prototype=r0.Map.prototype, constructor=r0.Map)
     // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
-    r10 = new globalThis.Map("undefined")
+    r10 = new r0.Map("undefined")
     // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
     // USED → r10 = r12[r10]
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
@@ -2586,112 +2586,112 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
     // USED → r16 = function_850 /* Closure with env r1 = undefined */
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
-    // USED → r15 = function_850 /* Closure with env r1 = undefined */.bind
+    // USED → r15 = r16.bind
     // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
-    // USED → r15 = function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */)
+    // USED → r15 = r16.bind.call(this, function_850 /* Closure with env r1 = undefined */, null, findNodeHandle /* Closure with env r1 = undefined */)
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-    // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) }
+    // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: r16.bind.call(this, function_850 /* Closure with env r1 = undefined */, null, findNodeHandle /* Closure with env r1 = undefined */) }
     // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-    // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }
+    // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: r16.bind.call(this, function_850 /* Closure with env r1 = undefined */, null, findNodeHandle /* Closure with env r1 = undefined */) } }
     // CODE → <NewObject>: <Reg8: 8>
     // USED → r8 = {}
     // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
-    // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.bundleType
+    // USED → r15 = r12.bundleType
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
-    // USED → r8 = { bundleType: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.bundleType }
+    // USED → r8 = { bundleType: r12.bundleType }
     // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
-    // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.version
+    // USED → r15 = r12.version
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
-    // USED → r8 = { bundleType: 0, version: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.version, rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version }
     // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-    // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererPackageName
+    // USED → r15 = r12.rendererPackageName
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererPackageName, rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName }
     // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-    // USED → r15 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererConfig
+    // USED → r15 = r12.rendererConfig
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.rendererConfig, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null }
     // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-    // USED → r14 = param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+    // USED → r14 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher }
     // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
     // USED → r14 = findHostInstanceByFiber /* Closure with env r1 = undefined */
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */ }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */ }
     // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-    // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.findFiberByHostInstance
+    // USED → r12 = r12.findFiberByHostInstance
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
-    if ({ findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = undefined */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, findNodeHandle /* Closure with env r1 = undefined */) } }.findFiberByHostInstance) { /* jump to label_6101 */ }
+    if (r12.findFiberByHostInstance) { /* jump to label_6101 */ }
     // ──────────────── Block 28 ──────────────── 
     // CODE → <Mov>: <Reg8: 12, Reg8: 13>
     // USED → r12 = emptyFindFiberByHostInstance /* Closure with env r1 = undefined */
     // ──────────────── Block 29 ──────────────── 
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */ }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */ }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
-    // USED → r8 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
     // CODE → <Mov>: <Reg8: 7, Reg8: 8>
-    // USED → r7 = { bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
+    // USED → r7 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
     // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__
     // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
-    // USED → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+    // USED → r8 = typeof r0.__REACT_DEVTOOLS_GLOBAL_HOOK__
     // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
-    if ("undefined" === typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__) { /* jump to label_6205 */ }
+    if ("undefined" === typeof r0.__REACT_DEVTOOLS_GLOBAL_HOOK__) { /* jump to label_6205 */ }
     // ──────────────── Block 30 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__
     // CODE → <Mov>: <Reg8: 6, Reg8: 8>
-    // USED → r6 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+    // USED → r6 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__
     // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
-    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled
+    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled
     // CODE → <JmpTrue>: <Addr8: 38, Reg8: 8>  # Address: 0000183d
-    if (globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) { /* jump to label_6205 */ }
+    if (r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) { /* jump to label_6205 */ }
     // ──────────────── Block 31 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 6>
-    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__
     // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
-    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber
+    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber
     // CODE → <JmpFalse>: <Addr8: 26, Reg8: 8>  # Address: 0000183d
-    if (!globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber) { /* jump to label_6205 */ }
+    if (!r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber) { /* jump to label_6205 */ }
     // ──────────────── Block 32 ──────────────── 
     // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
-    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject
+    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-    // USED → r7 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject({ bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" })
+    // USED → r7 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject({ bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" })
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
-    r1[31] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject({ bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = undefined */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = undefined */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = undefined */.bind(null, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2(r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" });
+    r1[31] = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject({ bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = undefined */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = undefined */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" });
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
-    r1[32] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+    r1[32] = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__;
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
     goto label_6205;
     // LOOP → START (while)
@@ -2750,11 +2750,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // LOOP → END
     // ──────────────── Block 35 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r1 = globalThis.Error
+    // USED → r1 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4985>  # String: 'Expected ReactFiberErrorDialog.showErrorDialog to be a function.' (String)
     // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    // USED → r0 = globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
+    // USED → r0 = r0.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
     // CODE → <Throw>: <Reg8: 0>
-    r0 = throw globalThis.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
+    r0 = throw r0.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
 }
