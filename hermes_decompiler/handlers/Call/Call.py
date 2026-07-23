@@ -34,7 +34,6 @@ class CallX(OpcodeHandler):
 
         dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
 
-        func_variable = self.get_register_variable(analysis, func_reg)
         callee = self.get_register_value_new(analysis, func_reg)
         func_name = self.get_register_value(analysis, func_reg)
         func_name_str = str(func_name)
@@ -57,34 +56,24 @@ class CallX(OpcodeHandler):
                 else:
                     template_parts.append(f"${{{arg}}}")
             template_str = f"`{''.join(template_parts)}`"
-            variable = JSVariable(handler, entry.address, f'r{dest_reg}', template_str, func_name_str, template_str)
+            variable = JSVariable(handler, entry.address, f'r{dest_reg}', template_str)
             analysis.add_result(entry, variable)
             return OpcodeResult(entry, variable)
 
         # argList içindeki Value objelerini karşılaştırma ve join için string'e çevirelim
         argList_str = [str(arg) for arg in arg_list]
-        first_arg = argList_str[0] if argList_str else None
 
-        # Extract the base object from function name, e.g., "this.console" from "this.console.log"
         func_parts = func_name_str.split(".")
         base_object = ".".join(func_parts[:-1]) if len(func_parts) > 1 else None
 
-        explicit_receiver_passed = False
         checked_args = []
 
         for arg in argList_str:
             if arg == "undefined" or arg == base_object:
-                explicit_receiver_passed = first_arg in ("undefined", base_object)
                 continue
             checked_args.append(arg)
 
-        # Artık checked_args içindeki tüm elemanlar garanti str olduğu için join hata vermez!
         args_str = ", ".join(checked_args)
-        if self.should_use_call(func_variable) and not explicit_receiver_passed:
-            func_val = f".call(this, {args_str})"
-        else:
-            func_val = f"({args_str})"
-
         value = f"{func_name}({args_str})"
         # value = CallExpression(callee=callee, arguments=arg_list)
 
@@ -92,28 +81,6 @@ class CallX(OpcodeHandler):
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
-
-    @staticmethod
-    def should_use_call(variable: JSVariable | None) -> bool:
-        """
-        Decide if we should emit `.call(this, ...)` based on the variable info.
-        """
-        if not variable:
-            return True  # fallback safety
-
-        # If it's created by a CreateClosure handler, assume it doesn't need it .call
-        if variable.handler == 'CreateClosure':
-            return False
-
-        if variable.name in ('fetch', 'encodeURIComponent'):  # Known global functions
-            return False
-
-        # If func_name starts with "this.", assume it's a method needing `.call(this, ...)`
-        if variable.name and variable.name.startswith("this."):
-            return True
-
-        # Otherwise, assume it's a property (this.console.log), needs .call
-        return True
 
 
 # DEFINE_OPCODE_3(Call, Reg8, Reg8, UInt8)
@@ -137,11 +104,7 @@ class Call(CallX):
         arg_list = [f"r{r}" for r in arg_regs]
         args_str = ", ".join(arg_list)
 
-        func_val = f"({args_str})" if not self.should_use_call(
-            self.get_register_variable(analysis, func_reg)) \
-            else f".call(this, {args_str})"
-
-        value = f"{func_name}{func_val}"
+        value = f"{func_name}({args_str})"
         # value = CallExpression(callee=func_name, arguments=arg_list)
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
