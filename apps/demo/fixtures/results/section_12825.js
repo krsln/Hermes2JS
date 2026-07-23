@@ -13,7 +13,8 @@ function function_12825(param0, param1, param2, param3, param4) {
     r4 = globalThis
     r3 = "Error occurred in "
     r2 = " callback, continuing anyway…"
-    // Loop
+    // Loop (LoopKind.WHILE)
+    while (!r10.length) {
         // Block 1
         r1 = r10
         r1 = r10.length
@@ -26,7 +27,8 @@ function function_12825(param0, param1, param2, param3, param4) {
         r1 = r10.pop()(r7)
         r0 = r10.pop()(r7) === false
         goto label_122;
-        // Loop
+        // Loop (LoopKind.WHILE)
+        while (!r0) {
             // Block 4
             r1 = r0
             if (!r0) { /* jump to label_39 */ }
@@ -41,8 +43,8 @@ function function_12825(param0, param1, param2, param3, param4) {
             r1 = r9.error(globalThis.HermesInternal.concat.call(this, "Error occurred in ", r8, " callback, continuing anyway…"))
             r1 = r9.error
             r1 = r9.error(caughtException)
-        // EndLoop
-    // EndLoop
+        } /* EndLoop */
+    } /* EndLoop */
     // Block 5
     return r10.pop()(r7) === false;
 }

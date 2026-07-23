@@ -121,9 +121,8 @@ class GetPNameList(OpcodeHandler):
         dest_reg, obj_reg, _index_reg, _size_reg = map(int, match.groups())
         obj_val = self.get_register_value(analysis, obj_reg) or f"r{obj_reg}"
 
-        variable = JSVariable(
-            handler, entry.address, f"r{dest_reg}",
-            f"Object.keys({obj_val}) /* for-in property list */", )
+        # for-in property list
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"HermesPropertyIterator({obj_val})", )
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -143,7 +142,8 @@ class GetNextPName(OpcodeHandler):
         dest_reg, list_reg, _obj_reg, _index_reg, _size_reg = map(int, match.groups())
         list_val = self.get_register_value(analysis, list_reg) or f"r{list_reg}"
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"{list_val}.next() /* for-in step */")
+        # for-in step
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"{list_val}.next()")
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

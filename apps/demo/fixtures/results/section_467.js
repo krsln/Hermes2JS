@@ -773,14 +773,15 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r43 = false
     r42 = undefined
     r41 = false
-    r49 = Object.keys(r50) /* for-in property list */
-    if (Object.keys(r50) /* for-in property list */ === undefined) { /* jump to label_3789 */ }
-    // Loop
+    r49 = HermesPropertyIterator(r50)
+    if (HermesPropertyIterator(r50) === undefined) { /* jump to label_3789 */ }
+    // Loop (LoopKind.WHILE)
+    while (HermesPropertyIterator(r50).next() === undefined) {
         // Block 1
         r54 = r43
         r41 = r54
-        r45 = Object.keys(r50) /* for-in property list */.next() /* for-in step */
-        if (Object.keys(r50) /* for-in property list */.next() /* for-in step */ === undefined) { /* jump to label_3789 */ }
+        r45 = HermesPropertyIterator(r50).next()
+        if (HermesPropertyIterator(r50).next() === undefined) { /* jump to label_3789 */ }
         // Block 2
         r44 = r45
         r52 = { ResponderEventPlugin: { _getResponder: _getResponder /* Closure with env r1 = undefined */, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { bubbled: "onStartShouldSetResponder", captured: "onMoveShouldSetResponderCapture" }, dependencies: [] } }, scrollShouldSetResponder: { phasedRegistrationNames: { bubbled: "onScrollShouldSetResponder", selectionChangeShouldSetResponder: { phasedRegistrationNames: { bubbled: "onSelectionChangeShouldSetResponder", moveShouldSetResponder: { phasedRegistrationNames: { bubbled: "onMoveShouldSetResponder", responderStart: { registrationName: "onResponderStart", responderMove: { registrationName: "onResponderMove", responderEnd: { registrationName: "onResponderEnd", responderRelease: { registrationName: "onResponderRelease", responderTerminationRequest: { registrationName: "onResponderTerminationRequest", responderGrant: { registrationName: "onResponderGrant", responderReject: { registrationName: "onResponderReject", responderTerminate: { registrationName: "onResponderTerminate", extractEvents: extractEvents /* Closure with env r1 = undefined */, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler /* Closure with env r1 = undefined */ } }, ReactNativeBridgeEventPlugin: { eventTypes: {}, extractEvents: extractEvents /* Closure with env r1 = undefined */ } }.hasOwnProperty
@@ -805,7 +806,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         r43 = true
         r42 = r52
         goto label_3677;
-    // EndLoop
+    } /* EndLoop */
     // Block 7
     r43 = globalThis.Error
     r42 = "`."
@@ -1363,7 +1364,8 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r1[31] = r8.inject();
     r1[32] = r8;
     goto label_6205;
-    // Loop
+    // Loop (LoopKind.WHILE)
+    while (true) {
         // Block 34
         r6 = function_852 /* Closure with env r1 = undefined */
         r3 = { createPortal: function_852 /* Closure with env r1 = undefined */ }
@@ -1390,7 +1392,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         return undefined;
         // Block 33
         r6 = caughtException
-    // EndLoop
+    } /* EndLoop */
     // Block 35
     r1 = globalThis.Error
     r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."

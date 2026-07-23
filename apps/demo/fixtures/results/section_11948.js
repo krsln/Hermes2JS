@@ -248,7 +248,8 @@ function _request(param0, param1, param2) {
     if (r4 < r5) { /* jump to label_866 */ }
     // Block 31
     goto label_934;
-    // Loop
+    // Loop (LoopKind.WHILE)
+    while (0 >= r3.length) {
         // Block 33
         r6 = r6[6]
         r7 = r6.default
@@ -264,7 +265,7 @@ function _request(param0, param1, param2) {
         r9 = r7
         r7 = r7.call
         r7 = r7.call(this, caughtException)
-    // EndLoop
+    } /* EndLoop */
     // Block 34
     r8 = r0
     r7 = r0.then

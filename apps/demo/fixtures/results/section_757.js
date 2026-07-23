@@ -11,7 +11,8 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     r2 = 0
     r1 = getEnvironment(0)
     r0 = r10
-    // Loop
+    // Loop (LoopKind.WHILE)
+    while (!r10.flags & 16384) {
         // Block 1
         r11 = r10.flags
         r11 = r10.flags & 16384
@@ -57,7 +58,8 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         r11 = { return: r0 }
         r0 = r11
         goto label_29;
-        // Loop
+        // Loop (LoopKind.WHILE)
+        while (r14(r9(), r8)) {
             // Block 5
             r13 = r6
             r11 = r7
@@ -78,8 +80,9 @@ function isRenderConsistentWithExternalStores(param0, param1) {
             r11 = r6
             r11 = r6.length
             if (r7 + 1 < r6.length) { /* jump to label_86 */ }
-        // EndLoop
-        // Loop
+        } /* EndLoop */
+        // Loop (LoopKind.WHILE)
+        while (null === r12.return) {
             // Block 12
             r15 = r12.return
             r13 = r14
@@ -93,8 +96,8 @@ function isRenderConsistentWithExternalStores(param0, param1) {
             r14 = r15
             r11 = r14
             if (null === r14.return.sibling) { /* jump to label_202 */ }
-        // EndLoop
-    // EndLoop
+        } /* EndLoop */
+    } /* EndLoop */
     // Block 6
     r11 = false
     return false;

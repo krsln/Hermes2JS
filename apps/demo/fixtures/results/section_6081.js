@@ -7,13 +7,13 @@ function processColorsInProps(param0, param1) {
     r9 = undefined
     r5 = r10
     r1 = getEnvironment(1)
-    r6 = Object.keys(r10) /* for-in property list */
-    if (Object.keys(r10) /* for-in property list */ === undefined) { /* jump to label_183 */ }
+    r6 = HermesPropertyIterator(r10)
+    if (HermesPropertyIterator(r10) === undefined) { /* jump to label_183 */ }
     // Loop (LoopKind.WHILE)
-    while (Object.keys(r10) /* for-in property list */.next() /* for-in step */ === undefined) {
+    while (HermesPropertyIterator(r10).next() === undefined) {
         // Block 1
-        r2 = Object.keys(r10) /* for-in property list */.next() /* for-in step */
-        if (Object.keys(r10) /* for-in property list */.next() /* for-in step */ === undefined) { /* jump to label_183 */ }
+        r2 = HermesPropertyIterator(r10).next()
+        if (HermesPropertyIterator(r10).next() === undefined) { /* jump to label_183 */ }
         // Block 2
         r13 = r2
         r7 = r13
