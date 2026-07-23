@@ -33,7 +33,7 @@ class GetEnvironment(OpcodeHandler):
         dest_reg, level = map(int, match.groups())
 
         # value = f"getEnvironment({level})"
-        value = CallExpression(IdentifierValue("getEnvironment"), [ConstantValue(level)])
+        value = value = CallExpression(callee=IdentifierValue("getEnvironment"), arguments=[ConstantValue(level)])
 
         variable = JSVariable(self.__class__.__name__, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
