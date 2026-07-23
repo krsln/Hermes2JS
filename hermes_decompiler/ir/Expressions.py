@@ -1,8 +1,35 @@
 from __future__ import annotations
 
+from abc import ABC
 from dataclasses import dataclass
 
 from .Values import Value
+
+
+@dataclass(frozen=True)
+class Expression(Value, ABC):
+    pass
+
+
+@dataclass(frozen=True)
+class PrefixUnaryExpression(Expression):
+    operator: str
+    operand: Value
+
+    def render(self):
+        if self.operator.isalpha():
+            return f"{self.operator} {self.operand.render()}"
+
+        return f"{self.operator}{self.operand.render()}"
+
+
+@dataclass(frozen=True)
+class PostfixUnaryExpression(Expression):
+    operand: Value
+    operator: str
+
+    def render(self):
+        return f"{self.operand.render()}{self.operator}"
 
 
 @dataclass(frozen=True)
@@ -11,8 +38,7 @@ class UnaryExpression(Value):
     operand: Value
 
     def render(self):
-        space = " " if self.operator.isalpha() else ""
-        return f"{self.operator}{space}{self.operand.render()}"
+        return f"{self.operator}{self.operand.render()}"
 
 
 @dataclass(frozen=True)
@@ -78,11 +104,14 @@ class IteratorNextExpression(Value):
         return f"{self.iterator.render()}.next()"
 
 
-@dataclass(frozen=True)
-class NewExpression(Value):
-    constructor: Value
-    arguments: tuple[Value, ...]
-
-    @property
-    def inlineable(self):
-        return False
+# @dataclass(frozen=True)
+# class NewExpression(Value):
+#     constructor: Value
+#     arguments: tuple[Value, ...]
+#
+#     @property
+#     def inlineable(self):
+#         return False
+#
+#     def render(self):
+#         pass

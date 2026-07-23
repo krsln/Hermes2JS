@@ -1,6 +1,6 @@
 from typing import ClassVar
 
-from hermes_decompiler.ir.Expressions import UnaryExpression, BinaryExpression
+from hermes_decompiler.ir.Expressions import UnaryExpression, BinaryExpression, Expression, PrefixUnaryExpression
 from hermes_decompiler.ir.Values import Value, ConstantValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
@@ -16,12 +16,12 @@ class UnaryOperator(OpcodeHandler):
 
     _PATTERN: ClassVar = sequence(REG, REG)
 
-    def expression(self, value: Value) -> Value:
+    def expression(self, value: Value) -> Expression:
         """
         Return the JavaScript expression for the unary operation.
         Subclasses should override this method.
         """
-        return UnaryExpression(operator="", operand=value)
+        pass
 
     def handle(
             self,
@@ -45,13 +45,13 @@ class UnaryOperator(OpcodeHandler):
 
 
 class Not(UnaryOperator):
-    def expression(self, value: Value) -> UnaryExpression:
-        return UnaryExpression(operator="!", operand=value)
+    def expression(self, value):
+        return PrefixUnaryExpression("!", value)
 
 
 class TypeOf(UnaryOperator):
-    def expression(self, value: Value):
-        return UnaryExpression(operator="typeof ", operand=value)
+    def expression(self, value):
+        return PrefixUnaryExpression("typeof", value)
 
 
 class ToInt32(UnaryOperator):
@@ -65,8 +65,8 @@ class ToNumeric(UnaryOperator):
 
 
 class ToNumber(UnaryOperator):
-    def expression(self, value: Value):
-        return UnaryExpression(operator="+", operand=value)
+    def expression(self, value):
+        return PrefixUnaryExpression("+", value)
 
 
 class Inc(UnaryOperator):
@@ -80,8 +80,8 @@ class Dec(UnaryOperator):
 
 
 class Negate(UnaryOperator):
-    def expression(self, value: Value):
-        return UnaryExpression(operator="-", operand=value)
+    def expression(self, value):
+        return PrefixUnaryExpression("-", value)
 
 
 class AddEmptyString(UnaryOperator):
