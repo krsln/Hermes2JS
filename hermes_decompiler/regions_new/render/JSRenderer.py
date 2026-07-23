@@ -132,7 +132,7 @@ class JSRenderer:
                 output.append(prefix + f"// CODE → {bytecode}")
             if stmt.result.variable.used:
                 if self.verbose:
-                    output.append(prefix + f"// USED → {stmt.result.result}")
+                    output.append(prefix + f"// ELIDED → {stmt.result.result}")
             else:
                 output.append(prefix + stmt.result.result)
 
