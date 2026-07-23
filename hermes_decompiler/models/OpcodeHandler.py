@@ -103,8 +103,8 @@ class OpcodeHandler(ABC):
 
         if (
                 variable
-                and variable.handler != "ResumeGenerator"
-                and not variable.handler.endswith("Environment")
+                # and variable.handler != "ResumeGenerator"
+                # and not variable.handler.endswith("Environment")
         ):
             return variable
 

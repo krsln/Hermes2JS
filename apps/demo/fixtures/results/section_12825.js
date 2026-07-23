@@ -19,7 +19,7 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 217>  # String: 'slice' (Identifier)
     // USED → r1 = r2.slice
     // CODE → <Call1>: <Reg8: 10, Reg8: 1, Reg8: 2>
-    // USED → r10 = r2.slice.call(this, param1)
+    // USED → r10 = r2.slice()
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 3614>  # String: 'Error occurred in ' (String)
@@ -30,22 +30,22 @@ function function_12825(param0, param1, param2, param3, param4) {
     while (!r1.length) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 10>
-        // USED → r1 = r2.slice.call(this, param1)
+        // USED → r1 = r2.slice()
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 139>  # String: 'length' (Identifier)
         // USED → r1 = r1.length
         // CODE → <JmpFalse>: <Addr8: 81, Reg8: 1>  # Address: 00000080
         if (!r1.length) { /* jump to label_128 */ }
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 11, Reg8: 10>
-        // USED → r11 = r2.slice.call(this, param1)
+        // USED → r11 = r2.slice()
         // CODE → <GetById>: <Reg8: 1, Reg8: 11, UInt8: 3, string_id: 16799>  # String: 'pop' (Identifier)
         // USED → r1 = r11.pop
         // CODE → <Call1>: <Reg8: 11, Reg8: 1, Reg8: 11>
-        // USED → r11 = r11.pop.call(this, r2.slice.call(this, param1))
+        // USED → r11 = r11.pop()
         // CODE → <Mov>: <Reg8: 1, Reg8: 7>
         // USED → r1 = param2
         // CODE → <Call2>: <Reg8: 1, Reg8: 11, Reg8: 6, Reg8: 1>
-        // USED → r1 = r11.pop.call(this, r2.slice.call(this, param1))(param2)
+        // USED → r1 = r11.pop()(r1)
         // CODE → <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
         // USED → r0 = r1 === false
         // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
@@ -71,13 +71,13 @@ function function_12825(param0, param1, param2, param3, param4) {
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 98>  # String: 'concat' (Identifier)
             // USED → r1 = r4.HermesInternal.concat
             // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 14, Reg8: 2>
-            // USED → r1 = r4.HermesInternal.concat.call(this, "Error occurred in ", param3, " callback, continuing anyway\u2026")
+            // USED → r1 = r4.HermesInternal.concat.call(this, "Error occurred in ", r14, " callback, continuing anyway\u2026")
             // CODE → <Call2>: <Reg8: 1, Reg8: 13, Reg8: 11, Reg8: 1>
-            r1 = r11.error.call(this, param4, r4.HermesInternal.concat.call(this, "Error occurred in ", param3, " callback, continuing anyway\u2026"))
+            r1 = r11.error(r1)
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
             // USED → r1 = r11.error
             // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>
-            r1 = r11.error.call(this, param4, caughtException)
+            r1 = r11.error(r12)
         }
         // LOOP → END
     }

@@ -39,22 +39,21 @@ class CallX(OpcodeHandler):
         func_name = self.get_register_value(analysis, func_reg)
         func_name_str = str(func_name)
 
-        arg_list = []
-        for reg in arg_regs:
-            variable = self._get_register_variable(analysis, reg)
-            if variable:
-                variable.used = True
-                arg_list.append(variable.value)
-            else:
-                print(RegisterValue(reg))
-                arg_list.append(RegisterValue(reg))
+        # arg_list = []
+        # for reg in arg_regs:
+        #     variable = self._get_register_variable(analysis, reg)
+        #     if variable:
+        #         variable.used = True
+        #         arg_list.append(variable.value)
+        #     else:
+        #         print(RegisterValue(reg))
+        #         arg_list.append(RegisterValue(reg))
 
-        # arg_list = [
-        #     self.get_register_value_new(analysis, reg)
-        #     for reg in arg_regs
-        # ]
-        # value = CallExpression(callee=callee, arguments=checked_args)
-        # todo
+        arg_list = [
+            self.get_register_value_new(analysis, reg)
+            for reg in arg_regs
+        ]
+        value = CallExpression(callee=callee, arguments=arg_list)
 
         # Special handling for HermesInternal.concat
         if func_name_str == "this.HermesInternal.concat":

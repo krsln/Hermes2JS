@@ -5,7 +5,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 7, UInt8: 1>
     // USED → r7 = param1
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    r0 = await yield
+    // USED → r0 = await yield
     // CODE → <JmpTrueLong>: <Addr32: 161, Reg8: 1>  # Address: 000000a8
     if (r1) { /* jump to label_168 */ }
     // ──────────────── Block 1 ──────────────── 
@@ -16,15 +16,15 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
-    // USED → r1 = await r2.fetch(param1)
+    // USED → r1 = await r2.fetch(r7)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000020
     yield label_32;  // SaveGenerator: suspend and jump to 32
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return await r2.fetch(param1);
+    return await r2.fetch(r7);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-    r1 = await yield
+    // USED → r1 = await yield
     // CODE → <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
     if (r2.fetch) { /* jump to label_165 */ }
     // ──────────────── Block 4 ──────────────── 
@@ -45,9 +45,9 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 1058>  # String: 'file://' (String)
     // USED → r3 = "file://"
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
-    // USED → r3 = r7.startsWith.call(this, param1, "file://")
+    // USED → r3 = r7.startsWith("file://")
     // CODE → <JmpTrue>: <Addr8: 63, Reg8: 3>  # Address: 0000008c
-    if (r7.startsWith.call(this, param1, "file://")) { /* jump to label_140 */ }
+    if (r7.startsWith("file://")) { /* jump to label_140 */ }
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = r2.Error
@@ -62,7 +62,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: ' failed with status ' (String)
     // USED → r2 = " failed with status "
     // CODE → <Call4>: <Reg8: 10, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 2, Reg8: 6>
-    r10 = r2.HermesInternal.concat.call(this, "Fetching ", param1, " failed with status ", r1.status)
+    r10 = r2.HermesInternal.concat.call(this, "Fetching ", r7, " failed with status ", r1.status)
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r3 = r2.Error.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
@@ -87,27 +87,27 @@ async function* anon_17161(param0, param1) {
     return await r1.text();
     // ──────────────── Block 10 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
-    r2 = await yield
+    // USED → r2 = await yield
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
     if (createThis(prototype=r2.Error.prototype, constructor=r2.Error)) { /* jump to label_162 */ }
     // ──────────────── Block 11 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator: No output needed
     // CODE → <Ret>: <Reg8: 2>
-    return undefined_r2;
+    return await yield;
     // ──────────────── Block 12 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator: No output needed
     // CODE → <Ret>: <Reg8: 2>
-    return undefined_r2;
+    return await yield;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator: No output needed
     // CODE → <Ret>: <Reg8: 1>
-    return undefined_r1;
+    return await yield;
     // ──────────────── Block 14 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator: No output needed
     // CODE → <Ret>: <Reg8: 0>
-    return undefined_r0;
+    return await yield;
 }

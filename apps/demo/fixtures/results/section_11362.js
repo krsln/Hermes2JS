@@ -55,7 +55,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LoadConstInt>: <Reg8: 6, Imm32: 271733878>
     // USED → r6 = 271733878
     // CODE → <GetEnvironment>: <Reg8: 92, UInt8: 0>
-    r92 = getEnvironment(0)
+    // USED → r92 = getEnvironment(0)
     // CODE → <LoadConstUndefined>: <Reg8: 91>
     // USED → r91 = undefined
     // CODE → <LoadConstUInt8>: <Reg8: 90, UInt8: 7>
@@ -234,7 +234,7 @@ function binl_md5(param0, param1, param2) {
     if (!0 < r98.length) { /* jump to label_2368 */ }
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 10>
-    r119 = r92[10]
+    // USED → r119 = getEnvironment(0)[10]
     // CODE → <Add>: <Reg8: 114, Reg8: 5, Reg8: 93>
     // USED → r114 = 0 + 0
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
@@ -526,7 +526,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // USED → r115 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 11>
-    r119 = r92[11]
+    // USED → r119 = getEnvironment(0)[11]
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
     r122 = r98[0 + 1]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
@@ -784,7 +784,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // USED → r115 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 12>
-    r119 = r92[12]
+    // USED → r119 = getEnvironment(0)[12]
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
     r122 = r98[0 + 5]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
@@ -1042,7 +1042,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // USED → r115 = r119.call(this, r111, r112, r113, r114, r115, r116, r117, r118)
     // CODE → <LoadFromEnvironment>: <Reg8: 103, Reg8: 92, UInt8: 13>
-    r103 = r92[13]
+    // USED → r103 = getEnvironment(0)[13]
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
     r122 = r98[0 + 0]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
@@ -1300,40 +1300,40 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 101, Reg8: 103, UInt8: 8>
     // USED → r101 = r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102)
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 92, UInt8: 14>
-    r0 = r92[14]
+    // USED → r0 = getEnvironment(0)[14]
     // CODE → <Call3>: <Reg8: 9, Reg8: 0, Reg8: 91, Reg8: 102, Reg8: 9>
-    // USED → r9 = r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), 1732584193)
+    // USED → r9 = getEnvironment(0)[14](r102, 1732584193)
     // CODE → <Call3>: <Reg8: 8, Reg8: 0, Reg8: 91, Reg8: 101, Reg8: 8>
-    // USED → r8 = r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), -271733879)
+    // USED → r8 = getEnvironment(0)[14](r101, -271733879)
     // CODE → <Call3>: <Reg8: 7, Reg8: 0, Reg8: 91, Reg8: 100, Reg8: 7>
-    // USED → r7 = r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), -1732584194)
+    // USED → r7 = getEnvironment(0)[14](r100, -1732584194)
     // CODE → <Call3>: <Reg8: 6, Reg8: 0, Reg8: 91, Reg8: 99, Reg8: 6>
-    // USED → r6 = r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), 271733878)
+    // USED → r6 = getEnvironment(0)[14](r99, 271733878)
     // CODE → <Add>: <Reg8: 5, Reg8: 5, Reg8: 42>
     // USED → r5 = 0 + 16
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
     // USED → r0 = r98.length
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-    // USED → r4 = r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), 1732584193)
+    // USED → r4 = getEnvironment(0)[14](r102, 1732584193)
     // CODE → <Mov>: <Reg8: 3, Reg8: 8>
-    // USED → r3 = r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), -271733879)
+    // USED → r3 = getEnvironment(0)[14](r101, -271733879)
     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
-    // USED → r2 = r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), -1732584194)
+    // USED → r2 = getEnvironment(0)[14](r100, -1732584194)
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
-    // USED → r1 = r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), 271733878)
+    // USED → r1 = getEnvironment(0)[14](r99, 271733878)
     // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
     if (0 + 16 < r98.length) { /* jump to label_566 */ }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
     // USED → r0 = [] /* capacity hint: 4 */
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 4, UInt8: 0>
-    // USED → r0 = [r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), 1732584193)]
+    // USED → r0 = [getEnvironment(0)[14](r102, 1732584193)]
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 3, UInt8: 1>
-    // USED → r0 = [r0(r103.call(this, r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), -271733879), r96, r97, r98, r99, r100, r101, r102), 1732584193)]
+    // USED → r0 = [getEnvironment(0)[14](r102, getEnvironment(0)[14](r101, -271733879)]
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 2, UInt8: 2>
-    // USED → r0 = [r0(r103.call(this, r0(r103.call(this, r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), -1732584194), r96, r97, r98, r99, r100, r101, r102), -271733879), r96, r97, r98, r99, r100, r101, r102), 1732584193)]
+    // USED → r0 = [getEnvironment(0)[14](r102, getEnvironment(0)[14](r101, getEnvironment(0)[14](r100, -1732584194)]
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 1, UInt8: 3>
-    // USED → r0 = [r0(r103.call(this, r0(r103.call(this, r0(r103.call(this, r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), 271733878), r96, r97, r98, r99, r100, r101, r102), -1732584194), r96, r97, r98, r99, r100, r101, r102), -271733879), r96, r97, r98, r99, r100, r101, r102), 1732584193)]
+    // USED → r0 = [getEnvironment(0)[14](r102, getEnvironment(0)[14](r101, getEnvironment(0)[14](r100, getEnvironment(0)[14](r99, 271733878)]
     // CODE → <Ret>: <Reg8: 0>
-    return [r0(r103.call(this, r0(r103.call(this, r0(r103.call(this, r0(r103.call(this, r95, r96, r97, r98, r99, r100, r101, r102), 271733878), r96, r97, r98, r99, r100, r101, r102), -1732584194), r96, r97, r98, r99, r100, r101, r102), -271733879), r96, r97, r98, r99, r100, r101, r102), 1732584193)];
+    return [getEnvironment(0)[14](r102, getEnvironment(0)[14](r101, getEnvironment(0)[14](r100, getEnvironment(0)[14](r99, 271733878)];
 }

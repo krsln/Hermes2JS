@@ -3,14 +3,14 @@ async function* anon_9956(param0, param1) {
     // CODE → <StartGenerator>: <>
     // StartGenerator: prepare generator context and jump to next instruction
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    r0 = await yield
+    // USED → r0 = await yield
     // CODE → <JmpTrue>: <Addr8: 57, Reg8: 1>  # Address: 0000003d
     if (r1) { /* jump to label_61 */ }
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 3>
-    r1 = getEnvironment(3)
+    // USED → r1 = getEnvironment(3)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 16>
-    r1 = r1[16]
+    // USED → r1 = getEnvironment(3)[16]
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
     // USED → r3 = r1.default
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 137>  # String: 'get' (Identifier)
@@ -30,7 +30,7 @@ async function* anon_9956(param0, param1) {
     return await r1.default.get("https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + r1);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
-    r1 = await yield
+    // USED → r1 = await yield
     // CODE → <JmpTrue>: <Addr8: 11, Reg8: 2>  # Address: 0000003a
     if (r1.default.get) { /* jump to label_58 */ }
     // ──────────────── Block 4 ──────────────── 
@@ -44,10 +44,10 @@ async function* anon_9956(param0, param1) {
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator: No output needed
     // CODE → <Ret>: <Reg8: 1>
-    return undefined_r1;
+    return await yield;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator: No output needed
     // CODE → <Ret>: <Reg8: 0>
-    return undefined_r0;
+    return await yield;
 }

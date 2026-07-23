@@ -3,14 +3,14 @@ async function* anon_9594(param0, param1) {
     // CODE → <StartGenerator>: <>
     // StartGenerator: prepare generator context and jump to next instruction
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    r0 = await yield
+    // USED → r0 = await yield
     // CODE → <JmpTrue>: <Addr8: 98, Reg8: 1>  # Address: 00000066
     if (r1) { /* jump to label_102 */ }
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 4>
-    r1 = getEnvironment(4)
+    // USED → r1 = getEnvironment(4)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 16>
-    r1 = r1[16]
+    // USED → r1 = getEnvironment(4)[16]
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
     // USED → r4 = r1.default
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 137>  # String: 'get' (Identifier)
@@ -26,17 +26,17 @@ async function* anon_9594(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1
     // CODE → <Call2>: <Reg8: 1, Reg8: 6, Reg8: 5, Reg8: 1>
-    // USED → r1 = r2.HermesInternal.concat.call(this, "https://coachify.ai/api/checkUsernameAvailable?username=", param1)
+    // USED → r1 = r2.HermesInternal.concat.call(this, "https://coachify.ai/api/checkUsernameAvailable?username=", r1)
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-    // USED → r1 = await r1.default.get(r2.HermesInternal.concat.call(this, "https://coachify.ai/api/checkUsernameAvailable?username=", param1))
+    // USED → r1 = await r1.default.get(r1)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003a
     yield label_58;  // SaveGenerator: suspend and jump to 58
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return await r1.default.get(r2.HermesInternal.concat.call(this, "https://coachify.ai/api/checkUsernameAvailable?username=", param1));
+    return await r1.default.get(r1);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-    r1 = await yield
+    // USED → r1 = await yield
     // CODE → <JmpTrue>: <Addr8: 38, Reg8: 3>  # Address: 00000063
     if (r1.default.get) { /* jump to label_99 */ }
     // ──────────────── Block 4 ──────────────── 
@@ -60,10 +60,10 @@ async function* anon_9594(param0, param1) {
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator: No output needed
     // CODE → <Ret>: <Reg8: 1>
-    return undefined_r1;
+    return await yield;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator: No output needed
     // CODE → <Ret>: <Reg8: 0>
-    return undefined_r0;
+    return await yield;
 }
