@@ -100,7 +100,7 @@ class JSRenderer:
             if self.verbose:
                 bytecode = stmt.result.opcode.bytecode
                 bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
-                output.append(prefix + f"// LINE → {bytecode}")
+                output.append(prefix + f"// CODE → {bytecode}")
             if stmt.result.variable.used:
                 if self.verbose:
                     output.append(prefix + f"// USED → {stmt.result.result}")
