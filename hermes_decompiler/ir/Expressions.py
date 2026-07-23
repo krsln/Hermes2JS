@@ -126,6 +126,19 @@ class AssignmentExpression(Expression):
         return f"{self.left.render()} {self.operator} {self.right.render()}"
 
 
+@dataclass(frozen=True)
+class CreateThisExpression(Expression):
+    prototype: Value
+    constructor: Value
+
+    def render(self):
+        return (
+            "createThis("
+            f"prototype={self.prototype.render()}, "
+            f"constructor={self.constructor.render()}"
+            ")"
+        )
+
 # ConditionalExpression(
 #     condition=...,
 #     when_true=...,

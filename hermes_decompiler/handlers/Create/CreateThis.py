@@ -1,3 +1,4 @@
+from hermes_decompiler.ir.Expressions import CreateThisExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -23,14 +24,13 @@ class CreateThis(OpcodeHandler):
 
         dest, func, new_target = (int(x) for x in match.groups())
 
-        func_name = self.get_register_value(analysis, func) or f"r{func}"
-        new_target_name = self.get_register_value(analysis, new_target) or f"r{new_target}"
+        prototype = self.get_register_value_new(analysis, func)
+        constructor = self.get_register_value_new(analysis, new_target)
 
-        variable = JSVariable(
-            handler, entry.address,
-            f'r{dest}', f"createThis(prototype={func_name}, constructor={new_target_name})",
-        )
+        # value = f"createThis(prototype={func_name}, constructor={new_target_name})"
+        value = CreateThisExpression(prototype=prototype, constructor=constructor)
 
+        variable = JSVariable(handler, entry.address, f'r{dest}', value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

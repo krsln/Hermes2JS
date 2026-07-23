@@ -93,3 +93,11 @@ class ClosureValue(Value):
                 f"/* Closure with env {self.environment.render()} */"
             )
         return self.name
+
+@dataclass(frozen=True)
+class RegExpValue(Value):
+    pattern: str
+    flags: str = ""
+
+    def render(self):
+        return f"/{self.pattern}/{self.flags}"
