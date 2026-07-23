@@ -1179,13 +1179,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 19, Reg8: 10>
     // USED → r0 = r19[0]
     // CODE → <Call2>: <Reg8: 0, Reg8: 18, Reg8: 2, Reg8: 0>
-    r0 = param2(r19[0])
+    r0 = r18(undefined, r19[0])
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 19, Reg8: 0>
     // USED → r0 = r19[1]
     // CODE → <Call2>: <Reg8: 14, Reg8: 18, Reg8: 2, Reg8: 0>
-    // USED → r14 = param2(r19[1])
+    // USED → r14 = r18(undefined, r19[1])
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
@@ -1237,7 +1237,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12543>  # String: 'destructor' (Identifier)
     // USED → r37 = { preventDefault: preventDefault /* Closure with env r1 = createEnvironment() */, stopPropagation: stopPropagation /* Closure with env r1 = createEnvironment() */, persist: persist /* Closure with env r1 = createEnvironment() */, isPersistent: functionThatReturnsFalse /* Closure with env r1 = createEnvironment() */, destructor: destructor /* Closure with env r1 = createEnvironment() */ }
     // CODE → <Call3>: <Reg8: 37, Reg8: 41, Reg8: 2, Reg8: 40, Reg8: 37>
-    r37 = r0.Object.assign(r39.prototype, r37)
+    r37 = r0.Object.assign(undefined, r39.prototype, r37)
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 9, UInt16: 9, UInt16: 194, UInt16: 115>  # Object: {'type': null, 'target': null, 'currentTarget': null, 'eventPhase': null, 'bubbles': null, 'cancelable': null, 'timeStamp': null, 'defaultPrevented': null, 'isTrusted': null}
     // USED → r37 = { type: null, target: null, currentTarget: null, eventPhase: null, bubbles: null, cancelable: null, timeStamp: null, defaultPrevented: null, isTrusted: null }
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 809>  # Function: [#809 currentTarget of 4 bytes]: 1 params @ offset 0x00188e5c
@@ -1255,7 +1255,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutById>: <Reg8: 39, Reg8: 37, UInt8: 4, string_id: 14224>  # String: 'extend' (Identifier)
     // USED → r39 = { Interface: { type: null, target: null, currentTarget: currentTarget /* Closure with env r1 = createEnvironment() */, eventPhase: null, bubbles: null, cancelable: null, timeStamp: timeStamp /* Closure with env r1 = createEnvironment() */, defaultPrevented: null, isTrusted: null }, extend: function_811 /* Closure with env r1 = createEnvironment() */ }
     // CODE → <Call2>: <Reg8: 17, Reg8: 17, Reg8: 2, Reg8: 39>
-    r17 = addEventPoolingTo /* Closure with env r1 = createEnvironment() */(r39)
+    r17 = r17(undefined, r39)
     // CODE → <GetById>: <Reg8: 37, Reg8: 39, UInt8: 6, string_id: 14224>  # String: 'extend' (Identifier)
     // USED → r37 = r39.extend
     // CODE → <NewObject>: <Reg8: 17>
@@ -1265,9 +1265,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 40, string_id: 21539>  # String: 'touchHistory' (Identifier)
     // USED → r17 = { touchHistory: touchHistory /* Closure with env r1 = createEnvironment() */ }
     // CODE → <Call2>: <Reg8: 17, Reg8: 37, Reg8: 39, Reg8: 17>
-    // USED → r17 = r39.extend(r17)
+    // USED → r17 = r39.extend(r39, r17)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 17>
-    createEnvironment()[9] = r39.extend(r17);
+    createEnvironment()[9] = r39.extend(r39, r17);
     // CODE → <NewArrayWithBuffer>: <Reg8: 42, UInt16: 1, UInt16: 1, UInt16: 40883>  # Array: ['topTouchStart']
     // USED → r42 = ["topTouchStart"]
     // CODE → <NewArrayWithBuffer>: <Reg8: 41, UInt16: 1, UInt16: 1, UInt16: 40892>  # Array: ['topTouchMove']
@@ -1487,23 +1487,23 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
     // USED → r37 = r19[2]
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
-    // USED → r37 = param2(r19[2])
+    // USED → r37 = r18(undefined, r19[2])
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = r37.ReactNativeViewConfigRegistry
+    // USED → r37 = r18(undefined, r19[2]).ReactNativeViewConfigRegistry
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 8, string_id: 22641>  # String: 'customBubblingEventTypes' (Identifier)
-    // USED → r37 = r37.ReactNativeViewConfigRegistry.customBubblingEventTypes
+    // USED → r37 = r18(undefined, r19[2]).ReactNativeViewConfigRegistry.customBubblingEventTypes
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 23, Reg8: 37>
-    createEnvironment()[23] = r37.ReactNativeViewConfigRegistry.customBubblingEventTypes;
+    createEnvironment()[23] = r18(undefined, r19[2]).ReactNativeViewConfigRegistry.customBubblingEventTypes;
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
     // USED → r37 = r19[2]
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
-    // USED → r37 = param2(r19[2])
+    // USED → r37 = r18(undefined, r19[2])
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = r37.ReactNativeViewConfigRegistry
+    // USED → r37 = r18(undefined, r19[2]).ReactNativeViewConfigRegistry
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 9, string_id: 21940>  # String: 'customDirectEventTypes' (Identifier)
-    // USED → r37 = r37.ReactNativeViewConfigRegistry.customDirectEventTypes
+    // USED → r37 = r18(undefined, r19[2]).ReactNativeViewConfigRegistry.customDirectEventTypes
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 24, Reg8: 37>
-    createEnvironment()[24] = r37.ReactNativeViewConfigRegistry.customDirectEventTypes;
+    createEnvironment()[24] = r18(undefined, r19[2]).ReactNativeViewConfigRegistry.customDirectEventTypes;
     // CODE → <TryGetById>: <Reg8: 37, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
     // USED → r37 = r0.Array
     // CODE → <GetByIdShort>: <Reg8: 37, Reg8: 37, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
@@ -1515,11 +1515,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewArrayWithBuffer>: <Reg8: 37, UInt16: 2, UInt16: 2, UInt16: 40903>  # Array: ['ResponderEventPlugin', 'ReactNativeBridgeEventPlugin']
     // USED → r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]
     // CODE → <Call2>: <Reg8: 37, Reg8: 41, Reg8: 42, Reg8: 37>
-    // USED → r37 = r0.Array.prototype.slice.call(r37)
+    // USED → r37 = r0.Array.prototype.slice.call(r0.Array.prototype.slice, r37)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 37>
-    createEnvironment()[18] = r0.Array.prototype.slice.call(r37);
+    createEnvironment()[18] = r0.Array.prototype.slice.call(r0.Array.prototype.slice, r37);
     // CODE → <Call1>: <Reg8: 37, Reg8: 16, Reg8: 2>
-    r37 = recomputePluginOrdering /* Closure with env r1 = createEnvironment() */()
+    r37 = r16(undefined)
     // CODE → <NewObject>: <Reg8: 50>
     // USED → r50 = {}
     // CODE → <PutNewOwnById>: <Reg8: 50, Reg8: 40, string_id: 14576>  # String: 'ResponderEventPlugin' (Identifier)
@@ -1567,20 +1567,20 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetByIdShort>: <Reg8: 52, Reg8: 50, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
         // USED → r52 = r50.hasOwnProperty
         // CODE → <Call2>: <Reg8: 52, Reg8: 52, Reg8: 50, Reg8: 44>
-        // USED → r52 = r50.hasOwnProperty(r44)
+        // USED → r52 = r50.hasOwnProperty(r50, r44)
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
         r43 = false
         // CODE → <JmpFalse>: <Addr8: -31, Reg8: 52>  # Address: 00000e5d
-        if (!r50.hasOwnProperty(r44)) { /* jump to label_3677 */ }
+        if (!r50.hasOwnProperty(r50, r44)) { /* jump to label_3677 */ }
         // ──────────────── Block 3 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
         // USED → r52 = r50[r44]
         // CODE → <GetByIdShort>: <Reg8: 53, Reg8: 51, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
         // USED → r53 = r51.hasOwnProperty
         // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
-        // USED → r53 = r51.hasOwnProperty(r44)
+        // USED → r53 = r51.hasOwnProperty(r51, r44)
         // CODE → <JmpFalse>: <Addr8: 17, Reg8: 53>  # Address: 00000e9e
-        if (!r51.hasOwnProperty(r44)) { /* jump to label_3742 */ }
+        if (!r51.hasOwnProperty(r51, r44)) { /* jump to label_3742 */ }
         // ──────────────── Block 4 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
         // USED → r53 = r51[r44]
@@ -1618,15 +1618,15 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
     // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r44 + "`."
     // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
-    // USED → r42 = r0.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r44 + "`.")
+    // USED → r42 = r0.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r44 + "`.")
     // CODE → <Throw>: <Reg8: 42>
-    r42 = throw r0.Error("EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r44 + "`.")
+    r42 = throw r0.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r44 + "`.")
     // ──────────────── Block 8 ──────────────── 
     // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
     if (!false) { /* jump to label_3796 */ }
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Call1>: <Reg8: 16, Reg8: 16, Reg8: 2>
-    r16 = recomputePluginOrdering /* Closure with env r1 = createEnvironment() */()
+    r16 = r16(undefined)
     // ──────────────── Block 10 ──────────────── 
     // CODE → <NewObject>: <Reg8: 16>
     // USED → r16 = {}
@@ -1647,7 +1647,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
     createEnvironment()[30] = null;
     // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 14, string_id: 21563>  # String: '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED' (Identifier)
-    // USED → r14 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
+    // USED → r14 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 11>
     createEnvironment()[31] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
@@ -1735,13 +1735,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
     // USED → r9 = r19[2]
     // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
-    // USED → r9 = param2(r19[2])
+    // USED → r9 = r18(undefined, r19[2])
     // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r9 = r9.ReactNativeViewConfigRegistry
+    // USED → r9 = r18(undefined, r19[2]).ReactNativeViewConfigRegistry
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 31, string_id: 137>  # String: 'get' (Identifier)
-    // USED → r9 = r9.ReactNativeViewConfigRegistry.get
+    // USED → r9 = r18(undefined, r19[2]).ReactNativeViewConfigRegistry.get
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 49, Reg8: 9>
-    createEnvironment()[49] = r9.ReactNativeViewConfigRegistry.get;
+    createEnvironment()[49] = r18(undefined, r19[2]).ReactNativeViewConfigRegistry.get;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
     createEnvironment()[50] = 2;
     // CODE → <JmpFalse>: <Addr8: 13, Reg8: 16>  # Address: 00000fef
@@ -1750,7 +1750,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
     // USED → r9 = dispatchEvent /* Closure with env r1 = createEnvironment() */
     // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
-    r9 = r0.nativeFabricUIManager.registerEventHandler(r9)
+    r9 = r0.nativeFabricUIManager.registerEventHandler(undefined, r9)
     // ──────────────── Block 14 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 32, string_id: 214>  # String: 'setTimeout' (Identifier)
     // USED → r41 = r0.setTimeout
@@ -1815,7 +1815,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 43, string_id: 15401>  # String: 'onChange' (Identifier)
     // USED → r40 = { onChange: onChange /* Closure with env r1 = createEnvironment() */ }
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r40.injection.injectGlobalResponderHandler(r40)
+    r40 = r40.injection.injectGlobalResponderHandler(r40.injection, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1823,9 +1823,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 3815>  # String: 'react.element' (String)
     // USED → r40 = "react.element"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.element")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.element")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 55, Reg8: 40>
-    createEnvironment()[55] = r0.Symbol.for("react.element");
+    createEnvironment()[55] = r0.Symbol.for(r0.Symbol, "react.element");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1833,9 +1833,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5553>  # String: 'react.portal' (String)
     // USED → r40 = "react.portal"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.portal")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.portal")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 56, Reg8: 40>
-    createEnvironment()[56] = r0.Symbol.for("react.portal");
+    createEnvironment()[56] = r0.Symbol.for(r0.Symbol, "react.portal");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1843,9 +1843,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5930>  # String: 'react.fragment' (String)
     // USED → r40 = "react.fragment"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.fragment")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.fragment")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 57, Reg8: 40>
-    createEnvironment()[57] = r0.Symbol.for("react.fragment");
+    createEnvironment()[57] = r0.Symbol.for(r0.Symbol, "react.fragment");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1853,9 +1853,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6410>  # String: 'react.strict_mode' (String)
     // USED → r40 = "react.strict_mode"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.strict_mode")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.strict_mode")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 58, Reg8: 40>
-    createEnvironment()[58] = r0.Symbol.for("react.strict_mode");
+    createEnvironment()[58] = r0.Symbol.for(r0.Symbol, "react.strict_mode");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1863,9 +1863,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5628>  # String: 'react.profiler' (String)
     // USED → r40 = "react.profiler"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.profiler")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.profiler")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 59, Reg8: 40>
-    createEnvironment()[59] = r0.Symbol.for("react.profiler");
+    createEnvironment()[59] = r0.Symbol.for(r0.Symbol, "react.profiler");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1873,9 +1873,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 2499>  # String: 'react.provider' (String)
     // USED → r40 = "react.provider"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.provider")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.provider")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 60, Reg8: 40>
-    createEnvironment()[60] = r0.Symbol.for("react.provider");
+    createEnvironment()[60] = r0.Symbol.for(r0.Symbol, "react.provider");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1883,9 +1883,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 8244>  # String: 'react.consumer' (String)
     // USED → r40 = "react.consumer"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.consumer")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.consumer")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 61, Reg8: 40>
-    createEnvironment()[61] = r0.Symbol.for("react.consumer");
+    createEnvironment()[61] = r0.Symbol.for(r0.Symbol, "react.consumer");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1893,9 +1893,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 4944>  # String: 'react.context' (String)
     // USED → r40 = "react.context"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.context")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.context")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 62, Reg8: 40>
-    createEnvironment()[62] = r0.Symbol.for("react.context");
+    createEnvironment()[62] = r0.Symbol.for(r0.Symbol, "react.context");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1903,9 +1903,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 7930>  # String: 'react.forward_ref' (String)
     // USED → r40 = "react.forward_ref"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.forward_ref")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.forward_ref")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 63, Reg8: 40>
-    createEnvironment()[63] = r0.Symbol.for("react.forward_ref");
+    createEnvironment()[63] = r0.Symbol.for(r0.Symbol, "react.forward_ref");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1913,9 +1913,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6421>  # String: 'react.suspense' (String)
     // USED → r40 = "react.suspense"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.suspense")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.suspense")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 64, Reg8: 40>
-    createEnvironment()[64] = r0.Symbol.for("react.suspense");
+    createEnvironment()[64] = r0.Symbol.for(r0.Symbol, "react.suspense");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1923,9 +1923,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6422>  # String: 'react.suspense_list' (String)
     // USED → r40 = "react.suspense_list"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.suspense_list")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.suspense_list")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 65, Reg8: 40>
-    createEnvironment()[65] = r0.Symbol.for("react.suspense_list");
+    createEnvironment()[65] = r0.Symbol.for(r0.Symbol, "react.suspense_list");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1933,9 +1933,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 410>  # String: 'react.memo' (String)
     // USED → r40 = "react.memo"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.memo")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.memo")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 66, Reg8: 40>
-    createEnvironment()[66] = r0.Symbol.for("react.memo");
+    createEnvironment()[66] = r0.Symbol.for(r0.Symbol, "react.memo");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1943,9 +1943,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 10762>  # String: 'react.lazy' (String)
     // USED → r40 = "react.lazy"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.lazy")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.lazy")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 67, Reg8: 40>
-    createEnvironment()[67] = r0.Symbol.for("react.lazy");
+    createEnvironment()[67] = r0.Symbol.for(r0.Symbol, "react.lazy");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1953,7 +1953,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6222>  # String: 'react.scope' (String)
     // USED → r40 = "react.scope"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for("react.scope")
+    r40 = r0.Symbol.for(r0.Symbol, "react.scope")
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1961,7 +1961,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6531>  # String: 'react.debug_trace_mode' (String)
     // USED → r40 = "react.debug_trace_mode"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for("react.debug_trace_mode")
+    r40 = r0.Symbol.for(r0.Symbol, "react.debug_trace_mode")
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1969,9 +1969,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5577>  # String: 'react.offscreen' (String)
     // USED → r40 = "react.offscreen"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for("react.offscreen")
+    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.offscreen")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 68, Reg8: 40>
-    createEnvironment()[68] = r0.Symbol.for("react.offscreen");
+    createEnvironment()[68] = r0.Symbol.for(r0.Symbol, "react.offscreen");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1979,7 +1979,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 4905>  # String: 'react.legacy_hidden' (String)
     // USED → r40 = "react.legacy_hidden"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for("react.legacy_hidden")
+    r40 = r0.Symbol.for(r0.Symbol, "react.legacy_hidden")
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1987,7 +1987,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 2166>  # String: 'react.cache' (String)
     // USED → r40 = "react.cache"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for("react.cache")
+    r40 = r0.Symbol.for(r0.Symbol, "react.cache")
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1995,7 +1995,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 8982>  # String: 'react.tracing_marker' (String)
     // USED → r40 = "react.tracing_marker"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for("react.tracing_marker")
+    r40 = r0.Symbol.for(r0.Symbol, "react.tracing_marker")
     // CODE → <TryGetById>: <Reg8: 40, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r40 = r0.Symbol
     // CODE → <GetById>: <Reg8: 40, Reg8: 40, UInt8: 40, string_id: 13658>  # String: 'iterator' (Identifier)
@@ -2009,7 +2009,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 10511>  # String: 'react.client.reference' (String)
     // USED → r40 = "react.client.reference"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for("react.client.reference")
+    r40 = r0.Symbol.for(r0.Symbol, "react.client.reference")
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = []
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
@@ -2037,17 +2037,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
     createEnvironment()[73] = r0.Object.is;
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r38 = createCursor /* Closure with env r1 = createEnvironment() */(null)
+    // USED → r38 = r15(undefined, null)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 74, Reg8: 38>
-    createEnvironment()[74] = createCursor /* Closure with env r1 = createEnvironment() */(null);
+    createEnvironment()[74] = r15(undefined, null);
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r38 = createCursor /* Closure with env r1 = createEnvironment() */(null)
+    // USED → r38 = r15(undefined, null)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 75, Reg8: 38>
-    createEnvironment()[75] = createCursor /* Closure with env r1 = createEnvironment() */(null);
+    createEnvironment()[75] = r15(undefined, null);
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r38 = createCursor /* Closure with env r1 = createEnvironment() */(null)
+    // USED → r38 = r15(undefined, null)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 76, Reg8: 38>
-    createEnvironment()[76] = createCursor /* Closure with env r1 = createEnvironment() */(null);
+    createEnvironment()[76] = r15(undefined, null);
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 77, Reg8: 11>
     createEnvironment()[77] = null;
     // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
@@ -2085,17 +2085,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 38, string_id: 3625>  # String: "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`" (String)
     // USED → r38 = "str_3625"
     // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-    // USED → r38 = r0.Error("str_3625")
+    // USED → r38 = r0.Error(undefined, "str_3625")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 89, Reg8: 38>
-    createEnvironment()[89] = r0.Error("str_3625");
+    createEnvironment()[89] = r0.Error(undefined, "str_3625");
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r39 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 38, string_id: 6775>  # String: "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React." (String)
     // USED → r38 = "str_6775"
     // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-    // USED → r38 = r0.Error("str_6775")
+    // USED → r38 = r0.Error(undefined, "str_6775")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
-    createEnvironment()[90] = r0.Error("str_6775");
+    createEnvironment()[90] = r0.Error(undefined, "str_6775");
     // CODE → <NewObject>: <Reg8: 38>
     // USED → r38 = {}
     // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
@@ -2111,39 +2111,39 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 94, Reg8: 10>
     createEnvironment()[94] = 0;
     // CODE → <Call2>: <Reg8: 37, Reg8: 20, Reg8: 2, Reg8: 37>
-    // USED → r37 = createChildReconciler /* Closure with env r1 = createEnvironment() */(true)
+    // USED → r37 = r20(undefined, true)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 95, Reg8: 37>
-    createEnvironment()[95] = createChildReconciler /* Closure with env r1 = createEnvironment() */(true);
+    createEnvironment()[95] = r20(undefined, true);
     // CODE → <Call2>: <Reg8: 20, Reg8: 20, Reg8: 2, Reg8: 12>
-    // USED → r20 = createChildReconciler /* Closure with env r1 = createEnvironment() */(false)
+    // USED → r20 = r20(undefined, false)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 96, Reg8: 20>
-    createEnvironment()[96] = createChildReconciler /* Closure with env r1 = createEnvironment() */(false);
+    createEnvironment()[96] = r20(undefined, false);
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r20 = createCursor /* Closure with env r1 = createEnvironment() */(null)
+    // USED → r20 = r15(undefined, null)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 97, Reg8: 20>
-    createEnvironment()[97] = createCursor /* Closure with env r1 = createEnvironment() */(null);
+    createEnvironment()[97] = r15(undefined, null);
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-    // USED → r20 = createCursor /* Closure with env r1 = createEnvironment() */(0)
+    // USED → r20 = r15(undefined, 0)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 98, Reg8: 20>
-    createEnvironment()[98] = createCursor /* Closure with env r1 = createEnvironment() */(0);
+    createEnvironment()[98] = r15(undefined, 0);
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r20 = createCursor /* Closure with env r1 = createEnvironment() */(null)
+    // USED → r20 = r15(undefined, null)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 99, Reg8: 20>
-    createEnvironment()[99] = createCursor /* Closure with env r1 = createEnvironment() */(null);
+    createEnvironment()[99] = r15(undefined, null);
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 100, Reg8: 11>
     createEnvironment()[100] = null;
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-    // USED → r20 = createCursor /* Closure with env r1 = createEnvironment() */(0)
+    // USED → r20 = r15(undefined, 0)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 101, Reg8: 20>
-    createEnvironment()[101] = createCursor /* Closure with env r1 = createEnvironment() */(0);
+    createEnvironment()[101] = r15(undefined, 0);
     // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-    // USED → r20 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+    // USED → r20 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 102, Reg8: 20>
-    createEnvironment()[102] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
+    createEnvironment()[102] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
     // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-    // USED → r20 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+    // USED → r20 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 103, Reg8: 20>
-    createEnvironment()[103] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+    createEnvironment()[103] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 104, Reg8: 10>
     createEnvironment()[104] = 0;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 105, Reg8: 11>
@@ -2393,28 +2393,28 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
     // USED → r17 = r19[2]
     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-    // USED → r17 = param2(r19[2])
+    // USED → r17 = r18(undefined, r19[2])
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
-    // USED → r17 = r17.ReactFiberErrorDialog
+    // USED → r17 = r18(undefined, r19[2]).ReactFiberErrorDialog
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
-    // USED → r17 = r17.ReactFiberErrorDialog.showErrorDialog
+    // USED → r17 = r18(undefined, r19[2]).ReactFiberErrorDialog.showErrorDialog
     // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
-    // USED → r17 = typeof r17.ReactFiberErrorDialog.showErrorDialog
+    // USED → r17 = typeof r18(undefined, r19[2]).ReactFiberErrorDialog.showErrorDialog
     // CODE → <JStrictNotEqualLong>: <Addr32: 774, Reg8: 16, Reg8: 17>  # Address: 000018b9
-    if ("function" !== typeof r17.ReactFiberErrorDialog.showErrorDialog) { /* jump to label_6329 */ }
+    if ("function" !== typeof r18(undefined, r19[2]).ReactFiberErrorDialog.showErrorDialog) { /* jump to label_6329 */ }
     // ──────────────── Block 21 ──────────────── 
     // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-    // USED → r17 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+    // USED → r17 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 121, Reg8: 17>
-    createEnvironment()[121] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+    createEnvironment()[121] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
     // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r18 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
     // USED → r17 = "str_6991"
     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-    // USED → r17 = r0.Error("str_6991")
+    // USED → r17 = r0.Error(undefined, "str_6991")
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
-    createEnvironment()[122] = r0.Error("str_6991");
+    createEnvironment()[122] = r0.Error(undefined, "str_6991");
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
     createEnvironment()[123] = false;
     // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
@@ -2422,9 +2422,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
     createEnvironment()[124] = { dehydrated: null, treeContext: null, retryLane: 0 };
     // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r15 = createCursor /* Closure with env r1 = createEnvironment() */(null)
+    // USED → r15 = r15(undefined, null)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
-    createEnvironment()[125] = createCursor /* Closure with env r1 = createEnvironment() */(null);
+    createEnvironment()[125] = r15(undefined, null);
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 126, Reg8: 11>
     createEnvironment()[126] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 127, Reg8: 11>
@@ -2432,9 +2432,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 128, Reg8: 11>
     createEnvironment()[128] = null;
     // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-    // USED → r15 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+    // USED → r15 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 129, Reg8: 15>
-    createEnvironment()[129] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+    createEnvironment()[129] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 130, Reg8: 12>
     createEnvironment()[130] = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
@@ -2482,17 +2482,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
     createEnvironment()[136] = r0.WeakMap;
     // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-    // USED → r15 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+    // USED → r15 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
-    createEnvironment()[137] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
+    createEnvironment()[137] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
     // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-    // USED → r15 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+    // USED → r15 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
-    createEnvironment()[138] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+    createEnvironment()[138] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
     // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-    // USED → r15 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+    // USED → r15 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
-    createEnvironment()[139] = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+    createEnvironment()[139] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
     createEnvironment()[140] = 0;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
@@ -2588,11 +2588,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
     // USED → r15 = r16.bind
     // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
-    // USED → r15 = r16.bind(null, r5)
+    // USED → r15 = r16.bind(r16, null, r5)
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-    // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewAtPoint: r16.bind(null, r5) }
+    // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewAtPoint: r16.bind(r16, null, r5) }
     // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-    // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = createEnvironment() */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewAtPoint: r16.bind(null, r5) } }
+    // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = createEnvironment() */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewAtPoint: r16.bind(r16, null, r5) } }
     // CODE → <NewObject>: <Reg8: 8>
     // USED → r8 = {}
     // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
@@ -2630,13 +2630,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
     // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null }
     // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-    // USED → r14 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+    // USED → r14 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher }
     // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
     // USED → r14 = findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */ }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */ }
     // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
     // USED → r12 = r12.findFiberByHostInstance
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
@@ -2646,21 +2646,21 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // USED → r12 = emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */
     // ──────────────── Block 29 ──────────────── 
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */ }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */ }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null }
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
+    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
     // CODE → <Mov>: <Reg8: 7, Reg8: 8>
-    // USED → r7 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
+    // USED → r7 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */, findFiberByHostInstance: emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" }
     // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
     // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__
     // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
@@ -2687,9 +2687,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
     // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-    // USED → r7 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r7)
+    // USED → r7 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r0.__REACT_DEVTOOLS_GLOBAL_HOOK__, r7)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
-    createEnvironment()[31] = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r7);
+    createEnvironment()[31] = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r0.__REACT_DEVTOOLS_GLOBAL_HOOK__, r7);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
     createEnvironment()[32] = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__;
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
@@ -2754,7 +2754,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4985>  # String: 'Expected ReactFiberErrorDialog.showErrorDialog to be a function.' (String)
     // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    // USED → r0 = r0.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
+    // USED → r0 = r0.Error(undefined, "Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
     // CODE → <Throw>: <Reg8: 0>
-    r0 = throw r0.Error("Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
+    r0 = throw r0.Error(undefined, "Expected ReactFiberErrorDialog.showErrorDialog to be a function.")
 }

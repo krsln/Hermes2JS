@@ -65,9 +65,9 @@ function function_1(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined
     // CODE → <Call1>: <Reg8: 7, Reg8: 7, Reg8: 0>
-    // USED → r7 = clear /* Closure with env r2 = createEnvironment() */()
+    // USED → r7 = r7(undefined)
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 7>
-    createEnvironment()[1] = clear /* Closure with env r2 = createEnvironment() */();
+    createEnvironment()[1] = r7(undefined);
     // CODE → <NewObject>: <Reg8: 7>
     // USED → r7 = {}
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 7>

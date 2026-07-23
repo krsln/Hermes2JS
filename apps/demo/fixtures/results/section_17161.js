@@ -16,12 +16,12 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
-    // USED → r1 = await r2.fetch(r7)
+    // USED → r1 = await r2.fetch(undefined, r7)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000020
     yield label_32;  // SaveGenerator: suspend and jump to 32
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return await r2.fetch(r7);
+    return await r2.fetch(undefined, r7);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
     // USED → r1 = await yield
@@ -45,9 +45,9 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 1058>  # String: 'file://' (String)
     // USED → r3 = "file://"
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
-    // USED → r3 = r7.startsWith("file://")
+    // USED → r3 = r7.startsWith(r7, "file://")
     // CODE → <JmpTrue>: <Addr8: 63, Reg8: 3>  # Address: 0000008c
-    if (r7.startsWith("file://")) { /* jump to label_140 */ }
+    if (r7.startsWith(r7, "file://")) { /* jump to label_140 */ }
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = r2.Error
@@ -79,12 +79,12 @@ async function* anon_17161(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
     // USED → r2 = r1.text
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
-    // USED → r2 = await r1.text()
+    // USED → r2 = await r1.text(r1)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000099
     yield label_153;  // SaveGenerator: suspend and jump to 153
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Ret>: <Reg8: 2>
-    return await r1.text();
+    return await r1.text(r1);
     // ──────────────── Block 10 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
     // USED → r2 = await yield

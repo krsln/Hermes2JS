@@ -19,7 +19,7 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 217>  # String: 'slice' (Identifier)
     // USED → r1 = r2.slice
     // CODE → <Call1>: <Reg8: 10, Reg8: 1, Reg8: 2>
-    // USED → r10 = r2.slice()
+    // USED → r10 = r2.slice(r2)
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 3614>  # String: 'Error occurred in ' (String)
@@ -27,36 +27,36 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 11214>  # String: ' callback, continuing anyway…' (String)
     // USED → r2 = " callback, continuing anyway\u2026"
     // LOOP → START (while)
-    while (!r1.length) {
+    while (!r2.slice(r2).length) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 10>
-        // USED → r1 = r2.slice()
+        // USED → r1 = r2.slice(r2)
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 139>  # String: 'length' (Identifier)
-        // USED → r1 = r1.length
+        // USED → r1 = r2.slice(r2).length
         // CODE → <JmpFalse>: <Addr8: 81, Reg8: 1>  # Address: 00000080
-        if (!r1.length) { /* jump to label_128 */ }
+        if (!r2.slice(r2).length) { /* jump to label_128 */ }
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 11, Reg8: 10>
-        // USED → r11 = r2.slice()
+        // USED → r11 = r2.slice(r2)
         // CODE → <GetById>: <Reg8: 1, Reg8: 11, UInt8: 3, string_id: 16799>  # String: 'pop' (Identifier)
-        // USED → r1 = r11.pop
+        // USED → r1 = r2.slice(r2).pop
         // CODE → <Call1>: <Reg8: 11, Reg8: 1, Reg8: 11>
-        // USED → r11 = r11.pop()
+        // USED → r11 = r2.slice(r2).pop(r2.slice(r2))
         // CODE → <Mov>: <Reg8: 1, Reg8: 7>
         // USED → r1 = param2
         // CODE → <Call2>: <Reg8: 1, Reg8: 11, Reg8: 6, Reg8: 1>
-        // USED → r1 = r11.pop()(r1)
+        // USED → r1 = r2.slice(r2).pop(r2.slice(r2))(undefined, r1)
         // CODE → <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
-        // USED → r0 = r1 === false
+        // USED → r0 = r2.slice(r2).pop(r2.slice(r2))(undefined, r1) === false
         // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
         goto label_122;
         // LOOP → START (while)
-        while (!r1 === false) {
+        while (!r2.slice(r2).pop(r2.slice(r2))(undefined, r1) === false) {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-            // USED → r1 = r1 === false
+            // USED → r1 = r2.slice(r2).pop(r2.slice(r2))(undefined, r1) === false
             // CODE → <JmpFalse>: <Addr8: -86, Reg8: 1>  # Address: 00000027
-            if (!r1 === false) { /* jump to label_39 */ }
+            if (!r2.slice(r2).pop(r2.slice(r2))(undefined, r1) === false) { /* jump to label_39 */ }
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Catch>: <Reg8: 12>
             // USED → r12 = caughtException
@@ -73,16 +73,16 @@ function function_12825(param0, param1, param2, param3, param4) {
             // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 14, Reg8: 2>
             // USED → r1 = r4.HermesInternal.concat("Error occurred in ", r14, " callback, continuing anyway\u2026")
             // CODE → <Call2>: <Reg8: 1, Reg8: 13, Reg8: 11, Reg8: 1>
-            r1 = r11.error(r1)
+            r1 = r11.error(r11, r4.HermesInternal.concat("Error occurred in ", r14, " callback, continuing anyway\u2026"))
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
             // USED → r1 = r11.error
             // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>
-            r1 = r11.error(r12)
+            r1 = r11.error(r11, r12)
         }
         // LOOP → END
     }
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
-    return r1 === false;
+    return r2.slice(r2).pop(r2.slice(r2))(undefined, r1) === false;
 }

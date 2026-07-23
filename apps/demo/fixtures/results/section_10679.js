@@ -31,7 +31,7 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 65>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule"
     // CODE → <Call4>: <Reg8: 0, Reg8: 4, Reg8: 7, Reg8: 2, Reg8: 0, Reg8: 1>
-    r0 = r0.Object.defineProperty(r2, "__esModule", r1)
+    r0 = r0.Object.defineProperty(r0.Object, r2, "__esModule", r1)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined
     // CODE → <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
@@ -41,9 +41,9 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 6, Reg8: 1>
     // USED → r1 = r6[0]
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2(r6[0])
+    // USED → r1 = r5(undefined, r6[0])
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 2, Reg8: 1>
-    createEnvironment()[2] = param2(r6[0]);
+    createEnvironment()[2] = r5(undefined, r6[0]);
     // CODE → <NewArrayWithBuffer>: <Reg8: 1, UInt16: 9, UInt16: 9, UInt16: 43049>  # Array: ['MAIN_BUNDLE', 'CACHES_DIRECTORY', 'DOCUMENT_DIRECTORY', 'EXTERNAL_DIRECTORY', 'EXTERNAL_STORAGE_DIRECTORY', 'TEMP_DIRECTORY', 'LIBRARY_DIRECTORY', 'PICTURES_DIRECTORY', 'MOVIES_DIRECTORY']
     // USED → r1 = ["MAIN_BUNDLE", "CACHES_DIRECTORY", "DOCUMENT_DIRECTORY", "EXTERNAL_DIRECTORY", "EXTERNAL_STORAGE_DIRECTORY", "TEMP_DIRECTORY", "LIBRARY_DIRECTORY", "PICTURES_DIRECTORY", "MOVIES_DIRECTORY"]
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 3, Reg8: 1>
@@ -67,17 +67,17 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByVal>: <Reg8: 4, Reg8: 6, Reg8: 4>
     // USED → r4 = r6[2]
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 0, Reg8: 4>
-    // USED → r4 = param2(r6[2])
+    // USED → r4 = r5(undefined, r6[2])
     // CODE → <PutNewOwnById>: <Reg8: 1, Reg8: 4, string_id: 12734>  # String: 'SDK_VERSION' (Identifier)
-    // USED → r1 = { SDK_VERSION: param2(r6[2]) }
+    // USED → r1 = { SDK_VERSION: r5(undefined, r6[2]) }
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 3, function_id: 10681>  # Function: [#10681 get FilePath of 65 bytes]: 1 params @ offset 0x00294e9a
     // USED → r4 = get FilePath /* Closure with env r3 = createEnvironment() */
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5066>  # String: 'FilePath' (String)
     // USED → r3 = "FilePath"
     // CODE → <PutOwnGetterSetterByVal>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 0, UInt8: 1>
-    // USED → r1 = Object.defineProperty({ SDK_VERSION: param2(r6[2]) }, "FilePath", { get: get FilePath /* Closure with env r3 = createEnvironment() */, set: undefined, enumerable: true, configurable: true })
+    // USED → r1 = Object.defineProperty({ SDK_VERSION: r5(undefined, r6[2]) }, "FilePath", { get: get FilePath /* Closure with env r3 = createEnvironment() */, set: undefined, enumerable: true, configurable: true })
     // CODE → <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    r2 = { default: Object.defineProperty({ SDK_VERSION: param2(r6[2]) }, "FilePath", { get: get FilePath /* Closure with env r3 = createEnvironment() */, set: undefined, enumerable: true, configurable: true }) }
+    r2 = { default: Object.defineProperty({ SDK_VERSION: r5(undefined, r6[2]) }, "FilePath", { get: get FilePath /* Closure with env r3 = createEnvironment() */, set: undefined, enumerable: true, configurable: true }) }
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

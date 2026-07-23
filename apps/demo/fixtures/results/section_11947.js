@@ -22,12 +22,12 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 17057>  # String: '_request' (Identifier)
     // USED → r7 = r8._request
     // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
-    // USED → r3 = await r8._request(r4, r3)
+    // USED → r3 = await r8._request(r8, r4, r3)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
     yield label_41;  // SaveGenerator: suspend and jump to 41
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
-    return await r8._request(r4, r3);
+    return await r8._request(r8, r4, r3);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
     // USED → r3 = await yield
@@ -85,7 +85,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
     // USED → r4 = r7[r4]
     // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
-    r4 = r3.Error.captureStackTrace(r4)
+    r4 = r3.Error.captureStackTrace(r3.Error, r4)
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
     // USED → r4 = r7[r4]
@@ -105,10 +105,10 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <CreateRegExp>: <Reg8: 6, string_id: 7558, string_id: 11303, UInt32: 168>  # String: '^.+\\n' (String)  # String: '' (Identifier)
     // USED → r6 = /^.+\\n/
     // CODE → <Call3>: <Reg8: 4, Reg8: 7, Reg8: 9, Reg8: 6, Reg8: 8>
-    // USED → r4 = r6.stack.replace(r6, "")
+    // USED → r4 = r6.stack.replace(r6.stack, r6, "")
     // ──────────────── Block 11 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-    // USED → r2 = r6.stack.replace(r6, "")
+    // USED → r2 = r6.stack.replace(r6.stack, r6, "")
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
     // USED → r4 = caughtException
     // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
@@ -119,16 +119,16 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 6, Reg8: 1>
     // USED → r6 = caughtException
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = r6.stack.replace(r6, "")
+    // USED → r4 = r6.stack.replace(r6.stack, r6, "")
     // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r6 = { stack: r6.stack.replace(r6, "") }
+    r6 = { stack: r6.stack.replace(r6.stack, r6, "") }
     // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
     goto label_312;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = r6.stack.replace(r6, "")
+    // USED → r4 = r6.stack.replace(r6.stack, r6, "")
     // CODE → <JmpFalse>: <Addr8: 95, Reg8: 4>  # Address: 00000138
-    if (!r6.stack.replace(r6, "")) { /* jump to label_312 */ }
+    if (!r6.stack.replace(r6.stack, r6, "")) { /* jump to label_312 */ }
     // ──────────────── Block 14 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
     // USED → r4 = r3.String
@@ -137,36 +137,36 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
     // USED → r3 = r3.stack
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r5 = r3.String(r3.stack)
+    // USED → r5 = r3.String(undefined, r3.stack)
     // CODE → <GetById>: <Reg8: 4, Reg8: 5, UInt8: 8, string_id: 19080>  # String: 'endsWith' (Identifier)
-    // USED → r4 = r5.endsWith
+    // USED → r4 = r3.String(undefined, r3.stack).endsWith
     // CODE → <Mov>: <Reg8: 7, Reg8: 2>
-    // USED → r7 = r6.stack.replace(r6, "")
+    // USED → r7 = r6.stack.replace(r6.stack, r6, "")
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
-    // USED → r6 = r7.replace
+    // USED → r6 = r6.stack.replace(r6.stack, r6, "").replace
     // CODE → <CreateRegExp>: <Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169>  # String: '^.+\\n.+\\n' (String)  # String: '' (Identifier)
     // USED → r3 = /^.+\\n.+\\n/
     // CODE → <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
-    // USED → r3 = r7.replace(r3, "")
+    // USED → r3 = r6.stack.replace(r6.stack, r6, "").replace(r6.stack.replace(r6.stack, r6, ""), r3, "")
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r3 = r5.endsWith(r3)
+    // USED → r3 = r3.String(undefined, r3.stack).endsWith(r3.String(undefined, r3.stack), r6.stack.replace(r6.stack, r6, "").replace(r6.stack.replace(r6.stack, r6, ""), r3, ""))
     // CODE → <JmpTrue>: <Addr8: 33, Reg8: 3>  # Address: 00000138
-    if (r5.endsWith(r3)) { /* jump to label_312 */ }
+    if (r3.String(undefined, r3.stack).endsWith(r3.String(undefined, r3.stack), r6.stack.replace(r6.stack, r6, "").replace(r6.stack.replace(r6.stack, r6, ""), r3, ""))) { /* jump to label_312 */ }
     // ──────────────── Block 15 ──────────────── 
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
     // USED → r3 = caughtException
     // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
     // USED → r4 = r3.stack
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-    // USED → r5 = r6.stack.replace(r6, "")
+    // USED → r5 = r6.stack.replace(r6.stack, r6, "")
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
     // USED → r2 = "\\n"
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = "\\n" + r5
+    // USED → r2 = "\\n" + r6.stack.replace(r6.stack, r6, "")
     // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
-    // USED → r2 = r3.stack + "\\n" + r5
+    // USED → r2 = r3.stack + "\\n" + r6.stack.replace(r6.stack, r6, "")
     // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r3 = { stack: r3.stack + "\\n" + r5 }
+    r3 = { stack: r3.stack + "\\n" + r6.stack.replace(r6.stack, r6, "") }
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
     goto label_316;

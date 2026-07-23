@@ -26,7 +26,7 @@ function onPress(param0) {
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 21914>  # String: 'trackJoinCompetitionList' (Identifier)
     // USED → r2 = r3.trackJoinCompetitionList
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    r2 = r3.trackJoinCompetitionList()
+    r2 = r3.trackJoinCompetitionList(r3)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 11>
     // USED → r2 = getEnvironment(1)[11]
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
@@ -36,7 +36,7 @@ function onPress(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 2, UInt16: 2, UInt16: 2, UInt16: 4743, UInt16: 24182>  # Object: {'message': 'You have joined the list', 'type': 'success'}
     // USED → r2 = { message: "You have joined the list", type: "success" }
     // CODE → <Call2>: <Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 2>
-    r2 = getEnvironment(1)[11].default(r2)
+    r2 = getEnvironment(1)[11].default(undefined, r2)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 4>
     // USED → r2 = getEnvironment(1)[4]
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
@@ -48,13 +48,13 @@ function onPress(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 12320>  # String: 'true' (Identifier)
     // USED → r2 = "true"
     // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 2>
-    r2 = getEnvironment(1)[4].default.setItem("compjoin", "true")
+    r2 = getEnvironment(1)[4].default.setItem(getEnvironment(1)[4].default, "compjoin", "true")
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 3>
     // USED → r2 = getEnvironment(0)[3]
     // CODE → <GetById>: <Reg8: 1, Reg8: 2, UInt8: 5, string_id: 14155>  # String: 'goBack' (Identifier)
     // USED → r1 = getEnvironment(0)[3].goBack
     // CODE → <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
-    r1 = getEnvironment(0)[3].goBack()
+    r1 = getEnvironment(0)[3].goBack(getEnvironment(0)[3])
     // CODE → <Jmp>: <Addr8: 32>  # Address: 00000099
     goto label_153;
     // ──────────────── Block 2 ──────────────── 
@@ -67,7 +67,7 @@ function onPress(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 0, UInt16: 4, UInt16: 4, UInt16: 11077, UInt16: 9225>  # Object: {'title': 'Join Coachify AI Competition', 'message': 'Join Coachify AI Competition', 'url': 'https://coachify.ai/download?ref=compshare', 'subject': 'Join Coachify AI Competition'}
     // USED → r0 = { title: "Join Coachify AI Competition", message: "Join Coachify AI Competition", url: "https://coachify.ai/download?ref=compshare", subject: "Join Coachify AI Competition" }
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = getEnvironment(1)[12].default.open(r0)
+    r0 = getEnvironment(1)[12].default.open(getEnvironment(1)[12].default, r0)
     // ──────────────── Block 3 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined

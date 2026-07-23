@@ -28,12 +28,12 @@ async function* anon_9594(param0, param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 6, Reg8: 5, Reg8: 1>
     // USED → r1 = r2.HermesInternal.concat("https://coachify.ai/api/checkUsernameAvailable?username=", r1)
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-    // USED → r1 = await getEnvironment(4)[16].default.get(r1)
+    // USED → r1 = await getEnvironment(4)[16].default.get(getEnvironment(4)[16].default, r2.HermesInternal.concat("https://coachify.ai/api/checkUsernameAvailable?username=", r1))
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003a
     yield label_58;  // SaveGenerator: suspend and jump to 58
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return await getEnvironment(4)[16].default.get(r1);
+    return await getEnvironment(4)[16].default.get(getEnvironment(4)[16].default, r2.HermesInternal.concat("https://coachify.ai/api/checkUsernameAvailable?username=", r1));
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
     // USED → r1 = await yield
@@ -47,7 +47,7 @@ async function* anon_9594(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 7, string_id: 107>  # String: 'data' (Identifier)
     // USED → r2 = r1.data
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = r2.console.log(r1.data)
+    r2 = r2.console.log(r2.console, r1.data)
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 7, string_id: 107>  # String: 'data' (Identifier)
     // USED → r2 = r1.data
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 12563>  # String: 'available' (Identifier)

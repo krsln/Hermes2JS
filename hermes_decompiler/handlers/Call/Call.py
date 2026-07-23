@@ -2,7 +2,6 @@ import re
 from typing import Dict
 
 from hermes_decompiler.ir.Expressions import CallExpression
-from hermes_decompiler.ir.Values import RegisterValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -23,7 +22,6 @@ class CallX(OpcodeHandler):
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        # Get precompiled regex for the number of arguments
         reg_pattern = self._PATTERN.get(self.num_args)
         if not reg_pattern:
             return self.build_invalid_args_result(analysis, entry)
@@ -33,37 +31,14 @@ class CallX(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
-
         callee = self.get_register_value_new(analysis, func_reg)
-        func_name = self.get_register_value(analysis, func_reg)
-        func_name_str = str(func_name)
-
-        arg_list = [
+        arguments = [
             self.get_register_value_new(analysis, reg)
             for reg in arg_regs
         ]
 
-        # argList içindeki Value objelerini karşılaştırma ve join için string'e çevirelim
-        argList_str = [str(arg) for arg in arg_list]
-
-        func_parts = func_name_str.split(".")
-        base_object = ".".join(func_parts[:-1]) if len(func_parts) > 1 else None
-
-        checked_args = []
-
-        for arg in argList_str:
-            if arg == "undefined" or arg == base_object:
-                continue
-            checked_args.append(arg)
-
-        args_str = ", ".join(checked_args)
-        value = f"{func_name}({args_str})"
-        # value = CallExpression(callee=callee, arguments=arg_list)
-
-        if callee != func_name:
-            print(callee, func_name)
-
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
+        value = CallExpression(callee=callee, arguments=arguments)
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
