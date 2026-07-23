@@ -29,7 +29,7 @@ class PutOwnByIndex(OpcodeHandler):
         dest_reg, value_reg, index = map(int, match.groups())
 
         reg_var = self.get_register_variable(analysis, value_reg)
-        reg_value = reg_var.value if reg_var and reg_var.value is not None else 'undefined'
+        reg_value = str(reg_var.value) if reg_var and reg_var.value is not None else 'undefined'
 
         elements = self._parse_array_elements(self.get_register_variable(analysis, dest_reg), handler, entry)
 

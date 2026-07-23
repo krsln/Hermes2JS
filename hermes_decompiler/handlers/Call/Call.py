@@ -34,42 +34,45 @@ class CallX(OpcodeHandler):
 
         func_variable = self.get_register_variable(analysis, func_reg)
         func_name = self.get_register_value(analysis, func_reg)
+        func_name_str = str(func_name)
 
         argList = self.resolve_function_args(analysis, arg_regs)
 
         # Special handling for HermesInternal.concat
-        if func_name == "this.HermesInternal.concat":
-            # Skip the first argument if it's an empty string
-            checked_args = [arg for arg in argList if arg != '""']
-            # Build a template literal
+        if func_name_str == "this.HermesInternal.concat":
+            # Argument'leri string'e dönüştür
+            checked_args = [str(arg) for arg in argList if str(arg) != '""']
             template_parts = []
             for arg in checked_args:
-                # If the argument is a string literal, strip quotes for template literal
                 if arg.startswith('"') and arg.endswith('"'):
-                    template_parts.append(arg[1:-1])  # Remove quotes
+                    template_parts.append(arg[1:-1])
                 else:
-                    template_parts.append(f"${{{arg}}}")  # Wrap variables/expressions in ${}
-            # Combine into a template literal
+                    template_parts.append(f"${{{arg}}}")
             template_str = f"`{''.join(template_parts)}`"
-            variable = JSVariable(handler, entry.address, f'r{dest_reg}', template_str, func_name, template_str)
+            variable = JSVariable(handler, entry.address, f'r{dest_reg}', template_str, func_name_str, template_str)
             analysis.add_result(entry, variable)
             return OpcodeResult(entry, variable)
 
-        first_arg = argList[0] if argList else None
+        # argList içindeki Value objelerini karşılaştırma ve join için string'e çevirelim
+        argList_str = [str(arg) for arg in argList]
+        first_arg = argList_str[0] if argList_str else None
+
         # Extract the base object from function name, e.g., "this.console" from "this.console.log"
-        func_parts = str(func_name).split(".")
+        func_parts = func_name_str.split(".")
         base_object = ".".join(func_parts[:-1]) if len(func_parts) > 1 else None
 
         explicit_receiver_passed = False
         checked_args = []
-        for arg in argList:
+
+        for arg in argList_str:
             if arg == "undefined" or arg == base_object:
-                # If the first arg is "undefined" or it's the same as the function's base (e.g., "this.console")
                 explicit_receiver_passed = first_arg in ("undefined", base_object)
                 continue
             checked_args.append(arg)
 
-        args_str = ", ".join(r for r in checked_args)
+        # Artık checked_args içindeki tüm elemanlar garanti str olduğu için join hata vermez!
+        args_str = ", ".join(checked_args)
+
         if self.should_use_call(func_variable) and not explicit_receiver_passed:
             func_val = f".call(this, {args_str})"
         else:

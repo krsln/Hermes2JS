@@ -2,9 +2,10 @@ import re
 from typing import ClassVar
 
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
+from hermes_decompiler.ir.Values import Value, UndefinedValue, EmptyValue, ConstantValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry, _STRING_RE
+from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
@@ -21,7 +22,8 @@ class LoadSimpleConst(OpcodeHandler):
     """
 
     _PATTERN = sequence(REG)
-    CONSTANT: ClassVar[str]
+
+    VALUE: ClassVar[Value | object]
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
@@ -32,19 +34,35 @@ class LoadSimpleConst(OpcodeHandler):
 
         register = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f"r{register}", self.CONSTANT)
+        value = self.VALUE
+
+        if not isinstance(value, Value):
+            value = ConstantValue(value)
+
+        variable = JSVariable(handler, entry.address, f"r{register}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
 
 # @formatter:off
-class LoadConstZero(LoadSimpleConst): CONSTANT = "0"
-class LoadConstUndefined(LoadSimpleConst): CONSTANT = "undefined"
-class LoadConstNull(LoadSimpleConst): CONSTANT = "null"
-class LoadConstTrue(LoadSimpleConst): CONSTANT = "true"
-class LoadConstFalse(LoadSimpleConst): CONSTANT = "false"
-class LoadConstEmpty(LoadSimpleConst): CONSTANT = "empty"
+class LoadConstZero(LoadSimpleConst):
+    VALUE = 0
+
+class LoadConstTrue(LoadSimpleConst):
+    VALUE = True
+
+class LoadConstFalse(LoadSimpleConst):
+    VALUE = False
+
+class LoadConstNull(LoadSimpleConst):
+    VALUE = None
+
+class LoadConstUndefined(LoadSimpleConst):
+    VALUE = UndefinedValue()
+
+class LoadConstEmpty(LoadSimpleConst):
+    VALUE = EmptyValue()
 # @formatter:on
 
 # ---------------------------------------------------------------------------
@@ -62,7 +80,7 @@ class LoadConstUInt8(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8")
 
         register = int(match.group(1))
-        value = match.group(2)
+        value = ConstantValue(int(match.group(2)))
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
         analysis.add_result(entry, variable)
@@ -81,7 +99,7 @@ class LoadConstInt(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Imm32")
 
         register = int(match.group(1))
-        value = match.group(2)
+        value = ConstantValue(int(match.group(2)))
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
         analysis.add_result(entry, variable)
@@ -100,7 +118,7 @@ class LoadConstDouble(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Double")
 
         register = int(match.group(1))
-        value = match.group(2)
+        value = ConstantValue(float(match.group(2)))
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
         analysis.add_result(entry, variable)
@@ -133,7 +151,7 @@ class LoadConstString(OpcodeHandler):
         if resolved is None:
             resolved = f"str_{string_id}"
 
-        variable = JSVariable(handler, entry.address, f"r{register}", f'"{resolved}"')
+        variable = JSVariable(handler, entry.address, f"r{register}", ConstantValue(resolved))
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

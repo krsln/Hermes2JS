@@ -25,7 +25,7 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 3614>  # String: 'Error occurred in ' (String)
     // USED → r3 = "Error occurred in "
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 11214>  # String: ' callback, continuing anyway…' (String)
-    // USED → r2 = " callback, continuing anyway…"
+    // USED → r2 = " callback, continuing anyway\u2026"
     // LOOP → START (while)
     while (!param1.slice().length) {
         // ──────────────── Block 1 ──────────────── 
@@ -71,9 +71,9 @@ function function_12825(param0, param1, param2, param3, param4) {
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 98>  # String: 'concat' (Identifier)
             // USED → r1 = globalThis.HermesInternal.concat
             // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 14, Reg8: 2>
-            // USED → r1 = globalThis.HermesInternal.concat.call(this, "Error occurred in ", param3, " callback, continuing anyway…")
+            // USED → r1 = globalThis.HermesInternal.concat.call(this, "Error occurred in ", param3, " callback, continuing anyway\u2026")
             // CODE → <Call2>: <Reg8: 1, Reg8: 13, Reg8: 11, Reg8: 1>
-            r1 = param4.error(globalThis.HermesInternal.concat.call(this, "Error occurred in ", param3, " callback, continuing anyway…"))
+            r1 = param4.error(globalThis.HermesInternal.concat.call(this, "Error occurred in ", param3, " callback, continuing anyway\u2026"))
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
             // USED → r1 = param4.error
             // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>

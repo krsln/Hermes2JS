@@ -160,13 +160,13 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
     // USED → r5 = r7[r4].stack.replace(/^.+\\n/, "")
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
-    // USED → r2 = "\n"
+    // USED → r2 = "\\n"
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = "\n" + r7[r4].stack.replace(/^.+\\n/, "")
+    // USED → r2 = "\\n" + r7[r4].stack.replace(/^.+\\n/, "")
     // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
-    // USED → r2 = caughtException.stack + "\n" + r7[r4].stack.replace(/^.+\\n/, "")
+    // USED → r2 = caughtException.stack + "\\n" + r7[r4].stack.replace(/^.+\\n/, "")
     // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r3 = { stack: caughtException.stack + "\n" + r7[r4].stack.replace(/^.+\\n/, "") }
+    r3 = { stack: caughtException.stack + "\\n" + r7[r4].stack.replace(/^.+\\n/, "") }
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
     goto label_316;

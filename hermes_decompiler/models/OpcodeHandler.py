@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Optional
 
-from hermes_decompiler.ir.RegisterValue import RegisterValue
-from hermes_decompiler.ir.Value import Value
+from hermes_decompiler.ir.Values import Value, RegisterValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeResult import OpcodeResult

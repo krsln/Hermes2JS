@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from .Value import Value
+from .Values import Value
 from .Operators import BinaryOperator
 
 

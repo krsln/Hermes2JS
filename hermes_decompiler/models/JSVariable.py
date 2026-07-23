@@ -1,6 +1,6 @@
 from typing import Optional, Dict, Any
 
-from hermes_decompiler.ir.Value import Value
+from hermes_decompiler.ir.Values import Value
 
 RenderableValue = str | Value
 
