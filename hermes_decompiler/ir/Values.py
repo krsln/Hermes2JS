@@ -73,3 +73,13 @@ class IdentifierValue(Value):
 
     def render(self) -> str:
         return self.name
+
+@dataclass(frozen=True)
+class ClosureValue(Value):
+    name: str
+    comment: str | None = None
+
+    def render(self):
+        if self.comment:
+            return f"{self.name} /* {self.comment} */"
+        return self.name

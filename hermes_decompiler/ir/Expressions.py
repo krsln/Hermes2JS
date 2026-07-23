@@ -93,6 +93,7 @@ class CallExpression(Expression):
 
         return f"{self.callee.render()}({args})"
 
+
 @dataclass(frozen=True)
 class IteratorNextExpression(Expression):
     iterator: Value
@@ -114,10 +115,17 @@ class NewExpression(Expression):
         args = ", ".join(arg.render() for arg in self.arguments)
         return f"new {self.constructor.render()}({args})"
 
-# AssignmentExpression(
-#     target=IndexExpression(...),
-#     value=value
-# )
+
+@dataclass(frozen=True)
+class AssignmentExpression(Expression):
+    left: Value
+    operator: str
+    right: Value
+
+    def render(self):
+        return f"{self.left.render()} {self.operator} {self.right.render()}"
+
+
 # ConditionalExpression(
 #     condition=...,
 #     when_true=...,

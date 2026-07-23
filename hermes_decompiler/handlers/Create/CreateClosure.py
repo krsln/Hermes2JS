@@ -1,3 +1,4 @@
+from hermes_decompiler.ir.Values import ClosureValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -27,21 +28,16 @@ class CreateClosure(OpcodeHandler):
 
         dest_reg, value_reg, func_id = (int(x) for x in match.groups())
 
+        reg_value = self.get_register_value_new(analysis, value_reg)
         func_name = (
             entry.function.name
             if entry.function and entry.function.name
             else f"function_{func_id}"
         )
 
-        reg_var = self.get_register_variable(analysis, value_reg)
-        reg_value = reg_var.value if reg_var and reg_var.value is not None else 'undefined'
-        # print(env, env_value)
-
-        # Simplified closure representation
-        variable = JSVariable(
-            handler, entry.address,
-            f'r{dest_reg}', f"{func_name} /* Closure with env r{value_reg} = {reg_value} */",
-        )
+        # value = f"{func_name} /* Closure with env r{value_reg} = {reg_value} */"
+        value = ClosureValue(name=f"{func_name}", comment=f"Closure with env r{value_reg} = {reg_value}")
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
