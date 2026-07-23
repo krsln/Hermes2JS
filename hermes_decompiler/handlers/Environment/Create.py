@@ -1,3 +1,5 @@
+from hermes_decompiler.ir.Expressions import CallExpression
+from hermes_decompiler.ir.Values import IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -24,8 +26,8 @@ class CreateEnvironment(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        value = f"createEnvironment()"
-
+        # value = f"createEnvironment()"
+        value = CallExpression(callee=IdentifierValue("createEnvironment"), arguments=[])
         variable = JSVariable(self.__class__.__name__, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 

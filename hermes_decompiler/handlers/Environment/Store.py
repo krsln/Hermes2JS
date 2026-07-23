@@ -31,6 +31,7 @@ class StoreToEnvironment(OpcodeHandler):
         value = self.get_register_value(analysis, value_reg)
 
         expression = f"{env}[{slot}] = {value};"
+        # expression = AssignmentExpression(left=IndexExpression(...), right=value)
 
         variable = JSVariable(self.__class__.__name__, entry.address, "", expression)
         analysis.add_result(entry, variable)
