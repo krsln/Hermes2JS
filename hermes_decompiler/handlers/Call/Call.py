@@ -1,6 +1,8 @@
 import re
 from typing import Dict
 
+from hermes_decompiler.ir.Expressions import CallExpression
+from hermes_decompiler.ir.Values import RegisterValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -33,15 +35,31 @@ class CallX(OpcodeHandler):
         dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
 
         func_variable = self.get_register_variable(analysis, func_reg)
+        callee = self.get_register_value_new(analysis, func_reg)
         func_name = self.get_register_value(analysis, func_reg)
         func_name_str = str(func_name)
 
-        argList = self.resolve_function_args(analysis, arg_regs)
+        arg_list = []
+        for reg in arg_regs:
+            variable = self._get_register_variable(analysis, reg)
+            if variable:
+                variable.used = True
+                arg_list.append(variable.value)
+            else:
+                print(RegisterValue(reg))
+                arg_list.append(RegisterValue(reg))
+
+        # arg_list = [
+        #     self.get_register_value_new(analysis, reg)
+        #     for reg in arg_regs
+        # ]
+        # value = CallExpression(callee=callee, arguments=checked_args)
+        # todo
 
         # Special handling for HermesInternal.concat
         if func_name_str == "this.HermesInternal.concat":
             # Argument'leri string'e dönüştür
-            checked_args = [str(arg) for arg in argList if str(arg) != '""']
+            checked_args = [str(arg) for arg in arg_list if str(arg) != '""']
             template_parts = []
             for arg in checked_args:
                 if arg.startswith('"') and arg.endswith('"'):
@@ -54,7 +72,7 @@ class CallX(OpcodeHandler):
             return OpcodeResult(entry, variable)
 
         # argList içindeki Value objelerini karşılaştırma ve join için string'e çevirelim
-        argList_str = [str(arg) for arg in argList]
+        argList_str = [str(arg) for arg in arg_list]
         first_arg = argList_str[0] if argList_str else None
 
         # Extract the base object from function name, e.g., "this.console" from "this.console.log"
@@ -72,13 +90,13 @@ class CallX(OpcodeHandler):
 
         # Artık checked_args içindeki tüm elemanlar garanti str olduğu için join hata vermez!
         args_str = ", ".join(checked_args)
-
         if self.should_use_call(func_variable) and not explicit_receiver_passed:
             func_val = f".call(this, {args_str})"
         else:
             func_val = f"({args_str})"
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{func_name}{func_val}", func_name, func_val)
+        value = f"{func_name}{func_val}"
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -121,19 +139,18 @@ class Call(CallX):
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, func_reg, num_args = map(int, match.groups())
-        func_name = self.get_register_value(analysis, func_reg)
+        func_name = self.get_register_value_new(analysis, func_reg)
         arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
-        # argList = [self.GetValueByReg(analysis, r) for r in arg_regs]
-        argList = [
-            f"r{r}"
-            for r in arg_regs
-        ]
-        args_str = ", ".join(argList)
+        arg_list = [f"r{r}" for r in arg_regs]
+        args_str = ", ".join(arg_list)
 
         func_val = f"({args_str})" if not self.should_use_call(
             self.get_register_variable(analysis, func_reg)) else f".call(this, {args_str})"
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"{func_name}{func_val}", func_name, func_val)
+        value = f"{func_name}{func_val}"
+        # value = CallExpression(callee=func_name, arguments=arg_list)
+
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

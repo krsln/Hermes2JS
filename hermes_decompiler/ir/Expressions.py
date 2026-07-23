@@ -102,7 +102,7 @@ class NewExpression(Expression):
     arguments: list[Value]
 
     def render(self):
-        args = ", ".join(a.render() for a in self.arguments)
+        args = ", ".join(arg.render() for arg in self.arguments)
         return f"new {self.constructor.render()}({args})"
 
 # AssignmentExpression(

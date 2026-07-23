@@ -1,8 +1,6 @@
 from abc import ABC
 from typing import ClassVar
 
-from hermes_decompiler.Logger import logger
-
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -62,8 +60,6 @@ class ConstructBase(OpcodeHandler, ABC):
             entry.address,
             f"r{dest_reg}",
             expression,
-            f"new {constructor_str}",
-            f"({', '.join(args)})",
         )
 
         analysis.add_result(entry, variable)

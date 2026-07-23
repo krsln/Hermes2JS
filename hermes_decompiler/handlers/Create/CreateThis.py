@@ -31,7 +31,6 @@ class CreateThis(OpcodeHandler):
             f'r{dest}', f"createThis(prototype={func_name}, constructor={new_target_name})",
         )
 
-        # variable = JSVariable(handler, entry.address, f'r{dest}', f"createThis({func_name}, {new_target_name});")
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

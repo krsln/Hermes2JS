@@ -62,21 +62,6 @@ class OpcodeHandler(ABC):
         return OpcodeResult(entry, variable)
 
     @classmethod
-    def resolve_function_args(cls, analysis: HermesAnalysis, regs: list[int]) -> list[str]:
-        args = []
-
-        for reg in regs:
-            variable = cls._get_register_variable(analysis, reg)
-
-            if variable:
-                variable.used = True
-                args.append(variable.value)
-            else:
-                args.append(f"r{reg}")
-
-        return args
-
-    @classmethod
     def get_register_variable(cls, analysis: HermesAnalysis, reg: int) -> JSVariable | None:
         variable = cls._get_register_variable(analysis, reg)
 

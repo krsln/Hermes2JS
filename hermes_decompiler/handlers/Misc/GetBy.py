@@ -60,7 +60,7 @@ class GetById(OpcodeHandler):
         # value = f"{base_value}.{prop_name}"
         value = MemberExpression(object=value_object, property=prop_name)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value, function_base, f".{prop_name}")
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
