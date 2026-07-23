@@ -21,6 +21,25 @@ class ControlFlowGraphBuilder:
     # See handlers/Jump/Jmp.py: JmpFalse.BuildCondition already wraps
     # the value in `!...`, so from the CFG's point of view every one of
     # these behaves identically - goto=TRUE_BRANCH, fallthrough=FALSE_BRANCH.
+    #
+    # BUG FIX (was): this set only had the plain Jmp* family
+    # (JmpTrue/JmpFalse/JmpUndefined/JmpBuiltinIs(Not)/JmpTypeOfIs) -
+    # it was missing the entire handlers/Jump/JCompare.py family
+    # (JEqual, JNotEqual, JStrictEqual, JStrictNotEqual, JLess*,
+    # JLessEqual*, JNotLess*, JNotLessEqual*, JGreater*, JGreaterEqual*,
+    # JNotGreater*, JNotGreaterEqual*, and every *Long/*N variant).
+    # JCompareX.handle() sets `goto` and builds the exact same
+    # "if (lhs OP rhs) { /* jump to label_X */ }" condition text shape
+    # as Jmp.py's ConditionalJump family - but because its handler
+    # names weren't in this set, `_connect()` classified its edges as
+    # UNCONDITIONAL+FALLTHROUGH instead of TRUE_BRANCH+FALSE_BRANCH,
+    # so `StructuralAnalyzer.is_if_header()` never recognized these
+    # blocks as conditionals at all. Confirmed against real output:
+    # a for-of loop's `JStrictEqual`-based exit check was left as
+    # raw, unprocessed instruction text sitting uselessly inside an
+    # infinite `while (true)` with no `break` - the loop-exit edge was
+    # silently dropped by the "multi-successor block, follow the first
+    # edge only" fallback in `_StructuralAnalyzer._advance_frame`.
     _CONDITIONAL_HANDLERS = {
         "JmpTrue", "JmpTrueLong",
         "JmpFalse", "JmpFalseLong",
@@ -28,6 +47,17 @@ class ControlFlowGraphBuilder:
         "JmpBuiltinIs", "JmpBuiltinIsLong",
         "JmpBuiltinIsNot", "JmpBuiltinIsNotLong",
         "JmpTypeOfIs",
+        # JCompare.py family
+        "JEqual", "JEqualLong", "JNotEqual", "JNotEqualLong",
+        "JStrictEqual", "JStrictEqualLong", "JStrictNotEqual", "JStrictNotEqualLong",
+        "JLess", "JLessLong", "JLessN", "JLessNLong",
+        "JLessEqual", "JLessEqualLong", "JLessEqualN",
+        "JNotLess", "JNotLessLong", "JNotLessN", "JNotLessNLong",
+        "JNotLessEqual", "JNotLessEqualLong", "JNotLessEqualN", "JNotLessEqualNLong",
+        "JGreater", "JGreaterLong", "JGreaterN", "JGreaterNLong",
+        "JGreaterEqual", "JGreaterEqualLong", "JGreaterEqualN", "JGreaterEqualNLong",
+        "JNotGreater", "JNotGreaterLong", "JNotGreaterN", "JNotGreaterNLong",
+        "JNotGreaterEqual", "JNotGreaterEqualLong", "JNotGreaterEqualN", "JNotGreaterEqualNLong",
     }
 
     @classmethod

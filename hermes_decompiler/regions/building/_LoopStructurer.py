@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from hermes_decompiler.regions.model.LoopRegion import LoopKind, LoopRegion
 from hermes_decompiler.regions.building._ControlFlowEdges import control_flow_edges
+from hermes_decompiler.cfg.EdgeKind import EdgeKind
 
 
 class LoopStructurer:
@@ -44,30 +45,18 @@ class LoopStructurer:
 
     def build(self, header_id: int) -> tuple[LoopRegion, int | None]:
 
-        # Mark this header as "in progress" for the whole time we're
-        # constructing it - including everything structure_range()
-        # recurses into below - so if the body's traversal walks back
-        # into this same header (irreducible/overlapping loop bodies,
-        # e.g. header 158's body also containing header 29 while we're
-        # still building 29), it gets treated as an ordinary block
-        # instead of re-triggering build() and recursing forever. See
-        # the in-progress-set comment in _StructuralAnalyzer.__init__.
-        self._a._loop_headers_in_progress.add(header_id)
-        try:
-            body = self._a.loops_by_header[header_id]
-            header_block = self._a.cfg.get_block(header_id)
+        body = self._a.loops_by_header[header_id]
+        header_block = self._a.cfg.get_block(header_id)
 
-            while_result = self._try_while(header_id, header_block, body)
-            if while_result is not None:
-                return while_result
+        while_result = self._try_while(header_id, header_block, body)
+        if while_result is not None:
+            return while_result
 
-            do_while_result = self._try_do_while(header_id, body)
-            if do_while_result is not None:
-                return do_while_result
+        do_while_result = self._try_do_while(header_id, body)
+        if do_while_result is not None:
+            return do_while_result
 
-            return self._build_infinite(header_id, body)
-        finally:
-            self._a._loop_headers_in_progress.discard(header_id)
+        return self._build_infinite(header_id, body)
 
     # ------------------------------------------------------------
 
@@ -82,14 +71,33 @@ class LoopStructurer:
         if len(in_body) != 1 or len(out_body) != 1:
             return None
 
-        # print("WHILE", header_id, "entry=", in_body[0].target, "exit=", out_body[0].target )
         condition = self._a.extract_condition(header_block)
+
+        # BUG FIX (was): `condition` is always the text for the edge
+        # that gets a `goto`, which is unconditionally TRUE_BRANCH
+        # (see ControlFlowGraphBuilder._connect / _CONDITIONAL_HANDLERS
+        # - the goto edge is TRUE_BRANCH, fallthrough is FALSE_BRANCH).
+        # A `while` loop's condition must mean "keep looping" - that's
+        # only the SAME as the raw extracted text when the edge that
+        # stays IN the body (`in_body`) is itself the TRUE_BRANCH one.
+        # For headers where staying in the body is the FALSE_BRANCH
+        # path instead (e.g. a for-of/for-in iterator-done check:
+        # `if (item === undefined) goto AFTER_LOOP` - true means EXIT,
+        # false/fallthrough means keep iterating), using the raw text
+        # unnegated produces an inverted, semantically wrong condition
+        # (confirmed via test: emitted `while (r13 === undefined)` for
+        # a loop that should run while r13 is NOT undefined). Wrapping
+        # in `!(...)` is a safe, always-correct general negation - not
+        # as idiomatic as flipping the operator (=== -> !==, < -> >=,
+        # etc.) would be, but unambiguous without parsing the
+        # condition's operator out of arbitrary expression text.
+        if in_body[0].kind == EdgeKind.FALSE_BRANCH:
+            condition = f"!({condition})"
 
         body_region, _ = self._a.structure_range(
             in_body[0].target,
             stop_id=header_id,
             bound=body,
-            active_loop_header=header_id,
         )
 
         region = LoopRegion(kind=LoopKind.WHILE, condition=condition, body=body_region)
@@ -104,9 +112,17 @@ class LoopStructurer:
         latch_block = self._a.cfg.get_block(latch_id)
         condition = self._a.extract_condition(latch_block)
 
+        continue_edges = [e for e in control_flow_edges(latch_block) if e.target in body]
         exit_edges = [e for e in control_flow_edges(latch_block) if e.target not in body]
-        if len(exit_edges) != 1:
+        if len(exit_edges) != 1 or len(continue_edges) != 1:
             return None
+
+        # Same polarity fix as _try_while: `do { } while (condition)`
+        # must mean "keep looping while condition holds" - only true
+        # unnegated when the edge that loops back to the header
+        # (`continue_edges`) is itself TRUE_BRANCH.
+        if continue_edges[0].kind == EdgeKind.FALSE_BRANCH:
+            condition = f"!({condition})"
 
         # Structure the body starting at the header, but tell
         # structure_range to treat this specific visit to `header_id`

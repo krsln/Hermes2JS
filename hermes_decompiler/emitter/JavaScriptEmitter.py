@@ -15,6 +15,15 @@ from hermes_decompiler.regions.visitor.RegionVisitor import RegionVisitor
 # `goto label_X;` / `if (...) { /* jump ... */ }` text must NOT be
 # re-emitted here, or the control flow they represent would appear
 # twice: once as the structured if/while, and once as leftover text.
+# BUG FIX (was): missing the handlers/Jump/JCompare.py family
+# (JEqual/JNotEqual/JStrictEqual/JStrictNotEqual/JLess*/JGreater*/...).
+# Kept in sync with ControlFlowGraphBuilder._CONDITIONAL_HANDLERS -
+# see that set's comment for the full story. Without this, a
+# JCompare-family conditional that ControlFlowGraphBuilder now
+# correctly recognizes as an if-header still leaked its raw
+# "if (lhs OP rhs) { /* jump to label_X */ }" instruction text into
+# the output a second time, on top of the properly structured
+# IfRegion/IfElseRegion/LoopRegion condition built from it.
 _STRUCTURAL_JUMP_HANDLERS = {
     "Jmp", "JmpLong",
     "JmpTrue", "JmpTrueLong",
@@ -23,6 +32,16 @@ _STRUCTURAL_JUMP_HANDLERS = {
     "JmpBuiltinIs", "JmpBuiltinIsLong",
     "JmpBuiltinIsNot", "JmpBuiltinIsNotLong",
     "JmpTypeOfIs",
+    "JEqual", "JEqualLong", "JNotEqual", "JNotEqualLong",
+    "JStrictEqual", "JStrictEqualLong", "JStrictNotEqual", "JStrictNotEqualLong",
+    "JLess", "JLessLong", "JLessN", "JLessNLong",
+    "JLessEqual", "JLessEqualLong", "JLessEqualN",
+    "JNotLess", "JNotLessLong", "JNotLessN", "JNotLessNLong",
+    "JNotLessEqual", "JNotLessEqualLong", "JNotLessEqualN", "JNotLessEqualNLong",
+    "JGreater", "JGreaterLong", "JGreaterN", "JGreaterNLong",
+    "JGreaterEqual", "JGreaterEqualLong", "JGreaterEqualN", "JGreaterEqualNLong",
+    "JNotGreater", "JNotGreaterLong", "JNotGreaterN", "JNotGreaterNLong",
+    "JNotGreaterEqual", "JNotGreaterEqualLong", "JNotGreaterEqualN", "JNotGreaterEqualNLong",
 }
 
 
@@ -321,7 +340,7 @@ class JavaScriptEmitter(RegionVisitor):
 
         if variable.used:
             if self.verbose:
-                self._write(f"// USED → {result.result}")
+                self._write(f"// USED -> {result.result}")
             return
 
         self._write(result.result)
@@ -335,7 +354,7 @@ class JavaScriptEmitter(RegionVisitor):
 
     def _verbose_code(self, result):
         if self.verbose:
-            self._write(f"// CODE → {self._original_bytecode(result)}")
+            self._write(f"// CODE -> {self._original_bytecode(result)}")
 
     def _nested(self, region):
         """
