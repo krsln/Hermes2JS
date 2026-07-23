@@ -32,28 +32,6 @@ class JSRenderer:
         self._render_region(root, output, 1)
         return output
 
-    # ---------------------------------------------------------
-    def _render_block(self, block: BasicBlock, output, indent):
-
-        if self.verbose:
-            output.append(f"{'    ' * indent}// Block {block.id}")
-
-        for result in block.instructions:
-            self._render_instruction(result, output, indent)
-
-    def _render_instruction(self, result, output, indent):
-        prefix = "    " * indent
-
-        if self.verbose and hasattr(result, "comment"):
-            if result.comment:
-                output.append(prefix + "// " + result.comment)
-
-        if hasattr(result, "result"):
-            output.append(prefix + result.result)
-
-        else:
-            output.append(prefix + str(result))
-
     def _render_region(self, region, output, indent):
 
         if isinstance(region, SequenceRegion):
@@ -71,8 +49,6 @@ class JSRenderer:
             #     f"Unsupported region: {type(region).__name__}"
             # )
 
-    # ---------------------------------------------------------
-
     def _render_sequence(self, region, output, indent):
         current_block = None
 
@@ -82,18 +58,16 @@ class JSRenderer:
             else:
                 if self.verbose and hasattr(item, "block") and item.block is not current_block:
                     current_block = item.block
-                    output.append(f"{'    ' * indent}// Block {current_block.id}")
+                    output.append(f"{'    ' * indent}// ───── Block {current_block.id} ───── ")
 
                 self._render_statement(item, output, indent)
-
-    # ---------------------------------------------------------
 
     def _render_loop(self, region: LoopRegion, output, indent):
         prefix = "    " * indent
 
         kind = region.loop_kind
         if self.verbose:
-            output.append(f"{prefix}// Loop ({kind})")
+            output.append(f"{prefix}// Loop ({kind.value if kind else "unknown"})")
 
         if kind == LoopKind.WHILE:
             cond = region.condition or "true"
@@ -105,8 +79,6 @@ class JSRenderer:
         self._render_region(region.body, output, indent + 1)
 
         output.append(f"{prefix}}} /* EndLoop */")
-
-    # ---------------------------------------------------------
 
     def _render_if(self, region: IfRegion, output, indent):
         prefix = "    " * indent
@@ -120,8 +92,6 @@ class JSRenderer:
 
         output.append(prefix + "}")
 
-    # ---------------------------------------------------------
-
     def _render_statement(self, stmt, output, indent):
         prefix = "    " * indent
 
@@ -129,7 +99,7 @@ class JSRenderer:
             if self.verbose:
                 bytecode = stmt.result.opcode.bytecode
                 bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
-                output.append(prefix + f"// CODE → {bytecode}")
+                output.append(prefix + f"// {bytecode}")
             if stmt.result.variable.used:
                 if self.verbose:
                     output.append(prefix + f"// ELIDED → {stmt.result.result}")
