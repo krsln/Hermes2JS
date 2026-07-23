@@ -29,6 +29,7 @@ class StoreToEnvironment(OpcodeHandler):
         env_reg, slot, value_reg = map(int, match.groups())
         env = self.get_register_value(analysis, env_reg)
         value = self.get_register_value(analysis, value_reg)
+
         expression = f"{env}[{slot}] = {value};"
 
         variable = JSVariable(self.__class__.__name__, entry.address, "", expression)

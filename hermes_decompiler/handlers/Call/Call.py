@@ -38,27 +38,10 @@ class CallX(OpcodeHandler):
         func_name = self.get_register_value(analysis, func_reg)
         func_name_str = str(func_name)
 
-        print(callee, func_name)
-
         arg_list = [
             self.get_register_value_new(analysis, reg)
             for reg in arg_regs
         ]
-
-        # Special handling for HermesInternal.concat
-        if func_name_str == "this.HermesInternal.concat":
-            # Argument'leri string'e dönüştür
-            checked_args = [str(arg) for arg in arg_list if str(arg) != '""']
-            template_parts = []
-            for arg in checked_args:
-                if arg.startswith('"') and arg.endswith('"'):
-                    template_parts.append(arg[1:-1])
-                else:
-                    template_parts.append(f"${{{arg}}}")
-            template_str = f"`{''.join(template_parts)}`"
-            variable = JSVariable(handler, entry.address, f'r{dest_reg}', template_str)
-            analysis.add_result(entry, variable)
-            return OpcodeResult(entry, variable)
 
         # argList içindeki Value objelerini karşılaştırma ve join için string'e çevirelim
         argList_str = [str(arg) for arg in arg_list]
@@ -76,6 +59,9 @@ class CallX(OpcodeHandler):
         args_str = ", ".join(checked_args)
         value = f"{func_name}({args_str})"
         # value = CallExpression(callee=callee, arguments=arg_list)
+
+        if callee != func_name:
+            print(callee, func_name)
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
