@@ -1302,38 +1302,38 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 92, UInt8: 14>
     // USED → r0 = getEnvironment(0)[14]
     // CODE → <Call3>: <Reg8: 9, Reg8: 0, Reg8: 91, Reg8: 102, Reg8: 9>
-    // USED → r9 = getEnvironment(0)[14](undefined, r102, 1732584193)
+    // USED → r9 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 1732584193)
     // CODE → <Call3>: <Reg8: 8, Reg8: 0, Reg8: 91, Reg8: 101, Reg8: 8>
-    // USED → r8 = getEnvironment(0)[14](undefined, r101, -271733879)
+    // USED → r8 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -271733879)
     // CODE → <Call3>: <Reg8: 7, Reg8: 0, Reg8: 91, Reg8: 100, Reg8: 7>
-    // USED → r7 = getEnvironment(0)[14](undefined, r100, -1732584194)
+    // USED → r7 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -1732584194)
     // CODE → <Call3>: <Reg8: 6, Reg8: 0, Reg8: 91, Reg8: 99, Reg8: 6>
-    // USED → r6 = getEnvironment(0)[14](undefined, r99, 271733878)
+    // USED → r6 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 271733878)
     // CODE → <Add>: <Reg8: 5, Reg8: 5, Reg8: 42>
     // USED → r5 = 0 + 16
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
     // USED → r0 = r98.length
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-    // USED → r4 = getEnvironment(0)[14](undefined, r102, 1732584193)
+    // USED → r4 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 1732584193)
     // CODE → <Mov>: <Reg8: 3, Reg8: 8>
-    // USED → r3 = getEnvironment(0)[14](undefined, r101, -271733879)
+    // USED → r3 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -271733879)
     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
-    // USED → r2 = getEnvironment(0)[14](undefined, r100, -1732584194)
+    // USED → r2 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -1732584194)
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
-    // USED → r1 = getEnvironment(0)[14](undefined, r99, 271733878)
+    // USED → r1 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 271733878)
     // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
     if (0 + 16 < r98.length) { /* jump to label_566 */ }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
     // USED → r0 = [] /* capacity hint: 4 */
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 4, UInt8: 0>
-    // USED → r0 = [getEnvironment(0)[14](undefined, r102, 1732584193)]
+    // USED → r0 = [getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 1732584193)] /* capacity hint: 4 */
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 3, UInt8: 1>
-    // USED → r0 = [getEnvironment(0)[14](undefined, getEnvironment(0)[14](undefined, r101, -271733879), 1732584193)]
+    // USED → r0 = [getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 1732584193), getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -271733879)] /* capacity hint: 4 */
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 2, UInt8: 2>
-    // USED → r0 = [getEnvironment(0)[14](undefined, getEnvironment(0)[14](undefined, getEnvironment(0)[14](undefined, r100, -1732584194), -271733879), 1732584193)]
+    // USED → r0 = [getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 1732584193), getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -271733879), getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -1732584194)] /* capacity hint: 4 */
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 1, UInt8: 3>
-    // USED → r0 = [getEnvironment(0)[14](undefined, getEnvironment(0)[14](undefined, getEnvironment(0)[14](undefined, getEnvironment(0)[14](undefined, r99, 271733878), -1732584194), -271733879), 1732584193)]
+    // USED → r0 = [getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 1732584193), getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -271733879), getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -1732584194), getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 271733878)] /* capacity hint: 4 */
     // CODE → <Ret>: <Reg8: 0>
-    return [getEnvironment(0)[14](undefined, getEnvironment(0)[14](undefined, getEnvironment(0)[14](undefined, getEnvironment(0)[14](undefined, r99, 271733878), -1732584194), -271733879), 1732584193)];
+    return [getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 1732584193), getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -271733879), getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), -1732584194), getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 271733878)] /* capacity hint: 4 */;
 }

@@ -2,6 +2,7 @@ import re
 from typing import Dict
 
 from hermes_decompiler.ir.Expressions import CallExpression
+from hermes_decompiler.ir.Values import RegisterValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -65,11 +66,7 @@ class Call(CallX):
 
     _PATTERN = sequence(REG, REG, UINT8)
 
-    def handle(
-            self,
-            analysis: HermesAnalysis,
-            entry: OpcodeEntry,
-    ) -> OpcodeResult:
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
@@ -79,20 +76,19 @@ class Call(CallX):
         dest_reg, func_reg, num_args = map(int, match.groups())
 
         callee = self.get_register_value_new(analysis, func_reg)
-        arg_regs = range(func_reg - num_args, func_reg)
-
-
+        arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
         arguments = [
-            self.get_register_value_new(analysis, reg)
-            for reg in arg_regs
+            RegisterValue(r)
+            for r in arg_regs
         ]
+        # arguments = [
+        #     self.get_register_value_new(analysis, reg)
+        #     for reg in arg_regs
+        # ]
 
-
-        # value = CallExpression(callee=callee, arguments=arguments)
-        value = CallExpression(callee=callee, arguments=[])
+        value = CallExpression(callee=callee, arguments=arguments)
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
-
 
         return OpcodeResult(entry, variable)
 

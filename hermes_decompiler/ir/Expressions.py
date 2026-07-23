@@ -76,13 +76,16 @@ class IndexExpression(Expression):
 @dataclass(frozen=True)
 class CallExpression(Expression):
     callee: Value
-    arguments: list[Value]
+    arguments: list[Value | str]
 
     # None => normal çağrı
     this_arg: Value | None = None
 
     def render(self):
-        args = ", ".join(arg.render() for arg in self.arguments)
+        args = ", ".join(
+            arg.render() if isinstance(arg, Value) else arg
+            for arg in self.arguments
+        )
 
         if self.this_arg is not None:
             values = [self.this_arg.render()]

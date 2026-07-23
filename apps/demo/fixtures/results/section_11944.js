@@ -15,7 +15,7 @@ function function_11944(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 2, Reg8: 1>
     // USED → r1 = getEnvironment(1)[0].default(undefined, r1)
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 1>
-    createEnvironment()[0] = getEnvironment(1)[0].default(undefined, r1);
+    createEnvironment()[0] = getEnvironment(1)[0].default(undefined, r1)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11945>  # Function: [#11945 request of 30 bytes]: 3 params @ offset 0x00189110
     // USED → r0 = request /* Closure with env r0 = createEnvironment() */
     // CODE → <Ret>: <Reg8: 0>
