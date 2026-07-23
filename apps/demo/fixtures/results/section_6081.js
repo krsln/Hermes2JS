@@ -33,20 +33,20 @@ function processColorsInProps(param0, param1) {
         // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 17>
         // USED → r12 = getEnvironment(1)[17]
         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 148>  # String: 'includes' (Identifier)
-        // USED → r11 = r12.includes
+        // USED → r11 = getEnvironment(1)[17].includes
         // CODE → <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 13>
-        // USED → r11 = r12.includes(r13)
+        // USED → r11 = getEnvironment(1)[17].includes(r13)
         // CODE → <JmpTrue>: <Addr8: 98, Reg8: 11>  # Address: 0000009e
-        if (r12.includes(r13)) { /* jump to label_158 */ }
+        if (getEnvironment(1)[17].includes(r13)) { /* jump to label_158 */ }
         // ──────────────── Block 3 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 18>
         // USED → r12 = getEnvironment(1)[18]
         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
         // USED → r11 = HermesPropertyIterator(param1).next()
         // CODE → <GetByVal>: <Reg8: 11, Reg8: 12, Reg8: 11>
-        // USED → r11 = r12[r11]
+        // USED → r11 = getEnvironment(1)[18][r11]
         // CODE → <JmpFalse>: <Addr8: -46, Reg8: 11>  # Address: 0000001c
-        if (!r12[r11]) { /* jump to label_28 */ }
+        if (!getEnvironment(1)[18][r11]) { /* jump to label_28 */ }
         // ──────────────── Block 4 ──────────────── 
         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
         // USED → r11 = HermesPropertyIterator(param1).next()
@@ -73,26 +73,26 @@ function processColorsInProps(param0, param1) {
             // CODE → <Mov>: <Reg8: 13, Reg8: 7>
             // USED → r13 = HermesPropertyIterator(param1).next()
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 13>
-            // USED → r13 = r15[r13]
+            // USED → r13 = getEnvironment(1)[18][r13]
             // CODE → <Mov>: <Reg8: 9, Reg8: 13>
-            // USED → r9 = r15[r13]
+            // USED → r9 = getEnvironment(1)[18][r13]
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 13>
-            // USED → r13 = r14[r15[r13]]
+            // USED → r13 = r14[getEnvironment(1)[18][r13]]
             // CODE → <JStrictEqual>: <Addr8: 27, Reg8: 13, Reg8: 0>  # Address: 00000095
-            if (r14[r15[r13]] === undefined) { /* jump to label_149 */ }
+            if (r14[getEnvironment(1)[18][r13]] === undefined) { /* jump to label_149 */ }
             // ──────────────── Block 7 ──────────────── 
             // CODE → <Mov>: <Reg8: 15, Reg8: 8>
             // USED → r15 = GetIterator(r10[r11]).next()
             // CODE → <Mov>: <Reg8: 14, Reg8: 9>
-            // USED → r14 = r15[r13]
+            // USED → r14 = getEnvironment(1)[18][r13]
             // CODE → <LoadFromEnvironment>: <Reg8: 16, Reg8: 1, UInt8: 36>
             // USED → r16 = getEnvironment(1)[36]
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 14>
-            // USED → r13 = r15[r15[r13]]
+            // USED → r13 = r15[getEnvironment(1)[18][r13]]
             // CODE → <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
-            // USED → r13 = getEnvironment(1)[36](r15[r15[r13]])
+            // USED → r13 = getEnvironment(1)[36](r15[getEnvironment(1)[18][r13]])
             // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
-            GetIterator(r10[r11]).next()[r15[r13]] = getEnvironment(1)[36](r15[r15[r13]])
+            GetIterator(r10[r11]).next()[getEnvironment(1)[18][r13]] = getEnvironment(1)[36](r15[getEnvironment(1)[18][r13]])
             // ──────────────── Block 8 ──────────────── 
             // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
             goto label_90;
