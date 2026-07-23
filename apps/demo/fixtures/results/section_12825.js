@@ -47,16 +47,16 @@ function function_12825(param0, param1, param2, param3, param4) {
         // CODE → <Call2>: <Reg8: 1, Reg8: 11, Reg8: 6, Reg8: 1>
         // USED → r1 = r11.pop.call(this, r2.slice.call(this, param1))(param2)
         // CODE → <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
-        // USED → r0 = r11.pop.call(this, r2.slice.call(this, param1))(param2) === false
+        // USED → r0 = r1 === false
         // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
         goto label_122;
         // LOOP → START (while)
-        while (!r11.pop.call(this, r2.slice.call(this, param1))(param2) === false) {
+        while (!r1 === false) {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-            // USED → r1 = r11.pop.call(this, r2.slice.call(this, param1))(param2) === false
+            // USED → r1 = r1 === false
             // CODE → <JmpFalse>: <Addr8: -86, Reg8: 1>  # Address: 00000027
-            if (!r11.pop.call(this, r2.slice.call(this, param1))(param2) === false) { /* jump to label_39 */ }
+            if (!r1 === false) { /* jump to label_39 */ }
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Catch>: <Reg8: 12>
             // USED → r12 = caughtException
@@ -84,5 +84,5 @@ function function_12825(param0, param1, param2, param3, param4) {
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
-    return r11.pop.call(this, r2.slice.call(this, param1))(param2) === false;
+    return r1 === false;
 }

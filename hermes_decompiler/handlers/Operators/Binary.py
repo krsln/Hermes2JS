@@ -1,3 +1,4 @@
+from hermes_decompiler.ir.Expressions import ComparisonExpression, BinaryExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -11,6 +12,7 @@ class BinaryOperator(OpcodeHandler):
     """Base class for binary register operations."""
 
     _PATTERN = sequence(REG, REG, REG)
+    _COMPARISON_OPERATORS = ["<" "<=", ">", ">=", "==", "===", "!=", "!==", "instanceof", "in"]
 
     operator = "+"
 
@@ -23,10 +25,16 @@ class BinaryOperator(OpcodeHandler):
 
         dest, lhs, rhs = map(int, match.groups())
 
-        lhs_val = self.get_register_value(analysis, lhs) or f"r{lhs}"
-        rhs_val = self.get_register_value(analysis, rhs) or f"r{rhs}"
+        lhs_val = self.get_register_value_new(analysis, lhs)
+        rhs_val = self.get_register_value_new(analysis, rhs)
 
-        variable = JSVariable(handler, entry.address, f"r{dest}", f"{lhs_val} {self.operator} {rhs_val}")
+        # value = f"{lhs_val} {self.operator} {rhs_val}"
+        if self.operator in self._COMPARISON_OPERATORS:
+            value = ComparisonExpression(left=lhs_val, operator=self.operator, right=rhs_val)
+        else:
+            value = BinaryExpression(left=lhs_val, operator=self.operator, right=rhs_val)
+
+        variable = JSVariable(handler, entry.address, f"r{dest}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

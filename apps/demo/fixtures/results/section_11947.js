@@ -52,9 +52,9 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = r3.Error
     // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
-    // USED → r4 = caughtException instanceof r3.Error
+    // USED → r4 = r7 instanceof r3.Error
     // CODE → <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
-    if (!caughtException instanceof r3.Error) { /* jump to label_316 */ }
+    if (!r7 instanceof r3.Error) { /* jump to label_316 */ }
     // ──────────────── Block 6 ──────────────── 
     // CODE → <NewObject>: <Reg8: 6>
     r6 = {}
@@ -162,11 +162,11 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
     // USED → r2 = "\\n"
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = "\\n" + r6.stack.replace(/^.+\\n/, "")
+    // USED → r2 = "\\n" + r5
     // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
-    // USED → r2 = r3.stack + "\\n" + r6.stack.replace(/^.+\\n/, "")
+    // USED → r2 = r3.stack + "\\n" + r5
     // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r3 = { stack: r3.stack + "\\n" + r6.stack.replace(/^.+\\n/, "") }
+    r3 = { stack: r3.stack + "\\n" + r5 }
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
     goto label_316;
