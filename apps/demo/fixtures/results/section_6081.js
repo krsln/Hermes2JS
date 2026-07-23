@@ -9,7 +9,8 @@ function processColorsInProps(param0, param1) {
     r1 = getEnvironment(1)
     r6 = Object.keys(r10) /* for-in property list */
     if (Object.keys(r10) /* for-in property list */ === undefined) { /* jump to label_183 */ }
-    // Loop (while)
+    // Loop (LoopKind.WHILE)
+    while (Object.keys(r10) /* for-in property list */.next() /* for-in step */ === undefined) {
         // Block 1
         r2 = Object.keys(r10) /* for-in property list */.next() /* for-in step */
         if (Object.keys(r10) /* for-in property list */.next() /* for-in step */ === undefined) { /* jump to label_183 */ }
@@ -30,7 +31,8 @@ function processColorsInProps(param0, param1) {
         r13 = r10[r11]
         r11 = r13
         r12 = GetIterator(r13)
-        // Loop (while)
+        // Loop (LoopKind.WHILE)
+        while (r12 === undefined) {
             // Block 5
             r14 = GetIterator(r13).next()
             r13 = r12
@@ -52,8 +54,9 @@ function processColorsInProps(param0, param1) {
             r8[r9] = r16(r15[r14])
             // Block 8
             goto label_90;
-        // EndLoop
-        // Loop (None)
+        } /* EndLoop */
+        // Loop (LoopKind.WHILE)
+        while (true) {
             // Block 10
             r12 = r7
             r13 = r1[36]
@@ -65,8 +68,8 @@ function processColorsInProps(param0, param1) {
             r11 = caughtException
             // Error: IteratorClose at address 153: Invalid arguments: Reg8: 12, UInt8: 1
             r11 = throw caughtException
-        // EndLoop
-    // EndLoop
+        } /* EndLoop */
+    } /* EndLoop */
     // Block 11
     return undefined;
 }

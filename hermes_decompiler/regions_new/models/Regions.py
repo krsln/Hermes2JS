@@ -46,7 +46,7 @@ class LoopRegion(Region):
         self.header_block = loop.header
 
         self.condition = None
-        self.loop_kind = None
+        self.loop_kind = LoopKind.WHILE
         self.body = SequenceRegion()
 
         self.exits = list(loop.exits)

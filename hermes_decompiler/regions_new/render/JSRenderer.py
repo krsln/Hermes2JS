@@ -142,16 +142,17 @@ class JSRenderer:
             output,
             indent,
     ):
+        prefix = "    " * indent
         kind = region.loop_kind
         if self.verbose:
-            output.append(f"{'    ' * indent}// Loop ({kind})")
+            output.append(f"{prefix}// Loop ({kind})")
 
         if kind == LoopKind.WHILE:
             cond = region.condition or "true"
-            output.append(f"{indent}while ({cond}) {{")
+            output.append(f"{prefix}while ({cond}) {{")
 
         elif kind == LoopKind.DO_WHILE:
-            output.append(f"{indent}do {{")
+            output.append(f"{prefix}do {{")
 
         self._render_region(
             region.body,
@@ -159,8 +160,7 @@ class JSRenderer:
             indent + 1,
         )
 
-        if self.verbose:
-            output.append(f"{'    ' * indent}// EndLoop")
+        output.append(f"{prefix}}} /* EndLoop */")
 
     # ---------------------------------------------------------
 

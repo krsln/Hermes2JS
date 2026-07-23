@@ -2,7 +2,7 @@ import re
 
 from hermes_decompiler.regions_new.models.Regions import (
     SequenceRegion,
-    LoopRegion,
+    LoopRegion, LoopKind,
 )
 
 
@@ -52,4 +52,4 @@ class LoopConditionExtractor:
 
         loop.condition = match.group(1).strip()
 
-        loop.loop_kind = "while"
+        loop.loop_kind = LoopKind.WHILE
