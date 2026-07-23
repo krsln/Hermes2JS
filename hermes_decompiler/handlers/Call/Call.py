@@ -47,11 +47,29 @@ class CallX(OpcodeHandler):
 # DEFINE_OPCODE_3(Call, Reg8, Reg8, UInt8)
 # Example: <Call>: <Reg8: 4, Reg8: 9, UInt8: 6>
 class Call(CallX):
-    """The same semantics as CallX but with a runtime-determined argument count
-    (UInt8) instead of a fixed arity."""
+    """
+    Runtime argument count variant.
+
+    Hermes layout:
+
+        [arg1][arg2]...[argN][callee]
+
+    Example:
+
+        Call r4, r9, 6
+
+    means
+
+        r4 = r9(r3, r4, r5, r6, r7, r8)
+    """
+
     _PATTERN = sequence(REG, REG, UINT8)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(
+            self,
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
+    ) -> OpcodeResult:
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
@@ -59,16 +77,17 @@ class Call(CallX):
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, func_reg, num_args = map(int, match.groups())
-        func_name = self.get_register_value_new(analysis, func_reg)
 
-        arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
-        arg_list = [f"r{r}" for r in arg_regs]
-        args_str = ", ".join(arg_list)
+        callee = self.get_register_value_new(analysis, func_reg)
+        arg_regs = range(func_reg - num_args, func_reg)
 
-        value = f"{func_name}({args_str})"
-        # value = CallExpression(callee=func_name, arguments=arg_list)
+        arguments = [
+            self.get_register_value_new(analysis, reg)
+            for reg in arg_regs
+        ]
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
+        value = CallExpression(callee=callee, arguments=arguments)
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
