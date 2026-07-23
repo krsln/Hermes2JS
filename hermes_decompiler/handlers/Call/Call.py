@@ -81,14 +81,18 @@ class Call(CallX):
         callee = self.get_register_value_new(analysis, func_reg)
         arg_regs = range(func_reg - num_args, func_reg)
 
+
         arguments = [
             self.get_register_value_new(analysis, reg)
             for reg in arg_regs
         ]
 
-        value = CallExpression(callee=callee, arguments=arguments)
+
+        # value = CallExpression(callee=callee, arguments=arguments)
+        value = CallExpression(callee=callee, arguments=[])
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
+
 
         return OpcodeResult(entry, variable)
 

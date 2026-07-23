@@ -16,6 +16,7 @@ class Value(ABC):
         ...
 
     def __str__(self):
+        # print(type(self).__name__)
         return self.render()
 
 
@@ -74,6 +75,7 @@ class IdentifierValue(Value):
     def render(self) -> str:
         return self.name
 
+
 @dataclass(frozen=True)
 class ClosureValue(Value):
     name: str
@@ -93,6 +95,7 @@ class ClosureValue(Value):
                 f"/* Closure with env {self.environment.render()} */"
             )
         return self.name
+
 
 @dataclass(frozen=True)
 class RegExpValue(Value):

@@ -1,4 +1,5 @@
-from hermes_decompiler.Logger import logger
+from hermes_decompiler.ir.Expressions import AssignmentExpression, IndexExpression
+from hermes_decompiler.ir.Values import ArrayValue, UndefinedValue, ConstantValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -28,38 +29,30 @@ class PutOwnByIndex(OpcodeHandler):
 
         dest_reg, value_reg, index = map(int, match.groups())
 
-        reg_var = self.get_register_variable(analysis, value_reg)
-        reg_value = str(reg_var.value) if reg_var and reg_var.value is not None else 'undefined'
+        value = self.get_register_value_new(analysis, value_reg)
+        array = self.get_register_value_new(analysis, dest_reg)
 
-        elements = self._parse_array_elements(self.get_register_variable(analysis, dest_reg), handler, entry)
+        if isinstance(array, ArrayValue):
+            while len(array.elements) <= index:
+                array.elements.append(UndefinedValue())
 
-        # Extend array if needed
-        if index >= len(elements):
-            elements.extend(['undefined'] * (index - len(elements) + 1))
+            array.elements[index] = value
+            result = array
 
-        elements[index] = reg_value
+        else:
+            result = AssignmentExpression(
+                left=IndexExpression(
+                    object=array,
+                    index=ConstantValue(index),
+                ),
+                operator="=",
+                right=value
+            )
 
-        js_array = "[" + ", ".join(elements) + "]"
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', result)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
-
-    @staticmethod
-    def _parse_array_elements(dest_var: JSVariable | None, handler: str, entry: OpcodeEntry) -> list[str]:
-        if not dest_var or not dest_var.value:
-            return []
-
-        text = dest_var.value.split(" /* capacity hint:", 1)[0].strip()
-
-        if not (text.startswith('[') and text.endswith(']')):
-            logger.warning(
-                f"{handler} at {entry.address}: Not a recognizable array literal. Starting fresh."
-            )
-            return []
-
-        inner = text[1:-1].strip()
-        return [part.strip() for part in inner.split(",") if part.strip()]
 
 
 class PutOwnByIndexL(PutOwnByIndex):
