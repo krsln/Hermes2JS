@@ -33,7 +33,7 @@ class PostfixUnaryExpression(Expression):
 
 
 @dataclass(frozen=True)
-class UnaryExpression(Value):
+class UnaryExpression(Expression):
     operator: str
     operand: Value
 
@@ -42,7 +42,7 @@ class UnaryExpression(Value):
 
 
 @dataclass(frozen=True)
-class BinaryExpression(Value):
+class BinaryExpression(Expression):
     left: Value
     operator: str
     right: Value
@@ -57,7 +57,7 @@ class ComparisonExpression(BinaryExpression):
 
 
 @dataclass(frozen=True)
-class MemberExpression(Value):
+class MemberExpression(Expression):
     object: Value
     property: str
 
@@ -66,7 +66,7 @@ class MemberExpression(Value):
 
 
 @dataclass(frozen=True)
-class IndexExpression(Value):
+class IndexExpression(Expression):
     object: Value
     index: Value
 
@@ -75,25 +75,17 @@ class IndexExpression(Value):
 
 
 @dataclass(frozen=True)
-class CallExpression(Value):
+class CallExpression(Expression):
     callee: Value
-    arguments: tuple[Value, ...]
-
-    @property
-    def inlineable(self):
-        return False
+    arguments: list[Value]
 
     def render(self):
-        args = ", ".join(
-            arg.render()
-            for arg in self.arguments
-        )
-
+        args = ", ".join(arg.render() for arg in self.arguments)
         return f"{self.callee.render()}({args})"
 
 
 @dataclass(frozen=True)
-class IteratorNextExpression(Value):
+class IteratorNextExpression(Expression):
     iterator: Value
 
     @property
@@ -104,14 +96,24 @@ class IteratorNextExpression(Value):
         return f"{self.iterator.render()}.next()"
 
 
-# @dataclass(frozen=True)
-# class NewExpression(Value):
-#     constructor: Value
-#     arguments: tuple[Value, ...]
-#
-#     @property
-#     def inlineable(self):
-#         return False
-#
-#     def render(self):
-#         pass
+@dataclass(frozen=True)
+class NewExpression(Expression):
+    constructor: Value
+    arguments: list[Value]
+
+    def render(self):
+        args = ", ".join(a.render() for a in self.arguments)
+        return f"new {self.constructor.render()}({args})"
+
+# AssignmentExpression(
+#     target=IndexExpression(...),
+#     value=value
+# )
+# ConditionalExpression(
+#     condition=...,
+#     when_true=...,
+#     when_false=...
+# )
+# ArrayExpression(
+#     elements=[...]
+# )
