@@ -77,6 +77,7 @@ class HermesAnalysis:
 
     def generate_js(self, verbose: bool = False) -> list[str]:
         return self.generate_js_v1_new(verbose)
+        # return self.generate_js_v2(verbose)
 
     def generate_js_v2(self, verbose: bool = False) -> list[str]:
         #
