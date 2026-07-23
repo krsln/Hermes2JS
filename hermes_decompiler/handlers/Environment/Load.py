@@ -29,10 +29,10 @@ class LoadFromEnvironment(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, env_reg, slot = map(int, match.groups())
-        callee = self.get_register_value_new(analysis, env_reg)
+        env = self.get_register_value_new(analysis, env_reg)
 
-        # value = f"{callee}[{slot}]"
-        value = IndexExpression(object=callee, index=ConstantValue(slot))
+        # value = f"{env}[{slot}]"
+        value = IndexExpression(object=env, index=ConstantValue(slot))
 
         variable = JSVariable(self.__class__.__name__, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
