@@ -58,7 +58,7 @@ class JSRenderer:
             else:
                 if self.verbose and hasattr(item, "block") and item.block is not current_block:
                     current_block = item.block
-                    output.append(f"{'    ' * indent}// ───── Block {current_block.id} ───── ")
+                    output.append(f"{'    ' * indent}// ──────────────── Block {current_block.id} ──────────────── ")
 
                 self._render_statement(item, output, indent)
 
@@ -67,7 +67,7 @@ class JSRenderer:
 
         kind = region.loop_kind
         if self.verbose:
-            output.append(f"{prefix}// Loop ({kind.value if kind else "unknown"})")
+            output.append(f"{prefix}// LOOP → START ({kind.value if kind else "unknown"})")
 
         if kind == LoopKind.WHILE:
             cond = region.condition or "true"
@@ -78,7 +78,8 @@ class JSRenderer:
 
         self._render_region(region.body, output, indent + 1)
 
-        output.append(f"{prefix}}} /* EndLoop */")
+        output.append(f"{prefix}}}")
+        output.append(f"{prefix}// LOOP → END")
 
     def _render_if(self, region: IfRegion, output, indent):
         prefix = "    " * indent
@@ -99,10 +100,10 @@ class JSRenderer:
             if self.verbose:
                 bytecode = stmt.result.opcode.bytecode
                 bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
-                output.append(prefix + f"// {bytecode}")
+                output.append(prefix + f"// LINE → {bytecode}")
             if stmt.result.variable.used:
                 if self.verbose:
-                    output.append(prefix + f"// ELIDED → {stmt.result.result}")
+                    output.append(prefix + f"// USED → {stmt.result.result}")
             else:
                 output.append(prefix + stmt.result.result)
 
