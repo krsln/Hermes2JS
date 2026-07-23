@@ -126,7 +126,15 @@ class JSRenderer:
         prefix = "    " * indent
 
         if isinstance(stmt, InstructionStatement):
-            output.append(prefix + stmt.result.result)
+            if self.verbose:
+                bytecode = stmt.result.opcode.bytecode
+                bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
+                output.append(prefix + f"// CODE → {bytecode}")
+            if stmt.result.variable.used:
+                if self.verbose:
+                    output.append(prefix + f"// USED → {stmt.result.result}")
+            else:
+                output.append(prefix + stmt.result.result)
 
         elif isinstance(stmt, ReturnStatement):
             if stmt.value is None:
