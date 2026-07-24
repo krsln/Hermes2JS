@@ -1,6 +1,6 @@
 from typing import Dict, Any
 
-from hermes_decompiler.ir.Values import Value
+from hermes_decompiler.ir import Expression
 
 
 class JSVariable:
@@ -11,7 +11,7 @@ class JSVariable:
             handler: str,
             address: int,
             name: str,
-            value: Value,
+            value: Expression,
     ):
         """Initialize a JSVariable for Hermes bytecode analysis.
 
