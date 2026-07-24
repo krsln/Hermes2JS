@@ -4,13 +4,16 @@ from abc import ABC, abstractmethod
 
 
 class Node(ABC):
+    """
+    Base class for every IR node.
+    """
+
     @abstractmethod
     def render(self) -> str:
         """
         Temporary compatibility layer.
 
-        This method will be removed once the Visitor/Renderer
-        infrastructure fully replaces node rendering.
+        Rendering will eventually be moved to JSRenderer.
         """
         raise NotImplementedError()
 
@@ -47,3 +50,8 @@ class Statement(Node, ABC):
 #          -------------------------
 #          |           |          |
 #      Binary      Call       Identifier
+
+#                 Node
+#                /    \
+#               /      \
+#      Statement      Expression
