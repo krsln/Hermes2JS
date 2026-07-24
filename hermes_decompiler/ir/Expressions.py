@@ -146,12 +146,14 @@ class CreateThisExpression(Expression):
             ")"
         )
 
+
 @dataclass(frozen=True)
 class TypeOfExpression(Expression):
     value: Value
 
     def render(self):
         return f"typeof {self.value.render()}"
+
 
 @dataclass(frozen=True)
 class ComputedMemberExpression(Expression):
@@ -160,3 +162,13 @@ class ComputedMemberExpression(Expression):
 
     def render(self):
         return f"{self.object.render()}[{self.property.render()}]"
+
+
+@dataclass(frozen=True)
+class SwitchStatement(Expression):
+    expression: Value
+    targets: list[int]
+
+    def render(self):
+        labels = ", ".join(f"label_{t}" for t in self.targets)
+        return f"/* switch ({self.expression.render()}) -> {labels} */"

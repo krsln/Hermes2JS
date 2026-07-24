@@ -53,3 +53,4 @@ class IfGotoStatement(Statement):
     condition: str
 
     target: BasicBlock
+
