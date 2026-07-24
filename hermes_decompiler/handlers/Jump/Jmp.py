@@ -126,7 +126,7 @@ class ConditionalJumpBase(OpcodeHandler, ABC):
         target = entry.target_address or (entry.address + offset)
         analysis.gotoList.append(target)
 
-        value = self.get_register_value_new(analysis, reg)
+        value = self.get_register_value(analysis, reg)
 
         variable = JSVariable(
             self.__class__.__name__,

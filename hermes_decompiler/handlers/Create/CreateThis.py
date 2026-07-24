@@ -24,8 +24,8 @@ class CreateThis(OpcodeHandler):
 
         dest, func, new_target = (int(x) for x in match.groups())
 
-        prototype = self.get_register_value_new(analysis, func)
-        constructor = self.get_register_value_new(analysis, new_target)
+        prototype = self.get_register_value(analysis, func)
+        constructor = self.get_register_value(analysis, new_target)
 
         # value = f"createThis(prototype={func_name}, constructor={new_target_name})"
         value = CreateThisExpression(prototype=prototype, constructor=constructor)

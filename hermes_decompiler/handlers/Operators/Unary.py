@@ -37,7 +37,7 @@ class BaseUnaryOperator(OpcodeHandler):
 
         dest_reg, src_reg = map(int, match.groups())
 
-        src_val = self.get_register_value_new(analysis, src_reg)
+        src_val = self.get_register_value(analysis, src_reg)
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", self.expression(src_val))
         analysis.add_result(entry, variable)

@@ -21,7 +21,7 @@ class Ret(OpcodeHandler):
 
         if match:
             reg = int(match.group(1))
-            value = self.get_register_value_new(analysis, reg)
+            value = self.get_register_value(analysis, reg)
             return_value = ReturnValue(value)
         else:
             return_value = ReturnValue()

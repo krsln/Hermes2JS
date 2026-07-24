@@ -94,7 +94,7 @@ class NewObjectWithParent(OpcodeHandler):
 
         dest_reg, parent_reg = map(int, match.groups())
 
-        parent = self.get_register_value_new(analysis, parent_reg) or f"r{parent_reg}"
+        parent = self.get_register_value(analysis, parent_reg) or f"r{parent_reg}"
 
         value = CallExpression(
             callee=MemberExpression(
@@ -122,8 +122,8 @@ class SelectObject(OpcodeHandler):
 
         dest_reg, obj_reg, selector_reg = map(int, match.groups())
 
-        obj = self.get_register_value_new(analysis, obj_reg)
-        selector = self.get_register_value_new(analysis, selector_reg)
+        obj = self.get_register_value(analysis, obj_reg)
+        selector = self.get_register_value(analysis, selector_reg)
 
         value = ComputedMemberExpression(
             object=obj,

@@ -63,7 +63,7 @@ class GetArgumentsPropByVal(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
         dest_reg, index_reg, _lazy_reg = map(int, match.groups())
-        index_value = self.get_register_value_new(analysis, index_reg)
+        index_value = self.get_register_value(analysis, index_reg)
 
         value = ComputedMemberExpression(object=IdentifierValue("arguments"), property=index_value)
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)

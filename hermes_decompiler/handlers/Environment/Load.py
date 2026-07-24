@@ -29,7 +29,7 @@ class LoadFromEnvironment(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, env_reg, slot = map(int, match.groups())
-        env = self.get_register_value_new(analysis, env_reg)
+        env = self.get_register_value(analysis, env_reg)
 
         # value = f"{env}[{slot}]"
         value = IndexExpression(object=env, index=ConstantValue(slot))

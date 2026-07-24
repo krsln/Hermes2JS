@@ -52,7 +52,7 @@ class ConstructBase(OpcodeHandler, ABC):
 
         dest_reg, func_reg, arg_count = map(int, match.groups())
 
-        constructor = self.get_register_value_new(analysis, func_reg)
+        constructor = self.get_register_value(analysis, func_reg)
         arguments = self.resolve_arguments(analysis, func_reg, arg_count)
 
         value = NewExpression(
@@ -67,7 +67,7 @@ class ConstructBase(OpcodeHandler, ABC):
 
     def resolve_arguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> list[Value]:
         values = [
-            self.get_register_value_new(analysis, reg)
+            self.get_register_value(analysis, reg)
             for reg in range(func_reg - arg_count, func_reg)
         ]
 

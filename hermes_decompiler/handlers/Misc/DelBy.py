@@ -26,7 +26,7 @@ class DelById(OpcodeHandler):
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
         prop_name = entry.identifier_name or f"string_{string_id}"
-        obj = self.get_register_value_new(analysis, obj_reg)
+        obj = self.get_register_value(analysis, obj_reg)
 
         value = UnaryExpression(
             operator=UnaryOperator.DELETE,
@@ -57,8 +57,8 @@ class DelByVal(OpcodeHandler):
 
         dest_reg, obj_reg, prop_reg = map(int, match.groups())
 
-        obj = self.get_register_value_new(analysis, obj_reg)
-        prop = self.get_register_value_new(analysis, prop_reg)
+        obj = self.get_register_value(analysis, obj_reg)
+        prop = self.get_register_value(analysis, prop_reg)
 
         value = UnaryExpression(
             operator=UnaryOperator.DELETE,

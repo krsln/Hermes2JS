@@ -22,7 +22,7 @@ class Throw(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         value_reg = int(match.group(1))
-        value = self.get_register_value_new(analysis, value_reg)
+        value = self.get_register_value(analysis, value_reg)
 
         variable = JSVariable(handler, entry.address, "", ThrowValue(value))
         analysis.add_result(entry, variable)

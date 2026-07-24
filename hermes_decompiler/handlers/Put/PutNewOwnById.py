@@ -44,10 +44,10 @@ class PutNewOwnByIdX(PutById):
             "",
             AssignmentStatement(
                 left=MemberExpression(
-                    object=self.get_register_value_new(analysis, obj_reg),
+                    object=self.get_register_value(analysis, obj_reg),
                     property=ConstantValue(property_name),
                 ),
-                right=self.get_register_value_new(analysis, value_reg),
+                right=self.get_register_value(analysis, value_reg),
             ),
         )
 

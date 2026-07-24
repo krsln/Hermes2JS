@@ -46,12 +46,12 @@ class PutById(OpcodeHandler):
         )
 
         left = MemberExpression(
-            object=self.get_register_value_new(analysis, obj_reg),
+            object=self.get_register_value(analysis, obj_reg),
             property=IdentifierValue(property_name),
             computed=False,
         )
 
-        right = self.get_register_value_new(analysis, value_reg)
+        right = self.get_register_value(analysis, value_reg)
 
         variable = JSVariable(
             self.__class__.__name__,

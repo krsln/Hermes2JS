@@ -112,7 +112,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         if (null !== r10.child) { /* jump to label_277 */ }
         // ──────────────── Block 10 ──────────────── 
         // CODE → <JStrictEqual>: <Addr8: 90, Reg8: 12, Reg8: 10>  # Address: 00000111
-        if (r10 === param1) { /* jump to label_273 */ }
+        if (r10 === r10) { /* jump to label_273 */ }
         // ──────────────── Block 11 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
         // USED → r13 = r10.sibling
@@ -133,7 +133,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
         // USED → r15 = r10.return
         // CODE → <JStrictEqual>: <Addr8: 50, Reg8: 15, Reg8: 10>  # Address: 0000010d
-        if (r10.return === param1) { /* jump to label_269 */ }
+        if (r10.return === r10) { /* jump to label_269 */ }
         // ──────────────── Block 14 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
         // USED → r15 = r10.return

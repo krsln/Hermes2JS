@@ -23,7 +23,7 @@ class IteratorBegin(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         iterator_reg, iterable_reg = map(int, match.groups())
-        iterable = self.get_register_value_new(analysis, iterable_reg)
+        iterable = self.get_register_value(analysis, iterable_reg)
 
         variable = JSVariable(handler, entry.address, f"r{iterator_reg}", GetIteratorExpression(iterable))
         analysis.add_result(entry, variable)
@@ -44,7 +44,7 @@ class IteratorNext(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         result_reg, iterator_reg, _ = map(int, match.groups())
-        iterator = self.get_register_value_new(analysis, iterator_reg)
+        iterator = self.get_register_value(analysis, iterator_reg)
 
         callee = MemberExpression(iterator, IdentifierValue("next"))
         value = CallExpression(callee=callee, arguments=[])
@@ -68,7 +68,7 @@ class IteratorClose(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         iterator_reg = int(match.group(1))
-        iterator = self.get_register_value_new(analysis, iterator_reg)
+        iterator = self.get_register_value(analysis, iterator_reg)
 
         callee = MemberExpression(iterator, IdentifierValue("return"))
         value = CallExpression(callee=callee, arguments=[])
@@ -102,7 +102,7 @@ class GetPNameList(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected four Reg8 arguments")
 
         dest_reg, obj_reg, _index_reg, _size_reg = map(int, match.groups())
-        obj = self.get_register_value_new(analysis, obj_reg)
+        obj = self.get_register_value(analysis, obj_reg)
 
         value = PropertyIteratorExpression(obj)
 
@@ -125,7 +125,7 @@ class GetNextPName(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected five Reg8 arguments")
 
         dest_reg, list_reg, _obj_reg, _index_reg, _size_reg = map(int, match.groups())
-        list_val = self.get_register_value_new(analysis, list_reg)
+        list_val = self.get_register_value(analysis, list_reg)
 
         callee = MemberExpression(list_val, IdentifierValue("next"))
         value = CallExpression(callee=callee, arguments=[])

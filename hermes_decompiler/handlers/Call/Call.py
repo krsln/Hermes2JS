@@ -32,9 +32,9 @@ class CallX(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
-        callee = self.get_register_value_new(analysis, func_reg)
+        callee = self.get_register_value(analysis, func_reg)
         arguments = [
-            self.get_register_value_new(analysis, reg)
+            self.get_register_value(analysis, reg)
             for reg in arg_regs
         ]
 
@@ -75,7 +75,7 @@ class Call(CallX):
 
         dest_reg, func_reg, num_args = map(int, match.groups())
 
-        callee = self.get_register_value_new(analysis, func_reg)
+        callee = self.get_register_value(analysis, func_reg)
         arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
         arguments = [
             RegisterValue(r)

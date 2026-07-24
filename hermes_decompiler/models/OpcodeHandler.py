@@ -72,17 +72,7 @@ class OpcodeHandler(ABC):
         return variable
 
     @classmethod
-    def get_register_value(cls, analysis: HermesAnalysis, reg: int) -> str | Value:
-        variable = cls._get_register_variable(analysis, reg)
-
-        if not variable:
-            return RegisterValue(reg)
-
-        variable.used = True
-        return variable.value
-
-    @classmethod
-    def get_register_value_new(cls, analysis: HermesAnalysis, reg: int) -> Value:
+    def get_register_value(cls, analysis: HermesAnalysis, reg: int) -> Value:
         variable = cls._get_register_variable(analysis, reg)
 
         if not variable:

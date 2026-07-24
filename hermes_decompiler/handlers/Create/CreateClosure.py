@@ -28,7 +28,7 @@ class CreateClosure(OpcodeHandler):
 
         dest_reg, value_reg, func_id = (int(x) for x in match.groups())
 
-        reg_value = self.get_register_value_new(analysis, value_reg)
+        reg_value = self.get_register_value(analysis, value_reg)
         func_name = (
             entry.function.name
             if entry.function and entry.function.name

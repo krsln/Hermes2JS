@@ -33,11 +33,11 @@ class PutByVal(OpcodeHandler):
             "",
             AssignmentStatement(
                 left=MemberExpression(
-                    object=self.get_register_value_new(analysis, obj_reg),
-                    property=self.get_register_value_new(analysis, key_reg),
+                    object=self.get_register_value(analysis, obj_reg),
+                    property=self.get_register_value(analysis, key_reg),
                     computed=True,
                 ),
-                right=self.get_register_value_new(analysis, value_reg),
+                right=self.get_register_value(analysis, value_reg),
             ),
         )
 

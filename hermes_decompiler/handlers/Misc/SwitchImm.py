@@ -23,7 +23,7 @@ class SwitchImm(OpcodeHandler):
             )
 
         selector_reg = int(match.group(1))
-        selector = self.get_register_value_new(analysis, selector_reg)
+        selector = self.get_register_value(analysis, selector_reg)
 
         targets = []
 

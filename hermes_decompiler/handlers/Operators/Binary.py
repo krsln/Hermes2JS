@@ -37,8 +37,8 @@ class BaseBinaryOperator(OpcodeHandler):
 
         dest, lhs, rhs = map(int, match.groups())
 
-        lhs_val = self.get_register_value_new(analysis, lhs)
-        rhs_val = self.get_register_value_new(analysis, rhs)
+        lhs_val = self.get_register_value(analysis, lhs)
+        rhs_val = self.get_register_value(analysis, rhs)
 
         # value = f"{lhs_val} {self.operator} {rhs_val}"
         if self.operator in self._COMPARISON_OPERATORS:

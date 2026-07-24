@@ -33,11 +33,11 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
 
         properties = {}
 
-        getter = self.get_register_value_new(analysis, getter_reg)
+        getter = self.get_register_value(analysis, getter_reg)
         if getter is not None:
             properties["get"] = getter
 
-        setter = self.get_register_value_new(analysis, setter_reg)
+        setter = self.get_register_value(analysis, setter_reg)
         if setter is not None:
             properties["set"] = setter
 
@@ -52,8 +52,8 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
                 property=IdentifierValue("defineProperty"),
             ),
             arguments=[
-                self.get_register_value_new(analysis, obj_reg),
-                self.get_register_value_new(analysis, key_reg),
+                self.get_register_value(analysis, obj_reg),
+                self.get_register_value(analysis, key_reg),
                 descriptor,
             ],
         )
