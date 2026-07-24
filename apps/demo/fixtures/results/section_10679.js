@@ -19,9 +19,9 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 37>  # String: 'Object' (Identifier)
-    // USED → r7 = r0."Object"
+    // USED → r7 = r0.Object
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 2, string_id: 112>  # String: 'defineProperty' (Identifier)
-    // USED → r4 = r0."Object"."defineProperty"
+    // USED → r4 = r0.Object.defineProperty
     // CODE → <NewObject>: <Reg8: 1>
     // USED → r1 = {}
     // CODE → <LoadConstTrue>: <Reg8: 0>
@@ -31,7 +31,7 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 65>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule"
     // CODE → <Call4>: <Reg8: 0, Reg8: 4, Reg8: 7, Reg8: 2, Reg8: 0, Reg8: 1>
-    r0 = r0."Object"."defineProperty"(r0."Object", r2, "__esModule", r1)
+    r0 = r0.Object.defineProperty(r0.Object, r2, "__esModule", r1)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined
     // CODE → <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)

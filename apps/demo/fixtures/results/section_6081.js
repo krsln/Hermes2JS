@@ -33,11 +33,11 @@ function processColorsInProps(param0, param1) {
         // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 17>
         // USED → r12 = getEnvironment(1)[17]
         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 148>  # String: 'includes' (Identifier)
-        // USED → r11 = getEnvironment(1)[17]."includes"
+        // USED → r11 = getEnvironment(1)[17].includes
         // CODE → <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 13>
-        // USED → r11 = getEnvironment(1)[17]."includes"(getEnvironment(1)[17], r13)
+        // USED → r11 = getEnvironment(1)[17].includes(getEnvironment(1)[17], r13)
         // CODE → <JmpTrue>: <Addr8: 98, Reg8: 11>  # Address: 0000009e
-        if (getEnvironment(1)[17]."includes"(getEnvironment(1)[17], r13)) { /* jump to label_158 */ }
+        if (getEnvironment(1)[17].includes(getEnvironment(1)[17], r13)) { /* jump to label_158 */ }
         // ──────────────── Block 3 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 18>
         // USED → r12 = getEnvironment(1)[18]

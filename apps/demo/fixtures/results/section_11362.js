@@ -41,11 +41,11 @@ function binl_md5(param0, param1, param2) {
     // CODE → <PutByVal>: <Reg8: 98, Reg8: 0, Reg8: 1>
     r98[r1 + 64 >>> 9 << 4 + 14] = r1;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
-    // USED → r0 = r98."length"
+    // USED → r0 = r98.length
     // CODE → <LoadConstZero>: <Reg8: 93>
     // USED → r93 = 0
     // CODE → <Less>: <Reg8: 0, Reg8: 93, Reg8: 0>
-    // USED → r0 = 0 < r98."length"
+    // USED → r0 = 0 < r98.length
     // CODE → <LoadConstInt>: <Reg8: 9, Imm32: 1732584193>
     // USED → r9 = 1732584193
     // CODE → <LoadConstInt>: <Reg8: 8, Imm32: -271733879>
@@ -231,7 +231,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
     r1 = 271733878
     // CODE → <JmpFalseLong>: <Addr32: 1808, Reg8: 0>  # Address: 00000940
-    if (!0 < r98."length") { /* jump to label_2368 */ }
+    if (!0 < r98.length) { /* jump to label_2368 */ }
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 10>
     // USED → r119 = getEnvironment(0)[10]
@@ -1312,7 +1312,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 5, Reg8: 5, Reg8: 42>
     // USED → r5 = 0 + 16
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
-    // USED → r0 = r98."length"
+    // USED → r0 = r98.length
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
     // USED → r4 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 1732584193)
     // CODE → <Mov>: <Reg8: 3, Reg8: 8>
@@ -1322,7 +1322,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
     // USED → r1 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 271733878)
     // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
-    if (0 + 16 < r98."length") { /* jump to label_566 */ }
+    if (0 + 16 < r98.length) { /* jump to label_566 */ }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
     // USED → r0 = [] /* capacity hint: 4 */
