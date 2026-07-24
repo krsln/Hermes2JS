@@ -58,7 +58,7 @@ class ComparisonExpression(BinaryExpression):
 @dataclass(frozen=True)
 class MemberExpression(Expression):
     object: Value
-    property: str
+    property: Value
 
     def render(self):
         return f"{self.object.render()}.{self.property}"

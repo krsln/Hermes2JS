@@ -33,11 +33,11 @@ function processColorsInProps(param0, param1) {
         // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 17>
         // USED → r12 = getEnvironment(1)[17]
         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 148>  # String: 'includes' (Identifier)
-        // USED → r11 = getEnvironment(1)[17].includes
+        // USED → r11 = getEnvironment(1)[17]."includes"
         // CODE → <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 13>
-        // USED → r11 = getEnvironment(1)[17].includes(getEnvironment(1)[17], r13)
+        // USED → r11 = getEnvironment(1)[17]."includes"(getEnvironment(1)[17], r13)
         // CODE → <JmpTrue>: <Addr8: 98, Reg8: 11>  # Address: 0000009e
-        if (getEnvironment(1)[17].includes(getEnvironment(1)[17], r13)) { /* jump to label_158 */ }
+        if (getEnvironment(1)[17]."includes"(getEnvironment(1)[17], r13)) { /* jump to label_158 */ }
         // ──────────────── Block 3 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 18>
         // USED → r12 = getEnvironment(1)[18]
@@ -59,7 +59,7 @@ function processColorsInProps(param0, param1) {
             // CODE → <Call2>: <Reg8: 11, Reg8: 13, Reg8: 0, Reg8: 11>
             // USED → r11 = getEnvironment(1)[36](undefined, r10[r12])
             // CODE → <PutByVal>: <Reg8: 10, Reg8: 12, Reg8: 11>
-            param1[HermesPropertyIterator(param1).next()] = getEnvironment(1)[36](undefined, r10[r12])
+            r10[r12] = getEnvironment(1)[36](undefined, r10[r12]);
             // CODE → <JmpLong>: <Addr32: -150>  # Address: 0000001c
             goto label_28;
             // ──────────────── Block 9 ──────────────── 
@@ -118,7 +118,7 @@ function processColorsInProps(param0, param1) {
         // CODE → <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
         // USED → r13 = getEnvironment(1)[36](undefined, r15[getEnvironment(1)[18][r13]])
         // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
-        GetIterator(r10[r11]).next()[getEnvironment(1)[18][r13]] = getEnvironment(1)[36](undefined, r15[getEnvironment(1)[18][r13]])
+        r15[getEnvironment(1)[18][r13]] = getEnvironment(1)[36](undefined, r15[getEnvironment(1)[18][r13]]);
         // ──────────────── Block 8 ──────────────── 
         // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
         goto label_90;

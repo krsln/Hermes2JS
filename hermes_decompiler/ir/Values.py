@@ -167,3 +167,15 @@ class BuiltinValue(Value):
     def render(self):
         return f"builtin_{self.builtin}"
 
+
+@dataclass(frozen=True)
+class ObjectLiteralValue(Value):
+    properties: dict[str, Value]
+
+    def render(self):
+        parts = []
+
+        for key, value in self.properties.items():
+            parts.append(f"{key}: {value.render()}")
+
+        return "{ " + ", ".join(parts) + " }"

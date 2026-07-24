@@ -1,3 +1,5 @@
+from hermes_decompiler.ir.Expressions import CallExpression, MemberExpression
+from hermes_decompiler.ir.Values import ObjectLiteralValue, ConstantValue, IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -7,8 +9,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
 
 # Patterns
-PUT_BY_ID_PATTERN = sequence(REG, REG, UINT8, STRING_ID)
-PUT_NEW_OWN_PATTERN = sequence(REG, REG, STRING_ID)
 PUT_GETTER_SETTER_PATTERN = sequence(REG, REG, REG, REG, UINT8)
 
 
@@ -20,28 +20,51 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
 
         match = PUT_GETTER_SETTER_PATTERN.match(entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected 4 Reg + UInt8")
+            return self.build_invalid_args_result(
+                analysis,
+                entry,
+                "Expected 4 Reg + UInt8",
+            )
 
-        obj_reg, key_reg, getter_reg, setter_reg, enumerable_flag = map(int, match.groups())
+        obj_reg, key_reg, getter_reg, setter_reg, enumerable_flag = map(
+            int,
+            match.groups(),
+        )
 
-        obj_val = self.get_register_value(analysis, obj_reg) or f"r{obj_reg}"
-        key_val = self.get_register_value(analysis, key_reg) or f"r{key_reg}"
-        getter_val = self.get_register_value(analysis, getter_reg)
-        setter_val = self.get_register_value(analysis, setter_reg)
-        enumerable = "true" if enumerable_flag else "false"
+        properties = {}
 
-        descriptor_parts = []
-        if getter_val is not None:
-            descriptor_parts.append(f"get: {getter_val}")
-        if setter_val is not None:
-            descriptor_parts.append(f"set: {setter_val}")
-        descriptor_parts.append(f"enumerable: {enumerable}")
-        descriptor_parts.append("configurable: true")
+        getter = self.get_register_value_new(analysis, getter_reg)
+        if getter is not None:
+            properties["get"] = getter
 
-        descriptor = "{ " + ", ".join(descriptor_parts) + " }"
-        value = f"Object.defineProperty({obj_val}, {key_val}, {descriptor})"
+        setter = self.get_register_value_new(analysis, setter_reg)
+        if setter is not None:
+            properties["set"] = setter
 
-        variable = JSVariable(handler, entry.address, f'r{obj_reg}', value)
+        properties["enumerable"] = ConstantValue(bool(enumerable_flag))
+        properties["configurable"] = ConstantValue(True)
+
+        descriptor = ObjectLiteralValue(properties)
+
+        call = CallExpression(
+            callee=MemberExpression(
+                object=IdentifierValue("Object"),
+                property=ConstantValue("defineProperty"),
+            ),
+            arguments=[
+                self.get_register_value_new(analysis, obj_reg),
+                self.get_register_value_new(analysis, key_reg),
+                descriptor,
+            ],
+        )
+
+        variable = JSVariable(
+            self.__class__.__name__,
+            entry.address,
+            "",
+            call,
+        )
+
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

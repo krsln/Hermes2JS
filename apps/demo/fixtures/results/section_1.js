@@ -37,31 +37,31 @@ function function_1(param0, param1) {
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 15, Reg8: 0>
     createEnvironment()[15] = unknownModuleError /* Closure with env r2 = createEnvironment() */
     // CODE → <PutById>: <Reg8: 8, Reg8: 4, UInt8: 1, string_id: 14170>  # String: '__r' (Identifier)
-    // USED → r8 = { __r: metroRequire /* Closure with env r2 = createEnvironment() */ }
+    r8."__r" = metroRequire /* Closure with env r2 = createEnvironment() */;
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis
     // CODE → <GetById>: <Reg8: 11, Reg8: 1, UInt8: 1, string_id: 13635>  # String: '__METRO_GLOBAL_PREFIX__' (Identifier)
-    // USED → r11 = r1.__METRO_GLOBAL_PREFIX__
+    // USED → r11 = r1."__METRO_GLOBAL_PREFIX__"
     // CODE → <TryGetById>: <Reg8: 0, Reg8: 1, UInt8: 2, string_id: 21>  # String: 'HermesInternal' (Identifier)
-    // USED → r0 = r1.HermesInternal
+    // USED → r0 = r1."HermesInternal"
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 0, UInt8: 3, string_id: 98>  # String: 'concat' (Identifier)
-    // USED → r10 = r1.HermesInternal.concat
+    // USED → r10 = r1."HermesInternal"."concat"
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 11303>  # String: '' (Identifier)
     // USED → r9 = ""
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 64>  # String: '__d' (Identifier)
     // USED → r0 = "__d"
     // CODE → <Call3>: <Reg8: 9, Reg8: 10, Reg8: 9, Reg8: 11, Reg8: 0>
-    // USED → r9 = r1.HermesInternal.concat("", r1.__METRO_GLOBAL_PREFIX__, "__d")
+    // USED → r9 = r1."HermesInternal"."concat"("", r1."__METRO_GLOBAL_PREFIX__", "__d")
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 3>  # Function: [#3 define of 107 bytes]: 4 params @ offset 0x0016e029
     // USED → r0 = define /* Closure with env r2 = createEnvironment() */
     // CODE → <PutByVal>: <Reg8: 8, Reg8: 9, Reg8: 0>
-    { __r: metroRequire /* Closure with env r2 = createEnvironment() */ }[r1.HermesInternal.concat("", r1.__METRO_GLOBAL_PREFIX__, "__d")] = define /* Closure with env r2 = createEnvironment() */
+    r8[r1."HermesInternal"."concat"("", r1."__METRO_GLOBAL_PREFIX__", "__d")] = define /* Closure with env r2 = createEnvironment() */;
     // CODE → <PutById>: <Reg8: 8, Reg8: 7, UInt8: 2, string_id: 11632>  # String: '__c' (Identifier)
-    // USED → r8 = { __r: metroRequire /* Closure with env r2 = createEnvironment() */, __c: clear /* Closure with env r2 = createEnvironment() */ }
+    r8."__c" = clear /* Closure with env r2 = createEnvironment() */;
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 10>  # Function: [#10 registerSegment of 48 bytes]: 4 params @ offset 0x0016e278
     // USED → r0 = registerSegment /* Closure with env r2 = createEnvironment() */
     // CODE → <PutById>: <Reg8: 8, Reg8: 0, UInt8: 3, string_id: 16001>  # String: '__registerSegment' (Identifier)
-    r8 = { __r: metroRequire /* Closure with env r2 = createEnvironment() */, __c: clear /* Closure with env r2 = createEnvironment() */, __registerSegment: registerSegment /* Closure with env r2 = createEnvironment() */ }
+    r8."__registerSegment" = registerSegment /* Closure with env r2 = createEnvironment() */;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined
     // CODE → <Call1>: <Reg8: 7, Reg8: 7, Reg8: 0>
@@ -75,21 +75,21 @@ function function_1(param0, param1) {
     // CODE → <NewObject>: <Reg8: 7>
     // USED → r7 = {}
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 7, UInt8: 4, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-    // USED → r7 = r7.hasOwnProperty
+    // USED → r7 = r7."hasOwnProperty"
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 7>
-    createEnvironment()[3] = r7.hasOwnProperty
+    createEnvironment()[3] = r7."hasOwnProperty"
     // CODE → <PutById>: <Reg8: 4, Reg8: 6, UInt8: 4, string_id: 21604>  # String: 'importDefault' (Identifier)
-    // USED → r4 = { importDefault: metroImportDefault /* Closure with env r2 = createEnvironment() */ }
+    metroRequire /* Closure with env r2 = createEnvironment() */."importDefault" = metroImportDefault /* Closure with env r2 = createEnvironment() */;
     // CODE → <PutById>: <Reg8: 4, Reg8: 5, UInt8: 5, string_id: 23806>  # String: 'importAll' (Identifier)
-    // USED → r4 = { importDefault: metroImportDefault /* Closure with env r2 = createEnvironment() */, importAll: metroImportAll /* Closure with env r2 = createEnvironment() */ }
+    metroRequire /* Closure with env r2 = createEnvironment() */."importAll" = metroImportAll /* Closure with env r2 = createEnvironment() */;
     // CODE → <CreateClosure>: <Reg8: 5, Reg8: 2, function_id: 14>  # Function: [#14 fallbackRequireContext of 34 bytes]: 1 params @ offset 0x0016e472
     // USED → r5 = fallbackRequireContext /* Closure with env r2 = createEnvironment() */
     // CODE → <PutById>: <Reg8: 4, Reg8: 5, UInt8: 6, string_id: 11796>  # String: 'context' (Identifier)
-    // USED → r4 = { importDefault: metroImportDefault /* Closure with env r2 = createEnvironment() */, importAll: metroImportAll /* Closure with env r2 = createEnvironment() */, context: fallbackRequireContext /* Closure with env r2 = createEnvironment() */ }
+    metroRequire /* Closure with env r2 = createEnvironment() */."context" = fallbackRequireContext /* Closure with env r2 = createEnvironment() */;
     // CODE → <CreateClosure>: <Reg8: 5, Reg8: 2, function_id: 15>  # Function: [#15 fallbackRequireResolveWeak of 34 bytes]: 1 params @ offset 0x0016e494
     // USED → r5 = fallbackRequireResolveWeak /* Closure with env r2 = createEnvironment() */
     // CODE → <PutById>: <Reg8: 4, Reg8: 5, UInt8: 7, string_id: 15682>  # String: 'resolveWeak' (Identifier)
-    // USED → r4 = { importDefault: metroImportDefault /* Closure with env r2 = createEnvironment() */, importAll: metroImportAll /* Closure with env r2 = createEnvironment() */, context: fallbackRequireContext /* Closure with env r2 = createEnvironment() */, resolveWeak: fallbackRequireResolveWeak /* Closure with env r2 = createEnvironment() */ }
+    metroRequire /* Closure with env r2 = createEnvironment() */."resolveWeak" = fallbackRequireResolveWeak /* Closure with env r2 = createEnvironment() */;
     // CODE → <LoadConstFalse>: <Reg8: 5>
     // USED → r5 = false
     // CODE → <StoreNPToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 5>
@@ -103,25 +103,25 @@ function function_1(param0, param1) {
     // CODE → <StoreNPToEnvironment>: <Reg8: 2, UInt8: 6, Reg8: 5>
     createEnvironment()[6] = 65535
     // CODE → <PutById>: <Reg8: 4, Reg8: 3, UInt8: 8, string_id: 24223>  # String: 'unpackModuleId' (Identifier)
-    // USED → r4 = { importDefault: metroImportDefault /* Closure with env r2 = createEnvironment() */, importAll: metroImportAll /* Closure with env r2 = createEnvironment() */, context: fallbackRequireContext /* Closure with env r2 = createEnvironment() */, resolveWeak: fallbackRequireResolveWeak /* Closure with env r2 = createEnvironment() */, unpackModuleId: unpackModuleId /* Closure with env r2 = createEnvironment() */ }
+    metroRequire /* Closure with env r2 = createEnvironment() */."unpackModuleId" = unpackModuleId /* Closure with env r2 = createEnvironment() */;
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 9>  # Function: [#9 packModuleId of 32 bytes]: 2 params @ offset 0x0016e258
     // USED → r3 = packModuleId /* Closure with env r2 = createEnvironment() */
     // CODE → <PutById>: <Reg8: 4, Reg8: 3, UInt8: 9, string_id: 24224>  # String: 'packModuleId' (Identifier)
-    r4 = { importDefault: metroImportDefault /* Closure with env r2 = createEnvironment() */, importAll: metroImportAll /* Closure with env r2 = createEnvironment() */, context: fallbackRequireContext /* Closure with env r2 = createEnvironment() */, resolveWeak: fallbackRequireResolveWeak /* Closure with env r2 = createEnvironment() */, unpackModuleId: unpackModuleId /* Closure with env r2 = createEnvironment() */, packModuleId: packModuleId /* Closure with env r2 = createEnvironment() */ }
+    metroRequire /* Closure with env r2 = createEnvironment() */."packModuleId" = packModuleId /* Closure with env r2 = createEnvironment() */;
     // CODE → <NewArray>: <Reg8: 3, UInt16: 0>
     // USED → r3 = []
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 7, Reg8: 3>
     createEnvironment()[7] = []
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 5, string_id: 26>  # String: 'Map' (Identifier)
-    // USED → r1 = r1.Map
+    // USED → r1 = r1."Map"
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r3 = r1.Map.prototype
+    // USED → r3 = r1."Map"."prototype"
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 1>
-    // USED → r3 = createThis(prototype=r1.Map.prototype, constructor=r1.Map)
+    // USED → r3 = createThis(prototype=r1."Map"."prototype", constructor=r1."Map")
     // CODE → <Mov>: <Reg8: 14, Reg8: 3>
-    r14 = createThis(prototype=r1.Map.prototype, constructor=r1.Map)
+    r14 = createThis(prototype=r1."Map"."prototype", constructor=r1."Map")
     // CODE → <Construct>: <Reg8: 1, Reg8: 1, UInt8: 1>
-    r1 = new r1.Map(undefined)
+    r1 = new r1."Map"(undefined)
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 3, Reg8: 1>
     // USED → r1 = r3[r1]
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 8, Reg8: 1>

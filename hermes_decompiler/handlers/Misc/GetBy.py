@@ -1,4 +1,5 @@
 from hermes_decompiler.ir.Expressions import IndexExpression, MemberExpression
+from hermes_decompiler.ir.Values import ConstantValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -54,11 +55,11 @@ class GetById(OpcodeHandler):
 
         prop_name = entry.identifier_name or f"string_{string_id}"
         value_object = self.get_register_value_new(analysis, obj_reg)
-        function_base = str(value_object)
+        # function_base = str(value_object)
 
         # Build property access
         # value = f"{base_value}.{prop_name}"
-        value = MemberExpression(object=value_object, property=prop_name)
+        value = MemberExpression(object=value_object, property=ConstantValue(prop_name))
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)

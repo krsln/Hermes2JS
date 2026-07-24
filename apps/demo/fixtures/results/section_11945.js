@@ -7,7 +7,7 @@ function request(param0, param1, param2) {
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 0>
     // USED → r3 = getEnvironment(0)[0]
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 86>  # String: 'apply' (Identifier)
-    // USED → r2 = getEnvironment(0)[0].apply
+    // USED → r2 = getEnvironment(0)[0]."apply"
     // CODE → <ReifyArguments>: <Reg8: 0>
     // USED → r0 = arguments
     // CODE → <Mov>: <Reg8: 1, Reg8: 0>
@@ -15,7 +15,7 @@ function request(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r0 = getEnvironment(0)[0].apply(getEnvironment(0)[0], r0, r1)
+    // USED → r0 = getEnvironment(0)[0]."apply"(getEnvironment(0)[0], r0, r1)
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(0)[0].apply(getEnvironment(0)[0], r0, r1);
+    return getEnvironment(0)[0]."apply"(getEnvironment(0)[0], r0, r1);
 }
