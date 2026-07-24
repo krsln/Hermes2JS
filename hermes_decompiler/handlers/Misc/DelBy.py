@@ -1,3 +1,5 @@
+from hermes_decompiler.ir.Expressions import UnaryExpression, MemberExpression
+from hermes_decompiler.ir.Values import IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -23,9 +25,17 @@ class DelById(OpcodeHandler):
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
         prop_name = entry.identifier_name or f"string_{string_id}"
-        obj_val = self.get_register_value(analysis, obj_reg)
+        obj = self.get_register_value_new(analysis, obj_reg)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"delete {obj_val}.{prop_name}")
+        value = UnaryExpression(
+            operator="delete ",
+            operand=MemberExpression(
+                object=obj,
+                property=IdentifierValue(prop_name),
+            ),
+        )
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -46,10 +56,19 @@ class DelByVal(OpcodeHandler):
 
         dest_reg, obj_reg, prop_reg = map(int, match.groups())
 
-        obj_val = self.get_register_value(analysis, obj_reg)
-        prop_val = self.get_register_value(analysis, prop_reg)
+        obj = self.get_register_value_new(analysis, obj_reg)
+        prop = self.get_register_value_new(analysis, prop_reg)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"delete {obj_val}[{prop_val}]")
+        value = UnaryExpression(
+            operator="delete ",
+            operand=MemberExpression(
+                object=obj,
+                property=prop,
+                computed=True,
+            ),
+        )
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
