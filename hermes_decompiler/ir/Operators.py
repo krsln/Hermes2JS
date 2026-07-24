@@ -1,4 +1,44 @@
-from enum import Enum, StrEnum
+from enum import StrEnum
+
+
+class VariableKind(StrEnum):
+    VAR = "var"
+    LET = "let"
+    CONST = "const"
+
+
+class LogicalOperator(StrEnum):
+    AND = "&&"
+    OR = "||"
+    NULLISH = "??"
+
+
+class AssignmentOperator(StrEnum):
+    ASSIGN = "="
+
+    ADD_ASSIGN = "+="
+    SUBTRACT_ASSIGN = "-="
+    MULTIPLY_ASSIGN = "*="
+    DIVIDE_ASSIGN = "/="
+    MODULO_ASSIGN = "%="
+
+    BITWISE_AND_ASSIGN = "&="
+    BITWISE_OR_ASSIGN = "|="
+    BITWISE_XOR_ASSIGN = "^="
+
+    LEFT_SHIFT_ASSIGN = "<<="
+    RIGHT_SHIFT_ASSIGN = ">>="
+    UNSIGNED_RIGHT_SHIFT_ASSIGN = ">>>="
+
+    LOGICAL_AND_ASSIGN = "&&="
+    LOGICAL_OR_ASSIGN = "||="
+
+    NULLISH_ASSIGN = "??="
+
+
+class UpdateOperator(StrEnum):
+    INCREMENT = "++"
+    DECREMENT = "--"
 
 
 class UnaryOperator(StrEnum):
@@ -16,44 +56,75 @@ class UnaryOperator(StrEnum):
     # DELETE = "delete"
 
 
-class UpdateOperator(StrEnum):
-    INCREMENT = "++"
-    DECREMENT = "--"
-
-
-class BinaryOperator(Enum):
+class BinaryOperator(StrEnum):
     # Arithmetic
     ADD = "+"
-    SUB = "-"
-    MUL = "*"
-    DIV = "/"
-    MOD = "%"
-
-    # Comparison
-    EQ = "=="
-    STRICT_EQ = "==="
-    NOT_EQ = "!="
-    STRICT_NOT_EQ = "!=="
-
-    LT = "<"
-    LTE = "<="
-    GT = ">"
-    GTE = ">="
-
-    # Logical
-    AND = "&&"
-    OR = "||"
+    SUBTRACT = "-"
+    MULTIPLY = "*"
+    DIVIDE = "/"
+    MODULO = "%"
+    EXPONENT = "**"
 
     # Bitwise
-    BIT_AND = "&"
-    BIT_OR = "|"
-    BIT_XOR = "^"
+    BITWISE_AND = "&"
+    BITWISE_OR = "|"
+    BITWISE_XOR = "^"
 
     # Shifts
-    SHL = "<<"
-    SHR = ">>"
-    USHR = ">>>"
+    LEFT_SHIFT = "<<"
+    RIGHT_SHIFT = ">>"
+    UNSIGNED_RIGHT_SHIFT = ">>>"
+
+    # Comparison
+    LESS_THAN = "<"
+    LESS_EQUAL = "<="
+
+    GREATER_THAN = ">"
+    GREATER_EQUAL = ">="
+
+    EQUAL = "=="
+    NOT_EQUAL = "!="
+    STRICT_EQUAL = "==="
+    STRICT_NOT_EQUAL = "!=="
 
     # Others
     INSTANCEOF = "instanceof"
     IN = "in"
+
+
+_OPERATOR_PRECEDENCE = {
+    BinaryOperator.MULTIPLY: 14,
+    BinaryOperator.DIVIDE: 14,
+    BinaryOperator.MODULO: 14,
+
+    BinaryOperator.ADD: 13,
+    BinaryOperator.SUBTRACT: 13,
+
+    BinaryOperator.LEFT_SHIFT: 12,
+    BinaryOperator.RIGHT_SHIFT: 12,
+    BinaryOperator.UNSIGNED_RIGHT_SHIFT: 12,
+
+    BinaryOperator.LESS_THAN: 11,
+    BinaryOperator.LESS_EQUAL: 11,
+    BinaryOperator.GREATER_THAN: 11,
+    BinaryOperator.GREATER_EQUAL: 11,
+    BinaryOperator.INSTANCEOF: 11,
+    BinaryOperator.IN: 11,
+
+    BinaryOperator.EQUAL: 10,
+    BinaryOperator.NOT_EQUAL: 10,
+    BinaryOperator.STRICT_EQUAL: 10,
+    BinaryOperator.STRICT_NOT_EQUAL: 10,
+}
+
+
+def precedence(operator: BinaryOperator | LogicalOperator | AssignmentOperator) -> int:
+    ...
+
+
+def is_commutative(operator: BinaryOperator) -> bool:
+    ...
+
+
+def is_associative(operator: BinaryOperator) -> bool:
+    ...

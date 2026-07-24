@@ -169,7 +169,7 @@ class JmpFalse(ConditionalJump):
 
 class JmpUndefined(ConditionalJump):
     def build_condition(self, value: Value, *extra: Any) -> Expression:
-        return BinaryExpression(value, BinaryOperator.STRICT_EQ, UndefinedValue())
+        return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, UndefinedValue())
 
 
 # Long versions
@@ -194,13 +194,13 @@ class BuiltinConditionalJump(ConditionalJumpBase, ABC):
 class JmpBuiltinIs(BuiltinConditionalJump):
     def build_condition(self, value: Value, *extra: Any) -> Expression:
         builtin = extra[0]
-        return BinaryExpression(value, BinaryOperator.STRICT_EQ, BuiltinValue(builtin))
+        return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, BuiltinValue(builtin))
 
 
 class JmpBuiltinIsNot(BuiltinConditionalJump):
     def build_condition(self, value: Value, *extra: Any) -> Expression:
         builtin = extra[0]
-        return BinaryExpression(value, BinaryOperator.STRICT_NOT_EQ, BuiltinValue(builtin))
+        return BinaryExpression(value, BinaryOperator.STRICT_NOT_EQUAL, BuiltinValue(builtin))
 
 
 class JmpBuiltinIsLong(JmpBuiltinIs): pass
@@ -224,6 +224,6 @@ class JmpTypeOfIs(TypeOfConditionalJump):
         type_name = extra[0]
         return BinaryExpression(
             TypeOfExpression(value),
-            BinaryOperator.STRICT_EQ,
+            BinaryOperator.STRICT_EQUAL,
             ConstantValue(type_name),
         )

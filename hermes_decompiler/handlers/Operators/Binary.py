@@ -14,14 +14,14 @@ class BaseBinaryOperator(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, REG)
     _COMPARISON_OPERATORS = {
-        BinaryOperator.LT,
-        BinaryOperator.LTE,
-        BinaryOperator.GT,
-        BinaryOperator.GTE,
-        BinaryOperator.EQ,
-        BinaryOperator.STRICT_EQ,
-        BinaryOperator.NOT_EQ,
-        BinaryOperator.STRICT_NOT_EQ,
+        BinaryOperator.LESS_THAN,
+        BinaryOperator.LESS_EQUAL,
+        BinaryOperator.GREATER_THAN,
+        BinaryOperator.GREATER_EQUAL,
+        BinaryOperator.EQUAL,
+        BinaryOperator.STRICT_EQUAL,
+        BinaryOperator.NOT_EQUAL,
+        BinaryOperator.STRICT_NOT_EQUAL,
         BinaryOperator.INSTANCEOF,
         BinaryOperator.IN,
     }
@@ -56,35 +56,35 @@ class BaseBinaryOperator(OpcodeHandler):
 # @formatter:off
 class Add(BaseBinaryOperator): operator = BinaryOperator.ADD
 class AddN(Add): pass
-class Sub(BaseBinaryOperator): operator = BinaryOperator.SUB
+class Sub(BaseBinaryOperator): operator = BinaryOperator.SUBTRACT
 class SubN(Sub): pass
-class Mul(BaseBinaryOperator): operator = BinaryOperator.MUL
+class Mul(BaseBinaryOperator): operator = BinaryOperator.MULTIPLY
 class MulN(Mul): pass
-class Div(BaseBinaryOperator): operator = BinaryOperator.DIV
+class Div(BaseBinaryOperator): operator = BinaryOperator.DIVIDE
 class DivN(Div): pass
-class Mod(BaseBinaryOperator): operator = BinaryOperator.MOD
+class Mod(BaseBinaryOperator): operator = BinaryOperator.MODULO
 class ModN(Mod): pass
 
-class BitAnd(BaseBinaryOperator): operator = BinaryOperator.BIT_AND
+class BitAnd(BaseBinaryOperator): operator = BinaryOperator.BITWISE_AND
 class BitNot(BaseBinaryOperator): operator = UnaryOperator.BITWISE_NOT
-class BitOr(BaseBinaryOperator): operator = BinaryOperator.BIT_OR
+class BitOr(BaseBinaryOperator): operator = BinaryOperator.BITWISE_OR
 class BitOrN(BitOr): pass
-class BitXor(BaseBinaryOperator): operator = BinaryOperator.BIT_XOR
+class BitXor(BaseBinaryOperator): operator = BinaryOperator.BITWISE_XOR
 class BitXorN(BitXor): pass
 
-class LShift(BaseBinaryOperator): operator = BinaryOperator.SHL
-class RShift(BaseBinaryOperator): operator = BinaryOperator.SHR
-class URshift(BaseBinaryOperator): operator = BinaryOperator.USHR
+class LShift(BaseBinaryOperator): operator = BinaryOperator.LEFT_SHIFT
+class RShift(BaseBinaryOperator): operator = BinaryOperator.RIGHT_SHIFT
+class URshift(BaseBinaryOperator): operator = BinaryOperator.UNSIGNED_RIGHT_SHIFT
 
-class Less(BaseBinaryOperator): operator = BinaryOperator.LT
-class LessEq(BaseBinaryOperator): operator = BinaryOperator.LTE
-class Greater(BaseBinaryOperator): operator = BinaryOperator.GT
-class GreaterEq(BaseBinaryOperator): operator = BinaryOperator.GTE
+class Less(BaseBinaryOperator): operator = BinaryOperator.LESS_THAN
+class LessEq(BaseBinaryOperator): operator = BinaryOperator.LESS_EQUAL
+class Greater(BaseBinaryOperator): operator = BinaryOperator.GREATER_THAN
+class GreaterEq(BaseBinaryOperator): operator = BinaryOperator.GREATER_EQUAL
 
-class Eq(BaseBinaryOperator): operator = BinaryOperator.EQ
-class Neq(BaseBinaryOperator): operator = BinaryOperator.NOT_EQ
-class StrictEq(BaseBinaryOperator): operator = BinaryOperator.STRICT_EQ
-class StrictNeq(BaseBinaryOperator): operator = BinaryOperator.STRICT_NOT_EQ
+class Eq(BaseBinaryOperator): operator = BinaryOperator.EQUAL
+class Neq(BaseBinaryOperator): operator = BinaryOperator.NOT_EQUAL
+class StrictEq(BaseBinaryOperator): operator = BinaryOperator.STRICT_EQUAL
+class StrictNeq(BaseBinaryOperator): operator = BinaryOperator.STRICT_NOT_EQUAL
 # @formatter:on
 
 class InstanceOf(BaseBinaryOperator):

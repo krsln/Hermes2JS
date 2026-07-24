@@ -57,7 +57,7 @@ class TypeOf(BaseUnaryOperator):
 
 class ToInt32(BaseUnaryOperator):
     def expression(self, value: Value):
-        return BinaryExpression(left=value, operator=BinaryOperator.BIT_OR, right=ConstantValue(0))
+        return BinaryExpression(left=value, operator=BinaryOperator.BITWISE_OR, right=ConstantValue(0))
 
 
 class ToNumeric(BaseUnaryOperator):
@@ -77,7 +77,7 @@ class Inc(BaseUnaryOperator):
 
 class Dec(BaseUnaryOperator):
     def expression(self, value: Value):
-        return BinaryExpression(left=value, operator=BinaryOperator.SUB, right=ConstantValue(1))
+        return BinaryExpression(left=value, operator=BinaryOperator.SUBTRACT, right=ConstantValue(1))
 
 
 class Negate(BaseUnaryOperator):
