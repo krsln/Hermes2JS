@@ -1,14 +1,10 @@
 from __future__ import annotations
 
-from abc import ABC
 from dataclasses import dataclass
 
 from .Operators import BinaryOperator, UnaryOperator
 from .Values import Value
-
-
-class Expression(Value, ABC):
-    pass
+from .Node import Expression
 
 
 @dataclass(frozen=True)

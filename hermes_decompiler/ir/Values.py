@@ -1,23 +1,9 @@
 from __future__ import annotations
 
 import json
-from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-
-class Value(ABC):
-
-    @property
-    def inlineable(self) -> bool:
-        return True
-
-    @abstractmethod
-    def render(self) -> str:
-        ...
-
-    def __str__(self):
-        # print(type(self).__name__)
-        return self.render()
+from .Node import Value
 
 
 @dataclass(frozen=True)
@@ -171,6 +157,7 @@ class GlobalThisValue(Value):
     def render(self):
         return "globalThis"
 
+
 @dataclass(frozen=True)
 class BuiltinValue(Value):
     builtin: int
@@ -205,6 +192,7 @@ class VariableDeclaration(Value):
             f"{self.kind} {self.name} = "
             f"{self.initializer.render()};"
         )
+
 
 @dataclass(frozen=True)
 class ExceptionValue(Value):
