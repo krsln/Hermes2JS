@@ -167,6 +167,11 @@ class ThisValue(Value):
 
 
 @dataclass(frozen=True)
+class GlobalThisValue(Value):
+    def render(self):
+        return "globalThis"
+
+@dataclass(frozen=True)
 class BuiltinValue(Value):
     builtin: int
 
@@ -185,3 +190,18 @@ class ObjectLiteralValue(Value):
             parts.append(f"{key}: {value.render()}")
 
         return "{ " + ", ".join(parts) + " }"
+
+
+@dataclass(frozen=True)
+class VariableDeclaration(Value):
+    kind: str
+    name: Value
+    initializer: Value | None = None
+
+    def render(self):
+        if self.initializer is None:
+            return f"{self.kind} {self.name.render()};"
+        return (
+            f"{self.kind} {self.name} = "
+            f"{self.initializer.render()};"
+        )

@@ -41,21 +41,21 @@ function function_1(param0, param1) {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis
     // CODE → <GetById>: <Reg8: 11, Reg8: 1, UInt8: 1, string_id: 13635>  # String: '__METRO_GLOBAL_PREFIX__' (Identifier)
-    // USED → r11 = r1.__METRO_GLOBAL_PREFIX__
+    // USED → r11 = globalThis.__METRO_GLOBAL_PREFIX__
     // CODE → <TryGetById>: <Reg8: 0, Reg8: 1, UInt8: 2, string_id: 21>  # String: 'HermesInternal' (Identifier)
-    // USED → r0 = r1.HermesInternal
+    // USED → r0 = globalThis.HermesInternal
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 0, UInt8: 3, string_id: 98>  # String: 'concat' (Identifier)
-    // USED → r10 = r1.HermesInternal.concat
+    // USED → r10 = globalThis.HermesInternal.concat
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 11303>  # String: '' (Identifier)
     // USED → r9 = ""
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 64>  # String: '__d' (Identifier)
     // USED → r0 = "__d"
     // CODE → <Call3>: <Reg8: 9, Reg8: 10, Reg8: 9, Reg8: 11, Reg8: 0>
-    // USED → r9 = r1.HermesInternal.concat("", r1.__METRO_GLOBAL_PREFIX__, "__d")
+    // USED → r9 = globalThis.HermesInternal.concat("", globalThis.__METRO_GLOBAL_PREFIX__, "__d")
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 3>  # Function: [#3 define of 107 bytes]: 4 params @ offset 0x0016e029
     // USED → r0 = define /* Closure with env r2 = createEnvironment() */
     // CODE → <PutByVal>: <Reg8: 8, Reg8: 9, Reg8: 0>
-    r8[r1.HermesInternal.concat("", r1.__METRO_GLOBAL_PREFIX__, "__d")] = define /* Closure with env r2 = createEnvironment() */;
+    r8[globalThis.HermesInternal.concat("", globalThis.__METRO_GLOBAL_PREFIX__, "__d")] = define /* Closure with env r2 = createEnvironment() */;
     // CODE → <PutById>: <Reg8: 8, Reg8: 7, UInt8: 2, string_id: 11632>  # String: '__c' (Identifier)
     r8.__c = clear /* Closure with env r2 = createEnvironment() */;
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 10>  # Function: [#10 registerSegment of 48 bytes]: 4 params @ offset 0x0016e278
@@ -113,15 +113,15 @@ function function_1(param0, param1) {
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 7, Reg8: 3>
     createEnvironment()[7] = []
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 5, string_id: 26>  # String: 'Map' (Identifier)
-    // USED → r1 = r1.Map
+    // USED → r1 = globalThis.Map
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r3 = r1.Map.prototype
+    // USED → r3 = globalThis.Map.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 1>
-    // USED → r3 = createThis(prototype=r1.Map.prototype, constructor=r1.Map)
+    // USED → r3 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
     // CODE → <Mov>: <Reg8: 14, Reg8: 3>
-    r14 = createThis(prototype=r1.Map.prototype, constructor=r1.Map)
+    r14 = createThis(prototype=globalThis.Map.prototype, constructor=globalThis.Map)
     // CODE → <Construct>: <Reg8: 1, Reg8: 1, UInt8: 1>
-    r1 = new r1.Map(undefined)
+    r1 = new globalThis.Map(undefined)
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 3, Reg8: 1>
     // USED → r1 = r3[r1]
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 8, Reg8: 1>

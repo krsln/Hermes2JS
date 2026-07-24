@@ -1,10 +1,9 @@
-import re
-
+from hermes_decompiler.ir.Values import GlobalThisValue, IdentifierValue, VariableDeclaration
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 from hermes_decompiler.handlers._shared_patterns import REG, STRING_ID, sequence
 
@@ -31,11 +30,9 @@ class GetGlobalObject(OpcodeHandler):
             # Fallback if the attribute doesn't exist yet
             setattr(analysis, 'globalObjects', global_reg)
 
-        # In JavaScript, global-object is usually represented as `globalThis`
-        # or `this` at top-level. Using `globalThis` is more accurate.
-        variable = JSVariable(handler, entry.address, f'r{global_reg}', f"globalThis")
-
+        variable = JSVariable(handler, entry.address, f'r{global_reg}', GlobalThisValue())
         analysis.add_result(entry, variable)
+
         return OpcodeResult(entry, variable)
 
 
@@ -59,7 +56,11 @@ class DeclareGlobalVar(OpcodeHandler):
         string_id = int(match.group(1))
         prop_name = entry.identifier_name or f"string_{string_id}"
 
-        variable = JSVariable(handler, entry.address, "", f"var {prop_name};")
+        value = VariableDeclaration(
+            kind="var",
+            name=IdentifierValue(prop_name),
+        )
+        variable = JSVariable(handler, entry.address, "", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
