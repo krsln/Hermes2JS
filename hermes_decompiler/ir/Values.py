@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 
-from .Node import Value
+from .old import Value
 
 
 @dataclass(frozen=True)

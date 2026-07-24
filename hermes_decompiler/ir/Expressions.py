@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC
 from dataclasses import dataclass
 
-from .Node import Expression
+from .old import Expression
 from .Operators import BinaryOperator, UnaryOperator
 from .Values import Value
 

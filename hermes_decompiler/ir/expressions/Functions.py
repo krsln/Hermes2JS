@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from ..Node import Node
-from ..Statements import BlockStatement
+from ..statements import BlockStatement
 from .Base import Expression, Identifier
 
 __all__ = [
