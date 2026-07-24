@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from hermes_decompiler.regions_new.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.regions_new.models.Regions import (
     SequenceRegion,
     LoopRegion,

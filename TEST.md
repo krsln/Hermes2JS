@@ -4,6 +4,7 @@
 
 ```shell
 tree -I '__pycache__|__init__.py' hermes_decompiler/regions_new
+tree -I '__pycache__|__init__.py|two'  
 
 ```
 

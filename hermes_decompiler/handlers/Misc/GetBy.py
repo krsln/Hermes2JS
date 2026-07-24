@@ -1,10 +1,10 @@
 from hermes_decompiler.ir.Expressions import IndexExpression, MemberExpression
-from hermes_decompiler.ir.Values import ConstantValue, IdentifierValue
+from hermes_decompiler.ir.Values import IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
 
