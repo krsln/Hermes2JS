@@ -2385,7 +2385,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Mov>: <Reg8: 57, Reg8: 21>
     r57 = createThis(prototype=r0.WeakMap.prototype, constructor=r0.WeakMap)
     // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
-    r20 = new r0.WeakMap(param7)
+    r20 = new r0.WeakMap(r19)
     // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
     // USED → r20 = r21[r20]
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>

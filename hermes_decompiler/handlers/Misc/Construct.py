@@ -1,6 +1,8 @@
 from abc import ABC
 from typing import ClassVar
 
+from hermes_decompiler.ir.Expressions import NewExpression
+from hermes_decompiler.ir.Values import ThisValue, Value
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -49,36 +51,28 @@ class ConstructBase(OpcodeHandler, ABC):
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, ArgCount")
 
         dest_reg, func_reg, arg_count = map(int, match.groups())
-        constructor = (self.get_register_value(analysis, func_reg) or f"r{func_reg}")
-        constructor_str = constructor if isinstance(constructor, str) else constructor.render()
-        args = self.resolve_arguments(analysis, func_reg, arg_count)
 
-        expression = f"new {constructor_str}({', '.join(args)})"
+        constructor = self.get_register_value_new(analysis, func_reg)
+        arguments = self.resolve_arguments(analysis, func_reg, arg_count)
 
-        variable = JSVariable(
-            handler,
-            entry.address,
-            f"r{dest_reg}",
-            expression,
+        value = NewExpression(
+            constructor=constructor,
+            arguments=arguments,
         )
 
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
-    def resolve_arguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> list[str]:
-
-        values: list[str] = []
-
-        for reg in range(func_reg - arg_count, func_reg):
-
-            value = self.get_register_value(analysis, reg)
-            value_str = value if isinstance(value, str) else value.render()
-
-            values.append(value_str)
+    def resolve_arguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> list[Value]:
+        values = [
+            self.get_register_value_new(analysis, reg)
+            for reg in range(func_reg - arg_count, func_reg)
+        ]
 
         # Hermes CreateThis inserts an implicit "this"
-        if values and values[0] == "this":
+        if values and isinstance(values[0], ThisValue):
             values = values[1:]
 
         return values

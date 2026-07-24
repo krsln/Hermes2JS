@@ -161,6 +161,12 @@ class ThrowValue(Value):
 
 
 @dataclass(frozen=True)
+class ThisValue(Value):
+    def render(self):
+        return "this"
+
+
+@dataclass(frozen=True)
 class BuiltinValue(Value):
     builtin: int
 
