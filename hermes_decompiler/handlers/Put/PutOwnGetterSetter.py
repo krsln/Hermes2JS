@@ -49,7 +49,7 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
         call = CallExpression(
             callee=MemberExpression(
                 object=IdentifierValue("Object"),
-                property=ConstantValue("defineProperty"),
+                property=IdentifierValue("defineProperty"),
             ),
             arguments=[
                 self.get_register_value_new(analysis, obj_reg),
@@ -58,13 +58,7 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
             ],
         )
 
-        variable = JSVariable(
-            self.__class__.__name__,
-            entry.address,
-            "",
-            call,
-        )
-
+        variable = JSVariable(handler, entry.address, "", call)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

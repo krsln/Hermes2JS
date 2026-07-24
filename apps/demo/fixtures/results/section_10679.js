@@ -75,7 +75,7 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5066>  # String: 'FilePath' (String)
     // USED → r3 = "FilePath"
     // CODE → <PutOwnGetterSetterByVal>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 0, UInt8: 1>
-    Object."defineProperty"({  }, "FilePath", { get: get FilePath /* Closure with env r3 = createEnvironment() */, set: undefined, enumerable: true, configurable: true })
+    Object.defineProperty({  }, "FilePath", { get: get FilePath /* Closure with env r3 = createEnvironment() */, set: undefined, enumerable: true, configurable: true })
     // CODE → <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
     r2.default = {  };
     // CODE → <Ret>: <Reg8: 0>
