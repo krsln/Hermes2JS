@@ -8,58 +8,6 @@ from .Operators import BinaryOperator, UnaryOperator
 from .Values import Value
 
 
-class Literal(Expression, ABC):
-    """
-    Base class for all literal expressions.
-    """
-    pass
-
-
-@dataclass(frozen=True, slots=True)
-class Identifier(Expression, ABC):
-    """
-    JavaScript identifier.
-
-    Example:
-        foo
-    """
-
-    name: str
-
-
-# Expression
-# │
-# ├── Identifier
-# │
-# ├── Literal
-# │   ├── NumericLiteral
-# │   ├── StringLiteral
-# │   ├── BooleanLiteral
-# │   ├── NullLiteral
-# │   ├── UndefinedLiteral
-# │   └── RegExpLiteral
-# │
-# ├── ArrayExpression
-# ├── ObjectExpression
-# │
-# ├── UnaryExpression
-# ├── PostfixUnaryExpression
-# ├── BinaryExpression
-# ├── AssignmentExpression
-# ├── ConditionalExpression
-# ├── SequenceExpression
-# │
-# ├── MemberExpression
-# ├── CallExpression
-# ├── NewExpression
-# │
-# ├── AwaitExpression
-# ├── YieldExpression
-# └── TemplateLiteral
-
-# ____________________________________________________________
-
-
 @dataclass(frozen=True)
 class PostfixUnaryExpression(Expression):
     operand: Value

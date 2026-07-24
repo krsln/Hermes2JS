@@ -2,8 +2,36 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
+from abc import ABC
+from dataclasses import fields, is_dataclass
+
 
 class Node(ABC):
+
+    @property
+    def children(self) -> tuple["Node", ...]:
+        if not is_dataclass(self):
+            return ()
+
+        children: list[Node] = []
+
+        for field in fields(type(self)):
+            value = getattr(self, field.name)
+
+            if isinstance(value, Node):
+                children.append(value)
+
+            elif isinstance(value, tuple):
+                children.extend(
+                    child
+                    for child in value
+                    if isinstance(child, Node)
+                )
+
+        return tuple(children)
+
+
+class Node_(ABC):
     """
     Base class for every IR node.
     """
@@ -21,7 +49,7 @@ class Node(ABC):
         return self.render()
 
 
-class Value(Node, ABC):
+class Value(Node_, ABC):
     """
     Represents a JavaScript value.
     """
@@ -35,7 +63,7 @@ class Expression(Value, ABC):
     pass
 
 
-class Statement(Node, ABC):
+class Statement(Node_, ABC):
     """
     Represents an executable statement.
     """

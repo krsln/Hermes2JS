@@ -1,4 +1,5 @@
 from enum import StrEnum
+from typing import Final
 
 
 class VariableKind(StrEnum):
@@ -117,6 +118,12 @@ _OPERATOR_PRECEDENCE = {
     BinaryOperator.STRICT_NOT_EQUAL: 10,
 }
 
+
+_BINARY_PRECEDENCE: Final[dict[BinaryOperator, int]] = {...}
+
+_LOGICAL_PRECEDENCE: Final[dict[LogicalOperator, int]] = {...}
+
+_ASSIGNMENT_PRECEDENCE: Final[dict[AssignmentOperator, int]] = {...}
 
 def precedence(operator: BinaryOperator | LogicalOperator | AssignmentOperator) -> int:
     ...
