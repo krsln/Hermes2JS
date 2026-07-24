@@ -21,7 +21,7 @@ async function* anon_17161(param0, param1) {
     yield label_32;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return await r2.fetch(undefined, r7);
+    return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
     // USED → r1 = await yield /* ResumeGenerator -> r1 */
@@ -74,7 +74,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
     // USED → r2 = r3[r2]
     // CODE → <Throw>: <Reg8: 2>
-    r2 = throw r3[r2]
+    throw r2;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
     // USED → r2 = await yield /* ResumeGenerator -> r1 */.text
@@ -84,7 +84,7 @@ async function* anon_17161(param0, param1) {
     yield label_153;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Ret>: <Reg8: 2>
-    return await await yield /* ResumeGenerator -> r1 */.text(await yield /* ResumeGenerator -> r1 */);
+    return r2;
     // ──────────────── Block 10 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
     // USED → r2 = await yield /* ResumeGenerator -> r2 */

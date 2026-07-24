@@ -33,7 +33,7 @@ async function* anon_9594(param0, param1) {
     yield label_58;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return await getEnvironment(4)[16].default.get(getEnvironment(4)[16].default, r2.HermesInternal.concat("https://coachify.ai/api/checkUsernameAvailable?username=", r1));
+    return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
     // USED → r1 = await yield /* ResumeGenerator -> r1 */

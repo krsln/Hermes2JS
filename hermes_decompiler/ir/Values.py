@@ -140,3 +140,20 @@ class GeneratorValue(Value):
         if self.environment is not None:
             return f"generator {self.name} /* env={self.environment.render()} */"
         return f"generator {self.name}"
+
+@dataclass(frozen=True)
+class ReturnValue(Value):
+    value: Value | None = None
+
+    def render(self):
+        if self.value is None:
+            return "return;"
+        return f"return {self.value.render()};"
+
+
+@dataclass(frozen=True)
+class ThrowValue(Value):
+    value: Value
+
+    def render(self):
+        return f"throw {self.value.render()};"

@@ -27,7 +27,7 @@ async function* anon_11947(param0, param1, param2) {
     yield label_41;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
-    return await r8._request(r8, r4, r3);
+    return r3;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
     // USED → r3 = await yield /* ResumeGenerator -> r3 */
@@ -174,7 +174,7 @@ async function* anon_11947(param0, param1, param2) {
     while (true) {
         // ──────────────── Block 18 ──────────────── 
         // CODE → <Throw>: <Reg8: 1>
-        r1 = throw caughtException
+        throw r1;
         // ──────────────── Block 17 ──────────────── 
         // CODE → <Catch>: <Reg8: 2>
         r2 = caughtException

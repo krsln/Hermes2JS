@@ -27,7 +27,7 @@ async function* anon_9956(param0, param1) {
     yield label_44;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return await getEnvironment(3)[16].default.get(getEnvironment(3)[16].default, "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + r1);
+    return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
     // USED → r1 = await yield /* ResumeGenerator -> r1 */

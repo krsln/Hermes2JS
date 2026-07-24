@@ -1,3 +1,4 @@
+from hermes_decompiler.ir.Values import ThrowValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -21,15 +22,9 @@ class Throw(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         value_reg = int(match.group(1))
-        reg_var = self.get_register_variable(analysis, value_reg)
-        reg_value = reg_var.value if reg_var and reg_var.value is not None else 'undefined'
+        value = self.get_register_value_new(analysis, value_reg)
 
-        throw_stmt = f"throw {reg_value}"
-        variable = JSVariable(handler, entry.address, f'r{value_reg}', throw_stmt)
+        variable = JSVariable(handler, entry.address, "", ThrowValue(value))
         analysis.add_result(entry, variable)
 
-        return OpcodeResult(
-            entry,
-            variable,
-            control_flow=ControlFlowType.THROW,
-        )
+        return OpcodeResult(entry, variable, control_flow=ControlFlowType.THROW)

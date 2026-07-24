@@ -1,3 +1,4 @@
+from hermes_decompiler.ir.Values import ReturnValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -17,14 +18,21 @@ class Ret(OpcodeHandler):
         handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
+
         if match:
             reg = int(match.group(1))
-            value = self._get_register_value(analysis, reg)
-            return_stmt = f"return {value};"
+            value = self.get_register_value_new(analysis, reg)
+            return_value = ReturnValue(value)
         else:
-            return_stmt = "return;"
+            return_value = ReturnValue()
 
-        variable = JSVariable(handler, entry.address, '', return_stmt)
+        variable = JSVariable(
+            handler,
+            entry.address,
+            "",
+            return_value,
+        )
+
         analysis.add_result(entry, variable)
 
         return OpcodeResult(
@@ -32,7 +40,3 @@ class Ret(OpcodeHandler):
             variable,
             control_flow=ControlFlowType.RETURN,
         )
-
-    def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
-        var = self.get_register_variable(analysis, reg)
-        return var.value if var and var.value is not None else f'undefined_r{reg}'
