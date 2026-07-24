@@ -3,6 +3,9 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Tuple
 
+from hermes_decompiler.ir.Expressions import UnaryExpression, BinaryExpression, Expression, TypeOfExpression
+from hermes_decompiler.ir.Statements import IfStatement, GotoStatement
+from hermes_decompiler.ir.Values import Value, UndefinedValue, ConstantValue, BuiltinValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -87,7 +90,12 @@ def _parse_typeof(entry: OpcodeEntry) -> Tuple[int, int, int]:
 class Jump(OpcodeHandler):
     """Base class for unconditional jumps."""
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(
+            self,
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
+    ) -> OpcodeResult:
+
         handler = self.__class__.__name__
 
         try:
@@ -101,8 +109,19 @@ class Jump(OpcodeHandler):
 
         analysis.gotoList.append(target)
 
-        variable = JSVariable(handler, entry.address, "", f"goto label_{target};", )
-        analysis.add_result(entry, variable, goto=target)
+        variable = JSVariable(
+            handler,
+            entry.address,
+            "",
+            GotoStatement(target),
+        )
+
+        analysis.add_result(
+            entry,
+            variable,
+            goto=target,
+        )
+
         return OpcodeResult(
             entry,
             variable,
@@ -126,10 +145,15 @@ class JmpLong(Jump):
 class ConditionalJump(OpcodeHandler, ABC):
 
     @abstractmethod
-    def BuildCondition(self, value: str) -> str:
+    def build_condition(self, value: Value) -> Value:
         ...
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(
+            self,
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
+    ) -> OpcodeResult:
+
         handler = self.__class__.__name__
 
         try:
@@ -142,31 +166,57 @@ class ConditionalJump(OpcodeHandler, ABC):
             target = entry.address + offset
 
         analysis.gotoList.append(target)
-        value = self.get_register_value(analysis, reg)
 
-        variable = JSVariable(handler,
-                              entry.address,
-                              "",
-                              f"if ({self.BuildCondition(value)}) {{ /* jump to label_{target} */ }}"
-                              )
-        analysis.add_result(entry, variable, goto=target)
+        value = self.get_register_value_new(analysis, reg)
+        condition = self.build_condition(value)
 
-        return OpcodeResult(entry, variable, goto=target)
+        variable = JSVariable(
+            handler,
+            entry.address,
+            "",
+            IfStatement(
+                condition=condition,
+                target=target,
+            ),
+        )
+
+        analysis.add_result(
+            entry,
+            variable,
+            goto=target,
+        )
+
+        return OpcodeResult(
+            entry,
+            variable,
+            goto=target,
+            control_flow=ControlFlowType.CONDITIONAL,
+        )
 
 
 class JmpTrue(ConditionalJump):
-    def BuildCondition(self, value: str) -> str:
+
+    def build_condition(self, value: Value) -> Value:
         return value
 
 
 class JmpFalse(ConditionalJump):
-    def BuildCondition(self, value: str) -> str:
-        return f"!{value}"
+
+    def build_condition(self, value: Value) -> Value:
+        return UnaryExpression(
+            operator="!",
+            operand=value,
+        )
 
 
 class JmpUndefined(ConditionalJump):
-    def BuildCondition(self, value: str) -> str:
-        return f"{value} === undefined"
+
+    def build_condition(self, value: Value) -> Value:
+        return BinaryExpression(
+            left=value,
+            operator="===",
+            right=UndefinedValue(),
+        )
 
 
 class JmpTrueLong(JmpTrue):
@@ -188,10 +238,15 @@ class JmpUndefinedLong(JmpUndefined):
 class BuiltinConditionalJump(OpcodeHandler, ABC):
 
     @abstractmethod
-    def build_condition(self, value: str, builtin: int) -> str:
+    def build_condition(self, value: Value, builtin: int) -> Value:
         ...
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(
+            self,
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
+    ) -> OpcodeResult:
+
         handler = self.__class__.__name__
 
         try:
@@ -204,26 +259,61 @@ class BuiltinConditionalJump(OpcodeHandler, ABC):
             target = entry.address + offset
 
         analysis.gotoList.append(target)
-        value = self.get_register_value(analysis, reg)
 
-        variable = JSVariable(handler,
-                              entry.address,
-                              "",
-                              f"if ({self.build_condition(value, builtin)}) {{ /* jump to label_{target} */ }}"
-                              )
-        analysis.add_result(entry, variable, goto=target)
+        value = self.get_register_value_new(analysis, reg)
 
-        return OpcodeResult(entry, variable, goto=target)
+        condition = self.build_condition(value, builtin)
+
+        variable = JSVariable(
+            handler,
+            entry.address,
+            "",
+            IfStatement(
+                condition=condition,
+                target=target,
+            ),
+        )
+
+        analysis.add_result(
+            entry,
+            variable,
+            goto=target,
+        )
+
+        return OpcodeResult(
+            entry,
+            variable,
+            goto=target,
+            control_flow=ControlFlowType.CONDITIONAL,
+        )
 
 
 class JmpBuiltinIs(BuiltinConditionalJump):
-    def build_condition(self, value: str, builtin: int) -> str:
-        return f"{value} === builtin_{builtin}"
+
+    def build_condition(
+            self,
+            value: Value,
+            builtin: int,
+    ) -> Value:
+        return BinaryExpression(
+            left=value,
+            operator="===",
+            right=BuiltinValue(builtin),
+        )
 
 
 class JmpBuiltinIsNot(BuiltinConditionalJump):
-    def build_condition(self, value: str, builtin: int) -> str:
-        return f"{value} !== builtin_{builtin}"
+
+    def build_condition(
+            self,
+            value: Value,
+            builtin: int,
+    ) -> Value:
+        return BinaryExpression(
+            left=value,
+            operator="!==",
+            right=BuiltinValue(builtin),
+        )
 
 
 class JmpBuiltinIsLong(JmpBuiltinIs):
@@ -241,10 +331,19 @@ class JmpBuiltinIsNotLong(JmpBuiltinIsNot):
 class TypeOfConditionalJump(OpcodeHandler, ABC):
 
     @abstractmethod
-    def BuildCondition(self, value: str, type_name: str) -> str:
+    def build_condition(
+            self,
+            value: Value,
+            type_name: str,
+    ) -> Value:
         ...
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(
+            self,
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
+    ) -> OpcodeResult:
+
         handler = self.__class__.__name__
 
         try:
@@ -257,20 +356,43 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
             target = entry.address + offset
 
         analysis.gotoList.append(target)
-        value = self.get_register_value(analysis, reg)
-        type_name = TYPEOF_MAP.get(type_id, f"<{type_id}>")
 
-        variable = JSVariable(handler,
-                              entry.address,
-                              "",
-                              f"if ({self.BuildCondition(value, type_name)}) {{ /* jump to label_{target} */ }}"
-                              )
-        analysis.add_result(entry, variable, goto=target)
+        value = self.get_register_value_new(analysis, reg)
 
-        return OpcodeResult(entry, variable, goto=target)
+        condition = self.build_condition(
+            value,
+            TYPEOF_MAP.get(type_id, f"<{type_id}>"),
+        )
+
+        variable = JSVariable(
+            handler,
+            entry.address,
+            "",
+            IfStatement(
+                condition=condition,
+                target=target,
+            ),
+        )
+
+        analysis.add_result(
+            entry,
+            variable,
+            goto=target,
+        )
+
+        return OpcodeResult(
+            entry,
+            variable,
+            goto=target,
+            control_flow=ControlFlowType.CONDITIONAL,
+        )
 
 
 class JmpTypeOfIs(TypeOfConditionalJump):
 
-    def BuildCondition(self, value: str, type_name: str) -> str:
-        return f'typeof {value} == "{type_name}"'
+    def build_condition(self, value: Value, type_name: str) -> Value:
+        return BinaryExpression(
+            left=TypeOfExpression(value),
+            operator="===",
+            right=ConstantValue(type_name),
+        )

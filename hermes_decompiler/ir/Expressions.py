@@ -142,8 +142,9 @@ class CreateThisExpression(Expression):
             ")"
         )
 
-# ConditionalExpression(
-#     condition=...,
-#     when_true=...,
-#     when_false=...
-# )
+@dataclass(frozen=True)
+class TypeOfExpression(Expression):
+    value: Value
+
+    def render(self):
+        return f"typeof {self.value.render()}"

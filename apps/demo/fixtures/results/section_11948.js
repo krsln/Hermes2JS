@@ -38,7 +38,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 14, Reg8: 6>
     // USED → r14 = param1
     // CODE → <JmpTrue>: <Addr8: 5, Reg8: 14>  # Address: 00000034
-    if (param1) { /* jump to label_52 */ }
+    if (r14) { /* jump to label_52 */ }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewObject>: <Reg8: 14>
     // USED → r14 = {}
@@ -88,7 +88,7 @@ function _request(param0, param1, param2) {
                 // USED → r2 = {}
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <JmpTrue>: <Addr8: 5, Reg8: 2>  # Address: 0000003f
-                if (param2) { /* jump to label_63 */ }
+                if (r2) { /* jump to label_63 */ }
             }
             // LOOP → END
         }

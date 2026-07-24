@@ -17,14 +17,14 @@ function processColorsInProps(param0, param1) {
     // CODE → <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 3>
     // USED → r6 = HermesPropertyIterator(param1)
     // CODE → <JmpUndefinedLong>: <Addr32: 161, Reg8: 6>  # Address: 000000b7
-    if (HermesPropertyIterator(param1) === undefined) { /* jump to label_183 */ }
+    if (r6 === undefined) { /* jump to label_183 */ }
     // LOOP → START (while)
-    while (HermesPropertyIterator(param1).next() === undefined) {
+    while (r2 === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetNextPName>: <Reg8: 2, Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 3>
         // USED → r2 = HermesPropertyIterator(param1).next()
         // CODE → <JmpUndefinedLong>: <Addr32: 149, Reg8: 2>  # Address: 000000b7
-        if (HermesPropertyIterator(param1).next() === undefined) { /* jump to label_183 */ }
+        if (r2 === undefined) { /* jump to label_183 */ }
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 13, Reg8: 2>
         // USED → r13 = HermesPropertyIterator(param1).next()

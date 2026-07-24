@@ -141,6 +141,7 @@ class GeneratorValue(Value):
             return f"generator {self.name} /* env={self.environment.render()} */"
         return f"generator {self.name}"
 
+
 @dataclass(frozen=True)
 class ReturnValue(Value):
     value: Value | None = None
@@ -157,3 +158,12 @@ class ThrowValue(Value):
 
     def render(self):
         return f"throw {self.value.render()};"
+
+
+@dataclass(frozen=True)
+class BuiltinValue(Value):
+    builtin: int
+
+    def render(self):
+        return f"builtin_{self.builtin}"
+

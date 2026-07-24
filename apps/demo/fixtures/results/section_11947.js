@@ -32,7 +32,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
     // USED → r3 = await yield /* ResumeGenerator -> r3 */
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032
-    if (param1) { /* jump to label_50 */ }
+    if (r4) { /* jump to label_50 */ }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
