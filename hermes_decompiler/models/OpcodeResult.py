@@ -1,7 +1,19 @@
+from enum import Enum
 from typing import Optional
 
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.JSVariable import JSVariable
+
+from enum import Enum, auto
+
+
+class ControlFlowType(Enum):
+    NORMAL = auto()
+    CONDITIONAL = auto()
+    UNCONDITIONAL = auto()
+    RETURN = auto()
+    THROW = auto()
+    TERMINATOR = auto()  # optional
 
 
 class OpcodeResult:
@@ -10,6 +22,7 @@ class OpcodeResult:
     result: str
     goto: Optional[int]
     extra_gotos: list[int]
+    control_flow: ControlFlowType
 
     def __init__(
             self,
@@ -17,6 +30,7 @@ class OpcodeResult:
             variable: JSVariable,
             goto: Optional[int] = None,
             extra_gotos: Optional[list[int]] = None,
+            control_flow=ControlFlowType.NORMAL,
     ):
         """
         Args:
@@ -37,6 +51,7 @@ class OpcodeResult:
         self.variable = variable
         self.goto = goto
         self.extra_gotos = extra_gotos or []
+        self.control_flow = control_flow
 
         if variable.name:
             self.result = f'{variable.name} = {variable.value}'

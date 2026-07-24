@@ -7,7 +7,7 @@ from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT16, ADDR, sequence
 
@@ -88,6 +88,7 @@ class Jump(OpcodeHandler):
     """Base class for unconditional jumps."""
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
 
         try:
             offset = _parse_jump(entry)
@@ -100,15 +101,14 @@ class Jump(OpcodeHandler):
 
         analysis.gotoList.append(target)
 
-        variable = JSVariable(
-            self.__class__.__name__,
-            entry.address,
-            "",
-            f"goto label_{target};",
-        )
+        variable = JSVariable(handler, entry.address, "", f"goto label_{target};", )
         analysis.add_result(entry, variable, goto=target)
-
-        return OpcodeResult(entry, variable, goto=target)
+        return OpcodeResult(
+            entry,
+            variable,
+            goto=target,
+            control_flow=ControlFlowType.UNCONDITIONAL,
+        )
 
 
 class Jmp(Jump):
@@ -130,6 +130,7 @@ class ConditionalJump(OpcodeHandler, ABC):
         ...
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
 
         try:
             offset, reg = _parse_conditional(entry)
@@ -143,12 +144,11 @@ class ConditionalJump(OpcodeHandler, ABC):
         analysis.gotoList.append(target)
         value = self.get_register_value(analysis, reg)
 
-        variable = JSVariable(
-            self.__class__.__name__,
-            entry.address,
-            "",
-            f"if ({self.BuildCondition(value)}) {{ /* jump to label_{target} */ }}"
-        )
+        variable = JSVariable(handler,
+                              entry.address,
+                              "",
+                              f"if ({self.BuildCondition(value)}) {{ /* jump to label_{target} */ }}"
+                              )
         analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
@@ -192,6 +192,7 @@ class BuiltinConditionalJump(OpcodeHandler, ABC):
         ...
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
 
         try:
             offset, builtin, reg = _parse_builtin(entry)
@@ -205,12 +206,11 @@ class BuiltinConditionalJump(OpcodeHandler, ABC):
         analysis.gotoList.append(target)
         value = self.get_register_value(analysis, reg)
 
-        variable = JSVariable(
-            self.__class__.__name__,
-            entry.address,
-            "",
-            f"if ({self.build_condition(value, builtin)}) {{ /* jump to label_{target} */ }}"
-        )
+        variable = JSVariable(handler,
+                              entry.address,
+                              "",
+                              f"if ({self.build_condition(value, builtin)}) {{ /* jump to label_{target} */ }}"
+                              )
         analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
@@ -245,6 +245,7 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
         ...
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        handler = self.__class__.__name__
 
         try:
             offset, reg, type_id = _parse_typeof(entry)
@@ -259,12 +260,11 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
         value = self.get_register_value(analysis, reg)
         type_name = TYPEOF_MAP.get(type_id, f"<{type_id}>")
 
-        variable = JSVariable(
-            self.__class__.__name__,
-            entry.address,
-            "",
-            f"if ({self.BuildCondition(value, type_name)}) {{ /* jump to label_{target} */ }}"
-        )
+        variable = JSVariable(handler,
+                              entry.address,
+                              "",
+                              f"if ({self.BuildCondition(value, type_name)}) {{ /* jump to label_{target} */ }}"
+                              )
         analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
