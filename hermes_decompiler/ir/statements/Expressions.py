@@ -3,8 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from ..Node import Node
-from ..Expressions import Expression
-from .Base import Statement
+from ..expressions import Expression
+from ._Base import Statement
 
 __all__ = [
     "ExpressionStatement",

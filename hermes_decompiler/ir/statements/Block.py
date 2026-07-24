@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from ..Node import Node
-from .Base import Statement
+from ._Base import Statement
 
 __all__ = [
     "BlockStatement",

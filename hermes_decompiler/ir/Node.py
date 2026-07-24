@@ -1,26 +1,32 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
-
 from abc import ABC
 from dataclasses import fields, is_dataclass, dataclass
 
 
-# @dataclass(frozen=True, slots=True)
-# class Node(ABC):
-#     pass
+class Node(ABC):
 
+    @property
+    def children(self) -> tuple["Node", ...]:
+        if not is_dataclass(self):
+            return ()
 
+        children: list[Node] = []
 
-#                 Node
-#               /      \
-#          Statement   Value
-#                       |
-#                  Expression
-#                       |
-#          -------------------------
-#          |           |          |
-#      Binary      Call       Identifier
+        for field in fields(type(self)):
+            value = getattr(self, field.name)
+
+            if isinstance(value, Node):
+                children.append(value)
+
+            elif isinstance(value, tuple):
+                children.extend(
+                    child
+                    for child in value
+                    if isinstance(child, Node)
+                )
+
+        return tuple(children)
 
 #                 Node
 #                /    \

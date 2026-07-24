@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from enum import StrEnum
 from ..Node import Node
-from .Base import Expression
+from ._Base import Expression
 
 __all__ = [
     "PropertyKind",

@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC
 from dataclasses import dataclass
 
-from .Base import Expression
+from ._Base import Expression
 from ..Node import Node
 
 __all__ = [

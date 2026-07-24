@@ -10,7 +10,7 @@ from ..Operators import (
     UnaryOperator,
     UpdateOperator,
 )
-from .Base import Expression
+from ._Base import Expression
 
 __all__ = [
     "UnaryExpression",

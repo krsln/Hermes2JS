@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from ..Node import Node
 from ..statements import BlockStatement
-from .Base import Expression, Identifier
+from ._Base import Expression, Identifier
 
 __all__ = [
     "FunctionExpression",

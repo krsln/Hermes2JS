@@ -6,15 +6,11 @@ from dataclasses import dataclass
 from ..Node import Node
 
 
-# @dataclass(frozen=True, slots=True)
-# class Expression(Node, ABC):
-#     """
-#     Base class for every JavaScript expression.
-#     """
-
 @dataclass(frozen=True, slots=True)
 class Expression(Node, ABC):
-    pass
+    """
+    Base class for every JavaScript expression.
+    """
 
 
 @dataclass(frozen=True, slots=True)
