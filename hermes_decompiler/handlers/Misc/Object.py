@@ -1,6 +1,5 @@
 import re
 import json
-from typing import Any, Dict
 
 from hermes_decompiler.ir.Expressions import CallExpression, MemberExpression, ComputedMemberExpression
 from hermes_decompiler.ir.Values import ObjectLiteralValue, IdentifierValue
@@ -131,7 +130,7 @@ class SelectObject(OpcodeHandler):
             property=selector,
         )
 
-        variable = JSVariable(handler, entry.address,  f'r{dest_reg}', value  )
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
