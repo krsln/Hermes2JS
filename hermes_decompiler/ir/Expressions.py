@@ -3,6 +3,7 @@ from __future__ import annotations
 from abc import ABC
 from dataclasses import dataclass
 
+from .Operators import BinaryOperator, UnaryOperator
 from .Values import Value
 
 
@@ -11,43 +12,31 @@ class Expression(Value, ABC):
 
 
 @dataclass(frozen=True)
-class PrefixUnaryExpression(Expression):
-    operator: str
-    operand: Value
-
-    def render(self):
-        if self.operator.isalpha():
-            return f"{self.operator} {self.operand.render()}"
-
-        return f"{self.operator}{self.operand.render()}"
-
-
-@dataclass(frozen=True)
 class PostfixUnaryExpression(Expression):
     operand: Value
-    operator: str
+    operator: UnaryOperator
 
     def render(self):
-        return f"{self.operand.render()}{self.operator}"
+        return f"{self.operand.render()}{self.operator.value}"
 
 
 @dataclass(frozen=True)
 class UnaryExpression(Expression):
-    operator: str
+    operator: UnaryOperator
     operand: Value
 
     def render(self):
-        return f"{self.operator}{self.operand.render()}"
+        return f"{self.operator.value}{self.operand.render()}"
 
 
 @dataclass(frozen=True)
 class BinaryExpression(Expression):
     left: Value
-    operator: str
+    operator: BinaryOperator
     right: Value
 
     def render(self):
-        return f"{self.left.render()} {self.operator} {self.right.render()}"
+        return f"{self.left.render()} {self.operator.value} {self.right.render()}"
 
 
 @dataclass(frozen=True)
@@ -173,12 +162,14 @@ class SwitchStatement(Expression):
         labels = ", ".join(f"label_{t}" for t in self.targets)
         return f"/* switch ({self.expression.render()}) -> {labels} */"
 
+
 @dataclass(frozen=True)
 class GetIteratorExpression(Expression):
     iterable: Value
 
     def render(self):
         return f"GetIterator({self.iterable.render()})"
+
 
 @dataclass(frozen=True)
 class PropertyIteratorExpression(Expression):

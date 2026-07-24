@@ -1,4 +1,5 @@
 from hermes_decompiler.ir.Expressions import ComparisonExpression, BinaryExpression
+from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -8,13 +9,24 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-class BinaryOperator(OpcodeHandler):
+class BaseBinaryOperator(OpcodeHandler):
     """Base class for binary register operations."""
 
     _PATTERN = sequence(REG, REG, REG)
-    _COMPARISON_OPERATORS = ["<" "<=", ">", ">=", "==", "===", "!=", "!==", "instanceof", "in"]
+    _COMPARISON_OPERATORS = {
+        BinaryOperator.LT,
+        BinaryOperator.LTE,
+        BinaryOperator.GT,
+        BinaryOperator.GTE,
+        BinaryOperator.EQ,
+        BinaryOperator.STRICT_EQ,
+        BinaryOperator.NOT_EQ,
+        BinaryOperator.STRICT_NOT_EQ,
+        BinaryOperator.INSTANCEOF,
+        BinaryOperator.IN,
+    }
 
-    operator = "+"
+    operator = BinaryOperator.ADD
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
@@ -41,44 +53,45 @@ class BinaryOperator(OpcodeHandler):
 
 
 # @formatter:off
-class Add(BinaryOperator): operator = "+"
+# @formatter:off
+class Add(BaseBinaryOperator): operator = BinaryOperator.ADD
 class AddN(Add): pass
-class Sub(BinaryOperator): operator = "-"
+class Sub(BaseBinaryOperator): operator = BinaryOperator.SUB
 class SubN(Sub): pass
-class Mul(BinaryOperator): operator = "*"
+class Mul(BaseBinaryOperator): operator = BinaryOperator.MUL
 class MulN(Mul): pass
-class Div(BinaryOperator): operator = "/"
+class Div(BaseBinaryOperator): operator = BinaryOperator.DIV
 class DivN(Div): pass
-class Mod(BinaryOperator): operator = "%"
+class Mod(BaseBinaryOperator): operator = BinaryOperator.MOD
 class ModN(Mod): pass
 
-class BitAnd(BinaryOperator): operator = "&"
-class BitNot(BinaryOperator): operator = "~"
-class BitOr(BinaryOperator): operator = "|"
+class BitAnd(BaseBinaryOperator): operator = BinaryOperator.BIT_AND
+class BitNot(BaseBinaryOperator): operator = UnaryOperator.BIT_NOT
+class BitOr(BaseBinaryOperator): operator = BinaryOperator.BIT_OR
 class BitOrN(BitOr): pass
-class BitXor(BinaryOperator): operator = "^"
+class BitXor(BaseBinaryOperator): operator = BinaryOperator.BIT_XOR
 class BitXorN(BitXor): pass
 
-class LShift(BinaryOperator): operator = "<<"
-class RShift(BinaryOperator): operator = ">>"
-class URshift(BinaryOperator): operator = ">>>"
+class LShift(BaseBinaryOperator): operator = BinaryOperator.SHL
+class RShift(BaseBinaryOperator): operator = BinaryOperator.SHR
+class URshift(BaseBinaryOperator): operator = BinaryOperator.USHR
 
-class Less(BinaryOperator): operator = "<"
-class LessEq(BinaryOperator): operator = "<="
-class Greater(BinaryOperator): operator = ">"
-class GreaterEq(BinaryOperator): operator = ">="
+class Less(BaseBinaryOperator): operator = BinaryOperator.LT
+class LessEq(BaseBinaryOperator): operator = BinaryOperator.LTE
+class Greater(BaseBinaryOperator): operator = BinaryOperator.GT
+class GreaterEq(BaseBinaryOperator): operator = BinaryOperator.GTE
 
-class Eq(BinaryOperator): operator = "=="
-class Neq(BinaryOperator): operator = "!="
-class StrictEq(BinaryOperator): operator = "==="
-class StrictNeq(BinaryOperator): operator = "!=="
+class Eq(BaseBinaryOperator): operator = BinaryOperator.EQ
+class Neq(BaseBinaryOperator): operator = BinaryOperator.NOT_EQ
+class StrictEq(BaseBinaryOperator): operator = BinaryOperator.STRICT_EQ
+class StrictNeq(BaseBinaryOperator): operator = BinaryOperator.STRICT_NOT_EQ
 # @formatter:on
 
-class InstanceOf(BinaryOperator):
+class InstanceOf(BaseBinaryOperator):
     """instanceof operator."""
-    operator = "instanceof"
+    operator = BinaryOperator.INSTANCEOF
 
 
-class IsIn(BinaryOperator):
+class IsIn(BaseBinaryOperator):
     """`in` operator: Arg1 = (Arg2 in Arg3)."""
-    operator = "in"
+    operator = BinaryOperator.IN

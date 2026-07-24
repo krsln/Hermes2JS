@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Any, Tuple
 
 from hermes_decompiler.ir.Expressions import UnaryExpression, BinaryExpression, TypeOfExpression, Expression
+from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.Statements import IfStatement, GotoStatement
 from hermes_decompiler.ir.Values import Value, UndefinedValue, ConstantValue, BuiltinValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
@@ -163,12 +164,12 @@ class JmpTrue(ConditionalJump):
 
 class JmpFalse(ConditionalJump):
     def build_condition(self, value: Value, *extra: Any) -> Expression:
-        return UnaryExpression("!", value)
+        return UnaryExpression(UnaryOperator.NOT, value)
 
 
 class JmpUndefined(ConditionalJump):
     def build_condition(self, value: Value, *extra: Any) -> Expression:
-        return BinaryExpression(value, "===", UndefinedValue())
+        return BinaryExpression(value, BinaryOperator.STRICT_EQ, UndefinedValue())
 
 
 # Long versions
@@ -193,13 +194,13 @@ class BuiltinConditionalJump(ConditionalJumpBase, ABC):
 class JmpBuiltinIs(BuiltinConditionalJump):
     def build_condition(self, value: Value, *extra: Any) -> Expression:
         builtin = extra[0]
-        return BinaryExpression(value, "===", BuiltinValue(builtin))
+        return BinaryExpression(value, BinaryOperator.STRICT_EQ, BuiltinValue(builtin))
 
 
 class JmpBuiltinIsNot(BuiltinConditionalJump):
     def build_condition(self, value: Value, *extra: Any) -> Expression:
         builtin = extra[0]
-        return BinaryExpression(value, "!==", BuiltinValue(builtin))
+        return BinaryExpression(value, BinaryOperator.STRICT_NOT_EQ, BuiltinValue(builtin))
 
 
 class JmpBuiltinIsLong(JmpBuiltinIs): pass
@@ -223,6 +224,6 @@ class JmpTypeOfIs(TypeOfConditionalJump):
         type_name = extra[0]
         return BinaryExpression(
             TypeOfExpression(value),
-            "===",
+            BinaryOperator.STRICT_EQ,
             ConstantValue(type_name),
         )

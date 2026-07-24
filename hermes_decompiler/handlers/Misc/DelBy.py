@@ -1,4 +1,5 @@
 from hermes_decompiler.ir.Expressions import UnaryExpression, MemberExpression
+from hermes_decompiler.ir.Operators import UnaryOperator
 from hermes_decompiler.ir.Values import IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
@@ -28,7 +29,7 @@ class DelById(OpcodeHandler):
         obj = self.get_register_value_new(analysis, obj_reg)
 
         value = UnaryExpression(
-            operator="delete ",
+            operator=UnaryOperator.DELETE,
             operand=MemberExpression(
                 object=obj,
                 property=IdentifierValue(prop_name),
@@ -60,7 +61,7 @@ class DelByVal(OpcodeHandler):
         prop = self.get_register_value_new(analysis, prop_reg)
 
         value = UnaryExpression(
-            operator="delete ",
+            operator=UnaryOperator.DELETE,
             operand=MemberExpression(
                 object=obj,
                 property=prop,

@@ -1,6 +1,7 @@
 from typing import ClassVar
 
-from hermes_decompiler.ir.Expressions import UnaryExpression, BinaryExpression, Expression, PrefixUnaryExpression
+from hermes_decompiler.ir.Expressions import UnaryExpression, BinaryExpression, Expression
+from hermes_decompiler.ir.Operators import UnaryOperator, BinaryOperator
 from hermes_decompiler.ir.Values import Value, ConstantValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
@@ -11,7 +12,7 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-class UnaryOperator(OpcodeHandler):
+class BaseUnaryOperator(OpcodeHandler):
     """Base class for unary register operations."""
 
     _PATTERN: ClassVar = sequence(REG, REG)
@@ -44,46 +45,46 @@ class UnaryOperator(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-class Not(UnaryOperator):
+class Not(BaseUnaryOperator):
     def expression(self, value):
-        return PrefixUnaryExpression("!", value)
+        return UnaryExpression(UnaryOperator.NOT, value)
 
 
-class TypeOf(UnaryOperator):
+class TypeOf(BaseUnaryOperator):
     def expression(self, value):
-        return PrefixUnaryExpression("typeof", value)
+        return UnaryExpression(UnaryOperator.TYPEOF, value)
 
 
-class ToInt32(UnaryOperator):
+class ToInt32(BaseUnaryOperator):
     def expression(self, value: Value):
-        return BinaryExpression(left=value, operator="|", right=ConstantValue(0))
+        return BinaryExpression(left=value, operator=BinaryOperator.BIT_OR, right=ConstantValue(0))
 
 
-class ToNumeric(UnaryOperator):
+class ToNumeric(BaseUnaryOperator):
     def expression(self, value):
-        return UnaryExpression(operator="+", operand=value)
+        return UnaryExpression(operator=UnaryOperator.PLUS, operand=value)
 
 
-class ToNumber(UnaryOperator):
+class ToNumber(BaseUnaryOperator):
     def expression(self, value):
-        return PrefixUnaryExpression("+", value)
+        return UnaryExpression(UnaryOperator.PLUS, value)
 
 
-class Inc(UnaryOperator):
+class Inc(BaseUnaryOperator):
     def expression(self, value: Value):
-        return BinaryExpression(left=value, operator="+", right=ConstantValue(1))
+        return BinaryExpression(left=value, operator=BinaryOperator.ADD, right=ConstantValue(1))
 
 
-class Dec(UnaryOperator):
+class Dec(BaseUnaryOperator):
     def expression(self, value: Value):
-        return BinaryExpression(left=value, operator="-", right=ConstantValue(1))
+        return BinaryExpression(left=value, operator=BinaryOperator.SUB, right=ConstantValue(1))
 
 
-class Negate(UnaryOperator):
+class Negate(BaseUnaryOperator):
     def expression(self, value):
-        return PrefixUnaryExpression("-", value)
+        return UnaryExpression(UnaryOperator.NEGATE, value)
 
 
-class AddEmptyString(UnaryOperator):
+class AddEmptyString(BaseUnaryOperator):
     def expression(self, value: Value):
-        return BinaryExpression(left=ConstantValue(""), operator="+", right=value)
+        return BinaryExpression(left=ConstantValue(""), operator=BinaryOperator.ADD, right=value)

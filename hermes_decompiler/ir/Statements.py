@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 from hermes_decompiler.ir.Values import Value
-from hermes_decompiler.regions_new.models.Statements import Statement
 
 
 @dataclass(frozen=True)
