@@ -2,9 +2,6 @@ from typing import Dict, Any
 
 from hermes_decompiler.ir.Values import Value
 
-# RenderableValue = str | Value
-RenderableValue = Value
-
 
 class JSVariable:
     """Represents a variable or register in Hermes bytecode analysis."""
@@ -14,7 +11,7 @@ class JSVariable:
             handler: str,
             address: int,
             name: str,
-            value: RenderableValue,
+            value: Value,
     ):
         """Initialize a JSVariable for Hermes bytecode analysis.
 
