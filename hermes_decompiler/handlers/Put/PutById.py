@@ -1,6 +1,6 @@
 from hermes_decompiler.ir.Expressions import MemberExpression
 from hermes_decompiler.ir.Statements import AssignmentStatement
-from hermes_decompiler.ir.Values import ConstantValue
+from hermes_decompiler.ir.Values import IdentifierValue
 
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -30,11 +30,10 @@ class PutById(OpcodeHandler):
     _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
 
     def handle(
-        self,
-        analysis: HermesAnalysis,
-        entry: OpcodeEntry,
+            self,
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
     ) -> OpcodeResult:
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
@@ -42,13 +41,14 @@ class PutById(OpcodeHandler):
         obj_reg, value_reg, _cache, string_id = map(int, match.groups())
 
         property_name = (
-            entry.identifier_name
-            or f"string_{string_id}"
+                entry.identifier_name
+                or f"string_{string_id}"
         )
 
         left = MemberExpression(
             object=self.get_register_value_new(analysis, obj_reg),
-            property=ConstantValue(property_name),
+            property=IdentifierValue(property_name),
+            computed=False,
         )
 
         right = self.get_register_value_new(analysis, value_reg)

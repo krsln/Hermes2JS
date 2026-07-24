@@ -121,7 +121,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
     // USED → r4 = r6."stack"."replace"(r6."stack", /^.+\\n/, "")
     // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r6."stack" = r6."stack"."replace"(r6."stack", /^.+\\n/, "");
+    r6.stack = r6."stack"."replace"(r6."stack", /^.+\\n/, "");
     // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
     goto label_312;
     // ──────────────── Block 13 ──────────────── 
@@ -166,7 +166,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
     // USED → r2 = r3."stack" + "\\n" + r6."stack"."replace"(r6."stack", /^.+\\n/, "")
     // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r3."stack" = r3."stack" + "\\n" + r6."stack"."replace"(r6."stack", /^.+\\n/, "");
+    r3.stack = r3."stack" + "\\n" + r6."stack"."replace"(r6."stack", /^.+\\n/, "");
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
     goto label_316;

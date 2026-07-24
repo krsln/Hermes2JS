@@ -151,7 +151,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
         // USED → r13 = r13."return"."return"
         // CODE → <PutById>: <Reg8: 14, Reg8: 13, UInt8: 1, string_id: 209>  # String: 'return' (Identifier)
-        r13."return"."sibling"."return" = r13."return"."return";
+        r13."return"."sibling".return = r13."return"."return";
         // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 11, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
         r0 = r13."return"."sibling"
         // CODE → <JmpLong>: <Addr32: -235>  # Address: 0000001d
@@ -160,7 +160,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // CODE → <Mov>: <Reg8: 11, Reg8: 6>
         // USED → r11 = r12."child"
         // CODE → <PutById>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 209>  # String: 'return' (Identifier)
-        r12."child"."return" = r12;
+        r12."child".return = r12;
         // CODE → <Mov>: <Reg8: 0, Reg8: 11>
         r0 = r12."child"
         // CODE → <JmpLong>: <Addr32: -260>  # Address: 0000001d

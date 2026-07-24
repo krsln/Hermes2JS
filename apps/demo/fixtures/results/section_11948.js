@@ -78,7 +78,7 @@ function _request(param0, param1, param2) {
             // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
             createEnvironment()[0] = r2
             // CODE → <PutById>: <Reg8: 2, Reg8: 6, UInt8: 1, string_id: 14158>  # String: 'url' (Identifier)
-            r2."url" = r6;
+            r2.url = r6;
             // CODE → <Mov>: <Reg8: 14, Reg8: 2>
             // USED → r14 = {}
             // LOOP → START (while)
@@ -181,7 +181,7 @@ function _request(param0, param1, param2) {
     // CODE → <PutNewOwnById>: <Reg8: 2, Reg8: 14, string_id: 12525>  # String: 'serialize' (Identifier)
     r2."serialize" = getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."paramsSerializer";
     // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 2, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
-    getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."paramsSerializer" = r2;
+    getEnvironment(1)[7]."default"(undefined, r8."defaults", r14).paramsSerializer = r2;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 10, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
     // USED → r2 = getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."allowAbsoluteUrls"
@@ -198,7 +198,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstTrue>: <Reg8: 2>
     // USED → r2 = true
     // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 3, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."allowAbsoluteUrls" = true;
+    getEnvironment(1)[7]."default"(undefined, r8."defaults", r14).allowAbsoluteUrls = true;
     // CODE → <Jmp>: <Addr8: 20>  # Address: 00000177
     goto label_375;
     // LOOP → START (while)
@@ -244,7 +244,7 @@ function _request(param0, param1, param2) {
         // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
         // USED → r2 = r8."defaults"."allowAbsoluteUrls"
         // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 3, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-        getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."allowAbsoluteUrls" = r8."defaults"."allowAbsoluteUrls";
+        getEnvironment(1)[7]."default"(undefined, r8."defaults", r14).allowAbsoluteUrls = r8."defaults"."allowAbsoluteUrls";
     }
     // LOOP → END
     // ──────────────── Block 18 ──────────────── 
@@ -264,7 +264,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call1>: <Reg8: 14, Reg8: 14, Reg8: 15>
     // USED → r14 = "get"."toLowerCase"("get")
     // CODE → <PutById>: <Reg8: 10, Reg8: 14, UInt8: 4, string_id: 12916>  # String: 'method' (Identifier)
-    getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."method" = "get"."toLowerCase"("get");
+    getEnvironment(1)[7]."default"(undefined, r8."defaults", r14).method = "get"."toLowerCase"("get");
     // CODE → <Mov>: <Reg8: 16, Reg8: 17>
     // USED → r16 = getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers"
     // CODE → <JmpFalse>: <Addr8: 40, Reg8: 16>  # Address: 00000214
@@ -310,7 +310,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 14, Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 17>
     // USED → r14 = getEnvironment(1)[10]."default"."concat"(getEnvironment(1)[10]."default", getEnvironment(1)[3]."default"."merge"(getEnvironment(1)[3]."default", getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers"."common", getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers"[getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."method"]), getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers")
     // CODE → <PutById>: <Reg8: 10, Reg8: 14, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
-    getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers" = getEnvironment(1)[10]."default"."concat"(getEnvironment(1)[10]."default", getEnvironment(1)[3]."default"."merge"(getEnvironment(1)[3]."default", getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers"."common", getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers"[getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."method"]), getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers");
+    getEnvironment(1)[7]."default"(undefined, r8."defaults", r14).headers = getEnvironment(1)[10]."default"."concat"(getEnvironment(1)[10]."default", getEnvironment(1)[3]."default"."merge"(getEnvironment(1)[3]."default", getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers"."common", getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers"[getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."method"]), getEnvironment(1)[7]."default"(undefined, r8."defaults", r14)."headers");
     // CODE → <NewArray>: <Reg8: 14, UInt16: 0>
     // USED → r14 = []
     // CODE → <Mov>: <Reg8: 12, Reg8: 14>

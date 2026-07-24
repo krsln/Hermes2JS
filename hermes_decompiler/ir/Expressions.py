@@ -59,9 +59,13 @@ class ComparisonExpression(BinaryExpression):
 class MemberExpression(Expression):
     object: Value
     property: Value
+    computed: bool = False
 
     def render(self):
-        return f"{self.object.render()}.{self.property}"
+        if self.computed:
+            return f"{self.object.render()}[{self.property.render()}]"
+
+        return f"{self.object.render()}.{self.property.render()}"
 
 
 @dataclass(frozen=True)

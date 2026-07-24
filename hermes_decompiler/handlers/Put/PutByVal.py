@@ -3,7 +3,7 @@ from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.ir.Expressions import IndexExpression
+from hermes_decompiler.ir.Expressions import IndexExpression, MemberExpression
 from hermes_decompiler.ir.Statements import AssignmentStatement
 
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
@@ -32,9 +32,10 @@ class PutByVal(OpcodeHandler):
             entry.address,
             "",
             AssignmentStatement(
-                left=IndexExpression(
+                left=MemberExpression(
                     object=self.get_register_value_new(analysis, obj_reg),
-                    index=self.get_register_value_new(analysis, key_reg),
+                    property=self.get_register_value_new(analysis, key_reg),
+                    computed=True,
                 ),
                 right=self.get_register_value_new(analysis, value_reg),
             ),

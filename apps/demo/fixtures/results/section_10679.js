@@ -35,7 +35,7 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined
     // CODE → <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    r2."default" = undefined;
+    r2.default = undefined;
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 6, Reg8: 1>
@@ -77,7 +77,7 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <PutOwnGetterSetterByVal>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 0, UInt8: 1>
     Object."defineProperty"(r1, "FilePath", { get: get FilePath /* Closure with env r3 = createEnvironment() */, set: undefined, enumerable: true, configurable: true })
     // CODE → <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    r2."default" = r1;
+    r2.default = r1;
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }
