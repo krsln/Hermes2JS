@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..Node import Node
-from ..Operators import (
+from hermes_decompiler.ir.Node import Node
+from hermes_decompiler.ir.Operators import (
     AssignmentOperator,
     BinaryOperator,
     LogicalOperator,
@@ -22,15 +22,13 @@ __all__ = [
 ]
 
 
-# ============================================================================
-# Unary
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class UnaryExpression(Expression):
     """
-    Represents a unary operation.
+    Unary operation.
+
+    Example:
+        !value
     """
 
     operator: UnaryOperator
@@ -41,10 +39,14 @@ class UnaryExpression(Expression):
         return (self.operand,)
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class UpdateExpression(Expression):
     """
-    Represents an update operation.
+    Increment/decrement operation.
+
+    Examples:
+        ++i
+        i--
     """
 
     operator: UpdateOperator
@@ -56,15 +58,13 @@ class UpdateExpression(Expression):
         return (self.argument,)
 
 
-# ============================================================================
-# Binary
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class BinaryExpression(Expression):
     """
-    Represents a binary operation.
+    Binary or logical operation.
+
+    Example:
+        a + b
     """
 
     left: Expression
@@ -73,21 +73,16 @@ class BinaryExpression(Expression):
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.left,
-            self.right,
-        )
+        return self.left, self.right
 
 
-# ============================================================================
-# Assignment
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class AssignmentExpression(Expression):
     """
-    Represents an assignment operation.
+    Assignment operation.
+
+    Example:
+        a = b
     """
 
     left: Expression
@@ -96,23 +91,16 @@ class AssignmentExpression(Expression):
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.left,
-            self.right,
-        )
+        return self.left, self.right
 
 
-# ============================================================================
-# Conditional
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ConditionalExpression(Expression):
     """
-    Represents a conditional expression.
+    Ternary conditional expression.
 
-    condition ? consequent : alternate
+    Example:
+        condition ? consequent : alternate
     """
 
     test: Expression
@@ -121,22 +109,13 @@ class ConditionalExpression(Expression):
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.test,
-            self.consequent,
-            self.alternate,
-        )
+        return self.test, self.consequent, self.alternate
 
 
-# ============================================================================
-# Sequence
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class SequenceExpression(Expression):
     """
-    Represents a comma-separated expression sequence.
+    Comma-separated expression sequence.
 
     Example:
         a, b, c

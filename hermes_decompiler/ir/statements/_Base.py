@@ -3,33 +3,18 @@ from __future__ import annotations
 from abc import ABC
 from dataclasses import dataclass
 
-from ..Node import Node
+from hermes_decompiler.ir.Node import Node
 
 __all__ = [
     "Statement",
 ]
 
 
-# class Statement(Node, ABC):
-#     """
-#     Base class for all JavaScript statements.
-#
-#     Statements represent executable program constructs that perform actions,
-#     control program flow, or declare bindings. Unlike expressions, statements
-#     do not directly produce a value.
-#
-#     Examples:
-#         - ExpressionStatement
-#         - BlockStatement
-#         - IfStatement
-#         - ReturnStatement
-#         - WhileStatement
-#         - VariableDeclaration
-#     """
-#
-#     __slots__ = ()
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class Statement(Node, ABC):
-    pass
+    """
+    Abstract base class for every JavaScript statement.
+
+    A statement performs an action or controls program flow; unlike an
+    `Expression`, it does not itself produce a value.
+    """

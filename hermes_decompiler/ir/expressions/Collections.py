@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-
 from enum import StrEnum
-from ..Node import Node
+
+from hermes_decompiler.ir.Node import Node
 from ._Base import Expression
 
 __all__ = [
@@ -16,24 +16,17 @@ __all__ = [
 
 
 class PropertyKind(StrEnum):
-    """
-    Represents the kind of object property.
-    """
+    """Kind of an object literal property."""
 
     INIT = "init"
     GET = "get"
     SET = "set"
 
 
-# ============================================================================
-# Helper Nodes
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class SpreadElement(Node):
     """
-    Represents a spread element.
+    Spread element.
 
     Examples:
         [...items]
@@ -48,99 +41,62 @@ class SpreadElement(Node):
         return (self.argument,)
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ObjectProperty(Node):
     """
-    Represents a property within an object literal.
+    Single property within an object literal.
 
     Examples:
         { foo: 1 }
-
         { [key]: value }
-
         { foo }
-
         { foo() {} }
-
-        {
-            get name() {}
-        }
-
-        {
-            set name(v) {}
-        }
+        { get name() {} }
+        { set name(v) {} }
     """
 
     key: Expression
-
     value: Expression
-
     kind: PropertyKind = PropertyKind.INIT
-
     computed: bool = False
-
     method: bool = False
-
     shorthand: bool = False
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.key,
-            self.value,
-        )
+        return self.key, self.value
 
 
-# ============================================================================
-# Collection Expressions
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ArrayExpression(Expression):
     """
-    Represents a JavaScript array literal.
+    Array literal.
 
     Examples:
         []
-
         [1, 2, 3]
-
         [foo, ...bar]
     """
 
-    elements: tuple[
-        Expression | SpreadElement,
-        ...
-    ]
+    elements: tuple[Expression | SpreadElement, ...] = ()
 
     @property
     def children(self) -> tuple[Node, ...]:
         return self.elements
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ObjectExpression(Expression):
     """
-    Represents a JavaScript object literal.
+    Object literal.
 
     Examples:
         {}
-
         { foo: 1 }
-
-        {
-            foo,
-            bar: 2,
-            [key]: value,
-            ...other
-        }
+        { foo, bar: 2, [key]: value, ...other }
     """
 
-    properties: tuple[
-        ObjectProperty | SpreadElement,
-        ...
-    ]
+    properties: tuple[ObjectProperty | SpreadElement, ...] = ()
 
     @property
     def children(self) -> tuple[Node, ...]:

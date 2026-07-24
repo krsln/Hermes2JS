@@ -3,17 +3,21 @@ from __future__ import annotations
 from abc import ABC
 from dataclasses import dataclass
 
-from ..Node import Node
+from hermes_decompiler.ir.Node import Node
+
+__all__ = [
+    "Expression",
+    "Identifier",
+    "ParenthesizedExpression",
+]
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class Expression(Node, ABC):
-    """
-    Base class for every JavaScript expression.
-    """
+    """Abstract base class for every JavaScript expression."""
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class Identifier(Expression):
     """
     JavaScript identifier.
@@ -24,11 +28,16 @@ class Identifier(Expression):
 
     name: str
 
+    @property
+    def children(self) -> tuple[Node, ...]:
+        return ()
 
-@dataclass(frozen=True, slots=True)
+
+@dataclass(frozen=True, slots=True, eq=False)
 class ParenthesizedExpression(Expression):
     """
-    Parenthesized expression.
+    Explicit parenthesization, preserved for rendering/precedence
+    purposes. Semantically equivalent to `expression`.
 
     Example:
         (a + b)
@@ -37,5 +46,5 @@ class ParenthesizedExpression(Expression):
     expression: Expression
 
     @property
-    def children(self):
+    def children(self) -> tuple[Node, ...]:
         return (self.expression,)

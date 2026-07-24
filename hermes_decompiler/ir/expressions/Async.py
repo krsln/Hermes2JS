@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..Node import Node
+from hermes_decompiler.ir.Node import Node
 from ._Base import Expression
 
 __all__ = [
@@ -11,15 +11,10 @@ __all__ = [
 ]
 
 
-# ============================================================================
-# Async
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class AwaitExpression(Expression):
     """
-    Represents an await expression.
+    Await expression.
 
     Example:
         await value
@@ -32,10 +27,10 @@ class AwaitExpression(Expression):
         return (self.argument,)
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class YieldExpression(Expression):
     """
-    Represents a yield expression.
+    Yield expression.
 
     Examples:
         yield value
@@ -43,7 +38,6 @@ class YieldExpression(Expression):
     """
 
     argument: Expression | None = None
-
     delegate: bool = False
 
     @property

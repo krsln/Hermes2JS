@@ -1,10 +1,16 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
-from ..Node import Node
-from ..statements import BlockStatement
+from hermes_decompiler.ir.Node import Node
 from ._Base import Expression, Identifier
+
+if TYPE_CHECKING:
+    # Deferred to avoid a runtime circular import: `statements` imports
+    # from `expressions` (e.g. Declarations.py needs Expression), so
+    # `expressions` cannot import `statements` at module load time.
+    from hermes_decompiler.ir.statements.Block import BlockStatement
 
 __all__ = [
     "FunctionExpression",
@@ -13,28 +19,19 @@ __all__ = [
 ]
 
 
-# ============================================================================
-# Function
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class FunctionExpression(Expression):
     """
-    Represents a function expression.
+    Function expression.
 
     Example:
         function foo(a, b) { ... }
     """
 
     name: Identifier | None
-
     parameters: tuple[Identifier, ...]
-
-    body: BlockStatement
-
+    body: "BlockStatement"
     async_: bool = False
-
     generator: bool = False
 
     @property
@@ -50,53 +47,36 @@ class FunctionExpression(Expression):
         return tuple(children)
 
 
-# ============================================================================
-# Arrow Function
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ArrowFunctionExpression(Expression):
     """
-    Represents an arrow function.
+    Arrow function.
 
     Example:
         (a, b) => a + b
     """
 
     parameters: tuple[Identifier, ...]
-
-    body: Expression | BlockStatement
-
+    body: "Expression | BlockStatement"
     async_: bool = False
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            *self.parameters,
-            self.body,
-        )
+        return *self.parameters, self.body
 
 
-# ============================================================================
-# Class
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ClassExpression(Expression):
     """
-    Represents a class expression.
+    Class expression.
 
     Example:
         class Foo {}
     """
 
     name: Identifier | None = None
-
     super_class: Expression | None = None
-
-    body: BlockStatement | None = None
+    body: "BlockStatement | None" = None
 
     @property
     def children(self) -> tuple[Node, ...]:

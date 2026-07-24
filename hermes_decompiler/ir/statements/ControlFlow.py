@@ -2,51 +2,21 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..expressions import Expression, Identifier
-from ..Node import Node
+from hermes_decompiler.ir.Node import Node
+from hermes_decompiler.ir.expressions import Expression
 from ._Base import Statement
 
 __all__ = [
     "IfStatement",
     "ReturnStatement",
-    "BreakStatement",
-    "ContinueStatement",
     "DebuggerStatement",
 ]
 
 
-# ============================================================================
-# Return
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
-class ReturnStatement(Statement):
-    """
-    Represents a return statement.
-
-    Examples:
-        return;
-
-        return value;
-    """
-
-    argument: Expression | None = None
-
-    @property
-    def children(self) -> tuple[Node, ...]:
-        return () if self.argument is None else (self.argument,)
-
-
-# ============================================================================
-# If
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class IfStatement(Statement):
     """
-    Represents an if statement.
+    Conditional statement.
 
     Examples:
         if (condition)
@@ -59,17 +29,12 @@ class IfStatement(Statement):
     """
 
     test: Expression
-
     consequent: Statement
-
     alternate: Statement | None = None
 
     @property
     def children(self) -> tuple[Node, ...]:
-        children: list[Node] = [
-            self.test,
-            self.consequent,
-        ]
+        children: list[Node] = [self.test, self.consequent]
 
         if self.alternate is not None:
             children.append(self.alternate)
@@ -77,61 +42,27 @@ class IfStatement(Statement):
         return tuple(children)
 
 
-# ============================================================================
-# Break
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
-class BreakStatement(Statement):
+@dataclass(frozen=True, slots=True, eq=False)
+class ReturnStatement(Statement):
     """
-    Represents a break statement.
+    Return statement.
 
     Examples:
-        break;
-
-        break outerLoop;
+        return;
+        return value;
     """
 
-    label: Identifier | None = None
+    argument: Expression | None = None
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return () if self.label is None else (self.label,)
+        return () if self.argument is None else (self.argument,)
 
 
-# ============================================================================
-# Continue
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
-class ContinueStatement(Statement):
-    """
-    Represents a continue statement.
-
-    Examples:
-        continue;
-
-        continue outerLoop;
-    """
-
-    label: Identifier | None = None
-
-    @property
-    def children(self) -> tuple[Node, ...]:
-        return () if self.label is None else (self.label,)
-
-
-# ============================================================================
-# Debugger
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class DebuggerStatement(Statement):
     """
-    Represents a debugger statement.
+    Debugger statement.
 
     Example:
         debugger;

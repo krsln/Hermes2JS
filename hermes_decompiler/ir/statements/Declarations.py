@@ -2,44 +2,36 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..expressions import Expression
-from ..Node import Node
+from hermes_decompiler.ir.Node import Node
+from hermes_decompiler.ir.Operators import VariableKind
+from hermes_decompiler.ir.expressions import Expression, Identifier
 from ._Base import Statement
+from .Block import BlockStatement
 
 __all__ = [
-    "VariableDeclaration",
     "VariableDeclarator",
+    "VariableDeclaration",
     "FunctionDeclaration",
     "ClassDeclaration",
 ]
 
 
-# ============================================================================
-# Variable Declarator
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class VariableDeclarator(Node):
     """
-    Represents a single variable declaration.
+    Single binding within a variable declaration.
 
     Examples:
-
-        let x;
-
-        let x = 10;
+        x
+        x = 10
     """
 
     id: Expression
-
     init: Expression | None = None
 
     @property
     def children(self) -> tuple[Node, ...]:
-        children: list[Node] = [
-            self.id,
-        ]
+        children: list[Node] = [self.id]
 
         if self.init is not None:
             children.append(self.init)
@@ -47,27 +39,18 @@ class VariableDeclarator(Node):
         return tuple(children)
 
 
-# ============================================================================
-# Variable Declaration
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class VariableDeclaration(Statement):
     """
-    Represents variable declaration.
+    Variable declaration statement.
 
     Examples:
-
         let a;
-
         const x = 1;
-
         var a = 1, b = 2;
     """
 
-    kind: str
-
+    kind: VariableKind
     declarations: tuple[VariableDeclarator, ...]
 
     @property
@@ -75,69 +58,45 @@ class VariableDeclaration(Statement):
         return self.declarations
 
 
-# ============================================================================
-# Function Declaration
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class FunctionDeclaration(Statement):
     """
-    Represents a function declaration.
+    Function declaration.
 
     Example:
-
         function foo(a) {
             return a;
         }
     """
 
-    id: Expression
-
-    params: tuple[Expression, ...]
-
-    body: Statement
-
+    id: Identifier
+    params: tuple[Identifier, ...]
+    body: BlockStatement
     async_: bool = False
-
     generator: bool = False
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.id,
-            *self.params,
-            self.body,
-        )
+        return self.id, *self.params, self.body
 
 
-# ============================================================================
-# Class Declaration
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ClassDeclaration(Statement):
     """
-    Represents a class declaration.
+    Class declaration.
 
     Example:
-
         class Foo {
         }
     """
 
-    id: Expression
-
-    body: Statement
-
+    id: Identifier
+    body: BlockStatement
     super_class: Expression | None = None
 
     @property
     def children(self) -> tuple[Node, ...]:
-        children: list[Node] = [
-            self.id,
-        ]
+        children: list[Node] = [self.id]
 
         if self.super_class is not None:
             children.append(self.super_class)

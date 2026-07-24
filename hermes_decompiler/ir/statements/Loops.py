@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..expressions import Expression
-from ..Node import Node
+from hermes_decompiler.ir.Node import Node
+from hermes_decompiler.ir.expressions import Expression
 from ._Base import Statement
 
 __all__ = [
@@ -15,15 +15,10 @@ __all__ = [
 ]
 
 
-# ============================================================================
-# While
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class WhileStatement(Statement):
     """
-    Represents a while loop.
+    While loop.
 
     Example:
         while (condition) {
@@ -32,54 +27,36 @@ class WhileStatement(Statement):
     """
 
     test: Expression
-
     body: Statement
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.test,
-            self.body,
-        )
+        return self.test, self.body
 
 
-# ============================================================================
-# Do While
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class DoWhileStatement(Statement):
     """
-    Represents a do-while loop.
+    Do-while loop.
 
     Example:
         do {
             ...
-        } while (condition);
+        /} while (condition);
     """
 
     body: Statement
-
     test: Expression
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.body,
-            self.test,
-        )
+        return self.body, self.test
 
 
-# ============================================================================
-# For
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ForStatement(Statement):
     """
-    Represents a classic for loop.
+    Classic for loop.
 
     Example:
         for (init; test; update) {
@@ -110,15 +87,10 @@ class ForStatement(Statement):
         return tuple(children)
 
 
-# ============================================================================
-# For In
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ForInStatement(Statement):
     """
-    Represents a for-in loop.
+    For-in loop.
 
     Example:
         for (key in object) {
@@ -127,48 +99,29 @@ class ForInStatement(Statement):
     """
 
     left: Statement | Expression
-
     right: Expression
-
     body: Statement
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.left,
-            self.right,
-            self.body,
-        )
+        return self.left, self.right, self.body
 
 
-# ============================================================================
-# For Of
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ForOfStatement(Statement):
     """
-    Represents a for-of loop.
+    For-of loop.
 
     Examples:
         for (value of iterable) { ... }
-
         for await (value of iterable) { ... }
     """
 
     left: Statement | Expression
-
     right: Expression
-
     body: Statement
-
     await_: bool = False
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.left,
-            self.right,
-            self.body,
-        )
+        return self.left, self.right, self.body

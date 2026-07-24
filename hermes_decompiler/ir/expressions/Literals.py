@@ -3,8 +3,8 @@ from __future__ import annotations
 from abc import ABC
 from dataclasses import dataclass
 
+from hermes_decompiler.ir.Node import Node
 from ._Base import Expression
-from ..Node import Node
 
 __all__ = [
     "Literal",
@@ -20,28 +20,16 @@ __all__ = [
 ]
 
 
-# ============================================================================
-# Base
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class Literal(Expression, ABC):
-    """
-    Base class for every JavaScript literal.
-    """
+    """Abstract base class for every JavaScript literal."""
 
     @property
     def children(self) -> tuple[Node, ...]:
         return ()
 
 
-# ============================================================================
-# Primitive Literals
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class NumericLiteral(Literal):
     """
     JavaScript numeric literal.
@@ -54,7 +42,7 @@ class NumericLiteral(Literal):
     value: int | float
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class BigIntLiteral(Literal):
     """
     JavaScript BigInt literal.
@@ -66,7 +54,7 @@ class BigIntLiteral(Literal):
     value: int
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class StringLiteral(Literal):
     """
     JavaScript string literal.
@@ -78,35 +66,24 @@ class StringLiteral(Literal):
     value: str
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class BooleanLiteral(Literal):
-    """
-    JavaScript boolean literal.
-    """
+    """JavaScript boolean literal."""
 
     value: bool
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class NullLiteral(Literal):
-    """
-    JavaScript null literal.
-    """
+    """JavaScript `null` literal."""
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class UndefinedLiteral(Literal):
-    """
-    JavaScript undefined literal.
-    """
+    """JavaScript `undefined` literal."""
 
 
-# ============================================================================
-# Complex Literals
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class RegExpLiteral(Literal):
     """
     JavaScript regular expression literal.
@@ -119,11 +96,9 @@ class RegExpLiteral(Literal):
     flags: str = ""
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class TemplateElement(Node):
-    """
-    Static segment of a template literal.
-    """
+    """Static (non-interpolated) segment of a template literal."""
 
     raw: str
     cooked: str
@@ -133,7 +108,7 @@ class TemplateElement(Node):
         return ()
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class TemplateLiteral(Literal):
     """
     JavaScript template literal.

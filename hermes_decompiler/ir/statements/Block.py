@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..Node import Node
+from hermes_decompiler.ir.Node import Node
 from ._Base import Statement
 
 __all__ = [
@@ -11,17 +11,10 @@ __all__ = [
 ]
 
 
-# ============================================================================
-# Block
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class BlockStatement(Statement):
     """
-    Represents a JavaScript block statement.
-
-    A block groups zero or more statements into a single statement.
+    Sequence of statements grouped into a single statement.
 
     Examples:
         {
@@ -40,15 +33,10 @@ class BlockStatement(Statement):
         return self.statements
 
 
-# ============================================================================
-# Empty
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class EmptyStatement(Statement):
     """
-    Represents an empty statement.
+    Empty statement.
 
     Example:
         ;

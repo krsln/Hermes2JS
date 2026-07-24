@@ -2,30 +2,24 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from ..expressions import Expression
-from ..Node import Node
+from hermes_decompiler.ir.Node import Node
+from hermes_decompiler.ir.expressions import Expression
 from ._Base import Statement
 
 __all__ = [
     "ThrowStatement",
-    "TryStatement",
     "CatchClause",
     "FinallyClause",
+    "TryStatement",
 ]
 
 
-# ============================================================================
-# Throw
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class ThrowStatement(Statement):
     """
-    Represents a throw statement.
+    Throw statement.
 
     Example:
-
         throw error;
     """
 
@@ -33,23 +27,16 @@ class ThrowStatement(Statement):
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.argument,
-        )
+        return (self.argument,)
 
 
-# ============================================================================
-# Catch Clause
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class CatchClause(Node):
     """
-    Represents a catch clause.
+    Catch clause. The parameter is optional to support the modern
+    optional-catch-binding syntax.
 
     Examples:
-
         catch (error) {
             ...
         }
@@ -57,13 +44,9 @@ class CatchClause(Node):
         catch {
             ...
         }
-
-    The parameter is optional because modern JavaScript
-    supports optional catch binding.
     """
 
     parameter: Expression | None
-
     body: Statement
 
     @property
@@ -78,18 +61,12 @@ class CatchClause(Node):
         return tuple(children)
 
 
-# ============================================================================
-# Finally
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class FinallyClause(Node):
     """
-    Represents a finally block.
+    Finally clause.
 
     Example:
-
         finally {
             cleanup();
         }
@@ -99,23 +76,15 @@ class FinallyClause(Node):
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return (
-            self.body,
-        )
+        return (self.body,)
 
 
-# ============================================================================
-# Try
-# ============================================================================
-
-
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class TryStatement(Statement):
     """
-    Represents try/catch/finally.
+    Try/catch/finally statement.
 
     Examples:
-
         try {
             foo();
         }
@@ -123,20 +92,8 @@ class TryStatement(Statement):
             handle(e);
         }
 
-
         try {
             foo();
-        }
-        finally {
-            cleanup();
-        }
-
-
-        try {
-            foo();
-        }
-        catch(e) {
-            handle(e);
         }
         finally {
             cleanup();
@@ -144,16 +101,12 @@ class TryStatement(Statement):
     """
 
     body: Statement
-
     handler: CatchClause | None = None
-
     finalizer: FinallyClause | None = None
 
     @property
     def children(self) -> tuple[Node, ...]:
-        children: list[Node] = [
-            self.body,
-        ]
+        children: list[Node] = [self.body]
 
         if self.handler is not None:
             children.append(self.handler)
