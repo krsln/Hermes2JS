@@ -2,7 +2,8 @@ from typing import Dict, Any
 
 from hermes_decompiler.ir.Values import Value
 
-RenderableValue = str | Value
+# RenderableValue = str | Value
+RenderableValue = Value
 
 
 class JSVariable:

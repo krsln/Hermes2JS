@@ -1,3 +1,5 @@
+from hermes_decompiler.ir.Expressions import CallExpression
+from hermes_decompiler.ir.Values import RegisterValue, IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -19,9 +21,7 @@ class CallDirect(OpcodeHandler):
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
-        dest_reg = int(match.group(2))
-        arg_count = int(match.group(3))
-        func_index = int(match.group(4))
+        dest_reg, arg_count, func_index = map(int, match.groups())
 
         func_name = (
             entry.function.name
@@ -29,11 +29,13 @@ class CallDirect(OpcodeHandler):
             else f"function_{func_index}"
         )
 
-        args = [f"arg{i}" for i in range(arg_count)]
-        args_str = ", ".join(args)
-        func_val = f"{func_name}({args_str})"
+        arguments = [
+            RegisterValue(dest_reg - arg_count + i)
+            for i in range(arg_count)
+        ]
+        value = CallExpression(callee=IdentifierValue(func_name), arguments=arguments)
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", func_val, func_name, func_val)
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

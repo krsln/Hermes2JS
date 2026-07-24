@@ -1,3 +1,5 @@
+from hermes_decompiler.ir.Expressions import CallExpression
+from hermes_decompiler.ir.Values import RegisterValue, IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -17,23 +19,18 @@ class CallBuiltin(OpcodeHandler):
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8, UInt8 arguments")
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, builtin_id, arg_count = map(int, match.groups())
 
-        builtin_table = getattr(analysis, "builtinTable", None) or {}
-        func_name = builtin_table.get(str(builtin_id), f"builtin_{builtin_id}")
+        arguments = [
+            RegisterValue(reg)
+            for reg in range(dest_reg - arg_count, dest_reg)
+        ]
 
-        arg_start = dest_reg - arg_count
-        args = []
-        for offset, reg in enumerate(range(arg_start, dest_reg)):
-            value = self.get_register_value(analysis, reg)
-            args.append(value if value is not None else f"arg{offset}")
+        value = CallExpression(callee=IdentifierValue(f"builtin_{builtin_id}"), arguments=arguments)
 
-        args_str = ", ".join(args)
-        func_val = f"({args_str})"
-
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"{func_name}{func_val}", func_name, func_val)
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

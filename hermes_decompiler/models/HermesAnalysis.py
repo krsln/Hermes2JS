@@ -29,7 +29,6 @@ class HermesAnalysis:
     def __init__(
             self,
             metadata: Optional[dict[str, Any]] = None,
-            stringTable: Optional[dict[str, str]] = None,
     ) -> None:
         """
         Initialize the Hermes analysis context.
