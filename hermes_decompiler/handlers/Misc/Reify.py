@@ -1,3 +1,5 @@
+from hermes_decompiler.ir.Expressions import MemberExpression, ComputedMemberExpression
+from hermes_decompiler.ir.Values import IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -21,12 +23,9 @@ class ReifyArguments(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8 argument")
 
         dest_reg = int(match.group(1))
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', 'arguments')
+
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', IdentifierValue("arguments"))
         analysis.add_result(entry, variable)
-
-        # Optionally, mark the creation of the argument object in analysis.
-        # print("MarkArgumentsObject", entry.address, dest_reg)
-
         return OpcodeResult(entry, variable)
 
 
@@ -44,7 +43,8 @@ class GetArgumentsLength(OpcodeHandler):
 
         dest_reg, _lazy_reg = map(int, match.groups())
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", "arguments.length")
+        value = MemberExpression(IdentifierValue("arguments"), IdentifierValue("length"))
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -63,9 +63,10 @@ class GetArgumentsPropByVal(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
         dest_reg, index_reg, _lazy_reg = map(int, match.groups())
-        index_val = self.get_register_value(analysis, index_reg) or f"r{index_reg}"
+        index_value = self.get_register_value_new(analysis, index_reg)
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"arguments[{index_val}]")
+        value = ComputedMemberExpression(object=IdentifierValue("arguments"), property=index_value)
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

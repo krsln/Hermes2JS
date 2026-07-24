@@ -152,3 +152,11 @@ class TypeOfExpression(Expression):
 
     def render(self):
         return f"typeof {self.value.render()}"
+
+@dataclass(frozen=True)
+class ComputedMemberExpression(Expression):
+    object: Value
+    property: Value
+
+    def render(self):
+        return f"{self.object.render()}[{self.property.render()}]"
