@@ -2,7 +2,7 @@ import re
 import json
 from typing import Any, Dict
 
-from hermes_decompiler.ir.Expressions import CallExpression, MemberExpression
+from hermes_decompiler.ir.Expressions import CallExpression, MemberExpression, ComputedMemberExpression
 from hermes_decompiler.ir.Values import ObjectLiteralValue, IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
@@ -95,7 +95,7 @@ class NewObjectWithParent(OpcodeHandler):
 
         dest_reg, parent_reg = map(int, match.groups())
 
-        parent = self.get_register_value(analysis, parent_reg) or f"r{parent_reg}"
+        parent = self.get_register_value_new(analysis, parent_reg) or f"r{parent_reg}"
 
         value = CallExpression(
             callee=MemberExpression(
@@ -104,7 +104,7 @@ class NewObjectWithParent(OpcodeHandler):
             ),
             arguments=[parent],
         )
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"Object.create({parent})")
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -123,10 +123,15 @@ class SelectObject(OpcodeHandler):
 
         dest_reg, obj_reg, selector_reg = map(int, match.groups())
 
-        variable = JSVariable(
-            handler, entry.address,
-            f'r{dest_reg}', f"r{obj_reg}[r{selector_reg}]"
+        obj = self.get_register_value_new(analysis, obj_reg)
+        selector = self.get_register_value_new(analysis, selector_reg)
+
+        value = ComputedMemberExpression(
+            object=obj,
+            property=selector,
         )
+
+        variable = JSVariable(handler, entry.address,  f'r{dest_reg}', value  )
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

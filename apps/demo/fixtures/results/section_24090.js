@@ -20,13 +20,13 @@ function onPress(param0) {
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
     r8 = createThis(prototype=getEnvironment(1)[10].default.prototype, constructor=getEnvironment(1)[10].default)
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
-    r2 = new getEnvironment(1)[10].default(getEnvironment(0))
+    // USED → r2 = new getEnvironment(1)[10].default(getEnvironment(0))
     // CODE → <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    // USED → r3 = r3[r2]
+    // USED → r3 = createThis(prototype=getEnvironment(1)[10].default.prototype, constructor=getEnvironment(1)[10].default)[new getEnvironment(1)[10].default(getEnvironment(0))]
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 21914>  # String: 'trackJoinCompetitionList' (Identifier)
-    // USED → r2 = r3.trackJoinCompetitionList
+    // USED → r2 = createThis(prototype=getEnvironment(1)[10].default.prototype, constructor=getEnvironment(1)[10].default)[new getEnvironment(1)[10].default(getEnvironment(0))].trackJoinCompetitionList
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    r2 = r3.trackJoinCompetitionList(r3)
+    r2 = createThis(prototype=getEnvironment(1)[10].default.prototype, constructor=getEnvironment(1)[10].default)[new getEnvironment(1)[10].default(getEnvironment(0))].trackJoinCompetitionList(createThis(prototype=getEnvironment(1)[10].default.prototype, constructor=getEnvironment(1)[10].default)[new getEnvironment(1)[10].default(getEnvironment(0))])
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 11>
     // USED → r2 = getEnvironment(1)[11]
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)

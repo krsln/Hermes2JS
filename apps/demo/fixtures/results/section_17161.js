@@ -70,11 +70,11 @@ async function* anon_17161(param0, param1) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 3>
     r11 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)
     // CODE → <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-    r2 = new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))
+    // USED → r2 = new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = r3[r2]
+    // USED → r2 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))]
     // CODE → <Throw>: <Reg8: 2>
-    throw r2;
+    throw createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))];
     // ──────────────── Block 8 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
     // USED → r2 = await yield /* ResumeGenerator -> r1 */.text
