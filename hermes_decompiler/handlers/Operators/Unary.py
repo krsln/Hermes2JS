@@ -47,7 +47,7 @@ class BaseUnaryOperator(OpcodeHandler):
 
 class Not(BaseUnaryOperator):
     def expression(self, value):
-        return UnaryExpression(UnaryOperator.NOT, value)
+        return UnaryExpression(UnaryOperator.LOGICAL_NOT, value)
 
 
 class TypeOf(BaseUnaryOperator):
@@ -82,7 +82,7 @@ class Dec(BaseUnaryOperator):
 
 class Negate(BaseUnaryOperator):
     def expression(self, value):
-        return UnaryExpression(UnaryOperator.NEGATE, value)
+        return UnaryExpression(UnaryOperator.MINUS, value)
 
 
 class AddEmptyString(BaseUnaryOperator):

@@ -66,7 +66,7 @@ class Mod(BaseBinaryOperator): operator = BinaryOperator.MOD
 class ModN(Mod): pass
 
 class BitAnd(BaseBinaryOperator): operator = BinaryOperator.BIT_AND
-class BitNot(BaseBinaryOperator): operator = UnaryOperator.BIT_NOT
+class BitNot(BaseBinaryOperator): operator = UnaryOperator.BITWISE_NOT
 class BitOr(BaseBinaryOperator): operator = BinaryOperator.BIT_OR
 class BitOrN(BitOr): pass
 class BitXor(BaseBinaryOperator): operator = BinaryOperator.BIT_XOR

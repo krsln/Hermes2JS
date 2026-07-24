@@ -164,7 +164,7 @@ class JmpTrue(ConditionalJump):
 
 class JmpFalse(ConditionalJump):
     def build_condition(self, value: Value, *extra: Any) -> Expression:
-        return UnaryExpression(UnaryOperator.NOT, value)
+        return UnaryExpression(UnaryOperator.LOGICAL_NOT, value)
 
 
 class JmpUndefined(ConditionalJump):

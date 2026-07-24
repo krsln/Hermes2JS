@@ -1,15 +1,24 @@
-from enum import Enum
+from enum import Enum, StrEnum
 
 
-class UnaryOperator(Enum):
+class UnaryOperator(StrEnum):
     PLUS = "+"
-    NEGATE = "-"
-    NOT = "!"
-    BIT_NOT = "~"
+    MINUS = "-"
+
+    LOGICAL_NOT = "!"
+    BITWISE_NOT = "~"
 
     TYPEOF = "typeof "
     VOID = "void "
     DELETE = "delete "
+    # TYPEOF = "typeof"
+    # VOID = "void"
+    # DELETE = "delete"
+
+
+class UpdateOperator(StrEnum):
+    INCREMENT = "++"
+    DECREMENT = "--"
 
 
 class BinaryOperator(Enum):
