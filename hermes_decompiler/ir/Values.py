@@ -114,7 +114,7 @@ class RegExpValue(Value):
         return f"/{self.pattern}/{self.flags}"
 
 
-@dataclass
+@dataclass(frozen=True)
 class ArrayValue(Value):
     elements: list[Value]
     capacity_hint: int | None = None

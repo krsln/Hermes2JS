@@ -365,29 +365,29 @@ function _request(param0, param1, param2) {
     // CODE → <NewArray>: <Reg8: 15, UInt16: 2>
     // USED → r15 = [] /* capacity hint: 2 */
     // CODE → <PutOwnByIndex>: <Reg8: 15, Reg8: 9, UInt8: 0>
-    // USED → r15 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8)] /* capacity hint: 2 */
+    // USED → r15 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8)]
     // CODE → <PutOwnByIndex>: <Reg8: 15, Reg8: 11, UInt8: 1>
-    // USED → r15 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */
+    // USED → r15 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined]
     // CODE → <GetById>: <Reg8: 16, Reg8: 15, UInt8: 22, string_id: 16801>  # String: 'unshift' (Identifier)
-    // USED → r16 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.unshift
+    // USED → r16 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].unshift
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 16, UInt8: 23, string_id: 86>  # String: 'apply' (Identifier)
-    // USED → r14 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.unshift.apply
+    // USED → r14 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].unshift.apply
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
     // USED → r9 = []
     // CODE → <Call3>: <Reg8: 9, Reg8: 14, Reg8: 16, Reg8: 15, Reg8: 9>
-    r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.unshift.apply([getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.unshift, [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */, [])
+    r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].unshift.apply([getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].unshift, [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined], [])
     // CODE → <GetByIdShort>: <Reg8: 16, Reg8: 15, UInt8: 24, string_id: 201>  # String: 'push' (Identifier)
-    // USED → r16 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.push
+    // USED → r16 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].push
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 16, UInt8: 23, string_id: 86>  # String: 'apply' (Identifier)
-    // USED → r14 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.push.apply
+    // USED → r14 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].push.apply
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     // USED → r9 = []
     // CODE → <Call3>: <Reg8: 9, Reg8: 14, Reg8: 16, Reg8: 15, Reg8: 9>
-    r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.push.apply([getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.push, [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */, [])
+    r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].push.apply([getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].push, [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined], [])
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
-    // USED → r14 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.length
+    // USED → r14 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].length
     // CODE → <Mov>: <Reg8: 5, Reg8: 14>
-    // USED → r5 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.length
+    // USED → r5 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].length
     // CODE → <GetGlobalObject>: <Reg8: 9>
     // USED → r9 = globalThis
     // CODE → <TryGetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
@@ -399,7 +399,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
     // USED → r9 = 0
     // CODE → <JNotLess>: <Addr8: 54, Reg8: 9, Reg8: 14>  # Address: 00000349
-    if (0 >= [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.length) { /* jump to label_841 */ }
+    if (0 >= [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].length) { /* jump to label_841 */ }
     // ──────────────── Block 27 ──────────────── 
     // CODE → <Mov>: <Reg8: 18, Reg8: 0>
     // USED → r18 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  }))
@@ -414,7 +414,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
     r4 = +0 + 1
     // CODE → <GetByVal>: <Reg8: 16, Reg8: 15, Reg8: 14>
-    // USED → r16 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[+0]
+    // USED → r16 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined][+0]
     // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
     // USED → r9 = ++0 + 1
     // CODE → <Inc>: <Reg8: 14, Reg8: 9>
@@ -422,18 +422,18 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 14>
     r4 = ++0 + 1 + 1
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
-    // USED → r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1]
+    // USED → r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined][++0 + 1]
     // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
-    // USED → r0 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1])
+    // USED → r0 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined][+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined][++0 + 1])
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-    // USED → r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.length
+    // USED → r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].length
     // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
-    if (++0 + 1 + 1 < [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.length) { /* jump to label_791 */ }
+    if (++0 + 1 + 1 < [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined].length) { /* jump to label_791 */ }
     // ──────────────── Block 28 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 0>
-    // USED → r9 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1])
+    // USED → r9 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined][+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined][++0 + 1])
     // CODE → <Ret>: <Reg8: 9>
-    return globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1]);
+    return globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined][+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined][++0 + 1]);
     // ──────────────── Block 29 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
     // USED → r9 = []

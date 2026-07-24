@@ -33,12 +33,13 @@ class PutOwnByIndex(OpcodeHandler):
         array = self.get_register_value_new(analysis, dest_reg)
 
         if isinstance(array, ArrayValue):
-            while len(array.elements) <= index:
-                array.elements.append(UndefinedValue())
+            old = list(array.elements)
 
-            array.elements[index] = value
-            result = array
+            while len(old) <= index:
+                old.append(UndefinedValue())
 
+            old[index] = value
+            result = ArrayValue(old)
         else:
             result = AssignmentExpression(
                 left=IndexExpression(
