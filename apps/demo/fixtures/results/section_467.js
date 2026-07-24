@@ -1549,9 +1549,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetPNameList>: <Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
     // USED → r49 = HermesPropertyIterator({  })
     // CODE → <JmpUndefined>: <Addr8: 115, Reg8: 49>  # Address: 00000ecd
-    if (r49 === undefined) { /* jump to label_3789 */ }
+    if (HermesPropertyIterator({  }) === undefined) { /* jump to label_3789 */ }
     // LOOP → START (while)
-    while (r45 === undefined) {
+    while (HermesPropertyIterator({  }).next() === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 54, Reg8: 43>
         // USED → r54 = false
@@ -1560,48 +1560,48 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetNextPName>: <Reg8: 45, Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
         // USED → r45 = HermesPropertyIterator({  }).next()
         // CODE → <JmpUndefined>: <Addr8: 100, Reg8: 45>  # Address: 00000ecd
-        if (r45 === undefined) { /* jump to label_3789 */ }
+        if (HermesPropertyIterator({  }).next() === undefined) { /* jump to label_3789 */ }
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 44, Reg8: 45>
-        // USED → r44 = r45
+        // USED → r44 = HermesPropertyIterator({  }).next()
         // CODE → <GetByIdShort>: <Reg8: 52, Reg8: 50, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
         // USED → r52 = {  }.hasOwnProperty
         // CODE → <Call2>: <Reg8: 52, Reg8: 52, Reg8: 50, Reg8: 44>
-        // USED → r52 = {  }.hasOwnProperty({  }, r45)
+        // USED → r52 = {  }.hasOwnProperty({  }, HermesPropertyIterator({  }).next())
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
         r43 = false
         // CODE → <JmpFalse>: <Addr8: -31, Reg8: 52>  # Address: 00000e5d
-        if (!{  }.hasOwnProperty({  }, r45)) { /* jump to label_3677 */ }
+        if (!{  }.hasOwnProperty({  }, HermesPropertyIterator({  }).next())) { /* jump to label_3677 */ }
         // ──────────────── Block 3 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
-        // USED → r52 = {  }[r45]
+        // USED → r52 = {  }[HermesPropertyIterator({  }).next()]
         // CODE → <GetByIdShort>: <Reg8: 53, Reg8: 51, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
         // USED → r53 = {  }.hasOwnProperty
         // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
-        // USED → r53 = {  }.hasOwnProperty({  }, r45)
+        // USED → r53 = {  }.hasOwnProperty({  }, HermesPropertyIterator({  }).next())
         // CODE → <JmpFalse>: <Addr8: 17, Reg8: 53>  # Address: 00000e9e
-        if (!{  }.hasOwnProperty({  }, r45)) { /* jump to label_3742 */ }
+        if (!{  }.hasOwnProperty({  }, HermesPropertyIterator({  }).next())) { /* jump to label_3742 */ }
         // ──────────────── Block 4 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-        // USED → r53 = {  }[r45]
+        // USED → r53 = {  }[HermesPropertyIterator({  }).next()]
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
         r43 = false
         // CODE → <Mov>: <Reg8: 42, Reg8: 52>
-        r42 = {  }[r45]
+        r42 = {  }[HermesPropertyIterator({  }).next()]
         // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
-        if ({  }[r45] === {  }[r45]) { /* jump to label_3677 */ }
+        if ({  }[HermesPropertyIterator({  }).next()] === {  }[HermesPropertyIterator({  }).next()]) { /* jump to label_3677 */ }
         // ──────────────── Block 5 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-        // USED → r53 = {  }[r45]
+        // USED → r53 = {  }[HermesPropertyIterator({  }).next()]
         // CODE → <JmpTrue>: <Addr8: 14, Reg8: 53>  # Address: 00000eb0
-        if ({  }[r45]) { /* jump to label_3760 */ }
+        if ({  }[HermesPropertyIterator({  }).next()]) { /* jump to label_3760 */ }
         // ──────────────── Block 6 ──────────────── 
         // CODE → <PutByVal>: <Reg8: 51, Reg8: 44, Reg8: 52>
-        {  }[r45] = {  }[r45];
+        {  }[HermesPropertyIterator({  }).next()] = {  }[HermesPropertyIterator({  }).next()];
         // CODE → <LoadConstTrue>: <Reg8: 43>
         r43 = true
         // CODE → <Mov>: <Reg8: 42, Reg8: 52>
-        r42 = {  }[r45]
+        r42 = {  }[HermesPropertyIterator({  }).next()]
         // CODE → <Jmp>: <Addr8: -81>  # Address: 00000e5d
         goto label_3677;
     }
@@ -1612,15 +1612,15 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 558>  # String: '`.' (String)
     // USED → r42 = "`."
     // CODE → <Add>: <Reg8: 44, Reg8: 44, Reg8: 42>
-    // USED → r44 = r45 + "`."
+    // USED → r44 = HermesPropertyIterator({  }).next() + "`."
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 4924>  # String: 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `' (String)
     // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `"
     // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
-    // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`."
+    // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + HermesPropertyIterator({  }).next() + "`."
     // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
-    // USED → r42 = globalThis.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.")
+    // USED → r42 = globalThis.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + HermesPropertyIterator({  }).next() + "`.")
     // CODE → <Throw>: <Reg8: 42>
-    throw globalThis.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.");
+    throw globalThis.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + HermesPropertyIterator({  }).next() + "`.");
     // ──────────────── Block 8 ──────────────── 
     // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
     if (!false) { /* jump to label_3796 */ }

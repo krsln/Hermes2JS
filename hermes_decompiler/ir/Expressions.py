@@ -172,3 +172,17 @@ class SwitchStatement(Expression):
     def render(self):
         labels = ", ".join(f"label_{t}" for t in self.targets)
         return f"/* switch ({self.expression.render()}) -> {labels} */"
+
+@dataclass(frozen=True)
+class GetIteratorExpression(Expression):
+    iterable: Value
+
+    def render(self):
+        return f"GetIterator({self.iterable.render()})"
+
+@dataclass(frozen=True)
+class PropertyIteratorExpression(Expression):
+    object: Value
+
+    def render(self):
+        return f"HermesPropertyIterator({self.object.render()})"
