@@ -28,29 +28,22 @@ class JSVariable:
 
         self.used = False
 
-    @property
-    def rendered(self) -> str:
-        if hasattr(self.value, "render"):
-            return self.value.render()
-
-        return str(self.value)
-
-    def __str__(self) -> str:
-        return (
-            f"JSVariable("
-            f"address={self.address}, "
-            f"handler={self.handler}, "
-            f"name={self.name}, "
-            f"value={self.rendered}, "
-            f"used={self.used})"
-        )
-
-    def to_dict(self) -> Dict[str, Any]:
-        """Converts the JSVariable to a dictionary for serialization."""
-        return {
-            "handler": self.handler,
-            "address": self.address,
-            "name": self.name,
-            "value": self.value,
-            "used": self.used,
-        }
+    # def __str__(self) -> str:
+    #     return (
+    #         f"JSVariable("
+    #         f"address={self.address}, "
+    #         f"handler={self.handler}, "
+    #         f"name={self.name}, "
+    #         f"value={self.value}, "
+    #         f"used={self.used})"
+    #     )
+    #
+    # def to_dict(self) -> Dict[str, Any]:
+    #     """Converts the JSVariable to a dictionary for serialization."""
+    #     return {
+    #         "handler": self.handler,
+    #         "address": self.address,
+    #         "name": self.name,
+    #         "value": self.value,
+    #         "used": self.used,
+    #     }
