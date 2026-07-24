@@ -1,4 +1,5 @@
 from hermes_decompiler.Logger import logger
+from hermes_decompiler.ir.Values import ExceptionValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -24,10 +25,10 @@ class Catch(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', 'caughtException')
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', ExceptionValue())
         analysis.add_result(entry, variable)
 
-        logger.debug(f"{handler}: catch block starts at address {entry.address}, binds r{dest_reg}")
+        logger.debug("Catch block starts at %d -> r%d", entry.address, dest_reg)
         # TODO: if/when `analysis` grows structured exception-handler-range
         # tracking (e.g. an `analysis.MarkCatchBlock(...)` API), record it
         # here instead of only logging — replaces the earlier print()/stub.

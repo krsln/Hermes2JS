@@ -46,15 +46,15 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Catch>: <Reg8: 7>
     // USED → r7 = caughtException
     // CODE → <Mov>: <Reg8: 1, Reg8: 7>
-    // USED → r1 = r7
+    // USED → r1 = caughtException
     // CODE → <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = globalThis.Error
     // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
-    // USED → r4 = r7 instanceof globalThis.Error
+    // USED → r4 = caughtException instanceof globalThis.Error
     // CODE → <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
-    if (!r7 instanceof globalThis.Error) { /* jump to label_316 */ }
+    if (!caughtException instanceof globalThis.Error) { /* jump to label_316 */ }
     // ──────────────── Block 6 ──────────────── 
     // CODE → <NewObject>: <Reg8: 6>
     r6 = {  }
@@ -110,18 +110,18 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
     // USED → r2 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "")
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-    // USED → r4 = r7
+    // USED → r4 = caughtException
     // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r4 = r7.stack
+    // USED → r4 = caughtException.stack
     // CODE → <JmpTrue>: <Addr8: 17, Reg8: 4>  # Address: 000000d6
-    if (r7.stack) { /* jump to label_214 */ }
+    if (caughtException.stack) { /* jump to label_214 */ }
     // ──────────────── Block 12 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 1>
-    // USED → r6 = r7
+    // USED → r6 = caughtException
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
     // USED → r4 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "")
     // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r7.stack = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "");
+    caughtException.stack = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "");
     // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
     goto label_312;
     // ──────────────── Block 13 ──────────────── 
@@ -133,13 +133,13 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
     // USED → r4 = globalThis.String
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-    // USED → r3 = r7
+    // USED → r3 = caughtException
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r3 = r7.stack
+    // USED → r3 = caughtException.stack
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r5 = globalThis.String(undefined, r7.stack)
+    // USED → r5 = globalThis.String(undefined, caughtException.stack)
     // CODE → <GetById>: <Reg8: 4, Reg8: 5, UInt8: 8, string_id: 19080>  # String: 'endsWith' (Identifier)
-    // USED → r4 = globalThis.String(undefined, r7.stack).endsWith
+    // USED → r4 = globalThis.String(undefined, caughtException.stack).endsWith
     // CODE → <Mov>: <Reg8: 7, Reg8: 2>
     // USED → r7 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "")
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
@@ -149,14 +149,14 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
     // USED → r3 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "").replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, ""), /^.+\\n.+\\n/, "")
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r3 = globalThis.String(undefined, r7.stack).endsWith(globalThis.String(undefined, r7.stack), createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "").replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, ""), /^.+\\n.+\\n/, ""))
+    // USED → r3 = globalThis.String(undefined, caughtException.stack).endsWith(globalThis.String(undefined, caughtException.stack), createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "").replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, ""), /^.+\\n.+\\n/, ""))
     // CODE → <JmpTrue>: <Addr8: 33, Reg8: 3>  # Address: 00000138
-    if (globalThis.String(undefined, r7.stack).endsWith(globalThis.String(undefined, r7.stack), createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "").replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, ""), /^.+\\n.+\\n/, ""))) { /* jump to label_312 */ }
+    if (globalThis.String(undefined, caughtException.stack).endsWith(globalThis.String(undefined, caughtException.stack), createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "").replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, ""), /^.+\\n.+\\n/, ""))) { /* jump to label_312 */ }
     // ──────────────── Block 15 ──────────────── 
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-    // USED → r3 = r7
+    // USED → r3 = caughtException
     // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r4 = r7.stack
+    // USED → r4 = caughtException.stack
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
     // USED → r5 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "")
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
@@ -164,9 +164,9 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
     // USED → r2 = "\\n" + createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "")
     // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
-    // USED → r2 = r7.stack + "\\n" + createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "")
+    // USED → r2 = caughtException.stack + "\\n" + createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "")
     // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r7.stack = r7.stack + "\\n" + createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "");
+    caughtException.stack = caughtException.stack + "\\n" + createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack.replace(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))].stack, /^.+\\n/, "");
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
     goto label_316;
@@ -174,7 +174,7 @@ async function* anon_11947(param0, param1, param2) {
     while (true) {
         // ──────────────── Block 18 ──────────────── 
         // CODE → <Throw>: <Reg8: 1>
-        throw r7;
+        throw caughtException;
         // ──────────────── Block 17 ──────────────── 
         // CODE → <Catch>: <Reg8: 2>
         r2 = caughtException

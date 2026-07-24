@@ -205,3 +205,10 @@ class VariableDeclaration(Value):
             f"{self.kind} {self.name} = "
             f"{self.initializer.render()};"
         )
+
+@dataclass(frozen=True)
+class ExceptionValue(Value):
+    name: str = "caughtException"
+
+    def render(self):
+        return self.name
