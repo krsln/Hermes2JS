@@ -1537,7 +1537,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 50, Reg8: 37, string_id: 14569>  # String: 'ReactNativeBridgeEventPlugin' (Identifier)
     r50."ReactNativeBridgeEventPlugin" = r37;
     // CODE → <Mov>: <Reg8: 48, Reg8: 50>
-    // USED → r48 = {}
+    // USED → r48 = r50
     // CODE → <LoadConstTrue>: <Reg8: 37>
     // USED → r37 = true
     // CODE → <LoadConstFalse>: <Reg8: 43>
@@ -1547,7 +1547,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstFalse>: <Reg8: 41>
     r41 = false
     // CODE → <GetPNameList>: <Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
-    // USED → r49 = HermesPropertyIterator({})
+    // USED → r49 = HermesPropertyIterator(r50)
     // CODE → <JmpUndefined>: <Addr8: 115, Reg8: 49>  # Address: 00000ecd
     if (r49 === undefined) { /* jump to label_3789 */ }
     // LOOP → START (while)
@@ -1558,50 +1558,50 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Mov>: <Reg8: 41, Reg8: 54>
         // USED → r41 = false
         // CODE → <GetNextPName>: <Reg8: 45, Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
-        // USED → r45 = HermesPropertyIterator({}).next()
+        // USED → r45 = HermesPropertyIterator(r50).next()
         // CODE → <JmpUndefined>: <Addr8: 100, Reg8: 45>  # Address: 00000ecd
         if (r45 === undefined) { /* jump to label_3789 */ }
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 44, Reg8: 45>
-        // USED → r44 = HermesPropertyIterator({}).next()
+        // USED → r44 = r45
         // CODE → <GetByIdShort>: <Reg8: 52, Reg8: 50, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
         // USED → r52 = r50.hasOwnProperty
         // CODE → <Call2>: <Reg8: 52, Reg8: 52, Reg8: 50, Reg8: 44>
-        // USED → r52 = r50.hasOwnProperty(r50, r44)
+        // USED → r52 = r50.hasOwnProperty(r50, r45)
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
         r43 = false
         // CODE → <JmpFalse>: <Addr8: -31, Reg8: 52>  # Address: 00000e5d
-        if (!r50.hasOwnProperty(r50, r44)) { /* jump to label_3677 */ }
+        if (!r50.hasOwnProperty(r50, r45)) { /* jump to label_3677 */ }
         // ──────────────── Block 3 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
-        // USED → r52 = r50[r44]
+        // USED → r52 = r50[r45]
         // CODE → <GetByIdShort>: <Reg8: 53, Reg8: 51, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
         // USED → r53 = r51.hasOwnProperty
         // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
-        // USED → r53 = r51.hasOwnProperty(r51, r44)
+        // USED → r53 = r51.hasOwnProperty(r51, r45)
         // CODE → <JmpFalse>: <Addr8: 17, Reg8: 53>  # Address: 00000e9e
-        if (!r51.hasOwnProperty(r51, r44)) { /* jump to label_3742 */ }
+        if (!r51.hasOwnProperty(r51, r45)) { /* jump to label_3742 */ }
         // ──────────────── Block 4 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-        // USED → r53 = r51[r44]
+        // USED → r53 = r51[r45]
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
         r43 = false
         // CODE → <Mov>: <Reg8: 42, Reg8: 52>
-        r42 = r50[r44]
+        r42 = r50[r45]
         // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
-        if (r51[r44] === r50[r44]) { /* jump to label_3677 */ }
+        if (r51[r45] === r50[r45]) { /* jump to label_3677 */ }
         // ──────────────── Block 5 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-        // USED → r53 = r51[r44]
+        // USED → r53 = r51[r45]
         // CODE → <JmpTrue>: <Addr8: 14, Reg8: 53>  # Address: 00000eb0
-        if (r51[r44]) { /* jump to label_3760 */ }
+        if (r51[r45]) { /* jump to label_3760 */ }
         // ──────────────── Block 6 ──────────────── 
         // CODE → <PutByVal>: <Reg8: 51, Reg8: 44, Reg8: 52>
-        r51[r44] = r50[r44];
+        r51[r45] = r50[r45];
         // CODE → <LoadConstTrue>: <Reg8: 43>
         r43 = true
         // CODE → <Mov>: <Reg8: 42, Reg8: 52>
-        r42 = r50[r44]
+        r42 = r50[r45]
         // CODE → <Jmp>: <Addr8: -81>  # Address: 00000e5d
         goto label_3677;
     }
@@ -1612,15 +1612,15 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 558>  # String: '`.' (String)
     // USED → r42 = "`."
     // CODE → <Add>: <Reg8: 44, Reg8: 44, Reg8: 42>
-    // USED → r44 = r44 + "`."
+    // USED → r44 = r45 + "`."
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 4924>  # String: 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `' (String)
     // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `"
     // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
-    // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r44 + "`."
+    // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`."
     // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
-    // USED → r42 = globalThis.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r44 + "`.")
+    // USED → r42 = globalThis.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.")
     // CODE → <Throw>: <Reg8: 42>
-    throw globalThis.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r44 + "`.");
+    throw globalThis.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + r45 + "`.");
     // ──────────────── Block 8 ──────────────── 
     // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
     if (!false) { /* jump to label_3796 */ }
@@ -2668,7 +2668,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
     r8."reconcilerVersion" = "18.3.0-canary-9372c6311-20240315";
     // CODE → <Mov>: <Reg8: 7, Reg8: 8>
-    // USED → r7 = {}
+    // USED → r7 = r8
     // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
     // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
     // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
@@ -2695,9 +2695,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
     // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-    // USED → r7 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__, r7)
+    // USED → r7 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__, r8)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
-    createEnvironment()[31] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__, r7)
+    createEnvironment()[31] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__, r8)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
     createEnvironment()[32] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d

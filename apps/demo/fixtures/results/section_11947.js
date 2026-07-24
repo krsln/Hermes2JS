@@ -46,7 +46,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Catch>: <Reg8: 7>
     // USED → r7 = caughtException
     // CODE → <Mov>: <Reg8: 1, Reg8: 7>
-    // USED → r1 = caughtException
+    // USED → r1 = r7
     // CODE → <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
@@ -83,20 +83,20 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
     // USED → r7 = globalThis.Error.captureStackTrace
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-    // USED → r4 = r7[r4]
+    // USED → r4 = r6
     // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
-    r4 = globalThis.Error.captureStackTrace(globalThis.Error, r4)
+    r4 = globalThis.Error.captureStackTrace(globalThis.Error, r6)
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-    // USED → r4 = r7[r4]
+    // USED → r4 = r6
     // CODE → <GetById>: <Reg8: 7, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r7 = r4.stack
+    // USED → r7 = r6.stack
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 11303>  # String: '' (Identifier)
     // USED → r8 = ""
     // CODE → <Mov>: <Reg8: 4, Reg8: 8>
     r4 = ""
     // CODE → <JmpFalse>: <Addr8: 34, Reg8: 7>  # Address: 000000b9
-    if (!r4.stack) { /* jump to label_185 */ }
+    if (!r6.stack) { /* jump to label_185 */ }
     // ──────────────── Block 10 ──────────────── 
     // CODE → <GetById>: <Reg8: 9, Reg8: 6, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
     // USED → r9 = r6.stack
@@ -110,18 +110,18 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
     // USED → r2 = r6.stack.replace(r6.stack, /^.+\\n/, "")
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-    // USED → r4 = caughtException
+    // USED → r4 = r7
     // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r4 = r4.stack
+    // USED → r4 = r7.stack
     // CODE → <JmpTrue>: <Addr8: 17, Reg8: 4>  # Address: 000000d6
-    if (r4.stack) { /* jump to label_214 */ }
+    if (r7.stack) { /* jump to label_214 */ }
     // ──────────────── Block 12 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 1>
-    // USED → r6 = caughtException
+    // USED → r6 = r7
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
     // USED → r4 = r6.stack.replace(r6.stack, /^.+\\n/, "")
     // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r6.stack = r6.stack.replace(r6.stack, /^.+\\n/, "");
+    r7.stack = r6.stack.replace(r6.stack, /^.+\\n/, "");
     // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
     goto label_312;
     // ──────────────── Block 13 ──────────────── 
@@ -133,13 +133,13 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
     // USED → r4 = globalThis.String
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-    // USED → r3 = caughtException
+    // USED → r3 = r7
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r3 = r3.stack
+    // USED → r3 = r7.stack
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r5 = globalThis.String(undefined, r3.stack)
+    // USED → r5 = globalThis.String(undefined, r7.stack)
     // CODE → <GetById>: <Reg8: 4, Reg8: 5, UInt8: 8, string_id: 19080>  # String: 'endsWith' (Identifier)
-    // USED → r4 = globalThis.String(undefined, r3.stack).endsWith
+    // USED → r4 = globalThis.String(undefined, r7.stack).endsWith
     // CODE → <Mov>: <Reg8: 7, Reg8: 2>
     // USED → r7 = r6.stack.replace(r6.stack, /^.+\\n/, "")
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
@@ -149,14 +149,14 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
     // USED → r3 = r6.stack.replace(r6.stack, /^.+\\n/, "").replace(r6.stack.replace(r6.stack, /^.+\\n/, ""), /^.+\\n.+\\n/, "")
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r3 = globalThis.String(undefined, r3.stack).endsWith(globalThis.String(undefined, r3.stack), r6.stack.replace(r6.stack, /^.+\\n/, "").replace(r6.stack.replace(r6.stack, /^.+\\n/, ""), /^.+\\n.+\\n/, ""))
+    // USED → r3 = globalThis.String(undefined, r7.stack).endsWith(globalThis.String(undefined, r7.stack), r6.stack.replace(r6.stack, /^.+\\n/, "").replace(r6.stack.replace(r6.stack, /^.+\\n/, ""), /^.+\\n.+\\n/, ""))
     // CODE → <JmpTrue>: <Addr8: 33, Reg8: 3>  # Address: 00000138
-    if (globalThis.String(undefined, r3.stack).endsWith(globalThis.String(undefined, r3.stack), r6.stack.replace(r6.stack, /^.+\\n/, "").replace(r6.stack.replace(r6.stack, /^.+\\n/, ""), /^.+\\n.+\\n/, ""))) { /* jump to label_312 */ }
+    if (globalThis.String(undefined, r7.stack).endsWith(globalThis.String(undefined, r7.stack), r6.stack.replace(r6.stack, /^.+\\n/, "").replace(r6.stack.replace(r6.stack, /^.+\\n/, ""), /^.+\\n.+\\n/, ""))) { /* jump to label_312 */ }
     // ──────────────── Block 15 ──────────────── 
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-    // USED → r3 = caughtException
+    // USED → r3 = r7
     // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r4 = r3.stack
+    // USED → r4 = r7.stack
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
     // USED → r5 = r6.stack.replace(r6.stack, /^.+\\n/, "")
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
@@ -164,9 +164,9 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
     // USED → r2 = "\\n" + r6.stack.replace(r6.stack, /^.+\\n/, "")
     // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
-    // USED → r2 = r3.stack + "\\n" + r6.stack.replace(r6.stack, /^.+\\n/, "")
+    // USED → r2 = r7.stack + "\\n" + r6.stack.replace(r6.stack, /^.+\\n/, "")
     // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r3.stack = r3.stack + "\\n" + r6.stack.replace(r6.stack, /^.+\\n/, "");
+    r7.stack = r7.stack + "\\n" + r6.stack.replace(r6.stack, /^.+\\n/, "");
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
     goto label_316;
@@ -174,7 +174,7 @@ async function* anon_11947(param0, param1, param2) {
     while (true) {
         // ──────────────── Block 18 ──────────────── 
         // CODE → <Throw>: <Reg8: 1>
-        throw r1;
+        throw r7;
         // ──────────────── Block 17 ──────────────── 
         // CODE → <Catch>: <Reg8: 2>
         r2 = caughtException
