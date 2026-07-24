@@ -57,7 +57,7 @@ async function* anon_11947(param0, param1, param2) {
     if (!r7 instanceof globalThis.Error) { /* jump to label_316 */ }
     // ──────────────── Block 6 ──────────────── 
     // CODE → <NewObject>: <Reg8: 6>
-    r6 = {}
+    r6 = {  }
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = globalThis.Error
     // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)

@@ -34,7 +34,7 @@ function onPress(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 3>
     // USED → r3 = undefined
     // CODE → <NewObjectWithBuffer>: <Reg8: 2, UInt16: 2, UInt16: 2, UInt16: 4743, UInt16: 24182>  # Object: {'message': 'You have joined the list', 'type': 'success'}
-    // USED → r2 = { message: "You have joined the list", type: "success" }
+    // USED → r2 = {'message': 'You have joined the list', 'type': 'success'}
     // CODE → <Call2>: <Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 2>
     r2 = getEnvironment(1)[11].default(undefined, r2)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 4>
@@ -65,7 +65,7 @@ function onPress(param0) {
     // CODE → <GetById>: <Reg8: 1, Reg8: 2, UInt8: 6, string_id: 12341>  # String: 'open' (Identifier)
     // USED → r1 = getEnvironment(1)[12].default.open
     // CODE → <NewObjectWithBuffer>: <Reg8: 0, UInt16: 4, UInt16: 4, UInt16: 11077, UInt16: 9225>  # Object: {'title': 'Join Coachify AI Competition', 'message': 'Join Coachify AI Competition', 'url': 'https://coachify.ai/download?ref=compshare', 'subject': 'Join Coachify AI Competition'}
-    // USED → r0 = { title: "Join Coachify AI Competition", message: "Join Coachify AI Competition", url: "https://coachify.ai/download?ref=compshare", subject: "Join Coachify AI Competition" }
+    // USED → r0 = {'title': 'Join Coachify AI Competition', 'message': 'Join Coachify AI Competition', 'url': 'https://coachify.ai/download?ref=compshare', 'subject': 'Join Coachify AI Competition'}
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     r0 = getEnvironment(1)[12].default.open(getEnvironment(1)[12].default, r0)
     // ──────────────── Block 3 ──────────────── 

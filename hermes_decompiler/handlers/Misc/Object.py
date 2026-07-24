@@ -2,6 +2,8 @@ import re
 import json
 from typing import Any, Dict
 
+from hermes_decompiler.ir.Expressions import CallExpression, MemberExpression
+from hermes_decompiler.ir.Values import ObjectLiteralValue, IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -26,25 +28,22 @@ class NewObjectWithBuffer(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        parsed_obj = self._parse_object_from_comment(entry.comment)
+        object_value = self._parse_object_from_comment(entry.comment)
 
-        if not parsed_obj:
+        if not object_value:
             error = f'// Warning: No valid object parsed from comment: {entry.comment}'
             return self.build_exception_result(analysis, entry, error)
 
-        # Format as JS object literal
-        js_obj = self._format_object_literal(parsed_obj)
-
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', object_value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
     @staticmethod
-    def _parse_object_from_comment(comment: str) -> Dict[str, Any]:
+    def _parse_object_from_comment(comment: str) -> ObjectLiteralValue:
         """Extract and parse Object: {...} from opcode comment."""
         if not comment:
-            return {}
+            return ObjectLiteralValue({})
 
         object_matches = re.findall(r"Object:\s*(\{[^}]+})", comment)
         for obj_str in object_matches:
@@ -54,28 +53,7 @@ class NewObjectWithBuffer(OpcodeHandler):
                 return json.loads(clean_str)
             except json.JSONDecodeError:
                 continue  # try next match
-        return {}
-
-    @staticmethod
-    def _format_object_literal(obj: Dict[str, Any]) -> str:
-        """Convert dict to JS object literal string."""
-        if not obj:
-            return "{}"
-
-        parts = []
-        for k, v in obj.items():
-            # Handle different value types
-            if isinstance(v, str):
-                val_str = f'"{v}"'
-            elif v is None:
-                val_str = "null"
-            elif isinstance(v, bool):
-                val_str = "true" if v else "false"
-            else:
-                val_str = str(v)
-            parts.append(f'{k}: {val_str}')
-
-        return "{ " + ", ".join(parts) + " }"
+        return ObjectLiteralValue({})
 
 
 class NewObjectWithBufferLong(NewObjectWithBuffer):
@@ -96,7 +74,7 @@ class NewObject(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', "{}")
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', ObjectLiteralValue({}))
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -119,6 +97,13 @@ class NewObjectWithParent(OpcodeHandler):
 
         parent = self.get_register_value(analysis, parent_reg) or f"r{parent_reg}"
 
+        value = CallExpression(
+            callee=MemberExpression(
+                IdentifierValue("Object"),
+                IdentifierValue("create"),
+            ),
+            arguments=[parent],
+        )
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"Object.create({parent})")
         analysis.add_result(entry, variable)
 

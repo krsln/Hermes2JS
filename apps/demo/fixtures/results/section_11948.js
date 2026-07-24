@@ -41,14 +41,14 @@ function _request(param0, param1, param2) {
     if (r6) { /* jump to label_52 */ }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewObject>: <Reg8: 14>
-    // USED → r14 = {}
+    // USED → r14 = {  }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 14>
-    createEnvironment()[0] = r14
+    createEnvironment()[0] = {  }
     // CODE → <Jmp>: <Addr8: 20>  # Address: 0000004c
     goto label_76;
     // LOOP → START (while)
-    while (getEnvironment(1)[7].default(undefined, r8.defaults, r2).transitional === undefined) {
+    while (getEnvironment(1)[7].default(undefined, r8.defaults, {  }).transitional === undefined) {
         // ──────────────── Block 7 ──────────────── 
         // CODE → <GetEnvironment>: <Reg8: 6, UInt8: 1>
         // USED → r6 = getEnvironment(1)
@@ -59,33 +59,33 @@ function _request(param0, param1, param2) {
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
         // USED → r2 = r8.defaults
         // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 2, Reg8: 14>
-        // USED → r10 = getEnvironment(1)[7].default(undefined, r8.defaults, r2)
+        // USED → r10 = getEnvironment(1)[7].default(undefined, r8.defaults, {  })
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 10>
-        createEnvironment()[0] = getEnvironment(1)[7].default(undefined, r8.defaults, r2)
+        createEnvironment()[0] = getEnvironment(1)[7].default(undefined, r8.defaults, {  })
         // CODE → <GetById>: <Reg8: 19, Reg8: 10, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
-        // USED → r19 = getEnvironment(1)[7].default(undefined, r8.defaults, r2).transitional
+        // USED → r19 = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).transitional
         // CODE → <GetById>: <Reg8: 14, Reg8: 10, UInt8: 4, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
-        // USED → r14 = getEnvironment(1)[7].default(undefined, r8.defaults, r2).paramsSerializer
+        // USED → r14 = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).paramsSerializer
         // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 10, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
-        // USED → r17 = getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers
+        // USED → r17 = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 17>
-        createEnvironment()[1] = getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers
+        createEnvironment()[1] = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers
         // CODE → <JStrictEqual>: <Addr8: 100, Reg8: 19, Reg8: 11>  # Address: 000000e1
-        if (getEnvironment(1)[7].default(undefined, r8.defaults, r2).transitional === undefined) { /* jump to label_225 */ }
+        if (getEnvironment(1)[7].default(undefined, r8.defaults, {  }).transitional === undefined) { /* jump to label_225 */ }
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 6 ──────────────── 
             // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
-            createEnvironment()[0] = r2
+            createEnvironment()[0] = {  }
             // CODE → <PutById>: <Reg8: 2, Reg8: 6, UInt8: 1, string_id: 14158>  # String: 'url' (Identifier)
-            r2.url = r6;
+            {  }.url = r6;
             // CODE → <Mov>: <Reg8: 14, Reg8: 2>
-            // USED → r14 = r2
+            // USED → r14 = {  }
             // LOOP → START (while)
             while (true) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <NewObject>: <Reg8: 2>
-                // USED → r2 = {}
+                // USED → r2 = {  }
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <JmpTrue>: <Addr8: 5, Reg8: 2>  # Address: 0000003f
                 if (r2) { /* jump to label_63 */ }
@@ -103,7 +103,7 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 16, Reg8: 18, UInt8: 6, string_id: 22621>  # String: 'assertOptions' (Identifier)
     // USED → r16 = getEnvironment(1)[9].default.assertOptions
     // CODE → <NewObject>: <Reg8: 15>
-    // USED → r15 = {}
+    // USED → r15 = {  }
     // CODE → <LoadFromEnvironment>: <Reg8: 21, Reg8: 6, UInt8: 11>
     // USED → r21 = getEnvironment(1)[11]
     // CODE → <GetById>: <Reg8: 20, Reg8: 21, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
@@ -113,7 +113,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
     // USED → r2 = getEnvironment(1)[11].transitional(getEnvironment(1)[11], getEnvironment(1)[11].boolean)
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 19648>  # String: 'silentJSONParsing' (Identifier)
-    r15."silentJSONParsing" = getEnvironment(1)[11].transitional(getEnvironment(1)[11], getEnvironment(1)[11].boolean);
+    {  }."silentJSONParsing" = getEnvironment(1)[11].transitional(getEnvironment(1)[11], getEnvironment(1)[11].boolean);
     // CODE → <GetById>: <Reg8: 20, Reg8: 21, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
     // USED → r20 = getEnvironment(1)[11].transitional
     // CODE → <GetById>: <Reg8: 2, Reg8: 21, UInt8: 7, string_id: 12635>  # String: 'boolean' (Identifier)
@@ -121,7 +121,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
     // USED → r2 = getEnvironment(1)[11].transitional(getEnvironment(1)[11], getEnvironment(1)[11].boolean)
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 17756>  # String: 'forcedJSONParsing' (Identifier)
-    r15."forcedJSONParsing" = getEnvironment(1)[11].transitional(getEnvironment(1)[11], getEnvironment(1)[11].boolean);
+    {  }."forcedJSONParsing" = getEnvironment(1)[11].transitional(getEnvironment(1)[11], getEnvironment(1)[11].boolean);
     // CODE → <GetById>: <Reg8: 20, Reg8: 21, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
     // USED → r20 = getEnvironment(1)[11].transitional
     // CODE → <GetById>: <Reg8: 2, Reg8: 21, UInt8: 7, string_id: 12635>  # String: 'boolean' (Identifier)
@@ -129,16 +129,16 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
     // USED → r2 = getEnvironment(1)[11].transitional(getEnvironment(1)[11], getEnvironment(1)[11].boolean)
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 22889>  # String: 'clarifyTimeoutError' (Identifier)
-    r15."clarifyTimeoutError" = getEnvironment(1)[11].transitional(getEnvironment(1)[11], getEnvironment(1)[11].boolean);
+    {  }."clarifyTimeoutError" = getEnvironment(1)[11].transitional(getEnvironment(1)[11], getEnvironment(1)[11].boolean);
     // CODE → <LoadConstFalse>: <Reg8: 2>
     // USED → r2 = false
     // CODE → <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 2>
-    r2 = getEnvironment(1)[9].default.assertOptions(getEnvironment(1)[9].default, getEnvironment(1)[7].default(undefined, r8.defaults, r2).transitional, r15, false)
+    r2 = getEnvironment(1)[9].default.assertOptions(getEnvironment(1)[9].default, getEnvironment(1)[7].default(undefined, r8.defaults, {  }).transitional, {  }, false)
     // ──────────────── Block 9 ──────────────── 
     // CODE → <LoadConstNull>: <Reg8: 2>
     // USED → r2 = null
     // CODE → <JEqual>: <Addr8: 94, Reg8: 14, Reg8: 2>  # Address: 00000141
-    if (getEnvironment(1)[7].default(undefined, r8.defaults, r2).paramsSerializer == null) { /* jump to label_321 */ }
+    if (getEnvironment(1)[7].default(undefined, r8.defaults, {  }).paramsSerializer == null) { /* jump to label_321 */ }
     // ──────────────── Block 10 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 3>
     // USED → r2 = getEnvironment(1)[3]
@@ -147,9 +147,9 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 2, Reg8: 15, UInt8: 8, string_id: 19853>  # String: 'isFunction' (Identifier)
     // USED → r2 = getEnvironment(1)[3].default.isFunction
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 15, Reg8: 14>
-    // USED → r2 = getEnvironment(1)[3].default.isFunction(getEnvironment(1)[3].default, getEnvironment(1)[7].default(undefined, r8.defaults, r2).paramsSerializer)
+    // USED → r2 = getEnvironment(1)[3].default.isFunction(getEnvironment(1)[3].default, getEnvironment(1)[7].default(undefined, r8.defaults, {  }).paramsSerializer)
     // CODE → <JmpTrue>: <Addr8: 57, Reg8: 2>  # Address: 00000134
-    if (getEnvironment(1)[3].default.isFunction(getEnvironment(1)[3].default, getEnvironment(1)[7].default(undefined, r8.defaults, r2).paramsSerializer)) { /* jump to label_308 */ }
+    if (getEnvironment(1)[3].default.isFunction(getEnvironment(1)[3].default, getEnvironment(1)[7].default(undefined, r8.defaults, {  }).paramsSerializer)) { /* jump to label_308 */ }
     // ──────────────── Block 11 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
     // USED → r2 = getEnvironment(1)[9]
@@ -158,35 +158,35 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 16, Reg8: 18, UInt8: 6, string_id: 22621>  # String: 'assertOptions' (Identifier)
     // USED → r16 = getEnvironment(1)[9].default.assertOptions
     // CODE → <NewObject>: <Reg8: 15>
-    // USED → r15 = {}
+    // USED → r15 = {  }
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 11>
     // USED → r2 = getEnvironment(1)[11]
     // CODE → <GetById>: <Reg8: 19, Reg8: 2, UInt8: 9, string_id: 12255>  # String: 'function' (Identifier)
     // USED → r19 = getEnvironment(1)[11].function
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 19, string_id: 13048>  # String: 'encode' (Identifier)
-    r15."encode" = getEnvironment(1)[11].function;
+    {  }."encode" = getEnvironment(1)[11].function;
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 9, string_id: 12255>  # String: 'function' (Identifier)
     // USED → r2 = getEnvironment(1)[11].function
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 12525>  # String: 'serialize' (Identifier)
-    r15."serialize" = getEnvironment(1)[11].function;
+    {  }."serialize" = getEnvironment(1)[11].function;
     // CODE → <LoadConstTrue>: <Reg8: 2>
     // USED → r2 = true
     // CODE → <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 14, Reg8: 15, Reg8: 2>
-    r2 = getEnvironment(1)[9].default.assertOptions(getEnvironment(1)[9].default, getEnvironment(1)[7].default(undefined, r8.defaults, r2).paramsSerializer, r15, true)
+    r2 = getEnvironment(1)[9].default.assertOptions(getEnvironment(1)[9].default, getEnvironment(1)[7].default(undefined, r8.defaults, {  }).paramsSerializer, {  }, true)
     // CODE → <Jmp>: <Addr8: 15>  # Address: 00000141
     goto label_321;
     // ──────────────── Block 12 ──────────────── 
     // CODE → <NewObject>: <Reg8: 2>
-    // USED → r2 = {}
+    // USED → r2 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 2, Reg8: 14, string_id: 12525>  # String: 'serialize' (Identifier)
-    r2."serialize" = getEnvironment(1)[7].default(undefined, r8.defaults, r2).paramsSerializer;
+    {  }."serialize" = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).paramsSerializer;
     // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 2, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
-    getEnvironment(1)[7].default(undefined, r8.defaults, r2).paramsSerializer = r2;
+    getEnvironment(1)[7].default(undefined, r8.defaults, {  }).paramsSerializer = {  };
     // ──────────────── Block 13 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 10, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    // USED → r2 = getEnvironment(1)[7].default(undefined, r8.defaults, r2).allowAbsoluteUrls
+    // USED → r2 = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).allowAbsoluteUrls
     // CODE → <JStrictNotEqual>: <Addr8: 48, Reg8: 2, Reg8: 11>  # Address: 00000177
-    if (getEnvironment(1)[7].default(undefined, r8.defaults, r2).allowAbsoluteUrls !== undefined) { /* jump to label_375 */ }
+    if (getEnvironment(1)[7].default(undefined, r8.defaults, {  }).allowAbsoluteUrls !== undefined) { /* jump to label_375 */ }
     // ──────────────── Block 14 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
     // USED → r2 = r8.defaults
@@ -198,11 +198,11 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstTrue>: <Reg8: 2>
     // USED → r2 = true
     // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 3, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    getEnvironment(1)[7].default(undefined, r8.defaults, r2).allowAbsoluteUrls = true;
+    getEnvironment(1)[7].default(undefined, r8.defaults, {  }).allowAbsoluteUrls = true;
     // CODE → <Jmp>: <Addr8: 20>  # Address: 00000177
     goto label_375;
     // LOOP → START (while)
-    while (getEnvironment(1)[7].default(undefined, r8.defaults, r2).method) {
+    while (getEnvironment(1)[7].default(undefined, r8.defaults, {  }).method) {
         // ──────────────── Block 17 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
         // USED → r2 = getEnvironment(1)[9]
@@ -211,7 +211,7 @@ function _request(param0, param1, param2) {
         // CODE → <GetById>: <Reg8: 15, Reg8: 16, UInt8: 6, string_id: 22621>  # String: 'assertOptions' (Identifier)
         // USED → r15 = getEnvironment(1)[9].default.assertOptions
         // CODE → <NewObject>: <Reg8: 14>
-        // USED → r14 = {}
+        // USED → r14 = {  }
         // CODE → <LoadFromEnvironment>: <Reg8: 19, Reg8: 6, UInt8: 11>
         // USED → r19 = getEnvironment(1)[11]
         // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
@@ -221,7 +221,7 @@ function _request(param0, param1, param2) {
         // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
         // USED → r2 = getEnvironment(1)[11].spelling(getEnvironment(1)[11], "baseURL")
         // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 22683>  # String: 'baseUrl' (Identifier)
-        r14."baseUrl" = getEnvironment(1)[11].spelling(getEnvironment(1)[11], "baseURL");
+        {  }."baseUrl" = getEnvironment(1)[11].spelling(getEnvironment(1)[11], "baseURL");
         // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
         // USED → r18 = getEnvironment(1)[11].spelling
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 24723>  # String: 'withXSRFToken' (Identifier)
@@ -229,22 +229,22 @@ function _request(param0, param1, param2) {
         // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
         // USED → r2 = getEnvironment(1)[11].spelling(getEnvironment(1)[11], "withXSRFToken")
         // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 24724>  # String: 'withXsrfToken' (Identifier)
-        r14."withXsrfToken" = getEnvironment(1)[11].spelling(getEnvironment(1)[11], "withXSRFToken");
+        {  }."withXsrfToken" = getEnvironment(1)[11].spelling(getEnvironment(1)[11], "withXSRFToken");
         // CODE → <LoadConstTrue>: <Reg8: 2>
         // USED → r2 = true
         // CODE → <Call4>: <Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 10, Reg8: 14, Reg8: 2>
-        r14 = getEnvironment(1)[9].default.assertOptions(getEnvironment(1)[9].default, getEnvironment(1)[7].default(undefined, r8.defaults, r2), r14, true)
+        r14 = getEnvironment(1)[9].default.assertOptions(getEnvironment(1)[9].default, getEnvironment(1)[7].default(undefined, r8.defaults, {  }), {  }, true)
         // CODE → <GetById>: <Reg8: 15, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
-        // USED → r15 = getEnvironment(1)[7].default(undefined, r8.defaults, r2).method
+        // USED → r15 = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).method
         // CODE → <JmpTrue>: <Addr8: 15, Reg8: 15>  # Address: 000001d2
-        if (getEnvironment(1)[7].default(undefined, r8.defaults, r2).method) { /* jump to label_466 */ }
+        if (getEnvironment(1)[7].default(undefined, r8.defaults, {  }).method) { /* jump to label_466 */ }
         // ──────────────── Block 16 ──────────────── 
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
         // USED → r2 = r8.defaults
         // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
         // USED → r2 = r8.defaults.allowAbsoluteUrls
         // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 3, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-        getEnvironment(1)[7].default(undefined, r8.defaults, r2).allowAbsoluteUrls = r8.defaults.allowAbsoluteUrls;
+        getEnvironment(1)[7].default(undefined, r8.defaults, {  }).allowAbsoluteUrls = r8.defaults.allowAbsoluteUrls;
     }
     // LOOP → END
     // ──────────────── Block 18 ──────────────── 
@@ -264,11 +264,11 @@ function _request(param0, param1, param2) {
     // CODE → <Call1>: <Reg8: 14, Reg8: 14, Reg8: 15>
     // USED → r14 = "get".toLowerCase("get")
     // CODE → <PutById>: <Reg8: 10, Reg8: 14, UInt8: 4, string_id: 12916>  # String: 'method' (Identifier)
-    getEnvironment(1)[7].default(undefined, r8.defaults, r2).method = "get".toLowerCase("get");
+    getEnvironment(1)[7].default(undefined, r8.defaults, {  }).method = "get".toLowerCase("get");
     // CODE → <Mov>: <Reg8: 16, Reg8: 17>
-    // USED → r16 = getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers
+    // USED → r16 = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers
     // CODE → <JmpFalse>: <Addr8: 40, Reg8: 16>  # Address: 00000214
-    if (!getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers) { /* jump to label_532 */ }
+    if (!getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers) { /* jump to label_532 */ }
     // ──────────────── Block 22 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
     // USED → r14 = getEnvironment(1)[3]
@@ -277,16 +277,16 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 14, string_id: 12398>  # String: 'merge' (Identifier)
     // USED → r18 = getEnvironment(1)[3].default.merge
     // CODE → <GetById>: <Reg8: 15, Reg8: 17, UInt8: 15, string_id: 12528>  # String: 'common' (Identifier)
-    // USED → r15 = getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers.common
+    // USED → r15 = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers.common
     // CODE → <GetById>: <Reg8: 14, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
-    // USED → r14 = getEnvironment(1)[7].default(undefined, r8.defaults, r2).method
+    // USED → r14 = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).method
     // CODE → <GetByVal>: <Reg8: 14, Reg8: 17, Reg8: 14>
-    // USED → r14 = getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers[getEnvironment(1)[7].default(undefined, r8.defaults, r2).method]
+    // USED → r14 = getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers[getEnvironment(1)[7].default(undefined, r8.defaults, {  }).method]
     // CODE → <Call3>: <Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 14>
-    // USED → r16 = getEnvironment(1)[3].default.merge(getEnvironment(1)[3].default, getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers.common, getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers[getEnvironment(1)[7].default(undefined, r8.defaults, r2).method])
+    // USED → r16 = getEnvironment(1)[3].default.merge(getEnvironment(1)[3].default, getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers.common, getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers[getEnvironment(1)[7].default(undefined, r8.defaults, {  }).method])
     // ──────────────── Block 23 ──────────────── 
     // CODE → <JmpFalse>: <Addr8: 36, Reg8: 17>  # Address: 00000238
-    if (!getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers) { /* jump to label_568 */ }
+    if (!getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers) { /* jump to label_568 */ }
     // ──────────────── Block 24 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
     // USED → r14 = getEnvironment(1)[3]
@@ -308,9 +308,9 @@ function _request(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 17, string_id: 98>  # String: 'concat' (Identifier)
     // USED → r14 = getEnvironment(1)[10].default.concat
     // CODE → <Call3>: <Reg8: 14, Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 17>
-    // USED → r14 = getEnvironment(1)[10].default.concat(getEnvironment(1)[10].default, getEnvironment(1)[3].default.merge(getEnvironment(1)[3].default, getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers.common, getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers[getEnvironment(1)[7].default(undefined, r8.defaults, r2).method]), getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers)
+    // USED → r14 = getEnvironment(1)[10].default.concat(getEnvironment(1)[10].default, getEnvironment(1)[3].default.merge(getEnvironment(1)[3].default, getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers.common, getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers[getEnvironment(1)[7].default(undefined, r8.defaults, {  }).method]), getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers)
     // CODE → <PutById>: <Reg8: 10, Reg8: 14, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
-    getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers = getEnvironment(1)[10].default.concat(getEnvironment(1)[10].default, getEnvironment(1)[3].default.merge(getEnvironment(1)[3].default, getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers.common, getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers[getEnvironment(1)[7].default(undefined, r8.defaults, r2).method]), getEnvironment(1)[7].default(undefined, r8.defaults, r2).headers);
+    getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers = getEnvironment(1)[10].default.concat(getEnvironment(1)[10].default, getEnvironment(1)[3].default.merge(getEnvironment(1)[3].default, getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers.common, getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers[getEnvironment(1)[7].default(undefined, r8.defaults, {  }).method]), getEnvironment(1)[7].default(undefined, r8.defaults, {  }).headers);
     // CODE → <NewArray>: <Reg8: 14, UInt16: 0>
     // USED → r14 = []
     // CODE → <Mov>: <Reg8: 12, Reg8: 14>
@@ -395,16 +395,16 @@ function _request(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 16, UInt8: 27, string_id: 208>  # String: 'resolve' (Identifier)
     // USED → r9 = globalThis.Promise.resolve
     // CODE → <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
-    // USED → r0 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, r2))
+    // USED → r0 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  }))
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
     // USED → r9 = 0
     // CODE → <JNotLess>: <Addr8: 54, Reg8: 9, Reg8: 14>  # Address: 00000349
     if (0 >= [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.length) { /* jump to label_841 */ }
     // ──────────────── Block 27 ──────────────── 
     // CODE → <Mov>: <Reg8: 18, Reg8: 0>
-    // USED → r18 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, r2))
+    // USED → r18 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  }))
     // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
-    // USED → r17 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, r2)).then
+    // USED → r17 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })).then
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
     // USED → r9 = 0
     // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
@@ -424,16 +424,16 @@ function _request(param0, param1, param2) {
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
     // USED → r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1]
     // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
-    // USED → r0 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, r2)).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, r2)), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1])
+    // USED → r0 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1])
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
     // USED → r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.length
     // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
     if (++0 + 1 + 1 < [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */.length) { /* jump to label_791 */ }
     // ──────────────── Block 28 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 0>
-    // USED → r9 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, r2)).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, r2)), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1])
+    // USED → r9 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1])
     // CODE → <Ret>: <Reg8: 9>
-    return globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, r2)).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, r2)), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1]);
+    return globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, r8.defaults, {  })), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, r8), undefined] /* capacity hint: 2 */[++0 + 1]);
     // ──────────────── Block 29 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
     // USED → r9 = []
@@ -442,7 +442,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 9>
     // USED → r5 = [].length
     // CODE → <Mov>: <Reg8: 1, Reg8: 10>
-    // USED → r1 = getEnvironment(1)[7].default(undefined, r8.defaults, r2)
+    // USED → r1 = getEnvironment(1)[7].default(undefined, r8.defaults, {  })
     // CODE → <LoadConstZero>: <Reg8: 4>
     // USED → r4 = 0
     // CODE → <JNotLess>: <Addr8: 72, Reg8: 2, Reg8: 9>  # Address: 000003a6
@@ -469,9 +469,9 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 10, Reg8: 13>
     // USED → r10 = [][+0]
     // CODE → <Mov>: <Reg8: 9, Reg8: 1>
-    // USED → r9 = getEnvironment(1)[7].default(undefined, r8.defaults, r2)
+    // USED → r9 = getEnvironment(1)[7].default(undefined, r8.defaults, {  })
     // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
-    // USED → r1 = [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, r2))
+    // USED → r1 = [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, {  }))
     // CODE → <Mov>: <Reg8: 10, Reg8: 4>
     // USED → r10 = ++0 + 1 + 1
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
@@ -491,7 +491,7 @@ function _request(param0, param1, param2) {
         // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
         // USED → r6 = getEnvironment(1)[6].default.call
         // CODE → <Call3>: <Reg8: 0, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1>
-        // USED → r0 = getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, r2)))
+        // USED → r0 = getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, {  })))
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0
         // CODE → <Mov>: <Reg8: 1, Reg8: 3>
@@ -515,9 +515,9 @@ function _request(param0, param1, param2) {
     // LOOP → END
     // ──────────────── Block 34 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 0>
-    // USED → r8 = getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, r2)))
+    // USED → r8 = getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, {  })))
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
-    // USED → r7 = getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, r2))).then
+    // USED → r7 = getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, {  }))).then
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     // USED → r9 = []
     // CODE → <Mov>: <Reg8: 1, Reg8: 4>
@@ -539,14 +539,14 @@ function _request(param0, param1, param2) {
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>
     // USED → r1 = [][++0 + 1]
     // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
-    // USED → r0 = getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, r2))).then(getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, r2))), [][+0], [][++0 + 1])
+    // USED → r0 = getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, {  }))).then(getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, {  }))), [][+0], [][++0 + 1])
     // CODE → <Mov>: <Reg8: 1, Reg8: 5>
     // USED → r1 = [].length
     // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
     if (++0 + 1 + 1 < [].length) { /* jump to label_971 */ }
     // ──────────────── Block 35 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, r2))).then(getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, r2))), [][+0], [][++0 + 1]);
+    return getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, {  }))).then(getEnvironment(1)[6].default.call(getEnvironment(1)[6].default, r8, [][+0](undefined, getEnvironment(1)[7].default(undefined, r8.defaults, {  }))), [][+0], [][++0 + 1]);
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException
     // CODE → <GetGlobalObject>: <Reg8: 0>
