@@ -47,42 +47,54 @@ function _request(param0, param1, param2) {
     createEnvironment()[0] = r14
     // CODE → <Jmp>: <Addr8: 20>  # Address: 0000004c
     goto label_76;
-    // ──────────────── Block 4 ──────────────── 
-    // CODE → <JmpTrue>: <Addr8: 5, Reg8: 2>  # Address: 0000003f
-    if (param2) { /* jump to label_63 */ }
-    // ──────────────── Block 5 ──────────────── 
-    // CODE → <NewObject>: <Reg8: 2>
-    // USED → r2 = {}
-    // ──────────────── Block 6 ──────────────── 
-    // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
-    createEnvironment()[0] = r2
-    // CODE → <PutById>: <Reg8: 2, Reg8: 6, UInt8: 1, string_id: 14158>  # String: 'url' (Identifier)
-    // USED → r2 = { url: param1 }
-    // CODE → <Mov>: <Reg8: 14, Reg8: 2>
-    // USED → r14 = { url: param1 }
-    // ──────────────── Block 7 ──────────────── 
-    // CODE → <GetEnvironment>: <Reg8: 6, UInt8: 1>
-    // USED → r6 = getEnvironment(1)
-    // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 7>
-    // USED → r2 = getEnvironment(1)[7]
-    // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r10 = getEnvironment(1)[7].default
-    // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
-    // USED → r2 = r8.defaults
-    // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 2, Reg8: 14>
-    // USED → r10 = getEnvironment(1)[7].default(undefined, r8.defaults, r14)
-    // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 10>
-    createEnvironment()[0] = getEnvironment(1)[7].default(undefined, r8.defaults, r14)
-    // CODE → <GetById>: <Reg8: 19, Reg8: 10, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
-    // USED → r19 = getEnvironment(1)[7].default(undefined, r8.defaults, r14).transitional
-    // CODE → <GetById>: <Reg8: 14, Reg8: 10, UInt8: 4, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
-    // USED → r14 = getEnvironment(1)[7].default(undefined, r8.defaults, r14).paramsSerializer
-    // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 10, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
-    // USED → r17 = getEnvironment(1)[7].default(undefined, r8.defaults, r14).headers
-    // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 17>
-    createEnvironment()[1] = getEnvironment(1)[7].default(undefined, r8.defaults, r14).headers
-    // CODE → <JStrictEqual>: <Addr8: 100, Reg8: 19, Reg8: 11>  # Address: 000000e1
-    if (getEnvironment(1)[7].default(undefined, r8.defaults, r14).transitional === undefined) { /* jump to label_225 */ }
+    // LOOP → START (while)
+    while (getEnvironment(1)[7].default(undefined, r8.defaults, r14).transitional === undefined) {
+        // ──────────────── Block 7 ──────────────── 
+        // CODE → <GetEnvironment>: <Reg8: 6, UInt8: 1>
+        // USED → r6 = getEnvironment(1)
+        // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 7>
+        // USED → r2 = getEnvironment(1)[7]
+        // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
+        // USED → r10 = getEnvironment(1)[7].default
+        // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
+        // USED → r2 = r8.defaults
+        // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 2, Reg8: 14>
+        // USED → r10 = getEnvironment(1)[7].default(undefined, r8.defaults, r14)
+        // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 10>
+        createEnvironment()[0] = getEnvironment(1)[7].default(undefined, r8.defaults, r14)
+        // CODE → <GetById>: <Reg8: 19, Reg8: 10, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
+        // USED → r19 = getEnvironment(1)[7].default(undefined, r8.defaults, r14).transitional
+        // CODE → <GetById>: <Reg8: 14, Reg8: 10, UInt8: 4, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
+        // USED → r14 = getEnvironment(1)[7].default(undefined, r8.defaults, r14).paramsSerializer
+        // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 10, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
+        // USED → r17 = getEnvironment(1)[7].default(undefined, r8.defaults, r14).headers
+        // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 17>
+        createEnvironment()[1] = getEnvironment(1)[7].default(undefined, r8.defaults, r14).headers
+        // CODE → <JStrictEqual>: <Addr8: 100, Reg8: 19, Reg8: 11>  # Address: 000000e1
+        if (getEnvironment(1)[7].default(undefined, r8.defaults, r14).transitional === undefined) { /* jump to label_225 */ }
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 6 ──────────────── 
+            // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
+            createEnvironment()[0] = r2
+            // CODE → <PutById>: <Reg8: 2, Reg8: 6, UInt8: 1, string_id: 14158>  # String: 'url' (Identifier)
+            // USED → r2 = { url: param1 }
+            // CODE → <Mov>: <Reg8: 14, Reg8: 2>
+            // USED → r14 = { url: param1 }
+            // LOOP → START (while)
+            while (true) {
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → <NewObject>: <Reg8: 2>
+                // USED → r2 = {}
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <JmpTrue>: <Addr8: 5, Reg8: 2>  # Address: 0000003f
+                if (param2) { /* jump to label_63 */ }
+            }
+            // LOOP → END
+        }
+        // LOOP → END
+    }
+    // LOOP → END
     // ──────────────── Block 8 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
     // USED → r2 = getEnvironment(1)[9]
@@ -189,48 +201,52 @@ function _request(param0, param1, param2) {
     // USED → r10 = { paramsSerializer: { serialize: getEnvironment(1)[7].default(undefined, allowAbsoluteUrls: true }
     // CODE → <Jmp>: <Addr8: 20>  # Address: 00000177
     goto label_375;
-    // ──────────────── Block 16 ──────────────── 
-    // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
-    // USED → r2 = r8.defaults
-    // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    // USED → r2 = r8.defaults.allowAbsoluteUrls
-    // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 3, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    // USED → r10 = { paramsSerializer: { serialize: getEnvironment(1)[7].default(undefined, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls }
-    // ──────────────── Block 17 ──────────────── 
-    // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
-    // USED → r2 = getEnvironment(1)[9]
-    // CODE → <GetByIdShort>: <Reg8: 16, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r16 = getEnvironment(1)[9].default
-    // CODE → <GetById>: <Reg8: 15, Reg8: 16, UInt8: 6, string_id: 22621>  # String: 'assertOptions' (Identifier)
-    // USED → r15 = getEnvironment(1)[9].default.assertOptions
-    // CODE → <NewObject>: <Reg8: 14>
-    // USED → r14 = {}
-    // CODE → <LoadFromEnvironment>: <Reg8: 19, Reg8: 6, UInt8: 11>
-    // USED → r19 = getEnvironment(1)[11]
-    // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
-    // USED → r18 = getEnvironment(1)[11].spelling
-    // CODE → <LoadConstString>: <Reg8: 2, string_id: 15368>  # String: 'baseURL' (Identifier)
-    // USED → r2 = "baseURL"
-    // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
-    // USED → r2 = getEnvironment(1)[11].spelling(getEnvironment(1)[11], "baseURL")
-    // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 22683>  # String: 'baseUrl' (Identifier)
-    // USED → r14 = { baseUrl: getEnvironment(1)[11].spelling(getEnvironment(1)[11], "baseURL") }
-    // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
-    // USED → r18 = getEnvironment(1)[11].spelling
-    // CODE → <LoadConstString>: <Reg8: 2, string_id: 24723>  # String: 'withXSRFToken' (Identifier)
-    // USED → r2 = "withXSRFToken"
-    // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
-    // USED → r2 = getEnvironment(1)[11].spelling(getEnvironment(1)[11], "withXSRFToken")
-    // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 24724>  # String: 'withXsrfToken' (Identifier)
-    // USED → r14 = { baseUrl: getEnvironment(1)[11].spelling(getEnvironment(1)[11], withXsrfToken: getEnvironment(1)[11].spelling(getEnvironment(1)[11], "withXSRFToken") }
-    // CODE → <LoadConstTrue>: <Reg8: 2>
-    // USED → r2 = true
-    // CODE → <Call4>: <Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 10, Reg8: 14, Reg8: 2>
-    r14 = getEnvironment(1)[9].default.assertOptions(getEnvironment(1)[9].default, r10, r14, true)
-    // CODE → <GetById>: <Reg8: 15, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
-    // USED → r15 = r10.method
-    // CODE → <JmpTrue>: <Addr8: 15, Reg8: 15>  # Address: 000001d2
-    if (r10.method) { /* jump to label_466 */ }
+    // LOOP → START (while)
+    while (r10.method) {
+        // ──────────────── Block 17 ──────────────── 
+        // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
+        // USED → r2 = getEnvironment(1)[9]
+        // CODE → <GetByIdShort>: <Reg8: 16, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
+        // USED → r16 = getEnvironment(1)[9].default
+        // CODE → <GetById>: <Reg8: 15, Reg8: 16, UInt8: 6, string_id: 22621>  # String: 'assertOptions' (Identifier)
+        // USED → r15 = getEnvironment(1)[9].default.assertOptions
+        // CODE → <NewObject>: <Reg8: 14>
+        // USED → r14 = {}
+        // CODE → <LoadFromEnvironment>: <Reg8: 19, Reg8: 6, UInt8: 11>
+        // USED → r19 = getEnvironment(1)[11]
+        // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
+        // USED → r18 = getEnvironment(1)[11].spelling
+        // CODE → <LoadConstString>: <Reg8: 2, string_id: 15368>  # String: 'baseURL' (Identifier)
+        // USED → r2 = "baseURL"
+        // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
+        // USED → r2 = getEnvironment(1)[11].spelling(getEnvironment(1)[11], "baseURL")
+        // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 22683>  # String: 'baseUrl' (Identifier)
+        // USED → r14 = { baseUrl: getEnvironment(1)[11].spelling(getEnvironment(1)[11], "baseURL") }
+        // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
+        // USED → r18 = getEnvironment(1)[11].spelling
+        // CODE → <LoadConstString>: <Reg8: 2, string_id: 24723>  # String: 'withXSRFToken' (Identifier)
+        // USED → r2 = "withXSRFToken"
+        // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
+        // USED → r2 = getEnvironment(1)[11].spelling(getEnvironment(1)[11], "withXSRFToken")
+        // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 24724>  # String: 'withXsrfToken' (Identifier)
+        // USED → r14 = { baseUrl: getEnvironment(1)[11].spelling(getEnvironment(1)[11], withXsrfToken: getEnvironment(1)[11].spelling(getEnvironment(1)[11], "withXSRFToken") }
+        // CODE → <LoadConstTrue>: <Reg8: 2>
+        // USED → r2 = true
+        // CODE → <Call4>: <Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 10, Reg8: 14, Reg8: 2>
+        r14 = getEnvironment(1)[9].default.assertOptions(getEnvironment(1)[9].default, r10, r14, true)
+        // CODE → <GetById>: <Reg8: 15, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
+        // USED → r15 = r10.method
+        // CODE → <JmpTrue>: <Addr8: 15, Reg8: 15>  # Address: 000001d2
+        if (r10.method) { /* jump to label_466 */ }
+        // ──────────────── Block 16 ──────────────── 
+        // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
+        // USED → r2 = r8.defaults
+        // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
+        // USED → r2 = r8.defaults.allowAbsoluteUrls
+        // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 3, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
+        // USED → r10 = { paramsSerializer: { serialize: getEnvironment(1)[7].default(undefined, allowAbsoluteUrls: r8.defaults.allowAbsoluteUrls }
+    }
+    // LOOP → END
     // ──────────────── Block 18 ──────────────── 
     // CODE → <GetById>: <Reg8: 14, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
     // USED → r14 = r8.defaults

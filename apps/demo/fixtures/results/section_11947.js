@@ -1,11 +1,11 @@
 async function* anon_11947(param0, param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
-    // StartGenerator: prepare generator context and jump to next instruction
+    // StartGenerator
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 0>
     // USED → r8 = this
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 5>
-    // USED → r0 = await yield
+    // USED → r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrueLong>: <Addr32: 311, Reg8: 5>  # Address: 0000013e
     if (r5) { /* jump to label_318 */ }
     // ──────────────── Block 1 ──────────────── 
@@ -24,25 +24,25 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
     // USED → r3 = await r8._request(r8, r4, r3)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
-    yield label_41;  // SaveGenerator: suspend and jump to 41
+    yield label_41;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
     return await r8._request(r8, r4, r3);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
-    // USED → r3 = await yield
+    // USED → r3 = await yield /* ResumeGenerator -> r3 */
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032
     if (param1) { /* jump to label_50 */ }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator: No output needed
+    // CompleteGenerator
     // CODE → <Ret>: <Reg8: 3>
-    return await yield;
+    return await yield /* ResumeGenerator -> r3 */;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator: No output needed
+    // CompleteGenerator
     // CODE → <Ret>: <Reg8: 3>
-    return await yield;
+    return await yield /* ResumeGenerator -> r3 */;
     // CODE → <Catch>: <Reg8: 7>
     // USED → r7 = caughtException
     // CODE → <Mov>: <Reg8: 1, Reg8: 7>
@@ -182,7 +182,7 @@ async function* anon_11947(param0, param1, param2) {
     // LOOP → END
     // ──────────────── Block 19 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator: No output needed
+    // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>
-    return await yield;
+    return await yield /* ResumeGenerator -> r0 */;
 }

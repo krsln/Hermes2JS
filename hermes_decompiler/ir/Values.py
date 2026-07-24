@@ -29,6 +29,14 @@ class RegisterValue(Value):
 
 
 @dataclass(frozen=True)
+class CommentValue(Value):
+    value: str
+
+    def render(self):
+        return f"{self.value}"
+
+
+@dataclass(frozen=True)
 class ConstantValue(Value):
     value: object
 
@@ -120,3 +128,15 @@ class ArrayValue(Value):
             text += f" /* capacity hint: {self.capacity_hint} */"
 
         return text
+
+
+@dataclass(frozen=True)
+class GeneratorValue(Value):
+    name: str
+    environment_register: int | None
+    environment: Value | None
+
+    def render(self):
+        if self.environment is not None:
+            return f"generator {self.name} /* env={self.environment.render()} */"
+        return f"generator {self.name}"

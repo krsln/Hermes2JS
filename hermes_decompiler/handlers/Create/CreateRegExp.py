@@ -34,7 +34,7 @@ class CreateRegExp(OpcodeHandler):
             error = f'/* Error: could not resolve RegExp pattern (id {pattern_id}) */'
             return self.build_exception_result(analysis, entry, error)
 
-        value = f"/{pattern}/{flags or ''}"
+        # value = f"/{pattern}/{flags or ''}"
         value = RegExpValue(pattern=pattern, flags=flags or "")
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)

@@ -147,6 +147,3 @@ class CreateThisExpression(Expression):
 #     when_true=...,
 #     when_false=...
 # )
-# ArrayExpression(
-#     elements=[...]
-# )

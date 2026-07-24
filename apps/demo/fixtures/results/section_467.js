@@ -2450,197 +2450,205 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r15 = r0.Set
     // CODE → <Jmp>: <Addr8: 8>  # Address: 0000162b
     goto label_5675;
-    // ──────────────── Block 23 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-    // USED → r15 = r0.WeakSet
-    // ──────────────── Block 24 ──────────────── 
-    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
-    createEnvironment()[132] = r0.WeakSet
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
-    createEnvironment()[133] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
-    createEnvironment()[134] = false
-    // CODE → <LoadConstInt>: <Reg8: 15, Imm32: 8192>
-    // USED → r15 = 8192
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
-    createEnvironment()[135] = 8192
-    // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-    // USED → r15 = r0.WeakMap
-    // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-    // USED → r15 = typeof r0.WeakMap
-    // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
-    if ("function" === typeof r0.WeakMap) { /* jump to label_5717 */ }
+    // LOOP → START (while)
+    while ("function" === typeof r0.WeakMap) {
+        // ──────────────── Block 24 ──────────────── 
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
+        createEnvironment()[132] = r0.WeakSet
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
+        createEnvironment()[133] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
+        createEnvironment()[134] = false
+        // CODE → <LoadConstInt>: <Reg8: 15, Imm32: 8192>
+        // USED → r15 = 8192
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
+        createEnvironment()[135] = 8192
+        // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+        // USED → r15 = r0.WeakMap
+        // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
+        // USED → r15 = typeof r0.WeakMap
+        // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
+        if ("function" === typeof r0.WeakMap) { /* jump to label_5717 */ }
+        // ──────────────── Block 23 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
+        // USED → r15 = r0.WeakSet
+    }
+    // LOOP → END
     // ──────────────── Block 25 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
     r15 = r0.Map
     // CODE → <Jmp>: <Addr8: 8>  # Address: 0000165b
     goto label_5723;
-    // ──────────────── Block 26 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-    // USED → r15 = r0.WeakMap
-    // ──────────────── Block 27 ──────────────── 
-    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
-    createEnvironment()[136] = r0.WeakMap
-    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-    // USED → r15 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
-    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
-    createEnvironment()[137] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
-    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-    // USED → r15 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
-    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
-    createEnvironment()[138] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
-    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-    // USED → r15 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
-    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
-    createEnvironment()[139] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
-    createEnvironment()[140] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
-    createEnvironment()[141] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 142, Reg8: 11>
-    createEnvironment()[142] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 143, Reg8: 10>
-    createEnvironment()[143] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 144, Reg8: 10>
-    createEnvironment()[144] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 145, Reg8: 11>
-    createEnvironment()[145] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 146, Reg8: 12>
-    createEnvironment()[146] = false
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 147, Reg8: 10>
-    createEnvironment()[147] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 148, Reg8: 10>
-    createEnvironment()[148] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 149, Reg8: 11>
-    createEnvironment()[149] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 150, Reg8: 10>
-    createEnvironment()[150] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 151, Reg8: 10>
-    createEnvironment()[151] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 152, Reg8: 10>
-    createEnvironment()[152] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 153, Reg8: 10>
-    createEnvironment()[153] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 154, Reg8: 11>
-    createEnvironment()[154] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 155, Reg8: 11>
-    createEnvironment()[155] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 156, Reg8: 12>
-    createEnvironment()[156] = false
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
-    createEnvironment()[157] = 0
-    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
-    // USED → r15 = r0.Infinity
-    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
-    createEnvironment()[158] = r0.Infinity
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
-    createEnvironment()[159] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
-    createEnvironment()[160] = false
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 161, Reg8: 11>
-    createEnvironment()[161] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 162, Reg8: 11>
-    createEnvironment()[162] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 163, Reg8: 12>
-    createEnvironment()[163] = false
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 164, Reg8: 11>
-    createEnvironment()[164] = null
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 165, Reg8: 10>
-    createEnvironment()[165] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 166, Reg8: 10>
-    createEnvironment()[166] = 0
-    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 167, Reg8: 11>
-    createEnvironment()[167] = null
-    // CODE → <CreateClosure>: <Reg8: 10, Reg8: 1, function_id: 848>  # Function: [#848 batchedUpdatesImpl of 178 bytes]: 3 params @ offset 0x0018a193
-    // USED → r10 = batchedUpdatesImpl /* Closure with env r1 = createEnvironment() */
-    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
-    createEnvironment()[207] = batchedUpdatesImpl /* Closure with env r1 = createEnvironment() */
-    // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-    // USED → r10 = r0.Map
-    // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r12 = r0.Map.prototype
-    // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
-    // USED → r12 = createThis(prototype=r0.Map.prototype, constructor=r0.Map)
-    // CODE → <Mov>: <Reg8: 57, Reg8: 12>
-    r57 = createThis(prototype=r0.Map.prototype, constructor=r0.Map)
-    // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
-    r10 = new r0.Map("undefined")
-    // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
-    // USED → r10 = r12[r10]
-    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
-    createEnvironment()[168] = r10
-    // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
-    // USED → r12 = { findFiberByHostInstance: null, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
-    // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-    // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = createEnvironment() */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
-    // CODE → <LoadConstString>: <Reg8: 10, string_id: 1866>  # String: '18.3.0-canary-9372c6311-20240315' (String)
-    // USED → r10 = "18.3.0-canary-9372c6311-20240315"
-    // CODE → <NewObject>: <Reg8: 8>
-    // USED → r8 = {}
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-    // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */ }
-    // CODE → <CreateClosure>: <Reg8: 15, Reg8: 1, function_id: 849>  # Function: [#849 getInspectorDataForViewTag of 21 bytes]: 1 params @ offset 0x0018a245
-    // USED → r15 = getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12857>  # String: 'getInspectorDataForViewTag' (Identifier)
-    // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */ }
-    // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
-    // USED → r16 = function_850 /* Closure with env r1 = createEnvironment() */
-    // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
-    // USED → r15 = function_850 /* Closure with env r1 = createEnvironment() */.bind
-    // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
-    // USED → r15 = function_850 /* Closure with env r1 = createEnvironment() */.bind(function_850 /* Closure with env r1 = createEnvironment() */, null, findNodeHandle /* Closure with env r1 = createEnvironment() */)
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-    // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = createEnvironment() */.bind(function_850 /* Closure with env r1 = createEnvironment() */, null, findNodeHandle /* Closure with env r1 = createEnvironment() */) }
-    // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-    // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = createEnvironment() */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = createEnvironment() */.bind(function_850 /* Closure with env r1 = createEnvironment() */, null, findNodeHandle /* Closure with env r1 = createEnvironment() */) } }
-    // CODE → <NewObject>: <Reg8: 8>
-    // USED → r8 = {}
-    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
-    // USED → r15 = r12.bundleType
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType }
-    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
-    // USED → r15 = r12.version
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version }
-    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-    // USED → r15 = r12.rendererPackageName
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName }
-    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-    // USED → r15 = r12.rendererConfig
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig }
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null }
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null }
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null }
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null }
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null }
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null }
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null }
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null }
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null }
-    // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-    // USED → r14 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher }
-    // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
-    // USED → r14 = findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */
-    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
-    // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */ }
-    // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-    // USED → r12 = r12.findFiberByHostInstance
-    // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
-    if (r12.findFiberByHostInstance) { /* jump to label_6101 */ }
+    // LOOP → START (while)
+    while (r12.findFiberByHostInstance) {
+        // ──────────────── Block 27 ──────────────── 
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
+        createEnvironment()[136] = r0.WeakMap
+        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
+        // USED → r15 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
+        createEnvironment()[137] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
+        // USED → r15 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
+        createEnvironment()[138] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
+        // USED → r15 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
+        createEnvironment()[139] = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
+        createEnvironment()[140] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
+        createEnvironment()[141] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 142, Reg8: 11>
+        createEnvironment()[142] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 143, Reg8: 10>
+        createEnvironment()[143] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 144, Reg8: 10>
+        createEnvironment()[144] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 145, Reg8: 11>
+        createEnvironment()[145] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 146, Reg8: 12>
+        createEnvironment()[146] = false
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 147, Reg8: 10>
+        createEnvironment()[147] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 148, Reg8: 10>
+        createEnvironment()[148] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 149, Reg8: 11>
+        createEnvironment()[149] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 150, Reg8: 10>
+        createEnvironment()[150] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 151, Reg8: 10>
+        createEnvironment()[151] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 152, Reg8: 10>
+        createEnvironment()[152] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 153, Reg8: 10>
+        createEnvironment()[153] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 154, Reg8: 11>
+        createEnvironment()[154] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 155, Reg8: 11>
+        createEnvironment()[155] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 156, Reg8: 12>
+        createEnvironment()[156] = false
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
+        createEnvironment()[157] = 0
+        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
+        // USED → r15 = r0.Infinity
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
+        createEnvironment()[158] = r0.Infinity
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
+        createEnvironment()[159] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
+        createEnvironment()[160] = false
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 161, Reg8: 11>
+        createEnvironment()[161] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 162, Reg8: 11>
+        createEnvironment()[162] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 163, Reg8: 12>
+        createEnvironment()[163] = false
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 164, Reg8: 11>
+        createEnvironment()[164] = null
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 165, Reg8: 10>
+        createEnvironment()[165] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 166, Reg8: 10>
+        createEnvironment()[166] = 0
+        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 167, Reg8: 11>
+        createEnvironment()[167] = null
+        // CODE → <CreateClosure>: <Reg8: 10, Reg8: 1, function_id: 848>  # Function: [#848 batchedUpdatesImpl of 178 bytes]: 3 params @ offset 0x0018a193
+        // USED → r10 = batchedUpdatesImpl /* Closure with env r1 = createEnvironment() */
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
+        createEnvironment()[207] = batchedUpdatesImpl /* Closure with env r1 = createEnvironment() */
+        // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
+        // USED → r10 = r0.Map
+        // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
+        // USED → r12 = r0.Map.prototype
+        // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
+        // USED → r12 = createThis(prototype=r0.Map.prototype, constructor=r0.Map)
+        // CODE → <Mov>: <Reg8: 57, Reg8: 12>
+        r57 = createThis(prototype=r0.Map.prototype, constructor=r0.Map)
+        // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
+        r10 = new r0.Map("undefined")
+        // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
+        // USED → r10 = r12[r10]
+        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
+        createEnvironment()[168] = r10
+        // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
+        // USED → r12 = { findFiberByHostInstance: null, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
+        // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+        // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = createEnvironment() */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer" }
+        // CODE → <LoadConstString>: <Reg8: 10, string_id: 1866>  # String: '18.3.0-canary-9372c6311-20240315' (String)
+        // USED → r10 = "18.3.0-canary-9372c6311-20240315"
+        // CODE → <NewObject>: <Reg8: 8>
+        // USED → r8 = {}
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
+        // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */ }
+        // CODE → <CreateClosure>: <Reg8: 15, Reg8: 1, function_id: 849>  # Function: [#849 getInspectorDataForViewTag of 21 bytes]: 1 params @ offset 0x0018a245
+        // USED → r15 = getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12857>  # String: 'getInspectorDataForViewTag' (Identifier)
+        // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */ }
+        // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
+        // USED → r16 = function_850 /* Closure with env r1 = createEnvironment() */
+        // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
+        // USED → r15 = function_850 /* Closure with env r1 = createEnvironment() */.bind
+        // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
+        // USED → r15 = function_850 /* Closure with env r1 = createEnvironment() */.bind(function_850 /* Closure with env r1 = createEnvironment() */, null, findNodeHandle /* Closure with env r1 = createEnvironment() */)
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
+        // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = createEnvironment() */.bind(function_850 /* Closure with env r1 = createEnvironment() */, null, findNodeHandle /* Closure with env r1 = createEnvironment() */) }
+        // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+        // USED → r12 = { findFiberByHostInstance: getInstanceFromNode /* Closure with env r1 = createEnvironment() */, bundleType: 0, version: "18.3.0-canary-9372c6311-20240315", rendererPackageName: "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewTag: getInspectorDataForViewTag /* Closure with env r1 = createEnvironment() */, getInspectorDataForViewAtPoint: function_850 /* Closure with env r1 = createEnvironment() */.bind(function_850 /* Closure with env r1 = createEnvironment() */, null, findNodeHandle /* Closure with env r1 = createEnvironment() */) } }
+        // CODE → <NewObject>: <Reg8: 8>
+        // USED → r8 = {}
+        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
+        // USED → r15 = r12.bundleType
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType }
+        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
+        // USED → r15 = r12.version
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version }
+        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
+        // USED → r15 = r12.rendererPackageName
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName }
+        // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+        // USED → r15 = r12.rendererConfig
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null }
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null }
+        // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
+        // USED → r14 = r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, r19[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher }
+        // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
+        // USED → r14 = findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */
+        // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
+        // USED → r8 = { bundleType: r12.bundleType, version: r12.version, rendererPackageName: r12.rendererPackageName, rendererConfig: r12.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: r18(undefined, findHostInstanceByFiber: findHostInstanceByFiber /* Closure with env r1 = createEnvironment() */ }
+        // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+        // USED → r12 = r12.findFiberByHostInstance
+        // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
+        if (r12.findFiberByHostInstance) { /* jump to label_6101 */ }
+        // ──────────────── Block 26 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+        // USED → r15 = r0.WeakMap
+    }
+    // LOOP → END
     // ──────────────── Block 28 ──────────────── 
     // CODE → <Mov>: <Reg8: 12, Reg8: 13>
     // USED → r12 = emptyFindFiberByHostInstance /* Closure with env r1 = createEnvironment() */

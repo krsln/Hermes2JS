@@ -1,9 +1,9 @@
 async function* anon_9594(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
-    // StartGenerator: prepare generator context and jump to next instruction
+    // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield
+    // USED → r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrue>: <Addr8: 98, Reg8: 1>  # Address: 00000066
     if (r1) { /* jump to label_102 */ }
     // ──────────────── Block 1 ──────────────── 
@@ -30,13 +30,13 @@ async function* anon_9594(param0, param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
     // USED → r1 = await getEnvironment(4)[16].default.get(getEnvironment(4)[16].default, r2.HermesInternal.concat("https://coachify.ai/api/checkUsernameAvailable?username=", r1))
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003a
-    yield label_58;  // SaveGenerator: suspend and jump to 58
+    yield label_58;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
     return await getEnvironment(4)[16].default.get(getEnvironment(4)[16].default, r2.HermesInternal.concat("https://coachify.ai/api/checkUsernameAvailable?username=", r1));
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-    // USED → r1 = await yield
+    // USED → r1 = await yield /* ResumeGenerator -> r1 */
     // CODE → <JmpTrue>: <Addr8: 38, Reg8: 3>  # Address: 00000063
     if (getEnvironment(4)[16].default.get) { /* jump to label_99 */ }
     // ──────────────── Block 4 ──────────────── 
@@ -45,25 +45,25 @@ async function* anon_9594(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 6, string_id: 171>  # String: 'log' (Identifier)
     // USED → r3 = r2.console.log
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 7, string_id: 107>  # String: 'data' (Identifier)
-    // USED → r2 = r1.data
+    // USED → r2 = await yield /* ResumeGenerator -> r1 */.data
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = r2.console.log(r2.console, r1.data)
+    r2 = r2.console.log(r2.console, await yield /* ResumeGenerator -> r1 */.data)
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 7, string_id: 107>  # String: 'data' (Identifier)
-    // USED → r2 = r1.data
+    // USED → r2 = await yield /* ResumeGenerator -> r1 */.data
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 12563>  # String: 'available' (Identifier)
-    // USED → r2 = r1.data.available
+    // USED → r2 = await yield /* ResumeGenerator -> r1 */.data.available
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator: No output needed
+    // CompleteGenerator
     // CODE → <Ret>: <Reg8: 2>
-    return r1.data.available;
+    return await yield /* ResumeGenerator -> r1 */.data.available;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator: No output needed
+    // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
-    return await yield;
+    return await yield /* ResumeGenerator -> r1 */;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator: No output needed
+    // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>
-    return await yield;
+    return await yield /* ResumeGenerator -> r0 */;
 }

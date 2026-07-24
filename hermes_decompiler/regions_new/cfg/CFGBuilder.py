@@ -7,6 +7,21 @@ from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from .BasicBlock import BasicBlock
 from .CFG import CFG
 
+CONDITIONAL_JUMPS = {
+    "JmpTrue",
+    "JmpFalse",
+    "JmpTrueLong",
+    "JmpFalseLong",
+    "JmpUndefined",
+    "JmpUndefinedLong",
+    ...
+}
+UNCONDITIONAL_JUMPS = {
+    "Jmp",
+    "JmpLong",
+    "SaveGenerator",
+}
+
 
 class CFGBuilder:
     """
@@ -114,8 +129,8 @@ class CFGBuilder:
             # --------------------------------------------------
 
             if (
-                last.goto is not None
-                and self._is_unconditional_jump(last)
+                    last.goto is not None
+                    and self._is_unconditional_jump(last)
             ):
 
                 target = self.address_to_block.get(last.goto)
@@ -130,8 +145,8 @@ class CFGBuilder:
             # --------------------------------------------------
 
             if (
-                last.goto is not None
-                and self._is_conditional_jump(last)
+                    last.goto is not None
+                    and self._is_conditional_jump(last)
             ):
 
                 target = self.address_to_block.get(last.goto)
@@ -161,9 +176,9 @@ class CFGBuilder:
     # -------------------------------------------------------------
 
     def _connect(
-        self,
-        source: BasicBlock,
-        target: BasicBlock,
+            self,
+            source: BasicBlock,
+            target: BasicBlock,
     ) -> None:
 
         if target not in source.successors:
@@ -175,23 +190,9 @@ class CFGBuilder:
     # -------------------------------------------------------------
 
     @staticmethod
-    def _is_conditional_jump(result: OpcodeResult) -> bool:
-
-        value = result.variable.value
-
-        return (
-            "/* jump to" in value
-            and "if (" in value
-        )
-
-    # -------------------------------------------------------------
+    def _is_conditional_jump(result):
+        return result.handler in CONDITIONAL_JUMPS
 
     @staticmethod
-    def _is_unconditional_jump(result: OpcodeResult) -> bool:
-
-        value = result.variable.value
-
-        return (
-            result.goto is not None
-            and "if (" not in value
-        )
+    def _is_unconditional_jump(result):
+        return result.handler in UNCONDITIONAL_JUMPS

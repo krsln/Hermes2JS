@@ -1,5 +1,6 @@
 import re
 
+from hermes_decompiler.ir.Values import CommentValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -22,8 +23,8 @@ class StartGenerator(OpcodeHandler):
         if not START_GENERATOR_PATTERN.match(entry.args.strip()):
             return self.build_invalid_args_result(analysis, entry)
 
-        variable = JSVariable(handler, entry.address, "",
-                              f"// StartGenerator: prepare generator context and jump to next instruction")
+        value = CommentValue(value=f"// StartGenerator")
+        variable = JSVariable(handler, entry.address, "", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -43,8 +44,9 @@ class ResumeGenerator(OpcodeHandler):
 
         dest_reg, _flag_reg = map(int, match.groups())
 
-        # Generate JavaScript: e.g., 'r0 = await yield'
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"await yield")
+        # value = f"await yield"
+        value = CommentValue(f"await yield /* ResumeGenerator -> r{dest_reg} */")
+        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -60,7 +62,8 @@ class CompleteGenerator(OpcodeHandler):
         if not START_GENERATOR_PATTERN.match(entry.args.strip()):
             return self.build_invalid_args_result(analysis, entry)
 
-        variable = JSVariable(handler, entry.address, "", f"// CompleteGenerator: No output needed")
+        value = CommentValue(value=f"// CompleteGenerator")
+        variable = JSVariable(handler, entry.address, "", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -85,10 +88,11 @@ class SaveGenerator(OpcodeHandler):
             target = entry.address + offset
 
         analysis.gotoList.append(target)
-        label = f"label_{target}"
 
-        variable = JSVariable(handler, entry.address, "",
-                              f'yield {label};  // SaveGenerator: suspend and jump to {target}')
+        # value = f'yield label_{target};  // SaveGenerator: suspend and jump to {target}'
+        # value = CommentValue(value=f'yield label_{target}; // SaveGenerator: suspend and jump to {target}')
+        value = CommentValue(f"yield label_{target};")
+        variable = JSVariable(handler, entry.address, "", value)
         analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)

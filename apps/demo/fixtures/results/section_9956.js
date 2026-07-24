@@ -1,9 +1,9 @@
 async function* anon_9956(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
-    // StartGenerator: prepare generator context and jump to next instruction
+    // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield
+    // USED → r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrue>: <Addr8: 57, Reg8: 1>  # Address: 0000003d
     if (r1) { /* jump to label_61 */ }
     // ──────────────── Block 1 ──────────────── 
@@ -24,30 +24,30 @@ async function* anon_9956(param0, param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     // USED → r1 = await getEnvironment(3)[16].default.get(getEnvironment(3)[16].default, "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + r1)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000002c
-    yield label_44;  // SaveGenerator: suspend and jump to 44
+    yield label_44;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
     return await getEnvironment(3)[16].default.get(getEnvironment(3)[16].default, "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + r1);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
-    // USED → r1 = await yield
+    // USED → r1 = await yield /* ResumeGenerator -> r1 */
     // CODE → <JmpTrue>: <Addr8: 11, Reg8: 2>  # Address: 0000003a
     if (getEnvironment(3)[16].default.get) { /* jump to label_58 */ }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'data' (Identifier)
-    // USED → r2 = r1.data
+    // USED → r2 = await yield /* ResumeGenerator -> r1 */.data
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator: No output needed
+    // CompleteGenerator
     // CODE → <Ret>: <Reg8: 2>
-    return r1.data;
+    return await yield /* ResumeGenerator -> r1 */.data;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator: No output needed
+    // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
-    return await yield;
+    return await yield /* ResumeGenerator -> r1 */;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator: No output needed
+    // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>
-    return await yield;
+    return await yield /* ResumeGenerator -> r0 */;
 }

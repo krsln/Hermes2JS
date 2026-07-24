@@ -1,3 +1,4 @@
+from hermes_decompiler.ir.Values import GeneratorValue, ClosureValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -22,14 +23,11 @@ class CreateGenerator(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, env_reg, function_id = map(int, match.groups())
+        env = self.get_register_value_new(analysis, env_reg)
+        func_name = (entry.function.name if entry.function and entry.function.name else f"function_{function_id}")
 
-        func_name = (
-            entry.function.name
-            if entry.function and entry.function.name
-            else f"function_{function_id}"
-        )
-
-        value = f"createGenerator(r{env_reg}, {func_name})"
+        # value = f"createGenerator(r{env_reg}, {func_name})"
+        value = GeneratorValue(name=func_name, environment_register=env_reg, environment=env)
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
@@ -64,7 +62,12 @@ class CreateGeneratorClosure(OpcodeHandler):
             else f"function_{function_id}"
         )
 
-        value = f"createGeneratorClosure(r{env_reg}, {func_name})"
+        # value = f"createGeneratorClosure(r{env_reg}, {func_name})"
+        value = ClosureValue(
+            name=func_name,
+            environment_register=env_reg,
+            environment=self.get_register_value_new(analysis, env_reg)
+        )
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
