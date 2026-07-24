@@ -62,7 +62,7 @@ class TryStructurer:
 
         if block and block.instructions:
             first = block.instructions[0]
-            if first.handler == "Catch" and first.variable.name:
-                return first.variable.name
+            if first.handler == "Catch" and first.variable.value:
+                return first.variable.value
 
         return "e"
