@@ -1,14 +1,12 @@
 import re
 from typing import Dict
 
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
 from hermes_decompiler.ir import CallExpression, Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 class CallX(OpcodeHandler):
@@ -20,7 +18,6 @@ class CallX(OpcodeHandler):
     num_args = 1  # to be overridden
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         reg_pattern = self._PATTERN.get(self.num_args)
         if not reg_pattern:
@@ -37,11 +34,12 @@ class CallX(OpcodeHandler):
             for reg in arg_regs
         )
 
-        value = CallExpression(callee=callee, arguments=arguments)
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        expression = CallExpression(callee=callee, arguments=arguments)
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # DEFINE_OPCODE_3(Call, Reg8, Reg8, UInt8)
@@ -66,8 +64,6 @@ class Call(CallX):
     _PATTERN = sequence(REG, REG, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
@@ -86,11 +82,12 @@ class Call(CallX):
             for r in arg_regs
         )
 
-        value = CallExpression(callee=callee, arguments=arguments)
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        expression = CallExpression(callee=callee, arguments=arguments)
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # @formatter:off

@@ -1,11 +1,9 @@
+from hermes_decompiler.handlers._shared_patterns import REG, sequence
 from hermes_decompiler.ir import CallExpression, Identifier, MemberExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 class IteratorBegin(OpcodeHandler):
@@ -14,8 +12,6 @@ class IteratorBegin(OpcodeHandler):
     _PATTERN = sequence(REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
@@ -26,12 +22,12 @@ class IteratorBegin(OpcodeHandler):
         # Named pseudo-call, same convention as getEnvironment()/
         # HermesPropertyIterator() elsewhere - GetIterator() is not
         # real JS syntax but a VM-level operation.
-        value = CallExpression(callee=Identifier(name="GetIterator"), arguments=(iterable,))
+        expression = CallExpression(callee=Identifier(name="GetIterator"), arguments=(iterable,))
 
-        variable = JSVariable(handler, entry.address, f"r{iterator_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=iterator_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class IteratorNext(OpcodeHandler):
@@ -40,8 +36,6 @@ class IteratorNext(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
@@ -50,12 +44,12 @@ class IteratorNext(OpcodeHandler):
         iterator = self.get_register_value(analysis, iterator_reg)
 
         callee = MemberExpression(iterator, Identifier(name="next"))
-        value = CallExpression(callee=callee, arguments=())
+        expression = CallExpression(callee=callee, arguments=())
 
-        variable = JSVariable(handler, entry.address, f"r{result_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=result_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class IteratorClose(OpcodeHandler):
@@ -64,8 +58,6 @@ class IteratorClose(OpcodeHandler):
     _PATTERN = sequence(REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
@@ -74,12 +66,12 @@ class IteratorClose(OpcodeHandler):
         iterator = self.get_register_value(analysis, iterator_reg)
 
         callee = MemberExpression(iterator, Identifier(name="return"))
-        value = CallExpression(callee=callee, arguments=())
+        expression = CallExpression(callee=callee, arguments=())
 
-        variable = JSVariable(handler, entry.address, "", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=None)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 # CFG (control-flow graph) ->
@@ -98,8 +90,6 @@ class GetPNameList(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected four Reg8 arguments")
@@ -107,13 +97,13 @@ class GetPNameList(OpcodeHandler):
         dest_reg, obj_reg, _index_reg, _size_reg = map(int, match.groups())
         obj = self.get_register_value(analysis, obj_reg)
 
-        value = CallExpression(callee=Identifier(name="HermesPropertyIterator"), arguments=(obj,))
-
         # for-in property list
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        expression = CallExpression(callee=Identifier(name="HermesPropertyIterator"), arguments=(obj,))
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # DEFINE_OPCODE_5(GetNextPName, Reg8, Reg8, Reg8, Reg8, Reg8)
@@ -121,8 +111,6 @@ class GetNextPName(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected five Reg8 arguments")
@@ -131,10 +119,10 @@ class GetNextPName(OpcodeHandler):
         list_val = self.get_register_value(analysis, list_reg)
 
         callee = MemberExpression(list_val, Identifier(name="next"))
-        value = CallExpression(callee=callee, arguments=())
-
         # for-in step
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        expression = CallExpression(callee=callee, arguments=())
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result

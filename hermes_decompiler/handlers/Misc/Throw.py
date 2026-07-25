@@ -1,11 +1,9 @@
+from hermes_decompiler.handlers._shared_patterns import REG, sequence
 from hermes_decompiler.ir import ThrowStatement
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
+from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 
 
 # DEFINE_OPCODE_1(Throw, Reg8)
@@ -16,16 +14,20 @@ class Throw(OpcodeHandler):
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
         value_reg = int(match.group(1))
-        value = self.get_register_value(analysis, value_reg)
+        expression = self.get_register_value(analysis, value_reg)
 
-        variable = JSVariable(handler, entry.address, "", value, statement=ThrowStatement(argument=value))
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(
+            entry,
+            value=expression,
+            statement=ThrowStatement(argument=expression),
+            dest_reg=None,
+            control_flow=ControlFlowType.THROW
+        )
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable, control_flow=ControlFlowType.THROW)
+        return result

@@ -5,7 +5,6 @@ from typing import Dict, Optional
 
 from hermes_decompiler.ir import Expression, Identifier, RawExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.Logger import get_logger
@@ -34,8 +33,8 @@ class OpcodeHandler(ABC):
     @abstractmethod
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         """
-        Process a Hermes bytecode opcode and produce a corresponding
-        JavaScript variable or result.
+        Process a Hermes bytecode opcode and produce the corresponding
+        `OpcodeResult`.
         """
         ...
 
@@ -45,10 +44,10 @@ class OpcodeHandler(ABC):
 
     @classmethod
     def build_invalid_args_result(
-        cls,
-        analysis: HermesAnalysis,
-        entry: OpcodeEntry,
-        error_detail: str = "Invalid arguments",
+            cls,
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
+            error_detail: str = "Invalid arguments",
     ) -> OpcodeResult:
         error_msg = (
             f"// Error: {cls.__name__} at address {entry.address}: "
@@ -59,40 +58,36 @@ class OpcodeHandler(ABC):
             cls.__name__, entry.address, error_detail, entry.args,
         )
 
-        variable = JSVariable(
-            cls.__name__, entry.address, "", RawExpression(error_msg),
-        )
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=RawExpression(source=error_msg))
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
     @classmethod
     def build_exception_result(
-        cls,
-        analysis: HermesAnalysis,
-        entry: OpcodeEntry,
-        error: str,
+            cls,
+            analysis: HermesAnalysis,
+            entry: OpcodeEntry,
+            error: str,
     ) -> OpcodeResult:
         logger.error(
             "%s raised at address %s: %s", cls.__name__, entry.address, error,
         )
 
-        variable = JSVariable(
-            cls.__name__, entry.address, "", RawExpression(error),
-        )
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=RawExpression(source=error))
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
     @classmethod
-    def get_register_variable(cls, analysis: HermesAnalysis, reg: int) -> JSVariable | None:
-        variable = cls._get_register_variable(analysis, reg)
+    def get_register_variable(cls, analysis: HermesAnalysis, reg: int) -> OpcodeResult | None:
+        result = cls._get_register_result(analysis, reg)
 
-        if not variable:
+        if not result:
             return None
 
-        variable.used = True
-        return variable
+        result.used = True
+        return result
 
     @classmethod
     def get_register_value(cls, analysis: HermesAnalysis, reg: int) -> Expression:
@@ -101,29 +96,22 @@ class OpcodeHandler(ABC):
 
         Falls back to a plain `Identifier(f"r{reg}")` when the register
         hasn't been assigned yet in this analysis pass (e.g. it's a
-        parameter, or the assigning instruction wasn't tracked) - this is
-        the direct replacement for the old `RegisterValue` node, which no
-        longer exists as a separate IR type.
+        parameter, or the assigning instruction wasn't tracked).
         """
 
-        variable = cls._get_register_variable(analysis, reg)
+        result = cls._get_register_result(analysis, reg)
 
-        if not variable:
+        if not result:
             return Identifier(name=f"r{reg}")
 
-        if isinstance(variable.value, Expression):
-            value = variable.value
+        if isinstance(result.value, Expression):
+            value = result.value
         else:
             value = Identifier(name=f"r{reg}")
 
-        variable.used = True
+        result.used = True
         return value
 
     @classmethod
-    def _get_register_variable(cls, analysis: HermesAnalysis, reg: int) -> JSVariable | None:
-        variable = analysis.registers.get(f"r{reg}")
-
-        if variable:
-            return variable
-
-        return None
+    def _get_register_result(cls, analysis: HermesAnalysis, reg: int) -> OpcodeResult | None:
+        return analysis.registers.get(f"r{reg}")

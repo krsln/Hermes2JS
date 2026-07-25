@@ -1,12 +1,10 @@
+from hermes_decompiler.handlers._shared_patterns import REG, STRING_ID, sequence
 from hermes_decompiler.ir import Identifier, VariableDeclaration, VariableDeclarator
 from hermes_decompiler.ir.Operators import VariableKind
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
-from hermes_decompiler.handlers._shared_patterns import REG, STRING_ID, sequence
 
 
 # DEFINE_OPCODE_1(GetGlobalObject, Reg8)
@@ -17,21 +15,22 @@ class GetGlobalObject(OpcodeHandler):
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
-        global_reg = int(match.group(1))
+        dest_reg = int(match.group(1))
 
         # Track global object register in analysis
-        analysis.globalObjects = global_reg
+        analysis.globalObjects = dest_reg
 
-        variable = JSVariable(handler, entry.address, f"r{global_reg}", Identifier(name="globalThis"))
-        analysis.add_result(entry, variable)
+        expression = Identifier(name="globalThis")
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # DEFINE_OPCODE_1(DeclareGlobalVar, UInt32)
@@ -46,7 +45,6 @@ class DeclareGlobalVar(OpcodeHandler):
     _PATTERN = sequence(STRING_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -64,7 +62,7 @@ class DeclareGlobalVar(OpcodeHandler):
             declarations=(VariableDeclarator(id=Identifier(name=prop_name)),),
         )
 
-        variable = JSVariable(handler, entry.address, "", None, statement=declaration)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=None, statement=declaration, dest_reg=None)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result

@@ -1,11 +1,9 @@
+from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, sequence
 from hermes_decompiler.ir import CallExpression, Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, sequence
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 # DEFINE_OPCODE_3(CreateGenerator, Reg8, Reg8, UInt16)
@@ -17,7 +15,6 @@ class CreateGenerator(OpcodeHandler):
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -29,15 +26,15 @@ class CreateGenerator(OpcodeHandler):
 
         # Same named pseudo-call convention as createThis()/getEnvironment():
         # actually instantiating a generator object isn't plain JS syntax.
-        value = CallExpression(
+        expression = CallExpression(
             callee=Identifier(name="createGenerator"),
             arguments=(env, Identifier(name=func_name)),
         )
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class CreateGeneratorLongIndex(CreateGenerator):
@@ -55,7 +52,6 @@ class CreateGeneratorClosure(OpcodeHandler):
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -72,12 +68,12 @@ class CreateGeneratorClosure(OpcodeHandler):
         # Same treatment as CreateClosure: a closure over a generator
         # function is still just a name reference in real JS; the
         # captured environment register is dropped (see CreateClosure.py).
-        value = Identifier(name=func_name)
+        expression = Identifier(name=func_name)
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class CreateGeneratorClosureLongIndex(CreateGeneratorClosure):

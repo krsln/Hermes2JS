@@ -1,7 +1,9 @@
 from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from typing import Any, Tuple
 
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT16, ADDR, sequence
 from hermes_decompiler.ir import (
     Expression,
     UnaryExpression,
@@ -12,11 +14,9 @@ from hermes_decompiler.ir import (
 )
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT16, ADDR, sequence
 from hermes_decompiler.regions.models.Statements import GotoStatement, IfGotoStatement
 
 # --------------------------------------------------------------------------
@@ -85,22 +85,15 @@ class Jump(OpcodeHandler):
         target = entry.target_address or (entry.address + offset)
         analysis.gotoList.append(target)
 
-        variable = JSVariable(
-            self.__class__.__name__,
-            entry.address,
-            "",
-            None,  # pure control flow: no operand value
-            statement=GotoStatement(target=target),
-        )
-
-        analysis.add_result(entry, variable, goto=target)
-
-        return OpcodeResult(
+        result = OpcodeResult(
             entry,
-            variable,
-            goto=target,
-            control_flow=ControlFlowType.UNCONDITIONAL,
+            value=None, statement=GotoStatement(target=target),
+            dest_reg=None, goto=target,
+            control_flow=ControlFlowType.UNCONDITIONAL
         )
+        analysis.add_result(result)
+
+        return result
 
 
 class Jmp(Jump):
@@ -136,22 +129,16 @@ class ConditionalJumpBase(OpcodeHandler, ABC):
         value = self.get_register_value(analysis, reg)
         condition = self.build_condition(value, *extra)
 
-        variable = JSVariable(
-            self.__class__.__name__,
-            entry.address,
-            "",
-            None,  # pure control flow: no operand value of its own
-            statement=IfGotoStatement(condition=condition, target=target),
-        )
-
-        analysis.add_result(entry, variable, goto=target)
-
-        return OpcodeResult(
+        result = OpcodeResult(
             entry,
-            variable,
-            goto=target,
-            control_flow=ControlFlowType.CONDITIONAL,
+            value=None,  # pure control flow: no operand value of its own
+            statement=IfGotoStatement(condition=condition, target=target),
+            dest_reg=None, goto=target,
+            control_flow=ControlFlowType.CONDITIONAL
         )
+        analysis.add_result(result)
+
+        return result
 
 
 # --------------------------------------------------------------------------

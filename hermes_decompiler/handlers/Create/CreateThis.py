@@ -1,11 +1,9 @@
+from hermes_decompiler.handlers._shared_patterns import REG, sequence
 from hermes_decompiler.ir import CallExpression, Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
 # DEFINE_OPCODE_3(CreateThis, Reg8, Reg8, Reg8)
@@ -16,13 +14,12 @@ class CreateThis(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
-        dest, func, new_target = (int(x) for x in match.groups())
+        dest_reg, func, new_target = (int(x) for x in match.groups())
 
         prototype = self.get_register_value(analysis, func)
         constructor = self.get_register_value(analysis, new_target)
@@ -31,12 +28,12 @@ class CreateThis(OpcodeHandler):
         # the new `ir` package; represented as a named pseudo-call,
         # matching the same convention already used for
         # getEnvironment()/HermesPropertyIterator() elsewhere.
-        value = CallExpression(
+        expression = CallExpression(
             callee=Identifier(name="createThis"),
             arguments=(prototype, constructor),
         )
 
-        variable = JSVariable(handler, entry.address, f"r{dest}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result

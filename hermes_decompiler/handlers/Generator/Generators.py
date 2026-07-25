@@ -1,13 +1,11 @@
 import re
 
+from hermes_decompiler.handlers._shared_patterns import REG, ADDR, sequence
 from hermes_decompiler.ir import AwaitExpression, YieldExpression, RawExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, ADDR, sequence
+from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.regions.models.Statements import GotoStatement
 
 # Pre-compiled patterns
@@ -19,18 +17,18 @@ class StartGenerator(OpcodeHandler):
     """Initialize generator execution."""
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         if not START_GENERATOR_PATTERN.match(entry.args.strip()):
             return self.build_invalid_args_result(analysis, entry)
 
         # No JS-observable effect of its own; kept as a bare comment
         # marker via RawExpression, same as before.
-        value = RawExpression(source="// StartGenerator")
-        variable = JSVariable(handler, entry.address, "", value)
-        analysis.add_result(entry, variable)
+        expression = RawExpression(source="// StartGenerator")
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=None)
+        analysis.add_result(result)
+
+        return result
 
 
 # Example: <ResumeGenerator>: <Reg8: 0, Reg8: 2>
@@ -40,7 +38,6 @@ class ResumeGenerator(OpcodeHandler):
     _PATTERN = sequence(REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -50,12 +47,12 @@ class ResumeGenerator(OpcodeHandler):
 
         # `await yield` is real, expressible JS - modeled directly
         # instead of the previous comment-annotated string.
-        value = AwaitExpression(argument=YieldExpression())
+        expression = AwaitExpression(argument=YieldExpression())
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 # Example: <CompleteGenerator>: <>
@@ -63,16 +60,16 @@ class CompleteGenerator(OpcodeHandler):
     """Mark the generator as completed."""
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         if not START_GENERATOR_PATTERN.match(entry.args.strip()):
             return self.build_invalid_args_result(analysis, entry)
 
-        value = RawExpression(source="// CompleteGenerator")
-        variable = JSVariable(handler, entry.address, "", value)
-        analysis.add_result(entry, variable)
+        expression = RawExpression(source="// CompleteGenerator")
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=None)
+        analysis.add_result(result)
+
+        return result
 
 
 # Example: <SaveGenerator>: <Addr8: 4>  # Address: 00000095
@@ -91,7 +88,6 @@ class SaveGenerator(OpcodeHandler):
     _PATTERN = sequence(ADDR)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -105,18 +101,14 @@ class SaveGenerator(OpcodeHandler):
 
         analysis.gotoList.append(target)
 
-        variable = JSVariable(
-            handler,
-            entry.address,
-            "",
-            None,  # pure control flow: no operand value of its own
-            statement=GotoStatement(target=target),
-        )
-        analysis.add_result(entry, variable, goto=target)
-
-        return OpcodeResult(
+        result = OpcodeResult(
             entry,
-            variable,
+            value=None,  # pure control flow: no operand value of its own
+            statement=GotoStatement(target=target),
+            dest_reg=target,
             goto=target,
-            control_flow=ControlFlowType.UNCONDITIONAL,
+            control_flow=ControlFlowType.UNCONDITIONAL
         )
+        analysis.add_result(result)
+
+        return result

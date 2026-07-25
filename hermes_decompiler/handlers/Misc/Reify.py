@@ -1,11 +1,9 @@
+from hermes_decompiler.handlers._shared_patterns import REG, sequence
 from hermes_decompiler.ir import Identifier, MemberExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 # DEFINE_OPCODE_1(ReifyArguments, Reg8)
@@ -14,7 +12,6 @@ class ReifyArguments(OpcodeHandler):
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -22,9 +19,12 @@ class ReifyArguments(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", Identifier(name="arguments"))
-        analysis.add_result(entry, variable)
-        return OpcodeResult(entry, variable)
+        expression = Identifier(name="arguments")
+
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # DEFINE_OPCODE_2(GetArgumentsLength, Reg8, Reg8)
@@ -33,7 +33,6 @@ class GetArgumentsLength(OpcodeHandler):
     _PATTERN = sequence(REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -41,11 +40,12 @@ class GetArgumentsLength(OpcodeHandler):
 
         dest_reg, _lazy_reg = map(int, match.groups())
 
-        value = MemberExpression(receiver=Identifier(name="arguments"), member=Identifier(name="length"))
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        expression = MemberExpression(receiver=Identifier(name="arguments"), member=Identifier(name="length"))
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # DEFINE_OPCODE_3(GetArgumentsPropByVal, Reg8, Reg8, Reg8)
@@ -54,7 +54,6 @@ class GetArgumentsPropByVal(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -66,8 +65,9 @@ class GetArgumentsPropByVal(OpcodeHandler):
         # `ComputedMemberExpression` was a separate legacy class for
         # `obj[x]`; the new IR unifies dot/bracket access into one
         # `MemberExpression` via `computed=`.
-        value = MemberExpression(receiver=Identifier(name="arguments"), member=index_value, computed=True)
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        expression = MemberExpression(receiver=Identifier(name="arguments"), member=index_value, computed=True)
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result

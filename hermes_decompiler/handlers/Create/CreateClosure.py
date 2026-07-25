@@ -1,11 +1,9 @@
+from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, sequence
 from hermes_decompiler.ir import Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
-from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, sequence
 
 
 # DEFINE_OPCODE_3(CreateClosure, Reg8, Reg8, UInt16)
@@ -20,7 +18,6 @@ class CreateClosure(OpcodeHandler):
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -41,12 +38,12 @@ class CreateClosure(OpcodeHandler):
         # the function name is the correct AST shape. The captured env
         # register is still visible in verbose mode via the `// CODE ->`
         # bytecode comment if needed for debugging.
-        value = Identifier(name=func_name)
+        expression = Identifier(name=func_name)
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class CreateClosureLongIndex(CreateClosure):

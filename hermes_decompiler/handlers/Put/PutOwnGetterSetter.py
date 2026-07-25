@@ -1,3 +1,4 @@
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
 from hermes_decompiler.ir import (
     CallExpression,
     Identifier,
@@ -7,12 +8,9 @@ from hermes_decompiler.ir import (
     python_literal,
 )
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 # Patterns
 PUT_GETTER_SETTER_PATTERN = sequence(REG, REG, REG, REG, UINT8)
@@ -22,7 +20,6 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
     """Define getter/setter property."""
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = PUT_GETTER_SETTER_PATTERN.match(entry.args.strip())
         if not match:
@@ -50,7 +47,7 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
 
         descriptor = ObjectExpression(properties=properties)
 
-        call = CallExpression(
+        expression = CallExpression(
             callee=MemberExpression(
                 receiver=Identifier(name="Object"),
                 member=Identifier(name="defineProperty"),
@@ -62,7 +59,7 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
             ),
         )
 
-        variable = JSVariable(handler, entry.address, "", call)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=None)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result

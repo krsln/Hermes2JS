@@ -1,11 +1,9 @@
+from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
 from hermes_decompiler.ir import ArrayExpression, python_literal
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 # DEFINE_OPCODE_2(NewArray, Reg8, UInt16)
@@ -16,7 +14,6 @@ class NewArray(OpcodeHandler):
     _PATTERN = sequence(REG, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -28,12 +25,12 @@ class NewArray(OpcodeHandler):
         # here - `ArrayExpression` has no field for it, since it isn't
         # a JS-observable property. The raw UInt16 is still visible in
         # verbose mode via the `// CODE ->` bytecode comment.
-        value = ArrayExpression(elements=())
+        expression = ArrayExpression(elements=())
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class NewArrayWithBuffer(OpcodeHandler):
@@ -42,7 +39,6 @@ class NewArrayWithBuffer(OpcodeHandler):
     _PATTERN = sequence(REG, UINT16, UINT16, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -58,12 +54,12 @@ class NewArrayWithBuffer(OpcodeHandler):
             for v in entry.array_literal
         )
 
-        value = ArrayExpression(elements=elements)
+        expression = ArrayExpression(elements=elements)
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class NewArrayWithBufferLong(NewArrayWithBuffer):

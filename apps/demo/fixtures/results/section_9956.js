@@ -22,12 +22,12 @@ async function* anon_9956(param0, param1) {
     // CODE → <Add>: <Reg8: 1, Reg8: 4, Reg8: 1>
     // USED → r1 = "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + param1;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    // USED → r1 = await CallExpression(callee=MemberExpression(receiver=MemberExpression(receiver=MemberExpression(receiver=CallExpression(callee=Identifier(name='getEnvironment'), arguments=(NumericLiteral(value=3),), optional=False), member=NumericLiteral(value=16), computed=True, optional=False), member=Identifier(name='default'), computed=False, optional=False), member=Identifier(name='get'), computed=False, optional=False), arguments=(MemberExpression(receiver=MemberExpression(receiver=CallExpression(callee=Identifier(name='getEnvironment'), arguments=(NumericLiteral(value=3),), optional=False), member=NumericLiteral(value=16), computed=True, optional=False), member=Identifier(name='default'), computed=False, optional=False), BinaryExpression(left=StringLiteral(value='https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr='), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='param1'))), optional=False)
+    // USED → r1 = await getEnvironment(3)[16].default.get(getEnvironment(3)[16].default, "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + param1);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000002c
     goto label_44;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return r1;
+    return await getEnvironment(3)[16].default.get(getEnvironment(3)[16].default, "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + param1);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
     // USED → r1 = await yield;

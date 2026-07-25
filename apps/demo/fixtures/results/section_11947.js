@@ -22,12 +22,12 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 17057>  # String: '_request' (Identifier)
     // USED → r7 = this._request;
     // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
-    // USED → r3 = await CallExpression(callee=MemberExpression(receiver=Identifier(name='this'), member=Identifier(name='_request'), computed=False, optional=False), arguments=(Identifier(name='this'), Identifier(name='param1'), Identifier(name='param2')), optional=False)
+    // USED → r3 = await this._request(this, param1, param2);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
     goto label_41;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
-    return r3;
+    return await this._request(this, param1, param2);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
     // USED → r3 = await yield;

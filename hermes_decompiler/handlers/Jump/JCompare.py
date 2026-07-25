@@ -6,7 +6,6 @@ from hermes_decompiler.handlers._shared_patterns import ADDR, REG, sequence
 from hermes_decompiler.ir import BinaryExpression
 from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
@@ -66,16 +65,15 @@ class JCompareX(OpcodeHandler):
 
         condition = BinaryExpression(left=lhs, operator=self.operator, right=rhs)
 
-        variable = JSVariable(
-            self.__class__.__name__,
-            entry.address,
-            "",
-            None,  # pure control flow: no operand value of its own
+        result = OpcodeResult(
+            entry,
+            value=None,  # pure control flow: no operand value of its own
             statement=IfGotoStatement(condition=condition, target=target),
-        )
-        analysis.add_result(entry, variable, goto=target)
+            dest_reg=None, goto=target,
+            control_flow=ControlFlowType.CONDITIONAL)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable, goto=target, control_flow=ControlFlowType.CONDITIONAL)
+        return result
 
 
 # @formatter:off

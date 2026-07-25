@@ -1,17 +1,15 @@
-from hermes_decompiler.ir import AssignmentExpression, MemberExpression, NumericLiteral
-from hermes_decompiler.ir.Operators import AssignmentOperator
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
 from hermes_decompiler.handlers._shared_patterns import (
     REG,
     UINT8,
     UINT16,
     sequence,
 )
+from hermes_decompiler.ir import AssignmentExpression, MemberExpression, NumericLiteral
+from hermes_decompiler.ir.Operators import AssignmentOperator
+from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
+from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 class StoreToEnvironment(OpcodeHandler):
@@ -39,10 +37,10 @@ class StoreToEnvironment(OpcodeHandler):
         # already render a name-less Expression as a bare statement
         # (`env[17] = r5;`), so no extra ExpressionStatement wrapper
         # is needed here.
-        variable = JSVariable(self.__class__.__name__, entry.address, "", expression)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=None)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class StoreToEnvironmentL(StoreToEnvironment):

@@ -16,12 +16,12 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
-    // USED → r1 = await CallExpression(callee=MemberExpression(receiver=Identifier(name='globalThis'), member=Identifier(name='fetch'), computed=False, optional=False), arguments=(UndefinedLiteral(), Identifier(name='param1')), optional=False)
+    // USED → r1 = await globalThis.fetch(undefined, param1);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000020
     goto label_32;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return r1;
+    return await globalThis.fetch(undefined, param1);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
     // USED → r1 = await yield;
@@ -79,12 +79,12 @@ async function* anon_17161(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
     // USED → r2 = await yield.text;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
-    // USED → r2 = await CallExpression(callee=MemberExpression(receiver=AwaitExpression(argument=YieldExpression(argument=None, delegate=False)), member=Identifier(name='text'), computed=False, optional=False), arguments=(AwaitExpression(argument=YieldExpression(argument=None, delegate=False)),), optional=False)
+    // USED → r2 = await await yield.text(await yield);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000099
     goto label_153;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Ret>: <Reg8: 2>
-    return r2;
+    return await await yield.text(await yield);
     // ──────────────── Block 10 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
     // USED → r2 = await yield;

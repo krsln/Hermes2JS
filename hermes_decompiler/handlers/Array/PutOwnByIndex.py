@@ -1,3 +1,4 @@
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT32, sequence
 from hermes_decompiler.ir import (
     ArrayExpression,
     AssignmentExpression,
@@ -7,12 +8,9 @@ from hermes_decompiler.ir import (
 )
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT32, sequence
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 # DEFINE_OPCODE_3(PutOwnByIndex, Reg8, Reg8, UInt8)
@@ -24,7 +22,6 @@ class PutOwnByIndex(OpcodeHandler):
     _PATTERN_LONG = sequence(REG, REG, UINT32)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         # Try both UInt8 and UInt32 variants
         match = self._PATTERN.match(entry.args.strip()) or \
@@ -48,9 +45,9 @@ class PutOwnByIndex(OpcodeHandler):
 
             elements[index] = value
 
-            result = ArrayExpression(elements=tuple(elements))
+            expression = ArrayExpression(elements=tuple(elements))
         else:
-            result = AssignmentExpression(
+            expression = AssignmentExpression(
                 left=MemberExpression(
                     receiver=array,
                     member=NumericLiteral(index),
@@ -60,10 +57,10 @@ class PutOwnByIndex(OpcodeHandler):
                 right=value,
             )
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", result)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class PutOwnByIndexL(PutOwnByIndex):

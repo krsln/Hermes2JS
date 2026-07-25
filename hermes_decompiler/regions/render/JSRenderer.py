@@ -104,28 +104,28 @@ class JSRenderer:
 
     def _render_instruction(self, stmt: InstructionState, output, indent):
         prefix = "    " * indent
-        variable = stmt.result.variable
+        result = stmt.result
 
         if self.verbose:
-            bytecode = stmt.result.opcode.bytecode
+            bytecode = result.opcode.bytecode
             bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
             output.append(prefix + f"// CODE → {bytecode}")
 
-        if variable.used:
+        if result.used:
             if self.verbose:
-                output.append(prefix + f"// USED → {self._render_value(stmt)}")
+                output.append(prefix + f"// USED → {self._render_value(result)}")
             return
 
-        output.append(prefix + self._render_value(stmt))
+        output.append(prefix + self._render_value(result))
 
-    def _render_value(self, stmt: InstructionState) -> str:
+    def _render_value(self, result) -> str:
         """
         Renders one instruction's result line via the IR printer.
 
         Priority:
-            1. `variable.statement` - the opcode IS a statement/terminator
+            1. `result.statement` - the opcode IS a statement/terminator
                (e.g. Throw, Ret). Printed as-is.
-            2. `variable.value` as a proper IR `Expression` - printed as
+            2. `result.value` as a proper IR `Expression` - printed as
                an assignment (`dest = expr;`), or as a bare expression
                statement when there's no destination register.
             3. Legacy string fallback for handlers not yet migrated to
@@ -133,21 +133,19 @@ class JSRenderer:
                instead of crashing during the transition.
         """
 
-        variable = stmt.result.variable
+        if isinstance(result.statement, Statement):
+            return self.printer.print_statement(result.statement)
 
-        if isinstance(variable.statement, Statement):
-            return self.printer.print_statement(variable.statement)
+        if isinstance(result.value, Expression):
+            rendered = self.printer.print_expression(result.value)
 
-        if isinstance(variable.value, Expression):
-            rendered = self.printer.print_expression(variable.value)
-
-            if variable.name:
-                return f"{variable.name} = {rendered};"
+            if result.name:
+                return f"{result.name} = {rendered};"
 
             return f"{rendered};"
 
         # TODO: remove once every handler produces `ir` nodes.
-        return str(stmt.result.result)
+        return str(result.result)
 
     def dump(self, region, indent=0):
         print(

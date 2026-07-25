@@ -1,11 +1,9 @@
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
 from hermes_decompiler.ir import Identifier, MemberExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
 
 
 # DEFINE_OPCODE_3(GetByVal, Reg8, Reg8, Reg8)
@@ -16,8 +14,6 @@ class GetByVal(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, Reg8 arguments")
@@ -27,12 +23,12 @@ class GetByVal(OpcodeHandler):
         receiver = self.get_register_value(analysis, base_reg)
         index = self.get_register_value(analysis, prop_reg)
 
-        value = MemberExpression(receiver=receiver, member=index, computed=True)
+        expression = MemberExpression(receiver=receiver, member=index, computed=True)
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 # DEFINE_OPCODE_4(GetByIdShort, Reg8, Reg8, UInt8, UInt8)
@@ -46,8 +42,6 @@ class GetById(OpcodeHandler):
     _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
@@ -57,12 +51,12 @@ class GetById(OpcodeHandler):
         prop_name = entry.identifier_name or f"string_{string_id}"
         receiver = self.get_register_value(analysis, obj_reg)
 
-        value = MemberExpression(receiver=receiver, member=Identifier(name=prop_name))
+        expression = MemberExpression(receiver=receiver, member=Identifier(name=prop_name))
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class GetByIdShort(GetById):

@@ -1,19 +1,17 @@
 from abc import ABC
 from typing import ClassVar
 
-from hermes_decompiler.ir import Expression, Identifier, NewExpression
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
 from hermes_decompiler.handlers._shared_patterns import (
     REG,
     UINT8,
     UINT32,
     sequence,
 )
+from hermes_decompiler.ir import Expression, Identifier, NewExpression
+from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
+from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 class ConstructBase(OpcodeHandler, ABC):
@@ -43,8 +41,6 @@ class ConstructBase(OpcodeHandler, ABC):
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
-        handler = self.__class__.__name__
-
         match = self.Pattern().match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, ArgCount")
@@ -56,15 +52,12 @@ class ConstructBase(OpcodeHandler, ABC):
 
         # `ir.NewExpression` names this field `callee` (not `constructor`),
         # matching CallExpression's naming for consistency.
-        value = NewExpression(
-            callee=constructor,
-            arguments=arguments,
-        )
+        expression = NewExpression(callee=constructor, arguments=arguments)
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
     def resolve_arguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> tuple[Expression, ...]:
         values = [

@@ -1,6 +1,5 @@
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.ir import AssignmentExpression, MemberExpression
@@ -34,7 +33,7 @@ class PutByVal(OpcodeHandler):
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
-        variable = JSVariable(self.__class__.__name__, entry.address, "", expression)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=None)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result

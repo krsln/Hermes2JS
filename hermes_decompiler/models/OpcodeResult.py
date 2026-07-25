@@ -1,9 +1,10 @@
+from __future__ import annotations
+
 from enum import Enum, auto
-from typing import Optional
+from typing import Any, Optional
 
 from hermes_decompiler.ir import Expression, Statement
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.JSVariable import JSVariable
 
 
 class ControlFlowType(Enum):
@@ -16,57 +17,95 @@ class ControlFlowType(Enum):
 
 
 class OpcodeResult:
-    opcode: OpcodeEntry
-    variable: JSVariable
-    result: str
-    goto: Optional[int]
-    extra_gotos: list[int]
-    control_flow: ControlFlowType
+    """
+    The single record produced by handling one bytecode opcode.
+
+    Replaces the earlier OpcodeResult + JSVariable pair. `handler` and
+    `address` were pure duplicates of `entry.opcode`/`entry.address` and
+    are now derived properties; `value`/`statement`/`used`/destination
+    register are owned directly here instead of through a separate
+    wrapper object, so a handler builds exactly one `OpcodeResult`,
+    registers it via `analysis.add_result(result)`, and returns that
+    same instance - there is no longer a second, separately-constructed
+    `OpcodeResult` for the same opcode.
+    """
 
     def __init__(
         self,
-        opcode: OpcodeEntry,
-        variable: JSVariable,
+        entry: OpcodeEntry,
+        value: Expression | None = None,
+        statement: Statement | None = None,
+        dest_reg: int | None = None,
         goto: Optional[int] = None,
         extra_gotos: Optional[list[int]] = None,
-        control_flow=ControlFlowType.NORMAL,
+        control_flow: ControlFlowType = ControlFlowType.NORMAL,
     ):
         """
         Args:
-            goto: single jump target, used by unconditional/conditional
+            entry: The opcode this result was produced from. Also the
+                source of `handler`/`address` (see properties below).
+            value: The IR expression this opcode's destination register
+                now holds, if any (`None` for pure control flow with no
+                operand, e.g. an unconditional jump).
+            statement: The IR statement this opcode represents, if it's
+                a statement/terminator (Throw, Ret, Jmp, ...) rather
+                than a plain value computation.
+            dest_reg: The destination register index, if this opcode
+                writes one. Used to derive `name` (`"r{dest_reg}"`).
+            goto: Single jump target, used by unconditional/conditional
                 jumps (Jmp*, SaveGenerator's resume address, ...).
             extra_gotos: ADDITIONAL jump targets beyond `goto`, for
                 instructions with more than one possible successor that
                 isn't expressible as a single fallthrough - currently
                 only SwitchImm (one target per case label). Kept
                 separate from `goto` rather than making `goto` a list,
-                so every existing single-target call site (Jmp.py,
-                the whole conditional-jump family, BasicBlockBuilder's
-                leader-finding `result.goto is not None` checks, etc.)
-                keeps working unchanged; only the few call sites that
-                actually need multiple targets opt in.
+                so every existing single-target call site keeps working
+                unchanged; only the few call sites that actually need
+                multiple targets opt in.
+            control_flow: How this opcode affects control flow.
         """
-        self.opcode = opcode
-        self.variable = variable
+
+        self.opcode = entry
+        self.value = value
+        self.statement = statement
+        self.dest_reg = dest_reg
+        self.used = False
+
         self.goto = goto
         self.extra_gotos = extra_gotos or []
         self.control_flow = control_flow
 
-        self.result = self._render_result(variable)
+        self.result = self._render_result()
 
-    @staticmethod
-    def _render_result(variable: JSVariable) -> str:
+    # ------------------------------------------------------------------
+    # Derived from `entry` - no longer separately stored/duplicated.
+    # ------------------------------------------------------------------
+
+    @property
+    def handler(self) -> str:
+        return self.opcode.opcode
+
+    @property
+    def address(self) -> int:
+        return self.opcode.address
+
+    @property
+    def name(self) -> str:
+        return f"r{self.dest_reg}" if self.dest_reg is not None else ""
+
+    # ------------------------------------------------------------------
+    # Rendering
+    # ------------------------------------------------------------------
+
+    def _render_result(self) -> str:
         """
         Human-readable one-line summary of this instruction's effect,
         used by verbose logging/dumps and any legacy code path that
         hasn't moved to `JSRenderer`/`Printer` yet.
 
-        `variable.statement`/`variable.value` may already be proper `ir`
-        nodes (post-migration handlers) or plain strings (handlers not
-        yet migrated) - both are supported here so mixed-migration state
-        doesn't crash. `variable.value` may also legitimately be `None`
-        for pure control-flow opcodes (e.g. `Jmp`), which carry only a
-        `statement`.
+        Callable again after mutating `value`/`statement` (e.g.
+        `Dispatcher._handle_generator_await` wraps a previous result's
+        `value` in an `AwaitExpression` and recomputes `.result`).
         """
 
         # Imported lazily to avoid a hard dependency from `models` on
@@ -75,29 +114,55 @@ class OpcodeResult:
 
         printer = Printer()
 
-        if isinstance(variable.statement, Statement):
-            return printer.print_statement(variable.statement)
+        if isinstance(self.statement, Statement):
+            return printer.print_statement(self.statement)
 
-        if isinstance(variable.value, Expression):
-            rendered = printer.print_expression(variable.value)
+        if isinstance(self.value, Expression):
+            rendered = printer.print_expression(self.value)
 
-            if variable.name:
-                return f"{variable.name} = {rendered}"
+            if self.name:
+                return f"{self.name} = {rendered}"
 
             return rendered
 
-        if variable.value is None:
+        if self.value is None:
             # No statement and no value: nothing meaningful to show.
             # Shouldn't normally happen for a well-formed handler.
             return ""
 
         # Legacy fallback: value is still a plain string (handler not
         # yet migrated to the `ir` package).
-        if variable.name:
-            return f"{variable.name} = {variable.value}"
+        if self.name:
+            return f"{self.name} = {self.value}"
 
-        return f"{variable.value}"
+        return f"{self.value}"
 
-    @property
-    def handler(self) -> str:
-        return self.variable.handler
+    def refresh_result(self) -> None:
+        """Recompute `.result` after mutating `value`/`statement` in place."""
+
+        self.result = self._render_result()
+
+    # ------------------------------------------------------------------
+
+    def __str__(self) -> str:
+        return (
+            f"OpcodeResult("
+            f"address={self.address}, "
+            f"handler={self.handler}, "
+            f"name={self.name}, "
+            f"value={self.value!r}, "
+            f"statement={self.statement!r}, "
+            f"used={self.used})"
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "handler": self.handler,
+            "address": self.address,
+            "name": self.name,
+            "value": self.value,
+            "statement": self.statement,
+            "used": self.used,
+            "goto": self.goto,
+            "extra_gotos": self.extra_gotos,
+        }

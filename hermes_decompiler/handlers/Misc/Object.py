@@ -1,6 +1,7 @@
-import re
 import json
+import re
 
+from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
 from hermes_decompiler.ir import (
     ArrayExpression,
     CallExpression,
@@ -13,12 +14,9 @@ from hermes_decompiler.ir import (
     python_literal,
 )
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
+from hermes_decompiler.models.OpcodeResult import OpcodeResult
 
 
 def _json_to_expression(value: object) -> Expression:
@@ -48,7 +46,6 @@ class NewObjectWithBuffer(OpcodeHandler):
     _PATTERN = sequence(REG, UINT16, UINT16, UINT16, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -56,16 +53,16 @@ class NewObjectWithBuffer(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        object_value = self._parse_object_from_comment(entry.comment)
+        expression = self._parse_object_from_comment(entry.comment)
 
-        if object_value is None:
+        if expression is None:
             error = f"// Warning: No valid object parsed from comment: {entry.comment}"
             return self.build_exception_result(analysis, entry, error)
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", object_value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
     @staticmethod
     def _parse_object_from_comment(comment: str) -> ObjectExpression | None:
@@ -116,18 +113,18 @@ class NewObject(OpcodeHandler):
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", ObjectExpression(properties=()))
-        analysis.add_result(entry, variable)
+        expression = ObjectExpression(properties=())
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # Example: <NewObjectWithParent>: <Reg8: 1, Reg8: 14>
@@ -137,8 +134,6 @@ class NewObjectWithParent(OpcodeHandler):
     _PATTERN = sequence(REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
@@ -147,17 +142,18 @@ class NewObjectWithParent(OpcodeHandler):
 
         parent = self.get_register_value(analysis, parent_reg)
 
-        value = CallExpression(
+        expression = CallExpression(
             callee=MemberExpression(
                 Identifier(name="Object"),
                 Identifier(name="create"),
             ),
             arguments=(parent,),
         )
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 class SelectObject(OpcodeHandler):
@@ -166,8 +162,6 @@ class SelectObject(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
@@ -177,13 +171,13 @@ class SelectObject(OpcodeHandler):
         obj = self.get_register_value(analysis, obj_reg)
         selector = self.get_register_value(analysis, selector_reg)
 
-        value = MemberExpression(
+        expression = MemberExpression(
             receiver=obj,
             member=selector,
             computed=True,
         )
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result

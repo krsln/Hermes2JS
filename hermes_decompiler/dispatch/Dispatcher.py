@@ -1,8 +1,8 @@
 from typing import List
 
 from hermes_decompiler.handlers import import_handlers
+from hermes_decompiler.ir import AwaitExpression, Expression, RawExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
@@ -76,11 +76,8 @@ class OpcodeDispatcher:
             if parsed is None:
                 logger.debug("Unparsed line: %s", line)
                 entry = OpcodeEntry(bytecode=line, hex_address="", opcode="", args="", comment="")
-                result = OpcodeResult(
-                    entry,
-                    JSVariable("", 0, "", f'// Unparsed: {line}')
-                )
-                analysis.results.append(result)
+                result = OpcodeResult(entry, value=RawExpression(source=f"// Unparsed: {line}"))
+                analysis.add_result(result)
                 results.append(result)
                 continue
 
@@ -88,7 +85,7 @@ class OpcodeDispatcher:
                 result = dispatcher.dispatch(parsed)
 
                 # Special case for generator pattern
-                if result.variable.handler == "SaveGenerator":
+                if result.handler == "SaveGenerator":
                     OpcodeDispatcher._handle_generator_await(analysis)
 
                 results.append(result)
@@ -96,32 +93,38 @@ class OpcodeDispatcher:
                 logger.warning("No handler for opcode '%s' (line=%r)", e.opcode, raw_line)
                 if strict:
                     raise
-                result = OpcodeResult(
-                    parsed,
-                    JSVariable("-", parsed.address, "", f'// Unhandled opcode: {e.opcode}')
-                )
-                analysis.results.append(result)
+                result = OpcodeResult(parsed, value=RawExpression(source=f"// Unhandled opcode: {e.opcode}"))
+                analysis.add_result(result)
                 results.append(result)
             except OpcodeDispatchError as e:
                 logger.error("Dispatch error for opcode '%s': %s", e.opcode, e.cause, exc_info=True)
                 if strict:
                     raise
-                result = OpcodeResult(
-                    parsed,
-                    JSVariable(e.opcode, parsed.address, "", f'// Error: {e.cause}')
-                )
-                analysis.results.append(result)
+                result = OpcodeResult(parsed, value=RawExpression(source=f"// Error: {e.cause}"))
+                analysis.add_result(result)
                 results.append(result)
 
         return results
 
     @staticmethod
     def _handle_generator_await(analysis: HermesAnalysis) -> None:
-        """Special handling for generator yield patterns."""
+        """
+        Special handling for generator yield patterns.
+
+        NOTE (fix): previously mutated `prev.variable.value` into a
+        plain f-string (`f"await {prev.variable.value}"`), which broke
+        the `value: Expression` contract for that result - any later
+        code touching it as an IR node (Printer, etc.) would have
+        crashed the same way the original `.render()` AttributeError
+        did. Now wraps it in a real `AwaitExpression` and recomputes
+        `.result` via the same rendering path everything else uses.
+        """
+
         if len(analysis.results) < 2:
             return
 
         prev = analysis.results[len(analysis.results) - 2]
-        if prev.variable.handler.startswith("Call"):
-            prev.variable.value = f"await {prev.variable.value}"
-            prev.result = f"{prev.variable.name} = {prev.variable.value}"
+
+        if prev.handler.startswith("Call") and isinstance(prev.value, Expression):
+            prev.value = AwaitExpression(argument=prev.value)
+            prev.refresh_result()

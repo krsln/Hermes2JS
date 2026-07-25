@@ -1,10 +1,9 @@
 import re
 
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
-from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.regions.models.Statements import SwitchGotoStatement
 
 
@@ -12,7 +11,6 @@ class SwitchImm(OpcodeHandler):
     _PATTERN = re.compile(r"^Reg\d+:\s*(\d+)")
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -32,22 +30,17 @@ class SwitchImm(OpcodeHandler):
             analysis.gotoList.append(target)
             targets.append(target)
 
-        variable = JSVariable(
-            handler,
-            entry.address,
-            "",
-            None,  # pure control flow: no operand value of its own
-            statement=SwitchGotoStatement(selector=selector, targets=tuple(targets)),
-        )
-
-        analysis.add_result(entry, variable, extra_gotos=targets)
-
         # NOTE (fix): the original never set `control_flow`, defaulting
         # to NORMAL despite having multiple successors and no
         # fallthrough - same class of bug already fixed for JCompareX.
-        return OpcodeResult(
+        result = OpcodeResult(
             entry,
-            variable,
+            value=None,  # pure control flow: no operand value of its own
+            statement=SwitchGotoStatement(selector=selector, targets=tuple(targets)),
+            dest_reg=None,
             extra_gotos=targets,
             control_flow=ControlFlowType.TERMINATOR,
         )
+        analysis.add_result(result)
+
+        return result
