@@ -1,6 +1,5 @@
-from hermes_decompiler.ir.Expressions import UnaryExpression, MemberExpression
+from hermes_decompiler.ir import UnaryExpression, MemberExpression, Identifier
 from hermes_decompiler.ir.Operators import UnaryOperator
-from hermes_decompiler.ir.Values import IdentifierValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -31,8 +30,8 @@ class DelById(OpcodeHandler):
         value = UnaryExpression(
             operator=UnaryOperator.DELETE,
             operand=MemberExpression(
-                object=obj,
-                property=IdentifierValue(prop_name),
+                receiver=obj,
+                member=Identifier(name=prop_name),
             ),
         )
 
@@ -46,6 +45,7 @@ class DelById(OpcodeHandler):
 # Example: <DelByVal>: <Reg8: 2, Reg8: 0, Reg8: 1>
 class DelByVal(OpcodeHandler):
     """delete obj[prop]"""
+
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -63,8 +63,8 @@ class DelByVal(OpcodeHandler):
         value = UnaryExpression(
             operator=UnaryOperator.DELETE,
             operand=MemberExpression(
-                object=obj,
-                property=prop,
+                receiver=obj,
+                member=prop,
                 computed=True,
             ),
         )
