@@ -1,6 +1,4 @@
-import json
-
-from hermes_decompiler.ir.Values import ArrayValue, ConstantValue
+from hermes_decompiler.ir import ArrayExpression, python_literal
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -14,6 +12,7 @@ from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
 # Example: <NewArray>: <Reg8: 1, UInt16: 4>
 class NewArray(OpcodeHandler):
     """Create a new, empty Array with a preallocation size hint."""
+
     _PATTERN = sequence(REG, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -25,13 +24,13 @@ class NewArray(OpcodeHandler):
 
         dest_reg, capacity_hint = map(int, match.groups())
 
-        # value = "[]" if capacity_hint == 0 else f"[] /* capacity hint: {capacity_hint} */"
-        value = ArrayValue(
-            elements=[],
-            capacity_hint=capacity_hint if capacity_hint else None,
-        )
+        # NOTE: `capacity_hint` (Hermes' pre-allocation size) is dropped
+        # here - `ArrayExpression` has no field for it, since it isn't
+        # a JS-observable property. The raw UInt16 is still visible in
+        # verbose mode via the `// CODE ->` bytecode comment.
+        value = ArrayExpression(elements=())
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -39,6 +38,7 @@ class NewArray(OpcodeHandler):
 
 class NewArrayWithBuffer(OpcodeHandler):
     """Create a new array from a static buffer."""
+
     _PATTERN = sequence(REG, UINT16, UINT16, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -53,15 +53,14 @@ class NewArrayWithBuffer(OpcodeHandler):
         if entry.array_literal is None:
             return self.build_exception_result(analysis, entry, "// Warning: No array data in comment")
 
-        # value = json.dumps(entry.array_literal, ensure_ascii=False)
-        elements = [
-            ConstantValue(v)
+        elements = tuple(
+            python_literal(v)
             for v in entry.array_literal
-        ]
+        )
 
-        value = ArrayValue(elements)
+        value = ArrayExpression(elements=elements)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -69,4 +68,5 @@ class NewArrayWithBuffer(OpcodeHandler):
 
 class NewArrayWithBufferLong(NewArrayWithBuffer):
     """Long variant."""
+
     pass
