@@ -17,6 +17,7 @@ __all__ = [
     "RegExpLiteral",
     "TemplateElement",
     "TemplateLiteral",
+    "python_literal",
 ]
 
 
@@ -123,3 +124,34 @@ class TemplateLiteral(Literal):
     @property
     def children(self) -> tuple[Node, ...]:
         return *self.quasis, *self.expressions
+
+
+# ============================================================================
+# Python -> Literal conversion
+# ============================================================================
+
+
+def python_literal(value: object) -> Literal:
+    """
+    Build the appropriate `Literal` node for a plain Python value, e.g.
+    one already parsed out of a Hermes bytecode comment via
+    `ast.literal_eval`. Centralizes the Python-value -> JS-literal
+    mapping so callers don't hand-roll isinstance chains per handler.
+
+    Note: `bool` is checked before `int`/`float` since `bool` is a
+    subclass of `int` in Python.
+    """
+
+    if value is None:
+        return NullLiteral()
+
+    if isinstance(value, bool):
+        return BooleanLiteral(value)
+
+    if isinstance(value, (int, float)):
+        return NumericLiteral(value)
+
+    if isinstance(value, str):
+        return StringLiteral(value)
+
+    raise TypeError(f"No literal mapping for Python value of type {type(value).__name__}")
