@@ -1,5 +1,4 @@
-from hermes_decompiler.ir.Expressions import CallExpression
-from hermes_decompiler.ir.Values import RegisterValue, IdentifierValue
+from hermes_decompiler.ir import CallExpression, Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -29,11 +28,12 @@ class CallDirect(OpcodeHandler):
             else f"function_{func_index}"
         )
 
-        arguments = [
-            RegisterValue(dest_reg - arg_count + i)
+        arguments = tuple(
+            Identifier(name=f"r{dest_reg - arg_count + i}")
             for i in range(arg_count)
-        ]
-        value = CallExpression(callee=IdentifierValue(func_name), arguments=arguments)
+        )
+
+        value = CallExpression(callee=Identifier(name=func_name), arguments=arguments)
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)

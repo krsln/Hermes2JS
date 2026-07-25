@@ -1,5 +1,4 @@
-from hermes_decompiler.ir.Expressions import CallExpression
-from hermes_decompiler.ir.Values import RegisterValue, IdentifierValue
+from hermes_decompiler.ir import CallExpression, Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -23,12 +22,15 @@ class CallBuiltin(OpcodeHandler):
 
         dest_reg, builtin_id, arg_count = map(int, match.groups())
 
-        arguments = [
-            RegisterValue(reg)
+        arguments = tuple(
+            Identifier(name=f"r{reg}")
             for reg in range(dest_reg - arg_count, dest_reg)
-        ]
+        )
 
-        value = CallExpression(callee=IdentifierValue(f"builtin_{builtin_id}"), arguments=arguments)
+        value = CallExpression(
+            callee=Identifier(name=f"builtin_{builtin_id}"),
+            arguments=arguments,
+        )
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
