@@ -1,4 +1,4 @@
-from hermes_decompiler.ir.Values import GeneratorValue, ClosureValue
+from hermes_decompiler.ir import CallExpression, Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -13,6 +13,7 @@ from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, sequen
 # Example: <CreateGenerator>: <Reg8: 0, Reg8: 0, function_id: 11946> # Function: [#11946 ?anon_0_ of 251 bytes]: 2 params @ offset 0x002191ac
 class CreateGenerator(OpcodeHandler):
     """Create a generator object."""
+
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -26,8 +27,12 @@ class CreateGenerator(OpcodeHandler):
         env = self.get_register_value(analysis, env_reg)
         func_name = (entry.function.name if entry.function and entry.function.name else f"function_{function_id}")
 
-        # value = f"createGenerator(r{env_reg}, {func_name})"
-        value = GeneratorValue(name=func_name, environment_register=env_reg, environment=env)
+        # Same named pseudo-call convention as createThis()/getEnvironment():
+        # actually instantiating a generator object isn't plain JS syntax.
+        value = CallExpression(
+            callee=Identifier(name="createGenerator"),
+            arguments=(env, Identifier(name=func_name)),
+        )
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
@@ -37,6 +42,7 @@ class CreateGenerator(OpcodeHandler):
 
 class CreateGeneratorLongIndex(CreateGenerator):
     """Long index variant."""
+
     pass
 
 
@@ -45,6 +51,7 @@ class CreateGeneratorLongIndex(CreateGenerator):
 # Example: <CreateGeneratorClosure>: <Reg8: 1, Reg8: 0, function_id: 11945>  # Function: [#11945  of 9 bytes]: 2 params @ offset 0x002191a3
 class CreateGeneratorClosure(OpcodeHandler):
     """Create a closure for a GeneratorFunction."""
+
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -62,12 +69,10 @@ class CreateGeneratorClosure(OpcodeHandler):
             else f"function_{function_id}"
         )
 
-        # value = f"createGeneratorClosure(r{env_reg}, {func_name})"
-        value = ClosureValue(
-            name=func_name,
-            environment_register=env_reg,
-            environment=self.get_register_value(analysis, env_reg)
-        )
+        # Same treatment as CreateClosure: a closure over a generator
+        # function is still just a name reference in real JS; the
+        # captured environment register is dropped (see CreateClosure.py).
+        value = Identifier(name=func_name)
 
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
@@ -77,4 +82,5 @@ class CreateGeneratorClosure(OpcodeHandler):
 
 class CreateGeneratorClosureLongIndex(CreateGeneratorClosure):
     """Long index variant."""
+
     pass

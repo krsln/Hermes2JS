@@ -1,6 +1,6 @@
 import re
 
-from hermes_decompiler.ir.Values import CommentValue
+from hermes_decompiler.ir import AwaitExpression, YieldExpression, RawExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -8,6 +8,7 @@ from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
 from hermes_decompiler.handlers._shared_patterns import REG, ADDR, sequence
+from hermes_decompiler.regions.models.Statements import GotoStatement
 
 # Pre-compiled patterns
 START_GENERATOR_PATTERN = re.compile(r'^(?:<>)?$')
@@ -23,7 +24,9 @@ class StartGenerator(OpcodeHandler):
         if not START_GENERATOR_PATTERN.match(entry.args.strip()):
             return self.build_invalid_args_result(analysis, entry)
 
-        value = CommentValue(value=f"// StartGenerator")
+        # No JS-observable effect of its own; kept as a bare comment
+        # marker via RawExpression, same as before.
+        value = RawExpression(source="// StartGenerator")
         variable = JSVariable(handler, entry.address, "", value)
         analysis.add_result(entry, variable)
 
@@ -33,6 +36,7 @@ class StartGenerator(OpcodeHandler):
 # Example: <ResumeGenerator>: <Reg8: 0, Reg8: 2>
 class ResumeGenerator(OpcodeHandler):
     """Resume a suspended generator."""
+
     _PATTERN = sequence(REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -44,9 +48,11 @@ class ResumeGenerator(OpcodeHandler):
 
         dest_reg, _flag_reg = map(int, match.groups())
 
-        # value = f"await yield"
-        value = CommentValue(f"await yield /* ResumeGenerator -> r{dest_reg} */")
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
+        # `await yield` is real, expressible JS - modeled directly
+        # instead of the previous comment-annotated string.
+        value = AwaitExpression(argument=YieldExpression())
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -62,7 +68,7 @@ class CompleteGenerator(OpcodeHandler):
         if not START_GENERATOR_PATTERN.match(entry.args.strip()):
             return self.build_invalid_args_result(analysis, entry)
 
-        value = CommentValue(value=f"// CompleteGenerator")
+        value = RawExpression(source="// CompleteGenerator")
         variable = JSVariable(handler, entry.address, "", value)
         analysis.add_result(entry, variable)
 
@@ -71,7 +77,17 @@ class CompleteGenerator(OpcodeHandler):
 
 # Example: <SaveGenerator>: <Addr8: 4>  # Address: 00000095
 class SaveGenerator(OpcodeHandler):
-    """Save generator state and yield."""
+    """
+    Save generator state and yield.
+
+    CFG-wise this is an unconditional jump (like Jmp) to the resume
+    point, so it's represented the same way: `GotoStatement`. The
+    generator-specific `await yield` semantics is synthesized
+    separately by `Dispatcher._handle_generator_await`, which wraps the
+    *previous* instruction's value in an `AwaitExpression` once it sees
+    a `SaveGenerator` follows it.
+    """
+
     _PATTERN = sequence(ADDR)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -89,10 +105,13 @@ class SaveGenerator(OpcodeHandler):
 
         analysis.gotoList.append(target)
 
-        # value = f'yield label_{target};  // SaveGenerator: suspend and jump to {target}'
-        # value = CommentValue(value=f'yield label_{target}; // SaveGenerator: suspend and jump to {target}')
-        value = CommentValue(f"yield label_{target};")
-        variable = JSVariable(handler, entry.address, "", value)
+        variable = JSVariable(
+            handler,
+            entry.address,
+            "",
+            None,  # pure control flow: no operand value of its own
+            statement=GotoStatement(target=target),
+        )
         analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(

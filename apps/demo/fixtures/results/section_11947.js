@@ -1,11 +1,11 @@
 async function* anon_11947(param0, param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
-    // StartGenerator
+    // StartGenerator;
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 0>
     // USED → r8 = this;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 5>
-    r0 = await yield /* ResumeGenerator -> r0 */
+    r0 = await yield;
     // CODE → <JmpTrueLong>: <Addr32: 311, Reg8: 5>  # Address: 0000013e
     if (r5) goto label_318;
     // ──────────────── Block 1 ──────────────── 
@@ -24,12 +24,12 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
     r3 = await CallExpression(callee=Identifier(name='r7'), arguments=(Identifier(name='this'), Identifier(name='param1'), Identifier(name='param2')), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
-    yield label_41;
+    goto label_41;
     // LOOP → START (while)
     while (param1) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
-        r3 = await yield /* ResumeGenerator -> r3 */
+        r3 = await yield;
         // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032
         if (param1) goto label_50;
         // ──────────────── Block 2 ──────────────── 
@@ -39,12 +39,12 @@ async function* anon_11947(param0, param1, param2) {
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
+    // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 3>
     // Unhandled opcode: Ret
     // ──────────────── Block 5 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
+    // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 3>
     // Unhandled opcode: Ret
     // CODE → <Catch>: <Reg8: 7>
@@ -186,7 +186,7 @@ async function* anon_11947(param0, param1, param2) {
     // LOOP → END
     // ──────────────── Block 19 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
+    // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }

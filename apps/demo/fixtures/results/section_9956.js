@@ -1,9 +1,9 @@
 async function* anon_9956(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
-    // StartGenerator
+    // StartGenerator;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    r0 = await yield /* ResumeGenerator -> r0 */
+    r0 = await yield;
     // CODE → <JmpTrue>: <Addr8: 57, Reg8: 1>  # Address: 0000003d
     if (r1) goto label_61;
     // ──────────────── Block 1 ──────────────── 
@@ -24,12 +24,12 @@ async function* anon_9956(param0, param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     r1 = await CallExpression(callee=Identifier(name='r2'), arguments=(Identifier(name='r3'), BinaryExpression(left=StringLiteral(value='https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr='), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='param1'))), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000002c
-    yield label_44;
+    goto label_44;
     // LOOP → START (while)
     while (r2) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
-        // USED → r1 = await yield /* ResumeGenerator -> r1 */
+        // USED → r1 = await yield;
         // CODE → <JmpTrue>: <Addr8: 11, Reg8: 2>  # Address: 0000003a
         if (r2) goto label_58;
         // ──────────────── Block 2 ──────────────── 
@@ -39,19 +39,19 @@ async function* anon_9956(param0, param1) {
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'data' (Identifier)
-    r2 = r1.data
+    r2 = await yield.data
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
+    // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 2>
     // Unhandled opcode: Ret
     // ──────────────── Block 5 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
+    // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 1>
     // Unhandled opcode: Ret
     // ──────────────── Block 6 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
+    // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }

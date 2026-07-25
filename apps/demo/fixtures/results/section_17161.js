@@ -1,11 +1,11 @@
 async function* anon_17161(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
-    // StartGenerator
+    // StartGenerator;
     // CODE → <LoadParam>: <Reg8: 7, UInt8: 1>
     // USED → r7 = param1;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    r0 = await yield /* ResumeGenerator -> r0 */
+    r0 = await yield;
     // CODE → <JmpTrueLong>: <Addr32: 161, Reg8: 1>  # Address: 000000a8
     if (r1) goto label_168;
     // ──────────────── Block 1 ──────────────── 
@@ -18,12 +18,12 @@ async function* anon_17161(param0, param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
     r1 = await CallExpression(callee=Identifier(name='r3'), arguments=(UndefinedLiteral(), Identifier(name='param1')), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000020
-    yield label_32;
+    goto label_32;
     // LOOP → START (while)
     while (r3) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-        // USED → r1 = await yield /* ResumeGenerator -> r1 */
+        // USED → r1 = await yield;
         // CODE → <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
         if (r3) goto label_165;
         // ──────────────── Block 2 ──────────────── 
@@ -33,12 +33,12 @@ async function* anon_17161(param0, param1) {
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 14168>  # String: 'ok' (Identifier)
-    // USED → r3 = r1.ok
+    // USED → r3 = await yield.ok
     // CODE → <JmpTrue>: <Addr8: 93, Reg8: 3>  # Address: 0000008c
     if (r3) goto label_140;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
-    // USED → r4 = r1.status
+    // USED → r4 = await yield.status
     // CODE → <LoadConstZero>: <Reg8: 3>
     // USED → r3 = 0;
     // CODE → <JStrictNotEqual>: <Addr8: 22, Reg8: 4, Reg8: 3>  # Address: 00000050
@@ -56,7 +56,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = r2.Error
     // CODE → <GetById>: <Reg8: 6, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
-    // USED → r6 = r1.status
+    // USED → r6 = await yield.status
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 6, string_id: 21>  # String: 'HermesInternal' (Identifier)
     // USED → r2 = r2.HermesInternal
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 7, string_id: 98>  # String: 'concat' (Identifier)
@@ -81,16 +81,16 @@ async function* anon_17161(param0, param1) {
     throw r2;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
-    // USED → r2 = r1.text
+    // USED → r2 = await yield.text
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
-    r2 = await CallExpression(callee=Identifier(name='r2'), arguments=(Identifier(name='r1'),), optional=False)
+    r2 = await CallExpression(callee=Identifier(name='r2'), arguments=(AwaitExpression(argument=YieldExpression(argument=None, delegate=False)),), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000099
-    yield label_153;
+    goto label_153;
     // LOOP → START (while)
     while (createThis(r3, r4)) {
         // ──────────────── Block 10 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
-        r2 = await yield /* ResumeGenerator -> r2 */
+        r2 = await yield;
         // CODE → <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
         if (createThis(r3, r4)) goto label_162;
         // ──────────────── Block 9 ──────────────── 
@@ -100,22 +100,22 @@ async function* anon_17161(param0, param1) {
     // LOOP → END
     // ──────────────── Block 11 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
+    // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 2>
     // Unhandled opcode: Ret
     // ──────────────── Block 12 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
+    // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 2>
     // Unhandled opcode: Ret
     // ──────────────── Block 13 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
+    // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 1>
     // Unhandled opcode: Ret
     // ──────────────── Block 14 ──────────────── 
     // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
+    // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }
