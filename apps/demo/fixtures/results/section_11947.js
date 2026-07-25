@@ -7,7 +7,8 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 5>
     r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrueLong>: <Addr32: 311, Reg8: 5>  # Address: 0000013e
-    // Error: 'Identifier' object has no attribute 'render'
+    if (r5) { /* jump to label_318 */ }
+    // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 1>
     // USED → r4 = param1
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 2>
@@ -19,171 +20,173 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     r2 = undefined
     // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 17057>  # String: '_request' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r7 = r8._request
     // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
-     = await // Error: sequence item 0: expected str instance, Identifier found
+    r3 = await CallExpression(callee=Identifier(name='r7'), arguments=(Identifier(name='r8'), Identifier(name='r4'), Identifier(name='r3')), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
     yield label_41;
     // LOOP → START (while)
-    while (true) {
-        // ──────────────── Block 2 ──────────────── 
+    while (r4) {
+        // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
         r3 = await yield /* ResumeGenerator -> r3 */
         // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator
-        // CODE → <Ret>: <Reg8: 3>
-        // Unhandled opcode: Ret
-        // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator
-        // CODE → <Ret>: <Reg8: 3>
-        // Unhandled opcode: Ret
-        // CODE → <Catch>: <Reg8: 7>
-        // USED → r7 = caughtException
-        // CODE → <Mov>: <Reg8: 1, Reg8: 7>
-        // USED → r1 = r7;
-        // CODE → <GetGlobalObject>: <Reg8: 3>
-        // USED → r3 = globalThis
-        // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <NewObject>: <Reg8: 6>
-        // USED → r6 = {  }
-        // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <JmpTrue>: <Addr8: 25, Reg8: 4>  # Address: 00000079
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 4, string_id: 158>  # String: 'prototype' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateThis>: <Reg8: 7, Reg8: 4, Reg8: 8>
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Mov>: <Reg8: 12, Reg8: 7>
-        r12 = r7;
-        // CODE → <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Jmp>: <Addr8: 16>  # Address: 00000087
-        goto label_135;
-        // ──────────────── Block 1 ──────────────── 
+        if (r4) { /* jump to label_50 */ }
+        // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 3>
         // Unhandled opcode: Ret
     }
     // LOOP → END
+    // ──────────────── Block 4 ──────────────── 
+    // CODE → <CompleteGenerator>: <>
+    // CompleteGenerator
+    // CODE → <Ret>: <Reg8: 3>
+    // Unhandled opcode: Ret
+    // ──────────────── Block 5 ──────────────── 
+    // CODE → <CompleteGenerator>: <>
+    // CompleteGenerator
+    // CODE → <Ret>: <Reg8: 3>
+    // Unhandled opcode: Ret
+    // CODE → <Catch>: <Reg8: 7>
+    // USED → r7 = caughtException
+    // CODE → <Mov>: <Reg8: 1, Reg8: 7>
+    // USED → r1 = r7;
+    // CODE → <GetGlobalObject>: <Reg8: 3>
+    // USED → r3 = globalThis;
+    // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
+    // USED → r4 = globalThis.Error
+    // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
+    // USED → r4 = r7 instanceof r4;
+    // CODE → <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
+    if (!r7 instanceof r4) { /* jump to label_316 */ }
+    // ──────────────── Block 6 ──────────────── 
+    // CODE → <NewObject>: <Reg8: 6>
+    r6 = {  }
+    // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
+    // USED → r4 = globalThis.Error
+    // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
+    // USED → r4 = r4.captureStackTrace
+    // CODE → <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
+    // USED → r8 = globalThis.Error
+    // CODE → <JmpTrue>: <Addr8: 25, Reg8: 4>  # Address: 00000079
+    if (r4) { /* jump to label_121 */ }
+    // ──────────────── Block 7 ──────────────── 
+    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 4, string_id: 158>  # String: 'prototype' (Identifier)
+    // USED → r4 = r8.prototype
+    // CODE → <CreateThis>: <Reg8: 7, Reg8: 4, Reg8: 8>
+    // USED → r7 = createThis(prototype=r4, constructor=r8)
+    // CODE → <Mov>: <Reg8: 12, Reg8: 7>
+    r12 = r7;
+    // CODE → <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
+    // USED → r4 = new r8(r7)
+    // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
+    // USED → r6 = r7[r4]
+    // CODE → <Jmp>: <Addr8: 16>  # Address: 00000087
+    goto label_135;
+    // ──────────────── Block 8 ──────────────── 
+    // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
+    // USED → r7 = r8.captureStackTrace
+    // CODE → <Mov>: <Reg8: 4, Reg8: 6>
+    // USED → r4 = r6;
+    // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
+    r4 = r7(r8, r6);
+    // ──────────────── Block 9 ──────────────── 
+    // CODE → <Mov>: <Reg8: 4, Reg8: 6>
+    // USED → r4 = r6;
+    // CODE → <GetById>: <Reg8: 7, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
+    // USED → r7 = r6.stack
+    // CODE → <LoadConstString>: <Reg8: 8, string_id: 11303>  # String: '' (Identifier)
+    // USED → r8 = ""
+    // CODE → <Mov>: <Reg8: 4, Reg8: 8>
+    r4 = r8;
+    // CODE → <JmpFalse>: <Addr8: 34, Reg8: 7>  # Address: 000000b9
+    if (!r7) { /* jump to label_185 */ }
+    // ──────────────── Block 10 ──────────────── 
+    // CODE → <GetById>: <Reg8: 9, Reg8: 6, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
+    // USED → r9 = r6.stack
+    // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
+    // USED → r7 = r9.replace
+    // CODE → <CreateRegExp>: <Reg8: 6, string_id: 7558, string_id: 11303, UInt32: 168>  # String: '^.+\\n' (String)  # String: '' (Identifier)
+    // USED → r6 = /^.+\\n/;
+    // CODE → <Call3>: <Reg8: 4, Reg8: 7, Reg8: 9, Reg8: 6, Reg8: 8>
+    // USED → r4 = r7(r9, /^.+\\n/, r8);
+    // ──────────────── Block 11 ──────────────── 
+    // CODE → <Mov>: <Reg8: 2, Reg8: 4>
+    // USED → r2 = r7(r9, /^.+\\n/, r8);
+    // CODE → <Mov>: <Reg8: 4, Reg8: 1>
+    // USED → r4 = r7;
+    // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
+    // USED → r4 = r7.stack
+    // CODE → <JmpTrue>: <Addr8: 17, Reg8: 4>  # Address: 000000d6
+    if (r4) { /* jump to label_214 */ }
+    // ──────────────── Block 12 ──────────────── 
+    // CODE → <Mov>: <Reg8: 6, Reg8: 1>
+    // USED → r6 = r7;
+    // CODE → <Mov>: <Reg8: 4, Reg8: 2>
+    // USED → r4 = r7(r9, /^.+\\n/, r8);
+    // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
+    r7.stack = r7(r9, /^.+\\n/, r8);
+    // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
+    goto label_312;
+    // ──────────────── Block 13 ──────────────── 
+    // CODE → <Mov>: <Reg8: 4, Reg8: 2>
+    // USED → r4 = r7(r9, /^.+\\n/, r8);
+    // CODE → <JmpFalse>: <Addr8: 95, Reg8: 4>  # Address: 00000138
+    if (!r7(r9, /^.+\\n/, r8)) { /* jump to label_312 */ }
+    // ──────────────── Block 14 ──────────────── 
+    // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
+    // USED → r4 = globalThis.String
+    // CODE → <Mov>: <Reg8: 3, Reg8: 1>
+    // USED → r3 = r7;
+    // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
+    // USED → r3 = r7.stack
+    // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
+    // USED → r5 = r4(r5, r3);
+    // CODE → <GetById>: <Reg8: 4, Reg8: 5, UInt8: 8, string_id: 19080>  # String: 'endsWith' (Identifier)
+    // USED → r4 = r4(r5, r3).endsWith
+    // CODE → <Mov>: <Reg8: 7, Reg8: 2>
+    // USED → r7 = r7(r9, /^.+\\n/, r8);
+    // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
+    // USED → r6 = r7(r9, /^.+\\n/, r8).replace
+    // CODE → <CreateRegExp>: <Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169>  # String: '^.+\\n.+\\n' (String)  # String: '' (Identifier)
+    // USED → r3 = /^.+\\n.+\\n/;
+    // CODE → <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
+    // USED → r3 = r6(r7(r9, /^.+\\n/, r8), /^.+\\n.+\\n/, r8);
+    // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+    // USED → r3 = r4(r4(r5, r3), r6(r7(r9, /^.+\\n/, r8), /^.+\\n.+\\n/, r8));
+    // CODE → <JmpTrue>: <Addr8: 33, Reg8: 3>  # Address: 00000138
+    if (r4(r4(r5, r3), r6(r7(r9, /^.+\\n/, r8), /^.+\\n.+\\n/, r8))) { /* jump to label_312 */ }
+    // ──────────────── Block 15 ──────────────── 
+    // CODE → <Mov>: <Reg8: 3, Reg8: 1>
+    // USED → r3 = r7;
+    // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
+    // USED → r4 = r7.stack
+    // CODE → <Mov>: <Reg8: 5, Reg8: 2>
+    // USED → r5 = r7(r9, /^.+\\n/, r8);
+    // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
+    // USED → r2 = "\\n"
+    // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
+    // USED → r2 = r2 + r7(r9, /^.+\\n/, r8);
+    // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
+    // USED → r2 = r4 + (r2 + r7(r9, /^.+\\n/, r8));
+    // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
+    r7.stack = r4 + (r2 + r7(r9, /^.+\\n/, r8));
+    // ──────────────── Block 16 ──────────────── 
+    // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
+    goto label_316;
     // LOOP → START (while)
     while (true) {
-        // ──────────────── Block 4 ──────────────── 
-        // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-        // USED → r4 = r6;
-        // CODE → <GetById>: <Reg8: 7, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <LoadConstString>: <Reg8: 8, string_id: 11303>  # String: '' (Identifier)
-        // USED → r8 = ""
-        // CODE → <Mov>: <Reg8: 4, Reg8: 8>
-        // USED → r4 = r8;
-        // CODE → <JmpFalse>: <Addr8: 34, Reg8: 7>  # Address: 000000b9
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <GetById>: <Reg8: 9, Reg8: 6, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateRegExp>: <Reg8: 6, string_id: 7558, string_id: 11303, UInt32: 168>  # String: '^.+\\n' (String)  # String: '' (Identifier)
-        // USED → r6 = /^.+\\n/
-        // CODE → <Call3>: <Reg8: 4, Reg8: 7, Reg8: 9, Reg8: 6, Reg8: 8>
-        // Error: sequence item 0: expected str instance, Identifier found
-        // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-        // USED → r2 = r8;
-        // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-        // USED → r4 = r7;
-        // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <JmpTrue>: <Addr8: 17, Reg8: 4>  # Address: 000000d6
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Mov>: <Reg8: 6, Reg8: 1>
-        // USED → r6 = r7;
-        // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-        // USED → r4 = r8;
-        // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
-        goto label_312;
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-        // USED → r4 = r6;
-        // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
-        // Error: sequence item 0: expected str instance, Identifier found
-    }
-    // LOOP → END
-    // LOOP → START (while)
-    while (true) {
-        // ──────────────── Block 6 ──────────────── 
-        // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
-        goto label_316;
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-        // USED → r4 = r8;
-        // CODE → <JmpFalse>: <Addr8: 95, Reg8: 4>  # Address: 00000138
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-        // USED → r3 = r7;
-        // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
-        // Error: sequence item 0: expected str instance, Identifier found
-        // CODE → <GetById>: <Reg8: 4, Reg8: 5, UInt8: 8, string_id: 19080>  # String: 'endsWith' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Mov>: <Reg8: 7, Reg8: 2>
-        // USED → r7 = r8;
-        // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateRegExp>: <Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169>  # String: '^.+\\n.+\\n' (String)  # String: '' (Identifier)
-        // USED → r3 = /^.+\\n.+\\n/
-        // CODE → <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
-        // Error: sequence item 0: expected str instance, Identifier found
-        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-        // Error: sequence item 0: expected str instance, Identifier found
-        // CODE → <JmpTrue>: <Addr8: 33, Reg8: 3>  # Address: 00000138
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-        // USED → r3 = r7;
-        // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-        // USED → r5 = r8;
-        // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
-        // USED → r2 = "\\n"
-        // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-    }
-    // LOOP → END
-    // LOOP → START (while)
-    while (true) {
-        // ──────────────── Block 8 ──────────────── 
+        // ──────────────── Block 18 ──────────────── 
         // CODE → <Throw>: <Reg8: 1>
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator
-        // CODE → <Ret>: <Reg8: 0>
-        // Unhandled opcode: Ret
-        // ──────────────── Block 7 ──────────────── 
+        throw r7;
+        // ──────────────── Block 17 ──────────────── 
         // CODE → <Catch>: <Reg8: 2>
         r2 = caughtException
     }
     // LOOP → END
+    // ──────────────── Block 19 ──────────────── 
+    // CODE → <CompleteGenerator>: <>
+    // CompleteGenerator
+    // CODE → <Ret>: <Reg8: 0>
+    // Unhandled opcode: Ret
 }

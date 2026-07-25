@@ -7,61 +7,61 @@ function AcquisitionManager(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 8200>  # String: 'appcenter.ms' (String)
     // USED → r2 = "appcenter.ms"
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 13564>  # String: 'BASE_URL_PART' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    r1.BASE_URL_PART = r2;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1501>  # String: 'v0.1/public/codepush/' (String)
     // USED → r2 = "v0.1/public/codepush/"
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 22128>  # String: '_publicPrefixUrl' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    r1._publicPrefixUrl = r2;
     // CODE → <CreateEnvironment>: <Reg8: 2>
     // USED → r2 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 25631>  # Function: [#25631  of 41 bytes]: 2 params @ offset 0x0044ff52
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r2 = function_25631 /* Closure with env r2 = r2 */
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 3, string_id: 24002>  # String: 'isRecoverable' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    r1.isRecoverable = r2;
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
     // USED → r2 = param1
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 20572>  # String: '_httpRequester' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    r1._httpRequester = r2;
     // CODE → <GetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 22213>  # String: 'serverUrl' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r2 = r0.serverUrl
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 5, string_id: 22212>  # String: '_serverUrl' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    r1._serverUrl = r2;
     // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 2, string_id: 22212>  # String: '_serverUrl' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r4 = r1._serverUrl
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 217>  # String: 'slice' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r3 = r4.slice
     // CODE → <LoadConstInt>: <Reg8: 2, Imm32: -1>
     // USED → r2 = -1
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r2 = r3(r4, r2);
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 592>  # String: '/' (String)
     // USED → r3 = "/"
     // CODE → <JStrictEqual>: <Addr8: 20, Reg8: 2, Reg8: 3>  # Address: 0000006a
-    if (Identifier(name='r2') === Identifier(name='r3')) { /* jump to label_106 */ }
+    if (CallExpression(callee=Identifier(name='r3'), arguments=(Identifier(name='r4'), Identifier(name='r2')), optional=False) === Identifier(name='r3')) { /* jump to label_106 */ }
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 22212>  # String: '_serverUrl' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r2 = r1._serverUrl
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r2 = r2 + r3;
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 5, string_id: 22212>  # String: '_serverUrl' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    r1._serverUrl = r2 + r3;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 19645>  # String: 'appVersion' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r2 = r0.appVersion
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 6, string_id: 19644>  # String: '_appVersion' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    r1._appVersion = r2;
     // CODE → <GetById>: <Reg8: 2, Reg8: 0, UInt8: 5, string_id: 21704>  # String: 'clientUniqueId' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r2 = r0.clientUniqueId
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 7, string_id: 21703>  # String: '_clientUniqueId' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    r1._clientUniqueId = r2;
     // CODE → <GetById>: <Reg8: 2, Reg8: 0, UInt8: 6, string_id: 21751>  # String: 'deploymentKey' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r2 = r0.deploymentKey
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 8, string_id: 21750>  # String: '_deploymentKey' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    r1._deploymentKey = r2;
     // CODE → <GetById>: <Reg8: 0, Reg8: 0, UInt8: 7, string_id: 21903>  # String: 'ignoreAppVersion' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r0 = r0.ignoreAppVersion
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 9, string_id: 21902>  # String: '_ignoreAppVersion' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    r1._ignoreAppVersion = r0;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → <Ret>: <Reg8: 0>

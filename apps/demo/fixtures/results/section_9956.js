@@ -5,7 +5,8 @@ async function* anon_9956(param0, param1) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrue>: <Addr8: 57, Reg8: 1>  # Address: 0000003d
-    // Error: name 'IfStatement' is not defined
+    if (r1) { /* jump to label_61 */ }
+    // ──────────────── Block 1 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 3>
     // USED → r1 = getEnvironment(3)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 16>
@@ -25,29 +26,32 @@ async function* anon_9956(param0, param1) {
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000002c
     yield label_44;
     // LOOP → START (while)
-    while (true) {
-        // ──────────────── Block 2 ──────────────── 
+    while (r2) {
+        // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
         // USED → r1 = await yield /* ResumeGenerator -> r1 */
         // CODE → <JmpTrue>: <Addr8: 11, Reg8: 2>  # Address: 0000003a
-        // Error: name 'IfStatement' is not defined
-        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'data' (Identifier)
-        r2 = r1.data
-        // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator
-        // CODE → <Ret>: <Reg8: 2>
-        // Unhandled opcode: Ret
-        // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator
-        // CODE → <Ret>: <Reg8: 1>
-        // Unhandled opcode: Ret
-        // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator
-        // CODE → <Ret>: <Reg8: 0>
-        // Unhandled opcode: Ret
-        // ──────────────── Block 1 ──────────────── 
+        if (r2) { /* jump to label_58 */ }
+        // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
         // Unhandled opcode: Ret
     }
     // LOOP → END
+    // ──────────────── Block 4 ──────────────── 
+    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'data' (Identifier)
+    r2 = r1.data
+    // CODE → <CompleteGenerator>: <>
+    // CompleteGenerator
+    // CODE → <Ret>: <Reg8: 2>
+    // Unhandled opcode: Ret
+    // ──────────────── Block 5 ──────────────── 
+    // CODE → <CompleteGenerator>: <>
+    // CompleteGenerator
+    // CODE → <Ret>: <Reg8: 1>
+    // Unhandled opcode: Ret
+    // ──────────────── Block 6 ──────────────── 
+    // CODE → <CompleteGenerator>: <>
+    // CompleteGenerator
+    // CODE → <Ret>: <Reg8: 0>
+    // Unhandled opcode: Ret
 }

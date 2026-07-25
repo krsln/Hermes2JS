@@ -5,9 +5,9 @@ function request(param0, param1, param2) {
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 0>
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r3 = r1[0]
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 86>  # String: 'apply' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r2 = r3.apply
     // CODE → <ReifyArguments>: <Reg8: 0>
     // USED → r0 = arguments
     // CODE → <Mov>: <Reg8: 1, Reg8: 0>
@@ -15,7 +15,7 @@ function request(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r0 = r2(r3, r0, r0);
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }

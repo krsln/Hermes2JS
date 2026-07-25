@@ -5,19 +5,23 @@ function function_25631(param0, param1) {
     // CODE → <LoadConstInt>: <Reg8: 0, Imm32: 500>
     // USED → r0 = 500
     // CODE → <GreaterEq>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r0 = r2 >= r0;
     // CODE → <JmpTrue>: <Addr8: 13, Reg8: 0>  # Address: 0000001a
-    // Error: 'Identifier' object has no attribute 'render'
+    if (r2 >= r0) { /* jump to label_26 */ }
+    // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstInt>: <Reg8: 1, Imm32: 408>
     // USED → r1 = 408
     // CODE → <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
-    // Error: 'Identifier' object has no attribute 'render'
+    // USED → r0 = r2 === r1;
+    // ──────────────── Block 2 ──────────────── 
     // CODE → <JmpTrue>: <Addr8: 13, Reg8: 0>  # Address: 00000027
-    // Error: 'Identifier' object has no attribute 'render'
+    if (r2 === r1) { /* jump to label_39 */ }
+    // ──────────────── Block 3 ──────────────── 
     // CODE → <LoadConstInt>: <Reg8: 1, Imm32: 429>
     // USED → r1 = 429
     // CODE → <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
-    // Error: 'Identifier' object has no attribute 'render'
+    r0 = r2 === r1;
+    // ──────────────── Block 4 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }
