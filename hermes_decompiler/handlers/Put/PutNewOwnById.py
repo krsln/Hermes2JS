@@ -1,6 +1,5 @@
-from hermes_decompiler.ir.Expressions import MemberExpression
-from hermes_decompiler.ir.Statements import AssignmentStatement
-from hermes_decompiler.ir.Values import ConstantValue
+from hermes_decompiler.ir import AssignmentExpression, Identifier, MemberExpression
+from hermes_decompiler.ir.Operators import AssignmentOperator
 
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -38,19 +37,21 @@ class PutNewOwnByIdX(PutById):
             or f"string_{string_id}"
         )
 
-        variable = JSVariable(
-            self.__class__.__name__,
-            entry.address,
-            "",
-            AssignmentStatement(
-                left=MemberExpression(
-                    object=self.get_register_value(analysis, obj_reg),
-                    property=ConstantValue(property_name),
-                ),
-                right=self.get_register_value(analysis, value_reg),
-            ),
+        left = MemberExpression(
+            receiver=self.get_register_value(analysis, obj_reg),
+            # NOTE (fix): the original used `ConstantValue(property_name)`
+            # here, which renders a *quoted string* as the dot-access
+            # target (`obj."foo"` - not valid JS). A property name after
+            # `.` must be a bare identifier, matching PutById's own
+            # (correct) use of an identifier for the same kind of value.
+            member=Identifier(name=property_name),
+            computed=False,
         )
+        right = self.get_register_value(analysis, value_reg)
 
+        expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
+
+        variable = JSVariable(self.__class__.__name__, entry.address, "", expression)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

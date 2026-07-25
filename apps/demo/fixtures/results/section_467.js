@@ -1221,21 +1221,21 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 805>  # Function: [#805 preventDefault of 82 bytes]: 1 params @ offset 0x00188f55
     // USED → r43 = preventDefault;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 16522>  # String: 'preventDefault' (Identifier)
-    r37."preventDefault" = preventDefault;
+    r37.preventDefault = preventDefault;
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 806>  # Function: [#806 stopPropagation of 74 bytes]: 1 params @ offset 0x00188fa7
     // USED → r43 = stopPropagation;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 12808>  # String: 'stopPropagation' (Identifier)
-    r37."stopPropagation" = stopPropagation;
+    r37.stopPropagation = stopPropagation;
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 807>  # Function: [#807 persist of 20 bytes]: 1 params @ offset 0x00188ff1
     // USED → r43 = persist;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 16540>  # String: 'persist' (Identifier)
-    r37."persist" = persist;
+    r37.persist = persist;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 23978>  # String: 'isPersistent' (Identifier)
-    r37."isPersistent" = functionThatReturnsFalse;
+    r37.isPersistent = functionThatReturnsFalse;
     // CODE → <CreateClosure>: <Reg8: 42, Reg8: 1, function_id: 808>  # Function: [#808 destructor of 98 bytes]: 1 params @ offset 0x00189005
     // USED → r42 = destructor;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12543>  # String: 'destructor' (Identifier)
-    r37."destructor" = destructor;
+    r37.destructor = destructor;
     // CODE → <Call3>: <Reg8: 37, Reg8: 41, Reg8: 2, Reg8: 40, Reg8: 37>
     r37 = r41(undefined, r40, r37);
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 9, UInt16: 9, UInt16: 194, UInt16: 115>  # Object: {'type': null, 'target': null, 'currentTarget': null, 'eventPhase': null, 'bubbles': null, 'cancelable': null, 'timeStamp': null, 'defaultPrevented': null, 'isTrusted': null}
@@ -1263,7 +1263,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 814>  # Function: [#814 touchHistory of 4 bytes]: 1 params @ offset 0x00188e5c
     // USED → r40 = touchHistory;
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 40, string_id: 21539>  # String: 'touchHistory' (Identifier)
-    r17."touchHistory" = touchHistory;
+    r17.touchHistory = touchHistory;
     // CODE → <Call2>: <Reg8: 17, Reg8: 37, Reg8: 39, Reg8: 17>
     // USED → r17 = r37(SyntheticEvent, r17);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 17>
@@ -1291,13 +1291,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 815>  # Function: [#815 instrument of 14 bytes]: 2 params @ offset 0x0018912e
     // USED → r43 = instrument;
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 43, string_id: 23867>  # String: 'instrument' (Identifier)
-    r17."instrument" = instrument;
+    r17.instrument = instrument;
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 816>  # Function: [#816 recordTouchTrack of 328 bytes]: 3 params @ offset 0x0018913c
     // USED → r43 = recordTouchTrack;
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 43, string_id: 14419>  # String: 'recordTouchTrack' (Identifier)
-    r17."recordTouchTrack" = recordTouchTrack;
+    r17.recordTouchTrack = recordTouchTrack;
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21539>  # String: 'touchHistory' (Identifier)
-    r17."touchHistory" = r37;
+    r17.touchHistory = r37;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 13, Reg8: 17>
     createEnvironment()[13] = r17;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 14, Reg8: 11>
@@ -1311,133 +1311,133 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObjectWithBuffer>: <Reg8: 43, UInt16: 2, UInt16: 2, UInt16: 263, UInt16: 159>  # Object: {'bubbled': 'onStartShouldSetResponder', 'captured': 'onStartShouldSetResponderCapture'}
     // USED → r43 = {'bubbled': 'onStartShouldSetResponder', 'captured': 'onStartShouldSetResponderCapture'}
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
-    r37."phasedRegistrationNames" = r43;
+    r37.phasedRegistrationNames = r43;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = ["topTouchStart"];
+    r37.dependencies = ["topTouchStart"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 24007>  # String: 'startShouldSetResponder' (Identifier)
-    r17."startShouldSetResponder" = r37;
+    r17.startShouldSetResponder = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <NewObjectWithBuffer>: <Reg8: 43, UInt16: 2, UInt16: 2, UInt16: 263, UInt16: 164>  # Object: {'bubbled': 'onScrollShouldSetResponder', 'captured': 'onScrollShouldSetResponderCapture'}
     // USED → r43 = {'bubbled': 'onScrollShouldSetResponder', 'captured': 'onScrollShouldSetResponderCapture'}
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
-    r37."phasedRegistrationNames" = r43;
+    r37.phasedRegistrationNames = r43;
     // CODE → <NewArrayWithBuffer>: <Reg8: 43, UInt16: 1, UInt16: 1, UInt16: 40881>  # Array: ['topScroll']
     // USED → r43 = ["topScroll"];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = ["topScroll"];
+    r37.dependencies = ["topScroll"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 17673>  # String: 'scrollShouldSetResponder' (Identifier)
-    r17."scrollShouldSetResponder" = r37;
+    r17.scrollShouldSetResponder = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <NewObjectWithBuffer>: <Reg8: 43, UInt16: 2, UInt16: 2, UInt16: 263, UInt16: 111>  # Object: {'bubbled': 'onSelectionChangeShouldSetResponder', 'captured': 'onSelectionChangeShouldSetResponderCapture'}
     // USED → r43 = {'bubbled': 'onSelectionChangeShouldSetResponder', 'captured': 'onSelectionChangeShouldSetResponderCapture'}
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
-    r37."phasedRegistrationNames" = r43;
+    r37.phasedRegistrationNames = r43;
     // CODE → <NewArrayWithBuffer>: <Reg8: 43, UInt16: 1, UInt16: 1, UInt16: 40900>  # Array: ['topSelectionChange']
     // USED → r43 = ["topSelectionChange"];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = ["topSelectionChange"];
+    r37.dependencies = ["topSelectionChange"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 22946>  # String: 'selectionChangeShouldSetResponder' (Identifier)
-    r17."selectionChangeShouldSetResponder" = r37;
+    r17.selectionChangeShouldSetResponder = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <NewObjectWithBuffer>: <Reg8: 43, UInt16: 2, UInt16: 2, UInt16: 263, UInt16: 184>  # Object: {'bubbled': 'onMoveShouldSetResponder', 'captured': 'onMoveShouldSetResponderCapture'}
     // USED → r43 = {'bubbled': 'onMoveShouldSetResponder', 'captured': 'onMoveShouldSetResponderCapture'}
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
-    r37."phasedRegistrationNames" = r43;
+    r37.phasedRegistrationNames = r43;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = ["topTouchMove"];
+    r37.dependencies = ["topTouchMove"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 20089>  # String: 'moveShouldSetResponder' (Identifier)
-    r17."moveShouldSetResponder" = r37;
+    r17.moveShouldSetResponder = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 43, string_id: 22333>  # String: 'onResponderStart' (Identifier)
     // USED → r43 = "onResponderStart";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 43, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = "onResponderStart";
+    r37.registrationName = "onResponderStart";
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = ["topTouchStart"];
+    r37.dependencies = ["topTouchStart"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21573>  # String: 'responderStart' (Identifier)
-    r17."responderStart" = r37;
+    r17.responderStart = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 22238>  # String: 'onResponderMove' (Identifier)
     // USED → r42 = "onResponderMove";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 42, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = "onResponderMove";
+    r37.registrationName = "onResponderMove";
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = ["topTouchMove"];
+    r37.dependencies = ["topTouchMove"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21199>  # String: 'responderMove' (Identifier)
-    r17."responderMove" = r37;
+    r17.responderMove = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 41, string_id: 22198>  # String: 'onResponderEnd' (Identifier)
     // USED → r41 = "onResponderEnd";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 41, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = "onResponderEnd";
+    r37.registrationName = "onResponderEnd";
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = ["topTouchCancel", "topTouchEnd"];
+    r37.dependencies = ["topTouchCancel", "topTouchEnd"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 15364>  # String: 'responderEnd' (Identifier)
-    r17."responderEnd" = r37;
+    r17.responderEnd = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 41, string_id: 22319>  # String: 'onResponderRelease' (Identifier)
     // USED → r41 = "onResponderRelease";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 41, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = "onResponderRelease";
+    r37.registrationName = "onResponderRelease";
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = ["topTouchCancel", "topTouchEnd"];
+    r37.dependencies = ["topTouchCancel", "topTouchEnd"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 14449>  # String: 'responderRelease' (Identifier)
-    r17."responderRelease" = r37;
+    r17.responderRelease = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 19872>  # String: 'onResponderTerminationRequest' (Identifier)
     // USED → r40 = "onResponderTerminationRequest";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = "onResponderTerminationRequest";
+    r37.registrationName = "onResponderTerminationRequest";
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = [];
+    r37.dependencies = [];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21593>  # String: 'responderTerminationRequest' (Identifier)
-    r17."responderTerminationRequest" = r37;
+    r17.responderTerminationRequest = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 22208>  # String: 'onResponderGrant' (Identifier)
     // USED → r40 = "onResponderGrant";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = "onResponderGrant";
+    r37.registrationName = "onResponderGrant";
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = [];
+    r37.dependencies = [];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 18117>  # String: 'responderGrant' (Identifier)
-    r17."responderGrant" = r37;
+    r17.responderGrant = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 22270>  # String: 'onResponderReject' (Identifier)
     // USED → r40 = "onResponderReject";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = "onResponderReject";
+    r37.registrationName = "onResponderReject";
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = [];
+    r37.dependencies = [];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21302>  # String: 'responderReject' (Identifier)
-    r17."responderReject" = r37;
+    r17.responderReject = r37;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 22427>  # String: 'onResponderTerminate' (Identifier)
     // USED → r40 = "onResponderTerminate";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = "onResponderTerminate";
+    r37.registrationName = "onResponderTerminate";
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = [];
+    r37.dependencies = [];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21588>  # String: 'responderTerminate' (Identifier)
-    r17."responderTerminate" = r37;
+    r17.responderTerminate = r37;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 16, Reg8: 17>
     createEnvironment()[16] = r17;
     // CODE → <NewObject>: <Reg8: 40>
@@ -1445,23 +1445,23 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <CreateClosure>: <Reg8: 37, Reg8: 1, function_id: 817>  # Function: [#817 _getResponder of 9 bytes]: 1 params @ offset 0x00189284
     // USED → r37 = _getResponder;
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 37, string_id: 15697>  # String: '_getResponder' (Identifier)
-    r40."_getResponder" = _getResponder;
+    r40._getResponder = _getResponder;
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 17, string_id: 14917>  # String: 'eventTypes' (Identifier)
-    r40."eventTypes" = r17;
+    r40.eventTypes = r17;
     // CODE → <CreateClosure>: <Reg8: 17, Reg8: 1, function_id: 818>  # Function: [#818 extractEvents of 1750 bytes]: 5 params @ offset 0x0018928d
     // USED → r17 = extractEvents;
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 17, string_id: 14577>  # String: 'extractEvents' (Identifier)
-    r40."extractEvents" = extractEvents;
+    r40.extractEvents = extractEvents;
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 11, string_id: 21101>  # String: 'GlobalResponderHandler' (Identifier)
-    r40."GlobalResponderHandler" = null;
+    r40.GlobalResponderHandler = null;
     // CODE → <NewObject>: <Reg8: 17>
     // USED → r17 = {  }
     // CODE → <CreateClosure>: <Reg8: 37, Reg8: 1, function_id: 819>  # Function: [#819 injectGlobalResponderHandler of 20 bytes]: 2 params @ offset 0x00189963
     // USED → r37 = injectGlobalResponderHandler;
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21100>  # String: 'injectGlobalResponderHandler' (Identifier)
-    r17."injectGlobalResponderHandler" = injectGlobalResponderHandler;
+    r17.injectGlobalResponderHandler = injectGlobalResponderHandler;
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 17, string_id: 15132>  # String: 'injection' (Identifier)
-    r40."injection" = r17;
+    r40.injection = r17;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 17, Reg8: 40>
     createEnvironment()[17] = r40;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 11>
@@ -1523,19 +1523,19 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 50>
     // USED → r50 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 50, Reg8: 40, string_id: 14576>  # String: 'ResponderEventPlugin' (Identifier)
-    r50."ResponderEventPlugin" = r40;
+    r50.ResponderEventPlugin = r40;
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <NewObject>: <Reg8: 41>
     // USED → r41 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 14917>  # String: 'eventTypes' (Identifier)
-    r37."eventTypes" = r41;
+    r37.eventTypes = r41;
     // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 820>  # Function: [#820 extractEvents of 246 bytes]: 5 params @ offset 0x00189977
     // USED → r41 = extractEvents;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 14577>  # String: 'extractEvents' (Identifier)
-    r37."extractEvents" = extractEvents;
+    r37.extractEvents = extractEvents;
     // CODE → <PutNewOwnById>: <Reg8: 50, Reg8: 37, string_id: 14569>  # String: 'ReactNativeBridgeEventPlugin' (Identifier)
-    r50."ReactNativeBridgeEventPlugin" = r37;
+    r50.ReactNativeBridgeEventPlugin = r37;
     // CODE → <Mov>: <Reg8: 48, Reg8: 50>
     // USED → r48 = r50;
     // CODE → <LoadConstTrue>: <Reg8: 37>
@@ -1639,7 +1639,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 16>
     // USED → r16 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 16, Reg8: 37, string_id: 24472>  # String: 'unsafelyIgnoreFunctions' (Identifier)
-    r16."unsafelyIgnoreFunctions" = true;
+    r16.unsafelyIgnoreFunctions = true;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 28, Reg8: 16>
     createEnvironment()[28] = r16;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 29, Reg8: 12>
@@ -1813,7 +1813,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 823>  # Function: [#823 onChange of 122 bytes]: 4 params @ offset 0x00189aaf
     // USED → r43 = onChange;
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 43, string_id: 15401>  # String: 'onChange' (Identifier)
-    r40."onChange" = onChange;
+    r40.onChange = onChange;
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
     r40 = r41(r42, r40);
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
@@ -2101,7 +2101,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
     // USED → r39 = then;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 38, Reg8: 39, string_id: 231>  # String: 'then' (Identifier)
-    r38."then" = then;
+    r38.then = then;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 91, Reg8: 38>
     createEnvironment()[91] = r38;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 92, Reg8: 11>
@@ -2171,189 +2171,189 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 20>
     // USED → r20 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-    r20."readContext" = readContext;
+    r20.readContext = readContext;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-    r20."use" = use;
+    r20.use = use;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
-    r20."useCallback" = throwInvalidHookError;
+    r20.useCallback = throwInvalidHookError;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 228>  # String: 'useContext' (Identifier)
-    r20."useContext" = throwInvalidHookError;
+    r20.useContext = throwInvalidHookError;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 243>  # String: 'useEffect' (Identifier)
-    r20."useEffect" = throwInvalidHookError;
+    r20.useEffect = throwInvalidHookError;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-    r20."useImperativeHandle" = throwInvalidHookError;
+    r20.useImperativeHandle = throwInvalidHookError;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-    r20."useInsertionEffect" = throwInvalidHookError;
+    r20.useInsertionEffect = throwInvalidHookError;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-    r20."useLayoutEffect" = throwInvalidHookError;
+    r20.useLayoutEffect = throwInvalidHookError;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 230>  # String: 'useMemo' (Identifier)
-    r20."useMemo" = throwInvalidHookError;
+    r20.useMemo = throwInvalidHookError;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 12216>  # String: 'useReducer' (Identifier)
-    r20."useReducer" = throwInvalidHookError;
+    r20.useReducer = throwInvalidHookError;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 244>  # String: 'useRef' (Identifier)
-    r20."useRef" = throwInvalidHookError;
+    r20.useRef = throwInvalidHookError;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 246>  # String: 'useState' (Identifier)
-    r20."useState" = throwInvalidHookError;
+    r20.useState = throwInvalidHookError;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-    r20."useDebugValue" = throwInvalidHookError;
+    r20.useDebugValue = throwInvalidHookError;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-    r20."useDeferredValue" = throwInvalidHookError;
+    r20.useDeferredValue = throwInvalidHookError;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24665>  # String: 'useTransition' (Identifier)
-    r20."useTransition" = throwInvalidHookError;
+    r20.useTransition = throwInvalidHookError;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-    r20."useSyncExternalStore" = throwInvalidHookError;
+    r20.useSyncExternalStore = throwInvalidHookError;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24594>  # String: 'useId' (Identifier)
-    r20."useId" = throwInvalidHookError;
+    r20.useId = throwInvalidHookError;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 115, Reg8: 20>
     createEnvironment()[115] = r20;
     // CODE → <NewObject>: <Reg8: 20>
     // USED → r20 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-    r20."readContext" = readContext;
+    r20.readContext = readContext;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-    r20."use" = use;
+    r20.use = use;
     // CODE → <CreateClosure>: <Reg8: 36, Reg8: 1, function_id: 826>  # Function: [#826 useCallback of 49 bytes]: 3 params @ offset 0x00189b35
     // USED → r36 = useCallback;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
-    r20."useCallback" = useCallback;
+    r20.useCallback = useCallback;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-    r20."useContext" = readContext;
+    r20.useContext = readContext;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 243>  # String: 'useEffect' (Identifier)
-    r20."useEffect" = mountEffect;
+    r20.useEffect = mountEffect;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 827>  # Function: [#827 useImperativeHandle of 90 bytes]: 4 params @ offset 0x00189b66
     // USED → r35 = useImperativeHandle;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-    r20."useImperativeHandle" = useImperativeHandle;
+    r20.useImperativeHandle = useImperativeHandle;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 828>  # Function: [#828 useLayoutEffect of 33 bytes]: 3 params @ offset 0x00189bc0
     // USED → r35 = useLayoutEffect;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-    r20."useLayoutEffect" = useLayoutEffect;
+    r20.useLayoutEffect = useLayoutEffect;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 829>  # Function: [#829 useInsertionEffect of 30 bytes]: 3 params @ offset 0x00189be1
     // USED → r35 = useInsertionEffect;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-    r20."useInsertionEffect" = useInsertionEffect;
+    r20.useInsertionEffect = useInsertionEffect;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 830>  # Function: [#830 useMemo of 64 bytes]: 3 params @ offset 0x00189bff
     // USED → r35 = useMemo;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 230>  # String: 'useMemo' (Identifier)
-    r20."useMemo" = useMemo;
+    r20.useMemo = useMemo;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 831>  # Function: [#831 useReducer of 139 bytes]: 4 params @ offset 0x00189c3f
     // USED → r35 = useReducer;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 12216>  # String: 'useReducer' (Identifier)
-    r20."useReducer" = useReducer;
+    r20.useReducer = useReducer;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 832>  # Function: [#832 useRef of 31 bytes]: 2 params @ offset 0x00189cca
     // USED → r35 = useRef;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 244>  # String: 'useRef' (Identifier)
-    r20."useRef" = useRef;
+    r20.useRef = useRef;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 833>  # Function: [#833 useState of 72 bytes]: 2 params @ offset 0x00189ce9
     // USED → r35 = useState;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 246>  # String: 'useState' (Identifier)
-    r20."useState" = useState;
+    r20.useState = useState;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-    r20."useDebugValue" = mountDebugValue;
+    r20.useDebugValue = mountDebugValue;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 834>  # Function: [#834 useDeferredValue of 34 bytes]: 3 params @ offset 0x00189d31
     // USED → r35 = useDeferredValue;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-    r20."useDeferredValue" = useDeferredValue;
+    r20.useDeferredValue = useDeferredValue;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 835>  # Function: [#835 useTransition of 79 bytes]: 1 params @ offset 0x00189d53
     // USED → r35 = useTransition;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24665>  # String: 'useTransition' (Identifier)
-    r20."useTransition" = useTransition;
+    r20.useTransition = useTransition;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 836>  # Function: [#836 useSyncExternalStore of 239 bytes]: 3 params @ offset 0x00189da2
     // USED → r35 = useSyncExternalStore;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-    r20."useSyncExternalStore" = useSyncExternalStore;
+    r20.useSyncExternalStore = useSyncExternalStore;
     // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 837>  # Function: [#837 useId of 83 bytes]: 1 params @ offset 0x00189e91
     // USED → r35 = useId;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24594>  # String: 'useId' (Identifier)
-    r20."useId" = useId;
+    r20.useId = useId;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 116, Reg8: 20>
     createEnvironment()[116] = r20;
     // CODE → <NewObject>: <Reg8: 20>
     // USED → r20 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-    r20."readContext" = readContext;
+    r20.readContext = readContext;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-    r20."use" = use;
+    r20.use = use;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
-    r20."useCallback" = updateCallback;
+    r20.useCallback = updateCallback;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-    r20."useContext" = readContext;
+    r20.useContext = readContext;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
-    r20."useEffect" = updateEffect;
+    r20.useEffect = updateEffect;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-    r20."useImperativeHandle" = updateImperativeHandle;
+    r20.useImperativeHandle = updateImperativeHandle;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-    r20."useInsertionEffect" = updateInsertionEffect;
+    r20.useInsertionEffect = updateInsertionEffect;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-    r20."useLayoutEffect" = updateLayoutEffect;
+    r20.useLayoutEffect = updateLayoutEffect;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
-    r20."useMemo" = updateMemo;
+    r20.useMemo = updateMemo;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 12216>  # String: 'useReducer' (Identifier)
-    r20."useReducer" = updateReducer;
+    r20.useReducer = updateReducer;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
-    r20."useRef" = updateRef;
+    r20.useRef = updateRef;
     // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 838>  # Function: [#838 useState of 22 bytes]: 1 params @ offset 0x00189ee4
     // USED → r34 = useState;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 34, string_id: 246>  # String: 'useState' (Identifier)
-    r20."useState" = useState;
+    r20.useState = useState;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-    r20."useDebugValue" = mountDebugValue;
+    r20.useDebugValue = mountDebugValue;
     // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 839>  # Function: [#839 useDeferredValue of 42 bytes]: 3 params @ offset 0x00189efa
     // USED → r34 = useDeferredValue;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-    r20."useDeferredValue" = useDeferredValue;
+    r20.useDeferredValue = useDeferredValue;
     // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 840>  # Function: [#840 useTransition of 78 bytes]: 1 params @ offset 0x00189f24
     // USED → r34 = useTransition;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24665>  # String: 'useTransition' (Identifier)
-    r20."useTransition" = useTransition;
+    r20.useTransition = useTransition;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-    r20."useSyncExternalStore" = updateSyncExternalStore;
+    r20.useSyncExternalStore = updateSyncExternalStore;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
-    r20."useId" = updateId;
+    r20.useId = updateId;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 117, Reg8: 20>
     createEnvironment()[117] = r20;
     // CODE → <NewObject>: <Reg8: 20>
     // USED → r20 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-    r20."readContext" = readContext;
+    r20.readContext = readContext;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-    r20."use" = use;
+    r20.use = use;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
-    r20."useCallback" = updateCallback;
+    r20.useCallback = updateCallback;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-    r20."useContext" = readContext;
+    r20.useContext = readContext;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
-    r20."useEffect" = updateEffect;
+    r20.useEffect = updateEffect;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-    r20."useImperativeHandle" = updateImperativeHandle;
+    r20.useImperativeHandle = updateImperativeHandle;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-    r20."useInsertionEffect" = updateInsertionEffect;
+    r20.useInsertionEffect = updateInsertionEffect;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-    r20."useLayoutEffect" = updateLayoutEffect;
+    r20.useLayoutEffect = updateLayoutEffect;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
-    r20."useMemo" = updateMemo;
+    r20.useMemo = updateMemo;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 25, string_id: 12216>  # String: 'useReducer' (Identifier)
-    r20."useReducer" = rerenderReducer;
+    r20.useReducer = rerenderReducer;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
-    r20."useRef" = updateRef;
+    r20.useRef = updateRef;
     // CODE → <CreateClosure>: <Reg8: 24, Reg8: 1, function_id: 841>  # Function: [#841 useState of 22 bytes]: 1 params @ offset 0x00189f72
     // USED → r24 = useState;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 246>  # String: 'useState' (Identifier)
-    r20."useState" = useState;
+    r20.useState = useState;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-    r20."useDebugValue" = mountDebugValue;
+    r20.useDebugValue = mountDebugValue;
     // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 842>  # Function: [#842 useDeferredValue of 75 bytes]: 3 params @ offset 0x00189f88
     // USED → r23 = useDeferredValue;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-    r20."useDeferredValue" = useDeferredValue;
+    r20.useDeferredValue = useDeferredValue;
     // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 843>  # Function: [#843 useTransition of 78 bytes]: 1 params @ offset 0x00189fd3
     // USED → r23 = useTransition;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24665>  # String: 'useTransition' (Identifier)
-    r20."useTransition" = useTransition;
+    r20.useTransition = useTransition;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-    r20."useSyncExternalStore" = updateSyncExternalStore;
+    r20.useSyncExternalStore = updateSyncExternalStore;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
-    r20."useId" = updateId;
+    r20.useId = updateId;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 118, Reg8: 20>
     createEnvironment()[118] = r20;
     // CODE → <NewObject>: <Reg8: 20>
@@ -2361,19 +2361,19 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 844>  # Function: [#844 isMounted of 34 bytes]: 2 params @ offset 0x0018a021
     // USED → r21 = isMounted;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 16785>  # String: 'isMounted' (Identifier)
-    r20."isMounted" = isMounted;
+    r20.isMounted = isMounted;
     // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 845>  # Function: [#845 enqueueSetState of 109 bytes]: 4 params @ offset 0x0018a043
     // USED → r21 = enqueueSetState;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22773>  # String: 'enqueueSetState' (Identifier)
-    r20."enqueueSetState" = enqueueSetState;
+    r20.enqueueSetState = enqueueSetState;
     // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 846>  # Function: [#846 enqueueReplaceState of 118 bytes]: 4 params @ offset 0x0018a0b0
     // USED → r21 = enqueueReplaceState;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22685>  # String: 'enqueueReplaceState' (Identifier)
-    r20."enqueueReplaceState" = enqueueReplaceState;
+    r20.enqueueReplaceState = enqueueReplaceState;
     // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 847>  # Function: [#847 enqueueForceUpdate of 109 bytes]: 3 params @ offset 0x0018a126
     // USED → r21 = enqueueForceUpdate;
     // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 17151>  # String: 'enqueueForceUpdate' (Identifier)
-    r20."enqueueForceUpdate" = enqueueForceUpdate;
+    r20.enqueueForceUpdate = enqueueForceUpdate;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 119, Reg8: 20>
     createEnvironment()[119] = r20;
     // CODE → <TryGetById>: <Reg8: 20, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
@@ -2581,11 +2581,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <NewObject>: <Reg8: 8>
         // USED → r8 = {  }
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-        r8."getInspectorDataForInstance" = getInspectorDataForInstance;
+        r8.getInspectorDataForInstance = getInspectorDataForInstance;
         // CODE → <CreateClosure>: <Reg8: 15, Reg8: 1, function_id: 849>  # Function: [#849 getInspectorDataForViewTag of 21 bytes]: 1 params @ offset 0x0018a245
         // USED → r15 = getInspectorDataForViewTag;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12857>  # String: 'getInspectorDataForViewTag' (Identifier)
-        r8."getInspectorDataForViewTag" = getInspectorDataForViewTag;
+        r8.getInspectorDataForViewTag = getInspectorDataForViewTag;
         // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
         // USED → r16 = function_850;
         // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
@@ -2593,53 +2593,53 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
         // USED → r15 = r15(function_850, null, findNodeHandle);
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-        r8."getInspectorDataForViewAtPoint" = r15(function_850, null, findNodeHandle);
+        r8.getInspectorDataForViewAtPoint = r15(function_850, null, findNodeHandle);
         // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-        r12."rendererConfig" = r8;
+        r12.rendererConfig = r8;
         // CODE → <NewObject>: <Reg8: 8>
         // USED → r8 = {  }
         // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
         // USED → r15 = r12.bundleType
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
-        r8."bundleType" = r15;
+        r8.bundleType = r15;
         // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
         // USED → r15 = r12.version
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
-        r8."version" = r15;
+        r8.version = r15;
         // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
         // USED → r15 = r12.rendererPackageName
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-        r8."rendererPackageName" = r15;
+        r8.rendererPackageName = r15;
         // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
         // USED → r15 = r12.rendererConfig
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-        r8."rendererConfig" = r15;
+        r8.rendererConfig = r15;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
-        r8."overrideHookState" = null;
+        r8.overrideHookState = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
-        r8."overrideHookStateDeletePath" = null;
+        r8.overrideHookStateDeletePath = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
-        r8."overrideHookStateRenamePath" = null;
+        r8.overrideHookStateRenamePath = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
-        r8."overrideProps" = null;
+        r8.overrideProps = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
-        r8."overridePropsDeletePath" = null;
+        r8.overridePropsDeletePath = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
-        r8."overridePropsRenamePath" = null;
+        r8.overridePropsRenamePath = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
-        r8."setErrorHandler" = null;
+        r8.setErrorHandler = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
-        r8."setSuspenseHandler" = null;
+        r8.setSuspenseHandler = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
-        r8."scheduleUpdate" = null;
+        r8.scheduleUpdate = null;
         // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
         // USED → r14 = r14.ReactCurrentDispatcher
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
-        r8."currentDispatcherRef" = r14;
+        r8.currentDispatcherRef = r14;
         // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
         // USED → r14 = findHostInstanceByFiber;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
-        r8."findHostInstanceByFiber" = findHostInstanceByFiber;
+        r8.findHostInstanceByFiber = findHostInstanceByFiber;
         // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
         // USED → r12 = r12.findFiberByHostInstance
         // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
@@ -2654,19 +2654,19 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // USED → r12 = emptyFindFiberByHostInstance;
     // ──────────────── Block 29 ──────────────── 
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-    r8."findFiberByHostInstance" = emptyFindFiberByHostInstance;
+    r8.findFiberByHostInstance = emptyFindFiberByHostInstance;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
-    r8."findHostInstancesForRefresh" = null;
+    r8.findHostInstancesForRefresh = null;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
-    r8."scheduleRefresh" = null;
+    r8.scheduleRefresh = null;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
-    r8."scheduleRoot" = null;
+    r8.scheduleRoot = null;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
-    r8."setRefreshHandler" = null;
+    r8.setRefreshHandler = null;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
-    r8."getCurrentFiber" = null;
+    r8.getCurrentFiber = null;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
-    r8."reconcilerVersion" = "18.3.0-canary-9372c6311-20240315";
+    r8.reconcilerVersion = "18.3.0-canary-9372c6311-20240315";
     // CODE → <Mov>: <Reg8: 7, Reg8: 8>
     // USED → r7 = r8;
     // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)

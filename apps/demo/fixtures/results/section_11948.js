@@ -113,7 +113,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
     // USED → r2 = r20(getEnvironment(1)[11], r2);
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 19648>  # String: 'silentJSONParsing' (Identifier)
-    r15."silentJSONParsing" = r20(getEnvironment(1)[11], r2);
+    r15.silentJSONParsing = r20(getEnvironment(1)[11], r2);
     // CODE → <GetById>: <Reg8: 20, Reg8: 21, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
     // USED → r20 = getEnvironment(1)[11].transitional
     // CODE → <GetById>: <Reg8: 2, Reg8: 21, UInt8: 7, string_id: 12635>  # String: 'boolean' (Identifier)
@@ -121,7 +121,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
     // USED → r2 = r20(getEnvironment(1)[11], r2);
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 17756>  # String: 'forcedJSONParsing' (Identifier)
-    r15."forcedJSONParsing" = r20(getEnvironment(1)[11], r2);
+    r15.forcedJSONParsing = r20(getEnvironment(1)[11], r2);
     // CODE → <GetById>: <Reg8: 20, Reg8: 21, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
     // USED → r20 = getEnvironment(1)[11].transitional
     // CODE → <GetById>: <Reg8: 2, Reg8: 21, UInt8: 7, string_id: 12635>  # String: 'boolean' (Identifier)
@@ -129,7 +129,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
     // USED → r2 = r20(getEnvironment(1)[11], r2);
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 22889>  # String: 'clarifyTimeoutError' (Identifier)
-    r15."clarifyTimeoutError" = r20(getEnvironment(1)[11], r2);
+    r15.clarifyTimeoutError = r20(getEnvironment(1)[11], r2);
     // CODE → <LoadConstFalse>: <Reg8: 2>
     // USED → r2 = false;
     // CODE → <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 2>
@@ -164,11 +164,11 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 19, Reg8: 2, UInt8: 9, string_id: 12255>  # String: 'function' (Identifier)
     // USED → r19 = getEnvironment(1)[11].function
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 19, string_id: 13048>  # String: 'encode' (Identifier)
-    r15."encode" = r19;
+    r15.encode = r19;
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 9, string_id: 12255>  # String: 'function' (Identifier)
     // USED → r2 = getEnvironment(1)[11].function
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 12525>  # String: 'serialize' (Identifier)
-    r15."serialize" = r2;
+    r15.serialize = r2;
     // CODE → <LoadConstTrue>: <Reg8: 2>
     // USED → r2 = true;
     // CODE → <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 14, Reg8: 15, Reg8: 2>
@@ -179,7 +179,7 @@ function _request(param0, param1, param2) {
     // CODE → <NewObject>: <Reg8: 2>
     // USED → r2 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 2, Reg8: 14, string_id: 12525>  # String: 'serialize' (Identifier)
-    r2."serialize" = r14;
+    r2.serialize = r14;
     // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 2, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
     r10(undefined, r2, r2).paramsSerializer = r2;
     // ──────────────── Block 13 ──────────────── 
@@ -221,7 +221,7 @@ function _request(param0, param1, param2) {
         // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
         // USED → r2 = r18(getEnvironment(1)[11], "baseURL");
         // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 22683>  # String: 'baseUrl' (Identifier)
-        r14."baseUrl" = r18(getEnvironment(1)[11], "baseURL");
+        r14.baseUrl = r18(getEnvironment(1)[11], "baseURL");
         // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
         // USED → r18 = getEnvironment(1)[11].spelling
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 24723>  # String: 'withXSRFToken' (Identifier)
@@ -229,7 +229,7 @@ function _request(param0, param1, param2) {
         // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
         // USED → r2 = r18(getEnvironment(1)[11], "withXSRFToken");
         // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 24724>  # String: 'withXsrfToken' (Identifier)
-        r14."withXsrfToken" = r18(getEnvironment(1)[11], "withXSRFToken");
+        r14.withXsrfToken = r18(getEnvironment(1)[11], "withXSRFToken");
         // CODE → <LoadConstTrue>: <Reg8: 2>
         // USED → r2 = true;
         // CODE → <Call4>: <Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 10, Reg8: 14, Reg8: 2>

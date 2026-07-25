@@ -1,12 +1,18 @@
-from hermes_decompiler.ir.Expressions import CallExpression, MemberExpression
-from hermes_decompiler.ir.Values import ObjectLiteralValue, ConstantValue, IdentifierValue
+from hermes_decompiler.ir import (
+    CallExpression,
+    Identifier,
+    MemberExpression,
+    ObjectExpression,
+    ObjectProperty,
+    python_literal,
+)
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
+from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
 
 # Patterns
 PUT_GETTER_SETTER_PATTERN = sequence(REG, REG, REG, REG, UINT8)
@@ -31,31 +37,29 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
             match.groups(),
         )
 
-        properties = {}
+        # NOTE: get_register_value() always returns a fallback
+        # Identifier, never None (pre-existing behavior, unchanged by
+        # this migration), so getter/setter are unconditionally
+        # included - same as before.
+        properties = (
+            ObjectProperty(key=Identifier(name="get"), value=self.get_register_value(analysis, getter_reg)),
+            ObjectProperty(key=Identifier(name="set"), value=self.get_register_value(analysis, setter_reg)),
+            ObjectProperty(key=Identifier(name="enumerable"), value=python_literal(bool(enumerable_flag))),
+            ObjectProperty(key=Identifier(name="configurable"), value=python_literal(True)),
+        )
 
-        getter = self.get_register_value(analysis, getter_reg)
-        if getter is not None:
-            properties["get"] = getter
-
-        setter = self.get_register_value(analysis, setter_reg)
-        if setter is not None:
-            properties["set"] = setter
-
-        properties["enumerable"] = ConstantValue(bool(enumerable_flag))
-        properties["configurable"] = ConstantValue(True)
-
-        descriptor = ObjectLiteralValue(properties)
+        descriptor = ObjectExpression(properties=properties)
 
         call = CallExpression(
             callee=MemberExpression(
-                object=IdentifierValue("Object"),
-                property=IdentifierValue("defineProperty"),
+                receiver=Identifier(name="Object"),
+                member=Identifier(name="defineProperty"),
             ),
-            arguments=[
+            arguments=(
                 self.get_register_value(analysis, obj_reg),
                 self.get_register_value(analysis, key_reg),
                 descriptor,
-            ],
+            ),
         )
 
         variable = JSVariable(handler, entry.address, "", call)
