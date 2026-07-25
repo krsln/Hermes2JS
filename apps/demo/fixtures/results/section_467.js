@@ -1269,19 +1269,19 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 17>
     r1[9] = r17
     // CODE → <NewArrayWithBuffer>: <Reg8: 42, UInt16: 1, UInt16: 1, UInt16: 40883>  # Array: ['topTouchStart']
-    // USED → r42 = ["topTouchStart"]
+    // USED → r42 = ["topTouchStart"];
     // CODE → <NewArrayWithBuffer>: <Reg8: 41, UInt16: 1, UInt16: 1, UInt16: 40892>  # Array: ['topTouchMove']
-    // USED → r41 = ["topTouchMove"]
+    // USED → r41 = ["topTouchMove"];
     // CODE → <NewArrayWithBuffer>: <Reg8: 40, UInt16: 2, UInt16: 2, UInt16: 40895>  # Array: ['topTouchCancel', 'topTouchEnd']
-    // USED → r40 = ["topTouchCancel", "topTouchEnd"]
+    // USED → r40 = ["topTouchCancel", "topTouchEnd"];
     // CODE → <NewArray>: <Reg8: 17, UInt16: 0>
-    // USED → r17 = []
+    // USED → r17 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 10, Reg8: 17>
-    r1[10] = r17
+    r1[10] = []
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 4, UInt16: 4, UInt16: 250, UInt16: 141>  # Object: {'touchBank': null, 'numberActiveTouches': 0, 'indexOfSingleActiveTouch': 4294967295, 'mostRecentTimeStamp': 0}
     // USED → r37 = {'touchBank': None, 'numberActiveTouches': 0, 'indexOfSingleActiveTouch': 4294967295, 'mostRecentTimeStamp': 0}
     // CODE → <PutById>: <Reg8: 37, Reg8: 17, UInt8: 5, string_id: 21537>  # String: 'touchBank' (Identifier)
-    r37.touchBank = r17;
+    r37.touchBank = [];
     // CODE → <LoadConstInt>: <Reg8: 39, Imm32: -1>
     // USED → r39 = -1
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 11, Reg8: 37>
@@ -1313,7 +1313,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
     r37."phasedRegistrationNames" = r43;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r42;
+    r37."dependencies" = ["topTouchStart"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 24007>  # String: 'startShouldSetResponder' (Identifier)
     r17."startShouldSetResponder" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1323,9 +1323,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
     r37."phasedRegistrationNames" = r43;
     // CODE → <NewArrayWithBuffer>: <Reg8: 43, UInt16: 1, UInt16: 1, UInt16: 40881>  # Array: ['topScroll']
-    // USED → r43 = ["topScroll"]
+    // USED → r43 = ["topScroll"];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r43;
+    r37."dependencies" = ["topScroll"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 17673>  # String: 'scrollShouldSetResponder' (Identifier)
     r17."scrollShouldSetResponder" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1335,9 +1335,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
     r37."phasedRegistrationNames" = r43;
     // CODE → <NewArrayWithBuffer>: <Reg8: 43, UInt16: 1, UInt16: 1, UInt16: 40900>  # Array: ['topSelectionChange']
-    // USED → r43 = ["topSelectionChange"]
+    // USED → r43 = ["topSelectionChange"];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r43;
+    r37."dependencies" = ["topSelectionChange"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 22946>  # String: 'selectionChangeShouldSetResponder' (Identifier)
     r17."selectionChangeShouldSetResponder" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1347,7 +1347,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
     r37."phasedRegistrationNames" = r43;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r41;
+    r37."dependencies" = ["topTouchMove"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 20089>  # String: 'moveShouldSetResponder' (Identifier)
     r17."moveShouldSetResponder" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1357,7 +1357,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 43, string_id: 204>  # String: 'registrationName' (Identifier)
     r37."registrationName" = r43;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r42;
+    r37."dependencies" = ["topTouchStart"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21573>  # String: 'responderStart' (Identifier)
     r17."responderStart" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1367,7 +1367,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 42, string_id: 204>  # String: 'registrationName' (Identifier)
     r37."registrationName" = r42;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r41;
+    r37."dependencies" = ["topTouchMove"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21199>  # String: 'responderMove' (Identifier)
     r17."responderMove" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1377,7 +1377,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 41, string_id: 204>  # String: 'registrationName' (Identifier)
     r37."registrationName" = r41;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r40;
+    r37."dependencies" = ["topTouchCancel", "topTouchEnd"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 15364>  # String: 'responderEnd' (Identifier)
     r17."responderEnd" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1387,7 +1387,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 41, string_id: 204>  # String: 'registrationName' (Identifier)
     r37."registrationName" = r41;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r40;
+    r37."dependencies" = ["topTouchCancel", "topTouchEnd"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 14449>  # String: 'responderRelease' (Identifier)
     r17."responderRelease" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1397,9 +1397,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
     r37."registrationName" = r40;
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-    // USED → r40 = []
+    // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r40;
+    r37."dependencies" = [];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21593>  # String: 'responderTerminationRequest' (Identifier)
     r17."responderTerminationRequest" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1409,9 +1409,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
     r37."registrationName" = r40;
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-    // USED → r40 = []
+    // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r40;
+    r37."dependencies" = [];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 18117>  # String: 'responderGrant' (Identifier)
     r17."responderGrant" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1421,9 +1421,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
     r37."registrationName" = r40;
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-    // USED → r40 = []
+    // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r40;
+    r37."dependencies" = [];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21302>  # String: 'responderReject' (Identifier)
     r17."responderReject" = r37;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1433,9 +1433,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
     r37."registrationName" = r40;
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-    // USED → r40 = []
+    // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    r37."dependencies" = r40;
+    r37."dependencies" = [];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21588>  # String: 'responderTerminate' (Identifier)
     r17."responderTerminate" = r37;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 16, Reg8: 17>
@@ -1471,9 +1471,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 19, Reg8: 51>
     r1[19] = r51
     // CODE → <NewArray>: <Reg8: 17, UInt16: 0>
-    // USED → r17 = []
+    // USED → r17 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 20, Reg8: 17>
-    r1[20] = r17
+    r1[20] = []
     // CODE → <NewObject>: <Reg8: 17>
     // USED → r17 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 21, Reg8: 17>
@@ -1513,11 +1513,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 11, string_id: 91>  # String: 'call' (Identifier)
     // USED → r41 = r42.call
     // CODE → <NewArrayWithBuffer>: <Reg8: 37, UInt16: 2, UInt16: 2, UInt16: 40903>  # Array: ['ResponderEventPlugin', 'ReactNativeBridgeEventPlugin']
-    // USED → r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]
+    // USED → r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"];
     // CODE → <Call2>: <Reg8: 37, Reg8: 41, Reg8: 42, Reg8: 37>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 37>
-    r1[18] = r37
+    r1[18] = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]
     // CODE → <Call1>: <Reg8: 37, Reg8: 16, Reg8: 2>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <NewObject>: <Reg8: 50>
@@ -1993,9 +1993,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-    // USED → r40 = []
+    // USED → r40 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
-    r1[70] = r40
+    r1[70] = []
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 71, Reg8: 39>
     r1[71] = r39
     // CODE → <NewObject>: <Reg8: 39>
@@ -2033,9 +2033,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 77, Reg8: 11>
     r1[77] = r11
     // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
-    // USED → r38 = []
+    // USED → r38 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 78, Reg8: 38>
-    r1[78] = r38
+    r1[78] = []
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 79, Reg8: 10>
     r1[79] = r10
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 80, Reg8: 10>

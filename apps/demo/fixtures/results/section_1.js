@@ -109,9 +109,9 @@ function function_1(param0, param1) {
     // CODE → <PutById>: <Reg8: 4, Reg8: 3, UInt8: 9, string_id: 24224>  # String: 'packModuleId' (Identifier)
     r4.packModuleId = r3;
     // CODE → <NewArray>: <Reg8: 3, UInt16: 0>
-    // USED → r3 = []
+    // USED → r3 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 7, Reg8: 3>
-    r2[7] = r3
+    r2[7] = []
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 5, string_id: 26>  # String: 'Map' (Identifier)
     // USED → r1 = r1.Map
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 158>  # String: 'prototype' (Identifier)
