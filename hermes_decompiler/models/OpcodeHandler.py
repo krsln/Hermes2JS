@@ -1,8 +1,9 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from typing import Dict, Optional
 
-from hermes_decompiler.ir import Identifier, Expression
-from hermes_decompiler.ir.Values import Value, RegisterValue
+from hermes_decompiler.ir import Expression, Identifier, RawExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
@@ -22,7 +23,8 @@ class OpcodeHandler(ABC):
     (one instance per opcode, populated via __init_subclass__). That's a
     legitimate use of class-level storage and is left as-is.
     """
-    registry: Dict[str, 'OpcodeHandler'] = {}
+
+    registry: Dict[str, "OpcodeHandler"] = {}
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -32,32 +34,52 @@ class OpcodeHandler(ABC):
     @abstractmethod
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         """
-        Process a Hermes bytecode opcode and produce a corresponding JavaScript
-        variable or result.
+        Process a Hermes bytecode opcode and produce a corresponding
+        JavaScript variable or result.
         """
         ...
-        # raise NotImplementedError
 
     @classmethod
-    def get_handler(cls, opcode: str) -> Optional['OpcodeHandler']:
+    def get_handler(cls, opcode: str) -> Optional["OpcodeHandler"]:
         return cls.registry.get(opcode)
 
     @classmethod
-    def build_invalid_args_result(cls, analysis: HermesAnalysis, entry: OpcodeEntry,
-                                  error_detail: str = "Invalid arguments") -> OpcodeResult:
-        error_msg = f"// Error: {cls.__name__} at address {entry.address}: {error_detail}: {entry.args}"
-        logger.warning("%s at address %s: %s (args=%r)", cls.__name__, entry.address, error_detail, entry.args)
+    def build_invalid_args_result(
+        cls,
+        analysis: HermesAnalysis,
+        entry: OpcodeEntry,
+        error_detail: str = "Invalid arguments",
+    ) -> OpcodeResult:
+        error_msg = (
+            f"// Error: {cls.__name__} at address {entry.address}: "
+            f"{error_detail}: {entry.args}"
+        )
+        logger.warning(
+            "%s at address %s: %s (args=%r)",
+            cls.__name__, entry.address, error_detail, entry.args,
+        )
 
-        variable = JSVariable(cls.__name__, entry.address, "", error_msg)
+        variable = JSVariable(
+            cls.__name__, entry.address, "", RawExpression(error_msg),
+        )
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
 
     @classmethod
-    def build_exception_result(cls, analysis: HermesAnalysis, entry: OpcodeEntry, error: str) -> OpcodeResult:
-        logger.error("%s raised at address %s: %s", cls.__name__, entry.address, error)
+    def build_exception_result(
+        cls,
+        analysis: HermesAnalysis,
+        entry: OpcodeEntry,
+        error: str,
+    ) -> OpcodeResult:
+        logger.error(
+            "%s raised at address %s: %s", cls.__name__, entry.address, error,
+        )
 
-        variable = JSVariable(cls.__name__, entry.address, "", error)
+        variable = JSVariable(
+            cls.__name__, entry.address, "", RawExpression(error),
+        )
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -73,31 +95,26 @@ class OpcodeHandler(ABC):
         return variable
 
     @classmethod
-    def get_register_value_new(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+    def get_register_value(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+        """
+        Resolve the current value of a register as an IR expression.
+
+        Falls back to a plain `Identifier(f"r{reg}")` when the register
+        hasn't been assigned yet in this analysis pass (e.g. it's a
+        parameter, or the assigning instruction wasn't tracked) - this is
+        the direct replacement for the old `RegisterValue` node, which no
+        longer exists as a separate IR type.
+        """
+
         variable = cls._get_register_variable(analysis, reg)
 
         if not variable:
-            return Identifier(name=str(reg))
+            return Identifier(name=f"r{reg}")
 
         if isinstance(variable.value, Expression):
             value = variable.value
         else:
-            return Identifier(name=str(reg))
-
-        variable.used = True
-        return value
-
-    @classmethod
-    def get_register_value(cls, analysis: HermesAnalysis, reg: int) -> Value:
-        variable = cls._get_register_variable(analysis, reg)
-
-        if not variable:
-            return RegisterValue(reg)
-
-        if isinstance(variable.value, Value):
-            value = variable.value
-        else:
-            value = RegisterValue(reg)
+            value = Identifier(name=f"r{reg}")
 
         variable.used = True
         return value
@@ -106,11 +123,7 @@ class OpcodeHandler(ABC):
     def _get_register_variable(cls, analysis: HermesAnalysis, reg: int) -> JSVariable | None:
         variable = analysis.registers.get(f"r{reg}")
 
-        if (
-                variable
-                # and variable.handler != "ResumeGenerator"
-                # and not variable.handler.endswith("Environment")
-        ):
+        if variable:
             return variable
 
         return None
