@@ -59,7 +59,7 @@ function function_12825(param0, param1, param2, param3, param4) {
             if (!(r1(r1(param1))(undefined, param2) === false)) goto label_39;
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Catch>: <Reg8: 12>
-            // USED → r12 = caughtException
+            // USED → r12 = caughtException;
             // CODE → <Mov>: <Reg8: 11, Reg8: 9>
             // USED → r11 = param4;
             // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
@@ -77,7 +77,7 @@ function function_12825(param0, param1, param2, param3, param4) {
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
             // USED → r1 = param4.error
             // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>
-            r1 = r1(param4, r12);
+            r1 = r1(param4, caughtException);
         }
         // LOOP → END
     }

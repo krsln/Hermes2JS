@@ -2753,7 +2753,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // Unhandled opcode: Ret
         // ──────────────── Block 33 ──────────────── 
         // CODE → <Catch>: <Reg8: 6>
-        r6 = caughtException
+        r6 = caughtException;
     }
     // LOOP → END
     // ──────────────── Block 35 ──────────────── 

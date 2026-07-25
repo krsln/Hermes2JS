@@ -64,11 +64,11 @@ function processColorsInProps(param0, param1) {
             goto label_28;
             // ──────────────── Block 9 ──────────────── 
             // CODE → <Catch>: <Reg8: 11>
-            // USED → r11 = caughtException
+            // USED → r11 = caughtException;
             // CODE → <IteratorClose>: <Reg8: 12, UInt8: 1>
             // Error: IteratorClose at address 153: Invalid arguments: Reg8: 12, UInt8: 1;
             // CODE → <Throw>: <Reg8: 11>
-            throw r11;
+            throw caughtException;
         }
         // LOOP → END
     }

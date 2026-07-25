@@ -1,5 +1,5 @@
-from hermes_decompiler.Logger import logger
-from hermes_decompiler.ir.Values import ExceptionValue
+from hermes_decompiler.Logger import get_logger
+from hermes_decompiler.ir import Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -8,12 +8,15 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
+logger = get_logger(__name__)
+
 
 # DEFINE_OPCODE_1(Catch, Reg8)
 # Example: <Catch>: <Reg8: 1>
 class Catch(OpcodeHandler):
     """Marks the start of a catch block, binding the caught exception value
     to the destination register."""
+
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -25,7 +28,7 @@ class Catch(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', ExceptionValue())
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", Identifier(name="caughtException"))
         analysis.add_result(entry, variable)
 
         logger.debug("Catch block starts at %d -> r%d", entry.address, dest_reg)

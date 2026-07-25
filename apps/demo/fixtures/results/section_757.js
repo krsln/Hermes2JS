@@ -192,7 +192,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // LOOP → END
     // ──────────────── Block 19 ──────────────── 
     // CODE → <Catch>: <Reg8: 0>
-    r0 = caughtException
+    r0 = caughtException;
     // CODE → <LoadConstFalse>: <Reg8: 0>
     r0 = false;
     // CODE → <Ret>: <Reg8: 0>

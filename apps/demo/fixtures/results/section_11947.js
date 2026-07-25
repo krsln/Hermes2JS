@@ -48,17 +48,17 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Ret>: <Reg8: 3>
     // Unhandled opcode: Ret
     // CODE → <Catch>: <Reg8: 7>
-    // USED → r7 = caughtException
+    // USED → r7 = caughtException;
     // CODE → <Mov>: <Reg8: 1, Reg8: 7>
-    // USED → r1 = r7;
+    // USED → r1 = caughtException;
     // CODE → <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = r3.Error
     // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
-    // USED → r4 = r7 instanceof r4;
+    // USED → r4 = caughtException instanceof r4;
     // CODE → <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
-    if (!(r7 instanceof r4)) goto label_316;
+    if (!(caughtException instanceof r4)) goto label_316;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <NewObject>: <Reg8: 6>
     r6 = {  }
@@ -114,18 +114,18 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
     // USED → r2 = r7(r9, /^.+\\n/, "");
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-    // USED → r4 = r7;
+    // USED → r4 = caughtException;
     // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r4 = r7.stack
+    // USED → r4 = caughtException.stack
     // CODE → <JmpTrue>: <Addr8: 17, Reg8: 4>  # Address: 000000d6
     if (r4) goto label_214;
     // ──────────────── Block 12 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 1>
-    // USED → r6 = r7;
+    // USED → r6 = caughtException;
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
     // USED → r4 = r7(r9, /^.+\\n/, "");
     // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r7.stack = r7(r9, /^.+\\n/, "");
+    caughtException.stack = r7(r9, /^.+\\n/, "");
     // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
     goto label_312;
     // ──────────────── Block 13 ──────────────── 
@@ -137,9 +137,9 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
     // USED → r4 = r3.String
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-    // USED → r3 = r7;
+    // USED → r3 = caughtException;
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r3 = r7.stack
+    // USED → r3 = caughtException.stack
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
     // USED → r5 = r4(undefined, r3);
     // CODE → <GetById>: <Reg8: 4, Reg8: 5, UInt8: 8, string_id: 19080>  # String: 'endsWith' (Identifier)
@@ -158,9 +158,9 @@ async function* anon_11947(param0, param1, param2) {
     if (r4(r4(undefined, r3), r6(r7(r9, /^.+\\n/, ""), /^.+\\n.+\\n/, ""))) goto label_312;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-    // USED → r3 = r7;
+    // USED → r3 = caughtException;
     // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
-    // USED → r4 = r7.stack
+    // USED → r4 = caughtException.stack
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
     // USED → r5 = r7(r9, /^.+\\n/, "");
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
@@ -170,7 +170,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
     // USED → r2 = r4 + ("\\n" + r7(r9, /^.+\\n/, ""));
     // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    r7.stack = r4 + ("\\n" + r7(r9, /^.+\\n/, ""));
+    caughtException.stack = r4 + ("\\n" + r7(r9, /^.+\\n/, ""));
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
     goto label_316;
@@ -178,10 +178,10 @@ async function* anon_11947(param0, param1, param2) {
     while (true) {
         // ──────────────── Block 18 ──────────────── 
         // CODE → <Throw>: <Reg8: 1>
-        throw r7;
+        throw caughtException;
         // ──────────────── Block 17 ──────────────── 
         // CODE → <Catch>: <Reg8: 2>
-        r2 = caughtException
+        r2 = caughtException;
     }
     // LOOP → END
     // ──────────────── Block 19 ──────────────── 

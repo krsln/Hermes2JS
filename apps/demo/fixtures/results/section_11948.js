@@ -504,13 +504,13 @@ function _request(param0, param1, param2) {
         if (0 >= r1) goto label_1024;
         // ──────────────── Block 32 ──────────────── 
         // CODE → <Catch>: <Reg8: 10>
-        // USED → r10 = caughtException
+        // USED → r10 = caughtException;
         // CODE → <Mov>: <Reg8: 9, Reg8: 7>
         // USED → r9 = r7;
         // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
         // USED → r7 = r7.call
         // CODE → <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
-        r7 = r7(r7, this, r10);
+        r7 = r7(r7, this, caughtException);
     }
     // LOOP → END
     // ──────────────── Block 34 ──────────────── 
@@ -548,7 +548,7 @@ function _request(param0, param1, param2) {
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
     // CODE → <Catch>: <Reg8: 2>
-    // USED → r2 = caughtException
+    // USED → r2 = caughtException;
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
@@ -556,7 +556,7 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 0, Reg8: 1, UInt8: 30, string_id: 13645>  # String: 'reject' (Identifier)
     // USED → r0 = r1.reject
     // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
-    r0 = r0(r1, r2);
+    r0 = r0(r1, caughtException);
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }
