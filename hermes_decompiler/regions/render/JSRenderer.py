@@ -1,16 +1,12 @@
 from __future__ import annotations
 
+import warnings
+
 from hermes_decompiler.ir import Expression, Statement
 from hermes_decompiler.regions.models.Regions import (
-    SequenceRegion,
-    LoopRegion,
-    IfRegion, Region, LoopKind,
+    SequenceRegion, LoopRegion, IfRegion, Region, LoopKind,
 )
-
-from hermes_decompiler.regions.models.Statements import (
-    InstructionState
-)
-
+from hermes_decompiler.regions.models.Statements import (InstructionState)
 from .Printer import Printer
 
 
@@ -144,8 +140,13 @@ class JSRenderer:
 
             return f"{rendered};"
 
-        # TODO: remove once every handler produces `ir` nodes.
-        return str(result.result)
+        warnings.warn(
+            f"Handler produced a non-IR result: {type(result.result).__name__}. "
+            "Every opcode handler should now produce IR nodes.",
+            stacklevel=2,
+        )
+
+        return ""
 
     def dump(self, region, indent=0):
         print(
