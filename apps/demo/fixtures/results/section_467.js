@@ -2385,9 +2385,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Mov>: <Reg8: 57, Reg8: 21>
     r57 = createThis(r21, r20);
     // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
-    // USED → r20 = new r20(param7)
+    // USED → r20 = new r20(param7);
     // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
-    // USED → r20 = createThis(r21, r20)[r20]
+    // USED → r20 = createThis(r21, r20)[new r20(param7)]
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>
     createEnvironment()[120] = r20;
     // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
@@ -2567,9 +2567,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Mov>: <Reg8: 57, Reg8: 12>
         r57 = createThis(r12, r10);
         // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
-        // USED → r10 = new r10("undefined")
+        // USED → r10 = new r10("undefined");
         // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
-        // USED → r10 = createThis(r12, r10)[r10]
+        // USED → r10 = createThis(r12, r10)[new r10("undefined")]
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
         createEnvironment()[168] = r10;
         // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}

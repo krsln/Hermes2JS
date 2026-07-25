@@ -20,9 +20,9 @@ function onPress(param0) {
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
     r8 = createThis(r3, r2);
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
-    // USED → r2 = new r2(getEnvironment(0))
+    // USED → r2 = new r2(getEnvironment(0));
     // CODE → <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    // USED → r3 = createThis(r3, r2)[r2]
+    // USED → r3 = createThis(r3, r2)[new r2(getEnvironment(0))]
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 21914>  # String: 'trackJoinCompetitionList' (Identifier)
     // USED → r2 = r3.trackJoinCompetitionList
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>

@@ -74,9 +74,9 @@ async function* anon_17161(param0, param1) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 3>
     r11 = createThis(r3, r4);
     // CODE → <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-    // USED → r2 = new r4(" failed with status ", createThis(r3, r4))
+    // USED → r2 = new r4(" failed with status ", createThis(r3, r4));
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = createThis(r3, r4)[r2]
+    // USED → r2 = createThis(r3, r4)[new r4(" failed with status ", createThis(r3, r4))]
     // CODE → <Throw>: <Reg8: 2>
     throw r2;
     // ──────────────── Block 8 ──────────────── 

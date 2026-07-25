@@ -78,9 +78,9 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>
     r12 = createThis(r4, r8);
     // CODE → <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
-    // USED → r4 = new r8(createThis(r4, r8))
+    // USED → r4 = new r8(createThis(r4, r8));
     // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
-    // USED → r6 = createThis(r4, r8)[r4]
+    // USED → r6 = createThis(r4, r8)[new r8(createThis(r4, r8))]
     // CODE → <Jmp>: <Addr8: 16>  # Address: 00000087
     goto label_135;
     // ──────────────── Block 8 ──────────────── 

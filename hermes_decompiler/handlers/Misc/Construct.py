@@ -1,8 +1,7 @@
 from abc import ABC
 from typing import ClassVar
 
-from hermes_decompiler.ir.Expressions import NewExpression
-from hermes_decompiler.ir.Values import ThisValue, Value
+from hermes_decompiler.ir import Expression, Identifier, NewExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -55,8 +54,10 @@ class ConstructBase(OpcodeHandler, ABC):
         constructor = self.get_register_value(analysis, func_reg)
         arguments = self.resolve_arguments(analysis, func_reg, arg_count)
 
+        # `ir.NewExpression` names this field `callee` (not `constructor`),
+        # matching CallExpression's naming for consistency.
         value = NewExpression(
-            constructor=constructor,
+            callee=constructor,
             arguments=arguments,
         )
 
@@ -65,23 +66,27 @@ class ConstructBase(OpcodeHandler, ABC):
 
         return OpcodeResult(entry, variable)
 
-    def resolve_arguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> list[Value]:
+    def resolve_arguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> tuple[Expression, ...]:
         values = [
             self.get_register_value(analysis, reg)
             for reg in range(func_reg - arg_count, func_reg)
         ]
 
-        # Hermes CreateThis inserts an implicit "this"
-        if values and isinstance(values[0], ThisValue):
+        # Hermes CreateThis inserts an implicit "this" as the first
+        # constructor argument slot; `ThisValue` no longer exists as a
+        # distinct type (see decision on RegisterValue/ThisValue ->
+        # Identifier), so the check becomes a name comparison.
+        if values and isinstance(values[0], Identifier) and values[0].name == "this":
             values = values[1:]
 
-        return values
+        return tuple(values)
 
 
 class Construct(ConstructBase):
     """
     Construct using UInt8 argument count.
     """
+
     ARG_PATTERN = UINT8
 
 
@@ -89,4 +94,5 @@ class ConstructLong(ConstructBase):
     """
     Construct using UInt32 argument count.
     """
+
     ARG_PATTERN = UINT32

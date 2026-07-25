@@ -121,9 +121,9 @@ function function_1(param0, param1) {
     // CODE → <Mov>: <Reg8: 14, Reg8: 3>
     r14 = createThis(r3, r1);
     // CODE → <Construct>: <Reg8: 1, Reg8: 1, UInt8: 1>
-    // USED → r1 = new r1(undefined)
+    // USED → r1 = new r1(undefined);
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 3, Reg8: 1>
-    // USED → r1 = createThis(r3, r1)[r1]
+    // USED → r1 = createThis(r3, r1)[new r1(undefined)]
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 8, Reg8: 1>
     createEnvironment()[8] = r1;
     // CODE → <Ret>: <Reg8: 0>
