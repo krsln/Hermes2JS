@@ -18,11 +18,11 @@ async function* anon_9956(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 7880>  # String: 'https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=' (String)
     // USED → r4 = "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=";
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
-    // USED → r1 = param1
+    // USED → r1 = param1;
     // CODE → <Add>: <Reg8: 1, Reg8: 4, Reg8: 1>
-    // USED → r1 = "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + r1;
+    // USED → r1 = "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + param1;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = await CallExpression(callee=Identifier(name='r2'), arguments=(Identifier(name='r3'), BinaryExpression(left=StringLiteral(value='https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr='), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r1'))), optional=False)
+    r1 = await CallExpression(callee=Identifier(name='r2'), arguments=(Identifier(name='r3'), BinaryExpression(left=StringLiteral(value='https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr='), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='param1'))), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000002c
     yield label_44;
     // LOOP → START (while)

@@ -1,15 +1,15 @@
 function _request(param0, param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>
-    // USED → r6 = param1
+    // USED → r6 = param1;
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 2>
-    // USED → r2 = param2
+    // USED → r2 = param2;
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 0>
-    // USED → r8 = this
+    // USED → r8 = this;
     // CODE → <CreateEnvironment>: <Reg8: 9>
     // USED → r9 = createEnvironment();
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
-    createEnvironment()[0] = r2;
+    createEnvironment()[0] = param2;
     // CODE → <LoadConstUndefined>: <Reg8: 11>
     // USED → r11 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 12>
@@ -29,16 +29,16 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined;
     // CODE → <TypeOf>: <Reg8: 14, Reg8: 6>
-    // USED → r14 = typeof r6;
+    // USED → r14 = typeof param1;
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
     // USED → r10 = "string";
     // CODE → <JStrictEqual>: <Addr8: 18, Reg8: 14, Reg8: 10>  # Address: 0000003a
-    if (typeof r6 === "string") goto label_58;
+    if (typeof param1 === "string") goto label_58;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 14, Reg8: 6>
-    // USED → r14 = r6;
+    // USED → r14 = param1;
     // CODE → <JmpTrue>: <Addr8: 5, Reg8: 14>  # Address: 00000034
-    if (r6) goto label_52;
+    if (param1) goto label_52;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewObject>: <Reg8: 14>
     // USED → r14 = {  }
@@ -57,7 +57,7 @@ function _request(param0, param1, param2) {
         // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
         // USED → r10 = getEnvironment(1)[7].default
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
-        // USED → r2 = r8.defaults
+        // USED → r2 = this.defaults
         // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 2, Reg8: 14>
         // USED → r10 = r10(undefined, r2, r2);
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 10>
@@ -78,7 +78,7 @@ function _request(param0, param1, param2) {
             // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
             createEnvironment()[0] = r2;
             // CODE → <PutById>: <Reg8: 2, Reg8: 6, UInt8: 1, string_id: 14158>  # String: 'url' (Identifier)
-            r2.url = r6;
+            r2.url = param1;
             // CODE → <Mov>: <Reg8: 14, Reg8: 2>
             // USED → r14 = r2;
             // LOOP → START (while)
@@ -88,7 +88,7 @@ function _request(param0, param1, param2) {
                 // USED → r2 = {  }
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <JmpTrue>: <Addr8: 5, Reg8: 2>  # Address: 0000003f
-                if (r2) goto label_63;
+                if (param2) goto label_63;
             }
             // LOOP → END
         }
@@ -189,7 +189,7 @@ function _request(param0, param1, param2) {
     if (r2 !== undefined) goto label_375;
     // ──────────────── Block 14 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
-    // USED → r2 = r8.defaults
+    // USED → r2 = this.defaults
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
     // USED → r2 = r2.allowAbsoluteUrls
     // CODE → <JStrictNotEqual>: <Addr8: 14, Reg8: 2, Reg8: 11>  # Address: 00000165
@@ -240,7 +240,7 @@ function _request(param0, param1, param2) {
         if (r15) goto label_466;
         // ──────────────── Block 16 ──────────────── 
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
-        // USED → r2 = r8.defaults
+        // USED → r2 = this.defaults
         // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
         // USED → r2 = r2.allowAbsoluteUrls
         // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 3, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
@@ -249,7 +249,7 @@ function _request(param0, param1, param2) {
     // LOOP → END
     // ──────────────── Block 18 ──────────────── 
     // CODE → <GetById>: <Reg8: 14, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
-    // USED → r14 = r8.defaults
+    // USED → r14 = this.defaults
     // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
     // USED → r15 = r14.method
     // ──────────────── Block 19 ──────────────── 
@@ -320,7 +320,7 @@ function _request(param0, param1, param2) {
     // CODE → <StoreNPToEnvironment>: <Reg8: 9, UInt8: 3, Reg8: 2>
     createEnvironment()[3] = true;
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 18, string_id: 19835>  # String: 'interceptors' (Identifier)
-    // USED → r2 = r8.interceptors
+    // USED → r2 = this.interceptors
     // CODE → <GetById>: <Reg8: 15, Reg8: 2, UInt8: 19, string_id: 11955>  # String: 'request' (Identifier)
     // USED → r15 = r2.request
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 16, string_id: 135>  # String: 'forEach' (Identifier)
@@ -336,7 +336,7 @@ function _request(param0, param1, param2) {
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 4, Reg8: 2>
     createEnvironment()[4] = [];
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 18, string_id: 19835>  # String: 'interceptors' (Identifier)
-    // USED → r2 = r8.interceptors
+    // USED → r2 = this.interceptors
     // CODE → <GetById>: <Reg8: 15, Reg8: 2, UInt8: 20, string_id: 11767>  # String: 'response' (Identifier)
     // USED → r15 = r2.response
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 16, string_id: 135>  # String: 'forEach' (Identifier)
@@ -361,31 +361,31 @@ function _request(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 14, UInt8: 21, string_id: 87>  # String: 'bind' (Identifier)
     // USED → r9 = r14.bind
     // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 14, Reg8: 8>
-    // USED → r9 = r9(r14, r8);
+    // USED → r9 = r9(r14, this);
     // CODE → <NewArray>: <Reg8: 15, UInt16: 2>
     // USED → r15 = [];
     // CODE → <PutOwnByIndex>: <Reg8: 15, Reg8: 9, UInt8: 0>
-    // USED → r15 = [r9(r14, r8)];
+    // USED → r15 = [r9(r14, this)];
     // CODE → <PutOwnByIndex>: <Reg8: 15, Reg8: 11, UInt8: 1>
-    // USED → r15 = [r9(r14, r8), undefined];
+    // USED → r15 = [r9(r14, this), undefined];
     // CODE → <GetById>: <Reg8: 16, Reg8: 15, UInt8: 22, string_id: 16801>  # String: 'unshift' (Identifier)
-    // USED → r16 = [r9(r14, r8), undefined].unshift
+    // USED → r16 = [r9(r14, this), undefined].unshift
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 16, UInt8: 23, string_id: 86>  # String: 'apply' (Identifier)
     // USED → r14 = r16.apply
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
     // USED → r9 = [];
     // CODE → <Call3>: <Reg8: 9, Reg8: 14, Reg8: 16, Reg8: 15, Reg8: 9>
-    r9 = r14(r16, [r9(r14, r8), undefined], []);
+    r9 = r14(r16, [r9(r14, this), undefined], []);
     // CODE → <GetByIdShort>: <Reg8: 16, Reg8: 15, UInt8: 24, string_id: 201>  # String: 'push' (Identifier)
-    // USED → r16 = [r9(r14, r8), undefined].push
+    // USED → r16 = [r9(r14, this), undefined].push
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 16, UInt8: 23, string_id: 86>  # String: 'apply' (Identifier)
     // USED → r14 = r16.apply
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     // USED → r9 = [];
     // CODE → <Call3>: <Reg8: 9, Reg8: 14, Reg8: 16, Reg8: 15, Reg8: 9>
-    r9 = r14(r16, [r9(r14, r8), undefined], []);
+    r9 = r14(r16, [r9(r14, this), undefined], []);
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
-    // USED → r14 = [r9(r14, r8), undefined].length
+    // USED → r14 = [r9(r14, this), undefined].length
     // CODE → <Mov>: <Reg8: 5, Reg8: 14>
     // USED → r5 = r14;
     // CODE → <GetGlobalObject>: <Reg8: 9>
@@ -414,7 +414,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
     r4 = +0 + 1;
     // CODE → <GetByVal>: <Reg8: 16, Reg8: 15, Reg8: 14>
-    // USED → r16 = [r9(r14, r8), undefined][+0]
+    // USED → r16 = [r9(r14, this), undefined][+0]
     // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
     // USED → r9 = +(+0 + 1);
     // CODE → <Inc>: <Reg8: 14, Reg8: 9>
@@ -422,7 +422,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 14>
     r4 = +(+0 + 1) + 1;
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
-    // USED → r9 = [r9(r14, r8), undefined][+(+0 + 1)]
+    // USED → r9 = [r9(r14, this), undefined][+(+0 + 1)]
     // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
     // USED → r0 = r17(r9(r16, r10(undefined, r2, r2)), r16, r9);
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
@@ -491,7 +491,7 @@ function _request(param0, param1, param2) {
         // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
         // USED → r6 = r7.call
         // CODE → <Call3>: <Reg8: 0, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1>
-        // USED → r0 = r6(r7, r8, r13(undefined, r10(undefined, r2, r2)));
+        // USED → r0 = r6(r7, this, r13(undefined, r10(undefined, r2, r2)));
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0;
         // CODE → <Mov>: <Reg8: 1, Reg8: 3>
@@ -510,14 +510,14 @@ function _request(param0, param1, param2) {
         // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
         // USED → r7 = r7.call
         // CODE → <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
-        r7 = r7(r7, r8, r10);
+        r7 = r7(r7, this, r10);
     }
     // LOOP → END
     // ──────────────── Block 34 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 0>
-    // USED → r8 = r6(r7, r8, r13(undefined, r10(undefined, r2, r2)));
+    // USED → r8 = r6(r7, this, r13(undefined, r10(undefined, r2, r2)));
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
-    // USED → r7 = r6(r7, r8, r13(undefined, r10(undefined, r2, r2))).then
+    // USED → r7 = r6(r7, this, r13(undefined, r10(undefined, r2, r2))).then
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     // USED → r9 = [];
     // CODE → <Mov>: <Reg8: 1, Reg8: 4>
@@ -539,7 +539,7 @@ function _request(param0, param1, param2) {
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>
     // USED → r1 = [][+(+0 + 1)]
     // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
-    r0 = r7(r6(r7, r8, r13(undefined, r10(undefined, r2, r2))), r6, r1);
+    r0 = r7(r6(r7, this, r13(undefined, r10(undefined, r2, r2))), r6, r1);
     // CODE → <Mov>: <Reg8: 1, Reg8: 5>
     // USED → r1 = r1;
     // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb

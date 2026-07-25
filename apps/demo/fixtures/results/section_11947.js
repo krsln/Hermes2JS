@@ -3,16 +3,16 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <StartGenerator>: <>
     // StartGenerator
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 0>
-    // USED → r8 = this
+    // USED → r8 = this;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 5>
     r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrueLong>: <Addr32: 311, Reg8: 5>  # Address: 0000013e
     if (r5) goto label_318;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 1>
-    // USED → r4 = param1
+    // USED → r4 = param1;
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 2>
-    // USED → r3 = param2
+    // USED → r3 = param2;
     // CODE → <LoadConstUndefined>: <Reg8: 5>
     // USED → r5 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 6>
@@ -20,18 +20,18 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     r2 = undefined;
     // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 17057>  # String: '_request' (Identifier)
-    // USED → r7 = r8._request
+    // USED → r7 = this._request
     // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
-    r3 = await CallExpression(callee=Identifier(name='r7'), arguments=(Identifier(name='r8'), Identifier(name='r4'), Identifier(name='r3')), optional=False)
+    r3 = await CallExpression(callee=Identifier(name='r7'), arguments=(Identifier(name='this'), Identifier(name='param1'), Identifier(name='param2')), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
     yield label_41;
     // LOOP → START (while)
-    while (r4) {
+    while (param1) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
         r3 = await yield /* ResumeGenerator -> r3 */
         // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032
-        if (r4) goto label_50;
+        if (param1) goto label_50;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 3>
         // Unhandled opcode: Ret

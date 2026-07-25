@@ -1,17 +1,17 @@
 function function_467(param0, param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 18, UInt8: 2>
-    // USED → r18 = param2
+    // USED → r18 = param2;
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 6>
-    // USED → r3 = param6
+    // USED → r3 = param6;
     // CODE → <LoadParam>: <Reg8: 19, UInt8: 7>
-    // USED → r19 = param7
+    // USED → r19 = param7;
     // CODE → <CreateEnvironment>: <Reg8: 1>
     // USED → r1 = createEnvironment();
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 18>
-    createEnvironment()[0] = r18;
+    createEnvironment()[0] = param2;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 19>
-    createEnvironment()[1] = r19;
+    createEnvironment()[1] = param7;
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
@@ -1177,15 +1177,15 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstZero>: <Reg8: 10>
     // USED → r10 = 0;
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 19, Reg8: 10>
-    // USED → r0 = r19[0]
+    // USED → r0 = param7[0]
     // CODE → <Call2>: <Reg8: 0, Reg8: 18, Reg8: 2, Reg8: 0>
-    r0 = r18(undefined, r0);
+    r0 = param2(undefined, r0);
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1;
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 19, Reg8: 0>
-    // USED → r0 = r19[1]
+    // USED → r0 = param7[1]
     // CODE → <Call2>: <Reg8: 14, Reg8: 18, Reg8: 2, Reg8: 0>
-    // USED → r14 = r18(undefined, r0);
+    // USED → r14 = param2(undefined, r0);
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
@@ -1485,21 +1485,21 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstUInt8>: <Reg8: 17, UInt8: 2>
     // USED → r17 = 2;
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
-    // USED → r37 = r19[2]
+    // USED → r37 = param7[2]
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
-    // USED → r37 = r18(undefined, r37);
+    // USED → r37 = param2(undefined, r37);
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = r18(undefined, r37).ReactNativeViewConfigRegistry
+    // USED → r37 = param2(undefined, r37).ReactNativeViewConfigRegistry
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 8, string_id: 22641>  # String: 'customBubblingEventTypes' (Identifier)
     // USED → r37 = r37.customBubblingEventTypes
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 23, Reg8: 37>
     createEnvironment()[23] = r37;
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
-    // USED → r37 = r19[2]
+    // USED → r37 = param7[2]
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
-    // USED → r37 = r18(undefined, r37);
+    // USED → r37 = param2(undefined, r37);
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = r18(undefined, r37).ReactNativeViewConfigRegistry
+    // USED → r37 = param2(undefined, r37).ReactNativeViewConfigRegistry
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 9, string_id: 21940>  # String: 'customDirectEventTypes' (Identifier)
     // USED → r37 = r37.customDirectEventTypes
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 24, Reg8: 37>
@@ -1647,7 +1647,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
     createEnvironment()[30] = null;
     // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 14, string_id: 21563>  # String: '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED' (Identifier)
-    // USED → r14 = r18(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
+    // USED → r14 = param2(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 11>
     createEnvironment()[31] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
@@ -1733,11 +1733,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 48, Reg8: 9>
     createEnvironment()[48] = r9;
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
-    // USED → r9 = r19[2]
+    // USED → r9 = param7[2]
     // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
-    // USED → r9 = r18(undefined, r9);
+    // USED → r9 = param2(undefined, r9);
     // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r9 = r18(undefined, r9).ReactNativeViewConfigRegistry
+    // USED → r9 = param2(undefined, r9).ReactNativeViewConfigRegistry
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 31, string_id: 137>  # String: 'get' (Identifier)
     // USED → r9 = r9.get
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 49, Reg8: 9>
@@ -2385,17 +2385,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Mov>: <Reg8: 57, Reg8: 21>
     r57 = createThis(r21, r20);
     // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
-    // USED → r20 = new r20(r19)
+    // USED → r20 = new r20(param7)
     // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
     // USED → r20 = createThis(r21, r20)[r20]
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>
     createEnvironment()[120] = r20;
     // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
-    // USED → r17 = r19[2]
+    // USED → r17 = param7[2]
     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-    // USED → r17 = r18(undefined, r17);
+    // USED → r17 = param2(undefined, r17);
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
-    // USED → r17 = r18(undefined, r17).ReactFiberErrorDialog
+    // USED → r17 = param2(undefined, r17).ReactFiberErrorDialog
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
     // USED → r17 = r17.showErrorDialog
     // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
@@ -2708,47 +2708,47 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 852>  # Function: [#852  of 60 bytes]: 3 params @ offset 0x0018a28d
         // USED → r6 = function_852;
         // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 7, string_id: 18089>  # String: 'createPortal' (Identifier)
-        r3.createPortal = function_852;
+        param6.createPortal = function_852;
         // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 853>  # Function: [#853  of 172 bytes]: 4 params @ offset 0x0018a2c9
         // USED → r6 = function_853;
         // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 8, string_id: 11552>  # String: 'dispatchCommand' (Identifier)
-        r3.dispatchCommand = function_853;
+        param6.dispatchCommand = function_853;
         // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 854>  # Function: [#854  of 82 bytes]: 2 params @ offset 0x0018a375
         // USED → r6 = function_854;
         // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 9, string_id: 12842>  # String: 'findHostInstance_DEPRECATED' (Identifier)
-        r3.findHostInstance_DEPRECATED = function_854;
+        param6.findHostInstance_DEPRECATED = function_854;
         // CODE → <PutById>: <Reg8: 3, Reg8: 5, UInt8: 10, string_id: 18319>  # String: 'findNodeHandle' (Identifier)
-        r3.findNodeHandle = findNodeHandle;
+        param6.findNodeHandle = findNodeHandle;
         // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-        r3.getInspectorDataForInstance = getInspectorDataForInstance;
+        param6.getInspectorDataForInstance = getInspectorDataForInstance;
         // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 855>  # Function: [#855  of 30 bytes]: 2 params @ offset 0x0018a3c7
         // USED → r4 = function_855;
         // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 12, string_id: 23506>  # String: 'getNodeFromInternalInstanceHandle' (Identifier)
-        r3.getNodeFromInternalInstanceHandle = function_855;
+        param6.getNodeFromInternalInstanceHandle = function_855;
         // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 856>  # Function: [#856  of 115 bytes]: 2 params @ offset 0x0018a3e5
         // USED → r4 = function_856;
         // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 13, string_id: 19508>  # String: 'getPublicInstanceFromInternalInstanceHandle' (Identifier)
-        r3.getPublicInstanceFromInternalInstanceHandle = function_856;
+        param6.getPublicInstanceFromInternalInstanceHandle = function_856;
         // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 857>  # Function: [#857  of 21 bytes]: 1 params @ offset 0x0018a458
         // USED → r4 = function_857;
         // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 14, string_id: 19860>  # String: 'isChildPublicInstance' (Identifier)
-        r3.isChildPublicInstance = function_857;
+        param6.isChildPublicInstance = function_857;
         // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 858>  # Function: [#858  of 267 bytes]: 5 params @ offset 0x0018a46d
         // USED → r4 = function_858;
         // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 15, string_id: 11830>  # String: 'render' (Identifier)
-        r3.render = function_858;
+        param6.render = function_858;
         // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 859>  # Function: [#859  of 161 bytes]: 3 params @ offset 0x0018a578
         // USED → r4 = function_859;
         // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 16, string_id: 13824>  # String: 'sendAccessibilityEvent' (Identifier)
-        r3.sendAccessibilityEvent = function_859;
+        param6.sendAccessibilityEvent = function_859;
         // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 860>  # Function: [#860  of 56 bytes]: 2 params @ offset 0x0018a619
         // USED → r4 = function_860;
         // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 17, string_id: 17701>  # String: 'stopSurface' (Identifier)
-        r3.stopSurface = function_860;
+        param6.stopSurface = function_860;
         // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 862>  # Function: [#862  of 21 bytes]: 2 params @ offset 0x0018a66d
         // USED → r1 = function_862;
         // CODE → <PutById>: <Reg8: 3, Reg8: 1, UInt8: 18, string_id: 24466>  # String: 'unmountComponentAtNode' (Identifier)
-        r3.unmountComponentAtNode = function_862;
+        param6.unmountComponentAtNode = function_862;
         // CODE → <Ret>: <Reg8: 2>
         // Unhandled opcode: Ret
         // ──────────────── Block 33 ──────────────── 

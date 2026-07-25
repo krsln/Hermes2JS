@@ -3,9 +3,9 @@ function function_1(param0, param1) {
     // CODE → <CreateEnvironment>: <Reg8: 2>
     // USED → r2 = createEnvironment();
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 1>
-    // USED → r8 = param1
+    // USED → r8 = param1;
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 8>
-    createEnvironment()[0] = r8;
+    createEnvironment()[0] = param1;
     // CODE → <CreateClosure>: <Reg8: 7, Reg8: 2, function_id: 2>  # Function: [#2 clear of 37 bytes]: 1 params @ offset 0x0016e004
     // USED → r7 = clear;
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 4>  # Function: [#4 metroRequire of 59 bytes]: 2 params @ offset 0x0016e094
@@ -37,7 +37,7 @@ function function_1(param0, param1) {
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 15, Reg8: 0>
     createEnvironment()[15] = unknownModuleError;
     // CODE → <PutById>: <Reg8: 8, Reg8: 4, UInt8: 1, string_id: 14170>  # String: '__r' (Identifier)
-    r8.__r = metroRequire;
+    param1.__r = metroRequire;
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis
     // CODE → <GetById>: <Reg8: 11, Reg8: 1, UInt8: 1, string_id: 13635>  # String: '__METRO_GLOBAL_PREFIX__' (Identifier)
@@ -55,13 +55,13 @@ function function_1(param0, param1) {
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 3>  # Function: [#3 define of 107 bytes]: 4 params @ offset 0x0016e029
     // USED → r0 = define;
     // CODE → <PutByVal>: <Reg8: 8, Reg8: 9, Reg8: 0>
-    r8[r10("", r11, "__d")] = define;
+    param1[r10("", r11, "__d")] = define;
     // CODE → <PutById>: <Reg8: 8, Reg8: 7, UInt8: 2, string_id: 11632>  # String: '__c' (Identifier)
-    r8.__c = clear;
+    param1.__c = clear;
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 10>  # Function: [#10 registerSegment of 48 bytes]: 4 params @ offset 0x0016e278
     // USED → r0 = registerSegment;
     // CODE → <PutById>: <Reg8: 8, Reg8: 0, UInt8: 3, string_id: 16001>  # String: '__registerSegment' (Identifier)
-    r8.__registerSegment = registerSegment;
+    param1.__registerSegment = registerSegment;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call1>: <Reg8: 7, Reg8: 7, Reg8: 0>

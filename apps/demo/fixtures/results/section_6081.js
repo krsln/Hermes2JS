@@ -1,7 +1,7 @@
 function processColorsInProps(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 10, UInt8: 1>
-    // USED → r10 = param1
+    // USED → r10 = param1;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
@@ -11,11 +11,11 @@ function processColorsInProps(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 9>
     r9 = undefined;
     // CODE → <Mov>: <Reg8: 5, Reg8: 10>
-    // USED → r5 = r10;
+    // USED → r5 = param1;
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 1>
     // USED → r1 = getEnvironment(1);
     // CODE → <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 3>
-    // USED → r6 = HermesPropertyIterator(r10)
+    // USED → r6 = HermesPropertyIterator(param1)
     // CODE → <JmpUndefinedLong>: <Addr32: 161, Reg8: 6>  # Address: 000000b7
     if (r6 === undefined) goto label_183;
     // LOOP → START (while)
@@ -55,11 +55,11 @@ function processColorsInProps(param0, param1) {
             // CODE → <LoadFromEnvironment>: <Reg8: 13, Reg8: 1, UInt8: 36>
             // USED → r13 = getEnvironment(1)[36];
             // CODE → <GetByVal>: <Reg8: 11, Reg8: 10, Reg8: 12>
-            // USED → r11 = r10[r2]
+            // USED → r11 = param1[r2]
             // CODE → <Call2>: <Reg8: 11, Reg8: 13, Reg8: 0, Reg8: 11>
             // USED → r11 = getEnvironment(1)[36](undefined, r11);
             // CODE → <PutByVal>: <Reg8: 10, Reg8: 12, Reg8: 11>
-            r10[r2] = getEnvironment(1)[36](undefined, r11);
+            param1[r2] = getEnvironment(1)[36](undefined, r11);
             // CODE → <JmpLong>: <Addr32: -150>  # Address: 0000001c
             goto label_28;
             // ──────────────── Block 9 ──────────────── 
@@ -77,7 +77,7 @@ function processColorsInProps(param0, param1) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 7>
     // USED → r11 = r2;
     // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 11>
-    // USED → r13 = r10[r2]
+    // USED → r13 = param1[r2]
     // CODE → <Mov>: <Reg8: 11, Reg8: 13>
     // USED → r11 = r13;
     // CODE → <IteratorBegin>: <Reg8: 12, Reg8: 11>

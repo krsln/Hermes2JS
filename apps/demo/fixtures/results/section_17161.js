@@ -3,7 +3,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <StartGenerator>: <>
     // StartGenerator
     // CODE → <LoadParam>: <Reg8: 7, UInt8: 1>
-    // USED → r7 = param1
+    // USED → r7 = param1;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrueLong>: <Addr32: 161, Reg8: 1>  # Address: 000000a8
@@ -16,7 +16,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
-    r1 = await CallExpression(callee=Identifier(name='r3'), arguments=(UndefinedLiteral(), Identifier(name='r7')), optional=False)
+    r1 = await CallExpression(callee=Identifier(name='r3'), arguments=(UndefinedLiteral(), Identifier(name='param1')), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000020
     yield label_32;
     // LOOP → START (while)
@@ -45,13 +45,13 @@ async function* anon_17161(param0, param1) {
     if (r4 !== 0) goto label_80;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 19693>  # String: 'startsWith' (Identifier)
-    // USED → r4 = r7.startsWith
+    // USED → r4 = param1.startsWith
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 1058>  # String: 'file://' (String)
     // USED → r3 = "file://";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
-    // USED → r3 = r4(r7, "file://");
+    // USED → r3 = r4(param1, "file://");
     // CODE → <JmpTrue>: <Addr8: 63, Reg8: 3>  # Address: 0000008c
-    if (r4(r7, "file://")) goto label_140;
+    if (r4(param1, "file://")) goto label_140;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = r2.Error
@@ -66,7 +66,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: ' failed with status ' (String)
     // USED → r2 = " failed with status ";
     // CODE → <Call4>: <Reg8: 10, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 2, Reg8: 6>
-    r10 = r5("Fetching ", r7, " failed with status ", r6);
+    r10 = r5("Fetching ", param1, " failed with status ", r6);
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r3 = r4.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>

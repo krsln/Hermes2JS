@@ -1,13 +1,13 @@
 function function_12825(param0, param1, param2, param3, param4) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
-    // USED → r2 = param1
+    // USED → r2 = param1;
     // CODE → <LoadParam>: <Reg8: 7, UInt8: 2>
-    // USED → r7 = param2
+    // USED → r7 = param2;
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 3>
-    // USED → r8 = param3
+    // USED → r8 = param3;
     // CODE → <LoadParam>: <Reg8: 9, UInt8: 4>
-    // USED → r9 = param4
+    // USED → r9 = param4;
     // CODE → <LoadConstUndefined>: <Reg8: 6>
     // USED → r6 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 10>
@@ -17,9 +17,9 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <LoadConstFalse>: <Reg8: 0>
     r0 = false;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 217>  # String: 'slice' (Identifier)
-    // USED → r1 = r2.slice
+    // USED → r1 = param1.slice
     // CODE → <Call1>: <Reg8: 10, Reg8: 1, Reg8: 2>
-    // USED → r10 = r1(r2);
+    // USED → r10 = r1(param1);
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 3614>  # String: 'Error occurred in ' (String)
@@ -30,54 +30,54 @@ function function_12825(param0, param1, param2, param3, param4) {
     while (!r1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 10>
-        // USED → r1 = r1(r2);
+        // USED → r1 = r1(param1);
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 139>  # String: 'length' (Identifier)
-        // USED → r1 = r1(r2).length
+        // USED → r1 = r1(param1).length
         // CODE → <JmpFalse>: <Addr8: 81, Reg8: 1>  # Address: 00000080
         if (!r1) goto label_128;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 11, Reg8: 10>
-        // USED → r11 = r1(r2);
+        // USED → r11 = r1(param1);
         // CODE → <GetById>: <Reg8: 1, Reg8: 11, UInt8: 3, string_id: 16799>  # String: 'pop' (Identifier)
-        // USED → r1 = r1(r2).pop
+        // USED → r1 = r1(param1).pop
         // CODE → <Call1>: <Reg8: 11, Reg8: 1, Reg8: 11>
-        // USED → r11 = r1(r1(r2));
+        // USED → r11 = r1(r1(param1));
         // CODE → <Mov>: <Reg8: 1, Reg8: 7>
-        // USED → r1 = r7;
+        // USED → r1 = param2;
         // CODE → <Call2>: <Reg8: 1, Reg8: 11, Reg8: 6, Reg8: 1>
-        // USED → r1 = r1(r1(r2))(undefined, r7);
+        // USED → r1 = r1(r1(param1))(undefined, param2);
         // CODE → <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
-        // USED → r0 = r1(r1(r2))(undefined, r7) === false;
+        // USED → r0 = r1(r1(param1))(undefined, param2) === false;
         // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
         goto label_122;
         // LOOP → START (while)
-        while (!(r1(r1(r2))(undefined, r7) === false)) {
+        while (!(r1(r1(param1))(undefined, param2) === false)) {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-            // USED → r1 = r1(r1(r2))(undefined, r7) === false;
+            // USED → r1 = r1(r1(param1))(undefined, param2) === false;
             // CODE → <JmpFalse>: <Addr8: -86, Reg8: 1>  # Address: 00000027
-            if (!(r1(r1(r2))(undefined, r7) === false)) goto label_39;
+            if (!(r1(r1(param1))(undefined, param2) === false)) goto label_39;
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Catch>: <Reg8: 12>
             // USED → r12 = caughtException
             // CODE → <Mov>: <Reg8: 11, Reg8: 9>
-            // USED → r11 = r9;
+            // USED → r11 = param4;
             // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
-            // USED → r13 = r9.error
+            // USED → r13 = param4.error
             // CODE → <Mov>: <Reg8: 14, Reg8: 8>
-            // USED → r14 = r8;
+            // USED → r14 = param3;
             // CODE → <TryGetById>: <Reg8: 1, Reg8: 4, UInt8: 5, string_id: 21>  # String: 'HermesInternal' (Identifier)
             // USED → r1 = r4.HermesInternal
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 98>  # String: 'concat' (Identifier)
             // USED → r1 = r1.concat
             // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 14, Reg8: 2>
-            // USED → r1 = r1("Error occurred in ", r8, " callback, continuing anyway\u2026");
+            // USED → r1 = r1("Error occurred in ", param3, " callback, continuing anyway\u2026");
             // CODE → <Call2>: <Reg8: 1, Reg8: 13, Reg8: 11, Reg8: 1>
-            r1 = r13(r9, r1("Error occurred in ", r8, " callback, continuing anyway\u2026"));
+            r1 = r13(param4, r1("Error occurred in ", param3, " callback, continuing anyway\u2026"));
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
-            // USED → r1 = r9.error
+            // USED → r1 = param4.error
             // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>
-            r1 = r1(r9, r12);
+            r1 = r1(param4, r12);
         }
         // LOOP → END
     }
