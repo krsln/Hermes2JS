@@ -321,6 +321,16 @@ class Printer(NodeVisitor):
         return f"{self.visit(node.label)}:"
 
     # ------------------------------------------------------------------
+    # Pre-structural control flow (see regions/models/Statements.py)
+    # ------------------------------------------------------------------
+
+    def visit_GotoStatement(self, node) -> str:
+        return f"goto label_{node.target};"
+
+    def visit_IfGotoStatement(self, node) -> str:
+        return f"if ({self.visit(node.condition)}) goto label_{node.target};"
+
+    # ------------------------------------------------------------------
     # Operator precedence helpers
     # ------------------------------------------------------------------
 
