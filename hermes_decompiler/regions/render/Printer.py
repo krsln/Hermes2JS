@@ -330,6 +330,10 @@ class Printer(NodeVisitor):
     def visit_IfGotoStatement(self, node) -> str:
         return f"if ({self.visit(node.condition)}) goto label_{node.target};"
 
+    def visit_SwitchGotoStatement(self, node) -> str:
+        targets = ", ".join(f"label_{t}" for t in node.targets)
+        return f"/* switch ({self.visit(node.selector)}) -> {targets} */"
+
     # ------------------------------------------------------------------
     # Operator precedence helpers
     # ------------------------------------------------------------------
