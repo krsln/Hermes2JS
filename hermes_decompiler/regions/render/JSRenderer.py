@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from hermes_decompiler.ir import Expression, Statement
 from hermes_decompiler.regions.models.Regions import (
     SequenceRegion,
     LoopRegion,
@@ -7,20 +8,17 @@ from hermes_decompiler.regions.models.Regions import (
 )
 
 from hermes_decompiler.regions.models.Statements import (
-    InstructionStatement,
-    ReturnStatement,
-    ThrowStatement,
-    BreakStatement,
-    ContinueStatement,
-    GotoStatement,
-    IfGotoStatement,
+    InstructionState
 )
+
+from .Printer import Printer
 
 
 class JSRenderer:
 
     def __init__(self, verbose: bool = False):
         self.verbose = verbose
+        self.printer = Printer()
 
     # ---------------------------------------------------------
 
@@ -95,48 +93,61 @@ class JSRenderer:
     def _render_statement(self, stmt, output, indent):
         prefix = "    " * indent
 
-        if isinstance(stmt, InstructionStatement):
+        if isinstance(stmt, InstructionState):
+            self._render_instruction(stmt, output, indent)
+            return
+
+        print(f"Unsupported statement: {type(stmt).__name__}")
+        # raise TypeError(
+        #     f"Unsupported statement: {type(stmt).__name__}"
+        # )
+
+    def _render_instruction(self, stmt: InstructionState, output, indent):
+        prefix = "    " * indent
+        variable = stmt.result.variable
+
+        if self.verbose:
+            bytecode = stmt.result.opcode.bytecode
+            bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
+            output.append(prefix + f"// CODE → {bytecode}")
+
+        if variable.used:
             if self.verbose:
-                bytecode = stmt.result.opcode.bytecode
-                bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
-                output.append(prefix + f"// CODE → {bytecode}")
-            if stmt.result.variable.used:
-                if self.verbose:
-                    output.append(prefix + f"// USED → {stmt.result.result}")
-            else:
-                output.append(prefix + stmt.result.result)
+                output.append(prefix + f"// USED → {self._render_value(stmt)}")
+            return
 
-        elif isinstance(stmt, ReturnStatement):
-            if stmt.value is None:
-                output.append(prefix + "return;")
-            else:
-                output.append(prefix + f"return {stmt.value};")
+        output.append(prefix + self._render_value(stmt))
 
-        elif isinstance(stmt, ThrowStatement):
-            output.append(prefix + f"throw {stmt.value};")
+    def _render_value(self, stmt: InstructionState) -> str:
+        """
+        Renders one instruction's result line via the IR printer.
 
-        elif isinstance(stmt, BreakStatement):
-            output.append(prefix + "break;")
+        Priority:
+            1. `variable.statement` - the opcode IS a statement/terminator
+               (e.g. Throw, Ret). Printed as-is.
+            2. `variable.value` as a proper IR `Expression` - printed as
+               an assignment (`dest = expr;`), or as a bare expression
+               statement when there's no destination register.
+            3. Legacy string fallback for handlers not yet migrated to
+               the `ir` package, so unmigrated opcodes keep rendering
+               instead of crashing during the transition.
+        """
 
-        elif isinstance(stmt, ContinueStatement):
-            output.append(prefix + "continue;")
+        variable = stmt.result.variable
 
-        elif isinstance(stmt, GotoStatement):
-            #
-            # Goto'lar geçici.
-            # Break/Continue analizinden sonra
-            # büyük çoğunluğu kaybolacak.
-            #
-            output.append(prefix + f"goto label_{stmt.target};")
+        if isinstance(variable.statement, Statement):
+            return self.printer.print_statement(variable.statement)
 
-        elif isinstance(stmt, IfGotoStatement):
-            output.append(prefix + f"if ({stmt.condition}) goto label_{stmt.target};")
+        if isinstance(variable.value, Expression):
+            rendered = self.printer.print_expression(variable.value)
 
-        else:
-            print(f"Unsupported statement: {type(stmt).__name__}")
-            # raise TypeError(
-            #     f"Unsupported statement: {type(stmt).__name__}"
-            # )
+            if variable.name:
+                return f"{variable.name} = {rendered};"
+
+            return f"{rendered};"
+
+        # TODO: remove once every handler produces `ir` nodes.
+        return str(stmt.result.result)
 
     def dump(self, region, indent=0):
         print(
