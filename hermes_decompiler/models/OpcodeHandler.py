@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Optional
 
+from hermes_decompiler.ir import Identifier, Expression
 from hermes_decompiler.ir.Values import Value, RegisterValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -70,6 +71,21 @@ class OpcodeHandler(ABC):
 
         variable.used = True
         return variable
+
+    @classmethod
+    def get_register_value_new(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+        variable = cls._get_register_variable(analysis, reg)
+
+        if not variable:
+            return Identifier(name=str(reg))
+
+        if isinstance(variable.value, Expression):
+            value = variable.value
+        else:
+            return Identifier(name=str(reg))
+
+        variable.used = True
+        return value
 
     @classmethod
     def get_register_value(cls, analysis: HermesAnalysis, reg: int) -> Value:
