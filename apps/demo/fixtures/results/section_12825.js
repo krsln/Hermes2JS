@@ -54,7 +54,7 @@ function function_12825(param0, param1, param2, param3, param4) {
         // CODE → <JmpFalse>: <Addr8: -86, Reg8: 1>  # Address: 00000027
         // Error: 'BinaryExpression' object has no attribute 'render'
         // CODE → <Ret>: <Reg8: 0>
-        ReturnStatement(argument=BinaryExpression(left=Identifier(name='r7'), operator=<BinaryOperator.STRICT_EQUAL: '==='>, right=Identifier(name='r5')))
+        // Unhandled opcode: Ret
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Catch>: <Reg8: 12>
         // USED → r12 = caughtException

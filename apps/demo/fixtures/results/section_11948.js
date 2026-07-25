@@ -413,9 +413,9 @@ function _request(param0, param1, param2) {
     if (BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)) < Identifier(name='r14')) { /* jump to label_791 */ }
     // ──────────────── Block 14 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 0>
-    // USED → r9 = Identifier(name='r0')
+    r9 = Identifier(name='r0')
     // CODE → <Ret>: <Reg8: 9>
-    ReturnStatement(argument=Identifier(name='r0'))
+    // Unhandled opcode: Ret
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
     // USED → r9 = Identifier(name='r14')
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
@@ -527,7 +527,7 @@ function _request(param0, param1, param2) {
     if (BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)) < Identifier(name='r2')) { /* jump to label_971 */ }
     // ──────────────── Block 20 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
-    ReturnStatement(argument=Identifier(name='r0'))
+    // Unhandled opcode: Ret
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException
     // CODE → <GetGlobalObject>: <Reg8: 0>
@@ -539,5 +539,5 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <Ret>: <Reg8: 0>
-    ReturnStatement(argument=Identifier(name='r0'))
+    // Unhandled opcode: Ret
 }

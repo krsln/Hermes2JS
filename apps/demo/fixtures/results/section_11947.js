@@ -5,7 +5,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 0>
     // USED → r8 = this
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 5>
-    // USED → r0 = await yield /* ResumeGenerator -> r0 */
+    r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrueLong>: <Addr32: 311, Reg8: 5>  # Address: 0000013e
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 1>
@@ -24,56 +24,60 @@ async function* anon_11947(param0, param1, param2) {
      = await // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
     yield label_41;
-    // ──────────────── Block 1 ──────────────── 
-    // CODE → <Ret>: <Reg8: 3>
-    ReturnStatement(argument=Identifier(name='r3'))
-    // ──────────────── Block 2 ──────────────── 
-    // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
-    // USED → r3 = await yield /* ResumeGenerator -> r3 */
-    // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
-    // CODE → <Ret>: <Reg8: 3>
-    ReturnStatement(argument=Identifier(name='r3'))
-    // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
-    // CODE → <Ret>: <Reg8: 3>
-    ReturnStatement(argument=Identifier(name='r3'))
-    // CODE → <Catch>: <Reg8: 7>
-    // USED → r7 = caughtException
-    // CODE → <Mov>: <Reg8: 1, Reg8: 7>
-    // USED → r1 = Identifier(name='r7')
-    // CODE → <GetGlobalObject>: <Reg8: 3>
-    // USED → r3 = globalThis
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
-    // USED → r4 = BinaryExpression(left=Identifier(name='r7'), operator=<BinaryOperator.INSTANCEOF: 'instanceof'>, right=Identifier(name='r4'))
-    // CODE → <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
-    // Error: 'BinaryExpression' object has no attribute 'render'
-    // CODE → <NewObject>: <Reg8: 6>
-    // USED → r6 = {  }
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
-    // Error: 'BinaryExpression' object has no attribute 'render'
-    // CODE → <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <JmpTrue>: <Addr8: 25, Reg8: 4>  # Address: 00000079
-    // Error: 'BinaryExpression' object has no attribute 'render'
-    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 4, string_id: 158>  # String: 'prototype' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <CreateThis>: <Reg8: 7, Reg8: 4, Reg8: 8>
-    // Error: 'BinaryExpression' object has no attribute 'render'
-    // CODE → <Mov>: <Reg8: 12, Reg8: 7>
-    r12 = Identifier(name='r7')
-    // CODE → <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <Jmp>: <Addr8: 16>  # Address: 00000087
-    goto label_135;
+    // LOOP → START (while)
+    while (true) {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
+        r3 = await yield /* ResumeGenerator -> r3 */
+        // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 3>
+        // Unhandled opcode: Ret
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 3>
+        // Unhandled opcode: Ret
+        // CODE → <Catch>: <Reg8: 7>
+        // USED → r7 = caughtException
+        // CODE → <Mov>: <Reg8: 1, Reg8: 7>
+        // USED → r1 = Identifier(name='r7')
+        // CODE → <GetGlobalObject>: <Reg8: 3>
+        // USED → r3 = globalThis
+        // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
+        // USED → r4 = BinaryExpression(left=Identifier(name='r7'), operator=<BinaryOperator.INSTANCEOF: 'instanceof'>, right=Identifier(name='r4'))
+        // CODE → <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
+        // Error: 'BinaryExpression' object has no attribute 'render'
+        // CODE → <NewObject>: <Reg8: 6>
+        // USED → r6 = {  }
+        // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
+        // Error: 'BinaryExpression' object has no attribute 'render'
+        // CODE → <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <JmpTrue>: <Addr8: 25, Reg8: 4>  # Address: 00000079
+        // Error: 'BinaryExpression' object has no attribute 'render'
+        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 4, string_id: 158>  # String: 'prototype' (Identifier)
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <CreateThis>: <Reg8: 7, Reg8: 4, Reg8: 8>
+        // Error: 'BinaryExpression' object has no attribute 'render'
+        // CODE → <Mov>: <Reg8: 12, Reg8: 7>
+        r12 = Identifier(name='r7')
+        // CODE → <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <Jmp>: <Addr8: 16>  # Address: 00000087
+        goto label_135;
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <Ret>: <Reg8: 3>
+        // Unhandled opcode: Ret
+    }
+    // LOOP → END
     // LOOP → START (while)
     while (true) {
         // ──────────────── Block 4 ──────────────── 
@@ -176,7 +180,7 @@ async function* anon_11947(param0, param1, param2) {
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → <Ret>: <Reg8: 0>
-        ReturnStatement(argument=Identifier(name='r0'))
+        // Unhandled opcode: Ret
         // ──────────────── Block 7 ──────────────── 
         // CODE → <Catch>: <Reg8: 2>
         r2 = caughtException

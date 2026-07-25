@@ -19,5 +19,5 @@ function function_11944(param0) {
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11945>  # Function: [#11945 request of 30 bytes]: 3 params @ offset 0x00189110
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Ret>: <Reg8: 0>
-    ReturnStatement(argument=Identifier(name='r0'))
+    // Unhandled opcode: Ret
 }

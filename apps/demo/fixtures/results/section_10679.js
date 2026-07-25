@@ -79,5 +79,5 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Ret>: <Reg8: 0>
-    ReturnStatement(argument=Identifier(name='r0'))
+    // Unhandled opcode: Ret
 }

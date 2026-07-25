@@ -1604,1151 +1604,1164 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // LOOP → END
     // LOOP → START (while)
     while (true) {
-        // ──────────────── Block 17 ──────────────── 
-        // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 852>  # Function: [#852  of 60 bytes]: 3 params @ offset 0x0018a28d
+        // ──────────────── Block 18 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
         // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 7, string_id: 18089>  # String: 'createPortal' (Identifier)
+        // CODE → <LoadConstString>: <Reg8: 0, string_id: 4985>  # String: 'Expected ReactFiberErrorDialog.showErrorDialog to be a function.' (String)
+        // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
+        // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+        // Error: sequence item 0: expected str instance, Identifier found
+        // CODE → <Throw>: <Reg8: 0>
         // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 853>  # Function: [#853  of 172 bytes]: 4 params @ offset 0x0018a2c9
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 8, string_id: 11552>  # String: 'dispatchCommand' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 854>  # Function: [#854  of 82 bytes]: 2 params @ offset 0x0018a375
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 9, string_id: 12842>  # String: 'findHostInstance_DEPRECATED' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 5, UInt8: 10, string_id: 18319>  # String: 'findNodeHandle' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 855>  # Function: [#855  of 30 bytes]: 2 params @ offset 0x0018a3c7
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 12, string_id: 23506>  # String: 'getNodeFromInternalInstanceHandle' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 856>  # Function: [#856  of 115 bytes]: 2 params @ offset 0x0018a3e5
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 13, string_id: 19508>  # String: 'getPublicInstanceFromInternalInstanceHandle' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 857>  # Function: [#857  of 21 bytes]: 1 params @ offset 0x0018a458
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 14, string_id: 19860>  # String: 'isChildPublicInstance' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 858>  # Function: [#858  of 267 bytes]: 5 params @ offset 0x0018a46d
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 15, string_id: 11830>  # String: 'render' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 859>  # Function: [#859  of 161 bytes]: 3 params @ offset 0x0018a578
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 16, string_id: 13824>  # String: 'sendAccessibilityEvent' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 860>  # Function: [#860  of 56 bytes]: 2 params @ offset 0x0018a619
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 17, string_id: 17701>  # String: 'stopSurface' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 862>  # Function: [#862  of 21 bytes]: 2 params @ offset 0x0018a66d
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <PutById>: <Reg8: 3, Reg8: 1, UInt8: 18, string_id: 24466>  # String: 'unmountComponentAtNode' (Identifier)
-        // Error: 'Identifier' object has no attribute 'render'
-        // CODE → <Ret>: <Reg8: 2>
-        ReturnStatement(argument=Identifier(name='r2'))
-        // ──────────────── Block 16 ──────────────── 
-        // CODE → <Catch>: <Reg8: 6>
-        // USED → r6 = caughtException
         // LOOP → START (while)
         while (true) {
-            // ──────────────── Block 15 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
+            // ──────────────── Block 17 ──────────────── 
+            // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 852>  # Function: [#852  of 60 bytes]: 3 params @ offset 0x0018a28d
             // Error: 'Identifier' object has no attribute 'render'
-            // CODE → <Mov>: <Reg8: 6, Reg8: 8>
-            // USED → r6 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r8'))
-            // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
-            // Error: 'UnaryExpression' object has no attribute 'render'
-            // CODE → <JmpTrue>: <Addr8: 38, Reg8: 8>  # Address: 0000183d
-            // Error: 'UnaryExpression' object has no attribute 'render'
-            // CODE → <Mov>: <Reg8: 8, Reg8: 6>
-            // USED → r8 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r8'))
-            // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
-            // Error: 'UnaryExpression' object has no attribute 'render'
-            // CODE → <JmpFalse>: <Addr8: 26, Reg8: 8>  # Address: 0000183d
-            // Error: 'UnaryExpression' object has no attribute 'render'
-            // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
-            // Error: 'UnaryExpression' object has no attribute 'render'
-            // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-            // Error: sequence item 0: expected str instance, UnaryExpression found
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
+            // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 7, string_id: 18089>  # String: 'createPortal' (Identifier)
             // Error: 'Identifier' object has no attribute 'render'
-            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
+            // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 853>  # Function: [#853  of 172 bytes]: 4 params @ offset 0x0018a2c9
             // Error: 'Identifier' object has no attribute 'render'
-            // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
-            goto label_6205;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 8, string_id: 11552>  # String: 'dispatchCommand' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 854>  # Function: [#854  of 82 bytes]: 2 params @ offset 0x0018a375
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 9, string_id: 12842>  # String: 'findHostInstance_DEPRECATED' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <PutById>: <Reg8: 3, Reg8: 5, UInt8: 10, string_id: 18319>  # String: 'findNodeHandle' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 855>  # Function: [#855  of 30 bytes]: 2 params @ offset 0x0018a3c7
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 12, string_id: 23506>  # String: 'getNodeFromInternalInstanceHandle' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 856>  # Function: [#856  of 115 bytes]: 2 params @ offset 0x0018a3e5
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 13, string_id: 19508>  # String: 'getPublicInstanceFromInternalInstanceHandle' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 857>  # Function: [#857  of 21 bytes]: 1 params @ offset 0x0018a458
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 14, string_id: 19860>  # String: 'isChildPublicInstance' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 858>  # Function: [#858  of 267 bytes]: 5 params @ offset 0x0018a46d
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 15, string_id: 11830>  # String: 'render' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 859>  # Function: [#859  of 161 bytes]: 3 params @ offset 0x0018a578
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 16, string_id: 13824>  # String: 'sendAccessibilityEvent' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 860>  # Function: [#860  of 56 bytes]: 2 params @ offset 0x0018a619
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 17, string_id: 17701>  # String: 'stopSurface' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 862>  # Function: [#862  of 21 bytes]: 2 params @ offset 0x0018a66d
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <PutById>: <Reg8: 3, Reg8: 1, UInt8: 18, string_id: 24466>  # String: 'unmountComponentAtNode' (Identifier)
+            // Error: 'Identifier' object has no attribute 'render'
+            // CODE → <Ret>: <Reg8: 2>
+            // Unhandled opcode: Ret
+            // ──────────────── Block 16 ──────────────── 
+            // CODE → <Catch>: <Reg8: 6>
+            // USED → r6 = caughtException
             // LOOP → START (while)
-            while (Identifier(name='r9') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r8'))) {
-                // ──────────────── Block 14 ──────────────── 
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 142, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 143, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 144, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 145, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 146, Reg8: 12>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 147, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 148, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 149, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 150, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 151, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 152, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 153, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 154, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 155, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 156, Reg8: 12>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 161, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 162, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 163, Reg8: 12>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 164, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 165, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 166, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 167, Reg8: 11>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <CreateClosure>: <Reg8: 10, Reg8: 1, function_id: 848>  # Function: [#848 batchedUpdatesImpl of 178 bytes]: 3 params @ offset 0x0018a193
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <Mov>: <Reg8: 57, Reg8: 12>
-                r57 = Identifier(name='r12')
-                // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
-                // USED → r12 = {'findFiberByHostInstance': None, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
-                // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <LoadConstString>: <Reg8: 10, string_id: 1866>  # String: '18.3.0-canary-9372c6311-20240315' (String)
-                // USED → r10 = "18.3.0-canary-9372c6311-20240315"
-                // CODE → <NewObject>: <Reg8: 8>
-                // USED → r8 = {  }
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <CreateClosure>: <Reg8: 15, Reg8: 1, function_id: 849>  # Function: [#849 getInspectorDataForViewTag of 21 bytes]: 1 params @ offset 0x0018a245
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12857>  # String: 'getInspectorDataForViewTag' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
-                // Error: sequence item 0: expected str instance, Identifier found
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <NewObject>: <Reg8: 8>
-                // USED → r8 = {  }
-                // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <Mov>: <Reg8: 12, Reg8: 13>
-                // USED → r12 = Identifier(name='r13')
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <Mov>: <Reg8: 7, Reg8: 8>
-                // USED → r7 = Identifier(name='r8')
-                // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-                // Error: 'Identifier' object has no attribute 'render'
-                // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
+            while (true) {
+                // ──────────────── Block 15 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
+                // Error: 'Identifier' object has no attribute 'render'
+                // CODE → <Mov>: <Reg8: 6, Reg8: 8>
+                // USED → r6 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r8'))
+                // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
+                // Error: 'UnaryExpression' object has no attribute 'render'
+                // CODE → <JmpTrue>: <Addr8: 38, Reg8: 8>  # Address: 0000183d
+                // Error: 'UnaryExpression' object has no attribute 'render'
+                // CODE → <Mov>: <Reg8: 8, Reg8: 6>
                 // USED → r8 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r8'))
-                // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
-                if (Identifier(name='r9') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r8'))) { /* jump to label_6205 */ }
-                // ──────────────── Block 13 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+                // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
+                // Error: 'UnaryExpression' object has no attribute 'render'
+                // CODE → <JmpFalse>: <Addr8: 26, Reg8: 8>  # Address: 0000183d
+                // Error: 'UnaryExpression' object has no attribute 'render'
+                // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
+                // Error: 'UnaryExpression' object has no attribute 'render'
+                // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
+                // Error: sequence item 0: expected str instance, UnaryExpression found
+                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
                 // Error: 'Identifier' object has no attribute 'render'
+                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
+                // Error: 'Identifier' object has no attribute 'render'
+                // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
+                goto label_6205;
                 // LOOP → START (while)
-                while (true) {
-                    // ──────────────── Block 12 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
+                while (Identifier(name='r9') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r8'))) {
+                    // ──────────────── Block 14 ──────────────── 
+                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
                     // Error: 'Identifier' object has no attribute 'render'
-                    // CODE → <Jmp>: <Addr8: 8>  # Address: 0000165b
-                    goto label_5723;
+                    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 142, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 143, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 144, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 145, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 146, Reg8: 12>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 147, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 148, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 149, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 150, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 151, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 152, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 153, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 154, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 155, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 156, Reg8: 12>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 161, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 162, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 163, Reg8: 12>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 164, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 165, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 166, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 167, Reg8: 11>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <CreateClosure>: <Reg8: 10, Reg8: 1, function_id: 848>  # Function: [#848 batchedUpdatesImpl of 178 bytes]: 3 params @ offset 0x0018a193
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <Mov>: <Reg8: 57, Reg8: 12>
+                    r57 = Identifier(name='r12')
+                    // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
+                    // USED → r12 = {'findFiberByHostInstance': None, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
+                    // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <LoadConstString>: <Reg8: 10, string_id: 1866>  # String: '18.3.0-canary-9372c6311-20240315' (String)
+                    // USED → r10 = "18.3.0-canary-9372c6311-20240315"
+                    // CODE → <NewObject>: <Reg8: 8>
+                    // USED → r8 = {  }
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <CreateClosure>: <Reg8: 15, Reg8: 1, function_id: 849>  # Function: [#849 getInspectorDataForViewTag of 21 bytes]: 1 params @ offset 0x0018a245
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12857>  # String: 'getInspectorDataForViewTag' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
+                    // Error: sequence item 0: expected str instance, Identifier found
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <NewObject>: <Reg8: 8>
+                    // USED → r8 = {  }
+                    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <Mov>: <Reg8: 12, Reg8: 13>
+                    // USED → r12 = Identifier(name='r13')
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <Mov>: <Reg8: 7, Reg8: 8>
+                    // USED → r7 = Identifier(name='r8')
+                    // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
+                    // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
+                    // USED → r8 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r8'))
+                    // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
+                    if (Identifier(name='r9') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r8'))) { /* jump to label_6205 */ }
+                    // ──────────────── Block 13 ──────────────── 
+                    // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+                    // Error: 'Identifier' object has no attribute 'render'
                     // LOOP → START (while)
-                    while (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) {
-                        // ──────────────── Block 11 ──────────────── 
-                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
+                    while (true) {
+                        // ──────────────── Block 12 ──────────────── 
+                        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
                         // Error: 'Identifier' object has no attribute 'render'
-                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
-                        // Error: 'Identifier' object has no attribute 'render'
-                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
-                        // Error: 'Identifier' object has no attribute 'render'
-                        // CODE → <LoadConstInt>: <Reg8: 15, Imm32: 8192>
-                        // USED → r15 = 8192
-                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
-                        // Error: 'Identifier' object has no attribute 'render'
-                        // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-                        // Error: 'Identifier' object has no attribute 'render'
-                        // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-                        // USED → r15 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))
-                        // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
-                        if (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) { /* jump to label_5717 */ }
-                        // ──────────────── Block 10 ──────────────── 
-                        // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-                        // Error: 'Identifier' object has no attribute 'render'
+                        // CODE → <Jmp>: <Addr8: 8>  # Address: 0000165b
+                        goto label_5723;
                         // LOOP → START (while)
-                        while (true) {
-                            // ──────────────── Block 9 ──────────────── 
-                            // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
+                        while (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) {
+                            // ──────────────── Block 11 ──────────────── 
+                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
                             // Error: 'Identifier' object has no attribute 'render'
-                            // CODE → <Jmp>: <Addr8: 8>  # Address: 0000162b
-                            goto label_5675;
+                            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
+                            // Error: 'Identifier' object has no attribute 'render'
+                            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
+                            // Error: 'Identifier' object has no attribute 'render'
+                            // CODE → <LoadConstInt>: <Reg8: 15, Imm32: 8192>
+                            // USED → r15 = 8192
+                            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
+                            // Error: 'Identifier' object has no attribute 'render'
+                            // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+                            // Error: 'Identifier' object has no attribute 'render'
+                            // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
+                            // USED → r15 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))
+                            // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
+                            if (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) { /* jump to label_5717 */ }
+                            // ──────────────── Block 10 ──────────────── 
+                            // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
+                            // Error: 'Identifier' object has no attribute 'render'
                             // LOOP → START (while)
-                            while (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) {
-                                // ──────────────── Block 8 ──────────────── 
-                                // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
+                            while (true) {
+                                // ──────────────── Block 9 ──────────────── 
+                                // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
                                 // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 121, Reg8: 17>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
-                                // USED → r17 = "str_6991"
-                                // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-                                // Error: sequence item 0: expected str instance, Identifier found
-                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
-                                // USED → r17 = {'dehydrated': None, 'treeContext': None, 'retryLane': 0}
-                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
-                                // Error: sequence item 0: expected str instance, Identifier found
-                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 126, Reg8: 11>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 127, Reg8: 11>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 128, Reg8: 11>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 129, Reg8: 15>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 130, Reg8: 12>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-                                // Error: 'Identifier' object has no attribute 'render'
-                                // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-                                // USED → r15 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))
-                                // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
-                                if (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) { /* jump to label_5669 */ }
+                                // CODE → <Jmp>: <Addr8: 8>  # Address: 0000162b
+                                goto label_5675;
                                 // LOOP → START (while)
-                                while (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r17'))) {
-                                    // ──────────────── Block 7 ──────────────── 
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
+                                while (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) {
+                                    // ──────────────── Block 8 ──────────────── 
+                                    // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
                                     // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 74, Reg8: 38>
+                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 121, Reg8: 17>
                                     // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 75, Reg8: 38>
+                                    // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
                                     // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 76, Reg8: 38>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 77, Reg8: 11>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
-                                    // USED → r38 = []
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 78, Reg8: 38>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 79, Reg8: 10>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 80, Reg8: 10>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 81, Reg8: 11>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 82, Reg8: 11>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 83, Reg8: 12>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 84, Reg8: 12>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 85, Reg8: 12>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 86, Reg8: 10>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 87, Reg8: 12>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <TryGetById>: <Reg8: 38, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 88, Reg8: 38>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <LoadConstString>: <Reg8: 38, string_id: 3625>  # String: "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`" (String)
-                                    // USED → r38 = "str_3625"
-                                    // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 89, Reg8: 38>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <LoadConstString>: <Reg8: 38, string_id: 6775>  # String: "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React." (String)
-                                    // USED → r38 = "str_6775"
-                                    // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <NewObject>: <Reg8: 38>
-                                    // USED → r38 = {  }
-                                    // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 38, Reg8: 39, string_id: 231>  # String: 'then' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 91, Reg8: 38>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 92, Reg8: 11>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 93, Reg8: 11>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 94, Reg8: 10>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <Call2>: <Reg8: 37, Reg8: 20, Reg8: 2, Reg8: 37>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 95, Reg8: 37>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <Call2>: <Reg8: 20, Reg8: 20, Reg8: 2, Reg8: 12>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 96, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 97, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 98, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 99, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 100, Reg8: 11>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-                                    // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 101, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 102, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 103, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 104, Reg8: 10>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 105, Reg8: 11>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 106, Reg8: 11>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 107, Reg8: 11>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 108, Reg8: 12>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 109, Reg8: 12>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 110, Reg8: 12>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 111, Reg8: 10>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 112, Reg8: 11>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 113, Reg8: 10>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 20, Reg8: 1, function_id: 825>  # Function: [#825 createFunctionComponentUpdateQueue of 12 bytes]: 1 params @ offset 0x00189b29
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 114, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <NewObject>: <Reg8: 20>
-                                    // USED → r20 = {  }
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 228>  # String: 'useContext' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 243>  # String: 'useEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 230>  # String: 'useMemo' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 12216>  # String: 'useReducer' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 244>  # String: 'useRef' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 246>  # String: 'useState' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24665>  # String: 'useTransition' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24594>  # String: 'useId' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 115, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <NewObject>: <Reg8: 20>
-                                    // USED → r20 = {  }
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 36, Reg8: 1, function_id: 826>  # Function: [#826 useCallback of 49 bytes]: 3 params @ offset 0x00189b35
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 243>  # String: 'useEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 827>  # Function: [#827 useImperativeHandle of 90 bytes]: 4 params @ offset 0x00189b66
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 828>  # Function: [#828 useLayoutEffect of 33 bytes]: 3 params @ offset 0x00189bc0
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 829>  # Function: [#829 useInsertionEffect of 30 bytes]: 3 params @ offset 0x00189be1
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 830>  # Function: [#830 useMemo of 64 bytes]: 3 params @ offset 0x00189bff
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 230>  # String: 'useMemo' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 831>  # Function: [#831 useReducer of 139 bytes]: 4 params @ offset 0x00189c3f
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 12216>  # String: 'useReducer' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 832>  # Function: [#832 useRef of 31 bytes]: 2 params @ offset 0x00189cca
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 244>  # String: 'useRef' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 833>  # Function: [#833 useState of 72 bytes]: 2 params @ offset 0x00189ce9
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 246>  # String: 'useState' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 834>  # Function: [#834 useDeferredValue of 34 bytes]: 3 params @ offset 0x00189d31
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 835>  # Function: [#835 useTransition of 79 bytes]: 1 params @ offset 0x00189d53
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24665>  # String: 'useTransition' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 836>  # Function: [#836 useSyncExternalStore of 239 bytes]: 3 params @ offset 0x00189da2
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 837>  # Function: [#837 useId of 83 bytes]: 1 params @ offset 0x00189e91
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24594>  # String: 'useId' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 116, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <NewObject>: <Reg8: 20>
-                                    // USED → r20 = {  }
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 12216>  # String: 'useReducer' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 838>  # Function: [#838 useState of 22 bytes]: 1 params @ offset 0x00189ee4
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 34, string_id: 246>  # String: 'useState' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 839>  # Function: [#839 useDeferredValue of 42 bytes]: 3 params @ offset 0x00189efa
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 840>  # Function: [#840 useTransition of 78 bytes]: 1 params @ offset 0x00189f24
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24665>  # String: 'useTransition' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 117, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <NewObject>: <Reg8: 20>
-                                    // USED → r20 = {  }
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 25, string_id: 12216>  # String: 'useReducer' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 24, Reg8: 1, function_id: 841>  # Function: [#841 useState of 22 bytes]: 1 params @ offset 0x00189f72
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 246>  # String: 'useState' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 842>  # Function: [#842 useDeferredValue of 75 bytes]: 3 params @ offset 0x00189f88
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 843>  # Function: [#843 useTransition of 78 bytes]: 1 params @ offset 0x00189fd3
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24665>  # String: 'useTransition' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 118, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <NewObject>: <Reg8: 20>
-                                    // USED → r20 = {  }
-                                    // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 844>  # Function: [#844 isMounted of 34 bytes]: 2 params @ offset 0x0018a021
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 16785>  # String: 'isMounted' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 845>  # Function: [#845 enqueueSetState of 109 bytes]: 4 params @ offset 0x0018a043
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22773>  # String: 'enqueueSetState' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 846>  # Function: [#846 enqueueReplaceState of 118 bytes]: 4 params @ offset 0x0018a0b0
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22685>  # String: 'enqueueReplaceState' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 847>  # Function: [#847 enqueueForceUpdate of 109 bytes]: 3 params @ offset 0x0018a126
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 17151>  # String: 'enqueueForceUpdate' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 119, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <TryGetById>: <Reg8: 20, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <CreateThis>: <Reg8: 21, Reg8: 21, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <Mov>: <Reg8: 57, Reg8: 21>
-                                    r57 = Identifier(name='r21')
-                                    // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>
-                                    // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
-                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
+                                    // USED → r17 = "str_6991"
                                     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
                                     // Error: sequence item 0: expected str instance, Identifier found
-                                    // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
+                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
                                     // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
+                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
                                     // Error: 'Identifier' object has no attribute 'render'
-                                    // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
-                                    // USED → r17 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r17'))
-                                    // CODE → <JStrictNotEqualLong>: <Addr32: 774, Reg8: 16, Reg8: 17>  # Address: 000018b9
-                                    if (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r17'))) { /* jump to label_6329 */ }
+                                    // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
+                                    // USED → r17 = {'dehydrated': None, 'treeContext': None, 'retryLane': 0}
+                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
+                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
+                                    // Error: sequence item 0: expected str instance, Identifier found
+                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
+                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 126, Reg8: 11>
+                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 127, Reg8: 11>
+                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 128, Reg8: 11>
+                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
+                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 129, Reg8: 15>
+                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 130, Reg8: 12>
+                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
+                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
+                                    // Error: 'Identifier' object has no attribute 'render'
+                                    // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
+                                    // USED → r15 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))
+                                    // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
+                                    if (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) { /* jump to label_5669 */ }
                                     // LOOP → START (while)
-                                    while (true) {
-                                        // ──────────────── Block 6 ──────────────── 
-                                        // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
+                                    while (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r17'))) {
+                                        // ──────────────── Block 7 ──────────────── 
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
                                         // Error: 'Identifier' object has no attribute 'render'
-                                        // CODE → <GetById>: <Reg8: 38, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
-                                        // Error: 'UnaryExpression' object has no attribute 'render'
+                                        // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 74, Reg8: 38>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 75, Reg8: 38>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 76, Reg8: 38>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 77, Reg8: 11>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
+                                        // USED → r38 = []
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 78, Reg8: 38>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 79, Reg8: 10>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 80, Reg8: 10>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 81, Reg8: 11>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 82, Reg8: 11>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 83, Reg8: 12>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 84, Reg8: 12>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 85, Reg8: 12>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 86, Reg8: 10>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 87, Reg8: 12>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <TryGetById>: <Reg8: 38, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 88, Reg8: 38>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <LoadConstString>: <Reg8: 38, string_id: 3625>  # String: "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`" (String)
+                                        // USED → r38 = "str_3625"
+                                        // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 89, Reg8: 38>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <LoadConstString>: <Reg8: 38, string_id: 6775>  # String: "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React." (String)
+                                        // USED → r38 = "str_6775"
+                                        // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <NewObject>: <Reg8: 38>
+                                        // USED → r38 = {  }
+                                        // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 38, Reg8: 39, string_id: 231>  # String: 'then' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 91, Reg8: 38>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 92, Reg8: 11>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 93, Reg8: 11>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 94, Reg8: 10>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <Call2>: <Reg8: 37, Reg8: 20, Reg8: 2, Reg8: 37>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 95, Reg8: 37>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <Call2>: <Reg8: 20, Reg8: 20, Reg8: 2, Reg8: 12>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 96, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 97, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 98, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 99, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 100, Reg8: 11>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 101, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 102, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 103, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 104, Reg8: 10>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 105, Reg8: 11>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 106, Reg8: 11>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 107, Reg8: 11>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 108, Reg8: 12>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 109, Reg8: 12>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 110, Reg8: 12>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 111, Reg8: 10>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 112, Reg8: 11>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 113, Reg8: 10>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 20, Reg8: 1, function_id: 825>  # Function: [#825 createFunctionComponentUpdateQueue of 12 bytes]: 1 params @ offset 0x00189b29
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 114, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <NewObject>: <Reg8: 20>
+                                        // USED → r20 = {  }
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 228>  # String: 'useContext' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 243>  # String: 'useEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 230>  # String: 'useMemo' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 12216>  # String: 'useReducer' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 244>  # String: 'useRef' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 246>  # String: 'useState' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24567>  # String: 'useDebugValue' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24665>  # String: 'useTransition' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24594>  # String: 'useId' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 115, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <NewObject>: <Reg8: 20>
+                                        // USED → r20 = {  }
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 36, Reg8: 1, function_id: 826>  # Function: [#826 useCallback of 49 bytes]: 3 params @ offset 0x00189b35
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 243>  # String: 'useEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 827>  # Function: [#827 useImperativeHandle of 90 bytes]: 4 params @ offset 0x00189b66
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 828>  # Function: [#828 useLayoutEffect of 33 bytes]: 3 params @ offset 0x00189bc0
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 829>  # Function: [#829 useInsertionEffect of 30 bytes]: 3 params @ offset 0x00189be1
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 830>  # Function: [#830 useMemo of 64 bytes]: 3 params @ offset 0x00189bff
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 230>  # String: 'useMemo' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 831>  # Function: [#831 useReducer of 139 bytes]: 4 params @ offset 0x00189c3f
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 12216>  # String: 'useReducer' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 832>  # Function: [#832 useRef of 31 bytes]: 2 params @ offset 0x00189cca
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 244>  # String: 'useRef' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 833>  # Function: [#833 useState of 72 bytes]: 2 params @ offset 0x00189ce9
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 246>  # String: 'useState' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 834>  # Function: [#834 useDeferredValue of 34 bytes]: 3 params @ offset 0x00189d31
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 835>  # Function: [#835 useTransition of 79 bytes]: 1 params @ offset 0x00189d53
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24665>  # String: 'useTransition' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 836>  # Function: [#836 useSyncExternalStore of 239 bytes]: 3 params @ offset 0x00189da2
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 837>  # Function: [#837 useId of 83 bytes]: 1 params @ offset 0x00189e91
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24594>  # String: 'useId' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 116, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <NewObject>: <Reg8: 20>
+                                        // USED → r20 = {  }
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 12216>  # String: 'useReducer' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 838>  # Function: [#838 useState of 22 bytes]: 1 params @ offset 0x00189ee4
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 34, string_id: 246>  # String: 'useState' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 839>  # Function: [#839 useDeferredValue of 42 bytes]: 3 params @ offset 0x00189efa
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 840>  # Function: [#840 useTransition of 78 bytes]: 1 params @ offset 0x00189f24
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24665>  # String: 'useTransition' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 117, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <NewObject>: <Reg8: 20>
+                                        // USED → r20 = {  }
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 25, string_id: 12216>  # String: 'useReducer' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 24, Reg8: 1, function_id: 841>  # Function: [#841 useState of 22 bytes]: 1 params @ offset 0x00189f72
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 246>  # String: 'useState' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 842>  # Function: [#842 useDeferredValue of 75 bytes]: 3 params @ offset 0x00189f88
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 843>  # Function: [#843 useTransition of 78 bytes]: 1 params @ offset 0x00189fd3
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24665>  # String: 'useTransition' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 118, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <NewObject>: <Reg8: 20>
+                                        // USED → r20 = {  }
+                                        // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 844>  # Function: [#844 isMounted of 34 bytes]: 2 params @ offset 0x0018a021
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 16785>  # String: 'isMounted' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 845>  # Function: [#845 enqueueSetState of 109 bytes]: 4 params @ offset 0x0018a043
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22773>  # String: 'enqueueSetState' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 846>  # Function: [#846 enqueueReplaceState of 118 bytes]: 4 params @ offset 0x0018a0b0
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22685>  # String: 'enqueueReplaceState' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 847>  # Function: [#847 enqueueForceUpdate of 109 bytes]: 3 params @ offset 0x0018a126
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 17151>  # String: 'enqueueForceUpdate' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 119, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <TryGetById>: <Reg8: 20, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <CreateThis>: <Reg8: 21, Reg8: 21, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <Mov>: <Reg8: 57, Reg8: 21>
+                                        r57 = Identifier(name='r21')
+                                        // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
+                                        // Error: sequence item 0: expected str instance, Identifier found
+                                        // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
+                                        // Error: 'Identifier' object has no attribute 'render'
+                                        // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
+                                        // USED → r17 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r17'))
+                                        // CODE → <JStrictNotEqualLong>: <Addr32: 774, Reg8: 16, Reg8: 17>  # Address: 000018b9
+                                        if (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r17'))) { /* jump to label_6329 */ }
                                         // LOOP → START (while)
-                                        while (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r39'))) {
-                                            // ──────────────── Block 5 ──────────────── 
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 54, Reg8: 41>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 821>  # Function: [#821 getFiberCurrentPropsFromNode$1 of 17 bytes]: 2 params @ offset 0x00189a6d
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 41>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 6, Reg8: 8>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 822>  # Function: [#822 getNodeFromInstance$1 of 49 bytes]: 2 params @ offset 0x00189a7e
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 7, Reg8: 41>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetById>: <Reg8: 42, Reg8: 40, UInt8: 36, string_id: 15132>  # String: 'injection' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetById>: <Reg8: 41, Reg8: 42, UInt8: 37, string_id: 21100>  # String: 'injectGlobalResponderHandler' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <NewObject>: <Reg8: 40>
-                                            // USED → r40 = {  }
-                                            // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 823>  # Function: [#823 onChange of 122 bytes]: 4 params @ offset 0x00189aaf
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 43, string_id: 15401>  # String: 'onChange' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 3815>  # String: 'react.element' (String)
-                                            // USED → r40 = "react.element"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 55, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 5553>  # String: 'react.portal' (String)
-                                            // USED → r40 = "react.portal"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 56, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 5930>  # String: 'react.fragment' (String)
-                                            // USED → r40 = "react.fragment"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 57, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 6410>  # String: 'react.strict_mode' (String)
-                                            // USED → r40 = "react.strict_mode"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 58, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 5628>  # String: 'react.profiler' (String)
-                                            // USED → r40 = "react.profiler"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 59, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 2499>  # String: 'react.provider' (String)
-                                            // USED → r40 = "react.provider"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 60, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 8244>  # String: 'react.consumer' (String)
-                                            // USED → r40 = "react.consumer"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 61, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 4944>  # String: 'react.context' (String)
-                                            // USED → r40 = "react.context"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 62, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 7930>  # String: 'react.forward_ref' (String)
-                                            // USED → r40 = "react.forward_ref"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 63, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 6421>  # String: 'react.suspense' (String)
-                                            // USED → r40 = "react.suspense"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 64, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 6422>  # String: 'react.suspense_list' (String)
-                                            // USED → r40 = "react.suspense_list"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 65, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 410>  # String: 'react.memo' (String)
-                                            // USED → r40 = "react.memo"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 66, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 10762>  # String: 'react.lazy' (String)
-                                            // USED → r40 = "react.lazy"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 67, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 6222>  # String: 'react.scope' (String)
-                                            // USED → r40 = "react.scope"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 6531>  # String: 'react.debug_trace_mode' (String)
-                                            // USED → r40 = "react.debug_trace_mode"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 5577>  # String: 'react.offscreen' (String)
-                                            // USED → r40 = "react.offscreen"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 68, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 4905>  # String: 'react.legacy_hidden' (String)
-                                            // USED → r40 = "react.legacy_hidden"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 2166>  # String: 'react.cache' (String)
-                                            // USED → r40 = "react.cache"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 8982>  # String: 'react.tracing_marker' (String)
-                                            // USED → r40 = "react.tracing_marker"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <TryGetById>: <Reg8: 40, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetById>: <Reg8: 40, Reg8: 40, UInt8: 40, string_id: 13658>  # String: 'iterator' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 69, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-                                            // Error: 'UnaryExpression' object has no attribute 'render'
-                                            // CODE → <LoadConstString>: <Reg8: 40, string_id: 10511>  # String: 'react.client.reference' (String)
-                                            // USED → r40 = "react.client.reference"
-                                            // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-                                            // Error: sequence item 0: expected str instance, UnaryExpression found
-                                            // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-                                            // USED → r40 = []
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 71, Reg8: 39>
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <NewObject>: <Reg8: 39>
-                                            // USED → r39 = {  }
-                                            // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 72, Reg8: 39>
-                                            // Error: 'Identifier' object has no attribute 'render'
+                                        while (true) {
+                                            // ──────────────── Block 6 ──────────────── 
                                             // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
                                             // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <GetById>: <Reg8: 39, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
-                                            // Error: 'Identifier' object has no attribute 'render'
-                                            // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
-                                            // USED → r39 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r39'))
-                                            // CODE → <JStrictNotEqual>: <Addr8: 16, Reg8: 16, Reg8: 39>  # Address: 0000127e
-                                            if (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r39'))) { /* jump to label_4734 */ }
+                                            // CODE → <GetById>: <Reg8: 38, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
+                                            // Error: 'UnaryExpression' object has no attribute 'render'
                                             // LOOP → START (while)
-                                            while (true) {
-                                                // ──────────────── Block 4 ──────────────── 
-                                                // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // ──────────────── Block 3 ──────────────── 
-                                                // CODE → <TryGetById>: <Reg8: 43, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <LoadConstString>: <Reg8: 42, string_id: 558>  # String: '`.' (String)
-                                                // USED → r42 = "`."
-                                                // CODE → <Add>: <Reg8: 44, Reg8: 44, Reg8: 42>
-                                                // USED → r44 = BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42'))
-                                                // CODE → <LoadConstString>: <Reg8: 42, string_id: 4924>  # String: 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `' (String)
-                                                // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `"
-                                                // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
-                                                // USED → r42 = BinaryExpression(left=Identifier(name='r42'), operator=<BinaryOperator.ADD: '+'>, right=BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42')))
-                                                // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
-                                                // Error: sequence item 0: expected str instance, Identifier found
-                                                // CODE → <Throw>: <Reg8: 42>
-                                                // Error: 'BinaryExpression' object has no attribute 'render'
-                                                // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <Call1>: <Reg8: 16, Reg8: 16, Reg8: 2>
-                                                // Error: sequence item 0: expected str instance, Identifier found
-                                                // CODE → <NewObject>: <Reg8: 16>
-                                                // USED → r16 = {  }
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 25, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 26, Reg8: 11>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 27, Reg8: 10>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <NewObject>: <Reg8: 16>
-                                                // USED → r16 = {  }
-                                                // CODE → <PutNewOwnById>: <Reg8: 16, Reg8: 37, string_id: 24472>  # String: 'unsafelyIgnoreFunctions' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 28, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 29, Reg8: 12>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 14, string_id: 21563>  # String: '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 11>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00000f1e
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 9, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 33, Reg8: 9>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 17, string_id: 171>  # String: 'log' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 34, Reg8: 9>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 18, string_id: 21154>  # String: 'LN2' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 35, Reg8: 9>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 128>
-                                                // USED → r9 = 128
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 36, Reg8: 9>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <LoadConstInt>: <Reg8: 9, Imm32: 4194304>
-                                                // USED → r9 = 4194304
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 37, Reg8: 9>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 38, Reg8: 10>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 19, string_id: 24093>  # String: 'nativeFabricUIManager' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 20, string_id: 15507>  # String: 'createNode' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 39, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 21, string_id: 22912>  # String: 'cloneNodeWithNewChildren' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 40, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 22, string_id: 22913>  # String: 'cloneNodeWithNewChildrenAndProps' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 41, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 23, string_id: 22914>  # String: 'cloneNodeWithNewProps' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 42, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 24, string_id: 23048>  # String: 'createChildSet' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 43, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 25, string_id: 22565>  # String: 'appendChild' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 44, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 22566>  # String: 'appendChildToSet' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 45, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 27, string_id: 22962>  # String: 'completeRoot' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 46, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 28, string_id: 20376>  # String: 'registerEventHandler' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 41, Reg8: 9, UInt8: 29, string_id: 24474>  # String: 'unstable_DiscreteEventPriority' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 47, Reg8: 41>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 30, string_id: 24484>  # String: 'unstable_getCurrentEventPriority' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 48, Reg8: 9>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
-                                                // Error: sequence item 0: expected str instance, Identifier found
-                                                // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 31, string_id: 137>  # String: 'get' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 49, Reg8: 9>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <JmpFalse>: <Addr8: 13, Reg8: 16>  # Address: 00000fef
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
-                                                // Error: sequence item 0: expected str instance, Identifier found
-                                                // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 32, string_id: 214>  # String: 'setTimeout' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 51, Reg8: 41>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 33, string_id: 12162>  # String: 'clearTimeout' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 52, Reg8: 9>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 16, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <LoadConstString>: <Reg8: 9, string_id: 610>  # String: 'undefined' (String)
-                                                // USED → r9 = "undefined"
-                                                // CODE → <TypeOf>: <Reg8: 16, Reg8: 16>
-                                                // USED → r16 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r16'))
-                                                // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
-                                                // USED → r16 = BinaryExpression(left=Identifier(name='r9'), operator=<BinaryOperator.STRICT_NOT_EQUAL: '!=='>, right=UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r16')))
-                                                // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00001023
-                                                // Error: 'BinaryExpression' object has no attribute 'render'
-                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <Not>: <Reg8: 42, Reg8: 42>
-                                                // USED → r42 = UnaryExpression(operator=<UnaryOperator.LOGICAL_NOT: '!'>, operand=BinaryExpression(left=Identifier(name='r42'), operator=<BinaryOperator.ADD: '+'>, right=BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42'))))
-                                                // CODE → <Not>: <Reg8: 16, Reg8: 42>
-                                                // USED → r16 = UnaryExpression(operator=<UnaryOperator.LOGICAL_NOT: '!'>, operand=UnaryExpression(operator=<UnaryOperator.LOGICAL_NOT: '!'>, operand=BinaryExpression(left=Identifier(name='r42'), operator=<BinaryOperator.ADD: '+'>, right=BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42')))))
-                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 53, Reg8: 16>
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <GetById>: <Reg8: 42, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
-                                                // Error: 'Identifier' object has no attribute 'render'
-                                                // CODE → <LoadConstString>: <Reg8: 16, string_id: 12255>  # String: 'function' (Identifier)
-                                                // USED → r16 = "function"
-                                                // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
-                                                // USED → r42 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=UnaryExpression(operator=<UnaryOperator.LOGICAL_NOT: '!'>, operand=BinaryExpression(left=Identifier(name='r42'), operator=<BinaryOperator.ADD: '+'>, right=BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42')))))
-                                                // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 16, Reg8: 42>  # Address: 0000103e
-                                                if (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=UnaryExpression(operator=<UnaryOperator.LOGICAL_NOT: '!'>, operand=BinaryExpression(left=Identifier(name='r42'), operator=<BinaryOperator.ADD: '+'>, right=BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42')))))) { /* jump to label_4158 */ }
+                                            while (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r39'))) {
+                                                // ──────────────── Block 5 ──────────────── 
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 54, Reg8: 41>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 821>  # Function: [#821 getFiberCurrentPropsFromNode$1 of 17 bytes]: 2 params @ offset 0x00189a6d
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 41>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 6, Reg8: 8>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 822>  # Function: [#822 getNodeFromInstance$1 of 49 bytes]: 2 params @ offset 0x00189a7e
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 7, Reg8: 41>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetById>: <Reg8: 42, Reg8: 40, UInt8: 36, string_id: 15132>  # String: 'injection' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetById>: <Reg8: 41, Reg8: 42, UInt8: 37, string_id: 21100>  # String: 'injectGlobalResponderHandler' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <NewObject>: <Reg8: 40>
+                                                // USED → r40 = {  }
+                                                // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 823>  # Function: [#823 onChange of 122 bytes]: 4 params @ offset 0x00189aaf
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 43, string_id: 15401>  # String: 'onChange' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 3815>  # String: 'react.element' (String)
+                                                // USED → r40 = "react.element"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 55, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 5553>  # String: 'react.portal' (String)
+                                                // USED → r40 = "react.portal"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 56, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 5930>  # String: 'react.fragment' (String)
+                                                // USED → r40 = "react.fragment"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 57, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 6410>  # String: 'react.strict_mode' (String)
+                                                // USED → r40 = "react.strict_mode"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 58, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 5628>  # String: 'react.profiler' (String)
+                                                // USED → r40 = "react.profiler"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 59, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 2499>  # String: 'react.provider' (String)
+                                                // USED → r40 = "react.provider"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 60, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 8244>  # String: 'react.consumer' (String)
+                                                // USED → r40 = "react.consumer"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 61, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 4944>  # String: 'react.context' (String)
+                                                // USED → r40 = "react.context"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 62, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 7930>  # String: 'react.forward_ref' (String)
+                                                // USED → r40 = "react.forward_ref"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 63, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 6421>  # String: 'react.suspense' (String)
+                                                // USED → r40 = "react.suspense"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 64, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 6422>  # String: 'react.suspense_list' (String)
+                                                // USED → r40 = "react.suspense_list"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 65, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 410>  # String: 'react.memo' (String)
+                                                // USED → r40 = "react.memo"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 66, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 10762>  # String: 'react.lazy' (String)
+                                                // USED → r40 = "react.lazy"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 67, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 6222>  # String: 'react.scope' (String)
+                                                // USED → r40 = "react.scope"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 6531>  # String: 'react.debug_trace_mode' (String)
+                                                // USED → r40 = "react.debug_trace_mode"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 5577>  # String: 'react.offscreen' (String)
+                                                // USED → r40 = "react.offscreen"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 68, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 4905>  # String: 'react.legacy_hidden' (String)
+                                                // USED → r40 = "react.legacy_hidden"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 2166>  # String: 'react.cache' (String)
+                                                // USED → r40 = "react.cache"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 8982>  # String: 'react.tracing_marker' (String)
+                                                // USED → r40 = "react.tracing_marker"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <TryGetById>: <Reg8: 40, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetById>: <Reg8: 40, Reg8: 40, UInt8: 40, string_id: 13658>  # String: 'iterator' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 69, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
+                                                // Error: 'UnaryExpression' object has no attribute 'render'
+                                                // CODE → <LoadConstString>: <Reg8: 40, string_id: 10511>  # String: 'react.client.reference' (String)
+                                                // USED → r40 = "react.client.reference"
+                                                // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
+                                                // Error: sequence item 0: expected str instance, UnaryExpression found
+                                                // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
+                                                // USED → r40 = []
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 71, Reg8: 39>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <NewObject>: <Reg8: 39>
+                                                // USED → r39 = {  }
+                                                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 72, Reg8: 39>
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <GetById>: <Reg8: 39, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
+                                                // Error: 'Identifier' object has no attribute 'render'
+                                                // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
+                                                // USED → r39 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r39'))
+                                                // CODE → <JStrictNotEqual>: <Addr8: 16, Reg8: 16, Reg8: 39>  # Address: 0000127e
+                                                if (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r39'))) { /* jump to label_4734 */ }
+                                                // LOOP → START (while)
+                                                while (true) {
+                                                    // ──────────────── Block 4 ──────────────── 
+                                                    // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // ──────────────── Block 3 ──────────────── 
+                                                    // CODE → <TryGetById>: <Reg8: 43, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <LoadConstString>: <Reg8: 42, string_id: 558>  # String: '`.' (String)
+                                                    // USED → r42 = "`."
+                                                    // CODE → <Add>: <Reg8: 44, Reg8: 44, Reg8: 42>
+                                                    // USED → r44 = BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42'))
+                                                    // CODE → <LoadConstString>: <Reg8: 42, string_id: 4924>  # String: 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `' (String)
+                                                    // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `"
+                                                    // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
+                                                    // USED → r42 = BinaryExpression(left=Identifier(name='r42'), operator=<BinaryOperator.ADD: '+'>, right=BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42')))
+                                                    // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
+                                                    // Error: sequence item 0: expected str instance, Identifier found
+                                                    // CODE → <Throw>: <Reg8: 42>
+                                                    // Error: 'BinaryExpression' object has no attribute 'render'
+                                                    // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <Call1>: <Reg8: 16, Reg8: 16, Reg8: 2>
+                                                    // Error: sequence item 0: expected str instance, Identifier found
+                                                    // CODE → <NewObject>: <Reg8: 16>
+                                                    // USED → r16 = {  }
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 25, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 26, Reg8: 11>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 27, Reg8: 10>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <NewObject>: <Reg8: 16>
+                                                    // USED → r16 = {  }
+                                                    // CODE → <PutNewOwnById>: <Reg8: 16, Reg8: 37, string_id: 24472>  # String: 'unsafelyIgnoreFunctions' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 28, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 29, Reg8: 12>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 14, string_id: 21563>  # String: '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 11>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00000f1e
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 9, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 33, Reg8: 9>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 17, string_id: 171>  # String: 'log' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 34, Reg8: 9>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 18, string_id: 21154>  # String: 'LN2' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 35, Reg8: 9>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 128>
+                                                    // USED → r9 = 128
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 36, Reg8: 9>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <LoadConstInt>: <Reg8: 9, Imm32: 4194304>
+                                                    // USED → r9 = 4194304
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 37, Reg8: 9>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 38, Reg8: 10>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 19, string_id: 24093>  # String: 'nativeFabricUIManager' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 20, string_id: 15507>  # String: 'createNode' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 39, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 21, string_id: 22912>  # String: 'cloneNodeWithNewChildren' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 40, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 22, string_id: 22913>  # String: 'cloneNodeWithNewChildrenAndProps' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 41, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 23, string_id: 22914>  # String: 'cloneNodeWithNewProps' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 42, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 24, string_id: 23048>  # String: 'createChildSet' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 43, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 25, string_id: 22565>  # String: 'appendChild' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 44, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 22566>  # String: 'appendChildToSet' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 45, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 27, string_id: 22962>  # String: 'completeRoot' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 46, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 28, string_id: 20376>  # String: 'registerEventHandler' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 41, Reg8: 9, UInt8: 29, string_id: 24474>  # String: 'unstable_DiscreteEventPriority' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 47, Reg8: 41>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 30, string_id: 24484>  # String: 'unstable_getCurrentEventPriority' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 48, Reg8: 9>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
+                                                    // Error: sequence item 0: expected str instance, Identifier found
+                                                    // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 31, string_id: 137>  # String: 'get' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 49, Reg8: 9>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <JmpFalse>: <Addr8: 13, Reg8: 16>  # Address: 00000fef
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
+                                                    // Error: sequence item 0: expected str instance, Identifier found
+                                                    // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 32, string_id: 214>  # String: 'setTimeout' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 51, Reg8: 41>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 33, string_id: 12162>  # String: 'clearTimeout' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 52, Reg8: 9>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 16, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <LoadConstString>: <Reg8: 9, string_id: 610>  # String: 'undefined' (String)
+                                                    // USED → r9 = "undefined"
+                                                    // CODE → <TypeOf>: <Reg8: 16, Reg8: 16>
+                                                    // USED → r16 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r16'))
+                                                    // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
+                                                    // USED → r16 = BinaryExpression(left=Identifier(name='r9'), operator=<BinaryOperator.STRICT_NOT_EQUAL: '!=='>, right=UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r16')))
+                                                    // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00001023
+                                                    // Error: 'BinaryExpression' object has no attribute 'render'
+                                                    // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <Not>: <Reg8: 42, Reg8: 42>
+                                                    // USED → r42 = UnaryExpression(operator=<UnaryOperator.LOGICAL_NOT: '!'>, operand=BinaryExpression(left=Identifier(name='r42'), operator=<BinaryOperator.ADD: '+'>, right=BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42'))))
+                                                    // CODE → <Not>: <Reg8: 16, Reg8: 42>
+                                                    // USED → r16 = UnaryExpression(operator=<UnaryOperator.LOGICAL_NOT: '!'>, operand=UnaryExpression(operator=<UnaryOperator.LOGICAL_NOT: '!'>, operand=BinaryExpression(left=Identifier(name='r42'), operator=<BinaryOperator.ADD: '+'>, right=BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42')))))
+                                                    // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 53, Reg8: 16>
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <GetById>: <Reg8: 42, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
+                                                    // Error: 'Identifier' object has no attribute 'render'
+                                                    // CODE → <LoadConstString>: <Reg8: 16, string_id: 12255>  # String: 'function' (Identifier)
+                                                    // USED → r16 = "function"
+                                                    // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
+                                                    // USED → r42 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=UnaryExpression(operator=<UnaryOperator.LOGICAL_NOT: '!'>, operand=BinaryExpression(left=Identifier(name='r42'), operator=<BinaryOperator.ADD: '+'>, right=BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42')))))
+                                                    // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 16, Reg8: 42>  # Address: 0000103e
+                                                    if (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=UnaryExpression(operator=<UnaryOperator.LOGICAL_NOT: '!'>, operand=BinaryExpression(left=Identifier(name='r42'), operator=<BinaryOperator.ADD: '+'>, right=BinaryExpression(left=Identifier(name='r45'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42')))))) { /* jump to label_4158 */ }
+                                                }
+                                                // LOOP → END
                                             }
                                             // LOOP → END
                                         }
@@ -2771,13 +2784,4 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // LOOP → END
     }
     // LOOP → END
-    // ──────────────── Block 18 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4985>  # String: 'Expected ReactFiberErrorDialog.showErrorDialog to be a function.' (String)
-    // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
-    // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    // Error: sequence item 0: expected str instance, Identifier found
-    // CODE → <Throw>: <Reg8: 0>
-    // Error: 'Identifier' object has no attribute 'render'
 }

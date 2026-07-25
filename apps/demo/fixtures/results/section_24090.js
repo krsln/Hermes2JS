@@ -60,9 +60,9 @@ function onPress(param0) {
     while (true) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <LoadConstUndefined>: <Reg8: 0>
-        // USED → r0 = undefined
+        r0 = undefined
         // CODE → <Ret>: <Reg8: 0>
-        ReturnStatement(argument=Identifier(name='r0'))
+        // Unhandled opcode: Ret
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 12>
         // Error: 'Identifier' object has no attribute 'render'

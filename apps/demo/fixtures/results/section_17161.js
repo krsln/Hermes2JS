@@ -5,7 +5,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 7, UInt8: 1>
     // USED → r7 = param1
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield /* ResumeGenerator -> r0 */
+    r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrueLong>: <Addr32: 161, Reg8: 1>  # Address: 000000a8
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetGlobalObject>: <Reg8: 2>
@@ -18,24 +18,28 @@ async function* anon_17161(param0, param1) {
      = await // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000020
     yield label_32;
-    // ──────────────── Block 1 ──────────────── 
-    // CODE → <Ret>: <Reg8: 1>
-    ReturnStatement(argument=Identifier(name='r1'))
-    // ──────────────── Block 2 ──────────────── 
-    // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-    // USED → r1 = await yield /* ResumeGenerator -> r1 */
-    // CODE → <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 14168>  # String: 'ok' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <JmpTrue>: <Addr8: 93, Reg8: 3>  # Address: 0000008c
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <LoadConstZero>: <Reg8: 3>
-    // USED → r3 = 0
-    // CODE → <JStrictNotEqual>: <Addr8: 22, Reg8: 4, Reg8: 3>  # Address: 00000050
-    if (Identifier(name='r4') !== Identifier(name='r3')) { /* jump to label_80 */ }
+    // LOOP → START (while)
+    while (Identifier(name='r4') !== Identifier(name='r3')) {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
+        // USED → r1 = await yield /* ResumeGenerator -> r1 */
+        // CODE → <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 14168>  # String: 'ok' (Identifier)
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <JmpTrue>: <Addr8: 93, Reg8: 3>  # Address: 0000008c
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <LoadConstZero>: <Reg8: 3>
+        // USED → r3 = 0
+        // CODE → <JStrictNotEqual>: <Addr8: 22, Reg8: 4, Reg8: 3>  # Address: 00000050
+        if (Identifier(name='r4') !== Identifier(name='r3')) { /* jump to label_80 */ }
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <Ret>: <Reg8: 1>
+        // Unhandled opcode: Ret
+    }
+    // LOOP → END
     // ──────────────── Block 3 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 19693>  # String: 'startsWith' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
@@ -78,28 +82,32 @@ async function* anon_17161(param0, param1) {
      = await // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000099
     yield label_153;
-    // ──────────────── Block 5 ──────────────── 
-    // CODE → <Ret>: <Reg8: 2>
-    ReturnStatement(argument=Identifier(name='r2'))
-    // ──────────────── Block 6 ──────────────── 
-    // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
-    // USED → r2 = await yield /* ResumeGenerator -> r2 */
-    // CODE → <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
-    // Error: 'Identifier' object has no attribute 'render'
-    // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
-    // CODE → <Ret>: <Reg8: 2>
-    ReturnStatement(argument=Identifier(name='r2'))
-    // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
-    // CODE → <Ret>: <Reg8: 2>
-    ReturnStatement(argument=Identifier(name='r2'))
-    // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
-    // CODE → <Ret>: <Reg8: 1>
-    ReturnStatement(argument=Identifier(name='r1'))
-    // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
-    // CODE → <Ret>: <Reg8: 0>
-    ReturnStatement(argument=Identifier(name='r0'))
+    // LOOP → START (while)
+    while (true) {
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+        r2 = await yield /* ResumeGenerator -> r2 */
+        // CODE → <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
+        // Error: 'Identifier' object has no attribute 'render'
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 2>
+        // Unhandled opcode: Ret
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 2>
+        // Unhandled opcode: Ret
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 1>
+        // Unhandled opcode: Ret
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 0>
+        // Unhandled opcode: Ret
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <Ret>: <Reg8: 2>
+        // Unhandled opcode: Ret
+    }
+    // LOOP → END
 }

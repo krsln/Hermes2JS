@@ -83,9 +83,9 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // CODE → <JmpTrue>: <Addr8: 7, Reg8: 11>  # Address: 00000089
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <LoadConstFalse>: <Reg8: 11>
-        // USED → r11 = false
+        r11 = false
         // CODE → <Ret>: <Reg8: 11>
-        ReturnStatement(argument=Identifier(name='r11'))
+        // Unhandled opcode: Ret
         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
         // USED → r11 = Identifier(name='r7')
         // CODE → <Inc>: <Reg8: 13, Reg8: 11>
@@ -157,32 +157,40 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <JmpLong>: <Addr32: -235>  # Address: 0000001d
         goto label_29;
-        // ──────────────── Block 14 ──────────────── 
-        // CODE → <Mov>: <Reg8: 11, Reg8: 6>
-        // USED → r11 = BinaryExpression(left=Identifier(name='r11'), operator=<BinaryOperator.BITWISE_AND: '&'>, right=Identifier(name='r3'))
-        // CODE → <PutById>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 209>  # String: 'return' (Identifier)
-        // Error: 'BinaryExpression' object has no attribute 'render'
-        // CODE → <Mov>: <Reg8: 0, Reg8: 11>
-        r0 = BinaryExpression(left=Identifier(name='r11'), operator=<BinaryOperator.BITWISE_AND: '&'>, right=Identifier(name='r3'))
-        // CODE → <JmpLong>: <Addr32: -260>  # Address: 0000001d
-        goto label_29;
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 14 ──────────────── 
+            // CODE → <Mov>: <Reg8: 11, Reg8: 6>
+            // USED → r11 = BinaryExpression(left=Identifier(name='r11'), operator=<BinaryOperator.BITWISE_AND: '&'>, right=Identifier(name='r3'))
+            // CODE → <PutById>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 209>  # String: 'return' (Identifier)
+            // Error: 'BinaryExpression' object has no attribute 'render'
+            // CODE → <Mov>: <Reg8: 0, Reg8: 11>
+            r0 = BinaryExpression(left=Identifier(name='r11'), operator=<BinaryOperator.BITWISE_AND: '&'>, right=Identifier(name='r3'))
+            // CODE → <JmpLong>: <Addr32: -260>  # Address: 0000001d
+            goto label_29;
+            // LOOP → START (while)
+            while (true) {
+                // ──────────────── Block 13 ──────────────── 
+                // CODE → <LoadConstTrue>: <Reg8: 11>
+                r11 = true
+                // CODE → <Ret>: <Reg8: 11>
+                // Unhandled opcode: Ret
+                // ──────────────── Block 12 ──────────────── 
+                // CODE → <LoadConstTrue>: <Reg8: 11>
+                r11 = true
+                // CODE → <Ret>: <Reg8: 11>
+                // Unhandled opcode: Ret
+            }
+            // LOOP → END
+        }
+        // LOOP → END
     }
     // LOOP → END
-    // ──────────────── Block 12 ──────────────── 
-    // CODE → <LoadConstTrue>: <Reg8: 11>
-    // USED → r11 = true
-    // CODE → <Ret>: <Reg8: 11>
-    ReturnStatement(argument=Identifier(name='r11'))
-    // ──────────────── Block 13 ──────────────── 
-    // CODE → <LoadConstTrue>: <Reg8: 11>
-    // USED → r11 = true
-    // CODE → <Ret>: <Reg8: 11>
-    ReturnStatement(argument=Identifier(name='r11'))
     // ──────────────── Block 15 ──────────────── 
     // CODE → <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → <LoadConstFalse>: <Reg8: 0>
-    // USED → r0 = false
+    r0 = false
     // CODE → <Ret>: <Reg8: 0>
-    ReturnStatement(argument=Identifier(name='r0'))
+    // Unhandled opcode: Ret
 }

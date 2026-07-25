@@ -127,5 +127,5 @@ function function_1(param0, param1) {
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 8, Reg8: 1>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Ret>: <Reg8: 0>
-    ReturnStatement(argument=Identifier(name='r0'))
+    // Unhandled opcode: Ret
 }

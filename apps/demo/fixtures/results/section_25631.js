@@ -17,7 +17,7 @@ function function_25631(param0, param1) {
     // CODE → <LoadConstInt>: <Reg8: 1, Imm32: 429>
     // USED → r1 = 429
     // CODE → <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
-    // USED → r0 = BinaryExpression(left=Identifier(name='r2'), operator=<BinaryOperator.STRICT_EQUAL: '==='>, right=Identifier(name='r1'))
+    r0 = BinaryExpression(left=Identifier(name='r2'), operator=<BinaryOperator.STRICT_EQUAL: '==='>, right=Identifier(name='r1'))
     // CODE → <Ret>: <Reg8: 0>
-    ReturnStatement(argument=BinaryExpression(left=Identifier(name='r2'), operator=<BinaryOperator.STRICT_EQUAL: '==='>, right=Identifier(name='r1')))
+    // Unhandled opcode: Ret
 }

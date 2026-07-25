@@ -17,5 +17,5 @@ function request(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <Ret>: <Reg8: 0>
-    ReturnStatement(argument=Identifier(name='r0'))
+    // Unhandled opcode: Ret
 }

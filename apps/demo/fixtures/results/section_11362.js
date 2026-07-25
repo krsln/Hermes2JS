@@ -1335,5 +1335,5 @@ function binl_md5(param0, param1, param2) {
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 1, UInt8: 3>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Ret>: <Reg8: 0>
-    ReturnStatement(argument=Identifier(name='r0'))
+    // Unhandled opcode: Ret
 }
