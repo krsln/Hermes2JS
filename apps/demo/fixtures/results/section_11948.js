@@ -389,9 +389,9 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 14>
     // USED → r5 = r14;
     // CODE → <GetGlobalObject>: <Reg8: 9>
-    // USED → r9 = globalThis;
+    // USED → r9 = globalThis
     // CODE → <TryGetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
-    // USED → r16 = globalThis.Promise
+    // USED → r16 = r9.Promise
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 16, UInt8: 27, string_id: 208>  # String: 'resolve' (Identifier)
     // USED → r9 = r16.resolve
     // CODE → <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
@@ -550,9 +550,9 @@ function _request(param0, param1, param2) {
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException
     // CODE → <GetGlobalObject>: <Reg8: 0>
-    // USED → r0 = globalThis;
+    // USED → r0 = globalThis
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
-    // USED → r1 = globalThis.Promise
+    // USED → r1 = r0.Promise
     // CODE → <GetById>: <Reg8: 0, Reg8: 1, UInt8: 30, string_id: 13645>  # String: 'reject' (Identifier)
     // USED → r0 = r1.reject
     // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>

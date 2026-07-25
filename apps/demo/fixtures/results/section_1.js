@@ -39,11 +39,11 @@ function function_1(param0, param1) {
     // CODE → <PutById>: <Reg8: 8, Reg8: 4, UInt8: 1, string_id: 14170>  # String: '__r' (Identifier)
     r8.__r = metroRequire;
     // CODE → <GetGlobalObject>: <Reg8: 1>
-    // USED → r1 = globalThis;
+    // USED → r1 = globalThis
     // CODE → <GetById>: <Reg8: 11, Reg8: 1, UInt8: 1, string_id: 13635>  # String: '__METRO_GLOBAL_PREFIX__' (Identifier)
-    // USED → r11 = globalThis.__METRO_GLOBAL_PREFIX__
+    // USED → r11 = r1.__METRO_GLOBAL_PREFIX__
     // CODE → <TryGetById>: <Reg8: 0, Reg8: 1, UInt8: 2, string_id: 21>  # String: 'HermesInternal' (Identifier)
-    // USED → r0 = globalThis.HermesInternal
+    // USED → r0 = r1.HermesInternal
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 0, UInt8: 3, string_id: 98>  # String: 'concat' (Identifier)
     // USED → r10 = r0.concat
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 11303>  # String: '' (Identifier)
@@ -113,7 +113,7 @@ function function_1(param0, param1) {
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 7, Reg8: 3>
     createEnvironment()[7] = [];
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 5, string_id: 26>  # String: 'Map' (Identifier)
-    // USED → r1 = globalThis.Map
+    // USED → r1 = r1.Map
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r3 = r1.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 1>

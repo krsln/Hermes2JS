@@ -52,9 +52,9 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 7>
     // USED → r1 = r7;
     // CODE → <GetGlobalObject>: <Reg8: 3>
-    // USED → r3 = globalThis;
+    // USED → r3 = globalThis
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r4 = globalThis.Error
+    // USED → r4 = r3.Error
     // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
     // USED → r4 = r7 instanceof r4;
     // CODE → <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
@@ -63,11 +63,11 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <NewObject>: <Reg8: 6>
     r6 = {  }
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r4 = globalThis.Error
+    // USED → r4 = r3.Error
     // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
     // USED → r4 = r4.captureStackTrace
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r8 = globalThis.Error
+    // USED → r8 = r3.Error
     // CODE → <JmpTrue>: <Addr8: 25, Reg8: 4>  # Address: 00000079
     if (r4) goto label_121;
     // ──────────────── Block 7 ──────────────── 
@@ -135,7 +135,7 @@ async function* anon_11947(param0, param1, param2) {
     if (!r7(r9, /^.+\\n/, r8)) goto label_312;
     // ──────────────── Block 14 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
-    // USED → r4 = globalThis.String
+    // USED → r4 = r3.String
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
     // USED → r3 = r7;
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)

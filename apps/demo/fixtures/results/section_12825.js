@@ -21,7 +21,7 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <Call1>: <Reg8: 10, Reg8: 1, Reg8: 2>
     // USED → r10 = r1(r2);
     // CODE → <GetGlobalObject>: <Reg8: 4>
-    // USED → r4 = globalThis;
+    // USED → r4 = globalThis
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 3614>  # String: 'Error occurred in ' (String)
     // USED → r3 = "Error occurred in "
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 11214>  # String: ' callback, continuing anyway…' (String)
@@ -67,7 +67,7 @@ function function_12825(param0, param1, param2, param3, param4) {
             // CODE → <Mov>: <Reg8: 14, Reg8: 8>
             // USED → r14 = r8;
             // CODE → <TryGetById>: <Reg8: 1, Reg8: 4, UInt8: 5, string_id: 21>  # String: 'HermesInternal' (Identifier)
-            // USED → r1 = globalThis.HermesInternal
+            // USED → r1 = r4.HermesInternal
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 98>  # String: 'concat' (Identifier)
             // USED → r1 = r1.concat
             // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 14, Reg8: 2>

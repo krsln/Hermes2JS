@@ -10,9 +10,9 @@ async function* anon_17161(param0, param1) {
     if (r1) goto label_168;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 2>
-    // USED → r2 = globalThis;
+    // USED → r2 = globalThis
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 13438>  # String: 'fetch' (Identifier)
-    // USED → r3 = globalThis.fetch
+    // USED → r3 = r2.fetch
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
@@ -54,11 +54,11 @@ async function* anon_17161(param0, param1) {
     if (r4(r7, r3)) goto label_140;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r4 = globalThis.Error
+    // USED → r4 = r2.Error
     // CODE → <GetById>: <Reg8: 6, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
     // USED → r6 = r1.status
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 6, string_id: 21>  # String: 'HermesInternal' (Identifier)
-    // USED → r2 = globalThis.HermesInternal
+    // USED → r2 = r2.HermesInternal
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 7, string_id: 98>  # String: 'concat' (Identifier)
     // USED → r5 = r2.concat
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 2430>  # String: 'Fetching ' (String)
