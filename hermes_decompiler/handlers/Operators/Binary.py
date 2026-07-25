@@ -1,5 +1,5 @@
-from hermes_decompiler.ir.Expressions import ComparisonExpression, BinaryExpression
-from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
+from hermes_decompiler.ir import BinaryExpression
+from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -10,21 +10,17 @@ from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
 class BaseBinaryOperator(OpcodeHandler):
-    """Base class for binary register operations."""
+    """
+    Base class for binary register operations.
+
+    Comparison operators (<, ===, instanceof, ...) render through the
+    same BinaryExpression node as arithmetic/bitwise ones - the old
+    separate ComparisonExpression node added no information that
+    `operator` doesn't already carry, and `Operators.precedence()`
+    already handles comparison operators correctly.
+    """
 
     _PATTERN = sequence(REG, REG, REG)
-    _COMPARISON_OPERATORS = {
-        BinaryOperator.LESS_THAN,
-        BinaryOperator.LESS_EQUAL,
-        BinaryOperator.GREATER_THAN,
-        BinaryOperator.GREATER_EQUAL,
-        BinaryOperator.EQUAL,
-        BinaryOperator.STRICT_EQUAL,
-        BinaryOperator.NOT_EQUAL,
-        BinaryOperator.STRICT_NOT_EQUAL,
-        BinaryOperator.INSTANCEOF,
-        BinaryOperator.IN,
-    }
 
     operator = BinaryOperator.ADD
 
@@ -40,11 +36,7 @@ class BaseBinaryOperator(OpcodeHandler):
         lhs_val = self.get_register_value(analysis, lhs)
         rhs_val = self.get_register_value(analysis, rhs)
 
-        # value = f"{lhs_val} {self.operator} {rhs_val}"
-        if self.operator in self._COMPARISON_OPERATORS:
-            value = ComparisonExpression(left=lhs_val, operator=self.operator, right=rhs_val)
-        else:
-            value = BinaryExpression(left=lhs_val, operator=self.operator, right=rhs_val)
+        value = BinaryExpression(left=lhs_val, operator=self.operator, right=rhs_val)
 
         variable = JSVariable(handler, entry.address, f"r{dest}", value)
         analysis.add_result(entry, variable)
@@ -52,7 +44,6 @@ class BaseBinaryOperator(OpcodeHandler):
         return OpcodeResult(entry, variable)
 
 
-# @formatter:off
 # @formatter:off
 class Add(BaseBinaryOperator): operator = BinaryOperator.ADD
 class AddN(Add): pass
@@ -66,7 +57,6 @@ class Mod(BaseBinaryOperator): operator = BinaryOperator.MODULO
 class ModN(Mod): pass
 
 class BitAnd(BaseBinaryOperator): operator = BinaryOperator.BITWISE_AND
-class BitNot(BaseBinaryOperator): operator = UnaryOperator.BITWISE_NOT
 class BitOr(BaseBinaryOperator): operator = BinaryOperator.BITWISE_OR
 class BitOrN(BitOr): pass
 class BitXor(BaseBinaryOperator): operator = BinaryOperator.BITWISE_XOR
@@ -87,11 +77,14 @@ class StrictEq(BaseBinaryOperator): operator = BinaryOperator.STRICT_EQUAL
 class StrictNeq(BaseBinaryOperator): operator = BinaryOperator.STRICT_NOT_EQUAL
 # @formatter:on
 
+
 class InstanceOf(BaseBinaryOperator):
     """instanceof operator."""
+
     operator = BinaryOperator.INSTANCEOF
 
 
 class IsIn(BaseBinaryOperator):
     """`in` operator: Arg1 = (Arg2 in Arg3)."""
+
     operator = BinaryOperator.IN

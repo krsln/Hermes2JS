@@ -1,8 +1,13 @@
 from typing import ClassVar
 
-from hermes_decompiler.ir.Expressions import UnaryExpression, BinaryExpression, Expression
+from hermes_decompiler.ir import (
+    Expression,
+    UnaryExpression,
+    BinaryExpression,
+    NumericLiteral,
+    StringLiteral,
+)
 from hermes_decompiler.ir.Operators import UnaryOperator, BinaryOperator
-from hermes_decompiler.ir.Values import Value, ConstantValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -17,17 +22,17 @@ class BaseUnaryOperator(OpcodeHandler):
 
     _PATTERN: ClassVar = sequence(REG, REG)
 
-    def expression(self, value: Value) -> Expression:
+    def expression(self, value: Expression) -> Expression:
         """
         Return the JavaScript expression for the unary operation.
-        Subclasses should override this method.
+        Subclasses must override this method.
         """
-        pass
+        raise NotImplementedError
 
     def handle(
-            self,
-            analysis: HermesAnalysis,
-            entry: OpcodeEntry,
+        self,
+        analysis: HermesAnalysis,
+        entry: OpcodeEntry,
     ) -> OpcodeResult:
         handler = self.__class__.__name__
 
@@ -56,8 +61,8 @@ class TypeOf(BaseUnaryOperator):
 
 
 class ToInt32(BaseUnaryOperator):
-    def expression(self, value: Value):
-        return BinaryExpression(left=value, operator=BinaryOperator.BITWISE_OR, right=ConstantValue(0))
+    def expression(self, value: Expression):
+        return BinaryExpression(left=value, operator=BinaryOperator.BITWISE_OR, right=NumericLiteral(0))
 
 
 class ToNumeric(BaseUnaryOperator):
@@ -71,13 +76,13 @@ class ToNumber(BaseUnaryOperator):
 
 
 class Inc(BaseUnaryOperator):
-    def expression(self, value: Value):
-        return BinaryExpression(left=value, operator=BinaryOperator.ADD, right=ConstantValue(1))
+    def expression(self, value: Expression):
+        return BinaryExpression(left=value, operator=BinaryOperator.ADD, right=NumericLiteral(1))
 
 
 class Dec(BaseUnaryOperator):
-    def expression(self, value: Value):
-        return BinaryExpression(left=value, operator=BinaryOperator.SUBTRACT, right=ConstantValue(1))
+    def expression(self, value: Expression):
+        return BinaryExpression(left=value, operator=BinaryOperator.SUBTRACT, right=NumericLiteral(1))
 
 
 class Negate(BaseUnaryOperator):
@@ -86,5 +91,17 @@ class Negate(BaseUnaryOperator):
 
 
 class AddEmptyString(BaseUnaryOperator):
-    def expression(self, value: Value):
-        return BinaryExpression(left=ConstantValue(""), operator=BinaryOperator.ADD, right=value)
+    def expression(self, value: Expression):
+        return BinaryExpression(left=StringLiteral(""), operator=BinaryOperator.ADD, right=value)
+
+
+class BitNot(BaseUnaryOperator):
+    """
+    Bitwise NOT (~x). Moved here from Binary.py, where it was previously
+    misclassified as a BaseBinaryOperator with a UnaryOperator assigned
+    to a BinaryOperator-typed field - `~` is unary and takes a single
+    Reg8 operand, not two.
+    """
+
+    def expression(self, value):
+        return UnaryExpression(UnaryOperator.BITWISE_NOT, value)
