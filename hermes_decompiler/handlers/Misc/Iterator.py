@@ -1,6 +1,4 @@
-from hermes_decompiler.ir.Expressions import GetIteratorExpression, CallExpression, MemberExpression, \
-    PropertyIteratorExpression
-from hermes_decompiler.ir.Values import IdentifierValue
+from hermes_decompiler.ir import CallExpression, Identifier, MemberExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -25,7 +23,12 @@ class IteratorBegin(OpcodeHandler):
         iterator_reg, iterable_reg = map(int, match.groups())
         iterable = self.get_register_value(analysis, iterable_reg)
 
-        variable = JSVariable(handler, entry.address, f"r{iterator_reg}", GetIteratorExpression(iterable))
+        # Named pseudo-call, same convention as getEnvironment()/
+        # HermesPropertyIterator() elsewhere - GetIterator() is not
+        # real JS syntax but a VM-level operation.
+        value = CallExpression(callee=Identifier(name="GetIterator"), arguments=(iterable,))
+
+        variable = JSVariable(handler, entry.address, f"r{iterator_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -46,8 +49,8 @@ class IteratorNext(OpcodeHandler):
         result_reg, iterator_reg, _ = map(int, match.groups())
         iterator = self.get_register_value(analysis, iterator_reg)
 
-        callee = MemberExpression(iterator, IdentifierValue("next"))
-        value = CallExpression(callee=callee, arguments=[])
+        callee = MemberExpression(iterator, Identifier(name="next"))
+        value = CallExpression(callee=callee, arguments=())
 
         variable = JSVariable(handler, entry.address, f"r{result_reg}", value)
         analysis.add_result(entry, variable)
@@ -70,8 +73,8 @@ class IteratorClose(OpcodeHandler):
         iterator_reg = int(match.group(1))
         iterator = self.get_register_value(analysis, iterator_reg)
 
-        callee = MemberExpression(iterator, IdentifierValue("return"))
-        value = CallExpression(callee=callee, arguments=[])
+        callee = MemberExpression(iterator, Identifier(name="return"))
+        value = CallExpression(callee=callee, arguments=())
 
         variable = JSVariable(handler, entry.address, "", value)
         analysis.add_result(entry, variable)
@@ -104,7 +107,7 @@ class GetPNameList(OpcodeHandler):
         dest_reg, obj_reg, _index_reg, _size_reg = map(int, match.groups())
         obj = self.get_register_value(analysis, obj_reg)
 
-        value = PropertyIteratorExpression(obj)
+        value = CallExpression(callee=Identifier(name="HermesPropertyIterator"), arguments=(obj,))
 
         # for-in property list
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
@@ -127,8 +130,8 @@ class GetNextPName(OpcodeHandler):
         dest_reg, list_reg, _obj_reg, _index_reg, _size_reg = map(int, match.groups())
         list_val = self.get_register_value(analysis, list_reg)
 
-        callee = MemberExpression(list_val, IdentifierValue("next"))
-        value = CallExpression(callee=callee, arguments=[])
+        callee = MemberExpression(list_val, Identifier(name="next"))
+        value = CallExpression(callee=callee, arguments=())
 
         # for-in step
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
