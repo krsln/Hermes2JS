@@ -59,14 +59,9 @@ class JCompareX(OpcodeHandler):
             f"if ({lhs} {self.operator} {rhs}) "
             f"{{ /* jump to label_{target} */ }}"
         )
+        print("JCompareX", expression)
 
-        variable = JSVariable(
-            self.__class__.__name__,
-            entry.address,
-            "",
-            expression,
-        )
-
+        variable = JSVariable(self.__class__.__name__, entry.address, "", expression)
         analysis.add_result(entry, variable, goto=target)
 
         return OpcodeResult(entry, variable, goto=target)
