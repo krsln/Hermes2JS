@@ -25,25 +25,25 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <NewObject>: <Reg8: 1>
     // USED → r1 = {  }
     // CODE → <LoadConstTrue>: <Reg8: 0>
-    // USED → r0 = true
+    // USED → r0 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 0, string_id: 249>  # String: 'value' (Identifier)
-    r1."value" = r0;
+    r1."value" = true;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 65>  # String: '__esModule' (Identifier)
-    // USED → r0 = "__esModule"
+    // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 4, Reg8: 7, Reg8: 2, Reg8: 0, Reg8: 1>
-    r0 = r4(r7, r2, r0, r1);
+    r0 = r4(r7, r2, "__esModule", r1);
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined
+    // USED → r0 = undefined;
     // CODE → <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    r2.default = r0;
+    r2.default = undefined;
     // CODE → <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0
+    // USED → r1 = 0;
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 6, Reg8: 1>
-    // USED → r1 = r6[r1]
+    // USED → r1 = r6[0]
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 0, Reg8: 1>
-    // USED → r1 = r5(r0, r1);
+    // USED → r1 = r5(undefined, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 2, Reg8: 1>
-    createEnvironment()[2] = r5(r0, r1);
+    createEnvironment()[2] = r5(undefined, r1);
     // CODE → <NewArrayWithBuffer>: <Reg8: 1, UInt16: 9, UInt16: 9, UInt16: 43049>  # Array: ['MAIN_BUNDLE', 'CACHES_DIRECTORY', 'DOCUMENT_DIRECTORY', 'EXTERNAL_DIRECTORY', 'EXTERNAL_STORAGE_DIRECTORY', 'TEMP_DIRECTORY', 'LIBRARY_DIRECTORY', 'PICTURES_DIRECTORY', 'MOVIES_DIRECTORY']
     // USED → r1 = ["MAIN_BUNDLE", "CACHES_DIRECTORY", "DOCUMENT_DIRECTORY", "EXTERNAL_DIRECTORY", "EXTERNAL_STORAGE_DIRECTORY", "TEMP_DIRECTORY", "LIBRARY_DIRECTORY", "PICTURES_DIRECTORY", "MOVIES_DIRECTORY"];
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 3, Reg8: 1>
@@ -57,23 +57,23 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 5, Reg8: 1>
     createEnvironment()[5] = r1;
     // CODE → <LoadConstFalse>: <Reg8: 1>
-    // USED → r1 = false
+    // USED → r1 = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 3, UInt8: 6, Reg8: 1>
-    createEnvironment()[6] = r1;
+    createEnvironment()[6] = false;
     // CODE → <NewObject>: <Reg8: 1>
     // USED → r1 = {  }
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
-    // USED → r4 = 2
+    // USED → r4 = 2;
     // CODE → <GetByVal>: <Reg8: 4, Reg8: 6, Reg8: 4>
-    // USED → r4 = r6[r4]
+    // USED → r4 = r6[2]
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 0, Reg8: 4>
-    // USED → r4 = r5(r0, r4);
+    // USED → r4 = r5(undefined, r4);
     // CODE → <PutNewOwnById>: <Reg8: 1, Reg8: 4, string_id: 12734>  # String: 'SDK_VERSION' (Identifier)
-    r1."SDK_VERSION" = r5(r0, r4);
+    r1."SDK_VERSION" = r5(undefined, r4);
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 3, function_id: 10681>  # Function: [#10681 get FilePath of 65 bytes]: 1 params @ offset 0x00294e9a
     // USED → r4 = get FilePath;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5066>  # String: 'FilePath' (String)
-    // USED → r3 = "FilePath"
+    // USED → r3 = "FilePath";
     // CODE → <PutOwnGetterSetterByVal>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 0, UInt8: 1>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)

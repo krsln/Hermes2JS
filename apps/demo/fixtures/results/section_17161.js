@@ -14,9 +14,9 @@ async function* anon_17161(param0, param1) {
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 13438>  # String: 'fetch' (Identifier)
     // USED → r3 = r2.fetch
     // CODE → <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined
+    // USED → r1 = undefined;
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
-    r1 = await CallExpression(callee=Identifier(name='r3'), arguments=(Identifier(name='r1'), Identifier(name='r7')), optional=False)
+    r1 = await CallExpression(callee=Identifier(name='r3'), arguments=(UndefinedLiteral(), Identifier(name='r7')), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000020
     yield label_32;
     // LOOP → START (while)
@@ -40,18 +40,18 @@ async function* anon_17161(param0, param1) {
     // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
     // USED → r4 = r1.status
     // CODE → <LoadConstZero>: <Reg8: 3>
-    // USED → r3 = 0
+    // USED → r3 = 0;
     // CODE → <JStrictNotEqual>: <Addr8: 22, Reg8: 4, Reg8: 3>  # Address: 00000050
-    if (r4 !== r3) goto label_80;
+    if (r4 !== 0) goto label_80;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 19693>  # String: 'startsWith' (Identifier)
     // USED → r4 = r7.startsWith
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 1058>  # String: 'file://' (String)
-    // USED → r3 = "file://"
+    // USED → r3 = "file://";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
-    // USED → r3 = r4(r7, r3);
+    // USED → r3 = r4(r7, "file://");
     // CODE → <JmpTrue>: <Addr8: 63, Reg8: 3>  # Address: 0000008c
-    if (r4(r7, r3)) goto label_140;
+    if (r4(r7, "file://")) goto label_140;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = r2.Error
@@ -62,11 +62,11 @@ async function* anon_17161(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 7, string_id: 98>  # String: 'concat' (Identifier)
     // USED → r5 = r2.concat
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 2430>  # String: 'Fetching ' (String)
-    // USED → r3 = "Fetching "
+    // USED → r3 = "Fetching ";
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: ' failed with status ' (String)
-    // USED → r2 = " failed with status "
+    // USED → r2 = " failed with status ";
     // CODE → <Call4>: <Reg8: 10, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 2, Reg8: 6>
-    r10 = r5(r3, r7, r2, r6);
+    r10 = r5("Fetching ", r7, " failed with status ", r6);
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r3 = r4.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
@@ -74,7 +74,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 3>
     r11 = createThis(r3, r4);
     // CODE → <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-    // USED → r2 = new r4(r2, createThis(r3, r4))
+    // USED → r2 = new r4(" failed with status ", createThis(r3, r4))
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
     // USED → r2 = createThis(r3, r4)[r2]
     // CODE → <Throw>: <Reg8: 2>

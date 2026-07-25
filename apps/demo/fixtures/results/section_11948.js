@@ -11,29 +11,29 @@ function _request(param0, param1, param2) {
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
     createEnvironment()[0] = r2;
     // CODE → <LoadConstUndefined>: <Reg8: 11>
-    // USED → r11 = undefined
+    // USED → r11 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 12>
-    r12 = undefined
+    r12 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 3>
-    r3 = undefined
+    r3 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    r0 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 4>
-    r4 = undefined
+    r4 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 5>
-    r5 = undefined
+    r5 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 1>
-    r1 = undefined
+    r1 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 13>
-    r13 = undefined
+    r13 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
+    r7 = undefined;
     // CODE → <TypeOf>: <Reg8: 14, Reg8: 6>
     // USED → r14 = typeof r6;
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
-    // USED → r10 = "string"
+    // USED → r10 = "string";
     // CODE → <JStrictEqual>: <Addr8: 18, Reg8: 14, Reg8: 10>  # Address: 0000003a
-    if (typeof r6 === r10) goto label_58;
+    if (typeof r6 === "string") goto label_58;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 14, Reg8: 6>
     // USED → r14 = r6;
@@ -48,7 +48,7 @@ function _request(param0, param1, param2) {
     // CODE → <Jmp>: <Addr8: 20>  # Address: 0000004c
     goto label_76;
     // LOOP → START (while)
-    while (r19 === r11) {
+    while (r19 === undefined) {
         // ──────────────── Block 7 ──────────────── 
         // CODE → <GetEnvironment>: <Reg8: 6, UInt8: 1>
         // USED → r6 = getEnvironment(1);
@@ -59,19 +59,19 @@ function _request(param0, param1, param2) {
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
         // USED → r2 = r8.defaults
         // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 2, Reg8: 14>
-        // USED → r10 = r10(r11, r2, r2);
+        // USED → r10 = r10(undefined, r2, r2);
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 10>
-        createEnvironment()[0] = r10(r11, r2, r2);
+        createEnvironment()[0] = r10(undefined, r2, r2);
         // CODE → <GetById>: <Reg8: 19, Reg8: 10, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
-        // USED → r19 = r10(r11, r2, r2).transitional
+        // USED → r19 = r10(undefined, r2, r2).transitional
         // CODE → <GetById>: <Reg8: 14, Reg8: 10, UInt8: 4, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
-        // USED → r14 = r10(r11, r2, r2).paramsSerializer
+        // USED → r14 = r10(undefined, r2, r2).paramsSerializer
         // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 10, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
-        // USED → r17 = r10(r11, r2, r2).headers
+        // USED → r17 = r10(undefined, r2, r2).headers
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 17>
         createEnvironment()[1] = r17;
         // CODE → <JStrictEqual>: <Addr8: 100, Reg8: 19, Reg8: 11>  # Address: 000000e1
-        if (r19 === r11) goto label_225;
+        if (r19 === undefined) goto label_225;
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 6 ──────────────── 
@@ -131,14 +131,14 @@ function _request(param0, param1, param2) {
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 22889>  # String: 'clarifyTimeoutError' (Identifier)
     r15."clarifyTimeoutError" = r20(getEnvironment(1)[11], r2);
     // CODE → <LoadConstFalse>: <Reg8: 2>
-    // USED → r2 = false
+    // USED → r2 = false;
     // CODE → <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 2>
-    r2 = r16(r18, r19, r15, r2);
+    r2 = r16(r18, r19, r15, false);
     // ──────────────── Block 9 ──────────────── 
     // CODE → <LoadConstNull>: <Reg8: 2>
-    // USED → r2 = null
+    // USED → r2 = null;
     // CODE → <JEqual>: <Addr8: 94, Reg8: 14, Reg8: 2>  # Address: 00000141
-    if (r14 == r2) goto label_321;
+    if (r14 == null) goto label_321;
     // ──────────────── Block 10 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 3>
     // USED → r2 = getEnvironment(1)[3];
@@ -170,9 +170,9 @@ function _request(param0, param1, param2) {
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 12525>  # String: 'serialize' (Identifier)
     r15."serialize" = r2;
     // CODE → <LoadConstTrue>: <Reg8: 2>
-    // USED → r2 = true
+    // USED → r2 = true;
     // CODE → <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 14, Reg8: 15, Reg8: 2>
-    r2 = r16(r18, r14, r15, r2);
+    r2 = r16(r18, r14, r15, true);
     // CODE → <Jmp>: <Addr8: 15>  # Address: 00000141
     goto label_321;
     // ──────────────── Block 12 ──────────────── 
@@ -181,24 +181,24 @@ function _request(param0, param1, param2) {
     // CODE → <PutNewOwnById>: <Reg8: 2, Reg8: 14, string_id: 12525>  # String: 'serialize' (Identifier)
     r2."serialize" = r14;
     // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 2, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
-    r10(r11, r2, r2).paramsSerializer = r2;
+    r10(undefined, r2, r2).paramsSerializer = r2;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 10, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    // USED → r2 = r10(r11, r2, r2).allowAbsoluteUrls
+    // USED → r2 = r10(undefined, r2, r2).allowAbsoluteUrls
     // CODE → <JStrictNotEqual>: <Addr8: 48, Reg8: 2, Reg8: 11>  # Address: 00000177
-    if (r2 !== r11) goto label_375;
+    if (r2 !== undefined) goto label_375;
     // ──────────────── Block 14 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
     // USED → r2 = r8.defaults
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
     // USED → r2 = r2.allowAbsoluteUrls
     // CODE → <JStrictNotEqual>: <Addr8: 14, Reg8: 2, Reg8: 11>  # Address: 00000165
-    if (r2 !== r11) goto label_357;
+    if (r2 !== undefined) goto label_357;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <LoadConstTrue>: <Reg8: 2>
-    // USED → r2 = true
+    // USED → r2 = true;
     // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 3, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    r10(r11, r2, r2).allowAbsoluteUrls = r2;
+    r10(undefined, r2, r2).allowAbsoluteUrls = true;
     // CODE → <Jmp>: <Addr8: 20>  # Address: 00000177
     goto label_375;
     // LOOP → START (while)
@@ -217,25 +217,25 @@ function _request(param0, param1, param2) {
         // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
         // USED → r18 = getEnvironment(1)[11].spelling
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 15368>  # String: 'baseURL' (Identifier)
-        // USED → r2 = "baseURL"
+        // USED → r2 = "baseURL";
         // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
-        // USED → r2 = r18(getEnvironment(1)[11], r2);
+        // USED → r2 = r18(getEnvironment(1)[11], "baseURL");
         // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 22683>  # String: 'baseUrl' (Identifier)
-        r14."baseUrl" = r18(getEnvironment(1)[11], r2);
+        r14."baseUrl" = r18(getEnvironment(1)[11], "baseURL");
         // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
         // USED → r18 = getEnvironment(1)[11].spelling
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 24723>  # String: 'withXSRFToken' (Identifier)
-        // USED → r2 = "withXSRFToken"
+        // USED → r2 = "withXSRFToken";
         // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
-        // USED → r2 = r18(getEnvironment(1)[11], r2);
+        // USED → r2 = r18(getEnvironment(1)[11], "withXSRFToken");
         // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 24724>  # String: 'withXsrfToken' (Identifier)
-        r14."withXsrfToken" = r18(getEnvironment(1)[11], r2);
+        r14."withXsrfToken" = r18(getEnvironment(1)[11], "withXSRFToken");
         // CODE → <LoadConstTrue>: <Reg8: 2>
-        // USED → r2 = true
+        // USED → r2 = true;
         // CODE → <Call4>: <Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 10, Reg8: 14, Reg8: 2>
-        r14 = r15(r16, r10(r11, r2, r2), r14, r2);
+        r14 = r15(r16, r10(undefined, r2, r2), r14, true);
         // CODE → <GetById>: <Reg8: 15, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
-        // USED → r15 = r10(r11, r2, r2).method
+        // USED → r15 = r10(undefined, r2, r2).method
         // CODE → <JmpTrue>: <Addr8: 15, Reg8: 15>  # Address: 000001d2
         if (r15) goto label_466;
         // ──────────────── Block 16 ──────────────── 
@@ -244,7 +244,7 @@ function _request(param0, param1, param2) {
         // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
         // USED → r2 = r2.allowAbsoluteUrls
         // CODE → <PutById>: <Reg8: 10, Reg8: 2, UInt8: 3, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-        r10(r11, r2, r2).allowAbsoluteUrls = r2;
+        r10(undefined, r2, r2).allowAbsoluteUrls = r2;
     }
     // LOOP → END
     // ──────────────── Block 18 ──────────────── 
@@ -257,14 +257,14 @@ function _request(param0, param1, param2) {
     if (r15) goto label_473;
     // ──────────────── Block 20 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 15, string_id: 137>  # String: 'get' (Identifier)
-    // USED → r15 = "get"
+    // USED → r15 = "get";
     // ──────────────── Block 21 ──────────────── 
     // CODE → <GetById>: <Reg8: 14, Reg8: 15, UInt8: 13, string_id: 20258>  # String: 'toLowerCase' (Identifier)
-    // USED → r14 = r15.toLowerCase
+    // USED → r14 = "get".toLowerCase
     // CODE → <Call1>: <Reg8: 14, Reg8: 14, Reg8: 15>
-    // USED → r14 = r14(r15);
+    // USED → r14 = r14("get");
     // CODE → <PutById>: <Reg8: 10, Reg8: 14, UInt8: 4, string_id: 12916>  # String: 'method' (Identifier)
-    r10(r11, r2, r2).method = r14(r15);
+    r10(undefined, r2, r2).method = r14("get");
     // CODE → <Mov>: <Reg8: 16, Reg8: 17>
     // USED → r16 = r17;
     // CODE → <JmpFalse>: <Addr8: 40, Reg8: 16>  # Address: 00000214
@@ -279,7 +279,7 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 15, Reg8: 17, UInt8: 15, string_id: 12528>  # String: 'common' (Identifier)
     // USED → r15 = r17.common
     // CODE → <GetById>: <Reg8: 14, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
-    // USED → r14 = r10(r11, r2, r2).method
+    // USED → r14 = r10(undefined, r2, r2).method
     // CODE → <GetByVal>: <Reg8: 14, Reg8: 17, Reg8: 14>
     // USED → r14 = r17[r14]
     // CODE → <Call3>: <Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 14>
@@ -310,7 +310,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 14, Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 17>
     // USED → r14 = r14(r15, r18(r19, r15, r14), r17);
     // CODE → <PutById>: <Reg8: 10, Reg8: 14, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
-    r10(r11, r2, r2).headers = r14(r15, r18(r19, r15, r14), r17);
+    r10(undefined, r2, r2).headers = r14(r15, r18(r19, r15, r14), r17);
     // CODE → <NewArray>: <Reg8: 14, UInt16: 0>
     // USED → r14 = [];
     // CODE → <Mov>: <Reg8: 12, Reg8: 14>
@@ -318,7 +318,7 @@ function _request(param0, param1, param2) {
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 2, Reg8: 14>
     createEnvironment()[2] = [];
     // CODE → <StoreNPToEnvironment>: <Reg8: 9, UInt8: 3, Reg8: 2>
-    createEnvironment()[3] = r2;
+    createEnvironment()[3] = true;
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 18, string_id: 19835>  # String: 'interceptors' (Identifier)
     // USED → r2 = r8.interceptors
     // CODE → <GetById>: <Reg8: 15, Reg8: 2, UInt8: 19, string_id: 11955>  # String: 'request' (Identifier)
@@ -346,9 +346,9 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 14, Reg8: 15, Reg8: 2>
     r2 = r14(r15, pushResponseInterceptors);
     // CODE → <LoadConstZero>: <Reg8: 2>
-    // USED → r2 = 0
+    // USED → r2 = 0;
     // CODE → <LoadConstZero>: <Reg8: 4>
-    // USED → r4 = 0
+    // USED → r4 = 0;
     // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 9, UInt8: 3>
     // USED → r9 = createEnvironment()[3];
     // CODE → <JmpTrueLong>: <Addr32: 164, Reg8: 9>  # Address: 0000034e
@@ -367,25 +367,25 @@ function _request(param0, param1, param2) {
     // CODE → <PutOwnByIndex>: <Reg8: 15, Reg8: 9, UInt8: 0>
     // USED → r15 = [r9(r14, r8)];
     // CODE → <PutOwnByIndex>: <Reg8: 15, Reg8: 11, UInt8: 1>
-    // USED → r15 = [r9(r14, r8), r11];
+    // USED → r15 = [r9(r14, r8), undefined];
     // CODE → <GetById>: <Reg8: 16, Reg8: 15, UInt8: 22, string_id: 16801>  # String: 'unshift' (Identifier)
-    // USED → r16 = [r9(r14, r8), r11].unshift
+    // USED → r16 = [r9(r14, r8), undefined].unshift
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 16, UInt8: 23, string_id: 86>  # String: 'apply' (Identifier)
     // USED → r14 = r16.apply
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
     // USED → r9 = [];
     // CODE → <Call3>: <Reg8: 9, Reg8: 14, Reg8: 16, Reg8: 15, Reg8: 9>
-    r9 = r14(r16, [r9(r14, r8), r11], []);
+    r9 = r14(r16, [r9(r14, r8), undefined], []);
     // CODE → <GetByIdShort>: <Reg8: 16, Reg8: 15, UInt8: 24, string_id: 201>  # String: 'push' (Identifier)
-    // USED → r16 = [r9(r14, r8), r11].push
+    // USED → r16 = [r9(r14, r8), undefined].push
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 16, UInt8: 23, string_id: 86>  # String: 'apply' (Identifier)
     // USED → r14 = r16.apply
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     // USED → r9 = [];
     // CODE → <Call3>: <Reg8: 9, Reg8: 14, Reg8: 16, Reg8: 15, Reg8: 9>
-    r9 = r14(r16, [r9(r14, r8), r11], []);
+    r9 = r14(r16, [r9(r14, r8), undefined], []);
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
-    // USED → r14 = [r9(r14, r8), r11].length
+    // USED → r14 = [r9(r14, r8), undefined].length
     // CODE → <Mov>: <Reg8: 5, Reg8: 14>
     // USED → r5 = r14;
     // CODE → <GetGlobalObject>: <Reg8: 9>
@@ -395,43 +395,43 @@ function _request(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 16, UInt8: 27, string_id: 208>  # String: 'resolve' (Identifier)
     // USED → r9 = r16.resolve
     // CODE → <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
-    // USED → r0 = r9(r16, r10(r11, r2, r2));
+    // USED → r0 = r9(r16, r10(undefined, r2, r2));
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-    // USED → r9 = r4;
+    // USED → r9 = 0;
     // CODE → <JNotLess>: <Addr8: 54, Reg8: 9, Reg8: 14>  # Address: 00000349
-    if (r4 >= r14) goto label_841;
+    if (0 >= r14) goto label_841;
     // ──────────────── Block 27 ──────────────── 
     // CODE → <Mov>: <Reg8: 18, Reg8: 0>
-    // USED → r18 = r9(r16, r10(r11, r2, r2));
+    // USED → r18 = r9(r16, r10(undefined, r2, r2));
     // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
-    // USED → r17 = r9(r16, r10(r11, r2, r2)).then
+    // USED → r17 = r9(r16, r10(undefined, r2, r2)).then
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-    // USED → r9 = r4;
+    // USED → r9 = 0;
     // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
-    // USED → r14 = +r4;
+    // USED → r14 = +0;
     // CODE → <Inc>: <Reg8: 9, Reg8: 14>
-    // USED → r9 = +r4 + 1;
+    // USED → r9 = +0 + 1;
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-    r4 = +r4 + 1;
+    r4 = +0 + 1;
     // CODE → <GetByVal>: <Reg8: 16, Reg8: 15, Reg8: 14>
-    // USED → r16 = [r9(r14, r8), r11][+r4]
+    // USED → r16 = [r9(r14, r8), undefined][+0]
     // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
-    // USED → r9 = +(+r4 + 1);
+    // USED → r9 = +(+0 + 1);
     // CODE → <Inc>: <Reg8: 14, Reg8: 9>
-    // USED → r14 = +(+r4 + 1) + 1;
+    // USED → r14 = +(+0 + 1) + 1;
     // CODE → <Mov>: <Reg8: 4, Reg8: 14>
-    r4 = +(+r4 + 1) + 1;
+    r4 = +(+0 + 1) + 1;
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
-    // USED → r9 = [r9(r14, r8), r11][+(+r4 + 1)]
+    // USED → r9 = [r9(r14, r8), undefined][+(+0 + 1)]
     // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
-    // USED → r0 = r17(r9(r16, r10(r11, r2, r2)), r16, r9);
+    // USED → r0 = r17(r9(r16, r10(undefined, r2, r2)), r16, r9);
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
     // USED → r9 = r14;
     // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
-    if (+(+r4 + 1) + 1 < r14) goto label_791;
+    if (+(+0 + 1) + 1 < r14) goto label_791;
     // ──────────────── Block 28 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 0>
-    r9 = r17(r9(r16, r10(r11, r2, r2)), r16, r9);
+    r9 = r17(r9(r16, r10(undefined, r2, r2)), r16, r9);
     // CODE → <Ret>: <Reg8: 9>
     // Unhandled opcode: Ret
     // ──────────────── Block 29 ──────────────── 
@@ -442,47 +442,47 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 9>
     // USED → r5 = r9;
     // CODE → <Mov>: <Reg8: 1, Reg8: 10>
-    // USED → r1 = r10(r11, r2, r2);
+    // USED → r1 = r10(undefined, r2, r2);
     // CODE → <LoadConstZero>: <Reg8: 4>
-    // USED → r4 = 0
+    // USED → r4 = 0;
     // CODE → <JNotLess>: <Addr8: 72, Reg8: 2, Reg8: 9>  # Address: 000003a6
-    if (r2 >= r9) goto label_934;
+    if (0 >= r9) goto label_934;
     // ──────────────── Block 30 ──────────────── 
     // CODE → <Mov>: <Reg8: 10, Reg8: 12>
     // USED → r10 = [];
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-    // USED → r9 = r4;
+    // USED → r9 = 0;
     // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
-    // USED → r14 = +r4;
+    // USED → r14 = +0;
     // CODE → <Inc>: <Reg8: 9, Reg8: 14>
-    // USED → r9 = +r4 + 1;
+    // USED → r9 = +0 + 1;
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-    r4 = +r4 + 1;
+    r4 = +0 + 1;
     // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 14>
-    // USED → r13 = [][+r4]
+    // USED → r13 = [][+0]
     // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
-    // USED → r9 = +(+r4 + 1);
+    // USED → r9 = +(+0 + 1);
     // CODE → <Inc>: <Reg8: 4, Reg8: 9>
-    // USED → r4 = +(+r4 + 1) + 1;
+    // USED → r4 = +(+0 + 1) + 1;
     // CODE → <GetByVal>: <Reg8: 7, Reg8: 10, Reg8: 9>
-    // USED → r7 = [][+(+r4 + 1)]
+    // USED → r7 = [][+(+0 + 1)]
     // CODE → <Mov>: <Reg8: 10, Reg8: 13>
     // USED → r10 = r13;
     // CODE → <Mov>: <Reg8: 9, Reg8: 1>
-    // USED → r9 = r10(r11, r2, r2);
+    // USED → r9 = r10(undefined, r2, r2);
     // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
-    // USED → r1 = r13(r11, r10(r11, r2, r2));
+    // USED → r1 = r13(undefined, r10(undefined, r2, r2));
     // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-    // USED → r10 = +(+r4 + 1) + 1;
+    // USED → r10 = +(+0 + 1) + 1;
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
     // USED → r9 = r9;
     // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 9>  # Address: 00000362
-    if (+(+r4 + 1) + 1 < r9) goto label_866;
+    if (+(+0 + 1) + 1 < r9) goto label_866;
     // ──────────────── Block 31 ──────────────── 
     // CODE → <Jmp>: <Addr8: 18>  # Address: 000003a6
     goto label_934;
     // LOOP → START (while)
-    while (r2 >= r1) {
+    while (0 >= r1) {
         // ──────────────── Block 33 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 6>
         // USED → r6 = getEnvironment(1)[6];
@@ -491,9 +491,9 @@ function _request(param0, param1, param2) {
         // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
         // USED → r6 = r7.call
         // CODE → <Call3>: <Reg8: 0, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1>
-        // USED → r0 = r6(r7, r8, r13(r11, r10(r11, r2, r2)));
+        // USED → r0 = r6(r7, r8, r13(undefined, r10(undefined, r2, r2)));
         // CODE → <LoadConstZero>: <Reg8: 4>
-        // USED → r4 = 0
+        // USED → r4 = 0;
         // CODE → <Mov>: <Reg8: 1, Reg8: 3>
         // USED → r1 = [];
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
@@ -501,7 +501,7 @@ function _request(param0, param1, param2) {
         // CODE → <Mov>: <Reg8: 5, Reg8: 1>
         // USED → r5 = r1;
         // CODE → <JNotLess>: <Addr8: 57, Reg8: 2, Reg8: 1>  # Address: 00000400
-        if (r2 >= r1) goto label_1024;
+        if (0 >= r1) goto label_1024;
         // ──────────────── Block 32 ──────────────── 
         // CODE → <Catch>: <Reg8: 10>
         // USED → r10 = caughtException
@@ -515,35 +515,35 @@ function _request(param0, param1, param2) {
     // LOOP → END
     // ──────────────── Block 34 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 0>
-    // USED → r8 = r6(r7, r8, r13(r11, r10(r11, r2, r2)));
+    // USED → r8 = r6(r7, r8, r13(undefined, r10(undefined, r2, r2)));
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
-    // USED → r7 = r6(r7, r8, r13(r11, r10(r11, r2, r2))).then
+    // USED → r7 = r6(r7, r8, r13(undefined, r10(undefined, r2, r2))).then
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     // USED → r9 = [];
     // CODE → <Mov>: <Reg8: 1, Reg8: 4>
-    // USED → r1 = r4;
+    // USED → r1 = 0;
     // CODE → <ToNumeric>: <Reg8: 2, Reg8: 1>
-    // USED → r2 = +r4;
+    // USED → r2 = +0;
     // CODE → <Inc>: <Reg8: 1, Reg8: 2>
-    // USED → r1 = +r4 + 1;
+    // USED → r1 = +0 + 1;
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-    r4 = +r4 + 1;
+    r4 = +0 + 1;
     // CODE → <GetByVal>: <Reg8: 6, Reg8: 9, Reg8: 2>
-    // USED → r6 = [][+r4]
+    // USED → r6 = [][+0]
     // CODE → <ToNumeric>: <Reg8: 1, Reg8: 1>
-    // USED → r1 = +(+r4 + 1);
+    // USED → r1 = +(+0 + 1);
     // CODE → <Inc>: <Reg8: 2, Reg8: 1>
-    // USED → r2 = +(+r4 + 1) + 1;
+    // USED → r2 = +(+0 + 1) + 1;
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-    r4 = +(+r4 + 1) + 1;
+    r4 = +(+0 + 1) + 1;
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>
-    // USED → r1 = [][+(+r4 + 1)]
+    // USED → r1 = [][+(+0 + 1)]
     // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
-    r0 = r7(r6(r7, r8, r13(r11, r10(r11, r2, r2))), r6, r1);
+    r0 = r7(r6(r7, r8, r13(undefined, r10(undefined, r2, r2))), r6, r1);
     // CODE → <Mov>: <Reg8: 1, Reg8: 5>
     // USED → r1 = r1;
     // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
-    if (+(+r4 + 1) + 1 < r1) goto label_971;
+    if (+(+0 + 1) + 1 < r1) goto label_971;
     // ──────────────── Block 35 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret

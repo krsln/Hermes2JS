@@ -155,6 +155,11 @@ _BINARY_PRECEDENCE: Final[dict[BinaryOperator, int]] = {
     BinaryOperator.NOT_EQUAL: 10,
     BinaryOperator.STRICT_EQUAL: 10,
     BinaryOperator.STRICT_NOT_EQUAL: 10,
+
+    # added?
+    BinaryOperator.BITWISE_AND: 9,
+    BinaryOperator.BITWISE_XOR: 8,
+    BinaryOperator.BITWISE_OR: 7,
 }
 
 _LOGICAL_PRECEDENCE: Final[dict[LogicalOperator, int]] = {

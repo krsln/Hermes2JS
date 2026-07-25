@@ -13,11 +13,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 19>
     createEnvironment()[1] = r19;
     // CODE → <LoadConstUndefined>: <Reg8: 2>
-    // USED → r2 = undefined
+    // USED → r2 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
+    r7 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 6>
-    r6 = undefined
+    r6 = undefined;
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 1, function_id: 468>  # Function: [#468 executeDispatch of 77 bytes]: 4 params @ offset 0x00179753
     // USED → r0 = executeDispatch;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 169, Reg8: 0>
@@ -1175,17 +1175,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironmentL>: <Reg8: 1, UInt16: 447, Reg8: 0>
     createEnvironment()[447] = onRecoverableError;
     // CODE → <LoadConstZero>: <Reg8: 10>
-    // USED → r10 = 0
+    // USED → r10 = 0;
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 19, Reg8: 10>
-    // USED → r0 = r19[r10]
+    // USED → r0 = r19[0]
     // CODE → <Call2>: <Reg8: 0, Reg8: 18, Reg8: 2, Reg8: 0>
-    r0 = r18(r2, r0);
+    r0 = r18(undefined, r0);
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
-    // USED → r0 = 1
+    // USED → r0 = 1;
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 19, Reg8: 0>
-    // USED → r0 = r19[r0]
+    // USED → r0 = r19[1]
     // CODE → <Call2>: <Reg8: 14, Reg8: 18, Reg8: 2, Reg8: 0>
-    // USED → r14 = r18(r2, r0);
+    // USED → r14 = r18(undefined, r0);
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
@@ -1195,19 +1195,19 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 11>
     createEnvironment()[2] = r11;
     // CODE → <LoadConstFalse>: <Reg8: 12>
-    // USED → r12 = false
+    // USED → r12 = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 12>
-    createEnvironment()[3] = r12;
+    createEnvironment()[3] = false;
     // CODE → <LoadConstNull>: <Reg8: 11>
-    // USED → r11 = null
+    // USED → r11 = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 11>
-    createEnvironment()[4] = r11;
+    createEnvironment()[4] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 11>
-    createEnvironment()[5] = r11;
+    createEnvironment()[5] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 6, Reg8: 11>
-    createEnvironment()[6] = r11;
+    createEnvironment()[6] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 7, Reg8: 11>
-    createEnvironment()[7] = r11;
+    createEnvironment()[7] = null;
     // CODE → <TryGetById>: <Reg8: 37, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
     // USED → r37 = r0.Object
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 37, UInt8: 4, string_id: 62>  # String: 'assign' (Identifier)
@@ -1237,7 +1237,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12543>  # String: 'destructor' (Identifier)
     r37."destructor" = destructor;
     // CODE → <Call3>: <Reg8: 37, Reg8: 41, Reg8: 2, Reg8: 40, Reg8: 37>
-    r37 = r41(r2, r40, r37);
+    r37 = r41(undefined, r40, r37);
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 9, UInt16: 9, UInt16: 194, UInt16: 115>  # Object: {'type': null, 'target': null, 'currentTarget': null, 'eventPhase': null, 'bubbles': null, 'cancelable': null, 'timeStamp': null, 'defaultPrevented': null, 'isTrusted': null}
     // USED → r37 = {'type': None, 'target': None, 'currentTarget': None, 'eventPhase': None, 'bubbles': None, 'cancelable': None, 'timeStamp': None, 'defaultPrevented': None, 'isTrusted': None}
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 809>  # Function: [#809 currentTarget of 4 bytes]: 1 params @ offset 0x00188e5c
@@ -1255,7 +1255,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutById>: <Reg8: 39, Reg8: 37, UInt8: 4, string_id: 14224>  # String: 'extend' (Identifier)
     SyntheticEvent.extend = function_811;
     // CODE → <Call2>: <Reg8: 17, Reg8: 17, Reg8: 2, Reg8: 39>
-    r17 = addEventPoolingTo(r2, SyntheticEvent);
+    r17 = addEventPoolingTo(undefined, SyntheticEvent);
     // CODE → <GetById>: <Reg8: 37, Reg8: 39, UInt8: 6, string_id: 14224>  # String: 'extend' (Identifier)
     // USED → r37 = SyntheticEvent.extend
     // CODE → <NewObject>: <Reg8: 17>
@@ -1283,7 +1283,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutById>: <Reg8: 37, Reg8: 17, UInt8: 5, string_id: 21537>  # String: 'touchBank' (Identifier)
     r37.touchBank = [];
     // CODE → <LoadConstInt>: <Reg8: 39, Imm32: -1>
-    // USED → r39 = -1
+    // USED → r39 = -1;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 11, Reg8: 37>
     createEnvironment()[11] = r37;
     // CODE → <NewObject>: <Reg8: 17>
@@ -1301,9 +1301,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 13, Reg8: 17>
     createEnvironment()[13] = r17;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 14, Reg8: 11>
-    createEnvironment()[14] = r11;
+    createEnvironment()[14] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 15, Reg8: 10>
-    createEnvironment()[15] = r10;
+    createEnvironment()[15] = 0;
     // CODE → <NewObject>: <Reg8: 17>
     // USED → r17 = {  }
     // CODE → <NewObject>: <Reg8: 37>
@@ -1353,9 +1353,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 43, string_id: 22333>  # String: 'onResponderStart' (Identifier)
-    // USED → r43 = "onResponderStart"
+    // USED → r43 = "onResponderStart";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 43, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = r43;
+    r37."registrationName" = "onResponderStart";
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12219>  # String: 'dependencies' (Identifier)
     r37."dependencies" = ["topTouchStart"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21573>  # String: 'responderStart' (Identifier)
@@ -1363,9 +1363,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 22238>  # String: 'onResponderMove' (Identifier)
-    // USED → r42 = "onResponderMove"
+    // USED → r42 = "onResponderMove";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 42, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = r42;
+    r37."registrationName" = "onResponderMove";
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 12219>  # String: 'dependencies' (Identifier)
     r37."dependencies" = ["topTouchMove"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21199>  # String: 'responderMove' (Identifier)
@@ -1373,9 +1373,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 41, string_id: 22198>  # String: 'onResponderEnd' (Identifier)
-    // USED → r41 = "onResponderEnd"
+    // USED → r41 = "onResponderEnd";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 41, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = r41;
+    r37."registrationName" = "onResponderEnd";
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
     r37."dependencies" = ["topTouchCancel", "topTouchEnd"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 15364>  # String: 'responderEnd' (Identifier)
@@ -1383,9 +1383,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 41, string_id: 22319>  # String: 'onResponderRelease' (Identifier)
-    // USED → r41 = "onResponderRelease"
+    // USED → r41 = "onResponderRelease";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 41, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = r41;
+    r37."registrationName" = "onResponderRelease";
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
     r37."dependencies" = ["topTouchCancel", "topTouchEnd"];
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 14449>  # String: 'responderRelease' (Identifier)
@@ -1393,9 +1393,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 19872>  # String: 'onResponderTerminationRequest' (Identifier)
-    // USED → r40 = "onResponderTerminationRequest"
+    // USED → r40 = "onResponderTerminationRequest";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = r40;
+    r37."registrationName" = "onResponderTerminationRequest";
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
@@ -1405,9 +1405,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 22208>  # String: 'onResponderGrant' (Identifier)
-    // USED → r40 = "onResponderGrant"
+    // USED → r40 = "onResponderGrant";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = r40;
+    r37."registrationName" = "onResponderGrant";
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
@@ -1417,9 +1417,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 22270>  # String: 'onResponderReject' (Identifier)
-    // USED → r40 = "onResponderReject"
+    // USED → r40 = "onResponderReject";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = r40;
+    r37."registrationName" = "onResponderReject";
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
@@ -1429,9 +1429,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewObject>: <Reg8: 37>
     // USED → r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 22427>  # String: 'onResponderTerminate' (Identifier)
-    // USED → r40 = "onResponderTerminate"
+    // USED → r40 = "onResponderTerminate";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    r37."registrationName" = r40;
+    r37."registrationName" = "onResponderTerminate";
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
@@ -1453,7 +1453,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 17, string_id: 14577>  # String: 'extractEvents' (Identifier)
     r40."extractEvents" = extractEvents;
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 11, string_id: 21101>  # String: 'GlobalResponderHandler' (Identifier)
-    r40."GlobalResponderHandler" = r11;
+    r40."GlobalResponderHandler" = null;
     // CODE → <NewObject>: <Reg8: 17>
     // USED → r17 = {  }
     // CODE → <CreateClosure>: <Reg8: 37, Reg8: 1, function_id: 819>  # Function: [#819 injectGlobalResponderHandler of 20 bytes]: 2 params @ offset 0x00189963
@@ -1465,7 +1465,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 17, Reg8: 40>
     createEnvironment()[17] = r40;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 11>
-    createEnvironment()[18] = r11;
+    createEnvironment()[18] = null;
     // CODE → <NewObject>: <Reg8: 51>
     // USED → r51 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 19, Reg8: 51>
@@ -1483,23 +1483,23 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 22, Reg8: 17>
     createEnvironment()[22] = r17;
     // CODE → <LoadConstUInt8>: <Reg8: 17, UInt8: 2>
-    // USED → r17 = 2
+    // USED → r17 = 2;
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
-    // USED → r37 = r19[r17]
+    // USED → r37 = r19[2]
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
-    // USED → r37 = r18(r2, r37);
+    // USED → r37 = r18(undefined, r37);
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = r18(r2, r37).ReactNativeViewConfigRegistry
+    // USED → r37 = r18(undefined, r37).ReactNativeViewConfigRegistry
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 8, string_id: 22641>  # String: 'customBubblingEventTypes' (Identifier)
     // USED → r37 = r37.customBubblingEventTypes
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 23, Reg8: 37>
     createEnvironment()[23] = r37;
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
-    // USED → r37 = r19[r17]
+    // USED → r37 = r19[2]
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
-    // USED → r37 = r18(r2, r37);
+    // USED → r37 = r18(undefined, r37);
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = r18(r2, r37).ReactNativeViewConfigRegistry
+    // USED → r37 = r18(undefined, r37).ReactNativeViewConfigRegistry
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 9, string_id: 21940>  # String: 'customDirectEventTypes' (Identifier)
     // USED → r37 = r37.customDirectEventTypes
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 24, Reg8: 37>
@@ -1519,7 +1519,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 37>
     createEnvironment()[18] = r41(r42, ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]);
     // CODE → <Call1>: <Reg8: 37, Reg8: 16, Reg8: 2>
-    r37 = recomputePluginOrdering(r2);
+    r37 = recomputePluginOrdering(undefined);
     // CODE → <NewObject>: <Reg8: 50>
     // USED → r50 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 50, Reg8: 40, string_id: 14576>  # String: 'ResponderEventPlugin' (Identifier)
@@ -1539,13 +1539,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Mov>: <Reg8: 48, Reg8: 50>
     // USED → r48 = r50;
     // CODE → <LoadConstTrue>: <Reg8: 37>
-    // USED → r37 = true
+    // USED → r37 = true;
     // CODE → <LoadConstFalse>: <Reg8: 43>
-    // USED → r43 = false
+    // USED → r43 = false;
     // CODE → <LoadConstUndefined>: <Reg8: 42>
-    r42 = undefined
+    r42 = undefined;
     // CODE → <LoadConstFalse>: <Reg8: 41>
-    r41 = false
+    r41 = false;
     // CODE → <GetPNameList>: <Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
     // USED → r49 = HermesPropertyIterator(r50)
     // CODE → <JmpUndefined>: <Addr8: 115, Reg8: 49>  # Address: 00000ecd
@@ -1554,9 +1554,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     while (r45 === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 54, Reg8: 43>
-        // USED → r54 = r43;
+        // USED → r54 = false;
         // CODE → <Mov>: <Reg8: 41, Reg8: 54>
-        // USED → r41 = r43;
+        // USED → r41 = false;
         // CODE → <GetNextPName>: <Reg8: 45, Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
         // USED → r45 = r49.next()
         // CODE → <JmpUndefined>: <Addr8: 100, Reg8: 45>  # Address: 00000ecd
@@ -1569,7 +1569,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Call2>: <Reg8: 52, Reg8: 52, Reg8: 50, Reg8: 44>
         // USED → r52 = r52(r50, r45);
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
-        r43 = r43;
+        r43 = false;
         // CODE → <JmpFalse>: <Addr8: -31, Reg8: 52>  # Address: 00000e5d
         if (!r52(r50, r45)) goto label_3677;
         // ──────────────── Block 3 ──────────────── 
@@ -1585,7 +1585,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
         // USED → r53 = r51[r45]
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
-        r43 = r43;
+        r43 = false;
         // CODE → <Mov>: <Reg8: 42, Reg8: 52>
         r42 = r52;
         // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
@@ -1599,7 +1599,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <PutByVal>: <Reg8: 51, Reg8: 44, Reg8: 52>
         r51[r45] = r52;
         // CODE → <LoadConstTrue>: <Reg8: 43>
-        r43 = true
+        r43 = true;
         // CODE → <Mov>: <Reg8: 42, Reg8: 52>
         r42 = r52;
         // CODE → <Jmp>: <Addr8: -81>  # Address: 00000e5d
@@ -1610,48 +1610,48 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TryGetById>: <Reg8: 43, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r43 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 558>  # String: '`.' (String)
-    // USED → r42 = "`."
+    // USED → r42 = "`.";
     // CODE → <Add>: <Reg8: 44, Reg8: 44, Reg8: 42>
-    // USED → r44 = r45 + r42;
+    // USED → r44 = r45 + "`.";
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 4924>  # String: 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `' (String)
-    // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `"
+    // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `";
     // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
-    // USED → r42 = r42 + (r45 + r42);
+    // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r45 + "`.");
     // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
-    // USED → r42 = r43(r2, r42 + (r45 + r42));
+    // USED → r42 = r43(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r45 + "`."));
     // CODE → <Throw>: <Reg8: 42>
-    throw r43(r2, r42 + (r45 + r42));
+    throw r43(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r45 + "`."));
     // ──────────────── Block 8 ──────────────── 
     // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
-    if (!r43) goto label_3796;
+    if (!false) goto label_3796;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Call1>: <Reg8: 16, Reg8: 16, Reg8: 2>
-    r16 = recomputePluginOrdering(r2);
+    r16 = recomputePluginOrdering(undefined);
     // ──────────────── Block 10 ──────────────── 
     // CODE → <NewObject>: <Reg8: 16>
     // USED → r16 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 25, Reg8: 16>
     createEnvironment()[25] = r16;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 26, Reg8: 11>
-    createEnvironment()[26] = r11;
+    createEnvironment()[26] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 27, Reg8: 10>
-    createEnvironment()[27] = r10;
+    createEnvironment()[27] = 0;
     // CODE → <NewObject>: <Reg8: 16>
     // USED → r16 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 16, Reg8: 37, string_id: 24472>  # String: 'unsafelyIgnoreFunctions' (Identifier)
-    r16."unsafelyIgnoreFunctions" = r37;
+    r16."unsafelyIgnoreFunctions" = true;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 28, Reg8: 16>
     createEnvironment()[28] = r16;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 29, Reg8: 12>
-    createEnvironment()[29] = r12;
+    createEnvironment()[29] = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
-    createEnvironment()[30] = r11;
+    createEnvironment()[30] = null;
     // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 14, string_id: 21563>  # String: '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED' (Identifier)
-    // USED → r14 = r18(r2, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
+    // USED → r14 = r18(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 11>
-    createEnvironment()[31] = r11;
+    createEnvironment()[31] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
-    createEnvironment()[32] = r11;
+    createEnvironment()[32] = null;
     // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
     // USED → r16 = r0.Math
     // CODE → <GetById>: <Reg8: 16, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
@@ -1679,15 +1679,15 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 35, Reg8: 9>
     createEnvironment()[35] = r9;
     // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 128>
-    // USED → r9 = 128
+    // USED → r9 = 128;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 36, Reg8: 9>
-    createEnvironment()[36] = r9;
+    createEnvironment()[36] = 128;
     // CODE → <LoadConstInt>: <Reg8: 9, Imm32: 4194304>
-    // USED → r9 = 4194304
+    // USED → r9 = 4194304;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 37, Reg8: 9>
-    createEnvironment()[37] = r9;
+    createEnvironment()[37] = 4194304;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 38, Reg8: 10>
-    createEnvironment()[38] = r10;
+    createEnvironment()[38] = 0;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 19, string_id: 24093>  # String: 'nativeFabricUIManager' (Identifier)
     // USED → r9 = r0.nativeFabricUIManager
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 20, string_id: 15507>  # String: 'createNode' (Identifier)
@@ -1733,24 +1733,24 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 48, Reg8: 9>
     createEnvironment()[48] = r9;
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
-    // USED → r9 = r19[r17]
+    // USED → r9 = r19[2]
     // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
-    // USED → r9 = r18(r2, r9);
+    // USED → r9 = r18(undefined, r9);
     // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r9 = r18(r2, r9).ReactNativeViewConfigRegistry
+    // USED → r9 = r18(undefined, r9).ReactNativeViewConfigRegistry
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 31, string_id: 137>  # String: 'get' (Identifier)
     // USED → r9 = r9.get
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 49, Reg8: 9>
     createEnvironment()[49] = r9;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
-    createEnvironment()[50] = r17;
+    createEnvironment()[50] = 2;
     // CODE → <JmpFalse>: <Addr8: 13, Reg8: 16>  # Address: 00000fef
     if (!r16) goto label_4079;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
     // USED → r9 = dispatchEvent;
     // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
-    r9 = r16(r2, dispatchEvent);
+    r9 = r16(undefined, dispatchEvent);
     // ──────────────── Block 14 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 32, string_id: 214>  # String: 'setTimeout' (Identifier)
     // USED → r41 = r0.setTimeout
@@ -1763,13 +1763,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 16, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
     // USED → r16 = r0.RN$enableMicrotasksInReact
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 610>  # String: 'undefined' (String)
-    // USED → r9 = "undefined"
+    // USED → r9 = "undefined";
     // CODE → <TypeOf>: <Reg8: 16, Reg8: 16>
     // USED → r16 = typeof r16;
     // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
-    // USED → r16 = r9 !== typeof r16;
+    // USED → r16 = "undefined" !== typeof r16;
     // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00001023
-    if (!(r9 !== typeof r16)) goto label_4131;
+    if (!("undefined" !== typeof r16)) goto label_4131;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
     // USED → r42 = r0.RN$enableMicrotasksInReact
@@ -1783,11 +1783,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 42, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
     // USED → r42 = r0.queueMicrotask
     // CODE → <LoadConstString>: <Reg8: 16, string_id: 12255>  # String: 'function' (Identifier)
-    // USED → r16 = "function"
+    // USED → r16 = "function";
     // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
     // USED → r42 = typeof r42;
     // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 16, Reg8: 42>  # Address: 0000103e
-    if (r16 !== typeof r42) goto label_4158;
+    if ("function" !== typeof r42) goto label_4158;
     // ──────────────── Block 17 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
     // USED → r41 = r0.queueMicrotask
@@ -1821,181 +1821,181 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 3815>  # String: 'react.element' (String)
-    // USED → r40 = "react.element"
+    // USED → r40 = "react.element";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.element");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 55, Reg8: 40>
-    createEnvironment()[55] = r41(r42, r40);
+    createEnvironment()[55] = r41(r42, "react.element");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5553>  # String: 'react.portal' (String)
-    // USED → r40 = "react.portal"
+    // USED → r40 = "react.portal";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.portal");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 56, Reg8: 40>
-    createEnvironment()[56] = r41(r42, r40);
+    createEnvironment()[56] = r41(r42, "react.portal");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5930>  # String: 'react.fragment' (String)
-    // USED → r40 = "react.fragment"
+    // USED → r40 = "react.fragment";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.fragment");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 57, Reg8: 40>
-    createEnvironment()[57] = r41(r42, r40);
+    createEnvironment()[57] = r41(r42, "react.fragment");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6410>  # String: 'react.strict_mode' (String)
-    // USED → r40 = "react.strict_mode"
+    // USED → r40 = "react.strict_mode";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.strict_mode");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 58, Reg8: 40>
-    createEnvironment()[58] = r41(r42, r40);
+    createEnvironment()[58] = r41(r42, "react.strict_mode");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5628>  # String: 'react.profiler' (String)
-    // USED → r40 = "react.profiler"
+    // USED → r40 = "react.profiler";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.profiler");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 59, Reg8: 40>
-    createEnvironment()[59] = r41(r42, r40);
+    createEnvironment()[59] = r41(r42, "react.profiler");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 2499>  # String: 'react.provider' (String)
-    // USED → r40 = "react.provider"
+    // USED → r40 = "react.provider";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.provider");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 60, Reg8: 40>
-    createEnvironment()[60] = r41(r42, r40);
+    createEnvironment()[60] = r41(r42, "react.provider");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 8244>  # String: 'react.consumer' (String)
-    // USED → r40 = "react.consumer"
+    // USED → r40 = "react.consumer";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.consumer");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 61, Reg8: 40>
-    createEnvironment()[61] = r41(r42, r40);
+    createEnvironment()[61] = r41(r42, "react.consumer");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 4944>  # String: 'react.context' (String)
-    // USED → r40 = "react.context"
+    // USED → r40 = "react.context";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.context");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 62, Reg8: 40>
-    createEnvironment()[62] = r41(r42, r40);
+    createEnvironment()[62] = r41(r42, "react.context");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 7930>  # String: 'react.forward_ref' (String)
-    // USED → r40 = "react.forward_ref"
+    // USED → r40 = "react.forward_ref";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.forward_ref");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 63, Reg8: 40>
-    createEnvironment()[63] = r41(r42, r40);
+    createEnvironment()[63] = r41(r42, "react.forward_ref");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6421>  # String: 'react.suspense' (String)
-    // USED → r40 = "react.suspense"
+    // USED → r40 = "react.suspense";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.suspense");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 64, Reg8: 40>
-    createEnvironment()[64] = r41(r42, r40);
+    createEnvironment()[64] = r41(r42, "react.suspense");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6422>  # String: 'react.suspense_list' (String)
-    // USED → r40 = "react.suspense_list"
+    // USED → r40 = "react.suspense_list";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.suspense_list");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 65, Reg8: 40>
-    createEnvironment()[65] = r41(r42, r40);
+    createEnvironment()[65] = r41(r42, "react.suspense_list");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 410>  # String: 'react.memo' (String)
-    // USED → r40 = "react.memo"
+    // USED → r40 = "react.memo";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.memo");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 66, Reg8: 40>
-    createEnvironment()[66] = r41(r42, r40);
+    createEnvironment()[66] = r41(r42, "react.memo");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 10762>  # String: 'react.lazy' (String)
-    // USED → r40 = "react.lazy"
+    // USED → r40 = "react.lazy";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.lazy");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 67, Reg8: 40>
-    createEnvironment()[67] = r41(r42, r40);
+    createEnvironment()[67] = r41(r42, "react.lazy");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6222>  # String: 'react.scope' (String)
-    // USED → r40 = "react.scope"
+    // USED → r40 = "react.scope";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r41(r42, r40);
+    r40 = r41(r42, "react.scope");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6531>  # String: 'react.debug_trace_mode' (String)
-    // USED → r40 = "react.debug_trace_mode"
+    // USED → r40 = "react.debug_trace_mode";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r41(r42, r40);
+    r40 = r41(r42, "react.debug_trace_mode");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5577>  # String: 'react.offscreen' (String)
-    // USED → r40 = "react.offscreen"
+    // USED → r40 = "react.offscreen";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r41(r42, r40);
+    // USED → r40 = r41(r42, "react.offscreen");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 68, Reg8: 40>
-    createEnvironment()[68] = r41(r42, r40);
+    createEnvironment()[68] = r41(r42, "react.offscreen");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 4905>  # String: 'react.legacy_hidden' (String)
-    // USED → r40 = "react.legacy_hidden"
+    // USED → r40 = "react.legacy_hidden";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r41(r42, r40);
+    r40 = r41(r42, "react.legacy_hidden");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 2166>  # String: 'react.cache' (String)
-    // USED → r40 = "react.cache"
+    // USED → r40 = "react.cache";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r41(r42, r40);
+    r40 = r41(r42, "react.cache");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = r0.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 8982>  # String: 'react.tracing_marker' (String)
-    // USED → r40 = "react.tracing_marker"
+    // USED → r40 = "react.tracing_marker";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r41(r42, r40);
+    r40 = r41(r42, "react.tracing_marker");
     // CODE → <TryGetById>: <Reg8: 40, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r40 = r0.Symbol
     // CODE → <GetById>: <Reg8: 40, Reg8: 40, UInt8: 40, string_id: 13658>  # String: 'iterator' (Identifier)
@@ -2007,15 +2007,15 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
     // USED → r41 = r42.for
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 10511>  # String: 'react.client.reference' (String)
-    // USED → r40 = "react.client.reference"
+    // USED → r40 = "react.client.reference";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r41(r42, r40);
+    r40 = r41(r42, "react.client.reference");
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
     createEnvironment()[70] = [];
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 71, Reg8: 39>
-    createEnvironment()[71] = r39;
+    createEnvironment()[71] = -1;
     // CODE → <NewObject>: <Reg8: 39>
     // USED → r39 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 72, Reg8: 39>
@@ -2027,7 +2027,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
     // USED → r39 = typeof r39;
     // CODE → <JStrictNotEqual>: <Addr8: 16, Reg8: 16, Reg8: 39>  # Address: 0000127e
-    if (r16 !== typeof r39) goto label_4734;
+    if ("function" !== typeof r39) goto label_4734;
     // ──────────────── Block 19 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
     // USED → r39 = r0.Object
@@ -2037,41 +2037,41 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
     createEnvironment()[73] = r38;
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r38 = createCursor(r2, r11);
+    // USED → r38 = createCursor(undefined, null);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 74, Reg8: 38>
-    createEnvironment()[74] = createCursor(r2, r11);
+    createEnvironment()[74] = createCursor(undefined, null);
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r38 = createCursor(r2, r11);
+    // USED → r38 = createCursor(undefined, null);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 75, Reg8: 38>
-    createEnvironment()[75] = createCursor(r2, r11);
+    createEnvironment()[75] = createCursor(undefined, null);
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r38 = createCursor(r2, r11);
+    // USED → r38 = createCursor(undefined, null);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 76, Reg8: 38>
-    createEnvironment()[76] = createCursor(r2, r11);
+    createEnvironment()[76] = createCursor(undefined, null);
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 77, Reg8: 11>
-    createEnvironment()[77] = r11;
+    createEnvironment()[77] = null;
     // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
     // USED → r38 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 78, Reg8: 38>
     createEnvironment()[78] = [];
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 79, Reg8: 10>
-    createEnvironment()[79] = r10;
+    createEnvironment()[79] = 0;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 80, Reg8: 10>
-    createEnvironment()[80] = r10;
+    createEnvironment()[80] = 0;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 81, Reg8: 11>
-    createEnvironment()[81] = r11;
+    createEnvironment()[81] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 82, Reg8: 11>
-    createEnvironment()[82] = r11;
+    createEnvironment()[82] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 83, Reg8: 12>
-    createEnvironment()[83] = r12;
+    createEnvironment()[83] = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 84, Reg8: 12>
-    createEnvironment()[84] = r12;
+    createEnvironment()[84] = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 85, Reg8: 12>
-    createEnvironment()[85] = r12;
+    createEnvironment()[85] = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 86, Reg8: 10>
-    createEnvironment()[86] = r10;
+    createEnvironment()[86] = 0;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 87, Reg8: 12>
-    createEnvironment()[87] = r12;
+    createEnvironment()[87] = false;
     // CODE → <TryGetById>: <Reg8: 38, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
     // USED → r38 = r0.Object
     // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
@@ -2083,19 +2083,19 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r39 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 38, string_id: 3625>  # String: "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`" (String)
-    // USED → r38 = "str_3625"
+    // USED → r38 = "str_3625";
     // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-    // USED → r38 = r39(r2, r38);
+    // USED → r38 = r39(undefined, "str_3625");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 89, Reg8: 38>
-    createEnvironment()[89] = r39(r2, r38);
+    createEnvironment()[89] = r39(undefined, "str_3625");
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r39 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 38, string_id: 6775>  # String: "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React." (String)
-    // USED → r38 = "str_6775"
+    // USED → r38 = "str_6775";
     // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-    // USED → r38 = r39(r2, r38);
+    // USED → r38 = r39(undefined, "str_6775");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
-    createEnvironment()[90] = r39(r2, r38);
+    createEnvironment()[90] = r39(undefined, "str_6775");
     // CODE → <NewObject>: <Reg8: 38>
     // USED → r38 = {  }
     // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
@@ -2105,37 +2105,37 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 91, Reg8: 38>
     createEnvironment()[91] = r38;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 92, Reg8: 11>
-    createEnvironment()[92] = r11;
+    createEnvironment()[92] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 93, Reg8: 11>
-    createEnvironment()[93] = r11;
+    createEnvironment()[93] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 94, Reg8: 10>
-    createEnvironment()[94] = r10;
+    createEnvironment()[94] = 0;
     // CODE → <Call2>: <Reg8: 37, Reg8: 20, Reg8: 2, Reg8: 37>
-    // USED → r37 = createChildReconciler(r2, r37);
+    // USED → r37 = createChildReconciler(undefined, true);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 95, Reg8: 37>
-    createEnvironment()[95] = createChildReconciler(r2, r37);
+    createEnvironment()[95] = createChildReconciler(undefined, true);
     // CODE → <Call2>: <Reg8: 20, Reg8: 20, Reg8: 2, Reg8: 12>
-    // USED → r20 = createChildReconciler(r2, r12);
+    // USED → r20 = createChildReconciler(undefined, false);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 96, Reg8: 20>
-    createEnvironment()[96] = createChildReconciler(r2, r12);
+    createEnvironment()[96] = createChildReconciler(undefined, false);
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r20 = createCursor(r2, r11);
+    // USED → r20 = createCursor(undefined, null);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 97, Reg8: 20>
-    createEnvironment()[97] = createCursor(r2, r11);
+    createEnvironment()[97] = createCursor(undefined, null);
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-    // USED → r20 = createCursor(r2, r10);
+    // USED → r20 = createCursor(undefined, 0);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 98, Reg8: 20>
-    createEnvironment()[98] = createCursor(r2, r10);
+    createEnvironment()[98] = createCursor(undefined, 0);
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r20 = createCursor(r2, r11);
+    // USED → r20 = createCursor(undefined, null);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 99, Reg8: 20>
-    createEnvironment()[99] = createCursor(r2, r11);
+    createEnvironment()[99] = createCursor(undefined, null);
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 100, Reg8: 11>
-    createEnvironment()[100] = r11;
+    createEnvironment()[100] = null;
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-    // USED → r20 = createCursor(r2, r10);
+    // USED → r20 = createCursor(undefined, 0);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 101, Reg8: 20>
-    createEnvironment()[101] = createCursor(r2, r10);
+    createEnvironment()[101] = createCursor(undefined, 0);
     // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
     // USED → r20 = r14.ReactCurrentDispatcher
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 102, Reg8: 20>
@@ -2145,25 +2145,25 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 103, Reg8: 20>
     createEnvironment()[103] = r20;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 104, Reg8: 10>
-    createEnvironment()[104] = r10;
+    createEnvironment()[104] = 0;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 105, Reg8: 11>
-    createEnvironment()[105] = r11;
+    createEnvironment()[105] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 106, Reg8: 11>
-    createEnvironment()[106] = r11;
+    createEnvironment()[106] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 107, Reg8: 11>
-    createEnvironment()[107] = r11;
+    createEnvironment()[107] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 108, Reg8: 12>
-    createEnvironment()[108] = r12;
+    createEnvironment()[108] = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 109, Reg8: 12>
-    createEnvironment()[109] = r12;
+    createEnvironment()[109] = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 110, Reg8: 12>
-    createEnvironment()[110] = r12;
+    createEnvironment()[110] = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 111, Reg8: 10>
-    createEnvironment()[111] = r10;
+    createEnvironment()[111] = 0;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 112, Reg8: 11>
-    createEnvironment()[112] = r11;
+    createEnvironment()[112] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 113, Reg8: 10>
-    createEnvironment()[113] = r10;
+    createEnvironment()[113] = 0;
     // CODE → <CreateClosure>: <Reg8: 20, Reg8: 1, function_id: 825>  # Function: [#825 createFunctionComponentUpdateQueue of 12 bytes]: 1 params @ offset 0x00189b29
     // USED → r20 = createFunctionComponentUpdateQueue;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 114, Reg8: 20>
@@ -2391,17 +2391,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>
     createEnvironment()[120] = r20;
     // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
-    // USED → r17 = r19[r17]
+    // USED → r17 = r19[2]
     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-    // USED → r17 = r18(r2, r17);
+    // USED → r17 = r18(undefined, r17);
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
-    // USED → r17 = r18(r2, r17).ReactFiberErrorDialog
+    // USED → r17 = r18(undefined, r17).ReactFiberErrorDialog
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
     // USED → r17 = r17.showErrorDialog
     // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
     // USED → r17 = typeof r17;
     // CODE → <JStrictNotEqualLong>: <Addr32: 774, Reg8: 16, Reg8: 17>  # Address: 000018b9
-    if (r16 !== typeof r17) goto label_6329;
+    if ("function" !== typeof r17) goto label_6329;
     // ──────────────── Block 21 ──────────────── 
     // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
     // USED → r17 = r14.ReactCurrentOwner
@@ -2410,65 +2410,65 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r18 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
-    // USED → r17 = "str_6991"
+    // USED → r17 = "str_6991";
     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-    // USED → r17 = r18(r2, r17);
+    // USED → r17 = r18(undefined, "str_6991");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
-    createEnvironment()[122] = r18(r2, r17);
+    createEnvironment()[122] = r18(undefined, "str_6991");
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
-    createEnvironment()[123] = r12;
+    createEnvironment()[123] = false;
     // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
     // USED → r17 = {'dehydrated': None, 'treeContext': None, 'retryLane': 0}
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
     createEnvironment()[124] = r17;
     // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r15 = createCursor(r2, r11);
+    // USED → r15 = createCursor(undefined, null);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
-    createEnvironment()[125] = createCursor(r2, r11);
+    createEnvironment()[125] = createCursor(undefined, null);
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 126, Reg8: 11>
-    createEnvironment()[126] = r11;
+    createEnvironment()[126] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 127, Reg8: 11>
-    createEnvironment()[127] = r11;
+    createEnvironment()[127] = null;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 128, Reg8: 11>
-    createEnvironment()[128] = r11;
+    createEnvironment()[128] = null;
     // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
     // USED → r15 = r14.ReactCurrentBatchConfig
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 129, Reg8: 15>
     createEnvironment()[129] = r15;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 130, Reg8: 12>
-    createEnvironment()[130] = r12;
+    createEnvironment()[130] = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
-    createEnvironment()[131] = r12;
+    createEnvironment()[131] = false;
     // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
     // USED → r15 = r0.WeakSet
     // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
     // USED → r15 = typeof r15;
     // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
-    if (r16 === typeof r15) goto label_5669;
+    if ("function" === typeof r15) goto label_5669;
     // ──────────────── Block 22 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
     r15 = r0.Set
     // CODE → <Jmp>: <Addr8: 8>  # Address: 0000162b
     goto label_5675;
     // LOOP → START (while)
-    while (r16 === typeof r15) {
+    while ("function" === typeof r15) {
         // ──────────────── Block 24 ──────────────── 
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
         createEnvironment()[132] = r15;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
-        createEnvironment()[133] = r11;
+        createEnvironment()[133] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
-        createEnvironment()[134] = r12;
+        createEnvironment()[134] = false;
         // CODE → <LoadConstInt>: <Reg8: 15, Imm32: 8192>
-        // USED → r15 = 8192
+        // USED → r15 = 8192;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
-        createEnvironment()[135] = r15;
+        createEnvironment()[135] = 8192;
         // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
         // USED → r15 = r0.WeakMap
         // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
         // USED → r15 = typeof r15;
         // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
-        if (r16 === typeof r15) goto label_5717;
+        if ("function" === typeof r15) goto label_5717;
         // ──────────────── Block 23 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
         // USED → r15 = r0.WeakSet
@@ -2497,63 +2497,63 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
         createEnvironment()[139] = r15;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
-        createEnvironment()[140] = r10;
+        createEnvironment()[140] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
-        createEnvironment()[141] = r11;
+        createEnvironment()[141] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 142, Reg8: 11>
-        createEnvironment()[142] = r11;
+        createEnvironment()[142] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 143, Reg8: 10>
-        createEnvironment()[143] = r10;
+        createEnvironment()[143] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 144, Reg8: 10>
-        createEnvironment()[144] = r10;
+        createEnvironment()[144] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 145, Reg8: 11>
-        createEnvironment()[145] = r11;
+        createEnvironment()[145] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 146, Reg8: 12>
-        createEnvironment()[146] = r12;
+        createEnvironment()[146] = false;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 147, Reg8: 10>
-        createEnvironment()[147] = r10;
+        createEnvironment()[147] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 148, Reg8: 10>
-        createEnvironment()[148] = r10;
+        createEnvironment()[148] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 149, Reg8: 11>
-        createEnvironment()[149] = r11;
+        createEnvironment()[149] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 150, Reg8: 10>
-        createEnvironment()[150] = r10;
+        createEnvironment()[150] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 151, Reg8: 10>
-        createEnvironment()[151] = r10;
+        createEnvironment()[151] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 152, Reg8: 10>
-        createEnvironment()[152] = r10;
+        createEnvironment()[152] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 153, Reg8: 10>
-        createEnvironment()[153] = r10;
+        createEnvironment()[153] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 154, Reg8: 11>
-        createEnvironment()[154] = r11;
+        createEnvironment()[154] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 155, Reg8: 11>
-        createEnvironment()[155] = r11;
+        createEnvironment()[155] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 156, Reg8: 12>
-        createEnvironment()[156] = r12;
+        createEnvironment()[156] = false;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
-        createEnvironment()[157] = r10;
+        createEnvironment()[157] = 0;
         // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
         // USED → r15 = r0.Infinity
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
         createEnvironment()[158] = r15;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
-        createEnvironment()[159] = r11;
+        createEnvironment()[159] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
-        createEnvironment()[160] = r12;
+        createEnvironment()[160] = false;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 161, Reg8: 11>
-        createEnvironment()[161] = r11;
+        createEnvironment()[161] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 162, Reg8: 11>
-        createEnvironment()[162] = r11;
+        createEnvironment()[162] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 163, Reg8: 12>
-        createEnvironment()[163] = r12;
+        createEnvironment()[163] = false;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 164, Reg8: 11>
-        createEnvironment()[164] = r11;
+        createEnvironment()[164] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 165, Reg8: 10>
-        createEnvironment()[165] = r10;
+        createEnvironment()[165] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 166, Reg8: 10>
-        createEnvironment()[166] = r10;
+        createEnvironment()[166] = 0;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 167, Reg8: 11>
-        createEnvironment()[167] = r11;
+        createEnvironment()[167] = null;
         // CODE → <CreateClosure>: <Reg8: 10, Reg8: 1, function_id: 848>  # Function: [#848 batchedUpdatesImpl of 178 bytes]: 3 params @ offset 0x0018a193
         // USED → r10 = batchedUpdatesImpl;
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
@@ -2567,7 +2567,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Mov>: <Reg8: 57, Reg8: 12>
         r57 = createThis(r12, r10);
         // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
-        // USED → r10 = new r10(r9)
+        // USED → r10 = new r10("undefined")
         // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
         // USED → r10 = createThis(r12, r10)[r10]
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
@@ -2577,7 +2577,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
         r12.findFiberByHostInstance = getInstanceFromNode;
         // CODE → <LoadConstString>: <Reg8: 10, string_id: 1866>  # String: '18.3.0-canary-9372c6311-20240315' (String)
-        // USED → r10 = "18.3.0-canary-9372c6311-20240315"
+        // USED → r10 = "18.3.0-canary-9372c6311-20240315";
         // CODE → <NewObject>: <Reg8: 8>
         // USED → r8 = {  }
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
@@ -2591,9 +2591,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
         // USED → r15 = function_850.bind
         // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
-        // USED → r15 = r15(function_850, r11, findNodeHandle);
+        // USED → r15 = r15(function_850, null, findNodeHandle);
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-        r8."getInspectorDataForViewAtPoint" = r15(function_850, r11, findNodeHandle);
+        r8."getInspectorDataForViewAtPoint" = r15(function_850, null, findNodeHandle);
         // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
         r12."rendererConfig" = r8;
         // CODE → <NewObject>: <Reg8: 8>
@@ -2615,23 +2615,23 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
         r8."rendererConfig" = r15;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
-        r8."overrideHookState" = r11;
+        r8."overrideHookState" = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
-        r8."overrideHookStateDeletePath" = r11;
+        r8."overrideHookStateDeletePath" = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
-        r8."overrideHookStateRenamePath" = r11;
+        r8."overrideHookStateRenamePath" = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
-        r8."overrideProps" = r11;
+        r8."overrideProps" = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
-        r8."overridePropsDeletePath" = r11;
+        r8."overridePropsDeletePath" = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
-        r8."overridePropsRenamePath" = r11;
+        r8."overridePropsRenamePath" = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
-        r8."setErrorHandler" = r11;
+        r8."setErrorHandler" = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
-        r8."setSuspenseHandler" = r11;
+        r8."setSuspenseHandler" = null;
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
-        r8."scheduleUpdate" = r11;
+        r8."scheduleUpdate" = null;
         // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
         // USED → r14 = r14.ReactCurrentDispatcher
         // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
@@ -2656,17 +2656,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
     r8."findFiberByHostInstance" = emptyFindFiberByHostInstance;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
-    r8."findHostInstancesForRefresh" = r11;
+    r8."findHostInstancesForRefresh" = null;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
-    r8."scheduleRefresh" = r11;
+    r8."scheduleRefresh" = null;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
-    r8."scheduleRoot" = r11;
+    r8."scheduleRoot" = null;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
-    r8."setRefreshHandler" = r11;
+    r8."setRefreshHandler" = null;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
-    r8."getCurrentFiber" = r11;
+    r8."getCurrentFiber" = null;
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
-    r8."reconcilerVersion" = r10;
+    r8."reconcilerVersion" = "18.3.0-canary-9372c6311-20240315";
     // CODE → <Mov>: <Reg8: 7, Reg8: 8>
     // USED → r7 = r8;
     // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
@@ -2674,7 +2674,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
     // USED → r8 = typeof r8;
     // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
-    if (r9 === typeof r8) goto label_6205;
+    if ("undefined" === typeof r8) goto label_6205;
     // ──────────────── Block 30 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
     // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__
@@ -2760,9 +2760,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r1 = r0.Error
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4985>  # String: 'Expected ReactFiberErrorDialog.showErrorDialog to be a function.' (String)
-    // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
+    // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function.";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    // USED → r0 = r1(r2, r0);
+    // USED → r0 = r1(undefined, "Expected ReactFiberErrorDialog.showErrorDialog to be a function.");
     // CODE → <Throw>: <Reg8: 0>
-    throw r1(r2, r0);
+    throw r1(undefined, "Expected ReactFiberErrorDialog.showErrorDialog to be a function.");
 }

@@ -9,13 +9,13 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <LoadParam>: <Reg8: 9, UInt8: 4>
     // USED → r9 = param4
     // CODE → <LoadConstUndefined>: <Reg8: 6>
-    // USED → r6 = undefined
+    // USED → r6 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 10>
-    r10 = undefined
+    r10 = undefined;
     // CODE → <LoadConstFalse>: <Reg8: 5>
-    // USED → r5 = false
+    // USED → r5 = false;
     // CODE → <LoadConstFalse>: <Reg8: 0>
-    r0 = false
+    r0 = false;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 217>  # String: 'slice' (Identifier)
     // USED → r1 = r2.slice
     // CODE → <Call1>: <Reg8: 10, Reg8: 1, Reg8: 2>
@@ -23,9 +23,9 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 3614>  # String: 'Error occurred in ' (String)
-    // USED → r3 = "Error occurred in "
+    // USED → r3 = "Error occurred in ";
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 11214>  # String: ' callback, continuing anyway…' (String)
-    // USED → r2 = " callback, continuing anyway\u2026"
+    // USED → r2 = " callback, continuing anyway\u2026";
     // LOOP → START (while)
     while (!r1) {
         // ──────────────── Block 1 ──────────────── 
@@ -45,18 +45,18 @@ function function_12825(param0, param1, param2, param3, param4) {
         // CODE → <Mov>: <Reg8: 1, Reg8: 7>
         // USED → r1 = r7;
         // CODE → <Call2>: <Reg8: 1, Reg8: 11, Reg8: 6, Reg8: 1>
-        // USED → r1 = r1(r1(r2))(r6, r7);
+        // USED → r1 = r1(r1(r2))(undefined, r7);
         // CODE → <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
-        // USED → r0 = r1(r1(r2))(r6, r7) === r5;
+        // USED → r0 = r1(r1(r2))(undefined, r7) === false;
         // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
         goto label_122;
         // LOOP → START (while)
-        while (!(r1(r1(r2))(r6, r7) === r5)) {
+        while (!(r1(r1(r2))(undefined, r7) === false)) {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-            // USED → r1 = r1(r1(r2))(r6, r7) === r5;
+            // USED → r1 = r1(r1(r2))(undefined, r7) === false;
             // CODE → <JmpFalse>: <Addr8: -86, Reg8: 1>  # Address: 00000027
-            if (!(r1(r1(r2))(r6, r7) === r5)) goto label_39;
+            if (!(r1(r1(r2))(undefined, r7) === false)) goto label_39;
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Catch>: <Reg8: 12>
             // USED → r12 = caughtException
@@ -71,9 +71,9 @@ function function_12825(param0, param1, param2, param3, param4) {
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 98>  # String: 'concat' (Identifier)
             // USED → r1 = r1.concat
             // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 14, Reg8: 2>
-            // USED → r1 = r1(r3, r8, r2);
+            // USED → r1 = r1("Error occurred in ", r8, " callback, continuing anyway\u2026");
             // CODE → <Call2>: <Reg8: 1, Reg8: 13, Reg8: 11, Reg8: 1>
-            r1 = r13(r9, r1(r3, r8, r2));
+            r1 = r13(r9, r1("Error occurred in ", r8, " callback, continuing anyway\u2026"));
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
             // USED → r1 = r9.error
             // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>

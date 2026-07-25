@@ -3,13 +3,13 @@ function processColorsInProps(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 10, UInt8: 1>
     // USED → r10 = param1
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined
+    // USED → r0 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
+    r7 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined
+    r8 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 9>
-    r9 = undefined
+    r9 = undefined;
     // CODE → <Mov>: <Reg8: 5, Reg8: 10>
     // USED → r5 = r10;
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 1>
@@ -57,9 +57,9 @@ function processColorsInProps(param0, param1) {
             // CODE → <GetByVal>: <Reg8: 11, Reg8: 10, Reg8: 12>
             // USED → r11 = r10[r2]
             // CODE → <Call2>: <Reg8: 11, Reg8: 13, Reg8: 0, Reg8: 11>
-            // USED → r11 = getEnvironment(1)[36](r0, r11);
+            // USED → r11 = getEnvironment(1)[36](undefined, r11);
             // CODE → <PutByVal>: <Reg8: 10, Reg8: 12, Reg8: 11>
-            r10[r2] = getEnvironment(1)[36](r0, r11);
+            r10[r2] = getEnvironment(1)[36](undefined, r11);
             // CODE → <JmpLong>: <Addr32: -150>  # Address: 0000001c
             goto label_28;
             // ──────────────── Block 9 ──────────────── 
@@ -83,14 +83,14 @@ function processColorsInProps(param0, param1) {
     // CODE → <IteratorBegin>: <Reg8: 12, Reg8: 11>
     // USED → r12 = GetIterator(r13)
     // LOOP → START (while)
-    while (r12 === r0) {
+    while (r12 === undefined) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <IteratorNext>: <Reg8: 14, Reg8: 12, Reg8: 11>
         // USED → r14 = r12.next()
         // CODE → <Mov>: <Reg8: 13, Reg8: 12>
         // USED → r13 = r12;
         // CODE → <JStrictEqual>: <Addr8: -69, Reg8: 13, Reg8: 0>  # Address: 0000001c
-        if (r12 === r0) goto label_28;
+        if (r12 === undefined) goto label_28;
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Mov>: <Reg8: 8, Reg8: 14>
         // USED → r8 = r14;
@@ -105,7 +105,7 @@ function processColorsInProps(param0, param1) {
         // CODE → <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 13>
         // USED → r13 = r14[r13]
         // CODE → <JStrictEqual>: <Addr8: 27, Reg8: 13, Reg8: 0>  # Address: 00000095
-        if (r13 === r0) goto label_149;
+        if (r13 === undefined) goto label_149;
         // ──────────────── Block 7 ──────────────── 
         // CODE → <Mov>: <Reg8: 15, Reg8: 8>
         // USED → r15 = r14;
@@ -116,9 +116,9 @@ function processColorsInProps(param0, param1) {
         // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 14>
         // USED → r13 = r14[r13]
         // CODE → <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
-        // USED → r13 = getEnvironment(1)[36](r0, r13);
+        // USED → r13 = getEnvironment(1)[36](undefined, r13);
         // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
-        r14[r13] = getEnvironment(1)[36](r0, r13);
+        r14[r13] = getEnvironment(1)[36](undefined, r13);
         // ──────────────── Block 8 ──────────────── 
         // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
         goto label_90;

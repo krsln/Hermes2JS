@@ -1,7 +1,7 @@
 function request(param0, param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    r0 = undefined;
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 0>
