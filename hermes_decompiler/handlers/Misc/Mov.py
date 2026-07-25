@@ -9,6 +9,7 @@ from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 class Mov(OpcodeHandler):
     """Move value between registers: rX = rY"""
+
     _PATTERN = sequence(REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
