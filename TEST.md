@@ -36,3 +36,30 @@ python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/ou
 
 python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```
+
+## Region Tree
+
+uncomment to activate → LoopStructurer → hermes_decompiler/regions/building/Structurers.py
+
+```text
+===== REGION TREE =====
+SequenceRegion
+    Block 0
+    LoopRegion(header=1)
+        SequenceRegion
+            Block 1
+            Block 2
+            Block 3
+            LoopRegion(header=10)
+                SequenceRegion
+                    Block 10
+                    Block 9
+    Block 4
+    LoopRegion(header=5)
+        SequenceRegion
+            Block 5
+            Block 6
+            Block 7
+            Block 8
+    Block 11
+```

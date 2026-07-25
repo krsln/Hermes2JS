@@ -41,6 +41,7 @@ class LoopStructurer:
         for loop in roots:
             self._build_loop(loop, self.graph.root)
 
+        # TODO: activate with a condition
         # print("\n===== REGION TREE =====")
         # self._dump(self.graph.root)
 
