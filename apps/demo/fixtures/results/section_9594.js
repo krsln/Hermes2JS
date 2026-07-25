@@ -25,9 +25,9 @@ async function* anon_9594(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1
     // CODE → <Call2>: <Reg8: 1, Reg8: 6, Reg8: 5, Reg8: 1>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r1 = r6(r5, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-     = await // Error: sequence item 0: expected str instance, Identifier found
+    r1 = await CallExpression(callee=Identifier(name='r3'), arguments=(Identifier(name='r4'), CallExpression(callee=Identifier(name='r6'), arguments=(Identifier(name='r5'), Identifier(name='r1')), optional=False)), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003a
     yield label_58;
     // LOOP → START (while)
@@ -44,7 +44,7 @@ async function* anon_9594(param0, param1) {
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 7, string_id: 107>  # String: 'data' (Identifier)
         // USED → r2 = r1.data
         // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-        // Error: sequence item 0: expected str instance, Identifier found
+        r2 = r3(r4, r2);
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 7, string_id: 107>  # String: 'data' (Identifier)
         // USED → r2 = r1.data
         // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 12563>  # String: 'available' (Identifier)

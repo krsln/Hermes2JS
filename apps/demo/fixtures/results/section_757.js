@@ -72,11 +72,11 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 9>
     // USED → r11 = r9;
     // CODE → <Call1>: <Reg8: 13, Reg8: 11, Reg8: 5>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r13 = r9(r5);
     // CODE → <Mov>: <Reg8: 11, Reg8: 8>
     // USED → r11 = r8;
     // CODE → <Call3>: <Reg8: 11, Reg8: 14, Reg8: 5, Reg8: 13, Reg8: 11>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r11 = r14(r5, r9(r5), r8);
     // CODE → <JmpTrue>: <Addr8: 7, Reg8: 11>  # Address: 00000089
     // Error: name 'IfStatement' is not defined
     // CODE → <LoadConstFalse>: <Reg8: 11>

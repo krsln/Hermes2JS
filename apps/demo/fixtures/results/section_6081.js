@@ -32,7 +32,7 @@ function processColorsInProps(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 148>  # String: 'includes' (Identifier)
     // USED → r11 = r12.includes
     // CODE → <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 13>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r11 = r11(r12, r2);
     // CODE → <JmpTrue>: <Addr8: 98, Reg8: 11>  # Address: 0000009e
     // Error: name 'IfStatement' is not defined
     // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 18>
@@ -82,9 +82,9 @@ function processColorsInProps(param0, param1) {
     // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 14>
     // USED → r13 = r14[r13]
     // CODE → <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r13 = r16(r0, r13);
     // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
-    r14[r13] = r13;
+    r14[r13] = r16(r0, r13);
     // ──────────────── Block 4 ──────────────── 
     // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
     // Error: name 'GotoStatement' is not defined
@@ -101,9 +101,9 @@ function processColorsInProps(param0, param1) {
     // CODE → <GetByVal>: <Reg8: 11, Reg8: 10, Reg8: 12>
     // USED → r11 = r10[r2]
     // CODE → <Call2>: <Reg8: 11, Reg8: 13, Reg8: 0, Reg8: 11>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r11 = r13(r0, r11);
     // CODE → <PutByVal>: <Reg8: 10, Reg8: 12, Reg8: 11>
-    r10[r2] = r11;
+    r10[r2] = r13(r0, r11);
     // CODE → <JmpLong>: <Addr32: -150>  # Address: 0000001c
     // Error: name 'GotoStatement' is not defined
     // CODE → <Ret>: <Reg8: 0>

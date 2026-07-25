@@ -1,8 +1,7 @@
 import re
 from typing import Dict
 
-from hermes_decompiler.ir.Expressions import CallExpression
-from hermes_decompiler.ir.Values import RegisterValue
+from hermes_decompiler.ir import CallExpression, Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -33,10 +32,10 @@ class CallX(OpcodeHandler):
 
         dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
         callee = self.get_register_value(analysis, func_reg)
-        arguments = [
+        arguments = tuple(
             self.get_register_value(analysis, reg)
             for reg in arg_regs
-        ]
+        )
 
         value = CallExpression(callee=callee, arguments=arguments)
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
@@ -77,14 +76,15 @@ class Call(CallX):
 
         callee = self.get_register_value(analysis, func_reg)
         arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
-        arguments = [
-            RegisterValue(r)
+
+        # NOTE: kept as bare register references (not resolved via
+        # get_register_value), same as the original - the argument slots
+        # here are a contiguous stack range that doesn't necessarily
+        # correspond to individually tracked register assignments.
+        arguments = tuple(
+            Identifier(name=f"r{r}")
             for r in arg_regs
-        ]
-        # arguments = [
-        #     self.get_register_value_new(analysis, reg)
-        #     for reg in arg_regs
-        # ]
+        )
 
         value = CallExpression(callee=callee, arguments=arguments)
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)

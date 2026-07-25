@@ -1179,13 +1179,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 19, Reg8: 10>
     // USED → r0 = r19[r10]
     // CODE → <Call2>: <Reg8: 0, Reg8: 18, Reg8: 2, Reg8: 0>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r0 = r18(r2, r0);
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 19, Reg8: 0>
     // USED → r0 = r19[r0]
     // CODE → <Call2>: <Reg8: 14, Reg8: 18, Reg8: 2, Reg8: 0>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r14 = r18(r2, r0);
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
@@ -1237,7 +1237,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12543>  # String: 'destructor' (Identifier)
     r37."destructor" = r42;
     // CODE → <Call3>: <Reg8: 37, Reg8: 41, Reg8: 2, Reg8: 40, Reg8: 37>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r37 = r41(r2, r40, r37);
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 9, UInt16: 9, UInt16: 194, UInt16: 115>  # Object: {'type': null, 'target': null, 'currentTarget': null, 'eventPhase': null, 'bubbles': null, 'cancelable': null, 'timeStamp': null, 'defaultPrevented': null, 'isTrusted': null}
     // USED → r37 = {'type': None, 'target': None, 'currentTarget': None, 'eventPhase': None, 'bubbles': None, 'cancelable': None, 'timeStamp': None, 'defaultPrevented': None, 'isTrusted': None}
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 809>  # Function: [#809 currentTarget of 4 bytes]: 1 params @ offset 0x00188e5c
@@ -1255,7 +1255,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutById>: <Reg8: 39, Reg8: 37, UInt8: 4, string_id: 14224>  # String: 'extend' (Identifier)
     r39.extend = r37;
     // CODE → <Call2>: <Reg8: 17, Reg8: 17, Reg8: 2, Reg8: 39>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r17 = r17(r2, r39);
     // CODE → <GetById>: <Reg8: 37, Reg8: 39, UInt8: 6, string_id: 14224>  # String: 'extend' (Identifier)
     // USED → r37 = r39.extend
     // CODE → <NewObject>: <Reg8: 17>
@@ -1265,9 +1265,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 40, string_id: 21539>  # String: 'touchHistory' (Identifier)
     r17."touchHistory" = r40;
     // CODE → <Call2>: <Reg8: 17, Reg8: 37, Reg8: 39, Reg8: 17>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r17 = r37(r39, r17);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 17>
-    r1[9] = r17
+    r1[9] = r37(r39, r17)
     // CODE → <NewArrayWithBuffer>: <Reg8: 42, UInt16: 1, UInt16: 1, UInt16: 40883>  # Array: ['topTouchStart']
     // USED → r42 = ["topTouchStart"];
     // CODE → <NewArrayWithBuffer>: <Reg8: 41, UInt16: 1, UInt16: 1, UInt16: 40892>  # Array: ['topTouchMove']
@@ -1487,9 +1487,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
     // USED → r37 = r19[r17]
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r37 = r18(r2, r37);
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = r37.ReactNativeViewConfigRegistry
+    // USED → r37 = r18(r2, r37).ReactNativeViewConfigRegistry
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 8, string_id: 22641>  # String: 'customBubblingEventTypes' (Identifier)
     // USED → r37 = r37.customBubblingEventTypes
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 23, Reg8: 37>
@@ -1497,9 +1497,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
     // USED → r37 = r19[r17]
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r37 = r18(r2, r37);
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = r37.ReactNativeViewConfigRegistry
+    // USED → r37 = r18(r2, r37).ReactNativeViewConfigRegistry
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 9, string_id: 21940>  # String: 'customDirectEventTypes' (Identifier)
     // USED → r37 = r37.customDirectEventTypes
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 24, Reg8: 37>
@@ -1515,11 +1515,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <NewArrayWithBuffer>: <Reg8: 37, UInt16: 2, UInt16: 2, UInt16: 40903>  # Array: ['ResponderEventPlugin', 'ReactNativeBridgeEventPlugin']
     // USED → r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"];
     // CODE → <Call2>: <Reg8: 37, Reg8: 41, Reg8: 42, Reg8: 37>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r37 = r41(r42, ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 37>
-    r1[18] = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]
+    r1[18] = r41(r42, ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"])
     // CODE → <Call1>: <Reg8: 37, Reg8: 16, Reg8: 2>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r37 = r16(r2);
     // CODE → <NewObject>: <Reg8: 50>
     // USED → r50 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 50, Reg8: 40, string_id: 14576>  # String: 'ResponderEventPlugin' (Identifier)
@@ -1564,7 +1564,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 52, Reg8: 50, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
     // USED → r52 = r50.hasOwnProperty
     // CODE → <Call2>: <Reg8: 52, Reg8: 52, Reg8: 50, Reg8: 44>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r52 = r52(r50, r45);
     // CODE → <Mov>: <Reg8: 43, Reg8: 54>
     r43 = r43;
     // CODE → <JmpFalse>: <Addr8: -31, Reg8: 52>  # Address: 00000e5d
@@ -1574,7 +1574,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 53, Reg8: 51, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
     // USED → r53 = r51.hasOwnProperty
     // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r53 = r53(r51, r45);
     // CODE → <JmpFalse>: <Addr8: 17, Reg8: 53>  # Address: 00000e9e
     // Error: name 'IfStatement' is not defined
     // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
@@ -1609,13 +1609,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
     // USED → r42 = r42 + (r45 + r42);
     // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r42 = r43(r2, r42 + (r45 + r42));
     // CODE → <Throw>: <Reg8: 42>
-    throw r42 + (r45 + r42);
+    throw r43(r2, r42 + (r45 + r42));
     // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
     // Error: name 'IfStatement' is not defined
     // CODE → <Call1>: <Reg8: 16, Reg8: 16, Reg8: 2>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r16 = r16(r2);
     // CODE → <NewObject>: <Reg8: 16>
     // USED → r16 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 25, Reg8: 16>
@@ -1635,7 +1635,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
     r1[30] = r11
     // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 14, string_id: 21563>  # String: '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED' (Identifier)
-    // USED → r14 = r14.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
+    // USED → r14 = r18(r2, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 11>
     r1[31] = r11
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
@@ -1721,9 +1721,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
     // USED → r9 = r19[r17]
     // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r9 = r18(r2, r9);
     // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r9 = r9.ReactNativeViewConfigRegistry
+    // USED → r9 = r18(r2, r9).ReactNativeViewConfigRegistry
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 31, string_id: 137>  # String: 'get' (Identifier)
     // USED → r9 = r9.get
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 49, Reg8: 9>
@@ -1735,7 +1735,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
     // USED → r9 = dispatchEvent /* Closure with env r1 = r1 */
     // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r9 = r16(r2, r9);
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 32, string_id: 214>  # String: 'setTimeout' (Identifier)
     // USED → r41 = globalThis.setTimeout
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 51, Reg8: 41>
@@ -1797,7 +1797,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 43, string_id: 15401>  # String: 'onChange' (Identifier)
     r40."onChange" = r43;
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r40 = r41(r42, r40);
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1805,9 +1805,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 3815>  # String: 'react.element' (String)
     // USED → r40 = "react.element"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 55, Reg8: 40>
-    r1[55] = r40
+    r1[55] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1815,9 +1815,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5553>  # String: 'react.portal' (String)
     // USED → r40 = "react.portal"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 56, Reg8: 40>
-    r1[56] = r40
+    r1[56] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1825,9 +1825,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5930>  # String: 'react.fragment' (String)
     // USED → r40 = "react.fragment"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 57, Reg8: 40>
-    r1[57] = r40
+    r1[57] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1835,9 +1835,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6410>  # String: 'react.strict_mode' (String)
     // USED → r40 = "react.strict_mode"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 58, Reg8: 40>
-    r1[58] = r40
+    r1[58] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1845,9 +1845,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5628>  # String: 'react.profiler' (String)
     // USED → r40 = "react.profiler"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 59, Reg8: 40>
-    r1[59] = r40
+    r1[59] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1855,9 +1855,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 2499>  # String: 'react.provider' (String)
     // USED → r40 = "react.provider"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 60, Reg8: 40>
-    r1[60] = r40
+    r1[60] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1865,9 +1865,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 8244>  # String: 'react.consumer' (String)
     // USED → r40 = "react.consumer"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 61, Reg8: 40>
-    r1[61] = r40
+    r1[61] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1875,9 +1875,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 4944>  # String: 'react.context' (String)
     // USED → r40 = "react.context"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 62, Reg8: 40>
-    r1[62] = r40
+    r1[62] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1885,9 +1885,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 7930>  # String: 'react.forward_ref' (String)
     // USED → r40 = "react.forward_ref"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 63, Reg8: 40>
-    r1[63] = r40
+    r1[63] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1895,9 +1895,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6421>  # String: 'react.suspense' (String)
     // USED → r40 = "react.suspense"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 64, Reg8: 40>
-    r1[64] = r40
+    r1[64] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1905,9 +1905,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6422>  # String: 'react.suspense_list' (String)
     // USED → r40 = "react.suspense_list"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 65, Reg8: 40>
-    r1[65] = r40
+    r1[65] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1915,9 +1915,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 410>  # String: 'react.memo' (String)
     // USED → r40 = "react.memo"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 66, Reg8: 40>
-    r1[66] = r40
+    r1[66] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1925,9 +1925,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 10762>  # String: 'react.lazy' (String)
     // USED → r40 = "react.lazy"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 67, Reg8: 40>
-    r1[67] = r40
+    r1[67] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1935,7 +1935,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6222>  # String: 'react.scope' (String)
     // USED → r40 = "react.scope"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r40 = r41(r42, r40);
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1943,7 +1943,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6531>  # String: 'react.debug_trace_mode' (String)
     // USED → r40 = "react.debug_trace_mode"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r40 = r41(r42, r40);
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1951,9 +1951,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5577>  # String: 'react.offscreen' (String)
     // USED → r40 = "react.offscreen"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r40 = r41(r42, r40);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 68, Reg8: 40>
-    r1[68] = r40
+    r1[68] = r41(r42, r40)
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1961,7 +1961,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 4905>  # String: 'react.legacy_hidden' (String)
     // USED → r40 = "react.legacy_hidden"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r40 = r41(r42, r40);
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1969,7 +1969,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 2166>  # String: 'react.cache' (String)
     // USED → r40 = "react.cache"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r40 = r41(r42, r40);
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r42 = globalThis.Symbol
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1977,7 +1977,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 8982>  # String: 'react.tracing_marker' (String)
     // USED → r40 = "react.tracing_marker"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r40 = r41(r42, r40);
     // CODE → <TryGetById>: <Reg8: 40, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
     // USED → r40 = globalThis.Symbol
     // CODE → <GetById>: <Reg8: 40, Reg8: 40, UInt8: 40, string_id: 13658>  # String: 'iterator' (Identifier)
@@ -1991,7 +1991,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 10511>  # String: 'react.client.reference' (String)
     // USED → r40 = "react.client.reference"
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // Error: sequence item 0: expected str instance, Identifier found
+    r40 = r41(r42, r40);
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
@@ -2019,17 +2019,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
     r1[73] = r38
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r38 = r15(r2, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 74, Reg8: 38>
-    r1[74] = r38
+    r1[74] = r15(r2, r11)
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r38 = r15(r2, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 75, Reg8: 38>
-    r1[75] = r38
+    r1[75] = r15(r2, r11)
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r38 = r15(r2, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 76, Reg8: 38>
-    r1[76] = r38
+    r1[76] = r15(r2, r11)
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 77, Reg8: 11>
     r1[77] = r11
     // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
@@ -2067,17 +2067,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 38, string_id: 3625>  # String: "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`" (String)
     // USED → r38 = "str_3625"
     // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r38 = r39(r2, r38);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 89, Reg8: 38>
-    r1[89] = r38
+    r1[89] = r39(r2, r38)
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r39 = globalThis.Error
     // CODE → <LoadConstString>: <Reg8: 38, string_id: 6775>  # String: "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React." (String)
     // USED → r38 = "str_6775"
     // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r38 = r39(r2, r38);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
-    r1[90] = r38
+    r1[90] = r39(r2, r38)
     // CODE → <NewObject>: <Reg8: 38>
     // USED → r38 = {  }
     // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
@@ -2093,31 +2093,31 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 94, Reg8: 10>
     r1[94] = r10
     // CODE → <Call2>: <Reg8: 37, Reg8: 20, Reg8: 2, Reg8: 37>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r37 = r20(r2, r37);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 95, Reg8: 37>
-    r1[95] = r37
+    r1[95] = r20(r2, r37)
     // CODE → <Call2>: <Reg8: 20, Reg8: 20, Reg8: 2, Reg8: 12>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r20 = r20(r2, r12);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 96, Reg8: 20>
-    r1[96] = r20
+    r1[96] = r20(r2, r12)
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r20 = r15(r2, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 97, Reg8: 20>
-    r1[97] = r20
+    r1[97] = r15(r2, r11)
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r20 = r15(r2, r10);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 98, Reg8: 20>
-    r1[98] = r20
+    r1[98] = r15(r2, r10)
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r20 = r15(r2, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 99, Reg8: 20>
-    r1[99] = r20
+    r1[99] = r15(r2, r11)
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 100, Reg8: 11>
     r1[100] = r11
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r20 = r15(r2, r10);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 101, Reg8: 20>
-    r1[101] = r20
+    r1[101] = r15(r2, r10)
     // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
     // USED → r20 = r14.ReactCurrentDispatcher
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 102, Reg8: 20>
@@ -2375,9 +2375,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
     // USED → r17 = r19[r17]
     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r17 = r18(r2, r17);
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
-    // USED → r17 = r17.ReactFiberErrorDialog
+    // USED → r17 = r18(r2, r17).ReactFiberErrorDialog
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
     // USED → r17 = r17.showErrorDialog
     // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
@@ -2394,9 +2394,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
     // USED → r17 = "str_6991"
     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r17 = r18(r2, r17);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
-    r1[122] = r17
+    r1[122] = r18(r2, r17)
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
     r1[123] = r12
     // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
@@ -2404,9 +2404,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
     r1[124] = r17
     // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r15 = r15(r2, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
-    r1[125] = r15
+    r1[125] = r15(r2, r11)
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 126, Reg8: 11>
     r1[126] = r11
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 127, Reg8: 11>
@@ -2568,9 +2568,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
     // USED → r15 = r16.bind
     // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r15 = r15(r16, r11, r5);
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-    r8."getInspectorDataForViewAtPoint" = r15;
+    r8."getInspectorDataForViewAtPoint" = r15(r16, r11, r5);
     // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
     r12."rendererConfig" = r8;
     // CODE → <NewObject>: <Reg8: 8>
@@ -2663,9 +2663,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
     // USED → r8 = r8.inject
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r7 = r8(r8, r8);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
-    r1[31] = r8
+    r1[31] = r8(r8, r8)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
     r1[32] = r8
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
@@ -2725,7 +2725,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4985>  # String: 'Expected ReactFiberErrorDialog.showErrorDialog to be a function.' (String)
     // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function."
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r0 = r1(r2, r0);
     // CODE → <Throw>: <Reg8: 0>
-    throw r0;
+    throw r1(r2, r0);
 }

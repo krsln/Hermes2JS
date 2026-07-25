@@ -51,11 +51,11 @@ function function_1(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 64>  # String: '__d' (Identifier)
     // USED → r0 = "__d"
     // CODE → <Call3>: <Reg8: 9, Reg8: 10, Reg8: 9, Reg8: 11, Reg8: 0>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r9 = r10(r9, r11, r0);
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 3>  # Function: [#3 define of 107 bytes]: 4 params @ offset 0x0016e029
     // USED → r0 = define /* Closure with env r2 = r2 */
     // CODE → <PutByVal>: <Reg8: 8, Reg8: 9, Reg8: 0>
-    r8[r9] = r0;
+    r8[r10(r9, r11, r0)] = r0;
     // CODE → <PutById>: <Reg8: 8, Reg8: 7, UInt8: 2, string_id: 11632>  # String: '__c' (Identifier)
     r8.__c = r7;
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 10>  # Function: [#10 registerSegment of 48 bytes]: 4 params @ offset 0x0016e278
@@ -65,9 +65,9 @@ function function_1(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined
     // CODE → <Call1>: <Reg8: 7, Reg8: 7, Reg8: 0>
-    // Error: sequence item 0: expected str instance, Identifier found
+    // USED → r7 = r7(r0);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 7>
-    r2[1] = r7
+    r2[1] = r7(r0)
     // CODE → <NewObject>: <Reg8: 7>
     // USED → r7 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 7>

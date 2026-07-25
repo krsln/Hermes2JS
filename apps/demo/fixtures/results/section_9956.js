@@ -21,7 +21,7 @@ async function* anon_9956(param0, param1) {
     // CODE → <Add>: <Reg8: 1, Reg8: 4, Reg8: 1>
     // USED → r1 = r4 + r1;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-     = await // Error: sequence item 0: expected str instance, Identifier found
+    r1 = await CallExpression(callee=Identifier(name='r2'), arguments=(Identifier(name='r3'), BinaryExpression(left=Identifier(name='r4'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r1'))), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000002c
     yield label_44;
     // LOOP → START (while)
