@@ -1,6 +1,6 @@
 import re
 
-from hermes_decompiler.ir.Values import RegExpValue
+from hermes_decompiler.ir import RegExpLiteral
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -35,7 +35,7 @@ class CreateRegExp(OpcodeHandler):
             return self.build_exception_result(analysis, entry, error)
 
         # value = f"/{pattern}/{flags or ''}"
-        value = RegExpValue(pattern=pattern, flags=flags or "")
+        value = RegExpLiteral(pattern=pattern, flags=flags or "")
 
         variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
         analysis.add_result(entry, variable)
