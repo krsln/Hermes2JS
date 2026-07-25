@@ -231,7 +231,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
     r1 = r6;
     // CODE → <JmpFalseLong>: <Addr32: 1808, Reg8: 0>  # Address: 00000940
-    if (!r93 < r0) { /* jump to label_2368 */ }
+    if (!(r93 < r0)) goto label_2368;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 10>
     // USED → r119 = r92[10]

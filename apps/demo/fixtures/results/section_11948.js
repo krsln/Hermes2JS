@@ -38,7 +38,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 14, Reg8: 6>
     // USED → r14 = r6;
     // CODE → <JmpTrue>: <Addr8: 5, Reg8: 14>  # Address: 00000034
-    if (r6) { /* jump to label_52 */ }
+    if (r6) goto label_52;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewObject>: <Reg8: 14>
     // USED → r14 = {  }
@@ -88,7 +88,7 @@ function _request(param0, param1, param2) {
                 // USED → r2 = {  }
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <JmpTrue>: <Addr8: 5, Reg8: 2>  # Address: 0000003f
-                if (r2) { /* jump to label_63 */ }
+                if (r2) goto label_63;
             }
             // LOOP → END
         }
@@ -149,7 +149,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 15, Reg8: 14>
     // USED → r2 = r2(r15, r14);
     // CODE → <JmpTrue>: <Addr8: 57, Reg8: 2>  # Address: 00000134
-    if (r2(r15, r14)) { /* jump to label_308 */ }
+    if (r2(r15, r14)) goto label_308;
     // ──────────────── Block 11 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
     // USED → r2 = r6[9]
@@ -237,7 +237,7 @@ function _request(param0, param1, param2) {
         // CODE → <GetById>: <Reg8: 15, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
         // USED → r15 = r10(r11, r2, r2).method
         // CODE → <JmpTrue>: <Addr8: 15, Reg8: 15>  # Address: 000001d2
-        if (r15) { /* jump to label_466 */ }
+        if (r15) goto label_466;
         // ──────────────── Block 16 ──────────────── 
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
         // USED → r2 = r8.defaults
@@ -254,7 +254,7 @@ function _request(param0, param1, param2) {
     // USED → r15 = r14.method
     // ──────────────── Block 19 ──────────────── 
     // CODE → <JmpTrue>: <Addr8: 7, Reg8: 15>  # Address: 000001d9
-    if (r15) { /* jump to label_473 */ }
+    if (r15) goto label_473;
     // ──────────────── Block 20 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 15, string_id: 137>  # String: 'get' (Identifier)
     // USED → r15 = "get"
@@ -268,7 +268,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 16, Reg8: 17>
     // USED → r16 = r17;
     // CODE → <JmpFalse>: <Addr8: 40, Reg8: 16>  # Address: 00000214
-    if (!r17) { /* jump to label_532 */ }
+    if (!r17) goto label_532;
     // ──────────────── Block 22 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
     // USED → r14 = r6[3]
@@ -286,7 +286,7 @@ function _request(param0, param1, param2) {
     // USED → r16 = r18(r19, r15, r14);
     // ──────────────── Block 23 ──────────────── 
     // CODE → <JmpFalse>: <Addr8: 36, Reg8: 17>  # Address: 00000238
-    if (!r17) { /* jump to label_568 */ }
+    if (!r17) goto label_568;
     // ──────────────── Block 24 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
     // USED → r14 = r6[3]
@@ -352,7 +352,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 9, UInt8: 3>
     // USED → r9 = r9[3]
     // CODE → <JmpTrueLong>: <Addr32: 164, Reg8: 9>  # Address: 0000034e
-    if (r9) { /* jump to label_846 */ }
+    if (r9) goto label_846;
     // ──────────────── Block 26 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 6, UInt8: 6>
     // USED → r9 = r6[6]

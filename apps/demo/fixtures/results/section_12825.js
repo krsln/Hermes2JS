@@ -34,7 +34,7 @@ function function_12825(param0, param1, param2, param3, param4) {
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 139>  # String: 'length' (Identifier)
         // USED → r1 = r1(r2).length
         // CODE → <JmpFalse>: <Addr8: 81, Reg8: 1>  # Address: 00000080
-        if (!r1) { /* jump to label_128 */ }
+        if (!r1) goto label_128;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 11, Reg8: 10>
         // USED → r11 = r1(r2);
@@ -51,12 +51,12 @@ function function_12825(param0, param1, param2, param3, param4) {
         // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
         goto label_122;
         // LOOP → START (while)
-        while (!r1(r1(r2))(r6, r7) === r5) {
+        while (!(r1(r1(r2))(r6, r7) === r5)) {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = r1(r1(r2))(r6, r7) === r5;
             // CODE → <JmpFalse>: <Addr8: -86, Reg8: 1>  # Address: 00000027
-            if (!r1(r1(r2))(r6, r7) === r5) { /* jump to label_39 */ }
+            if (!(r1(r1(r2))(r6, r7) === r5)) goto label_39;
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Catch>: <Reg8: 12>
             // USED → r12 = caughtException

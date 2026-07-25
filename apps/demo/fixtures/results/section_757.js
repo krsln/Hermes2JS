@@ -23,7 +23,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <Mov>: <Reg8: 0, Reg8: 10>
     // USED → r0 = r10;
     // LOOP → START (while)
-    while (!r11 & r3) {
+    while (!(r11 & r3)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 130>  # String: 'flags' (Identifier)
         // USED → r11 = r10.flags
@@ -32,7 +32,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // CODE → <Mov>: <Reg8: 12, Reg8: 0>
         // USED → r12 = r10;
         // CODE → <JmpFalse>: <Addr8: 117, Reg8: 11>  # Address: 0000009e
-        if (!r11 & r3) { /* jump to label_158 */ }
+        if (!(r11 & r3)) goto label_158;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 2, string_id: 108>  # String: 'updateQueue' (Identifier)
         // USED → r11 = r10.updateQueue
@@ -82,7 +82,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // CODE → <Call3>: <Reg8: 11, Reg8: 14, Reg8: 5, Reg8: 13, Reg8: 11>
         // USED → r11 = r14(r5, r9(r5), r8);
         // CODE → <JmpTrue>: <Addr8: 7, Reg8: 11>  # Address: 00000089
-        if (r14(r5, r9(r5), r8)) { /* jump to label_137 */ }
+        if (r14(r5, r9(r5), r8)) goto label_137;
         // ──────────────── Block 6 ──────────────── 
         // CODE → <LoadConstFalse>: <Reg8: 11>
         r11 = false
@@ -109,7 +109,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // CODE → <BitAnd>: <Reg8: 11, Reg8: 11, Reg8: 3>
         // USED → r11 = r11 & r3;
         // CODE → <JmpFalse>: <Addr8: 10, Reg8: 11>  # Address: 000000b7
-        if (!r11 & r3) { /* jump to label_183 */ }
+        if (!(r11 & r3)) goto label_183;
         // ──────────────── Block 9 ──────────────── 
         // CODE → <Mov>: <Reg8: 11, Reg8: 6>
         // USED → r11 = r6;

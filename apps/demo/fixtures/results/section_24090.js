@@ -7,7 +7,7 @@ function onPress(param0) {
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 1>
     // USED → r0 = getEnvironment(1)
     // CODE → <JmpTrue>: <Addr8: 113, Reg8: 2>  # Address: 0000007b
-    if (r2) { /* jump to label_123 */ }
+    if (r2) goto label_123;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 10>
     // USED → r2 = r0[10]

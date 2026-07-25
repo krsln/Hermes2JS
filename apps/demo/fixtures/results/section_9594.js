@@ -5,7 +5,7 @@ async function* anon_9594(param0, param1) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrue>: <Addr8: 98, Reg8: 1>  # Address: 00000066
-    if (r1) { /* jump to label_102 */ }
+    if (r1) goto label_102;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 4>
     // USED → r1 = getEnvironment(4)
@@ -37,7 +37,7 @@ async function* anon_9594(param0, param1) {
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
         // USED → r1 = await yield /* ResumeGenerator -> r1 */
         // CODE → <JmpTrue>: <Addr8: 38, Reg8: 3>  # Address: 00000063
-        if (r3) { /* jump to label_99 */ }
+        if (r3) goto label_99;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
         // Unhandled opcode: Ret

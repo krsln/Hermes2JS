@@ -1549,7 +1549,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetPNameList>: <Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
     // USED → r49 = HermesPropertyIterator(r50)
     // CODE → <JmpUndefined>: <Addr8: 115, Reg8: 49>  # Address: 00000ecd
-    if (r49 === undefined) { /* jump to label_3789 */ }
+    if (r49 === undefined) goto label_3789;
     // LOOP → START (while)
     while (r45 === undefined) {
         // ──────────────── Block 1 ──────────────── 
@@ -1560,7 +1560,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetNextPName>: <Reg8: 45, Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
         // USED → r45 = r49.next()
         // CODE → <JmpUndefined>: <Addr8: 100, Reg8: 45>  # Address: 00000ecd
-        if (r45 === undefined) { /* jump to label_3789 */ }
+        if (r45 === undefined) goto label_3789;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 44, Reg8: 45>
         // USED → r44 = r45;
@@ -1571,7 +1571,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Mov>: <Reg8: 43, Reg8: 54>
         r43 = r43;
         // CODE → <JmpFalse>: <Addr8: -31, Reg8: 52>  # Address: 00000e5d
-        if (!r52(r50, r45)) { /* jump to label_3677 */ }
+        if (!r52(r50, r45)) goto label_3677;
         // ──────────────── Block 3 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
         // USED → r52 = r50[r45]
@@ -1580,7 +1580,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
         // USED → r53 = r53(r51, r45);
         // CODE → <JmpFalse>: <Addr8: 17, Reg8: 53>  # Address: 00000e9e
-        if (!r53(r51, r45)) { /* jump to label_3742 */ }
+        if (!r53(r51, r45)) goto label_3742;
         // ──────────────── Block 4 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
         // USED → r53 = r51[r45]
@@ -1594,7 +1594,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
         // USED → r53 = r51[r45]
         // CODE → <JmpTrue>: <Addr8: 14, Reg8: 53>  # Address: 00000eb0
-        if (r53) { /* jump to label_3760 */ }
+        if (r53) goto label_3760;
         // ──────────────── Block 6 ──────────────── 
         // CODE → <PutByVal>: <Reg8: 51, Reg8: 44, Reg8: 52>
         r51[r45] = r52;
@@ -1623,7 +1623,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     throw r43(r2, r42 + (r45 + r42));
     // ──────────────── Block 8 ──────────────── 
     // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
-    if (!r43) { /* jump to label_3796 */ }
+    if (!r43) goto label_3796;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Call1>: <Reg8: 16, Reg8: 16, Reg8: 2>
     r16 = r16(r2);
@@ -1657,7 +1657,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 16, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
     // USED → r16 = r16.clz32
     // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00000f1e
-    if (!r16) { /* jump to label_3870 */ }
+    if (!r16) goto label_3870;
     // ──────────────── Block 11 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
     // USED → r16 = globalThis.Math
@@ -1745,7 +1745,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
     r1[50] = r17
     // CODE → <JmpFalse>: <Addr8: 13, Reg8: 16>  # Address: 00000fef
-    if (!r16) { /* jump to label_4079 */ }
+    if (!r16) goto label_4079;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
     // USED → r9 = dispatchEvent /* Closure with env r1 = r1 */
@@ -1769,7 +1769,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
     // USED → r16 = r9 !== typeof r16;
     // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00001023
-    if (!r9 !== typeof r16) { /* jump to label_4131 */ }
+    if (!(r9 !== typeof r16)) goto label_4131;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
     // USED → r42 = globalThis.RN$enableMicrotasksInReact
@@ -2643,7 +2643,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
         // USED → r12 = r12.findFiberByHostInstance
         // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
-        if (r12) { /* jump to label_6101 */ }
+        if (r12) goto label_6101;
         // ──────────────── Block 26 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
         // USED → r15 = globalThis.WeakMap
@@ -2683,14 +2683,14 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
     // USED → r8 = r8.isDisabled
     // CODE → <JmpTrue>: <Addr8: 38, Reg8: 8>  # Address: 0000183d
-    if (r8) { /* jump to label_6205 */ }
+    if (r8) goto label_6205;
     // ──────────────── Block 31 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 6>
     // USED → r8 = r8;
     // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
     // USED → r8 = r8.supportsFiber
     // CODE → <JmpFalse>: <Addr8: 26, Reg8: 8>  # Address: 0000183d
-    if (!r8) { /* jump to label_6205 */ }
+    if (!r8) goto label_6205;
     // ──────────────── Block 32 ──────────────── 
     // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
     // USED → r8 = r8.inject

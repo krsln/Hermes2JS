@@ -7,7 +7,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 5>
     r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrueLong>: <Addr32: 311, Reg8: 5>  # Address: 0000013e
-    if (r5) { /* jump to label_318 */ }
+    if (r5) goto label_318;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 1>
     // USED → r4 = param1
@@ -31,7 +31,7 @@ async function* anon_11947(param0, param1, param2) {
         // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
         r3 = await yield /* ResumeGenerator -> r3 */
         // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032
-        if (r4) { /* jump to label_50 */ }
+        if (r4) goto label_50;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 3>
         // Unhandled opcode: Ret
@@ -58,7 +58,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
     // USED → r4 = r7 instanceof r4;
     // CODE → <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
-    if (!r7 instanceof r4) { /* jump to label_316 */ }
+    if (!(r7 instanceof r4)) goto label_316;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <NewObject>: <Reg8: 6>
     r6 = {  }
@@ -69,7 +69,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r8 = globalThis.Error
     // CODE → <JmpTrue>: <Addr8: 25, Reg8: 4>  # Address: 00000079
-    if (r4) { /* jump to label_121 */ }
+    if (r4) goto label_121;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 4, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r4 = r8.prototype
@@ -100,7 +100,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 8>
     r4 = r8;
     // CODE → <JmpFalse>: <Addr8: 34, Reg8: 7>  # Address: 000000b9
-    if (!r7) { /* jump to label_185 */ }
+    if (!r7) goto label_185;
     // ──────────────── Block 10 ──────────────── 
     // CODE → <GetById>: <Reg8: 9, Reg8: 6, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
     // USED → r9 = r6.stack
@@ -118,7 +118,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
     // USED → r4 = r7.stack
     // CODE → <JmpTrue>: <Addr8: 17, Reg8: 4>  # Address: 000000d6
-    if (r4) { /* jump to label_214 */ }
+    if (r4) goto label_214;
     // ──────────────── Block 12 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 1>
     // USED → r6 = r7;
@@ -132,7 +132,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
     // USED → r4 = r7(r9, /^.+\\n/, r8);
     // CODE → <JmpFalse>: <Addr8: 95, Reg8: 4>  # Address: 00000138
-    if (!r7(r9, /^.+\\n/, r8)) { /* jump to label_312 */ }
+    if (!r7(r9, /^.+\\n/, r8)) goto label_312;
     // ──────────────── Block 14 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
     // USED → r4 = globalThis.String
@@ -155,7 +155,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     // USED → r3 = r4(r4(r5, r3), r6(r7(r9, /^.+\\n/, r8), /^.+\\n.+\\n/, r8));
     // CODE → <JmpTrue>: <Addr8: 33, Reg8: 3>  # Address: 00000138
-    if (r4(r4(r5, r3), r6(r7(r9, /^.+\\n/, r8), /^.+\\n.+\\n/, r8))) { /* jump to label_312 */ }
+    if (r4(r4(r5, r3), r6(r7(r9, /^.+\\n/, r8), /^.+\\n.+\\n/, r8))) goto label_312;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
     // USED → r3 = r7;

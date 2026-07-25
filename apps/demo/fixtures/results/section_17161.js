@@ -7,7 +7,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrueLong>: <Addr32: 161, Reg8: 1>  # Address: 000000a8
-    if (r1) { /* jump to label_168 */ }
+    if (r1) goto label_168;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
@@ -25,7 +25,7 @@ async function* anon_17161(param0, param1) {
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
         // USED → r1 = await yield /* ResumeGenerator -> r1 */
         // CODE → <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
-        if (r3) { /* jump to label_165 */ }
+        if (r3) goto label_165;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
         // Unhandled opcode: Ret
@@ -35,7 +35,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 14168>  # String: 'ok' (Identifier)
     // USED → r3 = r1.ok
     // CODE → <JmpTrue>: <Addr8: 93, Reg8: 3>  # Address: 0000008c
-    if (r3) { /* jump to label_140 */ }
+    if (r3) goto label_140;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
     // USED → r4 = r1.status
@@ -51,7 +51,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
     // USED → r3 = r4(r7, r3);
     // CODE → <JmpTrue>: <Addr8: 63, Reg8: 3>  # Address: 0000008c
-    if (r4(r7, r3)) { /* jump to label_140 */ }
+    if (r4(r7, r3)) goto label_140;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = globalThis.Error
@@ -92,7 +92,7 @@ async function* anon_17161(param0, param1) {
         // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
         r2 = await yield /* ResumeGenerator -> r2 */
         // CODE → <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
-        if (r3) { /* jump to label_162 */ }
+        if (r3) goto label_162;
         // ──────────────── Block 9 ──────────────── 
         // CODE → <Ret>: <Reg8: 2>
         // Unhandled opcode: Ret
