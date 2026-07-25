@@ -18,7 +18,6 @@ class CallX(OpcodeHandler):
     num_args = 1  # to be overridden
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
         reg_pattern = self._PATTERN.get(self.num_args)
         if not reg_pattern:
             return self.build_invalid_args_result(analysis, entry)

@@ -30,16 +30,15 @@ class SwitchImm(OpcodeHandler):
             analysis.gotoList.append(target)
             targets.append(target)
 
+        statement = SwitchGotoStatement(selector=selector, targets=tuple(targets))
+        flow = ControlFlowType.TERMINATOR
+
         # NOTE (fix): the original never set `control_flow`, defaulting
         # to NORMAL despite having multiple successors and no
         # fallthrough - same class of bug already fixed for JCompareX.
+        # pure control flow: no operand value of its own
         result = OpcodeResult(
-            entry,
-            value=None,  # pure control flow: no operand value of its own
-            statement=SwitchGotoStatement(selector=selector, targets=tuple(targets)),
-            dest_reg=None,
-            extra_gotos=targets,
-            control_flow=ControlFlowType.TERMINATOR,
+            entry, value=None, statement=statement, dest_reg=None, extra_gotos=targets, control_flow=flow
         )
         analysis.add_result(result)
 

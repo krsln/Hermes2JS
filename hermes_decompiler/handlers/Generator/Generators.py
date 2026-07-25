@@ -8,17 +8,15 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.regions.models.Statements import GotoStatement
 
-# Pre-compiled patterns
-START_GENERATOR_PATTERN = re.compile(r'^(?:<>)?$')
-
 
 # Example: <StartGenerator>: <>
 class StartGenerator(OpcodeHandler):
     """Initialize generator execution."""
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    _PATTERN = re.compile(r'^(?:<>)?$')
 
-        if not START_GENERATOR_PATTERN.match(entry.args.strip()):
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        if not self._PATTERN.match(entry.args.strip()):
             return self.build_invalid_args_result(analysis, entry)
 
         # No JS-observable effect of its own; kept as a bare comment
@@ -38,7 +36,6 @@ class ResumeGenerator(OpcodeHandler):
     _PATTERN = sequence(REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
@@ -59,9 +56,10 @@ class ResumeGenerator(OpcodeHandler):
 class CompleteGenerator(OpcodeHandler):
     """Mark the generator as completed."""
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    _PATTERN = re.compile(r'^(?:<>)?$')
 
-        if not START_GENERATOR_PATTERN.match(entry.args.strip()):
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        if not self._PATTERN.match(entry.args.strip()):
             return self.build_invalid_args_result(analysis, entry)
 
         expression = RawExpression(source="// CompleteGenerator")
@@ -101,14 +99,11 @@ class SaveGenerator(OpcodeHandler):
 
         analysis.gotoList.append(target)
 
-        result = OpcodeResult(
-            entry,
-            value=None,  # pure control flow: no operand value of its own
-            statement=GotoStatement(target=target),
-            dest_reg=target,
-            goto=target,
-            control_flow=ControlFlowType.UNCONDITIONAL
-        )
+        statement = GotoStatement(target=target)
+        flow = ControlFlowType.UNCONDITIONAL
+
+        # pure control flow: no operand value of its own
+        result = OpcodeResult(entry, value=None, statement=statement, dest_reg=target, goto=target, control_flow=flow)
         analysis.add_result(result)
 
         return result

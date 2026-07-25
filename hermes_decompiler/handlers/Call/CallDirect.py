@@ -12,7 +12,6 @@ class CallDirect(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)

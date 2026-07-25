@@ -82,7 +82,6 @@ class LoadConstUInt8(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8")
@@ -100,7 +99,6 @@ class LoadConstInt(OpcodeHandler):
     _PATTERN = re.compile(r"^Reg8:\s*(\d+),\s*Imm32:\s*(-?\d+)$")
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Imm32")
@@ -118,7 +116,6 @@ class LoadConstDouble(OpcodeHandler):
     _PATTERN = re.compile(r"^Reg8:\s*(\d+),\s*Double:\s*(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)$")
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Double")

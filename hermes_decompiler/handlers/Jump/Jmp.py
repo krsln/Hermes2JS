@@ -85,12 +85,10 @@ class Jump(OpcodeHandler):
         target = entry.target_address or (entry.address + offset)
         analysis.gotoList.append(target)
 
-        result = OpcodeResult(
-            entry,
-            value=None, statement=GotoStatement(target=target),
-            dest_reg=None, goto=target,
-            control_flow=ControlFlowType.UNCONDITIONAL
-        )
+        statement = GotoStatement(target=target)
+        flow = ControlFlowType.UNCONDITIONAL
+
+        result = OpcodeResult(entry, value=None, statement=statement, dest_reg=None, goto=target, control_flow=flow)
         analysis.add_result(result)
 
         return result
@@ -129,13 +127,11 @@ class ConditionalJumpBase(OpcodeHandler, ABC):
         value = self.get_register_value(analysis, reg)
         condition = self.build_condition(value, *extra)
 
-        result = OpcodeResult(
-            entry,
-            value=None,  # pure control flow: no operand value of its own
-            statement=IfGotoStatement(condition=condition, target=target),
-            dest_reg=None, goto=target,
-            control_flow=ControlFlowType.CONDITIONAL
-        )
+        statement = IfGotoStatement(condition=condition, target=target)
+        flow = ControlFlowType.CONDITIONAL
+
+        # pure control flow: no operand value of its own
+        result = OpcodeResult(entry, value=None, statement=statement, dest_reg=None, goto=target, control_flow=flow)
         analysis.add_result(result)
 
         return result

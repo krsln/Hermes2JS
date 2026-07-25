@@ -11,6 +11,7 @@ from hermes_decompiler.models.OpcodeResult import OpcodeResult
 # Example: <CreateRegExp>: <Reg8: 0, UInt32: 12, UInt32: 13, UInt32: 0>  # String: '^\d+$'  String: 'g'
 class CreateRegExp(OpcodeHandler):
     """Create a RegExp literal."""
+
     _PATTERN = re.compile(
         r'^Reg\d+:\s*(\d+),\s*(?:string_id|UInt32):\s*(\d+),\s*(?:string_id|UInt32):\s*(\d+),\s*(?:UInt32|Reg\d+):\s*(\d+)$'
     )
@@ -19,10 +20,8 @@ class CreateRegExp(OpcodeHandler):
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(
-                analysis, entry,
-                "Expected Reg8, (string_id|UInt32), (string_id|UInt32), UInt32"
-            )
+            error = "Expected Reg8, (string_id|UInt32), (string_id|UInt32), UInt32"
+            return self.build_invalid_args_result(analysis, entry, error)
 
         dest_reg, pattern_id, flags_id, _ = map(int, match.groups())
 

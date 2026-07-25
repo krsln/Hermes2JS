@@ -18,7 +18,6 @@ class CreateClosure(OpcodeHandler):
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8 and function_id arguments")

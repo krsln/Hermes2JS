@@ -20,7 +20,6 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
     """Define getter/setter property."""
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
         match = PUT_GETTER_SETTER_PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(

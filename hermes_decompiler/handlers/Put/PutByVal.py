@@ -16,11 +16,7 @@ class PutByVal(OpcodeHandler):
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(
-                analysis,
-                entry,
-                "Expected three Reg8 arguments",
-            )
+            return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
         obj_reg, key_reg, value_reg = map(int, match.groups())
 

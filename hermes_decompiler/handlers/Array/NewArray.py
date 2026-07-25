@@ -14,7 +14,6 @@ class NewArray(OpcodeHandler):
     _PATTERN = sequence(REG, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8 and UInt16 arguments")

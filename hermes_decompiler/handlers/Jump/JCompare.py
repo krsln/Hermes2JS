@@ -11,8 +11,6 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.regions.models.Statements import IfGotoStatement
 
-_COMPARE_PATTERN = sequence(ADDR, REG, REG)
-
 
 def _parse_compare(entry: OpcodeEntry) -> Tuple[int, int, int]:
     """
@@ -21,7 +19,8 @@ def _parse_compare(entry: OpcodeEntry) -> Tuple[int, int, int]:
         Addr, Reg, Reg
     """
 
-    match = _COMPARE_PATTERN.match(entry.args.strip())
+    _PATTERN = sequence(ADDR, REG, REG)
+    match = _PATTERN.match(entry.args.strip())
 
     if not match:
         raise ValueError(
@@ -64,13 +63,11 @@ class JCompareX(OpcodeHandler):
         rhs = self.get_register_value(analysis, rhs_reg)
 
         condition = BinaryExpression(left=lhs, operator=self.operator, right=rhs)
+        statement = IfGotoStatement(condition=condition, target=target)
+        flow = ControlFlowType.CONDITIONAL
 
-        result = OpcodeResult(
-            entry,
-            value=None,  # pure control flow: no operand value of its own
-            statement=IfGotoStatement(condition=condition, target=target),
-            dest_reg=None, goto=target,
-            control_flow=ControlFlowType.CONDITIONAL)
+        # pure control flow: no operand value of its own
+        result = OpcodeResult(entry, value=None, statement=statement, dest_reg=None, goto=target, control_flow=flow)
         analysis.add_result(result)
 
         return result
