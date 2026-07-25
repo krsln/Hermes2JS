@@ -83,14 +83,14 @@ function processColorsInProps(param0, param1) {
     // CODE → <IteratorBegin>: <Reg8: 12, Reg8: 11>
     // USED → r12 = GetIterator(r13)
     // LOOP → START (while)
-    while (Identifier(name='r12') === Identifier(name='r0')) {
+    while (r12 === r0) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <IteratorNext>: <Reg8: 14, Reg8: 12, Reg8: 11>
         // USED → r14 = r12.next()
         // CODE → <Mov>: <Reg8: 13, Reg8: 12>
         // USED → r13 = r12;
         // CODE → <JStrictEqual>: <Addr8: -69, Reg8: 13, Reg8: 0>  # Address: 0000001c
-        if (Identifier(name='r12') === Identifier(name='r0')) { /* jump to label_28 */ }
+        if (r12 === r0) goto label_28;
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Mov>: <Reg8: 8, Reg8: 14>
         // USED → r8 = r14;
@@ -105,7 +105,7 @@ function processColorsInProps(param0, param1) {
         // CODE → <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 13>
         // USED → r13 = r14[r13]
         // CODE → <JStrictEqual>: <Addr8: 27, Reg8: 13, Reg8: 0>  # Address: 00000095
-        if (Identifier(name='r13') === Identifier(name='r0')) { /* jump to label_149 */ }
+        if (r13 === r0) goto label_149;
         // ──────────────── Block 7 ──────────────── 
         // CODE → <Mov>: <Reg8: 15, Reg8: 8>
         // USED → r15 = r14;

@@ -1322,7 +1322,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
     // USED → r1 = r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r6);
     // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
-    if (BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42')) < Identifier(name='r0')) { /* jump to label_566 */ }
+    if (r5 + r42 < r0) goto label_566;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
     // USED → r0 = [];

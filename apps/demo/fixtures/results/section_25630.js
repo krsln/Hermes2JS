@@ -37,7 +37,7 @@ function AcquisitionManager(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 592>  # String: '/' (String)
     // USED → r3 = "/"
     // CODE → <JStrictEqual>: <Addr8: 20, Reg8: 2, Reg8: 3>  # Address: 0000006a
-    if (CallExpression(callee=Identifier(name='r3'), arguments=(Identifier(name='r4'), Identifier(name='r2')), optional=False) === Identifier(name='r3')) { /* jump to label_106 */ }
+    if (r3(r4, r2) === r3) goto label_106;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 22212>  # String: '_serverUrl' (Identifier)
     // USED → r2 = r1._serverUrl

@@ -1589,7 +1589,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Mov>: <Reg8: 42, Reg8: 52>
         r42 = r52;
         // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
-        if (Identifier(name='r53') === Identifier(name='r52')) { /* jump to label_3677 */ }
+        if (r53 === r52) goto label_3677;
         // ──────────────── Block 5 ──────────────── 
         // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
         // USED → r53 = r51[r45]
@@ -1787,7 +1787,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
     // USED → r42 = typeof r42;
     // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 16, Reg8: 42>  # Address: 0000103e
-    if (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r42'))) { /* jump to label_4158 */ }
+    if (r16 !== typeof r42) goto label_4158;
     // ──────────────── Block 17 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
     // USED → r41 = globalThis.queueMicrotask
@@ -2027,7 +2027,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
     // USED → r39 = typeof r39;
     // CODE → <JStrictNotEqual>: <Addr8: 16, Reg8: 16, Reg8: 39>  # Address: 0000127e
-    if (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r39'))) { /* jump to label_4734 */ }
+    if (r16 !== typeof r39) goto label_4734;
     // ──────────────── Block 19 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
     // USED → r39 = globalThis.Object
@@ -2401,7 +2401,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
     // USED → r17 = typeof r17;
     // CODE → <JStrictNotEqualLong>: <Addr32: 774, Reg8: 16, Reg8: 17>  # Address: 000018b9
-    if (Identifier(name='r16') !== UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r17'))) { /* jump to label_6329 */ }
+    if (r16 !== typeof r17) goto label_6329;
     // ──────────────── Block 21 ──────────────── 
     // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
     // USED → r17 = r14.ReactCurrentOwner
@@ -2444,14 +2444,14 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
     // USED → r15 = typeof r15;
     // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
-    if (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) { /* jump to label_5669 */ }
+    if (r16 === typeof r15) goto label_5669;
     // ──────────────── Block 22 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
     r15 = globalThis.Set
     // CODE → <Jmp>: <Addr8: 8>  # Address: 0000162b
     goto label_5675;
     // LOOP → START (while)
-    while (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) {
+    while (r16 === typeof r15) {
         // ──────────────── Block 24 ──────────────── 
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
         r1[132] = r15
@@ -2468,7 +2468,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
         // USED → r15 = typeof r15;
         // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
-        if (Identifier(name='r16') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r15'))) { /* jump to label_5717 */ }
+        if (r16 === typeof r15) goto label_5717;
         // ──────────────── Block 23 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
         // USED → r15 = globalThis.WeakSet
@@ -2674,7 +2674,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
     // USED → r8 = typeof r8;
     // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
-    if (Identifier(name='r9') === UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r8'))) { /* jump to label_6205 */ }
+    if (r9 === typeof r8) goto label_6205;
     // ──────────────── Block 30 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
     // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__

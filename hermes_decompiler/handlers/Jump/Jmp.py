@@ -2,16 +2,22 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Any, Tuple
 
-from hermes_decompiler.ir.Expressions import UnaryExpression, BinaryExpression, TypeOfExpression, Expression
+from hermes_decompiler.ir import (
+    Expression,
+    UnaryExpression,
+    BinaryExpression,
+    UndefinedLiteral,
+    StringLiteral,
+    Identifier,
+)
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
-from hermes_decompiler.ir.Statements import IfStatement, GotoStatement
-from hermes_decompiler.ir.Values import Value, UndefinedValue, ConstantValue, BuiltinValue
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT16, ADDR, sequence
+from hermes_decompiler.regions.models.Statements import GotoStatement, IfGotoStatement
 
 # --------------------------------------------------------------------------
 # Patterns
@@ -83,7 +89,8 @@ class Jump(OpcodeHandler):
             self.__class__.__name__,
             entry.address,
             "",
-            GotoStatement(target),
+            None,  # pure control flow: no operand value
+            statement=GotoStatement(target=target),
         )
 
         analysis.add_result(entry, variable, goto=target)
@@ -114,7 +121,7 @@ class ConditionalJumpBase(OpcodeHandler, ABC):
         ...
 
     @abstractmethod
-    def build_condition(self, value: Value, *extra: Any) -> Expression:
+    def build_condition(self, value: Expression, *extra: Any) -> Expression:
         ...
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -127,15 +134,14 @@ class ConditionalJumpBase(OpcodeHandler, ABC):
         analysis.gotoList.append(target)
 
         value = self.get_register_value(analysis, reg)
+        condition = self.build_condition(value, *extra)
 
         variable = JSVariable(
             self.__class__.__name__,
             entry.address,
             "",
-            IfStatement(
-                condition=self.build_condition(value, *extra),
-                target=target,
-            ),
+            None,  # pure control flow: no operand value of its own
+            statement=IfGotoStatement(condition=condition, target=target),
         )
 
         analysis.add_result(entry, variable, goto=target)
@@ -158,18 +164,18 @@ class ConditionalJump(ConditionalJumpBase, ABC):
 
 
 class JmpTrue(ConditionalJump):
-    def build_condition(self, value: Value, *extra: Any):
+    def build_condition(self, value: Expression, *extra: Any):
         return value
 
 
 class JmpFalse(ConditionalJump):
-    def build_condition(self, value: Value, *extra: Any) -> Expression:
+    def build_condition(self, value: Expression, *extra: Any) -> Expression:
         return UnaryExpression(UnaryOperator.LOGICAL_NOT, value)
 
 
 class JmpUndefined(ConditionalJump):
-    def build_condition(self, value: Value, *extra: Any) -> Expression:
-        return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, UndefinedValue())
+    def build_condition(self, value: Expression, *extra: Any) -> Expression:
+        return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, UndefinedLiteral())
 
 
 # Long versions
@@ -192,15 +198,15 @@ class BuiltinConditionalJump(ConditionalJumpBase, ABC):
 
 
 class JmpBuiltinIs(BuiltinConditionalJump):
-    def build_condition(self, value: Value, *extra: Any) -> Expression:
+    def build_condition(self, value: Expression, *extra: Any) -> Expression:
         builtin = extra[0]
-        return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, BuiltinValue(builtin))
+        return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, Identifier(name=f"builtin_{builtin}"))
 
 
 class JmpBuiltinIsNot(BuiltinConditionalJump):
-    def build_condition(self, value: Value, *extra: Any) -> Expression:
+    def build_condition(self, value: Expression, *extra: Any) -> Expression:
         builtin = extra[0]
-        return BinaryExpression(value, BinaryOperator.STRICT_NOT_EQUAL, BuiltinValue(builtin))
+        return BinaryExpression(value, BinaryOperator.STRICT_NOT_EQUAL, Identifier(name=f"builtin_{builtin}"))
 
 
 class JmpBuiltinIsLong(JmpBuiltinIs): pass
@@ -220,10 +226,10 @@ class TypeOfConditionalJump(ConditionalJumpBase, ABC):
 
 
 class JmpTypeOfIs(TypeOfConditionalJump):
-    def build_condition(self, value: Value, *extra: Any) -> Expression:
+    def build_condition(self, value: Expression, *extra: Any) -> Expression:
         type_name = extra[0]
         return BinaryExpression(
-            TypeOfExpression(value),
+            UnaryExpression(UnaryOperator.TYPEOF, value),
             BinaryOperator.STRICT_EQUAL,
-            ConstantValue(type_name),
+            StringLiteral(type_name),
         )

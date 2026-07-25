@@ -33,7 +33,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
     // USED → r10 = "string"
     // CODE → <JStrictEqual>: <Addr8: 18, Reg8: 14, Reg8: 10>  # Address: 0000003a
-    if (UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r6')) === Identifier(name='r10')) { /* jump to label_58 */ }
+    if (typeof r6 === r10) goto label_58;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 14, Reg8: 6>
     // USED → r14 = r6;
@@ -48,7 +48,7 @@ function _request(param0, param1, param2) {
     // CODE → <Jmp>: <Addr8: 20>  # Address: 0000004c
     goto label_76;
     // LOOP → START (while)
-    while (Identifier(name='r19') === Identifier(name='r11')) {
+    while (r19 === r11) {
         // ──────────────── Block 7 ──────────────── 
         // CODE → <GetEnvironment>: <Reg8: 6, UInt8: 1>
         // USED → r6 = getEnvironment(1)
@@ -71,7 +71,7 @@ function _request(param0, param1, param2) {
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 17>
         r9[1] = r17
         // CODE → <JStrictEqual>: <Addr8: 100, Reg8: 19, Reg8: 11>  # Address: 000000e1
-        if (Identifier(name='r19') === Identifier(name='r11')) { /* jump to label_225 */ }
+        if (r19 === r11) goto label_225;
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 6 ──────────────── 
@@ -138,7 +138,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstNull>: <Reg8: 2>
     // USED → r2 = null
     // CODE → <JEqual>: <Addr8: 94, Reg8: 14, Reg8: 2>  # Address: 00000141
-    if (Identifier(name='r14') == Identifier(name='r2')) { /* jump to label_321 */ }
+    if (r14 == r2) goto label_321;
     // ──────────────── Block 10 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 3>
     // USED → r2 = r6[3]
@@ -186,14 +186,14 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 2, Reg8: 10, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
     // USED → r2 = r10(r11, r2, r2).allowAbsoluteUrls
     // CODE → <JStrictNotEqual>: <Addr8: 48, Reg8: 2, Reg8: 11>  # Address: 00000177
-    if (Identifier(name='r2') !== Identifier(name='r11')) { /* jump to label_375 */ }
+    if (r2 !== r11) goto label_375;
     // ──────────────── Block 14 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
     // USED → r2 = r8.defaults
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
     // USED → r2 = r2.allowAbsoluteUrls
     // CODE → <JStrictNotEqual>: <Addr8: 14, Reg8: 2, Reg8: 11>  # Address: 00000165
-    if (Identifier(name='r2') !== Identifier(name='r11')) { /* jump to label_357 */ }
+    if (r2 !== r11) goto label_357;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <LoadConstTrue>: <Reg8: 2>
     // USED → r2 = true
@@ -399,7 +399,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
     // USED → r9 = r4;
     // CODE → <JNotLess>: <Addr8: 54, Reg8: 9, Reg8: 14>  # Address: 00000349
-    if (Identifier(name='r4') >= Identifier(name='r14')) { /* jump to label_841 */ }
+    if (r4 >= r14) goto label_841;
     // ──────────────── Block 27 ──────────────── 
     // CODE → <Mov>: <Reg8: 18, Reg8: 0>
     // USED → r18 = r9(r16, r10(r11, r2, r2));
@@ -428,7 +428,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
     // USED → r9 = r14;
     // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
-    if (BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)) < Identifier(name='r14')) { /* jump to label_791 */ }
+    if (+(+r4 + 1) + 1 < r14) goto label_791;
     // ──────────────── Block 28 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 0>
     r9 = r17(r9(r16, r10(r11, r2, r2)), r16, r9);
@@ -446,7 +446,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstZero>: <Reg8: 4>
     // USED → r4 = 0
     // CODE → <JNotLess>: <Addr8: 72, Reg8: 2, Reg8: 9>  # Address: 000003a6
-    if (Identifier(name='r2') >= Identifier(name='r9')) { /* jump to label_934 */ }
+    if (r2 >= r9) goto label_934;
     // ──────────────── Block 30 ──────────────── 
     // CODE → <Mov>: <Reg8: 10, Reg8: 12>
     // USED → r10 = [];
@@ -477,12 +477,12 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
     // USED → r9 = r9;
     // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 9>  # Address: 00000362
-    if (BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)) < Identifier(name='r9')) { /* jump to label_866 */ }
+    if (+(+r4 + 1) + 1 < r9) goto label_866;
     // ──────────────── Block 31 ──────────────── 
     // CODE → <Jmp>: <Addr8: 18>  # Address: 000003a6
     goto label_934;
     // LOOP → START (while)
-    while (Identifier(name='r2') >= Identifier(name='r1')) {
+    while (r2 >= r1) {
         // ──────────────── Block 33 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 6>
         // USED → r6 = r6[6]
@@ -501,7 +501,7 @@ function _request(param0, param1, param2) {
         // CODE → <Mov>: <Reg8: 5, Reg8: 1>
         // USED → r5 = r1;
         // CODE → <JNotLess>: <Addr8: 57, Reg8: 2, Reg8: 1>  # Address: 00000400
-        if (Identifier(name='r2') >= Identifier(name='r1')) { /* jump to label_1024 */ }
+        if (r2 >= r1) goto label_1024;
         // ──────────────── Block 32 ──────────────── 
         // CODE → <Catch>: <Reg8: 10>
         // USED → r10 = caughtException
@@ -543,7 +543,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 5>
     // USED → r1 = r1;
     // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
-    if (BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)) < Identifier(name='r1')) { /* jump to label_971 */ }
+    if (+(+r4 + 1) + 1 < r1) goto label_971;
     // ──────────────── Block 35 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
