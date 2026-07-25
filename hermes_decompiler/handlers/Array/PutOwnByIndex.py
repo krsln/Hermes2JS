@@ -1,5 +1,11 @@
-from hermes_decompiler.ir.Expressions import AssignmentExpression, IndexExpression
-from hermes_decompiler.ir.Values import ArrayValue, UndefinedValue, ConstantValue
+from hermes_decompiler.ir import (
+    ArrayExpression,
+    AssignmentExpression,
+    MemberExpression,
+    NumericLiteral,
+    UndefinedLiteral,
+)
+from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -13,7 +19,7 @@ from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT32, sequ
 # DEFINE_OPCODE_3(PutOwnByIndexL, Reg8, Reg8, UInt32)
 class PutOwnByIndex(OpcodeHandler):
     """Set an array element by (statically known) numeric index."""
-    # PutOwnByIndex 2 pattern (UInt8 ve UInt32)
+
     _PATTERN = sequence(REG, REG, UINT8)
     _PATTERN_LONG = sequence(REG, REG, UINT32)
 
@@ -32,25 +38,29 @@ class PutOwnByIndex(OpcodeHandler):
         value = self.get_register_value(analysis, value_reg)
         array = self.get_register_value(analysis, dest_reg)
 
-        if isinstance(array, ArrayValue):
-            old = list(array.elements)
+        if isinstance(array, ArrayExpression):
+            # ArrayExpression is frozen/immutable: pad-and-replace has to
+            # build a new tuple rather than mutate `array.elements`.
+            elements = list(array.elements)
 
-            while len(old) <= index:
-                old.append(UndefinedValue())
+            while len(elements) <= index:
+                elements.append(UndefinedLiteral())
 
-            old[index] = value
-            result = ArrayValue(old)
+            elements[index] = value
+
+            result = ArrayExpression(elements=tuple(elements))
         else:
             result = AssignmentExpression(
-                left=IndexExpression(
-                    object=array,
-                    index=ConstantValue(index),
+                left=MemberExpression(
+                    receiver=array,
+                    member=NumericLiteral(index),
+                    computed=True,
                 ),
-                operator="=",
-                right=value
+                operator=AssignmentOperator.ASSIGN,
+                right=value,
             )
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', result)
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", result)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -58,4 +68,5 @@ class PutOwnByIndex(OpcodeHandler):
 
 class PutOwnByIndexL(PutOwnByIndex):
     """Long index variant (UInt32)."""
+
     pass
