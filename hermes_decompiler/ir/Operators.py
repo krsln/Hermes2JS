@@ -82,7 +82,6 @@ class UnaryOperator(StrEnum):
     LOGICAL_NOT = "!"
     BITWISE_NOT = "~"
 
-    # TODO: remove space suffix later
     TYPEOF = "typeof "
     VOID = "void "
     DELETE = "delete "
@@ -175,7 +174,7 @@ _ASSIGNMENT_PRECEDENCE: Final[dict[AssignmentOperator, int]] = {
 
 
 def precedence(
-    operator: BinaryOperator | LogicalOperator | AssignmentOperator,
+        operator: BinaryOperator | LogicalOperator | AssignmentOperator,
 ) -> int:
     """Returns the JavaScript operator precedence."""
 
@@ -204,7 +203,6 @@ _COMMUTATIVE: Final[frozenset[BinaryOperator]] = frozenset({
     BinaryOperator.STRICT_EQUAL,
     BinaryOperator.STRICT_NOT_EQUAL,
 })
-
 
 _ASSOCIATIVE: Final[frozenset[BinaryOperator]] = frozenset({
     BinaryOperator.ADD,

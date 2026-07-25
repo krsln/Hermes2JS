@@ -48,8 +48,6 @@ class StatementBuilder:
                 statements = []
 
                 for index, result in enumerate(child.instructions):
-                    # print("_build_sequence",type(result.variable.value).__name__)
-                    # TODO: burada ir/expressions|statements setlenebilir
                     statements.append(
                         InstructionState(
                             parent=region,
