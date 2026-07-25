@@ -9,7 +9,7 @@ from hermes_decompiler.regions.models.Regions import (
     FinallyRegion,
 )
 from hermes_decompiler.regions.models.Statements import (
-    InstructionStatement,
+    InstructionState,
 )
 
 
@@ -48,8 +48,10 @@ class StatementBuilder:
                 statements = []
 
                 for index, result in enumerate(child.instructions):
+                    print(type(result.variable.value).__name__)
+                    # TODO: burada ir/expressions|statements setlenebilir
                     statements.append(
-                        InstructionStatement(
+                        InstructionState(
                             parent=region,
                             block=child,
                             index=index,

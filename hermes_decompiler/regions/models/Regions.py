@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 from hermes_decompiler.regions.cfg.BasicBlock import BasicBlock
 
 if TYPE_CHECKING:
-    from hermes_decompiler.regions.models.Statements import Statement
+    from hermes_decompiler.regions.models.Statements import State
 
 
 class Region(ABC):
@@ -29,7 +29,7 @@ class SequenceRegion(Region):
         super().__init__()
 
         self.children: list[BasicBlock | Region] = []
-        self.statements: list[Statement] = []
+        self.statements: list[State] = []
         self.items = []
 
     def append(self, node):
