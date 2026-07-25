@@ -7,107 +7,99 @@ async function* anon_17161(param0, param1) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield /* ResumeGenerator -> r0 */
     // CODE → <JmpTrueLong>: <Addr32: 161, Reg8: 1>  # Address: 000000a8
-    if (r1) { /* jump to label_168 */ }
-    // ──────────────── Block 1 ──────────────── 
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 13438>  # String: 'fetch' (Identifier)
-    // USED → r3 = globalThis.fetch
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
-    // USED → r1 = await globalThis.fetch(undefined, r7)
+     = await // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000020
     yield label_32;
-    // ──────────────── Block 2 ──────────────── 
+    // ──────────────── Block 1 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return r1;
-    // ──────────────── Block 3 ──────────────── 
+    ReturnStatement(argument=Identifier(name='r1'))
+    // ──────────────── Block 2 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
     // USED → r1 = await yield /* ResumeGenerator -> r1 */
     // CODE → <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
-    if (globalThis.fetch) { /* jump to label_165 */ }
-    // ──────────────── Block 4 ──────────────── 
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 14168>  # String: 'ok' (Identifier)
-    // USED → r3 = await yield /* ResumeGenerator -> r1 */.ok
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <JmpTrue>: <Addr8: 93, Reg8: 3>  # Address: 0000008c
-    if (await yield /* ResumeGenerator -> r1 */.ok) { /* jump to label_140 */ }
-    // ──────────────── Block 5 ──────────────── 
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
-    // USED → r4 = await yield /* ResumeGenerator -> r1 */.status
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstZero>: <Reg8: 3>
     // USED → r3 = 0
     // CODE → <JStrictNotEqual>: <Addr8: 22, Reg8: 4, Reg8: 3>  # Address: 00000050
-    if (await yield /* ResumeGenerator -> r1 */.status !== 0) { /* jump to label_80 */ }
-    // ──────────────── Block 6 ──────────────── 
+    if (Identifier(name='r4') !== Identifier(name='r3')) { /* jump to label_80 */ }
+    // ──────────────── Block 3 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 19693>  # String: 'startsWith' (Identifier)
-    // USED → r4 = r7.startsWith
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 1058>  # String: 'file://' (String)
     // USED → r3 = "file://"
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
-    // USED → r3 = r7.startsWith(r7, "file://")
+    // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <JmpTrue>: <Addr8: 63, Reg8: 3>  # Address: 0000008c
-    if (r7.startsWith(r7, "file://")) { /* jump to label_140 */ }
-    // ──────────────── Block 7 ──────────────── 
+    // Error: 'Identifier' object has no attribute 'render'
+    // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r4 = globalThis.Error
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetById>: <Reg8: 6, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
-    // USED → r6 = await yield /* ResumeGenerator -> r1 */.status
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 2, UInt8: 6, string_id: 21>  # String: 'HermesInternal' (Identifier)
-    // USED → r2 = globalThis.HermesInternal
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 7, string_id: 98>  # String: 'concat' (Identifier)
-    // USED → r5 = globalThis.HermesInternal.concat
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 2430>  # String: 'Fetching ' (String)
     // USED → r3 = "Fetching "
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: ' failed with status ' (String)
     // USED → r2 = " failed with status "
     // CODE → <Call4>: <Reg8: 10, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 2, Reg8: 6>
-    r10 = globalThis.HermesInternal.concat("Fetching ", r7, " failed with status ", await yield /* ResumeGenerator -> r1 */.status)
+    // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r3 = globalThis.Error.prototype
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
-    // USED → r3 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 11, Reg8: 3>
-    r11 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)
+    r11 = Identifier(name='r3')
     // CODE → <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-    // USED → r2 = new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))]
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Throw>: <Reg8: 2>
-    throw createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)[new globalThis.Error(" failed with status ", createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error))];
-    // ──────────────── Block 8 ──────────────── 
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
-    // USED → r2 = await yield /* ResumeGenerator -> r1 */.text
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
-    // USED → r2 = await await yield /* ResumeGenerator -> r1 */.text(await yield /* ResumeGenerator -> r1 */)
+     = await // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000099
     yield label_153;
-    // ──────────────── Block 9 ──────────────── 
+    // ──────────────── Block 5 ──────────────── 
     // CODE → <Ret>: <Reg8: 2>
-    return r2;
-    // ──────────────── Block 10 ──────────────── 
+    ReturnStatement(argument=Identifier(name='r2'))
+    // ──────────────── Block 6 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
     // USED → r2 = await yield /* ResumeGenerator -> r2 */
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
-    if (createThis(prototype=globalThis.Error.prototype, constructor=globalThis.Error)) { /* jump to label_162 */ }
-    // ──────────────── Block 11 ──────────────── 
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 2>
-    return await yield /* ResumeGenerator -> r2 */;
-    // ──────────────── Block 12 ──────────────── 
+    ReturnStatement(argument=Identifier(name='r2'))
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 2>
-    return await yield /* ResumeGenerator -> r2 */;
-    // ──────────────── Block 13 ──────────────── 
+    ReturnStatement(argument=Identifier(name='r2'))
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
-    return await yield /* ResumeGenerator -> r1 */;
-    // ──────────────── Block 14 ──────────────── 
+    ReturnStatement(argument=Identifier(name='r1'))
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>
-    return await yield /* ResumeGenerator -> r0 */;
+    ReturnStatement(argument=Identifier(name='r0'))
 }
