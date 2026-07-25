@@ -15,7 +15,7 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <LoadConstFalse>: <Reg8: 5>
     // USED → r5 = false
     // CODE → <LoadConstFalse>: <Reg8: 0>
-    r0 = false
+    // USED → r0 = false
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 217>  # String: 'slice' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Call1>: <Reg8: 10, Reg8: 1, Reg8: 2>
@@ -27,43 +27,43 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 11214>  # String: ' callback, continuing anyway…' (String)
     // USED → r2 = " callback, continuing anyway\u2026"
     // CODE → <Mov>: <Reg8: 1, Reg8: 10>
-    // USED → r1 = Identifier(name='r10')
+    // USED → r1 = r10;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 139>  # String: 'length' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <JmpFalse>: <Addr8: 81, Reg8: 1>  # Address: 00000080
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 11, Reg8: 10>
-    // USED → r11 = Identifier(name='r10')
+    // USED → r11 = r10;
     // CODE → <GetById>: <Reg8: 1, Reg8: 11, UInt8: 3, string_id: 16799>  # String: 'pop' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Call1>: <Reg8: 11, Reg8: 1, Reg8: 11>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <Mov>: <Reg8: 1, Reg8: 7>
-    // USED → r1 = Identifier(name='r7')
+    // USED → r1 = r7;
     // CODE → <Call2>: <Reg8: 1, Reg8: 11, Reg8: 6, Reg8: 1>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
-    // USED → r0 = BinaryExpression(left=Identifier(name='r7'), operator=<BinaryOperator.STRICT_EQUAL: '==='>, right=Identifier(name='r5'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
     goto label_122;
     // LOOP → START (while)
     while (true) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-        // USED → r1 = BinaryExpression(left=Identifier(name='r7'), operator=<BinaryOperator.STRICT_EQUAL: '==='>, right=Identifier(name='r5'))
+        // USED → r1 = r0;
         // CODE → <JmpFalse>: <Addr8: -86, Reg8: 1>  # Address: 00000027
-        // Error: 'BinaryExpression' object has no attribute 'render'
+        // Error: 'Identifier' object has no attribute 'render'
         // CODE → <Ret>: <Reg8: 0>
         // Unhandled opcode: Ret
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Catch>: <Reg8: 12>
         // USED → r12 = caughtException
         // CODE → <Mov>: <Reg8: 11, Reg8: 9>
-        // USED → r11 = Identifier(name='r9')
+        // USED → r11 = r9;
         // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <Mov>: <Reg8: 14, Reg8: 8>
-        // USED → r14 = Identifier(name='r8')
+        // USED → r14 = r8;
         // CODE → <TryGetById>: <Reg8: 1, Reg8: 4, UInt8: 5, string_id: 21>  # String: 'HermesInternal' (Identifier)
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 98>  # String: 'concat' (Identifier)

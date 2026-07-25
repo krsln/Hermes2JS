@@ -17,7 +17,7 @@ function onPress(param0) {
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
-    r8 = Identifier(name='r3')
+    r8 = r3;
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>

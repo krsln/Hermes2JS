@@ -42,7 +42,7 @@ function AcquisitionManager(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 22212>  # String: '_serverUrl' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    // USED → r2 = BinaryExpression(left=Identifier(name='r2'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r3'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 5, string_id: 22212>  # String: '_serverUrl' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
     // ──────────────── Block 2 ──────────────── 

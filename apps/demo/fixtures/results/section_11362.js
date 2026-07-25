@@ -7,37 +7,37 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LoadConstUInt8>: <Reg8: 97, UInt8: 5>
     // USED → r97 = 5
     // CODE → <RShift>: <Reg8: 2, Reg8: 1, Reg8: 97>
-    // USED → r2 = BinaryExpression(left=Identifier(name='r1'), operator=<BinaryOperator.RIGHT_SHIFT: '>>'>, right=Identifier(name='r97'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 98, Reg8: 2>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 32>
     // USED → r0 = 32
     // CODE → <Mod>: <Reg8: 4, Reg8: 1, Reg8: 0>
-    // USED → r4 = BinaryExpression(left=Identifier(name='r1'), operator=<BinaryOperator.MODULO: '%'>, right=Identifier(name='r0'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 128>
     // USED → r0 = 128
     // CODE → <LShift>: <Reg8: 0, Reg8: 0, Reg8: 4>
-    // USED → r0 = BinaryExpression(left=Identifier(name='r0'), operator=<BinaryOperator.LEFT_SHIFT: '<<'>, right=BinaryExpression(left=Identifier(name='r1'), operator=<BinaryOperator.MODULO: '%'>, right=Identifier(name='r0')))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <BitOr>: <Reg8: 0, Reg8: 3, Reg8: 0>
-    // USED → r0 = BinaryExpression(left=Identifier(name='r3'), operator=<BinaryOperator.BITWISE_OR: '|'>, right=BinaryExpression(left=Identifier(name='r0'), operator=<BinaryOperator.LEFT_SHIFT: '<<'>, right=BinaryExpression(left=Identifier(name='r1'), operator=<BinaryOperator.MODULO: '%'>, right=Identifier(name='r0'))))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <PutByVal>: <Reg8: 98, Reg8: 2, Reg8: 0>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 64>
     // USED → r0 = 64
     // CODE → <Add>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = BinaryExpression(left=Identifier(name='r1'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r0'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstUInt8>: <Reg8: 96, UInt8: 9>
     // USED → r96 = 9
     // CODE → <URshift>: <Reg8: 0, Reg8: 0, Reg8: 96>
-    // USED → r0 = BinaryExpression(left=BinaryExpression(left=Identifier(name='r1'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r0')), operator=<BinaryOperator.UNSIGNED_RIGHT_SHIFT: '>>>'>, right=Identifier(name='r96'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstUInt8>: <Reg8: 95, UInt8: 4>
     // USED → r95 = 4
     // CODE → <LShift>: <Reg8: 0, Reg8: 0, Reg8: 95>
-    // USED → r0 = BinaryExpression(left=BinaryExpression(left=BinaryExpression(left=Identifier(name='r1'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r0')), operator=<BinaryOperator.UNSIGNED_RIGHT_SHIFT: '>>>'>, right=Identifier(name='r96')), operator=<BinaryOperator.LEFT_SHIFT: '<<'>, right=Identifier(name='r95'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstUInt8>: <Reg8: 94, UInt8: 14>
     // USED → r94 = 14
     // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 94>
-    // USED → r0 = BinaryExpression(left=BinaryExpression(left=BinaryExpression(left=BinaryExpression(left=Identifier(name='r1'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r0')), operator=<BinaryOperator.UNSIGNED_RIGHT_SHIFT: '>>>'>, right=Identifier(name='r96')), operator=<BinaryOperator.LEFT_SHIFT: '<<'>, right=Identifier(name='r95')), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r94'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <PutByVal>: <Reg8: 98, Reg8: 0, Reg8: 1>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
@@ -45,7 +45,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LoadConstZero>: <Reg8: 93>
     // USED → r93 = 0
     // CODE → <Less>: <Reg8: 0, Reg8: 93, Reg8: 0>
-    // USED → r0 = BinaryExpression(left=Identifier(name='r93'), operator=<BinaryOperator.LESS_THAN: '<'>, right=BinaryExpression(left=BinaryExpression(left=BinaryExpression(left=BinaryExpression(left=Identifier(name='r1'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r0')), operator=<BinaryOperator.UNSIGNED_RIGHT_SHIFT: '>>>'>, right=Identifier(name='r96')), operator=<BinaryOperator.LEFT_SHIFT: '<<'>, right=Identifier(name='r95')), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r94')))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstInt>: <Reg8: 9, Imm32: 1732584193>
     // USED → r9 = 1732584193
     // CODE → <LoadConstInt>: <Reg8: 8, Imm32: -271733879>
@@ -223,306 +223,306 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LoadConstZero>: <Reg8: 5>
     // USED → r5 = 0
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-    r4 = Identifier(name='r9')
+    r4 = r9;
     // CODE → <Mov>: <Reg8: 3, Reg8: 8>
-    r3 = Identifier(name='r8')
+    r3 = r8;
     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
-    r2 = Identifier(name='r7')
+    r2 = r7;
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
-    r1 = Identifier(name='r6')
+    r1 = r6;
     // CODE → <JmpFalseLong>: <Addr32: 1808, Reg8: 0>  # Address: 00000940
-    // Error: 'BinaryExpression' object has no attribute 'render'
+    // Error: 'Identifier' object has no attribute 'render'
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 10>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 114, Reg8: 5, Reg8: 93>
-    // USED → r114 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r93'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstUndefined>: <Reg8: 127>
     r127 = undefined
     // CODE → <Mov>: <Reg8: 126, Reg8: 9>
-    r126 = Identifier(name='r9')
+    r126 = r9;
     // CODE → <Mov>: <Reg8: 125, Reg8: 8>
-    r125 = Identifier(name='r8')
+    r125 = r8;
     // CODE → <Mov>: <Reg8: 124, Reg8: 7>
-    r124 = Identifier(name='r7')
+    r124 = r7;
     // CODE → <Mov>: <Reg8: 123, Reg8: 6>
-    r123 = Identifier(name='r6')
+    r123 = r6;
     // CODE → <Mov>: <Reg8: 121, Reg8: 90>
-    r121 = Identifier(name='r90')
+    r121 = r90;
     // CODE → <Mov>: <Reg8: 120, Reg8: 89>
-    r120 = Identifier(name='r89')
+    r120 = r89;
     // CODE → <Call>: <Reg8: 99, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 107, Reg8: 5, Reg8: 88>
-    // USED → r107 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r88'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 6>
-    r126 = Identifier(name='r6')
+    r126 = r6;
     // CODE → <Mov>: <Reg8: 125, Reg8: 99>
-    r125 = Identifier(name='r99')
+    r125 = r99;
     // CODE → <Mov>: <Reg8: 124, Reg8: 8>
-    r124 = Identifier(name='r8')
+    r124 = r8;
     // CODE → <Mov>: <Reg8: 123, Reg8: 7>
-    r123 = Identifier(name='r7')
+    r123 = r7;
     // CODE → <Mov>: <Reg8: 121, Reg8: 87>
-    r121 = Identifier(name='r87')
+    r121 = r87;
     // CODE → <Mov>: <Reg8: 120, Reg8: 86>
-    r120 = Identifier(name='r86')
+    r120 = r86;
     // CODE → <Call>: <Reg8: 104, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 100, Reg8: 5, Reg8: 85>
-    // USED → r100 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r85'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 7>
-    r126 = Identifier(name='r7')
+    r126 = r7;
     // CODE → <Mov>: <Reg8: 125, Reg8: 104>
-    r125 = Identifier(name='r104')
+    r125 = r104;
     // CODE → <Mov>: <Reg8: 124, Reg8: 99>
-    r124 = Identifier(name='r99')
+    r124 = r99;
     // CODE → <Mov>: <Reg8: 123, Reg8: 8>
-    r123 = Identifier(name='r8')
+    r123 = r8;
     // CODE → <Mov>: <Reg8: 121, Reg8: 84>
-    r121 = Identifier(name='r84')
+    r121 = r84;
     // CODE → <Mov>: <Reg8: 120, Reg8: 83>
-    r120 = Identifier(name='r83')
+    r120 = r83;
     // CODE → <Call>: <Reg8: 101, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 109, Reg8: 5, Reg8: 82>
-    // USED → r109 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r82'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 8>
-    r126 = Identifier(name='r8')
+    r126 = r8;
     // CODE → <Mov>: <Reg8: 125, Reg8: 101>
-    r125 = Identifier(name='r101')
+    r125 = r101;
     // CODE → <Mov>: <Reg8: 124, Reg8: 104>
-    r124 = Identifier(name='r104')
+    r124 = r104;
     // CODE → <Mov>: <Reg8: 123, Reg8: 99>
-    r123 = Identifier(name='r99')
+    r123 = r99;
     // CODE → <Mov>: <Reg8: 121, Reg8: 81>
-    r121 = Identifier(name='r81')
+    r121 = r81;
     // CODE → <Mov>: <Reg8: 120, Reg8: 80>
-    r120 = Identifier(name='r80')
+    r120 = r80;
     // CODE → <Call>: <Reg8: 103, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 102, Reg8: 5, Reg8: 95>
-    // USED → r102 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r95'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 99>
-    r126 = Identifier(name='r99')
+    r126 = r99;
     // CODE → <Mov>: <Reg8: 125, Reg8: 103>
-    r125 = Identifier(name='r103')
+    r125 = r103;
     // CODE → <Mov>: <Reg8: 124, Reg8: 101>
-    r124 = Identifier(name='r101')
+    r124 = r101;
     // CODE → <Mov>: <Reg8: 123, Reg8: 104>
-    r123 = Identifier(name='r104')
+    r123 = r104;
     // CODE → <Mov>: <Reg8: 121, Reg8: 90>
-    r121 = Identifier(name='r90')
+    r121 = r90;
     // CODE → <Mov>: <Reg8: 120, Reg8: 79>
-    r120 = Identifier(name='r79')
+    r120 = r79;
     // CODE → <Call>: <Reg8: 99, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 111, Reg8: 5, Reg8: 97>
-    // USED → r111 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r97'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 104>
-    r126 = Identifier(name='r104')
+    r126 = r104;
     // CODE → <Mov>: <Reg8: 125, Reg8: 99>
-    r125 = Identifier(name='r99')
+    r125 = r99;
     // CODE → <Mov>: <Reg8: 124, Reg8: 103>
-    r124 = Identifier(name='r103')
+    r124 = r103;
     // CODE → <Mov>: <Reg8: 123, Reg8: 101>
-    r123 = Identifier(name='r101')
+    r123 = r101;
     // CODE → <Mov>: <Reg8: 121, Reg8: 87>
-    r121 = Identifier(name='r87')
+    r121 = r87;
     // CODE → <Mov>: <Reg8: 120, Reg8: 78>
-    r120 = Identifier(name='r78')
+    r120 = r78;
     // CODE → <Call>: <Reg8: 105, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 104, Reg8: 5, Reg8: 77>
-    // USED → r104 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r77'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
-    r126 = Identifier(name='r101')
+    r126 = r101;
     // CODE → <Mov>: <Reg8: 125, Reg8: 105>
-    r125 = Identifier(name='r105')
+    r125 = r105;
     // CODE → <Mov>: <Reg8: 124, Reg8: 99>
-    r124 = Identifier(name='r99')
+    r124 = r99;
     // CODE → <Mov>: <Reg8: 123, Reg8: 103>
-    r123 = Identifier(name='r103')
+    r123 = r103;
     // CODE → <Mov>: <Reg8: 121, Reg8: 84>
-    r121 = Identifier(name='r84')
+    r121 = r84;
     // CODE → <Mov>: <Reg8: 120, Reg8: 76>
-    r120 = Identifier(name='r76')
+    r120 = r76;
     // CODE → <Call>: <Reg8: 101, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 113, Reg8: 5, Reg8: 90>
-    // USED → r113 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r90'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 103>
-    r126 = Identifier(name='r103')
+    r126 = r103;
     // CODE → <Mov>: <Reg8: 125, Reg8: 101>
-    r125 = Identifier(name='r101')
+    r125 = r101;
     // CODE → <Mov>: <Reg8: 124, Reg8: 105>
-    r124 = Identifier(name='r105')
+    r124 = r105;
     // CODE → <Mov>: <Reg8: 123, Reg8: 99>
-    r123 = Identifier(name='r99')
+    r123 = r99;
     // CODE → <Mov>: <Reg8: 121, Reg8: 81>
-    r121 = Identifier(name='r81')
+    r121 = r81;
     // CODE → <Mov>: <Reg8: 120, Reg8: 75>
-    r120 = Identifier(name='r75')
+    r120 = r75;
     // CODE → <Call>: <Reg8: 110, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 106, Reg8: 5, Reg8: 74>
-    // USED → r106 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r74'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 99>
-    r126 = Identifier(name='r99')
+    r126 = r99;
     // CODE → <Mov>: <Reg8: 125, Reg8: 110>
-    r125 = Identifier(name='r110')
+    r125 = r110;
     // CODE → <Mov>: <Reg8: 124, Reg8: 101>
-    r124 = Identifier(name='r101')
+    r124 = r101;
     // CODE → <Mov>: <Reg8: 123, Reg8: 105>
-    r123 = Identifier(name='r105')
+    r123 = r105;
     // CODE → <Mov>: <Reg8: 121, Reg8: 90>
-    r121 = Identifier(name='r90')
+    r121 = r90;
     // CODE → <Mov>: <Reg8: 120, Reg8: 73>
-    r120 = Identifier(name='r73')
+    r120 = r73;
     // CODE → <Call>: <Reg8: 103, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 0, Reg8: 5, Reg8: 96>
-    // USED → r0 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r96'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
-    r126 = Identifier(name='r105')
+    r126 = r105;
     // CODE → <Mov>: <Reg8: 125, Reg8: 103>
-    r125 = Identifier(name='r103')
+    r125 = r103;
     // CODE → <Mov>: <Reg8: 124, Reg8: 110>
-    r124 = Identifier(name='r110')
+    r124 = r110;
     // CODE → <Mov>: <Reg8: 123, Reg8: 101>
-    r123 = Identifier(name='r101')
+    r123 = r101;
     // CODE → <Mov>: <Reg8: 121, Reg8: 87>
-    r121 = Identifier(name='r87')
+    r121 = r87;
     // CODE → <Mov>: <Reg8: 120, Reg8: 72>
-    r120 = Identifier(name='r72')
+    r120 = r72;
     // CODE → <Call>: <Reg8: 112, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 108, Reg8: 5, Reg8: 71>
-    // USED → r108 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r71'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
-    r126 = Identifier(name='r101')
+    r126 = r101;
     // CODE → <Mov>: <Reg8: 125, Reg8: 112>
-    r125 = Identifier(name='r112')
+    r125 = r112;
     // CODE → <Mov>: <Reg8: 124, Reg8: 103>
-    r124 = Identifier(name='r103')
+    r124 = r103;
     // CODE → <Mov>: <Reg8: 123, Reg8: 110>
-    r123 = Identifier(name='r110')
+    r123 = r110;
     // CODE → <Mov>: <Reg8: 121, Reg8: 84>
-    r121 = Identifier(name='r84')
+    r121 = r84;
     // CODE → <Mov>: <Reg8: 120, Reg8: 70>
-    r120 = Identifier(name='r70')
+    r120 = r70;
     // CODE → <Call>: <Reg8: 105, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 99, Reg8: 5, Reg8: 69>
-    // USED → r99 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r69'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 110>
-    r126 = Identifier(name='r110')
+    r126 = r110;
     // CODE → <Mov>: <Reg8: 125, Reg8: 105>
-    r125 = Identifier(name='r105')
+    r125 = r105;
     // CODE → <Mov>: <Reg8: 124, Reg8: 112>
-    r124 = Identifier(name='r112')
+    r124 = r112;
     // CODE → <Mov>: <Reg8: 123, Reg8: 103>
-    r123 = Identifier(name='r103')
+    r123 = r103;
     // CODE → <Mov>: <Reg8: 121, Reg8: 81>
-    r121 = Identifier(name='r81')
+    r121 = r81;
     // CODE → <Mov>: <Reg8: 120, Reg8: 68>
-    r120 = Identifier(name='r68')
+    r120 = r68;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 110, Reg8: 5, Reg8: 87>
-    // USED → r110 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r87'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 103>
-    r126 = Identifier(name='r103')
+    r126 = r103;
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = Identifier(name='r115')
+    r125 = r115;
     // CODE → <Mov>: <Reg8: 124, Reg8: 105>
-    r124 = Identifier(name='r105')
+    r124 = r105;
     // CODE → <Mov>: <Reg8: 123, Reg8: 112>
-    r123 = Identifier(name='r112')
+    r123 = r112;
     // CODE → <Mov>: <Reg8: 121, Reg8: 90>
-    r121 = Identifier(name='r90')
+    r121 = r90;
     // CODE → <Mov>: <Reg8: 120, Reg8: 67>
-    r120 = Identifier(name='r67')
+    r120 = r67;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 101, Reg8: 5, Reg8: 66>
-    // USED → r101 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r66'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 112>
-    r126 = Identifier(name='r112')
+    r126 = r112;
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = Identifier(name='r118')
+    r125 = r118;
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = Identifier(name='r115')
+    r124 = r115;
     // CODE → <Mov>: <Reg8: 123, Reg8: 105>
-    r123 = Identifier(name='r105')
+    r123 = r105;
     // CODE → <Mov>: <Reg8: 121, Reg8: 87>
-    r121 = Identifier(name='r87')
+    r121 = r87;
     // CODE → <Mov>: <Reg8: 120, Reg8: 65>
-    r120 = Identifier(name='r65')
+    r120 = r65;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 112, Reg8: 5, Reg8: 94>
-    // USED → r112 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r94'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
-    r126 = Identifier(name='r105')
+    r126 = r105;
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = Identifier(name='r117')
+    r125 = r117;
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = Identifier(name='r118')
+    r124 = r118;
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = Identifier(name='r115')
+    r123 = r115;
     // CODE → <Mov>: <Reg8: 121, Reg8: 84>
-    r121 = Identifier(name='r84')
+    r121 = r84;
     // CODE → <Mov>: <Reg8: 120, Reg8: 64>
-    r120 = Identifier(name='r64')
+    r120 = r64;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Add>: <Reg8: 105, Reg8: 5, Reg8: 63>
-    // USED → r105 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r63'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = Identifier(name='r115')
+    r126 = r115;
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = Identifier(name='r116')
+    r125 = r116;
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = Identifier(name='r117')
+    r124 = r117;
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = Identifier(name='r118')
+    r123 = r118;
     // CODE → <Mov>: <Reg8: 121, Reg8: 81>
-    r121 = Identifier(name='r81')
+    r121 = r81;
     // CODE → <Mov>: <Reg8: 120, Reg8: 62>
-    r120 = Identifier(name='r62')
+    r120 = r62;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 11>
@@ -530,257 +530,257 @@ function binl_md5(param0, param1, param2) {
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = Identifier(name='r118')
+    r126 = r118;
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = Identifier(name='r115')
+    r125 = r115;
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = Identifier(name='r116')
+    r124 = r116;
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = Identifier(name='r117')
+    r123 = r117;
     // CODE → <Mov>: <Reg8: 121, Reg8: 97>
-    r121 = Identifier(name='r97')
+    r121 = r97;
     // CODE → <Mov>: <Reg8: 120, Reg8: 61>
-    r120 = Identifier(name='r61')
+    r120 = r61;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = Identifier(name='r117')
+    r126 = r117;
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = Identifier(name='r118')
+    r125 = r118;
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = Identifier(name='r115')
+    r124 = r115;
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = Identifier(name='r116')
+    r123 = r116;
     // CODE → <Mov>: <Reg8: 121, Reg8: 96>
-    r121 = Identifier(name='r96')
+    r121 = r96;
     // CODE → <Mov>: <Reg8: 120, Reg8: 60>
-    r120 = Identifier(name='r60')
+    r120 = r60;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = Identifier(name='r116')
+    r126 = r116;
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = Identifier(name='r117')
+    r125 = r117;
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = Identifier(name='r118')
+    r124 = r118;
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = Identifier(name='r115')
+    r123 = r115;
     // CODE → <Mov>: <Reg8: 121, Reg8: 94>
-    r121 = Identifier(name='r94')
+    r121 = r94;
     // CODE → <Mov>: <Reg8: 120, Reg8: 59>
-    r120 = Identifier(name='r59')
+    r120 = r59;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = Identifier(name='r115')
+    r126 = r115;
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = Identifier(name='r116')
+    r125 = r116;
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = Identifier(name='r117')
+    r124 = r117;
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = Identifier(name='r118')
+    r123 = r118;
     // CODE → <Mov>: <Reg8: 121, Reg8: 58>
-    r121 = Identifier(name='r58')
+    r121 = r58;
     // CODE → <Mov>: <Reg8: 120, Reg8: 57>
-    r120 = Identifier(name='r57')
+    r120 = r57;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = Identifier(name='r118')
+    r126 = r118;
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = Identifier(name='r115')
+    r125 = r115;
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = Identifier(name='r116')
+    r124 = r116;
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = Identifier(name='r117')
+    r123 = r117;
     // CODE → <Mov>: <Reg8: 121, Reg8: 97>
-    r121 = Identifier(name='r97')
+    r121 = r97;
     // CODE → <Mov>: <Reg8: 120, Reg8: 56>
-    r120 = Identifier(name='r56')
+    r120 = r56;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = Identifier(name='r117')
+    r126 = r117;
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = Identifier(name='r118')
+    r125 = r118;
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = Identifier(name='r115')
+    r124 = r115;
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = Identifier(name='r116')
+    r123 = r116;
     // CODE → <Mov>: <Reg8: 121, Reg8: 96>
-    r121 = Identifier(name='r96')
+    r121 = r96;
     // CODE → <Mov>: <Reg8: 120, Reg8: 55>
-    r120 = Identifier(name='r55')
+    r120 = r55;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = Identifier(name='r116')
+    r126 = r116;
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = Identifier(name='r117')
+    r125 = r117;
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = Identifier(name='r118')
+    r124 = r118;
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = Identifier(name='r115')
+    r123 = r115;
     // CODE → <Mov>: <Reg8: 121, Reg8: 94>
-    r121 = Identifier(name='r94')
+    r121 = r94;
     // CODE → <Mov>: <Reg8: 120, Reg8: 54>
-    r120 = Identifier(name='r54')
+    r120 = r54;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = Identifier(name='r115')
+    r126 = r115;
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = Identifier(name='r116')
+    r125 = r116;
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = Identifier(name='r117')
+    r124 = r117;
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = Identifier(name='r118')
+    r123 = r118;
     // CODE → <Mov>: <Reg8: 121, Reg8: 58>
-    r121 = Identifier(name='r58')
+    r121 = r58;
     // CODE → <Mov>: <Reg8: 120, Reg8: 53>
-    r120 = Identifier(name='r53')
+    r120 = r53;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = Identifier(name='r118')
+    r126 = r118;
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = Identifier(name='r115')
+    r125 = r115;
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = Identifier(name='r116')
+    r124 = r116;
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = Identifier(name='r117')
+    r123 = r117;
     // CODE → <Mov>: <Reg8: 121, Reg8: 97>
-    r121 = Identifier(name='r97')
+    r121 = r97;
     // CODE → <Mov>: <Reg8: 120, Reg8: 52>
-    r120 = Identifier(name='r52')
+    r120 = r52;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = Identifier(name='r117')
+    r126 = r117;
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = Identifier(name='r118')
+    r125 = r118;
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = Identifier(name='r115')
+    r124 = r115;
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = Identifier(name='r116')
+    r123 = r116;
     // CODE → <Mov>: <Reg8: 121, Reg8: 96>
-    r121 = Identifier(name='r96')
+    r121 = r96;
     // CODE → <Mov>: <Reg8: 120, Reg8: 51>
-    r120 = Identifier(name='r51')
+    r120 = r51;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = Identifier(name='r116')
+    r126 = r116;
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = Identifier(name='r117')
+    r125 = r117;
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = Identifier(name='r118')
+    r124 = r118;
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = Identifier(name='r115')
+    r123 = r115;
     // CODE → <Mov>: <Reg8: 121, Reg8: 94>
-    r121 = Identifier(name='r94')
+    r121 = r94;
     // CODE → <Mov>: <Reg8: 120, Reg8: 50>
-    r120 = Identifier(name='r50')
+    r120 = r50;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = Identifier(name='r115')
+    r126 = r115;
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = Identifier(name='r116')
+    r125 = r116;
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = Identifier(name='r117')
+    r124 = r117;
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = Identifier(name='r118')
+    r123 = r118;
     // CODE → <Mov>: <Reg8: 121, Reg8: 58>
-    r121 = Identifier(name='r58')
+    r121 = r58;
     // CODE → <Mov>: <Reg8: 120, Reg8: 49>
-    r120 = Identifier(name='r49')
+    r120 = r49;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = Identifier(name='r118')
+    r126 = r118;
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = Identifier(name='r115')
+    r125 = r115;
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = Identifier(name='r116')
+    r124 = r116;
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = Identifier(name='r117')
+    r123 = r117;
     // CODE → <Mov>: <Reg8: 121, Reg8: 97>
-    r121 = Identifier(name='r97')
+    r121 = r97;
     // CODE → <Mov>: <Reg8: 120, Reg8: 48>
-    r120 = Identifier(name='r48')
+    r120 = r48;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = Identifier(name='r117')
+    r126 = r117;
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = Identifier(name='r118')
+    r125 = r118;
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = Identifier(name='r115')
+    r124 = r115;
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = Identifier(name='r116')
+    r123 = r116;
     // CODE → <Mov>: <Reg8: 121, Reg8: 96>
-    r121 = Identifier(name='r96')
+    r121 = r96;
     // CODE → <Mov>: <Reg8: 120, Reg8: 47>
-    r120 = Identifier(name='r47')
+    r120 = r47;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = Identifier(name='r116')
+    r126 = r116;
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = Identifier(name='r117')
+    r125 = r117;
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = Identifier(name='r118')
+    r124 = r118;
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = Identifier(name='r115')
+    r123 = r115;
     // CODE → <Mov>: <Reg8: 121, Reg8: 94>
-    r121 = Identifier(name='r94')
+    r121 = r94;
     // CODE → <Mov>: <Reg8: 120, Reg8: 46>
-    r120 = Identifier(name='r46')
+    r120 = r46;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = Identifier(name='r115')
+    r126 = r115;
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = Identifier(name='r116')
+    r125 = r116;
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = Identifier(name='r117')
+    r124 = r117;
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = Identifier(name='r118')
+    r123 = r118;
     // CODE → <Mov>: <Reg8: 121, Reg8: 58>
-    r121 = Identifier(name='r58')
+    r121 = r58;
     // CODE → <Mov>: <Reg8: 120, Reg8: 45>
-    r120 = Identifier(name='r45')
+    r120 = r45;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 12>
@@ -788,257 +788,257 @@ function binl_md5(param0, param1, param2) {
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = Identifier(name='r118')
+    r126 = r118;
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = Identifier(name='r115')
+    r125 = r115;
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = Identifier(name='r116')
+    r124 = r116;
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = Identifier(name='r117')
+    r123 = r117;
     // CODE → <Mov>: <Reg8: 121, Reg8: 95>
-    r121 = Identifier(name='r95')
+    r121 = r95;
     // CODE → <Mov>: <Reg8: 120, Reg8: 44>
-    r120 = Identifier(name='r44')
+    r120 = r44;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = Identifier(name='r117')
+    r126 = r117;
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = Identifier(name='r118')
+    r125 = r118;
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = Identifier(name='r115')
+    r124 = r115;
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = Identifier(name='r116')
+    r123 = r116;
     // CODE → <Mov>: <Reg8: 121, Reg8: 69>
-    r121 = Identifier(name='r69')
+    r121 = r69;
     // CODE → <Mov>: <Reg8: 120, Reg8: 43>
-    r120 = Identifier(name='r43')
+    r120 = r43;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = Identifier(name='r116')
+    r126 = r116;
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = Identifier(name='r117')
+    r125 = r117;
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = Identifier(name='r118')
+    r124 = r118;
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = Identifier(name='r115')
+    r123 = r115;
     // CODE → <Mov>: <Reg8: 121, Reg8: 42>
-    r121 = Identifier(name='r42')
+    r121 = r42;
     // CODE → <Mov>: <Reg8: 120, Reg8: 41>
-    r120 = Identifier(name='r41')
+    r120 = r41;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = Identifier(name='r115')
+    r126 = r115;
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = Identifier(name='r116')
+    r125 = r116;
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = Identifier(name='r117')
+    r124 = r117;
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = Identifier(name='r118')
+    r123 = r118;
     // CODE → <Mov>: <Reg8: 121, Reg8: 40>
-    r121 = Identifier(name='r40')
+    r121 = r40;
     // CODE → <Mov>: <Reg8: 120, Reg8: 39>
-    r120 = Identifier(name='r39')
+    r120 = r39;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = Identifier(name='r118')
+    r126 = r118;
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = Identifier(name='r115')
+    r125 = r115;
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = Identifier(name='r116')
+    r124 = r116;
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = Identifier(name='r117')
+    r123 = r117;
     // CODE → <Mov>: <Reg8: 121, Reg8: 95>
-    r121 = Identifier(name='r95')
+    r121 = r95;
     // CODE → <Mov>: <Reg8: 120, Reg8: 38>
-    r120 = Identifier(name='r38')
+    r120 = r38;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = Identifier(name='r117')
+    r126 = r117;
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = Identifier(name='r118')
+    r125 = r118;
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = Identifier(name='r115')
+    r124 = r115;
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = Identifier(name='r116')
+    r123 = r116;
     // CODE → <Mov>: <Reg8: 121, Reg8: 69>
-    r121 = Identifier(name='r69')
+    r121 = r69;
     // CODE → <Mov>: <Reg8: 120, Reg8: 37>
-    r120 = Identifier(name='r37')
+    r120 = r37;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = Identifier(name='r116')
+    r126 = r116;
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = Identifier(name='r117')
+    r125 = r117;
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = Identifier(name='r118')
+    r124 = r118;
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = Identifier(name='r115')
+    r123 = r115;
     // CODE → <Mov>: <Reg8: 121, Reg8: 42>
-    r121 = Identifier(name='r42')
+    r121 = r42;
     // CODE → <Mov>: <Reg8: 120, Reg8: 36>
-    r120 = Identifier(name='r36')
+    r120 = r36;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = Identifier(name='r115')
+    r126 = r115;
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = Identifier(name='r116')
+    r125 = r116;
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = Identifier(name='r117')
+    r124 = r117;
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = Identifier(name='r118')
+    r123 = r118;
     // CODE → <Mov>: <Reg8: 121, Reg8: 40>
-    r121 = Identifier(name='r40')
+    r121 = r40;
     // CODE → <Mov>: <Reg8: 120, Reg8: 35>
-    r120 = Identifier(name='r35')
+    r120 = r35;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = Identifier(name='r118')
+    r126 = r118;
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = Identifier(name='r115')
+    r125 = r115;
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = Identifier(name='r116')
+    r124 = r116;
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = Identifier(name='r117')
+    r123 = r117;
     // CODE → <Mov>: <Reg8: 121, Reg8: 95>
-    r121 = Identifier(name='r95')
+    r121 = r95;
     // CODE → <Mov>: <Reg8: 120, Reg8: 34>
-    r120 = Identifier(name='r34')
+    r120 = r34;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = Identifier(name='r117')
+    r126 = r117;
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = Identifier(name='r118')
+    r125 = r118;
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = Identifier(name='r115')
+    r124 = r115;
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = Identifier(name='r116')
+    r123 = r116;
     // CODE → <Mov>: <Reg8: 121, Reg8: 69>
-    r121 = Identifier(name='r69')
+    r121 = r69;
     // CODE → <Mov>: <Reg8: 120, Reg8: 33>
-    r120 = Identifier(name='r33')
+    r120 = r33;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = Identifier(name='r116')
+    r126 = r116;
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = Identifier(name='r117')
+    r125 = r117;
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = Identifier(name='r118')
+    r124 = r118;
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = Identifier(name='r115')
+    r123 = r115;
     // CODE → <Mov>: <Reg8: 121, Reg8: 42>
-    r121 = Identifier(name='r42')
+    r121 = r42;
     // CODE → <Mov>: <Reg8: 120, Reg8: 32>
-    r120 = Identifier(name='r32')
+    r120 = r32;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = Identifier(name='r115')
+    r126 = r115;
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = Identifier(name='r116')
+    r125 = r116;
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = Identifier(name='r117')
+    r124 = r117;
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = Identifier(name='r118')
+    r123 = r118;
     // CODE → <Mov>: <Reg8: 121, Reg8: 40>
-    r121 = Identifier(name='r40')
+    r121 = r40;
     // CODE → <Mov>: <Reg8: 120, Reg8: 31>
-    r120 = Identifier(name='r31')
+    r120 = r31;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = Identifier(name='r118')
+    r126 = r118;
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = Identifier(name='r115')
+    r125 = r115;
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = Identifier(name='r116')
+    r124 = r116;
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = Identifier(name='r117')
+    r123 = r117;
     // CODE → <Mov>: <Reg8: 121, Reg8: 95>
-    r121 = Identifier(name='r95')
+    r121 = r95;
     // CODE → <Mov>: <Reg8: 120, Reg8: 30>
-    r120 = Identifier(name='r30')
+    r120 = r30;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = Identifier(name='r117')
+    r126 = r117;
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = Identifier(name='r118')
+    r125 = r118;
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = Identifier(name='r115')
+    r124 = r115;
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = Identifier(name='r116')
+    r123 = r116;
     // CODE → <Mov>: <Reg8: 121, Reg8: 69>
-    r121 = Identifier(name='r69')
+    r121 = r69;
     // CODE → <Mov>: <Reg8: 120, Reg8: 29>
-    r120 = Identifier(name='r29')
+    r120 = r29;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = Identifier(name='r116')
+    r126 = r116;
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = Identifier(name='r117')
+    r125 = r117;
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = Identifier(name='r118')
+    r124 = r118;
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = Identifier(name='r115')
+    r123 = r115;
     // CODE → <Mov>: <Reg8: 121, Reg8: 42>
-    r121 = Identifier(name='r42')
+    r121 = r42;
     // CODE → <Mov>: <Reg8: 120, Reg8: 28>
-    r120 = Identifier(name='r28')
+    r120 = r28;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = Identifier(name='r115')
+    r126 = r115;
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = Identifier(name='r116')
+    r125 = r116;
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = Identifier(name='r117')
+    r124 = r117;
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = Identifier(name='r118')
+    r123 = r118;
     // CODE → <Mov>: <Reg8: 121, Reg8: 40>
-    r121 = Identifier(name='r40')
+    r121 = r40;
     // CODE → <Mov>: <Reg8: 120, Reg8: 27>
-    r120 = Identifier(name='r27')
+    r120 = r27;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadFromEnvironment>: <Reg8: 103, Reg8: 92, UInt8: 13>
@@ -1046,257 +1046,257 @@ function binl_md5(param0, param1, param2) {
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = Identifier(name='r118')
+    r126 = r118;
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = Identifier(name='r115')
+    r125 = r115;
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = Identifier(name='r116')
+    r124 = r116;
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = Identifier(name='r117')
+    r123 = r117;
     // CODE → <Mov>: <Reg8: 121, Reg8: 77>
-    r121 = Identifier(name='r77')
+    r121 = r77;
     // CODE → <Mov>: <Reg8: 120, Reg8: 26>
-    r120 = Identifier(name='r26')
+    r120 = r26;
     // CODE → <Call>: <Reg8: 114, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = Identifier(name='r117')
+    r126 = r117;
     // CODE → <Mov>: <Reg8: 125, Reg8: 114>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r93'))
+    r125 = r114;
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = Identifier(name='r115')
+    r124 = r115;
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = Identifier(name='r116')
+    r123 = r116;
     // CODE → <Mov>: <Reg8: 121, Reg8: 71>
-    r121 = Identifier(name='r71')
+    r121 = r71;
     // CODE → <Mov>: <Reg8: 120, Reg8: 25>
-    r120 = Identifier(name='r25')
+    r120 = r25;
     // CODE → <Call>: <Reg8: 113, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = Identifier(name='r116')
+    r126 = r116;
     // CODE → <Mov>: <Reg8: 125, Reg8: 113>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r90'))
+    r125 = r113;
     // CODE → <Mov>: <Reg8: 124, Reg8: 114>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r93'))
+    r124 = r114;
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = Identifier(name='r115')
+    r123 = r115;
     // CODE → <Mov>: <Reg8: 121, Reg8: 63>
-    r121 = Identifier(name='r63')
+    r121 = r63;
     // CODE → <Mov>: <Reg8: 120, Reg8: 24>
-    r120 = Identifier(name='r24')
+    r120 = r24;
     // CODE → <Call>: <Reg8: 112, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = Identifier(name='r115')
+    r126 = r115;
     // CODE → <Mov>: <Reg8: 125, Reg8: 112>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r94'))
+    r125 = r112;
     // CODE → <Mov>: <Reg8: 124, Reg8: 113>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r90'))
+    r124 = r113;
     // CODE → <Mov>: <Reg8: 123, Reg8: 114>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r93'))
+    r123 = r114;
     // CODE → <Mov>: <Reg8: 121, Reg8: 23>
-    r121 = Identifier(name='r23')
+    r121 = r23;
     // CODE → <Mov>: <Reg8: 120, Reg8: 22>
-    r120 = Identifier(name='r22')
+    r120 = r22;
     // CODE → <Call>: <Reg8: 111, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 114>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r93'))
+    r126 = r114;
     // CODE → <Mov>: <Reg8: 125, Reg8: 111>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r97'))
+    r125 = r111;
     // CODE → <Mov>: <Reg8: 124, Reg8: 112>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r94'))
+    r124 = r112;
     // CODE → <Mov>: <Reg8: 123, Reg8: 113>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r90'))
+    r123 = r113;
     // CODE → <Mov>: <Reg8: 121, Reg8: 77>
-    r121 = Identifier(name='r77')
+    r121 = r77;
     // CODE → <Mov>: <Reg8: 120, Reg8: 21>
-    r120 = Identifier(name='r21')
+    r120 = r21;
     // CODE → <Call>: <Reg8: 110, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 113>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r90'))
+    r126 = r113;
     // CODE → <Mov>: <Reg8: 125, Reg8: 110>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r87'))
+    r125 = r110;
     // CODE → <Mov>: <Reg8: 124, Reg8: 111>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r97'))
+    r124 = r111;
     // CODE → <Mov>: <Reg8: 123, Reg8: 112>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r94'))
+    r123 = r112;
     // CODE → <Mov>: <Reg8: 121, Reg8: 71>
-    r121 = Identifier(name='r71')
+    r121 = r71;
     // CODE → <Mov>: <Reg8: 120, Reg8: 20>
-    r120 = Identifier(name='r20')
+    r120 = r20;
     // CODE → <Call>: <Reg8: 109, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 112>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r94'))
+    r126 = r112;
     // CODE → <Mov>: <Reg8: 125, Reg8: 109>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r82'))
+    r125 = r109;
     // CODE → <Mov>: <Reg8: 124, Reg8: 110>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r87'))
+    r124 = r110;
     // CODE → <Mov>: <Reg8: 123, Reg8: 111>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r97'))
+    r123 = r111;
     // CODE → <Mov>: <Reg8: 121, Reg8: 63>
-    r121 = Identifier(name='r63')
+    r121 = r63;
     // CODE → <Mov>: <Reg8: 120, Reg8: 19>
-    r120 = Identifier(name='r19')
+    r120 = r19;
     // CODE → <Call>: <Reg8: 108, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 111>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r97'))
+    r126 = r111;
     // CODE → <Mov>: <Reg8: 125, Reg8: 108>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r71'))
+    r125 = r108;
     // CODE → <Mov>: <Reg8: 124, Reg8: 109>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r82'))
+    r124 = r109;
     // CODE → <Mov>: <Reg8: 123, Reg8: 110>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r87'))
+    r123 = r110;
     // CODE → <Mov>: <Reg8: 121, Reg8: 23>
-    r121 = Identifier(name='r23')
+    r121 = r23;
     // CODE → <Mov>: <Reg8: 120, Reg8: 18>
-    r120 = Identifier(name='r18')
+    r120 = r18;
     // CODE → <Call>: <Reg8: 107, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 110>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r87'))
+    r126 = r110;
     // CODE → <Mov>: <Reg8: 125, Reg8: 107>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r88'))
+    r125 = r107;
     // CODE → <Mov>: <Reg8: 124, Reg8: 108>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r71'))
+    r124 = r108;
     // CODE → <Mov>: <Reg8: 123, Reg8: 109>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r82'))
+    r123 = r109;
     // CODE → <Mov>: <Reg8: 121, Reg8: 77>
-    r121 = Identifier(name='r77')
+    r121 = r77;
     // CODE → <Mov>: <Reg8: 120, Reg8: 17>
-    r120 = Identifier(name='r17')
+    r120 = r17;
     // CODE → <Call>: <Reg8: 106, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 109>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r82'))
+    r126 = r109;
     // CODE → <Mov>: <Reg8: 125, Reg8: 106>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r74'))
+    r125 = r106;
     // CODE → <Mov>: <Reg8: 124, Reg8: 107>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r88'))
+    r124 = r107;
     // CODE → <Mov>: <Reg8: 123, Reg8: 108>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r71'))
+    r123 = r108;
     // CODE → <Mov>: <Reg8: 121, Reg8: 71>
-    r121 = Identifier(name='r71')
+    r121 = r71;
     // CODE → <Mov>: <Reg8: 120, Reg8: 16>
-    r120 = Identifier(name='r16')
+    r120 = r16;
     // CODE → <Call>: <Reg8: 105, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 108>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r71'))
+    r126 = r108;
     // CODE → <Mov>: <Reg8: 125, Reg8: 105>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r63'))
+    r125 = r105;
     // CODE → <Mov>: <Reg8: 124, Reg8: 106>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r74'))
+    r124 = r106;
     // CODE → <Mov>: <Reg8: 123, Reg8: 107>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r88'))
+    r123 = r107;
     // CODE → <Mov>: <Reg8: 121, Reg8: 63>
-    r121 = Identifier(name='r63')
+    r121 = r63;
     // CODE → <Mov>: <Reg8: 120, Reg8: 15>
-    r120 = Identifier(name='r15')
+    r120 = r15;
     // CODE → <Call>: <Reg8: 104, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 107>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r88'))
+    r126 = r107;
     // CODE → <Mov>: <Reg8: 125, Reg8: 104>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r77'))
+    r125 = r104;
     // CODE → <Mov>: <Reg8: 124, Reg8: 105>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r63'))
+    r124 = r105;
     // CODE → <Mov>: <Reg8: 123, Reg8: 106>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r74'))
+    r123 = r106;
     // CODE → <Mov>: <Reg8: 121, Reg8: 23>
-    r121 = Identifier(name='r23')
+    r121 = r23;
     // CODE → <Mov>: <Reg8: 120, Reg8: 14>
-    r120 = Identifier(name='r14')
+    r120 = r14;
     // CODE → <Call>: <Reg8: 101, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 106>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r74'))
+    r126 = r106;
     // CODE → <Mov>: <Reg8: 125, Reg8: 101>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r66'))
+    r125 = r101;
     // CODE → <Mov>: <Reg8: 124, Reg8: 104>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r77'))
+    r124 = r104;
     // CODE → <Mov>: <Reg8: 123, Reg8: 105>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r63'))
+    r123 = r105;
     // CODE → <Mov>: <Reg8: 121, Reg8: 77>
-    r121 = Identifier(name='r77')
+    r121 = r77;
     // CODE → <Mov>: <Reg8: 120, Reg8: 13>
-    r120 = Identifier(name='r13')
+    r120 = r13;
     // CODE → <Call>: <Reg8: 102, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r63'))
+    r126 = r105;
     // CODE → <Mov>: <Reg8: 125, Reg8: 102>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r95'))
+    r125 = r102;
     // CODE → <Mov>: <Reg8: 124, Reg8: 101>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r66'))
+    r124 = r101;
     // CODE → <Mov>: <Reg8: 123, Reg8: 104>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r77'))
+    r123 = r104;
     // CODE → <Mov>: <Reg8: 121, Reg8: 71>
-    r121 = Identifier(name='r71')
+    r121 = r71;
     // CODE → <Mov>: <Reg8: 120, Reg8: 12>
-    r120 = Identifier(name='r12')
+    r120 = r12;
     // CODE → <Call>: <Reg8: 99, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 104>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r77'))
+    r126 = r104;
     // CODE → <Mov>: <Reg8: 125, Reg8: 99>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r69'))
+    r125 = r99;
     // CODE → <Mov>: <Reg8: 124, Reg8: 102>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r95'))
+    r124 = r102;
     // CODE → <Mov>: <Reg8: 123, Reg8: 101>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r66'))
+    r123 = r101;
     // CODE → <Mov>: <Reg8: 121, Reg8: 63>
-    r121 = Identifier(name='r63')
+    r121 = r63;
     // CODE → <Mov>: <Reg8: 120, Reg8: 11>
-    r120 = Identifier(name='r11')
+    r120 = r11;
     // CODE → <Call>: <Reg8: 100, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
-    r126 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r66'))
+    r126 = r101;
     // CODE → <Mov>: <Reg8: 125, Reg8: 100>
-    r125 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r85'))
+    r125 = r100;
     // CODE → <Mov>: <Reg8: 124, Reg8: 99>
-    r124 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r69'))
+    r124 = r99;
     // CODE → <Mov>: <Reg8: 123, Reg8: 102>
-    r123 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r95'))
+    r123 = r102;
     // CODE → <Mov>: <Reg8: 121, Reg8: 23>
-    r121 = Identifier(name='r23')
+    r121 = r23;
     // CODE → <Mov>: <Reg8: 120, Reg8: 10>
-    r120 = Identifier(name='r10')
+    r120 = r10;
     // CODE → <Call>: <Reg8: 101, Reg8: 103, UInt8: 8>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 92, UInt8: 14>
@@ -1310,19 +1310,19 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 6, Reg8: 0, Reg8: 91, Reg8: 99, Reg8: 6>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <Add>: <Reg8: 5, Reg8: 5, Reg8: 42>
-    // USED → r5 = BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-    // USED → r4 = Identifier(name='r9')
+    // USED → r4 = r9;
     // CODE → <Mov>: <Reg8: 3, Reg8: 8>
-    // USED → r3 = Identifier(name='r8')
+    // USED → r3 = r8;
     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
-    // USED → r2 = Identifier(name='r7')
+    // USED → r2 = r7;
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
-    // USED → r1 = Identifier(name='r6')
+    // USED → r1 = r6;
     // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
-    if (BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r42')) < BinaryExpression(left=Identifier(name='r5'), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='r96'))) { /* jump to label_566 */ }
+    if (Identifier(name='r5') < Identifier(name='r0')) { /* jump to label_566 */ }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
     // USED → r0 = [] /* capacity hint: 4 */

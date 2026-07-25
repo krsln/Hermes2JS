@@ -69,7 +69,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 11, Reg8: 3>
-    r11 = Identifier(name='r3')
+    r11 = r3;
     // CODE → <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>

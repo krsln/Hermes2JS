@@ -29,14 +29,14 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     // USED → r7 = undefined
     // CODE → <TypeOf>: <Reg8: 14, Reg8: 6>
-    // USED → r14 = UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r6'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
     // USED → r10 = "string"
     // CODE → <JStrictEqual>: <Addr8: 18, Reg8: 14, Reg8: 10>  # Address: 0000003a
-    if (UnaryExpression(operator=<UnaryOperator.TYPEOF: 'typeof '>, operand=Identifier(name='r6')) === Identifier(name='r10')) { /* jump to label_58 */ }
+    if (Identifier(name='r14') === Identifier(name='r10')) { /* jump to label_58 */ }
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 14, Reg8: 6>
-    // USED → r14 = Identifier(name='r6')
+    // USED → r14 = r6;
     // CODE → <JmpTrue>: <Addr8: 5, Reg8: 14>  # Address: 00000034
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <NewObject>: <Reg8: 14>
@@ -80,7 +80,7 @@ function _request(param0, param1, param2) {
         // CODE → <PutById>: <Reg8: 2, Reg8: 6, UInt8: 1, string_id: 14158>  # String: 'url' (Identifier)
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <Mov>: <Reg8: 14, Reg8: 2>
-        // USED → r14 = Identifier(name='r2')
+        // USED → r14 = r2;
     }
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 
@@ -244,7 +244,7 @@ function _request(param0, param1, param2) {
         // CODE → <PutById>: <Reg8: 10, Reg8: 14, UInt8: 4, string_id: 12916>  # String: 'method' (Identifier)
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <Mov>: <Reg8: 16, Reg8: 17>
-        // USED → r16 = Identifier(name='r17')
+        // USED → r16 = r17;
         // CODE → <JmpFalse>: <Addr8: 40, Reg8: 16>  # Address: 00000214
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
@@ -288,7 +288,7 @@ function _request(param0, param1, param2) {
         // CODE → <NewArray>: <Reg8: 14, UInt16: 0>
         // USED → r14 = []
         // CODE → <Mov>: <Reg8: 12, Reg8: 14>
-        // USED → r12 = Identifier(name='r14')
+        // USED → r12 = r14;
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 2, Reg8: 14>
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <StoreNPToEnvironment>: <Reg8: 9, UInt8: 3, Reg8: 2>
@@ -306,7 +306,7 @@ function _request(param0, param1, param2) {
         // CODE → <NewArray>: <Reg8: 2, UInt16: 0>
         // USED → r2 = []
         // CODE → <Mov>: <Reg8: 3, Reg8: 2>
-        // USED → r3 = Identifier(name='r2')
+        // USED → r3 = r2;
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 4, Reg8: 2>
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 18, string_id: 19835>  # String: 'interceptors' (Identifier)
@@ -346,7 +346,7 @@ function _request(param0, param1, param2) {
         // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 16, UInt8: 23, string_id: 86>  # String: 'apply' (Identifier)
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <Mov>: <Reg8: 9, Reg8: 12>
-        // USED → r9 = Identifier(name='r14')
+        // USED → r9 = r14;
         // CODE → <Call3>: <Reg8: 9, Reg8: 14, Reg8: 16, Reg8: 15, Reg8: 9>
         // Error: sequence item 0: expected str instance, Identifier found
         // CODE → <GetByIdShort>: <Reg8: 16, Reg8: 15, UInt8: 24, string_id: 201>  # String: 'push' (Identifier)
@@ -354,13 +354,13 @@ function _request(param0, param1, param2) {
         // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 16, UInt8: 23, string_id: 86>  # String: 'apply' (Identifier)
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <Mov>: <Reg8: 9, Reg8: 3>
-        // USED → r9 = Identifier(name='r2')
+        // USED → r9 = r2;
         // CODE → <Call3>: <Reg8: 9, Reg8: 14, Reg8: 16, Reg8: 15, Reg8: 9>
         // Error: sequence item 0: expected str instance, Identifier found
         // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <Mov>: <Reg8: 5, Reg8: 14>
-        // USED → r5 = Identifier(name='r14')
+        // USED → r5 = r14;
         // CODE → <GetGlobalObject>: <Reg8: 9>
         // USED → r9 = globalThis
         // CODE → <TryGetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
@@ -370,7 +370,7 @@ function _request(param0, param1, param2) {
         // CODE → <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
         // Error: sequence item 0: expected str instance, Identifier found
         // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-        // USED → r9 = Identifier(name='r4')
+        // USED → r9 = r4;
         // CODE → <JNotLess>: <Addr8: 54, Reg8: 9, Reg8: 14>  # Address: 00000349
         if (Identifier(name='r4') >= Identifier(name='r14')) { /* jump to label_841 */ }
         // ──────────────── Block 11 ──────────────── 
@@ -384,81 +384,81 @@ function _request(param0, param1, param2) {
     // LOOP → END
     // ──────────────── Block 13 ──────────────── 
     // CODE → <Mov>: <Reg8: 18, Reg8: 0>
-    // USED → r18 = Identifier(name='r0')
+    // USED → r18 = r0;
     // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-    // USED → r9 = Identifier(name='r4')
+    // USED → r9 = r4;
     // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
-    // USED → r14 = UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Inc>: <Reg8: 9, Reg8: 14>
-    // USED → r9 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-    r4 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    r4 = r4;
     // CODE → <GetByVal>: <Reg8: 16, Reg8: 15, Reg8: 14>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
-    // USED → r9 = UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Inc>: <Reg8: 14, Reg8: 9>
-    // USED → r14 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 4, Reg8: 14>
-    r4 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    r4 = r14;
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-    // USED → r9 = Identifier(name='r14')
+    // USED → r9 = r14;
     // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
-    if (BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)) < Identifier(name='r14')) { /* jump to label_791 */ }
+    if (Identifier(name='r14') < Identifier(name='r14')) { /* jump to label_791 */ }
     // ──────────────── Block 14 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 0>
-    r9 = Identifier(name='r0')
+    r9 = r0;
     // CODE → <Ret>: <Reg8: 9>
     // Unhandled opcode: Ret
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
-    // USED → r9 = Identifier(name='r14')
+    // USED → r9 = r14;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 5, Reg8: 9>
-    // USED → r5 = Identifier(name='r14')
+    // USED → r5 = r14;
     // CODE → <Mov>: <Reg8: 1, Reg8: 10>
-    // USED → r1 = Identifier(name='r10')
+    // USED → r1 = r10;
     // CODE → <LoadConstZero>: <Reg8: 4>
     // USED → r4 = 0
     // CODE → <JNotLess>: <Addr8: 72, Reg8: 2, Reg8: 9>  # Address: 000003a6
     if (Identifier(name='r2') >= Identifier(name='r14')) { /* jump to label_934 */ }
     // ──────────────── Block 15 ──────────────── 
     // CODE → <Mov>: <Reg8: 10, Reg8: 12>
-    // USED → r10 = Identifier(name='r14')
+    // USED → r10 = r14;
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-    // USED → r9 = Identifier(name='r4')
+    // USED → r9 = r4;
     // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
-    // USED → r14 = UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Inc>: <Reg8: 9, Reg8: 14>
-    // USED → r9 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-    r4 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    // USED → r4 = r4;
     // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 14>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
-    // USED → r9 = UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Inc>: <Reg8: 4, Reg8: 9>
-    // USED → r4 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <GetByVal>: <Reg8: 7, Reg8: 10, Reg8: 9>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 10, Reg8: 13>
-    // USED → r10 = Identifier(name='r13')
+    // USED → r10 = r13;
     // CODE → <Mov>: <Reg8: 9, Reg8: 1>
-    // USED → r9 = Identifier(name='r10')
+    // USED → r9 = r10;
     // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-    // USED → r10 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    // USED → r10 = r4;
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-    // USED → r9 = Identifier(name='r14')
+    // USED → r9 = r14;
     // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 9>  # Address: 00000362
-    if (BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)) < Identifier(name='r14')) { /* jump to label_866 */ }
+    if (Identifier(name='r4') < Identifier(name='r14')) { /* jump to label_866 */ }
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Jmp>: <Addr8: 18>  # Address: 000003a6
     goto label_934;
@@ -476,18 +476,18 @@ function _request(param0, param1, param2) {
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0
         // CODE → <Mov>: <Reg8: 1, Reg8: 3>
-        // USED → r1 = Identifier(name='r2')
+        // USED → r1 = r2;
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <Mov>: <Reg8: 5, Reg8: 1>
-        // USED → r5 = Identifier(name='r2')
+        // USED → r5 = r2;
         // CODE → <JNotLess>: <Addr8: 57, Reg8: 2, Reg8: 1>  # Address: 00000400
         if (Identifier(name='r2') >= Identifier(name='r2')) { /* jump to label_1024 */ }
         // ──────────────── Block 17 ──────────────── 
         // CODE → <Catch>: <Reg8: 10>
         // USED → r10 = caughtException
         // CODE → <Mov>: <Reg8: 9, Reg8: 7>
-        // USED → r9 = Identifier(name='r7')
+        // USED → r9 = r7;
         // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
         // Error: 'Identifier' object has no attribute 'render'
         // CODE → <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
@@ -496,35 +496,35 @@ function _request(param0, param1, param2) {
     // LOOP → END
     // ──────────────── Block 19 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 0>
-    // USED → r8 = Identifier(name='r0')
+    // USED → r8 = r0;
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
-    // USED → r9 = Identifier(name='r2')
+    // USED → r9 = r2;
     // CODE → <Mov>: <Reg8: 1, Reg8: 4>
-    // USED → r1 = Identifier(name='r4')
+    // USED → r1 = r4;
     // CODE → <ToNumeric>: <Reg8: 2, Reg8: 1>
-    // USED → r2 = UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4'))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Inc>: <Reg8: 1, Reg8: 2>
-    // USED → r1 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-    r4 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    r4 = r4;
     // CODE → <GetByVal>: <Reg8: 6, Reg8: 9, Reg8: 2>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <ToNumeric>: <Reg8: 1, Reg8: 1>
-    // USED → r1 = UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Inc>: <Reg8: 2, Reg8: 1>
-    // USED → r2 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-    r4 = BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))
+    r4 = r2;
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>
     // Error: 'Identifier' object has no attribute 'render'
     // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
     // Error: sequence item 0: expected str instance, Identifier found
     // CODE → <Mov>: <Reg8: 1, Reg8: 5>
-    // USED → r1 = Identifier(name='r2')
+    // USED → r1 = r2;
     // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
-    if (BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=BinaryExpression(left=UnaryExpression(operator=<UnaryOperator.PLUS: '+'>, operand=Identifier(name='r4')), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1))), operator=<BinaryOperator.ADD: '+'>, right=NumericLiteral(value=1)) < Identifier(name='r2')) { /* jump to label_971 */ }
+    if (Identifier(name='r2') < Identifier(name='r2')) { /* jump to label_971 */ }
     // ──────────────── Block 20 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret

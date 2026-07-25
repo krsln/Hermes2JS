@@ -11,7 +11,7 @@ function request(param0, param1, param2) {
     // CODE → <ReifyArguments>: <Reg8: 0>
     // USED → r0 = arguments
     // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-    // USED → r1 = Identifier(name='r0')
+    // USED → r1 = r0;
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
