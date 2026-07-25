@@ -33,20 +33,20 @@ function processColorsInProps(param0, param1) {
         // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 17>
         // USED → r12 = getEnvironment(1)[17];
         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 148>  # String: 'includes' (Identifier)
-        // USED → r11 = getEnvironment(1)[17].includes
+        // USED → r11 = getEnvironment(1)[17].includes;
         // CODE → <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 13>
-        // USED → r11 = r11(getEnvironment(1)[17], r2);
+        // USED → r11 = getEnvironment(1)[17].includes(getEnvironment(1)[17], r2);
         // CODE → <JmpTrue>: <Addr8: 98, Reg8: 11>  # Address: 0000009e
-        if (r11(getEnvironment(1)[17], r2)) goto label_158;
+        if (getEnvironment(1)[17].includes(getEnvironment(1)[17], r2)) goto label_158;
         // ──────────────── Block 3 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 1, UInt8: 18>
         // USED → r12 = getEnvironment(1)[18];
         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
         // USED → r11 = r2;
         // CODE → <GetByVal>: <Reg8: 11, Reg8: 12, Reg8: 11>
-        // USED → r11 = getEnvironment(1)[18][r2]
+        // USED → r11 = getEnvironment(1)[18][r2];
         // CODE → <JmpFalse>: <Addr8: -46, Reg8: 11>  # Address: 0000001c
-        if (!r11) goto label_28;
+        if (!getEnvironment(1)[18][r2]) goto label_28;
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 10 ──────────────── 
@@ -55,11 +55,11 @@ function processColorsInProps(param0, param1) {
             // CODE → <LoadFromEnvironment>: <Reg8: 13, Reg8: 1, UInt8: 36>
             // USED → r13 = getEnvironment(1)[36];
             // CODE → <GetByVal>: <Reg8: 11, Reg8: 10, Reg8: 12>
-            // USED → r11 = param1[r2]
+            // USED → r11 = param1[r2];
             // CODE → <Call2>: <Reg8: 11, Reg8: 13, Reg8: 0, Reg8: 11>
-            // USED → r11 = getEnvironment(1)[36](undefined, r11);
+            // USED → r11 = getEnvironment(1)[36](undefined, param1[r2]);
             // CODE → <PutByVal>: <Reg8: 10, Reg8: 12, Reg8: 11>
-            param1[r2] = getEnvironment(1)[36](undefined, r11);
+            param1[r2] = getEnvironment(1)[36](undefined, param1[r2]);
             // CODE → <JmpLong>: <Addr32: -150>  # Address: 0000001c
             goto label_28;
             // ──────────────── Block 9 ──────────────── 
@@ -77,11 +77,11 @@ function processColorsInProps(param0, param1) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 7>
     // USED → r11 = r2;
     // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 11>
-    // USED → r13 = param1[r2]
+    // USED → r13 = param1[r2];
     // CODE → <Mov>: <Reg8: 11, Reg8: 13>
-    // USED → r11 = r13;
+    // USED → r11 = param1[r2];
     // CODE → <IteratorBegin>: <Reg8: 12, Reg8: 11>
-    // USED → r12 = GetIterator(r13)
+    // USED → r12 = GetIterator(param1[r2])
     // LOOP → START (while)
     while (r12 === undefined) {
         // ──────────────── Block 5 ──────────────── 
@@ -99,26 +99,26 @@ function processColorsInProps(param0, param1) {
         // CODE → <Mov>: <Reg8: 13, Reg8: 7>
         // USED → r13 = r2;
         // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 13>
-        // USED → r13 = getEnvironment(1)[18][r2]
+        // USED → r13 = getEnvironment(1)[18][r2];
         // CODE → <Mov>: <Reg8: 9, Reg8: 13>
-        // USED → r9 = r13;
+        // USED → r9 = getEnvironment(1)[18][r2];
         // CODE → <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 13>
-        // USED → r13 = r14[r13]
+        // USED → r13 = r14[getEnvironment(1)[18][r2]];
         // CODE → <JStrictEqual>: <Addr8: 27, Reg8: 13, Reg8: 0>  # Address: 00000095
-        if (r13 === undefined) goto label_149;
+        if (r14[getEnvironment(1)[18][r2]] === undefined) goto label_149;
         // ──────────────── Block 7 ──────────────── 
         // CODE → <Mov>: <Reg8: 15, Reg8: 8>
         // USED → r15 = r14;
         // CODE → <Mov>: <Reg8: 14, Reg8: 9>
-        // USED → r14 = r13;
+        // USED → r14 = getEnvironment(1)[18][r2];
         // CODE → <LoadFromEnvironment>: <Reg8: 16, Reg8: 1, UInt8: 36>
         // USED → r16 = getEnvironment(1)[36];
         // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 14>
-        // USED → r13 = r14[r13]
+        // USED → r13 = r14[getEnvironment(1)[18][r2]];
         // CODE → <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
-        // USED → r13 = getEnvironment(1)[36](undefined, r13);
+        // USED → r13 = getEnvironment(1)[36](undefined, r14[getEnvironment(1)[18][r2]]);
         // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
-        r14[r13] = getEnvironment(1)[36](undefined, r13);
+        r14[getEnvironment(1)[18][r2]] = getEnvironment(1)[36](undefined, r14[getEnvironment(1)[18][r2]]);
         // ──────────────── Block 8 ──────────────── 
         // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
         goto label_90;

@@ -12,9 +12,9 @@ async function* anon_9956(param0, param1) {
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 16>
     // USED → r1 = getEnvironment(3)[16];
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r3 = getEnvironment(3)[16].default
+    // USED → r3 = getEnvironment(3)[16].default;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 137>  # String: 'get' (Identifier)
-    // USED → r2 = r3.get
+    // USED → r2 = getEnvironment(3)[16].default.get;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 7880>  # String: 'https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=' (String)
     // USED → r4 = "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=";
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
@@ -22,16 +22,16 @@ async function* anon_9956(param0, param1) {
     // CODE → <Add>: <Reg8: 1, Reg8: 4, Reg8: 1>
     // USED → r1 = "https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + param1;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = await CallExpression(callee=Identifier(name='r2'), arguments=(Identifier(name='r3'), BinaryExpression(left=StringLiteral(value='https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr='), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='param1'))), optional=False)
+    r1 = await CallExpression(callee=MemberExpression(receiver=MemberExpression(receiver=MemberExpression(receiver=CallExpression(callee=Identifier(name='getEnvironment'), arguments=(NumericLiteral(value=3),), optional=False), member=NumericLiteral(value=16), computed=True, optional=False), member=Identifier(name='default'), computed=False, optional=False), member=Identifier(name='get'), computed=False, optional=False), arguments=(MemberExpression(receiver=MemberExpression(receiver=CallExpression(callee=Identifier(name='getEnvironment'), arguments=(NumericLiteral(value=3),), optional=False), member=NumericLiteral(value=16), computed=True, optional=False), member=Identifier(name='default'), computed=False, optional=False), BinaryExpression(left=StringLiteral(value='https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr='), operator=<BinaryOperator.ADD: '+'>, right=Identifier(name='param1'))), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000002c
     goto label_44;
     // LOOP → START (while)
-    while (r2) {
+    while (getEnvironment(3)[16].default.get) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
         // USED → r1 = await yield;
         // CODE → <JmpTrue>: <Addr8: 11, Reg8: 2>  # Address: 0000003a
-        if (r2) goto label_58;
+        if (getEnvironment(3)[16].default.get) goto label_58;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
         // Unhandled opcode: Ret
@@ -39,7 +39,7 @@ async function* anon_9956(param0, param1) {
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'data' (Identifier)
-    r2 = await yield.data
+    r2 = await yield.data;
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 2>

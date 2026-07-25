@@ -9,7 +9,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <RShift>: <Reg8: 2, Reg8: 1, Reg8: 97>
     // USED → r2 = param2 >> 5;
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 98, Reg8: 2>
-    // USED → r3 = param1[param2 >> 5]
+    // USED → r3 = param1[param2 >> 5];
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 32>
     // USED → r0 = 32;
     // CODE → <Mod>: <Reg8: 4, Reg8: 1, Reg8: 0>
@@ -19,9 +19,9 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LShift>: <Reg8: 0, Reg8: 0, Reg8: 4>
     // USED → r0 = 128 << param2 % 32;
     // CODE → <BitOr>: <Reg8: 0, Reg8: 3, Reg8: 0>
-    // USED → r0 = r3 | 128 << param2 % 32;
+    // USED → r0 = param1[param2 >> 5] | 128 << param2 % 32;
     // CODE → <PutByVal>: <Reg8: 98, Reg8: 2, Reg8: 0>
-    param1[param2 >> 5] = r3 | 128 << param2 % 32;
+    param1[param2 >> 5] = param1[param2 >> 5] | 128 << param2 % 32;
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 64>
     // USED → r0 = 64;
     // CODE → <Add>: <Reg8: 0, Reg8: 1, Reg8: 0>
@@ -41,11 +41,11 @@ function binl_md5(param0, param1, param2) {
     // CODE → <PutByVal>: <Reg8: 98, Reg8: 0, Reg8: 1>
     param1[(param2 + 64 >>> 9 << 4) + 14] = param2;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
-    // USED → r0 = param1.length
+    // USED → r0 = param1.length;
     // CODE → <LoadConstZero>: <Reg8: 93>
     // USED → r93 = 0;
     // CODE → <Less>: <Reg8: 0, Reg8: 93, Reg8: 0>
-    // USED → r0 = 0 < r0;
+    // USED → r0 = 0 < param1.length;
     // CODE → <LoadConstInt>: <Reg8: 9, Imm32: 1732584193>
     // USED → r9 = 1732584193;
     // CODE → <LoadConstInt>: <Reg8: 8, Imm32: -271733879>
@@ -231,14 +231,14 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
     r1 = 271733878;
     // CODE → <JmpFalseLong>: <Addr32: 1808, Reg8: 0>  # Address: 00000940
-    if (!(0 < r0)) goto label_2368;
+    if (!(0 < param1.length)) goto label_2368;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 10>
     // USED → r119 = getEnvironment(0)[10];
     // CODE → <Add>: <Reg8: 114, Reg8: 5, Reg8: 93>
     // USED → r114 = 0 + 0;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
-    r122 = param1[0 + 0]
+    r122 = param1[0 + 0];
     // CODE → <LoadConstUndefined>: <Reg8: 127>
     r127 = undefined;
     // CODE → <Mov>: <Reg8: 126, Reg8: 9>
@@ -258,7 +258,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 107, Reg8: 5, Reg8: 88>
     // USED → r107 = 0 + 1;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
-    r122 = param1[0 + 1]
+    r122 = param1[0 + 1];
     // CODE → <Mov>: <Reg8: 126, Reg8: 6>
     r126 = 271733878;
     // CODE → <Mov>: <Reg8: 125, Reg8: 99>
@@ -276,7 +276,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 100, Reg8: 5, Reg8: 85>
     // USED → r100 = 0 + 2;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
-    r122 = param1[0 + 2]
+    r122 = param1[0 + 2];
     // CODE → <Mov>: <Reg8: 126, Reg8: 7>
     r126 = -1732584194;
     // CODE → <Mov>: <Reg8: 125, Reg8: 104>
@@ -294,7 +294,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 109, Reg8: 5, Reg8: 82>
     // USED → r109 = 0 + 3;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
-    r122 = param1[0 + 3]
+    r122 = param1[0 + 3];
     // CODE → <Mov>: <Reg8: 126, Reg8: 8>
     r126 = -271733879;
     // CODE → <Mov>: <Reg8: 125, Reg8: 101>
@@ -312,7 +312,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 102, Reg8: 5, Reg8: 95>
     // USED → r102 = 0 + 4;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
-    r122 = param1[0 + 4]
+    r122 = param1[0 + 4];
     // CODE → <Mov>: <Reg8: 126, Reg8: 99>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 103>
@@ -330,7 +330,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 111, Reg8: 5, Reg8: 97>
     // USED → r111 = 0 + 5;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
-    r122 = param1[0 + 5]
+    r122 = param1[0 + 5];
     // CODE → <Mov>: <Reg8: 126, Reg8: 104>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 99>
@@ -348,7 +348,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 104, Reg8: 5, Reg8: 77>
     // USED → r104 = 0 + 6;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
-    r122 = param1[0 + 6]
+    r122 = param1[0 + 6];
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 105>
@@ -366,7 +366,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 113, Reg8: 5, Reg8: 90>
     // USED → r113 = 0 + 7;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
-    r122 = param1[0 + 7]
+    r122 = param1[0 + 7];
     // CODE → <Mov>: <Reg8: 126, Reg8: 103>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 101>
@@ -384,7 +384,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 106, Reg8: 5, Reg8: 74>
     // USED → r106 = 0 + 8;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
-    r122 = param1[0 + 8]
+    r122 = param1[0 + 8];
     // CODE → <Mov>: <Reg8: 126, Reg8: 99>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 110>
@@ -402,7 +402,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 0, Reg8: 5, Reg8: 96>
     // USED → r0 = 0 + 9;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
-    r122 = param1[0 + 9]
+    r122 = param1[0 + 9];
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 103>
@@ -420,7 +420,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 108, Reg8: 5, Reg8: 71>
     // USED → r108 = 0 + 10;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
-    r122 = param1[0 + 10]
+    r122 = param1[0 + 10];
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 112>
@@ -438,7 +438,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 99, Reg8: 5, Reg8: 69>
     // USED → r99 = 0 + 11;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
-    r122 = param1[0 + 11]
+    r122 = param1[0 + 11];
     // CODE → <Mov>: <Reg8: 126, Reg8: 110>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 105>
@@ -456,7 +456,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 110, Reg8: 5, Reg8: 87>
     // USED → r110 = 0 + 12;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
-    r122 = param1[0 + 12]
+    r122 = param1[0 + 12];
     // CODE → <Mov>: <Reg8: 126, Reg8: 103>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
@@ -474,7 +474,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 101, Reg8: 5, Reg8: 66>
     // USED → r101 = 0 + 13;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
-    r122 = param1[0 + 13]
+    r122 = param1[0 + 13];
     // CODE → <Mov>: <Reg8: 126, Reg8: 112>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
@@ -492,7 +492,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 112, Reg8: 5, Reg8: 94>
     // USED → r112 = 0 + 14;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
-    r122 = param1[0 + 14]
+    r122 = param1[0 + 14];
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
@@ -510,7 +510,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 105, Reg8: 5, Reg8: 63>
     // USED → r105 = 0 + 15;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
-    r122 = param1[0 + 15]
+    r122 = param1[0 + 15];
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
@@ -528,7 +528,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 11>
     // USED → r119 = getEnvironment(0)[11];
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
-    r122 = param1[0 + 1]
+    r122 = param1[0 + 1];
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
@@ -544,7 +544,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // USED → r118 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
-    r122 = param1[0 + 6]
+    r122 = param1[0 + 6];
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
@@ -560,7 +560,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // USED → r117 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
-    r122 = param1[0 + 11]
+    r122 = param1[0 + 11];
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
@@ -576,7 +576,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // USED → r116 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
-    r122 = param1[0 + 0]
+    r122 = param1[0 + 0];
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
     r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
@@ -592,7 +592,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // USED → r115 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
-    r122 = param1[0 + 5]
+    r122 = param1[0 + 5];
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
@@ -608,7 +608,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // USED → r118 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
-    r122 = param1[0 + 10]
+    r122 = param1[0 + 10];
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
@@ -624,7 +624,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // USED → r117 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
-    r122 = param1[0 + 15]
+    r122 = param1[0 + 15];
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
@@ -640,7 +640,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // USED → r116 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
-    r122 = param1[0 + 4]
+    r122 = param1[0 + 4];
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
@@ -656,7 +656,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // USED → r115 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
-    r122 = param1[0 + 9]
+    r122 = param1[0 + 9];
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
@@ -672,7 +672,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // USED → r118 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
-    r122 = param1[0 + 14]
+    r122 = param1[0 + 14];
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
@@ -688,7 +688,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // USED → r117 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
-    r122 = param1[0 + 3]
+    r122 = param1[0 + 3];
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
@@ -704,7 +704,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // USED → r116 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
-    r122 = param1[0 + 8]
+    r122 = param1[0 + 8];
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
@@ -720,7 +720,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // USED → r115 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
-    r122 = param1[0 + 13]
+    r122 = param1[0 + 13];
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
@@ -736,7 +736,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // USED → r118 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
-    r122 = param1[0 + 2]
+    r122 = param1[0 + 2];
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
@@ -752,7 +752,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // USED → r117 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
-    r122 = param1[0 + 7]
+    r122 = param1[0 + 7];
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
@@ -768,7 +768,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // USED → r116 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
-    r122 = param1[0 + 12]
+    r122 = param1[0 + 12];
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
@@ -786,7 +786,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 12>
     // USED → r119 = getEnvironment(0)[12];
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
-    r122 = param1[0 + 5]
+    r122 = param1[0 + 5];
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
@@ -802,7 +802,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // USED → r118 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
-    r122 = param1[0 + 8]
+    r122 = param1[0 + 8];
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
@@ -818,7 +818,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // USED → r117 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
-    r122 = param1[0 + 11]
+    r122 = param1[0 + 11];
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
@@ -834,7 +834,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // USED → r116 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
-    r122 = param1[0 + 14]
+    r122 = param1[0 + 14];
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
     r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
@@ -850,7 +850,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // USED → r115 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
-    r122 = param1[0 + 1]
+    r122 = param1[0 + 1];
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
@@ -866,7 +866,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // USED → r118 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
-    r122 = param1[0 + 4]
+    r122 = param1[0 + 4];
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
@@ -882,7 +882,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // USED → r117 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
-    r122 = param1[0 + 7]
+    r122 = param1[0 + 7];
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
@@ -898,7 +898,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // USED → r116 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
-    r122 = param1[0 + 10]
+    r122 = param1[0 + 10];
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
@@ -914,7 +914,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // USED → r115 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
-    r122 = param1[0 + 13]
+    r122 = param1[0 + 13];
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
@@ -930,7 +930,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // USED → r118 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
-    r122 = param1[0 + 0]
+    r122 = param1[0 + 0];
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
@@ -946,7 +946,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // USED → r117 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
-    r122 = param1[0 + 3]
+    r122 = param1[0 + 3];
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
@@ -962,7 +962,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // USED → r116 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
-    r122 = param1[0 + 6]
+    r122 = param1[0 + 6];
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
@@ -978,7 +978,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
     // USED → r115 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
-    r122 = param1[0 + 9]
+    r122 = param1[0 + 9];
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
@@ -994,7 +994,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
     // USED → r118 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
-    r122 = param1[0 + 12]
+    r122 = param1[0 + 12];
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
@@ -1010,7 +1010,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
     // USED → r117 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
-    r122 = param1[0 + 15]
+    r122 = param1[0 + 15];
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
@@ -1026,7 +1026,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
     // USED → r116 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
-    r122 = param1[0 + 2]
+    r122 = param1[0 + 2];
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
@@ -1044,7 +1044,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LoadFromEnvironment>: <Reg8: 103, Reg8: 92, UInt8: 13>
     // USED → r103 = getEnvironment(0)[13];
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
-    r122 = param1[0 + 0]
+    r122 = param1[0 + 0];
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
@@ -1060,7 +1060,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 114, Reg8: 103, UInt8: 8>
     // USED → r114 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
-    r122 = param1[0 + 7]
+    r122 = param1[0 + 7];
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 114>
@@ -1076,7 +1076,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 113, Reg8: 103, UInt8: 8>
     // USED → r113 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
-    r122 = param1[0 + 14]
+    r122 = param1[0 + 14];
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 113>
@@ -1092,7 +1092,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 112, Reg8: 103, UInt8: 8>
     // USED → r112 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
-    r122 = param1[0 + 5]
+    r122 = param1[0 + 5];
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
     r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 112>
@@ -1108,7 +1108,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 111, Reg8: 103, UInt8: 8>
     // USED → r111 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
-    r122 = param1[0 + 12]
+    r122 = param1[0 + 12];
     // CODE → <Mov>: <Reg8: 126, Reg8: 114>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 111>
@@ -1124,7 +1124,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 110, Reg8: 103, UInt8: 8>
     // USED → r110 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
-    r122 = param1[0 + 3]
+    r122 = param1[0 + 3];
     // CODE → <Mov>: <Reg8: 126, Reg8: 113>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 110>
@@ -1140,7 +1140,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 109, Reg8: 103, UInt8: 8>
     // USED → r109 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
-    r122 = param1[0 + 10]
+    r122 = param1[0 + 10];
     // CODE → <Mov>: <Reg8: 126, Reg8: 112>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 109>
@@ -1156,7 +1156,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 108, Reg8: 103, UInt8: 8>
     // USED → r108 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
-    r122 = param1[0 + 1]
+    r122 = param1[0 + 1];
     // CODE → <Mov>: <Reg8: 126, Reg8: 111>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 108>
@@ -1172,7 +1172,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 107, Reg8: 103, UInt8: 8>
     // USED → r107 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
-    r122 = param1[0 + 8]
+    r122 = param1[0 + 8];
     // CODE → <Mov>: <Reg8: 126, Reg8: 110>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 107>
@@ -1188,7 +1188,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 106, Reg8: 103, UInt8: 8>
     // USED → r106 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
-    r122 = param1[0 + 15]
+    r122 = param1[0 + 15];
     // CODE → <Mov>: <Reg8: 126, Reg8: 109>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 106>
@@ -1204,7 +1204,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 105, Reg8: 103, UInt8: 8>
     // USED → r105 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
-    r122 = param1[0 + 6]
+    r122 = param1[0 + 6];
     // CODE → <Mov>: <Reg8: 126, Reg8: 108>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 105>
@@ -1220,7 +1220,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 104, Reg8: 103, UInt8: 8>
     // USED → r104 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
-    r122 = param1[0 + 13]
+    r122 = param1[0 + 13];
     // CODE → <Mov>: <Reg8: 126, Reg8: 107>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 104>
@@ -1236,7 +1236,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 101, Reg8: 103, UInt8: 8>
     // USED → r101 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
-    r122 = param1[0 + 4]
+    r122 = param1[0 + 4];
     // CODE → <Mov>: <Reg8: 126, Reg8: 106>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 101>
@@ -1252,7 +1252,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 102, Reg8: 103, UInt8: 8>
     // USED → r102 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
-    r122 = param1[0 + 11]
+    r122 = param1[0 + 11];
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 102>
@@ -1268,7 +1268,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 99, Reg8: 103, UInt8: 8>
     // USED → r99 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
-    r122 = param1[0 + 2]
+    r122 = param1[0 + 2];
     // CODE → <Mov>: <Reg8: 126, Reg8: 104>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 99>
@@ -1284,7 +1284,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call>: <Reg8: 100, Reg8: 103, UInt8: 8>
     // USED → r100 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
-    r122 = param1[0 + 9]
+    r122 = param1[0 + 9];
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
     r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 100>
@@ -1312,7 +1312,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 5, Reg8: 5, Reg8: 42>
     // USED → r5 = 0 + 16;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
-    // USED → r0 = param1.length
+    // USED → r0 = param1.length;
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
     // USED → r4 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 1732584193);
     // CODE → <Mov>: <Reg8: 3, Reg8: 8>
@@ -1322,7 +1322,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
     // USED → r1 = getEnvironment(0)[14](undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 271733878);
     // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
-    if (0 + 16 < r0) goto label_566;
+    if (0 + 16 < param1.length) goto label_566;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
     // USED → r0 = [];
