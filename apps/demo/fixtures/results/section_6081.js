@@ -126,5 +126,5 @@ function processColorsInProps(param0, param1) {
     // LOOP → END
     // ──────────────── Block 11 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return undefined;
 }

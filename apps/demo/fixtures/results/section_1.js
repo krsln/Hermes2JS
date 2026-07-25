@@ -127,5 +127,5 @@ function function_1(param0, param1) {
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 8, Reg8: 1>
     createEnvironment()[8] = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(undefined)];
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return undefined;
 }

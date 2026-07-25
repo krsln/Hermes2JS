@@ -63,7 +63,7 @@ function AcquisitionManager(param0, param1, param2) {
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 9, string_id: 21902>  # String: '_ignoreAppVersion' (Identifier)
     this._ignoreAppVersion = param2.ignoreAppVersion;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined;
+    // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return undefined;
 }

@@ -15,7 +15,7 @@ function request(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this;
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
-    r0 = getEnvironment(0)[0].apply(getEnvironment(0)[0], this, arguments);
+    // USED → r0 = getEnvironment(0)[0].apply(getEnvironment(0)[0], this, arguments);
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return getEnvironment(0)[0].apply(getEnvironment(0)[0], this, arguments);
 }

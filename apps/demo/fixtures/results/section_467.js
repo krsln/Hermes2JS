@@ -2750,7 +2750,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <PutById>: <Reg8: 3, Reg8: 1, UInt8: 18, string_id: 24466>  # String: 'unmountComponentAtNode' (Identifier)
         param6.unmountComponentAtNode = function_862;
         // CODE → <Ret>: <Reg8: 2>
-        // Unhandled opcode: Ret
+        return undefined;
         // ──────────────── Block 33 ──────────────── 
         // CODE → <Catch>: <Reg8: 6>
         r6 = caughtException;

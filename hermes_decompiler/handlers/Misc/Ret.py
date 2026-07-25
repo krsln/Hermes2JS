@@ -1,4 +1,4 @@
-from hermes_decompiler.ir import ThrowStatement
+from hermes_decompiler.ir import ReturnStatement
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -8,10 +8,20 @@ from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.handlers._shared_patterns import REG, sequence
 
 
-# DEFINE_OPCODE_1(Throw, Reg8)
-# Example: <Throw>: <Reg8: 2>
-class Throw(OpcodeHandler):
-    """Throw an exception."""
+# DEFINE_OPCODE_1(Ret, Reg8)
+# Example: <Ret>: <Reg8: 0>
+class Ret(OpcodeHandler):
+    """
+    Return from the current function.
+
+    NOTE (fix): this file previously contained a stray copy of
+    `Throw.py` - a `class Throw` (not `Ret`), which meant no handler was
+    ever registered for the `Ret` opcode at all (`OpcodeHandler.
+    __init_subclass__` keys the registry by class name). Every function
+    body was ending with an unhandled `Ret`, and the file's duplicate
+    `Throw` class was silently overwriting the real one from Misc/Throw.py
+    in the registry, depending on import order.
+    """
 
     _PATTERN = sequence(REG)
 
@@ -30,8 +40,8 @@ class Throw(OpcodeHandler):
             entry.address,
             "",
             value,
-            statement=ThrowStatement(argument=value),
+            statement=ReturnStatement(argument=value),
         )
         analysis.add_result(entry, variable)
 
-        return OpcodeResult(entry, variable, control_flow=ControlFlowType.THROW)
+        return OpcodeResult(entry, variable, control_flow=ControlFlowType.RETURN)

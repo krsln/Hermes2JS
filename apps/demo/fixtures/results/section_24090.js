@@ -70,7 +70,7 @@ function onPress(param0) {
     r0 = getEnvironment(1)[12].default.open(getEnvironment(1)[12].default, { "title": "Join Coachify AI Competition", "message": "Join Coachify AI Competition", "url": "https://coachify.ai/download?ref=compshare", "subject": "Join Coachify AI Competition" });
     // ──────────────── Block 3 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined;
+    // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return undefined;
 }

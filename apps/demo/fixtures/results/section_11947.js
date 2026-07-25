@@ -5,7 +5,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 0>
     // USED → r8 = this;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 5>
-    r0 = await yield;
+    // USED → r0 = await yield;
     // CODE → <JmpTrueLong>: <Addr32: 311, Reg8: 5>  # Address: 0000013e
     if (r5) goto label_318;
     // ──────────────── Block 1 ──────────────── 
@@ -22,31 +22,27 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 17057>  # String: '_request' (Identifier)
     // USED → r7 = this._request;
     // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
-    r3 = await CallExpression(callee=MemberExpression(receiver=Identifier(name='this'), member=Identifier(name='_request'), computed=False, optional=False), arguments=(Identifier(name='this'), Identifier(name='param1'), Identifier(name='param2')), optional=False)
+    // USED → r3 = await CallExpression(callee=MemberExpression(receiver=Identifier(name='this'), member=Identifier(name='_request'), computed=False, optional=False), arguments=(Identifier(name='this'), Identifier(name='param1'), Identifier(name='param2')), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
     goto label_41;
-    // LOOP → START (while)
-    while (param1) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
-        r3 = await yield;
-        // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032
-        if (param1) goto label_50;
-        // ──────────────── Block 2 ──────────────── 
-        // CODE → <Ret>: <Reg8: 3>
-        // Unhandled opcode: Ret
-    }
-    // LOOP → END
+    // ──────────────── Block 2 ──────────────── 
+    // CODE → <Ret>: <Reg8: 3>
+    return r3;
+    // ──────────────── Block 3 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
+    // USED → r3 = await yield;
+    // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000032
+    if (param1) goto label_50;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 3>
-    // Unhandled opcode: Ret
+    return await yield;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 3>
-    // Unhandled opcode: Ret
+    return await yield;
     // CODE → <Catch>: <Reg8: 7>
     // USED → r7 = caughtException;
     // CODE → <Mov>: <Reg8: 1, Reg8: 7>
@@ -188,5 +184,5 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return await yield;
 }

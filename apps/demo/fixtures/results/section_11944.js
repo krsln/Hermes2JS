@@ -17,7 +17,7 @@ function function_11944(param0) {
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 1>
     createEnvironment()[0] = getEnvironment(1)[0].default(undefined, function_11946);
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11945>  # Function: [#11945 request of 30 bytes]: 3 params @ offset 0x00189110
-    r0 = request;
+    // USED → r0 = request;
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return request;
 }

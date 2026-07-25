@@ -5,7 +5,7 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 7, UInt8: 1>
     // USED → r7 = param1;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    r0 = await yield;
+    // USED → r0 = await yield;
     // CODE → <JmpTrueLong>: <Addr32: 161, Reg8: 1>  # Address: 000000a8
     if (r1) goto label_168;
     // ──────────────── Block 1 ──────────────── 
@@ -16,21 +16,17 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
-    r1 = await CallExpression(callee=MemberExpression(receiver=Identifier(name='globalThis'), member=Identifier(name='fetch'), computed=False, optional=False), arguments=(UndefinedLiteral(), Identifier(name='param1')), optional=False)
+    // USED → r1 = await CallExpression(callee=MemberExpression(receiver=Identifier(name='globalThis'), member=Identifier(name='fetch'), computed=False, optional=False), arguments=(UndefinedLiteral(), Identifier(name='param1')), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000020
     goto label_32;
-    // LOOP → START (while)
-    while (globalThis.fetch) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-        // USED → r1 = await yield;
-        // CODE → <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
-        if (globalThis.fetch) goto label_165;
-        // ──────────────── Block 2 ──────────────── 
-        // CODE → <Ret>: <Reg8: 1>
-        // Unhandled opcode: Ret
-    }
-    // LOOP → END
+    // ──────────────── Block 2 ──────────────── 
+    // CODE → <Ret>: <Reg8: 1>
+    return r1;
+    // ──────────────── Block 3 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
+    // USED → r1 = await yield;
+    // CODE → <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
+    if (globalThis.fetch) goto label_165;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 14168>  # String: 'ok' (Identifier)
     // USED → r3 = await yield.ok;
@@ -83,39 +79,35 @@ async function* anon_17161(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
     // USED → r2 = await yield.text;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
-    r2 = await CallExpression(callee=MemberExpression(receiver=AwaitExpression(argument=YieldExpression(argument=None, delegate=False)), member=Identifier(name='text'), computed=False, optional=False), arguments=(AwaitExpression(argument=YieldExpression(argument=None, delegate=False)),), optional=False)
+    // USED → r2 = await CallExpression(callee=MemberExpression(receiver=AwaitExpression(argument=YieldExpression(argument=None, delegate=False)), member=Identifier(name='text'), computed=False, optional=False), arguments=(AwaitExpression(argument=YieldExpression(argument=None, delegate=False)),), optional=False)
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000099
     goto label_153;
-    // LOOP → START (while)
-    while (createThis(globalThis.Error.prototype, globalThis.Error)) {
-        // ──────────────── Block 10 ──────────────── 
-        // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
-        r2 = await yield;
-        // CODE → <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
-        if (createThis(globalThis.Error.prototype, globalThis.Error)) goto label_162;
-        // ──────────────── Block 9 ──────────────── 
-        // CODE → <Ret>: <Reg8: 2>
-        // Unhandled opcode: Ret
-    }
-    // LOOP → END
+    // ──────────────── Block 9 ──────────────── 
+    // CODE → <Ret>: <Reg8: 2>
+    return r2;
+    // ──────────────── Block 10 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+    // USED → r2 = await yield;
+    // CODE → <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
+    if (createThis(globalThis.Error.prototype, globalThis.Error)) goto label_162;
     // ──────────────── Block 11 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 2>
-    // Unhandled opcode: Ret
+    return await yield;
     // ──────────────── Block 12 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 2>
-    // Unhandled opcode: Ret
+    return await yield;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 1>
-    // Unhandled opcode: Ret
+    return await yield;
     // ──────────────── Block 14 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator;
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return await yield;
 }

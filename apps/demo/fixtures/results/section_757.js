@@ -83,11 +83,6 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // USED → r11 = getEnvironment(0)[73](undefined, param1.updateQueue.stores[0].getSnapshot(undefined), param1.updateQueue.stores[0].value);
         // CODE → <JmpTrue>: <Addr8: 7, Reg8: 11>  # Address: 00000089
         if (getEnvironment(0)[73](undefined, param1.updateQueue.stores[0].getSnapshot(undefined), param1.updateQueue.stores[0].value)) goto label_137;
-        // ──────────────── Block 6 ──────────────── 
-        // CODE → <LoadConstFalse>: <Reg8: 11>
-        r11 = false;
-        // CODE → <Ret>: <Reg8: 11>
-        // Unhandled opcode: Ret
         // ──────────────── Block 7 ──────────────── 
         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
         // USED → r11 = 0;
@@ -161,40 +156,37 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         r0 = param1.return.sibling;
         // CODE → <JmpLong>: <Addr32: -235>  # Address: 0000001d
         goto label_29;
-        // LOOP → START (while)
-        while (true) {
-            // ──────────────── Block 18 ──────────────── 
-            // CODE → <Mov>: <Reg8: 11, Reg8: 6>
-            // USED → r11 = param1.child;
-            // CODE → <PutById>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 209>  # String: 'return' (Identifier)
-            param1.child.return = param1;
-            // CODE → <Mov>: <Reg8: 0, Reg8: 11>
-            r0 = param1.child;
-            // CODE → <JmpLong>: <Addr32: -260>  # Address: 0000001d
-            goto label_29;
-            // LOOP → START (while)
-            while (true) {
-                // ──────────────── Block 17 ──────────────── 
-                // CODE → <LoadConstTrue>: <Reg8: 11>
-                r11 = true;
-                // CODE → <Ret>: <Reg8: 11>
-                // Unhandled opcode: Ret
-                // ──────────────── Block 16 ──────────────── 
-                // CODE → <LoadConstTrue>: <Reg8: 11>
-                r11 = true;
-                // CODE → <Ret>: <Reg8: 11>
-                // Unhandled opcode: Ret
-            }
-            // LOOP → END
-        }
-        // LOOP → END
+        // ──────────────── Block 18 ──────────────── 
+        // CODE → <Mov>: <Reg8: 11, Reg8: 6>
+        // USED → r11 = param1.child;
+        // CODE → <PutById>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 209>  # String: 'return' (Identifier)
+        param1.child.return = param1;
+        // CODE → <Mov>: <Reg8: 0, Reg8: 11>
+        r0 = param1.child;
+        // CODE → <JmpLong>: <Addr32: -260>  # Address: 0000001d
+        goto label_29;
     }
     // LOOP → END
+    // ──────────────── Block 6 ──────────────── 
+    // CODE → <LoadConstFalse>: <Reg8: 11>
+    // USED → r11 = false;
+    // CODE → <Ret>: <Reg8: 11>
+    return false;
+    // ──────────────── Block 16 ──────────────── 
+    // CODE → <LoadConstTrue>: <Reg8: 11>
+    // USED → r11 = true;
+    // CODE → <Ret>: <Reg8: 11>
+    return true;
+    // ──────────────── Block 17 ──────────────── 
+    // CODE → <LoadConstTrue>: <Reg8: 11>
+    // USED → r11 = true;
+    // CODE → <Ret>: <Reg8: 11>
+    return true;
     // ──────────────── Block 19 ──────────────── 
     // CODE → <Catch>: <Reg8: 0>
     r0 = caughtException;
     // CODE → <LoadConstFalse>: <Reg8: 0>
-    r0 = false;
+    // USED → r0 = false;
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return false;
 }

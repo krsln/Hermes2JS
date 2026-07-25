@@ -20,8 +20,8 @@ function function_25631(param0, param1) {
     // CODE → <LoadConstInt>: <Reg8: 1, Imm32: 429>
     // USED → r1 = 429;
     // CODE → <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
-    r0 = param1 === 429;
+    // USED → r0 = param1 === 429;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return param1 === 429;
 }

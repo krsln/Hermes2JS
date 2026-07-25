@@ -84,5 +84,5 @@ function function_12825(param0, param1, param2, param3, param4) {
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return param1.slice(param1).pop(param1.slice(param1))(undefined, param2) === false;
 }

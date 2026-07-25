@@ -9,7 +9,7 @@ function function_11949(param0, param1) {
     // CODE → <DelByVal>: <Reg8: 0, Reg8: 1, Reg8: 0>
     r0 = delete getEnvironment(0)[1][param1];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined;
+    // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>
-    // Unhandled opcode: Ret
+    return undefined;
 }
