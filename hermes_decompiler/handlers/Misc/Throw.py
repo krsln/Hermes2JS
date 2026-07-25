@@ -1,4 +1,4 @@
-from hermes_decompiler.ir.Values import ThrowValue
+from hermes_decompiler.ir import ThrowStatement
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -12,6 +12,7 @@ from hermes_decompiler.handlers._shared_patterns import REG, sequence
 # Example: <Throw>: <Reg8: 2>
 class Throw(OpcodeHandler):
     """Throw an exception."""
+
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -24,7 +25,7 @@ class Throw(OpcodeHandler):
         value_reg = int(match.group(1))
         value = self.get_register_value(analysis, value_reg)
 
-        variable = JSVariable(handler, entry.address, "", ThrowValue(value))
+        variable = JSVariable(handler, entry.address, "", value, statement=ThrowStatement(argument=value))
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable, control_flow=ControlFlowType.THROW)

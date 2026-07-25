@@ -1,5 +1,4 @@
-from hermes_decompiler.ir.Expressions import MemberExpression, ComputedMemberExpression
-from hermes_decompiler.ir.Values import IdentifierValue
+from hermes_decompiler.ir import Identifier, MemberExpression
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -17,14 +16,13 @@ class ReifyArguments(OpcodeHandler):
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
 
-        # Parse arguments: expecting "Reg8: X"
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8 argument")
 
         dest_reg = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', IdentifierValue("arguments"))
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", Identifier(name="arguments"))
         analysis.add_result(entry, variable)
         return OpcodeResult(entry, variable)
 
@@ -43,7 +41,7 @@ class GetArgumentsLength(OpcodeHandler):
 
         dest_reg, _lazy_reg = map(int, match.groups())
 
-        value = MemberExpression(IdentifierValue("arguments"), IdentifierValue("length"))
+        value = MemberExpression(receiver=Identifier(name="arguments"), member=Identifier(name="length"))
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
@@ -65,7 +63,10 @@ class GetArgumentsPropByVal(OpcodeHandler):
         dest_reg, index_reg, _lazy_reg = map(int, match.groups())
         index_value = self.get_register_value(analysis, index_reg)
 
-        value = ComputedMemberExpression(object=IdentifierValue("arguments"), property=index_value)
+        # `ComputedMemberExpression` was a separate legacy class for
+        # `obj[x]`; the new IR unifies dot/bracket access into one
+        # `MemberExpression` via `computed=`.
+        value = MemberExpression(receiver=Identifier(name="arguments"), member=index_value, computed=True)
         variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 

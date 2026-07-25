@@ -1,11 +1,11 @@
 import re
 
-from hermes_decompiler.ir.Expressions import SwitchStatement
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
 from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.regions.models.Statements import SwitchGotoStatement
 
 
 class SwitchImm(OpcodeHandler):
@@ -36,9 +36,18 @@ class SwitchImm(OpcodeHandler):
             handler,
             entry.address,
             "",
-            SwitchStatement(selector, targets),
+            None,  # pure control flow: no operand value of its own
+            statement=SwitchGotoStatement(selector=selector, targets=tuple(targets)),
         )
 
         analysis.add_result(entry, variable, extra_gotos=targets)
 
-        return OpcodeResult(entry, variable, extra_gotos=targets)
+        # NOTE (fix): the original never set `control_flow`, defaulting
+        # to NORMAL despite having multiple successors and no
+        # fallthrough - same class of bug already fixed for JCompareX.
+        return OpcodeResult(
+            entry,
+            variable,
+            extra_gotos=targets,
+            control_flow=ControlFlowType.TERMINATOR,
+        )
