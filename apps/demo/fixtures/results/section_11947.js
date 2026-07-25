@@ -74,13 +74,13 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 4, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r4 = r8.prototype
     // CODE → <CreateThis>: <Reg8: 7, Reg8: 4, Reg8: 8>
-    // USED → r7 = createThis(prototype=r4, constructor=r8)
+    // USED → r7 = createThis(r4, r8);
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>
-    r12 = r7;
+    r12 = createThis(r4, r8);
     // CODE → <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
-    // USED → r4 = new r8(r7)
+    // USED → r4 = new r8(createThis(r4, r8))
     // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
-    // USED → r6 = r7[r4]
+    // USED → r6 = createThis(r4, r8)[r4]
     // CODE → <Jmp>: <Addr8: 16>  # Address: 00000087
     goto label_135;
     // ──────────────── Block 8 ──────────────── 

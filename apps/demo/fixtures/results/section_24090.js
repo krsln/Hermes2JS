@@ -16,13 +16,13 @@ function onPress(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r3 = r2.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    // USED → r3 = createThis(prototype=r3, constructor=r2)
+    // USED → r3 = createThis(r3, r2);
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
-    r8 = r3;
+    r8 = createThis(r3, r2);
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
     // USED → r2 = new r2(r1)
     // CODE → <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    // USED → r3 = r3[r2]
+    // USED → r3 = createThis(r3, r2)[r2]
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 21914>  # String: 'trackJoinCompetitionList' (Identifier)
     // USED → r2 = r3.trackJoinCompetitionList
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>

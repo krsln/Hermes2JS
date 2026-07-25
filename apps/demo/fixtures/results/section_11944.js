@@ -17,7 +17,7 @@ function function_11944(param0) {
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 1>
     r0[0] = r3(r2, r1)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11945>  # Function: [#11945 request of 30 bytes]: 3 params @ offset 0x00189110
-    r0 = request /* Closure with env r0 = r0 */
+    r0 = request;
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }

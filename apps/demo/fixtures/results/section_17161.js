@@ -70,13 +70,13 @@ async function* anon_17161(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r3 = r4.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
-    // USED → r3 = createThis(prototype=r3, constructor=r4)
+    // USED → r3 = createThis(r3, r4);
     // CODE → <Mov>: <Reg8: 11, Reg8: 3>
-    r11 = r3;
+    r11 = createThis(r3, r4);
     // CODE → <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-    // USED → r2 = new r4(r2, r3)
+    // USED → r2 = new r4(r2, createThis(r3, r4))
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = r3[r2]
+    // USED → r2 = createThis(r3, r4)[r2]
     // CODE → <Throw>: <Reg8: 2>
     throw r2;
     // ──────────────── Block 8 ──────────────── 
@@ -87,12 +87,12 @@ async function* anon_17161(param0, param1) {
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000099
     yield label_153;
     // LOOP → START (while)
-    while (r3) {
+    while (createThis(r3, r4)) {
         // ──────────────── Block 10 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
         r2 = await yield /* ResumeGenerator -> r2 */
         // CODE → <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
-        if (r3) goto label_162;
+        if (createThis(r3, r4)) goto label_162;
         // ──────────────── Block 9 ──────────────── 
         // CODE → <Ret>: <Reg8: 2>
         // Unhandled opcode: Ret

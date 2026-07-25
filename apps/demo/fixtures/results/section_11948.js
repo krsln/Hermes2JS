@@ -297,9 +297,9 @@ function _request(param0, param1, param2) {
     // CODE → <NewArrayWithBuffer>: <Reg8: 15, UInt16: 7, UInt16: 7, UInt16: 21504>  # Array: ['delete', 'get', 'head', 'post', 'put', 'patch', 'common']
     // USED → r15 = ["delete", "get", "head", "post", "put", "patch", "common"];
     // CODE → <CreateClosure>: <Reg8: 14, Reg8: 9, function_id: 11949>  # Function: [#11949  of 18 bytes]: 2 params @ offset 0x002ba16a
-    // USED → r14 = function_11949 /* Closure with env r9 = r9 */
+    // USED → r14 = function_11949;
     // CODE → <Call3>: <Reg8: 14, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 14>
-    r14 = r18(r19, ["delete", "get", "head", "post", "put", "patch", "common"], r14);
+    r14 = r18(r19, ["delete", "get", "head", "post", "put", "patch", "common"], function_11949);
     // ──────────────── Block 25 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 10>
     // USED → r14 = r6[10]
@@ -326,9 +326,9 @@ function _request(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 16, string_id: 135>  # String: 'forEach' (Identifier)
     // USED → r14 = r15.forEach
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 9, function_id: 11950>  # Function: [#11950 unshiftRequestInterceptors of 100 bytes]: 2 params @ offset 0x002ba17c
-    // USED → r2 = unshiftRequestInterceptors /* Closure with env r9 = r9 */
+    // USED → r2 = unshiftRequestInterceptors;
     // CODE → <Call2>: <Reg8: 2, Reg8: 14, Reg8: 15, Reg8: 2>
-    r2 = r14(r15, r2);
+    r2 = r14(r15, unshiftRequestInterceptors);
     // CODE → <NewArray>: <Reg8: 2, UInt16: 0>
     // USED → r2 = [];
     // CODE → <Mov>: <Reg8: 3, Reg8: 2>
@@ -342,9 +342,9 @@ function _request(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 16, string_id: 135>  # String: 'forEach' (Identifier)
     // USED → r14 = r15.forEach
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 9, function_id: 11951>  # Function: [#11951 pushResponseInterceptors of 37 bytes]: 2 params @ offset 0x002ba1e0
-    // USED → r2 = pushResponseInterceptors /* Closure with env r9 = r9 */
+    // USED → r2 = pushResponseInterceptors;
     // CODE → <Call2>: <Reg8: 2, Reg8: 14, Reg8: 15, Reg8: 2>
-    r2 = r14(r15, r2);
+    r2 = r14(r15, pushResponseInterceptors);
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0
     // CODE → <LoadConstZero>: <Reg8: 4>

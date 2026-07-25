@@ -1,4 +1,4 @@
-from hermes_decompiler.ir.Values import ClosureValue
+from hermes_decompiler.ir import Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -28,16 +28,22 @@ class CreateClosure(OpcodeHandler):
 
         dest_reg, value_reg, func_id = (int(x) for x in match.groups())
 
-        reg_value = self.get_register_value(analysis, value_reg)
         func_name = (
             entry.function.name
             if entry.function and entry.function.name
             else f"function_{func_id}"
         )
 
-        # value = f"{func_name} /* Closure with env r{value_reg} = {reg_value} */"
-        value = ClosureValue(name=f"{func_name}", environment_register=value_reg, environment=reg_value)
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
+        # NOTE: `environment_register`/`environment` (the old
+        # `ClosureValue`'s comment about which env the closure captures)
+        # is dropped here. In real JS, a closure's environment capture
+        # is implicit lexical scoping, not syntax - a plain reference to
+        # the function name is the correct AST shape. The captured env
+        # register is still visible in verbose mode via the `// CODE ->`
+        # bytecode comment if needed for debugging.
+        value = Identifier(name=func_name)
+
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

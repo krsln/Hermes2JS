@@ -1,4 +1,4 @@
-from hermes_decompiler.ir.Expressions import CreateThisExpression
+from hermes_decompiler.ir import CallExpression, Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -27,10 +27,16 @@ class CreateThis(OpcodeHandler):
         prototype = self.get_register_value(analysis, func)
         constructor = self.get_register_value(analysis, new_target)
 
-        # value = f"createThis(prototype={func_name}, constructor={new_target_name})"
-        value = CreateThisExpression(prototype=prototype, constructor=constructor)
+        # `CreateThisExpression` had no JS equivalent and isn't part of
+        # the new `ir` package; represented as a named pseudo-call,
+        # matching the same convention already used for
+        # getEnvironment()/HermesPropertyIterator() elsewhere.
+        value = CallExpression(
+            callee=Identifier(name="createThis"),
+            arguments=(prototype, constructor),
+        )
 
-        variable = JSVariable(handler, entry.address, f'r{dest}', value)
+        variable = JSVariable(handler, entry.address, f"r{dest}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

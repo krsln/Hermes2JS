@@ -13,11 +13,11 @@ function AcquisitionManager(param0, param1, param2) {
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 22128>  # String: '_publicPrefixUrl' (Identifier)
     r1._publicPrefixUrl = r2;
     // CODE → <CreateEnvironment>: <Reg8: 2>
-    // USED → r2 = createEnvironment()
+    r2 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 25631>  # Function: [#25631  of 41 bytes]: 2 params @ offset 0x0044ff52
-    // USED → r2 = function_25631 /* Closure with env r2 = r2 */
+    // USED → r2 = function_25631;
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 3, string_id: 24002>  # String: 'isRecoverable' (Identifier)
-    r1.isRecoverable = r2;
+    r1.isRecoverable = function_25631;
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
     // USED → r2 = param1
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 20572>  # String: '_httpRequester' (Identifier)

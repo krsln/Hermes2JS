@@ -13,9 +13,9 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 1, Reg8: 6>
     r3[1] = r6
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 3, function_id: 10680>  # Function: [#10680 processPathConstants of 246 bytes]: 2 params @ offset 0x00294da4
-    // USED → r0 = processPathConstants /* Closure with env r3 = r3 */
+    // USED → r0 = processPathConstants;
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 7, Reg8: 0>
-    r3[7] = r0
+    r3[7] = processPathConstants
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 37>  # String: 'Object' (Identifier)
@@ -71,7 +71,7 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <PutNewOwnById>: <Reg8: 1, Reg8: 4, string_id: 12734>  # String: 'SDK_VERSION' (Identifier)
     r1."SDK_VERSION" = r5(r0, r4);
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 3, function_id: 10681>  # Function: [#10681 get FilePath of 65 bytes]: 1 params @ offset 0x00294e9a
-    // USED → r4 = get FilePath /* Closure with env r3 = r3 */
+    // USED → r4 = get FilePath;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5066>  # String: 'FilePath' (String)
     // USED → r3 = "FilePath"
     // CODE → <PutOwnGetterSetterByVal>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 0, UInt8: 1>
