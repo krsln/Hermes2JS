@@ -1,7 +1,7 @@
 function function_10679(param0, param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 3>
-    // USED → r3 = createEnvironment()
+    // USED → r3 = createEnvironment();
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 2>
     // USED → r5 = param2
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 6>
@@ -9,13 +9,13 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 7>
     // USED → r6 = param7
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 0, Reg8: 5>
-    r3[0] = r5
+    createEnvironment()[0] = r5;
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 1, Reg8: 6>
-    r3[1] = r6
+    createEnvironment()[1] = r6;
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 3, function_id: 10680>  # Function: [#10680 processPathConstants of 246 bytes]: 2 params @ offset 0x00294da4
     // USED → r0 = processPathConstants;
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 7, Reg8: 0>
-    r3[7] = processPathConstants
+    createEnvironment()[7] = processPathConstants;
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 37>  # String: 'Object' (Identifier)
@@ -43,23 +43,23 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 0, Reg8: 1>
     // USED → r1 = r5(r0, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 2, Reg8: 1>
-    r3[2] = r5(r0, r1)
+    createEnvironment()[2] = r5(r0, r1);
     // CODE → <NewArrayWithBuffer>: <Reg8: 1, UInt16: 9, UInt16: 9, UInt16: 43049>  # Array: ['MAIN_BUNDLE', 'CACHES_DIRECTORY', 'DOCUMENT_DIRECTORY', 'EXTERNAL_DIRECTORY', 'EXTERNAL_STORAGE_DIRECTORY', 'TEMP_DIRECTORY', 'LIBRARY_DIRECTORY', 'PICTURES_DIRECTORY', 'MOVIES_DIRECTORY']
     // USED → r1 = ["MAIN_BUNDLE", "CACHES_DIRECTORY", "DOCUMENT_DIRECTORY", "EXTERNAL_DIRECTORY", "EXTERNAL_STORAGE_DIRECTORY", "TEMP_DIRECTORY", "LIBRARY_DIRECTORY", "PICTURES_DIRECTORY", "MOVIES_DIRECTORY"];
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 3, Reg8: 1>
-    r3[3] = ["MAIN_BUNDLE", "CACHES_DIRECTORY", "DOCUMENT_DIRECTORY", "EXTERNAL_DIRECTORY", "EXTERNAL_STORAGE_DIRECTORY", "TEMP_DIRECTORY", "LIBRARY_DIRECTORY", "PICTURES_DIRECTORY", "MOVIES_DIRECTORY"]
+    createEnvironment()[3] = ["MAIN_BUNDLE", "CACHES_DIRECTORY", "DOCUMENT_DIRECTORY", "EXTERNAL_DIRECTORY", "EXTERNAL_STORAGE_DIRECTORY", "TEMP_DIRECTORY", "LIBRARY_DIRECTORY", "PICTURES_DIRECTORY", "MOVIES_DIRECTORY"];
     // CODE → <NewArrayWithBuffer>: <Reg8: 1, UInt16: 2, UInt16: 2, UInt16: 43068>  # Array: ['FILE_TYPE_REGULAR', 'FILE_TYPE_DIRECTORY']
     // USED → r1 = ["FILE_TYPE_REGULAR", "FILE_TYPE_DIRECTORY"];
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 4, Reg8: 1>
-    r3[4] = ["FILE_TYPE_REGULAR", "FILE_TYPE_DIRECTORY"]
+    createEnvironment()[4] = ["FILE_TYPE_REGULAR", "FILE_TYPE_DIRECTORY"];
     // CODE → <NewObject>: <Reg8: 1>
     // USED → r1 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 5, Reg8: 1>
-    r3[5] = r1
+    createEnvironment()[5] = r1;
     // CODE → <LoadConstFalse>: <Reg8: 1>
     // USED → r1 = false
     // CODE → <StoreNPToEnvironment>: <Reg8: 3, UInt8: 6, Reg8: 1>
-    r3[6] = r1
+    createEnvironment()[6] = r1;
     // CODE → <NewObject>: <Reg8: 1>
     // USED → r1 = {  }
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 2>

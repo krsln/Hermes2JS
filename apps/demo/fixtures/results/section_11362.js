@@ -55,7 +55,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <LoadConstInt>: <Reg8: 6, Imm32: 271733878>
     // USED → r6 = 271733878
     // CODE → <GetEnvironment>: <Reg8: 92, UInt8: 0>
-    // USED → r92 = getEnvironment(0)
+    // USED → r92 = getEnvironment(0);
     // CODE → <LoadConstUndefined>: <Reg8: 91>
     // USED → r91 = undefined
     // CODE → <LoadConstUInt8>: <Reg8: 90, UInt8: 7>
@@ -234,7 +234,7 @@ function binl_md5(param0, param1, param2) {
     if (!(r93 < r0)) goto label_2368;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 10>
-    // USED → r119 = r92[10]
+    // USED → r119 = getEnvironment(0)[10];
     // CODE → <Add>: <Reg8: 114, Reg8: 5, Reg8: 93>
     // USED → r114 = r5 + r93;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
@@ -254,7 +254,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 120, Reg8: 89>
     r120 = r89;
     // CODE → <Call>: <Reg8: 99, Reg8: 119, UInt8: 8>
-    // USED → r99 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r99 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 107, Reg8: 5, Reg8: 88>
     // USED → r107 = r5 + r88;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
@@ -262,7 +262,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 126, Reg8: 6>
     r126 = r6;
     // CODE → <Mov>: <Reg8: 125, Reg8: 99>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 8>
     r124 = r8;
     // CODE → <Mov>: <Reg8: 123, Reg8: 7>
@@ -272,7 +272,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 120, Reg8: 86>
     r120 = r86;
     // CODE → <Call>: <Reg8: 104, Reg8: 119, UInt8: 8>
-    // USED → r104 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r104 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 100, Reg8: 5, Reg8: 85>
     // USED → r100 = r5 + r85;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
@@ -280,9 +280,9 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 126, Reg8: 7>
     r126 = r7;
     // CODE → <Mov>: <Reg8: 125, Reg8: 104>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 99>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 8>
     r123 = r8;
     // CODE → <Mov>: <Reg8: 121, Reg8: 84>
@@ -290,7 +290,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 120, Reg8: 83>
     r120 = r83;
     // CODE → <Call>: <Reg8: 101, Reg8: 119, UInt8: 8>
-    // USED → r101 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r101 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 109, Reg8: 5, Reg8: 82>
     // USED → r109 = r5 + r82;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
@@ -298,1042 +298,1042 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 126, Reg8: 8>
     r126 = r8;
     // CODE → <Mov>: <Reg8: 125, Reg8: 101>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 104>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 99>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 81>
     r121 = r81;
     // CODE → <Mov>: <Reg8: 120, Reg8: 80>
     r120 = r80;
     // CODE → <Call>: <Reg8: 103, Reg8: 119, UInt8: 8>
-    // USED → r103 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r103 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 102, Reg8: 5, Reg8: 95>
     // USED → r102 = r5 + r95;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
     r122 = r98[r5 + r95]
     // CODE → <Mov>: <Reg8: 126, Reg8: 99>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 103>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 101>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 104>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 90>
     r121 = r90;
     // CODE → <Mov>: <Reg8: 120, Reg8: 79>
     r120 = r79;
     // CODE → <Call>: <Reg8: 99, Reg8: 119, UInt8: 8>
-    // USED → r99 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r99 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 111, Reg8: 5, Reg8: 97>
     // USED → r111 = r5 + r97;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
     r122 = r98[r5 + r97]
     // CODE → <Mov>: <Reg8: 126, Reg8: 104>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 99>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 103>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 101>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 87>
     r121 = r87;
     // CODE → <Mov>: <Reg8: 120, Reg8: 78>
     r120 = r78;
     // CODE → <Call>: <Reg8: 105, Reg8: 119, UInt8: 8>
-    // USED → r105 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r105 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 104, Reg8: 5, Reg8: 77>
     // USED → r104 = r5 + r77;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
     r122 = r98[r5 + r77]
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 105>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 99>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 103>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 84>
     r121 = r84;
     // CODE → <Mov>: <Reg8: 120, Reg8: 76>
     r120 = r76;
     // CODE → <Call>: <Reg8: 101, Reg8: 119, UInt8: 8>
-    // USED → r101 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r101 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 113, Reg8: 5, Reg8: 90>
     // USED → r113 = r5 + r90;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
     r122 = r98[r5 + r90]
     // CODE → <Mov>: <Reg8: 126, Reg8: 103>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 101>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 105>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 99>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 81>
     r121 = r81;
     // CODE → <Mov>: <Reg8: 120, Reg8: 75>
     r120 = r75;
     // CODE → <Call>: <Reg8: 110, Reg8: 119, UInt8: 8>
-    // USED → r110 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r110 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 106, Reg8: 5, Reg8: 74>
     // USED → r106 = r5 + r74;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
     r122 = r98[r5 + r74]
     // CODE → <Mov>: <Reg8: 126, Reg8: 99>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 110>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 101>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 105>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 90>
     r121 = r90;
     // CODE → <Mov>: <Reg8: 120, Reg8: 73>
     r120 = r73;
     // CODE → <Call>: <Reg8: 103, Reg8: 119, UInt8: 8>
-    // USED → r103 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r103 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 0, Reg8: 5, Reg8: 96>
     // USED → r0 = r5 + r96;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
     r122 = r98[r5 + r96]
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 103>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 110>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 101>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 87>
     r121 = r87;
     // CODE → <Mov>: <Reg8: 120, Reg8: 72>
     r120 = r72;
     // CODE → <Call>: <Reg8: 112, Reg8: 119, UInt8: 8>
-    // USED → r112 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r112 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 108, Reg8: 5, Reg8: 71>
     // USED → r108 = r5 + r71;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
     r122 = r98[r5 + r71]
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 112>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 103>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 110>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 84>
     r121 = r84;
     // CODE → <Mov>: <Reg8: 120, Reg8: 70>
     r120 = r70;
     // CODE → <Call>: <Reg8: 105, Reg8: 119, UInt8: 8>
-    // USED → r105 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r105 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 99, Reg8: 5, Reg8: 69>
     // USED → r99 = r5 + r69;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
     r122 = r98[r5 + r69]
     // CODE → <Mov>: <Reg8: 126, Reg8: 110>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 105>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 112>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 103>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 81>
     r121 = r81;
     // CODE → <Mov>: <Reg8: 120, Reg8: 68>
     r120 = r68;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
-    // USED → r115 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r115 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 110, Reg8: 5, Reg8: 87>
     // USED → r110 = r5 + r87;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
     r122 = r98[r5 + r87]
     // CODE → <Mov>: <Reg8: 126, Reg8: 103>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 105>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 112>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 90>
     r121 = r90;
     // CODE → <Mov>: <Reg8: 120, Reg8: 67>
     r120 = r67;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
-    // USED → r118 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r118 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 101, Reg8: 5, Reg8: 66>
     // USED → r101 = r5 + r66;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
     r122 = r98[r5 + r66]
     // CODE → <Mov>: <Reg8: 126, Reg8: 112>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 105>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 87>
     r121 = r87;
     // CODE → <Mov>: <Reg8: 120, Reg8: 65>
     r120 = r65;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
-    // USED → r117 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r117 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 112, Reg8: 5, Reg8: 94>
     // USED → r112 = r5 + r94;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
     r122 = r98[r5 + r94]
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 84>
     r121 = r84;
     // CODE → <Mov>: <Reg8: 120, Reg8: 64>
     r120 = r64;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
-    // USED → r116 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r116 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Add>: <Reg8: 105, Reg8: 5, Reg8: 63>
     // USED → r105 = r5 + r63;
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
     r122 = r98[r5 + r63]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 81>
     r121 = r81;
     // CODE → <Mov>: <Reg8: 120, Reg8: 62>
     r120 = r62;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
-    // USED → r115 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r115 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 11>
-    // USED → r119 = r92[11]
+    // USED → r119 = getEnvironment(0)[11];
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
     r122 = r98[r5 + r88]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 97>
     r121 = r97;
     // CODE → <Mov>: <Reg8: 120, Reg8: 61>
     r120 = r61;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
-    // USED → r118 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r118 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
     r122 = r98[r5 + r77]
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 96>
     r121 = r96;
     // CODE → <Mov>: <Reg8: 120, Reg8: 60>
     r120 = r60;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
-    // USED → r117 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r117 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
     r122 = r98[r5 + r69]
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 94>
     r121 = r94;
     // CODE → <Mov>: <Reg8: 120, Reg8: 59>
     r120 = r59;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
-    // USED → r116 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r116 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
     r122 = r98[r5 + r93]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[10](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 58>
     r121 = r58;
     // CODE → <Mov>: <Reg8: 120, Reg8: 57>
     r120 = r57;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
-    // USED → r115 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r115 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
     r122 = r98[r5 + r97]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 97>
     r121 = r97;
     // CODE → <Mov>: <Reg8: 120, Reg8: 56>
     r120 = r56;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
-    // USED → r118 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r118 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
     r122 = r98[r5 + r71]
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 96>
     r121 = r96;
     // CODE → <Mov>: <Reg8: 120, Reg8: 55>
     r120 = r55;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
-    // USED → r117 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r117 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
     r122 = r98[r5 + r63]
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 94>
     r121 = r94;
     // CODE → <Mov>: <Reg8: 120, Reg8: 54>
     r120 = r54;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
-    // USED → r116 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r116 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
     r122 = r98[r5 + r95]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 58>
     r121 = r58;
     // CODE → <Mov>: <Reg8: 120, Reg8: 53>
     r120 = r53;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
-    // USED → r115 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r115 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
     r122 = r98[r5 + r96]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 97>
     r121 = r97;
     // CODE → <Mov>: <Reg8: 120, Reg8: 52>
     r120 = r52;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
-    // USED → r118 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r118 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
     r122 = r98[r5 + r94]
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 96>
     r121 = r96;
     // CODE → <Mov>: <Reg8: 120, Reg8: 51>
     r120 = r51;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
-    // USED → r117 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r117 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
     r122 = r98[r5 + r82]
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 94>
     r121 = r94;
     // CODE → <Mov>: <Reg8: 120, Reg8: 50>
     r120 = r50;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
-    // USED → r116 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r116 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
     r122 = r98[r5 + r74]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 58>
     r121 = r58;
     // CODE → <Mov>: <Reg8: 120, Reg8: 49>
     r120 = r49;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
-    // USED → r115 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r115 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
     r122 = r98[r5 + r66]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 97>
     r121 = r97;
     // CODE → <Mov>: <Reg8: 120, Reg8: 48>
     r120 = r48;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
-    // USED → r118 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r118 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
     r122 = r98[r5 + r85]
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 96>
     r121 = r96;
     // CODE → <Mov>: <Reg8: 120, Reg8: 47>
     r120 = r47;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
-    // USED → r117 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r117 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
     r122 = r98[r5 + r90]
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 94>
     r121 = r94;
     // CODE → <Mov>: <Reg8: 120, Reg8: 46>
     r120 = r46;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
-    // USED → r116 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r116 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
     r122 = r98[r5 + r87]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 58>
     r121 = r58;
     // CODE → <Mov>: <Reg8: 120, Reg8: 45>
     r120 = r45;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
-    // USED → r115 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r115 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 12>
-    // USED → r119 = r92[12]
+    // USED → r119 = getEnvironment(0)[12];
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
     r122 = r98[r5 + r97]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 95>
     r121 = r95;
     // CODE → <Mov>: <Reg8: 120, Reg8: 44>
     r120 = r44;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
-    // USED → r118 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r118 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
     r122 = r98[r5 + r74]
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 69>
     r121 = r69;
     // CODE → <Mov>: <Reg8: 120, Reg8: 43>
     r120 = r43;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
-    // USED → r117 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r117 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
     r122 = r98[r5 + r69]
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 42>
     r121 = r42;
     // CODE → <Mov>: <Reg8: 120, Reg8: 41>
     r120 = r41;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
-    // USED → r116 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r116 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
     r122 = r98[r5 + r94]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[11](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 40>
     r121 = r40;
     // CODE → <Mov>: <Reg8: 120, Reg8: 39>
     r120 = r39;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
-    // USED → r115 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r115 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
     r122 = r98[r5 + r88]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 95>
     r121 = r95;
     // CODE → <Mov>: <Reg8: 120, Reg8: 38>
     r120 = r38;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
-    // USED → r118 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r118 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
     r122 = r98[r5 + r95]
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 69>
     r121 = r69;
     // CODE → <Mov>: <Reg8: 120, Reg8: 37>
     r120 = r37;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
-    // USED → r117 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r117 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
     r122 = r98[r5 + r90]
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 42>
     r121 = r42;
     // CODE → <Mov>: <Reg8: 120, Reg8: 36>
     r120 = r36;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
-    // USED → r116 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r116 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
     r122 = r98[r5 + r71]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 40>
     r121 = r40;
     // CODE → <Mov>: <Reg8: 120, Reg8: 35>
     r120 = r35;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
-    // USED → r115 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r115 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
     r122 = r98[r5 + r66]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 95>
     r121 = r95;
     // CODE → <Mov>: <Reg8: 120, Reg8: 34>
     r120 = r34;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
-    // USED → r118 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r118 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
     r122 = r98[r5 + r93]
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 69>
     r121 = r69;
     // CODE → <Mov>: <Reg8: 120, Reg8: 33>
     r120 = r33;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
-    // USED → r117 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r117 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
     r122 = r98[r5 + r82]
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 42>
     r121 = r42;
     // CODE → <Mov>: <Reg8: 120, Reg8: 32>
     r120 = r32;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
-    // USED → r116 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r116 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
     r122 = r98[r5 + r77]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 40>
     r121 = r40;
     // CODE → <Mov>: <Reg8: 120, Reg8: 31>
     r120 = r31;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
-    // USED → r115 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r115 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
     r122 = r98[r5 + r96]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 95>
     r121 = r95;
     // CODE → <Mov>: <Reg8: 120, Reg8: 30>
     r120 = r30;
     // CODE → <Call>: <Reg8: 118, Reg8: 119, UInt8: 8>
-    // USED → r118 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r118 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
     r122 = r98[r5 + r87]
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 118>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 69>
     r121 = r69;
     // CODE → <Mov>: <Reg8: 120, Reg8: 29>
     r120 = r29;
     // CODE → <Call>: <Reg8: 117, Reg8: 119, UInt8: 8>
-    // USED → r117 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r117 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
     r122 = r98[r5 + r63]
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 117>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 118>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 42>
     r121 = r42;
     // CODE → <Mov>: <Reg8: 120, Reg8: 28>
     r120 = r28;
     // CODE → <Call>: <Reg8: 116, Reg8: 119, UInt8: 8>
-    // USED → r116 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r116 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
     r122 = r98[r5 + r85]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 116>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 117>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 118>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 40>
     r121 = r40;
     // CODE → <Mov>: <Reg8: 120, Reg8: 27>
     r120 = r27;
     // CODE → <Call>: <Reg8: 115, Reg8: 119, UInt8: 8>
-    // USED → r115 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    // USED → r115 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <LoadFromEnvironment>: <Reg8: 103, Reg8: 92, UInt8: 13>
-    // USED → r103 = r92[13]
+    // USED → r103 = getEnvironment(0)[13];
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 114>
     r122 = r98[r5 + r93]
     // CODE → <Mov>: <Reg8: 126, Reg8: 118>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 115>
-    r125 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r125 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 124, Reg8: 116>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 117>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 77>
     r121 = r77;
     // CODE → <Mov>: <Reg8: 120, Reg8: 26>
     r120 = r26;
     // CODE → <Call>: <Reg8: 114, Reg8: 103, UInt8: 8>
-    // USED → r114 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r114 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 113>
     r122 = r98[r5 + r90]
     // CODE → <Mov>: <Reg8: 126, Reg8: 117>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 114>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 115>
-    r124 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r124 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 123, Reg8: 116>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 71>
     r121 = r71;
     // CODE → <Mov>: <Reg8: 120, Reg8: 25>
     r120 = r25;
     // CODE → <Call>: <Reg8: 113, Reg8: 103, UInt8: 8>
-    // USED → r113 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r113 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 112>
     r122 = r98[r5 + r94]
     // CODE → <Mov>: <Reg8: 126, Reg8: 116>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 113>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 114>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 115>
-    r123 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r123 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 121, Reg8: 63>
     r121 = r63;
     // CODE → <Mov>: <Reg8: 120, Reg8: 24>
     r120 = r24;
     // CODE → <Call>: <Reg8: 112, Reg8: 103, UInt8: 8>
-    // USED → r112 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r112 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 111>
     r122 = r98[r5 + r97]
     // CODE → <Mov>: <Reg8: 126, Reg8: 115>
-    r126 = r119(r111, r112, r113, r114, r115, r116, r117, r118);
+    r126 = getEnvironment(0)[12](r111, r112, r113, r114, r115, r116, r117, r118);
     // CODE → <Mov>: <Reg8: 125, Reg8: 112>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 113>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 114>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 23>
     r121 = r23;
     // CODE → <Mov>: <Reg8: 120, Reg8: 22>
     r120 = r22;
     // CODE → <Call>: <Reg8: 111, Reg8: 103, UInt8: 8>
-    // USED → r111 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r111 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 110>
     r122 = r98[r5 + r87]
     // CODE → <Mov>: <Reg8: 126, Reg8: 114>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 111>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 112>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 113>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 77>
     r121 = r77;
     // CODE → <Mov>: <Reg8: 120, Reg8: 21>
     r120 = r21;
     // CODE → <Call>: <Reg8: 110, Reg8: 103, UInt8: 8>
-    // USED → r110 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r110 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 109>
     r122 = r98[r5 + r82]
     // CODE → <Mov>: <Reg8: 126, Reg8: 113>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 110>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 111>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 112>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 71>
     r121 = r71;
     // CODE → <Mov>: <Reg8: 120, Reg8: 20>
     r120 = r20;
     // CODE → <Call>: <Reg8: 109, Reg8: 103, UInt8: 8>
-    // USED → r109 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r109 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 108>
     r122 = r98[r5 + r71]
     // CODE → <Mov>: <Reg8: 126, Reg8: 112>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 109>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 110>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 111>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 63>
     r121 = r63;
     // CODE → <Mov>: <Reg8: 120, Reg8: 19>
     r120 = r19;
     // CODE → <Call>: <Reg8: 108, Reg8: 103, UInt8: 8>
-    // USED → r108 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r108 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 107>
     r122 = r98[r5 + r88]
     // CODE → <Mov>: <Reg8: 126, Reg8: 111>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 108>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 109>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 110>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 23>
     r121 = r23;
     // CODE → <Mov>: <Reg8: 120, Reg8: 18>
     r120 = r18;
     // CODE → <Call>: <Reg8: 107, Reg8: 103, UInt8: 8>
-    // USED → r107 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r107 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 106>
     r122 = r98[r5 + r74]
     // CODE → <Mov>: <Reg8: 126, Reg8: 110>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 107>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 108>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 109>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 77>
     r121 = r77;
     // CODE → <Mov>: <Reg8: 120, Reg8: 17>
     r120 = r17;
     // CODE → <Call>: <Reg8: 106, Reg8: 103, UInt8: 8>
-    // USED → r106 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r106 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 105>
     r122 = r98[r5 + r63]
     // CODE → <Mov>: <Reg8: 126, Reg8: 109>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 106>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 107>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 108>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 71>
     r121 = r71;
     // CODE → <Mov>: <Reg8: 120, Reg8: 16>
     r120 = r16;
     // CODE → <Call>: <Reg8: 105, Reg8: 103, UInt8: 8>
-    // USED → r105 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r105 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 104>
     r122 = r98[r5 + r77]
     // CODE → <Mov>: <Reg8: 126, Reg8: 108>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 105>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 106>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 107>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 63>
     r121 = r63;
     // CODE → <Mov>: <Reg8: 120, Reg8: 15>
     r120 = r15;
     // CODE → <Call>: <Reg8: 104, Reg8: 103, UInt8: 8>
-    // USED → r104 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r104 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 101>
     r122 = r98[r5 + r66]
     // CODE → <Mov>: <Reg8: 126, Reg8: 107>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 104>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 105>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 106>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 23>
     r121 = r23;
     // CODE → <Mov>: <Reg8: 120, Reg8: 14>
     r120 = r14;
     // CODE → <Call>: <Reg8: 101, Reg8: 103, UInt8: 8>
-    // USED → r101 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r101 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 102>
     r122 = r98[r5 + r95]
     // CODE → <Mov>: <Reg8: 126, Reg8: 106>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 101>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 104>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 105>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 77>
     r121 = r77;
     // CODE → <Mov>: <Reg8: 120, Reg8: 13>
     r120 = r13;
     // CODE → <Call>: <Reg8: 102, Reg8: 103, UInt8: 8>
-    // USED → r102 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r102 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 99>
     r122 = r98[r5 + r69]
     // CODE → <Mov>: <Reg8: 126, Reg8: 105>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 102>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 101>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 104>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 71>
     r121 = r71;
     // CODE → <Mov>: <Reg8: 120, Reg8: 12>
     r120 = r12;
     // CODE → <Call>: <Reg8: 99, Reg8: 103, UInt8: 8>
-    // USED → r99 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r99 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 100>
     r122 = r98[r5 + r85]
     // CODE → <Mov>: <Reg8: 126, Reg8: 104>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 99>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 102>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 101>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 63>
     r121 = r63;
     // CODE → <Mov>: <Reg8: 120, Reg8: 11>
     r120 = r11;
     // CODE → <Call>: <Reg8: 100, Reg8: 103, UInt8: 8>
-    // USED → r100 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r100 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <GetByVal>: <Reg8: 122, Reg8: 98, Reg8: 0>
     r122 = r98[r5 + r96]
     // CODE → <Mov>: <Reg8: 126, Reg8: 101>
-    r126 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r126 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 125, Reg8: 100>
-    r125 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r125 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 124, Reg8: 99>
-    r124 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r124 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 123, Reg8: 102>
-    r123 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    r123 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <Mov>: <Reg8: 121, Reg8: 23>
     r121 = r23;
     // CODE → <Mov>: <Reg8: 120, Reg8: 10>
     r120 = r10;
     // CODE → <Call>: <Reg8: 101, Reg8: 103, UInt8: 8>
-    // USED → r101 = r103(r95, r96, r97, r98, r99, r100, r101, r102);
+    // USED → r101 = getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102);
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 92, UInt8: 14>
-    // USED → r0 = r92[14]
+    // USED → r0 = getEnvironment(0)[14];
     // CODE → <Call3>: <Reg8: 9, Reg8: 0, Reg8: 91, Reg8: 102, Reg8: 9>
-    // USED → r9 = r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r9);
+    // USED → r9 = getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r9);
     // CODE → <Call3>: <Reg8: 8, Reg8: 0, Reg8: 91, Reg8: 101, Reg8: 8>
-    // USED → r8 = r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r8);
+    // USED → r8 = getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r8);
     // CODE → <Call3>: <Reg8: 7, Reg8: 0, Reg8: 91, Reg8: 100, Reg8: 7>
-    // USED → r7 = r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r7);
+    // USED → r7 = getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r7);
     // CODE → <Call3>: <Reg8: 6, Reg8: 0, Reg8: 91, Reg8: 99, Reg8: 6>
-    // USED → r6 = r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r6);
+    // USED → r6 = getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r6);
     // CODE → <Add>: <Reg8: 5, Reg8: 5, Reg8: 42>
     // USED → r5 = r5 + r42;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
     // USED → r0 = r98.length
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-    // USED → r4 = r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r9);
+    // USED → r4 = getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r9);
     // CODE → <Mov>: <Reg8: 3, Reg8: 8>
-    // USED → r3 = r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r8);
+    // USED → r3 = getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r8);
     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
-    // USED → r2 = r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r7);
+    // USED → r2 = getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r7);
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
-    // USED → r1 = r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r6);
+    // USED → r1 = getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r6);
     // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
     if (r5 + r42 < r0) goto label_566;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
     // USED → r0 = [];
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 4, UInt8: 0>
-    // USED → r0 = [r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r9)];
+    // USED → r0 = [getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r9)];
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 3, UInt8: 1>
-    // USED → r0 = [r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r9), r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r8)];
+    // USED → r0 = [getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r9), getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r8)];
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 2, UInt8: 2>
-    // USED → r0 = [r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r9), r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r8), r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r7)];
+    // USED → r0 = [getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r9), getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r8), getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r7)];
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 1, UInt8: 3>
-    r0 = [r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r9), r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r8), r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r7), r0(r91, r103(r95, r96, r97, r98, r99, r100, r101, r102), r6)];
+    r0 = [getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r9), getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r8), getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r7), getEnvironment(0)[14](r91, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), r6)];
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }

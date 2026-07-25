@@ -8,11 +8,11 @@ async function* anon_9594(param0, param1) {
     if (r1) goto label_102;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 4>
-    // USED → r1 = getEnvironment(4)
+    // USED → r1 = getEnvironment(4);
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 16>
-    // USED → r1 = r1[16]
+    // USED → r1 = getEnvironment(4)[16];
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r4 = r1.default
+    // USED → r4 = getEnvironment(4)[16].default
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 137>  # String: 'get' (Identifier)
     // USED → r3 = r4.get
     // CODE → <GetGlobalObject>: <Reg8: 2>

@@ -7,9 +7,9 @@ function _request(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 0>
     // USED → r8 = this
     // CODE → <CreateEnvironment>: <Reg8: 9>
-    // USED → r9 = createEnvironment()
+    // USED → r9 = createEnvironment();
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
-    r9[0] = r2
+    createEnvironment()[0] = r2;
     // CODE → <LoadConstUndefined>: <Reg8: 11>
     // USED → r11 = undefined
     // CODE → <LoadConstUndefined>: <Reg8: 12>
@@ -44,24 +44,24 @@ function _request(param0, param1, param2) {
     // USED → r14 = {  }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 14>
-    r9[0] = r14
+    createEnvironment()[0] = r14;
     // CODE → <Jmp>: <Addr8: 20>  # Address: 0000004c
     goto label_76;
     // LOOP → START (while)
     while (r19 === r11) {
         // ──────────────── Block 7 ──────────────── 
         // CODE → <GetEnvironment>: <Reg8: 6, UInt8: 1>
-        // USED → r6 = getEnvironment(1)
+        // USED → r6 = getEnvironment(1);
         // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 7>
-        // USED → r2 = r6[7]
+        // USED → r2 = getEnvironment(1)[7];
         // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-        // USED → r10 = r2.default
+        // USED → r10 = getEnvironment(1)[7].default
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
         // USED → r2 = r8.defaults
         // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 2, Reg8: 14>
         // USED → r10 = r10(r11, r2, r2);
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 10>
-        r9[0] = r10(r11, r2, r2)
+        createEnvironment()[0] = r10(r11, r2, r2);
         // CODE → <GetById>: <Reg8: 19, Reg8: 10, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
         // USED → r19 = r10(r11, r2, r2).transitional
         // CODE → <GetById>: <Reg8: 14, Reg8: 10, UInt8: 4, string_id: 15117>  # String: 'paramsSerializer' (Identifier)
@@ -69,14 +69,14 @@ function _request(param0, param1, param2) {
         // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 10, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
         // USED → r17 = r10(r11, r2, r2).headers
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 17>
-        r9[1] = r17
+        createEnvironment()[1] = r17;
         // CODE → <JStrictEqual>: <Addr8: 100, Reg8: 19, Reg8: 11>  # Address: 000000e1
         if (r19 === r11) goto label_225;
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 6 ──────────────── 
             // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 2>
-            r9[0] = r2
+            createEnvironment()[0] = r2;
             // CODE → <PutById>: <Reg8: 2, Reg8: 6, UInt8: 1, string_id: 14158>  # String: 'url' (Identifier)
             r2.url = r6;
             // CODE → <Mov>: <Reg8: 14, Reg8: 2>
@@ -97,39 +97,39 @@ function _request(param0, param1, param2) {
     // LOOP → END
     // ──────────────── Block 8 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
-    // USED → r2 = r6[9]
+    // USED → r2 = getEnvironment(1)[9];
     // CODE → <GetByIdShort>: <Reg8: 18, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r18 = r2.default
+    // USED → r18 = getEnvironment(1)[9].default
     // CODE → <GetById>: <Reg8: 16, Reg8: 18, UInt8: 6, string_id: 22621>  # String: 'assertOptions' (Identifier)
     // USED → r16 = r18.assertOptions
     // CODE → <NewObject>: <Reg8: 15>
     // USED → r15 = {  }
     // CODE → <LoadFromEnvironment>: <Reg8: 21, Reg8: 6, UInt8: 11>
-    // USED → r21 = r6[11]
+    // USED → r21 = getEnvironment(1)[11];
     // CODE → <GetById>: <Reg8: 20, Reg8: 21, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
-    // USED → r20 = r21.transitional
+    // USED → r20 = getEnvironment(1)[11].transitional
     // CODE → <GetById>: <Reg8: 2, Reg8: 21, UInt8: 7, string_id: 12635>  # String: 'boolean' (Identifier)
-    // USED → r2 = r21.boolean
+    // USED → r2 = getEnvironment(1)[11].boolean
     // CODE → <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
-    // USED → r2 = r20(r21, r2);
+    // USED → r2 = r20(getEnvironment(1)[11], r2);
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 19648>  # String: 'silentJSONParsing' (Identifier)
-    r15."silentJSONParsing" = r20(r21, r2);
+    r15."silentJSONParsing" = r20(getEnvironment(1)[11], r2);
     // CODE → <GetById>: <Reg8: 20, Reg8: 21, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
-    // USED → r20 = r21.transitional
+    // USED → r20 = getEnvironment(1)[11].transitional
     // CODE → <GetById>: <Reg8: 2, Reg8: 21, UInt8: 7, string_id: 12635>  # String: 'boolean' (Identifier)
-    // USED → r2 = r21.boolean
+    // USED → r2 = getEnvironment(1)[11].boolean
     // CODE → <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
-    // USED → r2 = r20(r21, r2);
+    // USED → r2 = r20(getEnvironment(1)[11], r2);
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 17756>  # String: 'forcedJSONParsing' (Identifier)
-    r15."forcedJSONParsing" = r20(r21, r2);
+    r15."forcedJSONParsing" = r20(getEnvironment(1)[11], r2);
     // CODE → <GetById>: <Reg8: 20, Reg8: 21, UInt8: 3, string_id: 17336>  # String: 'transitional' (Identifier)
-    // USED → r20 = r21.transitional
+    // USED → r20 = getEnvironment(1)[11].transitional
     // CODE → <GetById>: <Reg8: 2, Reg8: 21, UInt8: 7, string_id: 12635>  # String: 'boolean' (Identifier)
-    // USED → r2 = r21.boolean
+    // USED → r2 = getEnvironment(1)[11].boolean
     // CODE → <Call2>: <Reg8: 2, Reg8: 20, Reg8: 21, Reg8: 2>
-    // USED → r2 = r20(r21, r2);
+    // USED → r2 = r20(getEnvironment(1)[11], r2);
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 22889>  # String: 'clarifyTimeoutError' (Identifier)
-    r15."clarifyTimeoutError" = r20(r21, r2);
+    r15."clarifyTimeoutError" = r20(getEnvironment(1)[11], r2);
     // CODE → <LoadConstFalse>: <Reg8: 2>
     // USED → r2 = false
     // CODE → <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 2>
@@ -141,9 +141,9 @@ function _request(param0, param1, param2) {
     if (r14 == r2) goto label_321;
     // ──────────────── Block 10 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 3>
-    // USED → r2 = r6[3]
+    // USED → r2 = getEnvironment(1)[3];
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r15 = r2.default
+    // USED → r15 = getEnvironment(1)[3].default
     // CODE → <GetById>: <Reg8: 2, Reg8: 15, UInt8: 8, string_id: 19853>  # String: 'isFunction' (Identifier)
     // USED → r2 = r15.isFunction
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 15, Reg8: 14>
@@ -152,21 +152,21 @@ function _request(param0, param1, param2) {
     if (r2(r15, r14)) goto label_308;
     // ──────────────── Block 11 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
-    // USED → r2 = r6[9]
+    // USED → r2 = getEnvironment(1)[9];
     // CODE → <GetByIdShort>: <Reg8: 18, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r18 = r2.default
+    // USED → r18 = getEnvironment(1)[9].default
     // CODE → <GetById>: <Reg8: 16, Reg8: 18, UInt8: 6, string_id: 22621>  # String: 'assertOptions' (Identifier)
     // USED → r16 = r18.assertOptions
     // CODE → <NewObject>: <Reg8: 15>
     // USED → r15 = {  }
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 11>
-    // USED → r2 = r6[11]
+    // USED → r2 = getEnvironment(1)[11];
     // CODE → <GetById>: <Reg8: 19, Reg8: 2, UInt8: 9, string_id: 12255>  # String: 'function' (Identifier)
-    // USED → r19 = r2.function
+    // USED → r19 = getEnvironment(1)[11].function
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 19, string_id: 13048>  # String: 'encode' (Identifier)
     r15."encode" = r19;
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 9, string_id: 12255>  # String: 'function' (Identifier)
-    // USED → r2 = r2.function
+    // USED → r2 = getEnvironment(1)[11].function
     // CODE → <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 12525>  # String: 'serialize' (Identifier)
     r15."serialize" = r2;
     // CODE → <LoadConstTrue>: <Reg8: 2>
@@ -205,31 +205,31 @@ function _request(param0, param1, param2) {
     while (r15) {
         // ──────────────── Block 17 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
-        // USED → r2 = r6[9]
+        // USED → r2 = getEnvironment(1)[9];
         // CODE → <GetByIdShort>: <Reg8: 16, Reg8: 2, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-        // USED → r16 = r2.default
+        // USED → r16 = getEnvironment(1)[9].default
         // CODE → <GetById>: <Reg8: 15, Reg8: 16, UInt8: 6, string_id: 22621>  # String: 'assertOptions' (Identifier)
         // USED → r15 = r16.assertOptions
         // CODE → <NewObject>: <Reg8: 14>
         // USED → r14 = {  }
         // CODE → <LoadFromEnvironment>: <Reg8: 19, Reg8: 6, UInt8: 11>
-        // USED → r19 = r6[11]
+        // USED → r19 = getEnvironment(1)[11];
         // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
-        // USED → r18 = r19.spelling
+        // USED → r18 = getEnvironment(1)[11].spelling
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 15368>  # String: 'baseURL' (Identifier)
         // USED → r2 = "baseURL"
         // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
-        // USED → r2 = r18(r19, r2);
+        // USED → r2 = r18(getEnvironment(1)[11], r2);
         // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 22683>  # String: 'baseUrl' (Identifier)
-        r14."baseUrl" = r18(r19, r2);
+        r14."baseUrl" = r18(getEnvironment(1)[11], r2);
         // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 11, string_id: 12544>  # String: 'spelling' (Identifier)
-        // USED → r18 = r19.spelling
+        // USED → r18 = getEnvironment(1)[11].spelling
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 24723>  # String: 'withXSRFToken' (Identifier)
         // USED → r2 = "withXSRFToken"
         // CODE → <Call2>: <Reg8: 2, Reg8: 18, Reg8: 19, Reg8: 2>
-        // USED → r2 = r18(r19, r2);
+        // USED → r2 = r18(getEnvironment(1)[11], r2);
         // CODE → <PutNewOwnById>: <Reg8: 14, Reg8: 2, string_id: 24724>  # String: 'withXsrfToken' (Identifier)
-        r14."withXsrfToken" = r18(r19, r2);
+        r14."withXsrfToken" = r18(getEnvironment(1)[11], r2);
         // CODE → <LoadConstTrue>: <Reg8: 2>
         // USED → r2 = true
         // CODE → <Call4>: <Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 10, Reg8: 14, Reg8: 2>
@@ -271,9 +271,9 @@ function _request(param0, param1, param2) {
     if (!r17) goto label_532;
     // ──────────────── Block 22 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
-    // USED → r14 = r6[3]
+    // USED → r14 = getEnvironment(1)[3];
     // CODE → <GetByIdShort>: <Reg8: 19, Reg8: 14, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r19 = r14.default
+    // USED → r19 = getEnvironment(1)[3].default
     // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 14, string_id: 12398>  # String: 'merge' (Identifier)
     // USED → r18 = r19.merge
     // CODE → <GetById>: <Reg8: 15, Reg8: 17, UInt8: 15, string_id: 12528>  # String: 'common' (Identifier)
@@ -289,9 +289,9 @@ function _request(param0, param1, param2) {
     if (!r17) goto label_568;
     // ──────────────── Block 24 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
-    // USED → r14 = r6[3]
+    // USED → r14 = getEnvironment(1)[3];
     // CODE → <GetByIdShort>: <Reg8: 19, Reg8: 14, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r19 = r14.default
+    // USED → r19 = getEnvironment(1)[3].default
     // CODE → <GetByIdShort>: <Reg8: 18, Reg8: 19, UInt8: 16, string_id: 135>  # String: 'forEach' (Identifier)
     // USED → r18 = r19.forEach
     // CODE → <NewArrayWithBuffer>: <Reg8: 15, UInt16: 7, UInt16: 7, UInt16: 21504>  # Array: ['delete', 'get', 'head', 'post', 'put', 'patch', 'common']
@@ -302,9 +302,9 @@ function _request(param0, param1, param2) {
     r14 = r18(r19, ["delete", "get", "head", "post", "put", "patch", "common"], function_11949);
     // ──────────────── Block 25 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 10>
-    // USED → r14 = r6[10]
+    // USED → r14 = getEnvironment(1)[10];
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 14, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r15 = r14.default
+    // USED → r15 = getEnvironment(1)[10].default
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 17, string_id: 98>  # String: 'concat' (Identifier)
     // USED → r14 = r15.concat
     // CODE → <Call3>: <Reg8: 14, Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 17>
@@ -316,9 +316,9 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 12, Reg8: 14>
     // USED → r12 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 2, Reg8: 14>
-    r9[2] = []
+    createEnvironment()[2] = [];
     // CODE → <StoreNPToEnvironment>: <Reg8: 9, UInt8: 3, Reg8: 2>
-    r9[3] = r2
+    createEnvironment()[3] = r2;
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 18, string_id: 19835>  # String: 'interceptors' (Identifier)
     // USED → r2 = r8.interceptors
     // CODE → <GetById>: <Reg8: 15, Reg8: 2, UInt8: 19, string_id: 11955>  # String: 'request' (Identifier)
@@ -334,7 +334,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 3, Reg8: 2>
     // USED → r3 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 4, Reg8: 2>
-    r9[4] = []
+    createEnvironment()[4] = [];
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 18, string_id: 19835>  # String: 'interceptors' (Identifier)
     // USED → r2 = r8.interceptors
     // CODE → <GetById>: <Reg8: 15, Reg8: 2, UInt8: 20, string_id: 11767>  # String: 'response' (Identifier)
@@ -350,14 +350,14 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstZero>: <Reg8: 4>
     // USED → r4 = 0
     // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 9, UInt8: 3>
-    // USED → r9 = r9[3]
+    // USED → r9 = createEnvironment()[3];
     // CODE → <JmpTrueLong>: <Addr32: 164, Reg8: 9>  # Address: 0000034e
-    if (r9) goto label_846;
+    if (createEnvironment()[3]) goto label_846;
     // ──────────────── Block 26 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 6, UInt8: 6>
-    // USED → r9 = r6[6]
+    // USED → r9 = getEnvironment(1)[6];
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 9, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r14 = r9.default
+    // USED → r14 = getEnvironment(1)[6].default
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 14, UInt8: 21, string_id: 87>  # String: 'bind' (Identifier)
     // USED → r9 = r14.bind
     // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 14, Reg8: 8>
@@ -485,9 +485,9 @@ function _request(param0, param1, param2) {
     while (r2 >= r1) {
         // ──────────────── Block 33 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 6>
-        // USED → r6 = r6[6]
+        // USED → r6 = getEnvironment(1)[6];
         // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-        // USED → r7 = r6.default
+        // USED → r7 = getEnvironment(1)[6].default
         // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
         // USED → r6 = r7.call
         // CODE → <Call3>: <Reg8: 0, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1>

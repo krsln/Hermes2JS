@@ -1,41 +1,41 @@
 function function_1(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 2>
-    // USED → r2 = createEnvironment()
+    // USED → r2 = createEnvironment();
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 1>
     // USED → r8 = param1
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 8>
-    r2[0] = r8
+    createEnvironment()[0] = r8;
     // CODE → <CreateClosure>: <Reg8: 7, Reg8: 2, function_id: 2>  # Function: [#2 clear of 37 bytes]: 1 params @ offset 0x0016e004
     // USED → r7 = clear;
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 4>  # Function: [#4 metroRequire of 59 bytes]: 2 params @ offset 0x0016e094
     // USED → r4 = metroRequire;
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 9, Reg8: 4>
-    r2[9] = metroRequire
+    createEnvironment()[9] = metroRequire;
     // CODE → <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 5>  # Function: [#5 metroImportDefault of 100 bytes]: 2 params @ offset 0x0016e0cf
     // USED → r6 = metroImportDefault;
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 10, Reg8: 6>
-    r2[10] = metroImportDefault
+    createEnvironment()[10] = metroImportDefault;
     // CODE → <CreateClosure>: <Reg8: 5, Reg8: 2, function_id: 6>  # Function: [#6 metroImportAll of 157 bytes]: 2 params @ offset 0x0016e133
     // USED → r5 = metroImportAll;
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 11, Reg8: 5>
-    r2[11] = metroImportAll
+    createEnvironment()[11] = metroImportAll;
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 7>  # Function: [#7 guardedLoadModule of 100 bytes]: 3 params @ offset 0x0016e1d0
     // USED → r0 = guardedLoadModule;
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 12, Reg8: 0>
-    r2[12] = guardedLoadModule
+    createEnvironment()[12] = guardedLoadModule;
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 8>  # Function: [#8 unpackModuleId of 36 bytes]: 2 params @ offset 0x0016e234
     // USED → r3 = unpackModuleId;
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 13, Reg8: 3>
-    r2[13] = unpackModuleId
+    createEnvironment()[13] = unpackModuleId;
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 12>  # Function: [#12 loadModuleImplementation of 356 bytes]: 3 params @ offset 0x0016e2ea
     // USED → r0 = loadModuleImplementation;
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 14, Reg8: 0>
-    r2[14] = loadModuleImplementation
+    createEnvironment()[14] = loadModuleImplementation;
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 13>  # Function: [#13 unknownModuleError of 36 bytes]: 2 params @ offset 0x0016e44e
     // USED → r0 = unknownModuleError;
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 15, Reg8: 0>
-    r2[15] = unknownModuleError
+    createEnvironment()[15] = unknownModuleError;
     // CODE → <PutById>: <Reg8: 8, Reg8: 4, UInt8: 1, string_id: 14170>  # String: '__r' (Identifier)
     r8.__r = metroRequire;
     // CODE → <GetGlobalObject>: <Reg8: 1>
@@ -67,17 +67,17 @@ function function_1(param0, param1) {
     // CODE → <Call1>: <Reg8: 7, Reg8: 7, Reg8: 0>
     // USED → r7 = clear(r0);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 7>
-    r2[1] = clear(r0)
+    createEnvironment()[1] = clear(r0);
     // CODE → <NewObject>: <Reg8: 7>
     // USED → r7 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 7>
-    r2[2] = r7
+    createEnvironment()[2] = r7;
     // CODE → <NewObject>: <Reg8: 7>
     // USED → r7 = {  }
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 7, UInt8: 4, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
     // USED → r7 = r7.hasOwnProperty
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 7>
-    r2[3] = r7
+    createEnvironment()[3] = r7;
     // CODE → <PutById>: <Reg8: 4, Reg8: 6, UInt8: 4, string_id: 21604>  # String: 'importDefault' (Identifier)
     metroRequire.importDefault = metroImportDefault;
     // CODE → <PutById>: <Reg8: 4, Reg8: 5, UInt8: 5, string_id: 23806>  # String: 'importAll' (Identifier)
@@ -93,15 +93,15 @@ function function_1(param0, param1) {
     // CODE → <LoadConstFalse>: <Reg8: 5>
     // USED → r5 = false
     // CODE → <StoreNPToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 5>
-    r2[4] = r5
+    createEnvironment()[4] = r5;
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 16>
     // USED → r5 = 16
     // CODE → <StoreNPToEnvironment>: <Reg8: 2, UInt8: 5, Reg8: 5>
-    r2[5] = r5
+    createEnvironment()[5] = r5;
     // CODE → <LoadConstInt>: <Reg8: 5, Imm32: 65535>
     // USED → r5 = 65535
     // CODE → <StoreNPToEnvironment>: <Reg8: 2, UInt8: 6, Reg8: 5>
-    r2[6] = r5
+    createEnvironment()[6] = r5;
     // CODE → <PutById>: <Reg8: 4, Reg8: 3, UInt8: 8, string_id: 24223>  # String: 'unpackModuleId' (Identifier)
     metroRequire.unpackModuleId = unpackModuleId;
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 9>  # Function: [#9 packModuleId of 32 bytes]: 2 params @ offset 0x0016e258
@@ -111,7 +111,7 @@ function function_1(param0, param1) {
     // CODE → <NewArray>: <Reg8: 3, UInt16: 0>
     // USED → r3 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 7, Reg8: 3>
-    r2[7] = []
+    createEnvironment()[7] = [];
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 5, string_id: 26>  # String: 'Map' (Identifier)
     // USED → r1 = globalThis.Map
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 158>  # String: 'prototype' (Identifier)
@@ -125,7 +125,7 @@ function function_1(param0, param1) {
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 3, Reg8: 1>
     // USED → r1 = createThis(r3, r1)[r1]
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 8, Reg8: 1>
-    r2[8] = r1
+    createEnvironment()[8] = r1;
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }

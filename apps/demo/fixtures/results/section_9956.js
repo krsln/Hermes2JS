@@ -8,11 +8,11 @@ async function* anon_9956(param0, param1) {
     if (r1) goto label_61;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 3>
-    // USED → r1 = getEnvironment(3)
+    // USED → r1 = getEnvironment(3);
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 16>
-    // USED → r1 = r1[16]
+    // USED → r1 = getEnvironment(3)[16];
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    // USED → r3 = r1.default
+    // USED → r3 = getEnvironment(3)[16].default
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 137>  # String: 'get' (Identifier)
     // USED → r2 = r3.get
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 7880>  # String: 'https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=' (String)

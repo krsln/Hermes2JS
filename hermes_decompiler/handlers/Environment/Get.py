@@ -1,5 +1,4 @@
-from hermes_decompiler.ir.Expressions import CallExpression
-from hermes_decompiler.ir.Values import ConstantValue, IdentifierValue
+from hermes_decompiler.ir import CallExpression, Identifier, NumericLiteral
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -32,8 +31,10 @@ class GetEnvironment(OpcodeHandler):
 
         dest_reg, level = map(int, match.groups())
 
-        # value = f"getEnvironment({level})"
-        value = CallExpression(callee=IdentifierValue("getEnvironment"), arguments=[ConstantValue(level)])
+        value = CallExpression(
+            callee=Identifier(name="getEnvironment"),
+            arguments=(NumericLiteral(level),),
+        )
 
         variable = JSVariable(self.__class__.__name__, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)

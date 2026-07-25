@@ -19,7 +19,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
-    // USED → r1 = getEnvironment(0)
+    // USED → r1 = getEnvironment(0);
     // CODE → <Mov>: <Reg8: 0, Reg8: 10>
     // USED → r0 = r10;
     // LOOP → START (while)
@@ -72,7 +72,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 11, UInt8: 6, string_id: 249>  # String: 'value' (Identifier)
         // USED → r8 = r11.value
         // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 1, UInt8: 73>
-        // USED → r14 = r1[73]
+        // USED → r14 = getEnvironment(0)[73];
         // CODE → <Mov>: <Reg8: 11, Reg8: 9>
         // USED → r11 = r9;
         // CODE → <Call1>: <Reg8: 13, Reg8: 11, Reg8: 5>
@@ -80,9 +80,9 @@ function isRenderConsistentWithExternalStores(param0, param1) {
         // CODE → <Mov>: <Reg8: 11, Reg8: 8>
         // USED → r11 = r8;
         // CODE → <Call3>: <Reg8: 11, Reg8: 14, Reg8: 5, Reg8: 13, Reg8: 11>
-        // USED → r11 = r14(r5, r9(r5), r8);
+        // USED → r11 = getEnvironment(0)[73](r5, r9(r5), r8);
         // CODE → <JmpTrue>: <Addr8: 7, Reg8: 11>  # Address: 00000089
-        if (r14(r5, r9(r5), r8)) goto label_137;
+        if (getEnvironment(0)[73](r5, r9(r5), r8)) goto label_137;
         // ──────────────── Block 6 ──────────────── 
         // CODE → <LoadConstFalse>: <Reg8: 11>
         r11 = false
