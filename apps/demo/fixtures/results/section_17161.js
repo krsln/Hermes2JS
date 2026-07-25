@@ -76,9 +76,9 @@ async function* anon_17161(param0, param1) {
     // CODE → <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
     // USED → r2 = new globalThis.Error(" failed with status ", createThis(globalThis.Error.prototype, globalThis.Error));
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(" failed with status ", createThis(globalThis.Error.prototype, globalThis.Error))]
+    // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(" failed with status ", createThis(globalThis.Error.prototype, globalThis.Error))];
     // CODE → <Throw>: <Reg8: 2>
-    throw r2;
+    throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(" failed with status ", createThis(globalThis.Error.prototype, globalThis.Error))];
     // ──────────────── Block 8 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
     // USED → r2 = await yield.text;

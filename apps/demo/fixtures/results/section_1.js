@@ -69,15 +69,15 @@ function function_1(param0, param1) {
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 7>
     createEnvironment()[1] = clear(undefined);
     // CODE → <NewObject>: <Reg8: 7>
-    // USED → r7 = {  }
+    // USED → r7 = {  };
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 7>
-    createEnvironment()[2] = r7;
+    createEnvironment()[2] = {  };
     // CODE → <NewObject>: <Reg8: 7>
-    // USED → r7 = {  }
+    // USED → r7 = {  };
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 7, UInt8: 4, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-    // USED → r7 = r7.hasOwnProperty;
+    // USED → r7 = {  }.hasOwnProperty;
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 7>
-    createEnvironment()[3] = r7.hasOwnProperty;
+    createEnvironment()[3] = {  }.hasOwnProperty;
     // CODE → <PutById>: <Reg8: 4, Reg8: 6, UInt8: 4, string_id: 21604>  # String: 'importDefault' (Identifier)
     metroRequire.importDefault = metroImportDefault;
     // CODE → <PutById>: <Reg8: 4, Reg8: 5, UInt8: 5, string_id: 23806>  # String: 'importAll' (Identifier)
@@ -123,9 +123,9 @@ function function_1(param0, param1) {
     // CODE → <Construct>: <Reg8: 1, Reg8: 1, UInt8: 1>
     // USED → r1 = new globalThis.Map(undefined);
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 3, Reg8: 1>
-    // USED → r1 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(undefined)]
+    // USED → r1 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(undefined)];
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 8, Reg8: 1>
-    createEnvironment()[8] = r1;
+    createEnvironment()[8] = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(undefined)];
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }
