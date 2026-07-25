@@ -17,9 +17,9 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <StoreToEnvironment>: <Reg8: 3, UInt8: 7, Reg8: 0>
     r3[7] = r0
     // CODE → <GetGlobalObject>: <Reg8: 0>
-    // USED → r0 = globalThis
+    // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 37>  # String: 'Object' (Identifier)
-    // USED → r7 = r0.Object
+    // USED → r7 = globalThis.Object
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 2, string_id: 112>  # String: 'defineProperty' (Identifier)
     // USED → r4 = r7.defineProperty
     // CODE → <NewObject>: <Reg8: 1>
