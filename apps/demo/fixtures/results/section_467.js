@@ -1187,13 +1187,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Call2>: <Reg8: 14, Reg8: 18, Reg8: 2, Reg8: 0>
     // USED → r14 = param2(undefined, param7[1]);
     // CODE → <GetGlobalObject>: <Reg8: 0>
-    // USED → r0 = globalThis
+    // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
-    // USED → r11 = r0.Array;
+    // USED → r11 = globalThis.Array;
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 2, string_id: 1>  # String: 'isArray' (Identifier)
-    // USED → r11 = r0.Array.isArray;
+    // USED → r11 = globalThis.Array.isArray;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 11>
-    createEnvironment()[2] = r0.Array.isArray;
+    createEnvironment()[2] = globalThis.Array.isArray;
     // CODE → <LoadConstFalse>: <Reg8: 12>
     // USED → r12 = false;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 12>
@@ -1209,11 +1209,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 7, Reg8: 11>
     createEnvironment()[7] = null;
     // CODE → <TryGetById>: <Reg8: 37, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-    // USED → r37 = r0.Object;
+    // USED → r37 = globalThis.Object;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 37, UInt8: 4, string_id: 62>  # String: 'assign' (Identifier)
-    // USED → r41 = r0.Object.assign;
+    // USED → r41 = globalThis.Object.assign;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 8, Reg8: 41>
-    createEnvironment()[8] = r0.Object.assign;
+    createEnvironment()[8] = globalThis.Object.assign;
     // CODE → <GetByIdShort>: <Reg8: 40, Reg8: 39, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r40 = SyntheticEvent.prototype;
     // CODE → <NewObject>: <Reg8: 37>
@@ -1237,7 +1237,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12543>  # String: 'destructor' (Identifier)
     r37.destructor = destructor;
     // CODE → <Call3>: <Reg8: 37, Reg8: 41, Reg8: 2, Reg8: 40, Reg8: 37>
-    r37 = r0.Object.assign(undefined, SyntheticEvent.prototype, r37);
+    r37 = globalThis.Object.assign(undefined, SyntheticEvent.prototype, r37);
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 9, UInt16: 9, UInt16: 194, UInt16: 115>  # Object: {'type': null, 'target': null, 'currentTarget': null, 'eventPhase': null, 'bubbles': null, 'cancelable': null, 'timeStamp': null, 'defaultPrevented': null, 'isTrusted': null}
     // USED → r37 = {'type': None, 'target': None, 'currentTarget': None, 'eventPhase': None, 'bubbles': None, 'cancelable': None, 'timeStamp': None, 'defaultPrevented': None, 'isTrusted': None}
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 809>  # Function: [#809 currentTarget of 4 bytes]: 1 params @ offset 0x00188e5c
@@ -1505,19 +1505,19 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 24, Reg8: 37>
     createEnvironment()[24] = param2(undefined, param7[2]).ReactNativeViewConfigRegistry.customDirectEventTypes;
     // CODE → <TryGetById>: <Reg8: 37, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
-    // USED → r37 = r0.Array;
+    // USED → r37 = globalThis.Array;
     // CODE → <GetByIdShort>: <Reg8: 37, Reg8: 37, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r37 = r0.Array.prototype;
+    // USED → r37 = globalThis.Array.prototype;
     // CODE → <GetByIdShort>: <Reg8: 42, Reg8: 37, UInt8: 10, string_id: 217>  # String: 'slice' (Identifier)
-    // USED → r42 = r0.Array.prototype.slice;
+    // USED → r42 = globalThis.Array.prototype.slice;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 11, string_id: 91>  # String: 'call' (Identifier)
-    // USED → r41 = r0.Array.prototype.slice.call;
+    // USED → r41 = globalThis.Array.prototype.slice.call;
     // CODE → <NewArrayWithBuffer>: <Reg8: 37, UInt16: 2, UInt16: 2, UInt16: 40903>  # Array: ['ResponderEventPlugin', 'ReactNativeBridgeEventPlugin']
     // USED → r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"];
     // CODE → <Call2>: <Reg8: 37, Reg8: 41, Reg8: 42, Reg8: 37>
-    // USED → r37 = r0.Array.prototype.slice.call(r0.Array.prototype.slice, ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]);
+    // USED → r37 = globalThis.Array.prototype.slice.call(globalThis.Array.prototype.slice, ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 37>
-    createEnvironment()[18] = r0.Array.prototype.slice.call(r0.Array.prototype.slice, ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]);
+    createEnvironment()[18] = globalThis.Array.prototype.slice.call(globalThis.Array.prototype.slice, ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]);
     // CODE → <Call1>: <Reg8: 37, Reg8: 16, Reg8: 2>
     r37 = recomputePluginOrdering(undefined);
     // CODE → <NewObject>: <Reg8: 50>
@@ -1608,7 +1608,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 43, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r43 = r0.Error;
+    // USED → r43 = globalThis.Error;
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 558>  # String: '`.' (String)
     // USED → r42 = "`.";
     // CODE → <Add>: <Reg8: 44, Reg8: 44, Reg8: 42>
@@ -1618,9 +1618,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
     // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r45 + "`.");
     // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
-    // USED → r42 = r0.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r45 + "`."));
+    // USED → r42 = globalThis.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r45 + "`."));
     // CODE → <Throw>: <Reg8: 42>
-    throw r0.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r45 + "`."));
+    throw globalThis.Error(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r45 + "`."));
     // ──────────────── Block 8 ──────────────── 
     // CODE → <JmpFalse>: <Addr8: 7, Reg8: 41>  # Address: 00000ed4
     if (!false) goto label_3796;
@@ -1653,31 +1653,31 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
     createEnvironment()[32] = null;
     // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-    // USED → r16 = r0.Math;
+    // USED → r16 = globalThis.Math;
     // CODE → <GetById>: <Reg8: 16, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
-    // USED → r16 = r0.Math.clz32;
+    // USED → r16 = globalThis.Math.clz32;
     // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00000f1e
-    if (!r0.Math.clz32) goto label_3870;
+    if (!globalThis.Math.clz32) goto label_3870;
     // ──────────────── Block 11 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 16, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-    // USED → r16 = r0.Math;
+    // USED → r16 = globalThis.Math;
     // CODE → <GetById>: <Reg8: 9, Reg8: 16, UInt8: 16, string_id: 12352>  # String: 'clz32' (Identifier)
-    // USED → r9 = r0.Math.clz32;
+    // USED → r9 = globalThis.Math.clz32;
     // ──────────────── Block 12 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 33, Reg8: 9>
-    createEnvironment()[33] = r0.Math.clz32;
+    createEnvironment()[33] = globalThis.Math.clz32;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-    // USED → r9 = r0.Math;
+    // USED → r9 = globalThis.Math;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 17, string_id: 171>  # String: 'log' (Identifier)
-    // USED → r9 = r0.Math.log;
+    // USED → r9 = globalThis.Math.log;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 34, Reg8: 9>
-    createEnvironment()[34] = r0.Math.log;
+    createEnvironment()[34] = globalThis.Math.log;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 15, string_id: 33>  # String: 'Math' (Identifier)
-    // USED → r9 = r0.Math;
+    // USED → r9 = globalThis.Math;
     // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 18, string_id: 21154>  # String: 'LN2' (Identifier)
-    // USED → r9 = r0.Math.LN2;
+    // USED → r9 = globalThis.Math.LN2;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 35, Reg8: 9>
-    createEnvironment()[35] = r0.Math.LN2;
+    createEnvironment()[35] = globalThis.Math.LN2;
     // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 128>
     // USED → r9 = 128;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 36, Reg8: 9>
@@ -1689,49 +1689,49 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 38, Reg8: 10>
     createEnvironment()[38] = 0;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 19, string_id: 24093>  # String: 'nativeFabricUIManager' (Identifier)
-    // USED → r9 = r0.nativeFabricUIManager;
+    // USED → r9 = globalThis.nativeFabricUIManager;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 20, string_id: 15507>  # String: 'createNode' (Identifier)
-    // USED → r16 = r0.nativeFabricUIManager.createNode;
+    // USED → r16 = globalThis.nativeFabricUIManager.createNode;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 39, Reg8: 16>
-    createEnvironment()[39] = r0.nativeFabricUIManager.createNode;
+    createEnvironment()[39] = globalThis.nativeFabricUIManager.createNode;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 21, string_id: 22912>  # String: 'cloneNodeWithNewChildren' (Identifier)
-    // USED → r16 = r0.nativeFabricUIManager.cloneNodeWithNewChildren;
+    // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewChildren;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 40, Reg8: 16>
-    createEnvironment()[40] = r0.nativeFabricUIManager.cloneNodeWithNewChildren;
+    createEnvironment()[40] = globalThis.nativeFabricUIManager.cloneNodeWithNewChildren;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 22, string_id: 22913>  # String: 'cloneNodeWithNewChildrenAndProps' (Identifier)
-    // USED → r16 = r0.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps;
+    // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 41, Reg8: 16>
-    createEnvironment()[41] = r0.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps;
+    createEnvironment()[41] = globalThis.nativeFabricUIManager.cloneNodeWithNewChildrenAndProps;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 23, string_id: 22914>  # String: 'cloneNodeWithNewProps' (Identifier)
-    // USED → r16 = r0.nativeFabricUIManager.cloneNodeWithNewProps;
+    // USED → r16 = globalThis.nativeFabricUIManager.cloneNodeWithNewProps;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 42, Reg8: 16>
-    createEnvironment()[42] = r0.nativeFabricUIManager.cloneNodeWithNewProps;
+    createEnvironment()[42] = globalThis.nativeFabricUIManager.cloneNodeWithNewProps;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 24, string_id: 23048>  # String: 'createChildSet' (Identifier)
-    // USED → r16 = r0.nativeFabricUIManager.createChildSet;
+    // USED → r16 = globalThis.nativeFabricUIManager.createChildSet;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 43, Reg8: 16>
-    createEnvironment()[43] = r0.nativeFabricUIManager.createChildSet;
+    createEnvironment()[43] = globalThis.nativeFabricUIManager.createChildSet;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 25, string_id: 22565>  # String: 'appendChild' (Identifier)
-    // USED → r16 = r0.nativeFabricUIManager.appendChild;
+    // USED → r16 = globalThis.nativeFabricUIManager.appendChild;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 44, Reg8: 16>
-    createEnvironment()[44] = r0.nativeFabricUIManager.appendChild;
+    createEnvironment()[44] = globalThis.nativeFabricUIManager.appendChild;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 22566>  # String: 'appendChildToSet' (Identifier)
-    // USED → r16 = r0.nativeFabricUIManager.appendChildToSet;
+    // USED → r16 = globalThis.nativeFabricUIManager.appendChildToSet;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 45, Reg8: 16>
-    createEnvironment()[45] = r0.nativeFabricUIManager.appendChildToSet;
+    createEnvironment()[45] = globalThis.nativeFabricUIManager.appendChildToSet;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 27, string_id: 22962>  # String: 'completeRoot' (Identifier)
-    // USED → r16 = r0.nativeFabricUIManager.completeRoot;
+    // USED → r16 = globalThis.nativeFabricUIManager.completeRoot;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 46, Reg8: 16>
-    createEnvironment()[46] = r0.nativeFabricUIManager.completeRoot;
+    createEnvironment()[46] = globalThis.nativeFabricUIManager.completeRoot;
     // CODE → <GetById>: <Reg8: 16, Reg8: 9, UInt8: 28, string_id: 20376>  # String: 'registerEventHandler' (Identifier)
-    // USED → r16 = r0.nativeFabricUIManager.registerEventHandler;
+    // USED → r16 = globalThis.nativeFabricUIManager.registerEventHandler;
     // CODE → <GetById>: <Reg8: 41, Reg8: 9, UInt8: 29, string_id: 24474>  # String: 'unstable_DiscreteEventPriority' (Identifier)
-    // USED → r41 = r0.nativeFabricUIManager.unstable_DiscreteEventPriority;
+    // USED → r41 = globalThis.nativeFabricUIManager.unstable_DiscreteEventPriority;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 47, Reg8: 41>
-    createEnvironment()[47] = r0.nativeFabricUIManager.unstable_DiscreteEventPriority;
+    createEnvironment()[47] = globalThis.nativeFabricUIManager.unstable_DiscreteEventPriority;
     // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 30, string_id: 24484>  # String: 'unstable_getCurrentEventPriority' (Identifier)
-    // USED → r9 = r0.nativeFabricUIManager.unstable_getCurrentEventPriority;
+    // USED → r9 = globalThis.nativeFabricUIManager.unstable_getCurrentEventPriority;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 48, Reg8: 9>
-    createEnvironment()[48] = r0.nativeFabricUIManager.unstable_getCurrentEventPriority;
+    createEnvironment()[48] = globalThis.nativeFabricUIManager.unstable_getCurrentEventPriority;
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
     // USED → r9 = param7[2];
     // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
@@ -1745,55 +1745,55 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
     createEnvironment()[50] = 2;
     // CODE → <JmpFalse>: <Addr8: 13, Reg8: 16>  # Address: 00000fef
-    if (!r0.nativeFabricUIManager.registerEventHandler) goto label_4079;
+    if (!globalThis.nativeFabricUIManager.registerEventHandler) goto label_4079;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
     // USED → r9 = dispatchEvent;
     // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
-    r9 = r0.nativeFabricUIManager.registerEventHandler(undefined, dispatchEvent);
+    r9 = globalThis.nativeFabricUIManager.registerEventHandler(undefined, dispatchEvent);
     // ──────────────── Block 14 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 32, string_id: 214>  # String: 'setTimeout' (Identifier)
-    // USED → r41 = r0.setTimeout;
+    // USED → r41 = globalThis.setTimeout;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 51, Reg8: 41>
-    createEnvironment()[51] = r0.setTimeout;
+    createEnvironment()[51] = globalThis.setTimeout;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 33, string_id: 12162>  # String: 'clearTimeout' (Identifier)
-    // USED → r9 = r0.clearTimeout;
+    // USED → r9 = globalThis.clearTimeout;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 52, Reg8: 9>
-    createEnvironment()[52] = r0.clearTimeout;
+    createEnvironment()[52] = globalThis.clearTimeout;
     // CODE → <GetById>: <Reg8: 16, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
-    // USED → r16 = r0.RN$enableMicrotasksInReact;
+    // USED → r16 = globalThis.RN$enableMicrotasksInReact;
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 610>  # String: 'undefined' (String)
     // USED → r9 = "undefined";
     // CODE → <TypeOf>: <Reg8: 16, Reg8: 16>
-    // USED → r16 = typeof r0.RN$enableMicrotasksInReact;
+    // USED → r16 = typeof globalThis.RN$enableMicrotasksInReact;
     // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
-    // USED → r16 = "undefined" !== typeof r0.RN$enableMicrotasksInReact;
+    // USED → r16 = "undefined" !== typeof globalThis.RN$enableMicrotasksInReact;
     // CODE → <JmpFalse>: <Addr8: 15, Reg8: 16>  # Address: 00001023
-    if (!("undefined" !== typeof r0.RN$enableMicrotasksInReact)) goto label_4131;
+    if (!("undefined" !== typeof globalThis.RN$enableMicrotasksInReact)) goto label_4131;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
-    // USED → r42 = r0.RN$enableMicrotasksInReact;
+    // USED → r42 = globalThis.RN$enableMicrotasksInReact;
     // CODE → <Not>: <Reg8: 42, Reg8: 42>
-    // USED → r42 = !r0.RN$enableMicrotasksInReact;
+    // USED → r42 = !globalThis.RN$enableMicrotasksInReact;
     // CODE → <Not>: <Reg8: 16, Reg8: 42>
-    // USED → r16 = !!r0.RN$enableMicrotasksInReact;
+    // USED → r16 = !!globalThis.RN$enableMicrotasksInReact;
     // ──────────────── Block 16 ──────────────── 
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 53, Reg8: 16>
-    createEnvironment()[53] = !!r0.RN$enableMicrotasksInReact;
+    createEnvironment()[53] = !!globalThis.RN$enableMicrotasksInReact;
     // CODE → <GetById>: <Reg8: 42, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
-    // USED → r42 = r0.queueMicrotask;
+    // USED → r42 = globalThis.queueMicrotask;
     // CODE → <LoadConstString>: <Reg8: 16, string_id: 12255>  # String: 'function' (Identifier)
     // USED → r16 = "function";
     // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
-    // USED → r42 = typeof r0.queueMicrotask;
+    // USED → r42 = typeof globalThis.queueMicrotask;
     // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 16, Reg8: 42>  # Address: 0000103e
-    if ("function" !== typeof r0.queueMicrotask) goto label_4158;
+    if ("function" !== typeof globalThis.queueMicrotask) goto label_4158;
     // ──────────────── Block 17 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
-    // USED → r41 = r0.queueMicrotask;
+    // USED → r41 = globalThis.queueMicrotask;
     // ──────────────── Block 18 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 54, Reg8: 41>
-    createEnvironment()[54] = r0.queueMicrotask;
+    createEnvironment()[54] = globalThis.queueMicrotask;
     // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 821>  # Function: [#821 getFiberCurrentPropsFromNode$1 of 17 bytes]: 2 params @ offset 0x00189a6d
     // USED → r41 = getFiberCurrentPropsFromNode$1;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 5, Reg8: 41>
@@ -1817,199 +1817,199 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
     r40 = r40.injection.injectGlobalResponderHandler(r40.injection, r40);
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 3815>  # String: 'react.element' (String)
     // USED → r40 = "react.element";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.element");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.element");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 55, Reg8: 40>
-    createEnvironment()[55] = r0.Symbol.for(r0.Symbol, "react.element");
+    createEnvironment()[55] = globalThis.Symbol.for(globalThis.Symbol, "react.element");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5553>  # String: 'react.portal' (String)
     // USED → r40 = "react.portal";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.portal");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.portal");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 56, Reg8: 40>
-    createEnvironment()[56] = r0.Symbol.for(r0.Symbol, "react.portal");
+    createEnvironment()[56] = globalThis.Symbol.for(globalThis.Symbol, "react.portal");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5930>  # String: 'react.fragment' (String)
     // USED → r40 = "react.fragment";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.fragment");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.fragment");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 57, Reg8: 40>
-    createEnvironment()[57] = r0.Symbol.for(r0.Symbol, "react.fragment");
+    createEnvironment()[57] = globalThis.Symbol.for(globalThis.Symbol, "react.fragment");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6410>  # String: 'react.strict_mode' (String)
     // USED → r40 = "react.strict_mode";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.strict_mode");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.strict_mode");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 58, Reg8: 40>
-    createEnvironment()[58] = r0.Symbol.for(r0.Symbol, "react.strict_mode");
+    createEnvironment()[58] = globalThis.Symbol.for(globalThis.Symbol, "react.strict_mode");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5628>  # String: 'react.profiler' (String)
     // USED → r40 = "react.profiler";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.profiler");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.profiler");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 59, Reg8: 40>
-    createEnvironment()[59] = r0.Symbol.for(r0.Symbol, "react.profiler");
+    createEnvironment()[59] = globalThis.Symbol.for(globalThis.Symbol, "react.profiler");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 2499>  # String: 'react.provider' (String)
     // USED → r40 = "react.provider";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.provider");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.provider");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 60, Reg8: 40>
-    createEnvironment()[60] = r0.Symbol.for(r0.Symbol, "react.provider");
+    createEnvironment()[60] = globalThis.Symbol.for(globalThis.Symbol, "react.provider");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 8244>  # String: 'react.consumer' (String)
     // USED → r40 = "react.consumer";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.consumer");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.consumer");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 61, Reg8: 40>
-    createEnvironment()[61] = r0.Symbol.for(r0.Symbol, "react.consumer");
+    createEnvironment()[61] = globalThis.Symbol.for(globalThis.Symbol, "react.consumer");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 4944>  # String: 'react.context' (String)
     // USED → r40 = "react.context";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.context");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.context");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 62, Reg8: 40>
-    createEnvironment()[62] = r0.Symbol.for(r0.Symbol, "react.context");
+    createEnvironment()[62] = globalThis.Symbol.for(globalThis.Symbol, "react.context");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 7930>  # String: 'react.forward_ref' (String)
     // USED → r40 = "react.forward_ref";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.forward_ref");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.forward_ref");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 63, Reg8: 40>
-    createEnvironment()[63] = r0.Symbol.for(r0.Symbol, "react.forward_ref");
+    createEnvironment()[63] = globalThis.Symbol.for(globalThis.Symbol, "react.forward_ref");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6421>  # String: 'react.suspense' (String)
     // USED → r40 = "react.suspense";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.suspense");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.suspense");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 64, Reg8: 40>
-    createEnvironment()[64] = r0.Symbol.for(r0.Symbol, "react.suspense");
+    createEnvironment()[64] = globalThis.Symbol.for(globalThis.Symbol, "react.suspense");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6422>  # String: 'react.suspense_list' (String)
     // USED → r40 = "react.suspense_list";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.suspense_list");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.suspense_list");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 65, Reg8: 40>
-    createEnvironment()[65] = r0.Symbol.for(r0.Symbol, "react.suspense_list");
+    createEnvironment()[65] = globalThis.Symbol.for(globalThis.Symbol, "react.suspense_list");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 410>  # String: 'react.memo' (String)
     // USED → r40 = "react.memo";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.memo");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.memo");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 66, Reg8: 40>
-    createEnvironment()[66] = r0.Symbol.for(r0.Symbol, "react.memo");
+    createEnvironment()[66] = globalThis.Symbol.for(globalThis.Symbol, "react.memo");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 10762>  # String: 'react.lazy' (String)
     // USED → r40 = "react.lazy";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.lazy");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.lazy");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 67, Reg8: 40>
-    createEnvironment()[67] = r0.Symbol.for(r0.Symbol, "react.lazy");
+    createEnvironment()[67] = globalThis.Symbol.for(globalThis.Symbol, "react.lazy");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6222>  # String: 'react.scope' (String)
     // USED → r40 = "react.scope";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for(r0.Symbol, "react.scope");
+    r40 = globalThis.Symbol.for(globalThis.Symbol, "react.scope");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 6531>  # String: 'react.debug_trace_mode' (String)
     // USED → r40 = "react.debug_trace_mode";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for(r0.Symbol, "react.debug_trace_mode");
+    r40 = globalThis.Symbol.for(globalThis.Symbol, "react.debug_trace_mode");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 5577>  # String: 'react.offscreen' (String)
     // USED → r40 = "react.offscreen";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    // USED → r40 = r0.Symbol.for(r0.Symbol, "react.offscreen");
+    // USED → r40 = globalThis.Symbol.for(globalThis.Symbol, "react.offscreen");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 68, Reg8: 40>
-    createEnvironment()[68] = r0.Symbol.for(r0.Symbol, "react.offscreen");
+    createEnvironment()[68] = globalThis.Symbol.for(globalThis.Symbol, "react.offscreen");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 4905>  # String: 'react.legacy_hidden' (String)
     // USED → r40 = "react.legacy_hidden";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for(r0.Symbol, "react.legacy_hidden");
+    r40 = globalThis.Symbol.for(globalThis.Symbol, "react.legacy_hidden");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 2166>  # String: 'react.cache' (String)
     // USED → r40 = "react.cache";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for(r0.Symbol, "react.cache");
+    r40 = globalThis.Symbol.for(globalThis.Symbol, "react.cache");
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 8982>  # String: 'react.tracing_marker' (String)
     // USED → r40 = "react.tracing_marker";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for(r0.Symbol, "react.tracing_marker");
+    r40 = globalThis.Symbol.for(globalThis.Symbol, "react.tracing_marker");
     // CODE → <TryGetById>: <Reg8: 40, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r40 = r0.Symbol;
+    // USED → r40 = globalThis.Symbol;
     // CODE → <GetById>: <Reg8: 40, Reg8: 40, UInt8: 40, string_id: 13658>  # String: 'iterator' (Identifier)
-    // USED → r40 = r0.Symbol.iterator;
+    // USED → r40 = globalThis.Symbol.iterator;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 69, Reg8: 40>
-    createEnvironment()[69] = r0.Symbol.iterator;
+    createEnvironment()[69] = globalThis.Symbol.iterator;
     // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
-    // USED → r42 = r0.Symbol;
+    // USED → r42 = globalThis.Symbol;
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
-    // USED → r41 = r0.Symbol.for;
+    // USED → r41 = globalThis.Symbol.for;
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 10511>  # String: 'react.client.reference' (String)
     // USED → r40 = "react.client.reference";
     // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-    r40 = r0.Symbol.for(r0.Symbol, "react.client.reference");
+    r40 = globalThis.Symbol.for(globalThis.Symbol, "react.client.reference");
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
     // USED → r40 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
@@ -2021,21 +2021,21 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 72, Reg8: 39>
     createEnvironment()[72] = r39;
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-    // USED → r39 = r0.Object;
+    // USED → r39 = globalThis.Object;
     // CODE → <GetById>: <Reg8: 39, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
-    // USED → r39 = r0.Object.is;
+    // USED → r39 = globalThis.Object.is;
     // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
-    // USED → r39 = typeof r0.Object.is;
+    // USED → r39 = typeof globalThis.Object.is;
     // CODE → <JStrictNotEqual>: <Addr8: 16, Reg8: 16, Reg8: 39>  # Address: 0000127e
-    if ("function" !== typeof r0.Object.is) goto label_4734;
+    if ("function" !== typeof globalThis.Object.is) goto label_4734;
     // ──────────────── Block 19 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-    // USED → r39 = r0.Object;
+    // USED → r39 = globalThis.Object;
     // CODE → <GetById>: <Reg8: 38, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
-    // USED → r38 = r0.Object.is;
+    // USED → r38 = globalThis.Object.is;
     // ──────────────── Block 20 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
-    createEnvironment()[73] = r0.Object.is;
+    createEnvironment()[73] = globalThis.Object.is;
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
     // USED → r38 = createCursor(undefined, null);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 74, Reg8: 38>
@@ -2073,29 +2073,29 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 87, Reg8: 12>
     createEnvironment()[87] = false;
     // CODE → <TryGetById>: <Reg8: 38, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
-    // USED → r38 = r0.Object;
+    // USED → r38 = globalThis.Object;
     // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r38 = r0.Object.prototype;
+    // USED → r38 = globalThis.Object.prototype;
     // CODE → <GetByIdShort>: <Reg8: 38, Reg8: 38, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-    // USED → r38 = r0.Object.prototype.hasOwnProperty;
+    // USED → r38 = globalThis.Object.prototype.hasOwnProperty;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 88, Reg8: 38>
-    createEnvironment()[88] = r0.Object.prototype.hasOwnProperty;
+    createEnvironment()[88] = globalThis.Object.prototype.hasOwnProperty;
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r39 = r0.Error;
+    // USED → r39 = globalThis.Error;
     // CODE → <LoadConstString>: <Reg8: 38, string_id: 3625>  # String: "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`" (String)
     // USED → r38 = "str_3625";
     // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-    // USED → r38 = r0.Error(undefined, "str_3625");
+    // USED → r38 = globalThis.Error(undefined, "str_3625");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 89, Reg8: 38>
-    createEnvironment()[89] = r0.Error(undefined, "str_3625");
+    createEnvironment()[89] = globalThis.Error(undefined, "str_3625");
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r39 = r0.Error;
+    // USED → r39 = globalThis.Error;
     // CODE → <LoadConstString>: <Reg8: 38, string_id: 6775>  # String: "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React." (String)
     // USED → r38 = "str_6775";
     // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-    // USED → r38 = r0.Error(undefined, "str_6775");
+    // USED → r38 = globalThis.Error(undefined, "str_6775");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
-    createEnvironment()[90] = r0.Error(undefined, "str_6775");
+    createEnvironment()[90] = globalThis.Error(undefined, "str_6775");
     // CODE → <NewObject>: <Reg8: 38>
     // USED → r38 = {  }
     // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
@@ -2377,17 +2377,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 119, Reg8: 20>
     createEnvironment()[119] = r20;
     // CODE → <TryGetById>: <Reg8: 20, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-    // USED → r20 = r0.WeakMap;
+    // USED → r20 = globalThis.WeakMap;
     // CODE → <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r21 = r0.WeakMap.prototype;
+    // USED → r21 = globalThis.WeakMap.prototype;
     // CODE → <CreateThis>: <Reg8: 21, Reg8: 21, Reg8: 20>
-    // USED → r21 = createThis(r0.WeakMap.prototype, r0.WeakMap);
+    // USED → r21 = createThis(globalThis.WeakMap.prototype, globalThis.WeakMap);
     // CODE → <Mov>: <Reg8: 57, Reg8: 21>
-    r57 = createThis(r0.WeakMap.prototype, r0.WeakMap);
+    r57 = createThis(globalThis.WeakMap.prototype, globalThis.WeakMap);
     // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
-    // USED → r20 = new r0.WeakMap(param7);
+    // USED → r20 = new globalThis.WeakMap(param7);
     // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
-    // USED → r20 = createThis(r0.WeakMap.prototype, r0.WeakMap)[new r0.WeakMap(param7)]
+    // USED → r20 = createThis(globalThis.WeakMap.prototype, globalThis.WeakMap)[new globalThis.WeakMap(param7)]
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>
     createEnvironment()[120] = r20;
     // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
@@ -2408,13 +2408,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 121, Reg8: 17>
     createEnvironment()[121] = param2(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
     // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r18 = r0.Error;
+    // USED → r18 = globalThis.Error;
     // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
     // USED → r17 = "str_6991";
     // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-    // USED → r17 = r0.Error(undefined, "str_6991");
+    // USED → r17 = globalThis.Error(undefined, "str_6991");
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
-    createEnvironment()[122] = r0.Error(undefined, "str_6991");
+    createEnvironment()[122] = globalThis.Error(undefined, "str_6991");
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
     createEnvironment()[123] = false;
     // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
@@ -2440,21 +2440,21 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
     createEnvironment()[131] = false;
     // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-    // USED → r15 = r0.WeakSet;
+    // USED → r15 = globalThis.WeakSet;
     // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-    // USED → r15 = typeof r0.WeakSet;
+    // USED → r15 = typeof globalThis.WeakSet;
     // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
-    if ("function" === typeof r0.WeakSet) goto label_5669;
+    if ("function" === typeof globalThis.WeakSet) goto label_5669;
     // ──────────────── Block 22 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
-    r15 = r0.Set;
+    r15 = globalThis.Set;
     // CODE → <Jmp>: <Addr8: 8>  # Address: 0000162b
     goto label_5675;
     // LOOP → START (while)
-    while ("function" === typeof r0.WeakMap) {
+    while ("function" === typeof globalThis.WeakMap) {
         // ──────────────── Block 24 ──────────────── 
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
-        createEnvironment()[132] = r0.WeakSet;
+        createEnvironment()[132] = globalThis.WeakSet;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
         createEnvironment()[133] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
@@ -2464,26 +2464,26 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
         createEnvironment()[135] = 8192;
         // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-        // USED → r15 = r0.WeakMap;
+        // USED → r15 = globalThis.WeakMap;
         // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-        // USED → r15 = typeof r0.WeakMap;
+        // USED → r15 = typeof globalThis.WeakMap;
         // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
-        if ("function" === typeof r0.WeakMap) goto label_5717;
+        if ("function" === typeof globalThis.WeakMap) goto label_5717;
         // ──────────────── Block 23 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-        // USED → r15 = r0.WeakSet;
+        // USED → r15 = globalThis.WeakSet;
     }
     // LOOP → END
     // ──────────────── Block 25 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-    r15 = r0.Map;
+    r15 = globalThis.Map;
     // CODE → <Jmp>: <Addr8: 8>  # Address: 0000165b
     goto label_5723;
     // LOOP → START (while)
     while (r12.findFiberByHostInstance) {
         // ──────────────── Block 27 ──────────────── 
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
-        createEnvironment()[136] = r0.WeakMap;
+        createEnvironment()[136] = globalThis.WeakMap;
         // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
         // USED → r15 = param2(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
@@ -2533,9 +2533,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 157, Reg8: 10>
         createEnvironment()[157] = 0;
         // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 51, string_id: 21125>  # String: 'Infinity' (Identifier)
-        // USED → r15 = r0.Infinity;
+        // USED → r15 = globalThis.Infinity;
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 158, Reg8: 15>
-        createEnvironment()[158] = r0.Infinity;
+        createEnvironment()[158] = globalThis.Infinity;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 159, Reg8: 11>
         createEnvironment()[159] = null;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 160, Reg8: 12>
@@ -2559,17 +2559,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 207, Reg8: 10>
         createEnvironment()[207] = batchedUpdatesImpl;
         // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-        // USED → r10 = r0.Map;
+        // USED → r10 = globalThis.Map;
         // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-        // USED → r12 = r0.Map.prototype;
+        // USED → r12 = globalThis.Map.prototype;
         // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
-        // USED → r12 = createThis(r0.Map.prototype, r0.Map);
+        // USED → r12 = createThis(globalThis.Map.prototype, globalThis.Map);
         // CODE → <Mov>: <Reg8: 57, Reg8: 12>
-        r57 = createThis(r0.Map.prototype, r0.Map);
+        r57 = createThis(globalThis.Map.prototype, globalThis.Map);
         // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
-        // USED → r10 = new r0.Map("undefined");
+        // USED → r10 = new globalThis.Map("undefined");
         // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
-        // USED → r10 = createThis(r0.Map.prototype, r0.Map)[new r0.Map("undefined")]
+        // USED → r10 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map("undefined")]
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
         createEnvironment()[168] = r10;
         // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
@@ -2646,7 +2646,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         if (r12.findFiberByHostInstance) goto label_6101;
         // ──────────────── Block 26 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-        // USED → r15 = r0.WeakMap;
+        // USED → r15 = globalThis.WeakMap;
     }
     // LOOP → END
     // ──────────────── Block 28 ──────────────── 
@@ -2670,36 +2670,36 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Mov>: <Reg8: 7, Reg8: 8>
     // USED → r7 = r8;
     // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
     // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
-    // USED → r8 = typeof r0.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+    // USED → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
     // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
-    if ("undefined" === typeof r0.__REACT_DEVTOOLS_GLOBAL_HOOK__) goto label_6205;
+    if ("undefined" === typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__) goto label_6205;
     // ──────────────── Block 30 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
     // CODE → <Mov>: <Reg8: 6, Reg8: 8>
-    // USED → r6 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+    // USED → r6 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
     // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
-    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled;
+    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled;
     // CODE → <JmpTrue>: <Addr8: 38, Reg8: 8>  # Address: 0000183d
-    if (r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) goto label_6205;
+    if (globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) goto label_6205;
     // ──────────────── Block 31 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 6>
-    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
     // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
-    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber;
+    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber;
     // CODE → <JmpFalse>: <Addr8: 26, Reg8: 8>  # Address: 0000183d
-    if (!r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber) goto label_6205;
+    if (!globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber) goto label_6205;
     // ──────────────── Block 32 ──────────────── 
     // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
-    // USED → r8 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject;
+    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject;
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-    // USED → r7 = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r0.__REACT_DEVTOOLS_GLOBAL_HOOK__, r8);
+    // USED → r7 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__, r8);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
-    createEnvironment()[31] = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r0.__REACT_DEVTOOLS_GLOBAL_HOOK__, r8);
+    createEnvironment()[31] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__, r8);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
-    createEnvironment()[32] = r0.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+    createEnvironment()[32] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
     goto label_6205;
     // LOOP → START (while)
@@ -2758,11 +2758,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // LOOP → END
     // ──────────────── Block 35 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
-    // USED → r1 = r0.Error;
+    // USED → r1 = globalThis.Error;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4985>  # String: 'Expected ReactFiberErrorDialog.showErrorDialog to be a function.' (String)
     // USED → r0 = "Expected ReactFiberErrorDialog.showErrorDialog to be a function.";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    // USED → r0 = r0.Error(undefined, "Expected ReactFiberErrorDialog.showErrorDialog to be a function.");
+    // USED → r0 = globalThis.Error(undefined, "Expected ReactFiberErrorDialog.showErrorDialog to be a function.");
     // CODE → <Throw>: <Reg8: 0>
-    throw r0.Error(undefined, "Expected ReactFiberErrorDialog.showErrorDialog to be a function.");
+    throw globalThis.Error(undefined, "Expected ReactFiberErrorDialog.showErrorDialog to be a function.");
 }

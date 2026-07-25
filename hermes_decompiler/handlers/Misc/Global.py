@@ -1,4 +1,5 @@
-from hermes_decompiler.ir.Values import GlobalThisValue, IdentifierValue, VariableDeclaration
+from hermes_decompiler.ir import Identifier, VariableDeclaration, VariableDeclarator
+from hermes_decompiler.ir.Operators import VariableKind
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -12,6 +13,7 @@ from hermes_decompiler.handlers._shared_patterns import REG, STRING_ID, sequence
 # Example: <GetGlobalObject>: <Reg8: 2>
 class GetGlobalObject(OpcodeHandler):
     """Get the global object (global scope)."""
+
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -24,13 +26,9 @@ class GetGlobalObject(OpcodeHandler):
         global_reg = int(match.group(1))
 
         # Track global object register in analysis
-        if hasattr(analysis, 'globalObjects'):
-            analysis.globalObjects = global_reg
-        else:
-            # Fallback if the attribute doesn't exist yet
-            setattr(analysis, 'globalObjects', global_reg)
+        analysis.globalObjects = global_reg
 
-        variable = JSVariable(handler, entry.address, f'r{global_reg}', GlobalThisValue())
+        variable = JSVariable(handler, entry.address, f"r{global_reg}", Identifier(name="globalThis"))
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -40,10 +38,11 @@ class GetGlobalObject(OpcodeHandler):
 # Example: <DeclareGlobalVar>: <string_id: 4522>  # String: 'myGlobal' (Identifier)
 class DeclareGlobalVar(OpcodeHandler):
     """
-    Side-effect-only opcode — no destination register, so the resulting
+    Side-effect-only opcode - no destination register, so the resulting
     statement is recorded under an empty register key (same convention as
     Ret/Throw/PutByVal for statements with no downstream chainable value).
     """
+
     _PATTERN = sequence(STRING_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -56,11 +55,16 @@ class DeclareGlobalVar(OpcodeHandler):
         string_id = int(match.group(1))
         prop_name = entry.identifier_name or f"string_{string_id}"
 
-        value = VariableDeclaration(
-            kind="var",
-            name=IdentifierValue(prop_name),
+        # A real `var` declaration statement, not an Expression - this is
+        # the `ir.statements.VariableDeclaration`, distinct from the old
+        # legacy `ir.Values.VariableDeclaration` (which was mistakenly a
+        # Value/Expression subclass despite having no meaningful value).
+        declaration = VariableDeclaration(
+            kind=VariableKind.VAR,
+            declarations=(VariableDeclarator(id=Identifier(name=prop_name)),),
         )
-        variable = JSVariable(handler, entry.address, "", value)
+
+        variable = JSVariable(handler, entry.address, "", None, statement=declaration)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

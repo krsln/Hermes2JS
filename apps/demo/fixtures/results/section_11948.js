@@ -389,22 +389,22 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 14>
     // USED → r5 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined].length;
     // CODE → <GetGlobalObject>: <Reg8: 9>
-    // USED → r9 = globalThis
+    // USED → r9 = globalThis;
     // CODE → <TryGetById>: <Reg8: 16, Reg8: 9, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
-    // USED → r16 = r9.Promise;
+    // USED → r16 = globalThis.Promise;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 16, UInt8: 27, string_id: 208>  # String: 'resolve' (Identifier)
-    // USED → r9 = r9.Promise.resolve;
+    // USED → r9 = globalThis.Promise.resolve;
     // CODE → <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
-    // USED → r0 = r9.Promise.resolve(r9.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2));
+    // USED → r0 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2));
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
     // USED → r9 = 0;
     // CODE → <JNotLess>: <Addr8: 54, Reg8: 9, Reg8: 14>  # Address: 00000349
     if (0 >= [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined].length) goto label_841;
     // ──────────────── Block 27 ──────────────── 
     // CODE → <Mov>: <Reg8: 18, Reg8: 0>
-    // USED → r18 = r9.Promise.resolve(r9.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2));
+    // USED → r18 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2));
     // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
-    // USED → r17 = r9.Promise.resolve(r9.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2)).then;
+    // USED → r17 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2)).then;
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
     // USED → r9 = 0;
     // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
@@ -424,14 +424,14 @@ function _request(param0, param1, param2) {
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
     // USED → r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined][+(+0 + 1)];
     // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
-    // USED → r0 = r9.Promise.resolve(r9.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2)).then(r9.Promise.resolve(r9.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2)), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined][+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined][+(+0 + 1)]);
+    // USED → r0 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2)).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2)), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined][+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined][+(+0 + 1)]);
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
     // USED → r9 = [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined].length;
     // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
     if (+(+0 + 1) + 1 < [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined].length) goto label_791;
     // ──────────────── Block 28 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 0>
-    r9 = r9.Promise.resolve(r9.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2)).then(r9.Promise.resolve(r9.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2)), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined][+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined][+(+0 + 1)]);
+    r9 = globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2)).then(globalThis.Promise.resolve(globalThis.Promise, getEnvironment(1)[7].default(undefined, this.defaults, r2)), [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined][+0], [getEnvironment(1)[6].default.bind(getEnvironment(1)[6].default, this), undefined][+(+0 + 1)]);
     // CODE → <Ret>: <Reg8: 9>
     // Unhandled opcode: Ret
     // ──────────────── Block 29 ──────────────── 
@@ -550,13 +550,13 @@ function _request(param0, param1, param2) {
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <GetGlobalObject>: <Reg8: 0>
-    // USED → r0 = globalThis
+    // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
-    // USED → r1 = r0.Promise;
+    // USED → r1 = globalThis.Promise;
     // CODE → <GetById>: <Reg8: 0, Reg8: 1, UInt8: 30, string_id: 13645>  # String: 'reject' (Identifier)
-    // USED → r0 = r0.Promise.reject;
+    // USED → r0 = globalThis.Promise.reject;
     // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
-    r0 = r0.Promise.reject(r0.Promise, caughtException);
+    r0 = globalThis.Promise.reject(globalThis.Promise, caughtException);
     // CODE → <Ret>: <Reg8: 0>
     // Unhandled opcode: Ret
 }
