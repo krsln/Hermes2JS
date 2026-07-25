@@ -2,7 +2,13 @@ import re
 from typing import ClassVar
 
 from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
-from hermes_decompiler.ir.Values import Value, UndefinedValue, EmptyValue, ConstantValue
+from hermes_decompiler.ir import (
+    Expression,
+    UndefinedLiteral,
+    StringLiteral,
+    RawExpression,
+    python_literal,
+)
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.JSVariable import JSVariable
 from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
@@ -23,7 +29,7 @@ class LoadSimpleConst(OpcodeHandler):
 
     _PATTERN = sequence(REG)
 
-    VALUE: ClassVar[Value | object]
+    VALUE: ClassVar[Expression | object]
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         handler = self.__class__.__name__
@@ -36,8 +42,8 @@ class LoadSimpleConst(OpcodeHandler):
 
         value = self.VALUE
 
-        if not isinstance(value, Value):
-            value = ConstantValue(value)
+        if not isinstance(value, Expression):
+            value = python_literal(value)
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
         analysis.add_result(entry, variable)
@@ -59,11 +65,16 @@ class LoadConstNull(LoadSimpleConst):
     VALUE = None
 
 class LoadConstUndefined(LoadSimpleConst):
-    VALUE = UndefinedValue()
+    VALUE = UndefinedLiteral()
 
 class LoadConstEmpty(LoadSimpleConst):
-    VALUE = EmptyValue()
+    # Hermes' internal "empty" sentinel (e.g. an array hole) has no real
+    # JS literal - it isn't `undefined` at the engine level, even though
+    # source-visible reads of it usually coerce to `undefined`. Kept as
+    # an explicit marker rather than silently lying with UndefinedLiteral.
+    VALUE = RawExpression(source="/* empty */")
 # @formatter:on
+
 
 # ---------------------------------------------------------------------------
 # Numeric constants
@@ -80,7 +91,7 @@ class LoadConstUInt8(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8")
 
         register = int(match.group(1))
-        value = ConstantValue(int(match.group(2)))
+        value = python_literal(int(match.group(2)))
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
         analysis.add_result(entry, variable)
@@ -99,7 +110,7 @@ class LoadConstInt(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Imm32")
 
         register = int(match.group(1))
-        value = ConstantValue(int(match.group(2)))
+        value = python_literal(int(match.group(2)))
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
         analysis.add_result(entry, variable)
@@ -118,7 +129,7 @@ class LoadConstDouble(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Double")
 
         register = int(match.group(1))
-        value = ConstantValue(float(match.group(2)))
+        value = python_literal(float(match.group(2)))
 
         variable = JSVariable(handler, entry.address, f"r{register}", value)
         analysis.add_result(entry, variable)
@@ -151,7 +162,7 @@ class LoadConstString(OpcodeHandler):
         if resolved is None:
             resolved = f"str_{string_id}"
 
-        variable = JSVariable(handler, entry.address, f"r{register}", ConstantValue(resolved))
+        variable = JSVariable(handler, entry.address, f"r{register}", StringLiteral(resolved))
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
@@ -161,4 +172,5 @@ class LoadConstStringLongIndex(LoadConstString):
     """
     UInt32 string index variant.
     """
+
     pass

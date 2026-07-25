@@ -1,3 +1,4 @@
+from hermes_decompiler.ir import Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -11,6 +12,7 @@ from hermes_decompiler.handlers._shared_patterns import REG, sequence
 # Example: <LoadThisNS>: <Reg8: 4>
 class LoadThisNS(OpcodeHandler):
     """Load and coerce `this` value."""
+
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -22,7 +24,7 @@ class LoadThisNS(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', 'this')
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", Identifier(name="this"))
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)

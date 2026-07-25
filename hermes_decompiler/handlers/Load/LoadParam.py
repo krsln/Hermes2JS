@@ -1,3 +1,4 @@
+from hermes_decompiler.ir import Identifier
 from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
 from hermes_decompiler.models.OpcodeResult import OpcodeResult
 from hermes_decompiler.models.JSVariable import JSVariable
@@ -11,6 +12,7 @@ from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
 # Example: <LoadParam>: <Reg8: 1, UInt8: 1>
 class LoadParam(OpcodeHandler):
     """Load function parameter (including this at index 0)."""
+
     _PATTERN = sequence(REG, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -23,9 +25,10 @@ class LoadParam(OpcodeHandler):
         dest_reg, param_index = map(int, match.groups())
 
         # param0 = this, others = paramN
-        value = 'this' if param_index == 0 else f"param{param_index}"
+        name = "this" if param_index == 0 else f"param{param_index}"
+        value = Identifier(name=name)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
+        variable = JSVariable(handler, entry.address, f"r{dest_reg}", value)
         analysis.add_result(entry, variable)
 
         return OpcodeResult(entry, variable)
