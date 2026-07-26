@@ -9,7 +9,6 @@ from .BasicBlock import BasicBlock
 class CFG:
 
     def __init__(self):
-
         self.loop_analysis = None
         self.blocks: List[BasicBlock] = []
 
@@ -20,7 +19,6 @@ class CFG:
 
     @classmethod
     def from_results(cls, results: List[OpcodeResult]) -> "CFG":
-
         from .CFGBuilder import CFGBuilder
 
         return CFGBuilder().build(results)
@@ -28,7 +26,6 @@ class CFG:
     # ---------------------------------------------------------
 
     def verify(self):
-
         from .CFGVerifier import CFGVerifier
 
         CFGVerifier(self).verify()
@@ -36,7 +33,6 @@ class CFG:
     # ---------------------------------------------------------
 
     def compute_dominators(self):
-
         from .DominatorTree import DominatorTree
 
         self.dominator_tree = DominatorTree(self)
@@ -46,7 +42,6 @@ class CFG:
     # ---------------------------------------------------------
 
     def compute_post_dominators(self):
-
         from .PostDominatorTree import PostDominatorTree
 
         self.post_dominator_tree = PostDominatorTree(self)

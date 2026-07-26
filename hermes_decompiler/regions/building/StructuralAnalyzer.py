@@ -5,6 +5,7 @@ from hermes_decompiler.regions.building.Structurers import (
     SequenceStructurer,
     LoopStructurer,
     IfStructurer,
+    BooleanChainFolder,
     SwitchStructurer,
     TryStructurer,
 )
@@ -23,6 +24,14 @@ class StructuralAnalyzer:
 
         LoopStructurer(graph, self.cfg).run()
         IfStructurer(graph, self.cfg).run()
+
+        # Fold `r = E1; if (!E1) { r = E2; }` idioms back into
+        # `r = E1 || E2;` (and the `&&` counterpart) before the
+        # condition is flattened to text. Must run after IfStructurer
+        # (needs real IfRegions) and before StatementBuilder (needs
+        # BasicBlocks still intact, not yet flattened to
+        # InstructionStates).
+        BooleanChainFolder().run(graph.root)
 
         LoopConditionExtractor(graph.root).run()
 

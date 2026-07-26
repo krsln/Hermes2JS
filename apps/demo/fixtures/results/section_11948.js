@@ -48,12 +48,7 @@ function _request(param0, param1, param2) {
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 14, Reg8: 6>
-        // USED → r14 = param1;
-        if (!param1) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <NewObject>: <Reg8: 14>
-            // USED → r14 = {  };
-        }
+        // USED → r14 = param1 || {  };
         // ──────────────── Block 3 ──────────────── 
         // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 0, Reg8: 14>
         createEnvironment()[0] = {  };

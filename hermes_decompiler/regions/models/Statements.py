@@ -23,16 +23,16 @@ class InstructionState(State):
 # Pre-structural control flow
 # ============================================================================
 #
-# JS has no `goto`. These two nodes are CFG-level IR only: the raw
-# output of jump opcodes (Jmp*, JCompareX, ...) before
-# StructuralAnalyzer/Structurers replace them with real `while`/`if`/
-# `break`/`continue` nodes from `ir.statements`. They live here, not in
-# `ir/`, because `ir/` models the *final* JS AST and these have no JS
+# JS has no `goto`. These nodes are CFG-level IR only: the raw output of
+# jump opcodes (Jmp*, JCompareX, SwitchImm) before StructuralAnalyzer/
+# Structurers replace them with real `while`/`if`/`switch`/`break`/
+# `continue` nodes from `ir.statements`. They live here, not in `ir/`,
+# because `ir/` models the *final* JS AST and these have no JS
 # equivalent - they should not survive past the structuring pass into
 # rendered output outside verbose/debug mode.
 #
 # They still subclass `ir.Statement` (rather than being a wholly
-# separate hierarchy) so they can be carried on `JSVariable.statement`
+# separate hierarchy) so they can be carried on `OpcodeResult.statement`
 # and printed by `Printer` like any other statement during this
 # transitional, pre-structuring stage.
 # ============================================================================

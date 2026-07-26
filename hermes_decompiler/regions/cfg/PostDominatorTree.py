@@ -9,13 +9,11 @@ from .BasicBlock import BasicBlock
 class PostDominatorTree(_IterativeSetAnalysis):
 
     def __init__(self, cfg):
-
         super().__init__(cfg)
 
         self.ipdom: Dict[BasicBlock, Optional[BasicBlock]] = {}
 
     def roots(self):
-
         #
         # all exits
         #
@@ -31,13 +29,11 @@ class PostDominatorTree(_IterativeSetAnalysis):
         ]
 
     def neighbors(self, block):
-
         return block.successors
 
     # ---------------------------------------------------------
 
     def compute(self):
-
         super().compute()
 
         self.ipdom = self.compute_immediate()
@@ -45,16 +41,14 @@ class PostDominatorTree(_IterativeSetAnalysis):
     # ---------------------------------------------------------
 
     def post_dominates(
-        self,
-        post_dominator: BasicBlock,
-        block: BasicBlock,
+            self,
+            post_dominator: BasicBlock,
+            block: BasicBlock,
     ) -> bool:
-
         return post_dominator in self.result.get(block, set())
 
     def immediate_post_dominator(
-        self,
-        block: BasicBlock,
+            self,
+            block: BasicBlock,
     ) -> Optional[BasicBlock]:
-
         return self.ipdom.get(block)

@@ -77,7 +77,9 @@ class JSRenderer:
     def _render_if(self, region: IfRegion, output, indent):
         prefix = "    " * indent
 
-        output.append(prefix + f"if ({region.condition}) {{")
+        condition = self.printer.print_expression(region.condition) if region.condition is not None else ""
+
+        output.append(prefix + f"if ({condition}) {{")
         self._render_region(region.then_body, output, indent + 1)
 
         if region.else_body:

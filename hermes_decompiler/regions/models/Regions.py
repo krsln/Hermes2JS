@@ -4,6 +4,7 @@ from abc import ABC
 from enum import Enum
 from typing import TYPE_CHECKING
 
+from hermes_decompiler.ir import Expression
 from hermes_decompiler.regions.cfg.BasicBlock import BasicBlock
 
 if TYPE_CHECKING:
@@ -62,7 +63,11 @@ class IfRegion(Region):
     def __init__(self):
         super().__init__()
 
-        self.condition: str = ""
+        # NOTE: an `ir.Expression`, not pre-rendered text - kept as real
+        # IR through the structuring passes (e.g. `BooleanChainFolder`
+        # needs to structurally compare conditions) and only turned into
+        # a string by `JSRenderer`/`Printer` at output time.
+        self.condition: Expression | None = None
 
         self.then_body = SequenceRegion()
 

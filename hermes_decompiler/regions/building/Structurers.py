@@ -1,17 +1,15 @@
 from __future__ import annotations
 
-from hermes_decompiler.ir.expressions import BinaryExpression, UnaryExpression
-from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
+from hermes_decompiler.ir.expressions import BinaryExpression, Expression, UnaryExpression
+from hermes_decompiler.ir.Operators import BinaryOperator, LogicalOperator, UnaryOperator
 from hermes_decompiler.regions.building.RegionGraph import RegionGraph
 from hermes_decompiler.regions.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.regions.models.Regions import (
     SequenceRegion,
     LoopRegion,
     IfRegion,
-    Region,
 )
 from hermes_decompiler.regions.models.Statements import IfGotoStatement
-from hermes_decompiler.regions.render.Printer import Printer
 
 
 class SequenceStructurer:
@@ -58,10 +56,6 @@ class LoopStructurer:
 
         region = LoopRegion(loop)
 
-        #
-        # Eğer root veya parent içinde header yoksa
-        # header'ı ekle
-        #
         if loop.header not in parent_sequence.children:
 
             old_owner = self.graph.owner(loop.header)
@@ -77,9 +71,6 @@ class LoopStructurer:
 
             self.graph.block_owner[loop.header] = parent_sequence
 
-        #
-        # Header yerine LoopRegion koy
-        #
         index = parent_sequence.children.index(
             loop.header
         )
@@ -88,26 +79,17 @@ class LoopStructurer:
 
         region.parent = parent_sequence
 
-        #
-        # Header body içine
-        #
         region.body.children.append(
             loop.header
         )
 
         self.graph.block_owner[loop.header] = region.body
 
-        #
-        # Child loop bloklarını ayır
-        #
         child_members = set()
 
         for child in loop.children:
             child_members.update(child.members)
 
-        #
-        # Normal blokları taşı
-        #
         for block in sorted(loop.members, key=lambda b: b.id):
 
             if block == loop.header:
@@ -121,9 +103,6 @@ class LoopStructurer:
                 region.body
             )
 
-        #
-        # Child loops
-        #
         for child in sorted(
                 loop.children,
                 key=lambda l: l.header.id
@@ -154,6 +133,47 @@ class LoopStructurer:
         print(f"{prefix}{type(region).__name__}")
 
 
+# ============================================================================
+# Condition negation - shared by IfStructurer and BooleanChainFolder
+# ============================================================================
+
+_INVERSE_COMPARISON = {
+    BinaryOperator.EQUAL: BinaryOperator.NOT_EQUAL,
+    BinaryOperator.NOT_EQUAL: BinaryOperator.EQUAL,
+    BinaryOperator.STRICT_EQUAL: BinaryOperator.STRICT_NOT_EQUAL,
+    BinaryOperator.STRICT_NOT_EQUAL: BinaryOperator.STRICT_EQUAL,
+    BinaryOperator.LESS_THAN: BinaryOperator.GREATER_EQUAL,
+    BinaryOperator.GREATER_EQUAL: BinaryOperator.LESS_THAN,
+    BinaryOperator.LESS_EQUAL: BinaryOperator.GREATER_THAN,
+    BinaryOperator.GREATER_THAN: BinaryOperator.LESS_EQUAL,
+}
+
+
+def _negate_condition(expr: Expression) -> Expression:
+    """
+    Produce the logical negation of `expr`, preferring a flipped
+    comparison operator (`!==` instead of `!(=== )`) or unwrapping an
+    existing `!` over a generic `UnaryExpression(NOT, expr)` wrap, to
+    match how a human would actually write the condition.
+
+    Shared by `IfStructurer` (negating a no-else jump condition) and
+    `BooleanChainFolder` (checking whether an `if`'s condition is
+    exactly the negation of a preceding assignment's value).
+    """
+
+    if isinstance(expr, UnaryExpression) and expr.operator == UnaryOperator.LOGICAL_NOT:
+        return expr.operand
+
+    if isinstance(expr, BinaryExpression) and expr.operator in _INVERSE_COMPARISON:
+        return BinaryExpression(
+            left=expr.left,
+            operator=_INVERSE_COMPARISON[expr.operator],
+            right=expr.right,
+        )
+
+    return UnaryExpression(UnaryOperator.LOGICAL_NOT, expr)
+
+
 class IfStructurer:
     """
     Converts conditional-jump-terminated basic blocks (whose last
@@ -173,7 +193,7 @@ class IfStructurer:
            `C` true means "skip fallthrough-body entirely". The natural
            JS "then" is therefore the fallthrough-body, taken when `C`
            is false - shown as `if (!C) { <fallthrough-body> }`
-           (negated; see `_negate`).
+           (negated; see `_negate_condition`).
 
         2. If/else - the jump target is a distinct block that itself
            reconverges at MERGE:
@@ -202,21 +222,9 @@ class IfStructurer:
     renders correctly on its own, just unstructured.
     """
 
-    _INVERSE_COMPARISON = {
-        BinaryOperator.EQUAL: BinaryOperator.NOT_EQUAL,
-        BinaryOperator.NOT_EQUAL: BinaryOperator.EQUAL,
-        BinaryOperator.STRICT_EQUAL: BinaryOperator.STRICT_NOT_EQUAL,
-        BinaryOperator.STRICT_NOT_EQUAL: BinaryOperator.STRICT_EQUAL,
-        BinaryOperator.LESS_THAN: BinaryOperator.GREATER_EQUAL,
-        BinaryOperator.GREATER_EQUAL: BinaryOperator.LESS_THAN,
-        BinaryOperator.LESS_EQUAL: BinaryOperator.GREATER_THAN,
-        BinaryOperator.GREATER_THAN: BinaryOperator.LESS_EQUAL,
-    }
-
     def __init__(self, graph: RegionGraph, cfg):
         self.graph = graph
         self.cfg = cfg
-        self.printer = Printer()
 
         self._address_to_block = {
             block.first.opcode.address: block
@@ -310,9 +318,11 @@ class IfStructurer:
         return None
 
     def _convert(self, region: SequenceRegion, block: BasicBlock) -> bool:
-        """Returns True if `block` was converted into an IfRegion, False
+        """
+        Returns True if `block` was converted into an IfRegion, False
         if it was left untouched (see `_structure_sequence` for why the
-        return value matters)."""
+        return value matters).
+        """
 
         header_result = block.instructions[-1]
         goto_stmt: IfGotoStatement = header_result.statement
@@ -375,10 +385,10 @@ class IfStructurer:
         else:
             # fallthrough -> then, negated condition (see class docstring)
             self.graph.transfer(then_items, then_body)
-            condition_expr = self._negate(goto_stmt.condition)
+            condition_expr = _negate_condition(goto_stmt.condition)
 
         if_region = IfRegion()
-        if_region.condition = self.printer.print_expression(condition_expr)
+        if_region.condition = condition_expr
         if_region.then_body = then_body
         if_region.else_body = else_body
 
@@ -412,29 +422,163 @@ class IfStructurer:
 
         return index
 
+
+class BooleanChainFolder:
+    """
+    Folds the common short-circuit `||`/`&&` compiled idiom back into a
+    single expression, once `IfStructurer` has already turned the raw
+    conditional jump into an `IfRegion`:
+
+        r0 = E1;
+        if (<negation of E1>) {
+            r0 = E2;
+        }
+
+    becomes:
+
+        r0 = E1 || E2;
+
+    and the AND counterpart (the original jump condition was `!E1`, so
+    `IfStructurer`'s negation step unwrapped it back to plain `E1`):
+
+        r0 = E1;
+        if (E1) {
+            r0 = E2;
+        }
+
+    becomes:
+
+        r0 = E1 && E2;
+
+    Chains longer than two operands (`E1 || E2 || E3 || ...`) fold
+    naturally: after the first fold, `block`'s value becomes
+    `E1 || E2`, and the loop re-checks the same block against whatever
+    `IfRegion` now follows it, matching against the *new* combined value.
+
+    `_visit` recurses post-order (children before folding at the
+    current level) so a nested chain (e.g. `E2 || E3` inside an outer
+    `if`'s `then_body`) is already collapsed to a single operand before
+    the outer level attempts its own fold.
+
+    Only folds when the `if` has no `else` and its `then_body` is
+    exactly one `BasicBlock` with exactly one instruction (the
+    reassignment) - anything more elaborate is left as a real `if` to
+    avoid silently dropping side effects.
+
+    Must run after `IfStructurer` (needs real `IfRegion`s) and before
+    `StatementBuilder` flattens blocks into `InstructionState`s.
+    """
+
+    def run(self, root: SequenceRegion):
+        self._visit(root)
+
     # ------------------------------------------------------------------
-    # Condition negation
+
+    def _visit(self, region):
+
+        if isinstance(region, SequenceRegion):
+
+            # Post-order: fold nested chains first, so that by the time
+            # we try to fold at *this* level, an inner IfRegion whose
+            # then_body just collapsed to a single block (e.g. a nested
+            # `E2 || E3`) already looks like a single foldable operand
+            # instead of a two-item [block, IfRegion] pair.
+            for child in region.children:
+                self._visit(child)
+
+            self._fold_sequence(region)
+
+            return
+
+        if isinstance(region, LoopRegion):
+            self._visit(region.body)
+            return
+
+        if isinstance(region, IfRegion):
+
+            self._visit(region.then_body)
+
+            if region.else_body:
+                self._visit(region.else_body)
+
+            return
+
+        if hasattr(region, "body"):
+            self._visit(region.body)
+
     # ------------------------------------------------------------------
 
-    def _negate(self, expr):
-        """
-        Produce the logical negation of `expr`, preferring a flipped
-        comparison operator (`!==` instead of `!(=== )`) or unwrapping
-        an existing `!` over a generic `UnaryExpression(NOT, expr)`
-        wrap, to match how a human would actually write the condition.
-        """
+    def _fold_sequence(self, region: SequenceRegion):
 
-        if isinstance(expr, UnaryExpression) and expr.operator == UnaryOperator.LOGICAL_NOT:
-            return expr.operand
+        index = 0
 
-        if isinstance(expr, BinaryExpression) and expr.operator in self._INVERSE_COMPARISON:
-            return BinaryExpression(
-                left=expr.left,
-                operator=self._INVERSE_COMPARISON[expr.operator],
-                right=expr.right,
-            )
+        while index < len(region.children) - 1:
 
-        return UnaryExpression(UnaryOperator.LOGICAL_NOT, expr)
+            block = region.children[index]
+            if_region = region.children[index + 1]
+
+            if self._try_fold(block, if_region):
+                # `if_region` was absorbed into `block`'s value; don't
+                # advance - re-check `block` against its new neighbor
+                # for a longer chain (E1 || E2 || E3 ...).
+                del region.children[index + 1]
+                continue
+
+            index += 1
+
+    def _try_fold(self, block, if_region) -> bool:
+
+        if not isinstance(block, BasicBlock) or not isinstance(if_region, IfRegion):
+            return False
+
+        if if_region.else_body is not None:
+            return False
+
+        if not block.instructions:
+            return False
+
+        last = block.instructions[-1]
+
+        if last.dest_reg is None or not isinstance(last.value, Expression):
+            return False
+
+        then_children = if_region.then_body.children
+
+        if len(then_children) != 1 or not isinstance(then_children[0], BasicBlock):
+            return False
+
+        then_block = then_children[0]
+
+        if len(then_block.instructions) != 1:
+            return False
+
+        then_result = then_block.instructions[0]
+
+        if then_result.dest_reg != last.dest_reg:
+            return False
+
+        if not isinstance(then_result.value, Expression):
+            return False
+
+        e1 = last.value
+        condition = if_region.condition
+
+        if condition is None:
+            return False
+
+        if _negate_condition(e1).structurally_equal(condition):
+            operator = LogicalOperator.OR
+
+        elif e1.structurally_equal(condition):
+            operator = LogicalOperator.AND
+
+        else:
+            return False
+
+        last.value = BinaryExpression(left=e1, operator=operator, right=then_result.value)
+        last.refresh_result()
+
+        return True
 
 
 class SwitchStructurer:
