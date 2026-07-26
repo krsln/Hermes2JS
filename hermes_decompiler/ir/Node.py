@@ -104,6 +104,6 @@ class Node(ABC):
         handler produces new-style nodes exclusively.
         """
 
-        from hermes_decompiler.regions.render.Printer import Printer
+        from hermes_decompiler.emit import Printer
 
         return Printer().visit(self)

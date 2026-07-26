@@ -10,7 +10,7 @@ from hermes_decompiler.regions.models.Statements import (InstructionState)
 from .Printer import Printer
 
 
-class JSRenderer:
+class JSEmitter:
 
     def __init__(self, verbose: bool = False):
         self.verbose = verbose

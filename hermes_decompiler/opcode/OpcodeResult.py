@@ -111,7 +111,7 @@ class OpcodeResult:
 
         # Imported lazily to avoid a hard dependency from `models` on
         # `regions` at module load time; `models` is the lower layer.
-        from hermes_decompiler.regions.render.Printer import Printer
+        from hermes_decompiler.emit import Printer
 
         printer = Printer()
 

@@ -56,7 +56,7 @@ class HermesAnalysis:
     def generate_js_v1(self, verbose: bool = False) -> List[str]:
         from hermes_decompiler.regions.cfg.CFG import CFG
         from hermes_decompiler.regions.building.StructuralAnalyzer import StructuralAnalyzer
-        from hermes_decompiler.regions.render.JSRenderer import JSRenderer
+        from hermes_decompiler.emit import JSEmitter
 
         cfg = CFG.from_results(self.results)
 
@@ -66,6 +66,6 @@ class HermesAnalysis:
         cfg.compute_loops()
 
         root = StructuralAnalyzer(cfg).build()
-        renderer = JSRenderer(verbose)
+        renderer = JSEmitter(verbose)
 
         return renderer.render(root)
