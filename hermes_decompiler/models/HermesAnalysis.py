@@ -51,9 +51,9 @@ class HermesAnalysis:
             self.registers[result.name] = result
 
     def generate_js(self, verbose: bool = False) -> list[str]:
-        return self.generate_js_v1_new(verbose)
+        return self.generate_js_v1(verbose)
 
-    def generate_js_v1_new(self, verbose: bool = False) -> List[str]:
+    def generate_js_v1(self, verbose: bool = False) -> List[str]:
         from hermes_decompiler.regions.cfg.CFG import CFG
         from hermes_decompiler.regions.building.StructuralAnalyzer import StructuralAnalyzer
         from hermes_decompiler.regions.render.JSRenderer import JSRenderer
