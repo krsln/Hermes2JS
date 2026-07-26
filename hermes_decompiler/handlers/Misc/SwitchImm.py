@@ -1,10 +1,9 @@
 import re
 
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
+from hermes_decompiler.handlers import OpcodeHandler
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
 from hermes_decompiler.regions.models.Statements import SwitchGotoStatement
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 class SwitchImm(OpcodeHandler):

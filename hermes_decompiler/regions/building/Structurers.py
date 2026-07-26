@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hermes_decompiler.ir import BinaryExpression, UnaryExpression
+from hermes_decompiler.ir.expressions import BinaryExpression, UnaryExpression
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.regions.building.RegionGraph import RegionGraph
 from hermes_decompiler.regions.cfg.BasicBlock import BasicBlock

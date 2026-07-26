@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from hermes_decompiler.ir import Expression, Node, Statement
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.opcode import OpcodeResult
 
 
 @dataclass(slots=True)

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List
 
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.opcode import OpcodeResult
 
 
 class BasicBlock:

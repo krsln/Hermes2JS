@@ -1,22 +1,20 @@
 from typing import List
 
-from hermes_decompiler.handlers import import_handlers
-from hermes_decompiler.ir import AwaitExpression, Expression, RawExpression
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.core.exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
-from hermes_decompiler.Logger import get_logger
+from hermes_decompiler.core.Exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
+from hermes_decompiler.core.Logging import get_logger
+from hermes_decompiler.handlers import HandlerLoader, OpcodeHandler
+from hermes_decompiler.ir.expressions import AwaitExpression, Expression, RawExpression
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)
 
-# import_handlers() populates OpcodeHandler.registry via __init_subclass__
+# HandlerLoader.load() populates OpcodeHandler.registry via __init_subclass__
 # side effects. It's idempotent (re-importing already-imported modules is a
 # no-op), so doing it once at module load time - rather than once per
 # JSOpcodeDispatcher() instance - is both correct and avoids repeated
 # import-machinery overhead when many sections are converted in one process.
-import_handlers()
+HandlerLoader.load()
 
 
 class OpcodeDispatcher:
@@ -60,7 +58,7 @@ class OpcodeDispatcher:
                 strict: If True, rise on the first error (useful for tests/CI).
         """
         # Local import to avoid a circular import between dispatch and parsing.
-        from hermes_decompiler.parsers.line_parser import parse_line
+        from hermes_decompiler.parsing import OpcodeParser
 
         dispatcher = OpcodeDispatcher(analysis)
         results: List[OpcodeResult] = []
@@ -71,7 +69,7 @@ class OpcodeDispatcher:
             if not line:
                 continue
 
-            parsed = parse_line(line)
+            parsed = OpcodeParser.parse(line)
 
             if parsed is None:
                 logger.debug("Unparsed line: %s", line)

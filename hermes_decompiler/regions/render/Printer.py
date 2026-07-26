@@ -3,7 +3,8 @@ from __future__ import annotations
 from hermes_decompiler.ir import (
     NodeVisitor,
     precedence,
-    # expressions
+)
+from hermes_decompiler.ir.expressions import (
     Identifier,
     ParenthesizedExpression,
     NumericLiteral,
@@ -33,7 +34,9 @@ from hermes_decompiler.ir import (
     AwaitExpression,
     YieldExpression,
     RawExpression,
-    # statements
+)
+from hermes_decompiler.ir.statements import (
+
     BlockStatement,
     EmptyStatement,
     ExpressionStatement,

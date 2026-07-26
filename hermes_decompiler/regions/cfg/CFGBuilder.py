@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Set
 
-from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
-
+from hermes_decompiler.opcode import OpcodeResult, ControlFlowType
 from .BasicBlock import BasicBlock
 from .CFG import CFG
 

@@ -1,8 +1,8 @@
 import json
 import re
 
-from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
-from hermes_decompiler.ir import (
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence
+from hermes_decompiler.ir.expressions import (
     ArrayExpression,
     CallExpression,
     Expression,
@@ -13,10 +13,8 @@ from hermes_decompiler.ir import (
     StringLiteral,
     python_literal,
 )
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 def _json_to_expression(value: object) -> Expression:

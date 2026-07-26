@@ -3,8 +3,9 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Any, Tuple
 
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT16, ADDR, sequence
-from hermes_decompiler.ir import (
+from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, UINT8, UINT16, sequence
+from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
+from hermes_decompiler.ir.expressions import (
     Expression,
     UnaryExpression,
     BinaryExpression,
@@ -12,12 +13,9 @@ from hermes_decompiler.ir import (
     StringLiteral,
     Identifier,
 )
-from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
 from hermes_decompiler.regions.models.Statements import GotoStatement, IfGotoStatement
+from hermes_decompiler.runtime import HermesAnalysis
 
 # --------------------------------------------------------------------------
 # Patterns

@@ -1,14 +1,9 @@
-from hermes_decompiler.handlers._shared_patterns import (
-    REG,
-    STRING_ID,
-    sequence,
-)
-from hermes_decompiler.ir import AssignmentExpression, Identifier, MemberExpression, ObjectExpression, ObjectProperty
+from hermes_decompiler.handlers import REG, STRING_ID, sequence
 from hermes_decompiler.ir.Operators import AssignmentOperator
-from hermes_decompiler.ir.expressions.Collections import PropertyKind
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.ir.expressions import AssignmentExpression, Identifier, MemberExpression, ObjectExpression, \
+    ObjectProperty, PropertyKind
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 from .PutById import PutById
 
 PUT_NEW_OWN_PATTERN = sequence(REG, REG, STRING_ID)

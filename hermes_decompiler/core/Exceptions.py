@@ -47,6 +47,5 @@ class NoHandlerError(HbcDecompilerError):
 class AnalysisContextError(HbcDecompilerError):
     """Dispatch was attempted without a valid HermesAnalysis context."""
 
-
 # class CodeGenerationError(HbcDecompilerError):
 #     """JS code generation (HermesAnalysis.GenerateJS) failed unexpectedly."""

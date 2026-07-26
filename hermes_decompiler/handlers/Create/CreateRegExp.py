@@ -1,10 +1,9 @@
 import re
 
-from hermes_decompiler.ir import RegExpLiteral
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler
+from hermes_decompiler.ir.expressions import RegExpLiteral
+from hermes_decompiler.runtime import HermesAnalysis
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 
 
 # DEFINE_OPCODE_4(CreateRegExp, Reg8, UInt32, UInt32, UInt32)

@@ -3,8 +3,9 @@ from __future__ import annotations
 from enum import Enum, auto
 from typing import Any, Optional
 
-from hermes_decompiler.ir import Expression, Statement
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
+from hermes_decompiler.ir.expressions import Expression
+from hermes_decompiler.ir.statements import Statement
+from hermes_decompiler.opcode import OpcodeEntry
 
 
 class ControlFlowType(Enum):
@@ -31,14 +32,14 @@ class OpcodeResult:
     """
 
     def __init__(
-        self,
-        entry: OpcodeEntry,
-        value: Expression | None = None,
-        statement: Statement | None = None,
-        dest_reg: int | None = None,
-        goto: Optional[int] = None,
-        extra_gotos: Optional[list[int]] = None,
-        control_flow: ControlFlowType = ControlFlowType.NORMAL,
+            self,
+            entry: OpcodeEntry,
+            value: Expression | None = None,
+            statement: Statement | None = None,
+            dest_reg: int | None = None,
+            goto: Optional[int] = None,
+            extra_gotos: Optional[list[int]] = None,
+            control_flow: ControlFlowType = ControlFlowType.NORMAL,
     ):
         """
         Args:

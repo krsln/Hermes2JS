@@ -1,12 +1,10 @@
 import re
 
-from hermes_decompiler.handlers._shared_patterns import REG, ADDR, sequence
-from hermes_decompiler.ir import AwaitExpression, YieldExpression, RawExpression
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
+from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, sequence
+from hermes_decompiler.ir.expressions import AwaitExpression, YieldExpression, RawExpression
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
 from hermes_decompiler.regions.models.Statements import GotoStatement
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Example: <StartGenerator>: <>

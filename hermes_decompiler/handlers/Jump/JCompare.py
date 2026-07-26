@@ -2,14 +2,12 @@ from __future__ import annotations
 
 from typing import ClassVar, Tuple
 
-from hermes_decompiler.handlers._shared_patterns import ADDR, REG, sequence
-from hermes_decompiler.ir import BinaryExpression
+from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, sequence
 from hermes_decompiler.ir.Operators import BinaryOperator
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
+from hermes_decompiler.ir.expressions import BinaryExpression
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
 from hermes_decompiler.regions.models.Statements import IfGotoStatement
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 def _parse_compare(entry: OpcodeEntry) -> Tuple[int, int, int]:

@@ -1,9 +1,7 @@
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
-from hermes_decompiler.ir import CallExpression, Identifier, MemberExpression
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
+from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 class IteratorBegin(OpcodeHandler):
