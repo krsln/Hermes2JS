@@ -27,11 +27,11 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstTrue>: <Reg8: 0>
     // USED → r0 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 0, string_id: 249>  # String: 'value' (Identifier)
-    {  }.value = true;
+    // USED → r1 = { value: true };
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 65>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 4, Reg8: 7, Reg8: 2, Reg8: 0, Reg8: 1>
-    r0 = globalThis.Object.defineProperty(globalThis.Object, param6, "__esModule", {  });
+    r0 = globalThis.Object.defineProperty(globalThis.Object, param6, "__esModule", { value: true });
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <PutById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
@@ -69,15 +69,15 @@ function function_10679(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 0, Reg8: 4>
     // USED → r4 = param2(undefined, param7[2]);
     // CODE → <PutNewOwnById>: <Reg8: 1, Reg8: 4, string_id: 12734>  # String: 'SDK_VERSION' (Identifier)
-    {  }.SDK_VERSION = param2(undefined, param7[2]);
+    // USED → r1 = { SDK_VERSION: param2(undefined, param7[2]) };
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 3, function_id: 10681>  # Function: [#10681 get FilePath of 65 bytes]: 1 params @ offset 0x00294e9a
     // USED → r4 = get FilePath;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5066>  # String: 'FilePath' (String)
     // USED → r3 = "FilePath";
     // CODE → <PutOwnGetterSetterByVal>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 0, UInt8: 1>
-    Object.defineProperty({  }, "FilePath", { get: get FilePath, set: undefined, enumerable: true, configurable: true });
+    Object.defineProperty({ SDK_VERSION: param2(undefined, param7[2]) }, "FilePath", { get: get FilePath, set: undefined, enumerable: true, configurable: true });
     // CODE → <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-    param6.default = {  };
+    param6.default = { SDK_VERSION: param2(undefined, param7[2]) };
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }
