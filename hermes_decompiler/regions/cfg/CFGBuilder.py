@@ -2,24 +2,17 @@ from __future__ import annotations
 
 from typing import Dict, List, Set
 
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.models.OpcodeResult import OpcodeResult, ControlFlowType
 
 from .BasicBlock import BasicBlock
 from .CFG import CFG
 
-CONDITIONAL_JUMPS = {
-    "JmpTrue",
-    "JmpFalse",
-    "JmpTrueLong",
-    "JmpFalseLong",
-    "JmpUndefined",
-    "JmpUndefinedLong",
-    ...
-}
-UNCONDITIONAL_JUMPS = {
-    "Jmp",
-    "JmpLong",
-    "SaveGenerator",
+# Opcodes with no successor at all - the block simply exits the
+# function (via return or exception), so no fallthrough edge should be
+# added even though `goto` is None for them.
+TERMINATING_CONTROL_FLOW = {
+    ControlFlowType.RETURN,
+    ControlFlowType.THROW,
 }
 
 
@@ -160,10 +153,20 @@ class CFGBuilder:
                 continue
 
             # --------------------------------------------------
-            # return
+            # return / throw (function exit - no successors)
+            # --------------------------------------------------
+            #
+            # NOTE (fix): previously only checked `last.handler == "Ret"`
+            # (a string), which left Throw-terminated blocks unhandled -
+            # they fell through to the "fallthrough" branch below and
+            # got an incorrect edge to whatever block happened to follow
+            # in bytecode order, corrupting dominance/post-dominance
+            # analysis for any function containing a `throw` that isn't
+            # the very last instruction. Now driven by the real
+            # `control_flow` enum every handler already sets.
             # --------------------------------------------------
 
-            if last.handler == "Ret":
+            if last.control_flow in TERMINATING_CONTROL_FLOW:
                 continue
 
             # --------------------------------------------------
@@ -190,9 +193,9 @@ class CFGBuilder:
     # -------------------------------------------------------------
 
     @staticmethod
-    def _is_conditional_jump(result):
-        return result.handler in CONDITIONAL_JUMPS
+    def _is_conditional_jump(result: OpcodeResult) -> bool:
+        return result.control_flow == ControlFlowType.CONDITIONAL
 
     @staticmethod
-    def _is_unconditional_jump(result):
-        return result.handler in UNCONDITIONAL_JUMPS
+    def _is_unconditional_jump(result: OpcodeResult) -> bool:
+        return result.control_flow == ControlFlowType.UNCONDITIONAL

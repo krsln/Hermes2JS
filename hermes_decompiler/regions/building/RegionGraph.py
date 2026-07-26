@@ -146,6 +146,33 @@ class RegionGraph:
             owner.children.remove(block)
 
         del self.block_owner[block]
+
+    # ---------------------------------------------------------
+    # ---------------------------------------------------------
+
+    def transfer(self, items: list, target: SequenceRegion) -> None:
+        """
+        Move a list of already-detached children (BasicBlock or Region)
+        into `target`, appending them in order and updating ownership
+        tracking.
+
+        Callers are expected to have already spliced `items` out of
+        their previous owner's `children` list (see `IfStructurer`) -
+        this only updates `target` and the block_owner/parent
+        bookkeeping. Unlike `move()`, this handles `Region` children
+        (e.g. an already-built `LoopRegion` nested inside an if branch)
+        as well as `BasicBlock`.
+        """
+
+        for item in items:
+
+            if isinstance(item, BasicBlock):
+                self.block_owner[item] = target
+            else:
+                item.parent = target
+
+            target.children.append(item)
+
     # ---------------------------------------------------------
     # ---------------------------------------------------------
     def replace__(

@@ -36,15 +36,15 @@ function AcquisitionManager(param0, param1, param2) {
     // USED → r2 = this._serverUrl.slice(this._serverUrl, -1);
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 592>  # String: '/' (String)
     // USED → r3 = "/";
-    // CODE → <JStrictEqual>: <Addr8: 20, Reg8: 2, Reg8: 3>  # Address: 0000006a
-    if (this._serverUrl.slice(this._serverUrl, -1) === "/") goto label_106;
-    // ──────────────── Block 1 ──────────────── 
-    // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 22212>  # String: '_serverUrl' (Identifier)
-    // USED → r2 = this._serverUrl;
-    // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    // USED → r2 = this._serverUrl + "/";
-    // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 5, string_id: 22212>  # String: '_serverUrl' (Identifier)
-    this._serverUrl = this._serverUrl + "/";
+    if (this._serverUrl.slice(this._serverUrl, -1) !== "/") {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 22212>  # String: '_serverUrl' (Identifier)
+        // USED → r2 = this._serverUrl;
+        // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 3>
+        // USED → r2 = this._serverUrl + "/";
+        // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 5, string_id: 22212>  # String: '_serverUrl' (Identifier)
+        this._serverUrl = this._serverUrl + "/";
+    }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 19645>  # String: 'appVersion' (Identifier)
     // USED → r2 = param2.appVersion;
