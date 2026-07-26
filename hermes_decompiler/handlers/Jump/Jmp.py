@@ -14,7 +14,7 @@ from hermes_decompiler.ir.expressions import (
     Identifier,
 )
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
-from hermes_decompiler.regions.models.Statements import GotoStatement, IfGotoStatement
+from hermes_decompiler.analysis.regions import GotoStatement, IfGotoStatement
 from hermes_decompiler.runtime import HermesAnalysis
 
 # --------------------------------------------------------------------------

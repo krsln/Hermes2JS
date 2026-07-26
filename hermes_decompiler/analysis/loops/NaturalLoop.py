@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
 
-from hermes_decompiler.regions.cfg.BasicBlock import BasicBlock
+from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
 
 
 @dataclass(slots=True)

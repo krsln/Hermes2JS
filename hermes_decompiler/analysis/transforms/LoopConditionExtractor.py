@@ -1,6 +1,6 @@
 import re
 
-from hermes_decompiler.regions.models.Regions import (
+from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     LoopRegion, LoopKind,
 )

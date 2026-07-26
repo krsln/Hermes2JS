@@ -1,4 +1,4 @@
-from hermes_decompiler.regions.cfg.NaturalLoop import NaturalLoop
+from hermes_decompiler.analysis.loops.NaturalLoop import NaturalLoop
 
 
 class LoopAnalysis:

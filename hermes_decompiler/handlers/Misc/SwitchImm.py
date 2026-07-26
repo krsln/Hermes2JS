@@ -2,7 +2,7 @@ import re
 
 from hermes_decompiler.handlers import OpcodeHandler
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
-from hermes_decompiler.regions.models.Statements import SwitchGotoStatement
+from hermes_decompiler.analysis.regions import SwitchGotoStatement
 from hermes_decompiler.runtime import HermesAnalysis
 
 

@@ -3,7 +3,7 @@ import re
 from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, sequence
 from hermes_decompiler.ir.expressions import AwaitExpression, YieldExpression, RawExpression
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
-from hermes_decompiler.regions.models.Statements import GotoStatement
+from hermes_decompiler.analysis.regions import GotoStatement
 from hermes_decompiler.runtime import HermesAnalysis
 
 

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, Set
 
-from .CFG import CFG
-from .BasicBlock import BasicBlock
-from ._IterativeSetAnalysis import _IterativeSetAnalysis
+from hermes_decompiler.analysis.cfg.CFG import CFG
+from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
+from hermes_decompiler.analysis.dominance._IterativeSetAnalysis import _IterativeSetAnalysis
 
 
 class DominatorTree(_IterativeSetAnalysis):
@@ -87,9 +87,9 @@ class DominatorTree(_IterativeSetAnalysis):
             for candidate in strict_doms:
 
                 if all(
-                    candidate not in self.dominators[other]
-                    for other in strict_doms
-                    if other is not candidate
+                        candidate not in self.dominators[other]
+                        for other in strict_doms
+                        if other is not candidate
                 ):
                     immediate = candidate
                     break
@@ -115,9 +115,9 @@ class DominatorTree(_IterativeSetAnalysis):
     # ---------------------------------------------------------
 
     def dominates(
-        self,
-        dominator: BasicBlock,
-        block: BasicBlock,
+            self,
+            dominator: BasicBlock,
+            block: BasicBlock,
     ) -> bool:
 
         return dominator in self.dominators.get(block, set())
@@ -125,8 +125,8 @@ class DominatorTree(_IterativeSetAnalysis):
     # ---------------------------------------------------------
 
     def immediate_dominator(
-        self,
-        block: BasicBlock,
+            self,
+            block: BasicBlock,
     ) -> Optional[BasicBlock]:
 
         return self.idom.get(block)
@@ -134,8 +134,8 @@ class DominatorTree(_IterativeSetAnalysis):
     # ---------------------------------------------------------
 
     def dominated_children(
-        self,
-        block: BasicBlock,
+            self,
+            block: BasicBlock,
     ) -> List[BasicBlock]:
 
         return self.children.get(block, [])

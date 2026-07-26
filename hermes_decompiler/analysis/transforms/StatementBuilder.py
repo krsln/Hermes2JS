@@ -1,14 +1,14 @@
 from __future__ import annotations
 
-from hermes_decompiler.regions.cfg.BasicBlock import BasicBlock
-from hermes_decompiler.regions.models.Regions import (
+from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     LoopRegion,
     IfRegion,
     CatchRegion,
     FinallyRegion,
 )
-from hermes_decompiler.regions.models.Statements import (
+from hermes_decompiler.analysis.regions.Statements import (
     InstructionState,
 )
 

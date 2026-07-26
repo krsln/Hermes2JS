@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import Dict, Optional
 
-from ._IterativeSetAnalysis import _IterativeSetAnalysis
-from .BasicBlock import BasicBlock
+from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
+from hermes_decompiler.analysis.dominance._IterativeSetAnalysis import _IterativeSetAnalysis
 
 
 class PostDominatorTree(_IterativeSetAnalysis):

@@ -33,7 +33,7 @@ class CFG:
     # ---------------------------------------------------------
 
     def compute_dominators(self):
-        from .DominatorTree import DominatorTree
+        from hermes_decompiler.analysis.dominance import DominatorTree
 
         self.dominator_tree = DominatorTree(self)
 
@@ -42,14 +42,14 @@ class CFG:
     # ---------------------------------------------------------
 
     def compute_post_dominators(self):
-        from .PostDominatorTree import PostDominatorTree
+        from hermes_decompiler.analysis.dominance import PostDominatorTree
 
         self.post_dominator_tree = PostDominatorTree(self)
 
         self.post_dominator_tree.compute()
 
     def compute_loops(self):
-        from hermes_decompiler.regions.cfg.LoopAnalysis import LoopAnalysis
+        from hermes_decompiler.analysis.loops.LoopAnalysis import LoopAnalysis
 
         self.loop_analysis = LoopAnalysis(self)
 

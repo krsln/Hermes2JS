@@ -5,10 +5,10 @@ from enum import Enum
 from typing import TYPE_CHECKING
 
 from hermes_decompiler.ir import Expression
-from hermes_decompiler.regions.cfg.BasicBlock import BasicBlock
+from hermes_decompiler.analysis.cfg import BasicBlock
 
 if TYPE_CHECKING:
-    from hermes_decompiler.regions.models.Statements import State
+    from hermes_decompiler.analysis.regions import State
 
 
 class Region(ABC):

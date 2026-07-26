@@ -3,10 +3,9 @@ from __future__ import annotations
 import warnings
 
 from hermes_decompiler.ir import Expression, Statement
-from hermes_decompiler.regions.models.Regions import (
-    SequenceRegion, LoopRegion, IfRegion, Region, LoopKind,
+from hermes_decompiler.analysis.regions import (
+    SequenceRegion, LoopRegion, IfRegion, Region, LoopKind, InstructionState
 )
-from hermes_decompiler.regions.models.Statements import (InstructionState)
 from .Printer import Printer
 
 

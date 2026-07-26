@@ -6,7 +6,7 @@ from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, sequence
 from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
-from hermes_decompiler.regions.models.Statements import IfGotoStatement
+from hermes_decompiler.analysis.regions import IfGotoStatement
 from hermes_decompiler.runtime import HermesAnalysis
 
 

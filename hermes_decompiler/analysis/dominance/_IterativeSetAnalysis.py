@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from typing import Dict, Set
-from .BasicBlock import BasicBlock
+from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
 
 
 class _IterativeSetAnalysis(ABC):

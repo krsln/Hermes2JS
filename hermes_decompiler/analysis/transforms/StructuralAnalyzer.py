@@ -1,7 +1,7 @@
-from hermes_decompiler.regions.building.LoopConditionExtractor import LoopConditionExtractor
-from hermes_decompiler.regions.building.RegionGraph import RegionGraph
-from hermes_decompiler.regions.building.StatementBuilder import StatementBuilder
-from hermes_decompiler.regions.building.Structurers import (
+from hermes_decompiler.analysis.transforms.LoopConditionExtractor import LoopConditionExtractor
+from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
+from hermes_decompiler.analysis.transforms.StatementBuilder import StatementBuilder
+from hermes_decompiler.analysis.transforms.structurers import (
     SequenceStructurer,
     LoopStructurer,
     IfStructurer,
