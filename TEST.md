@@ -3,7 +3,7 @@
 **control data /fixtures**
 
 ```shell
-tree -I '__pycache__|__init__.py' hermes_decompiler/regions
+tree -I '__pycache__|__init__.py' hermes_decompiler
 tree -I '__pycache__|__init__.py|ir|handlers|regions' hermes_decompiler
 
 ```
