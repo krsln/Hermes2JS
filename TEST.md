@@ -41,6 +41,31 @@ python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/ou
 
 uncomment to activate → LoopStructurer → hermes_decompiler/regions/building/Structurers.py
 
+```python
+class LoopStructurer:
+
+    def __init__(self, graph: RegionGraph, cfg):
+        self.graph = graph
+        self.cfg = cfg
+
+    def run(self):
+
+        if self.cfg.loop_analysis is None:
+            return
+
+        roots = [
+            loop
+            for loop in self.cfg.loop_analysis.loops.values()
+            if loop.parent is None
+        ]
+
+        for loop in roots:
+            self._build_loop(loop, self.graph.root)
+
+        # TODO: activate with a condition
+        # print("\n===== REGION TREE =====")
+        # self._dump(self.graph.root)
+```
 ```text
 ===== REGION TREE =====
 SequenceRegion
