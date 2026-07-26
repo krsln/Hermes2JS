@@ -29,3 +29,35 @@ python3 "hermes-dec/src/hermes_dec/parsers/hbc_file_parser.py" "assets/index.and
 % file index.android.bundle
 index.android.bundle: Hermes JavaScript bytecode, version 96
 ```
+
+```text
+Bytecode
+    │
+    ▼
+Parsing
+    │
+    ▼
+Dispatch
+    │
+    ▼
+Opcode Handlers
+    │
+    ▼
+Analysis
+    ├── CFG
+    ├── Dominance
+    ├── Loops
+    └── Regions
+    │
+    ▼
+Transforms
+    │
+    ▼
+IR
+    │
+    ▼
+Emit
+    │
+    ▼
+JavaScript
+```
