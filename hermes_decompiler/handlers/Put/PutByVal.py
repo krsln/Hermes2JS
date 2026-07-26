@@ -1,10 +1,8 @@
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
+from hermes_decompiler.ir.Operators import AssignmentOperator
+from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpression
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 # DEFINE_OPCODE_3(PutByVal, Reg8, Reg8, Reg8)
@@ -13,20 +11,22 @@ class PutByVal(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
         obj_reg, key_reg, value_reg = map(int, match.groups())
 
-        obj_val = self.get_register_value(analysis, obj_reg) or f"r{obj_reg}"
-        key_val = self.get_register_value(analysis, key_reg) or f"r{key_reg}"
-        value_val = self.get_register_value(analysis, value_reg) or f"r{value_reg}"
+        left = MemberExpression(
+            receiver=self.get_register_value(analysis, obj_reg),
+            member=self.get_register_value(analysis, key_reg),
+            computed=True,
+        )
+        right = self.get_register_value(analysis, value_reg)
 
-        statement = f"{obj_val}[{key_val}] = {value_val}"
-        variable = JSVariable(handler, entry.address, "", statement)
-        analysis.add_result(entry, variable)
+        expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=None)
+        analysis.add_result(result)
+
+        return result

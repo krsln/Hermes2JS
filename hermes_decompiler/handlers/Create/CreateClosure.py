@@ -1,10 +1,7 @@
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
-from hermes_decompiler.handlers._shared_patterns import REG, FUNCTION_ID, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, FUNCTION_ID, sequence
+from hermes_decompiler.ir.expressions import Identifier
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 # DEFINE_OPCODE_3(CreateClosure, Reg8, Reg8, UInt16)
@@ -19,27 +16,31 @@ class CreateClosure(OpcodeHandler):
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8 and function_id arguments")
 
         dest_reg, value_reg, func_id = (int(x) for x in match.groups())
 
-        func_name = analysis.functionTable.get(str(func_id), f"function_{func_id}")
-        reg_var = self.get_register_variable(analysis, value_reg)
-        reg_value = reg_var.value if reg_var and reg_var.value is not None else 'undefined'
-        # print(env, env_value)
-
-        # Simplified closure representation
-        variable = JSVariable(
-            handler, entry.address,
-            f'r{dest_reg}', f"{func_name} /* Closure with env r{value_reg} = {reg_value} */",
+        func_name = (
+            entry.function.name
+            if entry.function and entry.function.name
+            else f"function_{func_id}"
         )
-        analysis.add_result(entry, variable)
 
-        return OpcodeResult(entry, variable)
+        # NOTE: `environment_register`/`environment` (the old
+        # `ClosureValue`'s comment about which env the closure captures)
+        # is dropped here. In real JS, a closure's environment capture
+        # is implicit lexical scoping, not syntax - a plain reference to
+        # the function name is the correct AST shape. The captured env
+        # register is still visible in verbose mode via the `// CODE ->`
+        # bytecode comment if needed for debugging.
+        expression = Identifier(name=func_name)
+
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 class CreateClosureLongIndex(CreateClosure):

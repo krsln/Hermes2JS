@@ -1,43 +1,41 @@
-import re
-import json
-
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence
+from hermes_decompiler.ir.expressions import ArrayExpression, python_literal
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 # DEFINE_OPCODE_2(NewArray, Reg8, UInt16)
 # Example: <NewArray>: <Reg8: 1, UInt16: 4>
 class NewArray(OpcodeHandler):
     """Create a new, empty Array with a preallocation size hint."""
+
     _PATTERN = sequence(REG, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8 and UInt16 arguments")
 
         dest_reg, capacity_hint = map(int, match.groups())
 
-        js_array = "[]" if capacity_hint == 0 else f"[] /* capacity hint: {capacity_hint} */"
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
-        analysis.add_result(entry, variable)
+        # NOTE: `capacity_hint` (Hermes' pre-allocation size) is dropped
+        # here - `ArrayExpression` has no field for it, since it isn't
+        # a JS-observable property. The raw UInt16 is still visible in
+        # verbose mode via the `// CODE ->` bytecode comment.
+        expression = ArrayExpression(elements=())
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 class NewArrayWithBuffer(OpcodeHandler):
     """Create a new array from a static buffer."""
+
     _PATTERN = sequence(REG, UINT16, UINT16, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -45,30 +43,23 @@ class NewArrayWithBuffer(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        array_str = self._extract_array_from_comment(entry.comment)
-        if not array_str:
+        if entry.array_literal is None:
             return self.build_exception_result(analysis, entry, "// Warning: No array data in comment")
 
-        try:
-            clean_str = array_str.replace("'", '"')
-            parsed = json.loads(clean_str)
-            js_array = json.dumps(parsed, ensure_ascii=False)
-        except json.JSONDecodeError as e:
-            return self.build_exception_result(analysis, entry, f"// Warning: JSON decode failed: {e}")
+        elements = tuple(
+            python_literal(v)
+            for v in entry.array_literal
+        )
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_array)
-        analysis.add_result(entry, variable)
+        expression = ArrayExpression(elements=elements)
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-    @staticmethod
-    def _extract_array_from_comment(comment: str) -> str:
-        if not comment:
-            return ""
-        match = re.search(r'Array:\s*(\[.*?])', comment, re.DOTALL)
-        return match.group(1) if match else ""
+        return result
 
 
 class NewArrayWithBufferLong(NewArrayWithBuffer):
     """Long variant."""
+
     pass

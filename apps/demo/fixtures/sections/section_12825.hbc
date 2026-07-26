@@ -1,0 +1,44 @@
+
+=> [Function #12825 "" of 130 bytes]: 5 params, frame size=24, strict=0, exc handler=1, debug info=0  @ offset 0x002cdd6b
+  [Exception handlers: [start=0x32, end=0x4b, target=0x4d] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 7, UInt8: 2>
+==> 00000006: <LoadParam>: <Reg8: 8, UInt8: 3>
+==> 00000009: <LoadParam>: <Reg8: 9, UInt8: 4>
+==> 0000000c: <LoadConstUndefined>: <Reg8: 6>
+==> 0000000e: <LoadConstUndefined>: <Reg8: 10>
+==> 00000010: <LoadConstFalse>: <Reg8: 5>
+==> 00000012: <LoadConstFalse>: <Reg8: 0>
+==> 00000014: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 217>  # String: 'slice' (Identifier)
+==> 00000019: <Call1>: <Reg8: 10, Reg8: 1, Reg8: 2>
+==> 0000001d: <GetGlobalObject>: <Reg8: 4>
+==> 0000001f: <LoadConstString>: <Reg8: 3, string_id: 3614>  # String: 'Error occurred in ' (String)
+==> 00000023: <LoadConstString>: <Reg8: 2, string_id: 11214>  # String: ' callback, continuing anyway…' (String)
+==> 00000027: <Mov>: <Reg8: 1, Reg8: 10>
+==> 0000002a: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 139>  # String: 'length' (Identifier)
+==> 0000002f: <JmpFalse>: <Addr8: 81, Reg8: 1>  # Address: 00000080
+==> 00000032: <Mov>: <Reg8: 11, Reg8: 10>
+==> 00000035: <GetById>: <Reg8: 1, Reg8: 11, UInt8: 3, string_id: 16799>  # String: 'pop' (Identifier)
+==> 0000003b: <Call1>: <Reg8: 11, Reg8: 1, Reg8: 11>
+==> 0000003f: <Mov>: <Reg8: 1, Reg8: 7>
+==> 00000042: <Call2>: <Reg8: 1, Reg8: 11, Reg8: 6, Reg8: 1>
+==> 00000047: <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
+==> 0000004b: <Jmp>: <Addr8: 47>  # Address: 0000007a
+==> 0000004d: <Catch>: <Reg8: 12>
+==> 0000004f: <Mov>: <Reg8: 11, Reg8: 9>
+==> 00000052: <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
+==> 00000057: <Mov>: <Reg8: 14, Reg8: 8>
+==> 0000005a: <TryGetById>: <Reg8: 1, Reg8: 4, UInt8: 5, string_id: 21>  # String: 'HermesInternal' (Identifier)
+==> 00000060: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 98>  # String: 'concat' (Identifier)
+==> 00000065: <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 14, Reg8: 2>
+==> 0000006b: <Call2>: <Reg8: 1, Reg8: 13, Reg8: 11, Reg8: 1>
+==> 00000070: <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
+==> 00000075: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>
+==> 0000007a: <Mov>: <Reg8: 1, Reg8: 0>
+==> 0000007d: <JmpFalse>: <Addr8: -86, Reg8: 1>  # Address: 00000027
+==> 00000080: <Ret>: <Reg8: 0>
+
+

@@ -1,15 +1,7 @@
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
-from hermes_decompiler.handlers._shared_patterns import (
-    REG,
-    UINT8,
-    UINT16,
-    sequence,
-)
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT16, sequence
+from hermes_decompiler.ir.expressions import MemberExpression, NumericLiteral
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 class LoadFromEnvironment(OpcodeHandler):
@@ -19,7 +11,7 @@ class LoadFromEnvironment(OpcodeHandler):
         dst = env[slot]
     """
 
-    _PATTERN = sequence(REG, REG, UINT8, )
+    _PATTERN = sequence(REG, REG, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -28,12 +20,13 @@ class LoadFromEnvironment(OpcodeHandler):
 
         dest_reg, env_reg, slot = map(int, match.groups())
         env = self.get_register_value(analysis, env_reg)
-        expression = f"{env}[{slot}]"
 
-        variable = JSVariable(self.__class__.__name__, entry.address, f"r{dest_reg}", expression)
-        analysis.add_result(entry, variable)
+        expression = MemberExpression(receiver=env, member=NumericLiteral(slot), computed=True)
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 class LoadFromEnvironmentL(LoadFromEnvironment):

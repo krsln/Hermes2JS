@@ -1,10 +1,8 @@
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, STRING_ID, sequence
+from hermes_decompiler.ir.Operators import UnaryOperator
+from hermes_decompiler.ir.expressions import UnaryExpression, MemberExpression, Identifier
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 # DEFINE_OPCODE_4(DelById, Reg8, Reg8, UInt8, UInt16)
@@ -14,46 +12,56 @@ class DelById(OpcodeHandler):
     _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, UInt8, string_id arguments")
 
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
-        prop_name = self.resolve_property_name(analysis, entry, string_id)
-        if prop_name is None:
-            error = f'/* Error: string_id {string_id} not found in stringTable */ undefined'
-            return self.build_exception_result(analysis, entry, error)
+        prop_name = entry.identifier_name or f"string_{string_id}"
+        obj = self.get_register_value(analysis, obj_reg)
 
-        obj_val = self.get_register_value(analysis, obj_reg)
+        expression = UnaryExpression(
+            operator=UnaryOperator.DELETE,
+            operand=MemberExpression(
+                receiver=obj,
+                member=Identifier(name=prop_name),
+            ),
+        )
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"delete {obj_val}.{prop_name}")
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 # DEFINE_OPCODE_3(DelByVal, Reg8, Reg8, Reg8)
 # Example: <DelByVal>: <Reg8: 2, Reg8: 0, Reg8: 1>
 class DelByVal(OpcodeHandler):
     """delete obj[prop]"""
+
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
         dest_reg, obj_reg, prop_reg = map(int, match.groups())
 
-        obj_val = self.get_register_value(analysis, obj_reg)
-        prop_val = self.get_register_value(analysis, prop_reg)
+        obj = self.get_register_value(analysis, obj_reg)
+        prop = self.get_register_value(analysis, prop_reg)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', f"delete {obj_val}[{prop_val}]")
-        analysis.add_result(entry, variable)
+        expression = UnaryExpression(
+            operator=UnaryOperator.DELETE,
+            operand=MemberExpression(
+                receiver=obj,
+                member=prop,
+                computed=True,
+            ),
+        )
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result

@@ -3,8 +3,8 @@
 from pathlib import Path
 import argparse
 
-from hermes_decompiler.FileOps import get_section_files, process_section
-from hermes_decompiler.Logger import logger
+from hermes_decompiler.io import get_section_files, process_section
+from hermes_decompiler.core.Logging import logger
 
 
 # handler = logging.StreamHandler()

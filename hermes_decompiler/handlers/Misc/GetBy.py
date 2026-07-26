@@ -1,33 +1,32 @@
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, STRING_ID, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, STRING_ID, sequence
+from hermes_decompiler.ir.expressions import Identifier, MemberExpression
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 # DEFINE_OPCODE_3(GetByVal, Reg8, Reg8, Reg8)
 # Example: <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 0>
 class GetByVal(OpcodeHandler):
     """Get property by dynamic value: obj[key]"""
+
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, Reg8 arguments")
 
         dest_reg, base_reg, prop_reg = map(int, match.groups())
 
-        value = f"r{base_reg}[r{prop_reg}]"
+        receiver = self.get_register_value(analysis, base_reg)
+        index = self.get_register_value(analysis, prop_reg)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', value)
-        analysis.add_result(entry, variable)
+        expression = MemberExpression(receiver=receiver, member=index, computed=True)
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # DEFINE_OPCODE_4(GetByIdShort, Reg8, Reg8, UInt8, UInt8)
@@ -37,35 +36,25 @@ class GetByVal(OpcodeHandler):
 # Example: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 21914>  # String: 'trackJoinCompetitionList' (Identifier)
 class GetById(OpcodeHandler):
     """Get property by string ID: obj[propName]"""
+
     _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
-        # Resolve property name
-        prop_name = self.resolve_property_name(analysis, entry, string_id)
-        if not prop_name:
-            error = f'/* Error: string_id {string_id} not found in stringTable */'
-            return self.build_exception_result(analysis, entry, error)
+        prop_name = entry.identifier_name or f"string_{string_id}"
+        receiver = self.get_register_value(analysis, obj_reg)
 
-        # Get base object value
-        base_value = self.get_register_value(analysis, obj_reg)
+        expression = MemberExpression(receiver=receiver, member=Identifier(name=prop_name))
 
-        # Build property access
-        js_expr = f"{base_value}.{prop_name}"
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        variable = JSVariable(
-            handler, entry.address,
-            f'r{dest_reg}', js_expr, base_value, f".{prop_name}")
-        analysis.add_result(entry, variable)
-
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class GetByIdShort(GetById):
@@ -80,11 +69,10 @@ class GetByIdLong(GetById):
 # /// where Arg2 = GetGlobalObject.
 # DEFINE_OPCODE_4(TryGetById, Reg8, Reg8, UInt8, UInt16)
 # DEFINE_OPCODE_4(TryGetByIdLong, Reg8, Reg8, UInt8, UInt32)
-# OPERAND_STRING_ID(TryGetById, 4)
-# OPERAND_STRING_ID(TryGetByIdLong, 4)
 # Example: <TryGetById>: <Reg8: 14, Reg8: 13, UInt8: 8, string_id: 23> # String: 'Math' (Identifier)
 class TryGetById(GetById):
     """TryGetById - similar to GetById, often used with global-object."""
+
     pass
 
 

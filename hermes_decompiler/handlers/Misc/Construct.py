@@ -1,20 +1,10 @@
 from abc import ABC
 from typing import ClassVar
 
-from hermes_decompiler.Logger import logger
-
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
-from hermes_decompiler.handlers._shared_patterns import (
-    REG,
-    UINT8,
-    UINT32,
-    sequence,
-)
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT32, sequence
+from hermes_decompiler.ir.expressions import Expression, Identifier, NewExpression
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 class ConstructBase(OpcodeHandler, ABC):
@@ -44,56 +34,45 @@ class ConstructBase(OpcodeHandler, ABC):
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
-        handler = self.__class__.__name__
-
         match = self.Pattern().match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, ArgCount")
 
         dest_reg, func_reg, arg_count = map(int, match.groups())
-        constructor = (self.get_register_value(analysis, func_reg) or f"r{func_reg}")
-        args = self.ResolveArguments(analysis, func_reg, arg_count)
 
-        expression = f"new {constructor}({', '.join(args)})"
+        constructor = self.get_register_value(analysis, func_reg)
+        arguments = self.resolve_arguments(analysis, func_reg, arg_count)
 
-        variable = JSVariable(
-            handler,
-            entry.address,
-            f"r{dest_reg}",
-            expression,
-            f"new {constructor}",
-            f"({', '.join(args)})",
-        )
+        # `ir.NewExpression` names this field `callee` (not `constructor`),
+        # matching CallExpression's naming for consistency.
+        expression = NewExpression(callee=constructor, arguments=arguments)
 
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
-    def ResolveArguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> list[str]:
+    def resolve_arguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> tuple[Expression, ...]:
+        values = [
+            self.get_register_value(analysis, reg)
+            for reg in range(func_reg - arg_count, func_reg)
+        ]
 
-        values: list[str] = []
-
-        for reg in range(func_reg - arg_count, func_reg):
-
-            value = self.get_register_value(analysis, reg)
-
-            if value is None:
-                logger.warning("%s: unresolved constructor argument r%d", self.__class__.__name__, reg)
-                value = f"r{reg}"
-
-            values.append(value)
-
-        # Hermes CreateThis inserts an implicit "this"
-        if values and values[0] == "this":
+        # Hermes CreateThis inserts an implicit "this" as the first
+        # constructor argument slot; `ThisValue` no longer exists as a
+        # distinct type (see decision on RegisterValue/ThisValue ->
+        # Identifier), so the check becomes a name comparison.
+        if values and isinstance(values[0], Identifier) and values[0].name == "this":
             values = values[1:]
 
-        return values
+        return tuple(values)
 
 
 class Construct(ConstructBase):
     """
     Construct using UInt8 argument count.
     """
+
     ARG_PATTERN = UINT8
 
 
@@ -101,4 +80,5 @@ class ConstructLong(ConstructBase):
     """
     Construct using UInt32 argument count.
     """
+
     ARG_PATTERN = UINT32

@@ -1,10 +1,7 @@
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
+from hermes_decompiler.ir.expressions import CallExpression, Identifier
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 class CreateEnvironment(OpcodeHandler):
@@ -24,7 +21,9 @@ class CreateEnvironment(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        variable = JSVariable(self.__class__.__name__, entry.address, f"r{dest_reg}", "createEnvironment()")
-        analysis.add_result(entry, variable)
+        expression = CallExpression(callee=Identifier(name="createEnvironment"), arguments=())
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result

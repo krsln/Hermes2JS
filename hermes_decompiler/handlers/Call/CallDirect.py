@@ -1,10 +1,7 @@
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, UINT16, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT16, sequence
+from hermes_decompiler.ir.expressions import CallExpression, Identifier
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 # DEFINE_OPCODE_3(CallDirect, Reg8, UInt8, UInt16)
@@ -13,22 +10,26 @@ class CallDirect(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
-        dest_reg = int(match.group(2))
-        arg_count = int(match.group(3))
-        func_index = int(match.group(4))
+        dest_reg, arg_count, func_index = map(int, match.groups())
 
-        func_name = analysis.functionTable.get(str(func_index), f"function_{func_index}")
-        args = [f"arg{i}" for i in range(arg_count)]
-        args_str = ", ".join(args)
-        func_val = f"{func_name}({args_str})"
+        func_name = (
+            entry.function.name
+            if entry.function and entry.function.name
+            else f"function_{func_index}"
+        )
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", func_val, func_name, func_val)
-        analysis.add_result(entry, variable)
+        arguments = tuple(
+            Identifier(name=f"r{dest_reg - arg_count + i}")
+            for i in range(arg_count)
+        )
 
-        return OpcodeResult(entry, variable)
+        expression = CallExpression(callee=Identifier(name=func_name), arguments=arguments)
+
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result

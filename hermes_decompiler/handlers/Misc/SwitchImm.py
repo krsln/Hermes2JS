@@ -1,45 +1,44 @@
 import re
 
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.handlers import OpcodeHandler
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
+from hermes_decompiler.regions.models.Statements import SwitchGotoStatement
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 class SwitchImm(OpcodeHandler):
-    _PATTERN = re.compile(r'^Reg\d+:\s*(\d+)')
+    _PATTERN = re.compile(r"^Reg\d+:\s*(\d+)")
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-        args = entry.args.strip()
 
-        selector_match = self._PATTERN.match(args)
-        if not selector_match:
-            return self.build_invalid_args_result(analysis, entry, "Expected a leading Reg8 selector argument")
-
-        selector_reg = int(selector_match.group(1))
-        selector_val = self.get_register_value(analysis, selector_reg) or f"r{selector_reg}"
-
-        target_addr_list = []
-        for offset_str in re.compile(r'Addr\d+:\s*(-?\d+)').findall(args):
-            target_addr = entry.address + int(offset_str)
-            analysis.gotoList.append(target_addr)
-            target_addr_list.append(target_addr)
-
-        if target_addr_list:
-            targets = ", ".join(f"label_{addr}" for addr in target_addr_list)
-            value = (
-                f"/* TODO: SwitchImm({selector_val}) — jump table not reconstructed; "
-                f"candidate targets: {targets} */"
-            )
-        else:
-            value = (
-                f"/* TODO: SwitchImm({selector_val}) — jump table not reconstructed; "
-                f"no Addr operands found to recover targets from */"
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(
+                analysis,
+                entry,
+                "Expected a leading Reg selector",
             )
 
-        variable = JSVariable(handler, entry.address, "", value)
-        analysis.add_result(entry, variable)
+        selector_reg = int(match.group(1))
+        selector = self.get_register_value(analysis, selector_reg)
 
-        return OpcodeResult(entry, variable)
+        targets = []
+
+        for offset in re.compile(r"Addr\d+:\s*(-?\d+)").findall(entry.args):
+            target = entry.address + int(offset)
+            analysis.gotoList.append(target)
+            targets.append(target)
+
+        statement = SwitchGotoStatement(selector=selector, targets=tuple(targets))
+        flow = ControlFlowType.TERMINATOR
+
+        # NOTE (fix): the original never set `control_flow`, defaulting
+        # to NORMAL despite having multiple successors and no
+        # fallthrough - same class of bug already fixed for JCompareX.
+        # pure control flow: no operand value of its own
+        result = OpcodeResult(
+            entry, value=None, statement=statement, dest_reg=None, extra_gotos=targets, control_flow=flow
+        )
+        analysis.add_result(result)
+
+        return result

@@ -1,24 +1,49 @@
-import re
 import json
-from typing import Any, Dict
+import re
 
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence
+from hermes_decompiler.ir.expressions import (
+    ArrayExpression,
+    CallExpression,
+    Expression,
+    Identifier,
+    MemberExpression,
+    ObjectExpression,
+    ObjectProperty,
+    StringLiteral,
+    python_literal,
+)
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
-from hermes_decompiler.handlers._shared_patterns import REG, UINT16, sequence
+
+def _json_to_expression(value: object) -> Expression:
+    """
+    Recursively convert a parsed JSON value (from an opcode comment) into
+    the matching `ir` expression, including nested objects/arrays.
+    """
+
+    if isinstance(value, dict):
+        properties = tuple(
+            ObjectProperty(key=StringLiteral(k), value=_json_to_expression(v))
+            for k, v in value.items()
+        )
+        return ObjectExpression(properties=properties)
+
+    if isinstance(value, list):
+        return ArrayExpression(elements=tuple(_json_to_expression(v) for v in value))
+
+    return python_literal(value)
 
 
 # DEFINE_OPCODE_5(NewObjectWithBuffer, Reg8, UInt16, UInt16, UInt16, UInt16)
 # Example: < NewObjectWithBuffer >: < Reg8: 2, UInt16: 2, UInt16: 2, UInt16: 4743, UInt16: 24182 >  # Object: {'message': 'You have joined the list', 'type': 'success'}
 class NewObjectWithBuffer(OpcodeHandler):
     """Create an object from a static map of values using buffer."""
+
     _PATTERN = sequence(REG, UINT16, UINT16, UINT16, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -26,80 +51,78 @@ class NewObjectWithBuffer(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        parsed_obj = self._parse_object_from_comment(entry.comment)
+        expression = self._parse_object_from_comment(entry.comment)
 
-        if not parsed_obj:
-            error = f'// Warning: No valid object parsed from comment: {entry.comment}'
+        if expression is None:
+            error = f"// Warning: No valid object parsed from comment: {entry.comment}"
             return self.build_exception_result(analysis, entry, error)
 
-        # Format as JS object literal
-        js_obj = self._format_object_literal(parsed_obj)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', js_obj)
-        analysis.add_result(entry, variable)
-
-        return OpcodeResult(entry, variable)
+        return result
 
     @staticmethod
-    def _parse_object_from_comment(comment: str) -> Dict[str, Any]:
-        """Extract and parse Object: {...} from opcode comment."""
+    def _parse_object_from_comment(comment: str) -> ObjectExpression | None:
+        """
+        Extract and parse `Object: {...}` from an opcode comment.
+
+        NOTE (fix): the previous version returned the raw `dict` from
+        `json.loads(...)` on success - unwrapped, not an IR/Value node
+        at all - and only used `ObjectLiteralValue({})` on the empty/
+        failure path. Both branches now consistently return an
+        `ObjectExpression` (or `None` on genuine failure, distinguished
+        from a legitimately empty object).
+        """
+
         if not comment:
-            return {}
+            return ObjectExpression(properties=())
 
         object_matches = re.findall(r"Object:\s*(\{[^}]+})", comment)
+
         for obj_str in object_matches:
             try:
-                # Clean and convert to valid JSON
                 clean_str = obj_str.replace("'", '"').rstrip(",").strip()
-                return json.loads(clean_str)
+                parsed = json.loads(clean_str)
             except json.JSONDecodeError:
                 continue  # try next match
-        return {}
 
-    @staticmethod
-    def _format_object_literal(obj: Dict[str, Any]) -> str:
-        """Convert dict to JS object literal string."""
-        if not obj:
-            return "{}"
+            if not isinstance(parsed, dict):
+                continue
 
-        parts = []
-        for k, v in obj.items():
-            # Handle different value types
-            if isinstance(v, str):
-                val_str = f'"{v}"'
-            elif v is None:
-                val_str = "null"
-            elif isinstance(v, bool):
-                val_str = "true" if v else "false"
-            else:
-                val_str = str(v)
-            parts.append(f'{k}: {val_str}')
+            properties = tuple(
+                ObjectProperty(key=StringLiteral(k), value=_json_to_expression(v))
+                for k, v in parsed.items()
+            )
+            return ObjectExpression(properties=properties)
 
-        return "{ " + ", ".join(parts) + " }"
+        return None
 
 
 class NewObjectWithBufferLong(NewObjectWithBuffer):
     """Long variant."""
+
     pass
 
 
 class NewObject(OpcodeHandler):
     """Create a new empty object: {}"""
+
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f'r{dest_reg}', "{}")
-        analysis.add_result(entry, variable)
+        expression = ObjectExpression(properties=())
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # Example: <NewObjectWithParent>: <Reg8: 1, Reg8: 14>
@@ -109,39 +132,50 @@ class NewObjectWithParent(OpcodeHandler):
     _PATTERN = sequence(REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, parent_reg = map(int, match.groups())
 
-        parent = self.get_register_value(analysis, parent_reg) or f"r{parent_reg}"
+        parent = self.get_register_value(analysis, parent_reg)
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"Object.create({parent})")
-        analysis.add_result(entry, variable)
+        expression = CallExpression(
+            callee=MemberExpression(
+                Identifier(name="Object"),
+                Identifier(name="create"),
+            ),
+            arguments=(parent,),
+        )
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 class SelectObject(OpcodeHandler):
     """Select a property by dynamic key: obj[key]"""
+
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, obj_reg, selector_reg = map(int, match.groups())
 
-        variable = JSVariable(
-            handler, entry.address,
-            f'r{dest_reg}', f"r{obj_reg}[r{selector_reg}]"
-        )
-        analysis.add_result(entry, variable)
+        obj = self.get_register_value(analysis, obj_reg)
+        selector = self.get_register_value(analysis, selector_reg)
 
-        return OpcodeResult(entry, variable)
+        expression = MemberExpression(
+            receiver=obj,
+            member=selector,
+            computed=True,
+        )
+
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result

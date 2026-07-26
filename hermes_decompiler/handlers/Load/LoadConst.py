@@ -1,12 +1,16 @@
 import re
 from typing import ClassVar
 
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
+from hermes_decompiler.ir.expressions import (
+    Expression,
+    UndefinedLiteral,
+    StringLiteral,
+    RawExpression,
+    python_literal,
+)
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 # ---------------------------------------------------------------------------
@@ -21,31 +25,52 @@ class LoadSimpleConst(OpcodeHandler):
     """
 
     _PATTERN = sequence(REG)
-    CONSTANT: ClassVar[str]
+
+    VALUE: ClassVar[Expression | object]
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8 argument")
 
-        register = int(match.group(1))
+        dest_reg = int(match.group(1))
 
-        variable = JSVariable(handler, entry.address, f"r{register}", self.CONSTANT)
-        analysis.add_result(entry, variable)
+        value = self.VALUE
 
-        return OpcodeResult(entry, variable)
+        if not isinstance(value, Expression):
+            value = python_literal(value)
+
+        result = OpcodeResult(entry, value=value, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # @formatter:off
-class LoadConstZero(LoadSimpleConst): CONSTANT = "0"
-class LoadConstUndefined(LoadSimpleConst): CONSTANT = "undefined"
-class LoadConstNull(LoadSimpleConst): CONSTANT = "null"
-class LoadConstTrue(LoadSimpleConst): CONSTANT = "true"
-class LoadConstFalse(LoadSimpleConst): CONSTANT = "false"
-class LoadConstEmpty(LoadSimpleConst): CONSTANT = "empty"
+class LoadConstZero(LoadSimpleConst):
+    VALUE = 0
+
+class LoadConstTrue(LoadSimpleConst):
+    VALUE = True
+
+class LoadConstFalse(LoadSimpleConst):
+    VALUE = False
+
+class LoadConstNull(LoadSimpleConst):
+    VALUE = None
+
+class LoadConstUndefined(LoadSimpleConst):
+    VALUE = UndefinedLiteral()
+
+class LoadConstEmpty(LoadSimpleConst):
+    # Hermes' internal "empty" sentinel (e.g. an array hole) has no real
+    # JS literal - it isn't `undefined` at the engine level, even though
+    # source-visible reads of it usually coerce to `undefined`. Kept as
+    # an explicit marker rather than silently lying with UndefinedLiteral.
+    VALUE = RawExpression(source="/* empty */")
 # @formatter:on
+
 
 # ---------------------------------------------------------------------------
 # Numeric constants
@@ -55,57 +80,51 @@ class LoadConstUInt8(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8")
 
-        register = int(match.group(1))
-        value = match.group(2)
+        dest_reg = int(match.group(1))
+        value = python_literal(int(match.group(2)))
 
-        variable = JSVariable(handler, entry.address, f"r{register}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=value, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class LoadConstInt(OpcodeHandler):
     _PATTERN = re.compile(r"^Reg8:\s*(\d+),\s*Imm32:\s*(-?\d+)$")
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Imm32")
 
-        register = int(match.group(1))
-        value = match.group(2)
+        dest_reg = int(match.group(1))
+        value = python_literal(int(match.group(2)))
 
-        variable = JSVariable(handler, entry.address, f"r{register}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=value, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 class LoadConstDouble(OpcodeHandler):
     _PATTERN = re.compile(r"^Reg8:\s*(\d+),\s*Double:\s*(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)$")
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Double")
 
-        register = int(match.group(1))
-        value = match.group(2)
+        dest_reg = int(match.group(1))
+        value = python_literal(float(match.group(2)))
 
-        variable = JSVariable(handler, entry.address, f"r{register}", value)
-        analysis.add_result(entry, variable)
+        result = OpcodeResult(entry, value=value, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        return OpcodeResult(entry, variable)
+        return result
 
 
 # ---------------------------------------------------------------------------
@@ -115,30 +134,32 @@ class LoadConstDouble(OpcodeHandler):
 class LoadConstString(OpcodeHandler):
     _PATTERN = sequence(REG, r"string_id:\s*(\d+)")
 
-    @staticmethod
-    def ResolveString(analysis: HermesAnalysis, string_id: str) -> str:
-        return analysis.stringTable.get(string_id, f"str_{string_id}")
-
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, string_id")
 
-        register = int(match.group(1))
+        dest_reg = int(match.group(1))
         string_id = match.group(2)
 
-        value = f'"{self.ResolveString(analysis, string_id)}"'
+        resolved = entry.string_literal
 
-        variable = JSVariable(handler, entry.address, f"r{register}", value)
-        analysis.add_result(entry, variable)
+        if resolved is None:
+            resolved = entry.identifier_name
 
-        return OpcodeResult(entry, variable)
+        if resolved is None:
+            resolved = f"str_{string_id}"
+
+        result = OpcodeResult(entry, value=StringLiteral(resolved), dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 class LoadConstStringLongIndex(LoadConstString):
     """
     UInt32 string index variant.
     """
+
     pass

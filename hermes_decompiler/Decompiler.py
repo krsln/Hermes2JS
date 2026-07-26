@@ -1,11 +1,10 @@
-from hermes_decompiler.core.pipeline import ConversionState, Pipeline
+from hermes_decompiler.core import PipelineContext, Pipeline
 from hermes_decompiler.core.stages import (
     MetadataStage,
     SignatureStage,
     BytecodeExtractionStage,
-    SymbolTableStage,
     DispatchStage,
-    CodeGenStage,
+    CodeGenerationStage,
 )
 
 
@@ -47,15 +46,14 @@ class Decompiler:
             raise ValueError("Empty assembly content")
 
         lines = assembly_content.strip().split('\n')
-        state = ConversionState(section_index=section_index, lines=lines)
+        state = PipelineContext(section_index=section_index, lines=lines)
 
         pipeline = Pipeline([
             MetadataStage(),
             SignatureStage(),
             BytecodeExtractionStage(),
-            SymbolTableStage(),
             DispatchStage(strict=strict),
-            CodeGenStage(verbose=verbose),
+            CodeGenerationStage(verbose=verbose),
         ])
 
         try:
@@ -63,7 +61,7 @@ class Decompiler:
         except Exception as e:
             # Preserve the original public contract: callers of convert()
             # historically only needed to catch ValueError for bad input.
-            from hermes_decompiler.core.exceptions import MetadataParseError
+            from hermes_decompiler.core.Exceptions import MetadataParseError
             if isinstance(e, MetadataParseError):
                 raise ValueError(str(e)) from e
             raise

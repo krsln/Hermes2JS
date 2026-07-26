@@ -1,76 +1,84 @@
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
+from hermes_decompiler.ir.Operators import BinaryOperator
+from hermes_decompiler.ir.expressions import BinaryExpression
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
-class BinaryOperator(OpcodeHandler):
-    """Base class for binary register operations."""
+class BaseBinaryOperator(OpcodeHandler):
+    """
+    Base class for binary register operations.
+
+    Comparison operators (<, ===, instanceof, ...) render through the
+    same BinaryExpression node as arithmetic/bitwise ones - the old
+    separate ComparisonExpression node added no information that
+    `operator` doesn't already carry, and `Operators.precedence()`
+    already handles comparison operators correctly.
+    """
 
     _PATTERN = sequence(REG, REG, REG)
 
-    operator = "+"
+    operator = BinaryOperator.ADD
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
-        dest, lhs, rhs = map(int, match.groups())
+        dest_reg, lhs, rhs = map(int, match.groups())
 
-        lhs_val = self.get_register_value(analysis, lhs) or f"r{lhs}"
-        rhs_val = self.get_register_value(analysis, rhs) or f"r{rhs}"
+        lhs_val = self.get_register_value(analysis, lhs)
+        rhs_val = self.get_register_value(analysis, rhs)
 
-        variable = JSVariable(handler, entry.address, f"r{dest}", f"{lhs_val} {self.operator} {rhs_val}")
-        analysis.add_result(entry, variable)
+        expression = BinaryExpression(left=lhs_val, operator=self.operator, right=rhs_val)
 
-        return OpcodeResult(entry, variable)
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
 
 
 # @formatter:off
-class Add(BinaryOperator): operator = "+"
+class Add(BaseBinaryOperator): operator = BinaryOperator.ADD
 class AddN(Add): pass
-class Sub(BinaryOperator): operator = "-"
+class Sub(BaseBinaryOperator): operator = BinaryOperator.SUBTRACT
 class SubN(Sub): pass
-class Mul(BinaryOperator): operator = "*"
+class Mul(BaseBinaryOperator): operator = BinaryOperator.MULTIPLY
 class MulN(Mul): pass
-class Div(BinaryOperator): operator = "/"
+class Div(BaseBinaryOperator): operator = BinaryOperator.DIVIDE
 class DivN(Div): pass
-class Mod(BinaryOperator): operator = "%"
+class Mod(BaseBinaryOperator): operator = BinaryOperator.MODULO
 class ModN(Mod): pass
 
-class BitAnd(BinaryOperator): operator = "&"
-class BitNot(BinaryOperator): operator = "~"
-class BitOr(BinaryOperator): operator = "|"
+class BitAnd(BaseBinaryOperator): operator = BinaryOperator.BITWISE_AND
+class BitOr(BaseBinaryOperator): operator = BinaryOperator.BITWISE_OR
 class BitOrN(BitOr): pass
-class BitXor(BinaryOperator): operator = "^"
+class BitXor(BaseBinaryOperator): operator = BinaryOperator.BITWISE_XOR
 class BitXorN(BitXor): pass
 
-class LShift(BinaryOperator): operator = "<<"
-class RShift(BinaryOperator): operator = ">>"
-class URshift(BinaryOperator): operator = ">>>"
+class LShift(BaseBinaryOperator): operator = BinaryOperator.LEFT_SHIFT
+class RShift(BaseBinaryOperator): operator = BinaryOperator.RIGHT_SHIFT
+class URshift(BaseBinaryOperator): operator = BinaryOperator.UNSIGNED_RIGHT_SHIFT
 
-class Less(BinaryOperator): operator = "<"
-class LessEq(BinaryOperator): operator = "<="
-class Greater(BinaryOperator): operator = ">"
-class GreaterEq(BinaryOperator): operator = ">="
+class Less(BaseBinaryOperator): operator = BinaryOperator.LESS_THAN
+class LessEq(BaseBinaryOperator): operator = BinaryOperator.LESS_EQUAL
+class Greater(BaseBinaryOperator): operator = BinaryOperator.GREATER_THAN
+class GreaterEq(BaseBinaryOperator): operator = BinaryOperator.GREATER_EQUAL
 
-class Eq(BinaryOperator): operator = "=="
-class Neq(BinaryOperator): operator = "!="
-class StrictEq(BinaryOperator): operator = "==="
-class StrictNeq(BinaryOperator): operator = "!=="
+class Eq(BaseBinaryOperator): operator = BinaryOperator.EQUAL
+class Neq(BaseBinaryOperator): operator = BinaryOperator.NOT_EQUAL
+class StrictEq(BaseBinaryOperator): operator = BinaryOperator.STRICT_EQUAL
+class StrictNeq(BaseBinaryOperator): operator = BinaryOperator.STRICT_NOT_EQUAL
 # @formatter:on
 
-class InstanceOf(BinaryOperator):
+
+class InstanceOf(BaseBinaryOperator):
     """instanceof operator."""
-    operator = "instanceof"
+
+    operator = BinaryOperator.INSTANCEOF
 
 
-class IsIn(BinaryOperator):
+class IsIn(BaseBinaryOperator):
     """`in` operator: Arg1 = (Arg2 in Arg3)."""
-    operator = "in"
+
+    operator = BinaryOperator.IN

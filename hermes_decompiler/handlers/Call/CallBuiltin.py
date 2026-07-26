@@ -1,10 +1,7 @@
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, UINT8, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
+from hermes_decompiler.ir.expressions import CallExpression, Identifier
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 # DEFINE_OPCODE_3(CallBuiltin, Reg8, UInt8, UInt8)
@@ -13,27 +10,23 @@ class CallBuiltin(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8, UInt8 arguments")
+            return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, builtin_id, arg_count = map(int, match.groups())
 
-        builtin_table = getattr(analysis, "builtinTable", None) or {}
-        func_name = builtin_table.get(str(builtin_id), f"builtin_{builtin_id}")
+        arguments = tuple(
+            Identifier(name=f"r{reg}")
+            for reg in range(dest_reg - arg_count, dest_reg)
+        )
 
-        arg_start = dest_reg - arg_count
-        args = []
-        for offset, reg in enumerate(range(arg_start, dest_reg)):
-            value = self.get_register_value(analysis, reg)
-            args.append(value if value is not None else f"arg{offset}")
+        expression = CallExpression(
+            callee=Identifier(name=f"builtin_{builtin_id}"),
+            arguments=arguments,
+        )
 
-        args_str = ", ".join(args)
-        func_val = f"({args_str})"
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
 
-        variable = JSVariable(handler, entry.address, f"r{dest_reg}", f"{func_name}{func_val}", func_name, func_val)
-        analysis.add_result(entry, variable)
-
-        return OpcodeResult(entry, variable)
+        return result

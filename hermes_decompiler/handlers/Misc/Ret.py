@@ -1,34 +1,38 @@
-from hermes_decompiler.models.HermesAnalysis import HermesAnalysis
-from hermes_decompiler.models.OpcodeResult import OpcodeResult
-from hermes_decompiler.models.JSVariable import JSVariable
-from hermes_decompiler.models.OpcodeEntry import OpcodeEntry
-from hermes_decompiler.models.OpcodeHandler import OpcodeHandler
-
-from hermes_decompiler.handlers._shared_patterns import REG, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
+from hermes_decompiler.ir.statements import ReturnStatement
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
+from hermes_decompiler.runtime import HermesAnalysis
 
 
 # DEFINE_OPCODE_1(Ret, Reg8)
-# Example: <Ret>: <Reg8: 1>
+# Example: <Ret>: <Reg8: 0>
 class Ret(OpcodeHandler):
-    """Return a value from the current function."""
+    """
+    Return from the current function.
+
+    NOTE (fix): this file previously contained a stray copy of
+    `Throw.py` - a `class Throw` (not `Ret`), which meant no handler was
+    ever registered for the `Ret` opcode at all (`OpcodeHandler.
+    __init_subclass__` keys the registry by class name). Every function
+    body was ending with an unhandled `Ret`, and the file's duplicate
+    `Throw` class was silently overwriting the real one from Misc/Throw.py
+    in the registry, depending on import order.
+    """
+
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        handler = self.__class__.__name__
-
         match = self._PATTERN.match(entry.args.strip())
-        if match:
-            reg = int(match.group(1))
-            value = self._get_register_value(analysis, reg)
-            return_stmt = f"return {value};"
-        else:
-            return_stmt = "return;"
+        if not match:
+            return self.build_invalid_args_result(analysis, entry)
 
-        variable = JSVariable(handler, entry.address, '', return_stmt)
-        analysis.add_result(entry, variable)
+        value_reg = int(match.group(1))
 
-        return OpcodeResult(entry, variable)
+        expression = self.get_register_value(analysis, value_reg)
+        statement = ReturnStatement(argument=expression)
+        flow = ControlFlowType.RETURN
 
-    def _get_register_value(self, analysis: HermesAnalysis, reg: int) -> str:
-        var = self.get_register_variable(analysis, reg)
-        return var.value if var and var.value is not None else f'undefined_r{reg}'
+        result = OpcodeResult(entry, value=expression, statement=statement, dest_reg=None, control_flow=flow)
+        analysis.add_result(result)
+
+        return result
