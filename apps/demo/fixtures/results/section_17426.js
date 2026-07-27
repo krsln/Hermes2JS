@@ -91,103 +91,143 @@ function mapObject(param0, param1, param2) {
         goto label_160;
     }
     catch (caughtException) {
-        // LOOP → START (while)
-        while (true) {
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-            // USED → r5 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().next().done;
-            // CODE → <JmpTrue>: <Addr8: 26, Reg8: 5>  # Address: 000000bd
-            if (globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().next().done) goto label_189;
-            // ──────────────── Block 3 ──────────────── 
-            // CODE → <LoadConstTrue>: <Reg8: 2>
-            // USED → r2 = true;
-        }
-        // LOOP → END
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        // USED → r5 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]();
-        // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 9, string_id: 209>  # String: 'return' (Identifier)
-        // USED → r5 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return;
-        if (globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return) {
-            // ──────────────── Block 6 ──────────────── 
-            // CODE → <Mov>: <Reg8: 6, Reg8: 3>
-            // USED → r6 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]();
-            // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 9, string_id: 209>  # String: 'return' (Identifier)
+        try {
+            // LOOP → START (while)
+            while (true) {
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+                // USED → r5 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().next().done;
+                // CODE → <JmpTrue>: <Addr8: 26, Reg8: 5>  # Address: 000000bd
+                if (globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().next().done) goto label_189;
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → <LoadConstTrue>: <Reg8: 2>
+                // USED → r2 = true;
+            }
+            // LOOP → END
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → <Mov>: <Reg8: 5, Reg8: 3>
+            // USED → r5 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]();
+            // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 9, string_id: 209>  # String: 'return' (Identifier)
             // USED → r5 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return;
-            // CODE → <Call1>: <Reg8: 5, Reg8: 5, Reg8: 6>
-            r5 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return();
-        }
-        // ──────────────── Block 7 ──────────────── 
-        // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-        // USED → r5 = true;
-        if (true) {
-            // ──────────────── Block 9 ──────────────── 
-            // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-            // USED → r1 = caughtException;
-            // CODE → <Throw>: <Reg8: 1>
-            throw caughtException;
-            // CODE → <Catch>: <Reg8: 1>
-            // USED → r1 = caughtException;
+            if (globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return) {
+                // ──────────────── Block 6 ──────────────── 
+                // CODE → <Mov>: <Reg8: 6, Reg8: 3>
+                // USED → r6 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]();
+                // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 9, string_id: 209>  # String: 'return' (Identifier)
+                // USED → r5 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return;
+                // CODE → <Call1>: <Reg8: 5, Reg8: 5, Reg8: 6>
+                r5 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return();
+            }
+            // ──────────────── Block 7 ──────────────── 
             // CODE → <Mov>: <Reg8: 5, Reg8: 2>
             // USED → r5 = true;
+        }
+        catch (caughtException) {
             if (true) {
-                // ──────────────── Block 11 ──────────────── 
+                // ──────────────── Block 9 ──────────────── 
                 // CODE → <Mov>: <Reg8: 1, Reg8: 0>
                 // USED → r1 = caughtException;
                 // CODE → <Throw>: <Reg8: 1>
                 throw caughtException;
-                // CODE → <Catch>: <Reg8: 1>
-                // USED → r1 = caughtException;
-                if (!globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().next().done) {
-                    // ──────────────── Block 12 ──────────────── 
-                    // CODE → <Mov>: <Reg8: 4, Reg8: 3>
-                    // USED → r4 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]();
-                    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 9, string_id: 209>  # String: 'return' (Identifier)
-                    // USED → r4 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return;
-                    if (globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return) {
-                        // ──────────────── Block 13 ──────────────── 
-                        // CODE → <Mov>: <Reg8: 4, Reg8: 3>
-                        // USED → r4 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]();
-                        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 9, string_id: 209>  # String: 'return' (Identifier)
-                        // USED → r3 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return;
-                        // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 4>
-                        r3 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return();
-                    }
+                // LOOP → START (while)
+                while (true) {
+                    // ──────────────── Block 11 ──────────────── 
+                    // CODE → <Throw>: <Reg8: 1>
+                    throw caughtException;
+                    // ──────────────── Block 10 ──────────────── 
+                    // CODE → <Mov>: <Reg8: 5, Reg8: 2>
+                    // USED → r5 = true;
+                    // CODE → <JmpTrue>: <Addr8: 5, Reg8: 5>  # Address: 000000d4
+                    if (true) goto label_212;
                 }
-                // ──────────────── Block 14 ──────────────── 
-                // CODE → <Mov>: <Reg8: 3, Reg8: 2>
-                // USED → r3 = true;
-                if (true) {
-                    // ──────────────── Block 16 ──────────────── 
+                // LOOP → END
+                // LOOP → START (while)
+                while (true) {
+                    // ──────────────── Block 12 ──────────────── 
                     // CODE → <Mov>: <Reg8: 1, Reg8: 0>
                     // USED → r1 = caughtException;
                     // CODE → <Throw>: <Reg8: 1>
                     throw caughtException;
-                    // CODE → <Catch>: <Reg8: 1>
-                    // USED → r1 = caughtException;
-                    if (true) {
-                        // ──────────────── Block 18 ──────────────── 
-                        // CODE → <Throw>: <Reg8: 0>
-                        throw caughtException;
-                    } else {
+                }
+                // LOOP → END
+                try {
+                    // LOOP → START (while)
+                    while (true) {
                         // ──────────────── Block 17 ──────────────── 
                         // CODE → <Throw>: <Reg8: 1>
                         throw caughtException;
+                        // ──────────────── Block 13 ──────────────── 
+                        // CODE → <Catch>: <Reg8: 1>
+                        // USED → r1 = caughtException;
+                        if (!globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().next().done) {
+                            // ──────────────── Block 14 ──────────────── 
+                            // CODE → <Mov>: <Reg8: 4, Reg8: 3>
+                            // USED → r4 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]();
+                            // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 9, string_id: 209>  # String: 'return' (Identifier)
+                            // USED → r4 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return;
+                            if (globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return) {
+                                // ──────────────── Block 15 ──────────────── 
+                                // CODE → <Mov>: <Reg8: 4, Reg8: 3>
+                                // USED → r4 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]();
+                                // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 9, string_id: 209>  # String: 'return' (Identifier)
+                                // USED → r3 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return;
+                                // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 4>
+                                r3 = globalThis.Object.keys(param1)[globalThis.Symbol.iterator]().return();
+                            }
+                        }
+                        // ──────────────── Block 16 ──────────────── 
+                        // CODE → <Mov>: <Reg8: 3, Reg8: 2>
+                        // USED → r3 = true;
+                        // CODE → <JmpTrue>: <Addr8: 5, Reg8: 3>  # Address: 000000fd
+                        if (true) goto label_253;
                     }
-                } else {
-                    // ──────────────── Block 15 ──────────────── 
-                    // CODE → <Throw>: <Reg8: 1>
-                    throw caughtException;
+                    // LOOP → END
+                    // LOOP → START (while)
+                    while (true) {
+                        // ──────────────── Block 18 ──────────────── 
+                        // CODE → <Mov>: <Reg8: 1, Reg8: 0>
+                        // USED → r1 = caughtException;
+                        // CODE → <Throw>: <Reg8: 1>
+                        throw caughtException;
+                        // LOOP → START (while)
+                        while (true) {
+                            // LOOP → START (while)
+                            while (true) {
+                                // LOOP → START (while)
+                                while (true) {
+                                }
+                                // LOOP → END
+                            }
+                            // LOOP → END
+                        }
+                        // LOOP → END
+                    }
+                    // LOOP → END
+                }
+                catch (caughtException) {
+                    // LOOP → START (while)
+                    while (true) {
+                        // ──────────────── Block 20 ──────────────── 
+                        // CODE → <Throw>: <Reg8: 1>
+                        throw caughtException;
+                        // ──────────────── Block 19 ──────────────── 
+                        // CODE → <JmpTrue>: <Addr8: 5, Reg8: 2>  # Address: 00000109
+                        if (true) goto label_265;
+                    }
+                    // LOOP → END
+                    // LOOP → START (while)
+                    while (true) {
+                        // ──────────────── Block 21 ──────────────── 
+                        // CODE → <Throw>: <Reg8: 0>
+                        throw caughtException;
+                    }
+                    // LOOP → END
                 }
             } else {
-                // ──────────────── Block 10 ──────────────── 
-                // CODE → <Throw>: <Reg8: 1>
-                throw caughtException;
+                // ──────────────── Block 8 ──────────────── 
+                // CODE → <Ret>: <Reg8: 1>
+                return [];
             }
-        } else {
-            // ──────────────── Block 8 ──────────────── 
-            // CODE → <Ret>: <Reg8: 1>
-            return [];
         }
     }
 }

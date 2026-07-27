@@ -46,6 +46,7 @@ class CFGBuilder:
     def build(self, results: List[OpcodeResult], exception_handlers: list[dict] | None = None) -> CFG:
 
         self.results = results
+        exception_handlers = exception_handlers or []
 
         self.address_to_index = {
             r.opcode.address: i
@@ -54,31 +55,29 @@ class CFGBuilder:
 
         leaders = self._find_leaders()
 
+        # Exception handler targets (catch-block entry points) must be
+        # block boundaries too, even though they're never the destination
+        # of a normal Jmp/JCompare - they're reached only via the VM's
+        # implicit exception-dispatch mechanism, which `result.goto`
+        # doesn't model at all. Without this, a target address landing
+        # mid-block (as Hermes routinely produces) leaves no BasicBlock
+        # starting exactly there, so `_resolve_exception_handlers` can
+        # never find a `handler_block` for it and silently drops the
+        # handler - see CFGBuilder's DROPPED debug trail.
+        for handler in exception_handlers:
+            leaders.add(handler["target"])
+
         self._create_basic_blocks(leaders)
 
         self._connect_edges()
 
-        self.cfg.exception_handlers = self._resolve_exception_handlers(exception_handlers or [])
+        self.cfg.exception_handlers = self._resolve_exception_handlers(exception_handlers)
 
         return self.cfg
 
     # -------------------------------------------------------------
 
     def _resolve_exception_handlers(self, raw_handlers: list[dict]) -> list[dict]:
-        """
-        Maps address-based `{start, end, target}` handler entries (already
-        parsed out of the .hbc metadata line by `FunctionMetadataParser`)
-        onto real `BasicBlock`s.
-
-        `try_blocks` is every block whose first instruction's address falls
-        in `[start, end)` - i.e. every block (at least partially) covered
-        by the try range, in the raw layout Hermes produced them in. Blocks
-        with no matching address (couldn't be resolved) mean either a
-        malformed handler entry or a range with no live code (e.g. an
-        entirely-optimized-out try body) - the handler is dropped rather
-        than guessing, matching this codebase's existing philosophy (see
-        IfStructurer's `_convert` bail-outs).
-        """
 
         resolved = []
 
