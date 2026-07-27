@@ -11,6 +11,30 @@ Select an Expo SDK version > SDK 57
 
 # Navigate to the project directory
 cd HermesTestApp
+
+# ls -ld node_modules
+# sudo chown -R $(whoami):staff node_modules
+```
+
+```shell
+# npx expo prebuild
+# HermesTestApp/
+#├── android/
+#├── ios/
+#├── app/
+#├── package.json
+
+# rm -rf ios
+npx expo prebuild --platform android
+
+cd android
+touch local.properties
+# sdk.dir=/Users/mehmet/Library/Android/sdk
+
+./gradlew assembleRelease
+./gradlew assembleRelease --stacktrace
+
+# android/app/build/outputs/apk/release/app-release.apk
 ```
 
 ```text
