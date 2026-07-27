@@ -31,8 +31,8 @@ cd android
 touch local.properties
 # sdk.dir=/Users/mehmet/Library/Android/sdk
 
-./gradlew assembleRelease
-./gradlew assembleRelease --stacktrace
+./gradlew clean
+./gradlew assembleRelease --stacktrace --no-configuration-cache
 
 # android/app/build/outputs/apk/release/app-release.apk
 ```
