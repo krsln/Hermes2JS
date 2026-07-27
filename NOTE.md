@@ -16,6 +16,13 @@ python3 "hermes-dec/src/hermes_dec/decompilation/hbc_decompiler.py" "assets/inde
 
 echo "📦 Parsing structure..."
 python3 "hermes-dec/src/hermes_dec/parsers/hbc_file_parser.py" "assets/index.android.bundle" > "outputParser.js"
+
+# if index.android.bundle: Hermes JavaScript bytecode, version 96 causes error ->
+# vendor/hermes-dec/src/hermes_dec/parsers/hbc_bytecode_parser.py
+# if builtin_number < len(builtin_functions):
+#    builtin = builtin_functions[builtin_number]
+# else:
+#    builtin = f"<Builtin {builtin_number}>"
 ```
 
 ### hermesc

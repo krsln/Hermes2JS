@@ -46,37 +46,4 @@ echo "sdk.dir=/Users/mehmet/Library/Android/sdk" > local.properties
 
 # android/app/build/outputs/apk/release/app-release.apk
 ```
-
-```text
-testy/
-
-    ControlFlow/
-        While.ts
-        DoWhile.ts
-        For.ts
-        Switch.ts
-        If.ts
-
-    Objects/
-        ObjectLiteral.ts
-        Property.ts
-
-    Arrays/
-        Array.ts
-        Spread.ts
-
-    Functions/
-        Arrow.ts
-        Closure.ts
-        DefaultParameter.ts
-
-    Exceptions/
-        TryCatch.ts
-
-    Iterators/
-        ForOf.ts
-        ForIn.ts
-
-    Classes/
-        Class.ts
-```
+  
