@@ -51,8 +51,17 @@ class PutByVal(OpcodeHandler):
 # whether a failed write silently no-ops vs throws at runtime -- there
 # is no separate JS syntax for that, so it's rendered identically to
 # PutByVal: `obj[key] = value;`.
-#
-# NOTE: no PutByValStrict counterpart was requested/added here -- add
-# one analogously if/when it shows up in your opcode stream.
 class PutByValLoose(PutByVal):
+    pass
+
+
+# DEFINE_OPCODE_3(PutByValStrict, Reg8, Reg8, Reg8)
+#
+# Same reasoning/shape as PutByValLoose above -- the strict/loose split
+# for PutByVal mirrors DelByVal's confirmed DelByValStrict/
+# DelByValLoose pair exactly (same three Reg8 operands, mode baked into
+# the opcode name). Strict mode throws on a failed write instead of
+# silently no-oping; no separate JS syntax distinguishes that from a
+# plain computed assignment, so rendered identically: `obj[key] = value;`.
+class PutByValStrict(PutByVal):
     pass
