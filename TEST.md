@@ -1,4 +1,6 @@
-# IR (Intermediate Representation)
+# CFG - Control Flow Graph
+
+# IR - Intermediate Representation
 
 **control data /fixtures**
 
@@ -66,6 +68,7 @@ class LoopStructurer:
         # print("\n===== REGION TREE =====")
         # self._dump(self.graph.root)
 ```
+
 ```text
 ===== REGION TREE =====
 SequenceRegion
