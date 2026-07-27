@@ -12,7 +12,14 @@ chmod +x scripts/disassemble.sh
 ```shell
 ./scripts/disassemble.sh <app_name>
 
+## file index.android.bundle
+
+# index.android.bundle: Hermes JavaScript bytecode, version 96
+./scripts/disassemble.sh coachy
+
+# index.android.bundle: Hermes JavaScript bytecode, version 98
 ./scripts/disassemble.sh testy
+
 ```
 
 **Arguments**

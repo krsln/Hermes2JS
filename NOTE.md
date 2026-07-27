@@ -4,7 +4,7 @@ https://www.politesi.polimi.it/retrieve/17e4c202-4d63-43f1-97d9-84a925bb9130/202
 https://github.com/P1sec/hermes-dec   
 https://p1sec.github.io/hermes-dec/opcodes_table.html
 
-## usage example
+## usage hermes-dec
 
 ```shell
 # basic
@@ -16,6 +16,21 @@ python3 "hermes-dec/src/hermes_dec/decompilation/hbc_decompiler.py" "assets/inde
 
 echo "📦 Parsing structure..."
 python3 "hermes-dec/src/hermes_dec/parsers/hbc_file_parser.py" "assets/index.android.bundle" > "outputParser.js"
+```
+
+### hermesc
+```shell
+find ../../ -name "hermesc" -type f
+../../HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
+    -b \
+    -dump-bytecode \
+    index.android.bundle
+
+../../HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
+    -b \
+    -dump-bytecode \
+    -pretty \
+    index.android.bundle
 ```
 
 ## Test app

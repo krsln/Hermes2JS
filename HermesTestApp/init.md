@@ -26,13 +26,22 @@ cd HermesTestApp
 
 # rm -rf ios
 npx expo prebuild --platform android
+npx expo prebuild --platform android --clean
 
 cd android
-touch local.properties
-# sdk.dir=/Users/mehmet/Library/Android/sdk
+echo "sdk.dir=/Users/mehmet/Library/Android/sdk" > local.properties
+
+# android/gradle/wrapper/gradle-wrapper.properties
+# distributionUrl=https\://services.gradle.org/distributions/gradle-8.13-bin.zip
+
+which node
+# android/gradle.properties
+# NODE_BINARY=/usr/local/bin/node
+
+# -----------------------
 
 ./gradlew clean
-./gradlew assembleRelease --stacktrace --no-configuration-cache
+./gradlew assembleRelease --stacktrace
 
 # android/app/build/outputs/apk/release/app-release.apk
 ```
