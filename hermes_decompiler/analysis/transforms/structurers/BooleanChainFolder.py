@@ -1,13 +1,26 @@
 from __future__ import annotations
 
+import dataclasses
+
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     LoopRegion,
     IfRegion,
 )
+from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
-from hermes_decompiler.ir.expressions import BinaryExpression, Expression
+from hermes_decompiler.ir.expressions import (
+    BinaryExpression,
+    Expression,
+    CallExpression,
+    NewExpression,
+    AssignmentExpression,
+    UpdateExpression,
+    AwaitExpression,
+    YieldExpression, MemberExpression,
+)
+from hermes_decompiler.ir.statements import ReturnStatement
 from hermes_decompiler.analysis.transforms.structurers._negation import _negate_condition
 
 
@@ -15,47 +28,49 @@ class BooleanChainFolder:
     """
     Folds the common short-circuit `||`/`&&` compiled idiom back into a
     single expression, once `IfStructurer` has already turned the raw
-    conditional jump into an `IfRegion`:
+    conditional jump into an `IfRegion`. See prior revisions for the
+    full fold-mechanics docstring; this revision additionally fixes a
+    stale-reference bug:
 
-        r0 = E1;
-        if (<negation of E1>) {
-            r0 = E2;
-        }
+    IR generation (see e.g. `Ret`'s opcode handler) resolves a
+    register's value *once*, at the point in the original bytecode
+    order where it's read, and freezes that resolved `Expression`
+    object directly into e.g. `ReturnStatement.argument`. That
+    resolution happens long before this pass runs, and it grabs
+    whatever the *last* writer to that register was in raw bytecode
+    order - which, for our chain idiom, is the `then_block`'s bare
+    `E3` (not the header's `E1`, and definitely not the folded
+    `E1 || E2 || E3`).
 
-    becomes:
+    When we fold, `then_result.value` (`E3`) is reused unchanged as
+    the new `BinaryExpression`'s `.right` - its *object identity*
+    never changes, so anything holding a bare reference to that same
+    object (like `Ret`'s frozen `argument`) doesn't "see" the fold at
+    all; it just keeps rendering the old standalone `E3`.
 
-        r0 = E1 || E2;
-
-    and the AND counterpart (the original jump condition was `!E1`, so
-    `IfStructurer`'s negation step unwrapped it back to plain `E1`):
-
-        r0 = E1;
-        if (E1) {
-            r0 = E2;
-        }
-
-    becomes:
-
-        r0 = E1 && E2;
-
-    Chains longer than two operands (`E1 || E2 || E3 || ...`) fold
-    naturally: after the first fold, `block`'s value becomes
-    `E1 || E2`, and the loop re-checks the same block against whatever
-    `IfRegion` now follows it, matching against the *new* combined value.
-
-    `_visit` recurses post-order (children before folding at the
-    current level) so a nested chain (e.g. `E2 || E3` inside an outer
-    `if`'s `then_body`) is already collapsed to a single operand before
-    the outer level attempts its own fold.
-
-    Only folds when the `if` has no `else` and its `then_body` is
-    exactly one `BasicBlock` with exactly one instruction (the
-    reassignment) - anything more elaborate is left as a real `if` to
-    avoid silently dropping side effects.
-
-    Must run after `IfStructurer` (needs real `IfRegion`s) and before
-    `StatementBuilder` flattens blocks into `InstructionState`s.
+    `_repoint_references` fixes this by walking every block in the
+    CFG after a successful fold and replacing any other reference to
+    the pre-fold `E3` object (by identity, not equality - two
+    structurally-equal-but-distinct `E3`s elsewhere must NOT be
+    touched) with the newly folded expression. `OpcodeResult.value` is
+    a plain mutable attribute and can be reassigned directly;
+    `ReturnStatement` is a frozen dataclass, so its `argument` field
+    is swapped via `dataclasses.replace` instead of direct mutation.
     """
+
+    _LOGICAL_OPERATORS = (LogicalOperator.OR, LogicalOperator.AND)
+
+    _IMPURE_EXPRESSION_TYPES = (
+        CallExpression,
+        NewExpression,
+        AssignmentExpression,
+        UpdateExpression,
+        AwaitExpression,
+        YieldExpression,
+    )
+
+    def __init__(self, cfg):
+        self.cfg = cfg
 
     def run(self, root: SequenceRegion):
         self._visit(root)
@@ -66,11 +81,6 @@ class BooleanChainFolder:
 
         if isinstance(region, SequenceRegion):
 
-            # Post-order: fold nested chains first, so that by the time
-            # we try to fold at *this* level, an inner IfRegion whose
-            # then_body just collapsed to a single block (e.g. a nested
-            # `E2 || E3`) already looks like a single foldable operand
-            # instead of a two-item [block, IfRegion] pair.
             for child in region.children:
                 self._visit(child)
 
@@ -98,6 +108,14 @@ class BooleanChainFolder:
 
     def _fold_sequence(self, region: SequenceRegion):
 
+        # Empty BasicBlocks (no instructions - merge/passthrough points
+        # left behind by IfStructurer) render nothing and would
+        # otherwise break the adjacency `_try_fold` relies on.
+        region.children = [
+            child for child in region.children
+            if not (isinstance(child, BasicBlock) and not child.instructions)
+        ]
+
         index = 0
 
         while index < len(region.children) - 1:
@@ -106,9 +124,6 @@ class BooleanChainFolder:
             if_region = region.children[index + 1]
 
             if self._try_fold(block, if_region):
-                # `if_region` was absorbed into `block`'s value; don't
-                # advance - re-check `block` against its new neighbor
-                # for a longer chain (E1 || E2 || E3 ...).
                 del region.children[index + 1]
                 continue
 
@@ -137,10 +152,10 @@ class BooleanChainFolder:
 
         then_block = then_children[0]
 
-        if len(then_block.instructions) != 1:
+        if not then_block.instructions:
             return False
 
-        then_result = then_block.instructions[0]
+        then_result = then_block.instructions[-1]
 
         if then_result.dest_reg != last.dest_reg:
             return False
@@ -148,22 +163,145 @@ class BooleanChainFolder:
         if not isinstance(then_result.value, Expression):
             return False
 
-        e1 = last.value
+        for earlier in then_block.instructions[:-1]:
+            if not self._is_pure(earlier):
+                return False
+
         condition = if_region.condition
 
         if condition is None:
             return False
 
-        if _negate_condition(e1).structurally_equal(condition):
+        tail = self._chain_tail(last.value)
+
+        if _negate_condition(tail).structurally_equal(condition):
             operator = LogicalOperator.OR
 
-        elif e1.structurally_equal(condition):
+        elif tail.structurally_equal(condition):
             operator = LogicalOperator.AND
 
         else:
             return False
 
-        last.value = BinaryExpression(left=e1, operator=operator, right=then_result.value)
+        old_tail_expr = then_result.value
+
+        last.value = BinaryExpression(left=last.value, operator=operator, right=old_tail_expr)
         last.refresh_result()
+
+        self._repoint_references(old_tail_expr, last.value, min_block_id=then_block.id, exclude={then_result, last})
+
+        return True
+
+    def _repoint_references(self, old_expr, new_expr, min_block_id: int, exclude: set) -> None:
+
+        for blk in self.cfg.blocks:
+
+            if blk.id < min_block_id:
+                continue
+
+            for instr in blk.instructions:
+
+                if instr in exclude:
+                    continue
+
+                changed = False
+
+                new_value, value_changed = self._repoint_node(instr.value, old_expr, new_expr)
+                if value_changed:
+                    instr.value = new_value
+                    changed = True
+
+                stmt = instr.statement
+
+                if stmt is not None:
+                    new_stmt, stmt_changed = self._repoint_node(stmt, old_expr, new_expr)
+                    if stmt_changed:
+                        instr.statement = new_stmt
+                        changed = True
+
+                if changed:
+                    instr.refresh_result()
+
+    def _repoint_node(self, node, old_expr, new_expr):
+        """
+        Generic, type-agnostic deep replace of `old_expr` (by identity)
+        with `new_expr` inside any frozen-dataclass IR `Node` tree.
+
+        Every IR node (Expression *and* Statement, e.g. ReturnStatement)
+        is a `frozen=True, slots=True` dataclass whose fields are either
+        a `Node`/`Node | None`, or a `tuple[Node, ...]` (see `.children`
+        across expressions.py/ControlFlow.py). Rather than hand-listing
+        every wrapper shape (`AssignmentExpression.right`,
+        `MemberExpression.receiver`, `ReturnStatement.argument`, ...) -
+        which is exactly what broke last time, silently, for
+        `StoreNPToEnvironment` - we walk `dataclasses.fields(node)`
+        generically and rebuild via `dataclasses.replace` wherever a
+        field (or a tuple element) is `old_expr` by identity, or
+        recursively contains it.
+
+        Returns (possibly-rebuilt node, changed?). Non-dataclass /
+        non-Node leaves (str, bool, enums, int, None) are returned
+        unchanged - only Node identity/recursion is inspected.
+        """
+
+        if node is old_expr:
+            return new_expr, True
+
+        if not dataclasses.is_dataclass(node) or not isinstance(node, Node):
+            return node, False
+
+        updates = {}
+        any_changed = False
+
+        for field in dataclasses.fields(node):
+            value = getattr(node, field.name)
+
+            if isinstance(value, Node):
+                new_value, changed = self._repoint_node(value, old_expr, new_expr)
+                if changed:
+                    updates[field.name] = new_value
+                    any_changed = True
+
+            elif isinstance(value, tuple):
+                new_items = []
+                tuple_changed = False
+
+                for item in value:
+                    if isinstance(item, Node):
+                        new_item, changed = self._repoint_node(item, old_expr, new_expr)
+                        if changed:
+                            tuple_changed = True
+                        new_items.append(new_item)
+                    else:
+                        new_items.append(item)
+
+                if tuple_changed:
+                    updates[field.name] = tuple(new_items)
+                    any_changed = True
+
+            # else: plain value (str/bool/enum/int/None) - nothing to do
+
+        if not any_changed:
+            return node, False
+
+        return dataclasses.replace(node, **updates), True
+
+    def _chain_tail(self, value: Expression) -> Expression:
+
+        if isinstance(value, BinaryExpression) and value.operator in self._LOGICAL_OPERATORS:
+            return value.right
+
+        return value
+
+    def _is_pure(self, instruction) -> bool:
+
+        if instruction.statement is not None:
+            return False
+
+        if not isinstance(instruction.value, Expression):
+            return False
+
+        if isinstance(instruction.value, self._IMPURE_EXPRESSION_TYPES):
+            return False
 
         return True

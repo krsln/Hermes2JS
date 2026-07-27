@@ -2,13 +2,32 @@ import re
 from typing import Dict
 
 from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
-from hermes_decompiler.ir.expressions import CallExpression, Identifier
+from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression, UndefinedLiteral
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
 class CallX(OpcodeHandler):
-    # One pattern per arity: dest + closure + N argument registers.
+    """
+    Hermes CallN opcodes mirror `Function.prototype.call` semantics:
+    the FIRST argument register is always the `this` context, not a
+    regular positional argument - `CallN dst, callee, thisArg, arg1,
+    arg2, ...`. For the extremely common `obj.method(...)` shape, the
+    compiler puts `obj` itself into the `thisArg` slot (the same value
+    already sitting in a preceding `GetById`'s receiver), so rendering
+    it a second time as an explicit argument duplicates the receiver
+    expression and produces `obj.method(obj)` instead of `obj.method()`.
+
+    We special-case the common pattern: if `callee` is a
+    `MemberExpression` whose `.receiver` is structurally identical to
+    the resolved `thisArg` value, the call is a plain method call and
+    `thisArg` is dropped entirely (it's already implicit in
+    `obj.method(...)`). Otherwise `this` isn't the callee's own
+    receiver (e.g. `fn.call(otherThis, ...)`, or a bare function call
+    where `thisArg` is `undefined`/unrelated) and must be preserved
+    explicitly via `.call(thisArg, ...)` to keep semantics correct.
+    """
+
     _PATTERN: Dict[int, "re.Pattern[str]"] = {
         n: sequence(*([REG] * (n + 2))) for n in (1, 2, 3, 4)
     }
@@ -25,13 +44,37 @@ class CallX(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
+
+        if not arg_regs:
+            # No registers at all means not even a `this` slot was
+            # encoded - shouldn't happen for a real CallN, but don't
+            # crash on malformed input.
+            return self.build_invalid_args_result(analysis, entry, "missing thisArg register")
+
+        this_reg, *rest_arg_regs = arg_regs
+
         callee = self.get_register_value(analysis, func_reg)
-        arguments = tuple(
+        this_value = self.get_register_value(analysis, this_reg)
+        real_arguments = tuple(
             self.get_register_value(analysis, reg)
-            for reg in arg_regs
+            for reg in rest_arg_regs
         )
 
-        expression = CallExpression(callee=callee, arguments=arguments)
+        if isinstance(callee, MemberExpression) and callee.receiver.structurally_equal(this_value):
+            # Plain `obj.method(...)` - `this` is already implicit.
+            expression = CallExpression(callee=callee, arguments=real_arguments)
+
+        # elif isinstance(this_value, UndefinedLiteral):
+        #     # `this` explicitly undefined and unrelated to callee's receiver -
+        #     # a bare call already has this=undefined in strict mode, so
+        #     # `.call(undefined, ...)` is semantically redundant here.
+        #     expression = CallExpression(callee=callee, arguments=real_arguments)
+
+        else:
+            # `this` doesn't match the callee's own receiver (or callee
+            # isn't a member access at all) - preserve it explicitly.
+            call_callee = MemberExpression(receiver=callee, member=Identifier(name="call"), computed=False)
+            expression = CallExpression(callee=call_callee, arguments=(this_value, *real_arguments))
 
         result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
         analysis.add_result(result)

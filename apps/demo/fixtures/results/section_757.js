@@ -98,13 +98,13 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                         // CODE → <Mov>: <Reg8: 11, Reg8: 9>
                         // USED → r11 = param1.updateQueue.stores[0].getSnapshot;
                         // CODE → <Call1>: <Reg8: 13, Reg8: 11, Reg8: 5>
-                        // USED → r13 = param1.updateQueue.stores[0].getSnapshot(undefined);
+                        // USED → r13 = param1.updateQueue.stores[0].getSnapshot.call(undefined);
                         // CODE → <Mov>: <Reg8: 11, Reg8: 8>
                         // USED → r11 = param1.updateQueue.stores[0].value;
                         // CODE → <Call3>: <Reg8: 11, Reg8: 14, Reg8: 5, Reg8: 13, Reg8: 11>
-                        // USED → r11 = getEnvironment(0)[73](undefined, param1.updateQueue.stores[0].getSnapshot(undefined), param1.updateQueue.stores[0].value);
+                        // USED → r11 = getEnvironment(0)[73].call(undefined, param1.updateQueue.stores[0].getSnapshot.call(undefined), param1.updateQueue.stores[0].value);
                         // CODE → <JmpTrue>: <Addr8: 7, Reg8: 11>  # Address: 00000089
-                        if (getEnvironment(0)[73](undefined, param1.updateQueue.stores[0].getSnapshot(undefined), param1.updateQueue.stores[0].value)) goto label_137;
+                        if (getEnvironment(0)[73].call(undefined, param1.updateQueue.stores[0].getSnapshot.call(undefined), param1.updateQueue.stores[0].value)) goto label_137;
                         // ──────────────── Block 7 ──────────────── 
                         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
                         // USED → r11 = 0;

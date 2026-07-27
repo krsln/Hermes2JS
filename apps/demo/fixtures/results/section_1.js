@@ -51,11 +51,11 @@ function function_1(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 64>  # String: '__d' (Identifier)
     // USED → r0 = "__d";
     // CODE → <Call3>: <Reg8: 9, Reg8: 10, Reg8: 9, Reg8: 11, Reg8: 0>
-    // USED → r9 = globalThis.HermesInternal.concat("", globalThis.__METRO_GLOBAL_PREFIX__, "__d");
+    // USED → r9 = globalThis.HermesInternal.concat.call("", globalThis.__METRO_GLOBAL_PREFIX__, "__d");
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 3>  # Function: [#3 define of 107 bytes]: 4 params @ offset 0x0016e029
     // USED → r0 = define;
     // CODE → <PutByVal>: <Reg8: 8, Reg8: 9, Reg8: 0>
-    param1[globalThis.HermesInternal.concat("", globalThis.__METRO_GLOBAL_PREFIX__, "__d")] = define;
+    param1[globalThis.HermesInternal.concat.call("", globalThis.__METRO_GLOBAL_PREFIX__, "__d")] = define;
     // CODE → <PutById>: <Reg8: 8, Reg8: 7, UInt8: 2, string_id: 11632>  # String: '__c' (Identifier)
     param1.__c = clear;
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 10>  # Function: [#10 registerSegment of 48 bytes]: 4 params @ offset 0x0016e278
@@ -65,9 +65,9 @@ function function_1(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call1>: <Reg8: 7, Reg8: 7, Reg8: 0>
-    // USED → r7 = clear(undefined);
+    // USED → r7 = clear.call(undefined);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 7>
-    createEnvironment()[1] = clear(undefined);
+    createEnvironment()[1] = clear.call(undefined);
     // CODE → <NewObject>: <Reg8: 7>
     // USED → r7 = {  };
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 7>

@@ -17,7 +17,6 @@ class StructuralAnalyzer:
         self.cfg = cfg
 
     def build(self):
-
         root = SequenceStructurer(self.cfg).run()
 
         graph = RegionGraph(root)
@@ -31,7 +30,7 @@ class StructuralAnalyzer:
         # (needs real IfRegions) and before StatementBuilder (needs
         # BasicBlocks still intact, not yet flattened to
         # InstructionStates).
-        BooleanChainFolder().run(graph.root)
+        BooleanChainFolder(self.cfg).run(graph.root)
 
         LoopConditionExtractor(graph.root).run()
 

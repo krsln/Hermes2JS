@@ -34,8 +34,8 @@ function processColorsInProps(param0, param1) {
             // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 148>  # String: 'includes' (Identifier)
             // USED → r11 = getEnvironment(1)[17].includes;
             // CODE → <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 13>
-            // USED → r11 = getEnvironment(1)[17].includes(getEnvironment(1)[17], HermesPropertyIterator(param1).next());
-            if (getEnvironment(1)[17].includes(getEnvironment(1)[17], HermesPropertyIterator(param1).next())) {
+            // USED → r11 = getEnvironment(1)[17].includes(HermesPropertyIterator(param1).next());
+            if (getEnvironment(1)[17].includes(HermesPropertyIterator(param1).next())) {
                 // ──────────────── Block 10 ──────────────── 
                 // CODE → <Mov>: <Reg8: 12, Reg8: 7>
                 // USED → r12 = HermesPropertyIterator(param1).next();
@@ -44,9 +44,9 @@ function processColorsInProps(param0, param1) {
                 // CODE → <GetByVal>: <Reg8: 11, Reg8: 10, Reg8: 12>
                 // USED → r11 = param1[HermesPropertyIterator(param1).next()];
                 // CODE → <Call2>: <Reg8: 11, Reg8: 13, Reg8: 0, Reg8: 11>
-                // USED → r11 = getEnvironment(1)[36](undefined, param1[HermesPropertyIterator(param1).next()]);
+                // USED → r11 = getEnvironment(1)[36].call(undefined, param1[HermesPropertyIterator(param1).next()]);
                 // CODE → <PutByVal>: <Reg8: 10, Reg8: 12, Reg8: 11>
-                param1[HermesPropertyIterator(param1).next()] = getEnvironment(1)[36](undefined, param1[HermesPropertyIterator(param1).next()]);
+                param1[HermesPropertyIterator(param1).next()] = getEnvironment(1)[36].call(undefined, param1[HermesPropertyIterator(param1).next()]);
                 // CODE → <JmpLong>: <Addr32: -150>  # Address: 0000001c
                 goto label_28;
                 // LOOP → START (while)
@@ -82,9 +82,9 @@ function processColorsInProps(param0, param1) {
                         // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 14>
                         // USED → r13 = GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]];
                         // CODE → <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
-                        // USED → r13 = getEnvironment(1)[36](undefined, GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]]);
+                        // USED → r13 = getEnvironment(1)[36].call(undefined, GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]]);
                         // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
-                        GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]] = getEnvironment(1)[36](undefined, GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]]);
+                        GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]] = getEnvironment(1)[36].call(undefined, GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]]);
                     }
                     // ──────────────── Block 8 ──────────────── 
                     // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
