@@ -56,4 +56,57 @@ class CreateBaseClass(OpcodeHandler):
 class CreateBaseClassLongIndex(CreateBaseClass):
     pass
 
-# todo CreateDerivedClass
+
+# DEFINE_OPCODE_6(CreateDerivedClass, Reg8, Reg8, Reg8, Reg8, UInt16 function_id)
+# DEFINE_OPCODE_6(CreateDerivedClassLongIndex, Reg8, Reg8, Reg8, Reg8, UInt32 function_id)
+#   [confirmed, hermes-dec table]
+#
+#   "Create a derived class. Arg1 is the output register for the
+#    closure. Arg2 is the output register for the home object. Arg3 is
+#    the current environment. Arg4 is the superClass. Arg5 is index in
+#    the function table."
+#
+# Same two-output shape as CreateBaseClass, plus an extra input
+# register (the superclass, Arg4) that CreateBaseClass doesn't have --
+# this is what backs `class Foo extends Bar { ... }` vs. plain
+# `class Foo { ... }`. Rendered the same way as CreateBaseClass for both
+# outputs; the superclass register itself isn't part of either output
+# expression here (it would show up wherever the `extends` clause gets
+# reconstructed at the class-declaration level, which is presumably
+# handled by whatever higher-level pass stitches CreateClosure/
+# CreateBaseClass/CreateDerivedClass results into an actual `class ...`
+# statement -- this handler only resolves the two register writes).
+class CreateDerivedClass(OpcodeHandler):
+    """Create a derived (extends ...) ES6 class closure."""
+
+    _PATTERN = sequence(REG, REG, REG, REG, UINT8)
+
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(
+                analysis, entry, "Expected Reg8, Reg8, Reg8, Reg8, function_id arguments"
+            )
+
+        closure_reg, home_object_reg, _env_reg, _super_class_reg, function_id = map(int, match.groups())
+
+        func_name = (
+            entry.function.name
+            if entry.function and entry.function.name
+            else f"function_{function_id}"
+        )
+        class_name = f"function_{function_id}"
+        expression = Identifier(name=func_name)
+
+        result = OpcodeResult(entry, value=expression, dest_reg=closure_reg)
+        analysis.add_result(result)
+
+        home_object_expr = Identifier(name=f"{class_name}.prototype")
+        home_result = OpcodeResult(entry, value=home_object_expr, dest_reg=home_object_reg)
+        analysis.add_result(home_result)
+
+        return result
+
+
+class CreateDerivedClassLongIndex(CreateDerivedClass):
+    pass

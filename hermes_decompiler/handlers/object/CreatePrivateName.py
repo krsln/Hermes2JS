@@ -28,7 +28,7 @@ class CreatePrivateName(OpcodeHandler):
 
         expression = CallExpression(
             callee=Identifier(name="Symbol"),
-            arguments=[StringLiteral(value=name)], # hatalı Expected type 'tuple[Expression | SpreadElement, ...]', got 'list[StringLiteral]' instead
+            arguments=(StringLiteral(value=name),),
         )
 
         result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
