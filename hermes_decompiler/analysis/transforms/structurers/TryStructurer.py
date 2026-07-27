@@ -4,8 +4,6 @@ from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
 from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
-    LoopRegion,
-    IfRegion,
     TryRegion,
     CatchRegion,
 )
@@ -17,139 +15,31 @@ TERMINATING_CONTROL_FLOW = {ControlFlowType.RETURN, ControlFlowType.THROW}
 
 class TryStructurer:
     """
-    Converts a resolved `cfg.exception_handlers` entry (try-range +
-    catch target, already mapped to real BasicBlocks by
-    `CFGBuilder._resolve_exception_handlers`) into a real `TryRegion`.
+    Converts resolved `cfg.exception_handlers` entries into real
+    `TryRegion`s, using `RegionGraph.lowest_common_sequence` (backed
+    by `Region.covered_blocks`) instead of ad-hoc path-walking.
 
-    Must run AFTER `LoopStructurer`/`IfStructurer`: Hermes exception
-    ranges routinely cover only a *sub-slice* of a loop's body (e.g.
-    everything except the loop header/back-edge instructions), while
-    the handler sits structurally *after the whole loop*. Once
-    Loop/If have run, the try-range's raw blocks end up nested one or
-    more levels deep inside a `LoopRegion`/`IfRegion`, while the
-    handler block remains a sibling of that *outer* region - they are
-    no longer flat siblings in the same `SequenceRegion`.
+    Must run after LoopStructurer/IfStructurer (see prior docstring
+    revisions for why: exception ranges routinely wrap only part of a
+    loop's body, while the handler sits after the whole loop, so the
+    try-range's blocks and the handler block end up at different
+    nesting depths once Loop/If have run).
 
-    To handle this, we don't look for `start_block`/`handler_block` as
-    direct list members of one shared sequence. Instead we compute the
-    full root-to-leaf *path* (list of `(owning SequenceRegion, item)`
-    pairs) for every block, find the deepest `SequenceRegion` common
-    to both the try-range's blocks and the handler block (their
-    "lowest common ancestor" sequence), and use each side's
-    ancestor-or-self *item at that level* (which may be the raw block
-    itself, or a `LoopRegion`/`IfRegion` that now contains it) as the
-    thing to actually splice into `TryRegion.try_body` /
-    `CatchRegion.body`.
-
-    This subsumes the simple case too: when try-range and handler
-    really are flat siblings (no intervening loop/if), the LCA
-    sequence is just their shared owner and the "representative" is
-    the block itself - identical to the original simpler
-    implementation.
-
-    Does NOT attempt to handle:
-        - `finally` blocks (Hermes typically compiles `finally` as a
-          duplicated/inlined cleanup path per exit, not a single
-          block Hermes tags for us)
-        - nested try/catch with overlapping ranges
-        - a try-range whose blocks resolve to two *different*
-          representative items that themselves aren't contiguous
-          siblings at the LCA level (bails out rather than guessing)
-
-    Must run before `StatementBuilder` (needs BasicBlocks intact).
+    Handlers are processed narrowest-range-first so nested/overlapping
+    exception ranges (Hermes emits these for iterator-cleanup idioms
+    with multiple exit paths) resolve inner-to-outer: once an inner
+    handler becomes a single TryRegion, covered_blocks makes it look
+    like one atomic item to any outer handler that contains it.
     """
 
     def __init__(self, graph: RegionGraph, cfg):
         self.graph = graph
         self.cfg = cfg
-        self._paths: dict[BasicBlock, list[tuple[SequenceRegion, object]]] = {}
 
     def run(self):
-        for handler in self.cfg.exception_handlers:
-            # Rebuilt per-handler: structuring one handler mutates the
-            # tree (splices try/catch out), which would invalidate a
-            # path cache built before that mutation for any handler
-            # processed afterward.
-            self._paths = self._build_paths(self.graph.root)
+        handlers = sorted(self.cfg.exception_handlers, key=lambda h: h["end"] - h["start"])
+        for handler in handlers:
             self._structure_handler(handler)
-
-    # ------------------------------------------------------------------
-    # Path indexing / LCA
-    # ------------------------------------------------------------------
-
-    def _build_paths(self, root) -> dict:
-        paths: dict[BasicBlock, list[tuple[SequenceRegion, object]]] = {}
-
-        def walk(region, path):
-
-            if isinstance(region, SequenceRegion):
-                for item in region.children:
-                    new_path = path + [(region, item)]
-                    if isinstance(item, BasicBlock):
-                        paths[item] = new_path
-                    else:
-                        walk(item, new_path)
-                return
-
-            if isinstance(region, LoopRegion):
-                walk(region.body, path)
-                return
-
-            if isinstance(region, IfRegion):
-                walk(region.then_body, path)
-                if region.else_body:
-                    walk(region.else_body, path)
-                return
-
-            if isinstance(region, TryRegion):
-                walk(region.try_body, path)
-                if region.catch:
-                    walk(region.catch.body, path)
-                if region.finally_:
-                    walk(region.finally_.body, path)
-                return
-
-            if hasattr(region, "body"):
-                walk(region.body, path)
-
-        walk(root, [])
-        return paths
-
-    def _representative_in(self, block: BasicBlock, sequence: SequenceRegion):
-        """The ancestor-or-self item of `block` that sits directly in
-        `sequence.children`, or None if `block`'s path never passes
-        through `sequence`."""
-
-        path = self._paths.get(block)
-
-        if path is None:
-            return None
-
-        for seq, item in path:
-            if seq is sequence:
-                return item
-
-        return None
-
-    def _find_lca(self, block_a: BasicBlock, block_b: BasicBlock):
-        """Deepest SequenceRegion common to both blocks' paths, plus
-        each block's representative item at that level."""
-
-        path_a = self._paths.get(block_a)
-        path_b = self._paths.get(block_b)
-
-        if not path_a or not path_b:
-            return None
-
-        seqs_b = {seq: item for seq, item in path_b}
-
-        for seq, item in reversed(path_a):
-            if seq in seqs_b:
-                return seq, item, seqs_b[seq]
-
-        return None
-
-    # ------------------------------------------------------------------
 
     def _structure_handler(self, handler: dict):
 
@@ -159,15 +49,12 @@ class TryStructurer:
         start_block = try_blocks[0]
         end_block = try_blocks[-1]
 
-        lca = self._find_lca(start_block, handler_block)
+        lca = self.graph.lowest_common_sequence(start_block, handler_block)
 
         if lca is None:
             return
 
         lca_seq, start_repr, handler_repr = lca
-
-        if not isinstance(lca_seq, SequenceRegion):
-            return
 
         if start_repr not in lca_seq.children or handler_repr not in lca_seq.children:
             return
@@ -178,12 +65,10 @@ class TryStructurer:
         if handler_idx <= start_idx:
             return
 
-        # Sanity check: the try range's LAST block must resolve to a
-        # representative that also sits within [start_idx, handler_idx)
-        # at this same LCA level - otherwise the try range spans
-        # something more exotic than "one contiguous representative
-        # slice", and guessing would risk mis-scoping the try body.
-        end_repr = self._representative_in(end_block, lca_seq)
+        # end_block must resolve to a representative within
+        # [start_idx, handler_idx) at this same level - otherwise the
+        # try range isn't one contiguous slice here and we bail.
+        end_repr = self.graph.find_covering_item(lca_seq, end_block)
 
         if end_repr is None or end_repr not in lca_seq.children:
             return
@@ -193,19 +78,7 @@ class TryStructurer:
         if not (start_idx <= end_idx < handler_idx):
             return
 
-        # -------------------------------------------------------------
-        # try body = everything from the try-range's representative up
-        # to (not including) the handler's representative, at the LCA
-        # level.
-        # -------------------------------------------------------------
-
         try_items = lca_seq.children[start_idx:handler_idx]
-
-        # -------------------------------------------------------------
-        # catch body = handler onward, up to the merge point, or the
-        # first terminating (return/throw) block if there's no merge
-        # point (e.g. a handler that unconditionally rethrows).
-        # -------------------------------------------------------------
 
         merge_block = None
         if self.cfg.post_dominator_tree is not None:
@@ -214,13 +87,11 @@ class TryStructurer:
         stop_at = {merge_block} if merge_block is not None else set()
         catch_end = self._find_catch_boundary(lca_seq, handler_idx, stop_at)
 
-        catch_items = lca_seq.children[handler_idx:catch_end]
-
-        # -------------------------------------------------------------
-        # Splice both ranges out of the LCA sequence in one shot.
-        # -------------------------------------------------------------
-
-        del lca_seq.children[start_idx:catch_end]
+        catch_items = self.graph.splice_out(lca_seq, start_idx, catch_end)
+        # splice_out already removed [start_idx:catch_end]; slice the
+        # returned list back into try/catch halves by relative offset.
+        try_items = catch_items[: handler_idx - start_idx]
+        catch_items = catch_items[handler_idx - start_idx :]
 
         try_body = SequenceRegion()
         self.graph.transfer(try_items, try_body)
@@ -233,16 +104,15 @@ class TryStructurer:
         catch_region = CatchRegion()
         catch_region.exception = catch_param
         catch_region.body = catch_body
+        catch_body.parent = catch_region
 
         try_region = TryRegion()
         try_region.try_body = try_body
+        try_body.parent = try_region
         try_region.catch = catch_region
-
-        lca_seq.children.insert(start_idx, try_region)
-        try_region.parent = lca_seq
         catch_region.parent = try_region
 
-    # ------------------------------------------------------------------
+        self.graph.insert_at(lca_seq, start_idx, try_region)
 
     def _extract_catch_param(self, handler_block: BasicBlock) -> str:
 
@@ -250,11 +120,7 @@ class TryStructurer:
             return "e"
 
         first = handler_block.instructions[0]
-
-        if isinstance(first.value, Identifier):
-            name = first.value.name
-        else:
-            name = "e"
+        name = first.value.name if isinstance(first.value, Identifier) else "e"
 
         if first.dest_reg is not None and isinstance(first.value, Expression):
             handler_block.instructions.pop(0)
@@ -262,14 +128,6 @@ class TryStructurer:
         return name
 
     def _find_catch_boundary(self, region: SequenceRegion, start: int, stop_at: set) -> int:
-        """
-        Stops at the first item in `stop_at`, or right after a block
-        that terminates control flow (return/throw) - a rethrowing
-        handler has no legitimate "continue past me" sibling; anything
-        after it in the same sequence belongs to an unrelated path
-        (e.g. the function's normal-exit return) and must not be
-        swallowed into the catch body.
-        """
 
         index = start
 
