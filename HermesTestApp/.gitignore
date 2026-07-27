@@ -45,3 +45,5 @@ example
 .idea
 .vscode
 .claude
+
+package-lock.json
