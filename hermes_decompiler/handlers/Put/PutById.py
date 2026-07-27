@@ -48,3 +48,20 @@ class PutById(OpcodeHandler):
 
 class PutByIdLong(PutById):
     pass
+
+
+# ??
+# class PutByIdStrict(PutById):
+#     pass
+#
+#
+# class PutByIdStrictLong(PutById):
+#     pass
+#
+#
+# class PutByIdLoose(PutById):
+#     pass
+#
+#
+# class PutByIdLooseLong(PutById):
+#     pass
