@@ -50,18 +50,29 @@ class PutByIdLong(PutById):
     pass
 
 
-# ??
-# class PutByIdStrict(PutById):
-#     pass
+# PutByIdStrict / PutByIdLoose
 #
-#
-# class PutByIdStrictLong(PutById):
-#     pass
-#
-#
-# class PutByIdLoose(PutById):
-#     pass
-#
-#
-# class PutByIdLooseLong(PutById):
-#     pass
+# These are not present in the upstream facebook/hermes BytecodeList.def
+# (they are variants that appear in some newer/forked Hermes bytecode
+# versions, analogous to how DelById gained DelByIdStrict/DelByIdLoose
+# and DelByVal gained DelByValStrict/DelByValLoose). Layout is assumed
+# identical to PutById -- Reg8 obj, Reg8 value, UInt8 cache, UInt16/32
+# string_id -- with the only difference being whether the runtime throws
+# on a failed assignment (strict mode) or silently ignores it (loose
+# mode). That distinction is a runtime semantic, not something that
+# changes the decompiled JS source (`obj.foo = value;` either way), so
+# both simply reuse PutById's handling.
+class PutByIdStrict(PutById):
+    pass
+
+
+class PutByIdStrictLong(PutByIdStrict):
+    pass
+
+
+class PutByIdLoose(PutById):
+    pass
+
+
+class PutByIdLooseLong(PutByIdLoose):
+    pass
