@@ -1,0 +1,43 @@
+from hermes_decompiler.analysis.regions import GotoStatement
+from hermes_decompiler.handlers import OpcodeHandler, ADDR, sequence
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
+from hermes_decompiler.runtime import HermesAnalysis
+
+
+# Example: <SaveGenerator>: <Addr8: 4>  # Address: 00000095
+class SaveGenerator(OpcodeHandler):
+    """
+    Save generator state and yield.
+
+    CFG-wise this is an unconditional jump (like Jmp) to the resume
+    point, so it's represented the same way: `GotoStatement`. The
+    generator-specific `await yield` semantics is synthesized
+    separately by `Dispatcher._handle_generator_await`, which wraps the
+    *previous* instruction's value in an `AwaitExpression` once it sees
+    a `SaveGenerator` follows it.
+    """
+
+    _PATTERN = sequence(ADDR)
+
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(analysis, entry)
+
+        offset = int(match.group(1))
+
+        target = entry.target_address
+        if target is None:
+            target = entry.address + offset
+
+        analysis.gotoList.append(target)
+
+        statement = GotoStatement(target=target)
+        flow = ControlFlowType.UNCONDITIONAL
+
+        # pure control flow: no operand value of its own
+        result = OpcodeResult(entry, value=None, statement=statement, dest_reg=target, goto=target, control_flow=flow)
+        analysis.add_result(result)
+
+        return result

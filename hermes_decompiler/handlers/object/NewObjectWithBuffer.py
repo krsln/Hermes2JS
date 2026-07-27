@@ -4,10 +4,7 @@ import re
 from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
-    CallExpression,
     Expression,
-    Identifier,
-    MemberExpression,
     ObjectExpression,
     ObjectProperty,
     StringLiteral,
@@ -103,79 +100,3 @@ class NewObjectWithBufferLong(NewObjectWithBuffer):
     """Long variant."""
 
     pass
-
-
-class NewObject(OpcodeHandler):
-    """Create a new empty object: {}"""
-
-    _PATTERN = sequence(REG)
-
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
-
-        dest_reg = int(match.group(1))
-
-        expression = ObjectExpression(properties=())
-
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
-
-        return result
-
-
-# Example: <NewObjectWithParent>: <Reg8: 1, Reg8: 14>
-class NewObjectWithParent(OpcodeHandler):
-    """Create a new object with the specified prototype."""
-
-    _PATTERN = sequence(REG, REG)
-
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
-
-        dest_reg, parent_reg = map(int, match.groups())
-
-        parent = self.get_register_value(analysis, parent_reg)
-
-        expression = CallExpression(
-            callee=MemberExpression(
-                Identifier(name="Object"),
-                Identifier(name="create"),
-            ),
-            arguments=(parent,),
-        )
-
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
-
-        return result
-
-
-class SelectObject(OpcodeHandler):
-    """Select a property by dynamic key: obj[key]"""
-
-    _PATTERN = sequence(REG, REG, REG)
-
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
-
-        dest_reg, obj_reg, selector_reg = map(int, match.groups())
-
-        obj = self.get_register_value(analysis, obj_reg)
-        selector = self.get_register_value(analysis, selector_reg)
-
-        expression = MemberExpression(
-            receiver=obj,
-            member=selector,
-            computed=True,
-        )
-
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
-
-        return result
