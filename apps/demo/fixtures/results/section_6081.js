@@ -118,7 +118,7 @@ function processColorsInProps(param0, param1) {
         catch (caughtException) {
             // ──────────────── Block 9 ──────────────── 
             // CODE → <IteratorClose>: <Reg8: 12, UInt8: 1>
-            // Error: IteratorClose at address 153: Invalid arguments: Reg8: 12, UInt8: 1;
+            GetIterator(param1[HermesPropertyIterator(param1).next()]).return();
             // CODE → <Throw>: <Reg8: 11>
             throw caughtException;
         }

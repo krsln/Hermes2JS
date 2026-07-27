@@ -132,7 +132,7 @@ function function_21199(param0, param1) {
         catch (caughtException) {
             // ──────────────── Block 12 ──────────────── 
             // CODE → <IteratorClose>: <Reg8: 9, UInt8: 1>
-            // Error: IteratorClose at address 220: Invalid arguments: Reg8: 9, UInt8: 1;
+            GetIterator(globalThis.Object.values(GetIterator(globalThis.Object.values(param1.stats)).next())).return();
             // CODE → <Throw>: <Reg8: 8>
             throw caughtException;
         }
@@ -140,7 +140,7 @@ function function_21199(param0, param1) {
     catch (caughtException) {
         // ──────────────── Block 14 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-        // Error: IteratorClose at address 232: Invalid arguments: Reg8: 3, UInt8: 1;
+        GetIterator(globalThis.Object.values(param1.stats)).return();
         // CODE → <Throw>: <Reg8: 0>
         throw caughtException;
     }

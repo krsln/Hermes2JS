@@ -59,7 +59,7 @@ function collectExtraData(param0) {
     catch (caughtException) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 9, UInt8: 1>
-        // Error: IteratorClose at address 85: Invalid arguments: Reg8: 9, UInt8: 1;
+        GetIterator(getEnvironment(0)[0]._extraSources).return();
         // CODE → <Throw>: <Reg8: 4>
         throw caughtException;
     }
@@ -109,7 +109,7 @@ function collectExtraData(param0) {
     catch (caughtException) {
         // ──────────────── Block 7 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
-        // Error: IteratorClose at address 157: Invalid arguments: Reg8: 4, UInt8: 1;
+        GetIterator(getEnvironment(0)[0]._fileSources).return();
         // CODE → <Throw>: <Reg8: 3>
         throw caughtException;
     }
