@@ -74,6 +74,16 @@ class IfRegion(Region):
         self.else_body: SequenceRegion | None = None
 
 
+class TryRegion(Region):
+
+    def __init__(self):
+        super().__init__()
+
+        self.try_body = SequenceRegion()
+        self.catch: CatchRegion | None = None
+        self.finally_: FinallyRegion | None = None
+
+
 class CatchRegion(Region):
 
     def __init__(self):

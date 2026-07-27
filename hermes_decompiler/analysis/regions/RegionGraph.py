@@ -26,11 +26,8 @@ class RegionGraph:
             for child in region.children:
 
                 if isinstance(child, BasicBlock):
-
                     self.block_owner[child] = region
-
                 else:
-
                     self._index(child)
 
             return
@@ -43,6 +40,16 @@ class RegionGraph:
 
         if getattr(region, "else_body", None):
             self._index(region.else_body)
+
+        # TryRegion: try_body + optional catch/finally sub-regions
+        if hasattr(region, "try_body"):
+            self._index(region.try_body)
+
+        if getattr(region, "catch", None):
+            self._index(region.catch)
+
+        if getattr(region, "finally_", None):
+            self._index(region.finally_)
 
     def owner(
             self,

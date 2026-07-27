@@ -6,7 +6,7 @@ from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     LoopRegion,
-    IfRegion,
+    IfRegion, TryRegion,
 )
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
@@ -80,12 +80,9 @@ class BooleanChainFolder:
     def _visit(self, region):
 
         if isinstance(region, SequenceRegion):
-
             for child in region.children:
                 self._visit(child)
-
             self._fold_sequence(region)
-
             return
 
         if isinstance(region, LoopRegion):
@@ -93,12 +90,17 @@ class BooleanChainFolder:
             return
 
         if isinstance(region, IfRegion):
-
             self._visit(region.then_body)
-
             if region.else_body:
                 self._visit(region.else_body)
+            return
 
+        if isinstance(region, TryRegion):
+            self._visit(region.try_body)
+            if region.catch:
+                self._visit(region.catch.body)
+            if region.finally_:
+                self._visit(region.finally_.body)
             return
 
         if hasattr(region, "body"):

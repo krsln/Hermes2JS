@@ -17,11 +17,12 @@ class CFG:
         self.dominator_tree = None
         self.post_dominator_tree = None
 
-    @classmethod
-    def from_results(cls, results: List[OpcodeResult]) -> "CFG":
-        from .CFGBuilder import CFGBuilder
+        self.exception_handlers: list[dict] = []
 
-        return CFGBuilder().build(results)
+    @classmethod
+    def from_results(cls, results: List[OpcodeResult], exception_handlers: list[dict] | None = None) -> "CFG":
+        from .CFGBuilder import CFGBuilder
+        return CFGBuilder().build(results, exception_handlers or [])
 
     # ---------------------------------------------------------
 

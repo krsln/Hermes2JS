@@ -4,7 +4,7 @@ import warnings
 
 from hermes_decompiler.ir import Expression, Statement
 from hermes_decompiler.analysis.regions import (
-    SequenceRegion, LoopRegion, IfRegion, Region, LoopKind, InstructionState
+    SequenceRegion, LoopRegion, IfRegion, Region, LoopKind, InstructionState, TryRegion
 )
 from .Printer import Printer
 
@@ -35,11 +35,29 @@ class JSEmitter:
         elif isinstance(region, IfRegion):
             self._render_if(region, output, indent)
 
+        elif isinstance(region, TryRegion):
+            self._render_try(region, output, indent)
+
         else:
             print(f"Unsupported region: {type(region).__name__}")
-            # raise TypeError(
-            #     f"Unsupported region: {type(region).__name__}"
-            # )
+
+    def _render_try(self, region, output, indent):
+        prefix = "    " * indent
+
+        output.append(prefix + "try {")
+        self._render_region(region.try_body, output, indent + 1)
+        output.append(prefix + "}")
+
+        if region.catch:
+            param = region.catch.exception or "e"
+            output.append(prefix + f"catch ({param}) {{")
+            self._render_region(region.catch.body, output, indent + 1)
+            output.append(prefix + "}")
+
+        if region.finally_:
+            output.append(prefix + "finally {")
+            self._render_region(region.finally_.body, output, indent + 1)
+            output.append(prefix + "}")
 
     def _render_sequence(self, region, output, indent):
         current_block = None

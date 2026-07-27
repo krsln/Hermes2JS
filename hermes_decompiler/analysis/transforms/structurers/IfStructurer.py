@@ -5,7 +5,7 @@ from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
 from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     LoopRegion,
-    IfRegion,
+    IfRegion, TryRegion,
 )
 from hermes_decompiler.analysis.regions.Statements import IfGotoStatement
 from hermes_decompiler.analysis.transforms.structurers._negation import _negate_condition
@@ -77,15 +77,11 @@ class IfStructurer:
     # ------------------------------------------------------------------
 
     def _visit(self, region, exclude: frozenset):
-        """Recursively structure every SequenceRegion in the tree."""
 
         if isinstance(region, SequenceRegion):
-
             self._structure_sequence(region, exclude)
-
             for child in region.children:
                 self._visit(child, frozenset())
-
             return
 
         if isinstance(region, LoopRegion):
@@ -93,15 +89,19 @@ class IfStructurer:
             return
 
         if isinstance(region, IfRegion):
-
             self._visit(region.then_body, frozenset())
-
             if region.else_body:
                 self._visit(region.else_body, frozenset())
-
             return
 
-        # CatchRegion / FinallyRegion, if present.
+        if isinstance(region, TryRegion):
+            self._visit(region.try_body, frozenset())
+            if region.catch:
+                self._visit(region.catch.body, frozenset())
+            if region.finally_:
+                self._visit(region.finally_.body, frozenset())
+            return
+
         if hasattr(region, "body"):
             self._visit(region.body, frozenset())
 

@@ -58,7 +58,7 @@ class HermesAnalysis:
         from hermes_decompiler.analysis.transforms import StructuralAnalyzer
         from hermes_decompiler.emit import JSEmitter
 
-        cfg = CFG.from_results(self.results)
+        cfg = CFG.from_results(self.results, self.metadata.get("exception_handlers", []))
 
         cfg.verify()
         cfg.compute_dominators()

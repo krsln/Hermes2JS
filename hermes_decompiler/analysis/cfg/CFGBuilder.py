@@ -43,7 +43,7 @@ class CFGBuilder:
 
     # -------------------------------------------------------------
 
-    def build(self, results: List[OpcodeResult]) -> CFG:
+    def build(self, results: List[OpcodeResult], exception_handlers: list[dict] | None = None) -> CFG:
 
         self.results = results
 
@@ -58,7 +58,53 @@ class CFGBuilder:
 
         self._connect_edges()
 
+        self.cfg.exception_handlers = self._resolve_exception_handlers(exception_handlers or [])
+
         return self.cfg
+
+    # -------------------------------------------------------------
+
+    def _resolve_exception_handlers(self, raw_handlers: list[dict]) -> list[dict]:
+        """
+        Maps address-based `{start, end, target}` handler entries (already
+        parsed out of the .hbc metadata line by `FunctionMetadataParser`)
+        onto real `BasicBlock`s.
+
+        `try_blocks` is every block whose first instruction's address falls
+        in `[start, end)` - i.e. every block (at least partially) covered
+        by the try range, in the raw layout Hermes produced them in. Blocks
+        with no matching address (couldn't be resolved) mean either a
+        malformed handler entry or a range with no live code (e.g. an
+        entirely-optimized-out try body) - the handler is dropped rather
+        than guessing, matching this codebase's existing philosophy (see
+        IfStructurer's `_convert` bail-outs).
+        """
+
+        resolved = []
+
+        sorted_blocks = sorted(self.cfg.blocks, key=lambda b: b.first.opcode.address)
+
+        for handler in raw_handlers:
+
+            try_blocks = [
+                block for block in sorted_blocks
+                if handler["start"] <= block.first.opcode.address < handler["end"]
+            ]
+
+            handler_block = self.address_to_block.get(handler["target"])
+
+            if not try_blocks or handler_block is None:
+                continue
+
+            resolved.append({
+                "start": handler["start"],
+                "end": handler["end"],
+                "target": handler["target"],
+                "try_blocks": try_blocks,
+                "handler_block": handler_block,
+            })
+
+        return resolved
 
     # -------------------------------------------------------------
 

@@ -23,7 +23,23 @@ class LoopStructurer:
         ]
 
         for loop in roots:
-            self._build_loop(loop, self.graph.root)
+            # Build each top-level loop under whatever SequenceRegion
+            # currently owns its header block - NOT unconditionally
+            # graph.root. A prior pass (TryStructurer) may already have
+            # relocated the header (and its would-be members) into a
+            # try/catch body's own SequenceRegion; hardcoding root here
+            # would silently rip those blocks back out of the try body
+            # and re-home the loop at the top level, leaving an empty
+            # `try {}` behind. See RegionGraph.owner().
+            parent_sequence = self.graph.owner(loop.header)
+
+            if parent_sequence is None:
+                # Header isn't tracked anywhere yet (shouldn't normally
+                # happen post-SequenceStructurer) - fall back to root
+                # rather than crashing.
+                parent_sequence = self.graph.root
+
+            self._build_loop(loop, parent_sequence)
 
         # TODO: activate with a condition
         # print("\n===== REGION TREE =====")

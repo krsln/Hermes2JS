@@ -6,7 +6,7 @@ from hermes_decompiler.analysis.regions.Regions import (
     LoopRegion,
     IfRegion,
     CatchRegion,
-    FinallyRegion,
+    FinallyRegion, TryRegion,
 )
 from hermes_decompiler.analysis.regions.Statements import (
     InstructionState,
@@ -24,11 +24,16 @@ class StatementBuilder:
             self.build(region.body)
 
         elif isinstance(region, IfRegion):
-
             self.build(region.then_body)
-
             if region.else_body:
                 self.build(region.else_body)
+
+        elif isinstance(region, TryRegion):
+            self.build(region.try_body)
+            if region.catch:
+                self.build(region.catch.body)
+            if region.finally_:
+                self.build(region.finally_.body)
 
         elif isinstance(region, CatchRegion):
             self.build(region.body)

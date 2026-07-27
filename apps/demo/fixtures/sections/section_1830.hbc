@@ -1,0 +1,86 @@
+
+=> [Function #1830 "collectExtraData" of 297 bytes]: 1 params, frame size=22, strict=0, exc handler=1, debug info=0  @ offset 0x001a2660
+  [Exception handlers: [start=0x2f, end=0x51, target=0x53] [start=0x77, end=0x99, target=0x9b] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadConstUndefined>: <Reg8: 8>
+==> 00000002: <LoadConstUndefined>: <Reg8: 1>
+==> 00000004: <NewObject>: <Reg8: 2>
+==> 00000006: <GetEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000009: <LoadFromEnvironment>: <Reg8: 0, Reg8: 3, UInt8: 0>
+==> 0000000d: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 21795>  # String: '_extraSources' (Identifier)
+==> 00000013: <Mov>: <Reg8: 4, Reg8: 0>
+==> 00000016: <IteratorBegin>: <Reg8: 9, Reg8: 4>
+==> 00000019: <GetEnvironment>: <Reg8: 0, UInt8: 1>
+==> 0000001c: <LoadConstUInt8>: <Reg8: 7, UInt8: 2>
+==> 0000001f: <LoadConstZero>: <Reg8: 6>
+==> 00000021: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 00000024: <IteratorNext>: <Reg8: 11, Reg8: 9, Reg8: 4>
+==> 00000028: <Mov>: <Reg8: 10, Reg8: 9>
+==> 0000002b: <JStrictEqual>: <Addr8: 47, Reg8: 10, Reg8: 8>  # Address: 0000005a
+==> 0000002f: <LoadFromEnvironment>: <Reg8: 10, Reg8: 0, UInt8: 2>
+==> 00000033: <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 2, string_id: 110>  # String: 'default' (Identifier)
+==> 00000038: <Call3>: <Reg8: 10, Reg8: 10, Reg8: 8, Reg8: 11, Reg8: 7>
+==> 0000003e: <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 6>
+==> 00000042: <GetByVal>: <Reg8: 10, Reg8: 10, Reg8: 5>
+==> 00000046: <Mov>: <Reg8: 11, Reg8: 2>
+==> 00000049: <Call1>: <Reg8: 10, Reg8: 10, Reg8: 8>
+==> 0000004d: <PutByVal>: <Reg8: 11, Reg8: 12, Reg8: 10>
+==> 00000051: <Jmp>: <Addr8: -45>  # Address: 00000024
+==> 00000053: <Catch>: <Reg8: 4>
+==> 00000055: <IteratorClose>: <Reg8: 9, UInt8: 1>
+==> 00000058: <Throw>: <Reg8: 4>
+==> 0000005a: <NewObject>: <Reg8: 1>
+==> 0000005c: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 0>
+==> 00000060: <GetById>: <Reg8: 9, Reg8: 3, UInt8: 3, string_id: 21798>  # String: '_fileSources' (Identifier)
+==> 00000066: <Mov>: <Reg8: 3, Reg8: 9>
+==> 00000069: <IteratorBegin>: <Reg8: 4, Reg8: 3>
+==> 0000006c: <IteratorNext>: <Reg8: 10, Reg8: 4, Reg8: 3>
+==> 00000070: <Mov>: <Reg8: 9, Reg8: 4>
+==> 00000073: <JStrictEqual>: <Addr8: 47, Reg8: 9, Reg8: 8>  # Address: 000000a2
+==> 00000077: <LoadFromEnvironment>: <Reg8: 9, Reg8: 0, UInt8: 2>
+==> 0000007b: <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 2, string_id: 110>  # String: 'default' (Identifier)
+==> 00000080: <Call3>: <Reg8: 9, Reg8: 9, Reg8: 8, Reg8: 10, Reg8: 7>
+==> 00000086: <GetByVal>: <Reg8: 11, Reg8: 9, Reg8: 6>
+==> 0000008a: <GetByVal>: <Reg8: 9, Reg8: 9, Reg8: 5>
+==> 0000008e: <Mov>: <Reg8: 10, Reg8: 1>
+==> 00000091: <Call1>: <Reg8: 9, Reg8: 9, Reg8: 8>
+==> 00000095: <PutByVal>: <Reg8: 10, Reg8: 11, Reg8: 9>
+==> 00000099: <Jmp>: <Addr8: -45>  # Address: 0000006c
+==> 0000009b: <Catch>: <Reg8: 3>
+==> 0000009d: <IteratorClose>: <Reg8: 4, UInt8: 1>
+==> 000000a0: <Throw>: <Reg8: 3>
+==> 000000a2: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 7>
+==> 000000a6: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 110>  # String: 'default' (Identifier)
+==> 000000ab: <LoadConstNull>: <Reg8: 4>
+==> 000000ad: <JEqual>: <Addr8: 50, Reg8: 3, Reg8: 4>  # Address: 000000df
+==> 000000b1: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 7>
+==> 000000b5: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 110>  # String: 'default' (Identifier)
+==> 000000ba: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 13973>  # String: 'setExtraData' (Identifier)
+==> 000000c0: <JEqual>: <Addr8: 31, Reg8: 3, Reg8: 4>  # Address: 000000df
+==> 000000c4: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 7>
+==> 000000c8: <GetByIdShort>: <Reg8: 7, Reg8: 3, UInt8: 2, string_id: 110>  # String: 'default' (Identifier)
+==> 000000cd: <GetById>: <Reg8: 6, Reg8: 7, UInt8: 4, string_id: 13973>  # String: 'setExtraData' (Identifier)
+==> 000000d3: <Mov>: <Reg8: 5, Reg8: 2>
+==> 000000d6: <Mov>: <Reg8: 3, Reg8: 1>
+==> 000000d9: <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 5, Reg8: 3>
+==> 000000df: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 6>
+==> 000000e3: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 110>  # String: 'default' (Identifier)
+==> 000000e8: <JEqual>: <Addr8: 51, Reg8: 3, Reg8: 4>  # Address: 0000011b
+==> 000000ec: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 6>
+==> 000000f0: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 110>  # String: 'default' (Identifier)
+==> 000000f5: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 13973>  # String: 'setExtraData' (Identifier)
+==> 000000fb: <JEqual>: <Addr8: 32, Reg8: 3, Reg8: 4>  # Address: 0000011b
+==> 000000ff: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 6>
+==> 00000103: <GetByIdShort>: <Reg8: 5, Reg8: 0, UInt8: 2, string_id: 110>  # String: 'default' (Identifier)
+==> 00000108: <GetById>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 13973>  # String: 'setExtraData' (Identifier)
+==> 0000010e: <Mov>: <Reg8: 3, Reg8: 2>
+==> 00000111: <LoadConstString>: <Reg8: 0, string_id: 5208>  # String: 'From BugReporting.js' (String)
+==> 00000115: <Call3>: <Reg8: 0, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 0>
+==> 0000011b: <NewObject>: <Reg8: 0>
+==> 0000011d: <PutNewOwnById>: <Reg8: 0, Reg8: 2, string_id: 11602>  # String: 'extras' (Identifier)
+==> 00000122: <PutNewOwnById>: <Reg8: 0, Reg8: 1, string_id: 13507>  # String: 'files' (Identifier)
+==> 00000127: <Ret>: <Reg8: 0>
+
+
