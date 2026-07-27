@@ -1,4 +1,5 @@
 export function forOfTest() {
+    console.log("__BC:Iterators/IteratorTests/forOfTest/start");
 
     const arr = [1, 2, 3, 4];
 
@@ -6,9 +7,11 @@ export function forOfTest() {
         console.log(item);
     }
 
+    console.log("__BC:Iterators/IteratorTests/forOfTest/end");
 }
 
 export function forInTest() {
+    console.log("__BC:Iterators/IteratorTests/forInTest/start");
 
     const obj = {
         a: 1,
@@ -21,4 +24,5 @@ export function forInTest() {
         console.log(typedKey, obj[typedKey]);
     }
 
+    console.log("__BC:Iterators/IteratorTests/forInTest/end");
 }

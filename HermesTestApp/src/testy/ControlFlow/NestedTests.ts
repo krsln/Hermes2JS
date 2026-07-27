@@ -1,4 +1,5 @@
 export function nestedLoopTest() {
+    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/start");
 
     for (let i = 0; i < 3; i++) {
 
@@ -9,6 +10,7 @@ export function nestedLoopTest() {
             if (i === 1) {
 
                 if (j === 2) {
+                    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if");
                     console.log("nested");
                 }
 
@@ -18,4 +20,5 @@ export function nestedLoopTest() {
         }
     }
 
+    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/end");
 }
