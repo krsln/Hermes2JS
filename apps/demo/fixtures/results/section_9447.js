@@ -113,4 +113,86 @@ function ifElseChainTest(param0, param1, param2) {
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
+    if (param1) {
+        // ──────────────── Block 13 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+        // USED → r5 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+        // USED → r4 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 4724>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-either' (String)
+        // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-either";
+        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+        r3 = globalThis.console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-either");
+        // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+        // USED → r5 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+        // USED → r4 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 1893>  # String: 'either' (String)
+        // USED → r3 = "either";
+        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+        r3 = globalThis.console.log("either");
+        // CODE → <Jmp>: <Addr8: 42>  # Address: 000000a4
+        goto label_164;
+        // ──────────────── Block 14 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+        // USED → r5 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+        // USED → r4 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 4724>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-either' (String)
+        // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-either";
+        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+        r3 = globalThis.console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-either");
+        // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+        // USED → r5 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+        // USED → r4 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 1893>  # String: 'either' (String)
+        // USED → r3 = "either";
+        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+        r3 = globalThis.console.log("either");
+        // CODE → <Jmp>: <Addr8: 42>  # Address: 000000a4
+        goto label_164;
+        // ──────────────── Block 15 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+        // USED → r5 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+        // USED → r4 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 4724>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-either' (String)
+        // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-either";
+        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+        r3 = globalThis.console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-either");
+        // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+        // USED → r5 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+        // USED → r4 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 1893>  # String: 'either' (String)
+        // USED → r3 = "either";
+        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+        r3 = globalThis.console.log("either");
+        // CODE → <Jmp>: <Addr8: 42>  # Address: 000000a4
+        goto label_164;
+    } else {
+        // ──────────────── Block 11 ──────────────── 
+        // CODE → <JmpTrue>: <Addr8: 45, Reg8: 3>  # Address: 00000052
+        if (param2) goto label_82;
+        // ──────────────── Block 12 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+        // USED → r5 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+        // USED → r4 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 4725>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither' (String)
+        // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither";
+        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+        r3 = globalThis.console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither");
+        // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+        // USED → r5 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+        // USED → r4 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 1892>  # String: 'neither' (String)
+        // USED → r3 = "neither";
+        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+        r3 = globalThis.console.log("neither");
+        // CODE → <Jmp>: <Addr8: 84>  # Address: 000000a4
+        goto label_164;
+    }
 }
