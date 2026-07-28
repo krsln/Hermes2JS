@@ -12,9 +12,7 @@ class CFGVerifier:
     def verify(self):
 
         self._verify_entry()
-
         self._verify_blocks()
-
         self._verify_edges()
 
     # ---------------------------------------------------------
@@ -31,9 +29,7 @@ class CFGVerifier:
         for block in self.cfg.blocks:
 
             if not block.instructions:
-                raise ValueError(
-                    f"Empty basic block: {block.id}"
-                )
+                raise ValueError(f"Empty basic block: {block.id}")
 
     # ---------------------------------------------------------
 
@@ -41,18 +37,12 @@ class CFGVerifier:
 
         for block in self.cfg.blocks:
 
-            for succ in block.successors:
+            for successor in block.successors:
 
-                if block not in succ.predecessors:
+                if block not in successor.predecessors:
+                    raise ValueError(f"Broken edge: {block.id} -> {successor.id}")
 
-                    raise ValueError(
-                        f"Broken edge: {block.id} -> {succ.id}"
-                    )
+            for predecessor in block.predecessors:
 
-            for pred in block.predecessors:
-
-                if block not in pred.successors:
-
-                    raise ValueError(
-                        f"Broken edge: {pred.id} -> {block.id}"
-                    )
+                if block not in predecessor.successors:
+                    raise ValueError(f"Broken edge: {predecessor.id} -> {block.id}")
