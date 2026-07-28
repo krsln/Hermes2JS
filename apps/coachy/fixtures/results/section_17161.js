@@ -21,12 +21,12 @@ async function* anon_17161(param0, param1) {
         // CODE → <LoadConstUndefined>: <Reg8: 1>
         // USED → r1 = undefined;
         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 7>
-        // USED → r1 = await globalThis.fetch(undefined, param1);
+        // USED → r1 = await globalThis.fetch.call(undefined, param1);
         // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000020
         goto label_32;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
-        return await globalThis.fetch(undefined, param1);
+        return await globalThis.fetch.call(undefined, param1);
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
         // USED → r1 = await yield;
@@ -45,12 +45,12 @@ async function* anon_17161(param0, param1) {
                 // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
                 // USED → r2 = await yield.text;
                 // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
-                // USED → r2 = await await yield.text(await yield);
+                // USED → r2 = await await yield.text();
                 // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000099
                 goto label_153;
                 // ──────────────── Block 9 ──────────────── 
                 // CODE → <Ret>: <Reg8: 2>
-                return await await yield.text(await yield);
+                return await await yield.text();
                 // ──────────────── Block 10 ──────────────── 
                 // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
                 // USED → r2 = await yield;
@@ -88,7 +88,7 @@ async function* anon_17161(param0, param1) {
                     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: ' failed with status ' (String)
                     // USED → r2 = " failed with status ";
                     // CODE → <Call4>: <Reg8: 10, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 2, Reg8: 6>
-                    r10 = globalThis.HermesInternal.concat("Fetching ", param1, " failed with status ", await yield.status);
+                    r10 = globalThis.HermesInternal.concat.call("Fetching ", param1, " failed with status ", await yield.status);
                     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
                     // USED → r3 = globalThis.Error.prototype;
                     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
@@ -108,9 +108,9 @@ async function* anon_17161(param0, param1) {
                     // CODE → <LoadConstString>: <Reg8: 3, string_id: 1058>  # String: 'file://' (String)
                     // USED → r3 = "file://";
                     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
-                    // USED → r3 = param1.startsWith(param1, "file://");
+                    // USED → r3 = param1.startsWith("file://");
                     // CODE → <JmpTrue>: <Addr8: 63, Reg8: 3>  # Address: 0000008c
-                    if (param1.startsWith(param1, "file://")) goto label_140;
+                    if (param1.startsWith("file://")) goto label_140;
                 }
             }
         }
