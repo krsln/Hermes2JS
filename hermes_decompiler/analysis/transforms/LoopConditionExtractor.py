@@ -41,7 +41,7 @@ class LoopConditionExtractor:
         if header is None:
             return
 
-        last = header.last
+        last = header.last_instruction
 
         text = last.result
 

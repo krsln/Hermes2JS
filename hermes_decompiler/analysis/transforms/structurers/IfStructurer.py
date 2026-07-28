@@ -64,7 +64,7 @@ class IfStructurer:
         self.cfg = cfg
 
         self._address_to_block = {
-            block.first.opcode.address: block
+            block.first_instruction.opcode.address: block
             for block in cfg.blocks
             if block.instructions
         }

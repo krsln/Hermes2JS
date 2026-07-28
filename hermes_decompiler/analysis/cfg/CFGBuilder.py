@@ -2,17 +2,11 @@ from __future__ import annotations
 
 from typing import Dict, List, Set
 
-from hermes_decompiler.opcode import OpcodeResult, ControlFlowType
+from hermes_decompiler.opcode import OpcodeResult
 from .BasicBlock import BasicBlock
 from .CFG import CFG
-
-# Opcodes with no successor at all - the block simply exits the
-# function (via return or exception), so no fallthrough edge should be
-# added even though `goto` is None for them.
-TERMINATING_CONTROL_FLOW = {
-    ControlFlowType.RETURN,
-    ControlFlowType.THROW,
-}
+from ..terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorSwitch, TerminatorReturn, \
+    TerminatorThrow
 
 
 class CFGBuilder:
@@ -40,8 +34,6 @@ class CFGBuilder:
         self.address_to_index: Dict[int, int] = {}
 
         self.address_to_block: Dict[int, BasicBlock] = {}
-
-    # -------------------------------------------------------------
 
     def build(self, results: List[OpcodeResult], exception_handlers: list[dict] | None = None) -> CFG:
 
@@ -75,19 +67,17 @@ class CFGBuilder:
 
         return self.cfg
 
-    # -------------------------------------------------------------
-
     def _resolve_exception_handlers(self, raw_handlers: list[dict]) -> list[dict]:
 
         resolved = []
 
-        sorted_blocks = sorted(self.cfg.blocks, key=lambda b: b.first.opcode.address)
+        sorted_blocks = sorted(self.cfg.blocks, key=lambda b: b.first_instruction.opcode.address)
 
         for handler in raw_handlers:
 
             try_blocks = [
                 block for block in sorted_blocks
-                if handler["start"] <= block.first.opcode.address < handler["end"]
+                if handler["start"] <= block.first_instruction.opcode.address < handler["end"]
             ]
 
             handler_block = self.address_to_block.get(handler["target"])
@@ -105,29 +95,27 @@ class CFGBuilder:
 
         return resolved
 
-    # -------------------------------------------------------------
+    def _find_leaders(self) -> set[int]:
 
-    def _find_leaders(self) -> Set[int]:
-
-        leaders: Set[int] = set()
+        leaders: set[int] = set()
 
         if not self.results:
             return leaders
 
-        leaders.add(self.results[0].opcode.address)
+        leaders.add(self.results[0].address)
 
         for i, result in enumerate(self.results):
+            terminator = result.terminator
 
-            if result.goto is not None:
+            if terminator is None:
+                continue
 
-                leaders.add(result.goto)
+            leaders.update(terminator.targets)
 
-                if i + 1 < len(self.results):
-                    leaders.add(self.results[i + 1].opcode.address)
+            if terminator.targets and i + 1 < len(self.results):
+                leaders.add(self.results[i + 1].address)
 
         return leaders
-
-    # -------------------------------------------------------------
 
     def _create_basic_blocks(self, leaders: Set[int]) -> None:
 
@@ -140,7 +128,7 @@ class CFGBuilder:
 
             if address in leaders:
 
-                current_block = BasicBlock(block_id)
+                current_block = BasicBlock(block_id, address)
 
                 self.cfg.blocks.append(current_block)
 
@@ -151,95 +139,81 @@ class CFGBuilder:
 
                 block_id += 1
 
-            current_block.add_instruction(result)
+            if current_block:
 
-    # -------------------------------------------------------------
+                if result.terminator:
+                    # TODO: blockta irden fazla terminator varsa?
+
+                    if current_block.terminator is None:
+                        current_block.terminator = result.terminator
+                    else:
+                        print(f"Block {current_block.id} already has a terminator.", result.opcode)
+                        # raise RuntimeError(f"Block {current_block.id} already has a terminator.")
+                # else:
+                current_block.add_instruction(result)
 
     def _connect_edges(self):
 
         for index, block in enumerate(self.cfg.blocks):
 
-            last = block.instructions[-1]
+            # last = block.instructions[-1]
+            # terminator = last.terminator
+            terminator = block.terminator
 
-            # --------------------------------------------------
-            # unconditional jump
-            # --------------------------------------------------
+            match terminator:
 
-            if (
-                    last.goto is not None
-                    and self._is_unconditional_jump(last)
-            ):
+                #
+                # conditional branch
+                #
+                case TerminatorConditionalBranch(_, target):
 
-                target = self.address_to_block.get(last.goto)
+                    self._connect(block, self.address_to_block[target])
 
-                if target:
-                    self._connect(block, target)
+                    if index + 1 < len(self.cfg.blocks):
+                        self._connect(block, self.cfg.blocks[index + 1])
 
-                continue
+                #
+                # unconditional jump
+                #
+                case TerminatorJump(target):
 
-            # --------------------------------------------------
-            # conditional jump
-            # --------------------------------------------------
+                    self._connect(block, self.address_to_block[target])
 
-            if (
-                    last.goto is not None
-                    and self._is_conditional_jump(last)
-            ):
+                #
+                # switch
+                #
+                case TerminatorSwitch(_, targets):
 
-                target = self.address_to_block.get(last.goto)
+                    for target in targets:
+                        self._connect(block, self.address_to_block[target])
 
-                if target:
-                    self._connect(block, target)
+                #
+                # return
+                #
+                case TerminatorReturn():
 
-                if index + 1 < len(self.cfg.blocks):
-                    self._connect(block, self.cfg.blocks[index + 1])
+                    pass
 
-                continue
+                #
+                # throw
+                #
+                case TerminatorThrow():
 
-            # --------------------------------------------------
-            # return / throw (function exit - no successors)
-            # --------------------------------------------------
-            #
-            # NOTE (fix): previously only checked `last.handler == "Ret"`
-            # (a string), which left Throw-terminated blocks unhandled -
-            # they fell through to the "fallthrough" branch below and
-            # got an incorrect edge to whatever block happened to follow
-            # in bytecode order, corrupting dominance/post-dominance
-            # analysis for any function containing a `throw` that isn't
-            # the very last instruction. Now driven by the real
-            # `control_flow` enum every handler already sets.
-            # --------------------------------------------------
+                    pass
 
-            if last.control_flow in TERMINATING_CONTROL_FLOW:
-                continue
+                #
+                # ordinary block
+                #
+                case None:
 
-            # --------------------------------------------------
-            # fallthrough
-            # --------------------------------------------------
+                    if index + 1 < len(self.cfg.blocks):
+                        self._connect(block, self.cfg.blocks[index + 1])
 
-            if index + 1 < len(self.cfg.blocks):
-                self._connect(block, self.cfg.blocks[index + 1])
-
-    # -------------------------------------------------------------
-
-    def _connect(
-            self,
-            source: BasicBlock,
-            target: BasicBlock,
-    ) -> None:
+    @classmethod
+    def _connect(cls, source: BasicBlock, target: BasicBlock) -> None:
 
         if target not in source.successors:
             source.successors.append(target)
 
         if source not in target.predecessors:
             target.predecessors.append(source)
-
-    # -------------------------------------------------------------
-
-    @staticmethod
-    def _is_conditional_jump(result: OpcodeResult) -> bool:
-        return result.control_flow == ControlFlowType.CONDITIONAL
-
-    @staticmethod
-    def _is_unconditional_jump(result: OpcodeResult) -> bool:
-        return result.control_flow == ControlFlowType.UNCONDITIONAL
