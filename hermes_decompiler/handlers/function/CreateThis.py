@@ -70,3 +70,42 @@ class CreateThisForNew(OpcodeHandler):
         analysis.add_result(result)
 
         return result
+
+
+# DEFINE_OPCODE_4(CreateThisForSuper, Reg8, Reg8, Reg8, UInt8)   [confirmed, hermes-dec table]
+#
+#   "Allocate an empty, uninitialized object to be used as the `this`
+#    parameter for the current function when calling `super()`. Arg1 is
+#    the destination register. Arg2 is the constructor closure that
+#    will be invoked as `super()`. Arg3 is the value of new.target.
+#    Arg4 is a cache index used to speed up fetching the new target
+#    prototype property."
+#
+# Same "no JS-visible expression, opaque placeholder" treatment as
+# CreateThisForNew -- this is the derived-class-constructor sibling
+# (used right before a CallWithNewTarget that implements the actual
+# `super(...)` call), carrying an extra explicit new.target register
+# that CreateThisForNew derives implicitly instead.
+class CreateThisForSuper(OpcodeHandler):
+    """Allocate the uninitialized `this` object ahead of a `super(...)` call."""
+
+    _PATTERN = sequence(REG, REG, REG, UINT8)
+
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(
+                analysis, entry, "Expected Reg8, Reg8, Reg8, UInt8 arguments"
+            )
+
+        dest_reg, constructor_reg, new_target_reg, _cache = map(int, match.groups())
+
+        constructor = self.get_register_value(analysis, constructor_reg)
+        new_target = self.get_register_value(analysis, new_target_reg)
+
+        expression = Identifier(name="__uninitialized_this__")
+
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result

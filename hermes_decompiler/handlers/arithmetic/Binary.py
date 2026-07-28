@@ -40,7 +40,7 @@ class BaseBinaryOperator(OpcodeHandler):
 
 # @formatter:off
 class Add(BaseBinaryOperator): operator = BinaryOperator.ADD
-class AddN(Add): pass
+class AddN(Add): pass # Numeric addition, skips number check | Arg1 = Arg2 + Arg3
 class Sub(BaseBinaryOperator): operator = BinaryOperator.SUBTRACT
 class SubN(Sub): pass
 class Mul(BaseBinaryOperator): operator = BinaryOperator.MULTIPLY
@@ -82,3 +82,10 @@ class IsIn(BaseBinaryOperator):
     """`in` operator: Arg1 = (Arg2 in Arg3)."""
 
     operator = BinaryOperator.IN
+
+
+# String concat, skips string check | Arg1 = Arg2 + Arg3
+class AddS(BaseBinaryOperator):
+    """String-concatenation-proven variant of Add."""
+
+    operator = BinaryOperator.ADD
