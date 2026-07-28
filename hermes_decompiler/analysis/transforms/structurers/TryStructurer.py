@@ -25,6 +25,8 @@ class TryStructurer:
         for handler in handlers:
             self._structure_handler(handler)
 
+    # -------------------------------------------------------------
+
     def _structure_handler(self, handler: dict):
 
         try_blocks = handler["try_blocks"]
@@ -32,7 +34,10 @@ class TryStructurer:
 
         start_block = try_blocks[0]
 
-        lca = self.graph.lowest_common_sequence(start_block, handler_block)
+        lca = self.graph.lowest_common_sequence(
+            start_block,
+            handler_block,
+        )
 
         if lca is None:
             return
@@ -51,7 +56,10 @@ class TryStructurer:
         if handler_idx <= start_idx:
             return
 
-        end_repr = self.graph.find_covering_item(lca_seq, try_blocks[-1])
+        end_repr = self.graph.find_covering_item(
+            lca_seq,
+            try_blocks[-1],
+        )
 
         if end_repr is None:
             return
@@ -74,9 +82,17 @@ class TryStructurer:
 
         stop_at = {merge_block} if merge_block else set()
 
-        catch_end = self._find_catch_boundary(lca_seq, handler_idx, stop_at)
+        catch_end = self._find_catch_boundary(
+            lca_seq,
+            handler_idx,
+            stop_at,
+        )
 
-        items = self.graph.splice_out(lca_seq, start_idx, catch_end)
+        items = self.graph.splice_out(
+            lca_seq,
+            start_idx,
+            catch_end,
+        )
 
         split = handler_idx - start_idx
 
@@ -113,6 +129,8 @@ class TryStructurer:
             try_region,
         )
 
+    # -------------------------------------------------------------
+
     @classmethod
     def _extract_catch_param(cls, handler_block: BasicBlock) -> str:
 
@@ -134,6 +152,8 @@ class TryStructurer:
             handler_block.instructions.pop(0)
 
         return name
+
+    # -------------------------------------------------------------
 
     @classmethod
     def _find_catch_boundary(cls, region: SequenceRegion, start: int, stop_at: set) -> int:

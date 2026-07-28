@@ -78,6 +78,10 @@ class SequenceRegion(Region):
         return covered
 
 
+class SwitchRegion(Region):
+    pass
+
+
 class LoopRegion(Region):
     """
     NOTE: `body` is a property. Assigning `loop_region.body = x`

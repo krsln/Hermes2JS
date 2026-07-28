@@ -35,6 +35,8 @@ class CFGBuilder:
 
         self.address_to_block: Dict[int, BasicBlock] = {}
 
+    # -------------------------------------------------------------
+
     def build(self, results: List[OpcodeResult], exception_handlers: list[dict] | None = None) -> CFG:
 
         self.results = results
@@ -67,17 +69,19 @@ class CFGBuilder:
 
         return self.cfg
 
+    # -------------------------------------------------------------
+
     def _resolve_exception_handlers(self, raw_handlers: list[dict]) -> list[dict]:
 
         resolved = []
 
-        sorted_blocks = sorted(self.cfg.blocks, key=lambda b: b.first_instruction.opcode.address)
+        sorted_blocks = sorted(self.cfg.blocks, key=lambda b: b.address)
 
         for handler in raw_handlers:
 
             try_blocks = [
                 block for block in sorted_blocks
-                if handler["start"] <= block.first_instruction.opcode.address < handler["end"]
+                if handler["start"] <= block.address < handler["end"]
             ]
 
             handler_block = self.address_to_block.get(handler["target"])
@@ -94,6 +98,8 @@ class CFGBuilder:
             })
 
         return resolved
+
+    # -------------------------------------------------------------
 
     def _find_leaders(self) -> set[int]:
 
@@ -117,6 +123,8 @@ class CFGBuilder:
 
         return leaders
 
+    # -------------------------------------------------------------
+
     def _create_basic_blocks(self, leaders: Set[int]) -> None:
 
         current_block = None
@@ -124,7 +132,7 @@ class CFGBuilder:
 
         for result in self.results:
 
-            address = result.opcode.address
+            address = result.address
 
             if address in leaders:
 
@@ -139,6 +147,21 @@ class CFGBuilder:
 
                 block_id += 1
 
+            # NOTE (fix): terminator-bearing results (Ret, Throw, Jmp,
+            # JCompare, SwitchImm) used to be routed *only* into
+            # `block.terminator` and excluded from `block.instructions`,
+            # which meant Printer/StatementBuilder - which only ever
+            # walk `block.instructions` - could never render them. Any
+            # terminator the structurers didn't explicitly consume
+            # (only ConditionalBranch is folded into if/while
+            # conditions) was silently dropped: `Return`/`Throw` are
+            # *never* consumed by a structurer, so every `return`/
+            # `throw` in the program was being lost. Terminator-bearing
+            # results are now always added to `instructions` too, so
+            # they always get a chance to render (via `result.statement`
+            # - see Ret.py/Throw.py) or at minimum keep their verbose
+            # `// CODE ->` trace line; `block.terminator` below is still
+            # populated for the structurers' own CFG-level analysis.
             if current_block:
 
                 if result.terminator:
@@ -152,12 +175,12 @@ class CFGBuilder:
                 # else:
                 current_block.add_instruction(result)
 
+    # -------------------------------------------------------------
+
     def _connect_edges(self):
 
         for index, block in enumerate(self.cfg.blocks):
 
-            # last = block.instructions[-1]
-            # terminator = last.terminator
             terminator = block.terminator
 
             match terminator:
@@ -208,6 +231,8 @@ class CFGBuilder:
 
                     if index + 1 < len(self.cfg.blocks):
                         self._connect(block, self.cfg.blocks[index + 1])
+
+    # -------------------------------------------------------------
 
     @classmethod
     def _connect(cls, source: BasicBlock, target: BasicBlock) -> None:

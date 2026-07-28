@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Optional
+from typing import Any
 
 from hermes_decompiler.analysis.terminators import Terminator
 from hermes_decompiler.ir.expressions import Expression
@@ -26,10 +26,9 @@ class OpcodeResult:
             self,
             entry: OpcodeEntry,
             value: Expression | None = None,
+            statement: Statement | None = None,
             terminator: Terminator | None = None,
             dest_reg: int | None = None,
-
-            statement: Statement | None = None,
     ):
         """
         Args:
@@ -38,9 +37,6 @@ class OpcodeResult:
             value: The IR expression this opcode's destination register
                 now holds, if any (`None` for pure control flow with no
                 operand, e.g. an unconditional jump).
-            statement: The IR statement this opcode represents, if it's
-                a statement/terminator (Throw, Ret, Jmp, ...) rather
-                than a plain value computation.
             dest_reg: The destination register index, if this opcode
                 writes one. Used to derive `name` (`"r{dest_reg}"`).
         """
@@ -48,11 +44,9 @@ class OpcodeResult:
         self.opcode = entry
         self.value = value
         self.terminator = terminator
+        self.statement = statement
         self.dest_reg = dest_reg
         self.used = False
-
-        # todo: remove rest
-        self.statement = statement
 
         self.result = self._render_result()
 

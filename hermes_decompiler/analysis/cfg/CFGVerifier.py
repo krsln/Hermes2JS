@@ -12,7 +12,9 @@ class CFGVerifier:
     def verify(self):
 
         self._verify_entry()
+
         self._verify_blocks()
+
         self._verify_edges()
 
     # ---------------------------------------------------------
@@ -28,7 +30,10 @@ class CFGVerifier:
 
         for block in self.cfg.blocks:
 
-            if not block.instructions:
+            if (
+                    not block.instructions
+                    and block.terminator is None
+            ):
                 raise ValueError(f"Empty basic block: {block.id}")
 
     # ---------------------------------------------------------

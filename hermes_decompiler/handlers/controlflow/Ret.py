@@ -31,11 +31,20 @@ class Ret(OpcodeHandler):
 
         expression = self.get_register_value(analysis, value_reg)
         terminator = TerminatorReturn(value=expression)
-        # TODO: remove → statement | flow
+
+        # NOTE (fix): a `Return` terminator is never "consumed" by any
+        # structurer (only `ConditionalBranch` is, when folded into an
+        # if/while condition) - so unless this opcode also carries its
+        # own renderable `statement`, the `return` disappears from the
+        # output entirely once it reaches the printer. Building the
+        # `ReturnStatement` right here, at the source of truth for what
+        # value is being returned, is the most robust place: it can't
+        # get skipped by a structural-analysis pass forgetting about it.
         statement = ReturnStatement(argument=expression)
 
-        result = OpcodeResult(entry, value=expression, terminator=terminator, dest_reg=None,
-                              statement=statement)
+        result = OpcodeResult(
+            entry, value=expression, statement=statement, terminator=terminator, dest_reg=None
+        )
         analysis.add_result(result)
 
         return result

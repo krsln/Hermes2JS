@@ -22,11 +22,17 @@ class Throw(OpcodeHandler):
 
         expression = self.get_register_value(analysis, value_reg)
         terminator = TerminatorThrow(value=expression)
-        # TODO: remove → statement | flow
+
+        # NOTE (fix): same reasoning as Ret.py - `Throw` terminators are
+        # never consumed by a structurer, so without an explicit
+        # `statement` attached here the `throw ...;` line silently
+        # disappears from the output (this is what was happening in the
+        # generated `catch` blocks).
         statement = ThrowStatement(argument=expression)
 
-        result = OpcodeResult(entry, value=expression, terminator=terminator, dest_reg=None,
-                              statement=statement)
+        result = OpcodeResult(
+            entry, value=expression, statement=statement, terminator=terminator, dest_reg=None
+        )
         analysis.add_result(result)
 
         return result

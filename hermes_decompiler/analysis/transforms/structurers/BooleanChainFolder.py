@@ -188,7 +188,7 @@ class BooleanChainFolder:
         old_tail_expr = then_result.value
 
         last.value = BinaryExpression(left=last.value, operator=operator, right=old_tail_expr)
-        last.refresh_result()
+        # last.refresh_result()
 
         self._repoint_references(old_tail_expr, last.value, min_block_id=then_block.id, exclude={then_result, last})
 
@@ -206,23 +206,24 @@ class BooleanChainFolder:
                 if instr in exclude:
                     continue
 
-                changed = False
+                new_value, value_changed = self._repoint_node(
+                    instr.value,
+                    old_expr,
+                    new_expr,
+                )
 
-                new_value, value_changed = self._repoint_node(instr.value, old_expr, new_expr)
                 if value_changed:
                     instr.value = new_value
-                    changed = True
 
-                stmt = instr.statement
+                if instr.statement is not None:
+                    new_stmt, stmt_changed = self._repoint_node(
+                        instr.statement,
+                        old_expr,
+                        new_expr,
+                    )
 
-                if stmt is not None:
-                    new_stmt, stmt_changed = self._repoint_node(stmt, old_expr, new_expr)
                     if stmt_changed:
                         instr.statement = new_stmt
-                        changed = True
-
-                if changed:
-                    instr.refresh_result()
 
     def _repoint_node(self, node, old_expr, new_expr):
         """

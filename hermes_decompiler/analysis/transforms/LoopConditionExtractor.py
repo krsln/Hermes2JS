@@ -4,11 +4,12 @@ from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     LoopRegion, LoopKind,
 )
+from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
+
+_IF_PATTERN = re.compile(r"if\s*\((.*)\)")
 
 
 class LoopConditionExtractor:
-
-    _IF_PATTERN = re.compile(r"if\s*\((.*)\)")
 
     def __init__(self, root):
         self.root = root
@@ -19,25 +20,17 @@ class LoopConditionExtractor:
     def _visit(self, region):
 
         if isinstance(region, SequenceRegion):
-
             for child in region.children:
                 self._visit(child)
-
             return
 
         if isinstance(region, LoopRegion):
-
             self._extract(region)
-
             self._visit(region.body)
 
-    def _extract(self, loop):
-
-        if loop.header_block is None:
-            return
+    def _extract(self, loop: LoopRegion):
 
         header = loop.header_block
-
         if header is None:
             return
 
@@ -45,11 +38,18 @@ class LoopConditionExtractor:
 
         text = last.result
 
-        match = self._IF_PATTERN.search(text)
+        match = _IF_PATTERN.search(text)
 
         if not match:
             return
 
-        loop.condition = match.group(1).strip()
+        # branch = header.terminator
+        #
+        # if not isinstance(branch, TerminatorConditionalBranch):
+        #     return
 
+        # header.terminator = None
+        # loop.condition = branch.condition
+
+        loop.condition = match.group(1).strip()
         loop.loop_kind = LoopKind.WHILE

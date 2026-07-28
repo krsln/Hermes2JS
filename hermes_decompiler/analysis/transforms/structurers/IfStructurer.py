@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
 from hermes_decompiler.analysis.regions.Regions import (
-    SequenceRegion,
+    IfRegion,
     LoopRegion,
-    IfRegion, TryRegion,
+    SequenceRegion,
+    TryRegion,
 )
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.analysis.transforms.structurers._negation import _negate_condition
 
 
@@ -63,12 +64,14 @@ class IfStructurer:
             for block in cfg.blocks
         }
 
+    # -------------------------------------------------------------
+
     def run(self):
         self._visit(self.graph.root, exclude=frozenset())
 
-    # ------------------------------------------------------------------
-    # Tree walk
-    # ------------------------------------------------------------------
+    # -------------------------------------------------------------
+    # Tree traversal
+    # -------------------------------------------------------------
 
     def _visit(self, region, exclude: frozenset):
 
@@ -106,9 +109,9 @@ class IfStructurer:
         if hasattr(region, "body"):
             self._visit(region.body, frozenset())
 
-    # ------------------------------------------------------------------
-    # Finding + converting candidates
-    # ------------------------------------------------------------------
+    # -------------------------------------------------------------
+    # Sequence conversion
+    # -------------------------------------------------------------
 
     def _structure_sequence(self, region: SequenceRegion, exclude: frozenset):
         """
@@ -135,6 +138,8 @@ class IfStructurer:
             if not self._convert(region, block):
                 failed.add(block)
 
+    # -------------------------------------------------------------
+
     def _find_candidate(self, region: SequenceRegion, exclude: frozenset) -> BasicBlock | None:
 
         for item in region.children:
@@ -149,6 +154,8 @@ class IfStructurer:
                 return item
 
         return None
+
+    # -------------------------------------------------------------
 
     def _convert(self, region: SequenceRegion, block: BasicBlock) -> bool:
         """
@@ -243,7 +250,7 @@ class IfStructurer:
         #
         # The ConditionalBranch is now represented by the IfRegion.
         #
-        block.instructions.pop() # TODO: this is the way
+        block.instructions.pop()  # TODO: this is the way
         block.terminator = None
 
         insert_at = region.children.index(block) + 1
@@ -253,7 +260,10 @@ class IfStructurer:
 
         return True
 
-    def _find_boundary(self, region: SequenceRegion, start: int, stop_at: set) -> int:
+    # -------------------------------------------------------------
+
+    @classmethod
+    def _find_boundary(cls, region: SequenceRegion, start: int, stop_at: set) -> int:
         """
         Walks `region.children` from `start`, returning the index of the
         first item found in `stop_at`, or `len(region.children)` if none

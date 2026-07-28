@@ -18,13 +18,13 @@ class BasicBlock:
         self.predecessors: List["BasicBlock"] = []
         self.successors: List["BasicBlock"] = []
 
-    def add_instruction(self, result: OpcodeResult):
-        self.instructions.append(result)
-
     @property
     def first_instruction(self):
-        return self.instructions[0]
+        return self.instructions[0] if self.instructions else None
 
     @property
     def last_instruction(self):
-        return self.instructions[-1]
+        return self.instructions[-1] if self.instructions else None
+
+    def add_instruction(self, result: OpcodeResult):
+        self.instructions.append(result)

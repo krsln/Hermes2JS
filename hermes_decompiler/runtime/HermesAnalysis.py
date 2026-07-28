@@ -53,12 +53,15 @@ class HermesAnalysis:
     def generate_js(self, verbose: bool = False) -> list[str]:
         return self.generate_js_v1(verbose)
 
-    def generate_js_v1(self, verbose: bool = False) -> List[str]:
+    def generate_js_v1(self, verbose: bool = False) -> list[str]:
         from hermes_decompiler.analysis.cfg import CFG
         from hermes_decompiler.analysis.transforms import StructuralAnalyzer
         from hermes_decompiler.emit import JSEmitter
 
-        cfg = CFG.from_results(self.results, self.metadata.get("exception_handlers", []))
+        cfg = CFG.from_results(
+            self.results,
+            self.metadata.get("exception_handlers", []),
+        )
 
         cfg.verify()
         cfg.compute_dominators()
@@ -69,3 +72,7 @@ class HermesAnalysis:
         renderer = JSEmitter(verbose)
 
         return renderer.render(root)
+
+        # graph = StructuralAnalyzer(cfg).build()
+        #
+        # return JSEmitter(verbose).emit(graph)
