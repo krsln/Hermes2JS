@@ -1,7 +1,7 @@
 import re
 from typing import ClassVar
 
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence, STRING_ID
 from hermes_decompiler.ir.expressions import (
     Expression,
     UndefinedLiteral,
@@ -132,7 +132,7 @@ class LoadConstDouble(OpcodeHandler):
 # ---------------------------------------------------------------------------
 
 class LoadConstString(OpcodeHandler):
-    _PATTERN = sequence(REG, r"string_id:\s*(\d+)")
+    _PATTERN = sequence(REG, STRING_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
