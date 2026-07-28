@@ -63,17 +63,37 @@ __all__ = [
 
 class Printer(NodeVisitor):
     """
-    Renders `ir` Expression/Statement nodes into JavaScript source text.
+    Converts the structured RegionGraph into JavaScript source.
 
-    This is a plain expression/single-statement printer - it returns a
-    string for a given node and does not itself manage block indentation
-    for multi-statement bodies. `JSRenderer` owns indentation and calls
-    `print_expression`/`print_statement` per line; `BlockStatement`'s own
-    children are therefore not expanded here (see `visit_BlockStatement`),
-    that's `JSRenderer`'s job via the region tree.
+    Assumptions
+    -----------
 
-    Only a single instance is needed; the class holds no mutable state.
+    * CFG construction is complete.
+    * Structural analysis is complete.
+    * Every control-flow construct is represented by a Region.
+    * BasicBlocks contain only ordinary IR statements.
+    * Block terminators have already been consumed by the structurers.
     """
+
+    INDENT = "    "
+
+    def __init__(self, *, verbose: bool = False):
+        self.verbose = verbose
+        self._indent = 0
+
+    # ---------------------------------------------------------
+    # public
+    # ---------------------------------------------------------
+
+    def print_region(self, region) -> list[str]:
+
+        self._indent = 1
+
+        lines: list[str] = []
+
+        self._emit_region(region, lines)
+
+        return lines
 
     # ------------------------------------------------------------------
     # Public entry points

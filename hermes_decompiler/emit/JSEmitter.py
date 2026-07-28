@@ -11,14 +11,27 @@ from ..analysis.terminators import Terminator
 
 
 class JSEmitter:
+    """
+    Emits JavaScript from a structured SequenceRegion.
+
+    The graph is assumed to be fully structured
+    (loops, ifs, try/catch, switch, ...).
+
+    No control-flow analysis is performed here.
+    """
 
     def __init__(self, verbose: bool = False):
         self.verbose = verbose
-        self.printer = Printer()
+        self.printer = Printer(verbose=verbose)
+
+    def emit(self, root: SequenceRegion) -> list[str]:
+        return self.print_region(root)
+        # return self.printer.print_region(root)
+
 
     # ---------------------------------------------------------
 
-    def render(self, root):
+    def print_region(self, root):
         # self.dump(root)
 
         output = []

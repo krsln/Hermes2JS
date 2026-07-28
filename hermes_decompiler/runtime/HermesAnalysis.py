@@ -69,10 +69,5 @@ class HermesAnalysis:
         cfg.compute_loops()
 
         root = StructuralAnalyzer(cfg).build()
-        renderer = JSEmitter(verbose)
 
-        return renderer.render(root)
-
-        # graph = StructuralAnalyzer(cfg).build()
-        #
-        # return JSEmitter(verbose).emit(graph)
+        return JSEmitter(verbose).emit(root)
