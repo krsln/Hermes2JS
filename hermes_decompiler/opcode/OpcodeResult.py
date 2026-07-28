@@ -48,8 +48,6 @@ class OpcodeResult:
         self.dest_reg = dest_reg
         self.used = False
 
-        self.result = self._render_result()
-
     # ------------------------------------------------------------------
     # Derived from `entry` - no longer separately stored/duplicated.
     # ------------------------------------------------------------------
@@ -67,57 +65,6 @@ class OpcodeResult:
         if self.dest_reg is None:
             return ""
         return f"r{self.dest_reg}"
-
-    # ------------------------------------------------------------------
-    # Rendering
-    # ------------------------------------------------------------------
-
-    def _render_result(self) -> str:
-        """
-        Human-readable one-line summary of this instruction's effect,
-        used by verbose logging/dumps and any legacy code path that
-        hasn't moved to `JSRenderer`/`Printer` yet.
-
-        Callable again after mutating `value`/`statement` (e.g.
-        `Dispatcher._handle_generator_await` wraps a previous result's
-        `value` in an `AwaitExpression` and recomputes `.result`).
-        """
-
-        # Imported lazily to avoid a hard dependency from `models` on
-        # `regions` at module load time; `models` is the lower layer.
-        from hermes_decompiler.emit import Printer
-
-        printer = Printer()
-
-        if isinstance(self.statement, Statement):
-            return printer.print_statement(self.statement)
-
-        if isinstance(self.value, Expression):
-            rendered = printer.print_expression(self.value)
-
-            if self.name:
-                return f"{self.name} = {rendered}"
-
-            return rendered
-
-        if self.value is None:
-            # No statement and no value: nothing meaningful to show.
-            # Shouldn't normally happen for a well-formed handler.
-            return ""
-
-        # Legacy fallback: value is still a plain string (handler not
-        # yet migrated to the `ir` package).
-        if self.name:
-            return f"{self.name} = {self.value}"
-
-        return f"{self.value}"
-
-    def refresh_result(self) -> None:
-        """Recompute `.result` after mutating `value`/`statement` in place."""
-
-        self.result = self._render_result()
-
-    # ------------------------------------------------------------------
 
     def __str__(self) -> str:
         return (
