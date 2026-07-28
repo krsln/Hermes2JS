@@ -8,55 +8,51 @@ from hermes_decompiler.analysis.regions.Regions import (
     IfRegion, TryRegion,
 )
 from hermes_decompiler.analysis.regions.Statements import IfGotoStatement
+from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.analysis.transforms.structurers._negation import _negate_condition
 
 
 class IfStructurer:
     """
-    Converts conditional-jump-terminated basic blocks (whose last
-    instruction carries an `IfGotoStatement`) into real `IfRegion`s with
-    `then_body`/`else_body`.
+    Converts BasicBlocks terminated by a ConditionalBranch into
+    structured IfRegions.
 
-    Two bytecode shapes are recognized, both driven by
-    `cfg.post_dominator_tree.immediate_post_dominator(block)` (the
-    merge point where control reconverges after the branch):
+    Two CFG patterns are recognized:
 
-        1. No else - the jump target IS the merge point:
+        1. No else
 
                if (C) goto MERGE;
-               <fallthrough-body>
+               THEN
                MERGE:
 
-           `C` true means "skip fallthrough-body entirely". The natural
-           JS "then" is therefore the fallthrough-body, taken when `C`
-           is false - shown as `if (!C) { <fallthrough-body> }`
-           (negated; see `_negate_condition`).
+           becomes
 
-        2. If/else - the jump target is a distinct block that itself
-           reconverges at MERGE:
+               if (!C) {
+                   THEN
+               }
+
+        2. If / Else
 
                if (C) goto ELSE;
-               <fallthrough-body>
-               [goto MERGE]
+               THEN
+               goto MERGE;
+
                ELSE:
-               <else-body>
+               ELSE_BODY
+
                MERGE:
 
-           `C` true genuinely leads into the jump target's code, so no
-           negation is needed: `if (C) { <jump-target body> } else {
-           <fallthrough-body> }`.
+           becomes
 
-    Loop header blocks are passed in via `exclude` and left untouched:
-    their terminal `IfGotoStatement` is consumed later by
-    `LoopConditionExtractor` to build the loop's `while (...)` header,
-    and `StructuralAnalyzer` runs this class before that extraction -
-    converting the header here would remove the instruction
-    `LoopConditionExtractor` expects to find.
+               if (C) {
+                   ELSE_BODY
+               } else {
+                   THEN
+               }
 
-    Where the algorithm can't confidently determine a branch boundary
-    (e.g. an unexpected block ordering), it leaves the block untouched
-    rather than guessing - the raw `if (...) goto label_N;` line still
-    renders correctly on its own, just unstructured.
+    Loop header blocks are excluded because their ConditionalBranch is
+    consumed later by LoopConditionExtractor when building while/do-while
+    regions.
     """
 
     def __init__(self, graph: RegionGraph, cfg):
@@ -64,9 +60,8 @@ class IfStructurer:
         self.cfg = cfg
 
         self._address_to_block = {
-            block.first_instruction.opcode.address: block
+            block.address: block
             for block in cfg.blocks
-            if block.instructions
         }
 
     def run(self):
@@ -80,8 +75,10 @@ class IfStructurer:
 
         if isinstance(region, SequenceRegion):
             self._structure_sequence(region, exclude)
+
             for child in region.children:
                 self._visit(child, frozenset())
+
             return
 
         if isinstance(region, LoopRegion):
@@ -90,16 +87,21 @@ class IfStructurer:
 
         if isinstance(region, IfRegion):
             self._visit(region.then_body, frozenset())
+
             if region.else_body:
                 self._visit(region.else_body, frozenset())
+
             return
 
         if isinstance(region, TryRegion):
             self._visit(region.try_body, frozenset())
+
             if region.catch:
                 self._visit(region.catch.body, frozenset())
+
             if region.finally_:
                 self._visit(region.finally_.body, frozenset())
+
             return
 
         if hasattr(region, "body"):
@@ -126,13 +128,13 @@ class IfStructurer:
 
         while True:
 
-            target = self._find_candidate(region, exclude | failed)
+            block = self._find_candidate(region, exclude | failed)
 
-            if target is None:
+            if block is None:
                 return
 
-            if not self._convert(region, target):
-                failed.add(target)
+            if not self._convert(region, block):
+                failed.add(block)
 
     def _find_candidate(self, region: SequenceRegion, exclude: frozenset) -> BasicBlock | None:
 
@@ -144,15 +146,118 @@ class IfStructurer:
             if item in exclude:
                 continue
 
+            # if isinstance(item.terminator, TerminatorConditionalBranch):
+            #     return item
+
             if not item.instructions:
                 continue
 
-            last = item.instructions[-1]
-
-            if isinstance(last.statement, IfGotoStatement):
+            if isinstance(item.instructions[-1].statement, IfGotoStatement):
                 return item
 
         return None
+
+    def _convert_(self, region: SequenceRegion, block: BasicBlock) -> bool:
+        """
+        Returns True if `block` was converted into an IfRegion, False
+        if it was left untouched (see `_structure_sequence` for why the
+        return value matters).
+        """
+
+        branch = block.terminator
+        assert isinstance(branch, TerminatorConditionalBranch)
+
+        block_index = region.children.index(block)
+        then_start = block_index + 1
+
+        if then_start >= len(region.children):
+            # No fallthrough successor at all - can't structure safely.
+            return False
+
+        merge_block = None
+
+        if self.cfg.post_dominator_tree is not None:
+            merge_block = self.cfg.post_dominator_tree.immediate_post_dominator(block)
+
+        goto_block = self._address_to_block.get(branch.target)
+
+        has_else = (
+                goto_block is not None
+                and goto_block is not merge_block
+        )
+
+        # -------------------------------------------------------------
+        # Find the boundary between "then" and (optional) "else"/merge.
+        # -------------------------------------------------------------
+
+        stop = {
+            b
+            for b in (
+                merge_block,
+                goto_block if has_else else None,
+            )
+            if b is not None
+        }
+
+        then_end = self._find_boundary(region, then_start, stop)
+
+        if has_else:
+
+            else_start = then_end
+
+            if (
+                    else_start >= len(region.children)
+                    or region.children[else_start] is not goto_block
+            ):
+                # goto target isn't where expected right after "then" -
+                # bail out rather than guess incorrectly.
+                return False
+
+            stop_at_second = {merge_block} if merge_block is not None else set()
+            else_end = self._find_boundary(region, else_start, stop_at_second)
+
+        else:
+
+            else_start = then_end
+            else_end = then_end
+
+        then_items = region.children[then_start:then_end]
+        else_items = region.children[else_start:else_end]
+
+        del region.children[then_start:else_end]
+
+        then_body = SequenceRegion()
+        else_body = SequenceRegion() if has_else else None
+
+        if has_else:
+
+            self.graph.transfer(then_items, else_body)
+            self.graph.transfer(else_items, then_body)
+
+            condition = branch.condition
+
+        else:
+
+            self.graph.transfer(then_items, then_body)
+
+            condition = _negate_condition(branch.condition)
+
+        if_region = IfRegion()
+        if_region.condition = condition
+        if_region.then_body = then_body
+        if_region.else_body = else_body
+
+        #
+        # The ConditionalBranch is now represented by the IfRegion.
+        #
+        block.terminator = None
+
+        insert_at = region.children.index(block) + 1
+
+        region.children.insert(insert_at, if_region)
+        if_region.parent = region
+
+        return True
 
     def _convert(self, region: SequenceRegion, block: BasicBlock) -> bool:
         """

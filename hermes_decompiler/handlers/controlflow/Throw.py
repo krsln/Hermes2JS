@@ -2,7 +2,7 @@ from hermes_decompiler.analysis.terminators import TerminatorThrow
 from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 from hermes_decompiler.ir.statements import ThrowStatement
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
@@ -24,10 +24,9 @@ class Throw(OpcodeHandler):
         terminator = TerminatorThrow(value=expression)
         # TODO: remove → statement | flow
         statement = ThrowStatement(argument=expression)
-        flow = ControlFlowType.THROW
 
         result = OpcodeResult(entry, value=expression, terminator=terminator, dest_reg=None,
-                              statement=statement, control_flow=flow)
+                              statement=statement)
         analysis.add_result(result)
 
         return result

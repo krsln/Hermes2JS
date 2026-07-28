@@ -1,21 +1,11 @@
 from __future__ import annotations
 
-from enum import Enum, auto
 from typing import Any, Optional
 
 from hermes_decompiler.analysis.terminators import Terminator
 from hermes_decompiler.ir.expressions import Expression
 from hermes_decompiler.ir.statements import Statement
 from hermes_decompiler.opcode import OpcodeEntry
-
-
-class ControlFlowType(Enum):
-    NORMAL = auto()
-    CONDITIONAL = auto()
-    UNCONDITIONAL = auto()
-    RETURN = auto()
-    THROW = auto()
-    TERMINATOR = auto()  # optional
 
 
 class OpcodeResult:
@@ -40,8 +30,6 @@ class OpcodeResult:
             dest_reg: int | None = None,
 
             statement: Statement | None = None,
-            goto: Optional[int] = None,
-            control_flow: ControlFlowType = ControlFlowType.NORMAL,
     ):
         """
         Args:
@@ -55,9 +43,6 @@ class OpcodeResult:
                 than a plain value computation.
             dest_reg: The destination register index, if this opcode
                 writes one. Used to derive `name` (`"r{dest_reg}"`).
-            goto: Single jump target, used by unconditional/conditional
-                jumps (Jmp*, SaveGenerator's resume address, ...).
-            control_flow: How this opcode affects control flow.
         """
 
         self.opcode = entry
@@ -68,8 +53,6 @@ class OpcodeResult:
 
         # todo: remove rest
         self.statement = statement
-        self.goto = goto
-        self.control_flow = control_flow
 
         self.result = self._render_result()
 
@@ -149,7 +132,6 @@ class OpcodeResult:
             f"handler={self.handler}, "
             f"name={self.name}, "
             f"value={self.value!r}, "
-            f"statement={self.statement!r}, "
             f"used={self.used})"
         )
 
@@ -159,7 +141,5 @@ class OpcodeResult:
             "address": self.address,
             "name": self.name,
             "value": self.value,
-            "statement": self.statement,
             "used": self.used,
-            "goto": self.goto,
         }
