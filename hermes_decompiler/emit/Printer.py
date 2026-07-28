@@ -327,6 +327,7 @@ class Printer(NodeVisitor):
     # Pre-structural control flow (see regions/models/Statements.py)
     # ------------------------------------------------------------------
 
+    # TODO: Remove these
     def visit_GotoStatement(self, node) -> str:
         return f"goto label_{node.target};"
 

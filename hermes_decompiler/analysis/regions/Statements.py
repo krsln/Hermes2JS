@@ -61,18 +61,18 @@ class IfGotoStatement(Statement):
         return (self.condition,)
 
 
-@dataclass(frozen=True, slots=True, eq=False)
-class SwitchGotoStatement(Statement):
-    """
-    Pre-structural multi-way jump: the direct output of Hermes'
-    `SwitchImm` opcode, before `SwitchStructurer` turns it into a real
-    `switch`/`case`. `targets` is one jump address per case index -
-    there is no case/default distinction yet at this stage.
-    """
-
-    selector: Expression
-    targets: tuple[int, ...]
-
-    @property
-    def children(self) -> tuple[Node, ...]:
-        return (self.selector,)
+# @dataclass(frozen=True, slots=True, eq=False)
+# class SwitchGotoStatement(Statement):
+#     """
+#     Pre-structural multi-way jump: the direct output of Hermes'
+#     `SwitchImm` opcode, before `SwitchStructurer` turns it into a real
+#     `switch`/`case`. `targets` is one jump address per case index -
+#     there is no case/default distinction yet at this stage.
+#     """
+#
+#     selector: Expression
+#     targets: tuple[int, ...]
+#
+#     @property
+#     def children(self) -> tuple[Node, ...]:
+#         return (self.selector,)
