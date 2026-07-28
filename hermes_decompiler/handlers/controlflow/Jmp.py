@@ -3,6 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Any, Tuple
 
+from hermes_decompiler.analysis.terminators import TerminatorJump, TerminatorConditionalBranch
 from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, UINT8, UINT16, sequence
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (
@@ -83,10 +84,13 @@ class Jump(OpcodeHandler):
         target = entry.target_address or (entry.address + offset)
         analysis.gotoList.append(target)
 
+        terminator = TerminatorJump(target=target)
+        # TODO: remove → statement | flow
         statement = GotoStatement(target=target)
         flow = ControlFlowType.UNCONDITIONAL
 
-        result = OpcodeResult(entry, value=None, statement=statement, dest_reg=None, goto=target, control_flow=flow)
+        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None,
+                              statement=statement, goto=target, control_flow=flow)
         analysis.add_result(result)
 
         return result
@@ -125,11 +129,14 @@ class ConditionalJumpBase(OpcodeHandler, ABC):
         value = self.get_register_value(analysis, reg)
         condition = self.build_condition(value, *extra)
 
+        terminator = TerminatorConditionalBranch(condition=condition, target=target)
+        # TODO: remove → statement | flow
         statement = IfGotoStatement(condition=condition, target=target)
         flow = ControlFlowType.CONDITIONAL
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(entry, value=None, statement=statement, dest_reg=None, goto=target, control_flow=flow)
+        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None,
+                              statement=statement, goto=target, control_flow=flow)
         analysis.add_result(result)
 
         return result

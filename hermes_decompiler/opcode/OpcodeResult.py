@@ -3,6 +3,7 @@ from __future__ import annotations
 from enum import Enum, auto
 from typing import Any, Optional
 
+from hermes_decompiler.analysis.terminators import Terminator
 from hermes_decompiler.ir.expressions import Expression
 from hermes_decompiler.ir.statements import Statement
 from hermes_decompiler.opcode import OpcodeEntry
@@ -35,10 +36,11 @@ class OpcodeResult:
             self,
             entry: OpcodeEntry,
             value: Expression | None = None,
-            statement: Statement | None = None,
+            terminator: Terminator | None = None,
             dest_reg: int | None = None,
+
+            statement: Statement | None = None,
             goto: Optional[int] = None,
-            extra_gotos: Optional[list[int]] = None,
             control_flow: ControlFlowType = ControlFlowType.NORMAL,
     ):
         """
@@ -55,25 +57,17 @@ class OpcodeResult:
                 writes one. Used to derive `name` (`"r{dest_reg}"`).
             goto: Single jump target, used by unconditional/conditional
                 jumps (Jmp*, SaveGenerator's resume address, ...).
-            extra_gotos: ADDITIONAL jump targets beyond `goto`, for
-                instructions with more than one possible successor that
-                isn't expressible as a single fallthrough - currently
-                only SwitchImm (one target per case label). Kept
-                separate from `goto` rather than making `goto` a list,
-                so every existing single-target call site keeps working
-                unchanged; only the few call sites that actually need
-                multiple targets opt in.
             control_flow: How this opcode affects control flow.
         """
 
         self.opcode = entry
         self.value = value
-        self.statement = statement
         self.dest_reg = dest_reg
         self.used = False
 
+        # todo: remove rest
+        self.statement = statement
         self.goto = goto
-        self.extra_gotos = extra_gotos or []
         self.control_flow = control_flow
 
         self.result = self._render_result()
@@ -83,16 +77,18 @@ class OpcodeResult:
     # ------------------------------------------------------------------
 
     @property
-    def handler(self) -> str:
-        return self.opcode.opcode
-
-    @property
-    def address(self) -> int:
+    def address(self):
         return self.opcode.address
 
     @property
-    def name(self) -> str:
-        return f"r{self.dest_reg}" if self.dest_reg is not None else ""
+    def handler(self):
+        return self.opcode.opcode
+
+    @property
+    def name(self):
+        if self.dest_reg is None:
+            return ""
+        return f"r{self.dest_reg}"
 
     # ------------------------------------------------------------------
     # Rendering
@@ -165,5 +161,4 @@ class OpcodeResult:
             "statement": self.statement,
             "used": self.used,
             "goto": self.goto,
-            "extra_gotos": self.extra_gotos,
         }

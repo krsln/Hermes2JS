@@ -1,4 +1,5 @@
 from hermes_decompiler.analysis.regions import GotoStatement
+from hermes_decompiler.analysis.terminators import TerminatorJump
 from hermes_decompiler.handlers import OpcodeHandler, ADDR, sequence
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
 from hermes_decompiler.runtime import HermesAnalysis
@@ -33,11 +34,14 @@ class SaveGenerator(OpcodeHandler):
 
         analysis.gotoList.append(target)
 
+        terminator = TerminatorJump(target=target)
+        # TODO: remove → statement | flow
         statement = GotoStatement(target=target)
         flow = ControlFlowType.UNCONDITIONAL
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(entry, value=None, statement=statement, dest_reg=target, goto=target, control_flow=flow)
+        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=target,
+                              statement=statement, goto=target, control_flow=flow)
         analysis.add_result(result)
 
         return result

@@ -1,5 +1,6 @@
 import re
 
+from hermes_decompiler.analysis.terminators import TerminatorSwitch
 from hermes_decompiler.handlers import OpcodeHandler
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult, ControlFlowType
 from hermes_decompiler.analysis.regions import SwitchGotoStatement
@@ -29,6 +30,8 @@ class SwitchImm(OpcodeHandler):
             analysis.gotoList.append(target)
             targets.append(target)
 
+        terminator = TerminatorSwitch(selector=selector, targets=tuple(targets))
+        # TODO: remove → statement | flow
         statement = SwitchGotoStatement(selector=selector, targets=tuple(targets))
         flow = ControlFlowType.TERMINATOR
 
@@ -36,9 +39,8 @@ class SwitchImm(OpcodeHandler):
         # to NORMAL despite having multiple successors and no
         # fallthrough - same class of bug already fixed for JCompareX.
         # pure control flow: no operand value of its own
-        result = OpcodeResult(
-            entry, value=None, statement=statement, dest_reg=None, extra_gotos=targets, control_flow=flow
-        )
+        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None,
+                              statement=statement, control_flow=flow)
         analysis.add_result(result)
 
         return result
@@ -127,11 +129,14 @@ class StringSwitchImm(OpcodeHandler):
             analysis.gotoList.append(target)
             targets.append(target)
 
+        terminator = TerminatorSwitch(selector=selector, targets=tuple(targets))
+        # TODO: remove → statement | flow
         statement = SwitchGotoStatement(selector=selector, targets=tuple(targets))
         flow = ControlFlowType.TERMINATOR
 
         result = OpcodeResult(
-            entry, value=None, statement=statement, dest_reg=None, extra_gotos=targets, control_flow=flow
+            entry, value=None, terminator=terminator, dest_reg=None,
+            statement=statement, control_flow=flow
         )
         analysis.add_result(result)
 
