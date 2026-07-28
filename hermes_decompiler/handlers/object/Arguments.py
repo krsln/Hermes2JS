@@ -24,6 +24,29 @@ class ReifyArguments(OpcodeHandler):
         return result
 
 
+# DEFINE_OPCODE_1(ReifyArgumentsStrict, Reg8)
+# DEFINE_OPCODE_1(ReifyArgumentsLoose, Reg8)
+#
+# NOT independently confirmed for this specific pair, but following the
+# exact same pattern already established elsewhere in this codebase for
+# every other strict/loose opcode split (PutById -> PutByIdStrict/
+# PutByIdLoose, PutByVal -> PutByValStrict/PutByValLoose, DelByVal ->
+# DelByValStrict/DelByValLoose): same Reg8 operand as the unsuffixed
+# opcode, with the mode baked into the name rather than an operand.
+# The strict/loose distinction affects how the reified `arguments`
+# object interacts with mapped parameters at runtime (strict-mode
+# `arguments` never maps to named parameters; loose/sloppy-mode
+# `arguments` does) -- an ES-spec-level behavioral difference with no
+# separate JS *syntax* of its own, so both render identically to
+# ReifyArguments: `arguments`.
+class ReifyArgumentsStrict(ReifyArguments):
+    pass
+
+
+class ReifyArgumentsLoose(ReifyArguments):
+    pass
+
+
 # DEFINE_OPCODE_2(GetArgumentsLength, Reg8, Reg8)
 # Example: <GetArgumentsLength>: <Reg8: 1, Reg8: 0>
 class GetArgumentsLength(OpcodeHandler):

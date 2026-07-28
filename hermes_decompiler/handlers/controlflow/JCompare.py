@@ -94,6 +94,7 @@ class JLessNLong(JLess): pass
 class JLessEqual(JCompareX): operator = BinaryOperator.LESS_EQUAL
 class JLessEqualLong(JLessEqual): pass
 class JLessEqualN(JLessEqual): pass
+class JLessEqualNLong(JLessEqualN): pass
 
 class JNotLess(JCompareX): operator = BinaryOperator.GREATER_EQUAL
 class JNotLessLong(JNotLess): pass

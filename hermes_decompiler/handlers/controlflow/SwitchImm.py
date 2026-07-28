@@ -42,3 +42,17 @@ class SwitchImm(OpcodeHandler):
         analysis.add_result(result)
 
         return result
+
+
+# UIntSwitchImm
+#
+# Same instruction family as SwitchImm (a jump table keyed by an
+# integer selector register, `Addr` targets parsed the same way) --
+# the "UInt" distinction is about how Hermes encodes/bounds-checks the
+# selector *inside the VM* (unsigned vs. signed immediate comparisons
+# against the jump table's min/max), not about the disassembled text
+# shape this handler parses. `entry.args` for both opcodes follows the
+# same `Reg<N>: <selector>  Addr<N>: <offset> ...` textual layout, so
+# the existing regex-based parsing in SwitchImm applies unchanged.
+class UIntSwitchImm(SwitchImm):
+    pass
