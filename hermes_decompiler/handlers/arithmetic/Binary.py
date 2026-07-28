@@ -40,7 +40,7 @@ class BaseBinaryOperator(OpcodeHandler):
 
 # @formatter:off
 class Add(BaseBinaryOperator): operator = BinaryOperator.ADD
-class AddN(Add): pass # Numeric addition, skips number check | Arg1 = Arg2 + Arg3
+class AddN(Add): pass
 class Sub(BaseBinaryOperator): operator = BinaryOperator.SUBTRACT
 class SubN(Sub): pass
 class Mul(BaseBinaryOperator): operator = BinaryOperator.MULTIPLY
@@ -84,7 +84,65 @@ class IsIn(BaseBinaryOperator):
     operator = BinaryOperator.IN
 
 
-# String concat, skips string check | Arg1 = Arg2 + Arg3
+# DEFINE_OPCODE_4(PrivateIsIn, Reg8, Reg8, Reg8, Reg8)
+#   [confirmed, facebook/hermes BytecodeList.def, tag hermes-v260318099.0.1]
+#
+#   "Arg1 = Arg2 in Arg3 (JS relational 'in' for private names.)
+#    Arg2 must be a symbol.
+#    Arg4 is a private name cache index used to speed up the above
+#    operation.
+#    Note that this performs different logic than a normal `in` check.
+#    This instruction does not consult the prototype chain or trigger
+#    any proxy traps. It is a direct check on the own properties of
+#    the input object."
+#
+# Backs the ergonomic private-field brand check `#x in obj` (used to
+# test class membership without triggering getters/Proxy traps).
+# Rendered as the same `in` BinaryExpression as plain IsIn -- the
+# distinction (own-property-only, no prototype/proxy involvement) is a
+# semantic guarantee `#x in obj` already has in real JS syntax by
+# virtue of `#x` being a private name, so no separate rendering is
+# needed. Arg2 (the private-name symbol register) takes the LHS slot
+# exactly like a regular IsIn's property-key operand.
+class PrivateIsIn(OpcodeHandler):
+    """`#x in obj` brand-check operator: Arg1 = (Arg2 in Arg3), own-properties only, symbol-keyed."""
+
+    _PATTERN = sequence(REG, REG, REG, REG)
+
+    operator = BinaryOperator.IN
+
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(
+                analysis, entry, "Expected Reg8, Reg8, Reg8, Reg8 arguments"
+            )
+
+        dest_reg, private_name_reg, obj_reg, _cache = map(int, match.groups())
+
+        private_name = self.get_register_value(analysis, private_name_reg)
+        obj = self.get_register_value(analysis, obj_reg)
+
+        expression = BinaryExpression(left=private_name, operator=self.operator, right=obj)
+
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
+
+
+# DEFINE_OPCODE_3(AddS, Reg8, Reg8, Reg8)   [confirmed, hermes-dec table]
+#
+#   "This is a variant of Add which is used when the compiler can prove
+#    that at least one of the operands is a string, so the result must
+#    be a string concatenation (as opposed to Add's more general
+#    numeric-or-string behavior). Arg1 = Arg2 + Arg3, guaranteed
+#    string-concat semantics."
+#
+# Rendered identically to Add (`+`) -- the distinction is a compiler-
+# side proof/optimization about *which* runtime path Add would take,
+# not a different JS operator; `"a" + "b"` and the proven-string fast
+# path both surface as the same `+` in source.
 class AddS(BaseBinaryOperator):
     """String-concatenation-proven variant of Add."""
 
