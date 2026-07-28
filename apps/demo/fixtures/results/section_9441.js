@@ -23,7 +23,7 @@ function forTest(param0) {
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // LOOP → START (while)
-    while (true) {
+    while (0 === 3) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
         // USED → r1 = 0;

@@ -23,7 +23,7 @@ function whileTest(param0) {
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     // LOOP → START (while)
-    while (true) {
+    while (0 === 2) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
         // USED → r11 = globalThis.console;

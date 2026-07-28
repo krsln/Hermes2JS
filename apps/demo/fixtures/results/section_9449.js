@@ -17,7 +17,7 @@ function forOfTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    while (true) {
+    while (GetIterator([1, 2, 3, 4]) === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 4, Reg8: 2>
         r4 = [1, 2, 3, 4]

@@ -41,7 +41,7 @@ function closureLoopTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    while (true) {
+    while (GetIterator([]) === undefined) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <Mov>: <Reg8: 4, Reg8: 2>
         r4 = []

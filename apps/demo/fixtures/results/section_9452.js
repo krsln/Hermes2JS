@@ -53,7 +53,7 @@ function propertyAccessTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    while (true) {
+    while (GetIterator(globalThis.Object.keys(r4)) === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 2>
         r5 = globalThis.Object.keys(r4)
