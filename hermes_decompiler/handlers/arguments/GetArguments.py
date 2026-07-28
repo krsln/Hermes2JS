@@ -46,3 +46,11 @@ class GetArgumentsPropByVal(OpcodeHandler):
         analysis.add_result(result)
 
         return result
+
+
+class GetArgumentsPropByValLoose(GetArgumentsPropByVal):
+    pass
+
+
+class GetArgumentsPropByValStrict(GetArgumentsPropByVal):
+    pass
