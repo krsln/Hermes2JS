@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import ClassVar, Tuple
 
-from hermes_decompiler.analysis.regions import IfGotoStatement
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, sequence
 from hermes_decompiler.ir.Operators import BinaryOperator
@@ -63,11 +62,9 @@ class JCompareX(OpcodeHandler):
 
         condition = BinaryExpression(left=lhs, operator=self.operator, right=rhs)
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
-        # TODO: remove → statement | flow
-        statement = IfGotoStatement(condition=condition, target=target)
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None, statement=statement)
+        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
         analysis.add_result(result)
 
         return result

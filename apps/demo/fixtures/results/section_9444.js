@@ -37,7 +37,7 @@ function nestedLoopTest(param0) {
         // CODE → <JLessN>: <Addr8: -60, Reg8: 3, Reg8: 6>  # Address: 0000002c
         if (0 + 1 < 3) goto label_44;
         // LOOP → START (while)
-        while (0 !== 1) {
+        while (true) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = 0;

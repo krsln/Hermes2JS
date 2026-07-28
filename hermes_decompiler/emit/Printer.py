@@ -85,6 +85,9 @@ class Printer(NodeVisitor):
     def print_statement(self, node) -> str:
         return self.visit(node)
 
+    def print_terminator(self, node) -> str:
+        return self.visit(node)
+
     # ------------------------------------------------------------------
     # Fallback
     # ------------------------------------------------------------------
@@ -327,16 +330,11 @@ class Printer(NodeVisitor):
     # Pre-structural control flow (see regions/models/Statements.py)
     # ------------------------------------------------------------------
 
-    # TODO: Remove these
-    def visit_GotoStatement(self, node) -> str:
+    def visit_TerminatorJump(self, node) -> str:
         return f"goto label_{node.target};"
 
-    def visit_IfGotoStatement(self, node) -> str:
+    def visit_TerminatorConditionalBranch(self, node) -> str:
         return f"if ({self.visit(node.condition)}) goto label_{node.target};"
-
-    def visit_SwitchGotoStatement(self, node) -> str:
-        targets = ", ".join(f"label_{t}" for t in node.targets)
-        return f"/* switch ({self.visit(node.selector)}) -> {targets} */"
 
     # ------------------------------------------------------------------
     # Operator precedence helpers

@@ -23,7 +23,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <Mov>: <Reg8: 0, Reg8: 10>
     // USED → r0 = param1;
     // LOOP → START (while)
-    while (!(param1.flags & 16384)) {
+    while (true) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 130>  # String: 'flags' (Identifier)
         // USED → r11 = param1.flags;

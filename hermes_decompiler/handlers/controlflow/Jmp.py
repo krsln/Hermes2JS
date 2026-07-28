@@ -15,7 +15,6 @@ from hermes_decompiler.ir.expressions import (
     Identifier,
 )
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.analysis.regions import GotoStatement, IfGotoStatement
 from hermes_decompiler.runtime import HermesAnalysis
 
 # --------------------------------------------------------------------------
@@ -85,10 +84,8 @@ class Jump(OpcodeHandler):
         analysis.gotoList.append(target)
 
         terminator = TerminatorJump(target=target)
-        # TODO: remove → statement | flow
-        statement = GotoStatement(target=target)
 
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None, statement=statement)
+        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
         analysis.add_result(result)
 
         return result
@@ -128,11 +125,9 @@ class ConditionalJumpBase(OpcodeHandler, ABC):
         condition = self.build_condition(value, *extra)
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
-        # TODO: remove → statement | flow
-        statement = IfGotoStatement(condition=condition, target=target)
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None, statement=statement)
+        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
         analysis.add_result(result)
 
         return result

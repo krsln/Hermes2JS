@@ -7,7 +7,6 @@ from hermes_decompiler.analysis.regions.Regions import (
     LoopRegion,
     IfRegion, TryRegion,
 )
-from hermes_decompiler.analysis.regions.Statements import IfGotoStatement
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.analysis.transforms.structurers._negation import _negate_condition
 
@@ -146,18 +145,12 @@ class IfStructurer:
             if item in exclude:
                 continue
 
-            # if isinstance(item.terminator, TerminatorConditionalBranch):
-            #     return item
-
-            if not item.instructions:
-                continue
-
-            if isinstance(item.instructions[-1].statement, IfGotoStatement):
+            if isinstance(item.terminator, TerminatorConditionalBranch):
                 return item
 
         return None
 
-    def _convert_(self, region: SequenceRegion, block: BasicBlock) -> bool:
+    def _convert(self, region: SequenceRegion, block: BasicBlock) -> bool:
         """
         Returns True if `block` was converted into an IfRegion, False
         if it was left untouched (see `_structure_sequence` for why the
@@ -250,96 +243,11 @@ class IfStructurer:
         #
         # The ConditionalBranch is now represented by the IfRegion.
         #
+        block.instructions.pop() # TODO: this is the way
         block.terminator = None
 
         insert_at = region.children.index(block) + 1
 
-        region.children.insert(insert_at, if_region)
-        if_region.parent = region
-
-        return True
-
-    def _convert(self, region: SequenceRegion, block: BasicBlock) -> bool:
-        """
-        Returns True if `block` was converted into an IfRegion, False
-        if it was left untouched (see `_structure_sequence` for why the
-        return value matters).
-        """
-
-        header_result = block.instructions[-1]
-        goto_stmt: IfGotoStatement = header_result.statement
-
-        block_index = region.children.index(block)
-        then_start = block_index + 1
-
-        if then_start >= len(region.children):
-            # No fallthrough successor at all - can't structure safely.
-            return False
-
-        merge_block = None
-        if self.cfg.post_dominator_tree is not None:
-            merge_block = self.cfg.post_dominator_tree.immediate_post_dominator(block)
-
-        goto_block = self._address_to_block.get(goto_stmt.target)
-
-        has_else = goto_block is not None and goto_block is not merge_block
-
-        # -------------------------------------------------------------
-        # Find the boundary between "then" and (optional) "else"/merge.
-        # -------------------------------------------------------------
-
-        stop_at_first = {b for b in (merge_block, goto_block if has_else else None) if b is not None}
-        then_end = self._find_boundary(region, then_start, stop_at_first)
-
-        if has_else:
-
-            else_start = then_end
-
-            if else_start >= len(region.children) or region.children[else_start] is not goto_block:
-                # goto target isn't where expected right after "then" -
-                # bail out rather than guess incorrectly.
-                return False
-
-            stop_at_second = {merge_block} if merge_block is not None else set()
-            else_end = self._find_boundary(region, else_start, stop_at_second)
-
-        else:
-            else_start = then_end
-            else_end = then_end
-
-        # -------------------------------------------------------------
-        # Splice the collected ranges out of `region.children`.
-        # -------------------------------------------------------------
-
-        then_items = region.children[then_start:then_end]
-        else_items = region.children[else_start:else_end]
-
-        del region.children[then_start:else_end]
-
-        then_body = SequenceRegion()
-        else_body = SequenceRegion() if has_else else None
-
-        if has_else:
-            # fallthrough -> else, goto target -> then (see class docstring)
-            self.graph.transfer(then_items, else_body)
-            self.graph.transfer(else_items, then_body)
-            condition_expr = goto_stmt.condition
-        else:
-            # fallthrough -> then, negated condition (see class docstring)
-            self.graph.transfer(then_items, then_body)
-            condition_expr = _negate_condition(goto_stmt.condition)
-
-        if_region = IfRegion()
-        if_region.condition = condition_expr
-        if_region.then_body = then_body
-        if_region.else_body = else_body
-
-        # Drop the header's own terminal jump instruction - its meaning
-        # is now carried by `if_region.condition`; any earlier
-        # instructions in `block` still render normally right before it.
-        block.instructions.pop()
-
-        insert_at = region.children.index(block) + 1
         region.children.insert(insert_at, if_region)
         if_region.parent = region
 

@@ -7,6 +7,7 @@ from hermes_decompiler.analysis.regions import (
     SequenceRegion, LoopRegion, IfRegion, Region, LoopKind, InstructionState, TryRegion
 )
 from .Printer import Printer
+from ..analysis.terminators import Terminator
 
 
 class JSEmitter:
@@ -150,6 +151,8 @@ class JSEmitter:
 
         if isinstance(result.statement, Statement):
             return self.printer.print_statement(result.statement)
+        if isinstance(result.terminator, Terminator):
+            return self.printer.print_terminator(result.terminator)
 
         if isinstance(result.value, Expression):
             rendered = self.printer.print_expression(result.value)
