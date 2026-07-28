@@ -1,0 +1,20 @@
+
+=> [Function #9468 "description" of 57 bytes]: 1 params, frame size=14, strict=0, exc handler=0, debug info=0  @ offset 0x001fb674
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4701>  # String: '__BC:Classes/ClassTests/Animal/get-description' (String)
+==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000016: <LoadParam>: <Reg8: 1, UInt8: 0>
+==> 00000019: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 186>  # String: 'name' (Identifier)
+==> 0000001e: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 3, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000024: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 103>  # String: 'concat' (Identifier)
+==> 00000029: <LoadConstString>: <Reg8: 1, string_id: 1404>  # String: ' the animal' (String)
+==> 0000002d: <LoadConstString>: <Reg8: 0, string_id: 6249>  # String: '' (Identifier)
+==> 00000031: <Call3>: <Reg8: 0, Reg8: 2, Reg8: 0, Reg8: 3, Reg8: 1>
+==> 00000037: <Ret>: <Reg8: 0>
+
+

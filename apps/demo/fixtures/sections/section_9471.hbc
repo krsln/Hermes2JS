@@ -1,0 +1,35 @@
+
+=> [Function #9471 "create" of 116 bytes]: 2 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x001fb74b
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 1>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 2, string_id: 533>  # String: '__BC:Classes/ClassTests/Dog/static-create' (String)
+==> 00000014: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 5, Reg8: 0, UInt8: 2>
+==> 0000001d: <CreateThisForNew>: <Reg8: 2, Reg8: 5, UInt8: 2>
+==> 00000021: <JmpTypeOfIs>: <Addr32: 16, Reg8: 5, UInt16: 128>  # Address: 00000031
+==> 00000029: <LoadConstString>: <Reg8: 7, string_id: 4284>  # String: 'Trying to call a non-function' (String)
+==> 0000002d: <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 00000031: <LoadParam>: <Reg8: 7, UInt8: 1>
+==> 00000034: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 4>
+==> 00000038: <LoadParentNoTraps>: <Reg8: 3, Reg8: 0>
+==> 0000003b: <CreateThisForSuper>: <Reg8: 2, Reg8: 3, Reg8: 5, UInt8: 2>
+==> 00000040: <LoadConstString>: <Reg8: 6, string_id: 1426>  # String: 'Woof' (String)
+==> 00000044: <Mov>: <Reg8: 8, Reg8: 2>
+==> 00000047: <CallWithNewTarget>: <Reg8: 0, Reg8: 3, Reg8: 5, UInt8: 3>
+==> 0000004c: <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
+==> 00000050: <LoadConstEmpty>: <Reg8: 2>
+==> 00000052: <ThrowIfThisInitialized>: <Reg8: 2>
+==> 00000054: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 0000005a: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 0000005f: <LoadConstString>: <Reg8: 1, string_id: 2226>  # String: '__BC:Classes/ClassTests/Dog/constructor' (String)
+==> 00000063: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000068: <LoadConstString>: <Reg8: 1, string_id: 3657>  # String: 'Mixed' (String)
+==> 0000006c: <PutByIdStrict>: <Reg8: 0, Reg8: 1, UInt8: 0, string_id: 15973>  # String: 'breed' (Identifier)
+==> 00000072: <Ret>: <Reg8: 0>
+
+

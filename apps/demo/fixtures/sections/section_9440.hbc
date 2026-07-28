@@ -1,0 +1,26 @@
+
+=> [Function #9440 "doWhileTest" of 78 bytes]: 1 params, frame size=18, strict=0, exc handler=0, debug info=0  @ offset 0x001fa614
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 5>
+==> 00000002: <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 6, string_id: 4710>  # String: '__BC:ControlFlow/DoWhileTests/doWhileTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
+==> 00000016: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 00000019: <LoadConstUInt8>: <Reg8: 2, UInt8: 5>
+==> 0000001c: <LoadConstZero>: <Reg8: 0>
+==> 0000001e: <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 00000024: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 00000029: <Call2>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 0>
+==> 0000002e: <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
+==> 00000032: <JLessN>: <Addr8: -20, Reg8: 0, Reg8: 2>  # Address: 0000001e
+==> 00000036: <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 0000003c: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 00000041: <LoadConstString>: <Reg8: 5, string_id: 4709>  # String: '__BC:ControlFlow/DoWhileTests/doWhileTest/end' (String)
+==> 00000045: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
+==> 0000004a: <LoadConstUndefined>: <Reg8: 4>
+==> 0000004c: <Ret>: <Reg8: 4>
+
+

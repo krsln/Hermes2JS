@@ -1,0 +1,33 @@
+function computedPropertyTest(param0) {
+    // ──────────────── Block 0 ──────────────── 
+    // CODE → <GetGlobalObject>: <Reg8: 1>
+    // USED → r1 = globalThis;
+    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+    // USED → r4 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+    // USED → r3 = globalThis.console.log;
+    // CODE → <LoadConstString>: <Reg8: 2, string_id: 4777>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/start' (String)
+    // USED → r2 = "__BC:Objects/PropertyTests/computedPropertyTest/start";
+    // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+    // USED → r2 = globalThis.console.log("__BC:Objects/PropertyTests/computedPropertyTest/start");
+    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+    // USED → r4 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+    // USED → r3 = globalThis.console.log;
+    // CODE → <NewObjectWithBuffer>: <Reg8: 2, UInt16: 1915, UInt16: 46686>  # Object: {'dynamic': 42, 'staticKey': 'value'}
+    // Error: NewObjectWithBuffer at address 33: Invalid arguments: Reg8: 2, UInt16: 1915, UInt16: 46686;
+    // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+    r2 = globalThis.console.log(globalThis.console.log("__BC:Objects/PropertyTests/computedPropertyTest/start"));
+    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+    // USED → r3 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+    // USED → r2 = globalThis.console.log;
+    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4773>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/end' (String)
+    // USED → r1 = "__BC:Objects/PropertyTests/computedPropertyTest/end";
+    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    r1 = globalThis.console.log("__BC:Objects/PropertyTests/computedPropertyTest/end");
+    // CODE → <LoadConstUndefined>: <Reg8: 0>
+    // USED → r0 = undefined;
+    // CODE → <Ret>: <Reg8: 0>
+    return undefined;
+}
