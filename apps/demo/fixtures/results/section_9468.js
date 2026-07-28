@@ -9,7 +9,7 @@ function description(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4701>  # String: '__BC:Classes/ClassTests/Animal/get-description' (String)
     // USED → r1 = "__BC:Classes/ClassTests/Animal/get-description";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Classes/ClassTests/Animal/get-description");
+    r1 = globalThis.console.log("__BC:Classes/ClassTests/Animal/get-description")
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 186>  # String: 'name' (Identifier)

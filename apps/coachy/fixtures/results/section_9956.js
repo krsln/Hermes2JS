@@ -1,13 +1,13 @@
 async function* anon_9956(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
-    // StartGenerator;
+    // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
     if (r1) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator;
+        // CompleteGenerator
         // CODE → <Ret>: <Reg8: 0>
         return await yield;
     } else {
@@ -39,7 +39,7 @@ async function* anon_9956(param0, param1) {
         if (getEnvironment(3)[16].default.get) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → <CompleteGenerator>: <>
-            // CompleteGenerator;
+            // CompleteGenerator
             // CODE → <Ret>: <Reg8: 1>
             return await yield;
         } else {
@@ -47,7 +47,7 @@ async function* anon_9956(param0, param1) {
             // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'data' (Identifier)
             // USED → r2 = await yield.data;
             // CODE → <CompleteGenerator>: <>
-            // CompleteGenerator;
+            // CompleteGenerator
             // CODE → <Ret>: <Reg8: 2>
             return await yield.data;
         }

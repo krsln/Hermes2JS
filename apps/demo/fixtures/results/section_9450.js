@@ -9,9 +9,9 @@ function forInTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4769>  # String: '__BC:Iterators/IteratorTests/forInTest/start' (String)
     // USED → r4 = "__BC:Iterators/IteratorTests/forInTest/start";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-    r4 = globalThis.console.log("__BC:Iterators/IteratorTests/forInTest/start");
+    r4 = globalThis.console.log("__BC:Iterators/IteratorTests/forInTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1912, UInt16: 19164>  # Object: {'a': 1, 'b': 2, 'c': 3}
-    // Error: NewObjectWithBuffer at address 22: Invalid arguments: Reg8: 7, UInt16: 1912, UInt16: 19164;
+    // Error: NewObjectWithBuffer at address 22: Invalid arguments: Reg8: 7, UInt16: 1912, UInt16: 19164
     // CODE → <Mov>: <Reg8: 5, Reg8: 7>
     // USED → r5 = r7;
     // CODE → <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
@@ -34,7 +34,7 @@ function forInTest(param0) {
             // CODE → <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
             // USED → r8 = r7[HermesPropertyIterator(r7).next()];
             // CODE → <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
-            r8 = globalThis.console.log(HermesPropertyIterator(r7).next(), r7[HermesPropertyIterator(r7).next()]);
+            r8 = globalThis.console.log(HermesPropertyIterator(r7).next(), r7[HermesPropertyIterator(r7).next()])
             // CODE → <Jmp>: <Addr8: -33>  # Address: 00000027
             goto label_39;
         }
@@ -48,7 +48,7 @@ function forInTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4766>  # String: '__BC:Iterators/IteratorTests/forInTest/end' (String)
     // USED → r3 = "__BC:Iterators/IteratorTests/forInTest/end";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Iterators/IteratorTests/forInTest/end");
+    r3 = globalThis.console.log("__BC:Iterators/IteratorTests/forInTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → <Ret>: <Reg8: 2>

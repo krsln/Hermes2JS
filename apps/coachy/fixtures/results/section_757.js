@@ -5,13 +5,13 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 5>
     // USED → r5 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 6>
-    r6 = undefined;
+    r6 = undefined
     // CODE → <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined;
+    r7 = undefined
     // CODE → <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined;
+    r8 = undefined
     // CODE → <LoadConstUndefined>: <Reg8: 9>
-    r9 = undefined;
+    r9 = undefined
     // CODE → <LoadConstNull>: <Reg8: 4>
     // USED → r4 = null;
     // CODE → <LoadConstInt>: <Reg8: 3, Imm32: 16384>
@@ -56,7 +56,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                 // CODE → <Mov>: <Reg8: 14, Reg8: 12>
                 // USED → r14 = param1;
                 // CODE → <Mov>: <Reg8: 11, Reg8: 14>
-                r11 = param1;
+                r11 = param1
                 if (null !== param1.sibling) {
                     // ──────────────── Block 15 ──────────────── 
                     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 11, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
@@ -64,18 +64,18 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                     // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
                     // USED → r13 = param1.return.return;
                     // CODE → <PutById>: <Reg8: 14, Reg8: 13, UInt8: 1, string_id: 209>  # String: 'return' (Identifier)
-                    param1.return.sibling.return = param1.return.return;
+                    param1.return.sibling.return = param1.return.return
                     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 11, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
-                    r0 = param1.return.sibling;
+                    r0 = param1.return.sibling
                     // CODE → <JmpLong>: <Addr32: -235>  # Address: 0000001d
                     goto label_29;
                     // ──────────────── Block 18 ──────────────── 
                     // CODE → <Mov>: <Reg8: 11, Reg8: 6>
                     // USED → r11 = param1.child;
                     // CODE → <PutById>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 209>  # String: 'return' (Identifier)
-                    param1.child.return = param1;
+                    param1.child.return = param1
                     // CODE → <Mov>: <Reg8: 0, Reg8: 11>
-                    r0 = param1.child;
+                    r0 = param1.child
                     // CODE → <JmpLong>: <Addr32: -260>  # Address: 0000001d
                     goto label_29;
                     // LOOP → START (while)
@@ -88,7 +88,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                         // CODE → <GetByVal>: <Reg8: 11, Reg8: 13, Reg8: 11>
                         // USED → r11 = param1.updateQueue.stores[0];
                         // CODE → <Mov>: <Reg8: 8, Reg8: 11>
-                        r8 = param1.updateQueue.stores[0];
+                        r8 = param1.updateQueue.stores[0]
                         // CODE → <GetById>: <Reg8: 9, Reg8: 11, UInt8: 5, string_id: 23581>  # String: 'getSnapshot' (Identifier)
                         // USED → r9 = param1.updateQueue.stores[0].getSnapshot;
                         // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 11, UInt8: 6, string_id: 249>  # String: 'value' (Identifier)
@@ -111,7 +111,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                         // CODE → <Inc>: <Reg8: 13, Reg8: 11>
                         // USED → r13 = 0 + 1;
                         // CODE → <Mov>: <Reg8: 7, Reg8: 13>
-                        r7 = 0 + 1;
+                        r7 = 0 + 1
                         // CODE → <Mov>: <Reg8: 11, Reg8: 6>
                         // USED → r11 = param1.updateQueue.stores;
                         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 4, string_id: 139>  # String: 'length' (Identifier)
@@ -195,7 +195,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     return true;
     // ──────────────── Block 19 ──────────────── 
     // CODE → <Catch>: <Reg8: 0>
-    r0 = caughtException;
+    r0 = caughtException
     // CODE → <LoadConstFalse>: <Reg8: 0>
     // USED → r0 = false;
     // CODE → <Ret>: <Reg8: 0>

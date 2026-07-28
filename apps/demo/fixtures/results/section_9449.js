@@ -9,7 +9,7 @@ function forOfTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4771>  # String: '__BC:Iterators/IteratorTests/forOfTest/start' (String)
     // USED → r0 = "__BC:Iterators/IteratorTests/forOfTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Iterators/IteratorTests/forOfTest/start");
+    r0 = globalThis.console.log("__BC:Iterators/IteratorTests/forOfTest/start")
     // CODE → <NewArrayWithBuffer>: <Reg8: 2, UInt16: 4, UInt16: 4, UInt16: 36995>  # Array: [1, 2, 3, 4]
     // USED → r2 = [1, 2, 3, 4];
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
@@ -20,7 +20,7 @@ function forOfTest(param0) {
     while (true) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-        r4 = [1, 2, 3, 4];
+        r4 = [1, 2, 3, 4]
         // CODE → <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 4>
         // USED → r6 = GetIterator([1, 2, 3, 4]).next();
         // CODE → <Mov>: <Reg8: 4, Reg8: 3>
@@ -33,7 +33,7 @@ function forOfTest(param0) {
         // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
         // USED → r4 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
-        r4 = globalThis.console.log(GetIterator([1, 2, 3, 4]).next());
+        r4 = globalThis.console.log(GetIterator([1, 2, 3, 4]).next())
         // CODE → <Jmp>: <Addr8: -30>  # Address: 00000023
         goto label_35;
     }
@@ -42,7 +42,7 @@ function forOfTest(param0) {
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-    GetIterator([1, 2, 3, 4]).return();
+    GetIterator([1, 2, 3, 4]).return()
     // CODE → <Throw>: <Reg8: 2>
     throw caughtException;
     // ──────────────── Block 4 ──────────────── 
@@ -53,7 +53,7 @@ function forOfTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4770>  # String: '__BC:Iterators/IteratorTests/forOfTest/end' (String)
     // USED → r1 = "__BC:Iterators/IteratorTests/forOfTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Iterators/IteratorTests/forOfTest/end");
+    r1 = globalThis.console.log("__BC:Iterators/IteratorTests/forOfTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

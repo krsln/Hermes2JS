@@ -9,13 +9,13 @@ function propertyAccessTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4780>  # String: '__BC:Objects/PropertyTests/propertyAccessTest/start' (String)
     // USED → r0 = "__BC:Objects/PropertyTests/propertyAccessTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Objects/PropertyTests/propertyAccessTest/start");
+    r0 = globalThis.console.log("__BC:Objects/PropertyTests/propertyAccessTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 4, UInt16: 61, UInt16: 42586>  # Object: {'x': 1, 'y': 2}
-    // Error: NewObjectWithBuffer at address 22: Invalid arguments: Reg8: 4, UInt16: 61, UInt16: 42586;
+    // Error: NewObjectWithBuffer at address 22: Invalid arguments: Reg8: 4, UInt16: 61, UInt16: 42586
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
     // USED → r0 = 3;
     // CODE → <PutByIdStrict>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 6488>  # String: 'z' (Identifier)
-    r4.z = 3;
+    r4.z = 3
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
@@ -27,11 +27,11 @@ function propertyAccessTest(param0) {
     // CODE → <GetById>: <Reg8: 0, Reg8: 4, UInt8: 4, string_id: 6488>  # String: 'z' (Identifier)
     // USED → r0 = r4.z;
     // CODE → <Call4>: <Reg8: 0, Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log(r4.x, r4.y, r4.z);
+    r0 = globalThis.console.log(r4.x, r4.y, r4.z)
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 28>  # String: 'x' (Identifier)
     // USED → r0 = "x";
     // CODE → <DelByVal>: <Reg8: 2, Reg8: 4, Reg8: 0, UInt8: 1>
-    // Error: DelByVal at address 75: Expected three Reg8 arguments: Reg8: 2, Reg8: 4, Reg8: 0, UInt8: 1;
+    // Error: DelByVal at address 75: Expected three Reg8 arguments: Reg8: 2, Reg8: 4, Reg8: 0, UInt8: 1
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
@@ -39,7 +39,7 @@ function propertyAccessTest(param0) {
     // CODE → <IsIn>: <Reg8: 0, Reg8: 0, Reg8: 4>
     // USED → r0 = "x" in r4;
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("x" in r4);
+    r0 = globalThis.console.log("x" in r4)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 5, string_id: 21>  # String: 'Object' (Identifier)
     // USED → r2 = globalThis.Object;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 6, string_id: 172>  # String: 'keys' (Identifier)
@@ -56,7 +56,7 @@ function propertyAccessTest(param0) {
     while (true) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-        r5 = globalThis.Object.keys(r4);
+        r5 = globalThis.Object.keys(r4)
         // CODE → <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 5>
         // USED → r8 = GetIterator(globalThis.Object.keys(r4)).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
@@ -71,7 +71,7 @@ function propertyAccessTest(param0) {
         // CODE → <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 8>
         // USED → r5 = r4[GetIterator(globalThis.Object.keys(r4)).next()];
         // CODE → <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
-        r5 = globalThis.console.log(GetIterator(globalThis.Object.keys(r4)).next(), r4[GetIterator(globalThis.Object.keys(r4)).next()]);
+        r5 = globalThis.console.log(GetIterator(globalThis.Object.keys(r4)).next(), r4[GetIterator(globalThis.Object.keys(r4)).next()])
         // CODE → <Jmp>: <Addr8: -35>  # Address: 0000007c
         goto label_124;
     }
@@ -80,7 +80,7 @@ function propertyAccessTest(param0) {
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-    GetIterator(globalThis.Object.keys(r4)).return();
+    GetIterator(globalThis.Object.keys(r4)).return()
     // CODE → <Throw>: <Reg8: 2>
     throw caughtException;
     // ──────────────── Block 4 ──────────────── 
@@ -91,7 +91,7 @@ function propertyAccessTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4455>  # String: '__BC:Objects/PropertyTests/propertyAccessTest/end' (String)
     // USED → r1 = "__BC:Objects/PropertyTests/propertyAccessTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Objects/PropertyTests/propertyAccessTest/end");
+    r1 = globalThis.console.log("__BC:Objects/PropertyTests/propertyAccessTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

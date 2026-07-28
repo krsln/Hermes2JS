@@ -11,11 +11,11 @@ function closureLoopTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4760>  # String: '__BC:Functions/ClosureTests/closureLoopTest/start' (String)
     // USED → r0 = "__BC:Functions/ClosureTests/closureLoopTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/start");
+    r0 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/start")
     // CODE → <NewArray>: <Reg8: 0, UInt16: 0>
     // USED → r0 = [];
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
-    __environment__[0] = [];
+    __environment__[0] = []
     // CODE → <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 12405>  # Function: [#12405 _loop of 39 bytes]: 2 params @ offset 0x0023e3ea
     // USED → r6 = _loop;
     // CODE → <LoadConstZero>: <Reg8: 5>
@@ -28,7 +28,7 @@ function closureLoopTest(param0) {
     // USED → r2 = 0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 2>
-    r7 = _loop.call(0, 0);
+    r7 = _loop.call(0, 0)
     // CODE → <AddN>: <Reg8: 2, Reg8: 2, Reg8: 4>
     // USED → r2 = 0 + 1;
     // CODE → <JLessN>: <Addr8: -9, Reg8: 2, Reg8: 3>  # Address: 00000030
@@ -44,7 +44,7 @@ function closureLoopTest(param0) {
     while (true) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-        r4 = [];
+        r4 = []
         // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
         // USED → r4 = GetIterator([]).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
@@ -59,7 +59,7 @@ function closureLoopTest(param0) {
         // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
         // USED → r4 = GetIterator([]).next().call(undefined);
         // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-        r4 = globalThis.console.log(GetIterator([]).next().call(undefined));
+        r4 = globalThis.console.log(GetIterator([]).next().call(undefined))
         // CODE → <Jmp>: <Addr8: -34>  # Address: 00000045
         goto label_69;
     }
@@ -68,7 +68,7 @@ function closureLoopTest(param0) {
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-    GetIterator([]).return();
+    GetIterator([]).return()
     // CODE → <Throw>: <Reg8: 2>
     throw caughtException;
     // ──────────────── Block 6 ──────────────── 
@@ -79,7 +79,7 @@ function closureLoopTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4758>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
     // USED → r1 = "__BC:Functions/ClosureTests/closureLoopTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/end");
+    r1 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

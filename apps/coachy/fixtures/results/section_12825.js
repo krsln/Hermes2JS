@@ -11,11 +11,11 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <LoadConstUndefined>: <Reg8: 6>
     // USED → r6 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 10>
-    r10 = undefined;
+    r10 = undefined
     // CODE → <LoadConstFalse>: <Reg8: 5>
     // USED → r5 = false;
     // CODE → <LoadConstFalse>: <Reg8: 0>
-    r0 = false;
+    r0 = false
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 217>  # String: 'slice' (Identifier)
     // USED → r1 = param1.slice;
     // CODE → <Call1>: <Reg8: 10, Reg8: 1, Reg8: 2>
@@ -51,8 +51,7 @@ function function_12825(param0, param1, param2, param3, param4) {
             // USED → r0 = param1.slice().pop().call(undefined, param2) === false;
             // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
             goto label_122;
-        }
-        catch (caughtException) {
+        } catch (caughtException) {
             // LOOP → START (while)
             while (true) {
                 // ──────────────── Block 4 ──────────────── 
@@ -74,11 +73,11 @@ function function_12825(param0, param1, param2, param3, param4) {
                 // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 14, Reg8: 2>
                 // USED → r1 = globalThis.HermesInternal.concat.call("Error occurred in ", param3, " callback, continuing anyway\u2026");
                 // CODE → <Call2>: <Reg8: 1, Reg8: 13, Reg8: 11, Reg8: 1>
-                r1 = param4.error(globalThis.HermesInternal.concat.call("Error occurred in ", param3, " callback, continuing anyway\u2026"));
+                r1 = param4.error(globalThis.HermesInternal.concat.call("Error occurred in ", param3, " callback, continuing anyway\u2026"))
                 // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
                 // USED → r1 = param4.error;
                 // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>
-                r1 = param4.error(caughtException);
+                r1 = param4.error(caughtException)
             }
             // LOOP → END
         }

@@ -9,7 +9,7 @@ function nestedLoopTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 11, string_id: 4735>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/start' (String)
     // USED → r11 = "__BC:ControlFlow/NestedTests/nestedLoopTest/start";
     // CODE → <Call2>: <Reg8: 11, Reg8: 12, Reg8: 13, Reg8: 11>
-    r11 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/start");
+    r11 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
@@ -50,13 +50,13 @@ function nestedLoopTest(param0) {
                 // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
                 // USED → r13 = globalThis.console.log;
                 // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 12>
-                r13 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if");
+                r13 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if")
                 // CODE → <TryGetById>: <Reg8: 14, Reg8: 10, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
                 // USED → r14 = globalThis.console;
                 // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
                 // USED → r13 = globalThis.console.log;
                 // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 11>
-                r13 = globalThis.console.log("nested");
+                r13 = globalThis.console.log("nested")
             }
             // ──────────────── Block 5 ──────────────── 
             // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
@@ -75,7 +75,7 @@ function nestedLoopTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 4266>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/end' (String)
     // USED → r10 = "__BC:ControlFlow/NestedTests/nestedLoopTest/end";
     // CODE → <Call2>: <Reg8: 10, Reg8: 11, Reg8: 12, Reg8: 10>
-    r10 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/end");
+    r10 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 9>
     // USED → r9 = undefined;
     // CODE → <Ret>: <Reg8: 9>

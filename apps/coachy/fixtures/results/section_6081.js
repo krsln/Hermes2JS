@@ -5,11 +5,11 @@ function processColorsInProps(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined;
+    r7 = undefined
     // CODE → <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined;
+    r8 = undefined
     // CODE → <LoadConstUndefined>: <Reg8: 9>
-    r9 = undefined;
+    r9 = undefined
     // CODE → <Mov>: <Reg8: 5, Reg8: 10>
     // USED → r5 = param1;
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 1>
@@ -47,7 +47,7 @@ function processColorsInProps(param0, param1) {
                     // CODE → <Call2>: <Reg8: 11, Reg8: 13, Reg8: 0, Reg8: 11>
                     // USED → r11 = getEnvironment(1)[36].call(undefined, param1[HermesPropertyIterator(param1).next()]);
                     // CODE → <PutByVal>: <Reg8: 10, Reg8: 12, Reg8: 11>
-                    param1[HermesPropertyIterator(param1).next()] = getEnvironment(1)[36].call(undefined, param1[HermesPropertyIterator(param1).next()]);
+                    param1[HermesPropertyIterator(param1).next()] = getEnvironment(1)[36].call(undefined, param1[HermesPropertyIterator(param1).next()])
                     // CODE → <JmpLong>: <Addr32: -150>  # Address: 0000001c
                     goto label_28;
                     // LOOP → START (while)
@@ -85,7 +85,7 @@ function processColorsInProps(param0, param1) {
                             // CODE → <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
                             // USED → r13 = getEnvironment(1)[36].call(undefined, GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]]);
                             // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
-                            GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]] = getEnvironment(1)[36].call(undefined, GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]]);
+                            GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]] = getEnvironment(1)[36].call(undefined, GetIterator(param1[HermesPropertyIterator(param1).next()]).next()[getEnvironment(1)[18][HermesPropertyIterator(param1).next()]])
                         }
                         // ──────────────── Block 8 ──────────────── 
                         // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
@@ -114,11 +114,10 @@ function processColorsInProps(param0, param1) {
                 }
             }
             // LOOP → END
-        }
-        catch (caughtException) {
+        } catch (caughtException) {
             // ──────────────── Block 9 ──────────────── 
             // CODE → <IteratorClose>: <Reg8: 12, UInt8: 1>
-            GetIterator(param1[HermesPropertyIterator(param1).next()]).return();
+            GetIterator(param1[HermesPropertyIterator(param1).next()]).return()
             // CODE → <Throw>: <Reg8: 11>
             throw caughtException;
         }

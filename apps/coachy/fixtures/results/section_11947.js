@@ -1,7 +1,7 @@
 async function* anon_11947(param0, param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
-    // StartGenerator;
+    // StartGenerator
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 0>
     // USED → r8 = this;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 5>
@@ -9,7 +9,7 @@ async function* anon_11947(param0, param1, param2) {
     if (r5) {
         // ──────────────── Block 20 ──────────────── 
         // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator;
+        // CompleteGenerator
         // CODE → <Ret>: <Reg8: 0>
         return await yield;
     } else {
@@ -21,9 +21,9 @@ async function* anon_11947(param0, param1, param2) {
         // CODE → <LoadConstUndefined>: <Reg8: 5>
         // USED → r5 = undefined;
         // CODE → <LoadConstUndefined>: <Reg8: 6>
-        r6 = undefined;
+        r6 = undefined
         // CODE → <LoadConstUndefined>: <Reg8: 2>
-        r2 = undefined;
+        r2 = undefined
         // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 17057>  # String: '_request' (Identifier)
         // USED → r7 = this._request;
         // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
@@ -37,12 +37,11 @@ async function* anon_11947(param0, param1, param2) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
             // USED → r3 = await yield;
-        }
-        catch (caughtException) {
+        } catch (caughtException) {
             if (param1) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <CompleteGenerator>: <>
-                // CompleteGenerator;
+                // CompleteGenerator
                 // CODE → <Ret>: <Reg8: 3>
                 return await yield;
                 // LOOP → START (while)
@@ -52,7 +51,7 @@ async function* anon_11947(param0, param1, param2) {
                     throw caughtException;
                     // ──────────────── Block 18 ──────────────── 
                     // CODE → <Catch>: <Reg8: 2>
-                    r2 = caughtException;
+                    r2 = caughtException
                     // LOOP → START (while)
                     while (true) {
                         // ──────────────── Block 17 ──────────────── 
@@ -66,7 +65,7 @@ async function* anon_11947(param0, param1, param2) {
                             // CODE → <Mov>: <Reg8: 4, Reg8: 2>
                             // USED → r4 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error))].stack.replace(/^.+\\n/, "");
                             // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-                            caughtException.stack = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error))].stack.replace(/^.+\\n/, "");
+                            caughtException.stack = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error))].stack.replace(/^.+\\n/, "")
                             // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
                             goto label_312;
                         }
@@ -87,7 +86,7 @@ async function* anon_11947(param0, param1, param2) {
                             // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
                             // USED → r2 = caughtException.stack + ("\\n" + createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error))].stack.replace(/^.+\\n/, ""));
                             // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-                            caughtException.stack = caughtException.stack + ("\\n" + createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error))].stack.replace(/^.+\\n/, ""));
+                            caughtException.stack = caughtException.stack + ("\\n" + createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error))].stack.replace(/^.+\\n/, ""))
                             // LOOP → START (while)
                             while (true) {
                                 // ──────────────── Block 15 ──────────────── 
@@ -152,7 +151,7 @@ async function* anon_11947(param0, param1, param2) {
                                                 // CODE → <LoadConstString>: <Reg8: 8, string_id: 11303>  # String: '' (Identifier)
                                                 // USED → r8 = "";
                                                 // CODE → <Mov>: <Reg8: 4, Reg8: 8>
-                                                r4 = "";
+                                                r4 = ""
                                                 // CODE → <JmpFalse>: <Addr8: 34, Reg8: 7>  # Address: 000000b9
                                                 if (!createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error))].stack) goto label_185;
                                                 // LOOP → START (while)
@@ -163,7 +162,7 @@ async function* anon_11947(param0, param1, param2) {
                                                     // CODE → <CreateThis>: <Reg8: 7, Reg8: 4, Reg8: 8>
                                                     // USED → r7 = createThis(globalThis.Error.prototype, globalThis.Error);
                                                     // CODE → <Mov>: <Reg8: 12, Reg8: 7>
-                                                    r12 = createThis(globalThis.Error.prototype, globalThis.Error);
+                                                    r12 = createThis(globalThis.Error.prototype, globalThis.Error)
                                                     // CODE → <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
                                                     // USED → r4 = new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error));
                                                     // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
@@ -180,12 +179,12 @@ async function* anon_11947(param0, param1, param2) {
                                                     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
                                                     // USED → r4 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error))];
                                                     // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
-                                                    r4 = globalThis.Error.captureStackTrace(createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error))]);
+                                                    r4 = globalThis.Error.captureStackTrace(createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(createThis(globalThis.Error.prototype, globalThis.Error))])
                                                     // LOOP → START (while)
                                                     while (true) {
                                                         // ──────────────── Block 7 ──────────────── 
                                                         // CODE → <NewObject>: <Reg8: 6>
-                                                        r6 = {  };
+                                                        r6 = {  }
                                                         // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
                                                         // USED → r4 = globalThis.Error;
                                                         // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 3, string_id: 22838>  # String: 'captureStackTrace' (Identifier)
@@ -228,7 +227,7 @@ async function* anon_11947(param0, param1, param2) {
             } else {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <CompleteGenerator>: <>
-                // CompleteGenerator;
+                // CompleteGenerator
                 // CODE → <Ret>: <Reg8: 3>
                 return await yield;
             }

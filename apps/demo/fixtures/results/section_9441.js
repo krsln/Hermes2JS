@@ -9,7 +9,7 @@ function forTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 4722>  # String: '__BC:ControlFlow/ForTests/forTest/start' (String)
     // USED → r8 = "__BC:ControlFlow/ForTests/forTest/start";
     // CODE → <Call2>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 8>
-    r8 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/start");
+    r8 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 10>
@@ -38,7 +38,7 @@ function forTest(param0) {
         // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
         // USED → r9 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 1>
-        r9 = globalThis.console.log(0);
+        r9 = globalThis.console.log(0)
         // CODE → <Jmp>: <Addr8: 40>  # Address: 0000006b
         goto label_107;
         // ──────────────── Block 5 ──────────────── 
@@ -47,7 +47,7 @@ function forTest(param0) {
         // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
         // USED → r9 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 8>
-        r9 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-continue");
+        r9 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
         // ──────────────── Block 6 ──────────────── 
         // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
         // USED → r0 = 0 + 1;
@@ -63,7 +63,7 @@ function forTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 4720>  # String: '__BC:ControlFlow/ForTests/forTest/if-break' (String)
     // USED → r9 = "__BC:ControlFlow/ForTests/forTest/if-break";
     // CODE → <Call2>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 9>
-    r9 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-break");
+    r9 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-break")
     // CODE → <Jmp>: <Addr8: 26>  # Address: 00000073
     goto label_115;
     // ──────────────── Block 7 ──────────────── 
@@ -74,7 +74,7 @@ function forTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 4717>  # String: '__BC:ControlFlow/ForTests/forTest/end' (String)
     // USED → r7 = "__BC:ControlFlow/ForTests/forTest/end";
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
-    r7 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/end");
+    r7 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 6>
     // USED → r6 = undefined;
     // CODE → <Ret>: <Reg8: 6>

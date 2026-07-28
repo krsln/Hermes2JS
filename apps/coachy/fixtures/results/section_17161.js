@@ -1,7 +1,7 @@
 async function* anon_17161(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
-    // StartGenerator;
+    // StartGenerator
     // CODE → <LoadParam>: <Reg8: 7, UInt8: 1>
     // USED → r7 = param1;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
@@ -9,7 +9,7 @@ async function* anon_17161(param0, param1) {
     if (r1) {
         // ──────────────── Block 14 ──────────────── 
         // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator;
+        // CompleteGenerator
         // CODE → <Ret>: <Reg8: 0>
         return await yield;
     } else {
@@ -33,7 +33,7 @@ async function* anon_17161(param0, param1) {
         if (globalThis.fetch) {
             // ──────────────── Block 13 ──────────────── 
             // CODE → <CompleteGenerator>: <>
-            // CompleteGenerator;
+            // CompleteGenerator
             // CODE → <Ret>: <Reg8: 1>
             return await yield;
         } else {
@@ -57,13 +57,13 @@ async function* anon_17161(param0, param1) {
                 if (createThis(globalThis.Error.prototype, globalThis.Error)) {
                     // ──────────────── Block 12 ──────────────── 
                     // CODE → <CompleteGenerator>: <>
-                    // CompleteGenerator;
+                    // CompleteGenerator
                     // CODE → <Ret>: <Reg8: 2>
                     return await yield;
                 } else {
                     // ──────────────── Block 11 ──────────────── 
                     // CODE → <CompleteGenerator>: <>
-                    // CompleteGenerator;
+                    // CompleteGenerator
                     // CODE → <Ret>: <Reg8: 2>
                     return await yield;
                 }
@@ -88,13 +88,13 @@ async function* anon_17161(param0, param1) {
                     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: ' failed with status ' (String)
                     // USED → r2 = " failed with status ";
                     // CODE → <Call4>: <Reg8: 10, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 2, Reg8: 6>
-                    r10 = globalThis.HermesInternal.concat.call("Fetching ", param1, " failed with status ", await yield.status);
+                    r10 = globalThis.HermesInternal.concat.call("Fetching ", param1, " failed with status ", await yield.status)
                     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
                     // USED → r3 = globalThis.Error.prototype;
                     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
                     // USED → r3 = createThis(globalThis.Error.prototype, globalThis.Error);
                     // CODE → <Mov>: <Reg8: 11, Reg8: 3>
-                    r11 = createThis(globalThis.Error.prototype, globalThis.Error);
+                    r11 = createThis(globalThis.Error.prototype, globalThis.Error)
                     // CODE → <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
                     // USED → r2 = new globalThis.Error(" failed with status ", createThis(globalThis.Error.prototype, globalThis.Error));
                     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>

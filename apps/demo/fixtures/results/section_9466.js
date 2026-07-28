@@ -15,15 +15,15 @@ function Animal(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 2550>  # String: '__BC:Classes/ClassTests/Animal/constructor' (String)
     // USED → r1 = "__BC:Classes/ClassTests/Animal/constructor";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Classes/ClassTests/Animal/constructor");
+    r1 = globalThis.console.log("__BC:Classes/ClassTests/Animal/constructor")
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <PutByIdStrict>: <Reg8: 0, Reg8: 1, UInt8: 0, string_id: 186>  # String: 'name' (Identifier)
-    Object.create(new.target.prototype).name = param1;
+    Object.create(new.target.prototype).name = param1
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 2>
     // USED → r1 = param2;
     // CODE → <PutByIdStrict>: <Reg8: 0, Reg8: 1, UInt8: 1, string_id: 11460>  # String: 'sound' (Identifier)
-    Object.create(new.target.prototype).sound = param2;
+    Object.create(new.target.prototype).sound = param2
     // CODE → <Ret>: <Reg8: 0>
     return Object.create(new.target.prototype);
 }

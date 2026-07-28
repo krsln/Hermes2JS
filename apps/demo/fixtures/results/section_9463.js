@@ -11,7 +11,7 @@ function defaultWithRestTest(param0) {
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 1>
-    r9 = 1;
+    r9 = 1
     // CODE → <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 apply]
     // USED → r5 = builtin_47(r3, r4);
     // CODE → <GetGlobalObject>: <Reg8: 2>
@@ -23,7 +23,7 @@ function defaultWithRestTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4765>  # String: '__BC:Functions/DefaultParameterTests/defaultWithRestTest/start' (String)
     // USED → r3 = "__BC:Functions/DefaultParameterTests/defaultWithRestTest/start";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Functions/DefaultParameterTests/defaultWithRestTest/start");
+    r3 = globalThis.console.log("__BC:Functions/DefaultParameterTests/defaultWithRestTest/start")
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 214>  # String: 'reduce' (Identifier)
     // USED → r4 = builtin_47(r3, r4).reduce;
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 12406>  # Function: [#12406  of 12 bytes]: 3 params @ offset 0x0023e3bf
@@ -35,7 +35,7 @@ function defaultWithRestTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
-    r2 = globalThis.console.log(builtin_47(r3, r4).reduce(function_12406, 1));
+    r2 = globalThis.console.log(builtin_47(r3, r4).reduce(function_12406, 1))
     // CODE → <Ret>: <Reg8: 1>
     return undefined;
 }

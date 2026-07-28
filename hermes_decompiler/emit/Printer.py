@@ -1,7 +1,15 @@
 from __future__ import annotations
 
+from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.regions.Regions import (
+    SequenceRegion,
+    LoopRegion,
+    IfRegion,
+    TryRegion,
+    SwitchRegion,
+)
+from hermes_decompiler.ir import NodeVisitor
 from hermes_decompiler.ir import (
-    NodeVisitor,
     precedence,
 )
 from hermes_decompiler.ir.expressions import (
@@ -44,16 +52,10 @@ from hermes_decompiler.ir.statements import (
     IfStatement,
     ReturnStatement,
     DebuggerStatement,
-    WhileStatement,
-    DoWhileStatement,
-    ForStatement,
-    ForInStatement,
-    ForOfStatement,
     LabeledStatement,
     BreakStatement,
     ContinueStatement,
     ThrowStatement,
-    TryStatement,
 )
 
 __all__ = [
@@ -94,6 +96,191 @@ class Printer(NodeVisitor):
         self._emit_region(region, lines)
 
         return lines
+
+    # ---------------------------------------------------------
+    # dispatcher
+    # ---------------------------------------------------------
+
+    def _emit_region(self, region, lines):
+
+        match region:
+
+            case SequenceRegion():
+                self._emit_sequence(region, lines)
+
+            case LoopRegion():
+                self._emit_loop(region, lines)
+
+            case IfRegion():
+                self._emit_if(region, lines)
+
+            case TryRegion():
+                self._emit_try(region, lines)
+
+            case SwitchRegion():
+                self._emit_switch(region, lines)
+
+            case BasicBlock():
+                self._emit_block(region, lines)
+
+            case _:
+                raise TypeError(type(region))
+
+    # ---------------------------------------------------------
+    # basic block
+    # ---------------------------------------------------------
+
+    def _emit_block(
+            self,
+            block: BasicBlock,
+            lines: list[str],
+    ):
+
+        if self.verbose:
+            self._write(lines, f"// ──────────────── Block {block.id} ──────────────── ")
+
+        for instruction in block.instructions:
+
+            if self.verbose:
+                bytecode = instruction.opcode.bytecode
+                bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
+
+                self._write(lines, f"// CODE → {bytecode}")
+
+            if instruction.statement is not None:
+                rendered = self.print_statement(instruction.statement)
+
+                self._write(lines, rendered)
+
+                continue
+
+            if instruction.terminator is not None:
+                rendered = self.print_terminator(instruction.terminator)
+
+                self._write(lines, rendered)
+
+                continue
+
+            if instruction.value is None:
+                continue
+
+            rendered = self.print_expression(instruction.value)
+
+            if instruction.dest_reg is not None:
+                rendered = f"r{instruction.dest_reg} = {rendered}"
+
+            if instruction.used:
+                if self.verbose:
+                    self._write(lines, f"// USED → {rendered};")
+
+            else:
+                self._write(lines, rendered)
+
+    # ---------------------------------------------------------
+    # sequence
+    # ---------------------------------------------------------
+
+    def _emit_sequence(self, region: SequenceRegion, lines):
+
+        for child in region.children:
+            self._emit_region(child, lines)
+
+    # ---------------------------------------------------------
+    # if
+    # ---------------------------------------------------------
+
+    def _emit_if(self, region: IfRegion, lines):
+
+        cond = self.print_expression(region.condition)
+
+        self._write(lines, f"if ({cond}) {{")
+
+        self._indent += 1
+        self._emit_region(region.then_body, lines)
+        self._indent -= 1
+
+        if region.else_body:
+            self._write(lines, "} else {")
+
+            self._indent += 1
+            self._emit_region(region.else_body, lines)
+            self._indent -= 1
+
+        self._write(lines, "}")
+
+    # ---------------------------------------------------------
+    # loop
+    # ---------------------------------------------------------
+
+    def _emit_loop(self, region: LoopRegion, lines):
+
+        kind = region.loop_kind
+        if self.verbose:
+            self._write(lines,f"// LOOP → START ({kind.value if kind else "unknown"})")
+
+        cond = (
+            self.print_expression(region.condition)
+            if region.condition
+            else "true"
+        )
+
+        self._write(lines, f"while ({cond}) {{")
+
+        self._indent += 1
+        self._emit_region(region.body, lines)
+        self._indent -= 1
+
+        self._write(lines, "}")
+        self._write(lines, "// LOOP → END")
+
+
+    # ---------------------------------------------------------
+    # try
+    # ---------------------------------------------------------
+
+    def _emit_try(self, region: TryRegion, lines):
+
+        self._write(lines, "try {")
+
+        self._indent += 1
+        self._emit_region(region.try_body, lines)
+        self._indent -= 1
+
+        if region.catch:
+            name = region.catch.exception
+
+            self._write(lines, f"}} catch ({name}) {{")
+
+            self._indent += 1
+            self._emit_region(region.catch.body, lines)
+            self._indent -= 1
+
+        if region.finally_:
+            self._write(lines, "} finally {")
+
+            self._indent += 1
+            self._emit_region(region.finally_.body, lines)
+            self._indent -= 1
+
+        self._write(lines, "}")
+
+    # ---------------------------------------------------------
+    # switch
+    # ---------------------------------------------------------
+
+    def _emit_switch(self, region: SwitchRegion, lines):
+        raise NotImplementedError
+
+    # ---------------------------------------------------------
+    # helpers
+    # ---------------------------------------------------------
+
+    def _write(self, lines: list[str], text: str):
+        lines.append(f"{self.INDENT * self._indent}{text}")
+
+    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------
+    # ------------------------------------------------------------------
 
     # ------------------------------------------------------------------
     # Public entry points
