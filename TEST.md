@@ -20,6 +20,11 @@ python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fix
 python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --strict --no-verbose
 ```
 
+```shell
+python scripts/decompiler.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results
+
+```
+
 **Examples**
 
 ```shell
