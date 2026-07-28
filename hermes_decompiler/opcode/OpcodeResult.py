@@ -62,6 +62,7 @@ class OpcodeResult:
 
         self.opcode = entry
         self.value = value
+        self.terminator = terminator
         self.dest_reg = dest_reg
         self.used = False
 

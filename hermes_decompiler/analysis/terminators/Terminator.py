@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
 from hermes_decompiler.ir.expressions import Expression
@@ -9,26 +9,47 @@ from hermes_decompiler.ir.expressions import Expression
 class Terminator(ABC):
     """Ends a basic block."""
 
+    @property
+    @abstractmethod
+    def targets(self) -> tuple[int, ...]:
+        """CFG successor targets."""
+
 
 @dataclass(slots=True)
 class TerminatorConditionalBranch(Terminator):
     condition: Expression
     target: int
 
+    @property
+    def targets(self):
+        return (self.target,)
+
 
 @dataclass(slots=True)
 class TerminatorJump(Terminator):
     target: int
+
+    @property
+    def targets(self):
+        return (self.target,)
 
 
 @dataclass(slots=True)
 class TerminatorReturn(Terminator):
     value: Expression | None
 
+    @property
+    def targets(self):
+        return ()
+
 
 @dataclass(slots=True)
 class TerminatorThrow(Terminator):
     value: Expression | None
+
+    @property
+    def targets(self):
+        return ()
 
 
 @dataclass(slots=True)
