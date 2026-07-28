@@ -14,30 +14,18 @@ TERMINATING_CONTROL_FLOW = {ControlFlowType.RETURN, ControlFlowType.THROW}
 
 
 class TryStructurer:
-    """
-    Converts resolved `cfg.exception_handlers` entries into real
-    `TryRegion`s, using `RegionGraph.lowest_common_sequence` (backed
-    by `Region.covered_blocks`) instead of ad-hoc path-walking.
-
-    Must run after LoopStructurer/IfStructurer (see prior docstring
-    revisions for why: exception ranges routinely wrap only part of a
-    loop's body, while the handler sits after the whole loop, so the
-    try-range's blocks and the handler block end up at different
-    nesting depths once Loop/If have run).
-
-    Handlers are processed narrowest-range-first so nested/overlapping
-    exception ranges (Hermes emits these for iterator-cleanup idioms
-    with multiple exit paths) resolve inner-to-outer: once an inner
-    handler becomes a single TryRegion, covered_blocks makes it look
-    like one atomic item to any outer handler that contains it.
-    """
 
     def __init__(self, graph: RegionGraph, cfg):
         self.graph = graph
         self.cfg = cfg
 
     def run(self):
-        handlers = sorted(self.cfg.exception_handlers, key=lambda h: h["end"] - h["start"])
+
+        handlers = sorted(
+            self.cfg.exception_handlers,
+            key=lambda h: h["end"] - h["start"],
+        )
+
         for handler in handlers:
             self._structure_handler(handler)
 
@@ -91,7 +79,7 @@ class TryStructurer:
         # splice_out already removed [start_idx:catch_end]; slice the
         # returned list back into try/catch halves by relative offset.
         try_items = catch_items[: handler_idx - start_idx]
-        catch_items = catch_items[handler_idx - start_idx :]
+        catch_items = catch_items[handler_idx - start_idx:]
 
         try_body = SequenceRegion()
         self.graph.transfer(try_items, try_body)
