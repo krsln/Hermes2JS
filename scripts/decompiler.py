@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
+import argparse
 import logging
 from pathlib import Path
-import argparse
 
+from hermes_decompiler.core.logging import configure_logging, get_logger
 from hermes_decompiler.io import get_section_files, process_section
-from hermes_decompiler.core.logging import configure_logging, logging_test, get_logger
 
 logger = get_logger(__name__)
 
@@ -47,7 +47,7 @@ def main() -> None:
 
     # configure_logging(level=logging.DEBUG, use_color=True)
     configure_logging(level=LOG_LEVELS[args.log_level], use_color=True)
-    logging_test()
+    # logging_test()
 
     logger.info("Starting .hbc to JavaScript conversion. Verbose: %s | Strict: %s", args.verbose, args.strict)
 
