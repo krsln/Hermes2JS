@@ -6,8 +6,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# UInt32 (string_id) (total size 4)
 # DEFINE_OPCODE_1(DeclareGlobalVar, UInt32)
-# Example: <DeclareGlobalVar>: <string_id: 4522>  # String: 'myGlobal' (Identifier)
+# Example: <DeclareGlobalVar>: <string_id: 209>  # String: 'process' (Identifier)
 class DeclareGlobalVar(OpcodeHandler):
     """
     Side-effect-only opcode - no destination register, so the resulting

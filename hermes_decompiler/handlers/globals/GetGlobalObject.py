@@ -3,7 +3,7 @@ from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
-
+# Reg8 (total size 1)
 # DEFINE_OPCODE_1(GetGlobalObject, Reg8)
 # Example: <GetGlobalObject>: <Reg8: 2>
 class GetGlobalObject(OpcodeHandler):
