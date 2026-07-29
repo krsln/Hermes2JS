@@ -72,39 +72,85 @@ class NewObjectWithBuffer(OpcodeHandler):
         """
         Extract and parse `Object: {...}` from an opcode comment.
 
-        NOTE (fix): the previous version returned the raw `dict` from
-        `json.loads(...)` on success - unwrapped, not an IR/Value node
-        at all - and only used `ObjectLiteralValue({})` on the empty/
-        failure path. Both branches now consistently return an
-        `ObjectExpression` (or `None` on genuine failure, distinguished
-        from a legitimately empty object).
+        Handles nested braces and braces that appear inside string values
+        (common with Reanimated / worklet 'code' fields).
         """
-
         if not comment:
             return ObjectExpression(properties=())
 
-        object_matches = re.findall(r"Object:\s*(\{[^}]+})", comment)
+        marker = "Object:"
+        idx = comment.find(marker)
+        if idx == -1:
+            return None
 
-        for obj_str in object_matches:
-            try:
-                clean = obj_str
+        # İlk '{' karakterini bul
+        start = comment.find("{", idx + len(marker))
+        if start == -1:
+            return None
 
-                clean = re.sub(r"\btrue\b", "True", clean)
-                clean = re.sub(r"\bfalse\b", "False", clean)
-                clean = re.sub(r"\bnull\b", "None", clean)
+        # Balanced brace extraction (string-aware)
+        obj_str = NewObjectWithBuffer._extract_balanced_braces(comment, start)
+        if obj_str is None:
+            return None
 
-                parsed = ast.literal_eval(clean)
-            except json.JSONDecodeError:
-                continue  # try next match
+        try:
+            clean = obj_str
+            clean = re.sub(r"\btrue\b", "True", clean)
+            clean = re.sub(r"\bfalse\b", "False", clean)
+            clean = re.sub(r"\bnull\b", "None", clean)
 
-            if not isinstance(parsed, dict):
-                continue
+            parsed = ast.literal_eval(clean)
+        except (SyntaxError, ValueError, TypeError):
+            return None
 
-            properties = tuple(
-                ObjectProperty(key=StringLiteral(k), value=_json_to_expression(v))
-                for k, v in parsed.items()
-            )
-            return ObjectExpression(properties=properties)
+        if not isinstance(parsed, dict):
+            return None
+
+        properties = tuple(
+            ObjectProperty(key=StringLiteral(k), value=_json_to_expression(v))
+            for k, v in parsed.items()
+        )
+        return ObjectExpression(properties=properties)
+
+    @staticmethod
+    def _extract_balanced_braces(text: str, start: int) -> str | None:
+        """
+        text[start] == '{' varsayılır.
+        String literal içindeki { } karakterlerini yok sayarak
+        eşleşen kapanış '}' pozisyonuna kadar olan substring'i döner.
+        """
+        if start >= len(text) or text[start] != "{":
+            return None
+
+        depth = 0
+        i = start
+        in_string = False
+        string_char = None  # "'" veya '"'
+        escape = False
+
+        while i < len(text):
+            ch = text[i]
+
+            if in_string:
+                if escape:
+                    escape = False
+                elif ch == "\\":
+                    escape = True
+                elif ch == string_char:
+                    in_string = False
+                    string_char = None
+            else:
+                if ch in ("'", '"'):
+                    in_string = True
+                    string_char = ch
+                elif ch == "{":
+                    depth += 1
+                elif ch == "}":
+                    depth -= 1
+                    if depth == 0:
+                        return text[start: i + 1]
+
+            i += 1
 
         return None
 
