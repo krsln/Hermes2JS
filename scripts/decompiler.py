@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
-
+import logging
 from pathlib import Path
 import argparse
 
 from hermes_decompiler.io import get_section_files, process_section
-from hermes_decompiler.core.Logging import logger
+from hermes_decompiler.core.logging import configure_logging, logging_test, get_logger
 
+logger = get_logger(__name__)
+configure_logging(level=logging.DEBUG, use_color=True)
+logging_test()
 
-# handler = logging.StreamHandler()
-# handler.setFormatter(logging.Formatter("%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"))
-# logging.getLogger("hermes_decompiler").addHandler(handler)
-# logging.getLogger("hermes_decompiler").setLevel(logging.INFO)
 
 def main() -> None:
     parser = argparse.ArgumentParser(
@@ -33,11 +32,7 @@ def main() -> None:
         help="Directory where JavaScript files will be written.",
     )
 
-    parser.add_argument(
-        "--start",
-        type=int,
-        help="First section number to process.",
-    )
+    parser.add_argument("--start", type=int, help="First section number to process.")
 
     parser.add_argument(
         "--end",
