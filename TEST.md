@@ -14,6 +14,7 @@ tree -I '__pycache__|__init__.py|ir|handlers|regions' hermes_decompiler
 python scripts/decompiler.py -i ./apps/demo/fixtures/one -o ./apps/demo/fixtures/results
 
 python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
+python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --log-level DEBUG
 
 python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --no-verbose
 python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --strict

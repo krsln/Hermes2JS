@@ -113,8 +113,13 @@ python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fix
 **Examples**
 
 ```shell
-python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ 
-python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 999 
+python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results
+python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --no-verbose
+
+python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --strict
+python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --start 100 --end 200
+python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --log-level DEBUG
+python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --log-level WARNING --no-verbose
 
 python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```

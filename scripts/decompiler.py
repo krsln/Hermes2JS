@@ -7,8 +7,6 @@ from hermes_decompiler.io import get_section_files, process_section
 from hermes_decompiler.core.logging import configure_logging, logging_test, get_logger
 
 logger = get_logger(__name__)
-configure_logging(level=logging.DEBUG, use_color=True)
-logging_test()
 
 
 def main() -> None:
@@ -16,42 +14,29 @@ def main() -> None:
         description="Convert Hermes .hbc sections to JavaScript."
     )
 
-    parser.add_argument(
-        "-i",
-        "--input",
-        required=True,
-        type=Path,
-        help="Directory containing .hbc section files.",
-    )
+    LOG_LEVELS = {
+        "DEBUG": logging.DEBUG,
+        "INFO": logging.INFO,
+        "WARNING": logging.WARNING,
+        "ERROR": logging.ERROR,
+        "CRITICAL": logging.CRITICAL,
+    }
 
-    parser.add_argument(
-        "-o",
-        "--output",
-        required=True,
-        type=Path,
-        help="Directory where JavaScript files will be written.",
-    )
+    DESC_INPUT = "Directory containing .hbc section files."
+    DESC_OUTPUT = "Directory where JavaScript files will be written."
+    DESC_START = "First section number to process."
+    DESC_END = "Last section number to process."
+    DESC_STRICT = "Fail on first opcode error."
+    DESC_NO_VERBOSE = "Disable source comments."
+    DESC_LOG_LEVEL = "Logging verbosity."
 
-    parser.add_argument("--start", type=int, help="First section number to process.")
-
-    parser.add_argument(
-        "--end",
-        type=int,
-        help="Last section number to process.",
-    )
-
-    parser.add_argument(
-        "--strict",
-        action="store_true",
-        help="Fail on first opcode error",
-    )
-
-    parser.add_argument(
-        "--no-verbose",
-        action="store_false",
-        dest="verbose",
-        help="Disable source comments",
-    )
+    parser.add_argument("-i", "--input", required=True, type=Path, help=DESC_INPUT)
+    parser.add_argument("-o", "--output", required=True, type=Path, help=DESC_OUTPUT)
+    parser.add_argument("--start", type=int, help=DESC_START)
+    parser.add_argument("--end", type=int, help=DESC_END)
+    parser.add_argument("--strict", action="store_true", help=DESC_STRICT)
+    parser.add_argument("--no-verbose", action="store_false", dest="verbose", help=DESC_NO_VERBOSE)
+    parser.add_argument("--log-level", default="INFO", choices=LOG_LEVELS, help=DESC_LOG_LEVEL)
 
     parser.set_defaults(verbose=True)
 
@@ -59,6 +44,10 @@ def main() -> None:
 
     input_dir = args.input.resolve()
     output_dir = args.output.resolve()
+
+    # configure_logging(level=logging.DEBUG, use_color=True)
+    configure_logging(level=LOG_LEVELS[args.log_level], use_color=True)
+    logging_test()
 
     logger.info("Starting .hbc to JavaScript conversion. Verbose: %s | Strict: %s", args.verbose, args.strict)
 
