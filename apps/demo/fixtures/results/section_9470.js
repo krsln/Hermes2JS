@@ -19,9 +19,9 @@ function makeSound(param0) {
     // CODE → <LoadParentNoTraps>: <Reg8: 3, Reg8: 3>
     // USED → r3 = __getPrototypeOfNoTraps__(getParentEnvironment(0)[3]);
     // CODE → <GetByIdWithReceiverLong>: <Reg8: 3, Reg8: 3, UInt8: 2, Reg8: 1, string_id: 9459>  # String: 'makeSound' (Identifier)
-    // Error: GetByIdWithReceiverLong at address 35: Expected Reg8, Reg8, UInt8, Reg8, string_id arguments: Reg8: 3, Reg8: 3, UInt8: 2, Reg8: 1, string_id: 9459
+    // USED → r3 = Reflect.get(__getPrototypeOfNoTraps__(getParentEnvironment(0)[3]), "makeSound", this);
     // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 1>
-    r3 = __getPrototypeOfNoTraps__(getParentEnvironment(0)[3]).call(this)
+    r3 = Reflect.get(__getPrototypeOfNoTraps__(getParentEnvironment(0)[3]), "makeSound", this).call(this)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)

@@ -174,7 +174,7 @@ class CFGBuilder:
                     if current_block.terminator is None:
                         current_block.terminator = result.terminator
                     else:
-                        logger.error(
+                        logger.warning(
                             "BasicBlock %d already has a terminator.\n"
                             "    Current terminator : %s\n"
                             "    New terminator     : %s\n"

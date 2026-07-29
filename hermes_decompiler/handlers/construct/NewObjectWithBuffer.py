@@ -1,5 +1,6 @@
 import json
 import re
+import ast
 
 from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence, UINT32
 from hermes_decompiler.ir.expressions import (
@@ -34,14 +35,15 @@ def _json_to_expression(value: object) -> Expression:
 
 
 # Reg8, UInt16, UInt16 (total size 5)
+# DEFINE_OPCODE_5(NewObjectWithBuffer, Reg8, UInt16, UInt16, UInt16, UInt16)
 # DEFINE_OPCODE_3(NewObjectWithBuffer, Reg8, UInt16, UInt16)
 # Example: <NewObjectWithBuffer>: <Reg8: 7, UInt16: 27, UInt16: 17989>  # Object: {'enumerable': true, 'get': null}
 # Example: <NewObjectWithBuffer>: <Reg8: 37, UInt16: 9, UInt16: 9, UInt16: 194, UInt16: 115>  # Object: {'type': null, 'target': null, 'currentTarget': null, 'eventPhase': null, 'bubbles': null, 'cancelable': null, 'timeStamp': null, 'defaultPrevented': null, 'isTrusted': null}
 class NewObjectWithBuffer(OpcodeHandler):
     """Create an object from a static map of values using buffer."""
 
-    _PATTERN = sequence(REG, UINT16, UINT16)
-    _PATTERN_OLD = sequence(REG, UINT16, UINT16, UINT16, UINT16)
+    _PATTERN = sequence(REG, UINT16, UINT16, UINT16, UINT16)
+    _PATTERN_OLD = sequence(REG, UINT16, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
@@ -85,8 +87,13 @@ class NewObjectWithBuffer(OpcodeHandler):
 
         for obj_str in object_matches:
             try:
-                clean_str = obj_str.replace("'", '"').rstrip(",").strip()
-                parsed = json.loads(clean_str)
+                clean = obj_str
+
+                clean = re.sub(r"\btrue\b", "True", clean)
+                clean = re.sub(r"\bfalse\b", "False", clean)
+                clean = re.sub(r"\bnull\b", "None", clean)
+
+                parsed = ast.literal_eval(clean)
             except json.JSONDecodeError:
                 continue  # try next match
 
@@ -103,12 +110,13 @@ class NewObjectWithBuffer(OpcodeHandler):
 
 
 # Reg8, UInt32, UInt32 (total size 9)
+# DEFINE_OPCODE_5(NewObjectWithBufferLong, Reg8, UInt16, UInt16, UInt32, UInt32)
 # DEFINE_OPCODE_3(NewObjectWithBufferLong, Reg8, UInt32, UInt32)
 class NewObjectWithBufferLong(NewObjectWithBuffer):
     """Long variant."""
 
-    _PATTERN = sequence(REG, UINT32, UINT32)
-    _PATTERN_OLD = sequence(REG, UINT16, UINT16, UINT32, UINT32)
+    _PATTERN = sequence(REG, UINT16, UINT16, UINT32, UINT32)
+    _PATTERN_OLD = sequence(REG, UINT32, UINT32)
 
     pass
 

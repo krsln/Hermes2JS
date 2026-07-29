@@ -58,7 +58,7 @@ class DelByVal(OpcodeHandler):
     """delete obj[prop]"""
 
     _PATTERN = sequence(REG, REG, REG, UINT8)
-    _PATTERN_OLD = sequence(REG, REG, REG, UINT8)
+    _PATTERN_OLD = sequence(REG, REG, REG)  # DEFINE_OPCODE_3
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = (
@@ -68,7 +68,7 @@ class DelByVal(OpcodeHandler):
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
-        dest_reg, obj_reg, prop_reg = map(int, match.groups())
+        dest_reg, obj_reg, prop_reg, *_ = map(int, match.groups())
 
         obj = self.get_register_value(analysis, obj_reg)
         prop = self.get_register_value(analysis, prop_reg)

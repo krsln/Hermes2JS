@@ -69,11 +69,12 @@ class OpcodeHandler(ABC):
             entry: OpcodeEntry,
             error: str,
     ) -> OpcodeResult:
-        logger.exception(
-            "%s failed while processing opcode '%s' at address %d",
+        logger.error(
+            "%s failed while processing opcode '%s' at address %d: %s",
             cls.__name__,
             entry.opcode,
             entry.address,
+            error,
         )
 
         result = OpcodeResult(entry, value=RawExpression(source=error))

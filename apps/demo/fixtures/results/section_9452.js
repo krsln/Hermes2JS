@@ -31,7 +31,7 @@ function propertyAccessTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 28>  # String: 'x' (Identifier)
     // USED → r0 = "x";
     // CODE → <DelByVal>: <Reg8: 2, Reg8: 4, Reg8: 0, UInt8: 1>
-    // Error: DelByVal at address 75: Expected three Reg8 arguments: Reg8: 2, Reg8: 4, Reg8: 0, UInt8: 1
+    r2 = delete { "x": 1, "y": 2 }["x"]
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)

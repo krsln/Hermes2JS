@@ -19,9 +19,9 @@ function spreadObjectTest(param0) {
     // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 46, UInt8: 3>  # Built-in function: [#46 arraySpread]
     r3 = builtin_46(r0, r1, r2)
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
-    r0 = 3
+    // USED → r0 = 3;
     // CODE → <DefineOwnById>: <Reg8: 5, Reg8: 0, UInt8: 0, UInt16: 6488>
-    // Error: DefineOwnById at address 40: Invalid arguments: Reg8: 5, Reg8: 0, UInt8: 0, UInt16: 6488
+    {  }.string_6488 = 3
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
