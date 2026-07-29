@@ -4,6 +4,7 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8 (total size 2)
 # Example: <ResumeGenerator>: <Reg8: 0, Reg8: 2>
 class ResumeGenerator(OpcodeHandler):
     """Resume a suspended generator."""

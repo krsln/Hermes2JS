@@ -4,6 +4,7 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Addr8 (total size 1)
 # Example: <SaveGenerator>: <Addr8: 4>  # Address: 00000095
 class SaveGenerator(OpcodeHandler):
     """
@@ -40,3 +41,8 @@ class SaveGenerator(OpcodeHandler):
         analysis.add_result(result)
 
         return result
+
+
+# Addr32 (total size 4)
+class SaveGeneratorLong(SaveGenerator):
+    pass

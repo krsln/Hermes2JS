@@ -6,6 +6,7 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# (total size 0)
 # Example: <CompleteGenerator>: <>
 class CompleteGenerator(OpcodeHandler):
     """Mark the generator as completed."""
