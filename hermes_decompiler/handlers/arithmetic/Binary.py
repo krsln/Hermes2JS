@@ -72,38 +72,36 @@ class StrictNeq(BaseBinaryOperator): operator = BinaryOperator.STRICT_NOT_EQUAL
 # @formatter:on
 
 
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(AddS, Reg8, Reg8, Reg8)
+# Example: <AddS>: <Reg8: 9, Reg8: 6, Reg8: 1>
+class AddS(BaseBinaryOperator):
+    """String-concatenation-proven variant of Add."""
+
+    operator = BinaryOperator.ADD
+
+
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(InstanceOf, Reg8, Reg8, Reg8)
+# Example: <InstanceOf>: <Reg8: 8, Reg8: 11, Reg8: 18>
 class InstanceOf(BaseBinaryOperator):
     """instanceof operator."""
 
     operator = BinaryOperator.INSTANCEOF
 
 
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(IsIn, Reg8, Reg8, Reg8)
+# Example: <IsIn>: <Reg8: 0, Reg8: 4, Reg8: 5>
 class IsIn(BaseBinaryOperator):
     """`in` operator: Arg1 = (Arg2 in Arg3)."""
 
     operator = BinaryOperator.IN
 
 
+# Reg8, Reg8, Reg8, Reg8 (total size 4)
 # DEFINE_OPCODE_4(PrivateIsIn, Reg8, Reg8, Reg8, Reg8)
-#   [confirmed, facebook/hermes BytecodeList.def, tag hermes-v260318099.0.1]
-#
-#   "Arg1 = Arg2 in Arg3 (JS relational 'in' for private names.)
-#    Arg2 must be a symbol.
-#    Arg4 is a private name cache index used to speed up the above
-#    operation.
-#    Note that this performs different logic than a normal `in` check.
-#    This instruction does not consult the prototype chain or trigger
-#    any proxy traps. It is a direct check on the own properties of
-#    the input object."
-#
-# Backs the ergonomic private-field brand check `#x in obj` (used to
-# test class membership without triggering getters/Proxy traps).
-# Rendered as the same `in` BinaryExpression as plain IsIn -- the
-# distinction (own-property-only, no prototype/proxy involvement) is a
-# semantic guarantee `#x in obj` already has in real JS syntax by
-# virtue of `#x` being a private name, so no separate rendering is
-# needed. Arg2 (the private-name symbol register) takes the LHS slot
-# exactly like a regular IsIn's property-key operand.
+# Example: <PrivateIsIn>: <Reg8: 0, Reg8: 5, Reg8: 4, Reg8: 0>
 class PrivateIsIn(OpcodeHandler):
     """`#x in obj` brand-check operator: Arg1 = (Arg2 in Arg3), own-properties only, symbol-keyed."""
 
@@ -129,21 +127,3 @@ class PrivateIsIn(OpcodeHandler):
         analysis.add_result(result)
 
         return result
-
-
-# DEFINE_OPCODE_3(AddS, Reg8, Reg8, Reg8)   [confirmed, hermes-dec table]
-#
-#   "This is a variant of Add which is used when the compiler can prove
-#    that at least one of the operands is a string, so the result must
-#    be a string concatenation (as opposed to Add's more general
-#    numeric-or-string behavior). Arg1 = Arg2 + Arg3, guaranteed
-#    string-concat semantics."
-#
-# Rendered identically to Add (`+`) -- the distinction is a compiler-
-# side proof/optimization about *which* runtime path Add would take,
-# not a different JS operator; `"a" + "b"` and the proven-string fast
-# path both surface as the same `+` in source.
-class AddS(BaseBinaryOperator):
-    """String-concatenation-proven variant of Add."""
-
-    operator = BinaryOperator.ADD

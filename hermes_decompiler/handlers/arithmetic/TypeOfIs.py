@@ -5,38 +5,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, UInt16 (total size 4)
 # DEFINE_OPCODE_3(TypeOfIs, Reg8, Reg8, UInt16)
-#   [confirmed, facebook/hermes BytecodeList.def, tag hermes-v260318099.0.1]
-#
-#   "Arg1 = typeof Arg2 is in Arg3 (TypeOfIsTypes, see Typeof.h)"
-#
-# CORRECTION vs. earlier draft: this is a COMPLETE REWRITE. The
-# previous version guessed a single UInt8 "type_tag" operand mapping to
-# exactly one typeof-result string (`typeof x === "sometype"`). The
-# real opcode takes a UInt16 *bitmask* ("TypeOfIsTypes", defined in
-# Hermes's Typeof.h, which is NOT available to check from here) and
-# tests whether `typeof Arg2` is any one of potentially SEVERAL types
-# encoded in that mask -- i.e. this can represent `typeof x === "a" ||
-# typeof x === "b" || ...` fused into one instruction, not just a
-# single equality check.
-#
-# Since Typeof.h's actual bit-to-typeof-string mapping isn't available
-# in this session, the bitmask can't be decoded into the right set of
-# type-name strings here. Two honest options:
-#   (a) render a placeholder that preserves the raw mask for the reader
-#       to cross-reference, or
-#   (b) if the mask has exactly one bit set, render the single-type
-#       check other engines do (best-effort, common case).
-# This handler does (b) with a documented, EXPLICITLY GUESSED bit
-# ordering (see _TYPE_BITS below -- not sourced from Typeof.h, just a
-# plausible guess at typeof-result ordering) as a best-effort single-
-# type case, and falls back to (a) -- a literal mask placeholder -- for
-# anything with zero or multiple bits set, rather than silently
-# guessing which OR-combination was intended.
-#
-# VERIFY the actual bit assignments against
-# include/hermes/VM/Typeof.h (or wherever TypeOfIsTypes is defined) in
-# your Hermes source tree before trusting the single-bit case below.
+# Example: <TypeOfIs>: <Reg8: 1, Reg8: 4, UInt16: 258>
 class TypeOfIs(OpcodeHandler):
     """
     Arg1 = typeof Arg2 is one of the types encoded in the Arg3 bitmask.
