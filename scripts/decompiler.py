@@ -69,6 +69,8 @@ def main() -> None:
         return
 
     logger.info("Found %d .hbc files", len(files))
+    logger.info("input \t%s", input_dir)
+    logger.info("output \t%s", output_dir)
 
     for filename, section_index in files:
         file_path = input_dir / filename
