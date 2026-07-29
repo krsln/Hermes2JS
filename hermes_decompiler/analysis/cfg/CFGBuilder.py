@@ -2,11 +2,15 @@ from __future__ import annotations
 
 from typing import Dict, List, Set
 
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.opcode import OpcodeResult
 from .BasicBlock import BasicBlock
 from .CFG import CFG
-from ..terminators import TerminatorConditionalBranch, TerminatorJump, TerminatorSwitch, TerminatorReturn, \
-    TerminatorThrow
+from ..terminators import (
+    TerminatorConditionalBranch, TerminatorJump, TerminatorSwitch, TerminatorReturn, TerminatorThrow
+)
+
+logger = get_logger(__name__)
 
 
 class CFGBuilder:
@@ -170,7 +174,16 @@ class CFGBuilder:
                     if current_block.terminator is None:
                         current_block.terminator = result.terminator
                     else:
-                        print(f"Block {current_block.id} already has a terminator.", result.opcode)
+                        logger.error(
+                            "BasicBlock %d already has a terminator.\n"
+                            "    Current terminator : %s\n"
+                            "    New terminator     : %s\n"
+                            "    Produced by opcode : %s",
+                            current_block.id,
+                            current_block.terminator,
+                            result.terminator,
+                            result.handler,
+                        )
                         # raise RuntimeError(f"Block {current_block.id} already has a terminator.")
                 # else:
                 current_block.add_instruction(result)

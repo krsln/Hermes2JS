@@ -53,6 +53,15 @@ class IfStructurer(RegionStructurer):
     Loop header blocks are excluded because their ConditionalBranch is
     consumed later by LoopConditionExtractor when building while/do-while
     regions.
+
+    Both patterns generalize automatically to `else if` chains and to
+    any physical block layout the compiler chose: `then`/`else`
+    membership is decided by dominance (see `_convert`), not by
+    position in `region.children`, so nested tests, interleaved
+    sibling statements, or an else-target placed far from its "then"
+    counterpart are all handled without special-casing - each level of
+    the chain just becomes its own nested IfRegion once this pass
+    revisits `region.children` after the outer one converts.
     """
 
     def __init__(self, graph, cfg):
@@ -161,10 +170,33 @@ class IfStructurer(RegionStructurer):
         Returns True if `block` was converted into an IfRegion, False
         if it was left untouched (see `_structure_sequence` for why the
         return value matters).
+
+        Classifies every item after `block` by DOMINANCE rather than
+        physical list position: an item belongs to the "then" side iff
+        it's dominated by the fallthrough block (`then_root`), and to
+        the "else" side iff dominated by the branch target
+        (`else_root`) - regardless of how the compiler physically
+        interleaved the two branches' blocks in the flat sequence, and
+        regardless of whether `merge_block` happens to sit before or
+        after `else_root` in that sequence. The old adjacency-based
+        version required `goto_block` to be the literal next item after
+        "then" ended, which broke for else-if chains and any layout
+        where intervening not-yet-structured blocks (or even an
+        unrelated sibling statement) sat between "then" and "else".
+
+        Dominance also subsumes the single-entry check this class used
+        to run separately: an item with a predecessor outside its
+        claimed side's dominated subtree simply fails the `dominates()`
+        test below and this candidate correctly bails.
         """
 
         branch = block.terminator
         assert isinstance(branch, TerminatorConditionalBranch)
+
+        if self.cfg.dominator_tree is None:
+            # Can't safely classify anything without it - every caller
+            # in this codebase computes it before structuring runs.
+            return False
 
         block_index = region.children.index(block)
         then_start = block_index + 1
@@ -172,6 +204,9 @@ class IfStructurer(RegionStructurer):
         if then_start >= len(region.children):
             # No fallthrough successor at all - can't structure safely.
             return False
+
+        then_root = region.children[then_start]
+        then_entry = self._representative_block(then_root)
 
         merge_block = None
 
@@ -185,69 +220,64 @@ class IfStructurer(RegionStructurer):
                 and goto_block is not merge_block
         )
 
-        # -------------------------------------------------------------
-        # Find the boundary between "then" and (optional) "else"/merge.
-        # -------------------------------------------------------------
-
-        stop = {
-            b
-            for b in (
-                merge_block,
-                goto_block if has_else else None,
-            )
-            if b is not None
-        }
-
-        then_end = self._find_boundary(region, then_start, stop)
+        else_root = None
+        else_entry = None
 
         if has_else:
 
-            else_start = then_end
+            else_root = self.graph.find_covering_item(region, goto_block)
 
-            if (
-                    else_start >= len(region.children)
-                    or region.children[else_start] is not goto_block
-            ):
-                # goto target isn't where expected right after "then" -
-                # bail out rather than guess incorrectly.
+            if else_root is None or else_root is then_root:
+                # goto target isn't reachable as a distinct sibling in
+                # this region - bail rather than guess.
                 return False
 
-            stop_at_second = {merge_block} if merge_block is not None else set()
-            else_end = self._find_boundary(region, else_start, stop_at_second)
-
-        else:
-
-            else_start = then_end
-            else_end = then_end
-
-        then_items = region.children[then_start:then_end]
-        else_items = region.children[else_start:else_end]
+            else_entry = self._representative_block(else_root)
 
         # -------------------------------------------------------------
-        # Single-entry validation.
-        #
-        # then_items / else_items are only a valid "then"/"else" body if
-        # the ONLY way to reach them is through `block`'s branch. Short-
-        # circuit (&&/||) chains compile to multiple conditional blocks
-        # that all jump to a *shared* target (e.g. two different
-        # JmpTrue's landing on the same "either" block). Such a target
-        # is a join point, not part of a single then/else body - if we
-        # blindly sliced it into then_items/else_items here, we'd
-        # produce a structurally invalid (contradictory / duplicated)
-        # IfRegion, as seen with ifElseChainTest's `a || b` branch.
-        #
-        # We verify that every block in then_items (besides the first,
-        # which is legitimately entered from `block`) has no predecessor
-        # outside of `block` + the items collected so far. Same for
-        # else_items, whose first block is entered via `block`'s goto.
-        # If any block is reachable from somewhere else too, bail out
-        # and leave this candidate as a raw goto rather than guess.
+        # Classify region.children[then_start:] by dominance until the
+        # merge point (or end of region) is reached.
         # -------------------------------------------------------------
 
-        if not self._is_single_entry(then_items, block) or not self._is_single_entry(else_items, block):
+        dominators = self.cfg.dominator_tree
+
+        then_items: list = []
+        else_items: list = []
+
+        index = then_start
+        boundary = len(region.children)
+
+        while index < len(region.children):
+
+            item = region.children[index]
+
+            if item is merge_block:
+                boundary = index
+                break
+
+            rep = self._representative_block(item)
+
+            if dominators.dominates(then_entry, rep):
+                then_items.append(item)
+
+            elif has_else and dominators.dominates(else_entry, rep):
+                else_items.append(item)
+
+            else:
+                # Neither side dominates this item: it's reachable some
+                # other way we don't account for here (e.g. a join we
+                # didn't expect). Bail rather than misclassify it.
+                return False
+
+            index += 1
+
+        if has_else and not else_items:
+            # else_root dominates itself, so it must have been
+            # classified above - empty means something upstream is
+            # inconsistent. Bail rather than build a broken else.
             return False
 
-        del region.children[then_start:else_end]
+        del region.children[then_start:boundary]
 
         then_body = SequenceRegion()
         else_body = SequenceRegion() if has_else else None
@@ -286,66 +316,18 @@ class IfStructurer(RegionStructurer):
     # -------------------------------------------------------------
 
     @staticmethod
-    def _predecessors(block: BasicBlock) -> set:
+    def _representative_block(item) -> BasicBlock:
         """
-        Returns the set of blocks with an edge into `block`.
-
-        CFGBuilder._connect populates `block.predecessors` for every
-        edge it creates, so this is always available - no fallback
-        needed.
-        """
-
-        return set(block.predecessors)
-
-    def _is_single_entry(self, items: list, entry_from: BasicBlock) -> bool:
-        """
-        True if `items` (a candidate then/else body, in order) is only
-        ever entered from `entry_from` (i.e. `block`'s branch/fallthrough)
-        and, for items after the first, from earlier items in the same
-        list. False if any item has a predecessor from outside that
-        set - meaning it's a join point shared with some other branch
-        and must NOT be folded into this then/else body.
-
-        Predecessors that live *inside* `items` themselves are fine
-        (straight-line fallthrough within the body).
+        Any single `BasicBlock` that dominance checks against `item`
+        can be run on. For a raw `BasicBlock`, that's `item` itself.
+        For an already-built region (`IfRegion`/`LoopRegion`/
+        `TryRegion`), every block it covers shares the same dominance
+        relationship to blocks *outside* it - single-entry regions are
+        dominated as a unit, by construction - so any element of
+        `covered_blocks` is an equally valid representative.
         """
 
-        if not items:
-            return True
+        if isinstance(item, BasicBlock):
+            return item
 
-        allowed = {entry_from}
-
-        for item in items:
-
-            if not isinstance(item, BasicBlock):
-                allowed.add(item)
-                continue
-
-            if not self._predecessors(item).issubset(allowed):
-                return False
-
-            allowed.add(item)
-
-        return True
-
-    # -------------------------------------------------------------
-
-    @classmethod
-    def _find_boundary(cls, region: SequenceRegion, start: int, stop_at: set) -> int:
-        """
-        Walks `region.children` from `start`, returning the index of the
-        first item found in `stop_at`, or `len(region.children)` if none
-        is found (the branch runs to the end of this region - e.g. both
-        sides terminate via return/throw with no common merge point).
-        """
-
-        index = start
-
-        while index < len(region.children):
-
-            if region.children[index] in stop_at:
-                return index
-
-            index += 1
-
-        return index
+        return next(iter(item.covered_blocks))
