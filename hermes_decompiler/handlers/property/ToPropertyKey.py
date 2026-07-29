@@ -3,22 +3,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-# ToPropertyKey, Reg8, Reg8
-#
-# NOT found in either source consulted; not in the checked
-# BytecodeList.def, and the hermes-dec table lookup was truncated
-# before reaching the "T" opcodes, so this signature is inferred purely
-# from ES spec naming convention (ECMA-262 ToPropertyKey abstract
-# operation) and Hermes's existing Reg8,Reg8 unary-conversion pattern
-# (compare ToNumber, ToNumeric, ToInt32 above). Recommend verifying
-# against your BytecodeList.def / disassembler output before relying on
-# this in production -- specifically confirm operand count and whether
-# there's a UInt8 cache operand like other property-access opcodes.
-#
-# Semantically: Arg1 = ToPropertyKey(Arg2), i.e. converts a value to a
-# valid property key (string or symbol) per ES2015+ semantics, used
-# ahead of computed member expressions/class private fields where the
-# key type isn't statically known.
+# Reg8, Reg8 (total size 2)
+# DEFINE_OPCODE_2(ToPropertyKey, Reg8, Reg8)
+# Example: <ToPropertyKey>: <Reg8: 6, Reg8: 6>
 class ToPropertyKey(OpcodeHandler):
     """Arg1 = ToPropertyKey(Arg2) -- coerce a value to a valid property key."""
 

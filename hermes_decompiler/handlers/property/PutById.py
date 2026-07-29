@@ -5,6 +5,8 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
+# Example: <PutById>: <Reg8: 10, Reg8: 2, UInt8: 3, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
 class PutById(OpcodeHandler):
     """
     Put object property by identifier.
@@ -46,33 +48,42 @@ class PutById(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
+# Example:
 class PutByIdLong(PutById):
     pass
 
 
-# PutByIdStrict / PutByIdLoose
-#
-# These are not present in the upstream facebook/hermes BytecodeList.def
-# (they are variants that appear in some newer/forked Hermes bytecode
-# versions, analogous to how DelById gained DelByIdStrict/DelByIdLoose
-# and DelByVal gained DelByValStrict/DelByValLoose). Layout is assumed
-# identical to PutById -- Reg8 obj, Reg8 value, UInt8 cache, UInt16/32
-# string_id -- with the only difference being whether the runtime throws
-# on a failed assignment (strict mode) or silently ignores it (loose
-# mode). That distinction is a runtime semantic, not something that
-# changes the decompiled JS source (`obj.foo = value;` either way), so
-# both simply reuse PutById's handling.
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
+# DEFINE_OPCODE_4(PutByIdStrict, Reg8, Reg8, UInt8, UInt16)
+# Example: <PutByIdStrict>: <Reg8: 0, Reg8: 1, UInt8: 0, string_id: 186>  # String: 'name' (Identifier)
 class PutByIdStrict(PutById):
     pass
 
 
+# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
+# DEFINE_OPCODE_4(PutByIdStrictLong, Reg8, Reg8, UInt8, UInt32)
+# Example:
 class PutByIdStrictLong(PutByIdStrict):
     pass
 
 
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
+# DEFINE_OPCODE_4(PutByIdLoose, Reg8, Reg8, UInt8, UInt16)
+# Example: <PutByIdLoose>: <Reg8: 1, Reg8: 2, UInt8: 0, string_id: 140>  # String: 'exports' (Identifier)
 class PutByIdLoose(PutById):
     pass
 
 
+# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
+# DEFINE_OPCODE_4(PutByIdLooseLong, Reg8, Reg8, UInt8, UInt32)
+# Example:
 class PutByIdLooseLong(PutByIdLoose):
     pass
+
+# TryPutById
+# TryPutByIdLong
+# TryPutByIdLoose
+# TryPutByIdLooseLong
+# TryPutByIdStrict
+# TryPutByIdStrictLong

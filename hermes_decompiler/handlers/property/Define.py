@@ -1,4 +1,4 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, STRING_ID, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, STRING_ID, sequence, UINT32, UINT16
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
     AssignmentExpression,
@@ -13,23 +13,13 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-# DEFINE_OPCODE_5(DefineOwnById, Reg8, Reg8, UInt8, UInt16 string_id)   [confirmed, hermes-dec table]
-# DEFINE_OPCODE_5(DefineOwnByIdLong, Reg8, Reg8, UInt8, UInt32 string_id)
-#
-#   "Define an object own property by string index.
-#    Arg1[stringtable[Arg4]] = Arg2. Arg3 is a cache index."
-#
-# Semantically almost identical to PutById, except the property is
-# guaranteed to not exist yet and is being *defined* rather than
-# assigned through the prototype chain. Hermes emits this instead of
-# PutById for property definitions inside object literals / class
-# bodies where the compiler already knows the property is fresh.
-# The resulting JS is indistinguishable from a normal assignment, so we
-# render it the same way PutById does.
+# Reg8, Reg8, UInt8, UInt16 (total size 5)
+# DEFINE_OPCODE_4(DefineOwnById, Reg8, Reg8, UInt8, UInt16)
+# Example: <DefineOwnById>: <Reg8: 2, Reg8: 5, UInt8: 1, UInt16: 160>
 class DefineOwnById(OpcodeHandler):
     """Define an own object property by string ID: obj.foo = value (fresh property)."""
 
-    _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
+    _PATTERN = sequence(REG, REG, UINT8, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -55,21 +45,16 @@ class DefineOwnById(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
+# DEFINE_OPCODE_4(DefineOwnByIdLong, Reg8, Reg8, UInt8, UInt32)
+# Example:
 class DefineOwnByIdLong(DefineOwnById):
     pass
 
 
-# DEFINE_OPCODE_4(DefineOwnByVal, Reg8, Reg8, Reg8, UInt8 enumerable)   [confirmed, hermes-dec table]
-#
-#   "Set an own property identified by value.
-#    Arg1 is the destination object. Arg2 is the value to write.
-#    Arg3 is the property name. Arg4: bool -> enumerable.
-#    Arg1[Arg3] = Arg2;"
-#
-# Same shape as PutOwnByVal (which this codebase presumably already
-# handles); the enumerable flag (Arg4) only affects the resulting
-# property descriptor at runtime and has no separate JS surface syntax
-# distinct from a computed assignment, so it's rendered as obj[key] = value.
+# Reg8, Reg8, Reg8, UInt8 (total size 4)
+# DEFINE_OPCODE_4(DefineOwnByVal, Reg8, Reg8, Reg8, UInt8)
+# Example: <DefineOwnByVal>: <Reg8: 4, Reg8: 7, Reg8: 5, UInt8: 0>
 class DefineOwnByVal(OpcodeHandler):
     """Define an own object property by computed value: obj[key] = value (fresh property)."""
 
@@ -99,27 +84,9 @@ class DefineOwnByVal(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, Reg8, Reg8, UInt8 (total size 5)
 # DEFINE_OPCODE_5(DefineOwnGetterSetterByVal, Reg8, Reg8, Reg8, Reg8, UInt8)
-#   [confirmed, hermes-dec table]
-#
-#   "Add a getter and a setter for a property by value.
-#    Object.defineProperty(Arg1, Arg2, { get: Arg3, set: Arg4 }).
-#    Arg1 is the target object. Arg2 is the property name.
-#    Arg3 is the getter closure or undefined. Arg4 is the setter
-#    closure or undefined. Arg5: boolean, enumerable."
-#
-# Rendered as an explicit Object.defineProperty(...) call, since there's
-# no single JS literal syntax that captures "getter OR setter may be
-# undefined" the way object literal get/set shorthand does.
-#
-# NOTE: `ObjectExpression`/`Property` names are inferred from common
-# ESTree-style IR conventions used elsewhere in this codebase (e.g.
-# MemberExpression, AssignmentExpression). Verify these exact class
-# names/constructor kwargs exist in hermes_decompiler.ir.expressions
-# before relying on this -- if they're named differently (or don't
-# exist yet), this is the piece to adjust. Unlike Literal/UnaryExpression
-# (which I could check against the files you attached), I have not seen
-# the source for these two classes, so they're still unverified.
+# Example: <DefineOwnGetterSetterByVal>: <Reg8: 6, Reg8: 7, Reg8: 5, Reg8: 0, UInt8: 0>
 class DefineOwnGetterSetterByVal(OpcodeHandler):
     """Object.defineProperty(obj, key, { get, set, enumerable })."""
 
@@ -178,26 +145,9 @@ class DefineOwnGetterSetterByVal(OpcodeHandler):
         return result
 
 
-# DEFINE_OPCODE_3(DefineOwnByIndex, Reg8, Reg8, UInt8)   [confirmed, hermes-dec table]
-# DEFINE_OPCODE_3(DefineOwnByIndexL, Reg8, Reg8, UInt32)
-#
-#   "Assign a value to a constant integer own property which will be
-#    created as enumerable. This is used (potentially in conjunction
-#    with NewArrayWithBuffer) for arr=[foo,bar] initializations.
-#    Arg1[Arg3] = Arg2;"
-#
-# Note the args are: Arg1 = destination array/object, Arg2 = value,
-# Arg3 = the (immediate) integer index -- i.e. the *index* is baked
-# into the bytecode as UInt8/UInt32, not read from a register, unlike
-# DefineOwnByVal above. This is essentially the "own" counterpart to
-# PutOwnByIndex, used when populating array-literal elements that
-# couldn't be captured statically in the array buffer table.
-#
-# FIX vs. earlier draft: `Literal` (in Literals.py) is declared
-# `class Literal(Expression, ABC)` -- it's an abstract base class with
-# no `value` field of its own, so `Literal(value=index)` can't be
-# instantiated at all. The concrete subclass for a plain JS number is
-# `NumericLiteral(value=...)`.
+# Reg8, Reg8, UInt8 (total size 3)
+# DEFINE_OPCODE_3(DefineOwnByIndex, Reg8, Reg8, UInt8)
+# Example: <DefineOwnByIndex>: <Reg8: 3, Reg8: 4, UInt8: 70>
 class DefineOwnByIndex(OpcodeHandler):
     """Define an own indexed property: arr[N] = value (N is an immediate index)."""
 
@@ -225,33 +175,15 @@ class DefineOwnByIndex(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, UInt32 (total size 6)
+# DEFINE_OPCODE_3(DefineOwnByIndexL, Reg8, Reg8, UInt32)
 class DefineOwnByIndexL(DefineOwnByIndex):
-    pass
+    _PATTERN = sequence(REG, REG, UINT32)
 
 
-# DEFINE_OPCODE_3(DefineOwnInDenseArray, Reg8, Reg8, UInt8)   [confirmed, hermes-dec table]
-# DEFINE_OPCODE_4(DefineOwnInDenseArrayL, Reg8, Reg8, UInt16)
-#
-#   "Define an own property in a dense JavaScript array at a specific
-#    index. Requires that the array is dense and that the ArrayStorage
-#    underlying it has a size which is greater than the arrayIndex
-#    operand. Arg1[Arg3] = Arg2; Arg1 is the dense array object where
-#    the property will be defined. Arg2 is the value to be stored.
-#    Arg3 is the array index where the property will be stored. NOTE:
-#    the 'L' version only goes up to 16-bit array indices, because
-#    NewArray only takes UInt16 argument."
-#
-# Functionally identical rendering to DefineOwnByIndex (`arr[N] =
-# value`) -- the distinction (dense-array-storage fast path vs. generic
-# own-property definition) is a Hermes runtime optimization detail with
-# no separate JS syntax.
-#
-# Same `Literal` -> `NumericLiteral` fix as DefineOwnByIndex above.
-#
-# NOTE: per the doc comment, the "L" (long) variant here is UInt16, not
-# UInt32 like most other *L/*Long opcodes in this file -- verify that
-# matches your actual bytecode stream before assuming the same UINT8
-# token width works; may need a UInt16-specific pattern token.
+# Reg8, Reg8, UInt8 (total size 3)
+# DEFINE_OPCODE_3(DefineOwnInDenseArray, Reg8, Reg8, UInt8)
+# Example: <DefineOwnInDenseArray>: <Reg8: 4, Reg8: 3, UInt8: 2>
 class DefineOwnInDenseArray(OpcodeHandler):
     """Define an own property directly in dense array storage: arr[N] = value."""
 
@@ -279,5 +211,7 @@ class DefineOwnInDenseArray(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, UInt16 (total size 4)
+# DEFINE_OPCODE_3(DefineOwnInDenseArrayL, Reg8, Reg8, UInt16)
 class DefineOwnInDenseArrayL(DefineOwnInDenseArray):
-    pass
+    _PATTERN = sequence(REG, REG, UINT16)

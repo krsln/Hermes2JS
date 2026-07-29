@@ -6,14 +6,14 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 from .PutById import PutById
 
-PUT_NEW_OWN_PATTERN = sequence(REG, REG, STRING_ID)
-
 
 class PutNewOwnByIdX(PutById):
     """Base class for PutNewOwnById* variants."""
 
+    _PATTERN = sequence(REG, REG, STRING_ID)
+
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = PUT_NEW_OWN_PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
@@ -48,13 +48,25 @@ class PutNewOwnByIdX(PutById):
         return result
 
 
+# Reg8, Reg8, UInt8 (string_id) (total size 3)
+# DEFINE_OPCODE_3(PutNewOwnByIdShort, Reg8, Reg8, UInt8)
+# Example: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 0, string_id: 249>  # String: 'value' (Identifier)
 class PutNewOwnByIdShort(PutNewOwnByIdX):
+    """Set an existing own property identified at a slot index."""
     pass
 
 
+# Reg8, Reg8, UInt16 (string_id) (total size 4)
+# DEFINE_OPCODE_3(PutNewOwnById, Reg8, Reg8, UInt16)
+# Example: <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 19648>  # String: 'silentJSONParsing' (Identifier)
 class PutNewOwnById(PutNewOwnByIdX):
+    """Set an existing own property identified at a slot index."""
     pass
 
 
+# Reg8, Reg8, UInt32 (string_id) (total size 6)
+# DEFINE_OPCODE_3(PutNewOwnByIdLong, Reg8, Reg8, UInt32)
+# Example:
 class PutNewOwnByIdLong(PutNewOwnByIdX):
+    """Set an existing own property identified at a slot index."""
     pass

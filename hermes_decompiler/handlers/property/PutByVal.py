@@ -5,9 +5,12 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, Reg8 (total size 3)
 # DEFINE_OPCODE_3(PutByVal, Reg8, Reg8, Reg8)
 # Example: <PutByVal>: <Reg8: 98, Reg8: 2, Reg8: 0>
 class PutByVal(OpcodeHandler):
+    """Set an existing own property identified at a slot index."""
+
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -32,36 +35,23 @@ class PutByVal(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, Reg8 (total size 3)
 # DEFINE_OPCODE_3(PutByValLoose, Reg8, Reg8, Reg8)
-#
-# NOT in the checked BytecodeList.def, but confirmed to exist as a
-# sibling opcode by direct analogy with DelByVal -> DelByValLoose /
-# DelByValStrict, which IS confirmed in the hermes-dec table:
-#
-#   DelByValLoose: Reg8, Reg8, Reg8
-#   DelByValStrict: Reg8, Reg8, Reg8
-#   (both drop the UInt8 strict-mode flag that plain DelByVal carries,
-#    because the mode is now baked into the opcode name itself)
-#
-# PutByVal's own strict/loose split almost certainly follows the exact
-# same shape: same three Reg8 operands as PutByVal, with the pre-split
-# PutByVal instruction eventually retired/aliased once callers migrate
-# to the explicit strict/loose variants (compare PutById -> PutByIdLoose
-# also in this codebase). Loose mode differs from strict mode only in
-# whether a failed write silently no-ops vs throws at runtime -- there
-# is no separate JS syntax for that, so it's rendered identically to
-# PutByVal: `obj[key] = value;`.
+# Example: <PutByValLoose>: <Reg8: 3, Reg8: 2, Reg8: 4>
 class PutByValLoose(PutByVal):
+    """
+    Set a property by value. Constant string values should instead use GetById
+    (unless they are array indices according to ES5.1 section 15.4, in which
+    case this is still the right opcode)
+    """
     pass
 
 
+# Reg8, Reg8, Reg8 (total size 3)
 # DEFINE_OPCODE_3(PutByValStrict, Reg8, Reg8, Reg8)
-#
-# Same reasoning/shape as PutByValLoose above -- the strict/loose split
-# for PutByVal mirrors DelByVal's confirmed DelByValStrict/
-# DelByValLoose pair exactly (same three Reg8 operands, mode baked into
-# the opcode name). Strict mode throws on a failed write instead of
-# silently no-oping; no separate JS syntax distinguishes that from a
-# plain computed assignment, so rendered identically: `obj[key] = value;`.
+# Example: <PutByValStrict>: <Reg8: 2, Reg8: 3, Reg8: 1>
 class PutByValStrict(PutByVal):
     pass
+
+# Reg8, Reg8, Reg8, Reg8, UInt8 (total size 5)
+# DEFINE_OPCODE_5(PutByValWithReceiver, Reg8, Reg8, Reg8, Reg8, UInt8)

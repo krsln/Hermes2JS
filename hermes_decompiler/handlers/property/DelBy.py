@@ -5,11 +5,10 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-# DEFINE_OPCODE_4(DelById, Reg8, Reg8, UInt8, UInt16)
-# OPERAND_STRING_ID(DelById, 4)
-# Example: <DelById>: <Reg8: 2, Reg8: 1, UInt8: 0, string_id: 158>  # String: 'cache' (Identifier)
+# Reg8, Reg8, UInt16 (string_id) (total size 4)
+# DEFINE_OPCODE_3(DelById, Reg8, Reg8, UInt16)
 class DelById(OpcodeHandler):
-    _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
+    _PATTERN = sequence(REG, REG, STRING_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -35,15 +34,37 @@ class DelById(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, UInt32 (string_id) (total size 6)
+# DEFINE_OPCODE_3(DelByIdLong, Reg8, Reg8, UInt32)
+
+# Reg8, Reg8, UInt16 (string_id) (total size 4)
+# DEFINE_OPCODE_3(DelByIdLoose, Reg8, Reg8, UInt16)
+
+# Reg8, Reg8, UInt32 (string_id) (total size 6)
+# DEFINE_OPCODE_3(DelByIdLooseLong, Reg8, Reg8, UInt32)
+
+# Reg8, Reg8, UInt16 (string_id) (total size 4)
+# DEFINE_OPCODE_3(DelByIdStrict, Reg8, Reg8, UInt16)
+
+# Reg8, Reg8, UInt32 (string_id) (total size 6)
+# DEFINE_OPCODE_3(DelByIdStrictLong, Reg8, Reg8, UInt32)
+
+
+# Reg8, Reg8, Reg8, UInt8 (total size 4)
 # DEFINE_OPCODE_3(DelByVal, Reg8, Reg8, Reg8)
-# Example: <DelByVal>: <Reg8: 2, Reg8: 0, Reg8: 1>
+# DEFINE_OPCODE_4(DelByVal, Reg8, Reg8, Reg8, UInt8)
+# Example:<DelByVal>: <Reg8: 0, Reg8: 17, Reg8: 5, UInt8: 1>
 class DelByVal(OpcodeHandler):
     """delete obj[prop]"""
 
-    _PATTERN = sequence(REG, REG, REG)
+    _PATTERN = sequence(REG, REG, REG, UINT8)
+    _PATTERN_OLD = sequence(REG, REG, REG, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+        match = (
+                self._PATTERN.match(entry.args.strip())
+                or self._PATTERN_OLD.match(entry.args.strip())
+        )
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
@@ -65,3 +86,15 @@ class DelByVal(OpcodeHandler):
         analysis.add_result(result)
 
         return result
+
+
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(DelByValLoose, Reg8, Reg8, Reg8)
+class DelByValLoose(DelByVal):
+    pass
+
+
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(DelByValStrict, Reg8, Reg8, Reg8)
+class DelByValStrict(DelByVal):
+    pass

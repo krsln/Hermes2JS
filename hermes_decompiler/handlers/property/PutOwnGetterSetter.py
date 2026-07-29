@@ -10,15 +10,16 @@ from hermes_decompiler.ir.expressions import (
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
-# Patterns
-PUT_GETTER_SETTER_PATTERN = sequence(REG, REG, REG, REG, UINT8)
 
-
+# Reg8, Reg8, Reg8, Reg8, UInt8 (total size 5)
+# Example: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 0, UInt8: 1>
 class PutOwnGetterSetterByVal(OpcodeHandler):
-    """Define getter/setter property."""
+    """Add a getter and a setter for a property by value."""
+
+    _PATTERN = sequence(REG, REG, REG, REG, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = PUT_GETTER_SETTER_PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
                 analysis,

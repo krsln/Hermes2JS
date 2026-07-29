@@ -4,17 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, UInt8 (total size 3)
 # DEFINE_OPCODE_3(GetByIndex, Reg8, Reg8, UInt8)
-# Confirmed from hermes-dec opcode table (not in the version of
-# BytecodeList.def checked, appears in newer bytecode versions ~97-99):
-#
-#   "Get a property by value, for the special case where the property is a
-#    numeric literal that is a uint8_t integer. Arg1 = Arg2[Arg3]"
-#
-# So unlike GetByVal (index comes from a register) the index here is
-# an immediate UInt8 baked into the bytecode -- i.e. obj[3] where 3 is
-# small enough to fit in a byte. Rendered the same way GetByVal is,
-# just with a numeric literal instead of a register-derived expression.
+# Example: <GetByIndex>: <Reg8: 4, Reg8: 1, UInt8: 0>
 class GetByIndex(OpcodeHandler):
     """Get property by small integer index: obj[N] (N is an immediate UInt8)."""
 

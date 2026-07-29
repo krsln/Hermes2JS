@@ -4,6 +4,7 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, UInt8 (total size 3)
 # DEFINE_OPCODE_3(GetByVal, Reg8, Reg8, Reg8)
 # Example: <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 0>
 class GetByVal(OpcodeHandler):
@@ -27,3 +28,6 @@ class GetByVal(OpcodeHandler):
         analysis.add_result(result)
 
         return result
+
+# Reg8, Reg8, Reg8, Reg8 (total size 4)
+# DEFINE_OPCODE_4(GetByValWithReceiver, Reg8, Reg8, Reg8, Reg8)
