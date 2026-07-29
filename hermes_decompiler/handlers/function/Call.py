@@ -82,6 +82,7 @@ class CallX(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, UInt8 (total size 3)
 # DEFINE_OPCODE_3(Call, Reg8, Reg8, UInt8)
 # Example: <Call>: <Reg8: 4, Reg8: 9, UInt8: 6>
 class Call(CallX):
@@ -130,9 +131,25 @@ class Call(CallX):
         return result
 
 
-# @formatter:off
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(Call1, Reg8, Reg8, Reg8)
+# Example: <Call1>: <Reg8: 11, Reg8: 1, Reg8: 11>
 class Call1(CallX): num_args = 1
+
+
+# Reg8, Reg8, Reg8, Reg8 (total size 4)
+# DEFINE_OPCODE_4(Call2, Reg8, Reg8, Reg8, Reg8)
+# Example: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
 class Call2(CallX): num_args = 2
+
+
+# Reg8, Reg8, Reg8, Reg8, Reg8 (total size 5)
+# DEFINE_OPCODE_5(Call3, Reg8, Reg8, Reg8, Reg8, Reg8)
+# Example: <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
 class Call3(CallX): num_args = 3
+
+
+# Reg8, Reg8, Reg8, Reg8, Reg8, Reg8 (total size 6)
+# DEFINE_OPCODE_6(Call4, Reg8, Reg8, Reg8, Reg8, Reg8, Reg8)
+# Example: <Call4>: <Reg8: 0, Reg8: 4, Reg8: 7, Reg8: 2, Reg8: 0, Reg8: 1>
 class Call4(CallX): num_args = 4
-# @formatter:on

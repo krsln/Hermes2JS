@@ -4,24 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-# DEFINE_OPCODE_2(GetBuiltinClosure, Reg8, UInt8)   [confirmed, facebook/hermes main BytecodeList.def]
-#
-#   "Get a closure from a builtin function.
-#    Arg1 is the destination of the return value.
-#    Arg2 is the builtin number."
-#
-# The "builtin number" (Arg2) is an index into Hermes's internal
-# builtins table (see lib/VM/Builtins.def upstream) -- e.g. entries for
-# Array.prototype.push, Object.keys, Math.max, etc. This decompiler
-# doesn't have that table available here, so the builtin name can't be
-# resolved to something like `Array.prototype.push` without it; falls
-# back to an indexed placeholder identifier, matching the `string_N`/
-# `slot_N` convention already used elsewhere in this codebase when a
-# table lookup isn't available at this layer.
-#
-# TODO: if HermesAnalysis/OpcodeEntry exposes a builtins table (the
-# same way it exposes `identifier_name` for string IDs), resolve
-# `builtin_number` through that instead of the placeholder name.
+# Reg8, UInt8 (total size 2)
+# DEFINE_OPCODE_2(GetBuiltinClosure, Reg8, UInt8)
+# Example: <GetBuiltinClosure>: <Reg8: 9, UInt8: 1>  # Built-in function: [#1 Date.UTC]
 class GetBuiltinClosure(OpcodeHandler):
     """Fetch a closure reference to one of Hermes's internal builtin functions."""
 

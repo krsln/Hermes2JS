@@ -4,9 +4,8 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, UInt16 (function_id) (total size 4)
 # DEFINE_OPCODE_3(CreateClosure, Reg8, Reg8, UInt16)
-# DEFINE_OPCODE_3(CreateClosureLongIndex, Reg8, Reg8, UInt32)
-# Example: <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 11944>  # Function: [#11944  of 37 bytes]: 1 params @ offset 0x0021917e
 # Example: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 11947>  # Function: [#11947 fetchMovies of 29 bytes]: 2 params @ offset 0x00150430
 class CreateClosure(OpcodeHandler):
     """Creates a closure bound to the given environment register, resolving
@@ -43,6 +42,8 @@ class CreateClosure(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, UInt32 (function_id) (total size 6)
+# DEFINE_OPCODE_3(CreateClosureLongIndex, Reg8, Reg8, UInt32)
 class CreateClosureLongIndex(CreateClosure):
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         return super().handle(analysis, entry)

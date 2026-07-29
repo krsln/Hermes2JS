@@ -1,11 +1,11 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT16, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT16, sequence, UINT32
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, UInt8, UInt16 (function_id) (total size 4)
 # DEFINE_OPCODE_3(CallDirect, Reg8, UInt8, UInt16)
-# DEFINE_RET_TARGET(CallDirect)
 class CallDirect(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8, UINT16)
 
@@ -33,3 +33,8 @@ class CallDirect(OpcodeHandler):
         analysis.add_result(result)
 
         return result
+
+
+# Reg8, UInt8, UInt32 (total size 6)
+class CallDirectLongIndex(CallDirect):
+    _PATTERN = sequence(REG, UINT8, UINT32)

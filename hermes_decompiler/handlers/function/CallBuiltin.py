@@ -1,11 +1,12 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT32, sequence
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, UInt8, UInt8 (total size 3)
 # DEFINE_OPCODE_3(CallBuiltin, Reg8, UInt8, UInt8)
-# Example: <CallBuiltin>: <Reg8: 3, UInt8: 12, UInt8: 2>
+# Example: <CallBuiltin>: <Reg8: 1, UInt8: 46, UInt8: 3>  # Built-in function: [#46 arraySpread]
 class CallBuiltin(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8, UINT8)
 
@@ -30,3 +31,9 @@ class CallBuiltin(OpcodeHandler):
         analysis.add_result(result)
 
         return result
+
+
+# Reg8, UInt8, UInt32 (total size 6)
+# DEFINE_OPCODE_3(CallBuiltinLong, Reg8, UInt8, UInt32)
+class CallBuiltinLong(CallBuiltin):
+    _PATTERN = sequence(REG, UINT8, UINT32)
