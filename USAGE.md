@@ -12,14 +12,46 @@ chmod +x scripts/disassemble.sh
 ```shell
 ./scripts/disassemble.sh <app_name>
 
-## file index.android.bundle
-
+file apps/coachy/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 96
 ./scripts/disassemble.sh coachy
 
+file apps/testy/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 98
 ./scripts/disassemble.sh testy
 
+```
+
+### Notes: Hermes JavaScript bytecode, version 98
+
+if index.android.bundle: Hermes JavaScript bytecode, version 98 causes error ->
+
+```python
+# ../vendor/hermes-dec/src/hermes_dec/hbc/hbc98.py de 
+from typing import List
+
+_builtin_function_names: List[str] = [
+    # ...
+    # missing items | date: 2026-07-29
+    "makeAsyncIterator",
+    "awaitAsyncGenerator",
+]
+```
+or
+```python
+# vendor/hermes-dec/src/hermes_dec/parsers/hbc_bytecode_parser.py
+# search builtin_functions[builtin_number] then change it
+
+
+# if builtin_number < len(builtin_functions):
+#     builtin = builtin_functions[builtin_number]
+# else:
+#     builtin = f"<Builtin {builtin_number}>"
+# 
+# comment += '  # Built-in function: [#%d %s]' % (
+#     builtin_number,
+#     builtin,
+# )
 ```
 
 **Arguments**
