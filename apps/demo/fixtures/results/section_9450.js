@@ -11,30 +11,30 @@ function forInTest(param0) {
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
     r4 = globalThis.console.log("__BC:Iterators/IteratorTests/forInTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1912, UInt16: 19164>  # Object: {'a': 1, 'b': 2, 'c': 3}
-    // Error: NewObjectWithBuffer at address 22: Invalid arguments: Reg8: 7, UInt16: 1912, UInt16: 19164
+    // USED → r7 = { "a": 1, "b": 2, "c": 3 };
     // CODE → <Mov>: <Reg8: 5, Reg8: 7>
-    // USED → r5 = r7;
+    // USED → r5 = { "a": 1, "b": 2, "c": 3 };
     // CODE → <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
-    // USED → r6 = HermesPropertyIterator(r7);
-    if (HermesPropertyIterator(r7) !== undefined) {
+    // USED → r6 = HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 });
+    if (HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 }) !== undefined) {
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <GetNextPName>: <Reg8: 4, Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
-            // USED → r4 = HermesPropertyIterator(r7).next();
+            // USED → r4 = HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 }).next();
             // CODE → <JmpUndefined>: <Addr8: 29, Reg8: 4>  # Address: 0000004a
-            if (HermesPropertyIterator(r7).next() === undefined) goto label_74;
+            if (HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 }).next() === undefined) goto label_74;
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 11, Reg8: 4>
-            // USED → r11 = HermesPropertyIterator(r7).next();
+            // USED → r11 = HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 }).next();
             // CODE → <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
             // USED → r10 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
             // USED → r9 = globalThis.console.log;
             // CODE → <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
-            // USED → r8 = r7[HermesPropertyIterator(r7).next()];
+            // USED → r8 = { "a": 1, "b": 2, "c": 3 }[HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 }).next()];
             // CODE → <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
-            r8 = globalThis.console.log(HermesPropertyIterator(r7).next(), r7[HermesPropertyIterator(r7).next()])
+            r8 = globalThis.console.log(HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 }).next(), { "a": 1, "b": 2, "c": 3 }[HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 }).next()])
             // CODE → <Jmp>: <Addr8: -33>  # Address: 00000027
             goto label_39;
         }

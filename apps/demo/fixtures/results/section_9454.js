@@ -9,36 +9,36 @@ function optionalChainingTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 4779>  # String: '__BC:Objects/PropertyTests/optionalChainingTest/start' (String)
     // USED → r5 = "__BC:Objects/PropertyTests/optionalChainingTest/start";
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
-    // USED → r5 = globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start");
+    r5 = globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1916, UInt16: 20>  # Object: {'b': null}
-    // Error: NewObjectWithBuffer at address 22: Invalid arguments: Reg8: 5, UInt16: 1916, UInt16: 20
+    // USED → r5 = { "b": null };
     // CODE → <NewObject>: <Reg8: 6>
     // USED → r6 = {  };
     // CODE → <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 6, UInt8: 0>
-    globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start").slot_0 = {  }
+    { "b": null }.slot_0 = {  }
     // CODE → <LoadConstNull>: <Reg8: 1>
     // USED → r1 = null;
     // CODE → <Eq>: <Reg8: 3, Reg8: 5, Reg8: 1>
-    // USED → r3 = globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start") == null;
+    // USED → r3 = { "b": null } == null;
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
-    if (globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start") != null) {
+    if ({ "b": null } != null) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 2, string_id: 34>  # String: 'b' (Identifier)
-        // USED → r5 = globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start").b;
+        // USED → r5 = { "b": null }.b;
         // CODE → <Eq>: <Reg8: 3, Reg8: 5, Reg8: 1>
-        // USED → r3 = globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start").b == null;
+        // USED → r3 = { "b": null }.b == null;
         // CODE → <LoadConstUndefined>: <Reg8: 7>
         r7 = undefined
-        if (globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start").b != null) {
+        if ({ "b": null }.b != null) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 6345>  # String: 'c' (Identifier)
-            // USED → r7 = globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start").b.c;
+            // USED → r7 = { "b": null }.b.c;
         }
     }
-    if (globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start").b.c == null) {
+    if ({ "b": null }.b.c == null) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → <LoadConstInt>: <Reg8: 7, Imm32: -1>
         // USED → r7 = -1;

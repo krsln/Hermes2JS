@@ -44,6 +44,12 @@ async function* anon_11947(param0, param1, param2) {
                 // CompleteGenerator
                 // CODE → <Ret>: <Reg8: 3>
                 return await yield;
+            } else {
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <CompleteGenerator>: <>
+                // CompleteGenerator
+                // CODE → <Ret>: <Reg8: 3>
+                return await yield;
                 // LOOP → START (while)
                 while (true) {
                     // ──────────────── Block 19 ──────────────── 
@@ -224,12 +230,6 @@ async function* anon_11947(param0, param1, param2) {
                     // LOOP → END
                 }
                 // LOOP → END
-            } else {
-                // ──────────────── Block 4 ──────────────── 
-                // CODE → <CompleteGenerator>: <>
-                // CompleteGenerator
-                // CODE → <Ret>: <Reg8: 3>
-                return await yield;
             }
         }
     }

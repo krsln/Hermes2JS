@@ -13,7 +13,7 @@ function spreadObjectTest(param0) {
     // CODE → <NewObject>: <Reg8: 5>
     // USED → r5 = {  };
     // CODE → <NewObjectWithBuffer>: <Reg8: 8, UInt16: 61, UInt16: 42586>  # Object: {'x': 1, 'y': 2}
-    // Error: NewObjectWithBuffer at address 24: Invalid arguments: Reg8: 8, UInt16: 61, UInt16: 42586
+    r8 = { "x": 1, "y": 2 }
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
     r9 = {  }
     // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 46, UInt8: 3>  # Built-in function: [#46 arraySpread]
@@ -33,9 +33,9 @@ function spreadObjectTest(param0) {
     // CODE → <NewObject>: <Reg8: 9>
     r9 = {  }
     // CODE → <LoadConstNull>: <Reg8: 1>
-    r1 = null
+    // USED → r1 = null;
     // CODE → <NewObjectWithBufferAndParent>: <Reg8: 7, Reg8: 1, UInt32: 1118, UInt32: 17242>
-    // Error: NewObjectWithBufferAndParent at address 71: Expected Reg8, Reg8, UInt16, UInt16, UInt16, UInt16 arguments: Reg8: 7, Reg8: 1, UInt32: 1118, UInt32: 17242
+    r7 = {  }
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>
     r8 = {  }
     // CODE → <CallBuiltin>: <Reg8: 5, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]

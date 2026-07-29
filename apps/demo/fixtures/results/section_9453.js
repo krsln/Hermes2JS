@@ -9,15 +9,15 @@ function computedPropertyTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4777>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/start' (String)
     // USED → r2 = "__BC:Objects/PropertyTests/computedPropertyTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    // USED → r2 = globalThis.console.log("__BC:Objects/PropertyTests/computedPropertyTest/start");
+    r2 = globalThis.console.log("__BC:Objects/PropertyTests/computedPropertyTest/start")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <NewObjectWithBuffer>: <Reg8: 2, UInt16: 1915, UInt16: 46686>  # Object: {'dynamic': 42, 'staticKey': 'value'}
-    // Error: NewObjectWithBuffer at address 33: Invalid arguments: Reg8: 2, UInt16: 1915, UInt16: 46686
+    // USED → r2 = { "dynamic": 42, "staticKey": "value" };
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(globalThis.console.log("__BC:Objects/PropertyTests/computedPropertyTest/start"))
+    r2 = globalThis.console.log({ "dynamic": 42, "staticKey": "value" })
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
