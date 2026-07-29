@@ -4,7 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, Reg8, Reg8, Reg8 (total size 5)
 # DEFINE_OPCODE_5(GetNextPName, Reg8, Reg8, Reg8, Reg8, Reg8)
+# Example: <GetNextPName>: <Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 0, Reg8: 1>
 class GetNextPName(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG, REG, REG)
 

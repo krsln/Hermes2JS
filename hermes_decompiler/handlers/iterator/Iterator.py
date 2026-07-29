@@ -4,6 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8 (total size 2)
+# DEFINE_OPCODE_2(IteratorBegin, Reg8, Reg8)
+# Example: <IteratorBegin>: <Reg8: 1, Reg8: 2>
 class IteratorBegin(OpcodeHandler):
     """Begin iteration over an iterable."""
 
@@ -28,6 +31,9 @@ class IteratorBegin(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(IteratorNext, Reg8, Reg8, Reg8)
+# Example: <IteratorNext>: <Reg8: 9, Reg8: 2, Reg8: 9>
 class IteratorNext(OpcodeHandler):
     """Advance iterator."""
 
@@ -50,6 +56,9 @@ class IteratorNext(OpcodeHandler):
         return result
 
 
+# Reg8, UInt8 (total size 2)
+# DEFINE_OPCODE_2(IteratorClose, Reg8, UInt8)
+# Example: <IteratorClose>: <Reg8: 2, UInt8: 1>
 class IteratorClose(OpcodeHandler):
     """
     Close iterator.
