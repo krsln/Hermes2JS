@@ -4,9 +4,12 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8 (total size 2)
 # DEFINE_OPCODE_2(GetArgumentsLength, Reg8, Reg8)
 # Example: <GetArgumentsLength>: <Reg8: 1, Reg8: 0>
 class GetArgumentsLength(OpcodeHandler):
+    """Get the length of the 'arguments' array."""
+
     _PATTERN = sequence(REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -24,9 +27,12 @@ class GetArgumentsLength(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, Reg8 (total size 3)
 # DEFINE_OPCODE_3(GetArgumentsPropByVal, Reg8, Reg8, Reg8)
 # Example: <GetArgumentsPropByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
 class GetArgumentsPropByVal(OpcodeHandler):
+    """Get a property of the 'arguments' array by value."""
+
     _PATTERN = sequence(REG, REG, REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -48,9 +54,15 @@ class GetArgumentsPropByVal(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(GetArgumentsPropByValLoose, Reg8, Reg8, Reg8)
+# Example: <GetArgumentsPropByValLoose>: <Reg8: 3, Reg8: 0, Reg8: 4>
 class GetArgumentsPropByValLoose(GetArgumentsPropByVal):
     pass
 
 
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(GetArgumentsPropByValStrict, Reg8, Reg8, Reg8)
+# Example: <GetArgumentsPropByValStrict>: <Reg8: 12, Reg8: 1, Reg8: 10>
 class GetArgumentsPropByValStrict(GetArgumentsPropByVal):
     pass

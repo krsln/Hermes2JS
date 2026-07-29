@@ -4,6 +4,7 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8 (total size 1)
 # DEFINE_OPCODE_1(ReifyArguments, Reg8)
 # Example: <ReifyArguments>: <Reg8: 0>
 class ReifyArguments(OpcodeHandler):
@@ -24,24 +25,15 @@ class ReifyArguments(OpcodeHandler):
         return result
 
 
+# Reg8 (total size 1)
 # DEFINE_OPCODE_1(ReifyArgumentsStrict, Reg8)
-# DEFINE_OPCODE_1(ReifyArgumentsLoose, Reg8)
-#
-# NOT independently confirmed for this specific pair, but following the
-# exact same pattern already established elsewhere in this codebase for
-# every other strict/loose opcode split (PutById -> PutByIdStrict/
-# PutByIdLoose, PutByVal -> PutByValStrict/PutByValLoose, DelByVal ->
-# DelByValStrict/DelByValLoose): same Reg8 operand as the unsuffixed
-# opcode, with the mode baked into the name rather than an operand.
-# The strict/loose distinction affects how the reified `arguments`
-# object interacts with mapped parameters at runtime (strict-mode
-# `arguments` never maps to named parameters; loose/sloppy-mode
-# `arguments` does) -- an ES-spec-level behavioral difference with no
-# separate JS *syntax* of its own, so both render identically to
-# ReifyArguments: `arguments`.
+# Example: <ReifyArgumentsStrict>: <Reg8: 1>
 class ReifyArgumentsStrict(ReifyArguments):
     pass
 
 
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(ReifyArgumentsLoose, Reg8)
+# Example: <ReifyArgumentsLoose>: <Reg8: 4>
 class ReifyArgumentsLoose(ReifyArguments):
     pass
