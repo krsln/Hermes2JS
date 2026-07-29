@@ -6,11 +6,26 @@ from hermes_decompiler.analysis.transforms.structurers._base import RegionStruct
 
 
 class LoopStructurer(RegionStructurer):
+    """
+    Wraps each natural loop's header + members in a `LoopRegion`,
+    innermost-first via recursion into `loop.children`.
 
-    def run(self):
+    Every structural edit goes through `RegionGraph`'s mutation
+    primitives (`append`/`move`/`replace_block`) - never raw
+    `region.children`/`block_owner` manipulation - so `covered_blocks`
+    caching stays correct for every pass that runs after this one
+    (`IfStructurer`, `TryStructurer`, both of which rely on it).
+    """
+
+    def run(self) -> None:
 
         if self.cfg.loop_analysis is None:
-            return
+            raise RuntimeError(
+                "LoopStructurer requires cfg.compute_loops() to have "
+                "already run - see StructuralAnalyzer's pipeline "
+                "contract (loop analysis is a caller precondition, "
+                "not something this pass can silently skip)."
+            )
 
         roots = [
             loop
@@ -37,46 +52,30 @@ class LoopStructurer(RegionStructurer):
 
             self._build_loop(loop, parent_sequence)
 
-        # TODO: activate with a condition
+        # # TODO: activate with a condition
         # print("\n===== REGION TREE =====")
         # self._dump(self.graph.root)
 
-    def _build_loop(
-            self,
-            loop,
-            parent_sequence: SequenceRegion,
-    ):
+    # -------------------------------------------------------------
+
+    def _build_loop(self, loop, parent_sequence: SequenceRegion) -> None:
 
         region = LoopRegion(loop)
 
-        if loop.header not in parent_sequence.children:
+        header_owner = self.graph.owner(loop.header)
 
-            old_owner = self.graph.owner(loop.header)
+        if header_owner is not parent_sequence:
+            if header_owner is not None:
+                self.graph.move(loop.header, parent_sequence)
+            else:
+                self.graph.append(parent_sequence, loop.header)
 
-            if old_owner and loop.header in old_owner.children:
-                old_owner.children.remove(loop.header)
-
-            parent_sequence.children.append(
-                loop.header
-            )
-
-            loop.header.parent = parent_sequence
-
-            self.graph.block_owner[loop.header] = parent_sequence
-
-        index = parent_sequence.children.index(
-            loop.header
-        )
-
-        parent_sequence.children[index] = region
-
-        region.parent = parent_sequence
-
-        region.body.children.append(
-            loop.header
-        )
-
-        self.graph.block_owner[loop.header] = region.body
+        # Replace the header's slot in parent_sequence with the new
+        # LoopRegion, then re-attach the header as the first block
+        # inside the loop's own body - its dual role (both "the block
+        # that used to sit here" and "the loop's first statement").
+        self.graph.replace_block(loop.header, region)
+        self.graph.append(region.body, loop.header)
 
         child_members = set()
 
@@ -85,21 +84,12 @@ class LoopStructurer(RegionStructurer):
 
         for block in sorted(loop.members, key=lambda b: b.id):
 
-            if block == loop.header:
+            if block is loop.header or block in child_members:
                 continue
 
-            if block in child_members:
-                continue
+            self.graph.move(block, region.body)
 
-            self.graph.move(
-                block,
-                region.body
-            )
-
-        for child in sorted(
-                loop.children,
-                key=lambda l: l.header.id
-        ):
+        for child in sorted(loop.children, key=lambda l: l.header.id):
             self._build_loop(child, region.body)
 
     def _dump(self, region, indent=0):
