@@ -8,6 +8,7 @@ from hermes_decompiler.analysis.regions.Regions import (
     LoopRegion,
     IfRegion, TryRegion,
 )
+from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import (
@@ -18,9 +19,7 @@ from hermes_decompiler.ir.expressions import (
     AssignmentExpression,
     UpdateExpression,
     AwaitExpression,
-    YieldExpression,
-)
-from hermes_decompiler.analysis.transforms.shared import _negate_condition
+    YieldExpression, )
 
 
 class BooleanChainFolder:
@@ -30,6 +29,15 @@ class BooleanChainFolder:
     conditional jump into an `IfRegion`. See prior revisions for the
     full fold-mechanics docstring; this revision additionally fixes a
     stale-reference bug:
+
+    NOT responsible for pure control-flow `&&`/`||` (e.g. a bare
+    `if (a || b) { ... }` with no intermediate assignment): that's
+    `cfg_passes.BranchChainMerger`'s job, which runs much earlier, on
+    the raw CFG, before any region exists. This pass specifically
+    requires the folded block to end in an assignment (`dest_reg is
+    not None`, see `_try_fold`) - the value-producing case
+    (`const x = a || b;`). See `BranchChainMerger`'s docstring for the
+    full disjointness argument from the other side.
 
     IR generation (see e.g. `Ret`'s opcode handler) resolves a
     register's value *once*, at the point in the original bytecode

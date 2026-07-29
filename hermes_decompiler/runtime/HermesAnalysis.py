@@ -67,7 +67,7 @@ class HermesAnalysis:
         cfg.compute_dominators()
         cfg.compute_post_dominators()
 
-        # ShortCircuitConditionMerger (stage 1 inside
+        # BranchChainMerger (stage 1 inside
         # StructuralAnalyzer.build()) needs cfg.loop_analysis to avoid
         # folding a loop's rotation-duplicated guard/continue test
         # (same condition checked at two different points in the

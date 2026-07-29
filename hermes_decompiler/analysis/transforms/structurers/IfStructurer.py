@@ -8,7 +8,7 @@ from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     TryRegion,
 )
-from hermes_decompiler.analysis.transforms.shared import _negate_condition
+from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 
 

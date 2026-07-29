@@ -6,10 +6,11 @@ from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
 
 
-class ShortCircuitConditionMerger:
+class BranchChainMerger:
     """
-    Collapses Hermes' bytecode encoding of `&&` / `||` into a single
-    condition, before RegionGraph/IfStructurer ever see the CFG.
+    Collapses Hermes' bytecode encoding of a *pure control-flow*
+    `&&` / `||` condition into a single branch, before RegionGraph/
+    IfStructurer ever see the CFG.
 
         if (a) goto T;      if (!a) goto ELSE;
         if (b) goto T;      if (!b) goto ELSE;
@@ -17,7 +18,8 @@ class ShortCircuitConditionMerger:
 
     Both patterns compile the same way at the CFG level: two (or more)
     blocks, each ending in a TerminatorConditionalBranch, all jumping
-    to the SAME target. The branch is taken if EITHER condition is
+    to the SAME target, with NOTHING else in between (see
+    `_is_pure_test_block`). The branch is taken if EITHER condition is
     true, regardless of whether the source used `&&` or `||` -  De
     Morgan's laws are already baked into which operand got negated by
     JmpTrue/JmpFalse (see Jmp.py). So structurally there is exactly one
@@ -33,6 +35,18 @@ class ShortCircuitConditionMerger:
     After this pass runs, label_82's predecessors collapse to one
     merged block, and IfStructurer's single-entry check (see
     IfStructurer._is_single_entry) succeeds normally.
+
+    NOT responsible for value-producing `&&`/`||` (e.g. `const x = a
+    || b;`, where the bytecode assigns an intermediate register
+    instead of just branching): that's `region_passes.BooleanChainFolder`'s
+    job, which runs much later, on the already-built region tree, and
+    specifically requires the block it folds to end in an assignment
+    (`dest_reg is not None`). This pass requires the exact opposite -
+    `_is_pure_test_block` rejects any successor that assigns anything
+    at all - so the two passes' inputs are structurally disjoint and
+    can never both claim the same block. If you're tempted to loosen
+    `_is_pure_test_block`'s instruction-count check, re-check that
+    disjointness holds first.
 
     Must run after cfg.compute_loops() (needs loop membership to avoid
     touching loop rotation's duplicated guard/continue tests - see
@@ -200,6 +214,13 @@ class ShortCircuitConditionMerger:
         it exists solely to evaluate one more condition and branch,
         with no other observable side effects that would be lost if we
         fold it into the preceding block's condition.
+
+        This is also what keeps this pass disjoint from
+        `BooleanChainFolder`: any block that assigns a value (the
+        pattern *that* pass folds) has more than one instruction here
+        and is correctly rejected. See the class docstring's
+        "NOT responsible for value-producing &&/||" section before
+        loosening this check.
         """
 
         return len(block.instructions) <= 1
