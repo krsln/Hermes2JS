@@ -1,7 +1,7 @@
 import json
 import re
 
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence, UINT32
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
     Expression,
@@ -33,16 +33,22 @@ def _json_to_expression(value: object) -> Expression:
     return python_literal(value)
 
 
-# DEFINE_OPCODE_5(NewObjectWithBuffer, Reg8, UInt16, UInt16, UInt16, UInt16)
-# Example: < NewObjectWithBuffer >: < Reg8: 2, UInt16: 2, UInt16: 2, UInt16: 4743, UInt16: 24182 >  # Object: {'message': 'You have joined the list', 'type': 'success'}
+# Reg8, UInt16, UInt16 (total size 5)
+# DEFINE_OPCODE_3(NewObjectWithBuffer, Reg8, UInt16, UInt16)
+# Example: <NewObjectWithBuffer>: <Reg8: 7, UInt16: 27, UInt16: 17989>  # Object: {'enumerable': true, 'get': null}
+# Example: <NewObjectWithBuffer>: <Reg8: 37, UInt16: 9, UInt16: 9, UInt16: 194, UInt16: 115>  # Object: {'type': null, 'target': null, 'currentTarget': null, 'eventPhase': null, 'bubbles': null, 'cancelable': null, 'timeStamp': null, 'defaultPrevented': null, 'isTrusted': null}
 class NewObjectWithBuffer(OpcodeHandler):
     """Create an object from a static map of values using buffer."""
 
-    _PATTERN = sequence(REG, UINT16, UINT16, UINT16, UINT16)
+    _PATTERN = sequence(REG, UINT16, UINT16)
+    _PATTERN_OLD = sequence(REG, UINT16, UINT16, UINT16, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
-        match = self._PATTERN.match(entry.args.strip())
+        match = (
+                self._PATTERN.match(entry.args.strip())
+                or self._PATTERN_OLD.match(entry.args.strip())
+        )
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
@@ -96,52 +102,24 @@ class NewObjectWithBuffer(OpcodeHandler):
         return None
 
 
+# Reg8, UInt32, UInt32 (total size 9)
+# DEFINE_OPCODE_3(NewObjectWithBufferLong, Reg8, UInt32, UInt32)
 class NewObjectWithBufferLong(NewObjectWithBuffer):
     """Long variant."""
+
+    _PATTERN = sequence(REG, UINT32, UINT32)
+    _PATTERN_OLD = sequence(REG, UINT16, UINT16, UINT32, UINT32)
 
     pass
 
 
-# NewObjectWithBufferAndParent -- ***SIGNATURE NOT CONFIRMED***
-#
-# Not found in either source consulted (public BytecodeList.def or the
-# hermes-dec table). Inferred purely by name/analogy with two confirmed
-# siblings:
-#   - NewObjectWithBuffer:  Reg8 dest, UInt16 size_hint, UInt16 num_elems,
-#     UInt16 key_buf_idx, UInt16 val_buf_idx
-#   - NewObjectWithParent:  Reg8 dest, Reg8 parent
-#     ("Create a new empty Object with the specified parent. If the
-#      parent is null, no parent is used...")
-#
-# NewObjectWithBufferAndParent is presumably the fusion of both: same
-# static key/value buffer initialization as NewObjectWithBuffer, but
-# with an explicit parent register instead of always defaulting to
-# Object.prototype -- i.e. `Object.create(parent, ...)`-shaped object
-# literals (used for e.g. `{ __proto__: parent, a: 1, b: 2 }` or
-# Babel/TS helper-generated objects with a non-default prototype).
-#
-# Guessed layout: Reg8 dest, Reg8 parent, then the same four UInt16
-# buffer operands as NewObjectWithBuffer (size_hint, num_elems,
-# key_buf_idx, val_buf_idx) -- parent register inserted right after
-# dest, mirroring where it sits in NewObjectWithParent.
-#
-# VERIFY operand count/order against your actual disassembler output
-# before trusting this. Since the object's *contents* still come from
-# the same key/value buffer table lookup NewObjectWithBuffer uses
-# (which this decompiler resolves via the `Object: {...}` comment, not
-# from operand values directly), the buffer-parsing logic below is
-# reused as-is; only the parent register is new and gets threaded into
-# an `Object.create(parent, ...)`-style rendering... but since we don't
-# have a clean way to express "object literal with property descriptors
-# AND a custom prototype" as a single JS expression, this renders as a
-# comma-separated pseudo-assignment instead: the plain object literal
-# is built the same way as NewObjectWithBuffer, and the parent is noted
-# via `Object.setPrototypeOf`. Adjust once the real semantics/operand
-# layout are confirmed.
+# Reg8, Reg8, UInt32, UInt32 (total size 10)
+# DEFINE_OPCODE_4(NewObjectWithBufferAndParent, Reg8, Reg8, UInt32, UInt32)
+# Example: <NewObjectWithBufferAndParent>: <Reg8: 8, Reg8: 0, UInt32: 1594, UInt32: 17242>
 class NewObjectWithBufferAndParent(NewObjectWithBuffer):
     """Create an object from a static buffer with an explicit parent/prototype."""
 
-    _PATTERN = sequence(REG, REG, UINT16, UINT16, UINT16, UINT16)
+    _PATTERN = sequence(REG, REG, UINT32, UINT32)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
