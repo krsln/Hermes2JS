@@ -6,6 +6,7 @@ from hermes_decompiler.runtime import HermesAnalysis
 
 # Reg8, Reg8, UInt8 (total size 3)
 # DEFINE_OPCODE_3(GetEnvironment, Reg8, Reg8, UInt8)
+# DEFINE_OPCODE_2(GetEnvironment, Reg8, UInt8)
 # Example: <GetEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 1>
 class GetEnvironment(OpcodeHandler):
     """
@@ -18,9 +19,13 @@ class GetEnvironment(OpcodeHandler):
     """
 
     _PATTERN = sequence(REG, REG, UINT8)
+    _PATTERN_OLD = sequence(REG, UINT8)  # DEFINE_OPCODE_2
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+        match = (
+                self._PATTERN.match(entry.args.strip())
+                or self._PATTERN_OLD.match(entry.args.strip())
+        )
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 

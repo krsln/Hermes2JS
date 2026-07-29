@@ -5,7 +5,7 @@ from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8 (total size 2)
-# DEFINE_OPCODE_2(GetClosureEnvironment, Reg8, Reg8)
+# DEFINE_OPCODE_2(<GetClosureEnvironment, Reg8>, Reg8)
 # Example: <GetClosureEnvironment>: <Reg8: 3, Reg8: 2>
 class GetClosureEnvironment(OpcodeHandler):
     """Fetch the environment/scope captured by an explicit closure register."""
