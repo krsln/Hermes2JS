@@ -1,9 +1,12 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT32, sequence
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, UInt32 (total size 6)
+# DEFINE_OPCODE_3(CreateEnvironment, Reg8, Reg8, UInt32)
+# Example: <CreateEnvironment>: <Reg8: 3, Reg8: 2, UInt32: 1>
 class CreateEnvironment(OpcodeHandler):
     """
     Allocate a new lexical environment.
@@ -12,7 +15,7 @@ class CreateEnvironment(OpcodeHandler):
     captured by nested closures.
     """
 
-    _PATTERN = sequence(REG)
+    _PATTERN = sequence(REG, REG, UINT32)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())

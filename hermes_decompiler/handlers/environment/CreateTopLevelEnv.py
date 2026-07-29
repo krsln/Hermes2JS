@@ -4,24 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-# NOTE: `UINT32` is imported here on the assumption it exists as a
-# pattern token in hermes_decompiler.handlers, by analogy with UINT8/
-# UINT16 (UINT16 is confirmed in use in NewObjectWithBuffer.py). I have
-# not actually seen it used anywhere in the files shared so far --
-# if the import fails, either the token has a different name or
-# CreateTopLevelEnvironment's UInt32 operand needs a different
-# handling path (e.g. reusing STRING_ID's width or a raw regex).
-
-
-# DEFINE_OPCODE_2(CreateTopLevelEnvironment, Reg8, UInt32)   [confirmed, hermes-dec table]
-#
-#   "Create a top level environment, without a parent. TODO: Consider
-#    removing this in favor of using CreateEnvironment by using a
-#    different scheme for encoding the top level environment. Arg1 is
-#    the destination. Arg2 is the size of the new environment."
-#
-# Same treatment as CreateFunctionEnvironment/CreateEnvironment: opaque
-# scope allocation, no JS-visible expression of its own.
+# Reg8, UInt32 (total size 5)
+# DEFINE_OPCODE_2(CreateTopLevelEnvironment, Reg8, UInt32)
+# Example: <CreateTopLevelEnvironment>: <Reg8: 2, UInt32: 3>
 class CreateTopLevelEnvironment(OpcodeHandler):
     """Allocate the parentless module/global-level environment record."""
 

@@ -4,19 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-# DEFINE_OPCODE_2(CreateFunctionEnvironment, Reg8, UInt8)   [confirmed, hermes-dec table]
-#
-#   "Create a new environment, using the current function's enclosing
-#    environment as the parent. Arg1 is the destination. Arg2 is the
-#    size of the new environment."
-#
-# This is purely an internal scope-allocation instruction -- it has no
-# direct JS surface syntax (it backs closures/`let`/`const` scoping
-# machinery). Treated as opaque, like CreateEnvironment presumably
-# already is in this codebase: it produces a value for its destination
-# register but doesn't correspond to a JS expression the user wrote, so
-# it's modeled as a call to an internal helper for downstream renderer
-# consistency rather than emitting nothing.
+# Reg8, UInt8 (total size 2)
+# DEFINE_OPCODE_2(CreateFunctionEnvironment, Reg8, UInt8)
+# Example: <CreateFunctionEnvironment>: <Reg8: 7, UInt8: 1>
 class CreateFunctionEnvironment(OpcodeHandler):
     """Allocate a new function-local environment/scope record."""
 

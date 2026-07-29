@@ -4,6 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, UInt8 (total size 3)
+# DEFINE_OPCODE_3(GetEnvironment, Reg8, Reg8, UInt8)
+# Example: <GetEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 1>
 class GetEnvironment(OpcodeHandler):
     """
     Resolve an environment from the lexical scope chain.
@@ -14,7 +17,7 @@ class GetEnvironment(OpcodeHandler):
     ...
     """
 
-    _PATTERN = sequence(REG, UINT8)
+    _PATTERN = sequence(REG, REG, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())

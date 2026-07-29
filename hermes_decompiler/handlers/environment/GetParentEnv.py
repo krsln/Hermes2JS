@@ -4,26 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-# NOTE: `UINT32` is imported here on the assumption it exists as a
-# pattern token in hermes_decompiler.handlers, by analogy with UINT8/
-# UINT16 (UINT16 is confirmed in use in NewObjectWithBuffer.py). I have
-# not actually seen it used anywhere in the files shared so far --
-# if the import fails, either the token has a different name or
-# CreateTopLevelEnvironment's UInt32 operand needs a different
-# handling path (e.g. reusing STRING_ID's width or a raw regex).
-
-
-# DEFINE_OPCODE_2(GetParentEnvironment, Reg8, UInt8)   [confirmed, hermes-dec table]
-#
-#   "Get an environment (scope) from N levels up relative to the
-#    current function's enclosing environment. 0 retrieves the
-#    environment from the closure, 1 retrieves its parent, etc."
-#
-# Same "no direct JS surface syntax" situation as CreateFunctionEnvironment
-# earlier -- purely internal scope-chain traversal that backs closures'
-# access to outer-scope `let`/`const` bindings. Modeled the same way:
-# a named pseudo-call rather than emitting nothing, consistent with the
-# convention already used for CreateThis's createThis() placeholder.
+# Reg8, UInt8 (total size 2)
+# DEFINE_OPCODE_2(GetParentEnvironment, Reg8, UInt8)
+# Example: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
 class GetParentEnvironment(OpcodeHandler):
     """Fetch an environment N levels up the *enclosing* scope chain."""
 

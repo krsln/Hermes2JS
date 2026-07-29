@@ -4,22 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8 (total size 2)
 # DEFINE_OPCODE_2(GetClosureEnvironment, Reg8, Reg8)
-#   [confirmed, hermes-dec table -- bytecode versions 97/98/99]
-#
-#   "Get the environment from a closure.
-#    Arg1 is the destination.
-#    Arg2 is the closure from which to read."
-#
-# Confirms the earlier guess (Reg8 dest, Reg8 closure) was correct.
-# Distinguishing detail vs. the confirmed GetParentEnvironment (Reg8
-# dest, UInt8 levels -- walks up N levels from the *currently
-# executing* function's own environment): this one takes an explicit
-# closure register as input, i.e. "get the environment captured by
-# THIS OTHER closure value" rather than the current function's own.
-#
-# Same "no JS-visible expression" treatment as the other environment
-# opcodes -- rendered as a named pseudo-call for traceability.
+# Example: <GetClosureEnvironment>: <Reg8: 3, Reg8: 2>
 class GetClosureEnvironment(OpcodeHandler):
     """Fetch the environment/scope captured by an explicit closure register."""
 

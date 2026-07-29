@@ -4,6 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, UInt8 (total size 3)
+# DEFINE_OPCODE_3(LoadFromEnvironment, Reg8, Reg8, UInt8)
+# Example: <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 19>
 class LoadFromEnvironment(OpcodeHandler):
     """
     Load a value from a lexical environment.
@@ -29,5 +32,8 @@ class LoadFromEnvironment(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, UInt16 (total size 4)
+# DEFINE_OPCODE_3(LoadFromEnvironmentL, Reg8, Reg8, UInt16)
+# Example: <LoadFromEnvironmentL>: <Reg8: 7, Reg8: 5, UInt16: 269>
 class LoadFromEnvironmentL(LoadFromEnvironment):
     _PATTERN = sequence(REG, REG, UINT16)

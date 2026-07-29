@@ -5,6 +5,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, UInt8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(StoreToEnvironment, Reg8, UInt8, Reg8)
+# Example: <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 4>
 class StoreToEnvironment(OpcodeHandler):
     """
     Store a value into a lexical environment.
@@ -36,10 +39,16 @@ class StoreToEnvironment(OpcodeHandler):
         return result
 
 
+# Reg8, UInt16, Reg8 (total size 4)
+# DEFINE_OPCODE_3(StoreToEnvironmentL, Reg8, UInt16, Reg8)
+# Example: <StoreToEnvironmentL>: <Reg8: 5, UInt16: 385, Reg8: 4>
 class StoreToEnvironmentL(StoreToEnvironment):
     _PATTERN = sequence(REG, UINT16, REG)
 
 
+# Reg8, UInt8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(StoreNPToEnvironment, Reg8, UInt8, Reg8)
+# Example: <StoreNPToEnvironment>: <Reg8: 3, UInt8: 13, Reg8: 0>
 class StoreNPToEnvironment(StoreToEnvironment):
     """
     Non-pointer variant.
@@ -50,9 +59,13 @@ class StoreNPToEnvironment(StoreToEnvironment):
     pass
 
 
+# Reg8, UInt16, Reg8 (total size 4)
+# DEFINE_OPCODE_3(StoreNPToEnvironmentL, Reg8, UInt16, Reg8)
+# Example: <StoreNPToEnvironmentL>: <Reg8: 0, UInt16: 264, Reg8: 11>
 class StoreNPToEnvironmentL(StoreToEnvironmentL):
     """
     Long non-pointer variant.
     """
+    _PATTERN = sequence(REG, UINT16, REG)
 
     pass
