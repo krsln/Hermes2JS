@@ -46,32 +46,16 @@ python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/ou
 
 ## Region Tree
 
-uncomment to activate → LoopStructurer → hermes_decompiler/regions/building/Structurers.py
+Un-comment or change logging level to `logging.DEBUG` → scripts/decompiler.py
 
 ```python
-class LoopStructurer:
+import logging
+from hermes_decompiler.core.logging import configure_logging, logging_test, get_logger
 
-    def __init__(self, graph: RegionGraph, cfg):
-        self.graph = graph
-        self.cfg = cfg
-
-    def run(self):
-
-        if self.cfg.loop_analysis is None:
-            return
-
-        roots = [
-            loop
-            for loop in self.cfg.loop_analysis.loops.values()
-            if loop.parent is None
-        ]
-
-        for loop in roots:
-            self._build_loop(loop, self.graph.root)
-
-        # TODO: activate with a condition
-        # print("\n===== REGION TREE =====")
-        # self._dump(self.graph.root)
+logger = get_logger(__name__)
+# configure_logging(level=logging.INFO, use_color=True)
+configure_logging(level=logging.DEBUG, use_color=True)
+logging_test()
 ```
 
 ```text
