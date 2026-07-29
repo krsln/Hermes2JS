@@ -1,4 +1,4 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT32, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT16, UINT32, sequence
 from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
@@ -53,7 +53,7 @@ class CreateBaseClassLongIndex(CreateBaseClass):
 class CreateDerivedClass(OpcodeHandler):
     """Create a derived (extends ...) ES6 class closure."""
 
-    _PATTERN = sequence(REG, REG, REG, REG, UINT8)
+    _PATTERN = sequence(REG, REG, REG, REG, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
