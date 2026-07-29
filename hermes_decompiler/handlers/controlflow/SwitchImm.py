@@ -6,6 +6,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, UInt32, Addr32, UInt32, UInt32 (total size 17)
+# DEFINE_OPCODE_5(SwitchImm, Reg8, UInt32, Addr32, UInt32, UInt32)
+# Example: <SwitchImm>: <Reg8: 3, UInt32: 970, Addr32: 954, UInt32: 0, UInt32: 27>  # Address: 000003d6  # Jump table: [000003a2, ..., 0000018e]
 class SwitchImm(OpcodeHandler):
     _PATTERN = re.compile(r"^Reg\d+:\s*(\d+)")
 
@@ -41,63 +44,16 @@ class SwitchImm(OpcodeHandler):
         return result
 
 
-# UIntSwitchImm
-#
-# Same instruction family as SwitchImm (a jump table keyed by an
-# integer selector register, `Addr` targets parsed the same way) --
-# the "UInt" distinction is about how Hermes encodes/bounds-checks the
-# selector *inside the VM* (unsigned vs. signed immediate comparisons
-# against the jump table's min/max), not about the disassembled text
-# shape this handler parses. `entry.args` for both opcodes follows the
-# same `Reg<N>: <selector>  Addr<N>: <offset> ...` textual layout, so
-# the existing regex-based parsing in SwitchImm applies unchanged.
+# Reg8, UInt32, Addr32, UInt32, UInt32 (total size 17)
+# DEFINE_OPCODE_5(UIntSwitchImm, Reg8, UInt32, Addr32, UInt32, UInt32)
+# Example: <UIntSwitchImm>: <Reg8: 17, UInt32: 5474, Addr32: 5320, UInt32: 0, UInt32: 31>  # Address: 00001a74
 class UIntSwitchImm(SwitchImm):
     pass
 
 
+# Reg8, UInt32, UInt32, Addr32, UInt32 (total size 17)
 # DEFINE_OPCODE_5(StringSwitchImm, Reg8, UInt32, UInt32, Addr32, UInt32)
-#   [confirmed, facebook/hermes BytecodeList.def, tag hermes-v260318099.0.1]
-#
-#   "All-string switch (switch all of whose case labels are string
-#    literals).
-#    Arg 1 is the value to be branched upon
-#    Arg 2 is a global index for this StringSwitchImm instruction in
-#      the bytecode file.
-#    Arg 3 is the relative offset of the string switch table. A string
-#      switch table is a sequence of pairs:
-#      <UInt32 string table index, UInt32 jump targets>
-#    Arg 4 is the relative offset for the "default" jump.
-#    Arg 5 is the size of the string switch table.
-#
-#    Given the above, the jump table entry for a given value (that is
-#    in range) is located at offset ip + arg3. Note that Arg3 is
-#    *unaligned*; it is dynamically aligned at runtime."
-#
-# Structurally different from SwitchImm/UIntSwitchImm: those encode
-# jump targets as a flat sequence of `Addr` operands directly in
-# `entry.args` (parsed via the `Addr\d+:\s*(-?\d+)` regex), which is
-# why SwitchImm's existing parsing works unchanged for UIntSwitchImm.
-# StringSwitchImm instead points at an *out-of-line table* (Arg3: an
-# offset to a sequence of <string_id, jump_target> pairs elsewhere in
-# the bytecode) plus a separate `Addr32` default-jump operand (Arg4) --
-# the individual case targets are NOT expected to appear as `Addr`
-# tokens in this opcode's own disassembled `entry.args` text the way
-# SwitchImm's are. Whether this decompiler's disassembler/OpcodeEntry
-# layer already resolves that out-of-line table into inline `Addr`-like
-# annotations (the way it resolves string_ids into
-# `entry.identifier_name`) is unknown -- if it does, this can reuse
-# SwitchImm's regex-based target extraction; if it doesn't, this
-# handler alone can't recover the actual jump table without a new
-# capability which is not yet implemented.
-#
-# NOT extending SwitchImm here (unlike UIntSwitchImm) because the
-# operand shape is genuinely different, not just a VM-internal bounds-
-# check detail -- reusing SwitchImm.handle would silently mis-parse
-# Arg2 (bytecode-file-global switch index) as a selector register.
-#
-# VERIFY: whether entry.args/entry.comment exposes the resolved
-# <string, target> pairs for this opcode before trusting the "default
-# only" fallback below.
+# Example: <StringSwitchImm>: <Reg8: 1, UInt32: 3, UInt32: 86, Addr32: 82, UInt32: 12>  # Address: 0000007a
 class StringSwitchImm(OpcodeHandler):
     """All-string `switch` statement. Case targets come from an out-of-line table this handler can't yet resolve."""
 

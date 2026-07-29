@@ -7,8 +7,9 @@ from hermes_decompiler.runtime import HermesAnalysis
 logger = get_logger(__name__)
 
 
+# Reg8 (total size 1)
 # DEFINE_OPCODE_1(Catch, Reg8)
-# Example: <Catch>: <Reg8: 1>
+# Example: <Catch>: <Reg8: 12>
 class Catch(OpcodeHandler):
     """Marks the start of a catch block, binding the caught exception value
     to the destination register."""

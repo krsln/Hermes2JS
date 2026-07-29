@@ -157,7 +157,6 @@ class JmpUndefined(ConditionalJump):
         return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, UndefinedLiteral())
 
 
-# Long versions
 class JmpTrueLong(JmpTrue): pass
 
 
@@ -176,21 +175,25 @@ class BuiltinConditionalJump(ConditionalJumpBase, ABC):
         return offset, reg, (builtin,)
 
 
+# DEFINE_OPCODE_3(JmpBuiltinIs, Addr8, UInt8, Reg8)
 class JmpBuiltinIs(BuiltinConditionalJump):
     def build_condition(self, value: Expression, *extra: Any) -> Expression:
         builtin = extra[0]
         return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, Identifier(name=f"builtin_{builtin}"))
 
 
+# DEFINE_OPCODE_3(JmpBuiltinIsNot, Addr8, UInt8, Reg8)
 class JmpBuiltinIsNot(BuiltinConditionalJump):
     def build_condition(self, value: Expression, *extra: Any) -> Expression:
         builtin = extra[0]
         return BinaryExpression(value, BinaryOperator.STRICT_NOT_EQUAL, Identifier(name=f"builtin_{builtin}"))
 
 
+# DEFINE_OPCODE_3(JmpBuiltinIsLong, Addr32, UInt8, Reg8)
 class JmpBuiltinIsLong(JmpBuiltinIs): pass
 
 
+# DEFINE_OPCODE_3(JmpBuiltinIsNotLong, Addr32, UInt8, Reg8)
 class JmpBuiltinIsNotLong(JmpBuiltinIsNot): pass
 
 
@@ -204,6 +207,7 @@ class TypeOfConditionalJump(ConditionalJumpBase, ABC):
         return offset, reg, (type_name,)
 
 
+# DEFINE_OPCODE_3(JmpTypeOfIs, Addr32, Reg8, UInt16)
 class JmpTypeOfIs(TypeOfConditionalJump):
     def build_condition(self, value: Expression, *extra: Any) -> Expression:
         type_name = extra[0]

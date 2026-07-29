@@ -5,6 +5,7 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8 (total size 1)
 # DEFINE_OPCODE_1(Ret, Reg8)
 # Example: <Ret>: <Reg8: 0>
 class Ret(OpcodeHandler):

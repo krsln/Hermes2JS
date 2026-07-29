@@ -6,6 +6,7 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8 (total size 1)
 # DEFINE_OPCODE_1(Throw, Reg8)
 # Example: <Throw>: <Reg8: 2>
 class Throw(OpcodeHandler):
@@ -38,39 +39,162 @@ class Throw(OpcodeHandler):
         return result
 
 
-# ThrowIfThisInitialized -- ***SIGNATURE NOT CONFIRMED***
-#
-# Not found in either source consulted. Inferred from its name and JS
-# semantics: derived class constructors must call `super()` before
-# touching `this`, and calling `super()` a second time (or touching
-# `this` before the first `super()` call completes) is a runtime error
-# ("must call super constructor... before accessing 'this'" /
-# "super constructor may only be called once"). This opcode is
-# presumably the compiler-inserted guard for that check, emitted right
-# before/around a `super()` call site or a `this` access.
-#
-# Guessed shape: Reg8 (the `this` slot being checked) -- no destination
-# register, since like Throw this is a control-flow guard, not a value-
-# producing instruction. It only actually throws if the check fails;
-# on success it's effectively a no-op at the JS-source level (the
-# language-level guarantee it enforces is invisible in valid,
-# non-buggy compiled output), so unlike Throw there's no unconditional
-# ThrowStatement here -- it's rendered as an inert marker/no-op rather
-# than a guaranteed throw.
-#
-# VERIFY: operand count (could plausibly be 0-arg if it always checks
-# an implicit fixed `this` slot rather than an explicit register) and
-# whether your disassembler actually surfaces this opcode with an
-# operand at all before trusting the REG pattern below.
-class ThrowIfThisInitialized(OpcodeHandler):
-    """Guard: throws if `this` was already initialized (double `super()` call)."""
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT32, sequence
+from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.runtime import HermesAnalysis
+
+
+# Reg8, Reg8 (total size 2)
+# DEFINE_OPCODE_2(ThrowIfEmpty, Reg8, Reg8)
+# Example:
+class ThrowIfEmpty(OpcodeHandler):
+    """
+    Throw if the first register contains Hermes' internal Empty value.
+
+    TODO:
+        Requires runtime semantics. This opcode is conditional and
+        should eventually emit a conditional terminator rather than a
+        plain ThrowStatement.
+    """
+
+    _PATTERN = sequence(REG, REG)
+
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(
+                analysis,
+                entry,
+                "Expected Reg8, Reg8 arguments",
+            )
+
+        # value_reg = int(match.group(1))
+        # error_reg = int(match.group(2))
+
+        return self.build_exception_result(
+            analysis,
+            entry,
+            "// TODO: ThrowIfEmpty is not implemented",
+        )
+
+
+# UInt32 (string_id) (total size 4)
+# DEFINE_OPCODE_1(ThrowIfHasRestrictedGlobalProperty, UInt32)
+# Example:
+class ThrowIfHasRestrictedGlobalProperty(OpcodeHandler):
+    """
+    Throw if a restricted global property exists.
+
+    TODO:
+        Exact runtime semantics need verification.
+    """
+
+    _PATTERN = sequence(UINT32)
+
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(
+                analysis,
+                entry,
+                "Expected UInt32 argument",
+            )
+
+        # string_id = int(match.group(1))
+
+        return self.build_exception_result(
+            analysis,
+            entry,
+            "// TODO: ThrowIfHasRestrictedGlobalProperty is not implemented",
+        )
+
+
+# Reg8, Reg8 (total size 2)
+# DEFINE_OPCODE_2(ThrowIfUndefined, Reg8, Reg8)
+# Example:
+class ThrowIfUndefined(OpcodeHandler):
+    """
+    Throw if the first register contains undefined.
+
+    TODO:
+        Conditional runtime check.
+    """
+
+    _PATTERN = sequence(REG, REG)
+
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(
+                analysis,
+                entry,
+                "Expected Reg8, Reg8 arguments",
+            )
+
+        # value_reg = int(match.group(1))
+        # error_reg = int(match.group(2))
+
+        return self.build_exception_result(
+            analysis,
+            entry,
+            "// TODO: ThrowIfUndefined is not implemented",
+        )
+
+
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(ThrowIfUndefinedInst, Reg8)
+# Example:
+class ThrowIfUndefinedInst(OpcodeHandler):
+    """
+    Throw if the given register contains an undefined instance.
+
+    TODO:
+        Exact runtime semantics need verification.
+    """
 
     _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8 argument")
+            return self.build_invalid_args_result(
+                analysis,
+                entry,
+                "Expected Reg8 argument",
+            )
+
+        # value_reg = int(match.group(1))
+
+        return self.build_exception_result(
+            analysis,
+            entry,
+            "// TODO: ThrowIfUndefinedInst is not implemented",
+        )
+
+
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(ThrowIfThisInitialized, Reg8)
+# Example:
+class ThrowIfThisInitialized(OpcodeHandler):
+    """
+    Throw if 'this' has already been initialized.
+
+    Used by class constructor initialization checks.
+
+    TODO:
+        Conditional runtime check.
+    """
+
+    _PATTERN = sequence(REG)
+
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(
+                analysis,
+                entry,
+                "Expected Reg8 argument",
+            )
 
         this_reg = int(match.group(1))
 
@@ -85,6 +209,7 @@ class ThrowIfThisInitialized(OpcodeHandler):
             callee=Identifier(name="__throwIfThisInitialized__"),
             arguments=(this_value,),
         )
+        # // TODO: ThrowIfThisInitialized is not implemented
 
         result = OpcodeResult(entry, value=expression, dest_reg=None)
         analysis.add_result(result)
