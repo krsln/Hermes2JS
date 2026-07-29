@@ -1,6 +1,10 @@
 # CFG - Control Flow Graph
 
+https://raw.githubusercontent.com/facebook/hermes/hermes-v260318099.0.1/include/hermes/BCGen/HBC/BytecodeList.def
+
 # IR - Intermediate Representation
+
+https://p1sec.github.io/hermes-dec/opcodes_table.html
 
 **control data /fixtures**
 

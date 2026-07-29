@@ -349,38 +349,6 @@ function _request(param0, param1, param2) {
         // ──────────────── Block 31 ──────────────── 
         // CODE → <Jmp>: <Addr8: 18>  # Address: 000003a6
         goto label_934;
-        // LOOP → START (while)
-        while (true) {
-            // ──────────────── Block 33 ──────────────── 
-            // CODE → <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 6>
-            // USED → r6 = getEnvironment(1)[6];
-            // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-            // USED → r7 = getEnvironment(1)[6].default;
-            // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
-            // USED → r6 = getEnvironment(1)[6].default.call;
-            // CODE → <Call3>: <Reg8: 0, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1>
-            // USED → r0 = getEnvironment(1)[6].default.call(this, [][+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  })));
-            // CODE → <LoadConstZero>: <Reg8: 4>
-            // USED → r4 = 0;
-            // CODE → <Mov>: <Reg8: 1, Reg8: 3>
-            // USED → r1 = [];
-            // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
-            // USED → r1 = [].length;
-            // CODE → <Mov>: <Reg8: 5, Reg8: 1>
-            // USED → r5 = [].length;
-            // CODE → <JNotLess>: <Addr8: 57, Reg8: 2, Reg8: 1>  # Address: 00000400
-            if (0 >= [].length) goto label_1024;
-            // ──────────────── Block 32 ──────────────── 
-            // CODE → <Catch>: <Reg8: 10>
-            // USED → r10 = caughtException;
-            // CODE → <Mov>: <Reg8: 9, Reg8: 7>
-            // USED → r9 = [][+(+0 + 1)];
-            // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
-            // USED → r7 = [][+(+0 + 1)].call;
-            // CODE → <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
-            r7 = [][+(+0 + 1)].call(this, caughtException)
-        }
-        // LOOP → END
         // ──────────────── Block 34 ──────────────── 
         // CODE → <Mov>: <Reg8: 8, Reg8: 0>
         // USED → r8 = getEnvironment(1)[6].default.call(this, [][+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  })));
@@ -497,18 +465,51 @@ function _request(param0, param1, param2) {
         // USED → r9 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  })).then([getEnvironment(1)[6].default.bind(this), undefined][+0], [getEnvironment(1)[6].default.bind(this), undefined][+(+0 + 1)]);
         // CODE → <Ret>: <Reg8: 9>
         return globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  })).then([getEnvironment(1)[6].default.bind(this), undefined][+0], [getEnvironment(1)[6].default.bind(this), undefined][+(+0 + 1)]);
-        // ──────────────── Block 36 ──────────────── 
-        // CODE → <Catch>: <Reg8: 2>
-        // USED → r2 = caughtException;
-        // CODE → <GetGlobalObject>: <Reg8: 0>
-        // USED → r0 = globalThis;
-        // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
-        // USED → r1 = globalThis.Promise;
-        // CODE → <GetById>: <Reg8: 0, Reg8: 1, UInt8: 30, string_id: 13645>  # String: 'reject' (Identifier)
-        // USED → r0 = globalThis.Promise.reject;
-        // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
-        // USED → r0 = globalThis.Promise.reject(caughtException);
-        // CODE → <Ret>: <Reg8: 0>
-        return globalThis.Promise.reject(caughtException);
+        try {
+            // LOOP → START (while)
+            while (true) {
+                // ──────────────── Block 33 ──────────────── 
+                // CODE → <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 6>
+                // USED → r6 = getEnvironment(1)[6];
+                // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 6, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
+                // USED → r7 = getEnvironment(1)[6].default;
+                // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
+                // USED → r6 = getEnvironment(1)[6].default.call;
+                // CODE → <Call3>: <Reg8: 0, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1>
+                // USED → r0 = getEnvironment(1)[6].default.call(this, [][+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  })));
+                // CODE → <LoadConstZero>: <Reg8: 4>
+                // USED → r4 = 0;
+                // CODE → <Mov>: <Reg8: 1, Reg8: 3>
+                // USED → r1 = [];
+                // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 25, string_id: 139>  # String: 'length' (Identifier)
+                // USED → r1 = [].length;
+                // CODE → <Mov>: <Reg8: 5, Reg8: 1>
+                // USED → r5 = [].length;
+                // CODE → <JNotLess>: <Addr8: 57, Reg8: 2, Reg8: 1>  # Address: 00000400
+                if (0 >= [].length) goto label_1024;
+                // ──────────────── Block 32 ──────────────── 
+                // CODE → <Catch>: <Reg8: 10>
+                // USED → r10 = caughtException;
+                // CODE → <Mov>: <Reg8: 9, Reg8: 7>
+                // USED → r9 = [][+(+0 + 1)];
+                // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
+                // USED → r7 = [][+(+0 + 1)].call;
+                // CODE → <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
+                r7 = [][+(+0 + 1)].call(this, caughtException)
+            }
+            // LOOP → END
+        } catch (caughtException) {
+            // ──────────────── Block 36 ──────────────── 
+            // CODE → <GetGlobalObject>: <Reg8: 0>
+            // USED → r0 = globalThis;
+            // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 26, string_id: 41>  # String: 'Promise' (Identifier)
+            // USED → r1 = globalThis.Promise;
+            // CODE → <GetById>: <Reg8: 0, Reg8: 1, UInt8: 30, string_id: 13645>  # String: 'reject' (Identifier)
+            // USED → r0 = globalThis.Promise.reject;
+            // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
+            // USED → r0 = globalThis.Promise.reject(caughtException);
+            // CODE → <Ret>: <Reg8: 0>
+            return globalThis.Promise.reject(caughtException);
+        }
     }
 }

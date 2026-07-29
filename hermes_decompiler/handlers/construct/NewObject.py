@@ -4,6 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(NewObject, Reg8)
+# Example: <NewObject>: <Reg8: 7>
 class NewObject(OpcodeHandler):
     """Create a new empty object: {}"""
 

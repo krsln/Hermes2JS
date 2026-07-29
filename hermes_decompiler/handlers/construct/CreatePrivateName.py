@@ -1,17 +1,12 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, STRING_ID, sequence
-from hermes_decompiler.ir.expressions import CallExpression, Identifier, NewExpression, Literal, StringLiteral
+from hermes_decompiler.handlers import OpcodeHandler, REG, STRING_ID, sequence
+from hermes_decompiler.ir.expressions import CallExpression, Identifier, StringLiteral
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-# DEFINE_OPCODE_2(CreatePrivateName, Reg8, UInt32 string_id)   [confirmed, hermes-dec table]
-#
-#   "Create a new primitive symbol, taking in a string description as
-#    input... Arg1 = new Symbol(Arg2)"
-#
-# Backs `#privateField` class members. Rendered as `Symbol(name)` (no
-# `new`, matching real JS Symbol() semantics -- the doc's "new Symbol"
-# phrasing is describing bytecode intent, not actual constructible JS).
+# Reg8, UInt32 (string_id) (total size 5)
+# DEFINE_OPCODE_2(CreatePrivateName, Reg8, UInt32)
+# Example: <CreatePrivateName>: <Reg8: 4, string_id: 11468>  # String: '#code' (Identifier)
 class CreatePrivateName(OpcodeHandler):
     """Create a private-name symbol: Symbol('#fieldName')."""
 

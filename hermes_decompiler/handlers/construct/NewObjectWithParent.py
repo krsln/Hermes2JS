@@ -8,6 +8,8 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8 (total size 2)
+# DEFINE_OPCODE_2(NewObjectWithParent, Reg8, Reg8)
 # Example: <NewObjectWithParent>: <Reg8: 1, Reg8: 14>
 class NewObjectWithParent(OpcodeHandler):
     """Create a new object with the specified prototype."""

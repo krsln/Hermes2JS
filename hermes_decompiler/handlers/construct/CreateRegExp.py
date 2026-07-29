@@ -6,6 +6,7 @@ from hermes_decompiler.runtime import HermesAnalysis
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 
 
+# Reg8, UInt32 (string_id), UInt32 (string_id), UInt32 (total size 13)
 # DEFINE_OPCODE_4(CreateRegExp, Reg8, UInt32, UInt32, UInt32)
 # Example: <CreateRegExp>: <Reg8: 0, UInt32: 12, UInt32: 13, UInt32: 0>  # String: '^\d+$'  String: 'g'
 class CreateRegExp(OpcodeHandler):

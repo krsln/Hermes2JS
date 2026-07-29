@@ -4,6 +4,7 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, Reg8 (total size 3)
 # DEFINE_OPCODE_3(CreateThis, Reg8, Reg8, Reg8)
 # Example: <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
 class CreateThis(OpcodeHandler):
@@ -36,20 +37,9 @@ class CreateThis(OpcodeHandler):
         return result
 
 
-# DEFINE_OPCODE_3(CreateThisForNew, Reg8, Reg8, UInt8)   [confirmed, hermes-dec table]
-#
-#   "Allocate an empty, uninitialized object to be used as the `this`
-#    parameter in a `new` expression. Some closures are responsible for
-#    making their own `this`, so in these cases this instruction will
-#    simply return undefined. Arg1 is the destination register. Arg2 is
-#    the constructor closure that will be invoked. Arg3 is a cache
-#    index used to speed up fetching the new target prototype property."
-#
-# Newer replacement for CreateThis (which takes an explicit prototype
-# register instead of deriving it from the constructor). No independent
-# JS expression -- like CreateThis, it's implicit machinery behind a
-# `new Ctor(...)` call, so it's modeled the same way (an opaque
-# placeholder value that later gets replaced/selected by SelectObject).
+# Reg8, Reg8, UInt8 (total size 3)
+# DEFINE_OPCODE_3(CreateThisForNew, Reg8, Reg8, UInt8)
+# Example: <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
 class CreateThisForNew(OpcodeHandler):
     """Allocate the uninitialized `this` object ahead of a `new` call."""
 
@@ -64,7 +54,7 @@ class CreateThisForNew(OpcodeHandler):
 
         constructor = self.get_register_value(analysis, constructor_reg)
 
-        expression = Identifier(name="__uninitialized_this__")
+        expression = Identifier(name="__uninitialized_this_for_new__")
 
         result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
         analysis.add_result(result)
@@ -72,20 +62,9 @@ class CreateThisForNew(OpcodeHandler):
         return result
 
 
-# DEFINE_OPCODE_4(CreateThisForSuper, Reg8, Reg8, Reg8, UInt8)   [confirmed, hermes-dec table]
-#
-#   "Allocate an empty, uninitialized object to be used as the `this`
-#    parameter for the current function when calling `super()`. Arg1 is
-#    the destination register. Arg2 is the constructor closure that
-#    will be invoked as `super()`. Arg3 is the value of new.target.
-#    Arg4 is a cache index used to speed up fetching the new target
-#    prototype property."
-#
-# Same "no JS-visible expression, opaque placeholder" treatment as
-# CreateThisForNew -- this is the derived-class-constructor sibling
-# (used right before a CallWithNewTarget that implements the actual
-# `super(...)` call), carrying an extra explicit new.target register
-# that CreateThisForNew derives implicitly instead.
+# Reg8, Reg8, Reg8, UInt8 (total size 4)
+# DEFINE_OPCODE_4(CreateThisForSuper, Reg8, Reg8, Reg8, UInt8)
+# Example: <CreateThis>: <CreateThisForSuper>: <Reg8: 4, Reg8: 2, Reg8: 1, UInt8: 0>
 class CreateThisForSuper(OpcodeHandler):
     """Allocate the uninitialized `this` object ahead of a `super(...)` call."""
 
@@ -103,7 +82,7 @@ class CreateThisForSuper(OpcodeHandler):
         constructor = self.get_register_value(analysis, constructor_reg)
         new_target = self.get_register_value(analysis, new_target_reg)
 
-        expression = Identifier(name="__uninitialized_this__")
+        expression = Identifier(name="__uninitialized_this_for_super__")
 
         result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
         analysis.add_result(result)

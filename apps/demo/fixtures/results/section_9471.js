@@ -15,7 +15,7 @@ function create(param0, param1) {
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 0, UInt8: 2>
     // USED → r5 = getParentEnvironment(0)[2];
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 5, UInt8: 2>
-    r2 = __uninitialized_this__
+    r2 = __uninitialized_this_for_new__
     if (typeof getParentEnvironment(0)[2] !== "<128>") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 7, string_id: 4284>  # String: 'Trying to call a non-function' (String)
@@ -31,15 +31,15 @@ function create(param0, param1) {
     // CODE → <LoadParentNoTraps>: <Reg8: 3, Reg8: 0>
     // USED → r3 = __getPrototypeOfNoTraps__(getParentEnvironment(0)[4]);
     // CODE → <CreateThisForSuper>: <Reg8: 2, Reg8: 3, Reg8: 5, UInt8: 2>
-    // USED → r2 = __uninitialized_this__;
+    // USED → r2 = __uninitialized_this_for_super__;
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 1426>  # String: 'Woof' (String)
     r6 = "Woof"
     // CODE → <Mov>: <Reg8: 8, Reg8: 2>
-    r8 = __uninitialized_this__
+    r8 = __uninitialized_this_for_super__
     // CODE → <CallWithNewTarget>: <Reg8: 0, Reg8: 3, Reg8: 5, UInt8: 3>
     // USED → r0 = Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], getParentEnvironment(0)[2]);
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = __uninitialized_this__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], getParentEnvironment(0)[2])];
+    // USED → r0 = __uninitialized_this_for_super__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], getParentEnvironment(0)[2])];
     // CODE → <LoadConstEmpty>: <Reg8: 2>
     // USED → r2 = /* empty */;
     // CODE → <ThrowIfThisInitialized>: <Reg8: 2>
@@ -55,7 +55,7 @@ function create(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 3657>  # String: 'Mixed' (String)
     // USED → r1 = "Mixed";
     // CODE → <PutByIdStrict>: <Reg8: 0, Reg8: 1, UInt8: 0, string_id: 15973>  # String: 'breed' (Identifier)
-    __uninitialized_this__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], getParentEnvironment(0)[2])].breed = "Mixed"
+    __uninitialized_this_for_super__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], getParentEnvironment(0)[2])].breed = "Mixed"
     // CODE → <Ret>: <Reg8: 0>
-    return __uninitialized_this__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], getParentEnvironment(0)[2])];
+    return __uninitialized_this_for_super__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], getParentEnvironment(0)[2])];
 }

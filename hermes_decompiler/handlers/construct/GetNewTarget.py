@@ -4,17 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-# DEFINE_OPCODE_1(GetNewTarget, Reg8)   [confirmed, facebook/hermes main BytecodeList.def]
-#
-#   "Obtain the value of NewTarget from the frame.
-#    Arg1 = NewTarget"
-#
-# Backs the `new.target` meta-property. `new.target` isn't a regular
-# identifier or member expression in JS grammar terms, but since this
-# codebase doesn't have a dedicated MetaProperty IR node (checked: not
-# present in Access.py/Literals.py/Operations.py, the files reviewed so
-# far), it's rendered as a MemberExpression on the pseudo-receiver
-# `new`, matching how `new.target` actually reads as source text.
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(GetNewTarget, Reg8)
+# Example: <GetNewTarget>: <Reg8: 4>
 class GetNewTarget(OpcodeHandler):
     """Arg1 = new.target"""
 

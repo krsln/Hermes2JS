@@ -11,19 +11,18 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, Reg8, UInt8 (total size 3)
 # DEFINE_OPCODE_3(PutOwnByIndex, Reg8, Reg8, UInt8)
-# DEFINE_OPCODE_3(PutOwnByIndexL, Reg8, Reg8, UInt32)
+# Example: <PutOwnByIndex>: <Reg8: 0, Reg8: 2, UInt8: 2>
 class PutOwnByIndex(OpcodeHandler):
     """Set an array element by (statically known) numeric index."""
 
     _PATTERN = sequence(REG, REG, UINT8)
-    _PATTERN_LONG = sequence(REG, REG, UINT32)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
         # Try both UInt8 and UInt32 variants
-        match = self._PATTERN.match(entry.args.strip()) or \
-                self._PATTERN_LONG.match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())  # or  self._PATTERN_LONG.match(entry.args.strip())
 
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8 and UInt8/UInt32 arguments")
@@ -61,7 +60,9 @@ class PutOwnByIndex(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, UInt32 (total size 6)
+# DEFINE_OPCODE_3(PutOwnByIndexL, Reg8, Reg8, UInt32)
 class PutOwnByIndexL(PutOwnByIndex):
     """Long index variant (UInt32)."""
 
-    pass
+    _PATTERN = sequence(REG, REG, UINT32)

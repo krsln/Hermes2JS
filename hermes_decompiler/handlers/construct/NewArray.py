@@ -1,9 +1,10 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence
-from hermes_decompiler.ir.expressions import ArrayExpression
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, UINT32, sequence
+from hermes_decompiler.ir.expressions import ArrayExpression, python_literal
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8, UInt16 (total size 3)
 # DEFINE_OPCODE_2(NewArray, Reg8, UInt16)
 # Example: <NewArray>: <Reg8: 1, UInt16: 4>
 class NewArray(OpcodeHandler):
@@ -28,3 +29,42 @@ class NewArray(OpcodeHandler):
         analysis.add_result(result)
 
         return result
+
+
+# Reg8, UInt16, UInt16, UInt16 (total size 7)
+# DEFINE_OPCODE_4(NewArrayWithBuffer, Reg8, UInt16, UInt16, UInt16)
+# Example: <NewArrayWithBuffer>: <Reg8: 4, UInt16: 4, UInt16: 4, UInt16: 42610>  # Array: ['0.83', '0.84', '0.85', '0.86']
+class NewArrayWithBuffer(OpcodeHandler):
+    """Create a new array from a static buffer."""
+
+    _PATTERN = sequence(REG, UINT16, UINT16, UINT16)
+
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(analysis, entry)
+
+        dest_reg = int(match.group(1))
+
+        if entry.array_literal is None:
+            return self.build_exception_result(analysis, entry, "// Warning: No array data in comment")
+
+        elements = tuple(
+            python_literal(v)
+            for v in entry.array_literal
+        )
+
+        expression = ArrayExpression(elements=elements)
+
+        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
+
+
+# Reg8, UInt16, UInt16, UInt32 (total size 9)
+# DEFINE_OPCODE_4(NewArrayWithBufferLong, Reg8, UInt16, UInt16, UInt32)
+class NewArrayWithBufferLong(NewArrayWithBuffer):
+    """Long variant."""
+    _PATTERN = sequence(REG, UINT16, UINT16, UINT32)

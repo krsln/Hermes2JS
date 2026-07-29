@@ -68,6 +68,9 @@ class ConstructBase(OpcodeHandler, ABC):
         return tuple(values)
 
 
+# Reg8, Reg8, UInt8 (total size 3)
+# DEFINE_OPCODE_3(Construct, Reg8, Reg8, UInt8)
+# Example: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
 class Construct(ConstructBase):
     """
     Construct using UInt8 argument count.
@@ -76,6 +79,8 @@ class Construct(ConstructBase):
     ARG_PATTERN = UINT8
 
 
+# Reg8, Reg8, UInt32 (total size 6)
+# DEFINE_OPCODE_3(ConstructLong, Reg8, Reg8, UInt32)
 class ConstructLong(ConstructBase):
     """
     Construct using UInt32 argument count.

@@ -1,24 +1,12 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT32, sequence
 from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-# DEFINE_OPCODE_4(CreateBaseClass, Reg8, Reg8, Reg8, UInt16 function_id)
-# DEFINE_OPCODE_4(CreateBaseClassLongIndex, Reg8, Reg8, Reg8, UInt32 function_id)
-#   [confirmed, hermes-dec table]
-#
-#   "Create a base class. Arg1 is the output register for the closure.
-#    Arg2 is the output register for the home object. Arg3 is the
-#    current environment. Arg4 is index in the function table."
-#
-# NOTE: this opcode produces TWO results (closure in Arg1, home object
-# in Arg2) but OpcodeResult in this codebase only models a single
-# dest_reg, matching the pattern used for CreateClosure elsewhere. The
-# home-object register (Arg2) is set separately since analysis.add_result
-# only tracks one destination per call; if this decompiler's
-# OpcodeResult/analysis API supports multiple writes, prefer that
-# instead of the two-result-object workaround below.
+# Reg8, Reg8, Reg8, UInt16 (total size 5)
+# DEFINE_OPCODE_4(CreateBaseClass, Reg8, Reg8, Reg8, UInt16)
+# Example: <CreateBaseClass>: <Reg8: 1, Reg8: 3, Reg8: 2, UInt16: 8197>
 class CreateBaseClass(OpcodeHandler):
     """Create a base (non-derived) ES6 class closure."""
 
@@ -53,29 +41,15 @@ class CreateBaseClass(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, Reg8, UInt32 (total size 7)
+# DEFINE_OPCODE_4(CreateBaseClassLongIndex, Reg8, Reg8, Reg8, UInt32)
 class CreateBaseClassLongIndex(CreateBaseClass):
-    pass
+    _PATTERN = sequence(REG, REG, REG, UINT32)
 
 
-# DEFINE_OPCODE_6(CreateDerivedClass, Reg8, Reg8, Reg8, Reg8, UInt16 function_id)
-# DEFINE_OPCODE_6(CreateDerivedClassLongIndex, Reg8, Reg8, Reg8, Reg8, UInt32 function_id)
-#   [confirmed, hermes-dec table]
-#
-#   "Create a derived class. Arg1 is the output register for the
-#    closure. Arg2 is the output register for the home object. Arg3 is
-#    the current environment. Arg4 is the superClass. Arg5 is index in
-#    the function table."
-#
-# Same two-output shape as CreateBaseClass, plus an extra input
-# register (the superclass, Arg4) that CreateBaseClass doesn't have --
-# this is what backs `class Foo extends Bar { ... }` vs. plain
-# `class Foo { ... }`. Rendered the same way as CreateBaseClass for both
-# outputs; the superclass register itself isn't part of either output
-# expression here (it would show up wherever the `extends` clause gets
-# reconstructed at the class-declaration level, which is presumably
-# handled by whatever higher-level pass stitches CreateClosure/
-# CreateBaseClass/CreateDerivedClass results into an actual `class ...`
-# statement -- this handler only resolves the two register writes).
+# Reg8, Reg8, Reg8, Reg8, UInt16 (total size 6)
+# DEFINE_OPCODE_5(CreateDerivedClass, Reg8, Reg8, Reg8, Reg8, UInt16)
+# Example: <CreateDerivedClass>: <Reg8: 1, Reg8: 3, Reg8: 2, Reg8: 1, UInt16: 2363>
 class CreateDerivedClass(OpcodeHandler):
     """Create a derived (extends ...) ES6 class closure."""
 
@@ -108,5 +82,7 @@ class CreateDerivedClass(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, Reg8, Reg8, UInt32 (total size 8)
+# DEFINE_OPCODE_5(CreateDerivedClassLongIndex, Reg8, Reg8, Reg8, Reg8, UInt32)
 class CreateDerivedClassLongIndex(CreateDerivedClass):
-    pass
+    _PATTERN = sequence(REG, REG, REG, REG, UINT32)
