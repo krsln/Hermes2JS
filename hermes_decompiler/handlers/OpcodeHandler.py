@@ -48,15 +48,15 @@ class OpcodeHandler(ABC):
             entry: OpcodeEntry,
             error_detail: str = "Invalid arguments",
     ) -> OpcodeResult:
-        error_msg = (
-            f"// Error: {cls.__name__} at address {entry.address}: "
-            f"{error_detail}: {entry.args}"
-        )
         logger.warning(
-            "%s at address %s: %s (args=%r)",
-            cls.__name__, entry.address, error_detail, entry.args,
+            "Invalid arguments for opcode '%s' at address %d: %s (args=%r)",
+            entry.opcode,
+            entry.address,
+            error_detail,
+            entry.args,
         )
 
+        error_msg = f"// Error: {cls.__name__} at address {entry.address}: "    f"{error_detail}: {entry.args}"
         result = OpcodeResult(entry, value=RawExpression(source=error_msg))
         analysis.add_result(result)
 
@@ -69,8 +69,11 @@ class OpcodeHandler(ABC):
             entry: OpcodeEntry,
             error: str,
     ) -> OpcodeResult:
-        logger.error(
-            "%s raised at address %s: %s", cls.__name__, entry.address, error,
+        logger.exception(
+            "%s failed while processing opcode '%s' at address %d",
+            cls.__name__,
+            entry.opcode,
+            entry.address,
         )
 
         result = OpcodeResult(entry, value=RawExpression(source=error))
