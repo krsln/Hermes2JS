@@ -35,12 +35,12 @@ class LoopConditionExtractor:
 
         last = header.last_instruction
 
-        text = self._render_result(last)
+        if last is not None:
+            text = self._render_result(last)
+            match = _IF_PATTERN.search(text)
 
-        match = _IF_PATTERN.search(text)
-
-        if not match:
-            return
+            if not match:
+                return
 
         branch = header.terminator
 
