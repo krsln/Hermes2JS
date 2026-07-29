@@ -68,40 +68,39 @@ function switchTest(param0, param1) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
                 // USED → r0 = 3;
-                if (3 === param1) {
-                    // ──────────────── Block 6 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-                    // USED → r4 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-                    // USED → r3 = globalThis.console.log;
-                    // CODE → <LoadConstString>: <Reg8: 2, string_id: 1730>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-3-4' (String)
-                    // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/case-3-4";
-                    // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-                    r2 = globalThis.console.log("__BC:ControlFlow/SwitchTests/switchTest/case-3-4")
-                    // CODE → <LoadConstString>: <Reg8: 2, string_id: 3942>  # String: 'three-four' (String)
-                    // USED → r2 = "three-four";
-                    // CODE → <Ret>: <Reg8: 2>
-                    return "three-four";
-                } else {
-                    // ──────────────── Block 4 ──────────────── 
-                    // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
-                    // USED → r0 = 4;
-                    // CODE → <JStrictEqual>: <Addr8: 30, Reg8: 0, Reg8: 2>  # Address: 00000058
-                    if (4 === param1) goto label_88;
-                    // ──────────────── Block 5 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-                    // USED → r4 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-                    // USED → r3 = globalThis.console.log;
-                    // CODE → <LoadConstString>: <Reg8: 2, string_id: 4737>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-default' (String)
-                    // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/case-default";
-                    // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-                    r2 = globalThis.console.log("__BC:ControlFlow/SwitchTests/switchTest/case-default")
-                    // CODE → <LoadConstString>: <Reg8: 2, string_id: 1856>  # String: 'other' (String)
-                    // USED → r2 = "other";
-                    // CODE → <Ret>: <Reg8: 2>
-                    return "other";
-                }
+                // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 0, Reg8: 2>  # Address: 00000058
+                if (3 === param1) goto label_88;
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
+                // USED → r0 = 4;
+                // CODE → <JStrictEqual>: <Addr8: 30, Reg8: 0, Reg8: 2>  # Address: 00000058
+                if (4 === param1) goto label_88;
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+                // USED → r4 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+                // USED → r3 = globalThis.console.log;
+                // CODE → <LoadConstString>: <Reg8: 2, string_id: 4737>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-default' (String)
+                // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/case-default";
+                // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+                r2 = globalThis.console.log("__BC:ControlFlow/SwitchTests/switchTest/case-default")
+                // CODE → <LoadConstString>: <Reg8: 2, string_id: 1856>  # String: 'other' (String)
+                // USED → r2 = "other";
+                // CODE → <Ret>: <Reg8: 2>
+                return "other";
+                // ──────────────── Block 6 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+                // USED → r4 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+                // USED → r3 = globalThis.console.log;
+                // CODE → <LoadConstString>: <Reg8: 2, string_id: 1730>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-3-4' (String)
+                // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/case-3-4";
+                // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+                r2 = globalThis.console.log("__BC:ControlFlow/SwitchTests/switchTest/case-3-4")
+                // CODE → <LoadConstString>: <Reg8: 2, string_id: 3942>  # String: 'three-four' (String)
+                // USED → r2 = "three-four";
+                // CODE → <Ret>: <Reg8: 2>
+                return "three-four";
             }
         }
     }

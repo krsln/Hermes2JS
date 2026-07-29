@@ -1,15 +1,11 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
 from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion
+from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 
 
-class LoopStructurer:
-
-    def __init__(self, graph: RegionGraph, cfg):
-        self.graph = graph
-        self.cfg = cfg
+class LoopStructurer(RegionStructurer):
 
     def run(self):
 

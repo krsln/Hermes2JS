@@ -1,7 +1,15 @@
-from .BooleanChainFolder import *
-from .IfStructurer import *
-from .LoopStructurer import *
-from .SequenceStructurer import *
-from .SwitchStructurer import *
-from ._negation import *
-from .TryStructurer import *
+from ._base import RegionStructurer
+from .SequenceStructurer import SequenceStructurer
+from .LoopStructurer import LoopStructurer
+from .IfStructurer import IfStructurer
+from .TryStructurer import TryStructurer
+from .SwitchStructurer import SwitchStructurer
+
+__all__ = [
+    "RegionStructurer",
+    "SequenceStructurer",
+    "LoopStructurer",
+    "IfStructurer",
+    "TryStructurer",
+    "SwitchStructurer",
+]

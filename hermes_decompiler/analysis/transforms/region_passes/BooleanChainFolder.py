@@ -18,10 +18,9 @@ from hermes_decompiler.ir.expressions import (
     AssignmentExpression,
     UpdateExpression,
     AwaitExpression,
-    YieldExpression, MemberExpression,
+    YieldExpression,
 )
-from hermes_decompiler.ir.statements import ReturnStatement
-from hermes_decompiler.analysis.transforms.structurers._negation import _negate_condition
+from hermes_decompiler.analysis.transforms.shared import _negate_condition
 
 
 class BooleanChainFolder:

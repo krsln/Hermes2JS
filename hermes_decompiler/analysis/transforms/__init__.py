@@ -1,3 +1,3 @@
-from .LoopConditionExtractor import *
-from .StatementBuilder import *
-from .StructuralAnalyzer import *
+from .StructuralAnalyzer import StructuralAnalyzer
+
+__all__ = ["StructuralAnalyzer"]

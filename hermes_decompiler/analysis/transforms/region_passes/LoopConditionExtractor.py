@@ -64,7 +64,6 @@ class LoopConditionExtractor:
         `Dispatcher._handle_generator_await` wraps a previous result's
         `value` in an `AwaitExpression` and recomputes `.result`).
         """
-        print(result)
 
         # Imported lazily to avoid a hard dependency from `models` on
         # `regions` at module load time; `models` is the lower layer.

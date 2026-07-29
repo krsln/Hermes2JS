@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from dataclasses import dataclass, field
+from typing import Any
+
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
@@ -8,9 +11,32 @@ from hermes_decompiler.analysis.regions.Regions import (
     CatchRegion,
     FinallyRegion, TryRegion,
 )
-from hermes_decompiler.analysis.regions.Statements import (
-    InstructionState,
-)
+from hermes_decompiler.opcode import OpcodeResult
+
+
+@dataclass(slots=True)
+class _RegionItem:
+    """
+    Base for an entry in `SequenceRegion.items`.
+
+    Private to this module - `StatementBuilder` is the sole
+    producer and consumer. Deliberately NOT named `Statement`/`State`
+    (as it once was, in the now-removed `regions/Statements.py`):
+    that collided in name and in the reader's mental model with
+    `hermes_decompiler.ir.statements.Statement` (`ReturnStatement`
+    etc), a completely different concept - an actual IR statement
+    node, not a positional (region, index) reference into a
+    BasicBlock's raw instruction list.
+    """
+    parent: Any = field(default=None, kw_only=True)
+
+
+@dataclass(slots=True)
+class _InstructionRef(_RegionItem):
+    """One `BasicBlock` instruction's position within a region."""
+    block: BasicBlock
+    index: int
+    result: OpcodeResult
 
 
 class StatementBuilder:
@@ -54,7 +80,7 @@ class StatementBuilder:
 
                 for index, result in enumerate(child.instructions):
                     statements.append(
-                        InstructionState(
+                        _InstructionRef(
                             parent=region,
                             block=child,
                             index=index,

@@ -1,19 +1,15 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
 from hermes_decompiler.analysis.regions.Regions import SequenceRegion, TryRegion, CatchRegion
 from hermes_decompiler.analysis.terminators import TerminatorReturn, TerminatorThrow
 from hermes_decompiler.ir.expressions import Expression, Identifier
+from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 
 TERMINATING_TERMINATORS = (TerminatorReturn, TerminatorThrow)
 
 
-class TryStructurer:
-
-    def __init__(self, graph: RegionGraph, cfg):
-        self.graph = graph
-        self.cfg = cfg
+class TryStructurer(RegionStructurer):
 
     def run(self):
 

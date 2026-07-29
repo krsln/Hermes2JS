@@ -2,13 +2,9 @@ from __future__ import annotations
 
 from abc import ABC
 from enum import Enum
-from typing import TYPE_CHECKING
 
 from hermes_decompiler.ir import Expression
 from hermes_decompiler.analysis.cfg import BasicBlock
-
-if TYPE_CHECKING:
-    from hermes_decompiler.analysis.regions import State
 
 
 class Region(ABC):
@@ -56,7 +52,6 @@ class SequenceRegion(Region):
         super().__init__()
 
         self.children: list[BasicBlock | Region] = []
-        self.statements: list[State] = []
         self.items = []
 
     def append(self, node):

@@ -2,17 +2,17 @@ from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
-from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
 from hermes_decompiler.analysis.regions.Regions import (
     IfRegion,
     LoopRegion,
     SequenceRegion,
     TryRegion,
 )
-from hermes_decompiler.analysis.transforms.structurers._negation import _negate_condition
+from hermes_decompiler.analysis.transforms.shared import _negate_condition
+from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 
 
-class IfStructurer:
+class IfStructurer(RegionStructurer):
     """
     Converts BasicBlocks terminated by a ConditionalBranch into
     structured IfRegions.
@@ -55,9 +55,8 @@ class IfStructurer:
     regions.
     """
 
-    def __init__(self, graph: RegionGraph, cfg):
-        self.graph = graph
-        self.cfg = cfg
+    def __init__(self, graph, cfg):
+        super().__init__(graph, cfg)
 
         self._address_to_block = {
             block.address: block
@@ -224,6 +223,30 @@ class IfStructurer:
         then_items = region.children[then_start:then_end]
         else_items = region.children[else_start:else_end]
 
+        # -------------------------------------------------------------
+        # Single-entry validation.
+        #
+        # then_items / else_items are only a valid "then"/"else" body if
+        # the ONLY way to reach them is through `block`'s branch. Short-
+        # circuit (&&/||) chains compile to multiple conditional blocks
+        # that all jump to a *shared* target (e.g. two different
+        # JmpTrue's landing on the same "either" block). Such a target
+        # is a join point, not part of a single then/else body - if we
+        # blindly sliced it into then_items/else_items here, we'd
+        # produce a structurally invalid (contradictory / duplicated)
+        # IfRegion, as seen with ifElseChainTest's `a || b` branch.
+        #
+        # We verify that every block in then_items (besides the first,
+        # which is legitimately entered from `block`) has no predecessor
+        # outside of `block` + the items collected so far. Same for
+        # else_items, whose first block is entered via `block`'s goto.
+        # If any block is reachable from somewhere else too, bail out
+        # and leave this candidate as a raw goto rather than guess.
+        # -------------------------------------------------------------
+
+        if not self._is_single_entry(then_items, block) or not self._is_single_entry(else_items, block):
+            return False
+
         del region.children[then_start:else_end]
 
         then_body = SequenceRegion()
@@ -257,6 +280,51 @@ class IfStructurer:
 
         region.children.insert(insert_at, if_region)
         if_region.parent = region
+
+        return True
+
+    # -------------------------------------------------------------
+
+    @staticmethod
+    def _predecessors(block: BasicBlock) -> set:
+        """
+        Returns the set of blocks with an edge into `block`.
+
+        CFGBuilder._connect populates `block.predecessors` for every
+        edge it creates, so this is always available - no fallback
+        needed.
+        """
+
+        return set(block.predecessors)
+
+    def _is_single_entry(self, items: list, entry_from: BasicBlock) -> bool:
+        """
+        True if `items` (a candidate then/else body, in order) is only
+        ever entered from `entry_from` (i.e. `block`'s branch/fallthrough)
+        and, for items after the first, from earlier items in the same
+        list. False if any item has a predecessor from outside that
+        set - meaning it's a join point shared with some other branch
+        and must NOT be folded into this then/else body.
+
+        Predecessors that live *inside* `items` themselves are fine
+        (straight-line fallthrough within the body).
+        """
+
+        if not items:
+            return True
+
+        allowed = {entry_from}
+
+        for item in items:
+
+            if not isinstance(item, BasicBlock):
+                allowed.add(item)
+                continue
+
+            if not self._predecessors(item).issubset(allowed):
+                return False
+
+            allowed.add(item)
 
         return True
 

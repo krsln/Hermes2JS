@@ -42,5 +42,3 @@ def _negate_condition(expr: Expression) -> Expression:
         )
 
     return UnaryExpression(UnaryOperator.LOGICAL_NOT, expr)
-
-
