@@ -1,7 +1,6 @@
-import re
 from typing import ClassVar
 
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence, STRING_ID
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence, STRING_ID, IMM32, DOUBLE, BIGINT_ID
 from hermes_decompiler.ir.expressions import (
     Expression,
     UndefinedLiteral,
@@ -47,36 +46,62 @@ class LoadSimpleConst(OpcodeHandler):
         return result
 
 
-# @formatter:off
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(LoadConstZero, Reg8)
+# Example: <LoadConstZero>: <Reg8: 14>
 class LoadConstZero(LoadSimpleConst):
     VALUE = 0
 
+
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(LoadConstTrue, Reg8)
+# Example: <LoadConstTrue>: <Reg8: 4>
 class LoadConstTrue(LoadSimpleConst):
     VALUE = True
 
+
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(LoadConstFalse, Reg8)
+# Example: <LoadConstFalse>: <Reg8: 0>
 class LoadConstFalse(LoadSimpleConst):
     VALUE = False
 
+
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(LoadConstNull, Reg8)
+# Example: <LoadConstNull>: <Reg8: 1>
 class LoadConstNull(LoadSimpleConst):
     VALUE = None
 
+
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(LoadConstUndefined, Reg8)
+# Example: <LoadConstUndefined>: <Reg8: 0>
 class LoadConstUndefined(LoadSimpleConst):
     VALUE = UndefinedLiteral()
 
+
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(LoadConstEmpty, Reg8)
+# Example: <LoadConstEmpty>: <Reg8: 4>
 class LoadConstEmpty(LoadSimpleConst):
     # Hermes' internal "empty" sentinel (e.g. an array hole) has no real
     # JS literal - it isn't `undefined` at the engine level, even though
     # source-visible reads of it usually coerce to `undefined`. Kept as
     # an explicit marker rather than silently lying with UndefinedLiteral.
     VALUE = RawExpression(source="/* empty */")
-# @formatter:on
 
 
 # ---------------------------------------------------------------------------
 # Numeric constants
 # ---------------------------------------------------------------------------
 
+# Reg8, UInt8 (total size 2)
+# DEFINE_OPCODE_2(LoadConstUInt8, Reg8, UInt8)
+# Example: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
 class LoadConstUInt8(OpcodeHandler):
+    """"Load a constant integer value."""
+
     _PATTERN = sequence(REG, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -93,8 +118,13 @@ class LoadConstUInt8(OpcodeHandler):
         return result
 
 
+# Reg8, Imm32 (total size 5)
+# DEFINE_OPCODE_2(LoadConstInt, Reg8, Imm32)
+# Example: <LoadConstInt>: <Reg8: 11, Imm32: 256>
 class LoadConstInt(OpcodeHandler):
-    _PATTERN = re.compile(r"^Reg8:\s*(\d+),\s*Imm32:\s*(-?\d+)$")
+    """"Load a constant integer value."""
+
+    _PATTERN = sequence(REG, IMM32)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -110,8 +140,55 @@ class LoadConstInt(OpcodeHandler):
         return result
 
 
+# Reg8, UInt16 (bigint_id) (total size 3)
+# DEFINE_OPCODE_2(LoadConstBigInt, Reg8, UInt16)
+# Example:
+class LoadConstBigInt(OpcodeHandler):
+    """a constant BigInt value by bigint table index."""
+
+    _PATTERN = sequence(REG, BIGINT_ID)
+
+    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(
+                analysis,
+                entry,
+                "Expected Reg8, UInt16",
+            )
+
+        dest_reg = int(match.group(1))
+        bigint_id = int(match.group(2))
+
+        resolved = entry.string_literal
+
+        if resolved is None:
+            resolved = entry.identifier_name
+
+        if resolved is None:
+            resolved = f"bigint_{bigint_id}"
+
+        result = OpcodeResult(entry, value=StringLiteral(resolved), dest_reg=dest_reg)
+        analysis.add_result(result)
+
+        return result
+
+
+# Reg8, UInt32 (bigint_id) (total size 5)
+# DEFINE_OPCODE_2(LoadConstBigIntLongIndex, Reg8, UInt32)
+# Example:
+class LoadConstBigIntLongIndex(LoadConstBigInt):
+    """a constant BigInt value by bigint table index."""
+    pass
+
+
+# Reg8, Double (total size 9)
+# DEFINE_OPCODE_2(LoadConstDouble, Reg8, Double)
+# Example: <LoadConstDouble>: <Reg8: 0, Double: 7687411609819.0>
 class LoadConstDouble(OpcodeHandler):
-    _PATTERN = re.compile(r"^Reg8:\s*(\d+),\s*Double:\s*(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)$")
+    """"Load a constant double value."""
+
+    _PATTERN = sequence(REG, DOUBLE)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -131,7 +208,12 @@ class LoadConstDouble(OpcodeHandler):
 # String constants
 # ---------------------------------------------------------------------------
 
+# Reg8, UInt16 (string_id) (total size 3)
+# DEFINE_OPCODE_2(LoadConstString, Reg8, UInt16)
+# Example: <LoadConstString>: <Reg8: 2, string_id: 12273>  # String: 'getStaticFeatureFlag' (Identifier)
 class LoadConstString(OpcodeHandler):
+    """Load a constant string value by string table index."""
+
     _PATTERN = sequence(REG, STRING_ID)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
@@ -157,9 +239,10 @@ class LoadConstString(OpcodeHandler):
         return result
 
 
+# Reg8, UInt32 (string_id) (total size 5)
+# DEFINE_OPCODE_2(LoadConstStringLongIndex, Reg8, UInt32)
+# Example:
 class LoadConstStringLongIndex(LoadConstString):
-    """
-    UInt32 string index variant.
-    """
+    """Load a constant string value by string table index."""
 
     pass

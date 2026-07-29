@@ -4,8 +4,9 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# Reg8 (total size 1)
 # DEFINE_OPCODE_1(LoadThisNS, Reg8)
-# Example: <LoadThisNS>: <Reg8: 4>
+# Example: <LoadThisNS>: <Reg8: 3>
 class LoadThisNS(OpcodeHandler):
     """Load and coerce `this` value."""
 
