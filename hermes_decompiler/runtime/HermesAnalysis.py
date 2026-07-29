@@ -1,6 +1,6 @@
 from typing import Dict, Any, Optional, List
 
-from hermes_decompiler.core import get_logger
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.opcode import OpcodeResult
 
 logger = get_logger(__name__)

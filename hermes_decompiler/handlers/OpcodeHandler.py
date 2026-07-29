@@ -3,7 +3,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Dict, Optional
 
-from hermes_decompiler.core import get_logger
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import Expression, Identifier, RawExpression
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis

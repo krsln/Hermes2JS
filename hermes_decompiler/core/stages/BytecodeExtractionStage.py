@@ -1,4 +1,4 @@
-from hermes_decompiler.core.Logging import get_logger
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.core.PipelineContext import PipelineContext
 from hermes_decompiler.core.PipelineStage import PipelineStage
 

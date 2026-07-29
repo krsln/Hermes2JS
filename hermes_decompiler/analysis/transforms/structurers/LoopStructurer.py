@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+import logging
+
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion
+from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion, Region
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
+from hermes_decompiler.core.logging import get_logger
+
+logger = get_logger(__name__)
 
 
 class LoopStructurer(RegionStructurer):
@@ -52,9 +57,9 @@ class LoopStructurer(RegionStructurer):
 
             self._build_loop(loop, parent_sequence)
 
-        # # TODO: activate with a condition
-        # print("\n===== REGION TREE =====")
-        # self._dump(self.graph.root)
+        if logger.isEnabledFor(logging.DEBUG):
+            logger.debug("===== REGION TREE =====")
+            self._dump_region_tree(self.graph.root)
 
     # -------------------------------------------------------------
 
@@ -92,25 +97,20 @@ class LoopStructurer(RegionStructurer):
         for child in sorted(loop.children, key=lambda l: l.header.id):
             self._build_loop(child, region.body)
 
-    def _dump(self, region, indent=0):
-
+    def _dump_region_tree(self, node: Region | BasicBlock, indent: int = 0) -> None:
         prefix = " " * indent
 
-        if isinstance(region, SequenceRegion):
-            print(f"{prefix}SequenceRegion")
+        if isinstance(node, SequenceRegion):
+            logger.debug("%sSequenceRegion", prefix)
+            for child in node.children:
+                self._dump_region_tree(child, indent + 4)
 
-            for child in region.children:
-                self._dump(child, indent + 4)
+        elif isinstance(node, LoopRegion):
+            logger.debug("%sLoopRegion(header=%d)", prefix, node.header_block.id)
+            self._dump_region_tree(node.body, indent + 4)
 
-            return
+        elif isinstance(node, BasicBlock):
+            logger.debug("%sBlock %d", prefix, node.id)
 
-        if isinstance(region, LoopRegion):
-            print(f"{prefix}LoopRegion(header={region.header_block.id})")
-            self._dump(region.body, indent + 4)
-            return
-
-        if isinstance(region, BasicBlock):
-            print(f"{prefix}Block {region.id}")
-            return
-
-        print(f"{prefix}{type(region).__name__}")
+        else:
+            logger.debug("%s%s", prefix, type(node).__name__)

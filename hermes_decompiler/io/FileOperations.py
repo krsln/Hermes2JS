@@ -3,7 +3,7 @@ import re
 from typing import Tuple, Optional, List
 
 from hermes_decompiler.Decompiler import Decompiler
-from hermes_decompiler.core import get_logger
+from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)
 

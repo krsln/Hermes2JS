@@ -1,4 +1,4 @@
-from hermes_decompiler.core import get_logger
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
 from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
