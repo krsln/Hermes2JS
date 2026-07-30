@@ -1,6 +1,7 @@
 import re
 
 from hermes_decompiler.analysis.terminators import TerminatorSwitch
+from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, UINT8, UINT16, sequence
 from hermes_decompiler.handlers import OpcodeHandler
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
@@ -10,9 +11,15 @@ from hermes_decompiler.runtime import HermesAnalysis
 # DEFINE_OPCODE_5(SwitchImm, Reg8, UInt32, Addr32, UInt32, UInt32)
 # Example: <SwitchImm>: <Reg8: 3, UInt32: 970, Addr32: 954, UInt32: 0, UInt32: 27>  # Address: 000003d6  # Jump table: [000003a2, ..., 0000018e]
 class SwitchImm(OpcodeHandler):
-    _PATTERN = re.compile(r"^Reg\d+:\s*(\d+)")
+    """"
+    Jump table switch - using a table of offset, jump to the offset of the given
+    input or to the default block if out of range (or not right type)
+    """
+
+    _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+        print(entry)
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -27,10 +34,12 @@ class SwitchImm(OpcodeHandler):
 
         targets = []
 
-        for offset in re.compile(r"Addr\d+:\s*(-?\d+)").findall(entry.args):
+        for offset in sequence(ADDR).findall(entry.args):
             target = entry.address + int(offset)
             analysis.gotoList.append(target)
             targets.append(target)
+
+
 
         terminator = TerminatorSwitch(selector=selector, targets=tuple(targets))
 
@@ -57,7 +66,7 @@ class UIntSwitchImm(SwitchImm):
 class StringSwitchImm(OpcodeHandler):
     """All-string `switch` statement. Case targets come from an out-of-line table this handler can't yet resolve."""
 
-    _PATTERN = re.compile(r"^Reg\d+:\s*(\d+)")
+    _PATTERN = sequence(REG)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -75,7 +84,7 @@ class StringSwitchImm(OpcodeHandler):
         # the disassembler surfaces it as a plain `Addr` token, same as
         # SwitchImm's existing regex.
         targets = []
-        for offset in re.compile(r"Addr\d+:\s*(-?\d+)").findall(entry.args):
+        for offset in sequence(ADDR).findall(entry.args):
             target = entry.address + int(offset)
             analysis.gotoList.append(target)
             targets.append(target)

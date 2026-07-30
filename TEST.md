@@ -27,6 +27,8 @@ python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fix
 ```
 
 ```shell
+python scripts/decompiler.py -i ./apps/coachy/fixtures/one -o ./apps/coachy/fixtures/results
+
 python scripts/decompiler.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results
 
 ```
