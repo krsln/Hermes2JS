@@ -9,7 +9,21 @@ import { complexTest } from "./ControlFlow/ComplexTests";
 import { ifTest, ifElseChainTest } from "./ControlFlow/IfTests";
 
 // Exceptions
-import { tryCatchTest } from "./Exceptions/ExceptionTests";
+import {
+    tryCatchTest,
+    tryCatchNoFinallyTest,
+    tryFinallyNoCatchTest,
+    tryFinallyNormalCompletionTest,
+    tryCatchRethrowDifferentTest,
+    tryLoopMultiReturnTest,
+    nestedTryCatchTest,
+    nestedTryCatchFinallyTest,
+    tryCatchFinallyEarlyReturnTest,
+    tryFinallyLoopBreakTest,
+    tryCatchInsideLoopTest,
+    tryCatchFinallyBranchInFinallyTest,
+    tryCatchFinallyImplicitThrowTest,
+ } from "./Exceptions/ExceptionTests";
 
 // Iterators
 import { forOfTest, forInTest } from "./Iterators/IteratorTests";
@@ -57,6 +71,18 @@ export function runAllTests() {
 
     // Exceptions
     tryCatchTest();
+    tryCatchNoFinallyTest();
+    tryFinallyNoCatchTest();
+    tryFinallyNormalCompletionTest();
+    tryCatchRethrowDifferentTest();
+    tryLoopMultiReturnTest();
+    nestedTryCatchTest();
+    nestedTryCatchFinallyTest();
+    tryCatchFinallyEarlyReturnTest();
+    tryFinallyLoopBreakTest();
+    tryCatchInsideLoopTest();
+    tryCatchFinallyBranchInFinallyTest();
+    tryCatchFinallyImplicitThrowTest();
 
     // Iterators
     forOfTest();
