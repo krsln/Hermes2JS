@@ -8,11 +8,11 @@
 #├── app/
 #├── package.json
 
-rm -rf node_modules package-lock.json yarn.lock
-npm install
+#rm -rf node_modules package-lock.json yarn.lock
+#npm install
 
 # rm -rf ios
-rm -rf android/app/build android/build android/.gradle
+#rm -rf android/app/build android/build android/.gradle
 npx expo prebuild --platform android --clean
 
 cd android
