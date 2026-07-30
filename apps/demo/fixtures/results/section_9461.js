@@ -1,0 +1,41 @@
+function defaultWithRestTest(param0) {
+    // ──────────────── Block 0 ──────────────── 
+    // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>
+    // USED → r6 = param1;
+    // CODE → <LoadConstUndefined>: <Reg8: 1>
+    // USED → r1 = undefined;
+    if (param1 === undefined) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 1>
+        // USED → r6 = 1;
+    }
+    // ──────────────── Block 2 ──────────────── 
+    // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 1>
+    r9 = 1
+    // CODE → <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 apply]
+    // USED → r5 = builtin_47(r3, r4);
+    // CODE → <GetGlobalObject>: <Reg8: 2>
+    // USED → r2 = globalThis;
+    // CODE → <TryGetById>: <Reg8: 7, Reg8: 2, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+    // USED → r7 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+    // USED → r4 = globalThis.console.log;
+    // CODE → <LoadConstString>: <Reg8: 3, string_id: 4761>  # String: '__BC:Functions/DefaultParameterTests/defaultWithRestTest/start' (String)
+    // USED → r3 = "__BC:Functions/DefaultParameterTests/defaultWithRestTest/start";
+    // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
+    r3 = globalThis.console.log("__BC:Functions/DefaultParameterTests/defaultWithRestTest/start")
+    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 214>  # String: 'reduce' (Identifier)
+    // USED → r4 = builtin_47(r3, r4).reduce;
+    // CODE → <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 12404>  # Function: [#12404  of 12 bytes]: 3 params @ offset 0x0023e3a0
+    // USED → r3 = function_12404;
+    // CODE → <Call3>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 6>
+    // USED → r4 = builtin_47(r3, r4).reduce(function_12404, 1);
+    // CODE → <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+    // USED → r3 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+    // USED → r2 = globalThis.console.log;
+    // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
+    r2 = globalThis.console.log(builtin_47(r3, r4).reduce(function_12404, 1))
+    // CODE → <Ret>: <Reg8: 1>
+    return undefined;
+}
