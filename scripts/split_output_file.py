@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-hermes_splitter.py
+split_output_file.py
 ===================
 
 Splits a Hermes bytecode disassembly (.hbc / .hasm text dump) into one file
@@ -20,9 +20,9 @@ Features
 
 Usage
 -----
-    python scripts/hermes_splitter.py -i output.hbc -o sections/
-    python scripts/hermes_splitter.py -i output.hbc -o sections/ --manifest manifest.json
-    python scripts/hermes_splitter.py -i output.hbc -o sections/ --dry-run -v
+    python scripts/split_output_file.py -i output.hbc -o sections/
+    python scripts/split_output_file.py -i output.hbc -o sections/ --manifest manifest.json
+    python scripts/split_output_file.py -i output.hbc -o sections/ --dry-run -v
 """
 
 from __future__ import annotations
@@ -35,9 +35,9 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
+from hermes_decompiler.core.logging import configure_logging, get_logger
 
-LOGGER_NAME = "hermes_splitter"
-log = logging.getLogger(LOGGER_NAME)
+log = get_logger(__name__)
 
 DEFAULT_SEPARATOR = "==============="
 FUNCTION_HEADER_RE = re.compile(
@@ -232,7 +232,7 @@ def split_file(
 
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="hermes_splitter.py",
+        prog="split_output_file.py",
         description="Split a Hermes bytecode disassembly (.hbc) into one file per function.",
     )
     parser.add_argument("-i", "--input", required=True, help="Path to the input .hbc file")
@@ -271,22 +271,20 @@ def build_arg_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def configure_logging(verbosity: int, quiet: bool) -> None:
-    if quiet:
-        level = logging.ERROR
-    elif verbosity >= 2:
-        level = logging.DEBUG
-    elif verbosity == 1:
-        level = logging.INFO
-    else:
-        level = logging.WARNING
-    logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
-
-
 def main(argv: Optional[list[str]] = None) -> int:
     parser = build_arg_parser()
     args = parser.parse_args(argv)
-    configure_logging(args.verbose, args.quiet)
+
+    if args.quiet:
+        level = logging.ERROR
+    elif args.verbose >= 2:
+        level = logging.DEBUG
+    elif args.verbose == 1:
+        level = logging.INFO
+    else:
+        level = logging.WARNING
+
+    configure_logging(level=level, use_color=True)
 
     try:
         count = split_file(

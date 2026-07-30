@@ -12,25 +12,25 @@
 ### clone vendor/hermes-dec
 
 ```shell
-chmod +x scripts/bootstrap.sh
-chmod +x scripts/disassemble.sh
+chmod +x scripts/fetch-hermes-dec.sh
+chmod +x scripts/run-hermes-dec.sh
 
 # clones https://github.com/P1sec/hermes-dec to vendor/hermes-dec
-./scripts/bootstrap.sh
+./scripts/fetch-hermes-dec.sh
 ```
 
 ## Step—1 Disassemble
 
 ```shell
-#./scripts/disassemble.sh <app_name>
+#./scripts/run-hermes-dec.sh <app_name>
 
 file apps/coachy/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 96
-./scripts/disassemble.sh coachy
+./scripts/run-hermes-dec.sh coachy
 
 file apps/testy/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 98
-./scripts/disassemble.sh testy
+./scripts/run-hermes-dec.sh testy
 
 ```
 
@@ -61,17 +61,17 @@ Splits `output.hbc` into one file per function, using the
 `===============` separator lines the disassembler emits between functions.
 
 ```shell
-python scripts/hermes_splitter.py -i <input.hbc> -o <output_dir> [options]
+python scripts/split_output_file.py -i <input.hbc> -o <output_dir> [options]
 
 
 # Basic split
-python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o apps/testy/output/sections
+python scripts/split_output_file.py -i apps/testy/output/output.hbc -o apps/testy/output/sections
 
 # With manifest + INFO logging
-python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --manifest sections/manifest.json -v
+python scripts/split_output_file.py -i apps/testy/output/output.hbc -o sections --manifest sections/manifest.json -v
 
 # Dry run first, to check section count/naming before writing anything
-python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --dry-run -v
+python scripts/split_output_file.py -i apps/testy/output/output.hbc -o sections --dry-run -v
 ```
 
 ## Step—3 Decompile
@@ -79,16 +79,17 @@ python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --
 Converts each discovered `section_<n>.hbc` into a corresponding `section_<n>.js`.
 
 ```shell
-python scripts/decompiler.py -i <sections_dir> -o <results_dir> [options]
+python scripts/decompile_sections.py -i <sections_dir> -o <results_dir> [options]
+python scripts/decompile_sections.py -i <sections_dir> -o <results_dir> [options]
 
 
-python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results
-python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --no-verbose
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --no-verbose
 
-python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --strict
-python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --start 100 --end 1000
-python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --log-level DEBUG
-python scripts/decompiler.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --log-level WARNING --no-verbose
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --strict
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --start 100 --end 1000
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --log-level WARNING --no-verbose
 
-python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
+python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```

@@ -28,6 +28,7 @@ python "vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py" "apps/
 
 ```shell
 find . -name "hermesc" -type f
+./HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc hermesc -version
 ./HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
     -b \
     -dump-bytecode \

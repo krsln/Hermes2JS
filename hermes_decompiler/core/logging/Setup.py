@@ -9,7 +9,7 @@ _ROOT = "hermes_decompiler"
 _FORMAT = "%(asctime)s | %(levelname)-8s | %(name)s | %(message)s"
 _DATEFMT = "%Y-%m-%d %H:%M:%S"
 
-logging.getLogger(_FORMAT).addHandler(logging.NullHandler())
+logging.getLogger(_ROOT).addHandler(logging.NullHandler())
 
 
 def get_logger(module_name: str) -> logging.Logger:
@@ -34,9 +34,9 @@ def configure_logging(*, level: int = logging.INFO, use_color: bool = True, ) ->
     handler = logging.StreamHandler()
 
     if use_color:
-        formatter = ColorFormatter(_FORMAT)
+        formatter = ColorFormatter(_FORMAT, datefmt=_DATEFMT)
     else:
-        formatter = logging.Formatter(_FORMAT)
+        formatter = logging.Formatter(_FORMAT, datefmt=_DATEFMT)
 
     handler.setFormatter(formatter)
 
