@@ -41,21 +41,21 @@ python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./app
 **Examples**
 
 ```shell
-python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ 
-python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --no-verbose
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ 
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --no-verbose
 
-python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 999 
-python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 999 --end 1999 
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 999 
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 999 --end 1999 
 
-python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 5999 
-python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 5000 --end 9999 
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 5999 
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 5000 --end 9999 
 
-python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 10000 --end 14999 
-python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 15000 --end 19999
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 10000 --end 14999 
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 15000 --end 19999
 
-python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 20000 --end 24999 
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 20000 --end 24999 
 
-python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```
 
 ## Region Tree

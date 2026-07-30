@@ -7,6 +7,7 @@ from hermes_decompiler.runtime import HermesAnalysis
 
 # Reg8, Reg8, UInt16 (string_id) (total size 4)
 # DEFINE_OPCODE_3(DelById, Reg8, Reg8, UInt16)
+# Example: <DelById>: <Reg8: 11, Reg8: 11, string_id: 15620>  # String: 'channels' (Identifier)
 class DelById(OpcodeHandler):
     _PATTERN = sequence(REG, REG, STRING_ID)
 
@@ -15,7 +16,7 @@ class DelById(OpcodeHandler):
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, UInt8, string_id arguments")
 
-        dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
+        dest_reg, obj_reg, string_id = map(int, match.groups())
 
         prop_name = entry.identifier_name or f"string_{string_id}"
         obj = self.get_register_value(analysis, obj_reg)

@@ -35,7 +35,7 @@ function propertyAccessTest(param0) {
     // CODE → <Call4>: <Reg8: 2, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 3, Reg8: 2>
     r2 = globalThis.console.log({ "x": 1, "y": 2 }.x, { "x": 1, "y": 2 }.y, { "x": 1, "y": 2 }.z)
     // CODE → <DelById>: <Reg8: 2, Reg8: 5, string_id: 42>  # String: 'x' (Identifier)
-    // Error: not enough values to unpack (expected 4, got 3)
+    r2 = delete { "x": 1, "y": 2 }.x
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
