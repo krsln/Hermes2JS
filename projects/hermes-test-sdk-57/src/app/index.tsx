@@ -9,6 +9,9 @@ import { ThemedView } from '@/components/themed-view';
 import { WebBadge } from '@/components/web-badge';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
 
+import {runAllTests} from "@/testy";
+import {useEffect} from "react";
+
 function getDevMenuHint() {
   if (Platform.OS === 'web') {
     return <ThemedText type="small">use browser devtools</ThemedText>;
@@ -29,6 +32,10 @@ function getDevMenuHint() {
 }
 
 export default function HomeScreen() {
+  useEffect(() => {
+      runAllTests();
+  }, []);
+
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
@@ -37,6 +44,7 @@ export default function HomeScreen() {
           <ThemedText type="title" style={styles.title}>
             Welcome to&nbsp;Expo
           </ThemedText>
+          <ThemedText>Hermes2JS Test Application | SDK 57</ThemedText>
         </ThemedView>
 
         <ThemedText type="code" style={styles.code}>
