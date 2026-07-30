@@ -81,11 +81,27 @@ class CFGBuilder:
 
         sorted_blocks = sorted(self.cfg.blocks, key=lambda b: b.address)
 
+        # End address of each block = start address of the next block in
+        # program order (or +inf for the last block). Needed because a
+        # handler's "start" address routinely falls *inside* a block
+        # rather than exactly on a leader/block boundary (Hermes marks
+        # the protected range at instruction granularity, not block
+        # granularity) - so membership must be decided by range overlap,
+        # not by testing whether the block's own start address falls
+        # inside [handler.start, handler.end).
+        block_end: Dict[int, float] = {}
+        for i, block in enumerate(sorted_blocks):
+            block_end[block.address] = (
+                sorted_blocks[i + 1].address
+                if i + 1 < len(sorted_blocks)
+                else float("inf")
+            )
+
         for handler in raw_handlers:
 
             try_blocks = [
                 block for block in sorted_blocks
-                if handler["start"] <= block.address < handler["end"]
+                if block.address < handler["end"] and block_end[block.address] > handler["start"]
             ]
 
             handler_block = self.address_to_block.get(handler["target"])
