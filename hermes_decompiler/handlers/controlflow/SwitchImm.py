@@ -68,6 +68,7 @@ class SwitchImm(OpcodeHandler):
 # DEFINE_OPCODE_5(UIntSwitchImm, Reg8, UInt32, Addr32, UInt32, UInt32)
 # Example: <UIntSwitchImm>: <Reg8: 17, UInt32: 5474, Addr32: 5320, UInt32: 0, UInt32: 31>  # Address: 00001a74
 class UIntSwitchImm(SwitchImm):
+    # todo: wrong?
     pass
 
 
