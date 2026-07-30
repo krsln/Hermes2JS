@@ -1,0 +1,80 @@
+
+=> [Function #2173 "parseLinearGradientCSSString" of 303 bytes]: 2 params, frame size=21, strict=0, exc handler=0, debug info=0  @ offset 0x0015dc80
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000003: <LoadParam>: <Reg8: 6, UInt8: 1>
+==> 00000006: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 0, string_id: 230>  # String: 'split' (Identifier)
+==> 0000000b: <LoadConstString>: <Reg8: 4, string_id: 559>  # String: ',' (String)
+==> 0000000f: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 00000014: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 9>
+==> 00000018: <GetByIndex>: <Reg8: 7, Reg8: 4, UInt8: 0>
+==> 0000001c: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 202>  # String: 'trim' (Identifier)
+==> 00000021: <Call1>: <Reg8: 7, Reg8: 6, Reg8: 7>
+==> 00000025: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 242>  # String: 'toLowerCase' (Identifier)
+==> 0000002a: <Call1>: <Reg8: 7, Reg8: 6, Reg8: 7>
+==> 0000002e: <LoadFromEnvironment>: <Reg8: 8, Reg8: 3, UInt8: 8>
+==> 00000032: <GetByIdShort>: <Reg8: 6, Reg8: 8, UInt8: 3, string_id: 45>  # String: 'test' (Identifier)
+==> 00000037: <Call2>: <Reg8: 6, Reg8: 6, Reg8: 8, Reg8: 7>
+==> 0000003c: <JmpTrueLong>: <Addr32: 167, Reg8: 6>  # Address: 000000e3
+==> 00000042: <LoadFromEnvironment>: <Reg8: 8, Reg8: 3, UInt8: 7>
+==> 00000046: <GetByIdShort>: <Reg8: 6, Reg8: 8, UInt8: 3, string_id: 45>  # String: 'test' (Identifier)
+==> 0000004b: <Call2>: <Reg8: 6, Reg8: 6, Reg8: 8, Reg8: 7>
+==> 00000050: <JmpFalseLong>: <Addr32: 188, Reg8: 6>  # Address: 0000010c
+==> 00000056: <LoadConstNull>: <Reg8: 1>
+==> 00000058: <Eq>: <Reg8: 2, Reg8: 7, Reg8: 1>
+==> 0000005c: <LoadConstNull>: <Reg8: 6>
+==> 0000005e: <JmpTrue>: <Addr8: 113, Reg8: 2>  # Address: 000000cf
+==> 00000061: <GetByIdShort>: <Reg8: 10, Reg8: 7, UInt8: 4, string_id: 218>  # String: 'replace' (Identifier)
+==> 00000066: <LoadFromEnvironment>: <Reg8: 9, Reg8: 3, UInt8: 6>
+==> 0000006a: <LoadConstString>: <Reg8: 8, string_id: 807>  # String: ' ' (String)
+==> 0000006e: <Call3>: <Reg8: 9, Reg8: 10, Reg8: 7, Reg8: 9, Reg8: 8>
+==> 00000074: <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 242>  # String: 'toLowerCase' (Identifier)
+==> 00000079: <Call1>: <Reg8: 8, Reg8: 8, Reg8: 9>
+==> 0000007d: <LoadConstNull>: <Reg8: 6>
+==> 0000007f: <StringSwitchImm>: <Reg8: 8, UInt32: 2, UInt32: 176, Addr32: 80, UInt32: 12>  # Address: 000000cf
+==> 00000091: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 53, UInt16: 46187>  # Object: {'type': 'keyword', 'value': 'to bottom left'}
+==> 00000097: <Jmp>: <Addr8: 56>  # Address: 000000cf
+==> 00000099: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 53, UInt16: 46192>  # Object: {'type': 'keyword', 'value': 'to top left'}
+==> 0000009f: <Jmp>: <Addr8: 48>  # Address: 000000cf
+==> 000000a1: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 53, UInt16: 46197>  # Object: {'type': 'keyword', 'value': 'to bottom right'}
+==> 000000a7: <Jmp>: <Addr8: 40>  # Address: 000000cf
+==> 000000a9: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 53, UInt16: 18917>  # Object: {'type': 'keyword', 'value': 'to top right'}
+==> 000000af: <Jmp>: <Addr8: 32>  # Address: 000000cf
+==> 000000b1: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 53, UInt16: 46202>  # Object: {'type': 'angle', 'value': 270}
+==> 000000b7: <Jmp>: <Addr8: 24>  # Address: 000000cf
+==> 000000b9: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 53, UInt16: 18070>  # Object: {'type': 'angle', 'value': 180}
+==> 000000bf: <Jmp>: <Addr8: 16>  # Address: 000000cf
+==> 000000c1: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 53, UInt16: 46210>  # Object: {'type': 'angle', 'value': 90}
+==> 000000c7: <Jmp>: <Addr8: 8>  # Address: 000000cf
+==> 000000c9: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 53, UInt16: 46218>  # Object: {'type': 'angle', 'value': 0}
+==> 000000cf: <JNotEqual>: <Addr8: 6, Reg8: 6, Reg8: 1>  # Address: 000000d5
+==> 000000d3: <Ret>: <Reg8: 1>
+==> 000000d5: <GetByIdShort>: <Reg8: 8, Reg8: 4, UInt8: 5, string_id: 228>  # String: 'shift' (Identifier)
+==> 000000da: <Call1>: <Reg8: 8, Reg8: 8, Reg8: 4>
+==> 000000de: <Mov>: <Reg8: 5, Reg8: 6>
+==> 000000e1: <Jmp>: <Addr8: 43>  # Address: 0000010c
+==> 000000e3: <LoadFromEnvironment>: <Reg8: 6, Reg8: 3, UInt8: 20>
+==> 000000e7: <LoadConstZero>: <Reg8: 0>
+==> 000000e9: <Call2>: <Reg8: 7, Reg8: 6, Reg8: 0, Reg8: 7>
+==> 000000ee: <LoadConstNull>: <Reg8: 1>
+==> 000000f0: <JNotEqual>: <Addr8: 6, Reg8: 7, Reg8: 1>  # Address: 000000f6
+==> 000000f4: <Ret>: <Reg8: 1>
+==> 000000f6: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 53, UInt16: 46156>  # Object: {'type': 'angle', 'value': null}
+==> 000000fc: <PutOwnBySlotIdx>: <Reg8: 6, Reg8: 7, UInt8: 1>
+==> 00000100: <GetByIdShort>: <Reg8: 7, Reg8: 4, UInt8: 5, string_id: 228>  # String: 'shift' (Identifier)
+==> 00000105: <Call1>: <Reg8: 7, Reg8: 7, Reg8: 4>
+==> 00000109: <Mov>: <Reg8: 5, Reg8: 6>
+==> 0000010c: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 18>
+==> 00000110: <LoadConstZero>: <Reg8: 0>
+==> 00000112: <Call2>: <Reg8: 4, Reg8: 3, Reg8: 0, Reg8: 4>
+==> 00000117: <LoadConstNull>: <Reg8: 1>
+==> 00000119: <JEqual>: <Addr8: 20, Reg8: 4, Reg8: 1>  # Address: 0000012d
+==> 0000011d: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 927, UInt16: 46152>  # Object: {'type': 'linear-gradient', 'direction': null, 'colorStops': null}
+==> 00000123: <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 5, UInt8: 1>
+==> 00000127: <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 4, UInt8: 2>
+==> 0000012b: <Ret>: <Reg8: 3>
+==> 0000012d: <Ret>: <Reg8: 1>
+
+
