@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.terminators import TerminatorSwitch
 from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     LoopRegion,
@@ -10,7 +11,7 @@ from hermes_decompiler.analysis.regions.Regions import (
     SwitchCase,
 )
 from hermes_decompiler.ir.Operators import BinaryOperator
-from hermes_decompiler.ir.expressions import BinaryExpression, Expression
+from hermes_decompiler.ir.expressions import BinaryExpression, Expression, NumericLiteral
 from hermes_decompiler.ir.expressions.Literals import Literal
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 
@@ -24,31 +25,31 @@ _MIN_CASES = 2
 
 class SwitchStructurer(RegionStructurer):
     """
-    Folds a chain of `IfRegion`s that all compare the SAME discriminant
-    expression against different constant literals - exactly what
-    `if (x === 0) {...} else { if (x === 1) {...} else { ... } }`
-    looks like once IfStructurer is done with a compiled `switch` - back
-    into a single `SwitchRegion`.
+    Builds `SwitchRegion`s from whichever form Hermes compiled a
+    `switch` statement into - there are two, and it's always exactly
+    one or the other for a given switch, never both:
 
-    Hermes lowers `switch` this way (a chain of equality tests) rather
-    than emitting a distinct switch/jump-table opcode for the cases
-    seen so far, so this is a *region_passes*-style fold operating on
-    already-built `IfRegion`s, not a fresh CFG-level structurer - it's
-    kept under `structurers/` (extending `RegionStructurer`) rather
-    than `region_passes/` because it does introduce a new region kind
-    (`SwitchRegion`), matching this package's "builds a new region
-    kind" contract.
+    1. **Comparison chain** (small/sparse switches): a chain of
+       `IfRegion`s IfStructurer already built, all comparing the same
+       discriminant against different constant literals - see
+       `_match_chain`.
 
-    Known limitation: if two case tests jump to a *shared* body physically
-    placed elsewhere (`case 3: case 4: sharedBody`), IfStructurer's
-    dominance-based conversion can only resolve the shared body into
-    the FIRST case that reaches it - the later case is left as a raw,
-    unconverted conditional block (see IfStructurer's docstring on tail
-    duplication). This pass doesn't try to recover that case: the chain
-    simply stops there, and everything from that point on is treated as
-    the `default:` body verbatim (including the leftover raw
-    `if (...) goto label_N;`), which still renders correctly via
-    Printer's raw-terminator fallback - just not as a clean case label.
+    2. **Jump table** (`SwitchImm`/`UIntSwitchImm`, dense switches): a
+       single raw `BasicBlock` whose terminator is `TerminatorSwitch`,
+       untouched by IfStructurer (which only ever consumes
+       `TerminatorConditionalBranch`) - see `_fold_raw_switch`.
+
+    Known limitation (comparison-chain path only): if two case tests
+    jump to a *shared* body physically placed elsewhere (`case 3:
+    case 4: sharedBody`), IfStructurer's dominance-based conversion can
+    only resolve the shared body into the FIRST case that reaches it -
+    the later case is left as a raw, unconverted conditional block (see
+    IfStructurer's docstring on tail duplication). This pass doesn't
+    try to recover that case: the chain simply stops there, and
+    everything from that point on is treated as the `default:` body
+    verbatim (including the leftover raw `if (...) goto label_N;`),
+    which still renders correctly via Printer's raw-terminator
+    fallback - just not as a clean case label.
     """
 
     def run(self) -> None:
@@ -100,6 +101,13 @@ class SwitchStructurer(RegionStructurer):
 
         for index, item in enumerate(region.children):
 
+            if isinstance(item, BasicBlock) and isinstance(item.terminator, TerminatorSwitch):
+
+                if self._fold_raw_switch(region, item):
+                    return  # region.children mutated - re-scan on next pass
+
+                continue
+
             if not isinstance(item, IfRegion):
                 continue
 
@@ -124,6 +132,147 @@ class SwitchStructurer(RegionStructurer):
             self.graph.replace(item, switch_region)
 
             return  # region.children was just mutated - re-scan on next pass
+
+    # -------------------------------------------------------------
+    # Raw TerminatorSwitch (jump-table) folding.
+    # -------------------------------------------------------------
+
+    def _fold_raw_switch(self, region: SequenceRegion, header: BasicBlock) -> bool:
+        """
+        Builds a `SwitchRegion` directly from `header`'s `TerminatorSwitch`
+        (a real `SwitchImm`/`UIntSwitchImm` jump table), as opposed to
+        `_match_chain`'s job of folding an `if`/`else if` *comparison
+        chain* - Hermes emits one or the other depending on case
+        density, never both for the same switch.
+
+        Case labels that share a target address (`case 2: case 15:
+        body`) are grouped into one `SwitchCase`. A case value whose
+        target equals `default_target` is dropped from the explicit
+        case list - it already falls under `default:`, so listing it
+        again would just be a redundant label on the same body.
+
+        Each case/default body's extent is the contiguous run of
+        `region.children` from that target's item up to whichever
+        comes first: the next case/default's item (bodies are laid out
+        back-to-back by address, the standard compiled-switch layout),
+        `header`'s immediate post-dominator (if the switch has a real
+        merge point after it), or the end of `region`. Bails (`False`)
+        on anything that doesn't resolve this cleanly - the raw
+        `TerminatorSwitch` block is a completely valid (if unstructured)
+        fallback (see Printer's placeholder comment for it).
+        """
+
+        switch_term = header.terminator
+        assert isinstance(switch_term, TerminatorSwitch)
+
+        try:
+            header_index = region.children.index(header)
+        except ValueError:
+            return False
+
+        address_to_block = {b.address: b for b in self.cfg.blocks}
+
+        groups: dict[int, list[int]] = {}
+
+        for value, target in switch_term.case_map.items():
+
+            if target == switch_term.default_target:
+                # Already covered by `default:` - no separate label.
+                continue
+
+            groups.setdefault(target, []).append(value)
+
+        resolved: list[tuple[list[int], object]] = []
+
+        for target, values in groups.items():
+
+            target_block = address_to_block.get(target)
+
+            if target_block is None:
+                return False
+
+            item = self.graph.find_covering_item(region, target_block)
+
+            if item is None or item is header:
+                return False
+
+            resolved.append((sorted(values), item))
+
+        default_item = None
+
+        if switch_term.default_target:
+
+            default_block = address_to_block.get(switch_term.default_target)
+
+            if default_block is not None:
+                default_item = self.graph.find_covering_item(region, default_block)
+
+        all_items = [item for _, item in resolved]
+
+        if default_item is not None:
+            all_items.append(default_item)
+
+        if not all_items:
+            return False
+
+        if len(set(id(i) for i in all_items)) != len(all_items):
+            # Two distinct case groups resolved to the exact same
+            # top-level item in a way we can't split further - bail
+            # rather than guess which one actually owns it.
+            return False
+
+        try:
+            item_index = {id(i): region.children.index(i) for i in all_items}
+        except ValueError:
+            return False
+
+        ordered_items = sorted(all_items, key=lambda i: item_index[id(i)])
+
+        end_boundary = len(region.children)
+
+        if self.cfg.post_dominator_tree is not None:
+
+            merge_block = self.cfg.post_dominator_tree.immediate_post_dominator(header)
+
+            if merge_block is not None:
+
+                merge_item = self.graph.find_covering_item(region, merge_block)
+
+                if merge_item is not None:
+                    end_boundary = region.children.index(merge_item)
+
+        boundaries = [item_index[id(i)] for i in ordered_items] + [end_boundary]
+
+        bodies: dict[int, SequenceRegion] = {}
+
+        for position, item in enumerate(ordered_items):
+
+            start = boundaries[position]
+            stop = boundaries[position + 1]
+
+            if stop <= start:
+                # Overlapping/out-of-order items - can't slice safely.
+                return False
+
+            body_items = region.children[start:stop]
+            body = SequenceRegion()
+            self.graph.transfer(body_items, body)
+            bodies[id(item)] = body
+
+        switch_region = SwitchRegion(switch_term.selector)
+
+        for values, item in sorted(resolved, key=lambda r: item_index[id(r[1])]):
+            tests = [NumericLiteral(value=v) for v in values]
+            switch_region.add_case(SwitchCase(tests, bodies[id(item)]))
+
+        if default_item is not None:
+            switch_region.default_body = bodies[id(default_item)]
+
+        del region.children[header_index:end_boundary]
+        region.children.insert(header_index, switch_region)
+        switch_region.parent = region
+
+        return True
 
     # -------------------------------------------------------------
 
