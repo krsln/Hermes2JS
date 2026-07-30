@@ -1,0 +1,59 @@
+
+=> [Function #2532 "describeFiber" of 201 bytes]: 2 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x001b8142
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 224>  # String: 'tag' (Identifier)
+==> 00000008: <SwitchImm>: <Reg8: 1, UInt32: 193, Addr32: 187, UInt32: 0, UInt32: 27>  # Address: 000000c3  # Jump table: [0000004c, 0000001a, 0000004c, 000000c3, 000000c3, 000000aa, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 00000030, 000000c3, 0000007a, 000000c3, 0000004c, 00000092, 000000c3, 000000c3, 00000062, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000aa, 000000aa]
+==> 0000001a: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000001d: <LoadFromEnvironmentL>: <Reg8: 3, Reg8: 1, UInt16: 258>
+==> 00000022: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 159>  # String: 'type' (Identifier)
+==> 00000027: <LoadConstUndefined>: <Reg8: 1>
+==> 00000029: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 2>
+==> 0000002e: <Ret>: <Reg8: 1>
+==> 00000030: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000033: <LoadFromEnvironmentL>: <Reg8: 3, Reg8: 1, UInt16: 258>
+==> 00000038: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 159>  # String: 'type' (Identifier)
+==> 0000003d: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 11830>  # String: 'render' (Identifier)
+==> 00000043: <LoadConstUndefined>: <Reg8: 1>
+==> 00000045: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 2>
+==> 0000004a: <Ret>: <Reg8: 1>
+==> 0000004c: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000004f: <LoadFromEnvironmentL>: <Reg8: 3, Reg8: 1, UInt16: 258>
+==> 00000054: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 159>  # String: 'type' (Identifier)
+==> 00000059: <LoadConstUndefined>: <Reg8: 1>
+==> 0000005b: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 2>
+==> 00000060: <Ret>: <Reg8: 1>
+==> 00000062: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000065: <LoadFromEnvironmentL>: <Reg8: 4, Reg8: 1, UInt16: 257>
+==> 0000006a: <LoadConstUndefined>: <Reg8: 3>
+==> 0000006c: <LoadConstString>: <Reg8: 2, string_id: 19812>  # String: 'SuspenseList' (Identifier)
+==> 00000070: <LoadConstNull>: <Reg8: 1>
+==> 00000072: <Call3>: <Reg8: 1, Reg8: 4, Reg8: 3, Reg8: 2, Reg8: 1>
+==> 00000078: <Ret>: <Reg8: 1>
+==> 0000007a: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000007d: <LoadFromEnvironmentL>: <Reg8: 4, Reg8: 1, UInt16: 257>
+==> 00000082: <LoadConstUndefined>: <Reg8: 3>
+==> 00000084: <LoadConstString>: <Reg8: 2, string_id: 13570>  # String: 'Suspense' (Identifier)
+==> 00000088: <LoadConstNull>: <Reg8: 1>
+==> 0000008a: <Call3>: <Reg8: 1, Reg8: 4, Reg8: 3, Reg8: 2, Reg8: 1>
+==> 00000090: <Ret>: <Reg8: 1>
+==> 00000092: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000095: <LoadFromEnvironmentL>: <Reg8: 4, Reg8: 1, UInt16: 257>
+==> 0000009a: <LoadConstUndefined>: <Reg8: 3>
+==> 0000009c: <LoadConstString>: <Reg8: 2, string_id: 13018>  # String: 'Lazy' (Identifier)
+==> 000000a0: <LoadConstNull>: <Reg8: 1>
+==> 000000a2: <Call3>: <Reg8: 1, Reg8: 4, Reg8: 3, Reg8: 2, Reg8: 1>
+==> 000000a8: <Ret>: <Reg8: 1>
+==> 000000aa: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 000000ad: <LoadFromEnvironmentL>: <Reg8: 3, Reg8: 1, UInt16: 257>
+==> 000000b2: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 159>  # String: 'type' (Identifier)
+==> 000000b7: <LoadConstUndefined>: <Reg8: 1>
+==> 000000b9: <LoadConstNull>: <Reg8: 0>
+==> 000000bb: <Call3>: <Reg8: 0, Reg8: 3, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 000000c1: <Ret>: <Reg8: 0>
+==> 000000c3: <LoadConstString>: <Reg8: 0, string_id: 11303>  # String: '' (Identifier)
+==> 000000c7: <Ret>: <Reg8: 0>
+
+
