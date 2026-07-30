@@ -18,61 +18,58 @@ echo "📦 Parsing structure..."
 python3 "hermes-dec/src/hermes_dec/parsers/hbc_file_parser.py" "assets/index.android.bundle" > "outputParser.js"
 ```
 
-### hermesc
+**Examples**
+
 ```shell
-find ../../ -name "hermesc" -type f
-../../HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
+python "vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py" "apps/testy/index.android.bundle" > "apps/testy/output/output.hbc"
+```
+
+### hermesc
+
+```shell
+find . -name "hermesc" -type f
+./HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
     -b \
     -dump-bytecode \
-    index.android.bundle
+    "apps/testy/index.android.bundle" > "apps/testy/output/hermesc-output.hbc"
 
-../../HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
+./HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
     -b \
     -dump-bytecode \
     -pretty \
-    index.android.bundle
+    "apps/testy/index.android.bundle" > "apps/testy/output/hermesc-output.hbc"
 ```
 
-## Test app
+### Notes: Hermes JavaScript bytecode, version 98
 
-- Coach-ify AI: Workout Planner
-- unzip https://www.decompiler.com/
-- some.testy.apk / resources / assets / index.android.bundle
-- download the file :p
+if index.android.bundle: Hermes JavaScript bytecode, version 98 causes error ->
 
-```shell
-% file index.android.bundle
-index.android.bundle: Hermes JavaScript bytecode, version 96
+```python
+# ../vendor/hermes-dec/src/hermes_dec/hbc/hbc98.py de 
+from typing import List
+
+_builtin_function_names: List[str] = [
+    # ...
+    # missing items | date: 2026-07-29
+    "makeAsyncIterator",
+    "awaitAsyncGenerator",
+]
 ```
 
-```text
-Bytecode
-    │
-    ▼
-Parsing
-    │
-    ▼
-Dispatch
-    │
-    ▼
-Opcode Handlers
-    │
-    ▼
-Analysis
-    ├── CFG
-    ├── Dominance
-    ├── Loops
-    └── Regions
-    │
-    ▼
-Transforms
-    │
-    ▼
-IR
-    │
-    ▼
-Emit
-    │
-    ▼
-JavaScript
+or
+
+```python
+# vendor/hermes-dec/src/hermes_dec/parsers/hbc_bytecode_parser.py
+# search builtin_functions[builtin_number] then change it
+
+
+# if builtin_number < len(builtin_functions):
+#     builtin = builtin_functions[builtin_number]
+# else:
+#     builtin = f"<Builtin {builtin_number}>"
+# 
+# comment += '  # Built-in function: [#%d %s]' % (
+#     builtin_number,
+#     builtin,
+# )
 ```

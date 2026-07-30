@@ -2,9 +2,8 @@
 
 **Hermes Assembly (HASM) → JavaScript**
 
-Takes an already-built Hermes bytecode bundle from a React Native app
-(`index.android.bundle`), disassembles it, splits it into one file per
-function, and reconstructs each function as readable JavaScript.
+Takes an already-built Hermes bytecode bundle from a React Native app (`index.android.bundle`), disassembles it, splits
+it into one file per function, and reconstructs each function as readable JavaScript.
 
 ```text
 ┌────────────────────────┐      scripts/disassemble.sh       ┌────────────┐
@@ -44,3 +43,36 @@ function, and reconstructs each function as readable JavaScript.
 | JavaScript → Bytecode       | Hermes (`hermesc`) | Speed up startup & execution        |
 | Runtime Execution           | Hermes engine      | Run the compiled bytecode on device |
 
+## Workflow
+
+```text
+Bytecode
+    │
+    ▼
+Parsing
+    │
+    ▼
+Dispatch
+    │
+    ▼
+Opcode Handlers
+    │
+    ▼
+Analysis
+    ├── CFG
+    ├── Dominance
+    ├── Loops
+    └── Regions
+    │
+    ▼
+Transforms
+    │
+    ▼
+IR
+    │
+    ▼
+Emit
+    │
+    ▼
+JavaScript
+```

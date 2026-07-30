@@ -32,7 +32,7 @@ python scripts/decompiler.py -i ./apps/coachy/fixtures/one -o ./apps/coachy/fixt
 python scripts/decompiler.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results
 
 ```
-
+ 
 **Examples**
 
 ```shell
