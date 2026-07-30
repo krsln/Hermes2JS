@@ -3,9 +3,10 @@ function describeFiber(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 1>
     // USED → r0 = param1;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 224>  # String: 'tag' (Identifier)
-    r1 = param1.tag
+    // USED → r1 = param1.tag;
     // CODE → <SwitchImm>: <Reg8: 1, UInt32: 193, Addr32: 187, UInt32: 0, UInt32: 27>  # Address: 000000c3  # Jump table: [0000004c, 0000001a, 0000004c, 000000c3, 000000c3, 000000aa, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 00000030, 000000c3, 0000007a, 000000c3, 0000004c, 00000092, 000000c3, 000000c3, 00000062, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000aa, 000000aa]
-    // Error: SwitchImm at address 8: Expected a leading Reg selector: Reg8: 1, UInt32: 193, Addr32: 187, UInt32: 0, UInt32: 27
+    // Raw TerminatorSwitch reached Printer. SwitchStructurer should have converted it into a SwitchRegion.
+    // ──────────────── Block 1 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironmentL>: <Reg8: 3, Reg8: 1, UInt16: 258>
@@ -18,6 +19,7 @@ function describeFiber(param0, param1) {
     // USED → r1 = getEnvironment(0)[258].call(undefined, param1.type);
     // CODE → <Ret>: <Reg8: 1>
     return getEnvironment(0)[258].call(undefined, param1.type);
+    // ──────────────── Block 2 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironmentL>: <Reg8: 3, Reg8: 1, UInt16: 258>
@@ -32,6 +34,7 @@ function describeFiber(param0, param1) {
     // USED → r1 = getEnvironment(0)[258].call(undefined, param1.type.render);
     // CODE → <Ret>: <Reg8: 1>
     return getEnvironment(0)[258].call(undefined, param1.type.render);
+    // ──────────────── Block 3 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironmentL>: <Reg8: 3, Reg8: 1, UInt16: 258>
@@ -44,6 +47,7 @@ function describeFiber(param0, param1) {
     // USED → r1 = getEnvironment(0)[258].call(undefined, param1.type);
     // CODE → <Ret>: <Reg8: 1>
     return getEnvironment(0)[258].call(undefined, param1.type);
+    // ──────────────── Block 4 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironmentL>: <Reg8: 4, Reg8: 1, UInt16: 257>
@@ -58,6 +62,7 @@ function describeFiber(param0, param1) {
     // USED → r1 = getEnvironment(0)[257].call(undefined, "SuspenseList", null);
     // CODE → <Ret>: <Reg8: 1>
     return getEnvironment(0)[257].call(undefined, "SuspenseList", null);
+    // ──────────────── Block 5 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironmentL>: <Reg8: 4, Reg8: 1, UInt16: 257>
@@ -72,6 +77,7 @@ function describeFiber(param0, param1) {
     // USED → r1 = getEnvironment(0)[257].call(undefined, "Suspense", null);
     // CODE → <Ret>: <Reg8: 1>
     return getEnvironment(0)[257].call(undefined, "Suspense", null);
+    // ──────────────── Block 6 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironmentL>: <Reg8: 4, Reg8: 1, UInt16: 257>
@@ -86,6 +92,7 @@ function describeFiber(param0, param1) {
     // USED → r1 = getEnvironment(0)[257].call(undefined, "Lazy", null);
     // CODE → <Ret>: <Reg8: 1>
     return getEnvironment(0)[257].call(undefined, "Lazy", null);
+    // ──────────────── Block 7 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironmentL>: <Reg8: 3, Reg8: 1, UInt16: 257>
@@ -100,6 +107,7 @@ function describeFiber(param0, param1) {
     // USED → r0 = getEnvironment(0)[257].call(undefined, param1.type, null);
     // CODE → <Ret>: <Reg8: 0>
     return getEnvironment(0)[257].call(undefined, param1.type, null);
+    // ──────────────── Block 8 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 11303>  # String: '' (Identifier)
     // USED → r0 = "";
     // CODE → <Ret>: <Reg8: 0>

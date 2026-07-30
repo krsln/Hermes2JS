@@ -218,7 +218,9 @@ class CFGBuilder:
                 #
                 # switch
                 #
-                case TerminatorSwitch(_, targets):
+                case TerminatorSwitch(_, case_map, default_target):
+                    targets = set(case_map.values())
+                    targets.add(default_target)
 
                     for target in targets:
                         self._connect(block, self.address_to_block[target])

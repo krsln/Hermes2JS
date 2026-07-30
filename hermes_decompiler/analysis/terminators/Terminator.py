@@ -55,4 +55,12 @@ class TerminatorThrow(Terminator):
 @dataclass(slots=True)
 class TerminatorSwitch(Terminator):
     selector: Expression
-    targets: tuple[int, ...]
+    # targets: tuple[int, ...]
+    case_map: dict[int, int]
+    default_target: int
+
+    @property
+    def targets(self) -> tuple[int, ...]:
+        targets = set(self.case_map.values())
+        targets.add(self.default_target)
+        return tuple(sorted(targets))

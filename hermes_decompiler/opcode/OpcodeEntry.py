@@ -32,6 +32,9 @@ _REGEX_STRINGS_RE = re.compile(r"String:\s*'([^']*)'")
 # ==> 000001a8: <NewArrayWithBuffer>: <Reg8: 14, UInt16: 5, UInt16: 5, UInt16: 46337>  # Array: ['hsl', 'hsv', 'hsl', 'hwb', 'hcg']
 _ARRAY_RE = re.compile(r"Array:\s*(\[.*])")
 
+# ==> 00000008: <SwitchImm>: <Reg8: 1, UInt32: 193, Addr32: 187, UInt32: 0, UInt32: 27>  # Address: 000000c3  # Jump table: [0000004c, 0000001a, 0000004c, 000000c3, 000000c3, 000000aa, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 00000030, 000000c3, 0000007a, 000000c3, 0000004c, 00000092, 000000c3, 000000c3, 00000062, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000aa, 000000aa]
+_JUMP_TABLE_RE = re.compile(r"Jump table:\s*\[([^]]*)]")
+
 
 @dataclass(slots=True)
 class FunctionReference:
@@ -52,6 +55,8 @@ class OpcodeEntry:
     args: str = ""
 
     target_address: int | None = None
+    jump_table: tuple[int, ...] | None = None
+
     identifier_name: str | None = None
     string_literal: str | None = None
     array_literal: list | None = None
@@ -94,6 +99,20 @@ class OpcodeEntry:
                 param_count=int(match.group(4)) if match.group(4) else None,
                 offset=match.group(5),
             )
+        if match := _JUMP_TABLE_RE.search(self.comment):
+            entries = []
+
+            for value in match.group(1).split(","):
+                value = value.strip()
+                if not value:
+                    continue
+
+                try:
+                    entries.append(int(value, 16))
+                except ValueError:
+                    logger.warning("Invalid jump table entry %r", value)
+
+            self.jump_table = tuple(entries)
 
     def resolve_pattern_and_flags(self) -> tuple[str | None, str | None]:
         matches = _REGEX_STRINGS_RE.findall(self.comment)

@@ -585,6 +585,9 @@ class Printer(NodeVisitor):
     def visit_TerminatorConditionalBranch(self, node) -> str:
         return f"if ({self.visit(node.condition)}) goto label_{node.target};"
 
+    def visit_TerminatorSwitch(self, node) -> str:
+        return "// Raw TerminatorSwitch reached Printer. SwitchStructurer should have converted it into a SwitchRegion."
+
     # ------------------------------------------------------------------
     # Operator precedence helpers
     # ------------------------------------------------------------------

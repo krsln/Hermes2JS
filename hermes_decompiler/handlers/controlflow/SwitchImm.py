@@ -1,10 +1,10 @@
-import re
-
 from hermes_decompiler.analysis.terminators import TerminatorSwitch
-from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, UINT8, UINT16, sequence
-from hermes_decompiler.handlers import OpcodeHandler
+from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, UINT32, sequence
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
+
+logger = get_logger(__name__)
 
 
 # Reg8, UInt32, Addr32, UInt32, UInt32 (total size 17)
@@ -16,10 +16,9 @@ class SwitchImm(OpcodeHandler):
     input or to the default block if out of range (or not right type)
     """
 
-    _PATTERN = sequence(REG)
+    _PATTERN = sequence(REG, UINT32, ADDR, UINT32, UINT32)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        print(entry)
 
         match = self._PATTERN.match(entry.args.strip())
         if not match:
@@ -32,21 +31,33 @@ class SwitchImm(OpcodeHandler):
         selector_reg = int(match.group(1))
         selector = self.get_register_value(analysis, selector_reg)
 
-        targets = []
+        # if entry.jump_table:
+        #     targets = list(entry.jump_table)
+        # else:
+        #     targets = []
+        # # print("targets",targets)
 
-        for offset in sequence(ADDR).findall(entry.args):
-            target = entry.address + int(offset)
-            analysis.gotoList.append(target)
-            targets.append(target)
+        case_map = {}
 
+        if entry.jump_table:
+            first_case = int(match.group(4))
+            last_case = int(match.group(5))
 
+            expected = last_case - first_case + 1
 
-        terminator = TerminatorSwitch(selector=selector, targets=tuple(targets))
+            if len(entry.jump_table) != expected:
+                logger.warning("Jump table size mismatch: expected %d entries, got %d", expected, len(entry.jump_table))
 
-        # NOTE (fix): the original never set `control_flow`, defaulting
-        # to NORMAL despite having multiple successors and no
-        # fallthrough - same class of bug already fixed for JCompareX.
-        # pure control flow: no operand value of its own
+            for value, target in zip(
+                    range(first_case, first_case + len(entry.jump_table)),
+                    entry.jump_table,
+            ):
+                case_map[value] = target
+        # print("case_map",case_map)
+
+        default_target = entry.target_address or 0  # TODO:
+        terminator = TerminatorSwitch(selector=selector, case_map=case_map, default_target=default_target)
+
         result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
         analysis.add_result(result)
 
@@ -66,7 +77,7 @@ class UIntSwitchImm(SwitchImm):
 class StringSwitchImm(OpcodeHandler):
     """All-string `switch` statement. Case targets come from an out-of-line table this handler can't yet resolve."""
 
-    _PATTERN = sequence(REG)
+    _PATTERN = sequence(REG, UINT32, UINT32, ADDR, UINT32)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -89,7 +100,11 @@ class StringSwitchImm(OpcodeHandler):
             analysis.gotoList.append(target)
             targets.append(target)
 
-        terminator = TerminatorSwitch(selector=selector, targets=tuple(targets))
+        case_map = {}
+
+        # todo
+        default_target = entry.target_address or 0  # TODO:
+        terminator = TerminatorSwitch(selector=selector, case_map=case_map, default_target=default_target)
 
         result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
         analysis.add_result(result)
