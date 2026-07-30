@@ -2001,19 +2001,19 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
         // USED → r39 = globalThis.Error;
         // CODE → <LoadConstString>: <Reg8: 38, string_id: 3625>  # String: "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\n\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`" (String)
-        // USED → r38 = "str_3625";
+        // USED → r38 = "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\\n\\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`";
         // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-        // USED → r38 = globalThis.Error.call(undefined, "str_3625");
+        // USED → r38 = globalThis.Error.call(undefined, "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\\n\\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`");
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 89, Reg8: 38>
-        createEnvironment()[89] = globalThis.Error.call(undefined, "str_3625")
+        createEnvironment()[89] = globalThis.Error.call(undefined, "Suspense Exception: This is not a real error! It's an implementation detail of `use` to interrupt the current render. You must either rethrow it immediately, or move the `use` call outside of the `try/catch` block. Capturing without rethrowing will lead to unexpected behavior.\\n\\nTo handle async errors, wrap your component in an error boundary, or call the promise's `.catch` method and pass the result to `use`")
         // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
         // USED → r39 = globalThis.Error;
         // CODE → <LoadConstString>: <Reg8: 38, string_id: 6775>  # String: "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React." (String)
-        // USED → r38 = "str_6775";
+        // USED → r38 = "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React.";
         // CODE → <Call2>: <Reg8: 38, Reg8: 39, Reg8: 2, Reg8: 38>
-        // USED → r38 = globalThis.Error.call(undefined, "str_6775");
+        // USED → r38 = globalThis.Error.call(undefined, "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React.");
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
-        createEnvironment()[90] = globalThis.Error.call(undefined, "str_6775")
+        createEnvironment()[90] = globalThis.Error.call(undefined, "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React.")
         // CODE → <NewObject>: <Reg8: 38>
         // USED → r38 = {  };
         // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
@@ -2337,11 +2337,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
             // USED → r18 = globalThis.Error;
             // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
-            // USED → r17 = "str_6991";
+            // USED → r17 = "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue.";
             // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-            // USED → r17 = globalThis.Error.call(undefined, "str_6991");
+            // USED → r17 = globalThis.Error.call(undefined, "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue.");
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 122, Reg8: 17>
-            createEnvironment()[122] = globalThis.Error.call(undefined, "str_6991")
+            createEnvironment()[122] = globalThis.Error.call(undefined, "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue.")
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
             createEnvironment()[123] = false
             // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}

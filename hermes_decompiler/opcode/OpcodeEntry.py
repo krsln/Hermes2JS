@@ -17,17 +17,22 @@ _FUNCTION_RE = re.compile(
 )
 
 # ==> 00000009: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 86>  # String: 'apply' (Identifier)
+# Quoting switches to double quotes whenever the literal itself
+# contains an unescaped single quote (see e.g. `String: "'" (String)`
+# for the one-character string "'"), so both delimiters must be
+# accepted - a single-quote-only pattern silently fails to match
+# whenever a string/identifier contains an apostrophe.
 _IDENTIFIER_RE = re.compile(
-    r"String:\s*'([^']*)'\s*\(Identifier\)"
+    r"String:\s*(?:'([^']*)'|\"([^\"]*)\")\s*\(Identifier\)"
 )
 
 # ==> 00000196: <LoadConstString>: <Reg8: 11, string_id: 4>  # String: 'Generator functions may not be called on executing generators' (String)
 _STRING_RE = re.compile(
-    r"String:\s*'([^']*)'\s*\(String\)"
+    r"String:\s*(?:'([^']*)'|\"([^\"]*)\")\s*\(String\)"
 )
 
 # ==> 0000007d: <CreateRegExp>: <Reg8: 2, string_id: 7509, string_id: 11399, UInt32: 199>  # String: '\\(eval code' (String)  # String: 'g' (Identifier)
-_REGEX_STRINGS_RE = re.compile(r"String:\s*'([^']*)'")
+_REGEX_STRINGS_RE = re.compile(r"String:\s*(?:'([^']*)'|\"([^\"]*)\")")
 
 # ==> 000001a8: <NewArrayWithBuffer>: <Reg8: 14, UInt16: 5, UInt16: 5, UInt16: 46337>  # Array: ['hsl', 'hsv', 'hsl', 'hwb', 'hcg']
 _ARRAY_RE = re.compile(r"Array:\s*(\[.*])")
@@ -80,10 +85,10 @@ class OpcodeEntry:
             self.target_address = int(match.group(1), 16)
 
         if match := _IDENTIFIER_RE.search(self.comment):
-            self.identifier_name = match.group(1)
+            self.identifier_name = match.group(1) if match.group(1) is not None else match.group(2)
 
         if match := _STRING_RE.search(self.comment):
-            self.string_literal = match.group(1)
+            self.string_literal = match.group(1) if match.group(1) is not None else match.group(2)
 
         if match := _ARRAY_RE.search(self.comment):
             try:
@@ -129,7 +134,14 @@ class OpcodeEntry:
         return ast.literal_eval(text)
 
     def resolve_pattern_and_flags(self) -> tuple[str | None, str | None]:
-        matches = _REGEX_STRINGS_RE.findall(self.comment)
+        # `finditer` (unlike `findall`) leaves a non-participating
+        # alternation group as None rather than '', so an empty-but-real
+        # match (e.g. flags == '') can be told apart from "the other
+        # delimiter matched instead".
+        matches = [
+            m.group(1) if m.group(1) is not None else m.group(2)
+            for m in _REGEX_STRINGS_RE.finditer(self.comment)
+        ]
 
         if len(matches) >= 2:
             return matches[0], matches[1]
