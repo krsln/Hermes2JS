@@ -1,0 +1,32 @@
+
+=> [Function #15104 "callDefaultParameterTests" of 105 bytes]: 1 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x00265785
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4596>  # String: '__BC:Functions/DefaultParameterTests/callDefaultParameterTests/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 6, Reg8: 2, UInt8: 0>
+==> 0000001d: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001f: <LoadConstUInt8>: <Reg8: 5, UInt8: 5>
+==> 00000022: <Call2>: <Reg8: 3, Reg8: 6, Reg8: 0, Reg8: 5>
+==> 00000027: <LoadConstUInt8>: <Reg8: 4, UInt8: 20>
+==> 0000002a: <Call3>: <Reg8: 3, Reg8: 6, Reg8: 0, Reg8: 5, Reg8: 4>
+==> 00000030: <LoadConstString>: <Reg8: 3, string_id: 1224>  # String: 'sum' (String)
+==> 00000034: <Call4>: <Reg8: 3, Reg8: 6, Reg8: 0, Reg8: 5, Reg8: 4, Reg8: 3>
+==> 0000003b: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 1>
+==> 0000003f: <Call1>: <Reg8: 2, Reg8: 5, Reg8: 0>
+==> 00000043: <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
+==> 00000046: <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
+==> 00000049: <LoadConstUInt8>: <Reg8: 2, UInt8: 4>
+==> 0000004c: <Call4>: <Reg8: 2, Reg8: 5, Reg8: 0, Reg8: 4, Reg8: 3, Reg8: 2>
+==> 00000053: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000059: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000005e: <LoadConstString>: <Reg8: 1, string_id: 4594>  # String: '__BC:Functions/DefaultParameterTests/callDefaultParameterTests/end' (String)
+==> 00000062: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000067: <Ret>: <Reg8: 0>
+
+

@@ -22,7 +22,7 @@ chmod +x scripts/run-hermes-dec.sh
 ## Step—1 Disassemble
 
 ```bash
-#./scripts/run-hermes-dec.sh <app_name>
+#./scripts/run-hermes-dec.sh <bundle_path>
 
 file apps/coachy/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 96
@@ -30,11 +30,12 @@ file apps/coachy/index.android.bundle
 
 # Test Projects' bundles
 file apps/testy/96/index.android.bundle
+# index.android.bundle: Hermes JavaScript bytecode, version 96
 file apps/testy/98/index.android.bundle
-file apps/testy/index.android.bundle
-
 # index.android.bundle: Hermes JavaScript bytecode, version 98
+
 ./scripts/run-hermes-dec.sh apps/testy/96/index.android.bundle
+./scripts/run-hermes-dec.sh apps/testy/98/index.android.bundle
 
 ```
  
@@ -55,9 +56,9 @@ Splits `output.hbc` into one file per function, using the
 ```shell
 python scripts/split_output_file.py -i <input.hbc> -o <output_dir> [options]
 
-
 # Basic split
-python scripts/split_output_file.py -i apps/testy/output/output.hbc -o apps/testy/output/sections
+python scripts/split_output_file.py -i apps/testy/96/output/output.hbc -o apps/testy/96/output/sections
+python scripts/split_output_file.py -i apps/testy/98/output/output.hbc -o apps/testy/98/output/sections
 
 # With manifest + INFO logging
 python scripts/split_output_file.py -i apps/testy/output/output.hbc -o sections --manifest sections/manifest.json -v

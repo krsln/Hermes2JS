@@ -1,0 +1,53 @@
+
+=> [Function #15082 "spreadArrayTest" of 203 bytes]: 1 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x002651cd
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4511>  # String: '__BC:Arrays/SpreadTests/spreadArrayTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <NewArrayWithBuffer>: <Reg8: 2, UInt16: 3, UInt16: 3, UInt16: 23288>  # Array: [1, 2, 3]
+==> 0000001e: <NewArray>: <Reg8: 3, UInt16: 0>
+==> 00000022: <LoadConstZero>: <Reg8: 0>
+==> 00000024: <Mov>: <Reg8: 9, Reg8: 3>
+==> 00000027: <Mov>: <Reg8: 8, Reg8: 2>
+==> 0000002a: <LoadConstZero>: <Reg8: 7>
+==> 0000002c: <CallBuiltin>: <Reg8: 7, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
+==> 00000030: <NewArrayWithBuffer>: <Reg8: 8, UInt16: 3, UInt16: 3, UInt16: 23511>  # Array: [4, 5, 6]
+==> 00000038: <Mov>: <Reg8: 9, Reg8: 3>
+==> 0000003b: <CallBuiltin>: <Reg8: 4, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
+==> 0000003f: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000045: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000004a: <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000004f: <NewArrayWithBuffer>: <Reg8: 6, UInt16: 2, UInt16: 1, UInt16: 18568>  # Array: [0]
+==> 00000057: <LoadConstUInt8>: <Reg8: 4, UInt8: 1>
+==> 0000005a: <Mov>: <Reg8: 9, Reg8: 6>
+==> 0000005d: <Mov>: <Reg8: 8, Reg8: 2>
+==> 00000060: <Mov>: <Reg8: 7, Reg8: 4>
+==> 00000063: <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
+==> 00000067: <LoadConstUInt8>: <Reg8: 5, UInt8: 99>
+==> 0000006a: <PutOwnByVal>: <Reg8: 6, Reg8: 5, Reg8: 2, UInt8: 1>
+==> 0000006f: <Add>: <Reg8: 2, Reg8: 2, Reg8: 4>
+==> 00000073: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000079: <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000007e: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 6>
+==> 00000083: <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 0>
+==> 00000087: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000008a: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 2>
+==> 0000008e: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 108>  # String: 'default' (Identifier)
+==> 00000093: <LoadConstUndefined>: <Reg8: 0>
+==> 00000095: <Call2>: <Reg8: 3, Reg8: 2, Reg8: 0, Reg8: 3>
+==> 0000009a: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)
+==> 0000009f: <Call2>: <Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 4>
+==> 000000a4: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 000000aa: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 000000af: <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
+==> 000000b5: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 000000bb: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 000000c0: <LoadConstString>: <Reg8: 1, string_id: 4509>  # String: '__BC:Arrays/SpreadTests/spreadArrayTest/end' (String)
+==> 000000c4: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000c9: <Ret>: <Reg8: 0>
+
+

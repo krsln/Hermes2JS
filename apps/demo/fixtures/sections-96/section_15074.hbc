@@ -1,0 +1,72 @@
+
+=> [Function #15074 "arrayTest" of 308 bytes]: 1 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x00264fdf
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 1>
+==> 00000002: <GetGlobalObject>: <Reg8: 0>
+==> 00000004: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 0000000a: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000000f: <LoadConstString>: <Reg8: 2, string_id: 1426>  # String: '__BC:Arrays/ArrayTests/arrayTest/start' (String)
+==> 00000013: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000018: <NewArrayWithBuffer>: <Reg8: 4, UInt16: 5, UInt16: 5, UInt16: 17500>  # Array: [5, 3, 8, 1, 9]
+==> 00000020: <TryGetById>: <Reg8: 5, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000026: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000002b: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+==> 00000030: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
+==> 00000035: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 4, string_id: 208>  # String: 'push' (Identifier)
+==> 0000003a: <LoadConstUInt8>: <Reg8: 2, UInt8: 100>
+==> 0000003d: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000042: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 5, string_id: 201>  # String: 'pop' (Identifier)
+==> 00000047: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 4>
+==> 0000004b: <NewArray>: <Reg8: 6, UInt16: 0>
+==> 0000004f: <LoadConstZero>: <Reg8: 5>
+==> 00000051: <Mov>: <Reg8: 9, Reg8: 6>
+==> 00000054: <Mov>: <Reg8: 8, Reg8: 4>
+==> 00000057: <LoadConstZero>: <Reg8: 7>
+==> 00000059: <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
+==> 0000005d: <GetById>: <Reg8: 3, Reg8: 6, UInt8: 6, string_id: 8127>  # String: 'sort' (Identifier)
+==> 00000063: <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15075>  # Function: [#15075  of 12 bytes]: 3 params @ offset 0x001f3588
+==> 00000068: <Call2>: <Reg8: 6, Reg8: 3, Reg8: 6, Reg8: 2>
+==> 0000006d: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000073: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 00000078: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 6>
+==> 0000007d: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 7, string_id: 170>  # String: 'map' (Identifier)
+==> 00000082: <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15076>  # Function: [#15076  of 12 bytes]: 2 params @ offset 0x00265113
+==> 00000087: <Call2>: <Reg8: 6, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000008c: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000092: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 00000097: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 6>
+==> 0000009c: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 137>  # String: 'filter' (Identifier)
+==> 000000a1: <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15077>  # Function: [#15077  of 12 bytes]: 2 params @ offset 0x0026511f
+==> 000000a6: <Call2>: <Reg8: 6, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000ab: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 000000b1: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 000000b6: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 6>
+==> 000000bb: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 9, string_id: 211>  # String: 'reduce' (Identifier)
+==> 000000c0: <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15078>  # Function: [#15078  of 12 bytes]: 3 params @ offset 0x0026512b
+==> 000000c5: <Call3>: <Reg8: 5, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
+==> 000000cb: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 000000d1: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 000000d6: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5>
+==> 000000db: <GetById>: <Reg8: 2, Reg8: 4, UInt8: 10, string_id: 8627>  # String: 'find' (Identifier)
+==> 000000e1: <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 15079>  # Function: [#15079  of 12 bytes]: 2 params @ offset 0x00265137
+==> 000000e6: <Call2>: <Reg8: 3, Reg8: 2, Reg8: 4, Reg8: 1>
+==> 000000eb: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 000000f1: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 000000f6: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
+==> 000000fb: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 227>  # String: 'slice' (Identifier)
+==> 00000100: <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
+==> 00000103: <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
+==> 00000106: <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 1>
+==> 0000010c: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000112: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 00000117: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
+==> 0000011c: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000122: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 00000127: <LoadConstString>: <Reg8: 0, string_id: 977>  # String: '__BC:Arrays/ArrayTests/arrayTest/end' (String)
+==> 0000012b: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000130: <LoadConstUndefined>: <Reg8: 0>
+==> 00000132: <Ret>: <Reg8: 0>
+
+

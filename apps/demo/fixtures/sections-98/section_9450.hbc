@@ -1,0 +1,50 @@
+
+=> [Function #9450 "propertyAccessTest" of 190 bytes]: 1 params, frame size=20, strict=0, exc handler=0, debug info=0  @ offset 0x001fad49
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4779>  # String: '__BC:Objects/PropertyTests/propertyAccessTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 61, UInt16: 42589>  # Object: {'x': 1, 'y': 2}
+==> 0000001c: <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
+==> 0000001f: <PutByIdStrict>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 6497>  # String: 'z' (Identifier)
+==> 00000025: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 0000002b: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 00000030: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 28>  # String: 'x' (Identifier)
+==> 00000035: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 3, string_id: 4>  # String: 'y' (Identifier)
+==> 0000003a: <GetById>: <Reg8: 0, Reg8: 4, UInt8: 4, string_id: 6497>  # String: 'z' (Identifier)
+==> 00000040: <Call4>: <Reg8: 0, Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 2, Reg8: 0>
+==> 00000047: <LoadConstString>: <Reg8: 0, string_id: 28>  # String: 'x' (Identifier)
+==> 0000004b: <DelByVal>: <Reg8: 2, Reg8: 4, Reg8: 0, UInt8: 1>
+==> 00000050: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 00000056: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 0000005b: <IsIn>: <Reg8: 0, Reg8: 0, Reg8: 4>
+==> 0000005f: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000064: <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 5, string_id: 21>  # String: 'Object' (Identifier)
+==> 0000006a: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 6, string_id: 172>  # String: 'keys' (Identifier)
+==> 0000006f: <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 4>
+==> 00000074: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000077: <IteratorBegin>: <Reg8: 3, Reg8: 2>
+==> 0000007a: <LoadConstUndefined>: <Reg8: 0>
+==> 0000007c: <Mov>: <Reg8: 5, Reg8: 2>
+==> 0000007f: <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 5>
+==> 00000083: <Mov>: <Reg8: 5, Reg8: 3>
+==> 00000086: <JStrictEqual>: <Addr8: 34, Reg8: 5, Reg8: 0>  # Address: 000000a8
+==> 0000008a: <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 00000090: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 00000095: <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 8>
+==> 00000099: <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
+==> 0000009f: <Jmp>: <Addr8: -35>  # Address: 0000007c
+==> 000000a1: <Catch>: <Reg8: 2>
+==> 000000a3: <IteratorClose>: <Reg8: 3, UInt8: 1>
+==> 000000a6: <Throw>: <Reg8: 2>
+==> 000000a8: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 000000ae: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 000000b3: <LoadConstString>: <Reg8: 1, string_id: 4777>  # String: '__BC:Objects/PropertyTests/propertyAccessTest/end' (String)
+==> 000000b7: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000bc: <Ret>: <Reg8: 0>
+
+

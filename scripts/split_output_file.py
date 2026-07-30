@@ -1,39 +1,18 @@
 #!/usr/bin/env python3
-"""
-split_output_file.py
-===================
-
-Splits a Hermes bytecode disassembly (.hbc / .hasm text dump) into one file
-per function, using the `===============` separator lines emitted by the
-Hermes disassembler.
-
-Features
---------
-- Streaming I/O (no need to hold the whole input in memory).
-- Safe, collision-free filename generation (sanitization and deduplication).
-- Optional JSON manifest describing every section that was written
-  (source line range, function number/name, output path).
-- Dry-run mode to preview what would be written without touching the disk.
-- Configurable separator pattern and output naming.
-- Structured logging with adjustable verbosity instead of bare `print`.
-- Clear, non-zero exit codes on failure for CI/script-friendly usage.
-
-Usage
------
-    python scripts/split_output_file.py -i output.hbc -o sections/
-    python scripts/split_output_file.py -i output.hbc -o sections/ --manifest manifest.json
-    python scripts/split_output_file.py -i output.hbc -o sections/ --dry-run -v
-"""
-
 from __future__ import annotations
+
+from pathlib import Path
+
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 import argparse
 import json
 import logging
 import re
-import sys
 from dataclasses import dataclass, field
-from pathlib import Path
 from typing import Optional
 from hermes_decompiler.core.logging import configure_logging, get_logger
 

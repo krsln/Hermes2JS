@@ -1,0 +1,26 @@
+
+=> [Function #15051 "" of 78 bytes]: 3 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x00264552
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 2>
+==> 00000003: <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
+==> 00000006: <JStrictNotEqual>: <Addr8: 46, Reg8: 3, Reg8: 0>  # Address: 00000034
+==> 0000000a: <GetGlobalObject>: <Reg8: 0>
+==> 0000000c: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000012: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 00000017: <LoadConstString>: <Reg8: 1, string_id: 4537>  # String: '__BC:ControlFlow/ForEachTests/forEachTest/if-middle' (String)
+==> 0000001b: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
+==> 00000020: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000026: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000002b: <LoadConstString>: <Reg8: 0, string_id: 8291>  # String: 'middle' (Identifier)
+==> 0000002f: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000034: <GetGlobalObject>: <Reg8: 0>
+==> 00000036: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 0000003c: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 00000041: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000044: <Call3>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 0000004a: <LoadConstUndefined>: <Reg8: 0>
+==> 0000004c: <Ret>: <Reg8: 0>
+
+

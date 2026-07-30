@@ -1,0 +1,12 @@
+
+=> [Function #15089 "makeMultiplier" of 16 bytes]: 2 params, frame size=2, strict=1, exc handler=0, debug info=0  @ offset 0x0026546a
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
+==> 00000005: <StoreNPToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 1>
+==> 00000009: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15090>  # Function: [#15090  of 16 bytes]: 2 params @ offset 0x001e8b53
+==> 0000000e: <Ret>: <Reg8: 0>
+
+

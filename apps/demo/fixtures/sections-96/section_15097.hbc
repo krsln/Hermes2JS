@@ -1,0 +1,41 @@
+
+=> [Function #15097 "closureLoopTest" of 124 bytes]: 1 params, frame size=15, strict=1, exc handler=1, debug info=0  @ offset 0x00265572
+  [Exception handlers: [start=0x49, end=0x5d, target=0x5f] ]
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <GetGlobalObject>: <Reg8: 1>
+==> 00000004: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 0000000a: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000000f: <LoadConstString>: <Reg8: 2, string_id: 4592>  # String: '__BC:Functions/ClosureTests/closureLoopTest/start' (String)
+==> 00000013: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000018: <NewArray>: <Reg8: 4, UInt16: 0>
+==> 0000001c: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
+==> 00000020: <CreateClosure>: <Reg8: 5, Reg8: 0, function_id: 15098>  # Function: [#15098 _loop of 35 bytes]: 2 params @ offset 0x002655ee
+==> 00000025: <LoadConstUndefined>: <Reg8: 0>
+==> 00000027: <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
+==> 0000002a: <LoadConstZero>: <Reg8: 3>
+==> 0000002c: <Call2>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 3>
+==> 00000031: <Inc>: <Reg8: 3, Reg8: 3>
+==> 00000034: <JLess>: <Addr8: -8, Reg8: 3, Reg8: 2>  # Address: 0000002c
+==> 00000038: <Mov>: <Reg8: 2, Reg8: 4>
+==> 0000003b: <IteratorBegin>: <Reg8: 3, Reg8: 2>
+==> 0000003e: <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 2>
+==> 00000042: <Mov>: <Reg8: 5, Reg8: 3>
+==> 00000045: <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000066
+==> 00000049: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 0000004f: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 00000054: <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
+==> 00000058: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 0000005d: <Jmp>: <Addr8: -31>  # Address: 0000003e
+==> 0000005f: <Catch>: <Reg8: 2>
+==> 00000061: <IteratorClose>: <Reg8: 3, UInt8: 1>
+==> 00000064: <Throw>: <Reg8: 2>
+==> 00000066: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 0000006c: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 00000071: <LoadConstString>: <Reg8: 1, string_id: 4589>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
+==> 00000075: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000007a: <Ret>: <Reg8: 0>
+
+

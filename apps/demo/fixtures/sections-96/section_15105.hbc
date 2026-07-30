@@ -1,0 +1,55 @@
+
+=> [Function #15105 "" of 194 bytes]: 8 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x002657ee
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 2>
+==> 00000002: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 00000005: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000008: <LoadParam>: <Reg8: 5, UInt8: 7>
+==> 0000000b: <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15106>  # Function: [#15106 _interopDefault of 28 bytes]: 2 params @ offset 0x001017eb
+==> 00000010: <GetGlobalObject>: <Reg8: 0>
+==> 00000012: <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 25>  # String: 'Object' (Identifier)
+==> 00000018: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 109>  # String: 'defineProperty' (Identifier)
+==> 0000001d: <NewObject>: <Reg8: 6>
+==> 0000001f: <LoadConstTrue>: <Reg8: 0>
+==> 00000021: <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 0, string_id: 206>  # String: 'value' (Identifier)
+==> 00000025: <LoadConstString>: <Reg8: 0, string_id: 49>  # String: '__esModule' (Identifier)
+==> 00000029: <Call4>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 0, Reg8: 6>
+==> 00000030: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15107>  # Function: [#15107 classTest of 193 bytes]: 1 params @ offset 0x002658b0
+==> 00000035: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10666>  # String: 'classTest' (Identifier)
+==> 0000003b: <LoadConstZero>: <Reg8: 0>
+==> 0000003d: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
+==> 00000041: <LoadConstUndefined>: <Reg8: 0>
+==> 00000043: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 00000048: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 0000004d: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
+==> 00000051: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 00000054: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 00000058: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 0000005d: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 00000062: <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
+==> 00000066: <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
+==> 00000069: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 0000006d: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 00000072: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 00000077: <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 1>
+==> 0000007b: <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
+==> 0000007e: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 00000082: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 00000087: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 0000008c: <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 1>
+==> 00000090: <LoadConstUInt8>: <Reg8: 1, UInt8: 4>
+==> 00000093: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 00000097: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 0000009c: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 000000a1: <StoreToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 1>
+==> 000000a5: <CreateClosure>: <Reg8: 1, Reg8: 2, function_id: 15108>  # Function: [#15108  of 83 bytes]: 1 params @ offset 0x00265971
+==> 000000aa: <Call1>: <Reg8: 3, Reg8: 1, Reg8: 0>
+==> 000000ae: <StoreToEnvironment>: <Reg8: 2, UInt8: 5, Reg8: 3>
+==> 000000b2: <CreateClosure>: <Reg8: 1, Reg8: 2, function_id: 15112>  # Function: [#15112  of 106 bytes]: 2 params @ offset 0x00265a83
+==> 000000b7: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 3>
+==> 000000bc: <StoreToEnvironment>: <Reg8: 2, UInt8: 6, Reg8: 1>
+==> 000000c0: <Ret>: <Reg8: 0>
+
+

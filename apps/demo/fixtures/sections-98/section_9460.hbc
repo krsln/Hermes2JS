@@ -1,0 +1,25 @@
+
+=> [Function #9460 "defaultParameterTest" of 71 bytes]: 2 params, frame size=19, strict=0, exc handler=0, debug info=0  @ offset 0x001fb369
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 6, UInt8: 2>
+==> 00000003: <LoadConstUndefined>: <Reg8: 1>
+==> 00000005: <JStrictNotEqual>: <Addr8: 7, Reg8: 6, Reg8: 1>  # Address: 0000000c
+==> 00000009: <LoadConstUInt8>: <Reg8: 6, UInt8: 10>
+==> 0000000c: <LoadParam>: <Reg8: 5, UInt8: 3>
+==> 0000000f: <JStrictNotEqual>: <Addr8: 8, Reg8: 5, Reg8: 1>  # Address: 00000017
+==> 00000013: <LoadConstString>: <Reg8: 5, string_id: 7712>  # String: 'result' (Identifier)
+==> 00000017: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 0000001a: <GetGlobalObject>: <Reg8: 3>
+==> 0000001c: <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 00000022: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 00000027: <LoadConstString>: <Reg8: 4, string_id: 4760>  # String: '__BC:Functions/DefaultParameterTests/defaultParameterTest/start' (String)
+==> 0000002b: <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
+==> 00000030: <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 00000036: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 0000003b: <Add>: <Reg8: 2, Reg8: 2, Reg8: 6>
+==> 0000003f: <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 2>
+==> 00000045: <Ret>: <Reg8: 1>
+
+

@@ -1,0 +1,40 @@
+
+=> [Function #15048 "forTest" of 135 bytes]: 1 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x00264450
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4542>  # String: '__BC:ControlFlow/ForTests/forTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000016: <LoadConstUInt8>: <Reg8: 4, UInt8: 10>
+==> 00000019: <LoadConstString>: <Reg8: 3, string_id: 4541>  # String: '__BC:ControlFlow/ForTests/forTest/if-continue' (String)
+==> 0000001d: <LoadConstUInt8>: <Reg8: 2, UInt8: 8>
+==> 00000020: <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
+==> 00000023: <LoadConstZero>: <Reg8: 5>
+==> 00000025: <Mov>: <Reg8: 6, Reg8: 5>
+==> 00000028: <JStrictEqual>: <Addr8: 48, Reg8: 6, Reg8: 1>  # Address: 00000058
+==> 0000002c: <JStrictEqual>: <Addr8: 22, Reg8: 6, Reg8: 2>  # Address: 00000042
+==> 00000030: <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000036: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000003b: <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 6>
+==> 00000040: <Jmp>: <Addr8: 40>  # Address: 00000068
+==> 00000042: <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000048: <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000004d: <LoadConstString>: <Reg8: 7, string_id: 4540>  # String: '__BC:ControlFlow/ForTests/forTest/if-break' (String)
+==> 00000051: <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
+==> 00000056: <Jmp>: <Addr8: 25>  # Address: 0000006f
+==> 00000058: <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 0000005e: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 00000063: <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
+==> 00000068: <Inc>: <Reg8: 5, Reg8: 6>
+==> 0000006b: <JLess>: <Addr8: -70, Reg8: 5, Reg8: 4>  # Address: 00000025
+==> 0000006f: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000075: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000007a: <LoadConstString>: <Reg8: 0, string_id: 4539>  # String: '__BC:ControlFlow/ForTests/forTest/end' (String)
+==> 0000007e: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000083: <LoadConstUndefined>: <Reg8: 0>
+==> 00000085: <Ret>: <Reg8: 0>
+
+

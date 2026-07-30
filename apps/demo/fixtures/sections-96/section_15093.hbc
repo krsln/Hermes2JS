@@ -1,0 +1,18 @@
+
+=> [Function #15093 "makeCounter" of 41 bytes]: 1 params, frame size=3, strict=1, exc handler=0, debug info=0  @ offset 0x00265529
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 1>
+==> 00000002: <LoadConstZero>: <Reg8: 0>
+==> 00000004: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
+==> 00000008: <NewObject>: <Reg8: 0>
+==> 0000000a: <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15094>  # Function: [#15094 increment of 16 bytes]: 1 params @ offset 0x00265552
+==> 0000000f: <PutNewOwnById>: <Reg8: 0, Reg8: 2, string_id: 8421>  # String: 'increment' (Identifier)
+==> 00000014: <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15095>  # Function: [#15095 decrement of 16 bytes]: 1 params @ offset 0x00265562
+==> 00000019: <PutNewOwnById>: <Reg8: 0, Reg8: 2, string_id: 14314>  # String: 'decrement' (Identifier)
+==> 0000001e: <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 15096>  # Function: [#15096 value of 9 bytes]: 1 params @ offset 0x000f46a0
+==> 00000023: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 206>  # String: 'value' (Identifier)
+==> 00000027: <Ret>: <Reg8: 0>
+
+

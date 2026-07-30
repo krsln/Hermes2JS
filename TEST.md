@@ -18,18 +18,23 @@ tree -I '__pycache__|__init__.py|ir|handlers|regions' hermes_decompiler
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/one -o ./apps/demo/fixtures/results
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/one -o ./apps/demo/fixtures/results --log-level DEBUG
 
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections-96 -o ./apps/demo/fixtures/results-96
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections-96 -o ./apps/demo/fixtures/results-96 --log-level DEBUG
 
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --no-verbose
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --strict
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --strict --no-verbose
+
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections-98 -o ./apps/demo/fixtures/results-98
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections-98 -o ./apps/demo/fixtures/results-98 --log-level DEBUG
+
 ```
 
 ```shell
 python scripts/decompile_sections.py -i ./apps/coachy/fixtures/one -o ./apps/coachy/fixtures/results
 
 python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results
+
+python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --no-verbose
+python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict
+python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict --no-verbose
 
 ```
  

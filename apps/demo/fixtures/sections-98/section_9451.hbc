@@ -1,0 +1,22 @@
+
+=> [Function #9451 "computedPropertyTest" of 68 bytes]: 1 params, frame size=14, strict=0, exc handler=0, debug info=0  @ offset 0x001fae07
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 2, string_id: 4774>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000016: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 0000001c: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 00000021: <NewObjectWithBuffer>: <Reg8: 2, UInt16: 1915, UInt16: 46706>  # Object: {'dynamic': 42, 'staticKey': 'value'}
+==> 00000027: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000002c: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
+==> 00000032: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
+==> 00000037: <LoadConstString>: <Reg8: 1, string_id: 4771>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/end' (String)
+==> 0000003b: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000040: <LoadConstUndefined>: <Reg8: 0>
+==> 00000042: <Ret>: <Reg8: 0>
+
+

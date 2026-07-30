@@ -1,0 +1,32 @@
+
+=> [Function #15092 "closureTest" of 112 bytes]: 1 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x002654b9
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4593>  # String: '__BC:Functions/ClosureTests/closureTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <CreateEnvironment>: <Reg8: 0>
+==> 00000018: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15093>  # Function: [#15093 makeCounter of 41 bytes]: 1 params @ offset 0x00265529
+==> 0000001d: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001f: <Call1>: <Reg8: 5, Reg8: 2, Reg8: 0>
+==> 00000023: <GetById>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 8421>  # String: 'increment' (Identifier)
+==> 00000029: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 0000002d: <GetById>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 8421>  # String: 'increment' (Identifier)
+==> 00000033: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 00000037: <GetById>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 14314>  # String: 'decrement' (Identifier)
+==> 0000003d: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 00000041: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000047: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 0000004c: <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 206>  # String: 'value' (Identifier)
+==> 00000051: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 00000055: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000005a: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
+==> 00000060: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
+==> 00000065: <LoadConstString>: <Reg8: 1, string_id: 3433>  # String: '__BC:Functions/ClosureTests/closureTest/end' (String)
+==> 00000069: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000006e: <Ret>: <Reg8: 0>
+
+
