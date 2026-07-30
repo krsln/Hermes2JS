@@ -2,7 +2,15 @@
 
 https://www.politesi.polimi.it/retrieve/17e4c202-4d63-43f1-97d9-84a925bb9130/2023_05_Falvo.pdf   
 https://github.com/P1sec/hermes-dec   
-https://p1sec.github.io/hermes-dec/opcodes_table.html
+https://p1sec.github.io/hermes-dec/opcodes_table.html  
+https://github.com/facebook/hermes/tree/main/include/hermes/BCGen  
+##
+
+| React Native Version     | Hermes Bytecode Version (HBC) | Notes / Status                   |
+|--------------------------|-------------------------------|----------------------------------|
+| React Native 0.84+       | Version 98 / 99+              | next-generation Hermes V1 engine |
+| React Native 0.74 – 0.83 | Version 96                    | Common                           |
+| React Native 0.71 – 0.73 | Version 93                    |                                  |
 
 ## usage hermes-dec
 
