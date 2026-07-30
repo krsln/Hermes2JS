@@ -19,11 +19,11 @@ function spreadObjectTest(param0) {
     // CODE → <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 3>  # Built-in function: [#44 copyDataProperties]
     r0 = builtin_44(r-3, r-2, r-1)
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
-    r2 = 3
+    // USED → r2 = 3;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 7402>  # String: 'z' (Identifier)
-    r0 = "z"
+    // USED → r0 = "z";
     // CODE → <PutOwnByVal>: <Reg8: 4, Reg8: 2, Reg8: 0, UInt8: 1>
-    // Unhandled opcode: PutOwnByVal
+    {  }[3] = "z"
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)

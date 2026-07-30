@@ -13,17 +13,17 @@ function computedPropertyTest(param0) {
     // CODE → <NewObject>: <Reg8: 3>
     // USED → r3 = {  };
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 42>
-    r2 = 42
+    // USED → r2 = 42;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 8779>  # String: 'dynamic' (Identifier)
-    r1 = "dynamic"
+    // USED → r1 = "dynamic";
     // CODE → <PutOwnByVal>: <Reg8: 3, Reg8: 2, Reg8: 1, UInt8: 1>
-    // Unhandled opcode: PutOwnByVal
+    {  }[42] = "dynamic"
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 206>  # String: 'value' (Identifier)
-    r2 = "value"
+    // USED → r2 = "value";
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 3784>  # String: 'staticKey' (String)
-    r1 = "staticKey"
+    // USED → r1 = "staticKey";
     // CODE → <PutOwnByVal>: <Reg8: 3, Reg8: 2, Reg8: 1, UInt8: 1>
-    // Unhandled opcode: PutOwnByVal
+    {  }["value"] = "staticKey"
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)

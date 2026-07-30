@@ -49,9 +49,9 @@ function spreadArrayTest(param0) {
     // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
     // USED → r2 = builtin_46(r-2, r-1, r0, r1);
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 99>
-    r5 = 99
+    // USED → r5 = 99;
     // CODE → <PutOwnByVal>: <Reg8: 6, Reg8: 5, Reg8: 2, UInt8: 1>
-    // Unhandled opcode: PutOwnByVal
+    [0][99] = builtin_46(r-2, r-1, r0, r1)
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 4>
     r2 = builtin_46(r-2, r-1, r0, r1) + 1
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
