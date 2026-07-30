@@ -55,22 +55,6 @@ function tryCatchTest(param0) {
         // USED → r3 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
         // USED → r2 = globalThis.console.log;
-        // CODE → <LoadConstString>: <Reg8: 0, string_id: 4580>  # String: '__BC:Exceptions/ExceptionTests/tryCatchTest/finally-block' (String)
-        // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchTest/finally-block";
-        // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-        r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/finally-block")
-        // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-        // USED → r3 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-        // USED → r2 = globalThis.console.log;
-        // CODE → <LoadConstString>: <Reg8: 0, string_id: 10764>  # String: 'finally' (Identifier)
-        // USED → r0 = "finally";
-        // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-        r0 = globalThis.console.log("finally")
-        // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-        // USED → r3 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-        // USED → r2 = globalThis.console.log;
         // CODE → <LoadConstString>: <Reg8: 0, string_id: 3908>  # String: '__BC:Exceptions/ExceptionTests/tryCatchTest/end' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchTest/end";
         // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>

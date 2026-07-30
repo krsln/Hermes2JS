@@ -13,24 +13,24 @@ async function* anon_11947(param0, param1, param2) {
         // CODE → <Ret>: <Reg8: 0>
         return await yield;
     } else {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <LoadParam>: <Reg8: 4, UInt8: 1>
-        // USED → r4 = param1;
-        // CODE → <LoadParam>: <Reg8: 3, UInt8: 2>
-        // USED → r3 = param2;
-        // CODE → <LoadConstUndefined>: <Reg8: 5>
-        // USED → r5 = undefined;
-        // CODE → <LoadConstUndefined>: <Reg8: 6>
-        r6 = undefined
-        // CODE → <LoadConstUndefined>: <Reg8: 2>
-        r2 = undefined
-        // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 17057>  # String: '_request' (Identifier)
-        // USED → r7 = this._request;
-        // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
-        // USED → r3 = await this._request(param1, param2);
-        // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
-        goto label_41;
         try {
+            // ──────────────── Block 1 ──────────────── 
+            // CODE → <LoadParam>: <Reg8: 4, UInt8: 1>
+            // USED → r4 = param1;
+            // CODE → <LoadParam>: <Reg8: 3, UInt8: 2>
+            // USED → r3 = param2;
+            // CODE → <LoadConstUndefined>: <Reg8: 5>
+            // USED → r5 = undefined;
+            // CODE → <LoadConstUndefined>: <Reg8: 6>
+            r6 = undefined
+            // CODE → <LoadConstUndefined>: <Reg8: 2>
+            r2 = undefined
+            // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 17057>  # String: '_request' (Identifier)
+            // USED → r7 = this._request;
+            // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
+            // USED → r3 = await this._request(param1, param2);
+            // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
+            goto label_41;
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Ret>: <Reg8: 3>
             return await this._request(param1, param2);
