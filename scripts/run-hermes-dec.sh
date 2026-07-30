@@ -6,10 +6,10 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 usage() {
     cat <<EOF
 Usage:
-  $(basename "$0") <target-dir>
+  $(basename "$0") <bundle-path>
 
 Example:
-  $(basename "$0") testy
+  $(basename "$0") apps/testy/96/index.android.bundle
 EOF
 }
 
@@ -21,23 +21,26 @@ fi
 
 # Validate argument
 if [[ $# -ne 1 ]]; then
-    echo "❌ Missing target directory."
+    echo "❌ Missing bundle path."
     usage
     exit 1
 fi
 
-TARGET_DIR="$1"
+BUNDLE="$1"
 
-BUNDLE="$SCRIPT_DIR/../apps/$TARGET_DIR/index.android.bundle"
-OUTPUT="$SCRIPT_DIR/../apps/$TARGET_DIR/output"
-TOOLS_DIR="$SCRIPT_DIR/../vendor/hermes-dec"
+# Convert to absolute path if necessary
+if [[ "$BUNDLE" != /* ]]; then
+    BUNDLE="$PWD/$BUNDLE"
+fi
 
-# Validate input
 if [[ ! -f "$BUNDLE" ]]; then
     echo "❌ Bundle not found:"
     echo "   $BUNDLE"
     exit 1
 fi
+
+OUTPUT="$(dirname "$BUNDLE")/output"
+TOOLS_DIR="$SCRIPT_DIR/../vendor/hermes-dec"
 
 mkdir -p "$OUTPUT"
 
@@ -49,6 +52,7 @@ python "$TOOLS_DIR/src/hermes_dec/disassembly/hbc_disassembler.py" "$BUNDLE" > "
 
 #echo "📦 Parsing structure..."
 #python "$TOOLS_DIR/src/hermes_dec/parsers/hbc_file_parser.py" "$BUNDLE" > "$OUTPUT/outputParser.js"
+
 
 echo "✅ Done."
 echo "📁 Output: $OUTPUT"

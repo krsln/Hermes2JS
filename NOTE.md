@@ -5,20 +5,6 @@ https://github.com/P1sec/hermes-dec
 https://p1sec.github.io/hermes-dec/opcodes_table.html  
 https://github.com/facebook/hermes/tree/main/include/hermes/BCGen
 
-##
-
-| React Native Version     | Hermes Bytecode Version (HBC) | Notes / Status                   |
-|--------------------------|-------------------------------|----------------------------------|
-| React Native 0.84+       | Version 98 / 99+              | next-generation Hermes V1 engine |
-| React Native 0.74 – 0.83 | Version 96                    | Common                           |
-| React Native 0.71 – 0.73 | Version 93                    |                                  |
-
-| React Native | Expo SDK | Komut                                                            |
-|--------------|----------|------------------------------------------------------------------|
-| **0.83**     | **55**   | `npx create-expo-app@latest MyTestApp --template default@sdk-55` |
-| 0.85         | 56       | `npx create-expo-app@latest MyTestApp --template default@sdk-56` |
-| 0.86         | 57       | `npx create-expo-app@latest MyTestApp` (veya `@sdk-57`)          |
-
 ## usage hermes-dec
 
 ```shell

@@ -21,35 +21,23 @@ chmod +x scripts/run-hermes-dec.sh
 
 ## Step—1 Disassemble
 
-```shell
+```bash
 #./scripts/run-hermes-dec.sh <app_name>
 
 file apps/coachy/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 96
 ./scripts/run-hermes-dec.sh coachy
 
+# Test Projects' bundles
 file apps/testy/96/index.android.bundle
+file apps/testy/98/index.android.bundle
 file apps/testy/index.android.bundle
+
 # index.android.bundle: Hermes JavaScript bytecode, version 98
-./scripts/run-hermes-dec.sh testy
-
-# direct usage
-python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py apps/testy/index.android.bundle apps/testy/output/output.hasm
+./scripts/run-hermes-dec.sh apps/testy/96/index.android.bundle
 
 ```
-
-**Arguments**
-
-| Arg          | Required | Description                                   |
-|--------------|----------|-----------------------------------------------|
-| `<app_name>` | Yes      | Matches a directory under `apps/<app_name>/`. |
-
-**Input** (you must provide this)
-
-```
-apps/<app_name>/index.android.bundle
-```
-
+ 
 **Output**
 
 ```
