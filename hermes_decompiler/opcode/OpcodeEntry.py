@@ -87,7 +87,7 @@ class OpcodeEntry:
 
         if match := _ARRAY_RE.search(self.comment):
             try:
-                self.array_literal = ast.literal_eval(match.group(1))
+                self.array_literal = self._parse_array_literal(match.group(1))
             except (SyntaxError, ValueError):
                 logger.warning("Invalid array literal: %r", self.comment)
 
@@ -113,6 +113,20 @@ class OpcodeEntry:
                     logger.warning("Invalid jump table entry %r", value)
 
             self.jump_table = tuple(entries)
+
+    @classmethod
+    def _parse_array_literal(cls, text: str):
+        _NULL_RE = re.compile(r"\bnull\b")
+        _TRUE_RE = re.compile(r"\btrue\b")
+        _FALSE_RE = re.compile(r"\bfalse\b")
+        _UNDEFINED_RE = re.compile(r"\bundefined\b")
+
+        text = _NULL_RE.sub("None", text)
+        text = _TRUE_RE.sub("True", text)
+        text = _FALSE_RE.sub("False", text)
+        text = _UNDEFINED_RE.sub("None", text)
+
+        return ast.literal_eval(text)
 
     def resolve_pattern_and_flags(self) -> tuple[str | None, str | None]:
         matches = _REGEX_STRINGS_RE.findall(self.comment)

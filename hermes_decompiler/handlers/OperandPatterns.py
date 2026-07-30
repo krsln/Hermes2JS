@@ -10,7 +10,15 @@ UINT32 = r"UInt32:\s*(\d+)"
 IMM8 = r"Imm8:\s*(-?\d+)"
 IMM32 = r"Imm32:\s*(-?\d+)"
 
-DOUBLE = r"Double:\s*(-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)"
+DOUBLE_VALUE = (
+    r"-?(?:"
+    r"\d+(?:\.\d+)?(?:[eE][+-]?\d+)?"
+    r"|inf"
+    r"|nan"
+    r")"
+)
+
+DOUBLE = rf"Double:\s*({DOUBLE_VALUE})"
 
 STRING_ID = r"string_id:\s*(\d+)"
 FUNCTION_ID = r"function_id:\s*(\d+)"
