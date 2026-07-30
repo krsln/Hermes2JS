@@ -28,6 +28,7 @@ file apps/coachy/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 96
 ./scripts/run-hermes-dec.sh coachy
 
+file apps/testy/96/index.android.bundle
 file apps/testy/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 98
 ./scripts/run-hermes-dec.sh testy
