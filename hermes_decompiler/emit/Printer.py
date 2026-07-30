@@ -216,7 +216,7 @@ class Printer(NodeVisitor):
 
         kind = region.loop_kind
         if self.verbose:
-            self._write(lines,f"// LOOP → START ({kind.value if kind else "unknown"})")
+            self._write(lines, f"// LOOP → START ({kind.value if kind else "unknown"})")
 
         cond = (
             self.print_expression(region.condition)
@@ -232,7 +232,6 @@ class Printer(NodeVisitor):
 
         self._write(lines, "}")
         self._write(lines, "// LOOP → END")
-
 
     # ---------------------------------------------------------
     # try
@@ -269,7 +268,50 @@ class Printer(NodeVisitor):
     # ---------------------------------------------------------
 
     def _emit_switch(self, region: SwitchRegion, lines):
-        raise NotImplementedError
+
+        disc = self.print_expression(region.discriminant)
+
+        self._write(lines, f"switch ({disc}) {{")
+        self._indent += 1
+
+        for case in region.cases:
+
+            for test in case.tests:
+                self._write(lines, f"case {self.print_expression(test)}:")
+
+            self._indent += 1
+            self._emit_region(case.body, lines)
+            self._ensure_case_terminated(lines)
+            self._indent -= 1
+
+        if region.default_body is not None:
+            self._write(lines, "default:")
+
+            self._indent += 1
+            self._emit_region(region.default_body, lines)
+            self._ensure_case_terminated(lines)
+            self._indent -= 1
+
+        self._indent -= 1
+        self._write(lines, "}")
+
+    def _ensure_case_terminated(self, lines: list[str]) -> None:
+        """
+        JS `case` bodies fall through to the next case unless they end
+        in a terminating statement. Hermes-compiled switch bodies
+        always end in one (return/throw/break/continue - the VM has no
+        implicit fallthrough), but insert an explicit `break;` here
+        anyway as a safety net for any case body this pass produces
+        without one, since silently falling through would change the
+        emitted program's behavior from the original.
+        """
+
+        last = lines[-1].strip() if lines else ""
+
+        if last.startswith(("return", "throw", "break", "continue")):
+            return
+
+        self._write(lines, "break;")
 
     # ---------------------------------------------------------
     # helpers

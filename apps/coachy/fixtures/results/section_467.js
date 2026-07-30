@@ -2589,88 +2589,34 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
             // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
             // USED → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-            // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
-            if ("undefined" === typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__) goto label_6205;
-            // ──────────────── Block 30 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-            // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-            // CODE → <Mov>: <Reg8: 6, Reg8: 8>
-            // USED → r6 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-            // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
-            // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled;
-            // CODE → <JmpTrue>: <Addr8: 38, Reg8: 8>  # Address: 0000183d
-            if (globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) goto label_6205;
-            // ──────────────── Block 31 ──────────────── 
-            // CODE → <Mov>: <Reg8: 8, Reg8: 6>
-            // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-            // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
-            // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber;
-            // CODE → <JmpFalse>: <Addr8: 26, Reg8: 8>  # Address: 0000183d
-            if (!globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber) goto label_6205;
-            try {
-                // ──────────────── Block 32 ──────────────── 
-                // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
-                // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject;
-                // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-                // USED → r7 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject({ bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" });
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
-                createEnvironment()[31] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject({ bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" })
-                // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
-                createEnvironment()[32] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
-                // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
-                goto label_6205;
-            } catch (caughtException) {
-                // LOOP → START (while)
-                while (true) {
-                    // ──────────────── Block 34 ──────────────── 
-                    // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 852>  # Function: [#852  of 60 bytes]: 3 params @ offset 0x0018a28d
-                    // USED → r6 = function_852;
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 7, string_id: 18089>  # String: 'createPortal' (Identifier)
-                    param6.createPortal = function_852
-                    // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 853>  # Function: [#853  of 172 bytes]: 4 params @ offset 0x0018a2c9
-                    // USED → r6 = function_853;
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 8, string_id: 11552>  # String: 'dispatchCommand' (Identifier)
-                    param6.dispatchCommand = function_853
-                    // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 854>  # Function: [#854  of 82 bytes]: 2 params @ offset 0x0018a375
-                    // USED → r6 = function_854;
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 9, string_id: 12842>  # String: 'findHostInstance_DEPRECATED' (Identifier)
-                    param6.findHostInstance_DEPRECATED = function_854
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 5, UInt8: 10, string_id: 18319>  # String: 'findNodeHandle' (Identifier)
-                    param6.findNodeHandle = findNodeHandle
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-                    param6.getInspectorDataForInstance = getInspectorDataForInstance
-                    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 855>  # Function: [#855  of 30 bytes]: 2 params @ offset 0x0018a3c7
-                    // USED → r4 = function_855;
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 12, string_id: 23506>  # String: 'getNodeFromInternalInstanceHandle' (Identifier)
-                    param6.getNodeFromInternalInstanceHandle = function_855
-                    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 856>  # Function: [#856  of 115 bytes]: 2 params @ offset 0x0018a3e5
-                    // USED → r4 = function_856;
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 13, string_id: 19508>  # String: 'getPublicInstanceFromInternalInstanceHandle' (Identifier)
-                    param6.getPublicInstanceFromInternalInstanceHandle = function_856
-                    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 857>  # Function: [#857  of 21 bytes]: 1 params @ offset 0x0018a458
-                    // USED → r4 = function_857;
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 14, string_id: 19860>  # String: 'isChildPublicInstance' (Identifier)
-                    param6.isChildPublicInstance = function_857
-                    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 858>  # Function: [#858  of 267 bytes]: 5 params @ offset 0x0018a46d
-                    // USED → r4 = function_858;
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 15, string_id: 11830>  # String: 'render' (Identifier)
-                    param6.render = function_858
-                    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 859>  # Function: [#859  of 161 bytes]: 3 params @ offset 0x0018a578
-                    // USED → r4 = function_859;
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 16, string_id: 13824>  # String: 'sendAccessibilityEvent' (Identifier)
-                    param6.sendAccessibilityEvent = function_859
-                    // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 860>  # Function: [#860  of 56 bytes]: 2 params @ offset 0x0018a619
-                    // USED → r4 = function_860;
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 17, string_id: 17701>  # String: 'stopSurface' (Identifier)
-                    param6.stopSurface = function_860
-                    // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 862>  # Function: [#862  of 21 bytes]: 2 params @ offset 0x0018a66d
-                    // USED → r1 = function_862;
-                    // CODE → <PutById>: <Reg8: 3, Reg8: 1, UInt8: 18, string_id: 24466>  # String: 'unmountComponentAtNode' (Identifier)
-                    param6.unmountComponentAtNode = function_862
-                    // CODE → <Ret>: <Reg8: 2>
-                    return undefined;
+            if ("undefined" !== typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
+                // ──────────────── Block 30 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
+                // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+                // CODE → <Mov>: <Reg8: 6, Reg8: 8>
+                // USED → r6 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+                // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 59, string_id: 23915>  # String: 'isDisabled' (Identifier)
+                // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled;
+                if (!globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled) {
+                    // ──────────────── Block 31 ──────────────── 
+                    // CODE → <Mov>: <Reg8: 8, Reg8: 6>
+                    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+                    // CODE → <GetById>: <Reg8: 8, Reg8: 8, UInt8: 60, string_id: 15937>  # String: 'supportsFiber' (Identifier)
+                    // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber;
+                    if (globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber) {
+                        // ──────────────── Block 32 ──────────────── 
+                        // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
+                        // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject;
+                        // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
+                        // USED → r7 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject({ bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" });
+                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
+                        createEnvironment()[31] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject({ bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" })
+                        // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
+                        createEnvironment()[32] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+                        // CODE → <Jmp>: <Addr8: 4>  # Address: 0000183d
+                        goto label_6205;
+                    }
                 }
-                // LOOP → END
             }
         }
     } else {
@@ -2746,5 +2692,59 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // USED → r42 = globalThis.Error.call(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }).next() + "`."));
         // CODE → <Throw>: <Reg8: 42>
         throw globalThis.Error.call(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (HermesPropertyIterator({ ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }).next() + "`."));
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 34 ──────────────── 
+            // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 852>  # Function: [#852  of 60 bytes]: 3 params @ offset 0x0018a28d
+            // USED → r6 = function_852;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 7, string_id: 18089>  # String: 'createPortal' (Identifier)
+            param6.createPortal = function_852
+            // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 853>  # Function: [#853  of 172 bytes]: 4 params @ offset 0x0018a2c9
+            // USED → r6 = function_853;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 8, string_id: 11552>  # String: 'dispatchCommand' (Identifier)
+            param6.dispatchCommand = function_853
+            // CODE → <CreateClosure>: <Reg8: 6, Reg8: 1, function_id: 854>  # Function: [#854  of 82 bytes]: 2 params @ offset 0x0018a375
+            // USED → r6 = function_854;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 6, UInt8: 9, string_id: 12842>  # String: 'findHostInstance_DEPRECATED' (Identifier)
+            param6.findHostInstance_DEPRECATED = function_854
+            // CODE → <PutById>: <Reg8: 3, Reg8: 5, UInt8: 10, string_id: 18319>  # String: 'findNodeHandle' (Identifier)
+            param6.findNodeHandle = findNodeHandle
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 11, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
+            param6.getInspectorDataForInstance = getInspectorDataForInstance
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 855>  # Function: [#855  of 30 bytes]: 2 params @ offset 0x0018a3c7
+            // USED → r4 = function_855;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 12, string_id: 23506>  # String: 'getNodeFromInternalInstanceHandle' (Identifier)
+            param6.getNodeFromInternalInstanceHandle = function_855
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 856>  # Function: [#856  of 115 bytes]: 2 params @ offset 0x0018a3e5
+            // USED → r4 = function_856;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 13, string_id: 19508>  # String: 'getPublicInstanceFromInternalInstanceHandle' (Identifier)
+            param6.getPublicInstanceFromInternalInstanceHandle = function_856
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 857>  # Function: [#857  of 21 bytes]: 1 params @ offset 0x0018a458
+            // USED → r4 = function_857;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 14, string_id: 19860>  # String: 'isChildPublicInstance' (Identifier)
+            param6.isChildPublicInstance = function_857
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 858>  # Function: [#858  of 267 bytes]: 5 params @ offset 0x0018a46d
+            // USED → r4 = function_858;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 15, string_id: 11830>  # String: 'render' (Identifier)
+            param6.render = function_858
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 859>  # Function: [#859  of 161 bytes]: 3 params @ offset 0x0018a578
+            // USED → r4 = function_859;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 16, string_id: 13824>  # String: 'sendAccessibilityEvent' (Identifier)
+            param6.sendAccessibilityEvent = function_859
+            // CODE → <CreateClosure>: <Reg8: 4, Reg8: 1, function_id: 860>  # Function: [#860  of 56 bytes]: 2 params @ offset 0x0018a619
+            // USED → r4 = function_860;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 4, UInt8: 17, string_id: 17701>  # String: 'stopSurface' (Identifier)
+            param6.stopSurface = function_860
+            // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 862>  # Function: [#862  of 21 bytes]: 2 params @ offset 0x0018a66d
+            // USED → r1 = function_862;
+            // CODE → <PutById>: <Reg8: 3, Reg8: 1, UInt8: 18, string_id: 24466>  # String: 'unmountComponentAtNode' (Identifier)
+            param6.unmountComponentAtNode = function_862
+            // CODE → <Ret>: <Reg8: 2>
+            return undefined;
+            // ──────────────── Block 33 ──────────────── 
+            // CODE → <Catch>: <Reg8: 6>
+            r6 = caughtException
+        }
+        // LOOP → END
     }
 }

@@ -4,6 +4,7 @@ from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.Regions import (
     Region,
     SequenceRegion,
+    SwitchRegion,
 )
 
 
@@ -27,6 +28,13 @@ class RegionGraph:
                     self.block_owner[child] = region
                 else:
                     self._index(child)
+            return
+
+        if isinstance(region, SwitchRegion):
+            for case in region.cases:
+                self._index(case.body)
+            if region.default_body is not None:
+                self._index(region.default_body)
             return
 
         if hasattr(region, "body"):

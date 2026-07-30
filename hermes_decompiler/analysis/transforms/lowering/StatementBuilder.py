@@ -10,6 +10,7 @@ from hermes_decompiler.analysis.regions.Regions import (
     IfRegion,
     CatchRegion,
     FinallyRegion, TryRegion,
+    SwitchRegion,
 )
 from hermes_decompiler.opcode import OpcodeResult
 
@@ -66,6 +67,12 @@ class StatementBuilder:
 
         elif isinstance(region, FinallyRegion):
             self.build(region.body)
+
+        elif isinstance(region, SwitchRegion):
+            for case in region.cases:
+                self.build(case.body)
+            if region.default_body:
+                self.build(region.default_body)
 
     # ---------------------------------------------------------
     def _build_sequence(self, region):
