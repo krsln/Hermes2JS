@@ -37,7 +37,7 @@ python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./app
 python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict --no-verbose
 
 ```
- 
+
 **Examples**
 
 ```shell
@@ -46,6 +46,7 @@ python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./ap
 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 999 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 999 --end 1999 
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1999 --end 2999 
 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 5999 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 5000 --end 9999 
