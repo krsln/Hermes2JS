@@ -21,7 +21,8 @@ python3 "hermes-dec/src/hermes_dec/parsers/hbc_file_parser.py" "assets/index.and
 **Examples**
 
 ```shell
-python "vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py" "apps/testy/index.android.bundle" > "apps/testy/output/output.hbc"
+python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py apps/testy/index.android.bundle apps/testy/output/output.hasm
+
 ```
 
 ### hermesc

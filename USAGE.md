@@ -32,6 +32,9 @@ file apps/testy/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 98
 ./scripts/run-hermes-dec.sh testy
 
+# direct usage
+python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py apps/testy/index.android.bundle apps/testy/output/output.hasm
+
 ```
 
 **Arguments**

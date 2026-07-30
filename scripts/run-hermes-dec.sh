@@ -42,13 +42,13 @@ fi
 mkdir -p "$OUTPUT"
 
 echo "🔍 Disassembling..."
-python3 "$TOOLS_DIR/src/hermes_dec/disassembly/hbc_disassembler.py" "$BUNDLE" > "$OUTPUT/output.hbc"
+python "$TOOLS_DIR/src/hermes_dec/disassembly/hbc_disassembler.py" "$BUNDLE" > "$OUTPUT/output.hbc"
 
 #echo "🧩 Decompiling..."
-#python3 "$TOOLS_DIR/src/hermes_dec/decompilation/hbc_decompiler.py" "$BUNDLE" > "$OUTPUT/output.js"
+#python "$TOOLS_DIR/src/hermes_dec/decompilation/hbc_decompiler.py" "$BUNDLE" > "$OUTPUT/output.js"
 
 #echo "📦 Parsing structure..."
-#python3 "$TOOLS_DIR/src/hermes_dec/parsers/hbc_file_parser.py" "$BUNDLE" > "$OUTPUT/outputParser.js"
+#python "$TOOLS_DIR/src/hermes_dec/parsers/hbc_file_parser.py" "$BUNDLE" > "$OUTPUT/outputParser.js"
 
 echo "✅ Done."
 echo "📁 Output: $OUTPUT"
