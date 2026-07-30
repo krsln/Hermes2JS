@@ -15,15 +15,15 @@ tree -I '__pycache__|__init__.py|ir|handlers|regions' hermes_decompiler
 ```
 
 ```shell
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/one -o ./apps/demo/fixtures/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/one -o ./apps/demo/fixtures/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --log-level DEBUG
 
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections-96 -o ./apps/demo/fixtures/results-96
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections-96 -o ./apps/demo/fixtures/results-96 --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --log-level DEBUG
 
-
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections-98 -o ./apps/demo/fixtures/results-98
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections-98 -o ./apps/demo/fixtures/results-98 --log-level DEBUG
+# 96
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level DEBUG
 
 ```
 
