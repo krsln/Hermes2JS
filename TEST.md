@@ -100,3 +100,18 @@ SequenceRegion
             Block 8
     Block 11
 ```
+
+## Done Stuff
+
+- Test files created for ReactNative apps
+- ReactNative apps created to get different version of hermes bundle file
+- Hermes 96 & 98 bundles from test apps: disassembled and split (sections/) for usage of decompiler
+-
+- Handlers re-constructed, lil-doc added on every class
+- Terminator added, Logging improved (colorful)
+- Structures improved | TryStructurer, SwitchStructurer, 
+- 
+
+
+
+
