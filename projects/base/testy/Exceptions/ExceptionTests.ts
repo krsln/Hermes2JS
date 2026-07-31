@@ -345,3 +345,65 @@ export function tryCatchFinallyImplicitThrowTest(x: number) {
         console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block");
     }
 }
+
+// ------------------------------------------------------------
+// 14. loop OUTSIDE the try, but break/continue INSIDE the try
+//     targets it - the jump has to cross the try/finally region
+//     boundary, so the finally must still run before the loop
+//     actually exits/continues.
+// ------------------------------------------------------------
+export function loopBreakCrossesTryBoundaryTest(items: number[]) {
+    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start");
+
+    for (let i = 0; i < items.length; i++) {
+        try {
+            if (items[i] < 0) {
+                console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break");
+                break;
+            }
+
+            if (items[i] === 0) {
+                console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue");
+                continue;
+            }
+
+            console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", items[i]);
+
+        } finally {
+            console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally");
+        }
+    }
+
+    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end");
+}
+
+// ------------------------------------------------------------
+// 15. switch statement INSIDE a try/catch - checks that the
+//     SwitchRegion nests correctly inside a TryRegion's try_body
+//     rather than confusing the exception-handler's block range.
+// ------------------------------------------------------------
+export function switchInsideTryTest(v: number) {
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start");
+
+    try {
+        switch (v) {
+            case 0:
+                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0");
+                break;
+
+            case 1:
+                throw new Error("case 1 throws");
+
+            default:
+                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default");
+        }
+
+    } catch (e) {
+        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block");
+
+    } finally {
+        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block");
+    }
+
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end");
+}
