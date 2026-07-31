@@ -2303,11 +2303,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Mov>: <Reg8: 57, Reg8: 21>
         r57 = createThis(globalThis.WeakMap.prototype, globalThis.WeakMap)
         // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
-        // USED → r20 = new globalThis.WeakMap(param7);
+        // USED → r20 = new globalThis.WeakMap();
         // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
-        // USED → r20 = createThis(globalThis.WeakMap.prototype, globalThis.WeakMap)[new globalThis.WeakMap(param7)];
+        // USED → r20 = new globalThis.WeakMap();
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 120, Reg8: 20>
-        createEnvironment()[120] = createThis(globalThis.WeakMap.prototype, globalThis.WeakMap)[new globalThis.WeakMap(param7)]
+        createEnvironment()[120] = new globalThis.WeakMap()
         // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
         // USED → r17 = param7[2];
         // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
@@ -2493,11 +2493,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <Mov>: <Reg8: 57, Reg8: 12>
             r57 = createThis(globalThis.Map.prototype, globalThis.Map)
             // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
-            // USED → r10 = new globalThis.Map("undefined");
+            // USED → r10 = new globalThis.Map();
             // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>
-            // USED → r10 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map("undefined")];
+            // USED → r10 = new globalThis.Map();
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
-            createEnvironment()[168] = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map("undefined")]
+            createEnvironment()[168] = new globalThis.Map()
             // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
             // USED → r12 = { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer" };
             // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)

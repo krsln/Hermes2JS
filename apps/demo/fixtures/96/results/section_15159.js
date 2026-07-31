@@ -25,11 +25,11 @@ function restOnlyTest(param0) {
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
     r9 = createThis(globalThis.Array.prototype, globalThis.Array)
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
-    r8 = arguments.length
+    // USED → r8 = arguments.length;
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 2>
-    // USED → r2 = new globalThis.Array(undefined, globalThis);
+    // USED → r2 = new globalThis.Array(arguments.length);
     // CODE → <SelectObject>: <Reg8: 5, Reg8: 5, Reg8: 2>
-    // USED → r5 = createThis(globalThis.Array.prototype, globalThis.Array)[new globalThis.Array(undefined, globalThis)];
+    // USED → r5 = new globalThis.Array(arguments.length);
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // CODE → <Less>: <Reg8: 6, Reg8: 2, Reg8: 3>
@@ -39,7 +39,7 @@ function restOnlyTest(param0) {
         // CODE → <GetArgumentsPropByVal>: <Reg8: 6, Reg8: 2, Reg8: 4>
         // USED → r6 = arguments[0];
         // CODE → <PutByVal>: <Reg8: 5, Reg8: 2, Reg8: 6>
-        createThis(globalThis.Array.prototype, globalThis.Array)[new globalThis.Array(undefined, globalThis)][0] = arguments[0]
+        new globalThis.Array(arguments.length)[0] = arguments[0]
         // CODE → <Inc>: <Reg8: 2, Reg8: 2>
         // USED → r2 = 0 + 1;
         // CODE → <JLess>: <Addr8: -11, Reg8: 2, Reg8: 3>  # Address: 00000043
@@ -51,9 +51,9 @@ function restOnlyTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 169>  # String: 'length' (Identifier)
-    // USED → r2 = createThis(globalThis.Array.prototype, globalThis.Array)[new globalThis.Array(undefined, globalThis)].length;
+    // USED → r2 = new globalThis.Array(arguments.length).length;
     // CODE → <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
-    r2 = globalThis.console.log(createThis(globalThis.Array.prototype, globalThis.Array)[new globalThis.Array(undefined, globalThis)].length, createThis(globalThis.Array.prototype, globalThis.Array)[new globalThis.Array(undefined, globalThis)])
+    r2 = globalThis.console.log(new globalThis.Array(arguments.length).length, new globalThis.Array(arguments.length))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -15,15 +15,15 @@ function mayThrow(param0, param1) {
         // CODE → <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
         // USED → r1 = createThis(globalThis.Error.prototype, globalThis.Error);
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 1323>  # String: 'negative' (String)
-        r3 = "negative"
+        // USED → r3 = "negative";
         // CODE → <Mov>: <Reg8: 4, Reg8: 1>
         r4 = createThis(globalThis.Error.prototype, globalThis.Error)
         // CODE → <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
-        // USED → r0 = new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error));
+        // USED → r0 = new globalThis.Error("negative");
         // CODE → <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-        // USED → r0 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error))];
+        // USED → r0 = new globalThis.Error("negative");
         // CODE → <Throw>: <Reg8: 0>
-        throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error))];
+        throw new globalThis.Error("negative");
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>

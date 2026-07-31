@@ -14,15 +14,15 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
         // CODE → <CreateThis>: <Reg8: 2, Reg8: 0, Reg8: 3>
         // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error);
         // CODE → <LoadConstString>: <Reg8: 5, string_id: 238>  # String: 'test' (Identifier)
-        r5 = "test"
+        // USED → r5 = "test";
         // CODE → <Mov>: <Reg8: 6, Reg8: 2>
         r6 = createThis(globalThis.Error.prototype, globalThis.Error)
         // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-        // USED → r0 = new globalThis.Error(param1, createThis(globalThis.Error.prototype, globalThis.Error));
+        // USED → r0 = new globalThis.Error("test");
         // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-        // USED → r0 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(param1, createThis(globalThis.Error.prototype, globalThis.Error))];
+        // USED → r0 = new globalThis.Error("test");
         // CODE → <Throw>: <Reg8: 0>
-        throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(param1, createThis(globalThis.Error.prototype, globalThis.Error))];
+        throw new globalThis.Error("test");
     } catch (caughtException) {
         // LOOP → START (while)
         while (true) {

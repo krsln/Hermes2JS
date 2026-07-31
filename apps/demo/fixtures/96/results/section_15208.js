@@ -21,9 +21,9 @@ function privateStaticTest(param0) {
     // CODE → <Mov>: <Reg8: 7, Reg8: 3>
     r7 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
-    // USED → r2 = new getEnvironment(0)[8](getEnvironment(0));
+    // USED → r2 = new getEnvironment(0)[8]();
     // CODE → <SelectObject>: <Reg8: 5, Reg8: 3, Reg8: 2>
-    // USED → r5 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))];
+    // USED → r5 = new getEnvironment(0)[8]();
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 8>
     // USED → r3 = getEnvironment(0)[8];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
@@ -31,37 +31,37 @@ function privateStaticTest(param0) {
     // CODE → <CreateThis>: <Reg8: 7, Reg8: 2, Reg8: 3>
     r7 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])
     // CODE → <Construct>: <Reg8: 2, Reg8: 3, UInt8: 1>
-    r2 = new getEnvironment(0)[8](getEnvironment(0)[8].prototype)
+    r2 = new getEnvironment(0)[8]()
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 10830>  # String: 'increment' (Identifier)
-    // USED → r2 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))].increment;
+    // USED → r2 = new getEnvironment(0)[8]().increment;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    r2 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))].increment()
+    r2 = new getEnvironment(0)[8]().increment()
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 10830>  # String: 'increment' (Identifier)
-    // USED → r2 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))].increment;
+    // USED → r2 = new getEnvironment(0)[8]().increment;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    r2 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))].increment()
+    r2 = new getEnvironment(0)[8]().increment()
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 200>
     // USED → r2 = 200;
     // CODE → <PutById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 205>  # String: 'value' (Identifier)
-    createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))].value = 200
+    new getEnvironment(0)[8]().value = 200
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 205>  # String: 'value' (Identifier)
-    // USED → r2 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))].value;
+    // USED → r2 = new getEnvironment(0)[8]().value;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))].value)
+    r2 = globalThis.console.log(new getEnvironment(0)[8]().value)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 6, string_id: 10172>  # String: 'describe' (Identifier)
-    // USED → r2 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))].describe;
+    // USED → r2 = new getEnvironment(0)[8]().describe;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))].describe();
+    // USED → r2 = new getEnvironment(0)[8]().describe();
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])[new getEnvironment(0)[8](getEnvironment(0))].describe())
+    r2 = globalThis.console.log(new getEnvironment(0)[8]().describe())
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

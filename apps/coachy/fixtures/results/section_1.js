@@ -121,11 +121,11 @@ function function_1(param0, param1) {
     // CODE → <Mov>: <Reg8: 14, Reg8: 3>
     r14 = createThis(globalThis.Map.prototype, globalThis.Map)
     // CODE → <Construct>: <Reg8: 1, Reg8: 1, UInt8: 1>
-    // USED → r1 = new globalThis.Map(undefined);
+    // USED → r1 = new globalThis.Map();
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 3, Reg8: 1>
-    // USED → r1 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(undefined)];
+    // USED → r1 = new globalThis.Map();
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 8, Reg8: 1>
-    createEnvironment()[8] = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(undefined)]
+    createEnvironment()[8] = new globalThis.Map()
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

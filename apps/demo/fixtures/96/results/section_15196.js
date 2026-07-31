@@ -19,27 +19,27 @@ function classTest(param0) {
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
     // USED → r3 = createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5]);
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 3213>  # String: 'Generic' (String)
-    r7 = "Generic"
+    // USED → r7 = "Generic";
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 597>  # String: '...' (String)
-    r6 = "..."
+    // USED → r6 = "...";
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
     r8 = createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5])
     // CODE → <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
-    // USED → r2 = new getEnvironment(0)[5](getEnvironment(0)[5].prototype, createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5]), r4);
+    // USED → r2 = new getEnvironment(0)[5]("...", "Generic");
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5])[new getEnvironment(0)[5](getEnvironment(0)[5].prototype, createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5]), r4)];
+    // USED → r2 = new getEnvironment(0)[5]("...", "Generic");
     // CODE → <GetById>: <Reg8: 3, Reg8: 2, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
-    // USED → r3 = createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5])[new getEnvironment(0)[5](getEnvironment(0)[5].prototype, createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5]), r4)].makeSound;
+    // USED → r3 = new getEnvironment(0)[5]("...", "Generic").makeSound;
     // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    r3 = createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5])[new getEnvironment(0)[5](getEnvironment(0)[5].prototype, createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5]), r4)].makeSound()
+    r3 = new getEnvironment(0)[5]("...", "Generic").makeSound()
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 10805>  # String: 'description' (Identifier)
-    // USED → r2 = createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5])[new getEnvironment(0)[5](getEnvironment(0)[5].prototype, createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5]), r4)].description;
+    // USED → r2 = new getEnvironment(0)[5]("...", "Generic").description;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5])[new getEnvironment(0)[5](getEnvironment(0)[5].prototype, createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5]), r4)].description)
+    r2 = globalThis.console.log(new getEnvironment(0)[5]("...", "Generic").description)
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 6>
     // USED → r5 = getEnvironment(0)[6];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
@@ -47,23 +47,23 @@ function classTest(param0) {
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
     // USED → r3 = createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6]);
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 3886>  # String: 'Rex' (String)
-    r7 = "Rex"
+    // USED → r7 = "Rex";
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 3434>  # String: 'Labrador' (String)
-    r6 = "Labrador"
+    // USED → r6 = "Labrador";
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
     r8 = createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6])
     // CODE → <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
-    // USED → r2 = new getEnvironment(0)[6](getEnvironment(0)[6].prototype, createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6]), globalThis.console);
+    // USED → r2 = new getEnvironment(0)[6]("Labrador", "Rex");
     // CODE → <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    // USED → r3 = createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6])[new getEnvironment(0)[6](getEnvironment(0)[6].prototype, createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6]), globalThis.console)];
+    // USED → r3 = new getEnvironment(0)[6]("Labrador", "Rex");
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
-    // USED → r2 = createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6])[new getEnvironment(0)[6](getEnvironment(0)[6].prototype, createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6]), globalThis.console)].makeSound;
+    // USED → r2 = new getEnvironment(0)[6]("Labrador", "Rex").makeSound;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    r2 = createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6])[new getEnvironment(0)[6](getEnvironment(0)[6].prototype, createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6]), globalThis.console)].makeSound()
+    r2 = new getEnvironment(0)[6]("Labrador", "Rex").makeSound()
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
-    // USED → r2 = createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6])[new getEnvironment(0)[6](getEnvironment(0)[6].prototype, createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6]), globalThis.console)].makeSound;
+    // USED → r2 = new getEnvironment(0)[6]("Labrador", "Rex").makeSound;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    r2 = createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6])[new getEnvironment(0)[6](getEnvironment(0)[6].prototype, createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6]), globalThis.console)].makeSound()
+    r2 = new getEnvironment(0)[6]("Labrador", "Rex").makeSound()
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 6>
     // USED → r3 = getEnvironment(0)[6];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 6, string_id: 103>  # String: 'create' (Identifier)

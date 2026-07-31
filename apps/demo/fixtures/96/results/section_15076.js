@@ -26,15 +26,15 @@ function tryCatchNoFinallyTest(param0) {
         // CODE → <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
         // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error);
         // CODE → <LoadConstString>: <Reg8: 5, string_id: 6728>  # String: 'no finally here' (String)
-        r5 = "no finally here"
+        // USED → r5 = "no finally here";
         // CODE → <Mov>: <Reg8: 6, Reg8: 2>
         r6 = createThis(globalThis.Error.prototype, globalThis.Error)
         // CODE → <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
-        // USED → r1 = new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error));
+        // USED → r1 = new globalThis.Error("no finally here");
         // CODE → <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-        // USED → r1 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error))];
+        // USED → r1 = new globalThis.Error("no finally here");
         // CODE → <Throw>: <Reg8: 1>
-        throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error))];
+        throw new globalThis.Error("no finally here");
     } catch (caughtException) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

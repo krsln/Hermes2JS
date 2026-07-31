@@ -58,11 +58,11 @@ function defaultWithRestTest(param0) {
     // CODE → <Mov>: <Reg8: 12, Reg8: 4>
     r12 = createThis(globalThis.Array.prototype, globalThis.Array)
     // CODE → <Mov>: <Reg8: 11, Reg8: 8>
-    r11 = arguments.length - 1
+    // USED → r11 = arguments.length - 1;
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 2>
-    // USED → r2 = new globalThis.Array(undefined, globalThis);
+    // USED → r2 = new globalThis.Array(arguments.length - 1);
     // CODE → <SelectObject>: <Reg8: 4, Reg8: 4, Reg8: 2>
-    // USED → r4 = createThis(globalThis.Array.prototype, globalThis.Array)[new globalThis.Array(undefined, globalThis)];
+    // USED → r4 = new globalThis.Array(arguments.length - 1);
     // CODE → <Less>: <Reg8: 8, Reg8: 6, Reg8: 3>
     // USED → r8 = 1 < arguments.length;
     // CODE → <Mov>: <Reg8: 2, Reg8: 6>
@@ -74,7 +74,7 @@ function defaultWithRestTest(param0) {
         // CODE → <GetArgumentsPropByVal>: <Reg8: 8, Reg8: 2, Reg8: 7>
         // USED → r8 = arguments[1];
         // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
-        createThis(globalThis.Array.prototype, globalThis.Array)[new globalThis.Array(undefined, globalThis)][1 - 1] = arguments[1]
+        new globalThis.Array(arguments.length - 1)[1 - 1] = arguments[1]
         // CODE → <Inc>: <Reg8: 2, Reg8: 2>
         // USED → r2 = 1 + 1;
         // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 3>  # Address: 00000072
@@ -82,19 +82,19 @@ function defaultWithRestTest(param0) {
     }
     // ──────────────── Block 7 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)
-    // USED → r3 = createThis(globalThis.Array.prototype, globalThis.Array)[new globalThis.Array(undefined, globalThis)].reduce;
+    // USED → r3 = new globalThis.Array(arguments.length - 1).reduce;
     // CODE → <CreateEnvironment>: <Reg8: 2>
     r2 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 15156>  # Function: [#15156  of 12 bytes]: 3 params @ offset 0x00269c66
     // USED → r2 = function_15156;
     // CODE → <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
-    // USED → r3 = createThis(globalThis.Array.prototype, globalThis.Array)[new globalThis.Array(undefined, globalThis)].reduce(function_15156, arguments[0]);
+    // USED → r3 = new globalThis.Array(arguments.length - 1).reduce(function_15156, arguments[0]);
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    r1 = globalThis.console.log(createThis(globalThis.Array.prototype, globalThis.Array)[new globalThis.Array(undefined, globalThis)].reduce(function_15156, arguments[0]))
+    r1 = globalThis.console.log(new globalThis.Array(arguments.length - 1).reduce(function_15156, arguments[0]))
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

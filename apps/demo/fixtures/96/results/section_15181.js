@@ -73,15 +73,15 @@ async function* anon_15181(param0) {
                 // CODE → <CreateThis>: <Reg8: 4, Reg8: 3, Reg8: 5>
                 // USED → r4 = createThis(globalThis.Error.prototype, globalThis.Error);
                 // CODE → <LoadConstString>: <Reg8: 8, string_id: 6849>  # String: 'post-await failure' (String)
-                r8 = "post-await failure"
+                // USED → r8 = "post-await failure";
                 // CODE → <Mov>: <Reg8: 9, Reg8: 4>
                 r9 = createThis(globalThis.Error.prototype, globalThis.Error)
                 // CODE → <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
-                // USED → r3 = new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error));
+                // USED → r3 = new globalThis.Error("post-await failure");
                 // CODE → <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
-                // USED → r3 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error))];
+                // USED → r3 = new globalThis.Error("post-await failure");
                 // CODE → <Throw>: <Reg8: 3>
-                throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error))];
+                throw new globalThis.Error("post-await failure");
             } else {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <Jmp>: <Addr8: 79>  # Address: 000000a3

@@ -43,15 +43,15 @@ function switchInsideTryTest(param0, param1) {
         // CODE → <CreateThis>: <Reg8: 2, Reg8: 0, Reg8: 3>
         // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error);
         // CODE → <LoadConstString>: <Reg8: 5, string_id: 5270>  # String: 'case 1 throws' (String)
-        r5 = "case 1 throws"
+        // USED → r5 = "case 1 throws";
         // CODE → <Mov>: <Reg8: 6, Reg8: 2>
         r6 = createThis(globalThis.Error.prototype, globalThis.Error)
         // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-        // USED → r0 = new globalThis.Error(globalThis, createThis(globalThis.Error.prototype, globalThis.Error));
+        // USED → r0 = new globalThis.Error("case 1 throws");
         // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-        // USED → r0 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis, createThis(globalThis.Error.prototype, globalThis.Error))];
+        // USED → r0 = new globalThis.Error("case 1 throws");
         // CODE → <Throw>: <Reg8: 0>
-        throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis, createThis(globalThis.Error.prototype, globalThis.Error))];
+        throw new globalThis.Error("case 1 throws");
         // ──────────────── Block 4 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = globalThis.console;

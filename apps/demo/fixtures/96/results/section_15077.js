@@ -26,15 +26,15 @@ function tryFinallyNoCatchTest(param0) {
         // CODE → <CreateThis>: <Reg8: 2, Reg8: 0, Reg8: 3>
         // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error);
         // CODE → <LoadConstString>: <Reg8: 4, string_id: 6760>  # String: 'no catch here' (String)
-        r4 = "no catch here"
+        // USED → r4 = "no catch here";
         // CODE → <Mov>: <Reg8: 5, Reg8: 2>
         r5 = createThis(globalThis.Error.prototype, globalThis.Error)
         // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-        // USED → r0 = new globalThis.Error(globalThis, createThis(globalThis.Error.prototype, globalThis.Error));
+        // USED → r0 = new globalThis.Error("no catch here");
         // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-        // USED → r0 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis, createThis(globalThis.Error.prototype, globalThis.Error))];
+        // USED → r0 = new globalThis.Error("no catch here");
         // CODE → <Throw>: <Reg8: 0>
-        throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis, createThis(globalThis.Error.prototype, globalThis.Error))];
+        throw new globalThis.Error("no catch here");
     } finally {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

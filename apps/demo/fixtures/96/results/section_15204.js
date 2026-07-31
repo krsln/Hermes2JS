@@ -19,15 +19,15 @@ function create(param0, param1) {
     // CODE → <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 3>
     // USED → r1 = createThis(getEnvironment(0)[0].prototype, getEnvironment(0)[0]);
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 1>
-    r5 = param1
+    // USED → r5 = param1;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 3527>  # String: 'Mixed' (String)
-    r4 = "Mixed"
+    // USED → r4 = "Mixed";
     // CODE → <Mov>: <Reg8: 6, Reg8: 1>
     r6 = createThis(getEnvironment(0)[0].prototype, getEnvironment(0)[0])
     // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 3>
-    // USED → r0 = new getEnvironment(0)[0](getEnvironment(0)[0].prototype, createThis(getEnvironment(0)[0].prototype, getEnvironment(0)[0]), globalThis.console);
+    // USED → r0 = new getEnvironment(0)[0]("Mixed", param1);
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = createThis(getEnvironment(0)[0].prototype, getEnvironment(0)[0])[new getEnvironment(0)[0](getEnvironment(0)[0].prototype, createThis(getEnvironment(0)[0].prototype, getEnvironment(0)[0]), globalThis.console)];
+    // USED → r0 = new getEnvironment(0)[0]("Mixed", param1);
     // CODE → <Ret>: <Reg8: 0>
-    return createThis(getEnvironment(0)[0].prototype, getEnvironment(0)[0])[new getEnvironment(0)[0](getEnvironment(0)[0].prototype, createThis(getEnvironment(0)[0].prototype, getEnvironment(0)[0]), globalThis.console)];
+    return new getEnvironment(0)[0]("Mixed", param1);
 }

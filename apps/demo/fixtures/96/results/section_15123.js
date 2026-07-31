@@ -19,67 +19,67 @@ function mapTest(param0) {
     // CODE → <Mov>: <Reg8: 16, Reg8: 2>
     r16 = createThis(globalThis.Map.prototype, globalThis.Map)
     // CODE → <Construct>: <Reg8: 0, Reg8: 0, UInt8: 1>
-    // USED → r0 = new globalThis.Map(r-1);
+    // USED → r0 = new globalThis.Map();
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 2, Reg8: 0>
-    // USED → r2 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)];
+    // USED → r2 = new globalThis.Map();
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 185>  # String: 'set' (Identifier)
-    // USED → r4 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].set;
+    // USED → r4 = new globalThis.Map().set;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5105>  # String: 'alice' (String)
     // USED → r3 = "alice";
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 90>
     // USED → r0 = 90;
     // CODE → <Call3>: <Reg8: 0, Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].set("alice", 90)
+    r0 = new globalThis.Map().set("alice", 90)
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 5, string_id: 185>  # String: 'set' (Identifier)
-    // USED → r3 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].set;
+    // USED → r3 = new globalThis.Map().set;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 2540>  # String: 'bob' (String)
     // USED → r4 = "bob";
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 75>
     // USED → r0 = 75;
     // CODE → <Call3>: <Reg8: 0, Reg8: 3, Reg8: 2, Reg8: 4, Reg8: 0>
-    r0 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].set("bob", 75)
+    r0 = new globalThis.Map().set("bob", 75)
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 5, string_id: 185>  # String: 'set' (Identifier)
-    // USED → r5 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].set;
+    // USED → r5 = new globalThis.Map().set;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 677>  # String: 'carol' (String)
     // USED → r3 = "carol";
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 88>
     // USED → r0 = 88;
     // CODE → <Call3>: <Reg8: 0, Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].set("carol", 88)
+    r0 = new globalThis.Map().set("carol", 88)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 6, string_id: 50>  # String: 'get' (Identifier)
-    // USED → r0 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].get;
+    // USED → r0 = new globalThis.Map().get;
     // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 4>
-    // USED → r0 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].get("bob");
+    // USED → r0 = new globalThis.Map().get("bob");
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 5, Reg8: 0>
-    r0 = globalThis.console.log(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].get("bob"))
+    r0 = globalThis.console.log(new globalThis.Map().get("bob"))
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 2, UInt8: 7, string_id: 153>  # String: 'has' (Identifier)
-    // USED → r6 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].has;
+    // USED → r6 = new globalThis.Map().has;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 903>  # String: 'dave' (String)
     // USED → r0 = "dave";
     // CODE → <Call2>: <Reg8: 0, Reg8: 6, Reg8: 2, Reg8: 0>
-    // USED → r0 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].has("dave");
+    // USED → r0 = new globalThis.Map().has("dave");
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 5, Reg8: 0>
-    r0 = globalThis.console.log(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].has("dave"))
+    r0 = globalThis.console.log(new globalThis.Map().has("dave"))
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 8, string_id: 226>  # String: 'size' (Identifier)
-    // USED → r0 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].size;
+    // USED → r0 = new globalThis.Map().size;
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 5, Reg8: 0>
-    r0 = globalThis.console.log(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].size)
+    r0 = globalThis.console.log(new globalThis.Map().size)
     // CODE → <Mov>: <Reg8: 9, Reg8: 2>
-    // USED → r9 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)];
+    // USED → r9 = new globalThis.Map();
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 9>
-    // USED → r5 = GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]);
+    // USED → r5 = GetIterator(new globalThis.Map());
     // CODE → <GetEnvironment>: <Reg8: 8, UInt8: 0>
     // USED → r8 = getEnvironment(0);
     // CODE → <LoadConstUndefined>: <Reg8: 0>
@@ -95,28 +95,28 @@ function mapTest(param0) {
         while (true) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <IteratorNext>: <Reg8: 11, Reg8: 5, Reg8: 9>
-            // USED → r11 = GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]).next();
+            // USED → r11 = GetIterator(new globalThis.Map()).next();
             // CODE → <Mov>: <Reg8: 10, Reg8: 5>
-            // USED → r10 = GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]);
+            // USED → r10 = GetIterator(new globalThis.Map());
             // CODE → <JStrictEqual>: <Addr8: 53, Reg8: 10, Reg8: 0>  # Address: 00000102
-            if (GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]) === undefined) goto label_258;
+            if (GetIterator(new globalThis.Map()) === undefined) goto label_258;
             // ──────────────── Block 2 ──────────────── 
             // CODE → <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>
             // USED → r10 = getEnvironment(0)[0];
             // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 9, string_id: 107>  # String: 'default' (Identifier)
             // USED → r10 = getEnvironment(0)[0].default;
             // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 0, Reg8: 11, Reg8: 7>
-            // USED → r10 = getEnvironment(0)[0].default.call(undefined, GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]).next(), 2);
+            // USED → r10 = getEnvironment(0)[0].default.call(undefined, GetIterator(new globalThis.Map()).next(), 2);
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 6>
-            // USED → r13 = getEnvironment(0)[0].default.call(undefined, GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]).next(), 2)[0];
+            // USED → r13 = getEnvironment(0)[0].default.call(undefined, GetIterator(new globalThis.Map()).next(), 2)[0];
             // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 3>
-            // USED → r12 = getEnvironment(0)[0].default.call(undefined, GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]).next(), 2)[1];
+            // USED → r12 = getEnvironment(0)[0].default.call(undefined, GetIterator(new globalThis.Map()).next(), 2)[1];
             // CODE → <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r11 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r10 = globalThis.console.log;
             // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 13, Reg8: 12>
-            r10 = globalThis.console.log(getEnvironment(0)[0].default.call(undefined, GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]).next(), 2)[0], getEnvironment(0)[0].default.call(undefined, GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]).next(), 2)[1])
+            r10 = globalThis.console.log(getEnvironment(0)[0].default.call(undefined, GetIterator(new globalThis.Map()).next(), 2)[0], getEnvironment(0)[0].default.call(undefined, GetIterator(new globalThis.Map()).next(), 2)[1])
             // CODE → <Jmp>: <Addr8: -51>  # Address: 000000c6
             goto label_198;
         }
@@ -124,21 +124,21 @@ function mapTest(param0) {
     } finally {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 5, UInt8: 1>
-        GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]).return()
+        GetIterator(new globalThis.Map()).return()
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 10, string_id: 114>  # String: 'delete' (Identifier)
-    // USED → r3 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].delete;
+    // USED → r3 = new globalThis.Map().delete;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 2, Reg8: 4>
-    r3 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].delete("bob")
+    r3 = new globalThis.Map().delete("bob")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 226>  # String: 'size' (Identifier)
-    // USED → r2 = createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].size;
+    // USED → r2 = new globalThis.Map().size;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)].size)
+    r2 = globalThis.console.log(new globalThis.Map().size)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -85,7 +85,7 @@ async function* anon_17161(param0, param1) {
                     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: ' failed with status ' (String)
                     // USED → r2 = " failed with status ";
                     // CODE → <Call4>: <Reg8: 10, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 2, Reg8: 6>
-                    r10 = globalThis.HermesInternal.concat.call("Fetching ", param1, " failed with status ", await yield.status)
+                    // USED → r10 = globalThis.HermesInternal.concat.call("Fetching ", param1, " failed with status ", await yield.status);
                     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
                     // USED → r3 = globalThis.Error.prototype;
                     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
@@ -93,11 +93,11 @@ async function* anon_17161(param0, param1) {
                     // CODE → <Mov>: <Reg8: 11, Reg8: 3>
                     r11 = createThis(globalThis.Error.prototype, globalThis.Error)
                     // CODE → <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-                    // USED → r2 = new globalThis.Error(" failed with status ", createThis(globalThis.Error.prototype, globalThis.Error));
+                    // USED → r2 = new globalThis.Error(globalThis.HermesInternal.concat.call("Fetching ", param1, " failed with status ", await yield.status));
                     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-                    // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(" failed with status ", createThis(globalThis.Error.prototype, globalThis.Error))];
+                    // USED → r2 = new globalThis.Error(globalThis.HermesInternal.concat.call("Fetching ", param1, " failed with status ", await yield.status));
                     // CODE → <Throw>: <Reg8: 2>
-                    throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(" failed with status ", createThis(globalThis.Error.prototype, globalThis.Error))];
+                    throw new globalThis.Error(globalThis.HermesInternal.concat.call("Fetching ", param1, " failed with status ", await yield.status));
                 } else {
                     // ──────────────── Block 6 ──────────────── 
                     // CODE → <GetById>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 19693>  # String: 'startsWith' (Identifier)
