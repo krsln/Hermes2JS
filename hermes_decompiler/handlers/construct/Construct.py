@@ -12,6 +12,15 @@ class Construct(OpcodeHandler):
     Construct using UInt8 argument count.
 
     TODO
+/// Call a constructor, with semantics identical to Call.
+/// Arg1 is the destination of the return value.
+/// Arg2 is the closure to invoke.
+/// Arg3 is the number of arguments, assumed to be found in reverse order
+///      from the end of the current frame. The first argument 'this'
+///      is assumed to be created with CreateThis.
+DEFINE_OPCODE_3(Construct, Reg8, Reg8, UInt8)
+DEFINE_RET_TARGET(Construct)
+
     """
 
     _PATTERN = sequence(REG, REG, UINT8)
@@ -22,10 +31,10 @@ class Construct(OpcodeHandler):
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, ArgCount")
 
-        dest_reg, func_reg, arg_count = map(int, match.groups())
+        dest_reg, ctor_reg, arg_count = map(int, match.groups())
 
-        constructor = self.get_register_value(analysis, func_reg)
-        arguments = self.resolve_arguments(analysis, func_reg, arg_count)
+        constructor = self.get_register_value(analysis, ctor_reg)
+        arguments = self.resolve_arguments(analysis, ctor_reg, arg_count)
 
         # `ir.NewExpression` names this field `callee` (not `constructor`),
         # matching CallExpression's naming for consistency.
@@ -36,11 +45,15 @@ class Construct(OpcodeHandler):
 
         return result
 
-    def resolve_arguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> tuple[Expression, ...]:
+    def resolve_arguments(self, analysis: HermesAnalysis, ctor_reg: int, arg_count: int) -> tuple[Expression, ...]:
         values = [
             self.get_register_value(analysis, reg)
-            for reg in range(func_reg - arg_count, func_reg)
+            for reg in range(ctor_reg - arg_count, ctor_reg)
         ]
+        # print(ctor_reg, values)
+        # print()
+        # for item in analysis.results:
+        #     print(item.used, item)
 
         # Hermes CreateThis inserts an implicit "this" as the first
         # constructor argument slot; `ThisValue` no longer exists as a
