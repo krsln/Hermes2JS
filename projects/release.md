@@ -12,7 +12,7 @@
 #npm install
 
 # rm -rf ios
-#rm -rf android/app/build android/build android/.gradle
+rm -rf android/app/build android/build android/.gradle
 npx expo prebuild --platform android --clean
 
 cd android
@@ -29,6 +29,7 @@ echo "sdk.dir=/Users/mehmet/Library/Android/sdk" > local.properties
 ./gradlew clean
 ./gradlew assembleRelease --stacktrace
 
+# /android/app/build/generated/assets/react/release/index.android.bundle
 # android/app/build/outputs/apk/release/app-release.apk
 ```
   
