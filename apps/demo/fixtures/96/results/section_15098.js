@@ -81,12 +81,10 @@ function propertyAccessTest(param0) {
             goto label_133;
         }
         // LOOP → END
-    } catch (caughtException) {
+    } finally {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
         GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })).return()
-        // CODE → <Throw>: <Reg8: 2>
-        throw caughtException;
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

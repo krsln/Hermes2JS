@@ -82,7 +82,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
         r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end")
         // CODE → <Ret>: <Reg8: 0>
         return undefined;
-    } catch (caughtException) {
+    } finally {
         // ──────────────── Block 4 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = globalThis.console;
@@ -92,7 +92,5 @@ function tryFinallyLoopBreakTest(param0, param1) {
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block";
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
-        // CODE → <Throw>: <Reg8: 0>
-        throw caughtException;
     }
 }

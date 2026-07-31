@@ -59,12 +59,10 @@ function closureLoopTest(param0) {
             goto label_62;
         }
         // LOOP → END
-    } catch (caughtException) {
+    } finally {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
         GetIterator([]).return()
-        // CODE → <Throw>: <Reg8: 2>
-        throw caughtException;
     }
     // ──────────────── Block 6 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

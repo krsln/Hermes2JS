@@ -75,12 +75,10 @@ async function* anon_15185(param0, param1) {
             // CompleteGenerator
             // CODE → <Ret>: <Reg8: 3>
             return await yield;
-        } catch (caughtException) {
+        } finally {
             // ──────────────── Block 8 ──────────────── 
             // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
             GetIterator(param1).return()
-            // CODE → <Throw>: <Reg8: 3>
-            throw caughtException;
         }
         // ──────────────── Block 9 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

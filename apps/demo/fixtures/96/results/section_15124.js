@@ -77,12 +77,10 @@ function setTest(param0) {
             goto label_127;
         }
         // LOOP → END
-    } catch (caughtException) {
+    } finally {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
         GetIterator(createThis(globalThis.Set.prototype, globalThis.Set)[new globalThis.Set(globalThis, createThis(globalThis.Set.prototype, globalThis.Set))]).return()
-        // CODE → <Throw>: <Reg8: 2>
-        throw caughtException;
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <NewArray>: <Reg8: 4, UInt16: 0>

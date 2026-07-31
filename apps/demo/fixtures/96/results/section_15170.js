@@ -43,12 +43,10 @@ function callGeneratorTests(param0) {
             goto label_41;
         }
         // LOOP → END
-    } catch (caughtException) {
+    } finally {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
         GetIterator(getEnvironment(0)[0].call(undefined)).return()
-        // CODE → <Throw>: <Reg8: 3>
-        throw caughtException;
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
@@ -82,12 +80,10 @@ function callGeneratorTests(param0) {
             goto label_95;
         }
         // LOOP → END
-    } catch (caughtException) {
+    } finally {
         // ──────────────── Block 7 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
         GetIterator(getEnvironment(0)[1].call(undefined, 5)).return()
-        // CODE → <Throw>: <Reg8: 3>
-        throw caughtException;
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 2>

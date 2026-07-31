@@ -39,7 +39,7 @@ function tryFinallyNormalCompletionTest(param0) {
         // USED → r0 = undefined;
         // CODE → <Ret>: <Reg8: 0>
         return undefined;
-    } catch (caughtException) {
+    } finally {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = globalThis.console;
@@ -49,7 +49,5 @@ function tryFinallyNormalCompletionTest(param0) {
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/finally-block";
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/finally-block")
-        // CODE → <Throw>: <Reg8: 0>
-        throw caughtException;
     }
 }

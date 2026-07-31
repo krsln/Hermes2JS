@@ -121,12 +121,10 @@ function mapTest(param0) {
             goto label_198;
         }
         // LOOP → END
-    } catch (caughtException) {
+    } finally {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 5, UInt8: 1>
         GetIterator(createThis(globalThis.Map.prototype, globalThis.Map)[new globalThis.Map(r-1)]).return()
-        // CODE → <Throw>: <Reg8: 3>
-        throw caughtException;
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 10, string_id: 114>  # String: 'delete' (Identifier)

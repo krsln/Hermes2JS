@@ -45,19 +45,38 @@ class TryStructurer(RegionStructurer):
             if try_region is not None:
                 processed.append((handler, try_region))
 
+        # A plain `try { } finally { }` (no `catch` at all) compiles to
+        # a SINGLE handler, since there's no separate narrower handler
+        # to pair it with - it never goes through `_attach_finally`
+        # above. Structurally that lone handler is indistinguishable
+        # from an ordinary catch until we look at its *content*: it
+        # both runs cleanup code AND unconditionally rethrows the very
+        # exception it just caught. Reinterpret those as `finally`
+        # after the fact, once every handler has been resolved.
+        for _, try_region in processed:
+            if try_region.finally_ is None:
+                self._maybe_reinterpret_as_finally(try_region)
+
     # -------------------------------------------------------------
 
-    @classmethod
-    def _find_finally_wrapper_target(cls, handler: dict, processed: list):
+    def _find_finally_wrapper_target(self, handler: dict, processed: list):
         """
         Returns the (handler, try_region) pair that `handler` is a
         finally-wrapper for, or None if `handler` looks like an
         ordinary (non-finally) handler.
 
-        `handler` wraps `inner` when they protect the same starting
-        instruction and `handler`'s range also swallows `inner`'s own
-        catch-entry target - i.e. `handler` is reached whenever either
-        the try *or* the catch of `inner` throws.
+        `handler` wraps `inner` when its range swallows `inner`'s own
+        catch-entry target (i.e. `handler` is reached whenever either
+        the try *or* the catch of `inner` throws) AND `handler`'s own
+        body content is a duplicate of code that already appears
+        inside `inner`'s try/catch bodies - the tell-tale sign Hermes
+        left behind from inlining the finally code at every normal
+        exit point. The content check matters because the two
+        handlers' `start` addresses aren't always byte-identical (the
+        wider one can start a few instructions earlier or later
+        depending on what setup code precedes the try), so range
+        containment alone is too strict AND, on its own, too easy to
+        satisfy by coincidence for genuinely unrelated nested handlers.
         """
 
         for inner_handler, inner_region in processed:
@@ -65,13 +84,128 @@ class TryStructurer(RegionStructurer):
             if inner_handler["target"] == handler["target"]:
                 continue
 
-            if inner_handler["start"] != handler["start"]:
+            if not (handler["start"] <= inner_handler["target"] < handler["end"]):
                 continue
 
-            if handler["start"] <= inner_handler["target"] < handler["end"]:
+            if self._finally_content_matches(handler, inner_region):
                 return inner_handler, inner_region
 
         return None
+
+    # -------------------------------------------------------------
+
+    def _finally_content_matches(self, handler: dict, inner_region: TryRegion) -> bool:
+
+        values = self._candidate_finally_values(handler["handler_block"])
+
+        if not values:
+            return False
+
+        keys = [self._structural_key(v) for v in values]
+        n = len(keys)
+
+        regions = [inner_region.try_body]
+
+        if inner_region.catch is not None:
+            regions.append(inner_region.catch.body)
+
+        for region in regions:
+
+            for block in region.covered_blocks:
+
+                candidates = [i for i in block.instructions if i.value is not None]
+                candidate_keys = [self._structural_key(c.value) for c in candidates]
+
+                for start in range(len(candidate_keys) - n + 1):
+                    if candidate_keys[start:start + n] == keys:
+                        return True
+
+        return False
+
+    # -------------------------------------------------------------
+
+    @staticmethod
+    def _candidate_finally_values(handler_block: BasicBlock) -> list:
+        """
+        The value-bearing instructions of `handler_block` that would
+        actually constitute a `finally` body: the leading `Catch`
+        exception-binding and a trailing bare rethrow (if present)
+        excluded, since neither has any JS-visible surface inside a
+        real `finally` clause. Read-only - callers that intend to
+        commit to treating the block as a finally must still perform
+        the actual mutation themselves (see `_attach_finally`).
+        """
+
+        instructions = list(handler_block.instructions)
+
+        if (
+                instructions
+                and instructions[0].dest_reg is not None
+                and isinstance(instructions[0].value, Identifier)
+        ):
+            instructions = instructions[1:]
+
+        if (
+                instructions
+                and isinstance(handler_block.terminator, TerminatorThrow)
+                and isinstance(handler_block.terminator.value, Identifier)
+        ):
+            instructions = instructions[:-1]
+
+        return [i.value for i in instructions if i.value is not None]
+
+    # -------------------------------------------------------------
+
+    def _maybe_reinterpret_as_finally(self, try_region: TryRegion) -> None:
+        """
+        Handles the single-handler `try { } finally { }` case (no
+        `catch` at all in the source): with nothing to pair against,
+        `_structure_handler` has no choice but to build an ordinary
+        `catch` region out of it. If that "catch" body's last
+        statement is a bare rethrow of its own bound exception - and
+        there's at least one other statement before it (an empty
+        `catch (e) { throw e; }` is legitimate, if pointless, source
+        and shouldn't be rewritten) - it's really a `finally` that had
+        nowhere to attach to. Only handles a single straight-line
+        block for now; a finally body containing its own branching
+        needs the fuller multi-block treatment `_attach_finally`
+        performs for the two-handler case.
+        """
+
+        catch_region = try_region.catch
+
+        if catch_region is None:
+            return
+
+        body = catch_region.body
+
+        if len(body.children) != 1 or not isinstance(body.children[0], BasicBlock):
+            return
+
+        block = body.children[0]
+
+        if not isinstance(block.terminator, TerminatorThrow):
+            return
+
+        if not isinstance(block.terminator.value, Identifier):
+            return
+
+        if block.terminator.value.name != catch_region.exception:
+            return
+
+        if len(block.instructions) < 2:
+            return
+
+        block.instructions.pop()
+        block.terminator = None
+
+        try_region.catch = None
+
+        finally_region = FinallyRegion()
+        finally_region.body = body
+        body.parent = finally_region
+
+        try_region.finally_ = finally_region
 
     # -------------------------------------------------------------
 

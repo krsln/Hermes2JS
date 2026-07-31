@@ -64,7 +64,7 @@ function tryCatchFinallyImplicitThrowTest(param0, param1) {
             // USED → r0 = -1;
             // CODE → <Ret>: <Reg8: 0>
             return -1;
-        } catch (caughtException) {
+        } finally {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r3 = globalThis.console;
@@ -74,8 +74,6 @@ function tryCatchFinallyImplicitThrowTest(param0, param1) {
             // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block";
             // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
             r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block")
-            // CODE → <Throw>: <Reg8: 0>
-            throw caughtException;
         }
     }
 }

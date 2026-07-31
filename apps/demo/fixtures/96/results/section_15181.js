@@ -125,7 +125,7 @@ async function* anon_15181(param0) {
                         r1 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/caught")
                     }
                     // LOOP → END
-                } catch (caughtException) {
+                } finally {
                     // ──────────────── Block 10 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                     // USED → r4 = globalThis.console;
@@ -135,8 +135,6 @@ async function* anon_15181(param0) {
                     // USED → r2 = "__BC:Functions/AsyncTests/asyncTryCatchTest/finally";
                     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
                     r2 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
-                    // CODE → <Throw>: <Reg8: 1>
-                    throw caughtException;
                 }
             }
         }

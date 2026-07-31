@@ -114,12 +114,10 @@ function processColorsInProps(param0, param1) {
                 }
             }
             // LOOP → END
-        } catch (caughtException) {
+        } finally {
             // ──────────────── Block 9 ──────────────── 
             // CODE → <IteratorClose>: <Reg8: 12, UInt8: 1>
             GetIterator(param1[HermesPropertyIterator(param1).next()]).return()
-            // CODE → <Throw>: <Reg8: 11>
-            throw caughtException;
         }
     }
     // ──────────────── Block 11 ──────────────── 

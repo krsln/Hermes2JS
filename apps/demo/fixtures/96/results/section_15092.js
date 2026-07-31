@@ -37,12 +37,10 @@ function forOfTest(param0) {
             goto label_35;
         }
         // LOOP → END
-    } catch (caughtException) {
+    } finally {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
         GetIterator([1, 2, 3, 4]).return()
-        // CODE → <Throw>: <Reg8: 2>
-        throw caughtException;
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
