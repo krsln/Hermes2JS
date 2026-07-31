@@ -23,7 +23,7 @@ function spreadObjectTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 7612>  # String: 'z' (Identifier)
     // USED → r0 = "z";
     // CODE → <PutOwnByVal>: <Reg8: 4, Reg8: 2, Reg8: 0, UInt8: 1>
-    {  }[3] = "z"
+    {  }["z"] = 3
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

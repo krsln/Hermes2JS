@@ -105,7 +105,13 @@ class PutOwnByVal(OpcodeHandler):
     """
     Define or update an own property using a computed key.
 
-    The trailing UInt8 contains Hermes-specific flags and is currently ignored.
+    NOTE: unlike PutByVal (Arg1[Arg2] = Arg3), PutOwnByVal's operand order
+    is Arg1[Arg3] = Arg2 - the *second* register is the value, the *third*
+    is the property key. Naming both handlers' parameters the same way
+    (obj_reg, key_reg, value_reg) silently swapped key and value here.
+
+    The trailing UInt8 contains Hermes-specific flags (enumerable) and is
+    currently ignored.
     """
 
     _PATTERN = sequence(REG, REG, REG, UINT8)
@@ -119,7 +125,7 @@ class PutOwnByVal(OpcodeHandler):
                 "Expected Reg8, Reg8, Reg8, UInt8",
             )
 
-        obj_reg, key_reg, value_reg, _flags = map(int, match.groups())
+        obj_reg, value_reg, key_reg, _flags = map(int, match.groups())
 
         left = MemberExpression(
             receiver=self.get_register_value(analysis, obj_reg),
@@ -129,11 +135,7 @@ class PutOwnByVal(OpcodeHandler):
 
         right = self.get_register_value(analysis, value_reg)
 
-        expression = AssignmentExpression(
-            left=left,
-            operator=AssignmentOperator.ASSIGN,
-            right=right,
-        )
+        expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
         result = OpcodeResult(entry, value=expression, dest_reg=None)
         analysis.add_result(result)
