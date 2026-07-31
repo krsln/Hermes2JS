@@ -1,40 +1,24 @@
-from abc import ABC
-from typing import ClassVar
-
 from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT32, sequence
 from hermes_decompiler.ir.expressions import Expression, Identifier, NewExpression
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
-class ConstructBase(OpcodeHandler, ABC):
+# Reg8, Reg8, UInt8 (total size 3)
+# DEFINE_OPCODE_3(Construct, Reg8, Reg8, UInt8)
+# Example: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
+class Construct(OpcodeHandler):
     """
-    Base implementation for Construct opcodes.
+    Construct using UInt8 argument count.
 
-    Hermes semantics:
-
-        dest = new closure(arg1, arg2, ...)
-
-    Arguments are stored immediately before the closure register.
-
-    Example:
-
-        Construct r2, r8, 3
-
-    Means
-
-        r2 = new r8(r5, r6, r7)
+    TODO
     """
 
-    ARG_PATTERN: ClassVar[str] = UINT8
-
-    @classmethod
-    def Pattern(cls):
-        return sequence(REG, REG, cls.ARG_PATTERN)
+    _PATTERN = sequence(REG, REG, UINT8)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
-        match = self.Pattern().match(entry.args.strip())
+        match = self._PATTERN.match(entry.args.strip())
         if not match:
             return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, ArgCount")
 
@@ -68,22 +52,11 @@ class ConstructBase(OpcodeHandler, ABC):
         return tuple(values)
 
 
-# Reg8, Reg8, UInt8 (total size 3)
-# DEFINE_OPCODE_3(Construct, Reg8, Reg8, UInt8)
-# Example: <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-class Construct(ConstructBase):
-    """
-    Construct using UInt8 argument count.
-    """
-
-    ARG_PATTERN = UINT8
-
-
 # Reg8, Reg8, UInt32 (total size 6)
 # DEFINE_OPCODE_3(ConstructLong, Reg8, Reg8, UInt32)
-class ConstructLong(ConstructBase):
+class ConstructLong(Construct):
     """
     Construct using UInt32 argument count.
     """
 
-    ARG_PATTERN = UINT32
+    _PATTERN = sequence(REG, REG, UINT32)
