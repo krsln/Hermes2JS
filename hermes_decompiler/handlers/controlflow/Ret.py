@@ -30,7 +30,7 @@ class Ret(OpcodeHandler):
 
         value_reg = int(match.group(1))
 
-        expression = self.get_register_value(analysis, value_reg)
+        expression = self.get_register_expression(analysis, value_reg)
         terminator = TerminatorReturn(value=expression)
 
         # NOTE (fix): a `Return` terminator is never "consumed" by any

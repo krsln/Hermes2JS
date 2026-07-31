@@ -16,7 +16,7 @@ class GetNextPName(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected five Reg8 arguments")
 
         dest_reg, list_reg, _obj_reg, _index_reg, _size_reg = map(int, match.groups())
-        list_val = self.get_register_value(analysis, list_reg)
+        list_val = self.get_register_expression(analysis, list_reg)
 
         callee = MemberExpression(list_val, Identifier(name="next"))
         # for-in step

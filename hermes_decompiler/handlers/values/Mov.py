@@ -18,7 +18,7 @@ class Mov(OpcodeHandler):
 
         dest_reg, src_reg = map(int, match.groups())
 
-        expression = self.get_register_value(analysis, src_reg)
+        expression = self.get_register_expression(analysis, src_reg)
 
         result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
         analysis.add_result(result)

@@ -21,8 +21,8 @@ class CacheNewObject(OpcodeHandler):
 
         this_reg, new_target_reg, _shape_idx, _cache_idx = map(int, match.groups())
 
-        this_value = self.get_register_value(analysis, this_reg)
-        new_target = self.get_register_value(analysis, new_target_reg)
+        this_value = self.get_register_expression(analysis, this_reg)
+        new_target = self.get_register_expression(analysis, new_target_reg)
 
         expression = CallExpression(
             callee=Identifier(name="__cacheNewObject__"),

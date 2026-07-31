@@ -40,7 +40,7 @@ class TypeOfIs(OpcodeHandler):
 
         dest_reg, value_reg, type_mask = map(int, match.groups())
 
-        operand = self.get_register_value(analysis, value_reg)
+        operand = self.get_register_expression(analysis, value_reg)
         type_of_expr = UnaryExpression(operator=UnaryOperator.TYPEOF, operand=operand)
 
         type_name = self._TYPE_BITS.get(type_mask)

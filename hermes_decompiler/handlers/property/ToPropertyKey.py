@@ -21,7 +21,7 @@ class ToPropertyKey(OpcodeHandler):
         # No-op passthrough at the JS-source level: `obj[key]` already
         # implies ToPropertyKey coercion, so there's nothing additional
         # to render -- just forward the source value to the destination.
-        value = self.get_register_value(analysis, value_reg)
+        value = self.get_register_expression(analysis, value_reg)
 
         result = OpcodeResult(entry, value=value, dest_reg=dest_reg)
         analysis.add_result(result)

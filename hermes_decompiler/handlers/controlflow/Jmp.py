@@ -121,7 +121,7 @@ class ConditionalJumpBase(OpcodeHandler, ABC):
         target = entry.target_address or (entry.address + offset)
         analysis.gotoList.append(target)
 
-        value = self.get_register_value(analysis, reg)
+        value = self.get_register_expression(analysis, reg)
         condition = self.build_condition(value, *extra)
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)

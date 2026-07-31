@@ -17,13 +17,13 @@ function computedPropertyTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 8980>  # String: 'dynamic' (Identifier)
     // USED → r1 = "dynamic";
     // CODE → <PutOwnByVal>: <Reg8: 3, Reg8: 2, Reg8: 1, UInt8: 1>
-    {  }["dynamic"] = 42
+    r3[r1] = r2
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 205>  # String: 'value' (Identifier)
     // USED → r2 = "value";
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 2363>  # String: 'staticKey' (String)
     // USED → r1 = "staticKey";
     // CODE → <PutOwnByVal>: <Reg8: 3, Reg8: 2, Reg8: 1, UInt8: 1>
-    {  }["staticKey"] = "value"
+    r3[r1] = r2
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

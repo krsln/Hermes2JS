@@ -23,8 +23,8 @@ class StoreToEnvironment(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         env_reg, slot, value_reg = map(int, match.groups())
-        env = self.get_register_value(analysis, env_reg)
-        value = self.get_register_value(analysis, value_reg)
+        env = self.get_register_expression(analysis, env_reg)
+        value = self.get_register_expression(analysis, value_reg)
 
         left = MemberExpression(receiver=env, member=NumericLiteral(slot), computed=True)
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=value)

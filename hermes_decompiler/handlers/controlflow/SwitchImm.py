@@ -29,7 +29,7 @@ class SwitchImm(OpcodeHandler):
             )
 
         selector_reg = int(match.group(1))
-        selector = self.get_register_value(analysis, selector_reg)
+        selector = self.get_register_expression(analysis, selector_reg)
 
         # if entry.jump_table:
         #     targets = list(entry.jump_table)
@@ -88,7 +88,7 @@ class StringSwitchImm(OpcodeHandler):
             )
 
         selector_reg = int(match.group(1))
-        selector = self.get_register_value(analysis, selector_reg)
+        selector = self.get_register_expression(analysis, selector_reg)
 
         # Case targets live in an out-of-line string-switch table (Arg3
         # offset) that this handler does not resolve -- see module

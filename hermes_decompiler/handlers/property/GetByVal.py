@@ -19,8 +19,8 @@ class GetByVal(OpcodeHandler):
 
         dest_reg, base_reg, prop_reg = map(int, match.groups())
 
-        receiver = self.get_register_value(analysis, base_reg)
-        index = self.get_register_value(analysis, prop_reg)
+        receiver = self.get_register_expression(analysis, base_reg)
+        index = self.get_register_expression(analysis, prop_reg)
 
         expression = MemberExpression(receiver=receiver, member=index, computed=True)
 

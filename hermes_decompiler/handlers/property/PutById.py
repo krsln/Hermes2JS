@@ -30,12 +30,12 @@ class PutById(OpcodeHandler):
         property_name = (entry.identifier_name or f"string_{string_id}")
 
         left = MemberExpression(
-            receiver=self.get_register_value(analysis, obj_reg),
+            receiver=self.get_register_expression(analysis, obj_reg),
             member=Identifier(name=property_name),
             computed=False,
         )
 
-        right = self.get_register_value(analysis, value_reg)
+        right = self.get_register_expression(analysis, value_reg)
 
         # No destination register (name=""): OpcodeResult/JSRenderer
         # already render a name-less Expression as a bare statement

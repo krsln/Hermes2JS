@@ -22,7 +22,7 @@ class Construct(OpcodeHandler):
 
         dest_reg, ctor_reg, arg_count = map(int, match.groups())
 
-        constructor = self.get_register_value(analysis, ctor_reg)
+        constructor = self.get_register_expression(analysis, ctor_reg)
         arguments: list[OpcodeResult] = []
 
         for result in reversed(analysis.results):

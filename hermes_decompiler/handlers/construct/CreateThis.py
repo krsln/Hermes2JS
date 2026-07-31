@@ -19,8 +19,8 @@ class CreateThis(OpcodeHandler):
 
         dest_reg, func, new_target = (int(x) for x in match.groups())
 
-        prototype = self.get_register_value(analysis, func)
-        constructor = self.get_register_value(analysis, new_target)
+        prototype = self.get_register_expression(analysis, func)
+        constructor = self.get_register_expression(analysis, new_target)
 
         # `CreateThisExpression` had no JS equivalent and isn't part of
         # the new `ir` package; represented as a named pseudo-call,
@@ -52,7 +52,7 @@ class CreateThisForNew(OpcodeHandler):
 
         dest_reg, constructor_reg, _cache = map(int, match.groups())
 
-        constructor = self.get_register_value(analysis, constructor_reg)
+        constructor = self.get_register_expression(analysis, constructor_reg)
 
         expression = Identifier(name="__uninitialized_this_for_new__")
 
@@ -79,8 +79,8 @@ class CreateThisForSuper(OpcodeHandler):
 
         dest_reg, constructor_reg, new_target_reg, _cache = map(int, match.groups())
 
-        constructor = self.get_register_value(analysis, constructor_reg)
-        new_target = self.get_register_value(analysis, new_target_reg)
+        constructor = self.get_register_expression(analysis, constructor_reg)
+        new_target = self.get_register_expression(analysis, new_target_reg)
 
         expression = Identifier(name="__uninitialized_this_for_super__")
 

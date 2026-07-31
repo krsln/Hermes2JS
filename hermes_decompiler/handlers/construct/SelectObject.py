@@ -22,8 +22,8 @@ class SelectObject(OpcodeHandler):
 
         dest_reg, obj_reg, selector_reg = map(int, match.groups())
 
-        obj = self.get_register_value(analysis, obj_reg)
-        selector = self.get_register_value(analysis, selector_reg)
+        obj = self.get_register_expression(analysis, obj_reg)
+        selector = self.get_register_expression(analysis, selector_reg)
 
         # Eğer taraflardan biri NewExpression ise, SelectObject katmanını kaldırıp
         # doğrudan NewExpression'ı döndür (JS 'new' Semantiği).

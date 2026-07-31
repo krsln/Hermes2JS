@@ -21,8 +21,8 @@ class PutNewOwnByIdX(PutById):
 
         property_name = entry.identifier_name or f"string_{string_id}"
 
-        obj_value = self.get_register_value(analysis, obj_reg)
-        right = self.get_register_value(analysis, value_reg)
+        obj_value = self.get_register_expression(analysis, obj_reg)
+        right = self.get_register_expression(analysis, value_reg)
 
         # Special Case
         if isinstance(obj_value, ObjectExpression):

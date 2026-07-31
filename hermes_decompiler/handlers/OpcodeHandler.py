@@ -63,12 +63,7 @@ class OpcodeHandler(ABC):
         return result
 
     @classmethod
-    def build_exception_result(
-            cls,
-            analysis: HermesAnalysis,
-            entry: OpcodeEntry,
-            error: str,
-    ) -> OpcodeResult:
+    def build_exception_result(cls, analysis: HermesAnalysis, entry: OpcodeEntry, error: str) -> OpcodeResult:
         logger.error(
             "%s failed while processing opcode '%s' at address %d: %s",
             cls.__name__,
@@ -83,38 +78,48 @@ class OpcodeHandler(ABC):
         return result
 
     @classmethod
-    def get_register_variable(cls, analysis: HermesAnalysis, reg: int) -> OpcodeResult | None:
-        result = cls._get_register_result(analysis, reg)
-
-        if not result:
-            return None
-
-        result.used = True
-        return result
-
-    @classmethod
-    def get_register_value(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+    def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """
-        Resolve the current value of a register as an IR expression.
+        Return the current expression assigned to a register.
 
-        Falls back to a plain `Identifier(f"r{reg}")` when the register
-        hasn't been assigned yet in this analysis pass (e.g. it's a
-        parameter, or the assigning instruction wasn't tracked).
+        This exposes the actual IR node currently stored in the register
+        (ObjectExpression, Literal, BinaryExpression, CallExpression, etc.)
+        and should only be used by optimization or analysis passes that need
+        the defining expression.
+
+        If the register has never been defined, fall back to its symbolic
+        identifier.
         """
 
-        result = cls._get_register_result(analysis, reg)
+        result = analysis.registers.get(f"r{reg}")
 
-        if not result:
+        if result is None:
             return Identifier(name=f"r{reg}")
 
-        if isinstance(result.value, Expression):
-            value = result.value
-        else:
-            value = Identifier(name=f"r{reg}")
-
         result.used = True
-        return value
+
+        if isinstance(result.value, Expression):
+            return result.value
+
+        return Identifier(name=f"r{reg}")
 
     @classmethod
-    def _get_register_result(cls, analysis: HermesAnalysis, reg: int) -> OpcodeResult | None:
-        return analysis.registers.get(f"r{reg}")
+    def get_register_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier:
+        """
+        Return a symbolic reference to a register.
+
+        Unlike get_register_expression(), this never inlines the expression
+        currently stored in the register. It always returns the register
+        identifier itself (e.g. Identifier('r3')).
+
+        This should be used by almost every opcode handler because Hermes
+        bytecode operands refer to registers, not to the expressions that
+        originally defined them.
+        """
+
+        result = analysis.registers.get(f"r{reg}")
+
+        if result is not None:
+            result.used = True
+
+        return Identifier(name=f"r{reg}")

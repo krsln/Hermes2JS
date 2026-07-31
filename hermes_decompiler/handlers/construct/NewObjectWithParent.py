@@ -23,7 +23,7 @@ class NewObjectWithParent(OpcodeHandler):
 
         dest_reg, parent_reg = map(int, match.groups())
 
-        parent = self.get_register_value(analysis, parent_reg)
+        parent = self.get_register_expression(analysis, parent_reg)
 
         expression = CallExpression(
             callee=MemberExpression(

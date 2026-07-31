@@ -20,7 +20,7 @@ class GetById(OpcodeHandler):
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
         prop_name = entry.identifier_name or f"string_{string_id}"
-        receiver = self.get_register_value(analysis, obj_reg)
+        receiver = self.get_register_expression(analysis, obj_reg)
 
         expression = MemberExpression(receiver=receiver, member=Identifier(name=prop_name))
 
@@ -62,8 +62,8 @@ class GetByIdWithReceiverLong(OpcodeHandler):
         dest_reg, obj_reg, _cache, receiver_reg, string_id = map(int, match.groups())
 
         prop_name = entry.identifier_name or f"string_{string_id}"
-        obj = self.get_register_value(analysis, obj_reg)
-        receiver = self.get_register_value(analysis, receiver_reg)
+        obj = self.get_register_expression(analysis, obj_reg)
+        receiver = self.get_register_expression(analysis, receiver_reg)
 
         callee = MemberExpression(
             receiver=Identifier(name="Reflect"),

@@ -195,7 +195,7 @@ class NewObjectWithBufferAndParent(NewObjectWithBuffer):
         # so a future fix can incorporate it (e.g. Object.create/
         # Object.setPrototypeOf) once the real IR shape for this is
         # decided.
-        _parent = self.get_register_value(analysis, _parent_reg)
+        _parent = self.get_register_expression(analysis, _parent_reg)
 
         result = OpcodeResult(entry, value=object_expr, dest_reg=dest_reg)
         analysis.add_result(result)

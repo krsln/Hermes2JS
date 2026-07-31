@@ -18,7 +18,7 @@ class IteratorBegin(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         iterator_reg, iterable_reg = map(int, match.groups())
-        iterable = self.get_register_value(analysis, iterable_reg)
+        iterable = self.get_register_expression(analysis, iterable_reg)
 
         # Named pseudo-call, same convention as getEnvironment()/
         # HermesPropertyIterator() elsewhere - GetIterator() is not
@@ -45,7 +45,7 @@ class IteratorNext(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         result_reg, iterator_reg, _ = map(int, match.groups())
-        iterator = self.get_register_value(analysis, iterator_reg)
+        iterator = self.get_register_expression(analysis, iterator_reg)
 
         callee = MemberExpression(iterator, Identifier(name="next"))
         expression = CallExpression(callee=callee, arguments=())
@@ -81,7 +81,7 @@ class IteratorClose(OpcodeHandler):
         iterator_reg = int(match.group(1))
         # match.group(2) is the ignore-inner-exception flag - not
         # needed for rendering `.return()` itself.
-        iterator = self.get_register_value(analysis, iterator_reg)
+        iterator = self.get_register_expression(analysis, iterator_reg)
 
         callee = MemberExpression(iterator, Identifier(name="return"))
         expression = CallExpression(callee=callee, arguments=())

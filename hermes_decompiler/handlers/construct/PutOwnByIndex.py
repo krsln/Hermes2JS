@@ -29,8 +29,8 @@ class PutOwnByIndex(OpcodeHandler):
 
         dest_reg, value_reg, index = map(int, match.groups())
 
-        value = self.get_register_value(analysis, value_reg)
-        array = self.get_register_value(analysis, dest_reg)
+        value = self.get_register_expression(analysis, value_reg)
+        array = self.get_register_expression(analysis, dest_reg)
 
         if isinstance(array, ArrayExpression):
             # ArrayExpression is frozen/immutable: pad-and-replace has to

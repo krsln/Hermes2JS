@@ -18,7 +18,7 @@ class CreateGenerator(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         dest_reg, env_reg, function_id = map(int, match.groups())
-        env = self.get_register_value(analysis, env_reg)
+        env = self.get_register_expression(analysis, env_reg)
         func_name = (entry.function.name if entry.function and entry.function.name else f"function_{function_id}")
 
         # Same named pseudo-call convention as createThis()/getEnvironment():

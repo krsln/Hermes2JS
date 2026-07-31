@@ -21,7 +21,7 @@ class Throw(OpcodeHandler):
 
         value_reg = int(match.group(1))
 
-        expression = self.get_register_value(analysis, value_reg)
+        expression = self.get_register_expression(analysis, value_reg)
         terminator = TerminatorThrow(value=expression)
 
         # NOTE (fix): same reasoning as Ret.py - `Throw` terminators are
@@ -198,7 +198,7 @@ class ThrowIfThisInitialized(OpcodeHandler):
 
         this_reg = int(match.group(1))
 
-        this_value = self.get_register_value(analysis, this_reg)
+        this_value = self.get_register_expression(analysis, this_reg)
 
         # No JS-visible expression on the success path; modeled as an
         # inert pseudo-call so it's still traceable in output rather

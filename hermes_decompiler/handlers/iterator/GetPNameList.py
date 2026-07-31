@@ -16,7 +16,7 @@ class GetPNameList(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected four Reg8 arguments")
 
         dest_reg, obj_reg, _index_reg, _size_reg = map(int, match.groups())
-        obj = self.get_register_value(analysis, obj_reg)
+        obj = self.get_register_expression(analysis, obj_reg)
 
         # for-in property list
         expression = CallExpression(callee=Identifier(name="HermesPropertyIterator"), arguments=(obj,))

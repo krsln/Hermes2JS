@@ -31,11 +31,11 @@ class DefineOwnById(OpcodeHandler):
         property_name = entry.identifier_name or f"string_{string_id}"
 
         left = MemberExpression(
-            receiver=self.get_register_value(analysis, obj_reg),
+            receiver=self.get_register_expression(analysis, obj_reg),
             member=Identifier(name=property_name),
             computed=False,
         )
-        right = self.get_register_value(analysis, value_reg)
+        right = self.get_register_expression(analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
@@ -70,11 +70,11 @@ class DefineOwnByVal(OpcodeHandler):
         obj_reg, value_reg, key_reg, _enumerable = map(int, match.groups())
 
         left = MemberExpression(
-            receiver=self.get_register_value(analysis, obj_reg),
-            member=self.get_register_value(analysis, key_reg),
+            receiver=self.get_register_expression(analysis, obj_reg),
+            member=self.get_register_expression(analysis, key_reg),
             computed=True,
         )
-        right = self.get_register_value(analysis, value_reg)
+        right = self.get_register_expression(analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
@@ -111,13 +111,13 @@ class DefineOwnGetterSetterByVal(OpcodeHandler):
             properties=(
                 ObjectProperty(
                     key=Identifier(name="get"),
-                    value=self.get_register_value(analysis, getter_reg),
+                    value=self.get_register_expression(analysis, getter_reg),
                     shorthand=False,
                     computed=False,
                 ),
                 ObjectProperty(
                     key=Identifier(name="set"),
-                    value=self.get_register_value(analysis, setter_reg),
+                    value=self.get_register_expression(analysis, setter_reg),
                     shorthand=False,
                     computed=False,
                 ),
@@ -133,8 +133,8 @@ class DefineOwnGetterSetterByVal(OpcodeHandler):
         expression = CallExpression(
             callee=callee,
             arguments=(
-                self.get_register_value(analysis, obj_reg),
-                self.get_register_value(analysis, key_reg),
+                self.get_register_expression(analysis, obj_reg),
+                self.get_register_expression(analysis, key_reg),
                 descriptor,
             ),
         )
@@ -161,11 +161,11 @@ class DefineOwnByIndex(OpcodeHandler):
         obj_reg, value_reg, index = map(int, match.groups())
 
         left = MemberExpression(
-            receiver=self.get_register_value(analysis, obj_reg),
+            receiver=self.get_register_expression(analysis, obj_reg),
             member=NumericLiteral(value=index),
             computed=True,
         )
-        right = self.get_register_value(analysis, value_reg)
+        right = self.get_register_expression(analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
@@ -197,11 +197,11 @@ class DefineOwnInDenseArray(OpcodeHandler):
         obj_reg, value_reg, index = map(int, match.groups())
 
         left = MemberExpression(
-            receiver=self.get_register_value(analysis, obj_reg),
+            receiver=self.get_register_expression(analysis, obj_reg),
             member=NumericLiteral(value=index),
             computed=True,
         )
-        right = self.get_register_value(analysis, value_reg)
+        right = self.get_register_expression(analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 

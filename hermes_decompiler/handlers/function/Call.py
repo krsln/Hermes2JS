@@ -53,10 +53,10 @@ class CallX(OpcodeHandler):
 
         this_reg, *rest_arg_regs = arg_regs
 
-        callee = self.get_register_value(analysis, func_reg)
-        this_value = self.get_register_value(analysis, this_reg)
+        callee = self.get_register_expression(analysis, func_reg)
+        this_value = self.get_register_expression(analysis, this_reg)
         real_arguments = tuple(
-            self.get_register_value(analysis, reg)
+            self.get_register_expression(analysis, reg)
             for reg in rest_arg_regs
         )
 
@@ -111,7 +111,7 @@ class Call(CallX):
 
         dest_reg, func_reg, num_args = map(int, match.groups())
 
-        callee = self.get_register_value(analysis, func_reg)
+        callee = self.get_register_expression(analysis, func_reg)
         arg_regs = list(range(func_reg - num_args, func_reg))  # Arguments in reverse order
 
         # NOTE: kept as bare register references (not resolved via

@@ -37,8 +37,8 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
         # this migration), so getter/setter are unconditionally
         # included - same as before.
         properties = (
-            ObjectProperty(key=Identifier(name="get"), value=self.get_register_value(analysis, getter_reg)),
-            ObjectProperty(key=Identifier(name="set"), value=self.get_register_value(analysis, setter_reg)),
+            ObjectProperty(key=Identifier(name="get"), value=self.get_register_expression(analysis, getter_reg)),
+            ObjectProperty(key=Identifier(name="set"), value=self.get_register_expression(analysis, setter_reg)),
             ObjectProperty(key=Identifier(name="enumerable"), value=python_literal(bool(enumerable_flag))),
             ObjectProperty(key=Identifier(name="configurable"), value=python_literal(True)),
         )
@@ -51,8 +51,8 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
                 member=Identifier(name="defineProperty"),
             ),
             arguments=(
-                self.get_register_value(analysis, obj_reg),
-                self.get_register_value(analysis, key_reg),
+                self.get_register_expression(analysis, obj_reg),
+                self.get_register_expression(analysis, key_reg),
                 descriptor,
             ),
         )

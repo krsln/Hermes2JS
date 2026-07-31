@@ -41,7 +41,7 @@ class GetArgumentsPropByVal(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
 
         dest_reg, index_reg, _lazy_reg = map(int, match.groups())
-        index_value = self.get_register_value(analysis, index_reg)
+        index_value = self.get_register_expression(analysis, index_reg)
 
         # `ComputedMemberExpression` was a separate legacy class for
         # `obj[x]`; the new IR unifies dot/bracket access into one

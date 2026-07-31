@@ -23,11 +23,11 @@ class AddOwnPrivateBySym(OpcodeHandler):
         field_name = entry.identifier_name or f"__private_{private_name_reg}__"
 
         left = MemberExpression(
-            receiver=self.get_register_value(analysis, obj_reg),
+            receiver=self.get_register_expression(analysis, obj_reg),
             member=Identifier(name=f"#{field_name}"),
             computed=False,
         )
-        right = self.get_register_value(analysis, value_reg)
+        right = self.get_register_expression(analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
@@ -57,7 +57,7 @@ class GetOwnPrivateBySym(OpcodeHandler):
         field_name = entry.identifier_name or f"__private_{private_name_reg}__"
 
         expression = MemberExpression(
-            receiver=self.get_register_value(analysis, obj_reg),
+            receiver=self.get_register_expression(analysis, obj_reg),
             member=Identifier(name=f"#{field_name}"),
             computed=False,
         )
@@ -88,11 +88,11 @@ class PutOwnPrivateBySym(OpcodeHandler):
         field_name = entry.identifier_name or f"__private_{private_name_reg}__"
 
         left = MemberExpression(
-            receiver=self.get_register_value(analysis, obj_reg),
+            receiver=self.get_register_expression(analysis, obj_reg),
             member=Identifier(name=f"#{field_name}"),
             computed=False,
         )
-        right = self.get_register_value(analysis, value_reg)
+        right = self.get_register_expression(analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 

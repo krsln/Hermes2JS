@@ -27,8 +27,8 @@ class BaseBinaryOperator(OpcodeHandler):
 
         dest_reg, lhs, rhs = map(int, match.groups())
 
-        lhs_val = self.get_register_value(analysis, lhs)
-        rhs_val = self.get_register_value(analysis, rhs)
+        lhs_val = self.get_register_expression(analysis, lhs)
+        rhs_val = self.get_register_expression(analysis, rhs)
 
         expression = BinaryExpression(left=lhs_val, operator=self.operator, right=rhs_val)
 
@@ -118,8 +118,8 @@ class PrivateIsIn(OpcodeHandler):
 
         dest_reg, private_name_reg, obj_reg, _cache = map(int, match.groups())
 
-        private_name = self.get_register_value(analysis, private_name_reg)
-        obj = self.get_register_value(analysis, obj_reg)
+        private_name = self.get_register_expression(analysis, private_name_reg)
+        obj = self.get_register_expression(analysis, obj_reg)
 
         expression = BinaryExpression(left=private_name, operator=self.operator, right=obj)
 

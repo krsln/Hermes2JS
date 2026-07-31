@@ -19,7 +19,7 @@ class LoadParentNoTraps(OpcodeHandler):
 
         dest_reg, obj_reg = map(int, match.groups())
 
-        obj = self.get_register_value(analysis, obj_reg)
+        obj = self.get_register_expression(analysis, obj_reg)
 
         expression = CallExpression(
             callee=Identifier(name="__getPrototypeOfNoTraps__"),

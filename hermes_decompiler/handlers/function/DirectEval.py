@@ -37,7 +37,7 @@ class DirectEval(OpcodeHandler):
         # eval() is emitted the same way regardless; the VM applies the
         # flag internally when it actually evaluates the source.
 
-        eval_text = self.get_register_value(analysis, eval_text_reg)
+        eval_text = self.get_register_expression(analysis, eval_text_reg)
 
         expression = CallExpression(
             callee=Identifier(name="eval"),

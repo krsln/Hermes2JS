@@ -26,8 +26,8 @@ class CallWithNewTarget(OpcodeHandler):
 
         dest_reg, func_reg, new_target_reg, num_args = map(int, match.groups())
 
-        callee = self.get_register_value(analysis, func_reg)
-        new_target = self.get_register_value(analysis, new_target_reg)
+        callee = self.get_register_expression(analysis, func_reg)
+        new_target = self.get_register_expression(analysis, new_target_reg)
 
         arg_regs = list(range(func_reg - num_args, func_reg))
         arguments = ArrayExpression(elements=tuple(Identifier(name=f"r{r}") for r in arg_regs))

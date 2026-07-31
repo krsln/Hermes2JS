@@ -19,7 +19,7 @@ class GetClosureEnvironment(OpcodeHandler):
 
         dest_reg, closure_reg = map(int, match.groups())
 
-        closure = self.get_register_value(analysis, closure_reg)
+        closure = self.get_register_expression(analysis, closure_reg)
 
         expression = CallExpression(
             callee=Identifier(name="__getClosureEnvironment__"),
