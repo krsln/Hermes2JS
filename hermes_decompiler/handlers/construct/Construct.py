@@ -26,7 +26,7 @@ class Construct(OpcodeHandler):
         arguments: list[OpcodeResult] = []
 
         for result in reversed(analysis.results):
-            if result.used:
+            if result.definition_used:
                 continue
             if result.dest_reg is None:
                 continue
@@ -47,7 +47,7 @@ class Construct(OpcodeHandler):
 
         # Kullanıldı olarak işaretle
         for arg in arguments:
-            arg.used = True
+            arg.definition_used = True
 
         values = tuple(arg.value for arg in arguments)
         expression = NewExpression(callee=constructor, arguments=values)

@@ -169,7 +169,7 @@ class Printer(NodeVisitor):
             if instruction.dest_reg is not None:
                 rendered = f"r{instruction.dest_reg} = {rendered}"
 
-            if instruction.used:
+            if instruction.definition_used:
                 if self.verbose:
                     self._write(lines, f"// USED → {rendered};")
 

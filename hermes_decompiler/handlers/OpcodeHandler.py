@@ -42,12 +42,8 @@ class OpcodeHandler(ABC):
         return cls.registry.get(opcode)
 
     @classmethod
-    def build_invalid_args_result(
-            cls,
-            analysis: HermesAnalysis,
-            entry: OpcodeEntry,
-            error_detail: str = "Invalid arguments",
-    ) -> OpcodeResult:
+    def build_invalid_args_result(cls, analysis: HermesAnalysis, entry: OpcodeEntry,
+                                  error_detail: str = "Invalid arguments") -> OpcodeResult:
         logger.warning(
             "Invalid arguments for opcode '%s' at address %d: %s (args=%r)",
             entry.opcode,
@@ -64,13 +60,8 @@ class OpcodeHandler(ABC):
 
     @classmethod
     def build_exception_result(cls, analysis: HermesAnalysis, entry: OpcodeEntry, error: str) -> OpcodeResult:
-        logger.error(
-            "%s failed while processing opcode '%s' at address %d: %s",
-            cls.__name__,
-            entry.opcode,
-            entry.address,
-            error,
-        )
+        logger.error("%s failed while processing opcode '%s' at address %d: %s",
+                     cls.__name__, entry.opcode, entry.address, error)
 
         result = OpcodeResult(entry, value=RawExpression(source=error))
         analysis.add_result(result)
@@ -96,9 +87,8 @@ class OpcodeHandler(ABC):
         if result is None:
             return Identifier(name=f"r{reg}")
 
-        result.used = True
-
         if isinstance(result.value, Expression):
+            result.definition_used = True
             return result.value
 
         return Identifier(name=f"r{reg}")
@@ -120,6 +110,6 @@ class OpcodeHandler(ABC):
         result = analysis.registers.get(f"r{reg}")
 
         if result is not None:
-            result.used = True
+            result.register_read = True
 
         return Identifier(name=f"r{reg}")

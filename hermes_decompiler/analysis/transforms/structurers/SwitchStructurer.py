@@ -395,7 +395,7 @@ class SwitchStructurer(RegionStructurer):
         True if `item` is a `BasicBlock` that produces no visible
         output when printed (see `Printer._emit_block`): every
         instruction's value has already been consumed elsewhere
-        (`.used == True`) with no `.statement`/`.terminator` of its
+        (`.definition_used == True`) with no `.statement`/`.terminator` of its
         own.
 
         IfStructurer leaves exactly this kind of "spent" setup block
@@ -418,7 +418,7 @@ class SwitchStructurer(RegionStructurer):
             if instr.terminator is not None:
                 return False
 
-            if instr.value is not None and not instr.used:
+            if instr.value is not None and not instr.definition_used:
                 return False
 
         return True
