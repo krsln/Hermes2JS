@@ -129,11 +129,11 @@ class PutOwnByVal(OpcodeHandler):
 
         left = MemberExpression(
             receiver=self.get_register_reference(analysis, obj_reg),
-            member=self.get_register_reference(analysis, key_reg),
+            member=self.get_register_expression(analysis, key_reg),
             computed=True,
         )
 
-        right = self.get_register_reference(analysis, value_reg)
+        right = self.get_register_expression(analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 

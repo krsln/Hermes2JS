@@ -51,7 +51,7 @@ function spreadArrayTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 99>
     // USED → r5 = 99;
     // CODE → <PutOwnByVal>: <Reg8: 6, Reg8: 5, Reg8: 2, UInt8: 1>
-    r6[r2] = r5
+    r6[builtin_46(r-2, r-1, r0, r1)] = 99
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 4>
     r2 = builtin_46(r-2, r-1, r0, r1) + 1
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
