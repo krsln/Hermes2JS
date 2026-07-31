@@ -15,6 +15,30 @@ class TryStructurer(RegionStructurer):
 
     def run(self):
 
+        # Some functions list two handlers with the *identical*
+        # [start, end) range but different targets (seen e.g. in
+        # tryCatchFinallyImplicitThrowTest's `[start=0x19,end=0x3f,
+        # target=0x55]` / `[start=0x19,end=0x3f,target=0x87]` pair).
+        # Exception tables are matched in listed order, so for any
+        # exception raised inside that identical range the *first*
+        # entry always wins - the second is permanently shadowed and
+        # never actually fires at runtime. Structuring it anyway
+        # produces a phantom empty wrapper once its target block gets
+        # legitimately claimed elsewhere (see the finally-wrapper for
+        # the real, first handler). Drop shadowed duplicates before
+        # doing anything else.
+        seen_ranges = set()
+        handlers = []
+
+        for handler in self.cfg.exception_handlers:
+            key = (handler["start"], handler["end"])
+
+            if key in seen_ranges:
+                continue
+
+            seen_ranges.add(key)
+            handlers.append(handler)
+
         # Process narrower-scoped handlers before the wider ones that
         # wrap them, so `_structure_handler`'s splicing always finds
         # its inner region already built. Sorting by raw range size
@@ -26,7 +50,7 @@ class TryStructurer(RegionStructurer):
         # handler's `end` - that ordering constraint holds no matter
         # where either handler's `start` falls.
         handlers = sorted(
-            self.cfg.exception_handlers,
+            handlers,
             key=lambda h: h["end"],
         )
 
