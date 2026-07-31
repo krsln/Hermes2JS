@@ -94,14 +94,6 @@ async function* anon_15181(param0) {
                         // USED → r4 = globalThis.console;
                         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
                         // USED → r3 = globalThis.console.log;
-                        // CODE → <LoadConstString>: <Reg8: 1, string_id: 4757>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/finally' (String)
-                        // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/finally";
-                        // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-                        r1 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
-                        // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                        // USED → r4 = globalThis.console;
-                        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                        // USED → r3 = globalThis.console.log;
                         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4756>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/end' (String)
                         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/end";
                         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>

@@ -69,8 +69,6 @@ async function* anon_15185(param0, param1) {
             // CODE → <Ret>: <Reg8: 3>
             return await getEnvironment(2)[2].call(undefined, GetIterator(param1).next());
             // ──────────────── Block 7 ──────────────── 
-            // CODE → <IteratorClose>: <Reg8: 4, UInt8: 0>
-            GetIterator(param1).return()
             // CODE → <CompleteGenerator>: <>
             // CompleteGenerator
             // CODE → <Ret>: <Reg8: 3>

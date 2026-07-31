@@ -15,9 +15,19 @@ class TryStructurer(RegionStructurer):
 
     def run(self):
 
+        # Process narrower-scoped handlers before the wider ones that
+        # wrap them, so `_structure_handler`'s splicing always finds
+        # its inner region already built. Sorting by raw range size
+        # (end - start) breaks down when a wrapper's `start` sits later
+        # than the handler it wraps (its `end` alone can then make it
+        # look "smaller"). Sorting by `end` ascending is safe
+        # regardless: a finally-wrapper protects through the end of
+        # the catch it wraps, so its `end` is always >= the wrapped
+        # handler's `end` - that ordering constraint holds no matter
+        # where either handler's `start` falls.
         handlers = sorted(
             self.cfg.exception_handlers,
-            key=lambda h: h["end"] - h["start"],
+            key=lambda h: h["end"],
         )
 
         # Hermes has no bytecode-level `finally` construct: a
@@ -106,8 +116,10 @@ class TryStructurer(RegionStructurer):
 
         regions = [inner_region.try_body]
 
-        if inner_region.catch is not None:
-            regions.append(inner_region.catch.body)
+        catch_region = inner_region.catch
+
+        if catch_region is not None:
+            regions.append(catch_region.body)
 
         for region in regions:
 
@@ -179,10 +191,13 @@ class TryStructurer(RegionStructurer):
 
         body = catch_region.body
 
-        if len(body.children) != 1 or not isinstance(body.children[0], BasicBlock):
+        if len(body.children) != 1:
             return
 
         block = body.children[0]
+
+        if not isinstance(block, BasicBlock):
+            return
 
         if not isinstance(block.terminator, TerminatorThrow):
             return
@@ -198,6 +213,18 @@ class TryStructurer(RegionStructurer):
 
         block.instructions.pop()
         block.terminator = None
+
+        # Same reasoning as _attach_finally: Hermes also duplicates the
+        # finally code inline at the try body's own normal-completion
+        # exit, not just at the handler. Missing this step leaves the
+        # cleanup code printed - and actually running - twice.
+        finally_values = [
+            instr.value
+            for instr in block.instructions
+            if instr.value is not None
+        ]
+
+        self._strip_duplicate_run(try_region.try_body, finally_values)
 
         try_region.catch = None
 
@@ -262,8 +289,10 @@ class TryStructurer(RegionStructurer):
 
         self._strip_duplicate_run(try_region.try_body, finally_values)
 
-        if try_region.catch is not None:
-            self._strip_duplicate_run(try_region.catch.body, finally_values)
+        catch_region = try_region.catch
+
+        if catch_region is not None:
+            self._strip_duplicate_run(catch_region.body, finally_values)
 
         finally_body = SequenceRegion()
         self.graph.transfer([finally_block], finally_body)
@@ -351,7 +380,7 @@ class TryStructurer(RegionStructurer):
         )
 
         if lca is None:
-            return
+            return None
 
         lca_seq, start_repr, handler_repr = lca
 
@@ -359,13 +388,13 @@ class TryStructurer(RegionStructurer):
                 start_repr not in lca_seq.children
                 or handler_repr not in lca_seq.children
         ):
-            return
+            return None
 
         start_idx = lca_seq.children.index(start_repr)
         handler_idx = lca_seq.children.index(handler_repr)
 
         if handler_idx <= start_idx:
-            return
+            return None
 
         end_repr = self.graph.find_covering_item(
             lca_seq,
@@ -373,15 +402,15 @@ class TryStructurer(RegionStructurer):
         )
 
         if end_repr is None:
-            return
+            return None
 
         if end_repr not in lca_seq.children:
-            return
+            return None
 
         end_idx = lca_seq.children.index(end_repr)
 
         if not (start_idx <= end_idx < handler_idx):
-            return
+            return None
 
         merge_block = None
 

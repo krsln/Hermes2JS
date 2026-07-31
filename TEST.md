@@ -24,6 +24,9 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/
 # 96
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
+
+# Exception Tests 15075-15090
 
 ```
 

@@ -59,12 +59,6 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                 // USED → r2 = globalThis.console.log;
                 // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 4, Reg8: 6>
                 r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue")
-                // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r4 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r2 = globalThis.console.log;
-                // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 4, Reg8: 3>
-                r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
             } else {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -79,12 +73,6 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                 // USED → r2 = param1[0];
                 // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 10, Reg8: 5, Reg8: 2>
                 r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", param1[0])
-                // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r4 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r2 = globalThis.console.log;
-                // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 4, Reg8: 3>
-                r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
                 // CODE → <Jmp>: <Addr8: 34>  # Address: 000000a5
                 goto label_165;
             }
@@ -115,12 +103,6 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
         // USED → r2 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break";
         // CODE → <Call2>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 2>
         r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break")
-        // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r2 = globalThis.console.log;
-        // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 4, Reg8: 3>
-        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
         // ──────────────── Block 8 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r5 = globalThis.console;
