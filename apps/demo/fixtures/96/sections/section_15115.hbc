@@ -1,22 +1,11 @@
 
-=> [Function #15115 "create" of 58 bytes]: 2 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x00265bb9
+=> [Function #15115 "" of 12 bytes]: 2 params, frame size=2, strict=1, exc handler=0, debug info=0  @ offset 0x00269c72
 
 Bytecode listing:
 
-==> 00000000: <GetGlobalObject>: <Reg8: 0>
-==> 00000002: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000008: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 559>  # String: '__BC:Classes/ClassTests/Dog/static-create' (String)
-==> 00000011: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-==> 00000016: <GetEnvironment>: <Reg8: 0, UInt8: 0>
-==> 00000019: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 0>
-==> 0000001d: <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 3, string_id: 207>  # String: 'prototype' (Identifier)
-==> 00000022: <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 3>
-==> 00000026: <LoadParam>: <Reg8: 5, UInt8: 1>
-==> 00000029: <LoadConstString>: <Reg8: 4, string_id: 3473>  # String: 'Mixed' (String)
-==> 0000002d: <Mov>: <Reg8: 6, Reg8: 1>
-==> 00000030: <Construct>: <Reg8: 0, Reg8: 3, UInt8: 3>
-==> 00000034: <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-==> 00000038: <Ret>: <Reg8: 0>
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <LoadConstUInt8>: <Reg8: 0, UInt8: 5>
+==> 00000006: <Greater>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 0000000a: <Ret>: <Reg8: 0>
 
 

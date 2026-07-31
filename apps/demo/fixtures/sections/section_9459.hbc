@@ -1,43 +1,47 @@
 
-=> [Function #9459 "closureLoopTest" of 134 bytes]: 1 params, frame size=17, strict=0, exc handler=0, debug info=0  @ offset 0x001fb2e3
+=> [Function #9459 "tripleNestedLabeledTest" of 148 bytes]: 1 params, frame size=29, strict=0, exc handler=0, debug info=0  @ offset 0x001fe34b
 
 Bytecode listing:
 
-==> 00000000: <CreateFunctionEnvironment>: <Reg8: 2, UInt8: 1>
-==> 00000003: <GetGlobalObject>: <Reg8: 1>
-==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 00000010: <LoadConstString>: <Reg8: 0, string_id: 4756>  # String: '__BC:Functions/ClosureTests/closureLoopTest/start' (String)
-==> 00000014: <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
-==> 00000019: <NewArray>: <Reg8: 0, UInt16: 0>
-==> 0000001d: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
-==> 00000021: <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 12403>  # Function: [#12403 _loop of 39 bytes]: 2 params @ offset 0x0023e3cb
-==> 00000026: <LoadConstZero>: <Reg8: 5>
-==> 00000028: <LoadConstUInt8>: <Reg8: 4, UInt8: 1>
-==> 0000002b: <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
-==> 0000002e: <LoadConstZero>: <Reg8: 2>
-==> 00000030: <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 2>
-==> 00000035: <AddN>: <Reg8: 2, Reg8: 2, Reg8: 4>
-==> 00000039: <JLessN>: <Addr8: -9, Reg8: 2, Reg8: 3>  # Address: 00000030
-==> 0000003d: <Mov>: <Reg8: 2, Reg8: 0>
-==> 00000040: <IteratorBegin>: <Reg8: 3, Reg8: 2>
-==> 00000043: <LoadConstUndefined>: <Reg8: 0>
-==> 00000045: <Mov>: <Reg8: 4, Reg8: 2>
-==> 00000048: <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
-==> 0000004c: <Mov>: <Reg8: 5, Reg8: 3>
-==> 0000004f: <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000070
-==> 00000053: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 00000059: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 0000005e: <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-==> 00000062: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-==> 00000067: <Jmp>: <Addr8: -34>  # Address: 00000045
-==> 00000069: <Catch>: <Reg8: 2>
-==> 0000006b: <IteratorClose>: <Reg8: 3, UInt8: 1>
-==> 0000006e: <Throw>: <Reg8: 2>
-==> 00000070: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 00000076: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 0000007b: <LoadConstString>: <Reg8: 1, string_id: 4754>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
-==> 0000007f: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 00000084: <Ret>: <Reg8: 0>
+==> 00000000: <GetGlobalObject>: <Reg8: 15>
+==> 00000002: <TryGetById>: <Reg8: 18, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 16, string_id: 4804>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 16, Reg8: 17, Reg8: 18, Reg8: 16>
+==> 00000016: <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
+==> 00000019: <LoadConstUInt8>: <Reg8: 12, UInt8: 3>
+==> 0000001c: <LoadConstUInt8>: <Reg8: 13, UInt8: 2>
+==> 0000001f: <LoadConstZero>: <Reg8: 9>
+==> 00000021: <LoadConstZero>: <Reg8: 10>
+==> 00000023: <Mov>: <Reg8: 11, Reg8: 9>
+==> 00000026: <Mov>: <Reg8: 5, Reg8: 10>
+==> 00000029: <LoadConstZero>: <Reg8: 6>
+==> 0000002b: <Mov>: <Reg8: 7, Reg8: 6>
+==> 0000002e: <Mov>: <Reg8: 0, Reg8: 5>
+==> 00000031: <LoadConstZero>: <Reg8: 1>
+==> 00000033: <AddN>: <Reg8: 3, Reg8: 0, Reg8: 2>
+==> 00000037: <Mov>: <Reg8: 4, Reg8: 1>
+==> 0000003a: <JStrictEqual>: <Addr8: 23, Reg8: 4, Reg8: 2>  # Address: 00000051
+==> 0000003e: <JStrictNotEqual>: <Addr8: 8, Reg8: 11, Reg8: 13>  # Address: 00000046
+==> 00000042: <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 13>  # Address: 00000067
+==> 00000046: <AddN>: <Reg8: 1, Reg8: 4, Reg8: 2>
+==> 0000004a: <Mov>: <Reg8: 0, Reg8: 3>
+==> 0000004d: <JLessN>: <Addr8: -26, Reg8: 1, Reg8: 12>  # Address: 00000033
+==> 00000051: <AddN>: <Reg8: 6, Reg8: 7, Reg8: 2>
+==> 00000055: <Mov>: <Reg8: 5, Reg8: 3>
+==> 00000058: <JLessN>: <Addr8: -45, Reg8: 6, Reg8: 12>  # Address: 0000002b
+==> 0000005c: <AddN>: <Reg8: 9, Reg8: 11, Reg8: 2>
+==> 00000060: <Mov>: <Reg8: 10, Reg8: 3>
+==> 00000063: <JLessN>: <Addr8: -64, Reg8: 9, Reg8: 12>  # Address: 00000023
+==> 00000067: <TryGetById>: <Reg8: 18, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000006d: <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000072: <LoadConstString>: <Reg8: 16, string_id: 4801>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits' (String)
+==> 00000076: <Call3>: <Reg8: 16, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 3>
+==> 0000007c: <TryGetById>: <Reg8: 17, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000082: <GetByIdShort>: <Reg8: 16, Reg8: 17, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000087: <LoadConstString>: <Reg8: 15, string_id: 4798>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end' (String)
+==> 0000008b: <Call2>: <Reg8: 15, Reg8: 16, Reg8: 17, Reg8: 15>
+==> 00000090: <LoadConstUndefined>: <Reg8: 14>
+==> 00000092: <Ret>: <Reg8: 14>
 
 

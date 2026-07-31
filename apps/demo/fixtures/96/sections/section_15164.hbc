@@ -1,0 +1,10 @@
+
+=> [Function #15164 "simpleGeneratorTest" of 9 bytes]: 1 params, frame size=1, strict=1, exc handler=0, debug info=0  @ offset 0x0026aee0
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <CreateGenerator>: <Reg8: 0, Reg8: 0, function_id: 15165>  # Function: [#15165 ?anon_0_simpleGeneratorTest of 105 bytes]: 1 params @ offset 0x0026aee9
+==> 00000007: <Ret>: <Reg8: 0>
+
+

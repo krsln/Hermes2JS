@@ -1,0 +1,58 @@
+
+=> [Function #15171 "" of 218 bytes]: 8 params, frame size=23, strict=1, exc handler=0, debug info=0  @ offset 0x0026b151
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 2>
+==> 00000002: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 00000005: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000008: <LoadParam>: <Reg8: 5, UInt8: 7>
+==> 0000000b: <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15172>  # Function: [#15172 _interopDefault of 28 bytes]: 2 params @ offset 0x00104cff
+==> 00000010: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15173>  # Function: [#15173 delay of 24 bytes]: 2 params @ offset 0x0026b22b
+==> 00000015: <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 0>
+==> 00000019: <CreateClosure>: <Reg8: 8, Reg8: 2, function_id: 15174>  # Function: [#15174 simpleAsyncTest of 30 bytes]: 1 params @ offset 0x00244d86
+==> 0000001e: <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 8>
+==> 00000022: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15175>  # Function: [#15175 _simpleAsyncTest of 53 bytes]: 1 params @ offset 0x0026b243
+==> 00000027: <StoreToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 0>
+==> 0000002b: <CreateClosure>: <Reg8: 7, Reg8: 2, function_id: 15178>  # Function: [#15178 asyncTryCatchTest of 30 bytes]: 1 params @ offset 0x00244e78
+==> 00000030: <StoreToEnvironment>: <Reg8: 2, UInt8: 5, Reg8: 7>
+==> 00000034: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15179>  # Function: [#15179 _asyncTryCatchTest of 53 bytes]: 1 params @ offset 0x0026b2e6
+==> 00000039: <StoreToEnvironment>: <Reg8: 2, UInt8: 6, Reg8: 0>
+==> 0000003d: <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 15182>  # Function: [#15182 asyncLoopTest of 30 bytes]: 2 params @ offset 0x0025ab5e
+==> 00000042: <StoreToEnvironment>: <Reg8: 2, UInt8: 7, Reg8: 6>
+==> 00000046: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15183>  # Function: [#15183 _asyncLoopTest of 53 bytes]: 1 params @ offset 0x0026b40f
+==> 0000004b: <StoreToEnvironment>: <Reg8: 2, UInt8: 8, Reg8: 0>
+==> 0000004f: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15186>  # Function: [#15186 parallelAwaitTest of 30 bytes]: 1 params @ offset 0x0025aeb3
+==> 00000054: <StoreToEnvironment>: <Reg8: 2, UInt8: 9, Reg8: 0>
+==> 00000058: <CreateClosure>: <Reg8: 9, Reg8: 2, function_id: 15187>  # Function: [#15187 _parallelAwaitTest of 53 bytes]: 1 params @ offset 0x0026b4da
+==> 0000005d: <StoreToEnvironment>: <Reg8: 2, UInt8: 10, Reg8: 9>
+==> 00000061: <CreateClosure>: <Reg8: 9, Reg8: 2, function_id: 15191>  # Function: [#15191 _callAsyncTests of 53 bytes]: 1 params @ offset 0x0026b5bf
+==> 00000066: <StoreToEnvironment>: <Reg8: 2, UInt8: 11, Reg8: 9>
+==> 0000006a: <GetGlobalObject>: <Reg8: 9>
+==> 0000006c: <TryGetById>: <Reg8: 12, Reg8: 9, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000072: <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000077: <NewObject>: <Reg8: 10>
+==> 00000079: <LoadConstTrue>: <Reg8: 9>
+==> 0000007b: <PutNewOwnByIdShort>: <Reg8: 10, Reg8: 9, string_id: 205>  # String: 'value' (Identifier)
+==> 0000007f: <LoadConstString>: <Reg8: 9, string_id: 48>  # String: '__esModule' (Identifier)
+==> 00000083: <Call4>: <Reg8: 9, Reg8: 11, Reg8: 12, Reg8: 1, Reg8: 9, Reg8: 10>
+==> 0000008a: <PutById>: <Reg8: 1, Reg8: 8, UInt8: 1, string_id: 11171>  # String: 'simpleAsyncTest' (Identifier)
+==> 00000090: <PutById>: <Reg8: 1, Reg8: 7, UInt8: 2, string_id: 7300>  # String: 'asyncTryCatchTest' (Identifier)
+==> 00000096: <PutById>: <Reg8: 1, Reg8: 6, UInt8: 3, string_id: 11144>  # String: 'asyncLoopTest' (Identifier)
+==> 0000009c: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 11161>  # String: 'parallelAwaitTest' (Identifier)
+==> 000000a2: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15190>  # Function: [#15190 callAsyncTests of 30 bytes]: 1 params @ offset 0x00225544
+==> 000000a7: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 5, string_id: 9338>  # String: 'callAsyncTests' (Identifier)
+==> 000000ad: <LoadConstZero>: <Reg8: 0>
+==> 000000af: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
+==> 000000b3: <LoadConstUndefined>: <Reg8: 0>
+==> 000000b5: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 000000ba: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 000000bf: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
+==> 000000c3: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 000000c6: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 000000ca: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 000000cf: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 000000d4: <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
+==> 000000d8: <Ret>: <Reg8: 0>
+
+

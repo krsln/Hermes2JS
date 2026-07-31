@@ -1,51 +1,98 @@
-function spreadFunctionArgsTest(param0) {
-    // ──────────────── Block 0 ──────────────── 
-    // CODE → <GetGlobalObject>: <Reg8: 1>
-    // USED → r1 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 953>  # String: '__BC:Arrays/SpreadTests/spreadFunctionArgsTest/start' (String)
-    // USED → r0 = "__BC:Arrays/SpreadTests/spreadFunctionArgsTest/start";
-    // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadFunctionArgsTest/start")
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
-    // CODE → <NewArray>: <Reg8: 5, UInt16: 0>
-    // USED → r5 = [];
-    // CODE → <NewArrayWithBuffer>: <Reg8: 7, UInt16: 3, UInt16: 3, UInt16: 23288>  # Array: [1, 2, 3]
-    r7 = [1, 2, 3]
-    // CODE → <LoadConstZero>: <Reg8: 6>
-    r6 = 0
-    // CODE → <Mov>: <Reg8: 8, Reg8: 5>
-    r8 = []
-    // CODE → <CallBuiltin>: <Reg8: 0, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    r0 = builtin_46(r-4, r-3, r-2, r-1)
-    // CODE → <CreateEnvironment>: <Reg8: 0>
-    r0 = createEnvironment()
-    // CODE → <CreateClosure>: <Reg8: 8, Reg8: 0, function_id: 15085>  # Function: [#15085 sum of 19 bytes]: 4 params @ offset 0x00265384
-    r8 = sum
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
-    // CODE → <Mov>: <Reg8: 7, Reg8: 5>
-    r7 = []
-    // CODE → <LoadConstUndefined>: <Reg8: 6>
-    r6 = undefined
-    // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 4>  # Built-in function: [#47 apply]
-    // USED → r2 = builtin_47(r-2, r-1, r0, r1);
-    // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(builtin_47(r-2, r-1, r0, r1))
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4514>  # String: '__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end' (String)
-    // USED → r1 = "__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end")
-    // CODE → <Ret>: <Reg8: 0>
-    return undefined;
+function tryFinallyLoopBreakTest(param0, param1) {
+    try {
+        // ──────────────── Block 0 ──────────────── 
+        // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>
+        // USED → r6 = param1;
+        // CODE → <LoadConstUndefined>: <Reg8: 0>
+        // USED → r0 = undefined;
+        // CODE → <LoadConstUndefined>: <Reg8: 7>
+        r7 = undefined
+        // CODE → <GetGlobalObject>: <Reg8: 1>
+        // USED → r1 = globalThis;
+        // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r4 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r3 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 2, string_id: 4736>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start' (String)
+        // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start";
+        // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start")
+        // CODE → <LoadConstZero>: <Reg8: 5>
+        // USED → r5 = 0;
+        // CODE → <LoadConstZero>: <Reg8: 7>
+        // USED → r7 = 0;
+        // CODE → <Mov>: <Reg8: 2, Reg8: 6>
+        // USED → r2 = param1;
+        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+        // USED → r2 = param1.length;
+        // CODE → <LoadConstString>: <Reg8: 4, string_id: 4735>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
+        // USED → r4 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item";
+        if (0 < param1.length) {
+            // LOOP → START (while)
+            while (true) {
+                // ──────────────── Block 1 ──────────────── 
+                // CODE → <Mov>: <Reg8: 3, Reg8: 6>
+                // USED → r3 = param1;
+                // CODE → <Mov>: <Reg8: 2, Reg8: 7>
+                // USED → r2 = 0;
+                // CODE → <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
+                // USED → r2 = param1[0];
+                // CODE → <JStrictEqual>: <Addr8: 46, Reg8: 2, Reg8: 5>  # Address: 00000069
+                if (param1[0] === 0) goto label_105;
+                // ──────────────── Block 2 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r10 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r9 = globalThis.console.log;
+                // CODE → <Mov>: <Reg8: 2, Reg8: 6>
+                // USED → r2 = param1;
+                // CODE → <Mov>: <Reg8: 3, Reg8: 7>
+                // USED → r3 = 0;
+                // CODE → <GetByVal>: <Reg8: 8, Reg8: 2, Reg8: 3>
+                // USED → r8 = param1[0];
+                // CODE → <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 4, Reg8: 8>
+                r8 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", param1[0])
+                // CODE → <Inc>: <Reg8: 3, Reg8: 3>
+                // USED → r3 = 0 + 1;
+                // CODE → <Mov>: <Reg8: 7, Reg8: 3>
+                r7 = 0 + 1
+                // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+                // USED → r2 = param1.length;
+                // CODE → <JLess>: <Addr8: -52, Reg8: 3, Reg8: 2>  # Address: 00000031
+                if (0 + 1 < param1.length) goto label_49;
+            }
+            // LOOP → END
+        }
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r4 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r3 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 2, string_id: 4734>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block' (String)
+        // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block";
+        // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
+        // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r4 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r3 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 2, string_id: 4733>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end' (String)
+        // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end";
+        // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end")
+        // CODE → <Ret>: <Reg8: 0>
+        return undefined;
+    } catch (caughtException) {
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r3 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r2 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 1, string_id: 4734>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block' (String)
+        // USED → r1 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block";
+        // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+        r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
+        // CODE → <Throw>: <Reg8: 0>
+        throw caughtException;
+    }
 }

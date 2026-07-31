@@ -1,0 +1,26 @@
+
+=> [Function #9540 "describe" of 79 bytes]: 1 params, frame size=16, strict=0, exc handler=0, debug info=0  @ offset 0x00201153
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 0>
+==> 00000003: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000006: <GetGlobalObject>: <Reg8: 1>
+==> 00000008: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000e: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000013: <LoadConstString>: <Reg8: 4, string_id: 2588>  # String: '__BC:Classes/PrivateStaticTests/Counter/describe' (String)
+==> 00000017: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 0000001c: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 5>
+==> 00000020: <PrivateIsIn>: <Reg8: 0, Reg8: 4, Reg8: 3, Reg8: 0>
+==> 00000025: <JmpTrue>: <Addr8: 11, Reg8: 0>  # Address: 00000030
+==> 00000028: <LoadConstString>: <Reg8: 7, string_id: 3847>  # String: 'Private element not found' (String)
+==> 0000002c: <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 00000030: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 6>
+==> 00000034: <GetOwnPrivateBySym>: <Reg8: 3, Reg8: 3, UInt8: 1, Reg8: 2>
+==> 00000039: <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 0000003f: <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000044: <LoadConstString>: <Reg8: 1, string_id: 3789>  # String: 'count=' (String)
+==> 00000048: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 1, Reg8: 3>
+==> 0000004d: <Ret>: <Reg8: 1>
+
+

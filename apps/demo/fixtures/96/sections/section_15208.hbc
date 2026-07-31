@@ -1,0 +1,63 @@
+
+=> [Function #15208 "privateStaticTest" of 262 bytes]: 1 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x0026bc7a
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4554>  # String: '__BC:Classes/PrivateStaticTests/privateStaticTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000016: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 8>
+==> 0000001d: <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000022: <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
+==> 00000026: <Mov>: <Reg8: 7, Reg8: 3>
+==> 00000029: <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
+==> 0000002d: <SelectObject>: <Reg8: 5, Reg8: 3, Reg8: 2>
+==> 00000031: <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 8>
+==> 00000035: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
+==> 0000003a: <CreateThis>: <Reg8: 7, Reg8: 2, Reg8: 3>
+==> 0000003e: <Construct>: <Reg8: 2, Reg8: 3, UInt8: 1>
+==> 00000042: <GetById>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 10830>  # String: 'increment' (Identifier)
+==> 00000048: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 0000004c: <GetById>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 10830>  # String: 'increment' (Identifier)
+==> 00000052: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 00000056: <LoadConstUInt8>: <Reg8: 2, UInt8: 200>
+==> 00000059: <PutById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 205>  # String: 'value' (Identifier)
+==> 0000005f: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000065: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000006a: <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 205>  # String: 'value' (Identifier)
+==> 0000006f: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000074: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000007a: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000007f: <GetById>: <Reg8: 2, Reg8: 5, UInt8: 6, string_id: 10172>  # String: 'describe' (Identifier)
+==> 00000085: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 00000089: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000008e: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000094: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000099: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 8>
+==> 0000009d: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 7, string_id: 10838>  # String: 'instanceCount' (Identifier)
+==> 000000a3: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000a8: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000ae: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000b3: <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 10>
+==> 000000b7: <GetById>: <Reg8: 2, Reg8: 5, UInt8: 8, string_id: 8574>  # String: 'describeLabel' (Identifier)
+==> 000000bd: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 000000c1: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000c6: <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 8>
+==> 000000ca: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 9, string_id: 7840>  # String: 'reset' (Identifier)
+==> 000000d0: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 000000d4: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000da: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000df: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 8>
+==> 000000e3: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 7, string_id: 10838>  # String: 'instanceCount' (Identifier)
+==> 000000e9: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000ee: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000f4: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000f9: <LoadConstString>: <Reg8: 0, string_id: 4551>  # String: '__BC:Classes/PrivateStaticTests/privateStaticTest/end' (String)
+==> 000000fd: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000102: <LoadConstUndefined>: <Reg8: 0>
+==> 00000104: <Ret>: <Reg8: 0>
+
+

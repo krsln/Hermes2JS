@@ -1,31 +1,19 @@
-function function_15073(param0, param1, param2, param3, param4, param5, param6, param7) {
+function sideEffect(param0, param1, param2) {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
-    // USED → r1 = param6;
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 25>  # String: 'Object' (Identifier)
-    // USED → r4 = globalThis.Object;
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 109>  # String: 'defineProperty' (Identifier)
-    // USED → r3 = globalThis.Object.defineProperty;
-    // CODE → <NewObject>: <Reg8: 2>
-    // USED → r2 = {  };
-    // CODE → <LoadConstTrue>: <Reg8: 0>
-    // USED → r0 = true;
-    // CODE → <PutNewOwnByIdShort>: <Reg8: 2, Reg8: 0, string_id: 206>  # String: 'value' (Identifier)
-    // USED → r2 = { value: true };
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 49>  # String: '__esModule' (Identifier)
-    // USED → r0 = "__esModule";
-    // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>
-    r0 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
-    // CODE → <CreateEnvironment>: <Reg8: 0>
-    r0 = createEnvironment()
-    // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15074>  # Function: [#15074 arrayTest of 308 bytes]: 1 params @ offset 0x00264fdf
-    // USED → r0 = arrayTest;
-    // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 7735>  # String: 'arrayTest' (Identifier)
-    param6.arrayTest = arrayTest
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = globalThis.console.log;
+    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4634>  # String: '__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect' (String)
+    // USED → r1 = "__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect";
+    // CODE → <LoadParam>: <Reg8: 0, UInt8: 1>
+    // USED → r0 = param1;
+    // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
+    r0 = globalThis.console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", param1)
+    // CODE → <LoadParam>: <Reg8: 0, UInt8: 2>
+    // USED → r0 = param2;
     // CODE → <Ret>: <Reg8: 0>
-    return undefined;
+    return param2;
 }

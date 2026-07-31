@@ -1,40 +1,21 @@
 
-=> [Function #15055 "nestedLoopTest" of 130 bytes]: 1 params, frame size=22, strict=1, exc handler=0, debug info=0  @ offset 0x002646c8
+=> [Function #15055 "" of 52 bytes]: 8 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x00267e1f
 
 Bytecode listing:
 
-==> 00000000: <GetGlobalObject>: <Reg8: 0>
-==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4568>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/start' (String)
-==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 00000016: <LoadConstUInt8>: <Reg8: 7, UInt8: 3>
-==> 00000019: <LoadConstUInt8>: <Reg8: 6, UInt8: 4>
-==> 0000001c: <LoadConstString>: <Reg8: 5, string_id: 4563>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if' (String)
-==> 00000020: <LoadConstString>: <Reg8: 4, string_id: 1504>  # String: 'nested' (String)
-==> 00000024: <LoadConstUInt8>: <Reg8: 3, UInt8: 2>
-==> 00000027: <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
-==> 0000002a: <LoadConstZero>: <Reg8: 1>
-==> 0000002c: <Mov>: <Reg8: 9, Reg8: 1>
-==> 0000002f: <LoadConstZero>: <Reg8: 10>
-==> 00000031: <Mov>: <Reg8: 11, Reg8: 10>
-==> 00000034: <JStrictNotEqual>: <Addr8: 40, Reg8: 9, Reg8: 2>  # Address: 0000005c
-==> 00000038: <JStrictNotEqual>: <Addr8: 36, Reg8: 11, Reg8: 3>  # Address: 0000005c
-==> 0000003c: <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000042: <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 00000047: <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 5>
-==> 0000004c: <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000052: <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 00000057: <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 4>
-==> 0000005c: <Inc>: <Reg8: 10, Reg8: 11>
-==> 0000005f: <JLess>: <Addr8: -46, Reg8: 10, Reg8: 6>  # Address: 00000031
-==> 00000063: <Inc>: <Reg8: 1, Reg8: 9>
-==> 00000066: <JLess>: <Addr8: -58, Reg8: 1, Reg8: 7>  # Address: 0000002c
-==> 0000006a: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000070: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 00000075: <LoadConstString>: <Reg8: 0, string_id: 4565>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/end' (String)
-==> 00000079: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-==> 0000007e: <LoadConstUndefined>: <Reg8: 0>
-==> 00000080: <Ret>: <Reg8: 0>
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000003: <GetGlobalObject>: <Reg8: 0>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000010: <NewObject>: <Reg8: 2>
+==> 00000012: <LoadConstTrue>: <Reg8: 0>
+==> 00000014: <PutNewOwnByIdShort>: <Reg8: 2, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
+==> 00000018: <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
+==> 0000001c: <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>
+==> 00000023: <CreateEnvironment>: <Reg8: 0>
+==> 00000025: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15056>  # Function: [#15056 switchTest of 192 bytes]: 2 params @ offset 0x00267e53
+==> 0000002a: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 8729>  # String: 'switchTest' (Identifier)
+==> 00000030: <LoadConstUndefined>: <Reg8: 0>
+==> 00000032: <Ret>: <Reg8: 0>
 
 

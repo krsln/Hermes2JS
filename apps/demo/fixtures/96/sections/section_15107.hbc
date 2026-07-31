@@ -1,51 +1,29 @@
 
-=> [Function #15107 "classTest" of 193 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x002658b0
+=> [Function #15107 "swapViaDestructureTest" of 91 bytes]: 1 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x00269a1f
 
 Bytecode listing:
 
 ==> 00000000: <GetGlobalObject>: <Reg8: 0>
-==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4524>  # String: '__BC:Classes/ClassTests/classTest/start' (String)
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4824>  # String: '__BC:Objects/DestructuringTests/swapViaDestructureTest/start' (String)
 ==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 00000016: <GetEnvironment>: <Reg8: 1, UInt8: 0>
-==> 00000019: <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 5>
-==> 0000001d: <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 207>  # String: 'prototype' (Identifier)
-==> 00000022: <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
-==> 00000026: <LoadConstString>: <Reg8: 7, string_id: 3156>  # String: 'Generic' (String)
-==> 0000002a: <LoadConstString>: <Reg8: 6, string_id: 602>  # String: '...' (String)
-==> 0000002e: <Mov>: <Reg8: 8, Reg8: 3>
-==> 00000031: <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
-==> 00000035: <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-==> 00000039: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 4, string_id: 10199>  # String: 'makeSound' (Identifier)
-==> 0000003f: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 2>
-==> 00000043: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000049: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000004e: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 10660>  # String: 'description' (Identifier)
-==> 00000054: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-==> 00000059: <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 6>
-==> 0000005d: <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 207>  # String: 'prototype' (Identifier)
-==> 00000062: <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
-==> 00000066: <LoadConstString>: <Reg8: 7, string_id: 3854>  # String: 'Rex' (String)
-==> 0000006a: <LoadConstString>: <Reg8: 6, string_id: 3366>  # String: 'Labrador' (String)
-==> 0000006e: <Mov>: <Reg8: 8, Reg8: 3>
-==> 00000071: <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
-==> 00000075: <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
-==> 00000079: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 10199>  # String: 'makeSound' (Identifier)
-==> 0000007f: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-==> 00000083: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 10199>  # String: 'makeSound' (Identifier)
-==> 00000089: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-==> 0000008d: <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 6>
-==> 00000091: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 6, string_id: 104>  # String: 'create' (Identifier)
-==> 00000096: <LoadConstString>: <Reg8: 1, string_id: 702>  # String: 'Buddy' (String)
-==> 0000009a: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 0000009f: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 10199>  # String: 'makeSound' (Identifier)
-==> 000000a5: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
-==> 000000a9: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 000000af: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 000000b4: <LoadConstString>: <Reg8: 0, string_id: 4523>  # String: '__BC:Classes/ClassTests/classTest/end' (String)
-==> 000000b8: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-==> 000000bd: <LoadConstUndefined>: <Reg8: 0>
-==> 000000bf: <Ret>: <Reg8: 0>
+==> 00000016: <NewArray>: <Reg8: 2, UInt16: 2>
+==> 0000001a: <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
+==> 0000001d: <PutOwnByIndex>: <Reg8: 2, Reg8: 1, UInt8: 0>
+==> 00000021: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 00000024: <PutOwnByIndex>: <Reg8: 2, Reg8: 1, UInt8: 1>
+==> 00000028: <LoadConstZero>: <Reg8: 3>
+==> 0000002a: <GetByVal>: <Reg8: 4, Reg8: 2, Reg8: 3>
+==> 0000002e: <GetByVal>: <Reg8: 3, Reg8: 2, Reg8: 1>
+==> 00000032: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000038: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000003d: <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3>
+==> 00000043: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000049: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000004e: <LoadConstString>: <Reg8: 0, string_id: 4820>  # String: '__BC:Objects/DestructuringTests/swapViaDestructureTest/end' (String)
+==> 00000052: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000057: <LoadConstUndefined>: <Reg8: 0>
+==> 00000059: <Ret>: <Reg8: 0>
 
 

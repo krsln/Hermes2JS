@@ -1,16 +1,57 @@
 
-=> [Function #15081 "_interopDefault" of 28 bytes]: 2 params, frame size=3, strict=1, exc handler=0, debug info=0  @ offset 0x001017eb
+=> [Function #15081 "nestedTryCatchTest" of 214 bytes]: 1 params, frame size=13, strict=1, exc handler=1, debug info=0  @ offset 0x00268bd6
+  [Exception handlers: [start=0x2a, end=0x5e, target=0x5e] [start=0x16, end=0x98, target=0x98] ]
 
 Bytecode listing:
 
-==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 1>
-==> 00000003: <JmpFalse>: <Addr8: 14, Reg8: 2>  # Address: 00000011
-==> 00000006: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 49>  # String: '__esModule' (Identifier)
-==> 0000000b: <Mov>: <Reg8: 0, Reg8: 2>
-==> 0000000e: <JmpTrue>: <Addr8: 12, Reg8: 1>  # Address: 0000001a
-==> 00000011: <NewObject>: <Reg8: 1>
-==> 00000013: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 2, string_id: 108>  # String: 'default' (Identifier)
-==> 00000017: <Mov>: <Reg8: 0, Reg8: 1>
-==> 0000001a: <Ret>: <Reg8: 0>
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 1851>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000016: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000001c: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000021: <LoadConstString>: <Reg8: 1, string_id: 4677>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/outer-try' (String)
+==> 00000025: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000002a: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000030: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000035: <LoadConstString>: <Reg8: 1, string_id: 4672>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/inner-try' (String)
+==> 00000039: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000003e: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
+==> 00000044: <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000049: <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
+==> 0000004d: <LoadConstString>: <Reg8: 5, string_id: 7723>  # String: 'inner' (Identifier)
+==> 00000051: <Mov>: <Reg8: 6, Reg8: 2>
+==> 00000054: <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
+==> 00000058: <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 0000005c: <Throw>: <Reg8: 1>
+==> 0000005e: <Catch>: <Reg8: 2>
+==> 00000060: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000066: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000006b: <LoadConstString>: <Reg8: 1, string_id: 4670>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/inner-catch' (String)
+==> 0000006f: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 00000074: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
+==> 0000007a: <LoadConstString>: <Reg8: 1, string_id: 6991>  # String: 'rethrown from inner: ' (String)
+==> 0000007e: <Add>: <Reg8: 5, Reg8: 1, Reg8: 2>
+==> 00000082: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000087: <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 0000008b: <Mov>: <Reg8: 6, Reg8: 2>
+==> 0000008e: <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
+==> 00000092: <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 00000096: <Throw>: <Reg8: 1>
+==> 00000098: <Catch>: <Reg8: 3>
+==> 0000009a: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000a0: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000a5: <LoadConstString>: <Reg8: 1, string_id: 4675>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/outer-catch' (String)
+==> 000000a9: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
+==> 000000ae: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000b4: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000b9: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
+==> 000000be: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000c4: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000c9: <LoadConstString>: <Reg8: 0, string_id: 4667>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/end' (String)
+==> 000000cd: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 000000d2: <LoadConstUndefined>: <Reg8: 0>
+==> 000000d4: <Ret>: <Reg8: 0>
 
 

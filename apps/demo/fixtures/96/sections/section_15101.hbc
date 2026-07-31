@@ -1,40 +1,49 @@
 
-=> [Function #15101 "defaultParameterTest" of 121 bytes]: 2 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x00265663
+=> [Function #15101 "" of 179 bytes]: 8 params, frame size=24, strict=1, exc handler=0, debug info=0  @ offset 0x002696ec
 
 Bytecode listing:
 
-==> 00000000: <LoadConstUndefined>: <Reg8: 0>
-==> 00000002: <LoadConstUndefined>: <Reg8: 2>
-==> 00000004: <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
-==> 00000007: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
-==> 0000000a: <Greater>: <Reg8: 3, Reg8: 3, Reg8: 1>
-==> 0000000e: <LoadConstUInt8>: <Reg8: 4, UInt8: 10>
-==> 00000011: <Mov>: <Reg8: 5, Reg8: 4>
-==> 00000014: <JmpFalse>: <Addr8: 18, Reg8: 3>  # Address: 00000026
-==> 00000017: <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
-==> 0000001b: <Mov>: <Reg8: 5, Reg8: 4>
-==> 0000001e: <JStrictEqual>: <Addr8: 8, Reg8: 3, Reg8: 0>  # Address: 00000026
-==> 00000022: <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 1, Reg8: 2>
-==> 00000026: <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
-==> 00000029: <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
-==> 0000002c: <Greater>: <Reg8: 3, Reg8: 3, Reg8: 1>
-==> 00000030: <LoadConstString>: <Reg8: 6, string_id: 7145>  # String: 'result' (Identifier)
-==> 00000034: <Mov>: <Reg8: 4, Reg8: 6>
-==> 00000037: <JmpFalse>: <Addr8: 18, Reg8: 3>  # Address: 00000049
-==> 0000003a: <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
-==> 0000003e: <Mov>: <Reg8: 4, Reg8: 6>
-==> 00000041: <JStrictEqual>: <Addr8: 8, Reg8: 3, Reg8: 0>  # Address: 00000049
-==> 00000045: <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 1, Reg8: 2>
-==> 00000049: <GetGlobalObject>: <Reg8: 1>
-==> 0000004b: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000051: <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 00000056: <LoadConstString>: <Reg8: 2, string_id: 4597>  # String: '__BC:Functions/DefaultParameterTests/defaultParameterTest/start' (String)
-==> 0000005a: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 2>
-==> 0000005f: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000065: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000006a: <LoadParam>: <Reg8: 1, UInt8: 1>
-==> 0000006d: <Add>: <Reg8: 1, Reg8: 1, Reg8: 5>
-==> 00000071: <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1>
-==> 00000077: <Ret>: <Reg8: 0>
+==> 00000000: <CreateEnvironment>: <Reg8: 2>
+==> 00000002: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 00000005: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000008: <LoadParam>: <Reg8: 5, UInt8: 7>
+==> 0000000b: <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15102>  # Function: [#15102 _interopDefault of 28 bytes]: 2 params @ offset 0x00104cff
+==> 00000010: <CreateClosure>: <Reg8: 9, Reg8: 2, function_id: 15103>  # Function: [#15103 nestedObjectDestructureTest of 157 bytes]: 1 params @ offset 0x0026979f
+==> 00000015: <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 9>
+==> 00000019: <CreateClosure>: <Reg8: 8, Reg8: 2, function_id: 15104>  # Function: [#15104 renamedDefaultDestructureTest of 111 bytes]: 1 params @ offset 0x0026983c
+==> 0000001e: <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 8>
+==> 00000022: <CreateClosure>: <Reg8: 7, Reg8: 2, function_id: 15105>  # Function: [#15105 nestedArrayDestructureTest of 241 bytes]: 1 params @ offset 0x002698ab
+==> 00000027: <StoreToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 7>
+==> 0000002b: <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 15106>  # Function: [#15106 parameterDestructureTest of 131 bytes]: 3 params @ offset 0x0026999c
+==> 00000030: <StoreToEnvironment>: <Reg8: 2, UInt8: 5, Reg8: 6>
+==> 00000034: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15107>  # Function: [#15107 swapViaDestructureTest of 91 bytes]: 1 params @ offset 0x00269a1f
+==> 00000039: <StoreToEnvironment>: <Reg8: 2, UInt8: 6, Reg8: 0>
+==> 0000003d: <GetGlobalObject>: <Reg8: 10>
+==> 0000003f: <TryGetById>: <Reg8: 13, Reg8: 10, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000045: <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 0000004a: <NewObject>: <Reg8: 11>
+==> 0000004c: <LoadConstTrue>: <Reg8: 10>
+==> 0000004e: <PutNewOwnByIdShort>: <Reg8: 11, Reg8: 10, string_id: 205>  # String: 'value' (Identifier)
+==> 00000052: <LoadConstString>: <Reg8: 10, string_id: 48>  # String: '__esModule' (Identifier)
+==> 00000056: <Call4>: <Reg8: 10, Reg8: 12, Reg8: 13, Reg8: 1, Reg8: 10, Reg8: 11>
+==> 0000005d: <PutById>: <Reg8: 1, Reg8: 9, UInt8: 1, string_id: 11263>  # String: 'nestedObjectDestructureTest' (Identifier)
+==> 00000063: <PutById>: <Reg8: 1, Reg8: 8, UInt8: 2, string_id: 11276>  # String: 'renamedDefaultDestructureTest' (Identifier)
+==> 00000069: <PutById>: <Reg8: 1, Reg8: 7, UInt8: 3, string_id: 11259>  # String: 'nestedArrayDestructureTest' (Identifier)
+==> 0000006f: <PutById>: <Reg8: 1, Reg8: 6, UInt8: 4, string_id: 11272>  # String: 'parameterDestructureTest' (Identifier)
+==> 00000075: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 5, string_id: 11280>  # String: 'swapViaDestructureTest' (Identifier)
+==> 0000007b: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15108>  # Function: [#15108 callDestructuringTests of 108 bytes]: 1 params @ offset 0x00269a7a
+==> 00000080: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 6, string_id: 10657>  # String: 'callDestructuringTests' (Identifier)
+==> 00000086: <LoadConstZero>: <Reg8: 0>
+==> 00000088: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
+==> 0000008c: <LoadConstUndefined>: <Reg8: 0>
+==> 0000008e: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 00000093: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 00000098: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
+==> 0000009c: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 0000009f: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 000000a3: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 000000a8: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 000000ad: <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
+==> 000000b1: <Ret>: <Reg8: 0>
 
 

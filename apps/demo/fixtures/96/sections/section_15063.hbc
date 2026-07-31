@@ -1,23 +1,59 @@
 
-=> [Function #15063 "" of 63 bytes]: 8 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x00264b95
+=> [Function #15063 "ifElseChainTest" of 231 bytes]: 3 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x0026821d
 
 Bytecode listing:
 
-==> 00000000: <CreateEnvironment>: <Reg8: 0>
-==> 00000002: <LoadParam>: <Reg8: 1, UInt8: 6>
-==> 00000005: <GetGlobalObject>: <Reg8: 2>
-==> 00000007: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 25>  # String: 'Object' (Identifier)
-==> 0000000d: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 109>  # String: 'defineProperty' (Identifier)
-==> 00000012: <NewObject>: <Reg8: 3>
-==> 00000014: <LoadConstTrue>: <Reg8: 2>
-==> 00000016: <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 2, string_id: 206>  # String: 'value' (Identifier)
-==> 0000001a: <LoadConstString>: <Reg8: 2, string_id: 49>  # String: '__esModule' (Identifier)
-==> 0000001e: <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
-==> 00000025: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15064>  # Function: [#15064 forOfTest of 93 bytes]: 1 params @ offset 0x00264bd4
-==> 0000002a: <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 10789>  # String: 'forOfTest' (Identifier)
-==> 00000030: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15065>  # Function: [#15065 forInTest of 102 bytes]: 1 params @ offset 0x00264c31
-==> 00000035: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 8463>  # String: 'forInTest' (Identifier)
-==> 0000003b: <LoadConstUndefined>: <Reg8: 0>
-==> 0000003d: <Ret>: <Reg8: 0>
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 2, UInt8: 2>
+==> 00000006: <GetGlobalObject>: <Reg8: 0>
+==> 00000008: <TryGetById>: <Reg8: 5, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000e: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000013: <LoadConstString>: <Reg8: 3, string_id: 4118>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/start' (String)
+==> 00000017: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000001c: <JmpFalse>: <Addr8: 6, Reg8: 1>  # Address: 00000022
+==> 0000001f: <JmpTrue>: <Addr8: 93, Reg8: 2>  # Address: 0000007c
+==> 00000022: <JmpTrue>: <Addr8: 48, Reg8: 1>  # Address: 00000052
+==> 00000025: <JmpTrue>: <Addr8: 45, Reg8: 2>  # Address: 00000052
+==> 00000028: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000002e: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000033: <LoadConstString>: <Reg8: 2, string_id: 4588>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither' (String)
+==> 00000037: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000003c: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000042: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000047: <LoadConstString>: <Reg8: 2, string_id: 1908>  # String: 'neither' (String)
+==> 0000004b: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000050: <Jmp>: <Addr8: 84>  # Address: 000000a4
+==> 00000052: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000058: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000005d: <LoadConstString>: <Reg8: 2, string_id: 4587>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-either' (String)
+==> 00000061: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000066: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000006c: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000071: <LoadConstString>: <Reg8: 2, string_id: 1909>  # String: 'either' (String)
+==> 00000075: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000007a: <Jmp>: <Addr8: 42>  # Address: 000000a4
+==> 0000007c: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000082: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000087: <LoadConstString>: <Reg8: 2, string_id: 4586>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-both' (String)
+==> 0000008b: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000090: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000096: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000009b: <LoadConstString>: <Reg8: 2, string_id: 757>  # String: 'both' (String)
+==> 0000009f: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000a4: <JmpTrue>: <Addr8: 43, Reg8: 1>  # Address: 000000cf
+==> 000000a7: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000ad: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000b2: <LoadConstString>: <Reg8: 1, string_id: 4590>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-not-a' (String)
+==> 000000b6: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000bb: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000c1: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000c6: <LoadConstString>: <Reg8: 1, string_id: 680>  # String: 'not a' (String)
+==> 000000ca: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000cf: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000d5: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000da: <LoadConstString>: <Reg8: 0, string_id: 4592>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/end' (String)
+==> 000000de: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 000000e3: <LoadConstUndefined>: <Reg8: 0>
+==> 000000e5: <Ret>: <Reg8: 0>
 
 

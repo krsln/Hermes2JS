@@ -1,0 +1,47 @@
+
+=> [Function #9474 "tryCatchFinallyBranchInFinallyTest" of 154 bytes]: 2 params, frame size=14, strict=0, exc handler=0, debug info=0  @ offset 0x001fecb2
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <GetGlobalObject>: <Reg8: 0>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 2, string_id: 4862>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/try-block' (String)
+==> 00000014: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000019: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000001f: <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
+==> 00000023: <LoadConstString>: <Reg8: 5, string_id: 47>  # String: 'test' (Identifier)
+==> 00000027: <Mov>: <Reg8: 6, Reg8: 2>
+==> 0000002a: <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
+==> 0000002e: <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
+==> 00000032: <Throw>: <Reg8: 0>
+==> 00000034: <Catch>: <Reg8: 0>
+==> 00000036: <GetGlobalObject>: <Reg8: 0>
+==> 00000038: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000003e: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000043: <LoadConstString>: <Reg8: 2, string_id: 2163>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block' (String)
+==> 00000047: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000004c: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000052: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000057: <JmpTrue>: <Addr8: 14, Reg8: 1>  # Address: 00000065
+==> 0000005a: <LoadConstString>: <Reg8: 0, string_id: 4858>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
+==> 0000005e: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000063: <Jmp>: <Addr8: 11>  # Address: 0000006e
+==> 00000065: <LoadConstString>: <Reg8: 0, string_id: 4861>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true' (String)
+==> 00000069: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 0000006e: <LoadConstUndefined>: <Reg8: 0>
+==> 00000070: <Ret>: <Reg8: 0>
+==> 00000072: <Catch>: <Reg8: 0>
+==> 00000074: <GetGlobalObject>: <Reg8: 2>
+==> 00000076: <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000007c: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000081: <JmpTrue>: <Addr8: 14, Reg8: 1>  # Address: 0000008f
+==> 00000084: <LoadConstString>: <Reg8: 1, string_id: 4858>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
+==> 00000088: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000008d: <Jmp>: <Addr8: 11>  # Address: 00000098
+==> 0000008f: <LoadConstString>: <Reg8: 1, string_id: 4861>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true' (String)
+==> 00000093: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000098: <Throw>: <Reg8: 0>
+
+

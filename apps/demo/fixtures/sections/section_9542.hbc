@@ -1,0 +1,19 @@
+
+=> [Function #9542 "reset" of 44 bytes]: 1 params, frame size=15, strict=0, exc handler=0, debug info=0  @ offset 0x002011ca
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 3>
+==> 00000005: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 3, string_id: 4732>  # String: '__BC:Classes/PrivateStaticTests/Counter/static-reset' (String)
+==> 00000014: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 2>
+==> 0000001d: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 4>
+==> 00000021: <LoadConstZero>: <Reg8: 0>
+==> 00000023: <PutOwnPrivateBySym>: <Reg8: 3, Reg8: 0, UInt8: 0, Reg8: 2>
+==> 00000028: <LoadConstUndefined>: <Reg8: 1>
+==> 0000002a: <Ret>: <Reg8: 1>
+
+

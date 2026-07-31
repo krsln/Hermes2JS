@@ -1,0 +1,47 @@
+
+=> [Function #9489 "swapViaDestructureTest" of 145 bytes]: 1 params, frame size=20, strict=0, exc handler=0, debug info=0  @ offset 0x001ff630
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 4>
+==> 00000002: <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 5, string_id: 4986>  # String: '__BC:Objects/DestructuringTests/swapViaDestructureTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
+==> 00000016: <NewArray>: <Reg8: 7, UInt16: 2>
+==> 0000001a: <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
+==> 0000001d: <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 0>
+==> 00000021: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000024: <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 1>
+==> 00000028: <Mov>: <Reg8: 6, Reg8: 7>
+==> 0000002b: <IteratorBegin>: <Reg8: 5, Reg8: 6>
+==> 0000002e: <Mov>: <Reg8: 7, Reg8: 6>
+==> 00000031: <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
+==> 00000035: <Mov>: <Reg8: 8, Reg8: 5>
+==> 00000038: <LoadConstUndefined>: <Reg8: 2>
+==> 0000003a: <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
+==> 0000003e: <LoadConstUndefined>: <Reg8: 8>
+==> 00000040: <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 00000046
+==> 00000043: <Mov>: <Reg8: 8, Reg8: 7>
+==> 00000046: <LoadConstUndefined>: <Reg8: 7>
+==> 00000048: <JmpTrue>: <Addr8: 28, Reg8: 1>  # Address: 00000064
+==> 0000004b: <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
+==> 0000004f: <Mov>: <Reg8: 9, Reg8: 5>
+==> 00000052: <StrictEq>: <Reg8: 3, Reg8: 9, Reg8: 2>
+==> 00000056: <LoadConstUndefined>: <Reg8: 7>
+==> 00000058: <Mov>: <Reg8: 1, Reg8: 3>
+==> 0000005b: <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000064
+==> 0000005e: <Mov>: <Reg8: 7, Reg8: 6>
+==> 00000061: <Mov>: <Reg8: 1, Reg8: 3>
+==> 00000064: <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 0000006a
+==> 00000067: <IteratorClose>: <Reg8: 5, UInt8: 0>
+==> 0000006a: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000070: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000075: <Call3>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 8, Reg8: 7>
+==> 0000007b: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000081: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000086: <LoadConstString>: <Reg8: 4, string_id: 4984>  # String: '__BC:Objects/DestructuringTests/swapViaDestructureTest/end' (String)
+==> 0000008a: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 0000008f: <Ret>: <Reg8: 2>
+
+

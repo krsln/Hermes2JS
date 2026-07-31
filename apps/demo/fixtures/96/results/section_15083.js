@@ -1,63 +1,49 @@
-function spreadObjectTest(param0) {
-    // ──────────────── Block 0 ──────────────── 
-    // CODE → <GetGlobalObject>: <Reg8: 1>
-    // USED → r1 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4517>  # String: '__BC:Arrays/SpreadTests/spreadObjectTest/start' (String)
-    // USED → r0 = "__BC:Arrays/SpreadTests/spreadObjectTest/start";
-    // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadObjectTest/start")
-    // CODE → <NewObject>: <Reg8: 4>
-    // USED → r4 = {  };
-    // CODE → <NewObjectWithBuffer>: <Reg8: 6, UInt16: 2, UInt16: 2, UInt16: 338, UInt16: 19818>  # Object: {'x': 1, 'y': 2}
-    r6 = { "x": 1, "y": 2 }
-    // CODE → <Mov>: <Reg8: 7, Reg8: 4>
-    r7 = {  }
-    // CODE → <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 3>  # Built-in function: [#44 copyDataProperties]
-    r0 = builtin_44(r-3, r-2, r-1)
-    // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
-    // USED → r2 = 3;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 7402>  # String: 'z' (Identifier)
-    // USED → r0 = "z";
-    // CODE → <PutOwnByVal>: <Reg8: 4, Reg8: 2, Reg8: 0, UInt8: 1>
-    {  }[3] = "z"
-    // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r2 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r0 = globalThis.console.log;
-    // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 4>
-    r0 = globalThis.console.log({  })
-    // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 42>  # String: 'x' (Identifier)
-    // USED → r5 = {  }.x;
-    // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
-    // USED → r0 = getEnvironment(0);
-    // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 1>
-    // USED → r2 = getEnvironment(0)[1];
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 4, string_id: 108>  # String: 'default' (Identifier)
-    // USED → r3 = getEnvironment(0)[1].default;
-    // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
-    // USED → r2 = getEnvironment(0)[0];
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
-    // CODE → <Call3>: <Reg8: 4, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2>
-    // USED → r4 = getEnvironment(0)[1].default.call(undefined, {  }, getEnvironment(0)[0]);
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
-    r2 = globalThis.console.log({  }.x, getEnvironment(0)[1].default.call(undefined, {  }, getEnvironment(0)[0]))
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4515>  # String: '__BC:Arrays/SpreadTests/spreadObjectTest/end' (String)
-    // USED → r1 = "__BC:Arrays/SpreadTests/spreadObjectTest/end";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadObjectTest/end")
-    // CODE → <Ret>: <Reg8: 0>
-    return undefined;
+function tryCatchFinallyEarlyReturnTest(param0) {
+    try {
+        // ──────────────── Block 0 ──────────────── 
+        // CODE → <GetGlobalObject>: <Reg8: 0>
+        // USED → r0 = globalThis;
+        // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r3 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r2 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 1, string_id: 4691>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block' (String)
+        // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block";
+        // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+        r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/try-block")
+        // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
+        // USED → r2 = globalThis.Error;
+        // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
+        // USED → r0 = globalThis.Error.prototype;
+        // CODE → <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
+        // USED → r1 = createThis(globalThis.Error.prototype, globalThis.Error);
+        // CODE → <LoadConstString>: <Reg8: 4, string_id: 238>  # String: 'test' (Identifier)
+        r4 = "test"
+        // CODE → <Mov>: <Reg8: 5, Reg8: 1>
+        r5 = createThis(globalThis.Error.prototype, globalThis.Error)
+        // CODE → <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+        // USED → r0 = new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error));
+        // CODE → <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+        // USED → r0 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error))];
+        // CODE → <Throw>: <Reg8: 0>
+        throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error))];
+    } catch (caughtException) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <LoadConstFalse>: <Reg8: 0>
+        // USED → r0 = false;
+        // CODE → <Ret>: <Reg8: 0>
+        return false;
+    } finally {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → <GetGlobalObject>: <Reg8: 1>
+        // USED → r1 = globalThis;
+        // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r3 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r2 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 1, string_id: 4690>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block' (String)
+        // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block";
+        // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+        r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block")
+    }
 }

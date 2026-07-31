@@ -1,18 +1,30 @@
 
-=> [Function #15093 "makeCounter" of 41 bytes]: 1 params, frame size=3, strict=1, exc handler=0, debug info=0  @ offset 0x00265529
+=> [Function #15093 "forInTest" of 102 bytes]: 1 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x00269372
 
 Bytecode listing:
 
-==> 00000000: <CreateEnvironment>: <Reg8: 1>
-==> 00000002: <LoadConstZero>: <Reg8: 0>
-==> 00000004: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
-==> 00000008: <NewObject>: <Reg8: 0>
-==> 0000000a: <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15094>  # Function: [#15094 increment of 16 bytes]: 1 params @ offset 0x00265552
-==> 0000000f: <PutNewOwnById>: <Reg8: 0, Reg8: 2, string_id: 8421>  # String: 'increment' (Identifier)
-==> 00000014: <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15095>  # Function: [#15095 decrement of 16 bytes]: 1 params @ offset 0x00265562
-==> 00000019: <PutNewOwnById>: <Reg8: 0, Reg8: 2, string_id: 14314>  # String: 'decrement' (Identifier)
-==> 0000001e: <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 15096>  # Function: [#15096 value of 9 bytes]: 1 params @ offset 0x000f46a0
-==> 00000023: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 206>  # String: 'value' (Identifier)
-==> 00000027: <Ret>: <Reg8: 0>
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4802>  # String: '__BC:Iterators/IteratorTests/forInTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000016: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 3, UInt16: 3, UInt16: 1155, UInt16: 1179>  # Object: {'a': 1, 'b': 2, 'c': 3}
+==> 00000020: <Mov>: <Reg8: 4, Reg8: 6>
+==> 00000023: <GetPNameList>: <Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 2>
+==> 00000028: <JmpUndefined>: <Addr8: 38, Reg8: 5>  # Address: 0000004e
+==> 0000002b: <GetNextPName>: <Reg8: 1, Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 2>
+==> 00000031: <JmpUndefined>: <Addr8: 29, Reg8: 1>  # Address: 0000004e
+==> 00000034: <Mov>: <Reg8: 10, Reg8: 1>
+==> 00000037: <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000003d: <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000042: <GetByVal>: <Reg8: 7, Reg8: 6, Reg8: 10>
+==> 00000046: <Call3>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 7>
+==> 0000004c: <Jmp>: <Addr8: -33>  # Address: 0000002b
+==> 0000004e: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000054: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000059: <LoadConstString>: <Reg8: 0, string_id: 4800>  # String: '__BC:Iterators/IteratorTests/forInTest/end' (String)
+==> 0000005d: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000062: <LoadConstUndefined>: <Reg8: 0>
+==> 00000064: <Ret>: <Reg8: 0>
 
 

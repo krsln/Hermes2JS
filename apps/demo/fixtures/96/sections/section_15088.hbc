@@ -1,11 +1,45 @@
 
-=> [Function #15088 "" of 12 bytes]: 2 params, frame size=2, strict=1, exc handler=0, debug info=0  @ offset 0x00265113
+=> [Function #15088 "tryCatchFinallyImplicitThrowTest" of 159 bytes]: 2 params, frame size=14, strict=1, exc handler=1, debug info=0  @ offset 0x0026905e
+  [Exception handlers: [start=0x19, end=0x3f, target=0x55] [start=0x19, end=0x3f, target=0x87] [start=0x55, end=0x6b, target=0x87] ]
 
 Bytecode listing:
 
-==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
-==> 00000003: <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
-==> 00000006: <Mul>: <Reg8: 0, Reg8: 1, Reg8: 0>
-==> 0000000a: <Ret>: <Reg8: 0>
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <GetGlobalObject>: <Reg8: 1>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 2, string_id: 4698>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/start' (String)
+==> 00000014: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000019: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 0000001c: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
+==> 00000020: <Mov>: <Reg8: 2, Reg8: 0>
+==> 00000023: <LoadConstUndefined>: <Reg8: 0>
+==> 00000025: <Call2>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2>
+==> 0000002a: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000030: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000035: <LoadConstString>: <Reg8: 2, string_id: 4697>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result' (String)
+==> 00000039: <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 0>
+==> 0000003f: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000045: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000004a: <LoadConstString>: <Reg8: 2, string_id: 4695>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block' (String)
+==> 0000004e: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000053: <Ret>: <Reg8: 0>
+==> 00000055: <Catch>: <Reg8: 0>
+==> 00000057: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000005d: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000062: <LoadConstString>: <Reg8: 0, string_id: 4694>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/catch-block' (String)
+==> 00000066: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 0000006b: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000071: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000076: <LoadConstString>: <Reg8: 0, string_id: 4695>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block' (String)
+==> 0000007a: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 0000007f: <LoadConstInt>: <Reg8: 0, Imm32: -1>
+==> 00000085: <Ret>: <Reg8: 0>
+==> 00000087: <Catch>: <Reg8: 0>
+==> 00000089: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000008f: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000094: <LoadConstString>: <Reg8: 1, string_id: 4695>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block' (String)
+==> 00000098: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000009d: <Throw>: <Reg8: 0>
 
 

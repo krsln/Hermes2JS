@@ -1,25 +1,44 @@
 
-=> [Function #9461 "defaultWithRestTest" of 75 bytes]: 1 params, frame size=18, strict=0, exc handler=0, debug info=0  @ offset 0x001fb3b0
+=> [Function #9461 "shortCircuitAssignTest" of 166 bytes]: 1 params, frame size=15, strict=0, exc handler=0, debug info=0  @ offset 0x001fe468
 
 Bytecode listing:
 
-==> 00000000: <LoadParam>: <Reg8: 6, UInt8: 1>
-==> 00000003: <LoadConstUndefined>: <Reg8: 1>
-==> 00000005: <JStrictNotEqual>: <Addr8: 7, Reg8: 6, Reg8: 1>  # Address: 0000000c
-==> 00000009: <LoadConstUInt8>: <Reg8: 6, UInt8: 1>
-==> 0000000c: <LoadConstUInt8>: <Reg8: 9, UInt8: 1>
-==> 0000000f: <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 apply]
-==> 00000013: <GetGlobalObject>: <Reg8: 2>
-==> 00000015: <TryGetById>: <Reg8: 7, Reg8: 2, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 0000001b: <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 00000020: <LoadConstString>: <Reg8: 3, string_id: 4761>  # String: '__BC:Functions/DefaultParameterTests/defaultWithRestTest/start' (String)
-==> 00000024: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
-==> 00000029: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 214>  # String: 'reduce' (Identifier)
-==> 0000002e: <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 12404>  # Function: [#12404  of 12 bytes]: 3 params @ offset 0x0023e3a0
-==> 00000033: <Call3>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 6>
-==> 00000039: <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 0000003f: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 00000044: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
-==> 00000049: <Ret>: <Reg8: 1>
+==> 00000000: <GetGlobalObject>: <Reg8: 2>
+==> 00000002: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 3, string_id: 4816>  # String: '__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000016: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000001c: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000021: <LoadConstUInt8>: <Reg8: 0, UInt8: 5>
+==> 00000024: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0>
+==> 00000029: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000002f: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000034: <LoadConstUInt8>: <Reg8: 0, UInt8: 10>
+==> 00000037: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0>
+==> 0000003c: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000042: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000047: <LoadConstUInt8>: <Reg8: 0, UInt8: 20>
+==> 0000004a: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0>
+==> 0000004f: <NewObject>: <Reg8: 3>
+==> 00000051: <GetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 7613>  # String: 'count' (Identifier)
+==> 00000057: <LoadConstNull>: <Reg8: 1>
+==> 00000059: <JNotEqual>: <Addr8: 12, Reg8: 4, Reg8: 1>  # Address: 00000065
+==> 0000005d: <LoadConstZero>: <Reg8: 0>
+==> 0000005f: <PutByIdStrict>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 7613>  # String: 'count' (Identifier)
+==> 00000065: <GetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 7613>  # String: 'count' (Identifier)
+==> 0000006b: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 0000006e: <Add>: <Reg8: 4, Reg8: 4, Reg8: 0>
+==> 00000072: <PutByIdStrict>: <Reg8: 3, Reg8: 4, UInt8: 0, string_id: 7613>  # String: 'count' (Identifier)
+==> 00000078: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000007e: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000083: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 7613>  # String: 'count' (Identifier)
+==> 00000089: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000008e: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000094: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000099: <LoadConstString>: <Reg8: 2, string_id: 4813>  # String: '__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/end' (String)
+==> 0000009d: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000a2: <LoadConstUndefined>: <Reg8: 1>
+==> 000000a4: <Ret>: <Reg8: 1>
 
 

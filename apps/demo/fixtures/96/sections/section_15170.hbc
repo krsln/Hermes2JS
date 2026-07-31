@@ -1,0 +1,61 @@
+
+=> [Function #15170 "callGeneratorTests" of 212 bytes]: 1 params, frame size=16, strict=1, exc handler=1, debug info=0  @ offset 0x0026b07d
+  [Exception handlers: [start=0x34, end=0x44, target=0x46] [start=0x6a, end=0x7a, target=0x7c] ]
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4776>  # String: '__BC:Functions/GeneratorTests/callGeneratorTests/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
+==> 0000001d: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001f: <Call1>: <Reg8: 5, Reg8: 3, Reg8: 0>
+==> 00000023: <Mov>: <Reg8: 3, Reg8: 5>
+==> 00000026: <IteratorBegin>: <Reg8: 4, Reg8: 3>
+==> 00000029: <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 3>
+==> 0000002d: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000030: <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 0000004d
+==> 00000034: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000003a: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000003f: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+==> 00000044: <Jmp>: <Addr8: -27>  # Address: 00000029
+==> 00000046: <Catch>: <Reg8: 3>
+==> 00000048: <IteratorClose>: <Reg8: 4, UInt8: 1>
+==> 0000004b: <Throw>: <Reg8: 3>
+==> 0000004d: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
+==> 00000051: <LoadConstUInt8>: <Reg8: 3, UInt8: 5>
+==> 00000054: <Call2>: <Reg8: 5, Reg8: 4, Reg8: 0, Reg8: 3>
+==> 00000059: <Mov>: <Reg8: 3, Reg8: 5>
+==> 0000005c: <IteratorBegin>: <Reg8: 4, Reg8: 3>
+==> 0000005f: <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 3>
+==> 00000063: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000066: <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000083
+==> 0000006a: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000070: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000075: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+==> 0000007a: <Jmp>: <Addr8: -27>  # Address: 0000005f
+==> 0000007c: <Catch>: <Reg8: 3>
+==> 0000007e: <IteratorClose>: <Reg8: 4, UInt8: 1>
+==> 00000081: <Throw>: <Reg8: 3>
+==> 00000083: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 2>
+==> 00000087: <Call1>: <Reg8: 5, Reg8: 2, Reg8: 0>
+==> 0000008b: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000091: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000096: <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 182>  # String: 'next' (Identifier)
+==> 0000009b: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 0000009f: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000a4: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000aa: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000af: <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 214>  # String: 'return' (Identifier)
+==> 000000b4: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 0>
+==> 000000b9: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000be: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000c4: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000c9: <LoadConstString>: <Reg8: 1, string_id: 4775>  # String: '__BC:Functions/GeneratorTests/callGeneratorTests/end' (String)
+==> 000000cd: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000d2: <Ret>: <Reg8: 0>
+
+

@@ -1,69 +1,105 @@
-function function_15080(param0, param1, param2, param3, param4, param5, param6, param7) {
-    // ──────────────── Block 0 ──────────────── 
-    // CODE → <CreateEnvironment>: <Reg8: 2>
-    // USED → r2 = createEnvironment();
-    // CODE → <LoadParam>: <Reg8: 4, UInt8: 2>
-    // USED → r4 = param2;
-    // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
-    // USED → r1 = param6;
-    // CODE → <LoadParam>: <Reg8: 5, UInt8: 7>
-    // USED → r5 = param7;
-    // CODE → <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15081>  # Function: [#15081 _interopDefault of 28 bytes]: 2 params @ offset 0x001017eb
-    // USED → r3 = _interopDefault;
-    // CODE → <NewArrayWithBuffer>: <Reg8: 0, UInt16: 1, UInt16: 1, UInt16: 23509>  # Array: ['x']
-    // USED → r0 = ["x"];
-    // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
-    createEnvironment()[0] = ["x"]
-    // CODE → <GetGlobalObject>: <Reg8: 0>
-    // USED → r0 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 25>  # String: 'Object' (Identifier)
-    // USED → r8 = globalThis.Object;
-    // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 109>  # String: 'defineProperty' (Identifier)
-    // USED → r7 = globalThis.Object.defineProperty;
-    // CODE → <NewObject>: <Reg8: 6>
-    // USED → r6 = {  };
-    // CODE → <LoadConstTrue>: <Reg8: 0>
-    // USED → r0 = true;
-    // CODE → <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 0, string_id: 206>  # String: 'value' (Identifier)
-    // USED → r6 = { value: true };
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 49>  # String: '__esModule' (Identifier)
-    // USED → r0 = "__esModule";
-    // CODE → <Call4>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 0, Reg8: 6>
-    r0 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
-    // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15082>  # Function: [#15082 spreadArrayTest of 203 bytes]: 1 params @ offset 0x002651cd
-    // USED → r0 = spreadArrayTest;
-    // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10645>  # String: 'spreadArrayTest' (Identifier)
-    param6.spreadArrayTest = spreadArrayTest
-    // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15083>  # Function: [#15083 spreadObjectTest of 137 bytes]: 1 params @ offset 0x00265298
-    // USED → r0 = spreadObjectTest;
-    // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 10651>  # String: 'spreadObjectTest' (Identifier)
-    param6.spreadObjectTest = spreadObjectTest
-    // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15084>  # Function: [#15084 spreadFunctionArgsTest of 99 bytes]: 1 params @ offset 0x00265321
-    // USED → r0 = spreadFunctionArgsTest;
-    // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 10648>  # String: 'spreadFunctionArgsTest' (Identifier)
-    param6.spreadFunctionArgsTest = spreadFunctionArgsTest
-    // CODE → <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
-    // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
-    // USED → r1 = param7[0];
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
-    // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, param7[0]);
-    // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[0]));
-    // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
-    createEnvironment()[1] = _interopDefault.call(undefined, param2.call(undefined, param7[0]))
-    // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
-    // USED → r1 = 1;
-    // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-    // USED → r1 = param7[1];
-    // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, param7[1]);
-    // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[1]));
-    // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 1>
-    createEnvironment()[2] = _interopDefault.call(undefined, param2.call(undefined, param7[1]))
-    // CODE → <Ret>: <Reg8: 0>
-    return undefined;
+function tryLoopMultiReturnTest(param0, param1) {
+    try {
+        // ──────────────── Block 0 ──────────────── 
+        // CODE → <LoadParam>: <Reg8: 3, UInt8: 1>
+        // USED → r3 = param1;
+        // CODE → <LoadConstUndefined>: <Reg8: 4>
+        r4 = undefined
+        // CODE → <GetGlobalObject>: <Reg8: 0>
+        // USED → r0 = globalThis;
+        // CODE → <TryGetById>: <Reg8: 5, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r5 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r2 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 1, string_id: 4748>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start' (String)
+        // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start";
+        // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 1>
+        r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start")
+        // CODE → <LoadConstZero>: <Reg8: 2>
+        // USED → r2 = 0;
+        // CODE → <LoadConstZero>: <Reg8: 4>
+        // USED → r4 = 0;
+        // CODE → <LoadConstString>: <Reg8: 1, string_id: 4747>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
+        // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive";
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 1 ──────────────── 
+            // CODE → <Mov>: <Reg8: 6, Reg8: 4>
+            // USED → r6 = 0;
+            // CODE → <Mov>: <Reg8: 5, Reg8: 3>
+            // USED → r5 = param1;
+            // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+            // USED → r5 = param1.length;
+            // CODE → <JGreaterEqual>: <Addr8: 76, Reg8: 6, Reg8: 5>  # Address: 0000007a
+            if (0 >= param1.length) goto label_122;
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <Mov>: <Reg8: 6, Reg8: 3>
+            // USED → r6 = param1;
+            // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+            // USED → r5 = 0;
+            // CODE → <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
+            // USED → r5 = param1[0];
+            // CODE → <JLess>: <Addr8: 58, Reg8: 5, Reg8: 2>  # Address: 00000076
+            if (param1[0] < 0) goto label_118;
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → <Mov>: <Reg8: 6, Reg8: 3>
+            // USED → r6 = param1;
+            // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+            // USED → r5 = 0;
+            // CODE → <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
+            // USED → r5 = param1[0];
+            if (param1[0] === 0) {
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+                // USED → r5 = 0 + 1;
+                // CODE → <Inc>: <Reg8: 4, Reg8: 5>
+                r4 = 0 + 1 + 1
+                // CODE → <Jmp>: <Addr8: -81>  # Address: 00000023
+                goto label_35;
+            } else {
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r8 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r7 = globalThis.console.log;
+                // CODE → <Mov>: <Reg8: 6, Reg8: 3>
+                // USED → r6 = param1;
+                // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+                // USED → r5 = 0;
+                // CODE → <GetByVal>: <Reg8: 6, Reg8: 6, Reg8: 5>
+                // USED → r6 = param1[0];
+                // CODE → <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
+                r6 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", param1[0])
+                // CODE → <Inc>: <Reg8: 4, Reg8: 5>
+                // USED → r4 = 0 + 1;
+                // CODE → <Jmp>: <Addr8: -73>  # Address: 00000023
+                goto label_35;
+            }
+        }
+        // LOOP → END
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <LoadConstTrue>: <Reg8: 1>
+        // USED → r1 = true;
+        // CODE → <Ret>: <Reg8: 1>
+        return true;
+        // ──────────────── Block 7 ──────────────── 
+        // CODE → <LoadConstFalse>: <Reg8: 1>
+        // USED → r1 = false;
+        // CODE → <Ret>: <Reg8: 1>
+        return false;
+    } catch (caughtException) {
+        // ──────────────── Block 8 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r2 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r1 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 0, string_id: 3905>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block' (String)
+        // USED → r0 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block";
+        // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+        r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block")
+        // CODE → <LoadConstFalse>: <Reg8: 0>
+        // USED → r0 = false;
+        // CODE → <Ret>: <Reg8: 0>
+        return false;
+    }
 }

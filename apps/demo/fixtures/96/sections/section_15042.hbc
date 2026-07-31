@@ -1,101 +1,16 @@
 
-=> [Function #15042 "runAllTests" of 429 bytes]: 1 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x00264148
+=> [Function #15042 "runAllTests" of 30 bytes]: 1 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x0026772c
 
 Bytecode listing:
 
-==> 00000000: <GetGlobalObject>: <Reg8: 1>
-==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4616>  # String: '__BC:index/runAllTests/start' (String)
-==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-==> 00000016: <GetEnvironment>: <Reg8: 2, UInt8: 0>
-==> 00000019: <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 0>
-==> 0000001d: <GetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 10754>  # String: 'whileTest' (Identifier)
-==> 00000023: <LoadConstUndefined>: <Reg8: 0>
-==> 00000025: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000029: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 1>
-==> 0000002d: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 10692>  # String: 'doWhileTest' (Identifier)
-==> 00000033: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000037: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 2>
-==> 0000003b: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 10710>  # String: 'forTest' (Identifier)
-==> 00000041: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000045: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 3>
-==> 00000049: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 6, string_id: 10704>  # String: 'forEachTest' (Identifier)
-==> 0000004f: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000053: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000059: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000005e: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 4>
-==> 00000062: <GetById>: <Reg8: 6, Reg8: 3, UInt8: 7, string_id: 8540>  # String: 'switchTest' (Identifier)
-==> 00000068: <LoadConstUInt8>: <Reg8: 3, UInt8: 4>
-==> 0000006b: <Call2>: <Reg8: 3, Reg8: 6, Reg8: 0, Reg8: 3>
-==> 00000070: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-==> 00000075: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 5>
-==> 00000079: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 8, string_id: 10744>  # String: 'nestedLoopTest' (Identifier)
-==> 0000007f: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000083: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 6>
-==> 00000087: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 9, string_id: 7572>  # String: 'complexTest' (Identifier)
-==> 0000008d: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000091: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 7>
-==> 00000095: <GetById>: <Reg8: 4, Reg8: 3, UInt8: 10, string_id: 10728>  # String: 'ifTest' (Identifier)
-==> 0000009b: <LoadConstUInt8>: <Reg8: 3, UInt8: 7>
-==> 0000009e: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
-==> 000000a3: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 7>
-==> 000000a7: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 11, string_id: 10719>  # String: 'ifElseChainTest' (Identifier)
-==> 000000ad: <LoadConstTrue>: <Reg8: 4>
-==> 000000af: <LoadConstFalse>: <Reg8: 3>
-==> 000000b1: <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 4, Reg8: 3>
-==> 000000b7: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 8>
-==> 000000bb: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 12, string_id: 10761>  # String: 'tryCatchTest' (Identifier)
-==> 000000c1: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 000000c5: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 9>
-==> 000000c9: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 13, string_id: 10789>  # String: 'forOfTest' (Identifier)
-==> 000000cf: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 000000d3: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 9>
-==> 000000d7: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 14, string_id: 8463>  # String: 'forInTest' (Identifier)
-==> 000000dd: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 000000e1: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 10>
-==> 000000e5: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 15, string_id: 10792>  # String: 'objectLiteralTest' (Identifier)
-==> 000000eb: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 000000ef: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 11>
-==> 000000f3: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 16, string_id: 10808>  # String: 'propertyAccessTest' (Identifier)
-==> 000000f9: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 000000fd: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 11>
-==> 00000101: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 17, string_id: 10801>  # String: 'computedPropertyTest' (Identifier)
-==> 00000107: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 0000010b: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 11>
-==> 0000010f: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 18, string_id: 9758>  # String: 'optionalChainingTest' (Identifier)
-==> 00000115: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000119: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 12>
-==> 0000011d: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 19, string_id: 7735>  # String: 'arrayTest' (Identifier)
-==> 00000123: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000127: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 13>
-==> 0000012b: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 20, string_id: 10645>  # String: 'spreadArrayTest' (Identifier)
-==> 00000131: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000135: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 13>
-==> 00000139: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 21, string_id: 10651>  # String: 'spreadObjectTest' (Identifier)
-==> 0000013f: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000143: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 13>
-==> 00000147: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 22, string_id: 10648>  # String: 'spreadFunctionArgsTest' (Identifier)
-==> 0000014d: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000151: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 14>
-==> 00000155: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 23, string_id: 10769>  # String: 'arrowFunctionTest' (Identifier)
-==> 0000015b: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 0000015f: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 15>
-==> 00000163: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 24, string_id: 9676>  # String: 'closureTest' (Identifier)
-==> 00000169: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 0000016d: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 15>
-==> 00000171: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 25, string_id: 10775>  # String: 'closureLoopTest' (Identifier)
-==> 00000177: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 0000017b: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 16>
-==> 0000017f: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 26, string_id: 10781>  # String: 'callDefaultParameterTests' (Identifier)
-==> 00000185: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
-==> 00000189: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 17>
-==> 0000018d: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 27, string_id: 10666>  # String: 'classTest' (Identifier)
-==> 00000193: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 0>
-==> 00000197: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 0000019d: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 000001a2: <LoadConstString>: <Reg8: 1, string_id: 4615>  # String: '__BC:index/runAllTests/end' (String)
-==> 000001a6: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 000001ab: <Ret>: <Reg8: 0>
+==> 00000000: <LoadConstUndefined>: <Reg8: 0>
+==> 00000002: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000005: <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 29>
+==> 00000009: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 65>  # String: 'apply' (Identifier)
+==> 0000000e: <ReifyArguments>: <Reg8: 0>
+==> 00000010: <Mov>: <Reg8: 1, Reg8: 0>
+==> 00000013: <LoadParam>: <Reg8: 0, UInt8: 0>
+==> 00000016: <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 0000001c: <Ret>: <Reg8: 0>
 
 

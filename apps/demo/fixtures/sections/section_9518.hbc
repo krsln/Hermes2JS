@@ -1,0 +1,13 @@
+
+=> [Function #9518 "simpleGeneratorTest" of 20 bytes]: 1 params, frame size=2, strict=0, exc handler=0, debug info=0  @ offset 0x00200a10
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 2>
+==> 00000003: <LoadConstZero>: <Reg8: 0>
+==> 00000005: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 0>
+==> 00000009: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
+==> 0000000d: <CreateGenerator>: <Reg8: 1, Reg8: 1, function_id: 12482>  # Function: [#12482 simpleGeneratorTest of 398 bytes]: 1 params @ offset 0x00243eaf
+==> 00000012: <Ret>: <Reg8: 1>
+
+

@@ -1,0 +1,31 @@
+
+=> [Function #15120 "spreadFunctionArgsTest" of 99 bytes]: 1 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x00269e5c
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 993>  # String: '__BC:Arrays/SpreadTests/spreadFunctionArgsTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000001c: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000021: <NewArray>: <Reg8: 5, UInt16: 0>
+==> 00000025: <NewArrayWithBuffer>: <Reg8: 7, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
+==> 0000002d: <LoadConstZero>: <Reg8: 6>
+==> 0000002f: <Mov>: <Reg8: 8, Reg8: 5>
+==> 00000032: <CallBuiltin>: <Reg8: 0, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
+==> 00000036: <CreateEnvironment>: <Reg8: 0>
+==> 00000038: <CreateClosure>: <Reg8: 8, Reg8: 0, function_id: 15121>  # Function: [#15121 sum of 19 bytes]: 4 params @ offset 0x00269ebf
+==> 0000003d: <LoadConstUndefined>: <Reg8: 0>
+==> 0000003f: <Mov>: <Reg8: 7, Reg8: 5>
+==> 00000042: <LoadConstUndefined>: <Reg8: 6>
+==> 00000044: <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 4>  # Built-in function: [#47 apply]
+==> 00000048: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000004d: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000053: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000058: <LoadConstString>: <Reg8: 1, string_id: 4526>  # String: '__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end' (String)
+==> 0000005c: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000061: <Ret>: <Reg8: 0>
+
+

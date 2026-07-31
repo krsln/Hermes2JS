@@ -1,0 +1,44 @@
+
+=> [Function #15167 "?anon_0_generatorWithLoopTest" of 123 bytes]: 2 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x0026af5b
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000004: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000007: <JmpTrue>: <Addr8: 113, Reg8: 1>  # Address: 00000078
+==> 0000000a: <GetGlobalObject>: <Reg8: 1>
+==> 0000000c: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000012: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000017: <LoadConstString>: <Reg8: 2, string_id: 4786>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/start' (String)
+==> 0000001b: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000020: <LoadConstZero>: <Reg8: 4>
+==> 00000022: <Less>: <Reg8: 6, Reg8: 4, Reg8: 5>
+==> 00000026: <LoadConstString>: <Reg8: 3, string_id: 4783>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/skip' (String)
+==> 0000002a: <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
+==> 0000002d: <JmpFalse>: <Addr8: 50, Reg8: 6>  # Address: 0000005f
+==> 00000030: <Mov>: <Reg8: 6, Reg8: 4>
+==> 00000033: <JStrictEqual>: <Addr8: 21, Reg8: 6, Reg8: 2>  # Address: 00000048
+==> 00000037: <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>
+==> 0000003b: <SaveGenerator>: <Addr8: 4>  # Address: 0000003f
+==> 0000003d: <Ret>: <Reg8: 7>
+==> 0000003f: <ResumeGenerator>: <Reg8: 7, Reg8: 8>
+==> 00000042: <JmpFalse>: <Addr8: 22, Reg8: 8>  # Address: 00000058
+==> 00000045: <CompleteGenerator>: <>
+==> 00000046: <Ret>: <Reg8: 7>
+==> 00000048: <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000004e: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000053: <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
+==> 00000058: <Inc>: <Reg8: 4, Reg8: 6>
+==> 0000005b: <JLess>: <Addr8: -43, Reg8: 4, Reg8: 5>  # Address: 00000030
+==> 0000005f: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000065: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000006a: <LoadConstString>: <Reg8: 1, string_id: 4782>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/end' (String)
+==> 0000006e: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000073: <LoadConstUndefined>: <Reg8: 1>
+==> 00000075: <CompleteGenerator>: <>
+==> 00000076: <Ret>: <Reg8: 1>
+==> 00000078: <CompleteGenerator>: <>
+==> 00000079: <Ret>: <Reg8: 0>
+
+

@@ -1,41 +1,22 @@
 
-=> [Function #15087 "arrowFunctionTest" of 159 bytes]: 1 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x002653cb
+=> [Function #15087 "mayThrow" of 52 bytes]: 2 params, frame size=11, strict=1, exc handler=0, debug info=0  @ offset 0x0026902a
 
 Bytecode listing:
 
-==> 00000000: <CreateEnvironment>: <Reg8: 0>
-==> 00000002: <GetGlobalObject>: <Reg8: 1>
-==> 00000004: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 0000000a: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000000f: <LoadConstString>: <Reg8: 2, string_id: 4588>  # String: '__BC:Functions/ArrowTests/arrowFunctionTest/start' (String)
-==> 00000013: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-==> 00000018: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 0000001e: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 00000023: <LoadConstUInt8>: <Reg8: 5, UInt8: 5>
-==> 00000026: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5>
-==> 0000002b: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000031: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 00000036: <LoadConstUInt8>: <Reg8: 2, UInt8: 16>
-==> 00000039: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-==> 0000003e: <NewArrayWithBuffer>: <Reg8: 4, UInt16: 4, UInt16: 4, UInt16: 20713>  # Array: [1, 2, 3, 4]
-==> 00000046: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 170>  # String: 'map' (Identifier)
-==> 0000004b: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15088>  # Function: [#15088  of 12 bytes]: 2 params @ offset 0x00265113
-==> 00000050: <Call2>: <Reg8: 4, Reg8: 3, Reg8: 4, Reg8: 2>
-==> 00000055: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 0000005b: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 00000060: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
-==> 00000065: <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 15089>  # Function: [#15089 makeMultiplier of 16 bytes]: 2 params @ offset 0x0026546a
-==> 0000006a: <LoadConstUndefined>: <Reg8: 0>
-==> 0000006c: <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
-==> 0000006f: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 2>
-==> 00000074: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 0000007a: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000007f: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 5>
-==> 00000084: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-==> 00000089: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 0000008f: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 00000094: <LoadConstString>: <Reg8: 1, string_id: 4583>  # String: '__BC:Functions/ArrowTests/arrowFunctionTest/end' (String)
-==> 00000098: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 0000009d: <Ret>: <Reg8: 0>
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <LoadConstZero>: <Reg8: 0>
+==> 00000005: <JLess>: <Addr8: 13, Reg8: 1, Reg8: 0>  # Address: 00000012
+==> 00000009: <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
+==> 0000000c: <Mul>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 00000010: <Ret>: <Reg8: 0>
+==> 00000012: <GetGlobalObject>: <Reg8: 0>
+==> 00000014: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 12>  # String: 'Error' (Identifier)
+==> 0000001a: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
+==> 0000001f: <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
+==> 00000023: <LoadConstString>: <Reg8: 3, string_id: 1323>  # String: 'negative' (String)
+==> 00000027: <Mov>: <Reg8: 4, Reg8: 1>
+==> 0000002a: <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+==> 0000002e: <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 00000032: <Throw>: <Reg8: 0>
 
 

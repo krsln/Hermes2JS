@@ -1,0 +1,34 @@
+
+=> [Function #15161 "legacyArgumentsTest" of 109 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x0026ad9b
+
+Bytecode listing:
+
+==> 00000000: <LoadConstUndefined>: <Reg8: 0>
+==> 00000002: <LoadConstUndefined>: <Reg8: 4>
+==> 00000004: <GetGlobalObject>: <Reg8: 1>
+==> 00000006: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000c: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000011: <LoadConstString>: <Reg8: 2, string_id: 4795>  # String: '__BC:Functions/RestParameterTests/legacyArgumentsTest/start' (String)
+==> 00000015: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
+==> 0000001a: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000020: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000025: <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
+==> 00000028: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
+==> 0000002d: <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
+==> 00000030: <LoadConstZero>: <Reg8: 3>
+==> 00000032: <Less>: <Reg8: 2, Reg8: 3, Reg8: 2>
+==> 00000036: <JmpFalse>: <Addr8: 33, Reg8: 2>  # Address: 00000057
+==> 00000039: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000003f: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000044: <GetArgumentsPropByVal>: <Reg8: 2, Reg8: 3, Reg8: 4>
+==> 00000048: <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
+==> 0000004d: <Inc>: <Reg8: 3, Reg8: 3>
+==> 00000050: <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
+==> 00000053: <JLess>: <Addr8: -26, Reg8: 3, Reg8: 2>  # Address: 00000039
+==> 00000057: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000005d: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000062: <LoadConstString>: <Reg8: 1, string_id: 2593>  # String: '__BC:Functions/RestParameterTests/legacyArgumentsTest/end' (String)
+==> 00000066: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000006b: <Ret>: <Reg8: 0>
+
+

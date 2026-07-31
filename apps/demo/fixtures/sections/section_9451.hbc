@@ -1,22 +1,53 @@
 
-=> [Function #9451 "computedPropertyTest" of 68 bytes]: 1 params, frame size=14, strict=0, exc handler=0, debug info=0  @ offset 0x001fae07
+=> [Function #9451 "switchTest" of 192 bytes]: 2 params, frame size=14, strict=0, exc handler=0, debug info=0  @ offset 0x001fddc7
 
 Bytecode listing:
 
 ==> 00000000: <GetGlobalObject>: <Reg8: 1>
-==> 00000002: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 00000008: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 0000000d: <LoadConstString>: <Reg8: 2, string_id: 4774>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/start' (String)
+==> 00000002: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 2, string_id: 4808>  # String: '__BC:ControlFlow/SwitchTests/switchTest/start' (String)
 ==> 00000011: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-==> 00000016: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 0000001c: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 00000021: <NewObjectWithBuffer>: <Reg8: 2, UInt16: 1915, UInt16: 46706>  # Object: {'dynamic': 42, 'staticKey': 'value'}
-==> 00000027: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-==> 0000002c: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 00000032: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 00000037: <LoadConstString>: <Reg8: 1, string_id: 4771>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/end' (String)
-==> 0000003b: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 00000040: <LoadConstUndefined>: <Reg8: 0>
-==> 00000042: <Ret>: <Reg8: 0>
+==> 00000016: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000019: <LoadConstZero>: <Reg8: 0>
+==> 0000001b: <JStrictEqualLong>: <Addr32: 139, Reg8: 0, Reg8: 2>  # Address: 000000a6
+==> 00000022: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000025: <JStrictEqual>: <Addr8: 103, Reg8: 0, Reg8: 2>  # Address: 0000008c
+==> 00000029: <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
+==> 0000002c: <JStrictEqual>: <Addr8: 70, Reg8: 0, Reg8: 2>  # Address: 00000072
+==> 00000030: <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
+==> 00000033: <JStrictEqual>: <Addr8: 37, Reg8: 0, Reg8: 2>  # Address: 00000058
+==> 00000037: <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
+==> 0000003a: <JStrictEqual>: <Addr8: 30, Reg8: 0, Reg8: 2>  # Address: 00000058
+==> 0000003e: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000044: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000049: <LoadConstString>: <Reg8: 2, string_id: 3462>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-default' (String)
+==> 0000004d: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000052: <LoadConstString>: <Reg8: 2, string_id: 1861>  # String: 'other' (String)
+==> 00000056: <Ret>: <Reg8: 2>
+==> 00000058: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000005e: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000063: <LoadConstString>: <Reg8: 2, string_id: 1730>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-3-4' (String)
+==> 00000067: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000006c: <LoadConstString>: <Reg8: 2, string_id: 3949>  # String: 'three-four' (String)
+==> 00000070: <Ret>: <Reg8: 2>
+==> 00000072: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000078: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000007d: <LoadConstString>: <Reg8: 2, string_id: 919>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-2' (String)
+==> 00000081: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000086: <LoadConstString>: <Reg8: 2, string_id: 9241>  # String: 'two' (Identifier)
+==> 0000008a: <Ret>: <Reg8: 2>
+==> 0000008c: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000092: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000097: <LoadConstString>: <Reg8: 2, string_id: 2021>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-1' (String)
+==> 0000009b: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000a0: <LoadConstString>: <Reg8: 2, string_id: 6956>  # String: 'one' (Identifier)
+==> 000000a4: <Ret>: <Reg8: 2>
+==> 000000a6: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000ac: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000b1: <LoadConstString>: <Reg8: 1, string_id: 4807>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-0' (String)
+==> 000000b5: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000ba: <LoadConstString>: <Reg8: 1, string_id: 597>  # String: 'zero' (String)
+==> 000000be: <Ret>: <Reg8: 1>
 
 

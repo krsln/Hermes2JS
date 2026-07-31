@@ -1,0 +1,99 @@
+
+=> [Function #15205 "" of 417 bytes]: 8 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x0026ba9e
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 5>
+==> 00000002: <LoadParam>: <Reg8: 6, UInt8: 2>
+==> 00000005: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000008: <LoadParam>: <Reg8: 7, UInt8: 7>
+==> 0000000b: <CreateClosure>: <Reg8: 4, Reg8: 5, function_id: 15206>  # Function: [#15206 _interopDefault of 28 bytes]: 2 params @ offset 0x00104cff
+==> 00000010: <CreateClosure>: <Reg8: 0, Reg8: 5, function_id: 15207>  # Function: [#15207 _privateHelper2 of 59 bytes]: 1 params @ offset 0x0026bc3f
+==> 00000015: <StoreToEnvironment>: <Reg8: 5, UInt8: 11, Reg8: 0>
+==> 00000019: <GetGlobalObject>: <Reg8: 2>
+==> 0000001b: <TryGetById>: <Reg8: 9, Reg8: 2, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000021: <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000026: <NewObject>: <Reg8: 3>
+==> 00000028: <LoadConstTrue>: <Reg8: 0>
+==> 0000002a: <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
+==> 0000002e: <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
+==> 00000032: <Call4>: <Reg8: 0, Reg8: 8, Reg8: 9, Reg8: 1, Reg8: 0, Reg8: 3>
+==> 00000039: <CreateClosure>: <Reg8: 0, Reg8: 5, function_id: 15208>  # Function: [#15208 privateStaticTest of 262 bytes]: 1 params @ offset 0x0026bc7a
+==> 0000003e: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10854>  # String: 'privateStaticTest' (Identifier)
+==> 00000044: <LoadConstZero>: <Reg8: 0>
+==> 00000046: <GetByVal>: <Reg8: 1, Reg8: 7, Reg8: 0>
+==> 0000004a: <LoadConstUndefined>: <Reg8: 0>
+==> 0000004c: <Call2>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1>
+==> 00000051: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 00000056: <StoreToEnvironment>: <Reg8: 5, UInt8: 0, Reg8: 1>
+==> 0000005a: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 0000005d: <GetByVal>: <Reg8: 1, Reg8: 7, Reg8: 1>
+==> 00000061: <Call2>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1>
+==> 00000066: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 0000006b: <StoreToEnvironment>: <Reg8: 5, UInt8: 1, Reg8: 1>
+==> 0000006f: <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
+==> 00000072: <GetByVal>: <Reg8: 1, Reg8: 7, Reg8: 1>
+==> 00000076: <Call2>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1>
+==> 0000007b: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 00000080: <StoreToEnvironment>: <Reg8: 5, UInt8: 2, Reg8: 1>
+==> 00000084: <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
+==> 00000087: <GetByVal>: <Reg8: 1, Reg8: 7, Reg8: 1>
+==> 0000008b: <Call2>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1>
+==> 00000090: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 00000095: <StoreToEnvironment>: <Reg8: 5, UInt8: 3, Reg8: 1>
+==> 00000099: <LoadConstUInt8>: <Reg8: 1, UInt8: 4>
+==> 0000009c: <GetByVal>: <Reg8: 1, Reg8: 7, Reg8: 1>
+==> 000000a0: <Call2>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1>
+==> 000000a5: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 000000aa: <StoreToEnvironment>: <Reg8: 5, UInt8: 4, Reg8: 1>
+==> 000000ae: <LoadConstUInt8>: <Reg8: 3, UInt8: 5>
+==> 000000b1: <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 3>
+==> 000000b5: <Call2>: <Reg8: 3, Reg8: 6, Reg8: 0, Reg8: 3>
+==> 000000ba: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
+==> 000000bf: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 000000c4: <LoadConstString>: <Reg8: 4, string_id: 7735>  # String: 'count' (Identifier)
+==> 000000c8: <Call2>: <Reg8: 4, Reg8: 6, Reg8: 0, Reg8: 4>
+==> 000000cd: <StoreToEnvironment>: <Reg8: 5, UInt8: 5, Reg8: 4>
+==> 000000d1: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 000000d6: <LoadConstString>: <Reg8: 4, string_id: 1521>  # String: 'instances' (String)
+==> 000000da: <Call2>: <Reg8: 9, Reg8: 6, Reg8: 0, Reg8: 4>
+==> 000000df: <StoreToEnvironment>: <Reg8: 5, UInt8: 6, Reg8: 9>
+==> 000000e3: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 000000e8: <LoadConstString>: <Reg8: 4, string_id: 5021>  # String: 'privateHelper' (String)
+==> 000000ec: <Call2>: <Reg8: 4, Reg8: 6, Reg8: 0, Reg8: 4>
+==> 000000f1: <StoreToEnvironment>: <Reg8: 5, UInt8: 7, Reg8: 4>
+==> 000000f5: <CreateClosure>: <Reg8: 4, Reg8: 5, function_id: 15209>  # Function: [#15209  of 166 bytes]: 1 params @ offset 0x0026bd80
+==> 000000fa: <Call1>: <Reg8: 6, Reg8: 4, Reg8: 0>
+==> 000000fe: <StoreToEnvironment>: <Reg8: 5, UInt8: 8, Reg8: 6>
+==> 00000102: <TryGetById>: <Reg8: 8, Reg8: 2, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000108: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 0000010d: <NewObjectWithBuffer>: <Reg8: 4, UInt16: 2, UInt16: 2, UInt16: 43, UInt16: 45>  # Object: {'writable': true, 'value': 0}
+==> 00000117: <Call4>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 9, Reg8: 4>
+==> 0000011e: <LoadConstUInt8>: <Reg8: 4, UInt8: 100>
+==> 00000121: <PutById>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 11547>  # String: 'MAX' (Identifier)
+==> 00000127: <GetByIdShort>: <Reg8: 4, Reg8: 3, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 0000012c: <LoadConstString>: <Reg8: 3, string_id: 7671>  # String: 'label' (Identifier)
+==> 00000130: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
+==> 00000135: <StoreToEnvironment>: <Reg8: 5, UInt8: 9, Reg8: 3>
+==> 00000139: <CreateClosure>: <Reg8: 4, Reg8: 5, function_id: 15217>  # Function: [#15217  of 81 bytes]: 2 params @ offset 0x0026c046
+==> 0000013e: <Call2>: <Reg8: 4, Reg8: 4, Reg8: 0, Reg8: 6>
+==> 00000143: <StoreToEnvironment>: <Reg8: 5, UInt8: 10, Reg8: 4>
+==> 00000147: <TryGetById>: <Reg8: 7, Reg8: 2, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000014d: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000152: <NewObjectWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 2, UInt16: 43, UInt16: 219>  # Object: {'writable': true, 'value': 'configured'}
+==> 0000015c: <Call4>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 4, Reg8: 3, Reg8: 5>
+==> 00000163: <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 4, string_id: 99>  # String: 'console' (Identifier)
+==> 00000169: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 5, string_id: 90>  # String: 'log' (Identifier)
+==> 0000016e: <LoadConstString>: <Reg8: 2, string_id: 2815>  # String: '__BC:Classes/PrivateStaticTests/ConfiguredCounter/static-block' (String)
+==> 00000172: <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
+==> 00000177: <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 0000017c: <Call3>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 4, Reg8: 3>
+==> 00000182: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 00000187: <Call3>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 4, Reg8: 3>
+==> 0000018d: <GetByVal>: <Reg8: 4, Reg8: 1, Reg8: 3>
+==> 00000191: <GetById>: <Reg8: 1, Reg8: 4, UInt8: 6, string_id: 10961>  # String: 'toUpperCase' (Identifier)
+==> 00000197: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 4>
+==> 0000019b: <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000019f: <Ret>: <Reg8: 0>
+
+

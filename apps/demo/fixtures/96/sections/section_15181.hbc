@@ -1,0 +1,69 @@
+
+=> [Function #15181 "?anon_0_" of 235 bytes]: 1 params, frame size=16, strict=1, exc handler=1, debug info=0  @ offset 0x0026b324
+  [Exception handlers: [start=0x20, end=0x54, target=0x8d] [start=0x56, end=0x76, target=0x8d] [start=0x20, end=0x76, target=0xd0] [start=0x8d, end=0xa3, target=0xd0] ]
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000004: <JmpTrueLong>: <Addr32: 228, Reg8: 1>  # Address: 000000e8
+==> 0000000a: <GetGlobalObject>: <Reg8: 2>
+==> 0000000c: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000012: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000017: <LoadConstString>: <Reg8: 1, string_id: 4758>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/start' (String)
+==> 0000001b: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 00000020: <GetEnvironment>: <Reg8: 1, UInt8: 2>
+==> 00000023: <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
+==> 00000027: <LoadConstUndefined>: <Reg8: 1>
+==> 00000029: <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
+==> 0000002c: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 3>
+==> 00000031: <SaveGenerator>: <Addr8: 4>  # Address: 00000035
+==> 00000033: <Ret>: <Reg8: 1>
+==> 00000035: <ResumeGenerator>: <Reg8: 1, Reg8: 4>
+==> 00000038: <JmpTrue>: <Addr8: 62, Reg8: 4>  # Address: 00000076
+==> 0000003b: <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000041: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000046: <LoadConstString>: <Reg8: 4, string_id: 401>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/awaited' (String)
+==> 0000004a: <Call3>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
+==> 00000050: <JStrictEqual>: <Addr8: 6, Reg8: 1, Reg8: 3>  # Address: 00000056
+==> 00000054: <Jmp>: <Addr8: 79>  # Address: 000000a3
+==> 00000056: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
+==> 0000005c: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000061: <CreateThis>: <Reg8: 4, Reg8: 3, Reg8: 5>
+==> 00000065: <LoadConstString>: <Reg8: 8, string_id: 6849>  # String: 'post-await failure' (String)
+==> 00000069: <Mov>: <Reg8: 9, Reg8: 4>
+==> 0000006c: <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
+==> 00000070: <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
+==> 00000074: <Throw>: <Reg8: 3>
+==> 00000076: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000007c: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000081: <LoadConstString>: <Reg8: 3, string_id: 4757>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/finally' (String)
+==> 00000085: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000008a: <CompleteGenerator>: <>
+==> 0000008b: <Ret>: <Reg8: 1>
+==> 0000008d: <Catch>: <Reg8: 1>
+==> 0000008f: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000095: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000009a: <LoadConstString>: <Reg8: 1, string_id: 2140>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/caught' (String)
+==> 0000009e: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 000000a3: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000a9: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000ae: <LoadConstString>: <Reg8: 1, string_id: 4757>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/finally' (String)
+==> 000000b2: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 000000b7: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000bd: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000c2: <LoadConstString>: <Reg8: 1, string_id: 4756>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/end' (String)
+==> 000000c6: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 000000cb: <LoadConstUndefined>: <Reg8: 1>
+==> 000000cd: <CompleteGenerator>: <>
+==> 000000ce: <Ret>: <Reg8: 1>
+==> 000000d0: <Catch>: <Reg8: 1>
+==> 000000d2: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000d8: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000dd: <LoadConstString>: <Reg8: 2, string_id: 4757>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/finally' (String)
+==> 000000e1: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000e6: <Throw>: <Reg8: 1>
+==> 000000e8: <CompleteGenerator>: <>
+==> 000000e9: <Ret>: <Reg8: 0>
+
+

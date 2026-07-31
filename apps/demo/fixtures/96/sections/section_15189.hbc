@@ -1,0 +1,51 @@
+
+=> [Function #15189 "?anon_0_" of 167 bytes]: 1 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x0026b518
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000004: <JmpTrueLong>: <Addr32: 160, Reg8: 1>  # Address: 000000a4
+==> 0000000a: <GetGlobalObject>: <Reg8: 3>
+==> 0000000c: <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000012: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000017: <LoadConstString>: <Reg8: 1, string_id: 4761>  # String: '__BC:Functions/AsyncTests/parallelAwaitTest/start' (String)
+==> 0000001b: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
+==> 00000020: <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 3, string_id: 27>  # String: 'Promise' (Identifier)
+==> 00000026: <GetById>: <Reg8: 7, Reg8: 8, UInt8: 4, string_id: 7443>  # String: 'all' (Identifier)
+==> 0000002c: <GetEnvironment>: <Reg8: 4, UInt8: 2>
+==> 0000002f: <LoadFromEnvironment>: <Reg8: 9, Reg8: 4, UInt8: 2>
+==> 00000033: <LoadConstUndefined>: <Reg8: 2>
+==> 00000035: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 00000038: <Call2>: <Reg8: 6, Reg8: 9, Reg8: 2, Reg8: 5>
+==> 0000003d: <NewArray>: <Reg8: 1, UInt16: 2>
+==> 00000041: <PutOwnByIndex>: <Reg8: 1, Reg8: 6, UInt8: 0>
+==> 00000045: <LoadConstUInt8>: <Reg8: 6, UInt8: 2>
+==> 00000048: <Call2>: <Reg8: 9, Reg8: 9, Reg8: 2, Reg8: 6>
+==> 0000004d: <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
+==> 00000051: <Call2>: <Reg8: 1, Reg8: 7, Reg8: 8, Reg8: 1>
+==> 00000056: <SaveGenerator>: <Addr8: 4>  # Address: 0000005a
+==> 00000058: <Ret>: <Reg8: 1>
+==> 0000005a: <ResumeGenerator>: <Reg8: 1, Reg8: 7>
+==> 0000005d: <JmpTrue>: <Addr8: 68, Reg8: 7>  # Address: 000000a1
+==> 00000060: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 0>
+==> 00000064: <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 107>  # String: 'default' (Identifier)
+==> 00000069: <Call3>: <Reg8: 4, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 6>
+==> 0000006f: <LoadConstZero>: <Reg8: 6>
+==> 00000071: <GetByVal>: <Reg8: 7, Reg8: 4, Reg8: 6>
+==> 00000075: <GetByVal>: <Reg8: 6, Reg8: 4, Reg8: 5>
+==> 00000079: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000007f: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000084: <Call3>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 7, Reg8: 6>
+==> 0000008a: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000090: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000095: <LoadConstString>: <Reg8: 3, string_id: 4760>  # String: '__BC:Functions/AsyncTests/parallelAwaitTest/end' (String)
+==> 00000099: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000009e: <CompleteGenerator>: <>
+==> 0000009f: <Ret>: <Reg8: 2>
+==> 000000a1: <CompleteGenerator>: <>
+==> 000000a2: <Ret>: <Reg8: 1>
+==> 000000a4: <CompleteGenerator>: <>
+==> 000000a5: <Ret>: <Reg8: 0>
+
+

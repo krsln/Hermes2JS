@@ -1,0 +1,22 @@
+
+=> [Function #15207 "_privateHelper2" of 59 bytes]: 1 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x0026bc3f
+
+Bytecode listing:
+
+==> 00000000: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000003: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 4>
+==> 00000007: <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
+==> 0000000c: <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 5>
+==> 00000010: <LoadConstUndefined>: <Reg8: 2>
+==> 00000012: <LoadParam>: <Reg8: 1, UInt8: 0>
+==> 00000015: <Call3>: <Reg8: 1, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 3>
+==> 0000001b: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 5>
+==> 0000001f: <GetByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
+==> 00000023: <GetGlobalObject>: <Reg8: 0>
+==> 00000025: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 2, string_id: 14>  # String: 'HermesInternal' (Identifier)
+==> 0000002b: <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 96>  # String: 'concat' (Identifier)
+==> 00000030: <LoadConstString>: <Reg8: 0, string_id: 5460>  # String: 'count=' (String)
+==> 00000034: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 0, Reg8: 2>
+==> 00000039: <Ret>: <Reg8: 0>
+
+

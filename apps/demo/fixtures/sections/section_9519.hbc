@@ -1,0 +1,15 @@
+
+=> [Function #9519 "generatorWithLoopTest" of 27 bytes]: 2 params, frame size=3, strict=0, exc handler=0, debug info=0  @ offset 0x00200a24
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 4>
+==> 00000003: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000006: <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 2>
+==> 0000000a: <LoadConstZero>: <Reg8: 0>
+==> 0000000c: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 0>
+==> 00000010: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 0>
+==> 00000014: <CreateGenerator>: <Reg8: 1, Reg8: 1, function_id: 12483>  # Function: [#12483 generatorWithLoopTest of 399 bytes]: 2 params @ offset 0x0024403d
+==> 00000019: <Ret>: <Reg8: 1>
+
+

@@ -1,0 +1,47 @@
+function set(param0, param1) {
+    // ──────────────── Block 0 ──────────────── 
+    // CODE → <GetGlobalObject>: <Reg8: 1>
+    // USED → r1 = globalThis;
+    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = globalThis.console.log;
+    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4543>  # String: '__BC:Classes/PrivateStaticTests/Counter/set-value' (String)
+    // USED → r0 = "__BC:Classes/PrivateStaticTests/Counter/set-value";
+    // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+    r0 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/set-value")
+    // CODE → <GetEnvironment>: <Reg8: 2, UInt8: 1>
+    // USED → r2 = getEnvironment(1);
+    // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 4>
+    // USED → r0 = getEnvironment(1)[4];
+    // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+    // USED → r5 = getEnvironment(1)[4].default;
+    // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 5>
+    // USED → r4 = getEnvironment(1)[5];
+    // CODE → <LoadConstUndefined>: <Reg8: 0>
+    // USED → r0 = undefined;
+    // CODE → <LoadParam>: <Reg8: 3, UInt8: 0>
+    // USED → r3 = this;
+    // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
+    // USED → r3 = getEnvironment(1)[4].default.call(undefined, this, getEnvironment(1)[5]);
+    // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 5>
+    // USED → r2 = getEnvironment(1)[5];
+    // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 4, string_id: 21>  # String: 'Math' (Identifier)
+    // USED → r6 = globalThis.Math;
+    // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 5, string_id: 113>  # String: 'min' (Identifier)
+    // USED → r5 = globalThis.Math.min;
+    // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
+    // USED → r1 = getEnvironment(0);
+    // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
+    // USED → r1 = getEnvironment(0)[0];
+    // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 6, string_id: 11547>  # String: 'MAX' (Identifier)
+    // USED → r4 = getEnvironment(0)[0].MAX;
+    // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
+    // USED → r1 = param1;
+    // CODE → <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 1, Reg8: 4>
+    // USED → r1 = globalThis.Math.min(param1, getEnvironment(0)[0].MAX);
+    // CODE → <PutByVal>: <Reg8: 3, Reg8: 2, Reg8: 1>
+    getEnvironment(1)[4].default.call(undefined, this, getEnvironment(1)[5])[getEnvironment(1)[5]] = globalThis.Math.min(param1, getEnvironment(0)[0].MAX)
+    // CODE → <Ret>: <Reg8: 0>
+    return undefined;
+}

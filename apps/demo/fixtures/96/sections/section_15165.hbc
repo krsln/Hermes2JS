@@ -1,0 +1,45 @@
+
+=> [Function #15165 "?anon_0_simpleGeneratorTest" of 105 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x0026aee9
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000004: <JmpTrue>: <Addr8: 98, Reg8: 1>  # Address: 00000066
+==> 00000007: <GetGlobalObject>: <Reg8: 4>
+==> 00000009: <TryGetById>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000f: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000014: <LoadConstString>: <Reg8: 1, string_id: 4789>  # String: '__BC:Functions/GeneratorTests/simpleGeneratorTest/start' (String)
+==> 00000018: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000001d: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 00000020: <SaveGenerator>: <Addr8: 4>  # Address: 00000024
+==> 00000022: <Ret>: <Reg8: 1>
+==> 00000024: <ResumeGenerator>: <Reg8: 1, Reg8: 2>
+==> 00000027: <JmpTrue>: <Addr8: 60, Reg8: 2>  # Address: 00000063
+==> 0000002a: <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
+==> 0000002d: <SaveGenerator>: <Addr8: 4>  # Address: 00000031
+==> 0000002f: <Ret>: <Reg8: 2>
+==> 00000031: <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+==> 00000034: <JmpTrue>: <Addr8: 44, Reg8: 3>  # Address: 00000060
+==> 00000037: <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
+==> 0000003a: <SaveGenerator>: <Addr8: 4>  # Address: 0000003e
+==> 0000003c: <Ret>: <Reg8: 3>
+==> 0000003e: <ResumeGenerator>: <Reg8: 3, Reg8: 5>
+==> 00000041: <JmpTrue>: <Addr8: 28, Reg8: 5>  # Address: 0000005d
+==> 00000044: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000004a: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000004f: <LoadConstString>: <Reg8: 4, string_id: 4197>  # String: '__BC:Functions/GeneratorTests/simpleGeneratorTest/end' (String)
+==> 00000053: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 00000058: <LoadConstUndefined>: <Reg8: 4>
+==> 0000005a: <CompleteGenerator>: <>
+==> 0000005b: <Ret>: <Reg8: 4>
+==> 0000005d: <CompleteGenerator>: <>
+==> 0000005e: <Ret>: <Reg8: 3>
+==> 00000060: <CompleteGenerator>: <>
+==> 00000061: <Ret>: <Reg8: 2>
+==> 00000063: <CompleteGenerator>: <>
+==> 00000064: <Ret>: <Reg8: 1>
+==> 00000066: <CompleteGenerator>: <>
+==> 00000067: <Ret>: <Reg8: 0>
+
+

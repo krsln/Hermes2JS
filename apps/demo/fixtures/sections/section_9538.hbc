@@ -1,0 +1,24 @@
+
+=> [Function #9538 "value" of 71 bytes]: 2 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x002010dd
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 2>
+==> 00000005: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 3, string_id: 4730>  # String: '__BC:Classes/PrivateStaticTests/Counter/set-value' (String)
+==> 00000014: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 6>
+==> 0000001d: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 2, string_id: 19>  # String: 'Math' (Identifier)
+==> 00000023: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 3, string_id: 184>  # String: 'min' (Identifier)
+==> 00000028: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 2>
+==> 0000002c: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 4, string_id: 10140>  # String: 'MAX' (Identifier)
+==> 00000032: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000035: <Call3>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2>
+==> 0000003b: <LoadParam>: <Reg8: 1, UInt8: 0>
+==> 0000003e: <PutOwnPrivateBySym>: <Reg8: 1, Reg8: 2, UInt8: 0, Reg8: 3>
+==> 00000043: <LoadConstUndefined>: <Reg8: 0>
+==> 00000045: <Ret>: <Reg8: 0>
+
+

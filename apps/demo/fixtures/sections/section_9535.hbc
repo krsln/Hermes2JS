@@ -1,0 +1,93 @@
+
+=> [Function #9535 "privateStaticTest" of 403 bytes]: 1 params, frame size=22, strict=0, exc handler=0, debug info=0  @ offset 0x00200ec5
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 5, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 3>
+==> 00000005: <TryGetById>: <Reg8: 7, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 4, string_id: 4735>  # String: '__BC:Classes/PrivateStaticTests/privateStaticTest/start' (String)
+==> 00000014: <Call2>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 4>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 4, Reg8: 5, UInt8: 0>
+==> 0000001d: <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
+==> 00000021: <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000031
+==> 00000029: <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
+==> 0000002d: <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 00000031: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
+==> 00000036: <NewObjectWithParent>: <Reg8: 9, Reg8: 6>
+==> 00000039: <LoadFromEnvironment>: <Reg8: 12, Reg8: 5, UInt8: 5>
+==> 0000003d: <PrivateIsIn>: <Reg8: 1, Reg8: 12, Reg8: 9, Reg8: 0>
+==> 00000042: <JmpTrueLong>: <Addr32: 329, Reg8: 1>  # Address: 0000018b
+==> 00000048: <LoadConstUndefined>: <Reg8: 1>
+==> 0000004a: <AddOwnPrivateBySym>: <Reg8: 9, Reg8: 1, Reg8: 12>
+==> 0000004e: <LoadFromEnvironment>: <Reg8: 10, Reg8: 5, UInt8: 6>
+==> 00000052: <LoadConstZero>: <Reg8: 0>
+==> 00000054: <AddOwnPrivateBySym>: <Reg8: 9, Reg8: 0, Reg8: 10>
+==> 00000058: <TryGetById>: <Reg8: 7, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000005e: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000063: <LoadConstString>: <Reg8: 11, string_id: 4728>  # String: '__BC:Classes/PrivateStaticTests/Counter/constructor' (String)
+==> 00000067: <Call2>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 11>
+==> 0000006c: <LoadFromEnvironment>: <Reg8: 8, Reg8: 5, UInt8: 2>
+==> 00000070: <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 4>
+==> 00000074: <GetOwnPrivateBySym>: <Reg8: 6, Reg8: 8, UInt8: 1, Reg8: 7>
+==> 00000079: <Inc>: <Reg8: 6, Reg8: 6>
+==> 0000007c: <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
+==> 00000081: <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
+==> 00000085: <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000095
+==> 0000008d: <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
+==> 00000091: <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 00000095: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
+==> 0000009a: <NewObjectWithParent>: <Reg8: 6, Reg8: 6>
+==> 0000009d: <PrivateIsIn>: <Reg8: 2, Reg8: 12, Reg8: 6, Reg8: 2>
+==> 000000a2: <JmpTrueLong>: <Addr32: 225, Reg8: 2>  # Address: 00000183
+==> 000000a8: <AddOwnPrivateBySym>: <Reg8: 6, Reg8: 1, Reg8: 12>
+==> 000000ac: <AddOwnPrivateBySym>: <Reg8: 6, Reg8: 0, Reg8: 10>
+==> 000000b0: <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000b6: <GetByIdShort>: <Reg8: 6, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000bb: <Call2>: <Reg8: 6, Reg8: 6, Reg8: 10, Reg8: 11>
+==> 000000c0: <GetOwnPrivateBySym>: <Reg8: 6, Reg8: 8, UInt8: 1, Reg8: 7>
+==> 000000c5: <Inc>: <Reg8: 6, Reg8: 6>
+==> 000000c8: <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
+==> 000000cd: <GetById>: <Reg8: 6, Reg8: 9, UInt8: 3, string_id: 11123>  # String: 'increment' (Identifier)
+==> 000000d3: <Call1>: <Reg8: 6, Reg8: 6, Reg8: 9>
+==> 000000d7: <GetById>: <Reg8: 6, Reg8: 9, UInt8: 3, string_id: 11123>  # String: 'increment' (Identifier)
+==> 000000dd: <Call1>: <Reg8: 6, Reg8: 6, Reg8: 9>
+==> 000000e1: <LoadConstUInt8>: <Reg8: 0, UInt8: 200>
+==> 000000e4: <PutByIdStrict>: <Reg8: 9, Reg8: 0, UInt8: 0, string_id: 211>  # String: 'value' (Identifier)
+==> 000000ea: <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000f0: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000f5: <GetByIdShort>: <Reg8: 6, Reg8: 9, UInt8: 4, string_id: 211>  # String: 'value' (Identifier)
+==> 000000fa: <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
+==> 000000ff: <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000105: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000010a: <GetById>: <Reg8: 6, Reg8: 9, UInt8: 5, string_id: 8661>  # String: 'describe' (Identifier)
+==> 00000110: <Call1>: <Reg8: 6, Reg8: 6, Reg8: 9>
+==> 00000114: <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
+==> 00000119: <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000011f: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000124: <GetById>: <Reg8: 6, Reg8: 4, UInt8: 6, string_id: 9807>  # String: 'instanceCount' (Identifier)
+==> 0000012a: <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
+==> 0000012f: <TryGetById>: <Reg8: 7, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000135: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000013a: <LoadFromEnvironment>: <Reg8: 8, Reg8: 5, UInt8: 1>
+==> 0000013e: <GetById>: <Reg8: 5, Reg8: 8, UInt8: 7, string_id: 11346>  # String: 'describeLabel' (Identifier)
+==> 00000144: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 8>
+==> 00000148: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
+==> 0000014d: <GetById>: <Reg8: 5, Reg8: 4, UInt8: 8, string_id: 7259>  # String: 'reset' (Identifier)
+==> 00000153: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 4>
+==> 00000157: <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000015d: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000162: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 6, string_id: 9807>  # String: 'instanceCount' (Identifier)
+==> 00000168: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 0000016d: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000173: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000178: <LoadConstString>: <Reg8: 3, string_id: 4734>  # String: '__BC:Classes/PrivateStaticTests/privateStaticTest/end' (String)
+==> 0000017c: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000181: <Ret>: <Reg8: 1>
+==> 00000183: <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
+==> 00000187: <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 0000018b: <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
+==> 0000018f: <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+
+

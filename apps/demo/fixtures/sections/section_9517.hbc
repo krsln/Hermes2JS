@@ -1,0 +1,37 @@
+
+=> [Function #9517 "callRestParameterTests" of 119 bytes]: 1 params, frame size=24, strict=0, exc handler=0, debug info=0  @ offset 0x00200999
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 6, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 5>
+==> 00000005: <TryGetById>: <Reg8: 9, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 7, string_id: 4082>  # String: '__BC:Functions/RestParameterTests/callRestParameterTests/start' (String)
+==> 00000014: <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 7, Reg8: 6, UInt8: 0>
+==> 0000001d: <LoadConstUndefined>: <Reg8: 3>
+==> 0000001f: <Call1>: <Reg8: 4, Reg8: 7, Reg8: 3>
+==> 00000023: <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
+==> 00000026: <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
+==> 00000029: <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
+==> 0000002c: <Call4>: <Reg8: 4, Reg8: 7, Reg8: 3, Reg8: 2, Reg8: 1, Reg8: 0>
+==> 00000033: <LoadFromEnvironment>: <Reg8: 11, Reg8: 6, UInt8: 1>
+==> 00000037: <LoadConstString>: <Reg8: 10, string_id: 36>  # String: 'b' (Identifier)
+==> 0000003b: <LoadConstString>: <Reg8: 9, string_id: 6471>  # String: 'a' (Identifier)
+==> 0000003f: <Call3>: <Reg8: 4, Reg8: 11, Reg8: 3, Reg8: 9, Reg8: 10>
+==> 00000045: <LoadConstString>: <Reg8: 12, string_id: 6518>  # String: 'd' (Identifier)
+==> 00000049: <LoadConstString>: <Reg8: 13, string_id: 6562>  # String: 'c' (Identifier)
+==> 0000004d: <LoadConstUndefined>: <Reg8: 16>
+==> 0000004f: <Mov>: <Reg8: 15, Reg8: 9>
+==> 00000052: <Mov>: <Reg8: 14, Reg8: 10>
+==> 00000055: <Call>: <Reg8: 4, Reg8: 11, UInt8: 5>
+==> 00000059: <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 2>
+==> 0000005d: <Call1>: <Reg8: 4, Reg8: 6, Reg8: 3>
+==> 00000061: <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000067: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000006c: <LoadConstString>: <Reg8: 5, string_id: 4950>  # String: '__BC:Functions/RestParameterTests/callRestParameterTests/end' (String)
+==> 00000070: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
+==> 00000075: <Ret>: <Reg8: 3>
+
+

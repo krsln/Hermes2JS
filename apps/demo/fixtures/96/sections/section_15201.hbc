@@ -1,0 +1,34 @@
+
+=> [Function #15201 "" of 106 bytes]: 2 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x0026b92e
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <CreateClosure>: <Reg8: 4, Reg8: 0, function_id: 15202>  # Function: [#15202 Dog of 98 bytes]: 3 params @ offset 0x0026b998
+==> 00000007: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
+==> 0000000b: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000000e: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 2>
+==> 00000012: <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
+==> 00000017: <LoadConstUndefined>: <Reg8: 3>
+==> 00000019: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 0000001c: <Call3>: <Reg8: 2, Reg8: 5, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000022: <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 4>
+==> 00000026: <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
+==> 0000002b: <NewObject>: <Reg8: 5>
+==> 0000002d: <LoadConstString>: <Reg8: 1, string_id: 10340>  # String: 'makeSound' (Identifier)
+==> 00000031: <PutNewOwnByIdShort>: <Reg8: 5, Reg8: 1, string_id: 117>  # String: 'key' (Identifier)
+==> 00000035: <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 15203>  # Function: [#15203 makeSound of 106 bytes]: 1 params @ offset 0x0026b9fa
+==> 0000003a: <PutNewOwnByIdShort>: <Reg8: 5, Reg8: 1, string_id: 205>  # String: 'value' (Identifier)
+==> 0000003e: <NewArray>: <Reg8: 1, UInt16: 1>
+==> 00000042: <PutOwnByIndex>: <Reg8: 1, Reg8: 5, UInt8: 0>
+==> 00000046: <NewObject>: <Reg8: 5>
+==> 00000048: <LoadConstString>: <Reg8: 6, string_id: 103>  # String: 'create' (Identifier)
+==> 0000004c: <PutNewOwnByIdShort>: <Reg8: 5, Reg8: 6, string_id: 117>  # String: 'key' (Identifier)
+==> 00000050: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15204>  # Function: [#15204 create of 58 bytes]: 2 params @ offset 0x0026ba64
+==> 00000055: <PutNewOwnByIdShort>: <Reg8: 5, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
+==> 00000059: <NewArray>: <Reg8: 0, UInt16: 1>
+==> 0000005d: <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 0>
+==> 00000061: <Call4>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0>
+==> 00000068: <Ret>: <Reg8: 0>
+
+

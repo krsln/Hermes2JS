@@ -1,51 +1,31 @@
 
-=> [Function #15067 "objectLiteralTest" of 206 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x00264ccb
+=> [Function #15067 "labeledBlockBreakTest" of 109 bytes]: 1 params, frame size=12, strict=1, exc handler=0, debug info=0  @ offset 0x0026845f
 
 Bytecode listing:
 
 ==> 00000000: <GetGlobalObject>: <Reg8: 0>
-==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4603>  # String: '__BC:Objects/ObjectLiteralTests/objectLiteralTest/start' (String)
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4606>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/start' (String)
 ==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 00000016: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 3, UInt16: 2, UInt16: 12813, UInt16: 23462>  # Object: {'name': 'Ada', 'age': 30}
-==> 00000020: <CreateEnvironment>: <Reg8: 2>
-==> 00000022: <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 15068>  # Function: [#15068 greet of 35 bytes]: 1 params @ offset 0x00264d99
-==> 00000027: <PutNewOwnById>: <Reg8: 1, Reg8: 2, string_id: 17457>  # String: 'greet' (Identifier)
-==> 0000002c: <TryGetById>: <Reg8: 5, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000032: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 00000037: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 176>  # String: 'name' (Identifier)
-==> 0000003c: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 4, string_id: 7526>  # String: 'age' (Identifier)
-==> 00000042: <Call3>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 2>
-==> 00000048: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 5, string_id: 17457>  # String: 'greet' (Identifier)
-==> 0000004e: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
-==> 00000052: <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 176>  # String: 'name' (Identifier)
-==> 00000057: <GetById>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 7526>  # String: 'age' (Identifier)
-==> 0000005d: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000063: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 00000068: <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3>
-==> 0000006e: <NewObject>: <Reg8: 1>
-==> 00000070: <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
-==> 00000073: <PutNewOwnById>: <Reg8: 1, Reg8: 2, string_id: 6974>  # String: 'a' (Identifier)
-==> 00000078: <NewObject>: <Reg8: 2>
-==> 0000007a: <LoadConstUInt8>: <Reg8: 3, UInt8: 2>
-==> 0000007d: <PutNewOwnById>: <Reg8: 2, Reg8: 3, string_id: 7026>  # String: 'c' (Identifier)
-==> 00000082: <NewObject>: <Reg8: 3>
-==> 00000084: <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
-==> 00000087: <PutNewOwnById>: <Reg8: 3, Reg8: 4, string_id: 6965>  # String: 'e' (Identifier)
-==> 0000008c: <PutNewOwnById>: <Reg8: 2, Reg8: 3, string_id: 6966>  # String: 'd' (Identifier)
-==> 00000091: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 2, string_id: 39>  # String: 'b' (Identifier)
-==> 00000095: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 0000009b: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 000000a0: <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 39>  # String: 'b' (Identifier)
-==> 000000a5: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 7, string_id: 6966>  # String: 'd' (Identifier)
-==> 000000ab: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 8, string_id: 6965>  # String: 'e' (Identifier)
-==> 000000b1: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 000000b6: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 000000bc: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 000000c1: <LoadConstString>: <Reg8: 0, string_id: 4601>  # String: '__BC:Objects/ObjectLiteralTests/objectLiteralTest/end' (String)
-==> 000000c5: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-==> 000000ca: <LoadConstUndefined>: <Reg8: 0>
-==> 000000cc: <Ret>: <Reg8: 0>
+==> 00000016: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000001c: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000021: <LoadConstString>: <Reg8: 1, string_id: 2099>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/before-break' (String)
+==> 00000025: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000002a: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 21>  # String: 'Math' (Identifier)
+==> 00000030: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 9292>  # String: 'random' (Identifier)
+==> 00000036: <Call1>: <Reg8: 2, Reg8: 1, Reg8: 2>
+==> 0000003a: <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
+==> 0000003d: <JLess>: <Addr8: 24, Reg8: 2, Reg8: 1>  # Address: 00000055
+==> 00000041: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000047: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000004c: <LoadConstString>: <Reg8: 1, string_id: 4607>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/unreachable' (String)
+==> 00000050: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000055: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000005b: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000060: <LoadConstString>: <Reg8: 0, string_id: 4604>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/end' (String)
+==> 00000064: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000069: <LoadConstUndefined>: <Reg8: 0>
+==> 0000006b: <Ret>: <Reg8: 0>
 
 

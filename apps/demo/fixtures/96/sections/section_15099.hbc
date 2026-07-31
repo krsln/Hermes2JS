@@ -1,10 +1,28 @@
 
-=> [Function #15099 "" of 9 bytes]: 1 params, frame size=1, strict=1, exc handler=0, debug info=0  @ offset 0x000f46a0
+=> [Function #15099 "computedPropertyTest" of 89 bytes]: 1 params, frame size=12, strict=1, exc handler=0, debug info=0  @ offset 0x0026960e
 
 Bytecode listing:
 
-==> 00000000: <GetEnvironment>: <Reg8: 0, UInt8: 0>
-==> 00000003: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 0>
-==> 00000007: <Ret>: <Reg8: 0>
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4829>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000016: <NewObject>: <Reg8: 3>
+==> 00000018: <LoadConstUInt8>: <Reg8: 2, UInt8: 42>
+==> 0000001b: <LoadConstString>: <Reg8: 1, string_id: 8980>  # String: 'dynamic' (Identifier)
+==> 0000001f: <PutOwnByVal>: <Reg8: 3, Reg8: 2, Reg8: 1, UInt8: 1>
+==> 00000024: <LoadConstString>: <Reg8: 2, string_id: 205>  # String: 'value' (Identifier)
+==> 00000028: <LoadConstString>: <Reg8: 1, string_id: 2363>  # String: 'staticKey' (String)
+==> 0000002c: <PutOwnByVal>: <Reg8: 3, Reg8: 2, Reg8: 1, UInt8: 1>
+==> 00000031: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000037: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000003c: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
+==> 00000041: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000047: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000004c: <LoadConstString>: <Reg8: 0, string_id: 4828>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/end' (String)
+==> 00000050: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000055: <LoadConstUndefined>: <Reg8: 0>
+==> 00000057: <Ret>: <Reg8: 0>
 
 

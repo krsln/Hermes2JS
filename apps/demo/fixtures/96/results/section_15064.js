@@ -1,58 +1,43 @@
-function forOfTest(param0) {
+function function_15064(param0, param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <GetGlobalObject>: <Reg8: 1>
-    // USED → r1 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 3546>  # String: '__BC:Iterators/IteratorTests/forOfTest/start' (String)
-    // USED → r0 = "__BC:Iterators/IteratorTests/forOfTest/start";
-    // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Iterators/IteratorTests/forOfTest/start")
-    // CODE → <NewArrayWithBuffer>: <Reg8: 2, UInt16: 4, UInt16: 4, UInt16: 20713>  # Array: [1, 2, 3, 4]
-    // USED → r2 = [1, 2, 3, 4];
-    // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = GetIterator([1, 2, 3, 4]);
+    // CODE → <CreateEnvironment>: <Reg8: 0>
+    r0 = createEnvironment()
+    // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
+    // USED → r1 = param6;
+    // CODE → <GetGlobalObject>: <Reg8: 2>
+    // USED → r2 = globalThis;
+    // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+    // USED → r5 = globalThis.Object;
+    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+    // USED → r4 = globalThis.Object.defineProperty;
+    // CODE → <NewObject>: <Reg8: 3>
+    // USED → r3 = {  };
+    // CODE → <LoadConstTrue>: <Reg8: 2>
+    // USED → r2 = true;
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 2, string_id: 205>  # String: 'value' (Identifier)
+    // USED → r3 = { value: true };
+    // CODE → <LoadConstString>: <Reg8: 2, string_id: 48>  # String: '__esModule' (Identifier)
+    // USED → r2 = "__esModule";
+    // CODE → <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
+    r2 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
+    // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15065>  # Function: [#15065 labeledBreakTest of 123 bytes]: 1 params @ offset 0x00268359
+    // USED → r2 = labeledBreakTest;
+    // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 10933>  # String: 'labeledBreakTest' (Identifier)
+    param6.labeledBreakTest = labeledBreakTest
+    // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15066>  # Function: [#15066 labeledContinueTest of 139 bytes]: 1 params @ offset 0x002683d4
+    // USED → r2 = labeledContinueTest;
+    // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 10940>  # String: 'labeledContinueTest' (Identifier)
+    param6.labeledContinueTest = labeledContinueTest
+    // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15067>  # Function: [#15067 labeledBlockBreakTest of 109 bytes]: 1 params @ offset 0x0026845f
+    // USED → r2 = labeledBlockBreakTest;
+    // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 3, string_id: 8658>  # String: 'labeledBlockBreakTest' (Identifier)
+    param6.labeledBlockBreakTest = labeledBlockBreakTest
+    // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15068>  # Function: [#15068 tripleNestedLabeledTest of 144 bytes]: 1 params @ offset 0x002684cc
+    // USED → r0 = tripleNestedLabeledTest;
+    // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 10646>  # String: 'tripleNestedLabeledTest' (Identifier)
+    param6.tripleNestedLabeledTest = tripleNestedLabeledTest
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    try {
-        // LOOP → START (while)
-        while (true) {
-            // ──────────────── Block 1 ──────────────── 
-            // CODE → <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 2>
-            // USED → r6 = GetIterator([1, 2, 3, 4]).next();
-            // CODE → <Mov>: <Reg8: 4, Reg8: 3>
-            // USED → r4 = GetIterator([1, 2, 3, 4]);
-            // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 4, Reg8: 0>  # Address: 00000047
-            if (GetIterator([1, 2, 3, 4]) === undefined) goto label_71;
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-            // USED → r5 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-            // USED → r4 = globalThis.console.log;
-            // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
-            r4 = globalThis.console.log(GetIterator([1, 2, 3, 4]).next())
-            // CODE → <Jmp>: <Addr8: -27>  # Address: 00000023
-            goto label_35;
-        }
-        // LOOP → END
-    } catch (caughtException) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-        GetIterator([1, 2, 3, 4]).return()
-        // CODE → <Throw>: <Reg8: 2>
-        throw caughtException;
-    }
-    // ──────────────── Block 4 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4599>  # String: '__BC:Iterators/IteratorTests/forOfTest/end' (String)
-    // USED → r1 = "__BC:Iterators/IteratorTests/forOfTest/end";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Iterators/IteratorTests/forOfTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

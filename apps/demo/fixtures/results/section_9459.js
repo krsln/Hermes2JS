@@ -1,85 +1,104 @@
-function closureLoopTest(param0) {
+function tripleNestedLabeledTest(param0) {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <CreateFunctionEnvironment>: <Reg8: 2, UInt8: 1>
-    // USED → r2 = __environment__;
-    // CODE → <GetGlobalObject>: <Reg8: 1>
-    // USED → r1 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4756>  # String: '__BC:Functions/ClosureTests/closureLoopTest/start' (String)
-    // USED → r0 = "__BC:Functions/ClosureTests/closureLoopTest/start";
-    // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/start")
-    // CODE → <NewArray>: <Reg8: 0, UInt16: 0>
-    // USED → r0 = [];
-    // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
-    __environment__[0] = []
-    // CODE → <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 12403>  # Function: [#12403 _loop of 39 bytes]: 2 params @ offset 0x0023e3cb
-    // USED → r6 = _loop;
-    // CODE → <LoadConstZero>: <Reg8: 5>
-    // USED → r5 = 0;
-    // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 1>
-    // USED → r4 = 1;
-    // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
-    // USED → r3 = 3;
-    // CODE → <LoadConstZero>: <Reg8: 2>
-    // USED → r2 = 0;
-    // ──────────────── Block 1 ──────────────── 
-    // CODE → <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 2>
-    r7 = _loop.call(0, 0)
-    // CODE → <AddN>: <Reg8: 2, Reg8: 2, Reg8: 4>
-    // USED → r2 = 0 + 1;
-    // CODE → <JLessN>: <Addr8: -9, Reg8: 2, Reg8: 3>  # Address: 00000030
-    if (0 + 1 < 3) goto label_48;
-    // ──────────────── Block 2 ──────────────── 
-    // CODE → <Mov>: <Reg8: 2, Reg8: 0>
-    // USED → r2 = [];
-    // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = GetIterator([]);
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    // CODE → <GetGlobalObject>: <Reg8: 15>
+    // USED → r15 = globalThis;
+    // CODE → <TryGetById>: <Reg8: 18, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // USED → r18 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // USED → r17 = globalThis.console.log;
+    // CODE → <LoadConstString>: <Reg8: 16, string_id: 4804>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start' (String)
+    // USED → r16 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start";
+    // CODE → <Call2>: <Reg8: 16, Reg8: 17, Reg8: 18, Reg8: 16>
+    r16 = globalThis.console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start")
+    // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
+    // USED → r2 = 1;
+    // CODE → <LoadConstUInt8>: <Reg8: 12, UInt8: 3>
+    // USED → r12 = 3;
+    // CODE → <LoadConstUInt8>: <Reg8: 13, UInt8: 2>
+    // USED → r13 = 2;
+    // CODE → <LoadConstZero>: <Reg8: 9>
+    // USED → r9 = 0;
+    // CODE → <LoadConstZero>: <Reg8: 10>
+    // USED → r10 = 0;
     // LOOP → START (while)
-    while (GetIterator([]) === undefined) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-        r4 = []
-        // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
-        // USED → r4 = GetIterator([]).next();
-        // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        // USED → r5 = GetIterator([]);
-        // CODE → <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000070
-        if (GetIterator([]) === undefined) goto label_112;
-        // ──────────────── Block 4 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-        // USED → r6 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-        // USED → r5 = globalThis.console.log;
-        // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-        // USED → r4 = GetIterator([]).next().call(undefined);
-        // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-        r4 = globalThis.console.log(GetIterator([]).next().call(undefined))
-        // CODE → <Jmp>: <Addr8: -34>  # Address: 00000045
-        goto label_69;
+    while (true) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <Mov>: <Reg8: 11, Reg8: 9>
+        // USED → r11 = 0;
+        // CODE → <Mov>: <Reg8: 5, Reg8: 10>
+        // USED → r5 = 0;
+        // CODE → <LoadConstZero>: <Reg8: 6>
+        // USED → r6 = 0;
+        // ──────────────── Block 8 ──────────────── 
+        // CODE → <AddN>: <Reg8: 9, Reg8: 11, Reg8: 2>
+        // USED → r9 = 0 + 1;
+        // CODE → <Mov>: <Reg8: 10, Reg8: 3>
+        r10 = 0 + 1
+        // CODE → <JLessN>: <Addr8: -64, Reg8: 9, Reg8: 12>  # Address: 00000023
+        if (0 + 1 < 3) goto label_35;
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <Mov>: <Reg8: 7, Reg8: 6>
+            // USED → r7 = 0;
+            // CODE → <Mov>: <Reg8: 0, Reg8: 5>
+            // USED → r0 = 0;
+            // CODE → <LoadConstZero>: <Reg8: 1>
+            // USED → r1 = 0;
+            // ──────────────── Block 7 ──────────────── 
+            // CODE → <AddN>: <Reg8: 6, Reg8: 7, Reg8: 2>
+            // USED → r6 = 0 + 1;
+            // CODE → <Mov>: <Reg8: 5, Reg8: 3>
+            r5 = 0 + 1
+            // CODE → <JLessN>: <Addr8: -45, Reg8: 6, Reg8: 12>  # Address: 0000002b
+            if (0 + 1 < 3) goto label_43;
+            // LOOP → START (while)
+            while (0 === 1) {
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → <AddN>: <Reg8: 3, Reg8: 0, Reg8: 2>
+                // USED → r3 = 0 + 1;
+                // CODE → <Mov>: <Reg8: 4, Reg8: 1>
+                // USED → r4 = 0;
+                // CODE → <JStrictEqual>: <Addr8: 23, Reg8: 4, Reg8: 2>  # Address: 00000051
+                if (0 === 1) goto label_81;
+                if (0 !== 2) {
+                    // ──────────────── Block 6 ──────────────── 
+                    // CODE → <AddN>: <Reg8: 1, Reg8: 4, Reg8: 2>
+                    // USED → r1 = 0 + 1;
+                    // CODE → <Mov>: <Reg8: 0, Reg8: 3>
+                    r0 = 0 + 1
+                    // CODE → <JLessN>: <Addr8: -26, Reg8: 1, Reg8: 12>  # Address: 00000033
+                    if (0 + 1 < 3) goto label_51;
+                } else {
+                    // ──────────────── Block 5 ──────────────── 
+                    // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 13>  # Address: 00000067
+                    if (0 === 2) goto label_103;
+                }
+            }
+            // LOOP → END
+        }
+        // LOOP → END
     }
     // LOOP → END
-    // ──────────────── Block 5 ──────────────── 
-    // CODE → <Catch>: <Reg8: 2>
-    // USED → r2 = caughtException;
-    // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-    GetIterator([]).return()
-    // CODE → <Throw>: <Reg8: 2>
-    throw caughtException;
-    // ──────────────── Block 6 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4754>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
-    // USED → r1 = "__BC:Functions/ClosureTests/closureLoopTest/end";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
-    // CODE → <Ret>: <Reg8: 0>
+    // ──────────────── Block 9 ──────────────── 
+    // CODE → <TryGetById>: <Reg8: 18, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // USED → r18 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // USED → r17 = globalThis.console.log;
+    // CODE → <LoadConstString>: <Reg8: 16, string_id: 4801>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits' (String)
+    // USED → r16 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits";
+    // CODE → <Call3>: <Reg8: 16, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 3>
+    r16 = globalThis.console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits", 0 + 1)
+    // CODE → <TryGetById>: <Reg8: 17, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // USED → r17 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 16, Reg8: 17, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // USED → r16 = globalThis.console.log;
+    // CODE → <LoadConstString>: <Reg8: 15, string_id: 4798>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end' (String)
+    // USED → r15 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end";
+    // CODE → <Call2>: <Reg8: 15, Reg8: 16, Reg8: 17, Reg8: 15>
+    r15 = globalThis.console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end")
+    // CODE → <LoadConstUndefined>: <Reg8: 14>
+    // USED → r14 = undefined;
+    // CODE → <Ret>: <Reg8: 14>
     return undefined;
 }

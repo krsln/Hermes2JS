@@ -1,0 +1,32 @@
+
+=> [Function #9536 "Counter" of 94 bytes]: 1 params, frame size=16, strict=0, exc handler=0, debug info=0  @ offset 0x00201058
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000003: <GetNewTarget>: <Reg8: 2>
+==> 00000005: <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 0, string_id: 212>  # String: 'prototype' (Identifier)
+==> 0000000a: <NewObjectWithParent>: <Reg8: 2, Reg8: 2>
+==> 0000000d: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 5>
+==> 00000011: <PrivateIsIn>: <Reg8: 1, Reg8: 4, Reg8: 2, Reg8: 0>
+==> 00000016: <JmpTrue>: <Addr8: 64, Reg8: 1>  # Address: 00000056
+==> 00000019: <LoadConstUndefined>: <Reg8: 1>
+==> 0000001b: <AddOwnPrivateBySym>: <Reg8: 2, Reg8: 1, Reg8: 4>
+==> 0000001f: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 6>
+==> 00000023: <LoadConstZero>: <Reg8: 0>
+==> 00000025: <AddOwnPrivateBySym>: <Reg8: 2, Reg8: 0, Reg8: 4>
+==> 00000029: <GetGlobalObject>: <Reg8: 4>
+==> 0000002b: <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 108>  # String: 'console' (Identifier)
+==> 00000031: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 178>  # String: 'log' (Identifier)
+==> 00000036: <LoadConstString>: <Reg8: 4, string_id: 4728>  # String: '__BC:Classes/PrivateStaticTests/Counter/constructor' (String)
+==> 0000003a: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 0000003f: <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 2>
+==> 00000043: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 4>
+==> 00000047: <GetOwnPrivateBySym>: <Reg8: 3, Reg8: 5, UInt8: 1, Reg8: 4>
+==> 0000004c: <Inc>: <Reg8: 3, Reg8: 3>
+==> 0000004f: <PutOwnPrivateBySym>: <Reg8: 5, Reg8: 3, UInt8: 1, Reg8: 4>
+==> 00000054: <Ret>: <Reg8: 2>
+==> 00000056: <LoadConstString>: <Reg8: 7, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
+==> 0000005a: <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+
+

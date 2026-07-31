@@ -1,23 +1,21 @@
 
-=> [Function #15050 "forEachTest" of 71 bytes]: 1 params, frame size=12, strict=1, exc handler=0, debug info=0  @ offset 0x0026450b
+=> [Function #15050 "" of 52 bytes]: 8 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x00267c9b
 
 Bytecode listing:
 
-==> 00000000: <GetGlobalObject>: <Reg8: 0>
-==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4538>  # String: '__BC:ControlFlow/ForEachTests/forEachTest/start' (String)
-==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 00000016: <NewArrayWithBuffer>: <Reg8: 3, UInt16: 4, UInt16: 4, UInt16: 23471>  # Array: [10, 20, 30, 40]
-==> 0000001e: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 144>  # String: 'forEach' (Identifier)
-==> 00000023: <CreateEnvironment>: <Reg8: 1>
-==> 00000025: <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 15051>  # Function: [#15051  of 78 bytes]: 3 params @ offset 0x00264552
-==> 0000002a: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-==> 0000002f: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-==> 00000035: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-==> 0000003a: <LoadConstString>: <Reg8: 0, string_id: 4536>  # String: '__BC:ControlFlow/ForEachTests/forEachTest/end' (String)
-==> 0000003e: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-==> 00000043: <LoadConstUndefined>: <Reg8: 0>
-==> 00000045: <Ret>: <Reg8: 0>
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000003: <GetGlobalObject>: <Reg8: 0>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000010: <NewObject>: <Reg8: 2>
+==> 00000012: <LoadConstTrue>: <Reg8: 0>
+==> 00000014: <PutNewOwnByIdShort>: <Reg8: 2, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
+==> 00000018: <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
+==> 0000001c: <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>
+==> 00000023: <CreateEnvironment>: <Reg8: 0>
+==> 00000025: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15051>  # Function: [#15051 forTest of 135 bytes]: 1 params @ offset 0x00267ccf
+==> 0000002a: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10341>  # String: 'forTest' (Identifier)
+==> 00000030: <LoadConstUndefined>: <Reg8: 0>
+==> 00000032: <Ret>: <Reg8: 0>
 
 

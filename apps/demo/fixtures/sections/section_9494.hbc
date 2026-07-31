@@ -1,0 +1,30 @@
+
+=> [Function #9494 "spreadFunctionArgsTest" of 97 bytes]: 1 params, frame size=18, strict=0, exc handler=0, debug info=0  @ offset 0x001ffb89
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 2>
+==> 00000002: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 3, string_id: 4720>  # String: '__BC:Arrays/SpreadTests/spreadFunctionArgsTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000016: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000001c: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000021: <NewArray>: <Reg8: 6, UInt16: 0>
+==> 00000025: <LoadConstZero>: <Reg8: 7>
+==> 00000027: <NewArrayWithBuffer>: <Reg8: 8, UInt16: 3, UInt16: 3, UInt16: 19164>  # Array: [1, 2, 3]
+==> 0000002f: <Mov>: <Reg8: 9, Reg8: 6>
+==> 00000032: <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
+==> 00000036: <LoadConstUndefined>: <Reg8: 1>
+==> 00000038: <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 12477>  # Function: [#12477 sum of 19 bytes]: 4 params @ offset 0x00243e3c
+==> 0000003d: <Mov>: <Reg8: 8, Reg8: 6>
+==> 00000040: <LoadConstUndefined>: <Reg8: 7>
+==> 00000042: <CallBuiltin>: <Reg8: 3, UInt8: 49, UInt8: 4>  # Built-in function: [#49 applyWithNewTarget]
+==> 00000046: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000004b: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000051: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000056: <LoadConstString>: <Reg8: 2, string_id: 4719>  # String: '__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end' (String)
+==> 0000005a: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000005f: <Ret>: <Reg8: 1>
+
+

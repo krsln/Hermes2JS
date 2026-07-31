@@ -1,39 +1,31 @@
 
-=> [Function #9458 "closureTest" of 143 bytes]: 1 params, frame size=16, strict=0, exc handler=0, debug info=0  @ offset 0x001fb254
+=> [Function #9458 "labeledBlockBreakTest" of 109 bytes]: 1 params, frame size=15, strict=0, exc handler=0, debug info=0  @ offset 0x001fe2de
 
 Bytecode listing:
 
 ==> 00000000: <GetGlobalObject>: <Reg8: 2>
-==> 00000002: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 00000008: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 0000000d: <LoadConstString>: <Reg8: 3, string_id: 3578>  # String: '__BC:Functions/ClosureTests/closureTest/start' (String)
+==> 00000002: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 3, string_id: 4780>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/start' (String)
 ==> 00000011: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-==> 00000016: <CreateFunctionEnvironment>: <Reg8: 3, UInt8: 1>
-==> 00000019: <LoadConstZero>: <Reg8: 0>
-==> 0000001b: <StoreNPToEnvironment>: <Reg8: 3, UInt8: 0, Reg8: 0>
-==> 0000001f: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 1917, UInt16: 17347>  # Object: {'increment': null, 'decrement': null, 'value': null}
-==> 00000025: <CreateClosure>: <Reg8: 4, Reg8: 3, function_id: 13652>  # Function: [#13652 increment of 20 bytes]: 1 params @ offset 0x0025abf8
-==> 0000002a: <PutOwnBySlotIdx>: <Reg8: 6, Reg8: 4, UInt8: 0>
-==> 0000002e: <CreateClosure>: <Reg8: 4, Reg8: 3, function_id: 13653>  # Function: [#13653 decrement of 20 bytes]: 1 params @ offset 0x0025ac0c
-==> 00000033: <PutOwnBySlotIdx>: <Reg8: 6, Reg8: 4, UInt8: 1>
-==> 00000037: <CreateClosure>: <Reg8: 3, Reg8: 3, function_id: 13654>  # Function: [#13654 value of 9 bytes]: 1 params @ offset 0x00190524
-==> 0000003c: <PutOwnBySlotIdx>: <Reg8: 6, Reg8: 3, UInt8: 2>
-==> 00000040: <GetById>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 13098>  # String: 'increment' (Identifier)
-==> 00000046: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 6>
-==> 0000004a: <GetById>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 13098>  # String: 'increment' (Identifier)
-==> 00000050: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 6>
-==> 00000054: <GetById>: <Reg8: 3, Reg8: 6, UInt8: 3, string_id: 16234>  # String: 'decrement' (Identifier)
-==> 0000005a: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 6>
-==> 0000005e: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 00000064: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 00000069: <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 4, string_id: 212>  # String: 'value' (Identifier)
-==> 0000006e: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 6>
-==> 00000072: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-==> 00000077: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 106>  # String: 'console' (Identifier)
-==> 0000007d: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 177>  # String: 'log' (Identifier)
-==> 00000082: <LoadConstString>: <Reg8: 2, string_id: 2983>  # String: '__BC:Functions/ClosureTests/closureTest/end' (String)
-==> 00000086: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-==> 0000008b: <LoadConstUndefined>: <Reg8: 1>
-==> 0000008d: <Ret>: <Reg8: 1>
+==> 00000016: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000001c: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000021: <LoadConstString>: <Reg8: 3, string_id: 3618>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/before-break' (String)
+==> 00000025: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000002a: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 2, string_id: 19>  # String: 'Math' (Identifier)
+==> 00000030: <GetById>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 7174>  # String: 'random' (Identifier)
+==> 00000036: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 4>
+==> 0000003a: <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
+==> 0000003d: <JLess>: <Addr8: 24, Reg8: 3, Reg8: 0>  # Address: 00000055
+==> 00000041: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000047: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000004c: <LoadConstString>: <Reg8: 3, string_id: 3146>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/unreachable' (String)
+==> 00000050: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000055: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000005b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000060: <LoadConstString>: <Reg8: 2, string_id: 4778>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/end' (String)
+==> 00000064: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000069: <LoadConstUndefined>: <Reg8: 1>
+==> 0000006b: <Ret>: <Reg8: 1>
 
 

@@ -1,9 +1,21 @@
-function value(param0) {
+function greet(param0) {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
-    // USED → r0 = getEnvironment(0);
-    // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 0>
-    // USED → r0 = getEnvironment(0)[0];
+    // CODE → <GetGlobalObject>: <Reg8: 0>
+    // USED → r0 = globalThis;
+    // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = globalThis.console;
+    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = globalThis.console.log;
+    // CODE → <LoadParam>: <Reg8: 0, UInt8: 0>
+    // USED → r0 = this;
+    // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 176>  # String: 'name' (Identifier)
+    // USED → r1 = this.name;
+    // CODE → <LoadConstString>: <Reg8: 0, string_id: 6584>  # String: 'hello' (String)
+    // USED → r0 = "hello";
+    // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
+    r0 = globalThis.console.log("hello", this.name)
+    // CODE → <LoadConstUndefined>: <Reg8: 0>
+    // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(0)[0];
+    return undefined;
 }

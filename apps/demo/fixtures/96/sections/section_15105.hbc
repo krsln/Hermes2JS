@@ -1,55 +1,60 @@
 
-=> [Function #15105 "" of 194 bytes]: 8 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x002657ee
+=> [Function #15105 "nestedArrayDestructureTest" of 241 bytes]: 1 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x002698ab
 
 Bytecode listing:
 
-==> 00000000: <CreateEnvironment>: <Reg8: 2>
-==> 00000002: <LoadParam>: <Reg8: 4, UInt8: 2>
-==> 00000005: <LoadParam>: <Reg8: 1, UInt8: 6>
-==> 00000008: <LoadParam>: <Reg8: 5, UInt8: 7>
-==> 0000000b: <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15106>  # Function: [#15106 _interopDefault of 28 bytes]: 2 params @ offset 0x001017eb
-==> 00000010: <GetGlobalObject>: <Reg8: 0>
-==> 00000012: <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 25>  # String: 'Object' (Identifier)
-==> 00000018: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 109>  # String: 'defineProperty' (Identifier)
-==> 0000001d: <NewObject>: <Reg8: 6>
-==> 0000001f: <LoadConstTrue>: <Reg8: 0>
-==> 00000021: <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 0, string_id: 206>  # String: 'value' (Identifier)
-==> 00000025: <LoadConstString>: <Reg8: 0, string_id: 49>  # String: '__esModule' (Identifier)
-==> 00000029: <Call4>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 0, Reg8: 6>
-==> 00000030: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15107>  # Function: [#15107 classTest of 193 bytes]: 1 params @ offset 0x002658b0
-==> 00000035: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10666>  # String: 'classTest' (Identifier)
-==> 0000003b: <LoadConstZero>: <Reg8: 0>
-==> 0000003d: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
-==> 00000041: <LoadConstUndefined>: <Reg8: 0>
-==> 00000043: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-==> 00000048: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-==> 0000004d: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
-==> 00000051: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
-==> 00000054: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-==> 00000058: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-==> 0000005d: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-==> 00000062: <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
-==> 00000066: <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
-==> 00000069: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-==> 0000006d: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-==> 00000072: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-==> 00000077: <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 1>
-==> 0000007b: <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
-==> 0000007e: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-==> 00000082: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-==> 00000087: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-==> 0000008c: <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 1>
-==> 00000090: <LoadConstUInt8>: <Reg8: 1, UInt8: 4>
-==> 00000093: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-==> 00000097: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-==> 0000009c: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-==> 000000a1: <StoreToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 1>
-==> 000000a5: <CreateClosure>: <Reg8: 1, Reg8: 2, function_id: 15108>  # Function: [#15108  of 83 bytes]: 1 params @ offset 0x00265971
-==> 000000aa: <Call1>: <Reg8: 3, Reg8: 1, Reg8: 0>
-==> 000000ae: <StoreToEnvironment>: <Reg8: 2, UInt8: 5, Reg8: 3>
-==> 000000b2: <CreateClosure>: <Reg8: 1, Reg8: 2, function_id: 15112>  # Function: [#15112  of 106 bytes]: 2 params @ offset 0x00265a83
-==> 000000b7: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 3>
-==> 000000bc: <StoreToEnvironment>: <Reg8: 2, UInt8: 6, Reg8: 1>
-==> 000000c0: <Ret>: <Reg8: 0>
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4811>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <NewArray>: <Reg8: 3, UInt16: 3>
+==> 0000001a: <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23637>  # Array: [1, 2]
+==> 00000022: <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 0>
+==> 00000026: <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 12324>  # Array: [3, 4]
+==> 0000002e: <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 1>
+==> 00000032: <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23646>  # Array: [5, 6]
+==> 0000003a: <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 2>
+==> 0000003e: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000041: <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 1>
+==> 00000045: <GetByIdShort>: <Reg8: 7, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 0000004a: <LoadConstZero>: <Reg8: 6>
+==> 0000004c: <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 6>
+==> 00000050: <LoadConstUndefined>: <Reg8: 0>
+==> 00000052: <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
+==> 00000055: <Call3>: <Reg8: 5, Reg8: 7, Reg8: 0, Reg8: 5, Reg8: 4>
+==> 0000005b: <GetByVal>: <Reg8: 10, Reg8: 5, Reg8: 6>
+==> 0000005f: <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
+==> 00000062: <GetByVal>: <Reg8: 9, Reg8: 5, Reg8: 7>
+==> 00000066: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 1>
+==> 0000006a: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 0000006f: <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 4>
+==> 00000073: <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
+==> 00000079: <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 7>
+==> 0000007d: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000083: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000088: <Call4>: <Reg8: 3, Reg8: 3, Reg8: 5, Reg8: 10, Reg8: 9, Reg8: 8>
+==> 0000008f: <NewArrayWithBuffer>: <Reg8: 3, UInt16: 1, UInt16: 1, UInt16: 23655>  # Array: [10]
+==> 00000097: <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 6>
+==> 0000009b: <LoadConstZero>: <Reg8: 5>
+==> 0000009d: <JStrictEqual>: <Addr8: 7, Reg8: 8, Reg8: 0>  # Address: 000000a4
+==> 000000a1: <Mov>: <Reg8: 5, Reg8: 8>
+==> 000000a4: <GetByVal>: <Reg8: 7, Reg8: 3, Reg8: 7>
+==> 000000a8: <LoadConstZero>: <Reg8: 6>
+==> 000000aa: <JStrictEqual>: <Addr8: 7, Reg8: 7, Reg8: 0>  # Address: 000000b1
+==> 000000ae: <Mov>: <Reg8: 6, Reg8: 7>
+==> 000000b1: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
+==> 000000b5: <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 000000ba: <Call2>: <Reg8: 3, Reg8: 2, Reg8: 0, Reg8: 3>
+==> 000000bf: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)
+==> 000000c4: <Call2>: <Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 4>
+==> 000000c9: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000cf: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000d4: <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 000000db: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000e1: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000e6: <LoadConstString>: <Reg8: 1, string_id: 4808>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end' (String)
+==> 000000ea: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000ef: <Ret>: <Reg8: 0>
 
 

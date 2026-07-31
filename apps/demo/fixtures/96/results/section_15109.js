@@ -1,39 +1,31 @@
-function Animal(param0, param1, param2) {
+function function_15109(param0, param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <LoadParam>: <Reg8: 2, UInt8: 0>
-    // USED → r2 = this;
-    // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 1>
-    // USED → r0 = getEnvironment(1);
-    // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 3>
-    // USED → r0 = getEnvironment(1)[3];
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 108>  # String: 'default' (Identifier)
-    // USED → r3 = getEnvironment(1)[3].default;
-    // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
-    // USED → r0 = getEnvironment(0);
-    // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 0>
-    // USED → r1 = getEnvironment(0)[0];
+    // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
+    // USED → r1 = param6;
+    // CODE → <GetGlobalObject>: <Reg8: 0>
+    // USED → r0 = globalThis;
+    // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+    // USED → r4 = globalThis.Object;
+    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+    // USED → r3 = globalThis.Object.defineProperty;
+    // CODE → <NewObject>: <Reg8: 2>
+    // USED → r2 = {  };
+    // CODE → <LoadConstTrue>: <Reg8: 0>
+    // USED → r0 = true;
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 2, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
+    // USED → r2 = { value: true };
+    // CODE → <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
+    // USED → r0 = "__esModule";
+    // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>
+    r0 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
+    // CODE → <CreateEnvironment>: <Reg8: 0>
+    r0 = createEnvironment()
+    // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15110>  # Function: [#15110 arrayTest of 308 bytes]: 1 params @ offset 0x00269b1a
+    // USED → r0 = arrayTest;
+    // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 7969>  # String: 'arrayTest' (Identifier)
+    param6.arrayTest = arrayTest
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → <Call3>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
-    r1 = getEnvironment(1)[3].default.call(undefined, this, getEnvironment(0)[0])
-    // CODE → <GetGlobalObject>: <Reg8: 1>
-    // USED → r1 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 2, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 2455>  # String: '__BC:Classes/ClassTests/Animal/constructor' (String)
-    // USED → r1 = "__BC:Classes/ClassTests/Animal/constructor";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Classes/ClassTests/Animal/constructor")
-    // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
-    // USED → r1 = param1;
-    // CODE → <PutById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 176>  # String: 'name' (Identifier)
-    this.name = param1
-    // CODE → <LoadParam>: <Reg8: 1, UInt8: 2>
-    // USED → r1 = param2;
-    // CODE → <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 11417>  # String: 'sound' (Identifier)
-    this.sound = param2
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

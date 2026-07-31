@@ -1,0 +1,55 @@
+
+=> [Function #9478 "switchInsideTryTest" of 199 bytes]: 2 params, frame size=13, strict=0, exc handler=0, debug info=0  @ offset 0x001fef0b
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4124>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000019: <LoadConstZero>: <Reg8: 0>
+==> 0000001b: <JStrictEqual>: <Addr8: 60, Reg8: 0, Reg8: 2>  # Address: 00000057
+==> 0000001f: <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
+==> 00000022: <JStrictEqual>: <Addr8: 26, Reg8: 0, Reg8: 2>  # Address: 0000003c
+==> 00000026: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000002c: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000031: <LoadConstString>: <Reg8: 0, string_id: 4853>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default' (String)
+==> 00000035: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 0000003a: <Jmp>: <Addr8: 49>  # Address: 0000006b
+==> 0000003c: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000042: <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
+==> 00000046: <LoadConstString>: <Reg8: 4, string_id: 5232>  # String: 'case 1 throws' (String)
+==> 0000004a: <Mov>: <Reg8: 5, Reg8: 2>
+==> 0000004d: <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
+==> 00000051: <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
+==> 00000055: <Throw>: <Reg8: 0>
+==> 00000057: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000005d: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000062: <LoadConstString>: <Reg8: 0, string_id: 4852>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0' (String)
+==> 00000066: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 0000006b: <Jmp>: <Addr8: 24>  # Address: 00000083
+==> 0000006d: <Catch>: <Reg8: 0>
+==> 0000006f: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000075: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000007a: <LoadConstString>: <Reg8: 0, string_id: 3688>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block' (String)
+==> 0000007e: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000083: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000089: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000008e: <LoadConstString>: <Reg8: 0, string_id: 4857>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block' (String)
+==> 00000092: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000097: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000009d: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000a2: <LoadConstString>: <Reg8: 0, string_id: 4855>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/end' (String)
+==> 000000a6: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 000000ab: <LoadConstUndefined>: <Reg8: 0>
+==> 000000ad: <Ret>: <Reg8: 0>
+==> 000000af: <Catch>: <Reg8: 0>
+==> 000000b1: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000b7: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000bc: <LoadConstString>: <Reg8: 1, string_id: 4857>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block' (String)
+==> 000000c0: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000c5: <Throw>: <Reg8: 0>
+
+

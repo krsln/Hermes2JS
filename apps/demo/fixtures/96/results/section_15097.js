@@ -1,80 +1,39 @@
-function closureLoopTest(param0) {
+function function_15097(param0, param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    // USED → r0 = createEnvironment();
-    // CODE → <GetGlobalObject>: <Reg8: 1>
-    // USED → r1 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 2, string_id: 4592>  # String: '__BC:Functions/ClosureTests/closureLoopTest/start' (String)
-    // USED → r2 = "__BC:Functions/ClosureTests/closureLoopTest/start";
-    // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/start")
-    // CODE → <NewArray>: <Reg8: 4, UInt16: 0>
-    // USED → r4 = [];
-    // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
-    createEnvironment()[0] = []
-    // CODE → <CreateClosure>: <Reg8: 5, Reg8: 0, function_id: 15098>  # Function: [#15098 _loop of 35 bytes]: 2 params @ offset 0x002655ee
-    // USED → r5 = _loop;
+    r0 = createEnvironment()
+    // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
+    // USED → r1 = param6;
+    // CODE → <GetGlobalObject>: <Reg8: 2>
+    // USED → r2 = globalThis;
+    // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+    // USED → r5 = globalThis.Object;
+    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+    // USED → r4 = globalThis.Object.defineProperty;
+    // CODE → <NewObject>: <Reg8: 3>
+    // USED → r3 = {  };
+    // CODE → <LoadConstTrue>: <Reg8: 2>
+    // USED → r2 = true;
+    // CODE → <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 2, string_id: 205>  # String: 'value' (Identifier)
+    // USED → r3 = { value: true };
+    // CODE → <LoadConstString>: <Reg8: 2, string_id: 48>  # String: '__esModule' (Identifier)
+    // USED → r2 = "__esModule";
+    // CODE → <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
+    r2 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
+    // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15098>  # Function: [#15098 propertyAccessTest of 199 bytes]: 1 params @ offset 0x00269547
+    // USED → r2 = propertyAccessTest;
+    // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 11307>  # String: 'propertyAccessTest' (Identifier)
+    param6.propertyAccessTest = propertyAccessTest
+    // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15099>  # Function: [#15099 computedPropertyTest of 89 bytes]: 1 params @ offset 0x0026960e
+    // USED → r2 = computedPropertyTest;
+    // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 11290>  # String: 'computedPropertyTest' (Identifier)
+    param6.computedPropertyTest = computedPropertyTest
+    // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15100>  # Function: [#15100 optionalChainingTest of 133 bytes]: 1 params @ offset 0x00269667
+    // USED → r0 = optionalChainingTest;
+    // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 11295>  # String: 'optionalChainingTest' (Identifier)
+    param6.optionalChainingTest = optionalChainingTest
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
-    // USED → r2 = 3;
-    // CODE → <LoadConstZero>: <Reg8: 3>
-    // USED → r3 = 0;
-    // ──────────────── Block 1 ──────────────── 
-    // CODE → <Call2>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 3>
-    r6 = _loop.call(undefined, 0)
-    // CODE → <Inc>: <Reg8: 3, Reg8: 3>
-    // USED → r3 = 0 + 1;
-    // CODE → <JLess>: <Addr8: -8, Reg8: 3, Reg8: 2>  # Address: 0000002c
-    if (0 + 1 < 3) goto label_44;
-    // ──────────────── Block 2 ──────────────── 
-    // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-    // USED → r2 = [];
-    // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = GetIterator([]);
-    try {
-        // LOOP → START (while)
-        while (true) {
-            // ──────────────── Block 3 ──────────────── 
-            // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 2>
-            // USED → r4 = GetIterator([]).next();
-            // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-            // USED → r5 = GetIterator([]);
-            // CODE → <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000066
-            if (GetIterator([]) === undefined) goto label_102;
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-            // USED → r6 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-            // USED → r5 = globalThis.console.log;
-            // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-            // USED → r4 = GetIterator([]).next().call(undefined);
-            // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-            r4 = globalThis.console.log(GetIterator([]).next().call(undefined))
-            // CODE → <Jmp>: <Addr8: -31>  # Address: 0000003e
-            goto label_62;
-        }
-        // LOOP → END
-    } catch (caughtException) {
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-        GetIterator([]).return()
-        // CODE → <Throw>: <Reg8: 2>
-        throw caughtException;
-    }
-    // ──────────────── Block 6 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 100>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 91>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4589>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
-    // USED → r1 = "__BC:Functions/ClosureTests/closureLoopTest/end";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

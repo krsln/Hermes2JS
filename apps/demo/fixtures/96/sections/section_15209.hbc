@@ -1,0 +1,50 @@
+
+=> [Function #15209 "" of 166 bytes]: 1 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x0026bd80
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 5>
+==> 00000002: <CreateClosure>: <Reg8: 4, Reg8: 5, function_id: 15210>  # Function: [#15210 Counter of 148 bytes]: 1 params @ offset 0x0026be26
+==> 00000007: <StoreToEnvironment>: <Reg8: 5, UInt8: 0, Reg8: 4>
+==> 0000000b: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000000e: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 3>
+==> 00000012: <GetByIdShort>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
+==> 00000017: <NewObject>: <Reg8: 0>
+==> 00000019: <LoadConstString>: <Reg8: 1, string_id: 205>  # String: 'value' (Identifier)
+==> 0000001d: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 117>  # String: 'key' (Identifier)
+==> 00000021: <CreateClosure>: <Reg8: 1, Reg8: 5, function_id: 15211>  # Function: [#15211 get of 59 bytes]: 1 params @ offset 0x0026beba
+==> 00000026: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 50>  # String: 'get' (Identifier)
+==> 0000002a: <CreateClosure>: <Reg8: 1, Reg8: 5, function_id: 15212>  # Function: [#15212 set of 92 bytes]: 2 params @ offset 0x0026bef5
+==> 0000002f: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 185>  # String: 'set' (Identifier)
+==> 00000033: <NewArray>: <Reg8: 2, UInt16: 3>
+==> 00000037: <PutOwnByIndex>: <Reg8: 2, Reg8: 0, UInt8: 0>
+==> 0000003b: <NewObject>: <Reg8: 0>
+==> 0000003d: <LoadConstString>: <Reg8: 1, string_id: 10830>  # String: 'increment' (Identifier)
+==> 00000041: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 117>  # String: 'key' (Identifier)
+==> 00000045: <CreateClosure>: <Reg8: 1, Reg8: 5, function_id: 15213>  # Function: [#15213 increment of 66 bytes]: 1 params @ offset 0x0026bf51
+==> 0000004a: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 205>  # String: 'value' (Identifier)
+==> 0000004e: <PutOwnByIndex>: <Reg8: 2, Reg8: 0, UInt8: 1>
+==> 00000052: <NewObject>: <Reg8: 0>
+==> 00000054: <LoadConstString>: <Reg8: 1, string_id: 10172>  # String: 'describe' (Identifier)
+==> 00000058: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 117>  # String: 'key' (Identifier)
+==> 0000005c: <CreateClosure>: <Reg8: 1, Reg8: 5, function_id: 15214>  # Function: [#15214 describe of 59 bytes]: 1 params @ offset 0x0026bf93
+==> 00000061: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 205>  # String: 'value' (Identifier)
+==> 00000065: <PutOwnByIndex>: <Reg8: 2, Reg8: 0, UInt8: 2>
+==> 00000069: <NewObject>: <Reg8: 0>
+==> 0000006b: <LoadConstString>: <Reg8: 1, string_id: 10838>  # String: 'instanceCount' (Identifier)
+==> 0000006f: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 117>  # String: 'key' (Identifier)
+==> 00000073: <CreateClosure>: <Reg8: 1, Reg8: 5, function_id: 15215>  # Function: [#15215 get of 59 bytes]: 1 params @ offset 0x0026bfce
+==> 00000078: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 50>  # String: 'get' (Identifier)
+==> 0000007c: <NewArray>: <Reg8: 1, UInt16: 2>
+==> 00000080: <PutOwnByIndex>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 00000084: <NewObject>: <Reg8: 0>
+==> 00000086: <LoadConstString>: <Reg8: 6, string_id: 7840>  # String: 'reset' (Identifier)
+==> 0000008a: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 6, string_id: 117>  # String: 'key' (Identifier)
+==> 0000008e: <CreateClosure>: <Reg8: 5, Reg8: 5, function_id: 15216>  # Function: [#15216 reset of 61 bytes]: 1 params @ offset 0x0026c009
+==> 00000093: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 5, string_id: 205>  # String: 'value' (Identifier)
+==> 00000097: <PutOwnByIndex>: <Reg8: 1, Reg8: 0, UInt8: 1>
+==> 0000009b: <LoadConstUndefined>: <Reg8: 0>
+==> 0000009d: <Call4>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2, Reg8: 1>
+==> 000000a4: <Ret>: <Reg8: 0>
+
+
