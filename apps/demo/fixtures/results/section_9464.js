@@ -17,21 +17,21 @@ function tryCatchNoFinallyTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4882>  # String: '__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    // USED → r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block");
+    r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
     // USED → r3 = globalThis.Error;
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
     // USED → r2 = __uninitialized_this_for_new__;
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 2722>  # String: 'no finally here' (String)
-    r5 = "no finally here"
+    // USED → r5 = "no finally here";
     // CODE → <Mov>: <Reg8: 6, Reg8: 2>
-    r6 = __uninitialized_this_for_new__
+    // USED → r6 = __uninitialized_this_for_new__;
     // CODE → <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
-    // USED → r1 = new globalThis.Error(globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block"), __uninitialized_this_for_new__);
+    // USED → r1 = new globalThis.Error("no finally here", __uninitialized_this_for_new__);
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    // USED → r1 = __uninitialized_this_for_new__[new globalThis.Error(globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block"), __uninitialized_this_for_new__)];
+    // USED → r1 = new globalThis.Error("no finally here", __uninitialized_this_for_new__);
     // CODE → <Throw>: <Reg8: 1>
-    throw __uninitialized_this_for_new__[new globalThis.Error(globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/try-block"), __uninitialized_this_for_new__)];
+    throw new globalThis.Error("no finally here", __uninitialized_this_for_new__);
     // CODE → <Catch>: <Reg8: 3>
     // USED → r3 = caughtException;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

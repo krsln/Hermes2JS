@@ -15,15 +15,15 @@ function tryCatchFinallyEarlyReturnTest(param0) {
     // CODE → <CreateThisForNew>: <Reg8: 1, Reg8: 2, UInt8: 3>
     // USED → r1 = __uninitialized_this_for_new__;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 47>  # String: 'test' (Identifier)
-    r4 = "test"
+    // USED → r4 = "test";
     // CODE → <Mov>: <Reg8: 5, Reg8: 1>
-    r5 = __uninitialized_this_for_new__
+    // USED → r5 = __uninitialized_this_for_new__;
     // CODE → <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
-    // USED → r0 = new globalThis.Error(globalThis, __uninitialized_this_for_new__);
+    // USED → r0 = new globalThis.Error("test", __uninitialized_this_for_new__);
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = __uninitialized_this_for_new__[new globalThis.Error(globalThis, __uninitialized_this_for_new__)];
+    // USED → r0 = new globalThis.Error("test", __uninitialized_this_for_new__);
     // CODE → <Throw>: <Reg8: 0>
-    throw __uninitialized_this_for_new__[new globalThis.Error(globalThis, __uninitialized_this_for_new__)];
+    throw new globalThis.Error("test", __uninitialized_this_for_new__);
     // CODE → <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → <GetGlobalObject>: <Reg8: 0>

@@ -13,15 +13,15 @@ function mayThrow(param0, param1) {
         // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 1>
         // USED → r2 = __uninitialized_this_for_new__;
         // CODE → <LoadConstString>: <Reg8: 4, string_id: 1300>  # String: 'negative' (String)
-        r4 = "negative"
+        // USED → r4 = "negative";
         // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-        r5 = __uninitialized_this_for_new__
+        // USED → r5 = __uninitialized_this_for_new__;
         // CODE → <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
-        // USED → r1 = new globalThis.Error(globalThis, __uninitialized_this_for_new__);
+        // USED → r1 = new globalThis.Error("negative", __uninitialized_this_for_new__);
         // CODE → <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-        // USED → r1 = __uninitialized_this_for_new__[new globalThis.Error(globalThis, __uninitialized_this_for_new__)];
+        // USED → r1 = new globalThis.Error("negative", __uninitialized_this_for_new__);
         // CODE → <Throw>: <Reg8: 1>
-        throw __uninitialized_this_for_new__[new globalThis.Error(globalThis, __uninitialized_this_for_new__)];
+        throw new globalThis.Error("negative", __uninitialized_this_for_new__);
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>

@@ -15,63 +15,63 @@ function setTest(param0) {
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
     // USED → r2 = __uninitialized_this_for_new__;
     // CODE → <NewArrayWithBuffer>: <Reg8: 10, UInt16: 6, UInt16: 6, UInt16: 48500>  # Array: [1, 2, 2, 3, 3, 3]
-    r10 = [1, 2, 2, 3, 3, 3]
+    // USED → r10 = [1, 2, 2, 3, 3, 3];
     // CODE → <Mov>: <Reg8: 11, Reg8: 2>
-    r11 = __uninitialized_this_for_new__
+    // USED → r11 = __uninitialized_this_for_new__;
     // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = new globalThis.Set(globalThis, __uninitialized_this_for_new__);
+    // USED → r0 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__);
     // CODE → <SelectObject>: <Reg8: 3, Reg8: 2, Reg8: 0>
-    // USED → r3 = __uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)];
+    // USED → r3 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__);
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 69>  # String: 'size' (Identifier)
-    // USED → r0 = __uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)].size;
+    // USED → r0 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).size;
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-    r0 = globalThis.console.log(__uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)].size)
+    r0 = globalThis.console.log(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).size)
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 79>  # String: 'add' (Identifier)
-    // USED → r2 = __uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)].add;
+    // USED → r2 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).add;
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
     // USED → r0 = 4;
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = __uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)].add(4)
+    r0 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).add(4)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 6, string_id: 11>  # String: 'has' (Identifier)
-    // USED → r5 = __uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)].has;
+    // USED → r5 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).has;
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → <Call2>: <Reg8: 0, Reg8: 5, Reg8: 3, Reg8: 0>
-    // USED → r0 = __uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)].has(2);
+    // USED → r0 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).has(2);
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-    r0 = globalThis.console.log(__uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)].has(2))
+    r0 = globalThis.console.log(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).has(2))
     // CODE → <Mov>: <Reg8: 2, Reg8: 3>
-    // USED → r2 = __uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)];
+    // USED → r2 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__);
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = GetIterator(__uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)]);
+    // USED → r4 = GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__));
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    while (GetIterator(__uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)]) === undefined) {
+    while (GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)) === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-        r5 = __uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)]
+        r5 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)
         // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
-        // USED → r7 = GetIterator(__uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)]).next();
+        // USED → r7 = GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        // USED → r5 = GetIterator(__uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)]);
+        // USED → r5 = GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__));
         // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 000000a1
-        if (GetIterator(__uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)]) === undefined) goto label_161;
+        if (GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)) === undefined) goto label_161;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r5 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-        r5 = globalThis.console.log(GetIterator(__uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)]).next())
+        r5 = globalThis.console.log(GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)).next())
         // CODE → <Jmp>: <Addr8: -30>  # Address: 0000007a
         goto label_122;
     }
@@ -80,7 +80,7 @@ function setTest(param0) {
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
-    GetIterator(__uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)]).return()
+    GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)).return()
     // CODE → <Throw>: <Reg8: 2>
     throw caughtException;
     // ──────────────── Block 4 ──────────────── 
@@ -91,7 +91,7 @@ function setTest(param0) {
     // CODE → <Mov>: <Reg8: 10, Reg8: 4>
     r10 = []
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
-    r9 = __uninitialized_this_for_new__[new globalThis.Set(globalThis, __uninitialized_this_for_new__)]
+    r9 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)
     // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
     r2 = builtin_48(r-2, r-1, r0, r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

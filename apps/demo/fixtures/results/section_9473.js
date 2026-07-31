@@ -55,7 +55,7 @@ function tryCatchInsideLoopTest(param0, param1) {
         // CODE → <Call3>: <Reg8: 12, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 12>
         r12 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", param1[0])
         // CODE → <Mov>: <Reg8: 12, Reg8: 11>
-        // USED → r12 = 0;
+        r12 = 0
         // CODE → <Jmp>: <Addr8: 51>  # Address: 00000095
         goto label_149;
         // ──────────────── Block 4 ──────────────── 
@@ -77,15 +77,15 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <CreateThisForNew>: <Reg8: 14, Reg8: 13, UInt8: 4>
     // USED → r14 = __uninitialized_this_for_new__;
     // CODE → <Mov>: <Reg8: 18, Reg8: 14>
-    r18 = __uninitialized_this_for_new__
+    // USED → r18 = __uninitialized_this_for_new__;
     // CODE → <Mov>: <Reg8: 17, Reg8: 6>
-    r17 = "negative value"
+    // USED → r17 = "negative value";
     // CODE → <Construct>: <Reg8: 13, Reg8: 13, UInt8: 2>
-    // USED → r13 = new globalThis.Error(0, 0);
+    // USED → r13 = new globalThis.Error("negative value", __uninitialized_this_for_new__);
     // CODE → <SelectObject>: <Reg8: 13, Reg8: 14, Reg8: 13>
-    // USED → r13 = __uninitialized_this_for_new__[new globalThis.Error(0, 0)];
+    // USED → r13 = new globalThis.Error("negative value", __uninitialized_this_for_new__);
     // CODE → <Throw>: <Reg8: 13>
-    throw __uninitialized_this_for_new__[new globalThis.Error(0, 0)];
+    throw new globalThis.Error("negative value", __uninitialized_this_for_new__);
     // CODE → <Catch>: <Reg8: 15>
     // USED → r15 = caughtException;
     // CODE → <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

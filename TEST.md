@@ -6,13 +6,12 @@ https://raw.githubusercontent.com/facebook/hermes/hermes-v260318099.0.1/include/
 
 https://p1sec.github.io/hermes-dec/opcodes_table.html
 
-**control data /fixtures**
-
 ```shell
 tree -I '__pycache__|__init__.py' hermes_decompiler
-tree -I '__pycache__|__init__.py|ir|handlers|regions' hermes_decompiler
 
 ```
+
+## Testy
 
 ```shell
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/one -o ./apps/demo/fixtures/results
@@ -31,6 +30,8 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 # Exception Tests 15075-15090
 
 ```
+
+## Coach
 
 ```shell
 python scripts/decompile_sections.py -i ./apps/coachy/fixtures/one -o ./apps/coachy/fixtures/results
@@ -112,7 +113,7 @@ SequenceRegion
 - regions/ moved to analysis/ with re-structure
 - Handlers re-constructed, lil-doc added on every class
 - Terminator added, Logging improved (colorful)
-- Structures improved | TryStructurer, SwitchStructurer, 
+- Structures improved | TryStructurer, SwitchStructurer,
 - 
 
 

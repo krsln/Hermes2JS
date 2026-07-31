@@ -23,15 +23,15 @@ function tryCatchRethrowDifferentTest(param0) {
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
     // USED → r2 = __uninitialized_this_for_new__;
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 2554>  # String: 'original' (String)
-    r5 = "original"
+    // USED → r5 = "original";
     // CODE → <Mov>: <Reg8: 6, Reg8: 2>
-    r6 = __uninitialized_this_for_new__
+    // USED → r6 = __uninitialized_this_for_new__;
     // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = new globalThis.Error(globalThis, __uninitialized_this_for_new__);
+    // USED → r0 = new globalThis.Error("original", __uninitialized_this_for_new__);
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = __uninitialized_this_for_new__[new globalThis.Error(globalThis, __uninitialized_this_for_new__)];
+    // USED → r0 = new globalThis.Error("original", __uninitialized_this_for_new__);
     // CODE → <Throw>: <Reg8: 0>
-    throw __uninitialized_this_for_new__[new globalThis.Error(globalThis, __uninitialized_this_for_new__)];
+    throw new globalThis.Error("original", __uninitialized_this_for_new__);
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -47,17 +47,17 @@ function tryCatchRethrowDifferentTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 6428>  # String: 'wrapped: ' (String)
     // USED → r0 = "wrapped: ";
     // CODE → <Add>: <Reg8: 5, Reg8: 0, Reg8: 2>
-    r5 = "wrapped: " + caughtException
+    // USED → r5 = "wrapped: " + caughtException;
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
     // USED → r2 = __uninitialized_this_for_new__;
     // CODE → <Mov>: <Reg8: 6, Reg8: 2>
-    r6 = __uninitialized_this_for_new__
+    // USED → r6 = __uninitialized_this_for_new__;
     // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = new globalThis.Error(globalThis, __uninitialized_this_for_new__);
+    // USED → r0 = new globalThis.Error("wrapped: " + caughtException, __uninitialized_this_for_new__);
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = __uninitialized_this_for_new__[new globalThis.Error(globalThis, __uninitialized_this_for_new__)];
+    // USED → r0 = new globalThis.Error("wrapped: " + caughtException, __uninitialized_this_for_new__);
     // CODE → <Throw>: <Reg8: 0>
-    throw __uninitialized_this_for_new__[new globalThis.Error(globalThis, __uninitialized_this_for_new__)];
+    throw new globalThis.Error("wrapped: " + caughtException, __uninitialized_this_for_new__);
     // CODE → <Catch>: <Reg8: 0>
     // USED → r0 = caughtException;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

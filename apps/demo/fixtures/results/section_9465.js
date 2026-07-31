@@ -23,15 +23,15 @@ function tryFinallyNoCatchTest(param0) {
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
     // USED → r2 = __uninitialized_this_for_new__;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 3960>  # String: 'no catch here' (String)
-    r4 = "no catch here"
+    // USED → r4 = "no catch here";
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-    r5 = __uninitialized_this_for_new__
+    // USED → r5 = __uninitialized_this_for_new__;
     // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = new globalThis.Error(globalThis, __uninitialized_this_for_new__);
+    // USED → r0 = new globalThis.Error("no catch here", __uninitialized_this_for_new__);
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = __uninitialized_this_for_new__[new globalThis.Error(globalThis, __uninitialized_this_for_new__)];
+    // USED → r0 = new globalThis.Error("no catch here", __uninitialized_this_for_new__);
     // CODE → <Throw>: <Reg8: 0>
-    throw __uninitialized_this_for_new__[new globalThis.Error(globalThis, __uninitialized_this_for_new__)];
+    throw new globalThis.Error("no catch here", __uninitialized_this_for_new__);
     // CODE → <Catch>: <Reg8: 0>
     // USED → r0 = caughtException;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
