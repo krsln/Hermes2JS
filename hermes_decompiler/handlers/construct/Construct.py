@@ -1,5 +1,5 @@
 from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT32, sequence
-from hermes_decompiler.ir.expressions import Expression, Identifier, NewExpression, CallExpression
+from hermes_decompiler.ir.expressions import Expression, Identifier, NewExpression
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
@@ -36,58 +36,20 @@ class Construct(OpcodeHandler):
 
         return result
 
-    def resolve_arguments(
-            self, analysis: HermesAnalysis, func_reg: int, arg_count: int
-    ) -> tuple[Expression, ...]:
-        if arg_count <= 0:
-            return ()
+    def resolve_arguments(self, analysis: HermesAnalysis, func_reg: int, arg_count: int) -> tuple[Expression, ...]:
+        values = [
+            self.get_register_value(analysis, reg)
+            for reg in range(func_reg - arg_count, func_reg)
+        ]
 
-        # Henüz kullanılmamış register sonuçlarını topla
-        # (Construct'tan hemen önceki LoadConst / Mov / CreateThis vb.)
-        unused: dict[int, Expression] = {}
-        for item in analysis.results:
-            if not getattr(item, "used", True) and item.dest_reg is not None:
-                unused[item.dest_reg] = item.value
-
-        if not unused:
-            # fallback: eski davranış (nadiren gerekir)
-            regs = range(func_reg - arg_count, func_reg)
-            values = [self.get_register_value(analysis, r) for r in regs]
-        else:
-            # Frame'in sonu = en yüksek unused register
-            end_reg = max(unused.keys())  # örnekte 5
-            start_reg = end_reg - arg_count + 1  # örnekte 4
-
-            # reverse order: yüksek → düşük (this önce)
-            values = [
-                unused.get(reg) or self.get_register_value(analysis, reg)
-                for reg in range(end_reg, start_reg - 1, -1)
-            ]
-            # values = [r5=this, r4="test"]
-
-            # Bu register'ları artık kullandık diye işaretle
-            for reg in range(start_reg, end_reg + 1):
-                for item in analysis.results:
-                    if item.dest_reg == reg:
-                        item.used = True
-
-        # Construct'ta ilk slot her zaman CreateThis / this
-        if values and self._is_this_value(values[0]):
+        # Hermes CreateThis inserts an implicit "this" as the first
+        # constructor argument slot; `ThisValue` no longer exists as a
+        # distinct type (see decision on RegisterValue/ThisValue ->
+        # Identifier), so the check becomes a name comparison.
+        if values and isinstance(values[0], Identifier) and values[0].name == "this":
             values = values[1:]
 
         return tuple(values)
-
-    def _is_this_value(self, expr: Expression) -> bool:
-        if isinstance(expr, Identifier) and expr.name == "this":
-            return True
-        # CreateThis'i CallExpression(callee=Identifier("createThis"), ...) olarak üretiyorsan:
-        if (
-                isinstance(expr, CallExpression)
-                and isinstance(expr.callee, Identifier)
-                and expr.callee.name == "createThis"
-        ):
-            return True
-        return False
 
 
 # Reg8, Reg8, UInt32 (total size 6)

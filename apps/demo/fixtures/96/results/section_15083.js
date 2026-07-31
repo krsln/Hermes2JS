@@ -18,15 +18,15 @@ function tryCatchFinallyEarlyReturnTest(param0) {
         // CODE → <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
         // USED → r1 = createThis(globalThis.Error.prototype, globalThis.Error);
         // CODE → <LoadConstString>: <Reg8: 4, string_id: 238>  # String: 'test' (Identifier)
-        // USED → r4 = "test";
+        r4 = "test"
         // CODE → <Mov>: <Reg8: 5, Reg8: 1>
-        // USED → r5 = createThis(globalThis.Error.prototype, globalThis.Error);
+        r5 = createThis(globalThis.Error.prototype, globalThis.Error)
         // CODE → <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
-        // USED → r0 = new globalThis.Error("test");
+        // USED → r0 = new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error));
         // CODE → <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-        // USED → r0 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error("test")];
+        // USED → r0 = createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error))];
         // CODE → <Throw>: <Reg8: 0>
-        throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error("test")];
+        throw createThis(globalThis.Error.prototype, globalThis.Error)[new globalThis.Error(globalThis.Error.prototype, createThis(globalThis.Error.prototype, globalThis.Error))];
     } catch (caughtException) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstFalse>: <Reg8: 0>
