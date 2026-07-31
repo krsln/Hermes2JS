@@ -40,6 +40,9 @@ _ARRAY_RE = re.compile(r"Array:\s*(\[.*])")
 # ==> 00000008: <SwitchImm>: <Reg8: 1, UInt32: 193, Addr32: 187, UInt32: 0, UInt32: 27>  # Address: 000000c3  # Jump table: [0000004c, 0000001a, 0000004c, 000000c3, 000000c3, 000000aa, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 00000030, 000000c3, 0000007a, 000000c3, 0000004c, 00000092, 000000c3, 000000c3, 00000062, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000aa, 000000aa]
 _JUMP_TABLE_RE = re.compile(r"Jump table:\s*\[([^]]*)]")
 
+# ==> 0000000f: <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 apply]
+_BUILTIN_RE = re.compile(r"Built-in function:\s*\[#(\d+)\s+([^]]+)]")
+
 
 @dataclass(slots=True)
 class FunctionReference:
@@ -48,6 +51,12 @@ class FunctionReference:
     byte_size: int
     param_count: int | None = None
     offset: str | None = None
+
+
+@dataclass(slots=True)
+class BuiltinFunctionReference:
+    id: int
+    name: str
 
 
 class OpcodeEntry:
@@ -66,6 +75,7 @@ class OpcodeEntry:
     string_literal: str | None = None
     array_literal: list | None = None
     function: FunctionReference | None = None
+    builtin_function: BuiltinFunctionReference | None = None
 
     def __init__(self, bytecode: str, hex_address: str, comment: str = "", opcode: str = "", args: str = ""):
         self.bytecode = bytecode
@@ -104,6 +114,10 @@ class OpcodeEntry:
                 param_count=int(match.group(4)) if match.group(4) else None,
                 offset=match.group(5),
             )
+
+        if match := _BUILTIN_RE.search(self.comment):
+            self.builtin_function = BuiltinFunctionReference(id=int(match.group(1)), name=match.group(2))
+
         if match := _JUMP_TABLE_RE.search(self.comment):
             entries = []
 

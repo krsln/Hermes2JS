@@ -21,13 +21,13 @@ function spreadArrayTest(param0) {
     // CODE → <LoadConstZero>: <Reg8: 11>
     r11 = 0
     // CODE → <CallBuiltin>: <Reg8: 11, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
-    r11 = builtin_48(r7, r8, r9, r10)
+    r11 = applyArguments(r7, r8, r9, r10)
     // CODE → <NewArrayWithBuffer>: <Reg8: 12, UInt16: 3, UInt16: 3, UInt16: 11325>  # Array: [4, 5, 6]
     r12 = [4, 5, 6]
     // CODE → <Mov>: <Reg8: 13, Reg8: 0>
     r13 = []
     // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
-    r4 = builtin_48(r0, r1, r2, r3)
+    r4 = applyArguments(r0, r1, r2, r3)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -45,11 +45,11 @@ function spreadArrayTest(param0) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 8>
     r11 = 1
     // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
-    // USED → r4 = builtin_48(r0, r1, r2, r3);
+    // USED → r4 = applyArguments(r0, r1, r2, r3);
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 99>
     // USED → r3 = 99;
     // CODE → <DefineOwnByVal>: <Reg8: 5, Reg8: 3, Reg8: 4, UInt8: 1>
-    [0][builtin_48(r0, r1, r2, r3)] = 99
+    [0][applyArguments(r0, r1, r2, r3)] = 99
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

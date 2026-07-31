@@ -21,7 +21,7 @@ function privateStaticTest(param0) {
         // CODE → <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
         r13 = "Trying to call a non-function"
         // CODE → <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r6 = builtin_44(r4, r5)
+        r6 = copyDataProperties(r4, r5)
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
@@ -37,7 +37,7 @@ function privateStaticTest(param0) {
         // CODE → <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
         r13 = "Cannot initialize private field twice."
         // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r3 = builtin_44(r1, r2)
+        r3 = copyDataProperties(r1, r2)
     } else {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <LoadConstUndefined>: <Reg8: 1>
@@ -75,7 +75,7 @@ function privateStaticTest(param0) {
             // CODE → <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
             r13 = "Trying to call a non-function"
             // CODE → <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-            r6 = builtin_44(r4, r5)
+            r6 = copyDataProperties(r4, r5)
         }
         // ──────────────── Block 5 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
@@ -89,7 +89,7 @@ function privateStaticTest(param0) {
             // CODE → <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
             r13 = "Cannot initialize private field twice."
             // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-            r3 = builtin_44(r1, r2)
+            r3 = copyDataProperties(r1, r2)
         } else {
             // ──────────────── Block 6 ──────────────── 
             // CODE → <AddOwnPrivateBySym>: <Reg8: 6, Reg8: 1, Reg8: 12>

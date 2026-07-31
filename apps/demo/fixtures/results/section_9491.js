@@ -41,7 +41,7 @@ function arrayTest(param0) {
     // CODE → <LoadConstZero>: <Reg8: 8>
     r8 = 0
     // CODE → <CallBuiltin>: <Reg8: 1, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
-    r1 = builtin_48(r-3, r-2, r-1, r0)
+    r1 = applyArguments(r-3, r-2, r-1, r0)
     // CODE → <GetById>: <Reg8: 6, Reg8: 7, UInt8: 5, string_id: 7762>  # String: 'sort' (Identifier)
     // USED → r6 = [].sort;
     // CODE → <LoadConstUndefined>: <Reg8: 2>

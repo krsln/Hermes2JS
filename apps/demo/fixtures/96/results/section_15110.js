@@ -43,7 +43,7 @@ function arrayTest(param0) {
     // CODE → <LoadConstZero>: <Reg8: 7>
     r7 = 0
     // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    r2 = builtin_46(r-2, r-1, r0, r1)
+    r2 = arraySpread(r-2, r-1, r0, r1)
     // CODE → <GetById>: <Reg8: 3, Reg8: 6, UInt8: 6, string_id: 7576>  # String: 'sort' (Identifier)
     // USED → r3 = [].sort;
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15111>  # Function: [#15111  of 12 bytes]: 3 params @ offset 0x001f6a9c

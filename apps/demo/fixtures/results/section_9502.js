@@ -21,7 +21,7 @@ function taggedTemplateTest(param0, param1) {
     // CODE → <LoadConstUInt8>: <Reg8: 10, UInt8: 1>
     r10 = 1
     // CODE → <CallBuiltin>: <Reg8: 5, UInt8: 41, UInt8: 5>  # Built-in function: [#41 getMethod]
-    // USED → r5 = builtin_41(r0, r1, r2, r3, r4);
+    // USED → r5 = getMethod(r0, r1, r2, r3, r4);
     // CODE → <Mul>: <Reg8: 4, Reg8: 3, Reg8: 3>
     // USED → r4 = param1 * param1;
     // CODE → <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
@@ -31,13 +31,13 @@ function taggedTemplateTest(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Call3>: <Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 5, Reg8: 4>
-    // USED → r5 = getParentEnvironment(0)[0].call(undefined, builtin_41(r0, r1, r2, r3, r4), param1 * param1);
+    // USED → r5 = getParentEnvironment(0)[0].call(undefined, getMethod(r0, r1, r2, r3, r4), param1 * param1);
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
-    r3 = globalThis.console.log(getParentEnvironment(0)[0].call(undefined, builtin_41(r0, r1, r2, r3, r4), param1 * param1))
+    r3 = globalThis.console.log(getParentEnvironment(0)[0].call(undefined, getMethod(r0, r1, r2, r3, r4), param1 * param1))
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

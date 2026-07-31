@@ -23,7 +23,7 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>
     r8 = []
     // CODE → <CallBuiltin>: <Reg8: 0, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    r0 = builtin_46(r-4, r-3, r-2, r-1)
+    r0 = arraySpread(r-4, r-3, r-2, r-1)
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 8, Reg8: 0, function_id: 15121>  # Function: [#15121 sum of 19 bytes]: 4 params @ offset 0x00269ebf
@@ -35,9 +35,9 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 6>
     r6 = undefined
     // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 4>  # Built-in function: [#47 apply]
-    // USED → r2 = builtin_47(r-2, r-1, r0, r1);
+    // USED → r2 = apply(r-2, r-1, r0, r1);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(builtin_47(r-2, r-1, r0, r1))
+    r2 = globalThis.console.log(apply(r-2, r-1, r0, r1))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -23,7 +23,7 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <Mov>: <Reg8: 9, Reg8: 6>
     r9 = []
     // CODE → <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
-    r0 = builtin_48(r-4, r-3, r-2, r-1)
+    r0 = applyArguments(r-4, r-3, r-2, r-1)
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 12477>  # Function: [#12477 sum of 19 bytes]: 4 params @ offset 0x00243e3c
@@ -33,9 +33,9 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 49, UInt8: 4>  # Built-in function: [#49 applyWithNewTarget]
-    // USED → r3 = builtin_49(r-1, r0, r1, r2);
+    // USED → r3 = applyWithNewTarget(r-1, r0, r1, r2);
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log(builtin_49(r-1, r0, r1, r2))
+    r3 = globalThis.console.log(applyWithNewTarget(r-1, r0, r1, r2))
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

@@ -17,7 +17,7 @@ function spreadObjectTest(param0) {
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
     r9 = {  }
     // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 46, UInt8: 3>  # Built-in function: [#46 arraySpread]
-    r3 = builtin_46(r0, r1, r2)
+    r3 = arraySpread(r0, r1, r2)
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
     // USED → r0 = 3;
     // CODE → <DefineOwnById>: <Reg8: 5, Reg8: 0, UInt8: 0, UInt16: 6711>
@@ -39,13 +39,13 @@ function spreadObjectTest(param0) {
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>
     r8 = {  }
     // CODE → <CallBuiltin>: <Reg8: 5, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    // USED → r5 = builtin_46(r1, r2, r3, r4);
+    // USED → r5 = arraySpread(r1, r2, r3, r4);
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 6, Reg8: 5>
-    r3 = globalThis.console.log({  }.x, builtin_46(r1, r2, r3, r4))
+    r3 = globalThis.console.log({  }.x, arraySpread(r1, r2, r3, r4))
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

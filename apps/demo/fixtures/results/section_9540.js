@@ -23,7 +23,7 @@ function describe(param0) {
         // CODE → <LoadConstString>: <Reg8: 7, string_id: 3847>  # String: 'Private element not found' (String)
         r7 = "Private element not found"
         // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r4 = builtin_44(r2, r3)
+        r4 = copyDataProperties(r2, r3)
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 6>

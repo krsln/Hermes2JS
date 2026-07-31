@@ -17,7 +17,7 @@ function Counter(param0) {
         // CODE → <LoadConstString>: <Reg8: 7, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
         r7 = "Cannot initialize private field twice."
         // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r2 = builtin_44(r0, r1)
+        r2 = copyDataProperties(r0, r1)
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstUndefined>: <Reg8: 1>
