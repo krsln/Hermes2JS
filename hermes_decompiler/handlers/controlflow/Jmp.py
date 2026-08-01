@@ -31,6 +31,9 @@ TYPEOF_MAP = {
 # --------------------------------------------------------------------------
 # Jmp (Unconditional)
 # --------------------------------------------------------------------------
+
+# Addr8 (total size 1)
+# Example: <Jmp>: <Addr8: 40>  # Address: 00000068
 class Jmp(OpcodeHandler):
     """Unconditional jump."""
 
@@ -54,6 +57,8 @@ class Jmp(OpcodeHandler):
         return result
 
 
+# Addr32 (total size 4)
+# Example: <JmpLong>: <Addr32: 129>  # Address: 000000d9
 class JmpLong(Jmp):
     """Long unconditional jump."""
     pass
@@ -90,29 +95,40 @@ class ConditionalJump(OpcodeHandler, ABC):
         return result
 
 
+# Addr8, Reg8 (total size 2)
+# Example: <JmpTrue>: <Addr8: 54, Reg8: 5>  # Address: 000003e6
 class JmpTrue(ConditionalJump):
     def build_condition(self, value: Expression) -> Expression:
         return value
 
 
+# Addr32, Reg8 (total size 5)
+# Example: <JmpTrueLong>: <Addr32: 997, Reg8: 1>  # Address: 000003e9
+class JmpTrueLong(JmpTrue):
+    pass
+
+
+# Addr8, Reg8 (total size 2)
+# Example: <JmpFalse>: <Addr8: 18, Reg8: 1>  # Address: 00000025
 class JmpFalse(ConditionalJump):
     def build_condition(self, value: Expression) -> Expression:
         return UnaryExpression(UnaryOperator.LOGICAL_NOT, value)
 
 
+# Addr32, Reg8 (total size 5)
+# Example: <JmpFalseLong>: <Addr32: 143, Reg8: 5>  # Address: 000000d9
+class JmpFalseLong(JmpFalse):
+    pass
+
+
+# Addr8, Reg8 (total size 2)
+# Example: <JmpUndefined>: <Addr8: 38, Reg8: 5>  # Address: 0000004e
 class JmpUndefined(ConditionalJump):
     def build_condition(self, value: Expression) -> Expression:
         return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, UndefinedLiteral())
 
 
-class JmpTrueLong(JmpTrue):
-    pass
-
-
-class JmpFalseLong(JmpFalse):
-    pass
-
-
+# Addr32, Reg8 (total size 5)
 class JmpUndefinedLong(JmpUndefined):
     pass
 
@@ -148,6 +164,9 @@ class BuiltinConditionalJump(OpcodeHandler, ABC):
         return result
 
 
+# Addr8, UInt8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(JmpBuiltinIs, Addr8, UInt8, Reg8)
+# Example:
 class JmpBuiltinIs(BuiltinConditionalJump):
     def build_condition(self, value: Expression, builtin: int) -> Expression:
         return BinaryExpression(
@@ -157,6 +176,16 @@ class JmpBuiltinIs(BuiltinConditionalJump):
         )
 
 
+# Addr32, UInt8, Reg8 (total size 6)
+# DEFINE_OPCODE_3(JmpBuiltinIsLong, Addr32, UInt8, Reg8)
+# Example:
+class JmpBuiltinIsLong(JmpBuiltinIs):
+    pass
+
+
+# Addr8, UInt8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(JmpBuiltinIsNot, Addr8, UInt8, Reg8)
+# Example:
 class JmpBuiltinIsNot(BuiltinConditionalJump):
     def build_condition(self, value: Expression, builtin: int) -> Expression:
         return BinaryExpression(
@@ -166,10 +195,9 @@ class JmpBuiltinIsNot(BuiltinConditionalJump):
         )
 
 
-class JmpBuiltinIsLong(JmpBuiltinIs):
-    pass
-
-
+# Addr32, UInt8, Reg8 (total size 6)
+# DEFINE_OPCODE_3(JmpBuiltinIsNotLong, Addr32, UInt8, Reg8)
+# Example:
 class JmpBuiltinIsNotLong(JmpBuiltinIsNot):
     pass
 
@@ -178,12 +206,17 @@ class JmpBuiltinIsNotLong(JmpBuiltinIsNot):
 # TypeOf conditional jumps
 # --------------------------------------------------------------------------
 
-class TypeOfConditionalJump(OpcodeHandler, ABC):
-    _PATTERN = sequence(ADDR, REG, UINT16)
+# /// Jump if the type matches the TypeOfIsTypes in Arg3.
+# /// Arg1 is the target.
+# /// Arg2 is the value to test.
+# /// Arg3 is the TypeOfIsTypes (see Typeof.h).
+# DEFINE_OPCODE_3(JmpTypeOfIs, Addr32, Reg8, UInt16)
 
-    @abstractmethod
-    def build_condition(self, value: Expression, type_name: str) -> Expression:
-        ...
+# Addr32, Reg8, UInt16 (total size 7)
+# DEFINE_OPCODE_3(JmpTypeOfIs, Addr32, Reg8, UInt16)
+# Example: <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000031
+class JmpTypeOfIs(OpcodeHandler):
+    _PATTERN = sequence(ADDR, REG, UINT16)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -195,9 +228,10 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
         target = entry.target_address or (entry.address + offset)
         analysis.gotoList.append(target)
 
-        condition = self.build_condition(
-            self.get_register_expression(analysis, reg),
-            TYPEOF_MAP.get(type_id, f"<{type_id}>"),
+        condition = BinaryExpression(
+            UnaryExpression(UnaryOperator.TYPEOF, self.get_register_expression(analysis, reg)),
+            BinaryOperator.STRICT_EQUAL,
+            StringLiteral(TYPEOF_MAP.get(type_id, f"<{type_id}>")),
         )
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
@@ -207,12 +241,3 @@ class TypeOfConditionalJump(OpcodeHandler, ABC):
         analysis.add_result(result)
 
         return result
-
-
-class JmpTypeOfIs(TypeOfConditionalJump):
-    def build_condition(self, value: Expression, type_name: str) -> Expression:
-        return BinaryExpression(
-            UnaryExpression(UnaryOperator.TYPEOF, value),
-            BinaryOperator.STRICT_EQUAL,
-            StringLiteral(type_name),
-        )
