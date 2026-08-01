@@ -219,12 +219,21 @@ class ForEachRecognizer:
         (None, None, None) if it doesn't match.
         """
         header = loop.header_block
-        first = header.first_instruction if header is not None else None
-
-        if first is None or not isinstance(first.value, CallExpression):
+        if header is None:
             return None, None, None
 
-        callee = first.value.callee
+        first = header.first_instruction
+        if first is None:
+            return None, None, None
+
+        if first is None:
+            return None, None, None
+
+        value = first.value
+        if not isinstance(value, CallExpression):
+            return None, None, None
+
+        callee = value.callee
 
         if not isinstance(callee, MemberExpression):
             return None, None, None
@@ -234,7 +243,7 @@ class ForEachRecognizer:
         if not isinstance(prop, Identifier) or prop.name != method_name:
             return None, None, None
 
-        return first.value, first, header
+        return value, first, header
 
     @staticmethod
     def _match_call(expr, callee_name: str):
