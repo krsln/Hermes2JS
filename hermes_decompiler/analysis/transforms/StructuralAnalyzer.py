@@ -83,19 +83,23 @@ class StructuralAnalyzer:
         # siblings within whatever SequenceRegion they now live in.
         TryStructurer(graph, self.cfg).run()
 
+        # SwitchStructurer runs after the other structurers because it
+        # recognizes two different switch representations:
+        #
+        #   * raw TerminatorSwitch jump tables left untouched by
+        #     IfStructurer
+        #
+        #   * comparison chains that IfStructurer has already converted into
+        #     nested IfRegions
+        #
+        # Running here allows it to fold both forms into a single
+        # SwitchRegion representation before lowering.
+        SwitchStructurer(graph, self.cfg).run()
+
         # ---- 3. region_passes -------------------------------------------
         BooleanChainFolder(self.cfg).run(graph.root)
         LoopConditionExtractor(graph.root).run()
         ForEachRecognizer(graph).run()
-
-        # SwitchStructurer is kept in this historical position (after
-        # region_passes, not batched with the other structurers in
-        # stage 2) even though it's currently a no-op stub - preserved
-        # exactly as-is rather than reordered on a guess, since a
-        # future real implementation may depend on running after
-        # BooleanChainFolder/LoopConditionExtractor for reasons not
-        # yet documented here.
-        SwitchStructurer(graph, self.cfg).run()
 
         # ---- 4. lowering ------------------------------------------------
         StatementBuilder().build(root)
