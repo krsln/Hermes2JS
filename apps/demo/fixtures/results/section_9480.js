@@ -13,10 +13,10 @@ function forInTest(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1912, UInt16: 19164>  # Object: {'a': 1, 'b': 2, 'c': 3}
     // USED → r7 = { "a": 1, "b": 2, "c": 3 };
     // CODE → <Mov>: <Reg8: 5, Reg8: 7>
-    // USED → r5 = { "a": 1, "b": 2, "c": 3 };
+    r5 = { "a": 1, "b": 2, "c": 3 }
     // CODE → <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
-    // USED → r6 = HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 });
-    if (HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 }) !== undefined) {
+    // USED → r6 = HermesPropertyIterator(r5);
+    if (HermesPropertyIterator(r5) !== undefined) {
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 1 ──────────────── 

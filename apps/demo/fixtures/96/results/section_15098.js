@@ -53,16 +53,16 @@ function propertyAccessTest(param0) {
     // CODE → <Call2>: <Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 5>
     // USED → r5 = globalThis.Object.keys({ "x": 1, "y": 2 });
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
-    // USED → r2 = globalThis.Object.keys({ "x": 1, "y": 2 });
+    r2 = globalThis.Object.keys({ "x": 1, "y": 2 })
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 }));
+    // USED → r3 = GetIterator(r2);
     // LOOP → START (for_of)
-    for (const r8 of globalThis.Object.keys({ "x": 1, "y": 2 })) {
+    for (const r8 of r2) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        // USED → r5 = GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 }));
+        // USED → r5 = GetIterator(r2);
         // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 5, Reg8: 0>  # Address: 000000b1
-        if (GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })) === undefined) goto label_177;
+        if (GetIterator(r2) === undefined) goto label_177;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r7 = globalThis.console;
@@ -71,9 +71,9 @@ function propertyAccessTest(param0) {
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
         // USED → r5 = { "x": 1, "y": 2 };
         // CODE → <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 8>
-        // USED → r5 = { "x": 1, "y": 2 }[GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })).next()];
+        // USED → r5 = { "x": 1, "y": 2 }[GetIterator(r2).next()];
         // CODE → <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
-        r5 = globalThis.console.log(GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })).next(), { "x": 1, "y": 2 }[GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })).next()])
+        r5 = globalThis.console.log(GetIterator(r2).next(), { "x": 1, "y": 2 }[GetIterator(r2).next()])
         // CODE → <Jmp>: <Addr8: -35>  # Address: 00000085
         goto label_133;
     }

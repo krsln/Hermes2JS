@@ -59,48 +59,48 @@ function spreadArrayTest(param0) {
     // CODE → <Mov>: <Reg8: 7, Reg8: 0>
     // USED → r7 = [];
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 7>
-    // USED → r3 = GetIterator([]);
+    // USED → r3 = GetIterator(r7);
     // CODE → <Mov>: <Reg8: 0, Reg8: 7>
     r0 = []
     // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 0>
-    // USED → r4 = GetIterator([]).next();
+    // USED → r4 = GetIterator(r7).next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = GetIterator([]);
+    // USED → r5 = GetIterator(r7);
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <StrictEq>: <Reg8: 6, Reg8: 5, Reg8: 0>
-    // USED → r6 = GetIterator([]) === undefined;
+    // USED → r6 = GetIterator(r7) === undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 5>
     r5 = undefined
-    if (GetIterator([]) !== undefined) {
+    if (GetIterator(r7) !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        // USED → r5 = GetIterator([]).next();
+        // USED → r5 = GetIterator(r7).next();
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 4, UInt16: 0>
     // USED → r4 = [];
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
-    if (GetIterator([]) !== undefined) {
+    if (GetIterator(r7) !== undefined) {
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Mov>: <Reg8: 6, Reg8: 7>
             r6 = []
             // CODE → <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>
-            // USED → r10 = GetIterator([]).next();
+            // USED → r10 = GetIterator(r7).next();
             // CODE → <Mov>: <Reg8: 6, Reg8: 3>
-            // USED → r6 = GetIterator([]);
+            // USED → r6 = GetIterator(r7);
             // CODE → <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 0>
-            // USED → r6 = GetIterator([]) === undefined;
+            // USED → r6 = GetIterator(r7) === undefined;
             // CODE → <Mov>: <Reg8: 9, Reg8: 2>
             // USED → r9 = 0;
             // CODE → <JmpTrue>: <Addr8: 23, Reg8: 6>  # Address: 000000cc
-            if (GetIterator([]) === undefined) goto label_204;
+            if (GetIterator(r7) === undefined) goto label_204;
             // ──────────────── Block 4 ──────────────── 
             // CODE → <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
-            [][0] = GetIterator([]).next()
+            [][0] = GetIterator(r7).next()
             // CODE → <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
             r2 = 0 + 1
             // CODE → <Jmp>: <Addr8: -28>  # Address: 000000a4
@@ -116,12 +116,12 @@ function spreadArrayTest(param0) {
             while (true) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-                GetIterator([]).return()
+                GetIterator(r7).return()
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <Catch>: <Reg8: 2>
                 // USED → r2 = caughtException;
                 // CODE → <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 000000ca
-                if (GetIterator([]) === undefined) goto label_202;
+                if (GetIterator(r7) === undefined) goto label_202;
             }
             // LOOP → END
         }
@@ -133,7 +133,7 @@ function spreadArrayTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
-    r2 = globalThis.console.log(GetIterator([]).next(), [])
+    r2 = globalThis.console.log(GetIterator(r7).next(), [])
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

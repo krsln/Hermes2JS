@@ -13,12 +13,12 @@ function forInTest(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 6, UInt16: 3, UInt16: 3, UInt16: 1155, UInt16: 1179>  # Object: {'a': 1, 'b': 2, 'c': 3}
     // USED → r6 = { "a": 1, "b": 2, "c": 3 };
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-    // USED → r4 = { "a": 1, "b": 2, "c": 3 };
+    r4 = { "a": 1, "b": 2, "c": 3 }
     // CODE → <GetPNameList>: <Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 2>
-    // USED → r5 = HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 });
-    if (HermesPropertyIterator({ "a": 1, "b": 2, "c": 3 }) !== undefined) {
+    // USED → r5 = HermesPropertyIterator(r4);
+    if (HermesPropertyIterator(r4) !== undefined) {
         // LOOP → START (for_in)
-        for (const r1 in { "a": 1, "b": 2, "c": 3 }) {
+        for (const r1 in r4) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <JmpUndefined>: <Addr8: 29, Reg8: 1>  # Address: 0000004e
             if (r5.next() === undefined) goto label_78;

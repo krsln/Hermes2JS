@@ -18,7 +18,7 @@ class IteratorBegin(OpcodeHandler):
             return self.build_invalid_args_result(analysis, entry)
 
         iterator_reg, iterable_reg = map(int, match.groups())
-        iterable = self.get_register_expression(analysis, iterable_reg)
+        iterable = self.get_register_reference(analysis, iterable_reg)
 
         # Named pseudo-call, same convention as getEnvironment()/
         # HermesPropertyIterator() elsewhere - GetIterator() is not

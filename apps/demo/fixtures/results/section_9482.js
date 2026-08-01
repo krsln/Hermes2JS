@@ -49,27 +49,27 @@ function propertyAccessTest(param0) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 0>
     // USED → r2 = globalThis.Object.keys({ "x": 1, "y": 2 });
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 }));
+    // USED → r3 = GetIterator(r2);
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    while (GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })) === undefined) {
+    while (GetIterator(r2) === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 2>
         r5 = globalThis.Object.keys({ "x": 1, "y": 2 })
         // CODE → <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 5>
-        // USED → r8 = GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })).next();
+        // USED → r8 = GetIterator(r2).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        // USED → r5 = GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 }));
+        // USED → r5 = GetIterator(r2);
         // ──────────────── Block 2 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r7 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r6 = globalThis.console.log;
         // CODE → <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 8>
-        // USED → r5 = { "x": 1, "y": 2 }[GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })).next()];
+        // USED → r5 = { "x": 1, "y": 2 }[GetIterator(r2).next()];
         // CODE → <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
-        r5 = globalThis.console.log(GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })).next(), { "x": 1, "y": 2 }[GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })).next()])
+        r5 = globalThis.console.log(GetIterator(r2).next(), { "x": 1, "y": 2 }[GetIterator(r2).next()])
         // CODE → <Jmp>: <Addr8: -35>  # Address: 0000007c
         goto label_124;
     }
@@ -78,7 +78,7 @@ function propertyAccessTest(param0) {
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-    GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })).return()
+    GetIterator(r2).return()
     // CODE → <Throw>: <Reg8: 2>
     throw caughtException;
     // ──────────────── Block 4 ──────────────── 

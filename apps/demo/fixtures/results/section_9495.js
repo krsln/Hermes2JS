@@ -83,68 +83,68 @@ function mapTest(param0) {
     // CODE → <Mov>: <Reg8: 3, Reg8: 2>
     // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__);
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = GetIterator(new globalThis.Map(__uninitialized_this_for_new__));
+    // USED → r5 = GetIterator(r3);
     // LOOP → START (while)
-    while (GetIterator(new globalThis.Map(__uninitialized_this_for_new__)) === undefined) {
+    while (GetIterator(r3) === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 8, Reg8: 3>
         r8 = new globalThis.Map(__uninitialized_this_for_new__)
         // CODE → <IteratorNext>: <Reg8: 9, Reg8: 5, Reg8: 8>
-        // USED → r9 = GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next();
+        // USED → r9 = GetIterator(r3).next();
         // CODE → <Mov>: <Reg8: 8, Reg8: 5>
-        // USED → r8 = GetIterator(new globalThis.Map(__uninitialized_this_for_new__));
+        // USED → r8 = GetIterator(r3);
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 11, Reg8: 9>
-        // USED → r11 = GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next();
+        // USED → r11 = GetIterator(r3).next();
         // CODE → <IteratorBegin>: <Reg8: 8, Reg8: 11>
-        // USED → r8 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next());
+        // USED → r8 = GetIterator(r11);
         // CODE → <Mov>: <Reg8: 9, Reg8: 11>
-        r9 = GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()
+        r9 = GetIterator(r3).next()
         // CODE → <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 9>
-        // USED → r12 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).next();
+        // USED → r12 = GetIterator(r11).next();
         // CODE → <Mov>: <Reg8: 9, Reg8: 8>
-        // USED → r9 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next());
+        // USED → r9 = GetIterator(r11);
         // CODE → <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 0>
-        // USED → r9 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()) === undefined;
+        // USED → r9 = GetIterator(r11) === undefined;
         // CODE → <LoadConstUndefined>: <Reg8: 10>
         r10 = undefined
-        if (GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()) !== undefined) {
+        if (GetIterator(r11) !== undefined) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Mov>: <Reg8: 10, Reg8: 12>
-            // USED → r10 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).next();
+            // USED → r10 = GetIterator(r11).next();
         }
         // ──────────────── Block 4 ──────────────── 
         // CODE → <Mov>: <Reg8: 7, Reg8: 10>
-        // USED → r7 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).next();
+        // USED → r7 = GetIterator(r11).next();
         // CODE → <LoadConstUndefined>: <Reg8: 10>
         r10 = undefined
-        if (GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()) !== undefined) {
+        if (GetIterator(r11) !== undefined) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 11>
-            // USED → r12 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).next();
+            // USED → r12 = GetIterator(r11).next();
             // CODE → <Mov>: <Reg8: 11, Reg8: 8>
-            // USED → r11 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next());
+            // USED → r11 = GetIterator(r11);
             // CODE → <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 0>
-            // USED → r11 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()) === undefined;
+            // USED → r11 = GetIterator(r11) === undefined;
             // CODE → <LoadConstUndefined>: <Reg8: 10>
             r10 = undefined
             // CODE → <Mov>: <Reg8: 9, Reg8: 11>
-            r9 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()) === undefined
-            if (GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()) !== undefined) {
+            r9 = GetIterator(r11) === undefined
+            if (GetIterator(r11) !== undefined) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <Mov>: <Reg8: 10, Reg8: 12>
-                // USED → r10 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).next();
+                // USED → r10 = GetIterator(r11).next();
                 // CODE → <Mov>: <Reg8: 9, Reg8: 11>
-                // USED → r9 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()) === undefined;
+                // USED → r9 = GetIterator(r11) === undefined;
             }
         }
         // ──────────────── Block 7 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 10>
-        // USED → r6 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).next();
-        if (GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()) !== undefined) {
+        // USED → r6 = GetIterator(r11).next();
+        if (GetIterator(r11) !== undefined) {
             // ──────────────── Block 8 ──────────────── 
             // CODE → <IteratorClose>: <Reg8: 8, UInt8: 0>
-            GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).return()
+            GetIterator(r11).return()
         }
         // ──────────────── Block 9 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -152,11 +152,11 @@ function mapTest(param0) {
         // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r10 = globalThis.console.log;
         // CODE → <Mov>: <Reg8: 9, Reg8: 7>
-        // USED → r9 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).next();
+        // USED → r9 = GetIterator(r11).next();
         // CODE → <Mov>: <Reg8: 8, Reg8: 6>
-        // USED → r8 = GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).next();
+        // USED → r8 = GetIterator(r11).next();
         // CODE → <Call3>: <Reg8: 8, Reg8: 10, Reg8: 11, Reg8: 9, Reg8: 8>
-        r8 = globalThis.console.log(GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).next(), GetIterator(GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next()).next())
+        r8 = globalThis.console.log(GetIterator(r11).next(), GetIterator(r11).next())
         // CODE → <Jmp>: <Addr8: -107>  # Address: 000000ba
         goto label_186;
     }
@@ -165,7 +165,7 @@ function mapTest(param0) {
     // CODE → <Catch>: <Reg8: 3>
     // USED → r3 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 5, UInt8: 1>
-    GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).return()
+    GetIterator(r3).return()
     // CODE → <Throw>: <Reg8: 3>
     throw caughtException;
     // ──────────────── Block 11 ──────────────── 

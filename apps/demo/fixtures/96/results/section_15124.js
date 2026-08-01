@@ -51,25 +51,25 @@ function setTest(param0) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
     r0 = globalThis.console.log(new globalThis.Set([1, 2, 2, 3, 3, 3]).has(2))
     // CODE → <Mov>: <Reg8: 2, Reg8: 3>
-    // USED → r2 = new globalThis.Set([1, 2, 2, 3, 3, 3]);
+    r2 = new globalThis.Set([1, 2, 2, 3, 3, 3])
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3]));
+    // USED → r4 = GetIterator(r2);
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (for_of)
-    for (const r7 of new globalThis.Set([1, 2, 2, 3, 3, 3])) {
+    for (const r7 of r2) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        // USED → r5 = GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3]));
+        // USED → r5 = GetIterator(r2);
         // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 000000a3
-        if (GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3])) === undefined) goto label_163;
+        if (GetIterator(r2) === undefined) goto label_163;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r6 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r5 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-        r5 = globalThis.console.log(GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3])).next())
+        r5 = globalThis.console.log(GetIterator(r2).next())
         // CODE → <Jmp>: <Addr8: -27>  # Address: 0000007f
         goto label_127;
     }

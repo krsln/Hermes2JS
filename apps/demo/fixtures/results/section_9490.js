@@ -113,49 +113,49 @@ function callDestructuringTests(param0) {
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
     // USED → r6 = [9, 10];
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    // USED → r5 = GetIterator([9, 10]);
+    // USED → r5 = GetIterator(r6);
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>
     r7 = [9, 10]
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
-    // USED → r7 = GetIterator([9, 10]).next();
+    // USED → r7 = GetIterator(r6).next();
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>
-    // USED → r8 = GetIterator([9, 10]);
+    // USED → r8 = GetIterator(r6);
     // CODE → <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
-    // USED → r1 = GetIterator([9, 10]) === undefined;
+    // USED → r1 = GetIterator(r6) === undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 8>
     r8 = undefined
-    if (GetIterator([9, 10]) !== undefined) {
+    if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 9 ──────────────── 
         // CODE → <Mov>: <Reg8: 8, Reg8: 7>
-        // USED → r8 = GetIterator([9, 10]).next();
+        // USED → r8 = GetIterator(r6).next();
     }
     // ──────────────── Block 10 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
-    if (GetIterator([9, 10]) !== undefined) {
+    if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 11 ──────────────── 
         // CODE → <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
-        // USED → r6 = GetIterator([9, 10]).next();
+        // USED → r6 = GetIterator(r6).next();
         // CODE → <Mov>: <Reg8: 11, Reg8: 5>
-        // USED → r11 = GetIterator([9, 10]);
+        // USED → r11 = GetIterator(r6);
         // CODE → <StrictEq>: <Reg8: 3, Reg8: 11, Reg8: 2>
-        // USED → r3 = GetIterator([9, 10]) === undefined;
+        // USED → r3 = GetIterator(r6) === undefined;
         // CODE → <LoadConstUndefined>: <Reg8: 7>
         r7 = undefined
         // CODE → <Mov>: <Reg8: 1, Reg8: 3>
-        r1 = GetIterator([9, 10]) === undefined
-        if (GetIterator([9, 10]) !== undefined) {
+        r1 = GetIterator(r6) === undefined
+        if (GetIterator(r6) !== undefined) {
             // ──────────────── Block 12 ──────────────── 
             // CODE → <Mov>: <Reg8: 7, Reg8: 6>
-            // USED → r7 = GetIterator([9, 10]).next();
+            // USED → r7 = GetIterator(r6).next();
             // CODE → <Mov>: <Reg8: 1, Reg8: 3>
-            // USED → r1 = GetIterator([9, 10]) === undefined;
+            // USED → r1 = GetIterator(r6) === undefined;
         }
     }
-    if (GetIterator([9, 10]) !== undefined) {
+    if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 14 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 5, UInt8: 0>
-        GetIterator([9, 10]).return()
+        GetIterator(r6).return()
     }
     // ──────────────── Block 15 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -177,9 +177,9 @@ function callDestructuringTests(param0) {
     // CODE → <Mov>: <Reg8: 14, Reg8: 9>
     r14 = "anon"
     // CODE → <Mov>: <Reg8: 13, Reg8: 8>
-    r13 = GetIterator([9, 10]).next()
+    r13 = GetIterator(r6).next()
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>
-    r12 = GetIterator([9, 10]).next()
+    r12 = GetIterator(r6).next()
     // CODE → <Call>: <Reg8: 5, Reg8: 5, UInt8: 5>
     r5 = globalThis.console.log(r0, r1, r2, r3, r4)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -211,49 +211,49 @@ function callDestructuringTests(param0) {
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
     // USED → r6 = [];
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    // USED → r5 = GetIterator([]);
+    // USED → r5 = GetIterator(r6);
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>
     r7 = []
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
-    // USED → r7 = GetIterator([]).next();
+    // USED → r7 = GetIterator(r6).next();
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>
-    // USED → r8 = GetIterator([]);
+    // USED → r8 = GetIterator(r6);
     // CODE → <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
-    // USED → r1 = GetIterator([]) === undefined;
+    // USED → r1 = GetIterator(r6) === undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 8>
     r8 = undefined
-    if (GetIterator([]) !== undefined) {
+    if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 16 ──────────────── 
         // CODE → <Mov>: <Reg8: 8, Reg8: 7>
-        // USED → r8 = GetIterator([]).next();
+        // USED → r8 = GetIterator(r6).next();
     }
     // ──────────────── Block 17 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
-    if (GetIterator([]) !== undefined) {
+    if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 18 ──────────────── 
         // CODE → <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
-        // USED → r6 = GetIterator([]).next();
+        // USED → r6 = GetIterator(r6).next();
         // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-        // USED → r9 = GetIterator([]);
+        // USED → r9 = GetIterator(r6);
         // CODE → <StrictEq>: <Reg8: 3, Reg8: 9, Reg8: 2>
-        // USED → r3 = GetIterator([]) === undefined;
+        // USED → r3 = GetIterator(r6) === undefined;
         // CODE → <LoadConstUndefined>: <Reg8: 7>
         r7 = undefined
         // CODE → <Mov>: <Reg8: 1, Reg8: 3>
-        r1 = GetIterator([]) === undefined
-        if (GetIterator([]) !== undefined) {
+        r1 = GetIterator(r6) === undefined
+        if (GetIterator(r6) !== undefined) {
             // ──────────────── Block 19 ──────────────── 
             // CODE → <Mov>: <Reg8: 7, Reg8: 6>
-            // USED → r7 = GetIterator([]).next();
+            // USED → r7 = GetIterator(r6).next();
             // CODE → <Mov>: <Reg8: 1, Reg8: 3>
-            // USED → r1 = GetIterator([]) === undefined;
+            // USED → r1 = GetIterator(r6) === undefined;
         }
     }
-    if (GetIterator([]) !== undefined) {
+    if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 21 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 5, UInt8: 0>
-        GetIterator([]).return()
+        GetIterator(r6).return()
     }
     // ──────────────── Block 22 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -261,7 +261,7 @@ function callDestructuringTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 8, Reg8: 7>
-    r5 = globalThis.console.log(GetIterator([]).next(), GetIterator([]).next())
+    r5 = globalThis.console.log(GetIterator(r6).next(), GetIterator(r6).next())
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

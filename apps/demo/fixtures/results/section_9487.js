@@ -35,165 +35,165 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <Mov>: <Reg8: 6, Reg8: 2>
     // USED → r6 = [];
     // CODE → <IteratorBegin>: <Reg8: 1, Reg8: 6>
-    // USED → r1 = GetIterator([]);
+    // USED → r1 = GetIterator(r6);
     // CODE → <Mov>: <Reg8: 2, Reg8: 6>
     r2 = []
     // CODE → <IteratorNext>: <Reg8: 2, Reg8: 1, Reg8: 2>
-    // USED → r2 = GetIterator([]).next();
+    // USED → r2 = GetIterator(r6).next();
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-    // USED → r4 = GetIterator([]);
+    // USED → r4 = GetIterator(r6);
     // CODE → <StrictEq>: <Reg8: 4, Reg8: 4, Reg8: 3>
-    // USED → r4 = GetIterator([]) === undefined;
+    // USED → r4 = GetIterator(r6) === undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 5>
     r5 = undefined
-    if (GetIterator([]) !== undefined) {
+    if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-        // USED → r5 = GetIterator([]).next();
+        // USED → r5 = GetIterator(r6).next();
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 11, Reg8: 5>
-    // USED → r11 = GetIterator([]).next();
+    // USED → r11 = GetIterator(r6).next();
     // CODE → <IteratorBegin>: <Reg8: 2, Reg8: 11>
-    // USED → r2 = GetIterator(GetIterator([]).next());
+    // USED → r2 = GetIterator(r11);
     // CODE → <Mov>: <Reg8: 5, Reg8: 11>
-    r5 = GetIterator([]).next()
+    r5 = GetIterator(r6).next()
     // CODE → <IteratorNext>: <Reg8: 12, Reg8: 2, Reg8: 5>
-    // USED → r12 = GetIterator(GetIterator([]).next()).next();
+    // USED → r12 = GetIterator(r11).next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-    // USED → r5 = GetIterator(GetIterator([]).next());
+    // USED → r5 = GetIterator(r11);
     // CODE → <StrictEq>: <Reg8: 5, Reg8: 5, Reg8: 3>
-    // USED → r5 = GetIterator(GetIterator([]).next()) === undefined;
+    // USED → r5 = GetIterator(r11) === undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 9>
     r9 = undefined
-    if (GetIterator(GetIterator([]).next()) !== undefined) {
+    if (GetIterator(r11) !== undefined) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <Mov>: <Reg8: 9, Reg8: 12>
-        // USED → r9 = GetIterator(GetIterator([]).next()).next();
+        // USED → r9 = GetIterator(r11).next();
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 9>
-    // USED → r8 = GetIterator(GetIterator([]).next()).next();
+    // USED → r8 = GetIterator(r11).next();
     // CODE → <LoadConstUndefined>: <Reg8: 9>
     r9 = undefined
-    if (GetIterator(GetIterator([]).next()) !== undefined) {
+    if (GetIterator(r11) !== undefined) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <IteratorNext>: <Reg8: 12, Reg8: 2, Reg8: 11>
-        // USED → r12 = GetIterator(GetIterator([]).next()).next();
+        // USED → r12 = GetIterator(r11).next();
         // CODE → <Mov>: <Reg8: 11, Reg8: 2>
-        // USED → r11 = GetIterator(GetIterator([]).next());
+        // USED → r11 = GetIterator(r11);
         // CODE → <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
-        // USED → r11 = GetIterator(GetIterator([]).next()) === undefined;
+        // USED → r11 = GetIterator(r11) === undefined;
         // CODE → <LoadConstUndefined>: <Reg8: 9>
         r9 = undefined
         // CODE → <Mov>: <Reg8: 5, Reg8: 11>
-        r5 = GetIterator(GetIterator([]).next()) === undefined
-        if (GetIterator(GetIterator([]).next()) !== undefined) {
+        r5 = GetIterator(r11) === undefined
+        if (GetIterator(r11) !== undefined) {
             // ──────────────── Block 6 ──────────────── 
             // CODE → <Mov>: <Reg8: 9, Reg8: 12>
-            // USED → r9 = GetIterator(GetIterator([]).next()).next();
+            // USED → r9 = GetIterator(r11).next();
             // CODE → <Mov>: <Reg8: 5, Reg8: 11>
-            // USED → r5 = GetIterator(GetIterator([]).next()) === undefined;
+            // USED → r5 = GetIterator(r11) === undefined;
         }
     }
     // ──────────────── Block 7 ──────────────── 
     // CODE → <Mov>: <Reg8: 7, Reg8: 9>
-    // USED → r7 = GetIterator(GetIterator([]).next()).next();
-    if (GetIterator(GetIterator([]).next()) !== undefined) {
+    // USED → r7 = GetIterator(r11).next();
+    if (GetIterator(r11) !== undefined) {
         // ──────────────── Block 8 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 2, UInt8: 0>
-        GetIterator(GetIterator([]).next()).return()
+        GetIterator(r11).return()
     }
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-    r5 = GetIterator([]) === undefined
-    if (GetIterator([]) !== undefined) {
+    r5 = GetIterator(r6) === undefined
+    if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 10 ──────────────── 
         // CODE → <Mov>: <Reg8: 2, Reg8: 6>
         r2 = []
         // CODE → <IteratorNext>: <Reg8: 2, Reg8: 1, Reg8: 2>
-        r2 = GetIterator([]).next()
+        r2 = GetIterator(r6).next()
         // CODE → <Mov>: <Reg8: 2, Reg8: 1>
-        // USED → r2 = GetIterator([]);
+        // USED → r2 = GetIterator(r6);
         // CODE → <StrictEq>: <Reg8: 5, Reg8: 2, Reg8: 3>
-        // USED → r5 = GetIterator([]) === undefined;
+        // USED → r5 = GetIterator(r6) === undefined;
     }
     // ──────────────── Block 11 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 9>
     r9 = undefined
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
-    r2 = GetIterator([]) === undefined
-    if (GetIterator([]) !== undefined) {
+    r2 = GetIterator(r6) === undefined
+    if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 12 ──────────────── 
         // CODE → <IteratorNext>: <Reg8: 11, Reg8: 1, Reg8: 6>
-        // USED → r11 = GetIterator([]).next();
+        // USED → r11 = GetIterator(r6).next();
         // CODE → <Mov>: <Reg8: 6, Reg8: 1>
-        // USED → r6 = GetIterator([]);
+        // USED → r6 = GetIterator(r6);
         // CODE → <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 3>
-        // USED → r6 = GetIterator([]) === undefined;
+        // USED → r6 = GetIterator(r6) === undefined;
         // CODE → <LoadConstUndefined>: <Reg8: 9>
         r9 = undefined
         // CODE → <Mov>: <Reg8: 2, Reg8: 6>
-        r2 = GetIterator([]) === undefined
-        if (GetIterator([]) !== undefined) {
+        r2 = GetIterator(r6) === undefined
+        if (GetIterator(r6) !== undefined) {
             // ──────────────── Block 13 ──────────────── 
             // CODE → <Mov>: <Reg8: 9, Reg8: 11>
-            // USED → r9 = GetIterator([]).next();
+            // USED → r9 = GetIterator(r6).next();
             // CODE → <Mov>: <Reg8: 2, Reg8: 6>
-            // USED → r2 = GetIterator([]) === undefined;
+            // USED → r2 = GetIterator(r6) === undefined;
         }
     }
     // ──────────────── Block 14 ──────────────── 
     // CODE → <Mov>: <Reg8: 12, Reg8: 9>
-    // USED → r12 = GetIterator([]).next();
+    // USED → r12 = GetIterator(r6).next();
     // CODE → <IteratorBegin>: <Reg8: 6, Reg8: 12>
-    // USED → r6 = GetIterator(GetIterator([]).next());
+    // USED → r6 = GetIterator(r12);
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
-    r9 = GetIterator([]).next()
+    r9 = GetIterator(r6).next()
     // CODE → <IteratorNext>: <Reg8: 9, Reg8: 6, Reg8: 9>
-    r9 = GetIterator(GetIterator([]).next()).next()
+    r9 = GetIterator(r12).next()
     // CODE → <Mov>: <Reg8: 9, Reg8: 6>
-    // USED → r9 = GetIterator(GetIterator([]).next());
+    // USED → r9 = GetIterator(r12);
     // CODE → <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 3>
-    // USED → r9 = GetIterator(GetIterator([]).next()) === undefined;
+    // USED → r9 = GetIterator(r12) === undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 11>
     r11 = undefined
-    if (GetIterator(GetIterator([]).next()) !== undefined) {
+    if (GetIterator(r12) !== undefined) {
         // ──────────────── Block 15 ──────────────── 
         // CODE → <IteratorNext>: <Reg8: 13, Reg8: 6, Reg8: 12>
-        // USED → r13 = GetIterator(GetIterator([]).next()).next();
+        // USED → r13 = GetIterator(r12).next();
         // CODE → <Mov>: <Reg8: 12, Reg8: 6>
-        // USED → r12 = GetIterator(GetIterator([]).next());
+        // USED → r12 = GetIterator(r12);
         // CODE → <StrictEq>: <Reg8: 12, Reg8: 12, Reg8: 3>
-        // USED → r12 = GetIterator(GetIterator([]).next()) === undefined;
+        // USED → r12 = GetIterator(r12) === undefined;
         // CODE → <LoadConstUndefined>: <Reg8: 11>
         r11 = undefined
         // CODE → <Mov>: <Reg8: 9, Reg8: 12>
-        r9 = GetIterator(GetIterator([]).next()) === undefined
-        if (GetIterator(GetIterator([]).next()) !== undefined) {
+        r9 = GetIterator(r12) === undefined
+        if (GetIterator(r12) !== undefined) {
             // ──────────────── Block 16 ──────────────── 
             // CODE → <Mov>: <Reg8: 11, Reg8: 13>
-            // USED → r11 = GetIterator(GetIterator([]).next()).next();
+            // USED → r11 = GetIterator(r12).next();
             // CODE → <Mov>: <Reg8: 9, Reg8: 12>
-            // USED → r9 = GetIterator(GetIterator([]).next()) === undefined;
+            // USED → r9 = GetIterator(r12) === undefined;
         }
     }
     // ──────────────── Block 17 ──────────────── 
     // CODE → <Mov>: <Reg8: 0, Reg8: 11>
-    // USED → r0 = GetIterator(GetIterator([]).next()).next();
-    if (GetIterator(GetIterator([]).next()) !== undefined) {
+    // USED → r0 = GetIterator(r12).next();
+    if (GetIterator(r12) !== undefined) {
         // ──────────────── Block 18 ──────────────── 
         // CODE → <Mov>: <Reg8: 9, Reg8: 6>
-        // USED → r9 = GetIterator(GetIterator([]).next());
+        // USED → r9 = GetIterator(r12);
         // CODE → <IteratorClose>: <Reg8: 9, UInt8: 0>
-        GetIterator(GetIterator([]).next()).return()
+        GetIterator(r12).return()
     }
-    if (GetIterator([]) !== undefined) {
+    if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 20 ──────────────── 
         // CODE → <Mov>: <Reg8: 9, Reg8: 1>
-        // USED → r9 = GetIterator([]);
+        // USED → r9 = GetIterator(r6);
         // CODE → <IteratorClose>: <Reg8: 9, UInt8: 0>
-        GetIterator([]).return()
+        GetIterator(r6).return()
     }
     // ──────────────── Block 21 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -201,31 +201,31 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r9 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 0, Reg8: 9, Reg8: 11, Reg8: 8, Reg8: 7, Reg8: 0>
-    r0 = globalThis.console.log(GetIterator(GetIterator([]).next()).next(), GetIterator(GetIterator([]).next()).next(), GetIterator(GetIterator([]).next()).next())
+    r0 = globalThis.console.log(GetIterator(r11).next(), GetIterator(r11).next(), GetIterator(r12).next())
     // CODE → <NewArrayWithBuffer>: <Reg8: 17, UInt16: 1, UInt16: 1, UInt16: 20024>  # Array: [10]
     // USED → r17 = [10];
     // CODE → <IteratorBegin>: <Reg8: 7, Reg8: 17>
-    // USED → r7 = GetIterator([10]);
+    // USED → r7 = GetIterator(r17);
     // CODE → <LoadConstUndefined>: <Reg8: 12>
     r12 = undefined
     // CODE → <Mov>: <Reg8: 0, Reg8: 17>
     r0 = [10]
     // CODE → <IteratorNext>: <Reg8: 0, Reg8: 7, Reg8: 0>
-    // USED → r0 = GetIterator([10]).next();
+    // USED → r0 = GetIterator(r17).next();
     // CODE → <Mov>: <Reg8: 8, Reg8: 7>
-    // USED → r8 = GetIterator([10]);
+    // USED → r8 = GetIterator(r17);
     // CODE → <StrictEq>: <Reg8: 9, Reg8: 8, Reg8: 3>
-    // USED → r9 = GetIterator([10]) === undefined;
-    if (GetIterator([10]) === undefined) {
+    // USED → r9 = GetIterator(r17) === undefined;
+    if (GetIterator(r17) === undefined) {
         // ──────────────── Block 23 ──────────────── 
         // CODE → <LoadConstZero>: <Reg8: 12>
         // USED → r12 = 0;
     } else {
         // ──────────────── Block 22 ──────────────── 
         // CODE → <Mov>: <Reg8: 12, Reg8: 0>
-        r12 = GetIterator([10]).next()
+        r12 = GetIterator(r17).next()
         // CODE → <JStrictNotEqual>: <Addr8: 6, Reg8: 0, Reg8: 3>  # Address: 0000015d
-        if (GetIterator([10]).next() !== undefined) goto label_349;
+        if (GetIterator(r17).next() !== undefined) goto label_349;
     }
     // ──────────────── Block 24 ──────────────── 
     // CODE → <Mov>: <Reg8: 15, Reg8: 12>
@@ -233,40 +233,40 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 12>
     r12 = undefined
     // CODE → <Mov>: <Reg8: 11, Reg8: 9>
-    r11 = GetIterator([10]) === undefined
+    r11 = GetIterator(r17) === undefined
     // CODE → <JmpTrue>: <Addr8: 29, Reg8: 9>  # Address: 00000182
-    if (GetIterator([10]) === undefined) goto label_386;
+    if (GetIterator(r17) === undefined) goto label_386;
     // ──────────────── Block 25 ──────────────── 
     // CODE → <Mov>: <Reg8: 0, Reg8: 17>
     r0 = [10]
     // CODE → <IteratorNext>: <Reg8: 13, Reg8: 7, Reg8: 0>
-    // USED → r13 = GetIterator([10]).next();
+    // USED → r13 = GetIterator(r17).next();
     // CODE → <Mov>: <Reg8: 0, Reg8: 7>
-    // USED → r0 = GetIterator([10]);
+    // USED → r0 = GetIterator(r17);
     // CODE → <StrictEq>: <Reg8: 0, Reg8: 0, Reg8: 3>
-    // USED → r0 = GetIterator([10]) === undefined;
+    // USED → r0 = GetIterator(r17) === undefined;
     // CODE → <Mov>: <Reg8: 8, Reg8: 0>
-    // USED → r8 = GetIterator([10]) === undefined;
+    // USED → r8 = GetIterator(r17) === undefined;
     // CODE → <JmpTrue>: <Addr8: 22, Reg8: 8>  # Address: 0000018f
-    if (GetIterator([10]) === undefined) goto label_399;
+    if (GetIterator(r17) === undefined) goto label_399;
     // ──────────────── Block 26 ──────────────── 
     // CODE → <Mov>: <Reg8: 12, Reg8: 13>
-    // USED → r12 = GetIterator([10]).next();
+    // USED → r12 = GetIterator(r17).next();
     // CODE → <Mov>: <Reg8: 11, Reg8: 0>
-    // USED → r11 = GetIterator([10]) === undefined;
+    // USED → r11 = GetIterator(r17) === undefined;
     // ──────────────── Block 27 ──────────────── 
     // CODE → <Mov>: <Reg8: 0, Reg8: 12>
-    // USED → r0 = GetIterator([10]).next();
+    // USED → r0 = GetIterator(r17).next();
     // CODE → <Mov>: <Reg8: 8, Reg8: 11>
-    // USED → r8 = GetIterator([10]) === undefined;
+    // USED → r8 = GetIterator(r17) === undefined;
     // CODE → <Mov>: <Reg8: 11, Reg8: 8>
-    r11 = GetIterator([10]) === undefined
-    if (GetIterator([10]).next() === undefined) {
+    r11 = GetIterator(r17) === undefined
+    if (GetIterator(r17).next() === undefined) {
         // ──────────────── Block 28 ──────────────── 
         // CODE → <LoadConstZero>: <Reg8: 12>
         // USED → r12 = 0;
         // CODE → <Mov>: <Reg8: 11, Reg8: 8>
-        // USED → r11 = GetIterator([10]) === undefined;
+        // USED → r11 = GetIterator(r17) === undefined;
         // CODE → <Jmp>: <Addr8: 6>  # Address: 0000019a
         goto label_410;
     }
@@ -279,25 +279,25 @@ function nestedArrayDestructureTest(param0) {
     // USED → r12 = 1;
     // CODE → <LoadConstZero>: <Reg8: 16>
     // USED → r16 = 0;
-    if (GetIterator([10]) !== undefined) {
+    if (GetIterator(r17) !== undefined) {
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 31 ──────────────── 
             // CODE → <Mov>: <Reg8: 11, Reg8: 17>
             r11 = [10]
             // CODE → <IteratorNext>: <Reg8: 19, Reg8: 7, Reg8: 11>
-            // USED → r19 = GetIterator([10]).next();
+            // USED → r19 = GetIterator(r17).next();
             // CODE → <Mov>: <Reg8: 11, Reg8: 7>
-            // USED → r11 = GetIterator([10]);
+            // USED → r11 = GetIterator(r17);
             // CODE → <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
-            // USED → r11 = GetIterator([10]) === undefined;
+            // USED → r11 = GetIterator(r17) === undefined;
             // CODE → <Mov>: <Reg8: 18, Reg8: 16>
             // USED → r18 = 0;
             // CODE → <JmpTrue>: <Addr8: 20, Reg8: 11>  # Address: 000001ce
-            if (GetIterator([10]) === undefined) goto label_462;
+            if (GetIterator(r17) === undefined) goto label_462;
             // ──────────────── Block 32 ──────────────── 
             // CODE → <PutByValStrict>: <Reg8: 13, Reg8: 18, Reg8: 19>
-            [][0] = GetIterator([10]).next()
+            [][0] = GetIterator(r17).next()
             // CODE → <AddN>: <Reg8: 16, Reg8: 18, Reg8: 12>
             r16 = 0 + 1
             // CODE → <Jmp>: <Addr8: -28>  # Address: 000001a9
@@ -325,7 +325,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <Catch>: <Reg8: 0>
     // USED → r0 = caughtException;
     // CODE → <Mov>: <Reg8: 8, Reg8: 9>
-    // USED → r8 = GetIterator([10]) === undefined;
+    // USED → r8 = GetIterator(r17) === undefined;
     // LOOP → START (while)
     while (true) {
         // ──────────────── Block 37 ──────────────── 
@@ -334,7 +334,7 @@ function nestedArrayDestructureTest(param0) {
         // CODE → <Catch>: <Reg8: 0>
         // USED → r0 = caughtException;
         // CODE → <IteratorClose>: <Reg8: 6, UInt8: 1>
-        GetIterator(GetIterator([]).next()).return()
+        GetIterator(r12).return()
         // CODE → <Throw>: <Reg8: 0>
         throw caughtException;
         // CODE → <Catch>: <Reg8: 0>
@@ -345,9 +345,9 @@ function nestedArrayDestructureTest(param0) {
         while (true) {
             // ──────────────── Block 36 ──────────────── 
             // CODE → <IteratorClose>: <Reg8: 7, UInt8: 1>
-            GetIterator([10]).return()
+            GetIterator(r17).return()
             // LOOP → START (while)
-            while (GetIterator([10]) === undefined) {
+            while (GetIterator(r17) === undefined) {
                 // ──────────────── Block 35 ──────────────── 
                 // ──────────────── Block 29 ──────────────── 
                 // CODE → <Catch>: <Reg8: 0>
@@ -358,7 +358,7 @@ function nestedArrayDestructureTest(param0) {
                 // CODE → <Catch>: <Reg8: 0>
                 r0 = caughtException
                 // CODE → <Mov>: <Reg8: 8, Reg8: 11>
-                r8 = GetIterator([10]) === undefined
+                r8 = GetIterator(r17) === undefined
                 // CODE → <Jmp>: <Addr8: 47>  # Address: 000001fb
                 goto label_507;
             }
@@ -376,7 +376,7 @@ function nestedArrayDestructureTest(param0) {
         while (true) {
             // ──────────────── Block 42 ──────────────── 
             // CODE → <IteratorClose>: <Reg8: 1, UInt8: 1>
-            GetIterator([]).return()
+            GetIterator(r6).return()
             // LOOP → START (while)
             while (undefined) {
                 // ──────────────── Block 41 ──────────────── 
@@ -384,14 +384,14 @@ function nestedArrayDestructureTest(param0) {
                 // CODE → <Catch>: <Reg8: 0>
                 r0 = caughtException
                 // CODE → <Mov>: <Reg8: 2, Reg8: 5>
-                r2 = GetIterator([]) === undefined
+                r2 = GetIterator(r6) === undefined
                 // CODE → <Jmp>: <Addr8: 13>  # Address: 00000220
                 goto label_544;
                 // ──────────────── Block 39 ──────────────── 
                 // CODE → <Catch>: <Reg8: 0>
                 r0 = caughtException
                 // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-                r2 = GetIterator([]) === undefined
+                r2 = GetIterator(r6) === undefined
                 // CODE → <Jmp>: <Addr8: 6>  # Address: 00000220
                 goto label_544;
                 // ──────────────── Block 40 ──────────────── 

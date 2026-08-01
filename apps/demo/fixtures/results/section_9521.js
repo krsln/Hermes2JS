@@ -21,23 +21,23 @@ function callGeneratorTests(param0) {
     // CODE → <Mov>: <Reg8: 3, Reg8: 5>
     // USED → r3 = getParentEnvironment(0)[0].call(undefined);
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
-    // USED → r4 = GetIterator(getParentEnvironment(0)[0].call(undefined));
+    // USED → r4 = GetIterator(r3);
     // LOOP → START (while)
-    while (GetIterator(getParentEnvironment(0)[0].call(undefined)) === undefined) {
+    while (GetIterator(r3) === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
         r5 = getParentEnvironment(0)[0].call(undefined)
         // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
-        // USED → r7 = GetIterator(getParentEnvironment(0)[0].call(undefined)).next();
+        // USED → r7 = GetIterator(r3).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        // USED → r5 = GetIterator(getParentEnvironment(0)[0].call(undefined));
+        // USED → r5 = GetIterator(r3);
         // ──────────────── Block 2 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r5 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-        r5 = globalThis.console.log(GetIterator(getParentEnvironment(0)[0].call(undefined)).next())
+        r5 = globalThis.console.log(GetIterator(r3).next())
         // CODE → <Jmp>: <Addr8: -30>  # Address: 00000029
         goto label_41;
     }
@@ -46,7 +46,7 @@ function callGeneratorTests(param0) {
     // CODE → <Catch>: <Reg8: 3>
     // USED → r3 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
-    GetIterator(getParentEnvironment(0)[0].call(undefined)).return()
+    GetIterator(r3).return()
     // CODE → <Throw>: <Reg8: 3>
     throw caughtException;
     // ──────────────── Block 4 ──────────────── 
@@ -59,23 +59,23 @@ function callGeneratorTests(param0) {
     // CODE → <Mov>: <Reg8: 3, Reg8: 5>
     // USED → r3 = getParentEnvironment(0)[1].call(undefined, 5);
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
-    // USED → r4 = GetIterator(getParentEnvironment(0)[1].call(undefined, 5));
+    // USED → r4 = GetIterator(r3);
     // LOOP → START (while)
-    while (GetIterator(getParentEnvironment(0)[1].call(undefined, 5)) === undefined) {
+    while (GetIterator(r3) === undefined) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
         r5 = getParentEnvironment(0)[1].call(undefined, 5)
         // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
-        // USED → r7 = GetIterator(getParentEnvironment(0)[1].call(undefined, 5)).next();
+        // USED → r7 = GetIterator(r3).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        // USED → r5 = GetIterator(getParentEnvironment(0)[1].call(undefined, 5));
+        // USED → r5 = GetIterator(r3);
         // ──────────────── Block 6 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r5 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-        r5 = globalThis.console.log(GetIterator(getParentEnvironment(0)[1].call(undefined, 5)).next())
+        r5 = globalThis.console.log(GetIterator(r3).next())
         // CODE → <Jmp>: <Addr8: -30>  # Address: 00000062
         goto label_98;
     }
@@ -84,7 +84,7 @@ function callGeneratorTests(param0) {
     // CODE → <Catch>: <Reg8: 3>
     // USED → r3 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
-    GetIterator(getParentEnvironment(0)[1].call(undefined, 5)).return()
+    GetIterator(r3).return()
     // CODE → <Throw>: <Reg8: 3>
     throw caughtException;
     // ──────────────── Block 8 ──────────────── 
