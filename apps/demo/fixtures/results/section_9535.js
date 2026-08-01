@@ -16,7 +16,7 @@ function privateStaticTest(param0) {
     // USED → r4 = getParentEnvironment(0)[0];
     // CODE → <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
     r6 = __uninitialized_this_for_new__
-    if (typeof getParentEnvironment(0)[0] !== "<128>") {
+    if (typeof getParentEnvironment(0)[0] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
         r13 = "Trying to call a non-function"
@@ -70,7 +70,7 @@ function privateStaticTest(param0) {
         getParentEnvironment(0)[2].#__private_7__ = getParentEnvironment(0)[2].#__private_7__ + 1
         // CODE → <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
         r6 = __uninitialized_this_for_new__
-        if (typeof getParentEnvironment(0)[0] !== "<128>") {
+        if (typeof getParentEnvironment(0)[0] !== "function") {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
             r13 = "Trying to call a non-function"

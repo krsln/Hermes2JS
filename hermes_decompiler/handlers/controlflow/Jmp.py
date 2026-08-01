@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 
 from hermes_decompiler.analysis.terminators import TerminatorJump, TerminatorConditionalBranch
 from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, UINT8, UINT16, sequence
+from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (
     Expression,
@@ -15,17 +16,6 @@ from hermes_decompiler.ir.expressions import (
 )
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
-
-TYPEOF_MAP = {
-    0: "undefined",
-    1: "object",
-    2: "function",
-    3: "string",
-    4: "number",
-    5: "boolean",
-    6: "symbol",
-    7: "bigint",
-}
 
 
 # --------------------------------------------------------------------------
@@ -216,7 +206,21 @@ class JmpBuiltinIsNotLong(JmpBuiltinIsNot):
 # DEFINE_OPCODE_3(JmpTypeOfIs, Addr32, Reg8, UInt16)
 # Example: <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000031
 class JmpTypeOfIs(OpcodeHandler):
+    """Jump if the type matches the TypeOfIsTypes in Arg3."""
+
     _PATTERN = sequence(ADDR, REG, UINT16)
+
+    TYPEOF_FLAGS = {
+        1 << 0: "undefined",
+        1 << 1: "null",
+        1 << 2: "boolean",
+        1 << 3: "number",
+        1 << 4: "string",
+        1 << 5: "symbol",
+        1 << 6: "bigint",
+        1 << 7: "function",
+        1 << 8: "object",
+    }
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -225,13 +229,11 @@ class JmpTypeOfIs(OpcodeHandler):
 
         offset, reg, type_id = map(int, match.groups())
 
-        target = entry.target_address or (entry.address + offset)
+        target = entry.target_address if entry.target_address is not None else (entry.address + offset)
         analysis.gotoList.append(target)
 
-        condition = BinaryExpression(
-            UnaryExpression(UnaryOperator.TYPEOF, self.get_register_expression(analysis, reg)),
-            BinaryOperator.STRICT_EQUAL,
-            StringLiteral(TYPEOF_MAP.get(type_id, f"<{type_id}>")),
+        condition = self.build_typeof_condition(
+            self.get_register_expression(analysis, reg), type_id
         )
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
@@ -239,5 +241,23 @@ class JmpTypeOfIs(OpcodeHandler):
         # pure control flow: no operand value of its own
         result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
         analysis.add_result(result)
+
+        return result
+
+    @classmethod
+    def build_typeof_condition(cls, value: Expression, mask: int) -> Expression:
+        typeof_expr = UnaryExpression(UnaryOperator.TYPEOF, value)
+        conditions = [
+            BinaryExpression(typeof_expr, BinaryOperator.STRICT_EQUAL, StringLiteral(name))
+            for bit, name in cls.TYPEOF_FLAGS.items()
+            if mask & bit
+        ]
+
+        if not conditions:
+            return BinaryExpression(typeof_expr, BinaryOperator.STRICT_EQUAL, StringLiteral(f"<mask:{mask}>"))
+
+        result = conditions[0]
+        for cond in conditions[1:]:
+            result = BinaryExpression(result, LogicalOperator.OR, cond)
 
         return result

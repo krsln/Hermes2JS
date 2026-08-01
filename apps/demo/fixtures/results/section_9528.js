@@ -16,7 +16,7 @@ function classTest(param0) {
     // USED → r3 = getParentEnvironment(0)[0];
     // CODE → <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 2>
     r4 = __uninitialized_this_for_new__
-    if (typeof getParentEnvironment(0)[0] !== "<128>") {
+    if (typeof getParentEnvironment(0)[0] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
         r8 = "Trying to call a non-function"
@@ -60,7 +60,7 @@ function classTest(param0) {
     // USED → r4 = getParentEnvironment(0)[1];
     // CODE → <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 2>
     r3 = __uninitialized_this_for_new__
-    if (typeof getParentEnvironment(0)[1] !== "<128>") {
+    if (typeof getParentEnvironment(0)[1] !== "function") {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
         r8 = "Trying to call a non-function"

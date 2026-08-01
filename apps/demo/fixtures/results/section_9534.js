@@ -16,7 +16,7 @@ function create(param0, param1) {
     // USED → r5 = getParentEnvironment(0)[2];
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 5, UInt8: 2>
     r2 = __uninitialized_this_for_new__
-    if (typeof getParentEnvironment(0)[2] !== "<128>") {
+    if (typeof getParentEnvironment(0)[2] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 7, string_id: 4299>  # String: 'Trying to call a non-function' (String)
         r7 = "Trying to call a non-function"
