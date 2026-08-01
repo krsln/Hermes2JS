@@ -298,6 +298,9 @@ class Printer(NodeVisitor):
 
         disc = self.print_expression(region.discriminant)
 
+        if self.verbose:
+            self._write(lines, f"// Switch → START")
+
         self._write(lines, f"switch ({disc}) {{")
         self._indent += 1
 
@@ -321,6 +324,9 @@ class Printer(NodeVisitor):
 
         self._indent -= 1
         self._write(lines, "}")
+
+        if self.verbose:
+            self._write(lines, f"// Switch → END")
 
     def _ensure_case_terminated(self, lines: list[str]) -> None:
         """

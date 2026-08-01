@@ -1,4 +1,5 @@
 function describeFiber(param0, param1) {
+    // Switch → START
     switch (param1.tag) {
         case 1:
             // ──────────────── Block 1 ──────────────── 
@@ -119,4 +120,5 @@ function describeFiber(param0, param1) {
             // CODE → <Ret>: <Reg8: 0>
             return "";
     }
+    // Switch → END
 }

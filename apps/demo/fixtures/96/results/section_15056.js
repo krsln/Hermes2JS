@@ -14,6 +14,7 @@ function switchTest(param0, param1) {
     r1 = globalThis.console.log("__BC:ControlFlow/SwitchTests/switchTest/start")
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
+    // Switch → START
     switch (param1) {
         case 0:
             // ──────────────── Block 9 ──────────────── 
@@ -91,4 +92,5 @@ function switchTest(param0, param1) {
             // CODE → <Ret>: <Reg8: 1>
             return "other";
     }
+    // Switch → END
 }

@@ -14,6 +14,7 @@ function switchTest(param0, param1) {
     // USED → r2 = param1;
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
+    // Switch → START
     switch (param1) {
         case 0:
             // ──────────────── Block 9 ──────────────── 
@@ -91,4 +92,5 @@ function switchTest(param0, param1) {
             // CODE → <Ret>: <Reg8: 2>
             return "other";
     }
+    // Switch → END
 }
