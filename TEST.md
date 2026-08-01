@@ -101,7 +101,7 @@ SequenceRegion
     Block 11
 ```
 
-## Done Stuff
+## Done Stuff | from 2026-07-26
 
 - Test files created for ReactNative apps
 - ReactNative apps created to get different version of hermes bundle file
@@ -110,10 +110,9 @@ SequenceRegion
 - Structural changes
 - regions/render moved to emit/ with renames
 - regions/ moved to analysis/ with re-structure
-- Handlers re-constructed, lil-doc added on every class
 - Terminator added, Logging improved (colorful)
 - Structures improved | TryStructurer, SwitchStructurer,
-- 
+- Handlers re-constructed, lil-doc added on every class, also improved
 
 
 
