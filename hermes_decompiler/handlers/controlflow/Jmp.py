@@ -69,16 +69,19 @@ def _parse_typeof(entry: OpcodeEntry) -> Tuple[int, int, int]:
 
 
 # --------------------------------------------------------------------------
-# Base Jump (Unconditional)
+# Jmp (Unconditional)
 # --------------------------------------------------------------------------
-class Jump(OpcodeHandler):
-    """Base class for unconditional jumps."""
+class Jmp(OpcodeHandler):
+    """Unconditional jump."""
+
+    _PATTERN = sequence(ADDR)
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        try:
-            offset = _parse_jump(entry)
-        except ValueError as e:
-            return self.build_invalid_args_result(analysis, entry, str(e))
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(analysis, entry, f"Invalid arguments: {entry.args}")
+
+        offset = int(match.group(1))
 
         target = entry.target_address or (entry.address + offset)
         analysis.gotoList.append(target)
@@ -91,11 +94,8 @@ class Jump(OpcodeHandler):
         return result
 
 
-class Jmp(Jump):
-    pass
-
-
-class JmpLong(Jump):
+class JmpLong(Jmp):
+    """Long unconditional jump."""
     pass
 
 
