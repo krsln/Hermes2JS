@@ -1,0 +1,56 @@
+
+=> [Function #9473 "tryCatchInsideLoopTest" of 190 bytes]: 2 params, frame size=26, strict=0, exc handler=0, debug info=0  @ offset 0x001febf4
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 10, UInt8: 1>
+==> 00000003: <GetGlobalObject>: <Reg8: 1>
+==> 00000005: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 0, string_id: 4879>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start' (String)
+==> 00000014: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000019: <GetByIdShort>: <Reg8: 0, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+==> 0000001e: <LoadConstZero>: <Reg8: 9>
+==> 00000020: <Less>: <Reg8: 2, Reg8: 9, Reg8: 0>
+==> 00000024: <LoadConstUInt8>: <Reg8: 8, UInt8: 1>
+==> 00000027: <LoadConstString>: <Reg8: 7, string_id: 4874>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught' (String)
+==> 0000002b: <LoadConstString>: <Reg8: 6, string_id: 1440>  # String: 'negative value' (String)
+==> 0000002f: <LoadConstString>: <Reg8: 5, string_id: 4877>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok' (String)
+==> 00000033: <LoadConstZero>: <Reg8: 4>
+==> 00000035: <LoadConstZero>: <Reg8: 3>
+==> 00000037: <LoadConstZero>: <Reg8: 0>
+==> 00000039: <JmpFalse>: <Addr8: 111, Reg8: 2>  # Address: 000000a8
+==> 0000003c: <Mov>: <Reg8: 2, Reg8: 4>
+==> 0000003f: <Mov>: <Reg8: 11, Reg8: 3>
+==> 00000042: <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
+==> 00000046: <JLess>: <Addr8: 30, Reg8: 12, Reg8: 9>  # Address: 00000064
+==> 0000004a: <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000050: <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000055: <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
+==> 00000059: <Call3>: <Reg8: 12, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 12>
+==> 0000005f: <Mov>: <Reg8: 12, Reg8: 11>
+==> 00000062: <Jmp>: <Addr8: 51>  # Address: 00000095
+==> 00000064: <TryGetById>: <Reg8: 13, Reg8: 1, UInt8: 3, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000006a: <CreateThisForNew>: <Reg8: 14, Reg8: 13, UInt8: 4>
+==> 0000006e: <Mov>: <Reg8: 18, Reg8: 14>
+==> 00000071: <Mov>: <Reg8: 17, Reg8: 6>
+==> 00000074: <Construct>: <Reg8: 13, Reg8: 13, UInt8: 2>
+==> 00000078: <SelectObject>: <Reg8: 13, Reg8: 14, Reg8: 13>
+==> 0000007c: <Throw>: <Reg8: 13>
+==> 0000007e: <Catch>: <Reg8: 15>
+==> 00000080: <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000086: <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000008b: <Call3>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7, Reg8: 15>
+==> 00000091: <AddN>: <Reg8: 12, Reg8: 11, Reg8: 8>
+==> 00000095: <AddN>: <Reg8: 4, Reg8: 2, Reg8: 8>
+==> 00000099: <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+==> 0000009e: <Mov>: <Reg8: 3, Reg8: 12>
+==> 000000a1: <Mov>: <Reg8: 0, Reg8: 3>
+==> 000000a4: <JLess>: <Addr8: -104, Reg8: 4, Reg8: 2>  # Address: 0000003c
+==> 000000a8: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000ae: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000b3: <LoadConstString>: <Reg8: 1, string_id: 4876>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end' (String)
+==> 000000b7: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000bc: <Ret>: <Reg8: 0>
+
+

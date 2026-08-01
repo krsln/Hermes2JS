@@ -1,0 +1,19 @@
+
+=> [Function #9539 "increment" of 47 bytes]: 1 params, frame size=13, strict=0, exc handler=0, debug info=0  @ offset 0x00201124
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 2, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 0>
+==> 00000005: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 0, string_id: 4729>  # String: '__BC:Classes/PrivateStaticTests/Counter/increment' (String)
+==> 00000014: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 3, Reg8: 0>
+==> 00000019: <GetParentEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000001c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 6>
+==> 00000020: <GetOwnPrivateBySym>: <Reg8: 0, Reg8: 2, UInt8: 0, Reg8: 1>
+==> 00000025: <Inc>: <Reg8: 0, Reg8: 0>
+==> 00000028: <PutOwnPrivateBySym>: <Reg8: 2, Reg8: 0, UInt8: 0, Reg8: 1>
+==> 0000002d: <Ret>: <Reg8: 0>
+
+

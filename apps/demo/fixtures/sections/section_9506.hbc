@@ -1,0 +1,31 @@
+
+=> [Function #9506 "regExpGroupsAndReplaceTest" of 120 bytes]: 2 params, frame size=17, strict=0, exc handler=0, debug info=0  @ offset 0x002002d6
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000003: <GetGlobalObject>: <Reg8: 1>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 2, string_id: 5005>  # String: '__BC:Strings/RegExpTests/regExpGroupsAndReplaceTest/start' (String)
+==> 00000014: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000019: <CreateRegExp>: <Reg8: 4, string_id: 1955, string_id: 6457, UInt32: 162>  # String: '(\\d{4})-(\\d{2})-(\\d{2})' (String)  # String: '' (Identifier)
+==> 00000027: <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 180>  # String: 'match' (Identifier)
+==> 0000002c: <Call2>: <Reg8: 6, Reg8: 2, Reg8: 5, Reg8: 4>
+==> 00000031: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000037: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000003c: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 6>
+==> 00000041: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 3, string_id: 217>  # String: 'replace' (Identifier)
+==> 00000046: <LoadConstString>: <Reg8: 2, string_id: 1684>  # String: '$3/$2/$1' (String)
+==> 0000004a: <Call3>: <Reg8: 4, Reg8: 3, Reg8: 5, Reg8: 4, Reg8: 2>
+==> 00000050: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000056: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000005b: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
+==> 00000060: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000066: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000006b: <LoadConstString>: <Reg8: 1, string_id: 5004>  # String: '__BC:Strings/RegExpTests/regExpGroupsAndReplaceTest/end' (String)
+==> 0000006f: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000074: <LoadConstUndefined>: <Reg8: 0>
+==> 00000076: <Ret>: <Reg8: 0>
+
+

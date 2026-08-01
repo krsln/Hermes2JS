@@ -1,0 +1,29 @@
+
+=> [Function #15197 "" of 83 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x0026b81c
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 4>
+==> 00000002: <CreateClosure>: <Reg8: 3, Reg8: 4, function_id: 15198>  # Function: [#15198 Animal of 72 bytes]: 3 params @ offset 0x0026b86f
+==> 00000007: <StoreToEnvironment>: <Reg8: 4, UInt8: 0, Reg8: 3>
+==> 0000000b: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 0000000e: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 4>
+==> 00000012: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
+==> 00000017: <NewObject>: <Reg8: 0>
+==> 00000019: <LoadConstString>: <Reg8: 1, string_id: 10340>  # String: 'makeSound' (Identifier)
+==> 0000001d: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 117>  # String: 'key' (Identifier)
+==> 00000021: <CreateClosure>: <Reg8: 1, Reg8: 4, function_id: 15199>  # Function: [#15199 makeSound of 62 bytes]: 1 params @ offset 0x0026b8b7
+==> 00000026: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 205>  # String: 'value' (Identifier)
+==> 0000002a: <NewArray>: <Reg8: 1, UInt16: 2>
+==> 0000002e: <PutOwnByIndex>: <Reg8: 1, Reg8: 0, UInt8: 0>
+==> 00000032: <NewObject>: <Reg8: 0>
+==> 00000034: <LoadConstString>: <Reg8: 5, string_id: 10805>  # String: 'description' (Identifier)
+==> 00000038: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 5, string_id: 117>  # String: 'key' (Identifier)
+==> 0000003c: <CreateClosure>: <Reg8: 4, Reg8: 4, function_id: 15200>  # Function: [#15200 get of 57 bytes]: 1 params @ offset 0x0026b8f5
+==> 00000041: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 4, string_id: 50>  # String: 'get' (Identifier)
+==> 00000045: <PutOwnByIndex>: <Reg8: 1, Reg8: 0, UInt8: 1>
+==> 00000049: <LoadConstUndefined>: <Reg8: 0>
+==> 0000004b: <Call3>: <Reg8: 0, Reg8: 2, Reg8: 0, Reg8: 3, Reg8: 1>
+==> 00000051: <Ret>: <Reg8: 0>
+
+

@@ -2,7 +2,7 @@ import re
 import ast
 from dataclasses import dataclass
 
-from hermes_decompiler.core import get_logger
+from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)
 
@@ -17,20 +17,31 @@ _FUNCTION_RE = re.compile(
 )
 
 # ==> 00000009: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 86>  # String: 'apply' (Identifier)
+# Quoting switches to double quotes whenever the literal itself
+# contains an unescaped single quote (see e.g. `String: "'" (String)`
+# for the one-character string "'"), so both delimiters must be
+# accepted - a single-quote-only pattern silently fails to match
+# whenever a string/identifier contains an apostrophe.
 _IDENTIFIER_RE = re.compile(
-    r"String:\s*'([^']*)'\s*\(Identifier\)"
+    r"String:\s*(?:'([^']*)'|\"([^\"]*)\")\s*\(Identifier\)"
 )
 
 # ==> 00000196: <LoadConstString>: <Reg8: 11, string_id: 4>  # String: 'Generator functions may not be called on executing generators' (String)
 _STRING_RE = re.compile(
-    r"String:\s*'([^']*)'\s*\(String\)"
+    r"String:\s*(?:'([^']*)'|\"([^\"]*)\")\s*\(String\)"
 )
 
 # ==> 0000007d: <CreateRegExp>: <Reg8: 2, string_id: 7509, string_id: 11399, UInt32: 199>  # String: '\\(eval code' (String)  # String: 'g' (Identifier)
-_REGEX_STRINGS_RE = re.compile(r"String:\s*'([^']*)'")
+_REGEX_STRINGS_RE = re.compile(r"String:\s*(?:'([^']*)'|\"([^\"]*)\")")
 
 # ==> 000001a8: <NewArrayWithBuffer>: <Reg8: 14, UInt16: 5, UInt16: 5, UInt16: 46337>  # Array: ['hsl', 'hsv', 'hsl', 'hwb', 'hcg']
 _ARRAY_RE = re.compile(r"Array:\s*(\[.*])")
+
+# ==> 00000008: <SwitchImm>: <Reg8: 1, UInt32: 193, Addr32: 187, UInt32: 0, UInt32: 27>  # Address: 000000c3  # Jump table: [0000004c, 0000001a, 0000004c, 000000c3, 000000c3, 000000aa, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 00000030, 000000c3, 0000007a, 000000c3, 0000004c, 00000092, 000000c3, 000000c3, 00000062, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000c3, 000000aa, 000000aa]
+_JUMP_TABLE_RE = re.compile(r"Jump table:\s*\[([^]]*)]")
+
+# ==> 0000000f: <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 apply]
+_BUILTIN_RE = re.compile(r"Built-in function:\s*\[#(\d+)\s+([^]]+)]")
 
 
 @dataclass(slots=True)
@@ -40,6 +51,12 @@ class FunctionReference:
     byte_size: int
     param_count: int | None = None
     offset: str | None = None
+
+
+@dataclass(slots=True)
+class BuiltinFunctionReference:
+    id: int
+    name: str
 
 
 class OpcodeEntry:
@@ -52,10 +69,13 @@ class OpcodeEntry:
     args: str = ""
 
     target_address: int | None = None
+    jump_table: tuple[int, ...] | None = None
+
     identifier_name: str | None = None
     string_literal: str | None = None
     array_literal: list | None = None
     function: FunctionReference | None = None
+    builtin_function: BuiltinFunctionReference | None = None
 
     def __init__(self, bytecode: str, hex_address: str, comment: str = "", opcode: str = "", args: str = ""):
         self.bytecode = bytecode
@@ -75,14 +95,14 @@ class OpcodeEntry:
             self.target_address = int(match.group(1), 16)
 
         if match := _IDENTIFIER_RE.search(self.comment):
-            self.identifier_name = match.group(1)
+            self.identifier_name = match.group(1) if match.group(1) is not None else match.group(2)
 
         if match := _STRING_RE.search(self.comment):
-            self.string_literal = match.group(1)
+            self.string_literal = match.group(1) if match.group(1) is not None else match.group(2)
 
         if match := _ARRAY_RE.search(self.comment):
             try:
-                self.array_literal = ast.literal_eval(match.group(1))
+                self.array_literal = self._parse_array_literal(match.group(1))
             except (SyntaxError, ValueError):
                 logger.warning("Invalid array literal: %r", self.comment)
 
@@ -95,8 +115,47 @@ class OpcodeEntry:
                 offset=match.group(5),
             )
 
+        if match := _BUILTIN_RE.search(self.comment):
+            self.builtin_function = BuiltinFunctionReference(id=int(match.group(1)), name=match.group(2))
+
+        if match := _JUMP_TABLE_RE.search(self.comment):
+            entries = []
+
+            for value in match.group(1).split(","):
+                value = value.strip()
+                if not value:
+                    continue
+
+                try:
+                    entries.append(int(value, 16))
+                except ValueError:
+                    logger.warning("Invalid jump table entry %r", value)
+
+            self.jump_table = tuple(entries)
+
+    @classmethod
+    def _parse_array_literal(cls, text: str):
+        _NULL_RE = re.compile(r"\bnull\b")
+        _TRUE_RE = re.compile(r"\btrue\b")
+        _FALSE_RE = re.compile(r"\bfalse\b")
+        _UNDEFINED_RE = re.compile(r"\bundefined\b")
+
+        text = _NULL_RE.sub("None", text)
+        text = _TRUE_RE.sub("True", text)
+        text = _FALSE_RE.sub("False", text)
+        text = _UNDEFINED_RE.sub("None", text)
+
+        return ast.literal_eval(text)
+
     def resolve_pattern_and_flags(self) -> tuple[str | None, str | None]:
-        matches = _REGEX_STRINGS_RE.findall(self.comment)
+        # `finditer` (unlike `findall`) leaves a non-participating
+        # alternation group as None rather than '', so an empty-but-real
+        # match (e.g. flags == '') can be told apart from "the other
+        # delimiter matched instead".
+        matches = [
+            m.group(1) if m.group(1) is not None else m.group(2)
+            for m in _REGEX_STRINGS_RE.finditer(self.comment)
+        ]
 
         if len(matches) >= 2:
             return matches[0], matches[1]

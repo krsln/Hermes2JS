@@ -1,0 +1,32 @@
+
+=> [Function #9466 "tryFinallyNormalCompletionTest" of 110 bytes]: 1 params, frame size=13, strict=0, exc handler=0, debug info=0  @ offset 0x001fe79c
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4903>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000001c: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000021: <LoadConstString>: <Reg8: 0, string_id: 4904>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/try-block' (String)
+==> 00000025: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 0000002a: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000030: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000035: <LoadConstString>: <Reg8: 0, string_id: 4901>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/finally-block' (String)
+==> 00000039: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 0000003e: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000044: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000049: <LoadConstString>: <Reg8: 0, string_id: 3024>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end' (String)
+==> 0000004d: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000052: <LoadConstUndefined>: <Reg8: 0>
+==> 00000054: <Ret>: <Reg8: 0>
+==> 00000056: <Catch>: <Reg8: 0>
+==> 00000058: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000005e: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000063: <LoadConstString>: <Reg8: 1, string_id: 4901>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/finally-block' (String)
+==> 00000067: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000006c: <Throw>: <Reg8: 0>
+
+

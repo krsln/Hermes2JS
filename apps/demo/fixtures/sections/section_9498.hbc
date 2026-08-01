@@ -1,0 +1,50 @@
+
+=> [Function #9498 "callMapSetTests" of 195 bytes]: 1 params, frame size=18, strict=0, exc handler=0, debug info=0  @ offset 0x001ffeac
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 2>
+==> 00000005: <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 4, string_id: 4736>  # String: '__BC:Collections/MapSetTests/callMapSetTests/start' (String)
+==> 00000014: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 0>
+==> 0000001d: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001f: <Call1>: <Reg8: 1, Reg8: 4, Reg8: 0>
+==> 00000023: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 1>
+==> 00000027: <Call1>: <Reg8: 1, Reg8: 3, Reg8: 0>
+==> 0000002b: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000031: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000036: <LoadConstString>: <Reg8: 3, string_id: 4746>  # String: '__BC:Collections/MapSetTests/weakMapTest/start' (String)
+==> 0000003a: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000003f: <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 6821>  # String: 'WeakMap' (Identifier)
+==> 00000045: <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 3>
+==> 00000049: <Mov>: <Reg8: 10, Reg8: 4>
+==> 0000004c: <Construct>: <Reg8: 3, Reg8: 3, UInt8: 1>
+==> 00000050: <SelectObject>: <Reg8: 7, Reg8: 4, Reg8: 3>
+==> 00000054: <NewObject>: <Reg8: 6>
+==> 00000056: <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 55>  # String: 'set' (Identifier)
+==> 0000005b: <LoadConstString>: <Reg8: 3, string_id: 211>  # String: 'value' (Identifier)
+==> 0000005f: <Call3>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 6, Reg8: 3>
+==> 00000065: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000006b: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000070: <GetByIdShort>: <Reg8: 3, Reg8: 7, UInt8: 5, string_id: 11>  # String: 'has' (Identifier)
+==> 00000075: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 6>
+==> 0000007a: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000007f: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000085: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000008a: <GetByIdShort>: <Reg8: 3, Reg8: 7, UInt8: 6, string_id: 49>  # String: 'get' (Identifier)
+==> 0000008f: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 6>
+==> 00000094: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000099: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000009f: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000a4: <LoadConstString>: <Reg8: 3, string_id: 3088>  # String: '__BC:Collections/MapSetTests/weakMapTest/end' (String)
+==> 000000a8: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 000000ad: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000b3: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000b8: <LoadConstString>: <Reg8: 2, string_id: 293>  # String: '__BC:Collections/MapSetTests/callMapSetTests/end' (String)
+==> 000000bc: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000c1: <Ret>: <Reg8: 0>
+
+

@@ -1,0 +1,17 @@
+
+=> [Function #9446 "runAllTests" of 32 bytes]: 1 params, frame size=16, strict=0, exc handler=0, debug info=0  @ offset 0x001fdc0f
+
+Bytecode listing:
+
+==> 00000000: <LoadConstUndefined>: <Reg8: 0>
+==> 00000002: <LoadConstUndefined>: <Reg8: 1>
+==> 00000004: <ReifyArgumentsStrict>: <Reg8: 1>
+==> 00000006: <Mov>: <Reg8: 4, Reg8: 1>
+==> 00000009: <GetBuiltinClosure>: <Reg8: 3, UInt8: 57>  # Built-in function: [#57 makeAsyncIterator]
+==> 0000000c: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 0000000f: <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 12469>  # Function: [#12469 ?anon_0_runAllTests of 20 bytes]: 1 params @ offset 0x00243d87
+==> 00000014: <LoadParam>: <Reg8: 1, UInt8: 0>
+==> 00000017: <Call4>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1, Reg8: 4>
+==> 0000001e: <Ret>: <Reg8: 1>
+
+

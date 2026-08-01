@@ -1,0 +1,43 @@
+
+=> [Function #15122 "" of 141 bytes]: 8 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x00269ed2
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 2>
+==> 00000002: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000005: <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 15123>  # Function: [#15123 mapTest of 311 bytes]: 1 params @ offset 0x00269f5f
+==> 0000000a: <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 4>
+==> 0000000e: <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15124>  # Function: [#15124 setTest of 217 bytes]: 1 params @ offset 0x0026a096
+==> 00000013: <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 3>
+==> 00000017: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15125>  # Function: [#15125 weakMapTest of 141 bytes]: 1 params @ offset 0x0026a16f
+==> 0000001c: <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 0>
+==> 00000020: <GetGlobalObject>: <Reg8: 5>
+==> 00000022: <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000028: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 0000002d: <NewObject>: <Reg8: 6>
+==> 0000002f: <LoadConstTrue>: <Reg8: 5>
+==> 00000031: <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 5, string_id: 205>  # String: 'value' (Identifier)
+==> 00000035: <LoadConstString>: <Reg8: 5, string_id: 48>  # String: '__esModule' (Identifier)
+==> 00000039: <Call4>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 5, Reg8: 6>
+==> 00000040: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 10859>  # String: 'mapTest' (Identifier)
+==> 00000046: <PutById>: <Reg8: 1, Reg8: 3, UInt8: 2, string_id: 10864>  # String: 'setTest' (Identifier)
+==> 0000004c: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 10868>  # String: 'weakMapTest' (Identifier)
+==> 00000052: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15126>  # Function: [#15126 callMapSetTests of 73 bytes]: 1 params @ offset 0x0026a1fc
+==> 00000057: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 7228>  # String: 'callMapSetTests' (Identifier)
+==> 0000005d: <LoadParam>: <Reg8: 1, UInt8: 7>
+==> 00000060: <LoadConstZero>: <Reg8: 0>
+==> 00000062: <GetByVal>: <Reg8: 3, Reg8: 1, Reg8: 0>
+==> 00000066: <LoadParam>: <Reg8: 1, UInt8: 2>
+==> 00000069: <LoadConstUndefined>: <Reg8: 0>
+==> 0000006b: <Call2>: <Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 3>
+==> 00000070: <JmpFalse>: <Addr8: 14, Reg8: 4>  # Address: 0000007e
+==> 00000073: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 48>  # String: '__esModule' (Identifier)
+==> 00000078: <Mov>: <Reg8: 1, Reg8: 4>
+==> 0000007b: <JmpTrue>: <Addr8: 12, Reg8: 3>  # Address: 00000087
+==> 0000007e: <NewObject>: <Reg8: 3>
+==> 00000080: <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 4, string_id: 107>  # String: 'default' (Identifier)
+==> 00000084: <Mov>: <Reg8: 1, Reg8: 3>
+==> 00000087: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
+==> 0000008b: <Ret>: <Reg8: 0>
+
+

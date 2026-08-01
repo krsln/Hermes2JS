@@ -1,0 +1,28 @@
+
+=> [Function #9485 "nestedObjectDestructureTest" of 97 bytes]: 1 params, frame size=18, strict=0, exc handler=0, debug info=0  @ offset 0x001ff2a4
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 2>
+==> 00000002: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 3, string_id: 4969>  # String: '__BC:Objects/DestructuringTests/nestedObjectDestructureTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000016: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1917, UInt16: 48463>  # Object: {'id': 1, 'name': 'Ada'}
+==> 0000001c: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
+==> 00000021: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1918, UInt16: 93>  # Object: {'page': 1}
+==> 00000027: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 12200>  # String: 'page' (Identifier)
+==> 0000002d: <LoadConstUndefined>: <Reg8: 1>
+==> 0000002f: <JStrictNotEqual>: <Addr8: 7, Reg8: 5, Reg8: 1>  # Address: 00000036
+==> 00000033: <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
+==> 00000036: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000003c: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000041: <LoadConstUInt8>: <Reg8: 0, UInt8: 200>
+==> 00000044: <Call4>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 6, Reg8: 5>
+==> 0000004b: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000051: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000056: <LoadConstString>: <Reg8: 2, string_id: 4968>  # String: '__BC:Objects/DestructuringTests/nestedObjectDestructureTest/end' (String)
+==> 0000005a: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000005f: <Ret>: <Reg8: 1>
+
+

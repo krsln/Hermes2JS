@@ -1,0 +1,45 @@
+
+=> [Function #15160 "restAfterRequiredTest" of 149 bytes]: 3 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x0026ad06
+
+Bytecode listing:
+
+==> 00000000: <LoadConstUndefined>: <Reg8: 0>
+==> 00000002: <LoadConstUndefined>: <Reg8: 5>
+==> 00000004: <GetGlobalObject>: <Reg8: 1>
+==> 00000006: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000c: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000011: <LoadConstString>: <Reg8: 2, string_id: 4797>  # String: '__BC:Functions/RestParameterTests/restAfterRequiredTest/start' (String)
+==> 00000015: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000001a: <GetArgumentsLength>: <Reg8: 4, Reg8: 5>
+==> 0000001d: <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 3, string_id: 6>  # String: 'Array' (Identifier)
+==> 00000023: <LoadConstUInt8>: <Reg8: 3, UInt8: 2>
+==> 00000026: <Greater>: <Reg8: 6, Reg8: 4, Reg8: 3>
+==> 0000002a: <LoadConstZero>: <Reg8: 2>
+==> 0000002c: <JmpFalse>: <Addr8: 7, Reg8: 6>  # Address: 00000033
+==> 0000002f: <Sub>: <Reg8: 2, Reg8: 4, Reg8: 3>
+==> 00000033: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
+==> 00000038: <CreateThis>: <Reg8: 6, Reg8: 6, Reg8: 7>
+==> 0000003c: <Mov>: <Reg8: 12, Reg8: 6>
+==> 0000003f: <Mov>: <Reg8: 11, Reg8: 2>
+==> 00000042: <Construct>: <Reg8: 2, Reg8: 7, UInt8: 2>
+==> 00000046: <SelectObject>: <Reg8: 6, Reg8: 6, Reg8: 2>
+==> 0000004a: <Less>: <Reg8: 7, Reg8: 3, Reg8: 4>
+==> 0000004e: <Mov>: <Reg8: 2, Reg8: 3>
+==> 00000051: <JmpFalse>: <Addr8: 22, Reg8: 7>  # Address: 00000067
+==> 00000054: <Sub>: <Reg8: 8, Reg8: 2, Reg8: 3>
+==> 00000058: <GetArgumentsPropByVal>: <Reg8: 7, Reg8: 2, Reg8: 5>
+==> 0000005c: <PutByVal>: <Reg8: 6, Reg8: 8, Reg8: 7>
+==> 00000060: <Inc>: <Reg8: 2, Reg8: 2>
+==> 00000063: <JLess>: <Addr8: -15, Reg8: 2, Reg8: 4>  # Address: 00000054
+==> 00000067: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000006d: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000072: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000075: <LoadParam>: <Reg8: 2, UInt8: 2>
+==> 00000078: <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 2, Reg8: 6>
+==> 0000007f: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000085: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000008a: <LoadConstString>: <Reg8: 1, string_id: 4796>  # String: '__BC:Functions/RestParameterTests/restAfterRequiredTest/end' (String)
+==> 0000008e: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000093: <Ret>: <Reg8: 0>
+
+

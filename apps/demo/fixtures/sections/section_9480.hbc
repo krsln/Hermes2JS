@@ -1,0 +1,30 @@
+
+=> [Function #9480 "forInTest" of 98 bytes]: 1 params, frame size=22, strict=0, exc handler=0, debug info=0  @ offset 0x001ff032
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 3>
+==> 00000002: <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 4, string_id: 4960>  # String: '__BC:Iterators/IteratorTests/forInTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 00000016: <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1912, UInt16: 19164>  # Object: {'a': 1, 'b': 2, 'c': 3}
+==> 0000001c: <Mov>: <Reg8: 5, Reg8: 7>
+==> 0000001f: <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
+==> 00000024: <JmpUndefined>: <Addr8: 38, Reg8: 6>  # Address: 0000004a
+==> 00000027: <GetNextPName>: <Reg8: 4, Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
+==> 0000002d: <JmpUndefined>: <Addr8: 29, Reg8: 4>  # Address: 0000004a
+==> 00000030: <Mov>: <Reg8: 11, Reg8: 4>
+==> 00000033: <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000039: <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000003e: <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
+==> 00000042: <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
+==> 00000048: <Jmp>: <Addr8: -33>  # Address: 00000027
+==> 0000004a: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000050: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000055: <LoadConstString>: <Reg8: 3, string_id: 4959>  # String: '__BC:Iterators/IteratorTests/forInTest/end' (String)
+==> 00000059: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000005e: <LoadConstUndefined>: <Reg8: 2>
+==> 00000060: <Ret>: <Reg8: 2>
+
+

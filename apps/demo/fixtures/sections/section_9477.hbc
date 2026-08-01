@@ -1,0 +1,63 @@
+
+=> [Function #9477 "loopBreakCrossesTryBoundaryTest" of 244 bytes]: 2 params, frame size=22, strict=0, exc handler=0, debug info=0  @ offset 0x001fee17
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 8, UInt8: 1>
+==> 00000003: <GetGlobalObject>: <Reg8: 1>
+==> 00000005: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 0, string_id: 4831>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start' (String)
+==> 00000014: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000019: <GetByIdShort>: <Reg8: 0, Reg8: 8, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+==> 0000001e: <LoadConstZero>: <Reg8: 7>
+==> 00000020: <Less>: <Reg8: 0, Reg8: 7, Reg8: 0>
+==> 00000024: <LoadConstUInt8>: <Reg8: 6, UInt8: 1>
+==> 00000027: <LoadConstString>: <Reg8: 3, string_id: 4828>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally' (String)
+==> 0000002b: <LoadConstString>: <Reg8: 5, string_id: 4824>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue' (String)
+==> 0000002f: <LoadConstString>: <Reg8: 4, string_id: 4830>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item' (String)
+==> 00000033: <LoadConstZero>: <Reg8: 2>
+==> 00000035: <JmpFalseLong>: <Addr32: 147, Reg8: 0>  # Address: 000000c8
+==> 0000003b: <Mov>: <Reg8: 0, Reg8: 2>
+==> 0000003e: <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
+==> 00000042: <JLess>: <Addr8: 98, Reg8: 9, Reg8: 7>  # Address: 000000a4
+==> 00000046: <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
+==> 0000004a: <JStrictEqual>: <Addr8: 43, Reg8: 9, Reg8: 7>  # Address: 00000075
+==> 0000004e: <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000054: <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000059: <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
+==> 0000005d: <Call3>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 4, Reg8: 9>
+==> 00000063: <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000069: <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000006e: <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 3>
+==> 00000073: <Jmp>: <Addr8: 34>  # Address: 00000095
+==> 00000075: <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000007b: <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000080: <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 5>
+==> 00000085: <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000008b: <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000090: <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 3>
+==> 00000095: <AddN>: <Reg8: 2, Reg8: 0, Reg8: 6>
+==> 00000099: <GetByIdShort>: <Reg8: 0, Reg8: 8, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+==> 0000009e: <JLess>: <Addr8: -99, Reg8: 2, Reg8: 0>  # Address: 0000003b
+==> 000000a2: <Jmp>: <Addr8: 38>  # Address: 000000c8
+==> 000000a4: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000aa: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000af: <LoadConstString>: <Reg8: 0, string_id: 4823>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break' (String)
+==> 000000b3: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
+==> 000000b8: <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000be: <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000c3: <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 3>
+==> 000000c8: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000ce: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000d3: <LoadConstString>: <Reg8: 0, string_id: 4825>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end' (String)
+==> 000000d7: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
+==> 000000dc: <LoadConstUndefined>: <Reg8: 0>
+==> 000000de: <Ret>: <Reg8: 0>
+==> 000000e0: <Catch>: <Reg8: 0>
+==> 000000e2: <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000e8: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000ed: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
+==> 000000f2: <Throw>: <Reg8: 0>
+
+

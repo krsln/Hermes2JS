@@ -1,0 +1,70 @@
+
+=> [Function #9528 "classTest" of 287 bytes]: 1 params, frame size=17, strict=0, exc handler=0, debug info=0  @ offset 0x00200be9
+
+Bytecode listing:
+
+==> 00000000: <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 1>
+==> 00000005: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 3, string_id: 3972>  # String: '__BC:Classes/ClassTests/classTest/start' (String)
+==> 00000014: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
+==> 0000001d: <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 2>
+==> 00000021: <JmpTypeOfIs>: <Addr32: 16, Reg8: 3, UInt16: 128>  # Address: 00000031
+==> 00000029: <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
+==> 0000002d: <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 00000031: <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
+==> 00000036: <NewObjectWithParent>: <Reg8: 3, Reg8: 3>
+==> 00000039: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000003f: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000044: <LoadConstString>: <Reg8: 4, string_id: 2576>  # String: '__BC:Classes/ClassTests/Animal/constructor' (String)
+==> 00000048: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 0000004d: <LoadConstString>: <Reg8: 4, string_id: 3351>  # String: 'Generic' (String)
+==> 00000051: <PutByIdStrict>: <Reg8: 3, Reg8: 4, UInt8: 0, string_id: 187>  # String: 'name' (Identifier)
+==> 00000057: <LoadConstString>: <Reg8: 4, string_id: 765>  # String: '...' (String)
+==> 0000005b: <PutByIdStrict>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 11958>  # String: 'sound' (Identifier)
+==> 00000061: <GetById>: <Reg8: 4, Reg8: 3, UInt8: 3, string_id: 10532>  # String: 'makeSound' (Identifier)
+==> 00000067: <Call1>: <Reg8: 4, Reg8: 4, Reg8: 3>
+==> 0000006b: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000071: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000076: <GetById>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 11115>  # String: 'description' (Identifier)
+==> 0000007c: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000081: <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
+==> 00000085: <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 2>
+==> 00000089: <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000099
+==> 00000091: <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
+==> 00000095: <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 00000099: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 4>
+==> 0000009d: <LoadParentNoTraps>: <Reg8: 6, Reg8: 2>
+==> 000000a0: <CreateThisForSuper>: <Reg8: 3, Reg8: 6, Reg8: 4, UInt8: 2>
+==> 000000a5: <LoadConstString>: <Reg8: 7, string_id: 4424>  # String: 'Woof' (String)
+==> 000000a9: <LoadConstString>: <Reg8: 8, string_id: 3592>  # String: 'Rex' (String)
+==> 000000ad: <Mov>: <Reg8: 9, Reg8: 3>
+==> 000000b0: <CallWithNewTarget>: <Reg8: 2, Reg8: 6, Reg8: 4, UInt8: 3>
+==> 000000b5: <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
+==> 000000b9: <LoadConstEmpty>: <Reg8: 2>
+==> 000000bb: <ThrowIfThisInitialized>: <Reg8: 2>
+==> 000000bd: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000c3: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000c8: <LoadConstString>: <Reg8: 2, string_id: 2259>  # String: '__BC:Classes/ClassTests/Dog/constructor' (String)
+==> 000000cc: <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
+==> 000000d1: <LoadConstString>: <Reg8: 2, string_id: 2387>  # String: 'Labrador' (String)
+==> 000000d5: <PutByIdStrict>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 16255>  # String: 'breed' (Identifier)
+==> 000000db: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 10532>  # String: 'makeSound' (Identifier)
+==> 000000e1: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 000000e5: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 10532>  # String: 'makeSound' (Identifier)
+==> 000000eb: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 000000ef: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 44>  # String: 'create' (Identifier)
+==> 000000f4: <LoadConstString>: <Reg8: 2, string_id: 2777>  # String: 'Buddy' (String)
+==> 000000f8: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 000000fd: <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 10532>  # String: 'makeSound' (Identifier)
+==> 00000103: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
+==> 00000107: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000010d: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000112: <LoadConstString>: <Reg8: 1, string_id: 4251>  # String: '__BC:Classes/ClassTests/classTest/end' (String)
+==> 00000116: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000011b: <LoadConstUndefined>: <Reg8: 0>
+==> 0000011d: <Ret>: <Reg8: 0>
+
+

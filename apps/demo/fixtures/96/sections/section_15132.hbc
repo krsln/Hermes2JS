@@ -1,0 +1,31 @@
+
+=> [Function #15132 "taggedTemplateTest" of 99 bytes]: 2 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x0026a46b
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000003: <GetGlobalObject>: <Reg8: 1>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 2, string_id: 4116>  # String: '__BC:Strings/TemplateLiteralTests/taggedTemplateTest/start' (String)
+==> 00000014: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000019: <LoadConstUInt8>: <Reg8: 9, UInt8: 1>
+==> 0000001c: <LoadConstTrue>: <Reg8: 8>
+==> 0000001e: <LoadConstString>: <Reg8: 7, string_id: 1327>  # String: 'x squared is ' (String)
+==> 00000022: <LoadConstString>: <Reg8: 6, string_id: 7163>  # String: '' (Identifier)
+==> 00000026: <CallBuiltin>: <Reg8: 4, UInt8: 39, UInt8: 5>  # Built-in function: [#39 getTemplateObject]
+==> 0000002a: <Mul>: <Reg8: 3, Reg8: 0, Reg8: 0>
+==> 0000002e: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000031: <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
+==> 00000035: <LoadConstUndefined>: <Reg8: 0>
+==> 00000037: <Call3>: <Reg8: 4, Reg8: 2, Reg8: 0, Reg8: 4, Reg8: 3>
+==> 0000003d: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000043: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000048: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
+==> 0000004d: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000053: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000058: <LoadConstString>: <Reg8: 1, string_id: 4864>  # String: '__BC:Strings/TemplateLiteralTests/taggedTemplateTest/end' (String)
+==> 0000005c: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000061: <Ret>: <Reg8: 0>
+
+

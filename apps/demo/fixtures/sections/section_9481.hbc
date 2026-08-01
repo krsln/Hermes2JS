@@ -1,0 +1,38 @@
+
+=> [Function #9481 "objectLiteralTest" of 155 bytes]: 1 params, frame size=17, strict=0, exc handler=0, debug info=0  @ offset 0x001ff094
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 2, string_id: 4989>  # String: '__BC:Objects/ObjectLiteralTests/objectLiteralTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000016: <NewObjectWithBuffer>: <Reg8: 2, UInt16: 1913, UInt16: 48468>  # Object: {'name': 'Ada', 'age': 30, 'greet': null}
+==> 0000001c: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001e: <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 12471>  # Function: [#12471 greet of 35 bytes]: 1 params @ offset 0x00243de9
+==> 00000023: <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 3, UInt8: 2>
+==> 00000027: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000002d: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000032: <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
+==> 00000037: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 7158>  # String: 'age' (Identifier)
+==> 0000003d: <Call3>: <Reg8: 3, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 3>
+==> 00000043: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 4, string_id: 17251>  # String: 'greet' (Identifier)
+==> 00000049: <Call1>: <Reg8: 3, Reg8: 3, Reg8: 2>
+==> 0000004d: <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
+==> 00000052: <GetById>: <Reg8: 4, Reg8: 2, UInt8: 3, string_id: 7158>  # String: 'age' (Identifier)
+==> 00000058: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000005e: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000063: <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
+==> 00000069: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000006f: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000074: <NewObjectWithBuffer>: <Reg8: 2, UInt16: 1914, UInt16: 17759>  # Object: {'e': 3}
+==> 0000007a: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 6520>  # String: 'e' (Identifier)
+==> 00000080: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000085: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000008b: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000090: <LoadConstString>: <Reg8: 1, string_id: 4987>  # String: '__BC:Objects/ObjectLiteralTests/objectLiteralTest/end' (String)
+==> 00000094: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000099: <Ret>: <Reg8: 0>
+
+

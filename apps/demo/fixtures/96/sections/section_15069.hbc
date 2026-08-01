@@ -1,0 +1,25 @@
+
+=> [Function #15069 "" of 74 bytes]: 8 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x0026855c
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000005: <GetGlobalObject>: <Reg8: 2>
+==> 00000007: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000000d: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000012: <NewObject>: <Reg8: 3>
+==> 00000014: <LoadConstTrue>: <Reg8: 2>
+==> 00000016: <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 2, string_id: 205>  # String: 'value' (Identifier)
+==> 0000001a: <LoadConstString>: <Reg8: 2, string_id: 48>  # String: '__esModule' (Identifier)
+==> 0000001e: <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
+==> 00000025: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15070>  # Function: [#15070 ternaryTest of 137 bytes]: 2 params @ offset 0x002685a6
+==> 0000002a: <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 9849>  # String: 'ternaryTest' (Identifier)
+==> 00000030: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15071>  # Function: [#15071 shortCircuitAssignTest of 166 bytes]: 1 params @ offset 0x0026862f
+==> 00000035: <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 10963>  # String: 'shortCircuitAssignTest' (Identifier)
+==> 0000003b: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15072>  # Function: [#15072 logicalShortCircuitTest of 163 bytes]: 3 params @ offset 0x002686d5
+==> 00000040: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 10952>  # String: 'logicalShortCircuitTest' (Identifier)
+==> 00000046: <LoadConstUndefined>: <Reg8: 0>
+==> 00000048: <Ret>: <Reg8: 0>
+
+

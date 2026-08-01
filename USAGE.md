@@ -1,32 +1,44 @@
 # Usage
 
+## Prep
+
+### get index.android.bundle
+
+- get apk
+- decompile → use https://www.decompiler.com/
+- get bundle file → / resources / assets / index.android.bundle
+- download the file :p
+
+### clone vendor/hermes-dec
+
+```shell
+chmod +x scripts/fetch-hermes-dec.sh
+chmod +x scripts/run-hermes-dec.sh
+
+# clones https://github.com/P1sec/hermes-dec to vendor/hermes-dec
+./scripts/fetch-hermes-dec.sh
+```
+
 ## Step—1 Disassemble
 
-```shell
-chmod +x scripts/bootstrap.sh
-chmod +x scripts/disassemble.sh
+```bash
+#./scripts/run-hermes-dec.sh <bundle_path>
 
-./scripts/bootstrap.sh
-```
+file apps/coachy/index.android.bundle
+# index.android.bundle: Hermes JavaScript bytecode, version 96
+./scripts/run-hermes-dec.sh coachy
 
-```shell
-./scripts/disassemble.sh <app_name>
+# Test Projects' bundles
+file apps/testy/96/index.android.bundle
+# index.android.bundle: Hermes JavaScript bytecode, version 96
+file apps/testy/98/index.android.bundle
+# index.android.bundle: Hermes JavaScript bytecode, version 98
 
-./scripts/disassemble.sh testy
-```
-
-**Arguments**
-
-| Arg          | Required | Description                                   |
-|--------------|----------|-----------------------------------------------|
-| `<app_name>` | Yes      | Matches a directory under `apps/<app_name>/`. |
-
-**Input** (you must provide this)
+./scripts/run-hermes-dec.sh apps/testy/96/index.android.bundle
+./scripts/run-hermes-dec.sh apps/testy/98/index.android.bundle
 
 ```
-apps/<app_name>/index.android.bundle
-```
-
+ 
 **Output**
 
 ```
@@ -42,40 +54,35 @@ Splits `output.hbc` into one file per function, using the
 `===============` separator lines the disassembler emits between functions.
 
 ```shell
-python scripts/hermes_splitter.py -i <input.hbc> -o <output_dir> [options]
+python scripts/split_output_file.py -i <input.hbc> -o <output_dir> [options]
 
 # Basic split
-python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o apps/testy/output/sections
+python scripts/split_output_file.py -i apps/testy/96/output/output.hbc -o apps/testy/96/output/sections
+python scripts/split_output_file.py -i apps/testy/98/output/output.hbc -o apps/testy/98/output/sections
 
 # With manifest + INFO logging
-python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --manifest sections/manifest.json -v
+python scripts/split_output_file.py -i apps/testy/output/output.hbc -o sections --manifest sections/manifest.json -v
 
 # Dry run first, to check section count/naming before writing anything
-python scripts/hermes_splitter.py -i apps/testy/output/output.hbc -o sections --dry-run -v
+python scripts/split_output_file.py -i apps/testy/output/output.hbc -o sections --dry-run -v
 ```
 
 ## Step—3 Decompile
 
-Converts each discovered `section_<n>.hbc` into a corresponding
-`section_<n>.js`.
+Converts each discovered `section_<n>.hbc` into a corresponding `section_<n>.js`.
 
 ```shell
-python scripts/decompiler.py -i <sections_dir> -o <results_dir> [options]
-```
+python scripts/decompile_sections.py -i <sections_dir> -o <results_dir> [options]
+python scripts/decompile_sections.py -i <sections_dir> -o <results_dir> [options]
 
-**control data /fixtures**
 
-```shell
-python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
-python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --no-verbose
-python scripts/decompiler.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --strict
-```
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --no-verbose
 
-**Examples**
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --strict
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --start 100 --end 1000
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/testy/output/sections -o ./apps/testy/output/results --log-level WARNING --no-verbose
 
-```shell
-python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ 
-python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 999 
-
-python scripts/decompiler.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
+python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```

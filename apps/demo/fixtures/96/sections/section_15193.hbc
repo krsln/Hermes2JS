@@ -1,0 +1,58 @@
+
+=> [Function #15193 "?anon_0_" of 156 bytes]: 1 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x0026b5fd
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000004: <JmpTrueLong>: <Addr32: 149, Reg8: 1>  # Address: 00000099
+==> 0000000a: <GetGlobalObject>: <Reg8: 6>
+==> 0000000c: <TryGetById>: <Reg8: 3, Reg8: 6, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000012: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000017: <LoadConstString>: <Reg8: 1, string_id: 4759>  # String: '__BC:Functions/AsyncTests/callAsyncTests/start' (String)
+==> 0000001b: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000020: <GetEnvironment>: <Reg8: 4, UInt8: 2>
+==> 00000023: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 3>
+==> 00000027: <LoadConstUndefined>: <Reg8: 5>
+==> 00000029: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 5>
+==> 0000002d: <SaveGenerator>: <Addr8: 4>  # Address: 00000031
+==> 0000002f: <Ret>: <Reg8: 1>
+==> 00000031: <ResumeGenerator>: <Reg8: 1, Reg8: 2>
+==> 00000034: <JmpTrue>: <Addr8: 98, Reg8: 2>  # Address: 00000096
+==> 00000037: <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 5>
+==> 0000003b: <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+==> 0000003f: <SaveGenerator>: <Addr8: 4>  # Address: 00000043
+==> 00000041: <Ret>: <Reg8: 2>
+==> 00000043: <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+==> 00000046: <JmpTrue>: <Addr8: 77, Reg8: 3>  # Address: 00000093
+==> 00000049: <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 7>
+==> 0000004d: <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
+==> 00000055: <Call2>: <Reg8: 3, Reg8: 7, Reg8: 5, Reg8: 3>
+==> 0000005a: <SaveGenerator>: <Addr8: 4>  # Address: 0000005e
+==> 0000005c: <Ret>: <Reg8: 3>
+==> 0000005e: <ResumeGenerator>: <Reg8: 3, Reg8: 7>
+==> 00000061: <JmpTrue>: <Addr8: 47, Reg8: 7>  # Address: 00000090
+==> 00000064: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 9>
+==> 00000068: <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
+==> 0000006c: <SaveGenerator>: <Addr8: 4>  # Address: 00000070
+==> 0000006e: <Ret>: <Reg8: 4>
+==> 00000070: <ResumeGenerator>: <Reg8: 4, Reg8: 7>
+==> 00000073: <JmpTrue>: <Addr8: 26, Reg8: 7>  # Address: 0000008d
+==> 00000076: <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000007c: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000081: <LoadConstString>: <Reg8: 6, string_id: 2895>  # String: '__BC:Functions/AsyncTests/callAsyncTests/end' (String)
+==> 00000085: <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
+==> 0000008a: <CompleteGenerator>: <>
+==> 0000008b: <Ret>: <Reg8: 5>
+==> 0000008d: <CompleteGenerator>: <>
+==> 0000008e: <Ret>: <Reg8: 4>
+==> 00000090: <CompleteGenerator>: <>
+==> 00000091: <Ret>: <Reg8: 3>
+==> 00000093: <CompleteGenerator>: <>
+==> 00000094: <Ret>: <Reg8: 2>
+==> 00000096: <CompleteGenerator>: <>
+==> 00000097: <Ret>: <Reg8: 1>
+==> 00000099: <CompleteGenerator>: <>
+==> 0000009a: <Ret>: <Reg8: 0>
+
+

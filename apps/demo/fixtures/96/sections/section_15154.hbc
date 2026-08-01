@@ -1,0 +1,40 @@
+
+=> [Function #15154 "defaultParameterTest" of 121 bytes]: 2 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x0026aa9c
+
+Bytecode listing:
+
+==> 00000000: <LoadConstUndefined>: <Reg8: 0>
+==> 00000002: <LoadConstUndefined>: <Reg8: 2>
+==> 00000004: <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
+==> 00000007: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 0000000a: <Greater>: <Reg8: 3, Reg8: 3, Reg8: 1>
+==> 0000000e: <LoadConstUInt8>: <Reg8: 4, UInt8: 10>
+==> 00000011: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000014: <JmpFalse>: <Addr8: 18, Reg8: 3>  # Address: 00000026
+==> 00000017: <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
+==> 0000001b: <Mov>: <Reg8: 5, Reg8: 4>
+==> 0000001e: <JStrictEqual>: <Addr8: 8, Reg8: 3, Reg8: 0>  # Address: 00000026
+==> 00000022: <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 1, Reg8: 2>
+==> 00000026: <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
+==> 00000029: <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
+==> 0000002c: <Greater>: <Reg8: 3, Reg8: 3, Reg8: 1>
+==> 00000030: <LoadConstString>: <Reg8: 6, string_id: 7363>  # String: 'result' (Identifier)
+==> 00000034: <Mov>: <Reg8: 4, Reg8: 6>
+==> 00000037: <JmpFalse>: <Addr8: 18, Reg8: 3>  # Address: 00000049
+==> 0000003a: <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
+==> 0000003e: <Mov>: <Reg8: 4, Reg8: 6>
+==> 00000041: <JStrictEqual>: <Addr8: 8, Reg8: 3, Reg8: 0>  # Address: 00000049
+==> 00000045: <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 1, Reg8: 2>
+==> 00000049: <GetGlobalObject>: <Reg8: 1>
+==> 0000004b: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000051: <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000056: <LoadConstString>: <Reg8: 2, string_id: 4772>  # String: '__BC:Functions/DefaultParameterTests/defaultParameterTest/start' (String)
+==> 0000005a: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 2>
+==> 0000005f: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000065: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000006a: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 0000006d: <Add>: <Reg8: 1, Reg8: 1, Reg8: 5>
+==> 00000071: <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 00000077: <Ret>: <Reg8: 0>
+
+

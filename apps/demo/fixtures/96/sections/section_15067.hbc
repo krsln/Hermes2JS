@@ -1,0 +1,31 @@
+
+=> [Function #15067 "labeledBlockBreakTest" of 109 bytes]: 1 params, frame size=12, strict=1, exc handler=0, debug info=0  @ offset 0x0026845f
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4606>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000016: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000001c: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000021: <LoadConstString>: <Reg8: 1, string_id: 2099>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/before-break' (String)
+==> 00000025: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000002a: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 21>  # String: 'Math' (Identifier)
+==> 00000030: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 9292>  # String: 'random' (Identifier)
+==> 00000036: <Call1>: <Reg8: 2, Reg8: 1, Reg8: 2>
+==> 0000003a: <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
+==> 0000003d: <JLess>: <Addr8: 24, Reg8: 2, Reg8: 1>  # Address: 00000055
+==> 00000041: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000047: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000004c: <LoadConstString>: <Reg8: 1, string_id: 4607>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/unreachable' (String)
+==> 00000050: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000055: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000005b: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000060: <LoadConstString>: <Reg8: 0, string_id: 4604>  # String: '__BC:ControlFlow/LabeledTests/labeledBlockBreakTest/end' (String)
+==> 00000064: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000069: <LoadConstUndefined>: <Reg8: 0>
+==> 0000006b: <Ret>: <Reg8: 0>
+
+

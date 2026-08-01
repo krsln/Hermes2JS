@@ -1,0 +1,227 @@
+
+=> [Function #15045 "?anon_0_" of 1004 bytes]: 1 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x00267788
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000004: <JmpTrueLong>: <Addr32: 997, Reg8: 1>  # Address: 000003e9
+==> 0000000a: <GetGlobalObject>: <Reg8: 3>
+==> 0000000c: <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000012: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000017: <LoadConstString>: <Reg8: 1, string_id: 4866>  # String: '__BC:index/runAllTests/start' (String)
+==> 0000001b: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
+==> 00000020: <GetEnvironment>: <Reg8: 4, UInt8: 2>
+==> 00000023: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 1>
+==> 00000027: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 10971>  # String: 'whileTest' (Identifier)
+==> 0000002d: <LoadConstUndefined>: <Reg8: 2>
+==> 0000002f: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000033: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 2>
+==> 00000037: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 4, string_id: 10882>  # String: 'doWhileTest' (Identifier)
+==> 0000003d: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000041: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 3>
+==> 00000045: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 5, string_id: 10341>  # String: 'forTest' (Identifier)
+==> 0000004b: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000004f: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 4>
+==> 00000053: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 10885>  # String: 'forEachTest' (Identifier)
+==> 00000059: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000005d: <TryGetById>: <Reg8: 7, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000063: <GetByIdShort>: <Reg8: 5, Reg8: 7, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000068: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 5>
+==> 0000006c: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 7, string_id: 8729>  # String: 'switchTest' (Identifier)
+==> 00000072: <LoadConstUInt8>: <Reg8: 6, UInt8: 4>
+==> 00000075: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 6>
+==> 0000007a: <Call2>: <Reg8: 1, Reg8: 5, Reg8: 7, Reg8: 1>
+==> 0000007f: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 6>
+==> 00000083: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 8, string_id: 10944>  # String: 'nestedLoopTest' (Identifier)
+==> 00000089: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000008d: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 7>
+==> 00000091: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 9, string_id: 7792>  # String: 'complexTest' (Identifier)
+==> 00000097: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000009b: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 8>
+==> 0000009f: <GetById>: <Reg8: 5, Reg8: 1, UInt8: 10, string_id: 8596>  # String: 'ifTest' (Identifier)
+==> 000000a5: <LoadConstUInt8>: <Reg8: 1, UInt8: 7>
+==> 000000a8: <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
+==> 000000ad: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 8>
+==> 000000b1: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 11, string_id: 10899>  # String: 'ifElseChainTest' (Identifier)
+==> 000000b7: <LoadConstTrue>: <Reg8: 5>
+==> 000000b9: <LoadConstFalse>: <Reg8: 7>
+==> 000000bb: <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 7>
+==> 000000c1: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 9>
+==> 000000c5: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 12, string_id: 10933>  # String: 'labeledBreakTest' (Identifier)
+==> 000000cb: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000000cf: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 9>
+==> 000000d3: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 13, string_id: 10940>  # String: 'labeledContinueTest' (Identifier)
+==> 000000d9: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000000dd: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 9>
+==> 000000e1: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 14, string_id: 8658>  # String: 'labeledBlockBreakTest' (Identifier)
+==> 000000e7: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000000eb: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 9>
+==> 000000ef: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 15, string_id: 10646>  # String: 'tripleNestedLabeledTest' (Identifier)
+==> 000000f5: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000000f9: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 10>
+==> 000000fd: <GetById>: <Reg8: 8, Reg8: 1, UInt8: 16, string_id: 9849>  # String: 'ternaryTest' (Identifier)
+==> 00000103: <LoadConstInt>: <Reg8: 1, Imm32: -3>
+==> 00000109: <Call2>: <Reg8: 1, Reg8: 8, Reg8: 2, Reg8: 1>
+==> 0000010e: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 10>
+==> 00000112: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 17, string_id: 10963>  # String: 'shortCircuitAssignTest' (Identifier)
+==> 00000118: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000011c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 10>
+==> 00000120: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 18, string_id: 10952>  # String: 'logicalShortCircuitTest' (Identifier)
+==> 00000126: <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 7>
+==> 0000012c: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 00000130: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 19, string_id: 11096>  # String: 'tryCatchTest' (Identifier)
+==> 00000136: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000013a: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 0000013e: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 20, string_id: 11065>  # String: 'tryCatchNoFinallyTest' (Identifier)
+==> 00000144: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000148: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 0000014c: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 21, string_id: 11122>  # String: 'tryFinallyNoCatchTest' (Identifier)
+==> 00000152: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000156: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 0000015a: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 22, string_id: 11126>  # String: 'tryFinallyNormalCompletionTest' (Identifier)
+==> 00000160: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000164: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 00000168: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 23, string_id: 11088>  # String: 'tryCatchRethrowDifferentTest' (Identifier)
+==> 0000016e: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000172: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 00000176: <GetById>: <Reg8: 7, Reg8: 1, UInt8: 24, string_id: 10295>  # String: 'tryLoopMultiReturnTest' (Identifier)
+==> 0000017c: <NewArrayWithBuffer>: <Reg8: 1, UInt16: 4, UInt16: 2, UInt16: 23560>  # Array: [1, 0]
+==> 00000184: <LoadConstInt>: <Reg8: 8, Imm32: -1>
+==> 0000018a: <PutOwnByIndex>: <Reg8: 1, Reg8: 8, UInt8: 2>
+==> 0000018e: <LoadConstUInt8>: <Reg8: 9, UInt8: 2>
+==> 00000191: <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 3>
+==> 00000195: <Call2>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 1>
+==> 0000019a: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 0000019e: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 25, string_id: 11002>  # String: 'nestedTryCatchTest' (Identifier)
+==> 000001a4: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000001a8: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 000001ac: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 26, string_id: 10992>  # String: 'nestedTryCatchFinallyTest' (Identifier)
+==> 000001b2: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000001b6: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 000001ba: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 27, string_id: 11030>  # String: 'tryCatchFinallyEarlyReturnTest' (Identifier)
+==> 000001c0: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000001c4: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 000001c8: <GetById>: <Reg8: 7, Reg8: 1, UInt8: 28, string_id: 11112>  # String: 'tryFinallyLoopBreakTest' (Identifier)
+==> 000001ce: <NewArrayWithBuffer>: <Reg8: 1, UInt16: 4, UInt16: 4, UInt16: 23569>  # Array: [1, 2, 0, 3]
+==> 000001d6: <Call2>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 1>
+==> 000001db: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 000001df: <GetById>: <Reg8: 9, Reg8: 1, UInt8: 29, string_id: 8691>  # String: 'tryCatchInsideLoopTest' (Identifier)
+==> 000001e5: <NewArrayWithBuffer>: <Reg8: 1, UInt16: 3, UInt16: 1, UInt16: 3>  # Array: [1]
+==> 000001ed: <LoadConstInt>: <Reg8: 7, Imm32: -2>
+==> 000001f3: <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 1>
+==> 000001f7: <LoadConstUInt8>: <Reg8: 7, UInt8: 3>
+==> 000001fa: <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 2>
+==> 000001fe: <Call2>: <Reg8: 1, Reg8: 9, Reg8: 2, Reg8: 1>
+==> 00000203: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 00000207: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 30, string_id: 8711>  # String: 'tryCatchFinallyBranchInFinallyTest' (Identifier)
+==> 0000020d: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 5>
+==> 00000212: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 00000216: <GetById>: <Reg8: 5, Reg8: 1, UInt8: 31, string_id: 11038>  # String: 'tryCatchFinallyImplicitThrowTest' (Identifier)
+==> 0000021c: <LoadConstUInt8>: <Reg8: 1, UInt8: 5>
+==> 0000021f: <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
+==> 00000224: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 00000228: <GetById>: <Reg8: 5, Reg8: 1, UInt8: 32, string_id: 10975>  # String: 'loopBreakCrossesTryBoundaryTest' (Identifier)
+==> 0000022e: <NewArrayWithBuffer>: <Reg8: 1, UInt16: 5, UInt16: 3, UInt16: 23586>  # Array: [1, 0, 2]
+==> 00000236: <PutOwnByIndex>: <Reg8: 1, Reg8: 8, UInt8: 3>
+==> 0000023a: <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 4>
+==> 0000023e: <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
+==> 00000243: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
+==> 00000247: <GetById>: <Reg8: 5, Reg8: 1, UInt8: 33, string_id: 8763>  # String: 'switchInsideTryTest' (Identifier)
+==> 0000024d: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 00000250: <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
+==> 00000255: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 12>
+==> 00000259: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 34, string_id: 11254>  # String: 'forOfTest' (Identifier)
+==> 0000025f: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000263: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 12>
+==> 00000267: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 35, string_id: 11239>  # String: 'forInTest' (Identifier)
+==> 0000026d: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000271: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 13>
+==> 00000275: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 36, string_id: 11286>  # String: 'objectLiteralTest' (Identifier)
+==> 0000027b: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000027f: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 14>
+==> 00000283: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 37, string_id: 11307>  # String: 'propertyAccessTest' (Identifier)
+==> 00000289: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000028d: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 14>
+==> 00000291: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 38, string_id: 11290>  # String: 'computedPropertyTest' (Identifier)
+==> 00000297: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000029b: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 14>
+==> 0000029f: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 39, string_id: 11295>  # String: 'optionalChainingTest' (Identifier)
+==> 000002a5: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000002a9: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 15>
+==> 000002ad: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 40, string_id: 10657>  # String: 'callDestructuringTests' (Identifier)
+==> 000002b3: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000002b7: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 16>
+==> 000002bb: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 41, string_id: 7969>  # String: 'arrayTest' (Identifier)
+==> 000002c1: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000002c5: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 17>
+==> 000002c9: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 42, string_id: 10787>  # String: 'spreadArrayTest' (Identifier)
+==> 000002cf: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000002d3: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 17>
+==> 000002d7: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 43, string_id: 10795>  # String: 'spreadObjectTest' (Identifier)
+==> 000002dd: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000002e1: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 17>
+==> 000002e5: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 44, string_id: 10792>  # String: 'spreadFunctionArgsTest' (Identifier)
+==> 000002eb: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000002ef: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 18>
+==> 000002f3: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 45, string_id: 7228>  # String: 'callMapSetTests' (Identifier)
+==> 000002f9: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000002fd: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 19>
+==> 00000301: <GetById>: <Reg8: 7, Reg8: 1, UInt8: 46, string_id: 11328>  # String: 'basicTemplateTest' (Identifier)
+==> 00000307: <LoadConstString>: <Reg8: 5, string_id: 2445>  # String: 'Ada' (String)
+==> 0000030b: <LoadConstUInt8>: <Reg8: 1, UInt8: 30>
+==> 0000030e: <Call3>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 5, Reg8: 1>
+==> 00000314: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 19>
+==> 00000318: <GetById>: <Reg8: 5, Reg8: 1, UInt8: 47, string_id: 11332>  # String: 'nestedTemplateTest' (Identifier)
+==> 0000031e: <LoadConstUInt8>: <Reg8: 1, UInt8: 9>
+==> 00000321: <Call3>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 6, Reg8: 1>
+==> 00000327: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 19>
+==> 0000032b: <GetById>: <Reg8: 5, Reg8: 1, UInt8: 48, string_id: 11337>  # String: 'taggedTemplateTest' (Identifier)
+==> 00000331: <LoadConstUInt8>: <Reg8: 1, UInt8: 6>
+==> 00000334: <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
+==> 00000339: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 20>
+==> 0000033d: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 49, string_id: 11311>  # String: 'callRegExpTests' (Identifier)
+==> 00000343: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000347: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 21>
+==> 0000034b: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 50, string_id: 11139>  # String: 'arrowFunctionTest' (Identifier)
+==> 00000351: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000355: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 22>
+==> 00000359: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 51, string_id: 10113>  # String: 'closureTest' (Identifier)
+==> 0000035f: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000363: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 22>
+==> 00000367: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 52, string_id: 11176>  # String: 'closureLoopTest' (Identifier)
+==> 0000036d: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 00000371: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 23>
+==> 00000375: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 53, string_id: 11182>  # String: 'callDefaultParameterTests' (Identifier)
+==> 0000037b: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000037f: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 24>
+==> 00000383: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 54, string_id: 11222>  # String: 'callRestParameterTests' (Identifier)
+==> 00000389: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000038d: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 25>
+==> 00000391: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 55, string_id: 11199>  # String: 'callGeneratorTests' (Identifier)
+==> 00000397: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 0000039b: <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 26>
+==> 0000039f: <GetById>: <Reg8: 1, Reg8: 1, UInt8: 56, string_id: 9338>  # String: 'callAsyncTests' (Identifier)
+==> 000003a5: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
+==> 000003a9: <SaveGenerator>: <Addr8: 4>  # Address: 000003ad
+==> 000003ab: <Ret>: <Reg8: 1>
+==> 000003ad: <ResumeGenerator>: <Reg8: 1, Reg8: 5>
+==> 000003b0: <JmpTrue>: <Addr8: 54, Reg8: 5>  # Address: 000003e6
+==> 000003b3: <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 27>
+==> 000003b7: <GetById>: <Reg8: 5, Reg8: 5, UInt8: 57, string_id: 10812>  # String: 'classTest' (Identifier)
+==> 000003bd: <Call1>: <Reg8: 5, Reg8: 5, Reg8: 2>
+==> 000003c1: <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 28>
+==> 000003c5: <GetById>: <Reg8: 4, Reg8: 4, UInt8: 58, string_id: 10854>  # String: 'privateStaticTest' (Identifier)
+==> 000003cb: <Call1>: <Reg8: 4, Reg8: 4, Reg8: 2>
+==> 000003cf: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000003d5: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000003da: <LoadConstString>: <Reg8: 3, string_id: 4865>  # String: '__BC:index/runAllTests/end' (String)
+==> 000003de: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 000003e3: <CompleteGenerator>: <>
+==> 000003e4: <Ret>: <Reg8: 2>
+==> 000003e6: <CompleteGenerator>: <>
+==> 000003e7: <Ret>: <Reg8: 1>
+==> 000003e9: <CompleteGenerator>: <>
+==> 000003ea: <Ret>: <Reg8: 0>
+
+

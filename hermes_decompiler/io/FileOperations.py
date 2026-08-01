@@ -3,7 +3,7 @@ import re
 from typing import Tuple, Optional, List
 
 from hermes_decompiler.Decompiler import Decompiler
-from hermes_decompiler.core import get_logger
+from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)
 
@@ -57,7 +57,8 @@ def process_section(section_index: int, file_path: str, output_dir: str, verbose
         logger.error("File does not exist: %s", file_path)
         return False
 
-    logger.info("Processing section #%s: %s", section_index, file_path)
+    # logger.info("Processing section #%s: %s", section_index, file_path)
+    logger.info("Processing section #%s: %s", section_index, f"\t~/section_{section_index}.hbc")
 
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -82,7 +83,8 @@ def process_section(section_index: int, file_path: str, output_dir: str, verbose
     try:
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(js_code)
-        logger.info("Successfully wrote output to %s", output_path)
+        # logger.info("Successfully wrote output to %s", output_path)
+        logger.debug("Successfully wrote output %s", f"\t~/section_{section_index}.js")
         return True
     except OSError as e:
         logger.error("Error writing to %s: %s", output_path, e)

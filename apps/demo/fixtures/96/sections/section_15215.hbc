@@ -1,0 +1,22 @@
+
+=> [Function #15215 "get" of 59 bytes]: 1 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x0026bfce
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4545>  # String: '__BC:Classes/PrivateStaticTests/Counter/static-get-instanceCount' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000016: <GetEnvironment>: <Reg8: 0, UInt8: 1>
+==> 00000019: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 4>
+==> 0000001d: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 00000022: <GetEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000025: <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 0>
+==> 00000029: <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 6>
+==> 0000002d: <LoadConstUndefined>: <Reg8: 0>
+==> 0000002f: <Call3>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
+==> 00000035: <GetByVal>: <Reg8: 0, Reg8: 0, Reg8: 1>
+==> 00000039: <Ret>: <Reg8: 0>
+
+

@@ -1,0 +1,36 @@
+function mayThrow(param0, param1) {
+    // ──────────────── Block 0 ──────────────── 
+    // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
+    // USED → r1 = param1;
+    // CODE → <LoadConstZero>: <Reg8: 0>
+    // USED → r0 = 0;
+    if (param1 < 0) {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → <GetGlobalObject>: <Reg8: 0>
+        // USED → r0 = globalThis;
+        // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 12>  # String: 'Error' (Identifier)
+        // USED → r2 = globalThis.Error;
+        // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
+        // USED → r0 = globalThis.Error.prototype;
+        // CODE → <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
+        // USED → r1 = createThis(globalThis.Error.prototype, globalThis.Error);
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 1323>  # String: 'negative' (String)
+        // USED → r3 = "negative";
+        // CODE → <Mov>: <Reg8: 4, Reg8: 1>
+        r4 = createThis(globalThis.Error.prototype, globalThis.Error)
+        // CODE → <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
+        // USED → r0 = new globalThis.Error("negative");
+        // CODE → <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
+        // USED → r0 = new globalThis.Error("negative");
+        // CODE → <Throw>: <Reg8: 0>
+        throw new globalThis.Error("negative");
+    } else {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
+        // USED → r0 = 2;
+        // CODE → <Mul>: <Reg8: 0, Reg8: 1, Reg8: 0>
+        // USED → r0 = param1 * 2;
+        // CODE → <Ret>: <Reg8: 0>
+        return param1 * 2;
+    }
+}

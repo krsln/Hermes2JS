@@ -1,0 +1,43 @@
+
+=> [Function #9500 "nestedTemplateTest" of 159 bytes]: 3 params, frame size=19, strict=0, exc handler=0, debug info=0  @ offset 0x001fffe2
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 4, UInt8: 1>
+==> 00000003: <LoadParam>: <Reg8: 3, UInt8: 2>
+==> 00000006: <GetGlobalObject>: <Reg8: 2>
+==> 00000008: <TryGetById>: <Reg8: 7, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000e: <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000013: <LoadConstString>: <Reg8: 5, string_id: 705>  # String: '__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start' (String)
+==> 00000017: <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
+==> 0000001c: <Add>: <Reg8: 5, Reg8: 4, Reg8: 3>
+==> 00000020: <LoadConstUInt8>: <Reg8: 0, UInt8: 10>
+==> 00000023: <JGreater>: <Addr8: 35, Reg8: 5, Reg8: 0>  # Address: 00000046
+==> 00000027: <Add>: <Reg8: 8, Reg8: 4, Reg8: 3>
+==> 0000002b: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000031: <GetByIdShort>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000036: <LoadConstString>: <Reg8: 6, string_id: 870>  # String: ')' (String)
+==> 0000003a: <LoadConstString>: <Reg8: 5, string_id: 1947>  # String: 'small (' (String)
+==> 0000003e: <Call3>: <Reg8: 5, Reg8: 7, Reg8: 5, Reg8: 8, Reg8: 6>
+==> 00000044: <Jmp>: <Addr8: 31>  # Address: 00000063
+==> 00000046: <Add>: <Reg8: 7, Reg8: 4, Reg8: 3>
+==> 0000004a: <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000050: <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 3, string_id: 105>  # String: 'concat' (Identifier)
+==> 00000055: <LoadConstString>: <Reg8: 4, string_id: 870>  # String: ')' (String)
+==> 00000059: <LoadConstString>: <Reg8: 3, string_id: 1926>  # String: 'big (' (String)
+==> 0000005d: <Call3>: <Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 7, Reg8: 4>
+==> 00000063: <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)
+==> 00000069: <GetByIdShort>: <Reg8: 4, Reg8: 3, UInt8: 3, string_id: 105>  # String: 'concat' (Identifier)
+==> 0000006e: <LoadConstString>: <Reg8: 3, string_id: 1298>  # String: 'sum is ' (String)
+==> 00000072: <Call2>: <Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 5>
+==> 00000077: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000007d: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000082: <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
+==> 00000087: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000008d: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000092: <LoadConstString>: <Reg8: 2, string_id: 5011>  # String: '__BC:Strings/TemplateLiteralTests/nestedTemplateTest/end' (String)
+==> 00000096: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000009b: <LoadConstUndefined>: <Reg8: 1>
+==> 0000009d: <Ret>: <Reg8: 1>
+
+

@@ -1,0 +1,27 @@
+
+=> [Function #15064 "" of 85 bytes]: 8 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x00268304
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000005: <GetGlobalObject>: <Reg8: 2>
+==> 00000007: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000000d: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000012: <NewObject>: <Reg8: 3>
+==> 00000014: <LoadConstTrue>: <Reg8: 2>
+==> 00000016: <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 2, string_id: 205>  # String: 'value' (Identifier)
+==> 0000001a: <LoadConstString>: <Reg8: 2, string_id: 48>  # String: '__esModule' (Identifier)
+==> 0000001e: <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
+==> 00000025: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15065>  # Function: [#15065 labeledBreakTest of 123 bytes]: 1 params @ offset 0x00268359
+==> 0000002a: <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 10933>  # String: 'labeledBreakTest' (Identifier)
+==> 00000030: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15066>  # Function: [#15066 labeledContinueTest of 139 bytes]: 1 params @ offset 0x002683d4
+==> 00000035: <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 10940>  # String: 'labeledContinueTest' (Identifier)
+==> 0000003b: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15067>  # Function: [#15067 labeledBlockBreakTest of 109 bytes]: 1 params @ offset 0x0026845f
+==> 00000040: <PutById>: <Reg8: 1, Reg8: 2, UInt8: 3, string_id: 8658>  # String: 'labeledBlockBreakTest' (Identifier)
+==> 00000046: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15068>  # Function: [#15068 tripleNestedLabeledTest of 144 bytes]: 1 params @ offset 0x002684cc
+==> 0000004b: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 10646>  # String: 'tripleNestedLabeledTest' (Identifier)
+==> 00000051: <LoadConstUndefined>: <Reg8: 0>
+==> 00000053: <Ret>: <Reg8: 0>
+
+

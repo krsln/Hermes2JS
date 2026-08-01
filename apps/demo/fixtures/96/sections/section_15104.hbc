@@ -1,0 +1,32 @@
+
+=> [Function #15104 "renamedDefaultDestructureTest" of 111 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x0026983c
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4819>  # String: '__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <NewObject>: <Reg8: 2>
+==> 00000018: <LoadConstInt>: <Reg8: 0, Imm32: 500>
+==> 0000001e: <PutNewOwnById>: <Reg8: 2, Reg8: 0, string_id: 13118>  # String: 'timeout' (Identifier)
+==> 00000023: <GetById>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 13118>  # String: 'timeout' (Identifier)
+==> 00000029: <LoadConstInt>: <Reg8: 5, Imm32: 1000>
+==> 0000002f: <LoadConstUndefined>: <Reg8: 0>
+==> 00000031: <JStrictEqual>: <Addr8: 7, Reg8: 3, Reg8: 0>  # Address: 00000038
+==> 00000035: <Mov>: <Reg8: 5, Reg8: 3>
+==> 00000038: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 4, string_id: 17670>  # String: 'retries' (Identifier)
+==> 0000003e: <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
+==> 00000041: <JStrictEqual>: <Addr8: 7, Reg8: 2, Reg8: 0>  # Address: 00000048
+==> 00000045: <Mov>: <Reg8: 4, Reg8: 2>
+==> 00000048: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000004e: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000053: <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
+==> 00000059: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000005f: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000064: <LoadConstString>: <Reg8: 1, string_id: 4818>  # String: '__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/end' (String)
+==> 00000068: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000006d: <Ret>: <Reg8: 0>
+
+

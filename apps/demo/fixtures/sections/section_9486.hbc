@@ -1,0 +1,28 @@
+
+=> [Function #9486 "renamedDefaultDestructureTest" of 98 bytes]: 1 params, frame size=17, strict=0, exc handler=0, debug info=0  @ offset 0x001ff305
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 2>
+==> 00000002: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 3, string_id: 4980>  # String: '__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000016: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1919, UInt16: 19946>  # Object: {'timeout': 500}
+==> 0000001c: <GetById>: <Reg8: 6, Reg8: 3, UInt8: 2, string_id: 8581>  # String: 'timeout' (Identifier)
+==> 00000022: <LoadConstUndefined>: <Reg8: 1>
+==> 00000024: <JStrictNotEqual>: <Addr8: 10, Reg8: 6, Reg8: 1>  # Address: 0000002e
+==> 00000028: <LoadConstInt>: <Reg8: 6, Imm32: 1000>
+==> 0000002e: <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 9071>  # String: 'retries' (Identifier)
+==> 00000034: <JStrictNotEqual>: <Addr8: 7, Reg8: 5, Reg8: 1>  # Address: 0000003b
+==> 00000038: <LoadConstUInt8>: <Reg8: 5, UInt8: 3>
+==> 0000003b: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000041: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000046: <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 6, Reg8: 5>
+==> 0000004c: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000052: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000057: <LoadConstString>: <Reg8: 2, string_id: 4979>  # String: '__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/end' (String)
+==> 0000005b: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000060: <Ret>: <Reg8: 1>
+
+

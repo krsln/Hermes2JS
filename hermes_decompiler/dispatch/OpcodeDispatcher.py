@@ -1,7 +1,7 @@
 from typing import List
 
 from hermes_decompiler.core.Exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
-from hermes_decompiler.core.Logging import get_logger
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.handlers import HandlerLoader, OpcodeHandler
 from hermes_decompiler.ir.expressions import AwaitExpression, Expression, RawExpression
 from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
@@ -107,22 +107,22 @@ class OpcodeDispatcher:
     @staticmethod
     def _handle_generator_await(analysis: HermesAnalysis) -> None:
         """
-        Special handling for generator yield patterns.
+        Rewrites
 
-        NOTE (fix): previously mutated `prev.variable.value` into a
-        plain f-string (`f"await {prev.variable.value}"`), which broke
-        the `value: Expression` contract for that result - any later
-        code touching it as an IR node (Printer, etc.) would have
-        crashed the same way the original `.render()` AttributeError
-        did. Now wraps it in a real `AwaitExpression` and recomputes
-        `.result` via the same rendering path everything else uses.
+            rX = Call(...)
+            SaveGenerator
+
+        into
+
+            rX = await Call(...)
+
+        before any later opcode consumes that register.
         """
 
         if len(analysis.results) < 2:
             return
 
-        prev = analysis.results[len(analysis.results) - 2]
+        prev = analysis.results[-2]
 
         if prev.handler.startswith("Call") and isinstance(prev.value, Expression):
             prev.value = AwaitExpression(argument=prev.value)
-            prev.refresh_result()

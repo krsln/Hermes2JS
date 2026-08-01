@@ -1,0 +1,47 @@
+
+=> [Function #9472 "tryFinallyLoopBreakTest" of 162 bytes]: 2 params, frame size=20, strict=0, exc handler=0, debug info=0  @ offset 0x001feb52
+
+Bytecode listing:
+
+==> 00000000: <LoadConstUndefined>: <Reg8: 0>
+==> 00000002: <LoadConstUndefined>: <Reg8: 7>
+==> 00000004: <GetGlobalObject>: <Reg8: 1>
+==> 00000006: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000000c: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000011: <LoadConstString>: <Reg8: 2, string_id: 4895>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start' (String)
+==> 00000015: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 0000001a: <LoadParam>: <Reg8: 6, UInt8: 1>
+==> 0000001d: <LoadConstZero>: <Reg8: 5>
+==> 0000001f: <LoadConstZero>: <Reg8: 7>
+==> 00000021: <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+==> 00000026: <LoadConstString>: <Reg8: 4, string_id: 4894>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
+==> 0000002a: <JNotLess>: <Addr8: 54, Reg8: 5, Reg8: 2>  # Address: 00000060
+==> 0000002e: <Mov>: <Reg8: 2, Reg8: 7>
+==> 00000031: <GetByVal>: <Reg8: 2, Reg8: 6, Reg8: 2>
+==> 00000035: <JStrictEqual>: <Addr8: 43, Reg8: 2, Reg8: 5>  # Address: 00000060
+==> 00000039: <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000003f: <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000044: <Mov>: <Reg8: 2, Reg8: 7>
+==> 00000047: <GetByVal>: <Reg8: 3, Reg8: 6, Reg8: 2>
+==> 0000004b: <Call3>: <Reg8: 3, Reg8: 8, Reg8: 9, Reg8: 4, Reg8: 3>
+==> 00000051: <Inc>: <Reg8: 3, Reg8: 2>
+==> 00000054: <Mov>: <Reg8: 7, Reg8: 3>
+==> 00000057: <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+==> 0000005c: <JLess>: <Addr8: -46, Reg8: 3, Reg8: 2>  # Address: 0000002e
+==> 00000060: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000066: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000006b: <LoadConstString>: <Reg8: 2, string_id: 4893>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block' (String)
+==> 0000006f: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000074: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000007a: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000007f: <LoadConstString>: <Reg8: 2, string_id: 4892>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end' (String)
+==> 00000083: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000088: <Ret>: <Reg8: 0>
+==> 0000008a: <Catch>: <Reg8: 0>
+==> 0000008c: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000092: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000097: <LoadConstString>: <Reg8: 1, string_id: 4893>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block' (String)
+==> 0000009b: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000a0: <Throw>: <Reg8: 0>
+
+

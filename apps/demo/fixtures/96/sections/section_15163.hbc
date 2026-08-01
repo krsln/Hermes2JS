@@ -1,0 +1,30 @@
+
+=> [Function #15163 "" of 97 bytes]: 8 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x0026ae7f
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000005: <CreateGeneratorClosure>: <Reg8: 4, Reg8: 0, function_id: 15164>  # Function: [#15164 simpleGeneratorTest of 9 bytes]: 1 params @ offset 0x0026aee0
+==> 0000000a: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
+==> 0000000e: <CreateGeneratorClosure>: <Reg8: 3, Reg8: 0, function_id: 15166>  # Function: [#15166 generatorWithLoopTest of 9 bytes]: 2 params @ offset 0x0026af52
+==> 00000013: <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 3>
+==> 00000017: <CreateGeneratorClosure>: <Reg8: 2, Reg8: 0, function_id: 15168>  # Function: [#15168 generatorTryFinallyTest of 9 bytes]: 1 params @ offset 0x0026afd6
+==> 0000001c: <StoreToEnvironment>: <Reg8: 0, UInt8: 2, Reg8: 2>
+==> 00000020: <GetGlobalObject>: <Reg8: 5>
+==> 00000022: <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000028: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 0000002d: <NewObject>: <Reg8: 6>
+==> 0000002f: <LoadConstTrue>: <Reg8: 5>
+==> 00000031: <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 5, string_id: 205>  # String: 'value' (Identifier)
+==> 00000035: <LoadConstString>: <Reg8: 5, string_id: 48>  # String: '__esModule' (Identifier)
+==> 00000039: <Call4>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 5, Reg8: 6>
+==> 00000040: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 8828>  # String: 'simpleGeneratorTest' (Identifier)
+==> 00000046: <PutById>: <Reg8: 1, Reg8: 3, UInt8: 2, string_id: 8827>  # String: 'generatorWithLoopTest' (Identifier)
+==> 0000004c: <PutById>: <Reg8: 1, Reg8: 2, UInt8: 3, string_id: 8821>  # String: 'generatorTryFinallyTest' (Identifier)
+==> 00000052: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15170>  # Function: [#15170 callGeneratorTests of 212 bytes]: 1 params @ offset 0x0026b07d
+==> 00000057: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 11199>  # String: 'callGeneratorTests' (Identifier)
+==> 0000005d: <LoadConstUndefined>: <Reg8: 0>
+==> 0000005f: <Ret>: <Reg8: 0>
+
+

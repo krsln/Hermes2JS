@@ -1,0 +1,13 @@
+
+=> [Function #9522 "delay" of 24 bytes]: 2 params, frame size=12, strict=1, exc handler=0, debug info=0  @ offset 0x00200b31
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 0, string_id: 26>  # String: 'Promise' (Identifier)
+==> 00000008: <GetById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 7302>  # String: 'resolve' (Identifier)
+==> 0000000e: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000016: <Ret>: <Reg8: 0>
+
+

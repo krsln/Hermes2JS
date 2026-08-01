@@ -1,0 +1,21 @@
+
+=> [Function #9475 "mayThrow" of 47 bytes]: 2 params, frame size=13, strict=0, exc handler=0, debug info=0  @ offset 0x001fed4c
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000003: <LoadConstZero>: <Reg8: 0>
+==> 00000005: <JLess>: <Addr8: 13, Reg8: 1, Reg8: 0>  # Address: 00000012
+==> 00000009: <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
+==> 0000000c: <Mul>: <Reg8: 0, Reg8: 1, Reg8: 0>
+==> 00000010: <Ret>: <Reg8: 0>
+==> 00000012: <GetGlobalObject>: <Reg8: 1>
+==> 00000014: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 9>  # String: 'Error' (Identifier)
+==> 0000001a: <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 1>
+==> 0000001e: <LoadConstString>: <Reg8: 4, string_id: 1300>  # String: 'negative' (String)
+==> 00000022: <Mov>: <Reg8: 5, Reg8: 2>
+==> 00000025: <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
+==> 00000029: <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 0000002d: <Throw>: <Reg8: 1>
+
+

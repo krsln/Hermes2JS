@@ -1,0 +1,21 @@
+
+=> [Function #15199 "makeSound" of 62 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x0026b8b7
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 0, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 1>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 2, string_id: 3933>  # String: '__BC:Classes/ClassTests/Animal/makeSound' (String)
+==> 00000014: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000019: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000001f: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000024: <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 176>  # String: 'name' (Identifier)
+==> 00000029: <GetById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 11864>  # String: 'sound' (Identifier)
+==> 0000002f: <LoadConstString>: <Reg8: 0, string_id: 2375>  # String: 'says' (String)
+==> 00000033: <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 0, Reg8: 1>
+==> 0000003a: <LoadConstUndefined>: <Reg8: 0>
+==> 0000003c: <Ret>: <Reg8: 0>
+
+

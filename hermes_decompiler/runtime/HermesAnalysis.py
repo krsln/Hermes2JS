@@ -1,9 +1,6 @@
 from typing import Dict, Any, Optional, List
 
-from hermes_decompiler.core import get_logger
 from hermes_decompiler.opcode import OpcodeResult
-
-logger = get_logger(__name__)
 
 
 class HermesAnalysis:
@@ -53,19 +50,29 @@ class HermesAnalysis:
     def generate_js(self, verbose: bool = False) -> list[str]:
         return self.generate_js_v1(verbose)
 
-    def generate_js_v1(self, verbose: bool = False) -> List[str]:
-        from hermes_decompiler.regions.cfg.CFG import CFG
-        from hermes_decompiler.regions.building.StructuralAnalyzer import StructuralAnalyzer
-        from hermes_decompiler.regions.render.JSRenderer import JSRenderer
+    def generate_js_v1(self, verbose: bool = False) -> list[str]:
+        from hermes_decompiler.analysis.cfg import CFG
+        from hermes_decompiler.analysis.transforms import StructuralAnalyzer
+        from hermes_decompiler.emit import JSEmitter
 
-        cfg = CFG.from_results(self.results)
+        cfg = CFG.from_results(
+            self.results,
+            self.metadata.get("exception_handlers", []),
+        )
 
         cfg.verify()
         cfg.compute_dominators()
         cfg.compute_post_dominators()
+
+        # BranchChainMerger (stage 1 inside
+        # StructuralAnalyzer.build()) needs cfg.loop_analysis to avoid
+        # folding a loop's rotation-duplicated guard/continue test
+        # (same condition checked at two different points in the
+        # loop, both jumping forward to the same exit) into a single
+        # bogus `a || b` - so loop analysis must already be computed
+        # by the time build() runs.
         cfg.compute_loops()
 
         root = StructuralAnalyzer(cfg).build()
-        renderer = JSRenderer(verbose)
 
-        return renderer.render(root)
+        return JSEmitter(verbose).emit(root)

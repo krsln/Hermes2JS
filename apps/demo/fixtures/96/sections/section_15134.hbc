@@ -1,0 +1,31 @@
+
+=> [Function #15134 "basicRegExpTest" of 129 bytes]: 2 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x0026a53e
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000003: <GetGlobalObject>: <Reg8: 0>
+==> 00000005: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 1, string_id: 4840>  # String: '__BC:Strings/RegExpTests/basicRegExpTest/start' (String)
+==> 00000014: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000019: <CreateRegExp>: <Reg8: 4, string_id: 4503, string_id: 7163, UInt32: 3>  # String: '^\\d+$' (String)  # String: '' (Identifier)
+==> 00000027: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000002d: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000032: <GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
+==> 00000037: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 4, Reg8: 5>
+==> 0000003c: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000041: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000047: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000004c: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 171>  # String: 'match' (Identifier)
+==> 00000051: <CreateRegExp>: <Reg8: 1, string_id: 7189, string_id: 35, UInt32: 190>  # String: 'a' (Identifier)  # String: 'g' (Identifier)
+==> 0000005f: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
+==> 00000064: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000069: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000006f: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000074: <LoadConstString>: <Reg8: 0, string_id: 724>  # String: '__BC:Strings/RegExpTests/basicRegExpTest/end' (String)
+==> 00000078: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 0000007d: <LoadConstUndefined>: <Reg8: 0>
+==> 0000007f: <Ret>: <Reg8: 0>
+
+

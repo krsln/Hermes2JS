@@ -1,0 +1,21 @@
+
+=> [Function #15109 "" of 52 bytes]: 8 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x00269ae6
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000003: <GetGlobalObject>: <Reg8: 0>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000010: <NewObject>: <Reg8: 2>
+==> 00000012: <LoadConstTrue>: <Reg8: 0>
+==> 00000014: <PutNewOwnByIdShort>: <Reg8: 2, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
+==> 00000018: <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
+==> 0000001c: <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>
+==> 00000023: <CreateEnvironment>: <Reg8: 0>
+==> 00000025: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15110>  # Function: [#15110 arrayTest of 308 bytes]: 1 params @ offset 0x00269b1a
+==> 0000002a: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 7969>  # String: 'arrayTest' (Identifier)
+==> 00000030: <LoadConstUndefined>: <Reg8: 0>
+==> 00000032: <Ret>: <Reg8: 0>
+
+

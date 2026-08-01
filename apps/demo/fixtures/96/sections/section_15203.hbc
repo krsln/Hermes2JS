@@ -1,0 +1,33 @@
+
+=> [Function #15203 "makeSound" of 106 bytes]: 1 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x0026b9fa
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 1, UInt8: 0>
+==> 00000003: <GetGlobalObject>: <Reg8: 2>
+==> 00000005: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 0, string_id: 4534>  # String: '__BC:Classes/ClassTests/Dog/makeSound-override' (String)
+==> 00000014: <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
+==> 00000019: <GetEnvironment>: <Reg8: 0, UInt8: 1>
+==> 0000001c: <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 1>
+==> 00000020: <GetByIdShort>: <Reg8: 6, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 00000025: <GetEnvironment>: <Reg8: 0, UInt8: 0>
+==> 00000028: <LoadFromEnvironment>: <Reg8: 10, Reg8: 0, UInt8: 0>
+==> 0000002c: <LoadConstUndefined>: <Reg8: 0>
+==> 0000002e: <LoadConstString>: <Reg8: 9, string_id: 10340>  # String: 'makeSound' (Identifier)
+==> 00000032: <LoadConstUInt8>: <Reg8: 7, UInt8: 3>
+==> 00000035: <LoadConstUndefined>: <Reg8: 11>
+==> 00000037: <Mov>: <Reg8: 8, Reg8: 1>
+==> 0000003a: <Call>: <Reg8: 4, Reg8: 6, UInt8: 5>
+==> 0000003e: <NewArray>: <Reg8: 3, UInt16: 0>
+==> 00000042: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
+==> 00000047: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000004d: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000052: <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 176>  # String: 'name' (Identifier)
+==> 00000057: <GetById>: <Reg8: 2, Reg8: 1, UInt8: 5, string_id: 16784>  # String: 'breed' (Identifier)
+==> 0000005d: <LoadConstString>: <Reg8: 1, string_id: 1894>  # String: 'is a' (String)
+==> 00000061: <Call4>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>
+==> 00000068: <Ret>: <Reg8: 0>
+
+

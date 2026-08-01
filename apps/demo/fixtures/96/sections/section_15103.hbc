@@ -1,0 +1,42 @@
+
+=> [Function #15103 "nestedObjectDestructureTest" of 157 bytes]: 1 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x0026979f
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4814>  # String: '__BC:Objects/DestructuringTests/nestedObjectDestructureTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <NewObject>: <Reg8: 0>
+==> 00000018: <LoadConstUInt8>: <Reg8: 2, UInt8: 200>
+==> 0000001b: <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 2, string_id: 235>  # String: 'status' (Identifier)
+==> 0000001f: <NewObject>: <Reg8: 2>
+==> 00000021: <LoadConstUInt8>: <Reg8: 6, UInt8: 1>
+==> 00000024: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 2, UInt16: 2, UInt16: 12808, UInt16: 23461>  # Object: {'id': 1, 'name': 'Ada'}
+==> 0000002e: <PutNewOwnById>: <Reg8: 2, Reg8: 3, string_id: 7459>  # String: 'user' (Identifier)
+==> 00000033: <NewObject>: <Reg8: 3>
+==> 00000035: <PutNewOwnById>: <Reg8: 3, Reg8: 6, string_id: 12920>  # String: 'page' (Identifier)
+==> 0000003a: <PutNewOwnById>: <Reg8: 2, Reg8: 3, string_id: 10786>  # String: 'meta' (Identifier)
+==> 0000003f: <PutNewOwnById>: <Reg8: 0, Reg8: 2, string_id: 7222>  # String: 'body' (Identifier)
+==> 00000044: <GetByIdShort>: <Reg8: 5, Reg8: 0, UInt8: 3, string_id: 235>  # String: 'status' (Identifier)
+==> 00000049: <GetById>: <Reg8: 0, Reg8: 0, UInt8: 4, string_id: 7222>  # String: 'body' (Identifier)
+==> 0000004f: <GetById>: <Reg8: 2, Reg8: 0, UInt8: 5, string_id: 7459>  # String: 'user' (Identifier)
+==> 00000055: <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 6, string_id: 176>  # String: 'name' (Identifier)
+==> 0000005a: <GetById>: <Reg8: 2, Reg8: 0, UInt8: 7, string_id: 10786>  # String: 'meta' (Identifier)
+==> 00000060: <LoadConstUndefined>: <Reg8: 0>
+==> 00000062: <JStrictNotEqual>: <Addr8: 6, Reg8: 2, Reg8: 0>  # Address: 00000068
+==> 00000066: <NewObject>: <Reg8: 2>
+==> 00000068: <GetById>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 12920>  # String: 'page' (Identifier)
+==> 0000006e: <JStrictEqual>: <Addr8: 7, Reg8: 2, Reg8: 0>  # Address: 00000075
+==> 00000072: <Mov>: <Reg8: 6, Reg8: 2>
+==> 00000075: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000007b: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000080: <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4, Reg8: 6>
+==> 00000087: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000008d: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000092: <LoadConstString>: <Reg8: 1, string_id: 4813>  # String: '__BC:Objects/DestructuringTests/nestedObjectDestructureTest/end' (String)
+==> 00000096: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000009b: <Ret>: <Reg8: 0>
+
+

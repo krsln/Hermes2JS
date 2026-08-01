@@ -1,0 +1,47 @@
+
+=> [Function #9459 "tripleNestedLabeledTest" of 148 bytes]: 1 params, frame size=29, strict=0, exc handler=0, debug info=0  @ offset 0x001fe34b
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 15>
+==> 00000002: <TryGetById>: <Reg8: 18, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 16, string_id: 4804>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 16, Reg8: 17, Reg8: 18, Reg8: 16>
+==> 00000016: <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
+==> 00000019: <LoadConstUInt8>: <Reg8: 12, UInt8: 3>
+==> 0000001c: <LoadConstUInt8>: <Reg8: 13, UInt8: 2>
+==> 0000001f: <LoadConstZero>: <Reg8: 9>
+==> 00000021: <LoadConstZero>: <Reg8: 10>
+==> 00000023: <Mov>: <Reg8: 11, Reg8: 9>
+==> 00000026: <Mov>: <Reg8: 5, Reg8: 10>
+==> 00000029: <LoadConstZero>: <Reg8: 6>
+==> 0000002b: <Mov>: <Reg8: 7, Reg8: 6>
+==> 0000002e: <Mov>: <Reg8: 0, Reg8: 5>
+==> 00000031: <LoadConstZero>: <Reg8: 1>
+==> 00000033: <AddN>: <Reg8: 3, Reg8: 0, Reg8: 2>
+==> 00000037: <Mov>: <Reg8: 4, Reg8: 1>
+==> 0000003a: <JStrictEqual>: <Addr8: 23, Reg8: 4, Reg8: 2>  # Address: 00000051
+==> 0000003e: <JStrictNotEqual>: <Addr8: 8, Reg8: 11, Reg8: 13>  # Address: 00000046
+==> 00000042: <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 13>  # Address: 00000067
+==> 00000046: <AddN>: <Reg8: 1, Reg8: 4, Reg8: 2>
+==> 0000004a: <Mov>: <Reg8: 0, Reg8: 3>
+==> 0000004d: <JLessN>: <Addr8: -26, Reg8: 1, Reg8: 12>  # Address: 00000033
+==> 00000051: <AddN>: <Reg8: 6, Reg8: 7, Reg8: 2>
+==> 00000055: <Mov>: <Reg8: 5, Reg8: 3>
+==> 00000058: <JLessN>: <Addr8: -45, Reg8: 6, Reg8: 12>  # Address: 0000002b
+==> 0000005c: <AddN>: <Reg8: 9, Reg8: 11, Reg8: 2>
+==> 00000060: <Mov>: <Reg8: 10, Reg8: 3>
+==> 00000063: <JLessN>: <Addr8: -64, Reg8: 9, Reg8: 12>  # Address: 00000023
+==> 00000067: <TryGetById>: <Reg8: 18, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000006d: <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000072: <LoadConstString>: <Reg8: 16, string_id: 4801>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits' (String)
+==> 00000076: <Call3>: <Reg8: 16, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 3>
+==> 0000007c: <TryGetById>: <Reg8: 17, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000082: <GetByIdShort>: <Reg8: 16, Reg8: 17, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000087: <LoadConstString>: <Reg8: 15, string_id: 4798>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end' (String)
+==> 0000008b: <Call2>: <Reg8: 15, Reg8: 16, Reg8: 17, Reg8: 15>
+==> 00000090: <LoadConstUndefined>: <Reg8: 14>
+==> 00000092: <Ret>: <Reg8: 14>
+
+

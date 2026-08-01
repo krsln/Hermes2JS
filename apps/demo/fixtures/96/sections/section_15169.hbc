@@ -1,0 +1,53 @@
+
+=> [Function #15169 "?anon_0_generatorTryFinallyTest" of 158 bytes]: 1 params, frame size=15, strict=1, exc handler=1, debug info=0  @ offset 0x0026afdf
+  [Exception handlers: [start=0x20, end=0x3c, target=0x83] ]
+
+Bytecode listing:
+
+==> 00000000: <StartGenerator>: <>
+==> 00000001: <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+==> 00000004: <JmpTrueLong>: <Addr32: 151, Reg8: 1>  # Address: 0000009b
+==> 0000000a: <GetGlobalObject>: <Reg8: 2>
+==> 0000000c: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000012: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000017: <LoadConstString>: <Reg8: 1, string_id: 4779>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/start' (String)
+==> 0000001b: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 00000020: <LoadConstString>: <Reg8: 1, string_id: 7189>  # String: 'a' (Identifier)
+==> 00000024: <SaveGenerator>: <Addr8: 4>  # Address: 00000028
+==> 00000026: <Ret>: <Reg8: 1>
+==> 00000028: <ResumeGenerator>: <Reg8: 1, Reg8: 3>
+==> 0000002b: <JmpTrue>: <Addr8: 65, Reg8: 3>  # Address: 0000006c
+==> 0000002e: <LoadConstString>: <Reg8: 3, string_id: 38>  # String: 'b' (Identifier)
+==> 00000032: <SaveGenerator>: <Addr8: 4>  # Address: 00000036
+==> 00000034: <Ret>: <Reg8: 3>
+==> 00000036: <ResumeGenerator>: <Reg8: 3, Reg8: 4>
+==> 00000039: <JmpTrue>: <Addr8: 28, Reg8: 4>  # Address: 00000055
+==> 0000003c: <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000042: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000047: <LoadConstString>: <Reg8: 4, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
+==> 0000004b: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 00000050: <LoadConstUndefined>: <Reg8: 4>
+==> 00000052: <CompleteGenerator>: <>
+==> 00000053: <Ret>: <Reg8: 4>
+==> 00000055: <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000005b: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000060: <LoadConstString>: <Reg8: 4, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
+==> 00000064: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 00000069: <CompleteGenerator>: <>
+==> 0000006a: <Ret>: <Reg8: 3>
+==> 0000006c: <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000072: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000077: <LoadConstString>: <Reg8: 3, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
+==> 0000007b: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 00000080: <CompleteGenerator>: <>
+==> 00000081: <Ret>: <Reg8: 1>
+==> 00000083: <Catch>: <Reg8: 1>
+==> 00000085: <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000008b: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000090: <LoadConstString>: <Reg8: 2, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
+==> 00000094: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000099: <Throw>: <Reg8: 1>
+==> 0000009b: <CompleteGenerator>: <>
+==> 0000009c: <Ret>: <Reg8: 0>
+
+

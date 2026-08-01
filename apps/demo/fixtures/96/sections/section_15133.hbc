@@ -1,0 +1,33 @@
+
+=> [Function #15133 "" of 112 bytes]: 8 params, frame size=20, strict=1, exc handler=0, debug info=0  @ offset 0x0026a4ce
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 0>
+==> 00000002: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000005: <CreateClosure>: <Reg8: 5, Reg8: 0, function_id: 15134>  # Function: [#15134 basicRegExpTest of 129 bytes]: 2 params @ offset 0x0026a53e
+==> 0000000a: <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 5>
+==> 0000000e: <CreateClosure>: <Reg8: 4, Reg8: 0, function_id: 15135>  # Function: [#15135 regExpFlagsTest of 169 bytes]: 2 params @ offset 0x0026a5bf
+==> 00000013: <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 4>
+==> 00000017: <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 15136>  # Function: [#15136 regExpSingleQuotePatternTest of 139 bytes]: 2 params @ offset 0x0026a668
+==> 0000001c: <StoreToEnvironment>: <Reg8: 0, UInt8: 2, Reg8: 3>
+==> 00000020: <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15137>  # Function: [#15137 regExpGroupsAndReplaceTest of 120 bytes]: 2 params @ offset 0x0026a6f3
+==> 00000025: <StoreToEnvironment>: <Reg8: 0, UInt8: 3, Reg8: 2>
+==> 00000029: <GetGlobalObject>: <Reg8: 6>
+==> 0000002b: <TryGetById>: <Reg8: 9, Reg8: 6, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000031: <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000036: <NewObject>: <Reg8: 7>
+==> 00000038: <LoadConstTrue>: <Reg8: 6>
+==> 0000003a: <PutNewOwnByIdShort>: <Reg8: 7, Reg8: 6, string_id: 205>  # String: 'value' (Identifier)
+==> 0000003e: <LoadConstString>: <Reg8: 6, string_id: 48>  # String: '__esModule' (Identifier)
+==> 00000042: <Call4>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 1, Reg8: 6, Reg8: 7>
+==> 00000049: <PutById>: <Reg8: 1, Reg8: 5, UInt8: 1, string_id: 7656>  # String: 'basicRegExpTest' (Identifier)
+==> 0000004f: <PutById>: <Reg8: 1, Reg8: 4, UInt8: 2, string_id: 11315>  # String: 'regExpFlagsTest' (Identifier)
+==> 00000055: <PutById>: <Reg8: 1, Reg8: 3, UInt8: 3, string_id: 11325>  # String: 'regExpSingleQuotePatternTest' (Identifier)
+==> 0000005b: <PutById>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 11321>  # String: 'regExpGroupsAndReplaceTest' (Identifier)
+==> 00000061: <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15138>  # Function: [#15138 callRegExpTests of 101 bytes]: 1 params @ offset 0x0026a76b
+==> 00000066: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 5, string_id: 11311>  # String: 'callRegExpTests' (Identifier)
+==> 0000006c: <LoadConstUndefined>: <Reg8: 0>
+==> 0000006e: <Ret>: <Reg8: 0>
+
+

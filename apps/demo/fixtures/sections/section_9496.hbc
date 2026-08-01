@@ -1,0 +1,58 @@
+
+=> [Function #9496 "setTest" of 215 bytes]: 1 params, frame size=19, strict=0, exc handler=0, debug info=0  @ offset 0x001ffd4d
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4745>  # String: '__BC:Collections/MapSetTests/setTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 31>  # String: 'Set' (Identifier)
+==> 0000001c: <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
+==> 00000020: <NewArrayWithBuffer>: <Reg8: 10, UInt16: 6, UInt16: 6, UInt16: 48500>  # Array: [1, 2, 2, 3, 3, 3]
+==> 00000028: <Mov>: <Reg8: 11, Reg8: 2>
+==> 0000002b: <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
+==> 0000002f: <SelectObject>: <Reg8: 3, Reg8: 2, Reg8: 0>
+==> 00000033: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000039: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000003e: <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 69>  # String: 'size' (Identifier)
+==> 00000043: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
+==> 00000048: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 79>  # String: 'add' (Identifier)
+==> 0000004d: <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
+==> 00000050: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000055: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000005b: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000060: <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 6, string_id: 11>  # String: 'has' (Identifier)
+==> 00000065: <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
+==> 00000068: <Call2>: <Reg8: 0, Reg8: 5, Reg8: 3, Reg8: 0>
+==> 0000006d: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
+==> 00000072: <Mov>: <Reg8: 2, Reg8: 3>
+==> 00000075: <IteratorBegin>: <Reg8: 4, Reg8: 2>
+==> 00000078: <LoadConstUndefined>: <Reg8: 0>
+==> 0000007a: <Mov>: <Reg8: 5, Reg8: 2>
+==> 0000007d: <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
+==> 00000081: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000084: <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 000000a1
+==> 00000088: <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000008e: <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000093: <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+==> 00000098: <Jmp>: <Addr8: -30>  # Address: 0000007a
+==> 0000009a: <Catch>: <Reg8: 2>
+==> 0000009c: <IteratorClose>: <Reg8: 4, UInt8: 1>
+==> 0000009f: <Throw>: <Reg8: 2>
+==> 000000a1: <NewArray>: <Reg8: 4, UInt16: 0>
+==> 000000a5: <LoadConstZero>: <Reg8: 8>
+==> 000000a7: <Mov>: <Reg8: 10, Reg8: 4>
+==> 000000aa: <Mov>: <Reg8: 9, Reg8: 3>
+==> 000000ad: <CallBuiltin>: <Reg8: 2, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
+==> 000000b1: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000b7: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000bc: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
+==> 000000c1: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000c7: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000cc: <LoadConstString>: <Reg8: 1, string_id: 4741>  # String: '__BC:Collections/MapSetTests/setTest/end' (String)
+==> 000000d0: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000d5: <Ret>: <Reg8: 0>
+
+

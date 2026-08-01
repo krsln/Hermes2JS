@@ -1,0 +1,54 @@
+
+=> [Function #9469 "nestedTryCatchTest" of 204 bytes]: 1 params, frame size=14, strict=0, exc handler=0, debug info=0  @ offset 0x001fe928
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 3674>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000016: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 0000001c: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000021: <LoadConstString>: <Reg8: 1, string_id: 4851>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/outer-try' (String)
+==> 00000025: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000002a: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000030: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000035: <LoadConstString>: <Reg8: 1, string_id: 4847>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/inner-try' (String)
+==> 00000039: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000003e: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000044: <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
+==> 00000048: <LoadConstString>: <Reg8: 5, string_id: 9220>  # String: 'inner' (Identifier)
+==> 0000004c: <Mov>: <Reg8: 6, Reg8: 2>
+==> 0000004f: <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
+==> 00000053: <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 00000057: <Throw>: <Reg8: 1>
+==> 00000059: <Catch>: <Reg8: 2>
+==> 0000005b: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000061: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 00000066: <LoadConstString>: <Reg8: 1, string_id: 516>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/inner-catch' (String)
+==> 0000006a: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+==> 0000006f: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
+==> 00000075: <LoadConstString>: <Reg8: 1, string_id: 3368>  # String: 'rethrown from inner: ' (String)
+==> 00000079: <Add>: <Reg8: 5, Reg8: 1, Reg8: 2>
+==> 0000007d: <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
+==> 00000081: <Mov>: <Reg8: 6, Reg8: 2>
+==> 00000084: <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
+==> 00000088: <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 0000008c: <Throw>: <Reg8: 1>
+==> 0000008e: <Catch>: <Reg8: 3>
+==> 00000090: <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 00000096: <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 0000009b: <LoadConstString>: <Reg8: 1, string_id: 4848>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/outer-catch' (String)
+==> 0000009f: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
+==> 000000a4: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000aa: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000af: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
+==> 000000b4: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+==> 000000ba: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+==> 000000bf: <LoadConstString>: <Reg8: 0, string_id: 4846>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/end' (String)
+==> 000000c3: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 000000c8: <LoadConstUndefined>: <Reg8: 0>
+==> 000000ca: <Ret>: <Reg8: 0>
+
+

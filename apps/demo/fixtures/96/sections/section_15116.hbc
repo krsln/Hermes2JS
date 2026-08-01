@@ -1,0 +1,40 @@
+
+=> [Function #15116 "" of 138 bytes]: 8 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x00269c7e
+
+Bytecode listing:
+
+==> 00000000: <CreateEnvironment>: <Reg8: 2>
+==> 00000002: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 00000005: <LoadParam>: <Reg8: 1, UInt8: 6>
+==> 00000008: <LoadParam>: <Reg8: 5, UInt8: 7>
+==> 0000000b: <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15117>  # Function: [#15117 _interopDefault of 28 bytes]: 2 params @ offset 0x00104cff
+==> 00000010: <NewArrayWithBuffer>: <Reg8: 0, UInt16: 1, UInt16: 1, UInt16: 23669>  # Array: ['x']
+==> 00000018: <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
+==> 0000001c: <GetGlobalObject>: <Reg8: 0>
+==> 0000001e: <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
+==> 00000024: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
+==> 00000029: <NewObject>: <Reg8: 6>
+==> 0000002b: <LoadConstTrue>: <Reg8: 0>
+==> 0000002d: <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
+==> 00000031: <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
+==> 00000035: <Call4>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 0, Reg8: 6>
+==> 0000003c: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15118>  # Function: [#15118 spreadArrayTest of 203 bytes]: 1 params @ offset 0x00269d08
+==> 00000041: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10787>  # String: 'spreadArrayTest' (Identifier)
+==> 00000047: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15119>  # Function: [#15119 spreadObjectTest of 137 bytes]: 1 params @ offset 0x00269dd3
+==> 0000004c: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 10795>  # String: 'spreadObjectTest' (Identifier)
+==> 00000052: <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15120>  # Function: [#15120 spreadFunctionArgsTest of 99 bytes]: 1 params @ offset 0x00269e5c
+==> 00000057: <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 10792>  # String: 'spreadFunctionArgsTest' (Identifier)
+==> 0000005d: <LoadConstZero>: <Reg8: 0>
+==> 0000005f: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
+==> 00000063: <LoadConstUndefined>: <Reg8: 0>
+==> 00000065: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 0000006a: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 0000006f: <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
+==> 00000073: <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
+==> 00000076: <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
+==> 0000007a: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
+==> 0000007f: <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
+==> 00000084: <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 1>
+==> 00000088: <Ret>: <Reg8: 0>
+
+

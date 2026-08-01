@@ -1,0 +1,52 @@
+
+=> [Function #9488 "parameterDestructureTest" of 161 bytes]: 3 params, frame size=23, strict=0, exc handler=0, debug info=0  @ offset 0x001ff58f
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000003: <GetByIdShort>: <Reg8: 9, Reg8: 3, UInt8: 0, string_id: 28>  # String: 'id' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 8, Reg8: 3, UInt8: 1, string_id: 187>  # String: 'name' (Identifier)
+==> 0000000d: <LoadConstUndefined>: <Reg8: 1>
+==> 0000000f: <JStrictNotEqual>: <Addr8: 8, Reg8: 8, Reg8: 1>  # Address: 00000017
+==> 00000013: <LoadConstString>: <Reg8: 8, string_id: 514>  # String: 'anon' (String)
+==> 00000017: <LoadParam>: <Reg8: 4, UInt8: 2>
+==> 0000001a: <IteratorBegin>: <Reg8: 3, Reg8: 4>
+==> 0000001d: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000020: <IteratorNext>: <Reg8: 5, Reg8: 3, Reg8: 5>
+==> 00000024: <Mov>: <Reg8: 6, Reg8: 3>
+==> 00000027: <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 1>
+==> 0000002b: <LoadConstUndefined>: <Reg8: 7>
+==> 0000002d: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000033
+==> 00000030: <Mov>: <Reg8: 7, Reg8: 5>
+==> 00000033: <LoadConstUndefined>: <Reg8: 6>
+==> 00000035: <JmpTrue>: <Addr8: 28, Reg8: 0>  # Address: 00000051
+==> 00000038: <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
+==> 0000003c: <Mov>: <Reg8: 5, Reg8: 3>
+==> 0000003f: <StrictEq>: <Reg8: 2, Reg8: 5, Reg8: 1>
+==> 00000043: <LoadConstUndefined>: <Reg8: 6>
+==> 00000045: <Mov>: <Reg8: 0, Reg8: 2>
+==> 00000048: <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 00000051
+==> 0000004b: <Mov>: <Reg8: 6, Reg8: 4>
+==> 0000004e: <Mov>: <Reg8: 0, Reg8: 2>
+==> 00000051: <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000057
+==> 00000054: <IteratorClose>: <Reg8: 3, UInt8: 0>
+==> 00000057: <GetGlobalObject>: <Reg8: 3>
+==> 00000059: <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)
+==> 0000005f: <GetByIdShort>: <Reg8: 5, Reg8: 10, UInt8: 3, string_id: 178>  # String: 'log' (Identifier)
+==> 00000064: <LoadConstString>: <Reg8: 4, string_id: 4978>  # String: '__BC:Objects/DestructuringTests/parameterDestructureTest/start' (String)
+==> 00000068: <Call2>: <Reg8: 4, Reg8: 5, Reg8: 10, Reg8: 4>
+==> 0000006d: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)
+==> 00000073: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 3, string_id: 178>  # String: 'log' (Identifier)
+==> 00000078: <Mov>: <Reg8: 15, Reg8: 5>
+==> 0000007b: <Mov>: <Reg8: 14, Reg8: 9>
+==> 0000007e: <Mov>: <Reg8: 13, Reg8: 8>
+==> 00000081: <Mov>: <Reg8: 12, Reg8: 7>
+==> 00000084: <Mov>: <Reg8: 11, Reg8: 6>
+==> 00000087: <Call>: <Reg8: 4, Reg8: 4, UInt8: 5>
+==> 0000008b: <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)
+==> 00000091: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 3, string_id: 178>  # String: 'log' (Identifier)
+==> 00000096: <LoadConstString>: <Reg8: 3, string_id: 4975>  # String: '__BC:Objects/DestructuringTests/parameterDestructureTest/end' (String)
+==> 0000009a: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+==> 0000009f: <Ret>: <Reg8: 1>
+
+

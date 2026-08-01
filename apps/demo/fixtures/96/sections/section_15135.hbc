@@ -1,0 +1,37 @@
+
+=> [Function #15135 "regExpFlagsTest" of 169 bytes]: 2 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x0026a5bf
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 5, UInt8: 1>
+==> 00000003: <GetGlobalObject>: <Reg8: 0>
+==> 00000005: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000b: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000010: <LoadConstString>: <Reg8: 1, string_id: 4849>  # String: '__BC:Strings/RegExpTests/regExpFlagsTest/start' (String)
+==> 00000014: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000019: <CreateRegExp>: <Reg8: 6, string_id: 6584, string_id: 268, UInt32: 191>  # String: 'hello' (String)  # String: 'i' (String)
+==> 00000027: <CreateRegExp>: <Reg8: 4, string_id: 4514, string_id: 7179, UInt32: 192>  # String: '^line' (String)  # String: 'm' (Identifier)
+==> 00000035: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000003b: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000040: <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
+==> 00000045: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 6, Reg8: 5>
+==> 0000004a: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 0000004f: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000055: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000005a: <GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
+==> 0000005f: <Call2>: <Reg8: 1, Reg8: 1, Reg8: 4, Reg8: 5>
+==> 00000064: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000069: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000006f: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000074: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 171>  # String: 'match' (Identifier)
+==> 00000079: <CreateRegExp>: <Reg8: 1, string_id: 4336, string_id: 35, UInt32: 193>  # String: '[0-9A-Z_a-z]+' (String)  # String: 'g' (Identifier)
+==> 00000087: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
+==> 0000008c: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 00000091: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000097: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000009c: <LoadConstString>: <Reg8: 0, string_id: 4845>  # String: '__BC:Strings/RegExpTests/regExpFlagsTest/end' (String)
+==> 000000a0: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 000000a5: <LoadConstUndefined>: <Reg8: 0>
+==> 000000a7: <Ret>: <Reg8: 0>
+
+
