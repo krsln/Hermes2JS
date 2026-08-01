@@ -119,7 +119,7 @@ class Call(CallX):
         # here are a contiguous stack range that doesn't necessarily
         # correspond to individually tracked register assignments.
         arguments = tuple(
-            Identifier(name=f"r{r}")
+            self.get_register_reference(analysis, r)
             for r in arg_regs
         )
 
