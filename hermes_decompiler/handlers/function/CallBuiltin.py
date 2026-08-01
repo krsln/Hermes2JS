@@ -27,7 +27,7 @@ class CallBuiltin(OpcodeHandler):
         callee = Identifier(
             name=entry.builtin_function.name
             if entry.builtin_function
-            else f"builtin_{builtin_id}"
+            else f"builtin_{builtin_id}/* unresolved arg */"
         )
 
         arguments = tuple(
