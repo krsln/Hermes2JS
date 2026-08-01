@@ -55,7 +55,7 @@ class SwitchImm(OpcodeHandler):
                 case_map[value] = target
         # print("case_map",case_map)
 
-        default_target = entry.target_address or 0  # TODO:
+        default_target = entry.target_address
         terminator = TerminatorSwitch(selector=selector, case_map=case_map, default_target=default_target)
 
         result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
@@ -103,8 +103,7 @@ class StringSwitchImm(OpcodeHandler):
 
         case_map = {}
 
-        # todo
-        default_target = entry.target_address or 0  # TODO:
+        default_target = entry.target_address
         terminator = TerminatorSwitch(selector=selector, case_map=case_map, default_target=default_target)
 
         result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
