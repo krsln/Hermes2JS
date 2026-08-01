@@ -105,6 +105,7 @@ SequenceRegion
 ## Done Stuff | from 2025-08-01
 
 - LoopKind +-> FOR_OF, FOR_IN | ForEachRecognizer
+- handler: Jmp re-wrote
 
 
 
