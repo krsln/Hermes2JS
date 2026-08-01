@@ -6,7 +6,7 @@ from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
 
 
-class BranchChainMerger:
+class ShortCircuitConditionMerger:
     """
     Collapses Hermes' bytecode encoding of a *pure control-flow*
     `&&` / `||` condition into a single branch, before RegionGraph/

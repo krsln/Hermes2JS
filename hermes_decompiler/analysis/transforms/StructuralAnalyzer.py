@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
-from hermes_decompiler.analysis.transforms.cfg_passes import BranchChainMerger
+from hermes_decompiler.analysis.transforms.cfg_passes import ShortCircuitConditionMerger
 from hermes_decompiler.analysis.transforms.structurers import (
     SequenceStructurer,
     LoopStructurer,
@@ -66,7 +66,7 @@ class StructuralAnalyzer:
 
     def build(self):
         # ---- 1. cfg_passes --------------------------------------------
-        BranchChainMerger(self.cfg).run()
+        ShortCircuitConditionMerger(self.cfg).run()
 
         # ---- 2. structurers -------------------------------------------
         root = SequenceStructurer(self.cfg).run()
