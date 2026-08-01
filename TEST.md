@@ -8,7 +8,6 @@ https://p1sec.github.io/hermes-dec/opcodes_table.html
 
 ```shell
 tree -I '__pycache__|__init__.py' hermes_decompiler
-
 ```
 
 ## Testy
