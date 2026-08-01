@@ -59,8 +59,6 @@ function tripleNestedLabeledTest(param0) {
                 // USED → r4 = 0 + 1;
                 // CODE → <Mov>: <Reg8: 14, Reg8: 12>
                 // USED → r14 = 0;
-                // CODE → <JStrictEqual>: <Addr8: 22, Reg8: 14, Reg8: 3>  # Address: 0000004f
-                if (0 === 1) goto label_79;
                 if (0 !== 2) {
                     // ──────────────── Block 6 ──────────────── 
                     // CODE → <Inc>: <Reg8: 12, Reg8: 14>

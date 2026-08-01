@@ -25,8 +25,6 @@ function forTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 5>
         // USED → r6 = 0;
-        // CODE → <JStrictEqual>: <Addr8: 48, Reg8: 6, Reg8: 1>  # Address: 00000058
-        if (0 === 3) goto label_88;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <JStrictEqual>: <Addr8: 22, Reg8: 6, Reg8: 2>  # Address: 00000042
         if (0 === 8) goto label_66;

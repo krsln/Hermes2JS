@@ -93,8 +93,6 @@ function mapTest(param0) {
         // USED → r9 = GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next();
         // CODE → <Mov>: <Reg8: 8, Reg8: 5>
         // USED → r8 = GetIterator(new globalThis.Map(__uninitialized_this_for_new__));
-        // CODE → <JStrictEqual>: <Addr8: 106, Reg8: 8, Reg8: 0>  # Address: 0000012e
-        if (GetIterator(new globalThis.Map(__uninitialized_this_for_new__)) === undefined) goto label_302;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Mov>: <Reg8: 11, Reg8: 9>
         // USED → r11 = GetIterator(new globalThis.Map(__uninitialized_this_for_new__)).next();

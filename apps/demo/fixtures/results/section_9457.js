@@ -53,8 +53,6 @@ function labeledContinueTest(param0) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = 0;
-            // CODE → <JStrictEqual>: <Addr8: 47, Reg8: 1, Reg8: 3>  # Address: 0000005d
-            if (0 === 1) goto label_93;
             // ──────────────── Block 3 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r12 = globalThis.console;

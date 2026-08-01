@@ -33,8 +33,6 @@ function function_12825(param0, param1, param2, param3, param4) {
         // USED → r1 = param1.slice();
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 139>  # String: 'length' (Identifier)
         // USED → r1 = param1.slice().length;
-        // CODE → <JmpFalse>: <Addr8: 81, Reg8: 1>  # Address: 00000080
-        if (!param1.slice().length) goto label_128;
         try {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 11, Reg8: 10>

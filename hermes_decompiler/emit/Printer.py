@@ -4,6 +4,7 @@ from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     LoopRegion,
+    LoopKind,
     IfRegion,
     TryRegion,
     SwitchRegion,
@@ -218,20 +219,46 @@ class Printer(NodeVisitor):
         if self.verbose:
             self._write(lines, f"// LOOP → START ({kind.value if kind else "unknown"})")
 
-        cond = (
-            self.print_expression(region.condition)
-            if region.condition
-            else "true"
-        )
+        if kind in (LoopKind.FOR_OF, LoopKind.FOR_IN):
+            self._emit_for_each(region, lines)
+        else:
+            cond = (
+                self.print_expression(region.condition)
+                if region.condition
+                else "true"
+            )
 
-        self._write(lines, f"while ({cond}) {{")
+            self._write(lines, f"while ({cond}) {{")
+
+            self._indent += 1
+            self._emit_region(region.body, lines)
+            self._indent -= 1
+
+            self._write(lines, "}")
+
+        self._write(lines, "// LOOP → END")
+
+    def _emit_for_each(self, region: LoopRegion, lines):
+        """
+        Renders a `LoopRegion` that `ForEachRecognizer` has already
+        reclassified as FOR_OF/FOR_IN and populated `.iterable` /
+        `.loop_binding` on. `region.body` still contains the loop's
+        remaining statements (the header's IteratorNext/GetNextPName
+        instruction was already stripped by the recognizer, so it
+        won't be re-emitted here as a plain statement).
+        """
+
+        keyword = "of" if region.loop_kind is LoopKind.FOR_OF else "in"
+        source = self.print_expression(region.iterable)
+        binding = f"r{region.loop_binding}"
+
+        self._write(lines, f"for (const {binding} {keyword} {source}) {{")
 
         self._indent += 1
         self._emit_region(region.body, lines)
         self._indent -= 1
 
         self._write(lines, "}")
-        self._write(lines, "// LOOP → END")
 
     # ---------------------------------------------------------
     # try

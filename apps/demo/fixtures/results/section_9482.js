@@ -61,8 +61,6 @@ function propertyAccessTest(param0) {
         // USED → r8 = GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
         // USED → r5 = GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 }));
-        // CODE → <JStrictEqual>: <Addr8: 34, Reg8: 5, Reg8: 0>  # Address: 000000a8
-        if (GetIterator(globalThis.Object.keys({ "x": 1, "y": 2 })) === undefined) goto label_168;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r7 = globalThis.console;

@@ -42,8 +42,6 @@ function tryCatchInsideLoopTest(param0, param1) {
             // USED → r2 = 0;
             // CODE → <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
             // USED → r2 = param1[0];
-            // CODE → <JLess>: <Addr8: 33, Reg8: 2, Reg8: 6>  # Address: 00000065
-            if (param1[0] < 0) goto label_101;
             // ──────────────── Block 2 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r9 = globalThis.console;

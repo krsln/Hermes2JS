@@ -50,6 +50,18 @@ class LoopConditionExtractor:
         header.terminator = None
         loop.condition = branch.condition
 
+        # `header.terminator` is only consulted for CFG edges - Printer
+        # renders per-*instruction* terminators (`instruction.terminator`
+        # in `_emit_block`), which is a completely separate field on
+        # whichever OpcodeResult originally produced this branch (e.g.
+        # JmpUndefined/JStrictEqual). Nulling `header.terminator` alone
+        # leaves that instruction sitting in `header.instructions`, so
+        # it still prints as a standalone `if (...) goto label;` inside
+        # the loop body even though its condition was "consumed" into
+        # `loop.condition`. Must also drop the instruction itself.
+        if header.instructions and header.instructions[-1].terminator is branch:
+            header.instructions.pop()
+
         # loop.condition = match.group(1).strip()
         # loop.loop_kind = LoopKind.WHILE
 

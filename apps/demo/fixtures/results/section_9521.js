@@ -31,8 +31,6 @@ function callGeneratorTests(param0) {
         // USED → r7 = GetIterator(getParentEnvironment(0)[0].call(undefined)).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
         // USED → r5 = GetIterator(getParentEnvironment(0)[0].call(undefined));
-        // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000050
-        if (GetIterator(getParentEnvironment(0)[0].call(undefined)) === undefined) goto label_80;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = globalThis.console;
@@ -71,8 +69,6 @@ function callGeneratorTests(param0) {
         // USED → r7 = GetIterator(getParentEnvironment(0)[1].call(undefined, 5)).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
         // USED → r5 = GetIterator(getParentEnvironment(0)[1].call(undefined, 5));
-        // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000089
-        if (GetIterator(getParentEnvironment(0)[1].call(undefined, 5)) === undefined) goto label_137;
         // ──────────────── Block 6 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = globalThis.console;

@@ -12,6 +12,7 @@ from hermes_decompiler.analysis.transforms.structurers import (
 from hermes_decompiler.analysis.transforms.region_passes import (
     BooleanChainFolder,
     LoopConditionExtractor,
+    ForEachRecognizer,
 )
 from hermes_decompiler.analysis.transforms.lowering import StatementBuilder
 
@@ -85,6 +86,7 @@ class StructuralAnalyzer:
         # ---- 3. region_passes -------------------------------------------
         BooleanChainFolder(self.cfg).run(graph.root)
         LoopConditionExtractor(graph.root).run()
+        ForEachRecognizer(graph).run()
 
         # SwitchStructurer is kept in this historical position (after
         # region_passes, not batched with the other structurers in

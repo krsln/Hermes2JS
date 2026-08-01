@@ -63,8 +63,6 @@ function setTest(param0) {
         // USED → r7 = GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
         // USED → r5 = GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__));
-        // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 000000a1
-        if (GetIterator(new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)) === undefined) goto label_161;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = globalThis.console;

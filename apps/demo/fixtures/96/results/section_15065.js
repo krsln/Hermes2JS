@@ -33,8 +33,6 @@ function labeledBreakTest(param0) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 7, Reg8: 6>
             // USED → r7 = 0;
-            // CODE → <JStrictNotEqual>: <Addr8: 8, Reg8: 5, Reg8: 2>  # Address: 0000002e
-            if (0 !== 1) goto label_46;
             // ──────────────── Block 3 ──────────────── 
             // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 2>  # Address: 0000004f
             if (0 === 1) goto label_79;

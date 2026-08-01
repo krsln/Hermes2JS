@@ -31,8 +31,6 @@ function whileTest(param0) {
         r6 = globalThis.console.log("while", 0)
         // CODE → <Mov>: <Reg8: 7, Reg8: 5>
         // USED → r7 = 0;
-        // CODE → <JStrictEqual>: <Addr8: 9, Reg8: 7, Reg8: 1>  # Address: 00000043
-        if (0 === 2) goto label_67;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Inc>: <Reg8: 6, Reg8: 7>
         r6 = 0 + 1

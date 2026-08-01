@@ -44,6 +44,8 @@ class LoopKind(Enum):
     DO_WHILE = "do_while"
     FOR = "for"
     ENDLESS = "endless"
+    FOR_OF = "for_of"
+    FOR_IN = "for_in"
 
 
 class SequenceRegion(Region):
@@ -142,6 +144,8 @@ class LoopRegion(Region):
 
         self.condition = None
         self.loop_kind = LoopKind.WHILE
+        self.iterable = None  # for-of: dizilebilir ifade, for-in: obje ifadesi
+        self.loop_binding = None  # döngü değişkeninin geldiği dest_reg
 
         self._body = SequenceRegion()
         self._body.parent = self

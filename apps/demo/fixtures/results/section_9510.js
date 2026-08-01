@@ -49,8 +49,6 @@ function closureLoopTest(param0) {
         // USED → r4 = GetIterator([]).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
         // USED → r5 = GetIterator([]);
-        // CODE → <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000070
-        if (GetIterator([]) === undefined) goto label_112;
         // ──────────────── Block 4 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = globalThis.console;

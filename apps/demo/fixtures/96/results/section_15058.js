@@ -41,8 +41,6 @@ function nestedLoopTest(param0) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 11, Reg8: 10>
             // USED → r11 = 0;
-            // CODE → <JStrictNotEqual>: <Addr8: 40, Reg8: 9, Reg8: 2>  # Address: 0000005c
-            if (0 !== 1) goto label_92;
             if (0 === 2) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

@@ -4,6 +4,14 @@ from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# /// Get the list of properties from an object to implement for..in loop.
+# /// Returns Arg1, which is the register that holds array of properties.
+# /// Returns Undefined if the object is null/undefined.
+# /// Arg2 is the register that holds the object.
+# /// Arg3 is the register that holds the iterating index.
+# /// Arg4 is the register that holds the size of the property list.
+# DEFINE_OPCODE_4(GetPNameList, Reg8, Reg8, Reg8, Reg8)
+
 # Reg8, Reg8, Reg8, Reg8 (total size 4)
 # DEFINE_OPCODE_4(GetPNameList, Reg8, Reg8, Reg8, Reg8)
 # Example: <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
