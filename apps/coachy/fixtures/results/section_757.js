@@ -132,7 +132,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                 // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 4, string_id: 139>  # String: 'length' (Identifier)
                 // USED → r11 = param1.updateQueue.stores.length;
                 // CODE → <JNotLess>: <Addr8: 76, Reg8: 2, Reg8: 11>  # Address: 0000009e
-                if (0 >= param1.updateQueue.stores.length) goto label_158;
+                if (!(0 < param1.updateQueue.stores.length)) goto label_158;
                 // LOOP → START (while)
                 while (true) {
                     // ──────────────── Block 5 ──────────────── 

@@ -314,7 +314,7 @@ function _request(param0, param1, param2) {
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0;
         // CODE → <JNotLess>: <Addr8: 72, Reg8: 2, Reg8: 9>  # Address: 000003a6
-        if (0 >= [].length) goto label_934;
+        if (!(0 < [].length)) goto label_934;
         // ──────────────── Block 30 ──────────────── 
         // CODE → <Mov>: <Reg8: 10, Reg8: 12>
         // USED → r10 = [];
@@ -486,7 +486,7 @@ function _request(param0, param1, param2) {
                 // CODE → <Mov>: <Reg8: 5, Reg8: 1>
                 // USED → r5 = [].length;
                 // CODE → <JNotLess>: <Addr8: 57, Reg8: 2, Reg8: 1>  # Address: 00000400
-                if (0 >= [].length) goto label_1024;
+                if (!(0 < [].length)) goto label_1024;
                 // ──────────────── Block 32 ──────────────── 
                 // CODE → <Catch>: <Reg8: 10>
                 // USED → r10 = caughtException;

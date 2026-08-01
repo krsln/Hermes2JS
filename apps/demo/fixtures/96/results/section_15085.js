@@ -31,7 +31,7 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4701>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok";
     // CODE → <JNotLessLong>: <Addr32: 128, Reg8: 6, Reg8: 2>  # Address: 000000b3
-    if (0 >= param1.length) goto label_179;
+    if (!(0 < param1.length)) goto label_179;
     // LOOP → START (while)
     while (param1[0] < 0) {
         try {
