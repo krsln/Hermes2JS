@@ -1,0 +1,60 @@
+
+=> [Function #15105 "nestedArrayDestructureTest" of 241 bytes]: 1 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x002698ab
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 1>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 0, string_id: 4811>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start' (String)
+==> 00000011: <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+==> 00000016: <NewArray>: <Reg8: 3, UInt16: 3>
+==> 0000001a: <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23637>  # Array: [1, 2]
+==> 00000022: <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 0>
+==> 00000026: <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 12324>  # Array: [3, 4]
+==> 0000002e: <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 1>
+==> 00000032: <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23646>  # Array: [5, 6]
+==> 0000003a: <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 2>
+==> 0000003e: <GetEnvironment>: <Reg8: 2, UInt8: 0>
+==> 00000041: <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 1>
+==> 00000045: <GetByIdShort>: <Reg8: 7, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 0000004a: <LoadConstZero>: <Reg8: 6>
+==> 0000004c: <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 6>
+==> 00000050: <LoadConstUndefined>: <Reg8: 0>
+==> 00000052: <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
+==> 00000055: <Call3>: <Reg8: 5, Reg8: 7, Reg8: 0, Reg8: 5, Reg8: 4>
+==> 0000005b: <GetByVal>: <Reg8: 10, Reg8: 5, Reg8: 6>
+==> 0000005f: <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
+==> 00000062: <GetByVal>: <Reg8: 9, Reg8: 5, Reg8: 7>
+==> 00000066: <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 1>
+==> 0000006a: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 0000006f: <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 4>
+==> 00000073: <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
+==> 00000079: <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 7>
+==> 0000007d: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000083: <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000088: <Call4>: <Reg8: 3, Reg8: 3, Reg8: 5, Reg8: 10, Reg8: 9, Reg8: 8>
+==> 0000008f: <NewArrayWithBuffer>: <Reg8: 3, UInt16: 1, UInt16: 1, UInt16: 23655>  # Array: [10]
+==> 00000097: <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 6>
+==> 0000009b: <LoadConstZero>: <Reg8: 5>
+==> 0000009d: <JStrictEqual>: <Addr8: 7, Reg8: 8, Reg8: 0>  # Address: 000000a4
+==> 000000a1: <Mov>: <Reg8: 5, Reg8: 8>
+==> 000000a4: <GetByVal>: <Reg8: 7, Reg8: 3, Reg8: 7>
+==> 000000a8: <LoadConstZero>: <Reg8: 6>
+==> 000000aa: <JStrictEqual>: <Addr8: 7, Reg8: 7, Reg8: 0>  # Address: 000000b1
+==> 000000ae: <Mov>: <Reg8: 6, Reg8: 7>
+==> 000000b1: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
+==> 000000b5: <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+==> 000000ba: <Call2>: <Reg8: 3, Reg8: 2, Reg8: 0, Reg8: 3>
+==> 000000bf: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)
+==> 000000c4: <Call2>: <Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 4>
+==> 000000c9: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000cf: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000d4: <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 6, Reg8: 4>
+==> 000000db: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 000000e1: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 000000e6: <LoadConstString>: <Reg8: 1, string_id: 4808>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end' (String)
+==> 000000ea: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+==> 000000ef: <Ret>: <Reg8: 0>
+
+

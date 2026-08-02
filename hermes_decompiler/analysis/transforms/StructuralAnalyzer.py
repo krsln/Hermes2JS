@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
-from hermes_decompiler.analysis.transforms.cfg_passes import ShortCircuitConditionMerger
+from hermes_decompiler.analysis.transforms.cfg_passes import (
+    ShortCircuitConditionMerger,
+)
 from hermes_decompiler.analysis.transforms.structurers import (
     SequenceStructurer,
     LoopStructurer,

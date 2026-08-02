@@ -88,6 +88,7 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}")
 
         if isinstance(result.value, Expression):
+            analysis.pending_reads[reg] = (result.def_id, result.value)
             result.definition_used = True
             return result.value
 

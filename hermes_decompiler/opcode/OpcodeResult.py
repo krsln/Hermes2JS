@@ -1,11 +1,14 @@
 from __future__ import annotations
 
+import itertools
 from typing import Any
 
 from hermes_decompiler.analysis.terminators import Terminator
 from hermes_decompiler.ir.expressions import Expression
 from hermes_decompiler.ir.statements import Statement
 from hermes_decompiler.opcode import OpcodeEntry
+
+_next_def_id = itertools.count()
 
 
 class OpcodeResult:
@@ -40,6 +43,7 @@ class OpcodeResult:
             dest_reg: The destination register index, if this opcode
                 writes one. Used to derive `name` (`"r{dest_reg}"`).
         """
+        self.def_id = next(_next_def_id)  # independent of the object, unique
 
         self.opcode = entry
         self.value = value

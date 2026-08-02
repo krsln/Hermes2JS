@@ -29,6 +29,8 @@ class HermesAnalysis:
 
         self.results: List[OpcodeResult] = []
 
+        self.pending_reads: dict[int, object] = {}
+
     def add_result(self, result: OpcodeResult) -> None:
         """
         Register a single `OpcodeResult` produced by a handler.

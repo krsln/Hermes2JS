@@ -1,3 +1,5 @@
 from .ShortCircuitConditionMerger import ShortCircuitConditionMerger
 
-__all__ = ["ShortCircuitConditionMerger"]
+__all__ = [
+    "ShortCircuitConditionMerger",
+]
