@@ -156,10 +156,13 @@ class BooleanChainFolder:
 
         then_children = if_region.then_body.children
 
-        if len(then_children) != 1 or not isinstance(then_children[0], BasicBlock):
+        if len(then_children) != 1:
             return False
 
         then_block = then_children[0]
+
+        if not isinstance(then_block, BasicBlock):
+            return False
 
         if not then_block.instructions:
             return False
