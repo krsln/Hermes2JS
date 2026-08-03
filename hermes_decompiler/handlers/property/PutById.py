@@ -1,7 +1,7 @@
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, STRING_ID, sequence
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, Identifier, MemberExpression
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
@@ -81,9 +81,26 @@ class PutByIdLoose(PutById):
 class PutByIdLooseLong(PutByIdLoose):
     pass
 
-# TryPutById
-# TryPutByIdLong
-# TryPutByIdLoose
-# TryPutByIdLooseLong
-# TryPutByIdStrict
-# TryPutByIdStrictLong
+
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
+# DEFINE_OPCODE_4(TryPutByIdLoose, Reg8, Reg8, UInt8, UInt16)
+class TryPutByIdLoose(PutById):
+    pass
+
+
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
+# DEFINE_OPCODE_4(TryPutByIdStrict, Reg8, Reg8, UInt8, UInt16)
+class TryPutByIdStrict(PutById):
+    pass
+
+
+# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
+# DEFINE_OPCODE_4(TryPutByIdLooseLong, Reg8, Reg8, UInt8, UInt32)
+class TryPutByIdLooseLong(TryPutByIdLoose):
+    pass
+
+
+# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
+# DEFINE_OPCODE_4(TryPutByIdStrictLong, Reg8, Reg8, UInt8, UInt32)
+class TryPutByIdStrictLong(TryPutByIdStrict):
+    pass

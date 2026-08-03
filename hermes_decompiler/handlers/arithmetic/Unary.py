@@ -1,5 +1,6 @@
 from typing import ClassVar
 
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
 from hermes_decompiler.ir.Operators import UnaryOperator, BinaryOperator
 from hermes_decompiler.ir.expressions import (
@@ -9,7 +10,6 @@ from hermes_decompiler.ir.expressions import (
     NumericLiteral,
     StringLiteral,
 )
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
@@ -54,6 +54,11 @@ class TypeOf(BaseUnaryOperator):
 class ToInt32(BaseUnaryOperator):
     def expression(self, value: Expression):
         return BinaryExpression(left=value, operator=BinaryOperator.BITWISE_OR, right=NumericLiteral(0))
+
+
+class ToUint32(BaseUnaryOperator):
+    def expression(self, value: Expression):
+        return BinaryExpression(left=value, operator=BinaryOperator.UNSIGNED_RIGHT_SHIFT, right=NumericLiteral(0))
 
 
 class ToNumeric(BaseUnaryOperator):
