@@ -38,6 +38,8 @@ class HandlerLoadReport:
 
 
 class HandlerLoadError(RuntimeError):
+    """Raised when one or more handler modules fail to import."""
+
     def __init__(self, message: str, report: HandlerLoadReport):
         super().__init__(message)
         self.report = report
@@ -81,8 +83,6 @@ class HandlerLoader:
             try:
                 importlib.import_module(module_name)
             except BaseException as exc:  # noqa: BLE001 - intentionally broad, see docstring
-                print(module_name)
-                raise
                 logger.exception("Failed to import handler module: %s", module_name)
                 report.failed.append((module_name, exc))
             else:
