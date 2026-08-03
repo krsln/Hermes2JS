@@ -1,5 +1,6 @@
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence
+from hermes_decompiler.handlers import sequence
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.runtime import HermesAnalysis
 
 

@@ -1,8 +1,8 @@
 import re
 
-from hermes_decompiler.handlers import OpcodeHandler
-from hermes_decompiler.ir.expressions import RawExpression
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.ir.expressions import RawExpression
 from hermes_decompiler.runtime import HermesAnalysis
 
 

@@ -1,6 +1,7 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, FUNCTION_ID, sequence
-from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.handlers import sequence, REG, FUNCTION_ID
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.runtime import HermesAnalysis
 
 

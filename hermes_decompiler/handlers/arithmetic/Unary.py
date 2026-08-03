@@ -1,7 +1,8 @@
 from typing import ClassVar
 
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
+from hermes_decompiler.handlers import sequence, REG
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.ir.Operators import UnaryOperator, BinaryOperator
 from hermes_decompiler.ir.expressions import (
     Expression,

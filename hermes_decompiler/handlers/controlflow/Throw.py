@@ -1,6 +1,7 @@
 from hermes_decompiler.analysis.terminators import TerminatorThrow
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT32, sequence
+from hermes_decompiler.handlers import sequence, REG, UINT32
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 from hermes_decompiler.ir.statements import ThrowStatement
 from hermes_decompiler.runtime import HermesAnalysis

@@ -1,7 +1,9 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
-from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.handlers import sequence, REG
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.runtime import HermesAnalysis
+
 
 # Reg8 (total size 1)
 # DEFINE_OPCODE_1(GetGlobalObject, Reg8)

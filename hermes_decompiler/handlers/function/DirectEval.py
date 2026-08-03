@@ -1,7 +1,8 @@
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
-from hermes_decompiler.ir.expressions import CallExpression, Identifier
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.handlers import sequence, REG, UINT8
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.ir.expressions import CallExpression, Identifier
 from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)

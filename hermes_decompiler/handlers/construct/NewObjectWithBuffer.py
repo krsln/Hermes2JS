@@ -1,7 +1,9 @@
-import re
 import ast
+import re
 
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence, UINT32
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.handlers import sequence, REG, UINT16, UINT32
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
     Expression,
@@ -10,7 +12,6 @@ from hermes_decompiler.ir.expressions import (
     StringLiteral,
     python_literal,
 )
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 

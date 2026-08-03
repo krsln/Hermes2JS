@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.terminators import TerminatorJump, TerminatorConditionalBranch
-from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, UINT8, UINT16, sequence
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.handlers import sequence, REG, ADDR, UINT8, UINT16
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (
@@ -12,7 +14,6 @@ from hermes_decompiler.ir.expressions import (
     StringLiteral,
     Identifier,
 )
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 

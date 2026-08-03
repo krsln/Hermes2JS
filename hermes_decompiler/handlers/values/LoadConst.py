@@ -1,6 +1,8 @@
 from typing import ClassVar
 
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence, STRING_ID, IMM32, DOUBLE, BIGINT_ID
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.handlers import sequence, REG, STRING_ID, UINT8, IMM32, DOUBLE, BIGINT_ID
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.ir.expressions import (
     Expression,
     UndefinedLiteral,
@@ -8,7 +10,6 @@ from hermes_decompiler.ir.expressions import (
     RawExpression,
     python_literal,
 )
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 

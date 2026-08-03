@@ -2,7 +2,8 @@ import re
 from typing import Dict
 
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
+from hermes_decompiler.handlers import sequence, REG, UINT8
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
 from hermes_decompiler.runtime import HermesAnalysis
 

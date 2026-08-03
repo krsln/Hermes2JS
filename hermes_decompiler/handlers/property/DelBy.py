@@ -1,7 +1,8 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, STRING_ID, sequence
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.handlers import sequence, REG, STRING_ID, UINT8
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.ir.Operators import UnaryOperator
 from hermes_decompiler.ir.expressions import UnaryExpression, MemberExpression, Identifier
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 

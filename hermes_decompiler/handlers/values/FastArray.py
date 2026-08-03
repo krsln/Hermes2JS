@@ -1,5 +1,6 @@
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence
+from hermes_decompiler.handlers import sequence, REG, UINT16
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,

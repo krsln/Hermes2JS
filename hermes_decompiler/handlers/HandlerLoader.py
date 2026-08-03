@@ -6,8 +6,6 @@ import pkgutil
 from dataclasses import dataclass, field
 from typing import List, Tuple
 
-import hermes_decompiler
-
 logger = logging.getLogger(__name__)
 
 
@@ -70,7 +68,7 @@ class HandlerLoader:
         Returns a `HandlerLoadReport` either way (when strict=True and
         nothing failed, or after inspecting the report when strict=False).
         """
-        package = hermes_decompiler.handlers
+        package = importlib.import_module(__package__)
         report = HandlerLoadReport()
 
         for _, module_name, is_package in pkgutil.walk_packages(
@@ -83,6 +81,8 @@ class HandlerLoader:
             try:
                 importlib.import_module(module_name)
             except BaseException as exc:  # noqa: BLE001 - intentionally broad, see docstring
+                print(module_name)
+                raise
                 logger.exception("Failed to import handler module: %s", module_name)
                 report.failed.append((module_name, exc))
             else:
