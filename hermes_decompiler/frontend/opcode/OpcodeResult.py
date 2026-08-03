@@ -6,7 +6,7 @@ from typing import Any
 from hermes_decompiler.analysis.terminators import Terminator
 from hermes_decompiler.ir.expressions import Expression
 from hermes_decompiler.ir.statements import Statement
-from hermes_decompiler.opcode import OpcodeEntry
+from hermes_decompiler.frontend.opcode import OpcodeEntry
 
 _next_def_id = itertools.count()
 

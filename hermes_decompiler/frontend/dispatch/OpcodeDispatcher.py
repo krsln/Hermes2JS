@@ -4,7 +4,7 @@ from hermes_decompiler.core.Exceptions import AnalysisContextError, NoHandlerErr
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.handlers import HandlerLoader, OpcodeHandler
 from hermes_decompiler.ir.expressions import AwaitExpression, Expression, RawExpression
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)
@@ -58,7 +58,7 @@ class OpcodeDispatcher:
                 strict: If True, rise on the first error (useful for tests/CI).
         """
         # Local import to avoid a circular import between dispatch and parsing.
-        from hermes_decompiler.parsing import OpcodeParser
+        from hermes_decompiler.frontend.parsing import OpcodeParser
 
         dispatcher = OpcodeDispatcher(analysis)
         results: List[OpcodeResult] = []

@@ -1,4 +1,4 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, STRING_ID, sequence, UINT32, UINT16
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence, UINT32, UINT16
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
     AssignmentExpression,
@@ -9,7 +9,7 @@ from hermes_decompiler.ir.expressions import (
     NumericLiteral,
     ObjectExpression, ObjectProperty,
 )
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 

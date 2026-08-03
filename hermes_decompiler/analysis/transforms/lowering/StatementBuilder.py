@@ -12,7 +12,7 @@ from hermes_decompiler.analysis.regions.Regions import (
     FinallyRegion, TryRegion,
     SwitchRegion,
 )
-from hermes_decompiler.opcode import OpcodeResult
+from hermes_decompiler.frontend.opcode import OpcodeResult
 
 
 @dataclass(slots=True)

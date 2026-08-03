@@ -1,6 +1,6 @@
 from typing import Dict, Any, Optional, List
 
-from hermes_decompiler.opcode import OpcodeResult
+from hermes_decompiler.frontend.opcode import OpcodeResult
 
 
 class HermesAnalysis:

@@ -1,6 +1,6 @@
 import re
 
-from hermes_decompiler.opcode import OpcodeEntry
+from hermes_decompiler.frontend.opcode import OpcodeEntry
 from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)

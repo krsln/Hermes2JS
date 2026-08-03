@@ -3,7 +3,7 @@ import re
 from hermes_decompiler.handlers import OpcodeHandler
 from hermes_decompiler.ir.expressions import RegExpLiteral
 from hermes_decompiler.runtime import HermesAnalysis
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 
 
 # Reg8, UInt32 (string_id), UInt32 (string_id), UInt32 (total size 13)

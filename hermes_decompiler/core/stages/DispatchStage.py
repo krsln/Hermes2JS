@@ -1,7 +1,7 @@
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.core.PipelineContext import PipelineContext
 from hermes_decompiler.core.PipelineStage import PipelineStage
-from hermes_decompiler.dispatch import OpcodeDispatcher
+from hermes_decompiler.frontend.dispatch import OpcodeDispatcher
 
 logger = get_logger(__name__)
 

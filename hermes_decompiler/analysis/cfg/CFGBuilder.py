@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Dict, List, Set
 
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.opcode import OpcodeResult
+from hermes_decompiler.frontend.opcode import OpcodeResult
 from .BasicBlock import BasicBlock
 from .CFG import CFG
 from ..terminators import (

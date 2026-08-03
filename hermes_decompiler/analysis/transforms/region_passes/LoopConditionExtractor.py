@@ -1,9 +1,7 @@
 import re
 
 from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, Terminator
-from hermes_decompiler.ir import Statement, Expression
-from hermes_decompiler.opcode import OpcodeResult
+from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 
 _IF_PATTERN = re.compile(r"if\s*\((.*)\)")
 

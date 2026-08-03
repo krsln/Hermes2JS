@@ -106,6 +106,7 @@ SequenceRegion
 
 - LoopKind +-> FOR_OF, FOR_IN | ForEachRecognizer
 - handler: Jmp, JCompare re-wrote
+- dispatch/, opcode/, parsing/ moved into frontend/  folder 
 
 
 

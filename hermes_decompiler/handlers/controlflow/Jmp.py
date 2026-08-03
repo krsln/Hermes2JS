@@ -14,7 +14,7 @@ from hermes_decompiler.ir.expressions import (
     StringLiteral,
     Identifier,
 )
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.runtime import HermesAnalysis
 
 
