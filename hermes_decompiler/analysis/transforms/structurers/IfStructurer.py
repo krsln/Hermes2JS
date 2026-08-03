@@ -330,4 +330,10 @@ class IfStructurer(RegionStructurer):
         if isinstance(item, BasicBlock):
             return item
 
-        return next(iter(item.covered_blocks))
+        # `min(..., key=...)` rather than `next(iter(...))`: both are
+        # deterministic now that `BasicBlock.__hash__` is id-based (see
+        # that class), but picking explicitly by `.id` documents *why*
+        # any element works (dominance is invariant across a single-entry
+        # region's covered blocks) instead of leaving it to look like an
+        # arbitrary/unspecified choice.
+        return min(item.covered_blocks, key=lambda b: b.id)
