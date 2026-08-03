@@ -10,6 +10,15 @@ https://p1sec.github.io/hermes-dec/opcodes_table.html
 tree -I '__pycache__|__init__.py' hermes_decompiler
 ```
 
+## Done Stuff | from 2025-08-01
+
+- LoopKind +-> FOR_OF, FOR_IN | ForEachRecognizer
+- handler: Jmp, JCompare re-wrote
+- dispatch/, opcode/, parsing/ moved into frontend/ folder
+- OpcodeCatalog, opcode verification tests
+- io/ moved into core/IO.py
+- 
+
 ## Testy
 
 ```shell
@@ -101,16 +110,6 @@ SequenceRegion
             Block 8
     Block 11
 ```
-
-## Done Stuff | from 2025-08-01
-
-- LoopKind +-> FOR_OF, FOR_IN | ForEachRecognizer
-- handler: Jmp, JCompare re-wrote
-- dispatch/, opcode/, parsing/ moved into frontend/  folder 
-- OpcodeCatalog, opcode name verification test
-- io/ moved into core/IO.py
-
-
 
 
 
