@@ -36,6 +36,7 @@ class OpcodeDispatcher:
                 NoHandlerError: No handler registered for this opcode.
                 OpcodeDispatchError: Handler raised an exception.
         """
+
         handler_cls = OpcodeHandler.get_handler(entry.opcode)
         if not handler_cls:
             logger.warning("TODO: NO HANDLER '%s' (line=%r)", entry.opcode, entry)
