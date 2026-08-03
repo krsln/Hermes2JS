@@ -10,7 +10,7 @@ from hermes_decompiler.core.logging import get_logger
 logger = get_logger(__name__)
 
 
-class IO:
+class FileOperations:
     """
     Filesystem I/O for the `.hbc` -> `.js` pipeline: discovering input
     section files and writing converted output. Grouped under `core/`
