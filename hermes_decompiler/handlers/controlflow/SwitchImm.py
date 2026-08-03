@@ -68,7 +68,16 @@ class SwitchImm(OpcodeHandler):
 # DEFINE_OPCODE_5(UIntSwitchImm, Reg8, UInt32, Addr32, UInt32, UInt32)
 # Example: <UIntSwitchImm>: <Reg8: 17, UInt32: 5474, Addr32: 5320, UInt32: 0, UInt32: 31>  # Address: 00001a74
 class UIntSwitchImm(SwitchImm):
-    # todo: wrong?
+    """
+    Same operand layout as `SwitchImm` (`Reg8, UInt32, Addr32, UInt32,
+    UInt32`) - verified against hbc98 and hbc99's instruction definitions,
+    where it replaces `SwitchImm` (their version ranges don't overlap:
+    `SwitchImm` up to hbc97, `UIntSwitchImm` from hbc98 on). Only
+    difference is that the selector is compared as an unsigned integer;
+    that distinction doesn't affect this handler, which only reads the
+    jump table and case range, not the selector's signedness.
+    """
+
     pass
 
 

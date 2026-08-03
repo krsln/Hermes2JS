@@ -56,6 +56,9 @@ class Call(OpcodeHandler):
         return result
 
 
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(Call1, Reg8, Reg8, Reg8)
+# Example: <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
 class Call1(OpcodeHandler):
     """
     Call a function with one arg (`Call1`), and shared base

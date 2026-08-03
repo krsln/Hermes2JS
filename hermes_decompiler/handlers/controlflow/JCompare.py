@@ -35,7 +35,9 @@ def _parse_compare(entry: OpcodeEntry) -> Tuple[int, int, int]:
 
 class BaseJCompare(OpcodeHandler):
     """
-    Base class for every comparison jump opcode.
+    `BaseJCompare` comparison jump, and shared base implementation for every
+    other comparison jump opcode. A real opcode is used as the shared
+    base  - see `Add` in `handlers/arithmetic/Binary.py` for the rationale.
 
     Two ways to express a comparison, mutually exclusive:
 
@@ -44,10 +46,10 @@ class BaseJCompare(OpcodeHandler):
       condition genuinely IS that binary operator (JLess -> `<`,
       JEqual -> `==`, ...).
 
-    - `negate_of`: a `BinaryOperator` that gets wrapped in a logical NOT,
-      e.g. `!(lhs negate_of rhs)`. Use this for the historical
-      "inverted-jump" family (`JNotLess`, `JNotLessEqual`, `JNotGreater`,
-      `JNotGreaterEqual`).
+    - `negated_operator`: a `BinaryOperator` that gets wrapped in a
+      logical NOT, e.g. `!(lhs negated_operator rhs)`. Use this for the
+      historical "inverted-jump" family (`JNotLess`, `JNotLessEqual`,
+      `JNotGreater`, `JNotGreaterEqual`).
 
     Why the distinction matters: Hermes' `JNotLess` jumps when
     `lhs < rhs` is NOT true. In plain arithmetic that's equivalent to
@@ -72,11 +74,11 @@ class BaseJCompare(OpcodeHandler):
         # the two class vars in their own __dict__; classes that merely
         # inherit (e.g. the *Long / *N aliases) are left alone.
         own_operator = cls.__dict__.get("operator")
-        own_negate_of = cls.__dict__.get("negate_of")
-        if own_operator is not None and own_negate_of is not None:
+        own_negated_operator = cls.__dict__.get("negated_operator")
+        if own_operator is not None and own_negated_operator is not None:
             raise TypeError(
                 f"{cls.__name__}: set exactly one of `operator` or "
-                f"`negate_of`, not both"
+                f"`negated_operator`, not both"
             )
 
     def build_condition(self, lhs: Expression, rhs: Expression) -> Expression:
@@ -86,7 +88,7 @@ class BaseJCompare(OpcodeHandler):
             inner = BinaryExpression(left=lhs, operator=self.negated_operator, right=rhs)
             return UnaryExpression(UnaryOperator.LOGICAL_NOT, inner)
         raise NotImplementedError(
-            f"{type(self).__name__}: neither `operator` nor `negate_of` is set"
+            f"{type(self).__name__}: neither `operator` nor `negated_operator` is set"
         )
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
