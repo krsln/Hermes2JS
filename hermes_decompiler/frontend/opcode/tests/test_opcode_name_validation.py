@@ -50,9 +50,6 @@ NON_OPCODE_HELPER_CLASSES = {"OpcodeHandler"}
 # bilerek/gerekçeyle burada duran isimleri "izin verilen" sayar ama yine de
 # görünür kalmaları için ayrı bir uyarı testiyle raporlanır.
 KNOWN_UNVERIFIED: dict[str, str] = {
-    "BaseBinaryOperator": "Base Class",
-    "BaseUnaryOperator": "Base Class",
-    "BaseJCompare": "Base Class",
     # "BitOrN": "TODO: hangi sürüm/kaynakta doğrulandı?",
 }
 

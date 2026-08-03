@@ -15,7 +15,7 @@ class BaseBinaryOperator(OpcodeHandler):
     `operator` doesn't already carry, and `Operators.precedence()`
     already handles comparison operators correctly.
     """
-
+    _abstract = True
     _PATTERN = sequence(REG, REG, REG)
 
     operator = BinaryOperator.ADD

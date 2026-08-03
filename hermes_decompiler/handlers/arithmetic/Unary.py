@@ -16,6 +16,7 @@ from hermes_decompiler.runtime import HermesAnalysis
 class BaseUnaryOperator(OpcodeHandler):
     """Base class for unary register operations."""
 
+    _abstract = True
     _PATTERN: ClassVar = sequence(REG, REG)
 
     def expression(self, value: Expression) -> Expression:

@@ -65,6 +65,7 @@ class BaseJCompare(OpcodeHandler):
     regardless of operand types.
     """
 
+    _abstract = True
     operator: ClassVar[Optional[BinaryOperator]] = None
     negated_operator: ClassVar[Optional[BinaryOperator]] = None
 
