@@ -23,8 +23,7 @@ from __future__ import annotations
 
 import pytest
 
-from hermes_decompiler.handlers.HandlerLoader import HandlerLoader
-from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.handlers import HandlerLoader, OpcodeHandler
 from hermes_decompiler.frontend.opcode import OpcodeStatus, classify_all
 
 # Helper/mixin classes that intentionally do not correspond to Hermes

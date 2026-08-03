@@ -5,8 +5,7 @@ from typing import ClassVar, Optional, Tuple
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.handlers import ADDR
-from hermes_decompiler.handlers import sequence, REG
-from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.handlers import OpcodeHandler, sequence, REG
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression, UnaryExpression
 from hermes_decompiler.runtime import HermesAnalysis

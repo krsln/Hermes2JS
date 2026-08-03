@@ -1,6 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import sequence, STRING_ID
-from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.handlers import OpcodeHandler, sequence, STRING_ID
 from hermes_decompiler.ir.Operators import VariableKind
 from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.ir.statements import VariableDeclaration, VariableDeclarator

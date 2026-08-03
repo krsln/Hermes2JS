@@ -1,7 +1,6 @@
 from hermes_decompiler.analysis.terminators import TerminatorJump
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import sequence, ADDR
-from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.handlers import OpcodeHandler, sequence, ADDR
 from hermes_decompiler.runtime import HermesAnalysis
 
 

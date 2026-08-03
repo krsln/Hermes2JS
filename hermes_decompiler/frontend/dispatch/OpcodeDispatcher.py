@@ -3,8 +3,7 @@ from typing import List
 from hermes_decompiler.core.Exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers.HandlerLoader import HandlerLoader
-from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.handlers import HandlerLoader, OpcodeHandler
 from hermes_decompiler.ir.expressions import AwaitExpression, Expression, RawExpression
 from hermes_decompiler.runtime import HermesAnalysis
 

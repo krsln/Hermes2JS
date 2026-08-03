@@ -2,8 +2,7 @@ import ast
 import re
 
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import sequence, REG, UINT16, UINT32
-from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT16, UINT32
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
     Expression,
