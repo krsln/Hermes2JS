@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
-
 from hermes_decompiler.analysis.terminators import TerminatorJump, TerminatorConditionalBranch
 from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, UINT8, UINT16, sequence
 from hermes_decompiler.ir import LogicalOperator
@@ -57,12 +55,23 @@ class JmpLong(Jmp):
 # --------------------------------------------------------------------------
 # Conditional jumps
 # --------------------------------------------------------------------------
-class ConditionalJump(OpcodeHandler, ABC):
+
+# Addr8, Reg8 (total size 2)
+# Example: <JmpTrue>: <Addr8: 54, Reg8: 5>  # Address: 000003e6
+class JmpTrue(OpcodeHandler):
+    """
+    Conditional jump on Arg2 truthiness, and shared base implementation
+    for the rest of the single-register conditional jumps (`JmpFalse`,
+    `JmpUndefined`). See `Add` in `handlers/arithmetic/Binary.py` for why
+    a real opcode - rather than a separate non-opcode `ABC` base class -
+    is used as the shared base.
+    """
+
     _PATTERN = sequence(ADDR, REG)
 
-    @abstractmethod
     def build_condition(self, value: Expression) -> Expression:
-        ...
+        """Subclasses override this to change only the condition."""
+        return value
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -85,13 +94,6 @@ class ConditionalJump(OpcodeHandler, ABC):
         return result
 
 
-# Addr8, Reg8 (total size 2)
-# Example: <JmpTrue>: <Addr8: 54, Reg8: 5>  # Address: 000003e6
-class JmpTrue(ConditionalJump):
-    def build_condition(self, value: Expression) -> Expression:
-        return value
-
-
 # Addr32, Reg8 (total size 5)
 # Example: <JmpTrueLong>: <Addr32: 997, Reg8: 1>  # Address: 000003e9
 class JmpTrueLong(JmpTrue):
@@ -100,7 +102,7 @@ class JmpTrueLong(JmpTrue):
 
 # Addr8, Reg8 (total size 2)
 # Example: <JmpFalse>: <Addr8: 18, Reg8: 1>  # Address: 00000025
-class JmpFalse(ConditionalJump):
+class JmpFalse(JmpTrue):
     def build_condition(self, value: Expression) -> Expression:
         return UnaryExpression(UnaryOperator.LOGICAL_NOT, value)
 
@@ -113,7 +115,7 @@ class JmpFalseLong(JmpFalse):
 
 # Addr8, Reg8 (total size 2)
 # Example: <JmpUndefined>: <Addr8: 38, Reg8: 5>  # Address: 0000004e
-class JmpUndefined(ConditionalJump):
+class JmpUndefined(JmpTrue):
     def build_condition(self, value: Expression) -> Expression:
         return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, UndefinedLiteral())
 
@@ -126,12 +128,25 @@ class JmpUndefinedLong(JmpUndefined):
 # --------------------------------------------------------------------------
 # Builtin conditional jumps
 # --------------------------------------------------------------------------
-class BuiltinConditionalJump(OpcodeHandler, ABC):
+# Addr8, UInt8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(JmpBuiltinIs, Addr8, UInt8, Reg8)
+# Example:
+class JmpBuiltinIs(OpcodeHandler):
+    """
+    `JmpBuiltinIs` conditional jump, and shared base implementation for
+    `JmpBuiltinIsNot`. See `Add` in `handlers/arithmetic/Binary.py` for
+    why a real opcode is used as the shared base instead of a separate
+    non-opcode `ABC` class.
+    """
+
     _PATTERN = sequence(ADDR, UINT8, REG)
 
-    @abstractmethod
     def build_condition(self, value: Expression, builtin: int) -> Expression:
-        ...
+        return BinaryExpression(
+            value,
+            BinaryOperator.STRICT_EQUAL,
+            Identifier(name=f"builtin_{builtin}"),
+        )
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
         match = self._PATTERN.match(entry.args.strip())
@@ -154,18 +169,6 @@ class BuiltinConditionalJump(OpcodeHandler, ABC):
         return result
 
 
-# Addr8, UInt8, Reg8 (total size 3)
-# DEFINE_OPCODE_3(JmpBuiltinIs, Addr8, UInt8, Reg8)
-# Example:
-class JmpBuiltinIs(BuiltinConditionalJump):
-    def build_condition(self, value: Expression, builtin: int) -> Expression:
-        return BinaryExpression(
-            value,
-            BinaryOperator.STRICT_EQUAL,
-            Identifier(name=f"builtin_{builtin}"),
-        )
-
-
 # Addr32, UInt8, Reg8 (total size 6)
 # DEFINE_OPCODE_3(JmpBuiltinIsLong, Addr32, UInt8, Reg8)
 # Example:
@@ -176,7 +179,7 @@ class JmpBuiltinIsLong(JmpBuiltinIs):
 # Addr8, UInt8, Reg8 (total size 3)
 # DEFINE_OPCODE_3(JmpBuiltinIsNot, Addr8, UInt8, Reg8)
 # Example:
-class JmpBuiltinIsNot(BuiltinConditionalJump):
+class JmpBuiltinIsNot(JmpBuiltinIs):
     def build_condition(self, value: Expression, builtin: int) -> Expression:
         return BinaryExpression(
             value,

@@ -14,11 +14,10 @@ from .PutById import PutById
 class PutNewOwnById(PutById):
     """
     Set an existing own property identified at a slot index, and shared
-    base implementation for `PutNewOwnById`/`PutNewOwnByIdLong` (which
+    base implementation for `PutNewOwnByIdShort`/`PutNewOwnByIdLong` (which
     only differ in the string-id operand width, already handled
     uniformly by `STRING_ID`/`sequence(...)`). A real opcode is used as
-    the shared base (rather than a separate non-opcode `PutNewOwnByIdX`
-    class) - see `Add` in `handlers/arithmetic/Binary.py` for the
+    the shared base - see `Add` in `handlers/arithmetic/Binary.py` for the
     rationale.
     """
 

@@ -20,14 +20,47 @@ class OpcodeHandler(ABC):
     write-once-at-import-time registry of stateless handler singletons
     (one instance per opcode, populated via __init_subclass__). That's a
     legitimate use of class-level storage and is left as-is.
+
+    Dispatch resolves handlers by exact class name (`OpcodeEntry.opcode`),
+    so every registered class name must be a real Hermes opcode. Shared
+    logic between related opcodes should live directly on one of the real
+    opcode classes (the others subclass it and override just what differs -
+    see e.g. `Add`/`Sub`/`Mul` in `handlers/arithmetic/Binary.py`), rather
+    than on a separate non-opcode base class. If a genuinely non-opcode
+    helper class is unavoidable, set `_abstract = True` on it so it is
+    skipped here instead of being instantiated and registered under its
+    own (non-opcode) name.
+
+    `_abstract` is deliberately a plain class attribute rather than relying
+    on `abc.abstractmethod` + instantiation failure: `__init_subclass__`
+    runs *during* class creation, before `ABCMeta` finishes computing
+    `__abstractmethods__` on the new class, so instantiating an
+    ABC-abstract subclass here can silently succeed instead of raising -
+    the instantiation-time abstractness check simply isn't active yet at
+    that point. Don't rely on `ABC`/`@abstractmethod` alone to keep a base
+    class out of the registry; use `_abstract = True` explicitly.
     """
 
     registry: Dict[str, "OpcodeHandler"] = {}
 
+    #: Set to True on a class (not inherited implicitly - see
+    #: `__init_subclass__` below) to opt it out of registration. Only
+    #: meant for genuine non-opcode helper/mixin classes.
+    _abstract: bool = False
+
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
-        if cls.__name__ != "OpcodeHandler":
-            OpcodeHandler.registry[cls.__name__] = cls()
+
+        if cls.__name__ == "OpcodeHandler":
+            return
+
+        # Only a class's OWN `_abstract = True` opts it out - it must not
+        # be inherited, or a real opcode subclassing an abstract base
+        # would silently stay unregistered too.
+        if cls.__dict__.get("_abstract", False):
+            return
+
+        OpcodeHandler.registry[cls.__name__] = cls()
 
     @abstractmethod
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:

@@ -33,7 +33,7 @@ def _parse_compare(entry: OpcodeEntry) -> Tuple[int, int, int]:
     )
 
 
-class JCompareX(OpcodeHandler):
+class BaseJCompare(OpcodeHandler):
     """
     Base class for every comparison jump opcode.
 
@@ -120,27 +120,27 @@ class JCompareX(OpcodeHandler):
 # `==` / `!=` / `===` / `!==` have no NaN-related direction issue - the
 # operator itself already fully captures the semantics - so these use
 # `operator` directly.
-class JEqual(JCompareX): operator = BinaryOperator.EQUAL
+class JEqual(BaseJCompare): operator = BinaryOperator.EQUAL
 class JEqualLong(JEqual): pass
 
-class JNotEqual(JCompareX): operator = BinaryOperator.NOT_EQUAL
+class JNotEqual(BaseJCompare): operator = BinaryOperator.NOT_EQUAL
 class JNotEqualLong(JNotEqual): pass
 
-class JStrictEqual(JCompareX): operator = BinaryOperator.STRICT_EQUAL
+class JStrictEqual(BaseJCompare): operator = BinaryOperator.STRICT_EQUAL
 class JStrictEqualLong(JStrictEqual): pass
 
-class JStrictNotEqual(JCompareX): operator = BinaryOperator.STRICT_NOT_EQUAL
+class JStrictNotEqual(BaseJCompare): operator = BinaryOperator.STRICT_NOT_EQUAL
 class JStrictNotEqualLong(JStrictNotEqual): pass
 
 # Less
 # ----
 # Direct (non-inverted) family: condition IS the comparison.
-class JLess(JCompareX): operator = BinaryOperator.LESS_THAN
+class JLess(BaseJCompare): operator = BinaryOperator.LESS_THAN
 class JLessLong(JLess): pass
 class JLessN(JLess): pass
 class JLessNLong(JLessN): pass
 
-class JLessEqual(JCompareX): operator = BinaryOperator.LESS_EQUAL
+class JLessEqual(BaseJCompare): operator = BinaryOperator.LESS_EQUAL
 class JLessEqualLong(JLessEqual): pass
 class JLessEqualN(JLessEqual): pass
 class JLessEqualNLong(JLessEqualN): pass
@@ -148,35 +148,35 @@ class JLessEqualNLong(JLessEqualN): pass
 # Inverted family: jump when NOT(lhs < rhs) / NOT(lhs <= rhs).
 # Modeled as `!(...)` rather than flipped to `>=`/`>` to stay correct for
 # NaN operands (see JCompareX docstring).
-class JNotLess(JCompareX): negated_operator = BinaryOperator.LESS_THAN
+class JNotLess(BaseJCompare): negated_operator = BinaryOperator.LESS_THAN
 class JNotLessLong(JNotLess): pass
 class JNotLessN(JNotLess): pass
 class JNotLessNLong(JNotLessN): pass
 
-class JNotLessEqual(JCompareX): negated_operator = BinaryOperator.LESS_EQUAL
+class JNotLessEqual(BaseJCompare): negated_operator = BinaryOperator.LESS_EQUAL
 class JNotLessEqualLong(JNotLessEqual): pass
 class JNotLessEqualN(JNotLessEqual): pass
 class JNotLessEqualNLong(JNotLessEqualN): pass
 
 # Greater
 # -------
-class JGreater(JCompareX): operator = BinaryOperator.GREATER_THAN
+class JGreater(BaseJCompare): operator = BinaryOperator.GREATER_THAN
 class JGreaterLong(JGreater): pass
 class JGreaterN(JGreater): pass
 class JGreaterNLong(JGreaterN): pass
 
-class JGreaterEqual(JCompareX): operator = BinaryOperator.GREATER_EQUAL
+class JGreaterEqual(BaseJCompare): operator = BinaryOperator.GREATER_EQUAL
 class JGreaterEqualLong(JGreaterEqual): pass
 class JGreaterEqualN(JGreaterEqual): pass
 class JGreaterEqualNLong(JGreaterEqualN): pass
 
 # Inverted family: jump when NOT(lhs > rhs) / NOT(lhs >= rhs).
-class JNotGreater(JCompareX): negated_operator = BinaryOperator.GREATER_THAN
+class JNotGreater(BaseJCompare): negated_operator = BinaryOperator.GREATER_THAN
 class JNotGreaterLong(JNotGreater): pass
 class JNotGreaterN(JNotGreater): pass
 class JNotGreaterNLong(JNotGreaterN): pass
 
-class JNotGreaterEqual(JCompareX): negated_operator = BinaryOperator.GREATER_EQUAL
+class JNotGreaterEqual(BaseJCompare): negated_operator = BinaryOperator.GREATER_EQUAL
 class JNotGreaterEqualLong(JNotGreaterEqual): pass
 class JNotGreaterEqualN(JNotGreaterEqual): pass
 class JNotGreaterEqualNLong(JNotGreaterEqualN): pass

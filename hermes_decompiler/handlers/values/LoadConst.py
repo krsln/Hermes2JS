@@ -16,16 +16,21 @@ from hermes_decompiler.runtime import HermesAnalysis
 # Simple constants
 # ---------------------------------------------------------------------------
 
-class LoadSimpleConst(OpcodeHandler):
+# Reg8 (total size 1)
+# DEFINE_OPCODE_1(LoadConstZero, Reg8)
+# Example: <LoadConstZero>: <Reg8: 14>
+class LoadConstZero(OpcodeHandler):
     """
-    Base class for simple constant loaders.
-
-        Reg8
+    Load the constant `0`, and shared base implementation for the rest
+    of the simple (`Reg8`-only) constant loaders. A real opcode is used
+    as the shared base (rather than a separate non-opcode
+    `LoadSimpleConst` class) - see `Add` in
+    `handlers/arithmetic/Binary.py` for the rationale.
     """
 
     _PATTERN = sequence(REG)
 
-    VALUE: ClassVar[Expression | object]
+    VALUE: ClassVar[Expression | object] = 0
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
 
@@ -47,44 +52,37 @@ class LoadSimpleConst(OpcodeHandler):
 
 
 # Reg8 (total size 1)
-# DEFINE_OPCODE_1(LoadConstZero, Reg8)
-# Example: <LoadConstZero>: <Reg8: 14>
-class LoadConstZero(LoadSimpleConst):
-    VALUE = 0
-
-
-# Reg8 (total size 1)
 # DEFINE_OPCODE_1(LoadConstTrue, Reg8)
 # Example: <LoadConstTrue>: <Reg8: 4>
-class LoadConstTrue(LoadSimpleConst):
+class LoadConstTrue(LoadConstZero):
     VALUE = True
 
 
 # Reg8 (total size 1)
 # DEFINE_OPCODE_1(LoadConstFalse, Reg8)
 # Example: <LoadConstFalse>: <Reg8: 0>
-class LoadConstFalse(LoadSimpleConst):
+class LoadConstFalse(LoadConstZero):
     VALUE = False
 
 
 # Reg8 (total size 1)
 # DEFINE_OPCODE_1(LoadConstNull, Reg8)
 # Example: <LoadConstNull>: <Reg8: 1>
-class LoadConstNull(LoadSimpleConst):
+class LoadConstNull(LoadConstZero):
     VALUE = None
 
 
 # Reg8 (total size 1)
 # DEFINE_OPCODE_1(LoadConstUndefined, Reg8)
 # Example: <LoadConstUndefined>: <Reg8: 0>
-class LoadConstUndefined(LoadSimpleConst):
+class LoadConstUndefined(LoadConstZero):
     VALUE = UndefinedLiteral()
 
 
 # Reg8 (total size 1)
 # DEFINE_OPCODE_1(LoadConstEmpty, Reg8)
 # Example: <LoadConstEmpty>: <Reg8: 4>
-class LoadConstEmpty(LoadSimpleConst):
+class LoadConstEmpty(LoadConstZero):
     # Hermes' internal "empty" sentinel (e.g. an array hole) has no real
     # JS literal - it isn't `undefined` at the engine level, even though
     # source-visible reads of it usually coerce to `undefined`. Kept as
