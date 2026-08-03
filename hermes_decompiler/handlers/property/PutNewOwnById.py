@@ -1,14 +1,26 @@
+from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.handlers import REG, STRING_ID, sequence
 from hermes_decompiler.ir.Operators import AssignmentOperator
-from hermes_decompiler.ir.expressions import AssignmentExpression, Identifier, MemberExpression, ObjectExpression, \
-    ObjectProperty, PropertyKind
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.ir.expressions import (
+    AssignmentExpression, Identifier, MemberExpression, ObjectExpression, ObjectProperty, PropertyKind,
+)
 from hermes_decompiler.runtime import HermesAnalysis
 from .PutById import PutById
 
 
-class PutNewOwnByIdX(PutById):
-    """Base class for PutNewOwnById* variants."""
+# Reg8, Reg8, UInt16 (string_id) (total size 4)
+# DEFINE_OPCODE_3(PutNewOwnById, Reg8, Reg8, UInt16)
+# Example: <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 19648>  # String: 'silentJSONParsing' (Identifier)
+class PutNewOwnById(PutById):
+    """
+    Set an existing own property identified at a slot index, and shared
+    base implementation for `PutNewOwnById`/`PutNewOwnByIdLong` (which
+    only differ in the string-id operand width, already handled
+    uniformly by `STRING_ID`/`sequence(...)`). A real opcode is used as
+    the shared base (rather than a separate non-opcode `PutNewOwnByIdX`
+    class) - see `Add` in `handlers/arithmetic/Binary.py` for the
+    rationale.
+    """
 
     _PATTERN = sequence(REG, REG, STRING_ID)
 
@@ -51,15 +63,7 @@ class PutNewOwnByIdX(PutById):
 # Reg8, Reg8, UInt8 (string_id) (total size 3)
 # DEFINE_OPCODE_3(PutNewOwnByIdShort, Reg8, Reg8, UInt8)
 # Example: <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 0, string_id: 249>  # String: 'value' (Identifier)
-class PutNewOwnByIdShort(PutNewOwnByIdX):
-    """Set an existing own property identified at a slot index."""
-    pass
-
-
-# Reg8, Reg8, UInt16 (string_id) (total size 4)
-# DEFINE_OPCODE_3(PutNewOwnById, Reg8, Reg8, UInt16)
-# Example: <PutNewOwnById>: <Reg8: 15, Reg8: 2, string_id: 19648>  # String: 'silentJSONParsing' (Identifier)
-class PutNewOwnById(PutNewOwnByIdX):
+class PutNewOwnByIdShort(PutNewOwnById):
     """Set an existing own property identified at a slot index."""
     pass
 
@@ -67,6 +71,6 @@ class PutNewOwnById(PutNewOwnByIdX):
 # Reg8, Reg8, UInt32 (string_id) (total size 6)
 # DEFINE_OPCODE_3(PutNewOwnByIdLong, Reg8, Reg8, UInt32)
 # Example:
-class PutNewOwnByIdLong(PutNewOwnByIdX):
+class PutNewOwnByIdLong(PutNewOwnByIdShort):
     """Set an existing own property identified at a slot index."""
     pass
