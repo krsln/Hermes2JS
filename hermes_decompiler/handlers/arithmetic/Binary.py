@@ -48,13 +48,13 @@ class MulN(Mul): pass
 class Div(BaseBinaryOperator): operator = BinaryOperator.DIVIDE
 class DivN(Div): pass
 class Mod(BaseBinaryOperator): operator = BinaryOperator.MODULO
-class ModN(Mod): pass
+# class ModN(Mod): pass
 
 class BitAnd(BaseBinaryOperator): operator = BinaryOperator.BITWISE_AND
 class BitOr(BaseBinaryOperator): operator = BinaryOperator.BITWISE_OR
-class BitOrN(BitOr): pass
+# class BitOrN(BitOr): pass
 class BitXor(BaseBinaryOperator): operator = BinaryOperator.BITWISE_XOR
-class BitXorN(BitXor): pass
+# class BitXorN(BitXor): pass
 
 class LShift(BaseBinaryOperator): operator = BinaryOperator.LEFT_SHIFT
 class RShift(BaseBinaryOperator): operator = BinaryOperator.RIGHT_SHIFT

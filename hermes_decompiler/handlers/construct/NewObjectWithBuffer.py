@@ -200,7 +200,3 @@ class NewObjectWithBufferAndParent(NewObjectWithBuffer):
         analysis.add_result(result)
 
         return result
-
-
-class NewObjectWithBufferAndParentLong(NewObjectWithBufferAndParent):
-    pass

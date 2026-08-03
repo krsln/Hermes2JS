@@ -1,6 +1,6 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence, UINT32
-from hermes_decompiler.ir.expressions import MemberExpression, NumericLiteral
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
+from hermes_decompiler.ir.expressions import MemberExpression, NumericLiteral
 from hermes_decompiler.runtime import HermesAnalysis
 
 
@@ -28,7 +28,3 @@ class GetByIndex(OpcodeHandler):
         analysis.add_result(result)
 
         return result
-
-
-class GetByIndexLong(GetByIndex):
-    _PATTERN = sequence(REG, REG, UINT32)
