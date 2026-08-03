@@ -1,1 +1,5 @@
-from .OpcodeDispatcher import *
+from .OpcodeDispatcher import OpcodeDispatcher
+
+__all__ = [
+    "OpcodeDispatcher",
+]
