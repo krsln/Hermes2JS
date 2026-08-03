@@ -159,9 +159,10 @@ def test_no_duplicate_registration_shadowing():
     assert len(OpcodeHandler.registry) >= MIN_EXPECTED_HANDLER_COUNT
 
 
-def test_basic_block_equality_is_id_based_not_identity_based():
+def test_basic_blocks_compare_by_id():
+    # Distinct instances representing the same CFG node.
     a = BasicBlock(block_id=3, address=100)
-    b = BasicBlock(block_id=3, address=100)  # farklı nesne, aynı id
+    b = BasicBlock(block_id=3, address=100)
 
     assert a == b
     assert hash(a) == hash(b)
