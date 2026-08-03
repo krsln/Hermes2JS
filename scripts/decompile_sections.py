@@ -3,8 +3,8 @@ import argparse
 import logging
 from pathlib import Path
 
+from hermes_decompiler.core import IO
 from hermes_decompiler.core.logging import configure_logging, get_logger
-from hermes_decompiler.io import get_section_files, process_section
 
 logger = get_logger(__name__)
 
@@ -57,7 +57,7 @@ def main() -> None:
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    files = get_section_files(
+    files = IO.get_section_files(
         str(input_dir),
         str(output_dir),
         start=args.start,
@@ -74,7 +74,7 @@ def main() -> None:
 
     for filename, section_index in files:
         file_path = input_dir / filename
-        process_section(section_index, str(file_path), str(output_dir), args.verbose, args.strict)
+        IO.process_section(section_index, str(file_path), str(output_dir), args.verbose, args.strict)
 
     logger.info("Conversion completed successfully")
 

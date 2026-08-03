@@ -108,6 +108,7 @@ SequenceRegion
 - handler: Jmp, JCompare re-wrote
 - dispatch/, opcode/, parsing/ moved into frontend/  folder 
 - OpcodeCatalog, opcode name verification test
+- io/ moved into core/IO.py
 
 
 
