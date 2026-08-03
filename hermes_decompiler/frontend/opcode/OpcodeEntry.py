@@ -72,7 +72,11 @@ class OpcodeEntry:
     jump_table: tuple[int, ...] | None = None
 
     identifier_name: str | None = None
+    identifier_names: tuple[str, ...] = ()
+
     string_literal: str | None = None
+    string_literals: tuple[str, ...] = ()
+
     array_literal: list | None = None
     function: FunctionReference | None = None
     builtin_function: BuiltinFunctionReference | None = None
@@ -94,11 +98,41 @@ class OpcodeEntry:
         if match := _TARGET_ADDRESS_RE.search(self.comment):
             self.target_address = int(match.group(1), 16)
 
-        if match := _IDENTIFIER_RE.search(self.comment):
-            self.identifier_name = match.group(1) if match.group(1) is not None else match.group(2)
+        # `.finditer` (not `.search`) so a comment with more than one
+        # `String: '...' (Identifier)` / `String: '...' (String)` - which
+        # does happen, e.g. `CreateRegExp`'s pattern *and* flags string
+        # both land in the comment, see `_REGEX_STRINGS_RE` below - keeps
+        # every match instead of silently dropping all but the first.
+        # `identifier_name`/`string_literal` stay as the first match for
+        # backward compatibility with existing handler code; new code
+        # should prefer `identifier_names`/`string_literals`.
+        identifier_matches = [
+            m.group(1) if m.group(1) is not None else m.group(2)
+            for m in _IDENTIFIER_RE.finditer(self.comment)
+        ]
+        if identifier_matches:
+            self.identifier_names = tuple(identifier_matches)
+            self.identifier_name = identifier_matches[0]
+            if len(identifier_matches) > 1:
+                logger.debug(
+                    "Comment has %d Identifier strings, only the first is in "
+                    "`identifier_name` (see `identifier_names` for all): %r",
+                    len(identifier_matches), self.comment,
+                )
 
-        if match := _STRING_RE.search(self.comment):
-            self.string_literal = match.group(1) if match.group(1) is not None else match.group(2)
+        string_matches = [
+            m.group(1) if m.group(1) is not None else m.group(2)
+            for m in _STRING_RE.finditer(self.comment)
+        ]
+        if string_matches:
+            self.string_literals = tuple(string_matches)
+            self.string_literal = string_matches[0]
+            if len(string_matches) > 1:
+                logger.debug(
+                    "Comment has %d String literals, only the first is in "
+                    "`string_literal` (see `string_literals` for all): %r",
+                    len(string_matches), self.comment,
+                )
 
         if match := _ARRAY_RE.search(self.comment):
             try:

@@ -1,17 +1,19 @@
 from __future__ import annotations
 
 import json
-from collections.abc import Iterable
 from dataclasses import dataclass
 from enum import Enum
 from functools import lru_cache
 from importlib import resources
-from typing import Dict, FrozenSet
+from typing import Dict, FrozenSet, Tuple
 
 # Highest bytecode version this catalog currently tracks. Update together
 # with `data/opcode_version_map.json` (see `tools/update_opcode_catalog.py`
 # for how that file is regenerated from the hermes-dec project).
 CURRENT_VERSION = 99
+
+# Oldest bytecode version this catalog currently tracks.
+OLDEST_VERSION = 51
 
 
 class OpcodeStatus(str, Enum):
@@ -19,88 +21,63 @@ class OpcodeStatus(str, Enum):
 
     #: Present in the newest tracked bytecode version (CURRENT_VERSION).
     CURRENT = "current"
-
-    #: Present in at least one older version, but not in CURRENT_VERSION,
-    #: meaning the opcode was renamed, split, or removed.
+    #: Present in at least one older version, but not in CURRENT_VERSION -
+    #: i.e. renamed, split (e.g. PutById -> PutByIdLoose/Strict) or removed.
     LEGACY = "legacy"
-
-    #: Not present in any tracked bytecode version. This is either an opcode
-    #: from an unsupported Hermes version or an unknown/incorrect opcode name.
+    #: Not present in ANY tracked version. Either a real opcode from a
+    #: bytecode version we don't track yet, or a typo/incorrect name that
+    #: needs to be verified against an actual `.hbc` dump.
     UNKNOWN = "unknown"
 
 
 @dataclass(frozen=True, slots=True)
 class OpcodeInfo:
-    """Classification result for a single opcode."""
-
     name: str
     status: OpcodeStatus
-    versions: tuple[int, ...]  # Empty for UNKNOWN.
+    versions: Tuple[int, ...]  # empty for UNKNOWN
 
 
 @lru_cache(maxsize=1)
 def _load_version_map() -> Dict[str, FrozenSet[int]]:
     """
-    Load ``data/opcode_version_map.json``.
-
-    Returns:
-        Mapping of opcode name -> bytecode versions in which it exists.
+    Load `data/opcode_version_map.json`: opcode name -> set of bytecode
+    versions (from the hbc51..hbc99 definitions) it appears in.
     """
-    raw = (
-        resources.files(__package__)
-        .joinpath("data/opcode_version_map.json")
-        .read_text(encoding="utf-8")
-    )
-
+    raw = resources.files(__package__).joinpath("data/opcode_version_map.json").read_text()
     parsed = json.loads(raw)
-    return {
-        name: frozenset(versions)
-        for name, versions in parsed.items()
-    }
+    return {name: frozenset(versions) for name, versions in parsed.items()}
 
 
 def classify(opcode_name: str) -> OpcodeInfo:
     """
-    Classify a single opcode name against the known Hermes bytecode history.
+    Classify a single opcode name (typically an `OpcodeHandler` subclass
+    name, since dispatch resolves handlers by exact class name) against
+    the known bytecode-version history.
     """
     versions = _load_version_map().get(opcode_name)
 
-    if versions is None:
-        return OpcodeInfo(
-            name=opcode_name,
-            status=OpcodeStatus.UNKNOWN,
-            versions=(),
-        )
+    if not versions:
+        return OpcodeInfo(name=opcode_name, status=OpcodeStatus.UNKNOWN, versions=())
 
-    return OpcodeInfo(
-        name=opcode_name,
-        status=(
-            OpcodeStatus.CURRENT
-            if CURRENT_VERSION in versions
-            else OpcodeStatus.LEGACY
-        ),
-        versions=tuple(sorted(versions)),
-    )
+    status = OpcodeStatus.CURRENT if CURRENT_VERSION in versions else OpcodeStatus.LEGACY
+    return OpcodeInfo(name=opcode_name, status=status, versions=tuple(sorted(versions)))
 
 
-def classify_all(
-        opcode_names: Iterable[str],
-) -> Dict[OpcodeStatus, list[OpcodeInfo]]:
+def classify_all(opcode_names) -> Dict[OpcodeStatus, list]:
     """
-    Classify multiple opcode names.
+    Classify many opcode names at once, e.g. every key currently
+    registered in `OpcodeHandler.registry`.
 
-    Returns:
-        A mapping from OpcodeStatus to a sorted list of OpcodeInfo objects.
+    Returns a dict keyed by OpcodeStatus, each value a list of OpcodeInfo,
+    sorted by name, so callers/tests get stable, readable output.
     """
-    buckets: Dict[OpcodeStatus, list[OpcodeInfo]] = {
-        status: [] for status in OpcodeStatus
-    }
+    buckets: Dict[OpcodeStatus, list] = {status: [] for status in OpcodeStatus}
 
     for name in opcode_names:
         info = classify(name)
         buckets[info.status].append(info)
 
     for infos in buckets.values():
-        infos.sort(key=lambda item: item.name)
+        infos.sort(key=lambda i: i.name)
 
     return buckets
