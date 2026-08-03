@@ -1,35 +1,30 @@
 """
-Opcode adı doğrulama testi.
+Validate that every registered OpcodeHandler corresponds to a real Hermes
+bytecode opcode.
 
-`OpcodeDispatcher`, bir `OpcodeEntry.opcode` değerini doğrudan
-`OpcodeHandler` alt sınıfının adıyla eşleştirerek (`registry[entry.opcode]`)
-handler'a yönlendirir. Bu yüzden her handler class'ının adının, GERÇEK bir
-Hermes bytecode opcode'una karşılık gelmesi kritik bir doğruluk şartıdır:
-yanlış/hayali bir isim asla dispatch edilmeyen sessiz ölü kod anlamına
-gelir; eksik bir isim ise fark edilmeyen bir kapsam boşluğu anlamına gelir.
+Dispatch is performed by matching OpcodeEntry.opcode directly to the
+OpcodeHandler subclass name. A typo in a handler class name therefore
+creates silently unreachable code, while a missing handler represents an
+unnoticed coverage gap.
 
-Bu test, `hermes_decompiler/opcode/data/opcode_version_map.json` içinde
-tutulan, hbc51..hbc99 arası TÜM Hermes bytecode sürümlerinin birleşik
-opcode tablosuna (bkz. https://github.com/P1sec/hermes-dec) karşı her
-kayıtlı handler adını sınıflandırır:
+The opcode catalog is generated from the hermes-dec project and contains
+the union of all tracked Hermes bytecode versions (currently hbc51-hbc99).
 
-    - CURRENT : güncel (hbc99) sürümde var                -> OK
-    - LEGACY  : eski bir sürümde var, hbc99'da yok         -> OK (bilinçli
-                geriye-dönük uyumluluk), ama açıkça işaretlenmeli
-    - UNKNOWN : hiçbir izlenen sürümde bulunamadı          -> FAIL
+Handlers are classified as:
 
-Yeni bir handler eklerken bu test kırmızıya düşerse iki ihtimal var:
-  1) Opcode adında bir yazım hatası var -> düzelt.
-  2) Gerçekten var olan ama bu projede henüz izlenmeyen daha yeni bir HBC
-     sürümüne ait bir opcode -> `data/opcode_version_map.json`'ı güncelle
-     (bkz. modül docstring'i) ve/veya `KNOWN_UNVERIFIED` listesine gerekçeyle
-     ekle.
+    CURRENT  - present in the newest tracked bytecode version.
+    LEGACY   - present only in older tracked versions.
+    UNKNOWN  - not found in any tracked version.
+
+UNKNOWN handlers fail the test unless explicitly allow-listed.
 """
+
 from __future__ import annotations
 
 import pytest
 
-from hermes_decompiler.handlers import HandlerLoader, OpcodeHandler
+from hermes_decompiler.handlers.HandlerLoader import HandlerLoader
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from hermes_decompiler.frontend.opcode import OpcodeStatus, classify_all
 
 # Bu isimler gerçek opcode DEĞİL: OpcodeHandler'ın davranışını (regex
@@ -69,13 +64,21 @@ def test_every_handler_name_is_a_known_opcode(registered_opcode_names):
     unknown = [info for info in buckets[OpcodeStatus.UNKNOWN] if info.name not in KNOWN_UNVERIFIED]
 
     if unknown:
-        details = "\n".join(f"  - {info.name}" for info in unknown)
+        details = "\n".join(
+            f"  - {info.name}"
+            for info in unknown
+        )
+
         pytest.fail(
-            "Aşağıdaki handler class adları hbc51-hbc99 arası HİÇBİR "
-            "sürümde bulunamadı. Ya bir yazım/isim hatası var ya da "
-            "izlenmeyen bir bytecode sürümüne ait yeni bir opcode - "
-            "her iki durumda da bu isim harici bir kaynaktan teyit "
-            "edilmeden birleştirilmemeli:\n" + details
+            "The following handler class names do not exist in any tracked "
+            "Hermes bytecode version (hbc51-hbc99).\n\n"
+            "Either:\n"
+            "  1. the handler name contains a typo, or\n"
+            "  2. the opcode belongs to a newer Hermes bytecode version that "
+            "is not yet tracked.\n\n"
+            "Verify the opcode against a trusted external source before "
+            "merging.\n\n"
+            f"{details}"
         )
 
 

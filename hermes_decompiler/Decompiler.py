@@ -1,5 +1,5 @@
-from hermes_decompiler.core.PipelineContext import PipelineContext
 from hermes_decompiler.core.Pipeline import Pipeline
+from hermes_decompiler.core.PipelineContext import PipelineContext
 from hermes_decompiler.core.stages import (
     MetadataStage,
     SignatureStage,
