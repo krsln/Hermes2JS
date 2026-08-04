@@ -21,7 +21,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4272>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive";
     // LOOP → START (while)
-    while (0 >= param1.length) {
+    while (!(0 >= param1.length)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 4>
         // USED → r6 = 0;

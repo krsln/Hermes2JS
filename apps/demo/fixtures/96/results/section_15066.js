@@ -20,8 +20,8 @@ function labeledContinueTest(param0) {
     // USED → r2 = 1;
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
-    // LOOP → START (while)
-    while (true) {
+    // LOOP → START (do_while)
+    while (0 + 1 < 3) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 7, Reg8: 1>
         // USED → r7 = 0;
@@ -46,10 +46,8 @@ function labeledContinueTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 7>
         // USED → r1 = 0 + 1;
-        // CODE → <JLess>: <Addr8: -73, Reg8: 1, Reg8: 5>  # Address: 00000026
-        if (0 + 1 < 3) goto label_38;
         // LOOP → START (while)
-        while (0 === 1) {
+        while (!(0 === 1)) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 9, Reg8: 8>
             // USED → r9 = 0;

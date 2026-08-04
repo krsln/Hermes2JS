@@ -16,8 +16,8 @@ function labeledBreakTest(param0) {
     // USED → r2 = 1;
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
-    // LOOP → START (while)
-    while (true) {
+    // LOOP → START (do_while)
+    while (0 + 1 < 3) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 1>
         // USED → r5 = 0;
@@ -26,13 +26,13 @@ function labeledBreakTest(param0) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 5>
         // USED → r1 = 0 + 1;
-        // CODE → <JLess>: <Addr8: -43, Reg8: 1, Reg8: 3>  # Address: 0000001e
-        if (0 + 1 < 3) goto label_30;
-        // LOOP → START (while)
-        while (0 !== 1) {
+        // LOOP → START (do_while)
+        while (0 + 1 < 3) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 7, Reg8: 6>
             // USED → r7 = 0;
+            // CODE → <JStrictNotEqual>: <Addr8: 8, Reg8: 5, Reg8: 2>  # Address: 0000002e
+            if (0 !== 1) goto label_46;
             // ──────────────── Block 3 ──────────────── 
             // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 2>  # Address: 0000004f
             if (0 === 1) goto label_79;
@@ -45,8 +45,6 @@ function labeledBreakTest(param0) {
             r8 = globalThis.console.log(0, 0)
             // CODE → <Inc>: <Reg8: 6, Reg8: 7>
             // USED → r6 = 0 + 1;
-            // CODE → <JLess>: <Addr8: -31, Reg8: 6, Reg8: 3>  # Address: 00000023
-            if (0 + 1 < 3) goto label_35;
         }
         // LOOP → END
     }

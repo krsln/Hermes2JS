@@ -24,8 +24,8 @@ function nestedLoopTest(param0) {
     // USED → r2 = 1;
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
-    // LOOP → START (while)
-    while (true) {
+    // LOOP → START (do_while)
+    while (0 + 1 < 3) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 9, Reg8: 1>
         // USED → r9 = 0;
@@ -34,13 +34,13 @@ function nestedLoopTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 9>
         // USED → r1 = 0 + 1;
-        // CODE → <JLess>: <Addr8: -58, Reg8: 1, Reg8: 7>  # Address: 0000002c
-        if (0 + 1 < 3) goto label_44;
-        // LOOP → START (while)
-        while (0 !== 1) {
+        // LOOP → START (do_while)
+        while (0 + 1 < 4) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 11, Reg8: 10>
             // USED → r11 = 0;
+            // CODE → <JStrictNotEqual>: <Addr8: 40, Reg8: 9, Reg8: 2>  # Address: 0000005c
+            if (0 !== 1) goto label_92;
             if (0 === 2) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -59,8 +59,6 @@ function nestedLoopTest(param0) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → <Inc>: <Reg8: 10, Reg8: 11>
             // USED → r10 = 0 + 1;
-            // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 6>  # Address: 00000031
-            if (0 + 1 < 4) goto label_49;
         }
         // LOOP → END
     }

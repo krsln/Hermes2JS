@@ -27,7 +27,7 @@ function function_12825(param0, param1, param2, param3, param4) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 11214>  # String: ' callback, continuing anyway…' (String)
     // USED → r2 = " callback, continuing anyway\u2026";
     // LOOP → START (while)
-    while (!param1.slice().length) {
+    while (!!param1.slice().length) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 10>
         // USED → r1 = param1.slice();

@@ -85,7 +85,7 @@ function mapTest(param0) {
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 3>
     // USED → r5 = GetIterator(r3);
     // LOOP → START (while)
-    while (GetIterator(r3) === undefined) {
+    while (!(GetIterator(r3) === undefined)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 8, Reg8: 3>
         r8 = new globalThis.Map(__uninitialized_this_for_new__)

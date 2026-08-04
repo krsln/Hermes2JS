@@ -23,7 +23,7 @@ function callGeneratorTests(param0) {
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
     // USED → r4 = GetIterator(r3);
     // LOOP → START (while)
-    while (GetIterator(r3) === undefined) {
+    while (!(GetIterator(r3) === undefined)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
         r5 = getParentEnvironment(0)[0].call(undefined)
@@ -61,7 +61,7 @@ function callGeneratorTests(param0) {
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
     // USED → r4 = GetIterator(r3);
     // LOOP → START (while)
-    while (GetIterator(r3) === undefined) {
+    while (!(GetIterator(r3) === undefined)) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
         r5 = getParentEnvironment(0)[1].call(undefined, 5)

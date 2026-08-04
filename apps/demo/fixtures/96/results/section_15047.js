@@ -20,8 +20,8 @@ function whileTest(param0) {
     // USED → r1 = 2;
     // CODE → <LoadConstZero>: <Reg8: 5>
     // USED → r5 = 0;
-    // LOOP → START (while)
-    while (0 === 2) {
+    // LOOP → START (do_while)
+    while (0 + 1 < 5) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r7 = globalThis.console;
@@ -31,6 +31,8 @@ function whileTest(param0) {
         r6 = globalThis.console.log("while", 0)
         // CODE → <Mov>: <Reg8: 7, Reg8: 5>
         // USED → r7 = 0;
+        // CODE → <JStrictEqual>: <Addr8: 9, Reg8: 7, Reg8: 1>  # Address: 00000043
+        if (0 === 2) goto label_67;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Inc>: <Reg8: 6, Reg8: 7>
         r6 = 0 + 1
@@ -48,8 +50,6 @@ function whileTest(param0) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 6>
         // USED → r5 = 0 + 1;
-        // CODE → <JLess>: <Addr8: -51, Reg8: 5, Reg8: 4>  # Address: 00000026
-        if (0 + 1 < 5) goto label_38;
     }
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 

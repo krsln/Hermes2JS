@@ -341,13 +341,13 @@ function nestedArrayDestructureTest(param0) {
         r0 = caughtException
         // CODE → <Jmp>: <Addr8: 20>  # Address: 00000220
         goto label_544;
-        // LOOP → START (while)
-        while (true) {
+        // LOOP → START (do_while)
+        while (!(GetIterator(r17) === undefined)) {
             // ──────────────── Block 36 ──────────────── 
             // CODE → <IteratorClose>: <Reg8: 7, UInt8: 1>
             GetIterator(r17).return()
             // LOOP → START (while)
-            while (GetIterator(r17) === undefined) {
+            while (true) {
                 // ──────────────── Block 35 ──────────────── 
                 // ──────────────── Block 29 ──────────────── 
                 // CODE → <Catch>: <Reg8: 0>
@@ -372,13 +372,13 @@ function nestedArrayDestructureTest(param0) {
         // ──────────────── Block 43 ──────────────── 
         // CODE → <Throw>: <Reg8: 0>
         throw caughtException;
-        // LOOP → START (while)
-        while (true) {
+        // LOOP → START (do_while)
+        while (!undefined) {
             // ──────────────── Block 42 ──────────────── 
             // CODE → <IteratorClose>: <Reg8: 1, UInt8: 1>
             GetIterator(r6).return()
             // LOOP → START (while)
-            while (undefined) {
+            while (true) {
                 // ──────────────── Block 41 ──────────────── 
                 // ──────────────── Block 38 ──────────────── 
                 // CODE → <Catch>: <Reg8: 0>

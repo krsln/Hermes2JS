@@ -22,11 +22,13 @@ function forTest(param0) {
     // USED → r5 = 3;
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
-    // LOOP → START (while)
-    while (0 === 3) {
+    // LOOP → START (do_while)
+    while (0 + 1 < 10) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
         // USED → r1 = 0;
+        // CODE → <JStrictEqual>: <Addr8: 48, Reg8: 1, Reg8: 5>  # Address: 0000005b
+        if (0 === 3) goto label_91;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <JStrictEqual>: <Addr8: 22, Reg8: 1, Reg8: 4>  # Address: 00000045
         if (0 === 8) goto label_69;
@@ -49,8 +51,6 @@ function forTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
         // USED → r0 = 0 + 1;
-        // CODE → <JLessN>: <Addr8: -71, Reg8: 0, Reg8: 3>  # Address: 00000028
-        if (0 + 1 < 10) goto label_40;
     }
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 

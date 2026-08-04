@@ -55,7 +55,7 @@ function setTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    while (GetIterator(r2) === undefined) {
+    while (!(GetIterator(r2) === undefined)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 2>
         r5 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)

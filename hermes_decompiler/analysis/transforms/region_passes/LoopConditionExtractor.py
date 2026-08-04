@@ -1,12 +1,42 @@
-import re
-
-from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion
+from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion, LoopKind
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
+from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir.Operators import UnaryOperator
+from hermes_decompiler.ir.expressions import Expression, UnaryExpression
 
-_IF_PATTERN = re.compile(r"if\s*\((.*)\)")
+logger = get_logger(__name__)
 
 
 class LoopConditionExtractor:
+    """
+    Determines a loop's real continuation test (if any) and, from where
+    that test physically sits in the CFG, whether the loop is top-tested
+    (`while`) or bottom-tested (`do-while`):
+
+    - If the HEADER block (the first block executed every iteration,
+      including the first) ends in a valid loop-guard branch, the test
+      runs before the body can execute at all -> `while (cond) { body }`.
+    - Otherwise, if the loop's single LATCH block (the block that jumps
+      back to the header - i.e. the last block executed each iteration)
+      ends in one, the body always runs at least once before the test
+      -> `do { body } while (cond)`.
+    - If neither has a valid guard-shaped branch, no condition is
+      extracted and the loop stays `while (true)` (with whatever
+      unresolved conditional branch remains inside the body still
+      visible - see `StructuralAnalyzer._audit_unstructured_blocks`).
+
+    This distinction is not cosmetic: Hermes (like most compilers)
+    performs loop rotation, so a source-level `while (cond) { body }`
+    whose guard is provably true on entry commonly loses its separate
+    top-of-loop check entirely and compiles down to exactly the
+    bottom-tested shape above - indistinguishable, from bytecode alone,
+    from a `do-while` written in the source. Rendering it as `do-while`
+    is the structurally honest choice: it matches the actual
+    "body runs, then test" control flow, whereas silently defaulting to
+    `while (cond) {...}` here would misrepresent loops that must execute
+    at least once as ones that might execute zero times.
+    """
 
     def __init__(self, root):
         self.root = root
@@ -31,77 +61,80 @@ class LoopConditionExtractor:
         if header is None:
             return
 
-        # last = header.last_instruction
-
-        # if last is not None:
-        #     text = self._render_result(last)
-        #     match = _IF_PATTERN.search(text)
-        #
-        #     if not match:
-        #         return
-
-        branch = header.terminator
-
-        if not isinstance(branch, TerminatorConditionalBranch):
+        # 1) Top-tested: does the header itself carry a valid guard?
+        if self._consume_guard(header, loop, LoopKind.WHILE):
             return
 
-        header.terminator = None
-        loop.condition = branch.condition
+        # 2) Bottom-tested: does the loop's one latch carry a valid
+        # guard? (Multiple latches - e.g. two different `continue`-like
+        # back edges with different conditions - don't collapse to a
+        # single trailing `while (cond)` unambiguously, so those are
+        # deliberately left alone rather than guessed at.)
+        if len(loop.latches) == 1:
+            latch = next(iter(loop.latches))
+            if latch is not header and self._consume_guard(latch, loop, LoopKind.DO_WHILE):
+                return
 
-        # `header.terminator` is only consulted for CFG edges - Printer
+        logger.warning(
+            "Loop header block %d (0x%x): no valid guard found on the "
+            "header or its single latch - leaving as `while (true)`.",
+            header.id, header.address,
+        )
+
+    def _consume_guard(self, block: BasicBlock, loop: LoopRegion, kind: LoopKind) -> bool:
+        """
+        If `block`'s terminator is a conditional branch with exactly one
+        edge leaving the loop (a real loop guard's defining shape),
+        extract it as `loop.condition`, set `loop.loop_kind`, and remove
+        the now-redundant terminator/instruction from `block`. Returns
+        whether extraction succeeded; does nothing and returns False
+        otherwise, so the caller can try the next candidate block.
+        """
+
+        branch = block.terminator
+        if not isinstance(branch, TerminatorConditionalBranch):
+            return False
+
+        exits = set(loop.exits)
+
+        target_block = next((s for s in block.successors if s.address == branch.target), None)
+        fallthrough_candidates = [s for s in block.successors if s is not target_block]
+        fallthrough_block = fallthrough_candidates[0] if len(fallthrough_candidates) == 1 else None
+
+        target_is_exit = target_block is not None and target_block in exits
+        fallthrough_is_exit = fallthrough_block is not None and fallthrough_block in exits
+
+        condition: Expression
+        if target_is_exit and not fallthrough_is_exit:
+            # `if (condition) goto <outside the loop>` - taking the
+            # branch means leaving; the loop keeps iterating exactly
+            # when the condition does NOT hold.
+            condition = UnaryExpression(UnaryOperator.LOGICAL_NOT, branch.condition)
+        elif fallthrough_is_exit and not target_is_exit:
+            # `if (condition) goto <still inside the loop>`, and falling
+            # through (condition false) leaves the loop - the loop keeps
+            # iterating exactly when the condition holds, as-is.
+            condition = branch.condition
+        else:
+            # Neither edge cleanly identifies a single loop-exit - this
+            # branch doesn't have the shape a loop guard must have (e.g.
+            # it belongs to an unrelated `if` that happens to sit in
+            # this block). Don't guess.
+            return False
+
+        block.terminator = None
+        loop.condition = condition
+        loop.loop_kind = kind
+
+        # `block.terminator` is only consulted for CFG edges - Printer
         # renders per-*instruction* terminators (`instruction.terminator`
-        # in `_emit_block`), which is a completely separate field on
-        # whichever OpcodeResult originally produced this branch (e.g.
-        # JmpUndefined/JStrictEqual). Nulling `header.terminator` alone
-        # leaves that instruction sitting in `header.instructions`, so
-        # it still prints as a standalone `if (...) goto label;` inside
-        # the loop body even though its condition was "consumed" into
-        # `loop.condition`. Must also drop the instruction itself.
-        if header.instructions and header.instructions[-1].terminator is branch:
-            header.instructions.pop()
+        # in `_emit_block`), a separate field on whichever OpcodeResult
+        # originally produced this branch. Nulling `block.terminator`
+        # alone leaves that instruction sitting in `block.instructions`,
+        # so it would still print as a standalone `if (...) goto label;`
+        # even though its condition was "consumed" into `loop.condition`.
+        # Must also drop the instruction itself.
+        if block.instructions and block.instructions[-1].terminator is branch:
+            block.instructions.pop()
 
-        # loop.condition = match.group(1).strip()
-        # loop.loop_kind = LoopKind.WHILE
-
-    # @classmethod
-    # def _render_result(cls, result: OpcodeResult) -> str:
-    #     """
-    #     Human-readable one-line summary of this instruction's effect,
-    #     used by verbose logging/dumps and any legacy code path that
-    #     hasn't moved to `JSRenderer`/`Printer` yet.
-    #
-    #     Callable again after mutating `value`/`statement` (e.g.
-    #     `Dispatcher._handle_generator_await` wraps a previous result's
-    #     `value` in an `AwaitExpression` and recomputes `.result`).
-    #     """
-    #
-    #     # Imported lazily to avoid a hard dependency from `models` on
-    #     # `regions` at module load time; `models` is the lower layer.
-    #     from hermes_decompiler.emit import Printer
-    #
-    #     printer = Printer()
-    #
-    #     if isinstance(result.statement, Statement):
-    #         return printer.print_statement(result.statement)
-    #     if isinstance(result.terminator, Terminator):
-    #         return printer.print_terminator(result.terminator)
-    #
-    #     if isinstance(result.value, Expression):
-    #         rendered = printer.print_expression(result.value)
-    #
-    #         if result.name:
-    #             return f"{result.name} = {rendered}"
-    #
-    #         return rendered
-    #
-    #     if result.value is None:
-    #         # No statement and no value: nothing meaningful to show.
-    #         # Shouldn't normally happen for a well-formed handler.
-    #         return ""
-    #
-    #     # Legacy fallback: value is still a plain string (handler not
-    #     # yet migrated to the `ir` package).
-    #     if result.name:
-    #         return f"{result.name} = {result.value}"
-    #
-    #     return f"{result.value}"
+        return True
