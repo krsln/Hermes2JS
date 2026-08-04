@@ -303,7 +303,8 @@ class IfStructurer(RegionStructurer):
         #
         # The ConditionalBranch is now represented by the IfRegion.
         #
-        block.instructions.pop()  # TODO: this is the way
+        assert block.instructions[-1].terminator is not None
+        block.instructions.pop()
         block.terminator = None
 
         insert_at = region.children.index(block) + 1
