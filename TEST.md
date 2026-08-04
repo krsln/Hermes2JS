@@ -17,6 +17,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 - dispatch/, opcode/, parsing/ moved into frontend/ folder
 - OpcodeCatalog, opcode verification tests
 - io/ moved into core/IO.py
+- IfStructurer fix
 - 
 
 ## Testy
@@ -35,6 +36,7 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/one -o ./apps/de
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
 
+# If Tests 15062, 15063
 # Exception Tests 15075-15090
 # IteratorTests 15092, 15093
 

@@ -33,8 +33,6 @@ function ifElseChainTest(param0, param1, param2) {
             // USED → r2 = "either";
             // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
             r2 = globalThis.console.log("either")
-            // CODE → <Jmp>: <Addr8: 42>  # Address: 000000a4
-            goto label_164;
         } else {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -53,8 +51,6 @@ function ifElseChainTest(param0, param1, param2) {
             // USED → r2 = "neither";
             // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
             r2 = globalThis.console.log("neither")
-            // CODE → <Jmp>: <Addr8: 84>  # Address: 000000a4
-            goto label_164;
         }
     } else {
         // ──────────────── Block 1 ──────────────── 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
+from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.analysis.regions.Regions import (
     IfRegion,
     LoopRegion,
@@ -277,6 +277,27 @@ class IfStructurer(RegionStructurer):
             # inconsistent. Bail rather than build a broken else.
             return False
 
+        # Falling out of a `{ }` block already continues at whatever
+        # comes next - which, by construction, IS `merge_block` (that's
+        # what bounded this classification loop above). So if the last
+        # block on either side ends in a plain unconditional jump
+        # *specifically to merge_block*, that jump is exactly the
+        # redundant "goto past the if/else" the source compiled away
+        # into block-scoping; it must be consumed here, or it prints as
+        # a literal, confusing `goto label_N;` as the last line of an
+        # otherwise clean branch body.
+        #
+        # Deliberately narrow: only strips a jump whose target is
+        # *this* merge_block, on the branch's *last* block. A jump to
+        # anywhere else (e.g. genuine cross-branch shared/tail-merged
+        # code) is left completely alone - that's a different, harder
+        # problem (see module docstring), not something to paper over
+        # here.
+        if merge_block is not None:
+            self._strip_trailing_jump_to(then_items, merge_block)
+            if has_else:
+                self._strip_trailing_jump_to(else_items, merge_block)
+
         del region.children[then_start:boundary]
 
         then_body = SequenceRegion()
@@ -313,6 +334,35 @@ class IfStructurer(RegionStructurer):
         if_region.parent = region
 
         return True
+
+    # -------------------------------------------------------------
+
+    @staticmethod
+    def _strip_trailing_jump_to(items: list, merge_block: BasicBlock) -> None:
+        """
+        If `items[-1]` is a `BasicBlock` whose terminator is an
+        unconditional jump straight to `merge_block`, remove that jump
+        (instruction + terminator) - see call site for why this is safe
+        and why it's scoped this narrowly.
+        """
+        if not items:
+            return
+
+        last = items[-1]
+        if not isinstance(last, BasicBlock):
+            return
+
+        terminator = last.terminator
+        if not isinstance(terminator, TerminatorJump):
+            return
+
+        if terminator.target != merge_block.address:
+            return
+
+        if last.instructions and last.instructions[-1].terminator is terminator:
+            last.instructions.pop()
+
+        last.terminator = None
 
     # -------------------------------------------------------------
 

@@ -54,8 +54,6 @@ function ifTest(param0, param1) {
             // USED → r1 = "medium";
             // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
             r1 = globalThis.console.log("medium")
-            // CODE → <Jmp>: <Addr8: 42>  # Address: 000000d9
-            goto label_217;
         } else {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <LoadConstZero>: <Reg8: 1>
@@ -78,8 +76,6 @@ function ifTest(param0, param1) {
                 // USED → r1 = "zero";
                 // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
                 r1 = globalThis.console.log("zero")
-                // CODE → <Jmp>: <Addr8: 84>  # Address: 000000d9
-                goto label_217;
             } else {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -98,8 +94,6 @@ function ifTest(param0, param1) {
                 // USED → r1 = "small";
                 // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
                 r1 = globalThis.console.log("small")
-                // CODE → <JmpLong>: <Addr32: 129>  # Address: 000000d9
-                goto label_217;
             }
         }
     }
