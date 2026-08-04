@@ -122,12 +122,12 @@ class StructuralAnalyzer:
         # ---- 4. lowering ------------------------------------------------
         StatementBuilder().build(root)
 
-        self._audit_unstructured_blocks(root)
+        self._audit_unstructured_blocks(root, graph, self.cfg)
 
         return root
 
     @staticmethod
-    def _audit_unstructured_blocks(root) -> None:
+    def _audit_unstructured_blocks(root, graph: RegionGraph, cfg) -> None:
         """
         Log (once, as a single warning listing every offender) any block
         still holding a conditional-branch or switch terminator after
@@ -135,6 +135,22 @@ class StructuralAnalyzer:
         changes output - but makes an otherwise-silent structuring gap
         visible in normal logs instead of only showing up as an odd
         `if (...) goto label_N;` line buried in `--verbose` JS output.
+
+        For a conditional branch, also resolves and reports where its
+        target actually lives (which `SequenceRegion`, and whether that
+        region is the same one the source block itself belongs to).
+        Concretely distinguishes the two known failure shapes instead of
+        leaving both looking identical in the log:
+
+        - target's owner differs from the source block's own owner:
+          the target is reachable another way this pass doesn't handle
+          - most commonly compiler-side tail-merging/code-sharing across
+            branches (see `IfStructurer` module docstring) - and finding
+            the shared block by address by hand is exactly the kind of
+            lookup this log line exists to save.
+        - target has no owner / isn't a known block address at all:
+          something upstream produced an inconsistent CFG - worth
+          escalating rather than assuming it's the tail-merge case.
         """
         unresolved: list[BasicBlock] = sorted(
             (
@@ -147,7 +163,41 @@ class StructuralAnalyzer:
         if not unresolved:
             return
 
-        details = ", ".join(f"block {b.id} (0x{b.address:x})" for b in unresolved)
+        address_to_block = {block.address: block for block in cfg.blocks}
+
+        def describe(block: BasicBlock) -> str:
+            terminator = block.terminator
+            own_owner = graph.owner(block)
+
+            if not isinstance(terminator, TerminatorConditionalBranch):
+                # TerminatorSwitch (or any future addition to
+                # _UNSTRUCTURED_TERMINATOR_KINDS): no single "target" to
+                # resolve, just report the block itself.
+                return f"block {block.id} (0x{block.address:x})"
+
+            target_block = address_to_block.get(terminator.target)
+
+            if target_block is None or not isinstance(target_block, BasicBlock):
+                return (
+                    f"block {block.id} (0x{block.address:x}) -> target "
+                    f"0x{terminator.target:x} doesn't match any known block"
+                )
+
+            target_owner = graph.owner(target_block)
+
+            if target_owner is None:
+                relation = "target has no region owner (already consumed/detached?)"
+            elif target_owner is own_owner:
+                relation = "target IS a sibling in the same region - unexpected, investigate"
+            else:
+                relation = "target belongs to a DIFFERENT region (likely cross-branch/tail-merged code)"
+
+            return (
+                f"block {block.id} (0x{block.address:x}) -> goto "
+                f"block {target_block.id} (0x{target_block.address:x}): {relation}"
+            )
+
+        details = "; ".join(describe(b) for b in unresolved)
         logger.warning(
             "%d block(s) were not fully structured by any structurer and "
             "will render as raw goto/switch statements: %s",
