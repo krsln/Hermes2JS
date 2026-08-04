@@ -72,11 +72,7 @@ class OpcodeEntry:
     jump_table: tuple[int, ...] | None = None
 
     identifier_name: str | None = None
-    identifier_names: tuple[str, ...] = ()
-
     string_literal: str | None = None
-    string_literals: tuple[str, ...] = ()
-
     array_literal: list | None = None
     function: FunctionReference | None = None
     builtin_function: BuiltinFunctionReference | None = None
@@ -98,26 +94,27 @@ class OpcodeEntry:
         if match := _TARGET_ADDRESS_RE.search(self.comment):
             self.target_address = int(match.group(1), 16)
 
-        # `.finditer` (not `.search`) so a comment with more than one
-        # `String: '...' (Identifier)` / `String: '...' (String)` - which
-        # does happen, e.g. `CreateRegExp`'s pattern *and* flags string
-        # both land in the comment, see `_REGEX_STRINGS_RE` below - keeps
-        # every match instead of silently dropping all but the first.
-        # `identifier_name`/`string_literal` stay as the first match for
-        # backward compatibility with existing handler code; new code
-        # should prefer `identifier_names`/`string_literals`.
+        # `.finditer` (not `.search`): a comment CAN carry more than one
+        # `String: '...' (Identifier)` / `String: '...' (String)`. Using
+        # `.search` here would silently keep only the first and drop the
+        # rest with no trace. There is currently no opcode whose handler
+        # needs more than the first match (`CreateRegExp`, the one case
+        # that genuinely carries two strings - pattern and flags - already
+        # has its own dedicated `_REGEX_STRINGS_RE` extraction below, so
+        # this isn't exposing a second unused field "for later"), but if a
+        # comment ever does carry more than one, that's worth knowing
+        # about rather than losing silently.
         identifier_matches = [
             m.group(1) if m.group(1) is not None else m.group(2)
             for m in _IDENTIFIER_RE.finditer(self.comment)
         ]
         if identifier_matches:
-            self.identifier_names = tuple(identifier_matches)
             self.identifier_name = identifier_matches[0]
             if len(identifier_matches) > 1:
                 logger.debug(
-                    "Comment has %d Identifier strings, only the first is in "
-                    "`identifier_name` (see `identifier_names` for all): %r",
-                    len(identifier_matches), self.comment,
+                    "Comment has %d Identifier strings, only the first is "
+                    "used (identifier_name=%r): %r",
+                    len(identifier_matches), self.identifier_name, self.comment,
                 )
 
         string_matches = [
@@ -125,13 +122,12 @@ class OpcodeEntry:
             for m in _STRING_RE.finditer(self.comment)
         ]
         if string_matches:
-            self.string_literals = tuple(string_matches)
             self.string_literal = string_matches[0]
             if len(string_matches) > 1:
                 logger.debug(
-                    "Comment has %d String literals, only the first is in "
-                    "`string_literal` (see `string_literals` for all): %r",
-                    len(string_matches), self.comment,
+                    "Comment has %d String literals, only the first is "
+                    "used (string_literal=%r): %r",
+                    len(string_matches), self.string_literal, self.comment,
                 )
 
         if match := _ARRAY_RE.search(self.comment):

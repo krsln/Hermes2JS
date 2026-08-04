@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
+from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorSwitch
 from hermes_decompiler.analysis.transforms.cfg_passes import (
     ShortCircuitConditionMerger,
 )
@@ -17,6 +19,20 @@ from hermes_decompiler.analysis.transforms.region_passes import (
     ForEachRecognizer,
 )
 from hermes_decompiler.analysis.transforms.lowering import StatementBuilder
+from hermes_decompiler.core.logging import get_logger
+
+logger = get_logger(__name__)
+
+# Terminators that a structurer is always expected to consume. A
+# `BasicBlock` left holding one of these after `build()` means some CFG
+# shape wasn't recognized by any structurer - not a crash, but a real
+# gap: `Printer._emit_block` will render it as a raw
+# `if (...) goto label_N;` (or a switch dump) instead of proper
+# `if`/`while`/`switch` JS syntax. `TerminatorJump`/`Return`/`Throw` are
+# intentionally excluded: those render correctly as plain leaf
+# statements even inside a fully-structured tree, so their presence
+# isn't a sign of anything unresolved.
+_UNSTRUCTURED_TERMINATOR_KINDS = (TerminatorConditionalBranch, TerminatorSwitch)
 
 
 class StructuralAnalyzer:
@@ -106,4 +122,34 @@ class StructuralAnalyzer:
         # ---- 4. lowering ------------------------------------------------
         StatementBuilder().build(root)
 
+        self._audit_unstructured_blocks(root)
+
         return root
+
+    @staticmethod
+    def _audit_unstructured_blocks(root) -> None:
+        """
+        Log (once, as a single warning listing every offender) any block
+        still holding a conditional-branch or switch terminator after
+        every structurer has run. This is diagnostic only - it never
+        changes output - but makes an otherwise-silent structuring gap
+        visible in normal logs instead of only showing up as an odd
+        `if (...) goto label_N;` line buried in `--verbose` JS output.
+        """
+        unresolved: list[BasicBlock] = sorted(
+            (
+                block for block in root.covered_blocks
+                if isinstance(block.terminator, _UNSTRUCTURED_TERMINATOR_KINDS)
+            ),
+            key=lambda block: block.id,
+        )
+
+        if not unresolved:
+            return
+
+        details = ", ".join(f"block {b.id} (0x{b.address:x})" for b in unresolved)
+        logger.warning(
+            "%d block(s) were not fully structured by any structurer and "
+            "will render as raw goto/switch statements: %s",
+            len(unresolved), details,
+        )
