@@ -185,7 +185,6 @@ class CFGBuilder:
             if current_block:
 
                 if result.terminator:
-                    # TODO: blockta irden fazla terminator varsa?
 
                     if current_block.terminator is None:
                         current_block.terminator = result.terminator
@@ -200,6 +199,7 @@ class CFGBuilder:
                             result.terminator,
                             result.handler,
                         )
+                        # Hermes 98 is not stable, so just warning not raise error for now
                         # raise RuntimeError(f"Block {current_block.id} already has a terminator.")
                 # else:
                 current_block.add_instruction(result)
