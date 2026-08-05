@@ -1,5 +1,6 @@
 from typing import Dict, Any, Optional, List
 
+from hermes_decompiler.analysis.transforms.structurers import SequenceStructurer
 from hermes_decompiler.frontend.opcode import OpcodeResult
 
 
@@ -47,10 +48,10 @@ class HermesAnalysis:
         if result.name:
             self.registers[result.name] = result
 
-    def generate_js(self, verbose: bool = False) -> list[str]:
-        return self.generate_js_v1(verbose)
+    def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
+        return self.generate_js_v1(verbose, raw)
 
-    def generate_js_v1(self, verbose: bool = False) -> list[str]:
+    def generate_js_v1(self, verbose: bool = False, raw: bool = False) -> list[str]:
         from hermes_decompiler.analysis.cfg import CFG
         from hermes_decompiler.analysis.transforms import StructuralAnalyzer
         from hermes_decompiler.backend.emit import JSEmitter
@@ -73,6 +74,9 @@ class HermesAnalysis:
         # by the time build() runs.
         cfg.compute_loops()
 
-        root = StructuralAnalyzer(cfg).build()
+        if raw:
+            root = SequenceStructurer(cfg).run()
+        else:
+            root = StructuralAnalyzer(cfg).build()
 
         return JSEmitter(verbose).emit(root)

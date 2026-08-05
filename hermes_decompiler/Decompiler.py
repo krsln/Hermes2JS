@@ -25,7 +25,7 @@ class Decompiler:
     @staticmethod
     def convert(
             assembly_content: str, section_index: int,
-            *, strict: bool = False, verbose: bool = True,
+            *, strict: bool = False, verbose: bool = True, raw: bool = True,
     ) -> str:
         """
         Args:
@@ -34,6 +34,7 @@ class Decompiler:
             strict: If True, raise immediately on the first opcode
                 dispatch failure instead of emitting an inline `// Error: ...` comment and continuing.
             verbose: If True, annotate generated JS with `// CODE ->` source comments.
+            raw: If True, generates section_{section_index}_raw.js.
 
         Returns:
             The generated JavaScript code.
@@ -54,7 +55,7 @@ class Decompiler:
             SignatureStage(),
             BytecodeExtractionStage(),
             DispatchStage(strict=strict),
-            CodeGenerationStage(verbose=verbose),
+            CodeGenerationStage(verbose=verbose, raw=raw),
         ])
 
         try:

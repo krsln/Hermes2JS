@@ -62,6 +62,7 @@ class FileOperations:
             file_path: str,
             output_dir: str,
             verbose: bool,
+            raw: bool,
             strict: bool,
     ) -> bool:
         """
@@ -73,6 +74,7 @@ class FileOperations:
             file_path: Path to the .hbc file.
             output_dir: Directory to store the output .js file.
             verbose: If True, annotate generated JS with `// CODE ->`source comments.
+            raw: If True, generates section_{section_index}_raw.js.
             strict: If True, rise immediately on the first opcode
                     dispatch failure
 
@@ -96,7 +98,10 @@ class FileOperations:
             return False
 
         try:
-            js_code = Decompiler.convert(hbc_content, section_index, verbose=verbose, strict=strict)
+            js_code = Decompiler.convert(hbc_content, section_index, verbose=verbose, raw=False, strict=strict)
+            js_code_raw = None
+            if raw:
+                js_code_raw = Decompiler.convert(hbc_content, section_index, verbose=verbose, raw=True, strict=strict)
         except ValueError:
             # Bad/unparseable input for this specific section - log and let the
             # caller decide whether to continue with the rest of the batch.
@@ -105,9 +110,13 @@ class FileOperations:
 
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(output_dir, f"section_{section_index}.js")
+        output_path_raw = os.path.join(output_dir, f"section_{section_index}_raw.js")
         try:
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(js_code)
+            if raw and js_code_raw is not None:
+                with open(output_path_raw, 'w', encoding='utf-8') as f:
+                    f.write(js_code_raw)
             logger.debug("Successfully wrote output %s", f"\t~/section_{section_index}.js")
             return True
         except OSError as e:
