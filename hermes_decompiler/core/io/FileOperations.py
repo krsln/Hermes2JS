@@ -101,7 +101,7 @@ class FileOperations:
             js_code = Decompiler.convert(hbc_content, section_index, verbose=verbose, raw=False, strict=strict)
             js_code_raw = None
             if raw:
-                js_code_raw = Decompiler.convert(hbc_content, section_index, verbose=verbose, raw=True, strict=strict)
+                js_code_raw = Decompiler.convert(hbc_content, section_index, verbose=True, raw=True, strict=strict)
         except ValueError:
             # Bad/unparseable input for this specific section - log and let the
             # caller decide whether to continue with the rest of the batch.

@@ -40,6 +40,7 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 # If Tests 15062, 15063
 # Exception Tests 15075-15090
 # IteratorTests 15092, 15093
+# Switch 15056
 
 ```
 
