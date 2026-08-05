@@ -218,24 +218,83 @@ class Printer(NodeVisitor):
     # if  (with else-if flattening)
     # ---------------------------------------------------------
 
-    def _emit_if(self, region: IfRegion, lines):
-
+    def _emit_if(self, region: IfRegion, lines, *, _chain: bool = False):
+        """
+        Emit an IfRegion.  When the else-body consists of a single
+        nested IfRegion we emit a flat `else if` cascade instead of
+        nested braces – matching the original source style.
+        """
         cond = self.print_expression(region.condition)
 
-        self._write(lines, f"if ({cond}) {{")
+        if _chain:
+            self._write(lines, f"}} else if ({cond}) {{")
+        else:
+            self._write(lines, f"if ({cond}) {{")
 
         self._indent += 1
         self._emit_region(region.then_body, lines)
         self._indent -= 1
 
-        if region.else_body:
-            self._write(lines, "} else {")
+        if region.else_body is None:
+            self._write(lines, "}")
+            return
 
-            self._indent += 1
-            self._emit_region(region.else_body, lines)
-            self._indent -= 1
+        # Detect classic else-if: else body is a SequenceRegion that
+        # contains exactly one IfRegion (and nothing else).
+        nested = self._extract_single_if(region.else_body)
+        if nested is not None:
+            self._emit_if(nested, lines, _chain=True)
+            return
 
+        # Ordinary else
+        self._write(lines, "} else {")
+        self._indent += 1
+        self._emit_region(region.else_body, lines)
+        self._indent -= 1
         self._write(lines, "}")
+
+    @staticmethod
+    def _is_skippable_prefix(item) -> bool:
+        """True for BasicBlocks that only prepare values (loads / consts)
+        and have no terminator and no side-effecting statements.
+
+        Hermes frequently leaves the constant load for the next
+        comparison (`r1 = 5`) as a sibling BasicBlock in front of the
+        nested IfRegion.  Those blocks must not block else-if
+        flattening even when `definition_used` is still True (the
+        constant is already embedded in the IfRegion condition).
+        """
+        if not isinstance(item, BasicBlock):
+            return False
+        if item.terminator is not None:
+            return False
+        for instr in item.instructions:
+            if instr.statement is not None:
+                return False
+            if instr.terminator is not None:
+                return False
+            if instr.value is not None and isinstance(
+                    instr.value,
+                    (CallExpression, NewExpression, AssignmentExpression,
+                     UpdateExpression, AwaitExpression, YieldExpression),
+            ):
+                return False
+        return True
+
+    @classmethod
+    def _extract_single_if(cls, body) -> IfRegion | None:
+        if isinstance(body, IfRegion):
+            return body
+        if not isinstance(body, SequenceRegion):
+            return None
+        # Allow a pure prefix (const/param loads) before the single
+        # IfRegion so else-if cascades flatten correctly.
+        meaningful = [c for c in body.children if not cls._is_skippable_prefix(c)]
+        if len(meaningful) == 1 and isinstance(meaningful[0], IfRegion):
+            return meaningful[0]
+        if len(body.children) == 1 and isinstance(body.children[0], IfRegion):
+            return body.children[0]
+        return None
 
     # ---------------------------------------------------------
     # loop
