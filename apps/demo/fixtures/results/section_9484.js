@@ -27,9 +27,9 @@ function optionalChainingTest(param0) {
     if ({ "b": null } != null && { "b": null }.b != null) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 6562>  # String: 'c' (Identifier)
-        // USED → r7 = { "b": null }.b.c;
+        r7 = { "b": null }.b.c
     }
-    if ({ "b": null }.b.c == null) {
+    if (r7 == r1) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → <LoadConstInt>: <Reg8: 7, Imm32: -1>
         // USED → r7 = -1;

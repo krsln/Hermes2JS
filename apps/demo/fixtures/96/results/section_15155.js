@@ -14,7 +14,7 @@ function defaultWithRestTest(param0) {
     // USED → r6 = 1;
     // CODE → <Mov>: <Reg8: 5, Reg8: 6>
     r5 = 1
-    if (arguments.length > 0 && arguments[0] !== undefined) {
+    if (arguments.length > 0 && r1 !== r0) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 8, Reg8: 7>
         // USED → r5 = arguments[0];
@@ -69,9 +69,9 @@ function defaultWithRestTest(param0) {
         // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
         new globalThis.Array(arguments.length - 1)[1 - 1] = arguments[1]
         // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-        // USED → r2 = 1 + 1;
+        r2 = r2 + 1
         // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 3>  # Address: 00000072
-        if (1 + 1 < arguments.length) goto label_114;
+        if (r2 < r3) goto label_114;
     }
     // ──────────────── Block 7 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)

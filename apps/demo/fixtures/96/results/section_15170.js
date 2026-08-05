@@ -26,8 +26,8 @@ function callGeneratorTests(param0) {
     for (const r7 of r3) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        // USED → r5 = GetIterator(r3);
-        if (GetIterator(r3) !== undefined) {
+        r5 = GetIterator(r3)
+        if (r5 !== r0) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r6 = globalThis.console;
@@ -55,8 +55,8 @@ function callGeneratorTests(param0) {
     for (const r7 of r3) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        // USED → r5 = GetIterator(r3);
-        if (GetIterator(r3) !== undefined) {
+        r5 = GetIterator(r3)
+        if (r5 !== r0) {
             // ──────────────── Block 6 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r6 = globalThis.console;

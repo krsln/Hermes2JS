@@ -37,10 +37,10 @@ function shortCircuitAssignTest(param0) {
     // CODE → <NewObject>: <Reg8: 3>
     // USED → r3 = {  };
     // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 7613>  # String: 'count' (Identifier)
-    // USED → r4 = {  }.count;
+    r4 = {  }.count
     // CODE → <LoadConstNull>: <Reg8: 1>
-    // USED → r1 = null;
-    if ({  }.count == null) {
+    r1 = null
+    if (r4 == r1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstZero>: <Reg8: 0>
         // USED → r0 = 0;

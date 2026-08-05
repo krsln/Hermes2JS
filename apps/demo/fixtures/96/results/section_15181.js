@@ -64,7 +64,7 @@ async function* anon_15181(param0) {
             // USED → r4 = "__BC:Functions/AsyncTests/asyncTryCatchTest/awaited";
             // CODE → <Call3>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
             r4 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", await yield)
-            if (await yield === 1) {
+            if (r1 === r3) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
                 // USED → r5 = globalThis.Error;

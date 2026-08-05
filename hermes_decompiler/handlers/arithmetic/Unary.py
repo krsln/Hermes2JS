@@ -33,7 +33,7 @@ class BaseUnaryOperator(OpcodeHandler):
 
         dest_reg, src_reg = map(int, match.groups())
 
-        src_val = self.get_register_expression(analysis, src_reg)
+        src_val = self.get_register_reference(analysis, src_reg)
 
         result = OpcodeResult(entry, value=self.expression(src_val), dest_reg=dest_reg)
         analysis.add_result(result)

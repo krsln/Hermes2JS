@@ -13,7 +13,7 @@ function doWhileTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     // USED → r1 = 1;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 5>
-    // USED → r2 = 5;
+    r2 = 5
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // ──────────────── Block 1 ──────────────── 
@@ -24,8 +24,8 @@ function doWhileTest(param0) {
     // CODE → <Call2>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 0>
     r6 = globalThis.console.log(0)
     // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
-    // USED → r0 = 0 + 1;
-    if (0 + 1 >= 5) {
+    r0 = 0 + 1
+    if (r0 >= r2) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r7 = globalThis.console;

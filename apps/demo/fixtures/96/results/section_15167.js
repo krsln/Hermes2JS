@@ -31,7 +31,7 @@ async function* anon_15167(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 4783>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/skip' (String)
         // USED → r3 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/skip";
         // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
-        // USED → r2 = 2;
+        r2 = 2
         if (!(0 < param1)) {
             // ──────────────── Block 9 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -54,7 +54,7 @@ async function* anon_15167(param0, param1) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 4>
                 // USED → r6 = 0;
-                if (0 !== 2) {
+                if (r6 !== r2) {
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>
                     // USED → r7 = 0 * 0;
@@ -66,9 +66,9 @@ async function* anon_15167(param0, param1) {
                     if (!r8) {
                         // ──────────────── Block 8 ──────────────── 
                         // CODE → <Inc>: <Reg8: 4, Reg8: 6>
-                        // USED → r4 = 0 + 1;
+                        r4 = r6 + 1
                         // CODE → <JLess>: <Addr8: -43, Reg8: 4, Reg8: 5>  # Address: 00000030
-                        if (0 + 1 < param1) goto label_48;
+                        if (r4 < r5) goto label_48;
                     } else {
                         // ──────────────── Block 7 ──────────────── 
                         // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

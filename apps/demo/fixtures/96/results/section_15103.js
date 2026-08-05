@@ -41,10 +41,10 @@ function nestedObjectDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 6, string_id: 176>  # String: 'name' (Identifier)
     // USED → r4 = { status: 200, body: { user: { "id": 1, "name": "Ada" }, meta: { page: 1 } } }.body.user.name;
     // CODE → <GetById>: <Reg8: 2, Reg8: 0, UInt8: 7, string_id: 10786>  # String: 'meta' (Identifier)
-    // USED → r2 = { status: 200, body: { user: { "id": 1, "name": "Ada" }, meta: { page: 1 } } }.body.meta;
+    r2 = { status: 200, body: { user: { "id": 1, "name": "Ada" }, meta: { page: 1 } } }.body.meta
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    if ({ status: 200, body: { user: { "id": 1, "name": "Ada" }, meta: { page: 1 } } }.body.meta === undefined) {
+    if (r2 === r0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <NewObject>: <Reg8: 2>
         // USED → r2 = {  };
@@ -52,7 +52,7 @@ function nestedObjectDestructureTest(param0) {
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 12920>  # String: 'page' (Identifier)
     // USED → r2 = {  }.page;
-    if ({  }.page !== undefined) {
+    if (r2 !== r0) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 2>
         // USED → r6 = {  }.page;

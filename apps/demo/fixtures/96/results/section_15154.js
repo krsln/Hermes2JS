@@ -14,7 +14,7 @@ function defaultParameterTest(param0, param1) {
     // USED → r4 = 10;
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
     r5 = 10
-    if (arguments.length > 1 && arguments[1] !== undefined) {
+    if (arguments.length > 1 && r3 !== r0) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 1, Reg8: 2>
         // USED → r5 = arguments[1];
@@ -30,7 +30,7 @@ function defaultParameterTest(param0, param1) {
     // USED → r6 = "result";
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
     r4 = "result"
-    if (arguments.length > 2 && arguments[2] !== undefined) {
+    if (arguments.length > 2 && r3 !== r0) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 1, Reg8: 2>
         // USED → r4 = arguments[2];

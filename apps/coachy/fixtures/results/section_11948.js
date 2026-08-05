@@ -29,10 +29,10 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <TypeOf>: <Reg8: 14, Reg8: 6>
-    // USED → r14 = typeof param1;
+    r14 = typeof r6
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
-    // USED → r10 = "string";
-    if (typeof param1 === "string") {
+    r10 = "string"
+    if (r14 === r10) {
         if (!param2) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → <NewObject>: <Reg8: 2>
@@ -74,7 +74,7 @@ function _request(param0, param1, param2) {
     // USED → r17 = getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).headers;
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 17>
     createEnvironment()[1] = getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).headers
-    if (getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).transitional !== undefined) {
+    if (r19 !== r11) {
         // ──────────────── Block 8 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
         // USED → r2 = getEnvironment(1)[9];
@@ -117,8 +117,8 @@ function _request(param0, param1, param2) {
     }
     // ──────────────── Block 9 ──────────────── 
     // CODE → <LoadConstNull>: <Reg8: 2>
-    // USED → r2 = null;
-    if (getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).paramsSerializer != null) {
+    r2 = null
+    if (r14 != r2) {
         // ──────────────── Block 10 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 3>
         // USED → r2 = getEnvironment(1)[3];
@@ -164,14 +164,14 @@ function _request(param0, param1, param2) {
     }
     // ──────────────── Block 13 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 10, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    // USED → r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).allowAbsoluteUrls;
-    if (getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).allowAbsoluteUrls === undefined) {
+    r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).allowAbsoluteUrls
+    if (r2 === r11) {
         // ──────────────── Block 14 ──────────────── 
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
         // USED → r2 = this.defaults;
         // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-        // USED → r2 = this.defaults.allowAbsoluteUrls;
-        if (this.defaults.allowAbsoluteUrls !== undefined) {
+        r2 = this.defaults.allowAbsoluteUrls
+        if (r2 !== r11) {
             // ──────────────── Block 16 ──────────────── 
             // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
             // USED → r2 = this.defaults;
@@ -290,7 +290,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 14, Reg8: 15, Reg8: 2>
     r2 = this.interceptors.response.forEach(pushResponseInterceptors)
     // CODE → <LoadConstZero>: <Reg8: 2>
-    // USED → r2 = 0;
+    r2 = 0
     // CODE → <LoadConstZero>: <Reg8: 4>
     // USED → r4 = 0;
     // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 9, UInt8: 3>
@@ -307,75 +307,75 @@ function _request(param0, param1, param2) {
         // USED → r1 = getEnvironment(1)[7].default.call(undefined, this.defaults, {  });
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0;
-        if (0 < [].length) {
+        if (r2 < r9) {
             // ──────────────── Block 30 ──────────────── 
             // CODE → <Mov>: <Reg8: 10, Reg8: 12>
             // USED → r10 = [];
             // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-            // USED → r9 = 0;
+            r9 = 0
             // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
-            // USED → r14 = +0;
+            // USED → r14 = +r9;
             // CODE → <Inc>: <Reg8: 9, Reg8: 14>
-            // USED → r9 = +0 + 1;
+            // USED → r9 = r14 + 1;
             // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-            r4 = +0 + 1
+            r4 = r14 + 1
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 14>
-            // USED → r13 = [][+0];
+            // USED → r13 = [][+r9];
             // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
-            // USED → r9 = +(+0 + 1);
+            // USED → r9 = +r9;
             // CODE → <Inc>: <Reg8: 4, Reg8: 9>
-            // USED → r4 = +(+0 + 1) + 1;
+            // USED → r4 = r9 + 1;
             // CODE → <GetByVal>: <Reg8: 7, Reg8: 10, Reg8: 9>
-            // USED → r7 = [][+(+0 + 1)];
+            // USED → r7 = [][+r9];
             // CODE → <Mov>: <Reg8: 10, Reg8: 13>
-            // USED → r10 = [][+0];
+            // USED → r10 = [][+r9];
             // CODE → <Mov>: <Reg8: 9, Reg8: 1>
             // USED → r9 = getEnvironment(1)[7].default.call(undefined, this.defaults, {  });
             // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
-            // USED → r1 = [][+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  }));
+            // USED → r1 = [][+r9].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  }));
             // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-            // USED → r10 = +(+0 + 1) + 1;
+            r10 = r9 + 1
             // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-            // USED → r9 = [].length;
+            r9 = [].length
             // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 9>  # Address: 00000362
-            if (+(+0 + 1) + 1 < [].length) goto label_866;
+            if (r10 < r9) goto label_866;
             // ──────────────── Block 31 ──────────────── 
             // CODE → <Jmp>: <Addr8: 18>  # Address: 000003a6
             goto label_934;
             // ──────────────── Block 34 ──────────────── 
             // CODE → <Mov>: <Reg8: 8, Reg8: 0>
-            // USED → r8 = getEnvironment(1)[6].default.call(this, [][+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  })));
+            // USED → r8 = getEnvironment(1)[6].default.call(this, [][+r9].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  })));
             // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
-            // USED → r7 = getEnvironment(1)[6].default.call(this, [][+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  }))).then;
+            // USED → r7 = getEnvironment(1)[6].default.call(this, [][+r9].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  }))).then;
             // CODE → <Mov>: <Reg8: 9, Reg8: 3>
             // USED → r9 = [];
             // CODE → <Mov>: <Reg8: 1, Reg8: 4>
-            // USED → r1 = 0;
+            r1 = 0
             // CODE → <ToNumeric>: <Reg8: 2, Reg8: 1>
-            // USED → r2 = +0;
+            // USED → r2 = +r1;
             // CODE → <Inc>: <Reg8: 1, Reg8: 2>
-            // USED → r1 = +0 + 1;
+            // USED → r1 = r2 + 1;
             // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-            r4 = +0 + 1
+            r4 = r2 + 1
             // CODE → <GetByVal>: <Reg8: 6, Reg8: 9, Reg8: 2>
-            // USED → r6 = [][+0];
+            // USED → r6 = [][+r1];
             // CODE → <ToNumeric>: <Reg8: 1, Reg8: 1>
-            // USED → r1 = +(+0 + 1);
+            // USED → r1 = +r1;
             // CODE → <Inc>: <Reg8: 2, Reg8: 1>
-            // USED → r2 = +(+0 + 1) + 1;
+            // USED → r2 = r1 + 1;
             // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-            r4 = +(+0 + 1) + 1
+            r4 = r1 + 1
             // CODE → <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>
-            // USED → r1 = [][+(+0 + 1)];
+            // USED → r1 = [][+r1];
             // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
-            // USED → r0 = getEnvironment(1)[6].default.call(this, [][+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  }))).then([][+0], [][+(+0 + 1)]);
+            // USED → r0 = getEnvironment(1)[6].default.call(this, [][+r9].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  }))).then([][+r1], [][+r1]);
             // CODE → <Mov>: <Reg8: 1, Reg8: 5>
-            // USED → r1 = [].length;
+            r1 = [].length
             // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
-            if (+(+0 + 1) + 1 < [].length) goto label_971;
+            if (r2 < r1) goto label_971;
             // ──────────────── Block 35 ──────────────── 
             // CODE → <Ret>: <Reg8: 0>
-            return getEnvironment(1)[6].default.call(this, [][+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  }))).then([][+0], [][+(+0 + 1)]);
+            return getEnvironment(1)[6].default.call(this, [][+r9].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  }))).then([][+r1], [][+r1]);
         }
     } else {
         // ──────────────── Block 26 ──────────────── 
@@ -422,43 +422,43 @@ function _request(param0, param1, param2) {
         // CODE → <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
         // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  }));
         // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-        // USED → r9 = 0;
-        if (0 < [getEnvironment(1)[6].default.bind(this), undefined].length) {
+        r9 = 0
+        if (r9 < r14) {
             // ──────────────── Block 27 ──────────────── 
             // CODE → <Mov>: <Reg8: 18, Reg8: 0>
             // USED → r18 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  }));
             // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
             // USED → r17 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  })).then;
             // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-            // USED → r9 = 0;
+            r9 = 0
             // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
-            // USED → r14 = +0;
+            // USED → r14 = +r9;
             // CODE → <Inc>: <Reg8: 9, Reg8: 14>
-            // USED → r9 = +0 + 1;
+            // USED → r9 = r14 + 1;
             // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-            r4 = +0 + 1
+            r4 = r14 + 1
             // CODE → <GetByVal>: <Reg8: 16, Reg8: 15, Reg8: 14>
-            // USED → r16 = [getEnvironment(1)[6].default.bind(this), undefined][+0];
+            // USED → r16 = [getEnvironment(1)[6].default.bind(this), undefined][+r9];
             // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
-            // USED → r9 = +(+0 + 1);
+            // USED → r9 = +r9;
             // CODE → <Inc>: <Reg8: 14, Reg8: 9>
-            // USED → r14 = +(+0 + 1) + 1;
+            // USED → r14 = r9 + 1;
             // CODE → <Mov>: <Reg8: 4, Reg8: 14>
-            r4 = +(+0 + 1) + 1
+            r4 = r9 + 1
             // CODE → <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
-            // USED → r9 = [getEnvironment(1)[6].default.bind(this), undefined][+(+0 + 1)];
+            // USED → r9 = [getEnvironment(1)[6].default.bind(this), undefined][+r9];
             // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
-            // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  })).then([getEnvironment(1)[6].default.bind(this), undefined][+0], [getEnvironment(1)[6].default.bind(this), undefined][+(+0 + 1)]);
+            // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  })).then([getEnvironment(1)[6].default.bind(this), undefined][+r9], [getEnvironment(1)[6].default.bind(this), undefined][+r9]);
             // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-            // USED → r9 = [getEnvironment(1)[6].default.bind(this), undefined].length;
+            r9 = [getEnvironment(1)[6].default.bind(this), undefined].length
             // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
-            if (+(+0 + 1) + 1 < [getEnvironment(1)[6].default.bind(this), undefined].length) goto label_791;
+            if (r14 < r9) goto label_791;
         }
         // ──────────────── Block 28 ──────────────── 
         // CODE → <Mov>: <Reg8: 9, Reg8: 0>
-        // USED → r9 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  })).then([getEnvironment(1)[6].default.bind(this), undefined][+0], [getEnvironment(1)[6].default.bind(this), undefined][+(+0 + 1)]);
+        // USED → r9 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  })).then([getEnvironment(1)[6].default.bind(this), undefined][+r9], [getEnvironment(1)[6].default.bind(this), undefined][+r9]);
         // CODE → <Ret>: <Reg8: 9>
-        return globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  })).then([getEnvironment(1)[6].default.bind(this), undefined][+0], [getEnvironment(1)[6].default.bind(this), undefined][+(+0 + 1)]);
+        return globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, {  })).then([getEnvironment(1)[6].default.bind(this), undefined][+r9], [getEnvironment(1)[6].default.bind(this), undefined][+r9]);
         try {
             // LOOP → START (while)
             while (true) {
@@ -470,7 +470,7 @@ function _request(param0, param1, param2) {
                 // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
                 // USED → r6 = getEnvironment(1)[6].default.call;
                 // CODE → <Call3>: <Reg8: 0, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1>
-                // USED → r0 = getEnvironment(1)[6].default.call(this, [][+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  })));
+                // USED → r0 = getEnvironment(1)[6].default.call(this, [][+r9].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, {  })));
                 // CODE → <LoadConstZero>: <Reg8: 4>
                 // USED → r4 = 0;
                 // CODE → <Mov>: <Reg8: 1, Reg8: 3>
@@ -479,16 +479,16 @@ function _request(param0, param1, param2) {
                 // USED → r1 = [].length;
                 // CODE → <Mov>: <Reg8: 5, Reg8: 1>
                 // USED → r5 = [].length;
-                if (0 < [].length) {
+                if (r2 < r1) {
                     // ──────────────── Block 32 ──────────────── 
                     // CODE → <Catch>: <Reg8: 10>
                     // USED → r10 = caughtException;
                     // CODE → <Mov>: <Reg8: 9, Reg8: 7>
-                    // USED → r9 = [][+(+0 + 1)];
+                    // USED → r9 = [][+r9];
                     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
-                    // USED → r7 = [][+(+0 + 1)].call;
+                    // USED → r7 = [][+r9].call;
                     // CODE → <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
-                    r7 = [][+(+0 + 1)].call(this, caughtException)
+                    r7 = [][+r9].call(this, caughtException)
                 }
             }
             // LOOP → END

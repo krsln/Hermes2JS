@@ -31,9 +31,9 @@ function optionalChainingTest(param0) {
     if ({ a: { b: {  } } } != null && ({ a: { b: {  } } }.a != null && { a: { b: {  } } }.a.b != null)) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 7241>  # String: 'c' (Identifier)
-        // USED → r4 = { a: { b: {  } } }.a.b.c;
+        r4 = { a: { b: {  } } }.a.b.c
     }
-    if ({ a: { b: {  } } }.a.b.c == null) {
+    if (r4 == r2) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <LoadConstInt>: <Reg8: 4, Imm32: -1>
         // USED → r4 = -1;

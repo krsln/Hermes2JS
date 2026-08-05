@@ -11,7 +11,7 @@ function doWhileTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     r1 = globalThis.console.log("__BC:ControlFlow/DoWhileTests/doWhileTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 5>
-    // USED → r1 = 5;
+    r1 = 5
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // ──────────────── Block 1 ──────────────── 
@@ -22,8 +22,8 @@ function doWhileTest(param0) {
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
     r3 = globalThis.console.log(0)
     // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-    // USED → r2 = 0 + 1;
-    if (0 + 1 >= 5) {
+    r2 = r2 + 1
+    if (r2 >= r1) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r2 = globalThis.console;

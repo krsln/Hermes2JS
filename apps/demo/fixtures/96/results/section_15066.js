@@ -11,13 +11,13 @@ function labeledContinueTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     r1 = globalThis.console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 3>
-    // USED → r5 = 3;
+    r5 = 3
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4616>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer' (String)
     // USED → r4 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer";
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4619>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1' (String)
     // USED → r3 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1";
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
-    // USED → r2 = 1;
+    r2 = 1
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     // LOOP → START (while)
@@ -45,14 +45,14 @@ function labeledContinueTest(param0) {
         r8 = globalThis.console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 7>
-        // USED → r1 = 0 + 1;
-        if (0 + 1 >= 3) {
+        r1 = r7 + 1
+        if (r1 >= r5) {
             // LOOP → START (while)
             while (true) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 9, Reg8: 8>
                 // USED → r9 = 0;
-                if (0 !== 1) {
+                if (r9 !== r2) {
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                     // USED → r11 = globalThis.console;
@@ -61,9 +61,9 @@ function labeledContinueTest(param0) {
                     // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
                     r10 = globalThis.console.log(0, 0)
                     // CODE → <Inc>: <Reg8: 8, Reg8: 9>
-                    // USED → r8 = 0 + 1;
+                    r8 = r9 + 1
                     // CODE → <JLess>: <Addr8: -27, Reg8: 8, Reg8: 5>  # Address: 0000002b
-                    if (0 + 1 < 3) goto label_43;
+                    if (r8 < r5) goto label_43;
                 }
             }
             // LOOP → END
