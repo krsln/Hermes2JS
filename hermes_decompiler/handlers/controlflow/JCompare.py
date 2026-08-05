@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import ClassVar, Optional, Tuple
+from typing import ClassVar, Optional
 
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
@@ -9,29 +9,6 @@ from hermes_decompiler.handlers import OpcodeHandler, sequence, REG
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression, UnaryExpression
 from hermes_decompiler.runtime import HermesAnalysis
-
-# Compiled once at import time instead of on every `handle()` call.
-_COMPARE_PATTERN = sequence(ADDR, REG, REG)
-
-
-def _parse_compare(entry: OpcodeEntry) -> Tuple[int, int, int]:
-    """
-    Parse comparison jump arguments.
-
-        Addr, Reg, Reg
-    """
-    match = _COMPARE_PATTERN.match(entry.args.strip())
-
-    if not match:
-        raise ValueError(
-            f"Invalid arguments for {entry.opcode}: {entry.args}"
-        )
-
-    return (
-        int(match.group(1)),
-        int(match.group(2)),
-        int(match.group(3)),
-    )
 
 
 class BaseJCompare(OpcodeHandler):
@@ -70,6 +47,8 @@ class BaseJCompare(OpcodeHandler):
     operator: ClassVar[Optional[BinaryOperator]] = None
     negated_operator: ClassVar[Optional[BinaryOperator]] = None
 
+    _PATTERN = sequence(ADDR, REG, REG)
+
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
         # Only validate concrete leaf-ish classes that actually set one of
@@ -94,10 +73,12 @@ class BaseJCompare(OpcodeHandler):
         )
 
     def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        try:
-            offset, lhs_reg, rhs_reg = _parse_compare(entry)
-        except ValueError as exc:
-            return self.build_invalid_args_result(analysis, entry, str(exc))
+
+        match = self._PATTERN.match(entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(analysis, entry, f"Invalid arguments: {entry.args}")
+
+        offset, lhs_reg, rhs_reg = map(int, match.groups())
 
         target = entry.target_address
         if target is None:
