@@ -118,7 +118,7 @@ class OpcodeHandler(ABC):
         result = analysis.registers.get(f"r{reg}")
 
         if result is None:
-            return Identifier(name=f"r{reg}")
+            return Identifier(name=f"r{reg}_undefined")
 
         if isinstance(result.value, Expression):
             result.definition_used = True
@@ -141,6 +141,9 @@ class OpcodeHandler(ABC):
         """
 
         result = analysis.registers.get(f"r{reg}")
+
+        if result is None:
+            return Identifier(name=f"r{reg}_undefined")
 
         if result is not None:
             result.register_read = True
