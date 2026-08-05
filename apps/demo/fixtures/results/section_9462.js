@@ -69,12 +69,12 @@ function logicalShortCircuitTest(param0, param1, param2) {
     if (param1) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <LoadConstNull>: <Reg8: 4>
-        r4 = null
+        // USED → r4 = null;
     }
     // ──────────────── Block 6 ──────────────── 
     // CODE → <LoadConstNull>: <Reg8: 0>
-    r0 = null
-    if (r4 == r0) {
+    // USED → r0 = null;
+    if (null == null) {
         // ──────────────── Block 7 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r8 = globalThis.console;

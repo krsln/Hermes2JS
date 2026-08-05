@@ -21,19 +21,19 @@ function optionalChainingTest(param0) {
     // CODE → <PutNewOwnById>: <Reg8: 3, Reg8: 0, string_id: 7189>  # String: 'a' (Identifier)
     // USED → r3 = { a: { b: {  } } };
     // CODE → <LoadConstNull>: <Reg8: 2>
-    r2 = null
+    // USED → r2 = null;
     // CODE → <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
-    // USED → r5 = r3 == r2;
+    // USED → r5 = { a: { b: {  } } } == null;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     r4 = undefined
-    if (r3 != r2 && (r3 != r2 && r3 != r2)) {
+    if ({ a: { b: {  } } } != null && ({ a: { b: {  } } }.a != null && { a: { b: {  } } }.a.b != null)) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 7241>  # String: 'c' (Identifier)
-        r4 = { a: { b: {  } } }.a.b.c
+        // USED → r4 = { a: { b: {  } } }.a.b.c;
     }
-    if (r4 == r2) {
+    if ({ a: { b: {  } } }.a.b.c == null) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <LoadConstInt>: <Reg8: 4, Imm32: -1>
         // USED → r4 = -1;

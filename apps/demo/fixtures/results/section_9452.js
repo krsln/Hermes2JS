@@ -13,15 +13,15 @@ function nestedLoopTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
-    r6 = 3
+    // USED → r6 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 7, UInt8: 4>
-    r7 = 4
+    // USED → r7 = 4;
     // CODE → <LoadConstString>: <Reg8: 12, string_id: 2611>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if' (String)
     // USED → r12 = "__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if";
     // CODE → <LoadConstString>: <Reg8: 11, string_id: 1491>  # String: 'nested' (String)
     // USED → r11 = "nested";
     // CODE → <LoadConstUInt8>: <Reg8: 8, UInt8: 2>
-    r8 = 2
+    // USED → r8 = 2;
     // CODE → <LoadConstZero>: <Reg8: 3>
     // USED → r3 = 0;
     // LOOP → START (while)
@@ -33,15 +33,15 @@ function nestedLoopTest(param0) {
         // USED → r0 = 0;
         // ──────────────── Block 6 ──────────────── 
         // CODE → <AddN>: <Reg8: 3, Reg8: 4, Reg8: 2>
-        r3 = 0 + 1
-        if (r3 >= r6) {
+        // USED → r3 = 0 + 1;
+        if (0 + 1 >= 3) {
             // LOOP → START (while)
             while (true) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 1, Reg8: 0>
                 // USED → r1 = 0;
-                if (r4 === r2) {
-                    if (r1 === r8) {
+                if (0 === 1) {
+                    if (0 === 2) {
                         // ──────────────── Block 4 ──────────────── 
                         // CODE → <TryGetById>: <Reg8: 14, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                         // USED → r14 = globalThis.console;
@@ -58,9 +58,9 @@ function nestedLoopTest(param0) {
                     }
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-                    r0 = 0 + 1
+                    // USED → r0 = 0 + 1;
                     // CODE → <JLessN>: <Addr8: -47, Reg8: 0, Reg8: 7>  # Address: 00000031
-                    if (r0 < r7) goto label_49;
+                    if (0 + 1 < 4) goto label_49;
                 }
             }
             // LOOP → END

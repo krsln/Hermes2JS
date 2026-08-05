@@ -1,10 +1,10 @@
 function defaultWithRestTest(param0) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>
-    r6 = param1
+    // USED → r6 = param1;
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
-    if (r6 === r1) {
+    if (param1 === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 1>
         // USED → r6 = 1;

@@ -13,11 +13,11 @@ function complexTest(param0) {
     // CODE → <NewArrayWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 5, UInt16: 23616>  # Array: [1, 2, 3, 4, 5]
     // USED → r12 = [1, 2, 3, 4, 5];
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    r1 = [1, 2, 3, 4, 5].length
+    // USED → r1 = [1, 2, 3, 4, 5].length;
     // CODE → <LoadConstZero>: <Reg8: 11>
     // USED → r11 = 0;
     // CODE → <Less>: <Reg8: 1, Reg8: 11, Reg8: 1>
-    // USED → r1 = r11 < r1;
+    // USED → r1 = 0 < [1, 2, 3, 4, 5].length;
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 855>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-1' (String)
     // USED → r10 = "__BC:ControlFlow/ComplexTests/complexTest/case-1";
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 4563>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-2-continue' (String)
@@ -31,26 +31,26 @@ function complexTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 1881>  # String: 'other' (String)
     // USED → r5 = "other";
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
-    r4 = 3
+    // USED → r4 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 2>
-    r3 = 2
+    // USED → r3 = 2;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
-    r2 = 1
-    if (r11 < r1) {
+    // USED → r2 = 1;
+    if (0 < [1, 2, 3, 4, 5].length) {
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 11>
-            r13 = [1, 2, 3, 4, 5][0]
+            // USED → r13 = [1, 2, 3, 4, 5][0];
             // CODE → <Mov>: <Reg8: 1, Reg8: 11>
-            r1 = 0
-            if (r2 !== r13) {
+            // USED → r1 = 0;
+            if (1 !== [1, 2, 3, 4, 5][0]) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <JStrictEqual>: <Addr8: 76, Reg8: 3, Reg8: 13>  # Address: 000000a7
-                if (r3 === r13) goto label_167;
+                if (2 === [1, 2, 3, 4, 5][0]) goto label_167;
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <JStrictEqual>: <Addr8: 38, Reg8: 4, Reg8: 13>  # Address: 00000085
-                if (r4 === r13) goto label_133;
+                if (3 === [1, 2, 3, 4, 5][0]) goto label_133;
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r14 = globalThis.console;
@@ -99,11 +99,11 @@ function complexTest(param0) {
                 r13 = globalThis.console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → <Inc>: <Reg8: 11, Reg8: 1>
-                r11 = r1 + 1
+                // USED → r11 = 0 + 1;
                 // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-                r1 = [1, 2, 3, 4, 5].length
+                // USED → r1 = [1, 2, 3, 4, 5].length;
                 // CODE → <JLessLong>: <Addr32: -129, Reg8: 11, Reg8: 1>  # Address: 00000050
-                if (r11 < r1) goto label_80;
+                if (0 + 1 < [1, 2, 3, 4, 5].length) goto label_80;
             }
         }
         // LOOP → END

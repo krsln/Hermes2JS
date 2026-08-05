@@ -1309,9 +1309,9 @@ function binl_md5(param0, param1, param2) {
         // CODE → <Call3>: <Reg8: 6, Reg8: 0, Reg8: 91, Reg8: 99, Reg8: 6>
         // USED → r6 = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 271733878);
         // CODE → <Add>: <Reg8: 5, Reg8: 5, Reg8: 42>
-        r5 = 0 + 16
+        // USED → r5 = 0 + 16;
         // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
-        r0 = param1.length
+        // USED → r0 = param1.length;
         // CODE → <Mov>: <Reg8: 4, Reg8: 9>
         // USED → r4 = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 1732584193);
         // CODE → <Mov>: <Reg8: 3, Reg8: 8>
@@ -1321,7 +1321,7 @@ function binl_md5(param0, param1, param2) {
         // CODE → <Mov>: <Reg8: 1, Reg8: 6>
         // USED → r1 = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r95, r96, r97, r98, r99, r100, r101, r102), 271733878);
         // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
-        if (r5 < r0) goto label_566;
+        if (0 + 16 < param1.length) goto label_566;
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>

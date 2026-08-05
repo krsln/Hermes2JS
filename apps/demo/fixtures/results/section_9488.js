@@ -5,10 +5,10 @@ function parameterDestructureTest(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 3, UInt8: 0, string_id: 28>  # String: 'id' (Identifier)
     // USED → r9 = param1.id;
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 3, UInt8: 1, string_id: 187>  # String: 'name' (Identifier)
-    r8 = param1.name
+    // USED → r8 = param1.name;
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
-    if (r8 === r1) {
+    if (param1.name === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 8, string_id: 514>  # String: 'anon' (String)
         // USED → r8 = "anon";

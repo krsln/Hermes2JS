@@ -59,11 +59,11 @@ function Counter(param0) {
     // CODE → <Call3>: <Reg8: 2, Reg8: 1, Reg8: 0, Reg8: 2, Reg8: 3>
     // USED → r2 = getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6]);
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 2, Reg8: 3>
-    r1 = getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6])[getEnvironment(1)[6]]
+    // USED → r1 = getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6])[getEnvironment(1)[6]];
     // CODE → <Inc>: <Reg8: 1, Reg8: 1>
-    // USED → r1 = r1 + 1;
+    // USED → r1 = getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6])[getEnvironment(1)[6]] + 1;
     // CODE → <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>
-    getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6])[getEnvironment(1)[6]] = r1 + 1
+    getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6])[getEnvironment(1)[6]] = getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6])[getEnvironment(1)[6]] + 1
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

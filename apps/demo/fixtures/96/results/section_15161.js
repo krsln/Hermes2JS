@@ -23,12 +23,12 @@ function legacyArgumentsTest(param0) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
     r2 = globalThis.console.log(arguments.length)
     // CODE → <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
-    r2 = arguments.length
+    // USED → r2 = arguments.length;
     // CODE → <LoadConstZero>: <Reg8: 3>
     // USED → r3 = 0;
     // CODE → <Less>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = r3 < r2;
-    if (r3 < r2) {
+    // USED → r2 = 0 < arguments.length;
+    if (0 < arguments.length) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r6 = globalThis.console;
@@ -39,11 +39,11 @@ function legacyArgumentsTest(param0) {
         // CODE → <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
         r2 = globalThis.console.log(arguments[0])
         // CODE → <Inc>: <Reg8: 3, Reg8: 3>
-        r3 = r3 + 1
+        // USED → r3 = 0 + 1;
         // CODE → <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
-        r2 = arguments.length
+        // USED → r2 = arguments.length;
         // CODE → <JLess>: <Addr8: -26, Reg8: 3, Reg8: 2>  # Address: 00000039
-        if (r3 < r2) goto label_57;
+        if (0 + 1 < arguments.length) goto label_57;
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

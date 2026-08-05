@@ -10,7 +10,7 @@ function parameterDestructureTest(param0, param1, param2) {
     r6 = "anon"
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    if (r1 !== r0) {
+    if (param1.name !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 1>
         // USED → r6 = param1.name;

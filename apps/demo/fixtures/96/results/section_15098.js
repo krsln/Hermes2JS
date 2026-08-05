@@ -41,11 +41,11 @@ function propertyAccessTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 41>  # String: 'x' (Identifier)
-    r2 = "x"
+    // USED → r2 = "x";
     // CODE → <IsIn>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = r2 in r5;
+    // USED → r2 = "x" in { "x": 1, "y": 2 };
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 2>
-    r2 = globalThis.console.log(r2 in r5)
+    r2 = globalThis.console.log("x" in { "x": 1, "y": 2 })
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 24>  # String: 'Object' (Identifier)
     // USED → r3 = globalThis.Object;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 7, string_id: 118>  # String: 'keys' (Identifier)
@@ -60,8 +60,8 @@ function propertyAccessTest(param0) {
     for (const r8 of r2) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        r5 = GetIterator(r2)
-        if (r5 !== r0) {
+        // USED → r5 = GetIterator(r2);
+        if (GetIterator(r2) !== undefined) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r7 = globalThis.console;

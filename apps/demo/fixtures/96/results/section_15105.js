@@ -68,7 +68,7 @@ function nestedArrayDestructureTest(param0) {
     // USED → r8 = [10][0];
     // CODE → <LoadConstZero>: <Reg8: 5>
     r5 = 0
-    if (r8 !== r0) {
+    if ([10][0] !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 8>
         // USED → r5 = [10][0];
@@ -78,7 +78,7 @@ function nestedArrayDestructureTest(param0) {
     // USED → r7 = [10][1];
     // CODE → <LoadConstZero>: <Reg8: 6>
     r6 = 0
-    if (r7 !== r0) {
+    if ([10][1] !== undefined) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 7>
         // USED → r6 = [10][1];

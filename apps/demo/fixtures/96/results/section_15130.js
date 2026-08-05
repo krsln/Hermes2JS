@@ -7,7 +7,7 @@ function tag(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 7>
-    r6 = arguments.length
+    // USED → r6 = arguments.length;
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 6>  # String: 'Array' (Identifier)
@@ -15,13 +15,13 @@ function tag(param0, param1) {
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
     // USED → r5 = 1;
     // CODE → <Greater>: <Reg8: 4, Reg8: 6, Reg8: 5>
-    // USED → r4 = r6 > r5;
+    // USED → r4 = arguments.length > 1;
     // CODE → <LoadConstZero>: <Reg8: 2>
     r2 = 0
-    if (r6 > r5) {
+    if (arguments.length > 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Sub>: <Reg8: 2, Reg8: 6, Reg8: 5>
-        // USED → r2 = r6 - r5;
+        // USED → r2 = arguments.length - 1;
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
@@ -31,29 +31,29 @@ function tag(param0, param1) {
     // CODE → <Mov>: <Reg8: 12, Reg8: 4>
     r12 = createThis(globalThis.Array.prototype, globalThis.Array)
     // CODE → <Mov>: <Reg8: 11, Reg8: 2>
-    // USED → r11 = r6 - r5;
+    // USED → r11 = arguments.length - 1;
     // CODE → <Construct>: <Reg8: 2, Reg8: 8, UInt8: 2>
-    // USED → r2 = new globalThis.Array(r6 - r5);
+    // USED → r2 = new globalThis.Array(arguments.length - 1);
     // CODE → <SelectObject>: <Reg8: 4, Reg8: 4, Reg8: 2>
-    // USED → r4 = new globalThis.Array(r6 - r5);
+    // USED → r4 = new globalThis.Array(arguments.length - 1);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
-    createEnvironment()[0] = new globalThis.Array(r6 - r5)
+    createEnvironment()[0] = new globalThis.Array(arguments.length - 1)
     // CODE → <Less>: <Reg8: 8, Reg8: 5, Reg8: 6>
-    // USED → r8 = r5 < r6;
+    // USED → r8 = 1 < arguments.length;
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
     // USED → r2 = 1;
-    if (r5 < r6) {
+    if (1 < arguments.length) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <Sub>: <Reg8: 9, Reg8: 2, Reg8: 5>
-        // USED → r9 = r2 - r5;
+        // USED → r9 = 1 - 1;
         // CODE → <GetArgumentsPropByVal>: <Reg8: 8, Reg8: 2, Reg8: 7>
         // USED → r8 = arguments[1];
         // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
-        new globalThis.Array(r6 - r5)[r2 - r5] = arguments[1]
+        new globalThis.Array(arguments.length - 1)[1 - 1] = arguments[1]
         // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-        r2 = r2 + 1
+        // USED → r2 = 1 + 1;
         // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 6>  # Address: 00000047
-        if (r2 < r6) goto label_71;
+        if (1 + 1 < arguments.length) goto label_71;
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 99>  # String: 'console' (Identifier)

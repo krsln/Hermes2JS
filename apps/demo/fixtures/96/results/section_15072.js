@@ -57,12 +57,12 @@ function logicalShortCircuitTest(param0, param1, param2) {
     if (param1) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <LoadConstNull>: <Reg8: 4>
-        r4 = null
+        // USED → r4 = null;
     }
     // ──────────────── Block 6 ──────────────── 
     // CODE → <LoadConstNull>: <Reg8: 3>
-    r3 = null
-    if (r4 == r3) {
+    // USED → r3 = null;
+    if (null == null) {
         // ──────────────── Block 7 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 3574>  # String: 'nullish-right' (String)
         // USED → r3 = "nullish-right";

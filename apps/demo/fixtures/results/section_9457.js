@@ -13,7 +13,7 @@ function labeledContinueTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
     // USED → r3 = 1;
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
-    r6 = 3
+    // USED → r6 = 3;
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 4790>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer' (String)
     // USED → r10 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer";
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 4796>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1' (String)
@@ -45,14 +45,14 @@ function labeledContinueTest(param0) {
         r11 = globalThis.console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
         // ──────────────── Block 6 ──────────────── 
         // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
-        r4 = 0 + 1
-        if (r4 >= r6) {
+        // USED → r4 = 0 + 1;
+        if (0 + 1 >= 3) {
             // LOOP → START (while)
             while (true) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 1, Reg8: 0>
                 // USED → r1 = 0;
-                if (r1 !== r3) {
+                if (0 !== 1) {
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                     // USED → r12 = globalThis.console;
@@ -61,9 +61,9 @@ function labeledContinueTest(param0) {
                     // CODE → <Call3>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 2, Reg8: 1>
                     r11 = globalThis.console.log(0, 0)
                     // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 3>
-                    r0 = 0 + 1
+                    // USED → r0 = 0 + 1;
                     // CODE → <JLessN>: <Addr8: -28, Reg8: 0, Reg8: 6>  # Address: 0000002b
-                    if (r0 < r6) goto label_43;
+                    if (0 + 1 < 3) goto label_43;
                 }
             }
             // LOOP → END

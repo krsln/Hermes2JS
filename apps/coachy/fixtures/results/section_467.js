@@ -1688,23 +1688,23 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 52, Reg8: 9>
         createEnvironment()[52] = globalThis.clearTimeout
         // CODE → <GetById>: <Reg8: 16, Reg8: 0, UInt8: 34, string_id: 15863>  # String: 'RN$enableMicrotasksInReact' (Identifier)
-        r16 = globalThis.RN$enableMicrotasksInReact
+        // USED → r16 = globalThis.RN$enableMicrotasksInReact;
         // CODE → <LoadConstString>: <Reg8: 9, string_id: 610>  # String: 'undefined' (String)
         // USED → r9 = "undefined";
         // CODE → <TypeOf>: <Reg8: 16, Reg8: 16>
-        // USED → r16 = typeof r16;
+        // USED → r16 = typeof globalThis.RN$enableMicrotasksInReact;
         // CODE → <StrictNeq>: <Reg8: 16, Reg8: 9, Reg8: 16>
-        // USED → r16 = "undefined" !== typeof r16 && !r42;
+        // USED → r16 = "undefined" !== typeof globalThis.RN$enableMicrotasksInReact && !!globalThis.RN$enableMicrotasksInReact;
         // ──────────────── Block 16 ──────────────── 
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 53, Reg8: 16>
-        createEnvironment()[53] = "undefined" !== typeof r16 && !r42
+        createEnvironment()[53] = "undefined" !== typeof globalThis.RN$enableMicrotasksInReact && !!globalThis.RN$enableMicrotasksInReact
         // CODE → <GetById>: <Reg8: 42, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
-        r42 = globalThis.queueMicrotask
+        // USED → r42 = globalThis.queueMicrotask;
         // CODE → <LoadConstString>: <Reg8: 16, string_id: 12255>  # String: 'function' (Identifier)
-        r16 = "function"
+        // USED → r16 = "function";
         // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
-        r42 = typeof r42
-        if (r16 === r42) {
+        // USED → r42 = typeof globalThis.queueMicrotask;
+        if ("function" === typeof globalThis.queueMicrotask) {
             // ──────────────── Block 17 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
             // USED → r41 = globalThis.queueMicrotask;
@@ -1941,10 +1941,10 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
         // USED → r39 = globalThis.Object;
         // CODE → <GetById>: <Reg8: 39, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
-        r39 = globalThis.Object.is
+        // USED → r39 = globalThis.Object.is;
         // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
-        r39 = typeof r39
-        if (r16 === r39) {
+        // USED → r39 = typeof globalThis.Object.is;
+        if ("function" === typeof globalThis.Object.is) {
             // ──────────────── Block 19 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
             // USED → r39 = globalThis.Object;
@@ -2315,10 +2315,10 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
         // USED → r17 = param2.call(undefined, param7[2]).ReactFiberErrorDialog;
         // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
-        r17 = param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog
+        // USED → r17 = param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog;
         // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
-        r17 = typeof r17
-        if (r16 !== r17) {
+        // USED → r17 = typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog;
+        if ("function" !== typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog) {
             // ──────────────── Block 35 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
             // USED → r1 = globalThis.Error;
@@ -2367,10 +2367,10 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
             createEnvironment()[131] = false
             // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-            r15 = globalThis.WeakSet
+            // USED → r15 = globalThis.WeakSet;
             // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-            r15 = typeof r15
-            if (r16 === r15) {
+            // USED → r15 = typeof globalThis.WeakSet;
+            if ("function" === typeof globalThis.WeakSet) {
                 // ──────────────── Block 23 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
                 // USED → r15 = globalThis.WeakSet;
@@ -2391,10 +2391,10 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 135, Reg8: 15>
             createEnvironment()[135] = 8192
             // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-            r15 = globalThis.WeakMap
+            // USED → r15 = globalThis.WeakMap;
             // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-            r15 = typeof r15
-            if (r16 === r15) {
+            // USED → r15 = typeof globalThis.WeakMap;
+            if ("function" === typeof globalThis.WeakMap) {
                 // ──────────────── Block 26 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
                 // USED → r15 = globalThis.WeakMap;
@@ -2582,10 +2582,10 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <Mov>: <Reg8: 7, Reg8: 8>
             // USED → r7 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" };
             // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
-            r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+            // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
             // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
-            r8 = typeof r8
-            if (r9 !== r8 && (!globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled && globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber)) {
+            // USED → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+            if ("undefined" !== typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__ && (!globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.isDisabled && globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.supportsFiber)) {
                 // ──────────────── Block 32 ──────────────── 
                 // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
                 // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject;
@@ -2644,13 +2644,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
                 } else {
                     // ──────────────── Block 4 ──────────────── 
                     // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-                    r53 = {  }[r49.next()]
+                    // USED → r53 = {  }[r49.next()];
                     // CODE → <Mov>: <Reg8: 43, Reg8: 54>
                     r43 = false
                     // CODE → <Mov>: <Reg8: 42, Reg8: 52>
                     r42 = { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }[r49.next()]
                     // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
-                    if (r53 === r52) goto label_3677;
+                    if ({  }[r49.next()] === { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }[r49.next()]) goto label_3677;
                 }
             }
         }

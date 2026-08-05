@@ -15,7 +15,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 1>
     r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start")
     // CODE → <LoadConstZero>: <Reg8: 2>
-    r2 = 0
+    // USED → r2 = 0;
     // CODE → <LoadConstZero>: <Reg8: 4>
     // USED → r4 = 0;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4272>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
@@ -24,28 +24,28 @@ function tryLoopMultiReturnTest(param0, param1) {
     while (true) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 4>
-        r6 = 0
+        // USED → r6 = 0;
         // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-        r5 = param1.length
-        if (r6 < r5) {
+        // USED → r5 = param1.length;
+        if (0 < param1.length) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 5, Reg8: 4>
             // USED → r5 = 0;
             // CODE → <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
-            r5 = param1[0]
+            // USED → r5 = param1[0];
             // CODE → <JLess>: <Addr8: 52, Reg8: 5, Reg8: 2>  # Address: 0000006a
-            if (r5 < r2) goto label_106;
+            if (param1[0] < 0) goto label_106;
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Mov>: <Reg8: 5, Reg8: 4>
             // USED → r5 = 0;
             // CODE → <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
-            r5 = param1[0]
-            if (r5 === r2) {
+            // USED → r5 = param1[0];
+            if (param1[0] === 0) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-                r5 = r5 + 1
+                // USED → r5 = 0 + 1;
                 // CODE → <Inc>: <Reg8: 4, Reg8: 5>
-                r4 = r5 + 1
+                r4 = 0 + 1 + 1
             } else {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -59,7 +59,7 @@ function tryLoopMultiReturnTest(param0, param1) {
                 // CODE → <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
                 r6 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", param1[0])
                 // CODE → <Inc>: <Reg8: 4, Reg8: 5>
-                // USED → r4 = r5 + 1;
+                // USED → r4 = 0 + 1;
             }
         }
     }

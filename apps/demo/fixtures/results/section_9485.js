@@ -17,10 +17,10 @@ function nestedObjectDestructureTest(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1918, UInt16: 93>  # Object: {'page': 1}
     // USED → r3 = { "page": 1 };
     // CODE → <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 12200>  # String: 'page' (Identifier)
-    r5 = { "page": 1 }.page
+    // USED → r5 = { "page": 1 }.page;
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
-    if (r5 === r1) {
+    if ({ "page": 1 }.page === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
         // USED → r5 = 1;

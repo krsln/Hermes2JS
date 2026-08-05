@@ -11,11 +11,11 @@ function tripleNestedLabeledTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     r1 = globalThis.console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
-    r6 = 3
+    // USED → r6 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 2>
-    r5 = 2
+    // USED → r5 = 2;
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
-    r3 = 1
+    // USED → r3 = 1;
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // CODE → <LoadConstZero>: <Reg8: 1>
@@ -26,46 +26,46 @@ function tripleNestedLabeledTest(param0) {
         // CODE → <Mov>: <Reg8: 10, Reg8: 2>
         // USED → r10 = 0;
         // CODE → <Mov>: <Reg8: 8, Reg8: 1>
-        r8 = 0
+        // USED → r8 = 0;
         // CODE → <LoadConstZero>: <Reg8: 9>
         // USED → r9 = 0;
         // ──────────────── Block 8 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 8>
-        r1 = r8 + 1
+        // USED → r1 = 0 + 1;
         // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-        r2 = r13 + 1
-        if (r1 >= r6) {
+        r2 = 0 + 1
+        if (0 + 1 >= 3) {
             // LOOP → START (while)
             while (true) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 13, Reg8: 10>
-                r13 = 0
+                // USED → r13 = 0;
                 // CODE → <Mov>: <Reg8: 11, Reg8: 9>
-                r11 = 0
+                // USED → r11 = 0;
                 // CODE → <LoadConstZero>: <Reg8: 12>
                 // USED → r12 = 0;
                 // ──────────────── Block 7 ──────────────── 
                 // CODE → <Inc>: <Reg8: 9, Reg8: 11>
-                r9 = r11 + 1
+                // USED → r9 = 0 + 1;
                 // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-                r10 = r13 + 1
-                if (r9 >= r6) {
+                r10 = 0 + 1
+                if (0 + 1 >= 3) {
                     // LOOP → START (while)
                     while (true) {
                         // ──────────────── Block 3 ──────────────── 
                         // CODE → <Inc>: <Reg8: 4, Reg8: 13>
-                        // USED → r4 = r13 + 1;
+                        // USED → r4 = 0 + 1;
                         // CODE → <Mov>: <Reg8: 14, Reg8: 12>
-                        r14 = 0
-                        if (r14 !== r3) {
-                            if (r8 !== r5) {
+                        // USED → r14 = 0;
+                        if (0 !== 1) {
+                            if (0 !== 2) {
                                 // ──────────────── Block 6 ──────────────── 
                                 // CODE → <Inc>: <Reg8: 12, Reg8: 14>
-                                r12 = r14 + 1
+                                // USED → r12 = 0 + 1;
                                 // CODE → <Mov>: <Reg8: 13, Reg8: 4>
-                                r13 = r13 + 1
+                                r13 = 0 + 1
                                 // CODE → <JLess>: <Addr8: -24, Reg8: 12, Reg8: 6>  # Address: 00000033
-                                if (r12 < r6) goto label_51;
+                                if (0 + 1 < 3) goto label_51;
                             } else {
                             }
                         }
@@ -85,7 +85,7 @@ function tripleNestedLabeledTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4620>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits' (String)
     // USED → r1 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits";
     // CODE → <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 4>
-    r1 = globalThis.console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits", r13 + 1)
+    r1 = globalThis.console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits", 0 + 1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

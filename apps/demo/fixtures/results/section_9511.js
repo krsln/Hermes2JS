@@ -1,18 +1,18 @@
 function defaultParameterTest(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 2>
-    r6 = param2
+    // USED → r6 = param2;
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
-    if (r6 === r1) {
+    if (param2 === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 10>
         // USED → r6 = 10;
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 3>
-    r5 = param3
-    if (r5 === r1) {
+    // USED → r5 = param3;
+    if (param3 === undefined) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 5, string_id: 7900>  # String: 'result' (Identifier)
         // USED → r5 = "result";

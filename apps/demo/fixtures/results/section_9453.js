@@ -33,24 +33,24 @@ function complexTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 1861>  # String: 'other' (String)
     // USED → r8 = "other";
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
-    r3 = 3
+    // USED → r3 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
-    r4 = 2
+    // USED → r4 = 2;
     if (0 < [1, 2, 3, 4, 5].length) {
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
-            r7 = [1, 2, 3, 4, 5][0]
+            // USED → r7 = [1, 2, 3, 4, 5][0];
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = 0;
-            if (r2 !== r7) {
+            if (1 !== [1, 2, 3, 4, 5][0]) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <JStrictEqual>: <Addr8: 76, Reg8: 4, Reg8: 7>  # Address: 000000a7
-                if (r4 === r7) goto label_167;
+                if (2 === [1, 2, 3, 4, 5][0]) goto label_167;
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <JStrictEqual>: <Addr8: 38, Reg8: 3, Reg8: 7>  # Address: 00000085
-                if (r3 === r7) goto label_133;
+                if (3 === [1, 2, 3, 4, 5][0]) goto label_133;
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                 // USED → r15 = globalThis.console;
@@ -99,11 +99,11 @@ function complexTest(param0) {
                 r7 = globalThis.console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-                r0 = 0 + 1
+                // USED → r0 = 0 + 1;
                 // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-                r7 = [1, 2, 3, 4, 5].length
+                // USED → r7 = [1, 2, 3, 4, 5].length;
                 // CODE → <JLessLong>: <Addr32: -130, Reg8: 0, Reg8: 7>  # Address: 00000050
-                if (r0 < r7) goto label_80;
+                if (0 + 1 < [1, 2, 3, 4, 5].length) goto label_80;
             }
         }
         // LOOP → END

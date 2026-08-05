@@ -1,10 +1,10 @@
 function mayThrow(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
-    r1 = param1
+    // USED → r1 = param1;
     // CODE → <LoadConstZero>: <Reg8: 0>
-    r0 = 0
-    if (r1 < r0) {
+    // USED → r0 = 0;
+    if (param1 < 0) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <GetGlobalObject>: <Reg8: 0>
         // USED → r0 = globalThis;
@@ -27,10 +27,10 @@ function mayThrow(param0, param1) {
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
-        r0 = 2
+        // USED → r0 = 2;
         // CODE → <Mul>: <Reg8: 0, Reg8: 1, Reg8: 0>
-        // USED → r0 = r1 * r0;
+        // USED → r0 = param1 * 2;
         // CODE → <Ret>: <Reg8: 0>
-        return r1 * r0;
+        return param1 * 2;
     }
 }
