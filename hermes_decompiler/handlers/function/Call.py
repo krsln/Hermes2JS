@@ -36,13 +36,19 @@ class Call(OpcodeHandler):
 
         dest_reg, func_reg, num_args = map(int, match.groups())
 
-        if num_args > func_reg:
+        highest = max(
+            int(r[1:])
+            for r in analysis.registers
+        )
+
+        if highest + 1 < num_args:
             return self.build_invalid_args_result(analysis, entry)
 
         # Arguments occupy the contiguous register range
         # [function - argCount, function). First argument is at the
         # lowest register index.
-        arg_regs = list(range(func_reg - num_args, func_reg))
+        arg_regs = range(highest, highest - num_args, -1)
+        # arg_regs = list(range(func_reg - num_args, func_reg))
 
         # NOTE: kept as bare register references (not resolved via
         # get_register_value), same as the original - the argument slots

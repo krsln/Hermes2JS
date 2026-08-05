@@ -45,7 +45,7 @@ function callRestParameterTests(param0) {
     // CODE → <Mov>: <Reg8: 14, Reg8: 10>
     r14 = "b"
     // CODE → <Call>: <Reg8: 4, Reg8: 11, UInt8: 5>
-    r4 = getParentEnvironment(0)[1](r6, r7, r8, r9, r10)
+    r4 = getParentEnvironment(0)[1](r16, r15, r14, r13, r12)
     // CODE → <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 2>
     // USED → r6 = getParentEnvironment(0)[2];
     // CODE → <Call1>: <Reg8: 4, Reg8: 6, Reg8: 3>

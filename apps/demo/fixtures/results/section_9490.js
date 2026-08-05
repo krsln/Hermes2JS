@@ -168,7 +168,7 @@ function callDestructuringTests(param0) {
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>
     r12 = GetIterator(r6).next()
     // CODE → <Call>: <Reg8: 5, Reg8: 5, UInt8: 5>
-    r5 = globalThis.console.log(r0, r1, r2, r3, r4)
+    r5 = globalThis.console.log(r16, r15, r14, r13, r12)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
