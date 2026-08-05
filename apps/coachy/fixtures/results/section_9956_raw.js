@@ -5,9 +5,9 @@ async function* anon_9956(param0, param1) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r1 = __generatorReturn;
+    // USED → r1 = __resumeIsReturn;
     // CODE → <JmpTrue>: <Addr8: 57, Reg8: 1>  # Address: 0000003d
-    if (__generatorReturn) goto label_61;
+    if (__resumeIsReturn) goto label_61;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 3>
     // USED → r1 = getEnvironment(3);
@@ -33,24 +33,23 @@ async function* anon_9956(param0, param1) {
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
     // USED → r1 = await yield;
-    // ──────────────── Block 4 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
-    // USED → r2 = __generatorReturn;
+    // USED → r2 = __resumeIsReturn;
     // CODE → <JmpTrue>: <Addr8: 11, Reg8: 2>  # Address: 0000003a
-    if (__generatorReturn) goto label_58;
-    // ──────────────── Block 5 ──────────────── 
+    if (__resumeIsReturn) goto label_58;
+    // ──────────────── Block 4 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'data' (Identifier)
     // USED → r2 = await yield.data;
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 2>
     return await yield.data;
-    // ──────────────── Block 6 ──────────────── 
+    // ──────────────── Block 5 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
     return await yield;
-    // ──────────────── Block 7 ──────────────── 
+    // ──────────────── Block 6 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>

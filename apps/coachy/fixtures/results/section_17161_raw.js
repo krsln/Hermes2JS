@@ -7,9 +7,9 @@ async function* anon_17161(param0, param1) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r1 = __generatorReturn;
+    // USED → r1 = __resumeIsReturn;
     // CODE → <JmpTrueLong>: <Addr32: 161, Reg8: 1>  # Address: 000000a8
-    if (__generatorReturn) goto label_168;
+    if (__resumeIsReturn) goto label_168;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
@@ -27,24 +27,23 @@ async function* anon_17161(param0, param1) {
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
     // USED → r1 = await yield;
-    // ──────────────── Block 4 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-    // USED → r3 = __generatorReturn;
+    // USED → r3 = __resumeIsReturn;
     // CODE → <JmpTrueLong>: <Addr32: 130, Reg8: 3>  # Address: 000000a5
-    if (__generatorReturn) goto label_165;
-    // ──────────────── Block 5 ──────────────── 
+    if (__resumeIsReturn) goto label_165;
+    // ──────────────── Block 4 ──────────────── 
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 14168>  # String: 'ok' (Identifier)
     // USED → r3 = await yield.ok;
     // CODE → <JmpTrue>: <Addr8: 93, Reg8: 3>  # Address: 0000008c
     if (await yield.ok) goto label_140;
-    // ──────────────── Block 6 ──────────────── 
+    // ──────────────── Block 5 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
     // USED → r4 = await yield.status;
     // CODE → <LoadConstZero>: <Reg8: 3>
     // USED → r3 = 0;
     // CODE → <JStrictNotEqual>: <Addr8: 22, Reg8: 4, Reg8: 3>  # Address: 00000050
     if (await yield.status !== 0) goto label_80;
-    // ──────────────── Block 7 ──────────────── 
+    // ──────────────── Block 6 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 19693>  # String: 'startsWith' (Identifier)
     // USED → r4 = param1.startsWith;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 1058>  # String: 'file://' (String)
@@ -53,7 +52,7 @@ async function* anon_17161(param0, param1) {
     // USED → r3 = param1.startsWith("file://");
     // CODE → <JmpTrue>: <Addr8: 63, Reg8: 3>  # Address: 0000008c
     if (param1.startsWith("file://")) goto label_140;
-    // ──────────────── Block 8 ──────────────── 
+    // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)
     // USED → r4 = globalThis.Error;
     // CODE → <GetById>: <Reg8: 6, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
@@ -80,40 +79,39 @@ async function* anon_17161(param0, param1) {
     // USED → r2 = new globalThis.Error(globalThis.HermesInternal.concat.call("Fetching ", param1, " failed with status ", await yield.status));
     // CODE → <Throw>: <Reg8: 2>
     throw new globalThis.Error(globalThis.HermesInternal.concat.call("Fetching ", param1, " failed with status ", await yield.status));
-    // ──────────────── Block 9 ──────────────── 
+    // ──────────────── Block 8 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
     // USED → r2 = await yield.text;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
     // USED → r2 = await await yield.text();
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000099
     goto label_153;
-    // ──────────────── Block 10 ──────────────── 
+    // ──────────────── Block 9 ──────────────── 
     // CODE → <Ret>: <Reg8: 2>
     return await await yield.text();
-    // ──────────────── Block 11 ──────────────── 
+    // ──────────────── Block 10 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
     // USED → r2 = await yield;
-    // ──────────────── Block 12 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
-    // USED → r3 = __generatorReturn;
+    // USED → r3 = __resumeIsReturn;
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 3>  # Address: 000000a2
-    if (__generatorReturn) goto label_162;
+    if (__resumeIsReturn) goto label_162;
+    // ──────────────── Block 11 ──────────────── 
+    // CODE → <CompleteGenerator>: <>
+    // CompleteGenerator
+    // CODE → <Ret>: <Reg8: 2>
+    return await yield;
+    // ──────────────── Block 12 ──────────────── 
+    // CODE → <CompleteGenerator>: <>
+    // CompleteGenerator
+    // CODE → <Ret>: <Reg8: 2>
+    return await yield;
     // ──────────────── Block 13 ──────────────── 
-    // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
-    // CODE → <Ret>: <Reg8: 2>
-    return await yield;
-    // ──────────────── Block 14 ──────────────── 
-    // CODE → <CompleteGenerator>: <>
-    // CompleteGenerator
-    // CODE → <Ret>: <Reg8: 2>
-    return await yield;
-    // ──────────────── Block 15 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
     return await yield;
-    // ──────────────── Block 16 ──────────────── 
+    // ──────────────── Block 14 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>
