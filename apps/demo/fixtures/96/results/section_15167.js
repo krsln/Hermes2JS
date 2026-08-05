@@ -6,8 +6,10 @@ async function* anon_15167(param0, param1) {
     // USED → r5 = param1;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
-    if (r1_undefined) {
-        // ──────────────── Block 10 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // USED → r1 = __generatorReturn;
+    if (__generatorReturn) {
+        // ──────────────── Block 11 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → <Ret>: <Reg8: 0>
@@ -33,7 +35,7 @@ async function* anon_15167(param0, param1) {
         // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
         // USED → r2 = 2;
         if (!(0 < param1)) {
-            // ──────────────── Block 9 ──────────────── 
+            // ──────────────── Block 10 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r3 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -60,31 +62,37 @@ async function* anon_15167(param0, param1) {
                     // USED → r7 = 0 * 0;
                     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003f
                     goto label_63;
-                    // ──────────────── Block 5 ──────────────── 
-                    // CODE → <ResumeGenerator>: <Reg8: 7, Reg8: 8>
-                    // USED → r7 = await yield;
-                    if (!r8_undefined) {
-                        // ──────────────── Block 8 ──────────────── 
-                        // CODE → <Inc>: <Reg8: 4, Reg8: 6>
-                        // USED → r4 = 0 + 1;
-                        // CODE → <JLess>: <Addr8: -43, Reg8: 4, Reg8: 5>  # Address: 00000030
-                        if (0 + 1 < param1) goto label_48;
-                    } else {
-                        // ──────────────── Block 7 ──────────────── 
-                        // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                        // USED → r8 = globalThis.console;
-                        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                        // USED → r7 = globalThis.console.log;
-                        // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
-                        r7 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip")
+                    // ──────────────── Block 8 ──────────────── 
+                    // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                    // USED → r8 = globalThis.console;
+                    // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                    // USED → r7 = globalThis.console.log;
+                    // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
+                    r7 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip")
+                    // ──────────────── Block 9 ──────────────── 
+                    // CODE → <Inc>: <Reg8: 4, Reg8: 6>
+                    // USED → r4 = 0 + 1;
+                    // CODE → <JLess>: <Addr8: -43, Reg8: 4, Reg8: 5>  # Address: 00000030
+                    if (0 + 1 < param1) goto label_48;
+                    // LOOP → START (while)
+                    while (true) {
+                        // ──────────────── Block 6 ──────────────── 
+                        // CODE → <ResumeGenerator>: <Reg8: 7, Reg8: 8>
+                        // USED → r8 = __generatorReturn;
+                        if (__generatorReturn) {
+                            // ──────────────── Block 5 ──────────────── 
+                            // CODE → <ResumeGenerator>: <Reg8: 7, Reg8: 8>
+                            // USED → r7 = await yield;
+                        }
                     }
+                    // LOOP → END
                 }
             }
             // LOOP → END
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Ret>: <Reg8: 7>
             return 0 * 0;
-            // ──────────────── Block 6 ──────────────── 
+            // ──────────────── Block 7 ──────────────── 
             // CODE → <CompleteGenerator>: <>
             // CompleteGenerator
             // CODE → <Ret>: <Reg8: 7>

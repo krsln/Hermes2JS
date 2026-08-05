@@ -6,8 +6,10 @@ async function* anon_15167(param0, param1) {
     // USED → r5 = param1;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // USED → r1 = __generatorReturn;
     // CODE → <JmpTrue>: <Addr8: 113, Reg8: 1>  # Address: 00000078
-    if (r1_undefined) goto label_120;
+    if (__generatorReturn) goto label_120;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
@@ -45,26 +47,29 @@ async function* anon_15167(param0, param1) {
     // ──────────────── Block 5 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 7, Reg8: 8>
     // USED → r7 = await yield;
-    // CODE → <JmpFalse>: <Addr8: 22, Reg8: 8>  # Address: 00000058
-    if (!r8_undefined) goto label_88;
     // ──────────────── Block 6 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 7, Reg8: 8>
+    // USED → r8 = __generatorReturn;
+    // CODE → <JmpFalse>: <Addr8: 22, Reg8: 8>  # Address: 00000058
+    if (!__generatorReturn) goto label_88;
+    // ──────────────── Block 7 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 7>
     return await yield;
-    // ──────────────── Block 7 ──────────────── 
+    // ──────────────── Block 8 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r8 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r7 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
     r7 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip")
-    // ──────────────── Block 8 ──────────────── 
+    // ──────────────── Block 9 ──────────────── 
     // CODE → <Inc>: <Reg8: 4, Reg8: 6>
     // USED → r4 = 0 + 1;
     // CODE → <JLess>: <Addr8: -43, Reg8: 4, Reg8: 5>  # Address: 00000030
     if (0 + 1 < param1) goto label_48;
-    // ──────────────── Block 9 ──────────────── 
+    // ──────────────── Block 10 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -79,7 +84,7 @@ async function* anon_15167(param0, param1) {
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
     return undefined;
-    // ──────────────── Block 10 ──────────────── 
+    // ──────────────── Block 11 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>

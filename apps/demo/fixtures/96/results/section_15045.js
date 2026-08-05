@@ -4,8 +4,10 @@ async function* anon_15045(param0) {
     // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
-    if (r1_undefined) {
-        // ──────────────── Block 6 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // USED → r1 = __generatorReturn;
+    if (__generatorReturn) {
+        // ──────────────── Block 7 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → <Ret>: <Reg8: 0>
@@ -411,41 +413,47 @@ async function* anon_15045(param0) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
         return await getEnvironment(2)[26].callAsyncTests.call(undefined);
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 5>
-        // USED → r1 = await yield;
-        if (getEnvironment(2)[19].taggedTemplateTest) {
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → <CompleteGenerator>: <>
-            // CompleteGenerator
-            // CODE → <Ret>: <Reg8: 1>
-            return await yield;
-        } else {
+        // LOOP → START (while)
+        while (true) {
             // ──────────────── Block 4 ──────────────── 
-            // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 27>
-            // USED → r5 = getEnvironment(2)[27];
-            // CODE → <GetById>: <Reg8: 5, Reg8: 5, UInt8: 57, string_id: 10812>  # String: 'classTest' (Identifier)
-            // USED → r5 = getEnvironment(2)[27].classTest;
-            // CODE → <Call1>: <Reg8: 5, Reg8: 5, Reg8: 2>
-            r5 = getEnvironment(2)[27].classTest.call(undefined)
-            // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 28>
-            // USED → r4 = getEnvironment(2)[28];
-            // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 58, string_id: 10854>  # String: 'privateStaticTest' (Identifier)
-            // USED → r4 = getEnvironment(2)[28].privateStaticTest;
-            // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 2>
-            r4 = getEnvironment(2)[28].privateStaticTest.call(undefined)
-            // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r5 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r4 = globalThis.console.log;
-            // CODE → <LoadConstString>: <Reg8: 3, string_id: 4865>  # String: '__BC:index/runAllTests/end' (String)
-            // USED → r3 = "__BC:index/runAllTests/end";
-            // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-            r3 = globalThis.console.log("__BC:index/runAllTests/end")
-            // CODE → <CompleteGenerator>: <>
-            // CompleteGenerator
-            // CODE → <Ret>: <Reg8: 2>
-            return undefined;
+            // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 5>
+            // USED → r5 = __generatorReturn;
+            if (!__generatorReturn) {
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 5>
+                // USED → r1 = await yield;
+            }
         }
+        // LOOP → END
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 27>
+        // USED → r5 = getEnvironment(2)[27];
+        // CODE → <GetById>: <Reg8: 5, Reg8: 5, UInt8: 57, string_id: 10812>  # String: 'classTest' (Identifier)
+        // USED → r5 = getEnvironment(2)[27].classTest;
+        // CODE → <Call1>: <Reg8: 5, Reg8: 5, Reg8: 2>
+        r5 = getEnvironment(2)[27].classTest.call(undefined)
+        // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 28>
+        // USED → r4 = getEnvironment(2)[28];
+        // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 58, string_id: 10854>  # String: 'privateStaticTest' (Identifier)
+        // USED → r4 = getEnvironment(2)[28].privateStaticTest;
+        // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 2>
+        r4 = getEnvironment(2)[28].privateStaticTest.call(undefined)
+        // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r5 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r4 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 4865>  # String: '__BC:index/runAllTests/end' (String)
+        // USED → r3 = "__BC:index/runAllTests/end";
+        // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+        r3 = globalThis.console.log("__BC:index/runAllTests/end")
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 2>
+        return undefined;
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 1>
+        return await yield;
     }
 }

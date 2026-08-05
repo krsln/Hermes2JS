@@ -4,8 +4,10 @@ async function* anon_9956(param0, param1) {
     // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
-    if (r1_undefined) {
-        // ──────────────── Block 6 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // USED → r1 = __generatorReturn;
+    if (__generatorReturn) {
+        // ──────────────── Block 7 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → <Ret>: <Reg8: 0>
@@ -33,23 +35,29 @@ async function* anon_9956(param0, param1) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
         return await getEnvironment(3)[16].default.get("https://api.edamam.com/api/food-database/v2/parser?app_id=3ac995c0&app_key=86e23e190bd9559f728aeb1010a73765&nutrition-type=logging&ingr=" + param1);
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
-        // USED → r1 = await yield;
-        if (getEnvironment(3)[16].default.get) {
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → <CompleteGenerator>: <>
-            // CompleteGenerator
-            // CODE → <Ret>: <Reg8: 1>
-            return await yield;
-        } else {
+        // LOOP → START (while)
+        while (true) {
             // ──────────────── Block 4 ──────────────── 
-            // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'data' (Identifier)
-            // USED → r2 = await yield.data;
-            // CODE → <CompleteGenerator>: <>
-            // CompleteGenerator
-            // CODE → <Ret>: <Reg8: 2>
-            return await yield.data;
+            // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
+            // USED → r2 = __generatorReturn;
+            if (!__generatorReturn) {
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
+                // USED → r1 = await yield;
+            }
         }
+        // LOOP → END
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'data' (Identifier)
+        // USED → r2 = await yield.data;
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 2>
+        return await yield.data;
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 1>
+        return await yield;
     }
 }

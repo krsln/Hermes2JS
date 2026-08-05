@@ -1,6 +1,6 @@
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, sequence, REG
-from hermes_decompiler.ir.expressions import AwaitExpression, YieldExpression
+from hermes_decompiler.ir.expressions import AwaitExpression, YieldExpression, Identifier
 from hermes_decompiler.runtime import HermesAnalysis
 
 
@@ -25,13 +25,16 @@ class ResumeGenerator(OpcodeHandler):
         if not match:
             return self.build_invalid_args_result(analysis, entry)
 
-        dest_reg, _flag_reg = map(int, match.groups())
+        dest_reg, flag_reg = map(int, match.groups())
 
-        # `await yield` is real, expressible JS - modeled directly
-        # instead of the previous comment-annotated string.
+        # value = await yield;   (normal next / return value)
         expression = AwaitExpression(argument=YieldExpression())
 
         result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
         analysis.add_result(result)
+
+        # Track the generator return flag for subsequent conditional jumps.
+        flag_result = OpcodeResult(entry, value=Identifier(name=f"__generatorReturn"), dest_reg=flag_reg)
+        analysis.add_result(flag_result)
 
         return result

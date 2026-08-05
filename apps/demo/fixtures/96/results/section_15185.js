@@ -4,8 +4,10 @@ async function* anon_15185(param0, param1) {
     // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 2>
     // USED → r0 = await yield;
-    if (r2_undefined) {
-        // ──────────────── Block 10 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 2>
+    // USED → r2 = __generatorReturn;
+    if (__generatorReturn) {
+        // ──────────────── Block 11 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → <Ret>: <Reg8: 0>
@@ -49,20 +51,27 @@ async function* anon_15185(param0, param1) {
                 // USED → r3 = await getEnvironment(2)[2].call(undefined, GetIterator(r6).next());
                 // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
                 goto label_74;
-                // ──────────────── Block 5 ──────────────── 
-                // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-                // USED → r3 = await yield;
-                // CODE → <JmpTrue>: <Addr8: 9, Reg8: 9>  # Address: 00000056
-                if (GetIterator(r6).next()) goto label_86;
-                // ──────────────── Block 6 ──────────────── 
+                // ──────────────── Block 7 ──────────────── 
                 // CODE → <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
                 // USED → r1 = 0 + await yield;
                 // CODE → <Jmp>: <Addr8: -37>  # Address: 0000002f
                 goto label_47;
+                // LOOP → START (while)
+                while (true) {
+                    // ──────────────── Block 6 ──────────────── 
+                    // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 9>
+                    // USED → r9 = __generatorReturn;
+                    if (!__generatorReturn) {
+                        // ──────────────── Block 5 ──────────────── 
+                        // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 9>
+                        // USED → r3 = await yield;
+                    }
+                }
+                // LOOP → END
             }
         }
         // LOOP → END
-        // ──────────────── Block 9 ──────────────── 
+        // ──────────────── Block 10 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r4 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

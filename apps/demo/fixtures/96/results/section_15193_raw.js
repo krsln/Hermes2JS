@@ -4,8 +4,10 @@ async function* anon_15193(param0) {
     // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // USED → r1 = __generatorReturn;
     // CODE → <JmpTrueLong>: <Addr32: 149, Reg8: 1>  # Address: 00000099
-    if (r1_undefined) goto label_153;
+    if (__generatorReturn) goto label_153;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 6>
     // USED → r6 = globalThis;
@@ -33,24 +35,30 @@ async function* anon_15193(param0) {
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
     // USED → r1 = await yield;
-    // CODE → <JmpTrue>: <Addr8: 98, Reg8: 2>  # Address: 00000096
-    if (globalThis.console.log) goto label_150;
     // ──────────────── Block 4 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
+    // USED → r2 = __generatorReturn;
+    // CODE → <JmpTrue>: <Addr8: 98, Reg8: 2>  # Address: 00000096
+    if (__generatorReturn) goto label_150;
+    // ──────────────── Block 5 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 5>
     // USED → r2 = getEnvironment(2)[5];
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
     // USED → r2 = await getEnvironment(2)[5].call(undefined);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000043
     goto label_67;
-    // ──────────────── Block 5 ──────────────── 
+    // ──────────────── Block 6 ──────────────── 
     // CODE → <Ret>: <Reg8: 2>
     return await getEnvironment(2)[5].call(undefined);
-    // ──────────────── Block 6 ──────────────── 
+    // ──────────────── Block 7 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
     // USED → r2 = await yield;
+    // ──────────────── Block 8 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+    // USED → r3 = __generatorReturn;
     // CODE → <JmpTrue>: <Addr8: 77, Reg8: 3>  # Address: 00000093
-    if (globalThis.console) goto label_147;
-    // ──────────────── Block 7 ──────────────── 
+    if (__generatorReturn) goto label_147;
+    // ──────────────── Block 9 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 7>
     // USED → r7 = getEnvironment(2)[7];
     // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
@@ -59,30 +67,36 @@ async function* anon_15193(param0) {
     // USED → r3 = await getEnvironment(2)[7].call(undefined, [1, 2, 3]);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000005e
     goto label_94;
-    // ──────────────── Block 8 ──────────────── 
+    // ──────────────── Block 10 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
     return await getEnvironment(2)[7].call(undefined, [1, 2, 3]);
-    // ──────────────── Block 9 ──────────────── 
+    // ──────────────── Block 11 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 7>
     // USED → r3 = await yield;
+    // ──────────────── Block 12 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 7>
+    // USED → r7 = __generatorReturn;
     // CODE → <JmpTrue>: <Addr8: 47, Reg8: 7>  # Address: 00000090
-    if (getEnvironment(2)[7]) goto label_144;
-    // ──────────────── Block 10 ──────────────── 
+    if (__generatorReturn) goto label_144;
+    // ──────────────── Block 13 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 9>
     // USED → r4 = getEnvironment(2)[9];
     // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
     // USED → r4 = await getEnvironment(2)[9].call(undefined);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000070
     goto label_112;
-    // ──────────────── Block 11 ──────────────── 
+    // ──────────────── Block 14 ──────────────── 
     // CODE → <Ret>: <Reg8: 4>
     return await getEnvironment(2)[9].call(undefined);
-    // ──────────────── Block 12 ──────────────── 
+    // ──────────────── Block 15 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 4, Reg8: 7>
     // USED → r4 = await yield;
+    // ──────────────── Block 16 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 4, Reg8: 7>
+    // USED → r7 = __generatorReturn;
     // CODE → <JmpTrue>: <Addr8: 26, Reg8: 7>  # Address: 0000008d
-    if (getEnvironment(2)[7]) goto label_141;
-    // ──────────────── Block 13 ──────────────── 
+    if (__generatorReturn) goto label_141;
+    // ──────────────── Block 17 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r8 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -95,27 +109,27 @@ async function* anon_15193(param0) {
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 5>
     return undefined;
-    // ──────────────── Block 14 ──────────────── 
+    // ──────────────── Block 18 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 4>
     return await yield;
-    // ──────────────── Block 15 ──────────────── 
+    // ──────────────── Block 19 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 3>
     return await yield;
-    // ──────────────── Block 16 ──────────────── 
+    // ──────────────── Block 20 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 2>
     return await yield;
-    // ──────────────── Block 17 ──────────────── 
+    // ──────────────── Block 21 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
     return await yield;
-    // ──────────────── Block 18 ──────────────── 
+    // ──────────────── Block 22 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>

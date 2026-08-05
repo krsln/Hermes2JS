@@ -4,8 +4,10 @@ async function* anon_15165(param0) {
     // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // USED → r1 = __generatorReturn;
     // CODE → <JmpTrue>: <Addr8: 98, Reg8: 1>  # Address: 00000066
-    if (r1_undefined) goto label_102;
+    if (__generatorReturn) goto label_102;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis;
@@ -27,35 +29,44 @@ async function* anon_15165(param0) {
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
     // USED → r1 = await yield;
-    // CODE → <JmpTrue>: <Addr8: 60, Reg8: 2>  # Address: 00000063
-    if (globalThis.console.log) goto label_99;
     // ──────────────── Block 4 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
+    // USED → r2 = __generatorReturn;
+    // CODE → <JmpTrue>: <Addr8: 60, Reg8: 2>  # Address: 00000063
+    if (__generatorReturn) goto label_99;
+    // ──────────────── Block 5 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
     // USED → r2 = 2;
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000031
     goto label_49;
-    // ──────────────── Block 5 ──────────────── 
+    // ──────────────── Block 6 ──────────────── 
     // CODE → <Ret>: <Reg8: 2>
     return 2;
-    // ──────────────── Block 6 ──────────────── 
+    // ──────────────── Block 7 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
     // USED → r2 = await yield;
+    // ──────────────── Block 8 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+    // USED → r3 = __generatorReturn;
     // CODE → <JmpTrue>: <Addr8: 44, Reg8: 3>  # Address: 00000060
-    if (globalThis.console) goto label_96;
-    // ──────────────── Block 7 ──────────────── 
+    if (__generatorReturn) goto label_96;
+    // ──────────────── Block 9 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
     // USED → r3 = 3;
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003e
     goto label_62;
-    // ──────────────── Block 8 ──────────────── 
+    // ──────────────── Block 10 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
     return 3;
-    // ──────────────── Block 9 ──────────────── 
+    // ──────────────── Block 11 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 5>
     // USED → r3 = await yield;
+    // ──────────────── Block 12 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 5>
+    // USED → r5 = __generatorReturn;
     // CODE → <JmpTrue>: <Addr8: 28, Reg8: 5>  # Address: 0000005d
-    if (r5_undefined) goto label_93;
-    // ──────────────── Block 10 ──────────────── 
+    if (__generatorReturn) goto label_93;
+    // ──────────────── Block 13 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -70,22 +81,22 @@ async function* anon_15165(param0) {
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 4>
     return undefined;
-    // ──────────────── Block 11 ──────────────── 
+    // ──────────────── Block 14 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 3>
     return await yield;
-    // ──────────────── Block 12 ──────────────── 
+    // ──────────────── Block 15 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 2>
     return await yield;
-    // ──────────────── Block 13 ──────────────── 
+    // ──────────────── Block 16 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
     return await yield;
-    // ──────────────── Block 14 ──────────────── 
+    // ──────────────── Block 17 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>

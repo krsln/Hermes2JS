@@ -4,8 +4,10 @@ async function* anon_15193(param0) {
     // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
-    if (r1_undefined) {
-        // ──────────────── Block 18 ──────────────── 
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // USED → r1 = __generatorReturn;
+    if (__generatorReturn) {
+        // ──────────────── Block 22 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → <Ret>: <Reg8: 0>
@@ -35,94 +37,118 @@ async function* anon_15193(param0) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
         return await getEnvironment(2)[3].call(undefined);
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
-        // USED → r1 = await yield;
-        if (globalThis.console.log) {
-            // ──────────────── Block 17 ──────────────── 
-            // CODE → <CompleteGenerator>: <>
-            // CompleteGenerator
-            // CODE → <Ret>: <Reg8: 1>
-            return await yield;
-        } else {
+        // LOOP → START (while)
+        while (true) {
             // ──────────────── Block 4 ──────────────── 
-            // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 5>
-            // USED → r2 = getEnvironment(2)[5];
-            // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-            // USED → r2 = await getEnvironment(2)[5].call(undefined);
-            // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000043
-            goto label_67;
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → <Ret>: <Reg8: 2>
-            return await getEnvironment(2)[5].call(undefined);
-            // ──────────────── Block 6 ──────────────── 
-            // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
-            // USED → r2 = await yield;
-            if (globalThis.console) {
-                // ──────────────── Block 16 ──────────────── 
-                // CODE → <CompleteGenerator>: <>
-                // CompleteGenerator
-                // CODE → <Ret>: <Reg8: 2>
-                return await yield;
-            } else {
-                // ──────────────── Block 7 ──────────────── 
-                // CODE → <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 7>
-                // USED → r7 = getEnvironment(2)[7];
-                // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
-                // USED → r3 = [1, 2, 3];
-                // CODE → <Call2>: <Reg8: 3, Reg8: 7, Reg8: 5, Reg8: 3>
-                // USED → r3 = await getEnvironment(2)[7].call(undefined, [1, 2, 3]);
-                // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000005e
-                goto label_94;
-                // ──────────────── Block 8 ──────────────── 
-                // CODE → <Ret>: <Reg8: 3>
-                return await getEnvironment(2)[7].call(undefined, [1, 2, 3]);
-                // ──────────────── Block 9 ──────────────── 
-                // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 7>
-                // USED → r3 = await yield;
-                if (getEnvironment(2)[7]) {
-                    // ──────────────── Block 15 ──────────────── 
-                    // CODE → <CompleteGenerator>: <>
-                    // CompleteGenerator
-                    // CODE → <Ret>: <Reg8: 3>
-                    return await yield;
-                } else {
-                    // ──────────────── Block 10 ──────────────── 
-                    // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 9>
-                    // USED → r4 = getEnvironment(2)[9];
-                    // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
-                    // USED → r4 = await getEnvironment(2)[9].call(undefined);
-                    // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000070
-                    goto label_112;
-                    // ──────────────── Block 11 ──────────────── 
-                    // CODE → <Ret>: <Reg8: 4>
-                    return await getEnvironment(2)[9].call(undefined);
-                    // ──────────────── Block 12 ──────────────── 
-                    // CODE → <ResumeGenerator>: <Reg8: 4, Reg8: 7>
-                    // USED → r4 = await yield;
-                    if (getEnvironment(2)[7]) {
-                        // ──────────────── Block 14 ──────────────── 
-                        // CODE → <CompleteGenerator>: <>
-                        // CompleteGenerator
-                        // CODE → <Ret>: <Reg8: 4>
-                        return await yield;
-                    } else {
-                        // ──────────────── Block 13 ──────────────── 
-                        // CODE → <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                        // USED → r8 = globalThis.console;
-                        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                        // USED → r7 = globalThis.console.log;
-                        // CODE → <LoadConstString>: <Reg8: 6, string_id: 2895>  # String: '__BC:Functions/AsyncTests/callAsyncTests/end' (String)
-                        // USED → r6 = "__BC:Functions/AsyncTests/callAsyncTests/end";
-                        // CODE → <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
-                        r6 = globalThis.console.log("__BC:Functions/AsyncTests/callAsyncTests/end")
-                        // CODE → <CompleteGenerator>: <>
-                        // CompleteGenerator
-                        // CODE → <Ret>: <Reg8: 5>
-                        return undefined;
-                    }
-                }
+            // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
+            // USED → r2 = __generatorReturn;
+            if (!__generatorReturn) {
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
+                // USED → r1 = await yield;
             }
         }
+        // LOOP → END
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 5>
+        // USED → r2 = getEnvironment(2)[5];
+        // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
+        // USED → r2 = await getEnvironment(2)[5].call(undefined);
+        // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000043
+        goto label_67;
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <Ret>: <Reg8: 2>
+        return await getEnvironment(2)[5].call(undefined);
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 8 ──────────────── 
+            // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+            // USED → r3 = __generatorReturn;
+            if (!__generatorReturn) {
+                // ──────────────── Block 7 ──────────────── 
+                // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+                // USED → r2 = await yield;
+            }
+        }
+        // LOOP → END
+        // ──────────────── Block 9 ──────────────── 
+        // CODE → <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 7>
+        // USED → r7 = getEnvironment(2)[7];
+        // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
+        // USED → r3 = [1, 2, 3];
+        // CODE → <Call2>: <Reg8: 3, Reg8: 7, Reg8: 5, Reg8: 3>
+        // USED → r3 = await getEnvironment(2)[7].call(undefined, [1, 2, 3]);
+        // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000005e
+        goto label_94;
+        // ──────────────── Block 10 ──────────────── 
+        // CODE → <Ret>: <Reg8: 3>
+        return await getEnvironment(2)[7].call(undefined, [1, 2, 3]);
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 12 ──────────────── 
+            // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 7>
+            // USED → r7 = __generatorReturn;
+            if (!__generatorReturn) {
+                // ──────────────── Block 11 ──────────────── 
+                // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 7>
+                // USED → r3 = await yield;
+            }
+        }
+        // LOOP → END
+        // ──────────────── Block 13 ──────────────── 
+        // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 9>
+        // USED → r4 = getEnvironment(2)[9];
+        // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
+        // USED → r4 = await getEnvironment(2)[9].call(undefined);
+        // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000070
+        goto label_112;
+        // ──────────────── Block 14 ──────────────── 
+        // CODE → <Ret>: <Reg8: 4>
+        return await getEnvironment(2)[9].call(undefined);
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 16 ──────────────── 
+            // CODE → <ResumeGenerator>: <Reg8: 4, Reg8: 7>
+            // USED → r7 = __generatorReturn;
+            if (!__generatorReturn) {
+                // ──────────────── Block 15 ──────────────── 
+                // CODE → <ResumeGenerator>: <Reg8: 4, Reg8: 7>
+                // USED → r4 = await yield;
+            }
+        }
+        // LOOP → END
+        // ──────────────── Block 17 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r8 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r7 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 6, string_id: 2895>  # String: '__BC:Functions/AsyncTests/callAsyncTests/end' (String)
+        // USED → r6 = "__BC:Functions/AsyncTests/callAsyncTests/end";
+        // CODE → <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
+        r6 = globalThis.console.log("__BC:Functions/AsyncTests/callAsyncTests/end")
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 5>
+        return undefined;
+        // ──────────────── Block 18 ──────────────── 
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 4>
+        return await yield;
+        // ──────────────── Block 19 ──────────────── 
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 3>
+        return await yield;
+        // ──────────────── Block 20 ──────────────── 
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 2>
+        return await yield;
+        // ──────────────── Block 21 ──────────────── 
+        // CODE → <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → <Ret>: <Reg8: 1>
+        return await yield;
     }
 }
