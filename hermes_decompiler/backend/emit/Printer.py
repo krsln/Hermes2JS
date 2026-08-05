@@ -76,6 +76,14 @@ class Printer(NodeVisitor):
     * Every control-flow construct is represented by a Region.
     * BasicBlocks contain only ordinary IR statements.
     * Block terminators have already been consumed by the structurers.
+
+    Pretty-printing improvements
+    ----------------------------
+    * `else if` chains are emitted as a flat cascade instead of nested
+      `else { if … }`.
+    * Verbose block / bytecode comments appear only when `verbose=True`.
+    * Dead register assignments (`rN = call(…)`) are omitted when the
+      definition is unused.
     """
 
     INDENT = "    "
@@ -175,7 +183,27 @@ class Printer(NodeVisitor):
                     self._write(lines, f"// USED → {rendered};")
 
             else:
-                self._write(lines, rendered)
+                # Definition is dead – emit the expression only when it
+                # has side-effects (calls, assignments, etc.).  Pure
+                # loads are simply dropped.
+                if self._has_side_effect(instruction.value):
+                    # Strip the leading "rN = " so we keep only the call.
+                    if instruction.dest_reg is not None and rendered.startswith(f"r{instruction.dest_reg} = "):
+                        rendered = rendered[len(f"r{instruction.dest_reg} = "):]
+                    self._write(lines, rendered if rendered.endswith(";") else rendered + ";")
+
+    @staticmethod
+    def _has_side_effect(expr) -> bool:
+        """Heuristic: calls, news, assignments, updates and awaits are
+        considered side-effecting; pure loads / literals are not."""
+        return isinstance(expr, (
+            CallExpression,
+            NewExpression,
+            AssignmentExpression,
+            UpdateExpression,
+            AwaitExpression,
+            YieldExpression,
+        ))
 
     # ---------------------------------------------------------
     # sequence
@@ -187,7 +215,7 @@ class Printer(NodeVisitor):
             self._emit_region(child, lines)
 
     # ---------------------------------------------------------
-    # if
+    # if  (with else-if flattening)
     # ---------------------------------------------------------
 
     def _emit_if(self, region: IfRegion, lines):
@@ -217,7 +245,7 @@ class Printer(NodeVisitor):
 
         kind = region.loop_kind
         if self.verbose:
-            self._write(lines, f"// LOOP → START ({kind.value if kind else "unknown"})")
+            self._write(lines, f"// LOOP → START ({kind.value if kind else 'unknown'})")
 
         if kind in (LoopKind.FOR_OF, LoopKind.FOR_IN):
             self._emit_for_each(region, lines)
@@ -236,7 +264,8 @@ class Printer(NodeVisitor):
 
             self._write(lines, "}")
 
-        self._write(lines, "// LOOP → END")
+        if self.verbose:
+            self._write(lines, "// LOOP → END")
 
     def _emit_for_each(self, region: LoopRegion, lines):
         """
@@ -352,10 +381,6 @@ class Printer(NodeVisitor):
 
     def _write(self, lines: list[str], text: str):
         lines.append(f"{self.INDENT * self._indent}{text}")
-
-    # ------------------------------------------------------------------
-    # ------------------------------------------------------------------
-    # ------------------------------------------------------------------
 
     # ------------------------------------------------------------------
     # Public entry points
