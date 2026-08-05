@@ -14,45 +14,7 @@ function ifElseChainTest(param0, param1, param2) {
     // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/start";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     globalThis.console.log("__BC:ControlFlow/IfTests/ifElseChainTest/start");
-    if (!param1) {
-        if (param1 || param2) {
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r4 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r3 = globalThis.console.log;
-            // CODE → <LoadConstString>: <Reg8: 2, string_id: 4587>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-either' (String)
-            // USED → r2 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-either";
-            // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-            globalThis.console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-either");
-            // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r4 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r3 = globalThis.console.log;
-            // CODE → <LoadConstString>: <Reg8: 2, string_id: 1909>  # String: 'either' (String)
-            // USED → r2 = "either";
-            // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-            globalThis.console.log("either");
-        } else {
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r4 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r3 = globalThis.console.log;
-            // CODE → <LoadConstString>: <Reg8: 2, string_id: 4588>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither' (String)
-            // USED → r2 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither";
-            // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-            globalThis.console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither");
-            // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r4 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r3 = globalThis.console.log;
-            // CODE → <LoadConstString>: <Reg8: 2, string_id: 1908>  # String: 'neither' (String)
-            // USED → r2 = "neither";
-            // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-            globalThis.console.log("neither");
-        }
-    } else if (!param2) {
+    if (param1 && param2) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r4 = globalThis.console;
@@ -70,6 +32,42 @@ function ifElseChainTest(param0, param1, param2) {
         // USED → r2 = "both";
         // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
         globalThis.console.log("both");
+    } else if (param1 || param2) {
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r4 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r3 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 2, string_id: 4587>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-either' (String)
+        // USED → r2 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-either";
+        // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+        globalThis.console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-either");
+        // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r4 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r3 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 2, string_id: 1909>  # String: 'either' (String)
+        // USED → r2 = "either";
+        // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+        globalThis.console.log("either");
+    } else {
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r4 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r3 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 2, string_id: 4588>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither' (String)
+        // USED → r2 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither";
+        // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+        globalThis.console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither");
+        // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r4 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r3 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 2, string_id: 1908>  # String: 'neither' (String)
+        // USED → r2 = "neither";
+        // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+        globalThis.console.log("neither");
     }
     if (!param1) {
         // ──────────────── Block 8 ──────────────── 
