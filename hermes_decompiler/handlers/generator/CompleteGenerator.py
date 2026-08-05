@@ -7,9 +7,10 @@ from hermes_decompiler.runtime import HermesAnalysis
 
 
 # (total size 0)
+# DEFINE_OPCODE_0(CompleteGenerator)
 # Example: <CompleteGenerator>: <>
 class CompleteGenerator(OpcodeHandler):
-    """Mark the generator as completed."""
+    """Set the generator status to complete, but do not return."""
 
     _PATTERN = re.compile(r'^(?:<>)?$')
 

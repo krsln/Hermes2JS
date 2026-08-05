@@ -4,7 +4,16 @@ from hermes_decompiler.ir.expressions import AwaitExpression, YieldExpression
 from hermes_decompiler.runtime import HermesAnalysis
 
 
+# /// Resume generator by performing one of the following user-requested actions:
+# /// - next(val): Set Arg1 to val, Arg2 to false, run next instruction
+# /// - return(val): Set Arg1 to val, Arg2 to true, run next instruction
+# /// - throw(val): Throw val as an error
+# /// Arg1 is the result provided by the user.
+# /// Arg2 is a boolean which is true if the user requested a return().
+# DEFINE_OPCODE_2(ResumeGenerator, Reg8, Reg8)
+
 # Reg8, Reg8 (total size 2)
+# DEFINE_OPCODE_2(ResumeGenerator, Reg8, Reg8)
 # Example: <ResumeGenerator>: <Reg8: 0, Reg8: 2>
 class ResumeGenerator(OpcodeHandler):
     """Resume a suspended generator."""
