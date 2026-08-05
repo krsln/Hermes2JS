@@ -86,8 +86,8 @@ class BaseJCompare(OpcodeHandler):
 
         analysis.gotoList.append(target)
 
-        lhs = self.get_register_reference(analysis, lhs_reg)
-        rhs = self.get_register_reference(analysis, rhs_reg)
+        lhs = self.get_register_expression(analysis, lhs_reg)
+        rhs = self.get_register_expression(analysis, rhs_reg)
 
         condition = self.build_condition(lhs, rhs)
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
