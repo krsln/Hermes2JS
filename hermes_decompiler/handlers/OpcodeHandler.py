@@ -115,14 +115,16 @@ class OpcodeHandler(ABC):
         identifier.
         """
 
-        result = analysis.registers.get(f"r{reg}")
+        state = analysis.registers.get(f"r{reg}")
 
-        if result is None:
+        if state is None or state.definition is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        if isinstance(result.value, Expression):
-            result.definition_used = True
-            return result.value
+        state_value = state.value
+        if isinstance(state_value, Expression):
+            state.reads += 1
+            state.definition.definition_used = True
+            return state_value
 
         return Identifier(name=f"r{reg}")
 
@@ -140,12 +142,12 @@ class OpcodeHandler(ABC):
         originally defined them.
         """
 
-        result = analysis.registers.get(f"r{reg}")
+        state = analysis.registers.get(f"r{reg}")
 
-        if result is None:
+        if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        if result is not None:
-            result.register_read = True
+        if state is not None:
+            state.reads += 1
 
         return Identifier(name=f"r{reg}")

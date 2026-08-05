@@ -25,13 +25,13 @@ function basicTemplateTest(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 11, UInt8: 1>
     r11 = param1
     // CODE → <Call>: <Reg8: 4, Reg8: 7, UInt8: 5>
-    // USED → r4 = globalThis.HermesInternal.concat(r2, r3, r4, r5, r6);
+    // USED → r4 = globalThis.HermesInternal.concat(r2, r3, r4, r5_undefined, r6_undefined);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
-    r2 = globalThis.console.log(globalThis.HermesInternal.concat(r2, r3, r4, r5, r6))
+    r2 = globalThis.console.log(globalThis.HermesInternal.concat(r2, r3, r4, r5_undefined, r6_undefined))
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

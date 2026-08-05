@@ -25,13 +25,13 @@ function basicTemplateTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 979>  # String: ' years old.' (String)
     r7 = " years old."
     // CODE → <Call>: <Reg8: 3, Reg8: 6, UInt8: 5>
-    // USED → r3 = globalThis.HermesInternal.concat(r1, r2, r3, r4, r5);
+    // USED → r3 = globalThis.HermesInternal.concat(r1, r2, r3, r4_undefined, r5_undefined);
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    r1 = globalThis.console.log(globalThis.HermesInternal.concat(r1, r2, r3, r4, r5))
+    r1 = globalThis.console.log(globalThis.HermesInternal.concat(r1, r2, r3, r4_undefined, r5_undefined))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

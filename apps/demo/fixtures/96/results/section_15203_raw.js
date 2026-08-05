@@ -33,11 +33,11 @@ function makeSound(param0) {
     // CODE → <Mov>: <Reg8: 8, Reg8: 1>
     r8 = this
     // CODE → <Call>: <Reg8: 4, Reg8: 6, UInt8: 5>
-    // USED → r4 = getEnvironment(1)[1].default(r1, r2, r3, r4, r5);
+    // USED → r4 = getEnvironment(1)[1].default(r1, r2, r3, r4, r5_undefined);
     // CODE → <NewArray>: <Reg8: 3, UInt16: 0>
     // USED → r3 = [];
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
-    r3 = getEnvironment(1)[1].default(r1, r2, r3, r4, r5).call(undefined, [])
+    r3 = getEnvironment(1)[1].default(r1, r2, r3, r4, r5_undefined).call(undefined, [])
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

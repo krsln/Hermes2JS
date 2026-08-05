@@ -5,7 +5,7 @@ async function* anon_9956(param0, param1) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
     // CODE → <JmpTrue>: <Addr8: 57, Reg8: 1>  # Address: 0000003d
-    if (r1) goto label_61;
+    if (r1_undefined) goto label_61;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 3>
     // USED → r1 = getEnvironment(3);

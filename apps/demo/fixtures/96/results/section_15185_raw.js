@@ -5,7 +5,7 @@ async function* anon_15185(param0, param1) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 2>
     // USED → r0 = await yield;
     // CODE → <JmpTrueLong>: <Addr32: 134, Reg8: 2>  # Address: 0000008a
-    if (r2) goto label_138;
+    if (r2_undefined) goto label_138;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     // USED → r7 = undefined;

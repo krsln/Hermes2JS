@@ -5,7 +5,7 @@ async function* anon_15165(param0) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
     // CODE → <JmpTrue>: <Addr8: 98, Reg8: 1>  # Address: 00000066
-    if (r1) goto label_102;
+    if (r1_undefined) goto label_102;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis;
@@ -54,7 +54,7 @@ async function* anon_15165(param0) {
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 5>
     // USED → r3 = await yield;
     // CODE → <JmpTrue>: <Addr8: 28, Reg8: 5>  # Address: 0000005d
-    if (r5) goto label_93;
+    if (r5_undefined) goto label_93;
     // ──────────────── Block 10 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;

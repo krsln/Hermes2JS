@@ -19,7 +19,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 - io/ moved into core/IO.py
 - IfStructurer fix
 - _raw.js
-- 
+- HermesAnalysis  self.registers: dict[str, RegisterState] = {}
 
 ## Testy
 

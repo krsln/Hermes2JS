@@ -4,7 +4,7 @@ async function* anon_15165(param0) {
     // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
-    if (r1) {
+    if (r1_undefined) {
         // ──────────────── Block 14 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
@@ -68,7 +68,7 @@ async function* anon_15165(param0) {
                 // ──────────────── Block 9 ──────────────── 
                 // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 5>
                 // USED → r3 = await yield;
-                if (r5) {
+                if (r5_undefined) {
                     // ──────────────── Block 11 ──────────────── 
                     // CODE → <CompleteGenerator>: <>
                     // CompleteGenerator

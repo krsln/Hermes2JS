@@ -6,7 +6,7 @@ async function* anon_17161(param0, param1) {
     // USED → r7 = param1;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
-    if (r1) {
+    if (r1_undefined) {
         // ──────────────── Block 14 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator

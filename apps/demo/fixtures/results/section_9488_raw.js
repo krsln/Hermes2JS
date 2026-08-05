@@ -76,7 +76,7 @@ function parameterDestructureTest(param0, param1, param2) {
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 3, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    r4 = globalThis.console.log
     // CODE → <Mov>: <Reg8: 15, Reg8: 5>
     r15 = globalThis.console
     // CODE → <Mov>: <Reg8: 14, Reg8: 9>
@@ -88,7 +88,7 @@ function parameterDestructureTest(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 6>
     r11 = GetIterator(r4).next()
     // CODE → <Call>: <Reg8: 4, Reg8: 4, UInt8: 5>
-    r4 = globalThis.console.log(r-1, r0, r1, r2, r3)
+    // Error: Call at address 135: Invalid arguments: Reg8: 4, Reg8: 4, UInt8: 5
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 3, string_id: 178>  # String: 'log' (Identifier)
