@@ -99,7 +99,7 @@ class StructuralAnalyzer:
         # the try range's blocks need to already be resolved into
         # their final loop/if nesting before we can find them as flat
         # siblings within whatever SequenceRegion they now live in.
-        TryStructurer(graph, self.cfg).run()
+        TryStructurer(graph, self.cfg).run()  # ✅
 
         # SwitchStructurer runs after the other structurers because it
         # recognizes two different switch representations:
@@ -112,15 +112,15 @@ class StructuralAnalyzer:
         #
         # Running here allows it to fold both forms into a single
         # SwitchRegion representation before lowering.
-        SwitchStructurer(graph, self.cfg).run()
+        SwitchStructurer(graph, self.cfg).run()  # ✅
 
         # ---- 3. region_passes -------------------------------------------
-        BooleanChainFolder(self.cfg).run(graph.root)
+        # BooleanChainFolder(self.cfg).run(graph.root) # ❌ no effect at all
         LoopConditionExtractor(graph.root).run()
         ForEachRecognizer(graph).run()
 
         # ---- 4. lowering ------------------------------------------------
-        StatementBuilder().build(root)
+        # StatementBuilder().build(root) # ❌ no effect at all
 
         self._audit_unstructured_blocks(root, graph, self.cfg)
 

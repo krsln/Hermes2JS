@@ -5,8 +5,22 @@ function function_25631(param0, param1) {
     // CODE → <LoadConstInt>: <Reg8: 0, Imm32: 500>
     // USED → r0 = 500;
     // CODE → <GreaterEq>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = param1 >= 500 || param1 === 408 || param1 === 429;
+    // USED → r0 = param1 >= 500;
+    if (param1 < 500) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <LoadConstInt>: <Reg8: 1, Imm32: 408>
+        // USED → r1 = 408;
+        // CODE → <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
+        // USED → r0 = param1 === 408;
+    }
+    if (param1 !== 408) {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → <LoadConstInt>: <Reg8: 1, Imm32: 429>
+        // USED → r1 = 429;
+        // CODE → <StrictEq>: <Reg8: 0, Reg8: 2, Reg8: 1>
+        // USED → r0 = param1 === 429;
+    }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
-    return param1 >= 500 || param1 === 408 || param1 === 429;
+    return param1 === 429;
 }
