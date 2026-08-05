@@ -34,7 +34,7 @@ class ResumeGenerator(OpcodeHandler):
         analysis.add_result(result)
 
         # Track the generator return flag for subsequent conditional jumps.
-        flag_result = OpcodeResult(entry, value=Identifier(name=f"__generatorReturn"), dest_reg=flag_reg)
+        flag_result = OpcodeResult(entry, value=Identifier(name=f"__resumeIsReturn"), dest_reg=flag_reg)
         analysis.add_result(flag_result)
 
         return result

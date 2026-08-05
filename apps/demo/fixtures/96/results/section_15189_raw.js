@@ -5,9 +5,9 @@ async function* anon_15189(param0) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r1 = __generatorReturn;
+    // USED → r1 = __resumeIsReturn;
     // CODE → <JmpTrueLong>: <Addr32: 160, Reg8: 1>  # Address: 000000a4
-    if (__generatorReturn) goto label_164;
+    if (__resumeIsReturn) goto label_164;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis;
@@ -53,12 +53,11 @@ async function* anon_15189(param0) {
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 7>
     // USED → r1 = await yield;
-    // ──────────────── Block 4 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 7>
-    // USED → r7 = __generatorReturn;
+    // USED → r7 = __resumeIsReturn;
     // CODE → <JmpTrue>: <Addr8: 68, Reg8: 7>  # Address: 000000a1
-    if (__generatorReturn) goto label_161;
-    // ──────────────── Block 5 ──────────────── 
+    if (__resumeIsReturn) goto label_161;
+    // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 0>
     // USED → r4 = getEnvironment(2)[0];
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 107>  # String: 'default' (Identifier)
@@ -89,12 +88,12 @@ async function* anon_15189(param0) {
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 2>
     return undefined;
-    // ──────────────── Block 6 ──────────────── 
+    // ──────────────── Block 5 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
     return await yield;
-    // ──────────────── Block 7 ──────────────── 
+    // ──────────────── Block 6 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>

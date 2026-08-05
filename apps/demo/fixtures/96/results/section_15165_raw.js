@@ -5,9 +5,9 @@ async function* anon_15165(param0) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r1 = __generatorReturn;
+    // USED → r1 = __resumeIsReturn;
     // CODE → <JmpTrue>: <Addr8: 98, Reg8: 1>  # Address: 00000066
-    if (__generatorReturn) goto label_102;
+    if (__resumeIsReturn) goto label_102;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis;
@@ -29,44 +29,41 @@ async function* anon_15165(param0) {
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
     // USED → r1 = await yield;
-    // ──────────────── Block 4 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
-    // USED → r2 = __generatorReturn;
+    // USED → r2 = __resumeIsReturn;
     // CODE → <JmpTrue>: <Addr8: 60, Reg8: 2>  # Address: 00000063
-    if (__generatorReturn) goto label_99;
-    // ──────────────── Block 5 ──────────────── 
+    if (__resumeIsReturn) goto label_99;
+    // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
     // USED → r2 = 2;
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000031
     goto label_49;
-    // ──────────────── Block 6 ──────────────── 
+    // ──────────────── Block 5 ──────────────── 
     // CODE → <Ret>: <Reg8: 2>
     return 2;
-    // ──────────────── Block 7 ──────────────── 
+    // ──────────────── Block 6 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
     // USED → r2 = await yield;
-    // ──────────────── Block 8 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
-    // USED → r3 = __generatorReturn;
+    // USED → r3 = __resumeIsReturn;
     // CODE → <JmpTrue>: <Addr8: 44, Reg8: 3>  # Address: 00000060
-    if (__generatorReturn) goto label_96;
-    // ──────────────── Block 9 ──────────────── 
+    if (__resumeIsReturn) goto label_96;
+    // ──────────────── Block 7 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
     // USED → r3 = 3;
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003e
     goto label_62;
-    // ──────────────── Block 10 ──────────────── 
+    // ──────────────── Block 8 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
     return 3;
-    // ──────────────── Block 11 ──────────────── 
+    // ──────────────── Block 9 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 5>
     // USED → r3 = await yield;
-    // ──────────────── Block 12 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 5>
-    // USED → r5 = __generatorReturn;
+    // USED → r5 = __resumeIsReturn;
     // CODE → <JmpTrue>: <Addr8: 28, Reg8: 5>  # Address: 0000005d
-    if (__generatorReturn) goto label_93;
-    // ──────────────── Block 13 ──────────────── 
+    if (__resumeIsReturn) goto label_93;
+    // ──────────────── Block 10 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -81,22 +78,22 @@ async function* anon_15165(param0) {
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 4>
     return undefined;
-    // ──────────────── Block 14 ──────────────── 
+    // ──────────────── Block 11 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 3>
     return await yield;
-    // ──────────────── Block 15 ──────────────── 
+    // ──────────────── Block 12 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 2>
     return await yield;
-    // ──────────────── Block 16 ──────────────── 
+    // ──────────────── Block 13 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
     return await yield;
-    // ──────────────── Block 17 ──────────────── 
+    // ──────────────── Block 14 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>

@@ -5,9 +5,9 @@ async function* anon_15181(param0) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r1 = __generatorReturn;
+    // USED → r1 = __resumeIsReturn;
     // CODE → <JmpTrueLong>: <Addr32: 228, Reg8: 1>  # Address: 000000e8
-    if (__generatorReturn) goto label_232;
+    if (__resumeIsReturn) goto label_232;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
@@ -37,12 +37,11 @@ async function* anon_15181(param0) {
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 4>
     // USED → r1 = await yield;
-    // ──────────────── Block 4 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 4>
-    // USED → r4 = __generatorReturn;
+    // USED → r4 = __resumeIsReturn;
     // CODE → <JmpTrue>: <Addr8: 62, Reg8: 4>  # Address: 00000076
-    if (__generatorReturn) goto label_118;
-    // ──────────────── Block 5 ──────────────── 
+    if (__resumeIsReturn) goto label_118;
+    // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -53,10 +52,10 @@ async function* anon_15181(param0) {
     r4 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", await yield)
     // CODE → <JStrictEqual>: <Addr8: 6, Reg8: 1, Reg8: 3>  # Address: 00000056
     if (await yield === 1) goto label_86;
-    // ──────────────── Block 6 ──────────────── 
+    // ──────────────── Block 5 ──────────────── 
     // CODE → <Jmp>: <Addr8: 79>  # Address: 000000a3
     goto label_163;
-    // ──────────────── Block 7 ──────────────── 
+    // ──────────────── Block 6 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
     // USED → r5 = globalThis.Error;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
@@ -73,7 +72,7 @@ async function* anon_15181(param0) {
     // USED → r3 = new globalThis.Error("post-await failure");
     // CODE → <Throw>: <Reg8: 3>
     throw new globalThis.Error("post-await failure");
-    // ──────────────── Block 8 ──────────────── 
+    // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -86,7 +85,7 @@ async function* anon_15181(param0) {
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
     return await yield;
-    // ──────────────── Block 9 ──────────────── 
+    // ──────────────── Block 8 ──────────────── 
     // CODE → <Catch>: <Reg8: 1>
     r1 = caughtException
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -97,7 +96,7 @@ async function* anon_15181(param0) {
     // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/caught";
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
     r1 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/caught")
-    // ──────────────── Block 10 ──────────────── 
+    // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -120,7 +119,7 @@ async function* anon_15181(param0) {
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
     return undefined;
-    // ──────────────── Block 11 ──────────────── 
+    // ──────────────── Block 10 ──────────────── 
     // CODE → <Catch>: <Reg8: 1>
     // USED → r1 = caughtException;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -133,7 +132,7 @@ async function* anon_15181(param0) {
     r2 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
     // CODE → <Throw>: <Reg8: 1>
     throw caughtException;
-    // ──────────────── Block 12 ──────────────── 
+    // ──────────────── Block 11 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>

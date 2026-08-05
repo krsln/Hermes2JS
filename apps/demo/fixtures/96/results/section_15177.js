@@ -5,9 +5,9 @@ async function* anon_15177(param0) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r1 = __generatorReturn;
-    if (__generatorReturn) {
-        // ──────────────── Block 7 ──────────────── 
+    // USED → r1 = __resumeIsReturn;
+    if (__resumeIsReturn) {
+        // ──────────────── Block 6 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → <Ret>: <Reg8: 0>
@@ -39,41 +39,37 @@ async function* anon_15177(param0) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
         return await getEnvironment(2)[2].call(undefined, 42);
-        // LOOP → START (while)
-        while (true) {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
+        // USED → r1 = await yield;
+        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
+        // USED → r3 = __resumeIsReturn;
+        if (__resumeIsReturn) {
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → <CompleteGenerator>: <>
+            // CompleteGenerator
+            // CODE → <Ret>: <Reg8: 1>
+            return await yield;
+        } else {
             // ──────────────── Block 4 ──────────────── 
-            // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-            // USED → r3 = __generatorReturn;
-            if (!__generatorReturn) {
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-                // USED → r1 = await yield;
-            }
+            // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r4 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r3 = globalThis.console.log;
+            // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 1>
+            r3 = globalThis.console.log(await yield)
+            // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r4 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r3 = globalThis.console.log;
+            // CODE → <LoadConstString>: <Reg8: 2, string_id: 4764>  # String: '__BC:Functions/AsyncTests/simpleAsyncTest/end' (String)
+            // USED → r2 = "__BC:Functions/AsyncTests/simpleAsyncTest/end";
+            // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+            r2 = globalThis.console.log("__BC:Functions/AsyncTests/simpleAsyncTest/end")
+            // CODE → <CompleteGenerator>: <>
+            // CompleteGenerator
+            // CODE → <Ret>: <Reg8: 1>
+            return await yield;
         }
-        // LOOP → END
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r3 = globalThis.console.log;
-        // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 1>
-        r3 = globalThis.console.log(await yield)
-        // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r3 = globalThis.console.log;
-        // CODE → <LoadConstString>: <Reg8: 2, string_id: 4764>  # String: '__BC:Functions/AsyncTests/simpleAsyncTest/end' (String)
-        // USED → r2 = "__BC:Functions/AsyncTests/simpleAsyncTest/end";
-        // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-        r2 = globalThis.console.log("__BC:Functions/AsyncTests/simpleAsyncTest/end")
-        // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator
-        // CODE → <Ret>: <Reg8: 1>
-        return await yield;
-        // ──────────────── Block 6 ──────────────── 
-        // CODE → <CompleteGenerator>: <>
-        // CompleteGenerator
-        // CODE → <Ret>: <Reg8: 1>
-        return await yield;
     }
 }

@@ -5,9 +5,9 @@ async function* anon_15185(param0, param1) {
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 2>
     // USED → r0 = await yield;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 2>
-    // USED → r2 = __generatorReturn;
+    // USED → r2 = __resumeIsReturn;
     // CODE → <JmpTrueLong>: <Addr32: 134, Reg8: 2>  # Address: 0000008a
-    if (__generatorReturn) goto label_138;
+    if (__resumeIsReturn) goto label_138;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     // USED → r7 = undefined;
@@ -53,31 +53,30 @@ async function* anon_15185(param0, param1) {
     // ──────────────── Block 5 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 9>
     // USED → r3 = await yield;
-    // ──────────────── Block 6 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-    // USED → r9 = __generatorReturn;
+    // USED → r9 = __resumeIsReturn;
     // CODE → <JmpTrue>: <Addr8: 9, Reg8: 9>  # Address: 00000056
-    if (__generatorReturn) goto label_86;
-    // ──────────────── Block 7 ──────────────── 
+    if (__resumeIsReturn) goto label_86;
+    // ──────────────── Block 6 ──────────────── 
     // CODE → <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
     // USED → r1 = 0 + await yield;
     // CODE → <Jmp>: <Addr8: -37>  # Address: 0000002f
     goto label_47;
-    // ──────────────── Block 8 ──────────────── 
+    // ──────────────── Block 7 ──────────────── 
     // CODE → <IteratorClose>: <Reg8: 4, UInt8: 0>
     GetIterator(r6).return()
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 3>
     return await yield;
-    // ──────────────── Block 9 ──────────────── 
+    // ──────────────── Block 8 ──────────────── 
     // CODE → <Catch>: <Reg8: 3>
     // USED → r3 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
     GetIterator(r6).return()
     // CODE → <Throw>: <Reg8: 3>
     throw caughtException;
-    // ──────────────── Block 10 ──────────────── 
+    // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -96,7 +95,7 @@ async function* anon_15185(param0, param1) {
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
     return 0 + await yield;
-    // ──────────────── Block 11 ──────────────── 
+    // ──────────────── Block 10 ──────────────── 
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 0>

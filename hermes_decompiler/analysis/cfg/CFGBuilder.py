@@ -154,7 +154,21 @@ class CFGBuilder:
 
             address = result.address
 
-            if address in leaders:
+            # A single instruction (e.g. ResumeGenerator) can now yield more
+            # than one OpcodeResult sharing the same `entry.address` (dest_reg
+            # + flag_reg). Only the FIRST result at a given address should
+            # start a new block; subsequent results at that same address are
+            # additional instructions in the block already opened for it.
+            # Without this guard, each same-address result re-triggers the
+            # `address in leaders` branch, opening a second BasicBlock at the
+            # same address and overwriting `address_to_block[address]` to
+            # point at that later block - any real jump target aimed at this
+            # address then gets misdirected to the second block, orphaning
+            # the first and confusing loop detection into inventing a
+            # spurious back-edge / while(true).
+            is_new_address = current_block is None or current_block.address != address
+
+            if address in leaders and is_new_address:
 
                 current_block = BasicBlock(block_id, address)
 
@@ -167,21 +181,6 @@ class CFGBuilder:
 
                 block_id += 1
 
-            # NOTE (fix): terminator-bearing results (Ret, Throw, Jmp,
-            # JCompare, SwitchImm) used to be routed *only* into
-            # `block.terminator` and excluded from `block.instructions`,
-            # which meant Printer/StatementBuilder - which only ever
-            # walk `block.instructions` - could never render them. Any
-            # terminator the structurers didn't explicitly consume
-            # (only ConditionalBranch is folded into if/while
-            # conditions) was silently dropped: `Return`/`Throw` are
-            # *never* consumed by a structurer, so every `return`/
-            # `throw` in the program was being lost. Terminator-bearing
-            # results are now always added to `instructions` too, so
-            # they always get a chance to render (via `result.statement`
-            # - see Ret.py/Throw.py) or at minimum keep their verbose
-            # `// CODE ->` trace line; `block.terminator` below is still
-            # populated for the structurers' own CFG-level analysis.
             if current_block:
 
                 if result.terminator:

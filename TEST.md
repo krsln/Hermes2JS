@@ -13,7 +13,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 ## Done Stuff | from 2025-08-01
 
 - LoopKind +-> FOR_OF, FOR_IN | ForEachRecognizer
-- handler fix: Jmp, JCompare, Call
+- handler fix: Jmp, JCompare, Call, ResumeGenerator
 - dispatch/, opcode/, parsing/ moved into frontend/ folder
 - OpcodeCatalog, opcode verification tests
 - io/ moved into core/IO.py
