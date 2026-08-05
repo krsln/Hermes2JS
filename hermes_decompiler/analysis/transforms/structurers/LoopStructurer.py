@@ -1,9 +1,6 @@
 from __future__ import annotations
 
-import logging
-
-from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion, Region
+from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
 
@@ -57,9 +54,7 @@ class LoopStructurer(RegionStructurer):
 
             self._build_loop(loop, parent_sequence)
 
-        if logger.isEnabledFor(logging.DEBUG):
-            logger.debug("===== REGION TREE =====")
-            self._dump_region_tree(self.graph.root)
+        self.dump_region_tree_if_debug(type(self).__name__)
 
     # -------------------------------------------------------------
 
@@ -97,20 +92,4 @@ class LoopStructurer(RegionStructurer):
         for child in sorted(loop.children, key=lambda l: l.header.id):
             self._build_loop(child, region.body)
 
-    def _dump_region_tree(self, node: Region | BasicBlock, indent: int = 0) -> None:
-        prefix = " " * indent
-
-        if isinstance(node, SequenceRegion):
-            logger.debug("%sSequenceRegion", prefix)
-            for child in node.children:
-                self._dump_region_tree(child, indent + 4)
-
-        elif isinstance(node, LoopRegion):
-            logger.debug("%sLoopRegion(header=%d)", prefix, node.header_block.id)
-            self._dump_region_tree(node.body, indent + 4)
-
-        elif isinstance(node, BasicBlock):
-            logger.debug("%sBlock %d", prefix, node.id)
-
-        else:
-            logger.debug("%s%s", prefix, type(node).__name__)
+    # -------------------------------------------------------------

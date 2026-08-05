@@ -119,6 +119,8 @@ class IfStructurer(RegionStructurer):
         self._fold_all(self.graph.root)
         # Final cleanup of empty BasicBlocks left behind by stripping.
         self._prune_empty_blocks(self.graph.root)
+        self.dump_region_tree_if_debug(type(self).__name__)
+
 
     # -------------------------------------------------------------
     # Tree traversal
