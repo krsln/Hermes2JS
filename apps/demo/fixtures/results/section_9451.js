@@ -59,6 +59,7 @@ function switchTest(param0, param1) {
             // CODE → <Ret>: <Reg8: 2>
             return "two";
         case 3:
+        case 4:
             // ──────────────── Block 6 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r4 = globalThis.console;
@@ -73,25 +74,19 @@ function switchTest(param0, param1) {
             // CODE → <Ret>: <Reg8: 2>
             return "three-four";
         default:
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
-            // USED → r0 = 4;
-            if (4 !== param1) {
-                // ──────────────── Block 5 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                // USED → r4 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                // USED → r3 = globalThis.console.log;
-                // CODE → <LoadConstString>: <Reg8: 2, string_id: 3462>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-default' (String)
-                // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/case-default";
-                // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-                r2 = globalThis.console.log("__BC:ControlFlow/SwitchTests/switchTest/case-default")
-                // CODE → <LoadConstString>: <Reg8: 2, string_id: 1861>  # String: 'other' (String)
-                // USED → r2 = "other";
-                // CODE → <Ret>: <Reg8: 2>
-                return "other";
-            }
-            break;
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+            // USED → r4 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+            // USED → r3 = globalThis.console.log;
+            // CODE → <LoadConstString>: <Reg8: 2, string_id: 3462>  # String: '__BC:ControlFlow/SwitchTests/switchTest/case-default' (String)
+            // USED → r2 = "__BC:ControlFlow/SwitchTests/switchTest/case-default";
+            // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+            r2 = globalThis.console.log("__BC:ControlFlow/SwitchTests/switchTest/case-default")
+            // CODE → <LoadConstString>: <Reg8: 2, string_id: 1861>  # String: 'other' (String)
+            // USED → r2 = "other";
+            // CODE → <Ret>: <Reg8: 2>
+            return "other";
     }
     // Switch → END
 }

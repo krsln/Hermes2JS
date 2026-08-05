@@ -16,45 +16,63 @@ from hermes_decompiler.ir.expressions.Literals import Literal
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 
 _EQUALITY_OPERATORS = (BinaryOperator.EQUAL, BinaryOperator.STRICT_EQUAL)
+_INEQUALITY_OPERATORS = (BinaryOperator.NOT_EQUAL, BinaryOperator.STRICT_NOT_EQUAL)
 
 # Below this many cases, folding into a `switch` adds no value over the
-# `if`/`else if` chain IfStructurer already built - not wrong, just not
-# worth the structural churn for a 1-2-way branch.
+# `if`/`else if` chain IfStructurer already built — not wrong, just not
+# worth the structural churn for a 1–2-way branch.
 _MIN_CASES = 2
 
 
 class SwitchStructurer(RegionStructurer):
     """
     Builds `SwitchRegion`s from whichever form Hermes compiled a
-    `switch` statement into - there are two, and it's always exactly
-    one or the other for a given switch, never both:
+    `switch` statement into. For any given switch Hermes emits exactly
+    one of the two shapes, never both:
 
-    1. **Comparison chain** (small/sparse switches): a chain of
-       `IfRegion`s IfStructurer already built, all comparing the same
-       discriminant against different constant literals - see
-       `_match_chain`.
+    1. **Comparison chain** (small / sparse switches)
+       A chain of `IfRegion`s already produced by IfStructurer, each
+       testing the same discriminant against a different constant
+       literal. Recovered by `_match_chain`.
 
-    2. **Jump table** (`SwitchImm`/`UIntSwitchImm`, dense switches): a
-       single raw `BasicBlock` whose terminator is `TerminatorSwitch`,
-       untouched by IfStructurer (which only ever consumes
-       `TerminatorConditionalBranch`) - see `_fold_raw_switch`.
+    2. **Jump table** (`SwitchImm` / `UIntSwitchImm`, dense switches)
+       A single raw `BasicBlock` whose terminator is `TerminatorSwitch`.
+       Untouched by IfStructurer (which only consumes
+       `TerminatorConditionalBranch`). Recovered by `_fold_raw_switch`.
 
-    Known limitation (comparison-chain path only): if two case tests
-    jump to a *shared* body physically placed elsewhere (`case 3:
-    case 4: sharedBody`), IfStructurer's dominance-based conversion can
-    only resolve the shared body into the FIRST case that reaches it -
-    the later case is left as a raw, unconverted conditional block (see
-    IfStructurer's docstring on tail duplication). This pass doesn't
-    try to recover that case: the chain simply stops there, and
-    everything from that point on is treated as the `default:` body
-    verbatim (including the leftover raw `if (...) goto label_N;`),
-    which still renders correctly via Printer's raw-terminator
-    fallback - just not as a clean case label.
+    Shared-body recovery (comparison-chain path)
+    --------------------------------------------
+    When two or more case labels share a single body
+    (`case 3: case 4: sharedBody`), IfStructurer’s dominance-based
+    conversion typically attaches the body to the first label only.
+    Later labels remain as residual conditionals that later folding
+    often turns into inverted tests inside what looks like the
+    `default` arm, e.g.:
+
+        case 3:
+            sharedBody
+        default:
+            if (4 !== disc) { realDefault }
+
+    This pass recovers those residual tests:
+
+    * Consecutive equality tests that resolve to the same body are
+      merged into a single multi-value `SwitchCase`.
+    * An inverted residual of the form `if (C !== disc) { realDefault }`
+      (or the symmetric operand order) contributes `C` to the preceding
+      case’s test list and promotes the residual’s then-body to the
+      true `default`.
+
+    Anything that cannot be recovered cleanly is left as the default
+    body; the printer’s raw-terminator fallback still renders a correct
+    (if less tidy) result.
     """
 
     def run(self) -> None:
         self._visit(self.graph.root)
 
+    # -------------------------------------------------------------
+    # Region walk
     # -------------------------------------------------------------
 
     def _visit(self, region) -> None:
@@ -96,16 +114,19 @@ class SwitchStructurer(RegionStructurer):
             self._visit(region.body)
 
     # -------------------------------------------------------------
+    # Sequence folding entry point
+    # -------------------------------------------------------------
 
     def _fold_sequence(self, region: SequenceRegion) -> None:
 
         for index, item in enumerate(region.children):
 
-            if isinstance(item, BasicBlock) and isinstance(item.terminator, TerminatorSwitch):
-
+            if isinstance(item, BasicBlock) and isinstance(
+                    item.terminator, TerminatorSwitch
+            ):
                 if self._fold_raw_switch(region, item):
-                    return  # region.children mutated - re-scan on next pass
-
+                    # children mutated — re-scan on the next pass
+                    return
                 continue
 
             if not isinstance(item, IfRegion):
@@ -117,49 +138,40 @@ class SwitchStructurer(RegionStructurer):
                 continue
 
             discriminant, cases, default_body = chain
-
             if len(cases) < _MIN_CASES:
                 continue
 
             switch_region = SwitchRegion(discriminant)
-
             for tests, body in cases:
                 switch_region.add_case(SwitchCase(tests, body))
-
             if default_body is not None:
                 switch_region.default_body = default_body
 
             self.graph.replace(item, switch_region)
-
-            return  # region.children was just mutated - re-scan on next pass
+            # children mutated — re-scan on the next pass
+            return
 
     # -------------------------------------------------------------
-    # Raw TerminatorSwitch (jump-table) folding.
+    # Raw TerminatorSwitch (jump-table) folding
     # -------------------------------------------------------------
 
     def _fold_raw_switch(self, region: SequenceRegion, header: BasicBlock) -> bool:
         """
-        Builds a `SwitchRegion` directly from `header`'s `TerminatorSwitch`
-        (a real `SwitchImm`/`UIntSwitchImm` jump table), as opposed to
-        `_match_chain`'s job of folding an `if`/`else if` *comparison
-        chain* - Hermes emits one or the other depending on case
-        density, never both for the same switch.
+        Build a `SwitchRegion` directly from `header`’s
+        `TerminatorSwitch` (a real `SwitchImm` / `UIntSwitchImm` jump
+        table).
 
-        Case labels that share a target address (`case 2: case 15:
-        body`) are grouped into one `SwitchCase`. A case value whose
-        target equals `default_target` is dropped from the explicit
-        case list - it already falls under `default:`, so listing it
-        again would just be a redundant label on the same body.
+        Case labels that share a target address are grouped into one
+        `SwitchCase`. A case value whose target equals `default_target`
+        is omitted from the explicit case list — it already falls under
+        `default:`.
 
-        Each case/default body's extent is the contiguous run of
-        `region.children` from that target's item up to whichever
-        comes first: the next case/default's item (bodies are laid out
-        back-to-back by address, the standard compiled-switch layout),
-        `header`'s immediate post-dominator (if the switch has a real
-        merge point after it), or the end of `region`. Bails (`False`)
-        on anything that doesn't resolve this cleanly - the raw
-        `TerminatorSwitch` block is a completely valid (if unstructured)
-        fallback (see Printer's placeholder comment for it).
+        Each case / default body’s extent is the contiguous run of
+        `region.children` from that target’s item up to the next
+        case/default item, the header’s immediate post-dominator, or
+        the end of the region. Returns `False` on any layout that cannot
+        be resolved cleanly; the raw `TerminatorSwitch` block remains a
+        valid unstructured fallback.
         """
 
         switch_term = header.terminator
@@ -177,7 +189,6 @@ class SwitchStructurer(RegionStructurer):
         for value, target in switch_term.case_map.items():
 
             if target == switch_term.default_target:
-                # Already covered by `default:` - no separate label.
                 continue
 
             groups.setdefault(target, []).append(value)
@@ -216,9 +227,8 @@ class SwitchStructurer(RegionStructurer):
             return False
 
         if len(set(id(i) for i in all_items)) != len(all_items):
-            # Two distinct case groups resolved to the exact same
-            # top-level item in a way we can't split further - bail
-            # rather than guess which one actually owns it.
+            # Distinct case groups resolved to the same top-level item —
+            # cannot split further without guessing ownership.
             return False
 
         try:
@@ -246,12 +256,10 @@ class SwitchStructurer(RegionStructurer):
         bodies: dict[int, SequenceRegion] = {}
 
         for position, item in enumerate(ordered_items):
-
             start = boundaries[position]
             stop = boundaries[position + 1]
 
             if stop <= start:
-                # Overlapping/out-of-order items - can't slice safely.
                 return False
 
             body_items = region.children[start:stop]
@@ -275,54 +283,67 @@ class SwitchStructurer(RegionStructurer):
         return True
 
     # -------------------------------------------------------------
+    # Comparison-chain matching
+    # -------------------------------------------------------------
 
     def _match_chain(self, root: IfRegion):
         """
-        Walks `root`'s `else if` chain as far as it validly extends.
+        Walk `root`’s `else if` chain as far as it validly extends.
 
         Returns `(discriminant, cases, default_body)` where `cases` is
-        `[(tests, body), ...]` in source order, or `None` if `root`
-        itself isn't even a single `discriminant == constant` test (no
-        chain at all, not even a 1-case one).
+        `[(tests, body), …]` in source order, or `None` when `root`
+        itself is not even a single `discriminant == constant` test.
+
+        Shared-body and inverted-residual recovery are performed
+        inline so that labels such as `case 3: case 4:` are restored
+        instead of leaving a residual conditional inside `default`.
         """
 
         discriminant = None
         cases: list[tuple[list[Expression], SequenceRegion]] = []
         current = root
 
-        # The SequenceRegion directly containing `current`, once we're
-        # past `root` (which the caller found as a bare top-level item,
-        # not wrapped in one). Needed so that if `current` itself turns
-        # out not to parse as a case, we can fall back to returning
-        # this container as the default body - NOT just discard
-        # `current` (and everything under it - e.g. a merged
-        # `case 3: case 4:` test BranchChainMerger folded into a single
-        # `||` condition, which this pass can't split back into two
-        # labels but must still preserve as default content).
+        # SequenceRegion that directly contains `current` once we have
+        # moved past `root`. Used as a safe fallback default body when
+        # a later link fails to parse as a case test.
         container: SequenceRegion | None = None
 
         while True:
-
             parsed = self._parse_case_test(current.condition, discriminant)
 
             if parsed is None:
+                # Attempt inverted / shared recovery before giving up.
+                recovered = self._try_recover_shared_or_inverted(
+                    current, discriminant, cases, container
+                )
+
+                if recovered is not None:
+                    return recovered
 
                 if container is not None:
                     return discriminant, cases, container
 
-                # `root` itself didn't parse - no chain at all.
                 return None
 
             disc_expr, test_value = parsed
             discriminant = disc_expr
 
-            cases.append(([test_value], current.then_body))
+            body = current.then_body
+
+            if cases and self._same_body(cases[-1][1], body):
+                # Same physical body as the previous case — multi-value
+                # label (case N: case M: sharedBody).
+                cases[-1][0].append(test_value)
+            else:
+                cases.append(([test_value], body))
 
             else_body = current.else_body
-
             if else_body is None:
                 return discriminant, cases, None
 
+            # Continue the chain when the else arm is exactly one more
+            # equality-test IfRegion (optionally preceded by a
+            # transparent spent const-setup block left by IfStructurer).
             if (
                     len(else_body.children) == 1
                     and isinstance(else_body.children[0], IfRegion)
@@ -336,33 +357,119 @@ class SwitchStructurer(RegionStructurer):
                     and self._is_transparent(else_body.children[0])
                     and isinstance(else_body.children[1], IfRegion)
             ):
-                # IfStructurer leaves the "spent" constant-setup block
-                # (e.g. `LoadConstUInt8 r0, 1` feeding a comparison
-                # that's since been folded entirely into the next
-                # level's condition expression) sitting right before
-                # the nested IfRegion instead of removing it. It
-                # produces no visible output (see _is_transparent) and
-                # doesn't break the chain.
                 current = else_body.children[1]
                 container = else_body
                 continue
 
-            # else_body doesn't extend the chain (not exactly one more
-            # equality-test IfRegion) - whatever it is becomes default.
+            # else_body does not extend the chain. Try to recover an
+            # inverted residual that still belongs to the last case.
+            recovered_default = self._try_recover_inverted_default(
+                else_body, discriminant, cases
+            )
+
+            if recovered_default is not None:
+                return discriminant, cases, recovered_default
+
             return discriminant, cases, else_body
 
+    # -------------------------------------------------------------
+    # Shared-body / inverted residual recovery
+    # -------------------------------------------------------------
+
+    def _try_recover_shared_or_inverted(
+            self,
+            current: IfRegion,
+            discriminant,
+            cases: list,
+            container: SequenceRegion | None,
+    ):
+        """
+        Called when `current.condition` is not a plain equality test.
+        Handles the common residual shape produced after IfStructurer
+        and compound-condition folding:
+
+            if (C !== disc) { realDefault }          # else empty
+            if (disc != C)  { realDefault }
+
+        The constant `C` is appended to the most recent case’s test
+        list and the residual’s then-body becomes the true default.
+        """
+        if discriminant is None or not cases:
+            return None
+
+        inv = self._parse_inverted_case_test(current.condition, discriminant)
+        if inv is None:
+            return None
+
+        _, extra_value = inv
+
+        # Prefer the shape where the then-arm is the real default and
+        # the else-arm is empty / transparent.
+        if self._is_empty_or_transparent_body(current.else_body):
+            cases[-1][0].append(extra_value)
+            return discriminant, cases, current.then_body
+
+        # Symmetric shape: then empty, else is the real default.
+        if self._is_empty_or_transparent_body(current.then_body):
+            cases[-1][0].append(extra_value)
+            return discriminant, cases, current.else_body
+
+        return None
+
+    def _try_recover_inverted_default(
+            self,
+            else_body: SequenceRegion,
+            discriminant,
+            cases: list,
+    ):
+        """
+        Inspect a non-chain else arm for a single inverted residual:
+
+            SequenceRegion
+              └── IfRegion  condition = (C !== disc)   else = None
+                    └── then = realDefault
+
+        On success appends `C` to the last case and returns the residual
+        then-body as the switch’s default.
+        """
+        if discriminant is None or not cases:
+            return None
+        if not isinstance(else_body, SequenceRegion):
+            return None
+
+        # Tolerate a leading transparent block (spent const load).
+        meaningful = [
+            c for c in else_body.children if not self._is_transparent(c)
+        ]
+        if len(meaningful) != 1 or not isinstance(meaningful[0], IfRegion):
+            return None
+
+        residual = meaningful[0]
+        if residual.else_body is not None and not self._is_empty_or_transparent_body(
+                residual.else_body
+        ):
+            return None
+
+        inv = self._parse_inverted_case_test(residual.condition, discriminant)
+        if inv is None:
+            return None
+
+        _, extra_value = inv
+        cases[-1][0].append(extra_value)
+        return residual.then_body
+
+    # -------------------------------------------------------------
+    # Condition parsers
     # -------------------------------------------------------------
 
     @staticmethod
     def _parse_case_test(condition, expected_discriminant):
         """
-        If `condition` is `<discriminant> == <constant>` (either
-        operand order, `==` or `===`), and `<discriminant>` matches
-        `expected_discriminant` (or `expected_discriminant` is still
-        unset - the first case in the chain), returns
-        `(discriminant_expr, constant_expr)`. Otherwise `None`.
+        Recognise `<discriminant> == <constant>` (either operand order,
+        `==` or `===`). When `expected_discriminant` is already set it
+        must structurally match. Returns `(discriminant_expr, constant)`
+        or `None`.
         """
-
         if not isinstance(condition, BinaryExpression):
             return None
 
@@ -378,33 +485,103 @@ class SwitchStructurer(RegionStructurer):
         elif left_is_const and not right_is_const:
             disc_expr, test_value = right, left
         else:
-            # Both constant or both non-constant - not a recognizable
-            # `switch`-shaped comparison either way.
             return None
 
-        if expected_discriminant is not None and not disc_expr.structurally_equal(expected_discriminant):
+        if (
+                expected_discriminant is not None
+                and not disc_expr.structurally_equal(expected_discriminant)
+        ):
+            return None
+
+        return disc_expr, test_value
+
+    @staticmethod
+    def _parse_inverted_case_test(condition, expected_discriminant):
+        """
+        Recognise `<discriminant> != <constant>` (either operand order,
+        `!=` or `!==`). Same contract as `_parse_case_test`.
+        """
+
+        if not isinstance(condition, BinaryExpression):
+            return None
+
+        if condition.operator not in _INEQUALITY_OPERATORS:
+            return None
+
+        left, right = condition.left, condition.right
+        left_is_const = isinstance(left, Literal)
+        right_is_const = isinstance(right, Literal)
+
+        if right_is_const and not left_is_const:
+            disc_expr, test_value = left, right
+        elif left_is_const and not right_is_const:
+            disc_expr, test_value = right, left
+        else:
+            return None
+
+        if (
+                expected_discriminant is not None
+                and not disc_expr.structurally_equal(expected_discriminant)
+        ):
             return None
 
         return disc_expr, test_value
 
     # -------------------------------------------------------------
+    # Body / transparency helpers
+    # -------------------------------------------------------------
+
+    @staticmethod
+    def _same_body(a, b) -> bool:
+        """
+        True when two case bodies are the same physical region (shared
+        fall-through) or share the same entry block address.
+        """
+        if a is b:
+            return True
+        if a is None or b is None:
+            return False
+
+        def _entry_address(body):
+            if isinstance(body, BasicBlock):
+                return body.address
+            if isinstance(body, SequenceRegion) and body.children:
+                first = body.children[0]
+                if isinstance(first, BasicBlock):
+                    return first.address
+                if hasattr(first, "covered_blocks") and first.covered_blocks:
+                    return min(first.covered_blocks, key=lambda blk: blk.id).address
+            if hasattr(body, "covered_blocks") and body.covered_blocks:
+                return min(body.covered_blocks, key=lambda blk: blk.id).address
+            return None
+
+        addr_a = _entry_address(a)
+        addr_b = _entry_address(b)
+        return addr_a is not None and addr_a == addr_b
+
+    @staticmethod
+    def _is_empty_or_transparent_body(body) -> bool:
+        if body is None:
+            return True
+        if isinstance(body, SequenceRegion):
+            if len(body.children) == 0:
+                return True
+            return all(SwitchStructurer._is_transparent(c) for c in body.children)
+        return SwitchStructurer._is_transparent(body)
 
     @staticmethod
     def _is_transparent(item) -> bool:
         """
-        True if `item` is a `BasicBlock` that produces no visible
-        output when printed (see `Printer._emit_block`): every
-        instruction's value has already been consumed elsewhere
-        (`.definition_used == True`) with no `.statement`/`.terminator` of its
-        own.
+        True when `item` is a `BasicBlock` that produces no visible
+        output when printed: every instruction’s value has already been
+        consumed elsewhere and the block holds no statement or
+        terminator of its own.
 
-        IfStructurer leaves exactly this kind of "spent" setup block
-        (e.g. a `LoadConstUInt8 r0, 1` that only ever fed a comparison
-        whose result is now folded entirely into the *next* level's
-        condition expression) sitting immediately before the following
-        nested IfRegion in `else_body.children`, instead of removing
-        it. It must not be mistaken for real content that breaks the
-        `else if` chain.
+        IfStructurer occasionally leaves exactly this kind of spent
+        setup block (e.g. a `LoadConstUInt8` that only fed a comparison
+        now folded into the next level’s condition) immediately before
+        a nested IfRegion. It must not be treated as real content that
+        breaks the `else if` chain.
         """
 
         if not isinstance(item, BasicBlock):
