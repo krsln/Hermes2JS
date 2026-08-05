@@ -183,27 +183,7 @@ class Printer(NodeVisitor):
                     self._write(lines, f"// USED → {rendered};")
 
             else:
-                # Definition is dead – emit the expression only when it
-                # has side-effects (calls, assignments, etc.).  Pure
-                # loads are simply dropped.
-                if self._has_side_effect(instruction.value):
-                    # Strip the leading "rN = " so we keep only the call.
-                    if instruction.dest_reg is not None and rendered.startswith(f"r{instruction.dest_reg} = "):
-                        rendered = rendered[len(f"r{instruction.dest_reg} = "):]
-                    self._write(lines, rendered if rendered.endswith(";") else rendered + ";")
-
-    @staticmethod
-    def _has_side_effect(expr) -> bool:
-        """Heuristic: calls, news, assignments, updates and awaits are
-        considered side-effecting; pure loads / literals are not."""
-        return isinstance(expr, (
-            CallExpression,
-            NewExpression,
-            AssignmentExpression,
-            UpdateExpression,
-            AwaitExpression,
-            YieldExpression,
-        ))
+                self._write(lines, rendered)
 
     # ---------------------------------------------------------
     # sequence
