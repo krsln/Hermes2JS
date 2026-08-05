@@ -18,6 +18,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 - OpcodeCatalog, opcode verification tests
 - io/ moved into core/IO.py
 - IfStructurer fix
+- _raw.js
 - 
 
 ## Testy
