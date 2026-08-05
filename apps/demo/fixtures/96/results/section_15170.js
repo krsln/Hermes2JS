@@ -27,17 +27,17 @@ function callGeneratorTests(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
         // USED → r5 = GetIterator(r3);
-        // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 0000004d
-        if (GetIterator(r3) === undefined) goto label_77;
-        // ──────────────── Block 2 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r6 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r5 = globalThis.console.log;
-        // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-        r5 = globalThis.console.log(GetIterator(r3).next())
-        // CODE → <Jmp>: <Addr8: -27>  # Address: 00000029
-        goto label_41;
+        if (GetIterator(r3) !== undefined) {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r6 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r5 = globalThis.console.log;
+            // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+            r5 = globalThis.console.log(GetIterator(r3).next())
+            // CODE → <Jmp>: <Addr8: -27>  # Address: 00000029
+            goto label_41;
+        }
     }
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 
@@ -56,17 +56,17 @@ function callGeneratorTests(param0) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
         // USED → r5 = GetIterator(r3);
-        // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000083
-        if (GetIterator(r3) === undefined) goto label_131;
-        // ──────────────── Block 6 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r6 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r5 = globalThis.console.log;
-        // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-        r5 = globalThis.console.log(GetIterator(r3).next())
-        // CODE → <Jmp>: <Addr8: -27>  # Address: 0000005f
-        goto label_95;
+        if (GetIterator(r3) !== undefined) {
+            // ──────────────── Block 6 ──────────────── 
+            // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r6 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r5 = globalThis.console.log;
+            // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+            r5 = globalThis.console.log(GetIterator(r3).next())
+            // CODE → <Jmp>: <Addr8: -27>  # Address: 0000005f
+            goto label_95;
+        }
     }
     // LOOP → END
     // ──────────────── Block 8 ──────────────── 

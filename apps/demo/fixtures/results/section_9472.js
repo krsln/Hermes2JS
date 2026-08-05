@@ -32,27 +32,27 @@ function tryFinallyLoopBreakTest(param0, param1) {
             // USED → r2 = 0;
             // CODE → <GetByVal>: <Reg8: 2, Reg8: 6, Reg8: 2>
             // USED → r2 = param1[0];
-            // CODE → <JStrictEqual>: <Addr8: 43, Reg8: 2, Reg8: 5>  # Address: 00000060
-            if (param1[0] === 0) goto label_96;
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r9 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r8 = globalThis.console.log;
-            // CODE → <Mov>: <Reg8: 2, Reg8: 7>
-            // USED → r2 = 0;
-            // CODE → <GetByVal>: <Reg8: 3, Reg8: 6, Reg8: 2>
-            // USED → r3 = param1[0];
-            // CODE → <Call3>: <Reg8: 3, Reg8: 8, Reg8: 9, Reg8: 4, Reg8: 3>
-            r3 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", param1[0])
-            // CODE → <Inc>: <Reg8: 3, Reg8: 2>
-            // USED → r3 = 0 + 1;
-            // CODE → <Mov>: <Reg8: 7, Reg8: 3>
-            r7 = 0 + 1
-            // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-            // USED → r2 = param1.length;
-            // CODE → <JLess>: <Addr8: -46, Reg8: 3, Reg8: 2>  # Address: 0000002e
-            if (0 + 1 < param1.length) goto label_46;
+            if (param1[0] !== 0) {
+                // ──────────────── Block 2 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+                // USED → r9 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+                // USED → r8 = globalThis.console.log;
+                // CODE → <Mov>: <Reg8: 2, Reg8: 7>
+                // USED → r2 = 0;
+                // CODE → <GetByVal>: <Reg8: 3, Reg8: 6, Reg8: 2>
+                // USED → r3 = param1[0];
+                // CODE → <Call3>: <Reg8: 3, Reg8: 8, Reg8: 9, Reg8: 4, Reg8: 3>
+                r3 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", param1[0])
+                // CODE → <Inc>: <Reg8: 3, Reg8: 2>
+                // USED → r3 = 0 + 1;
+                // CODE → <Mov>: <Reg8: 7, Reg8: 3>
+                r7 = 0 + 1
+                // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+                // USED → r2 = param1.length;
+                // CODE → <JLess>: <Addr8: -46, Reg8: 3, Reg8: 2>  # Address: 0000002e
+                if (0 + 1 < param1.length) goto label_46;
+            }
         }
         // LOOP → END
     }

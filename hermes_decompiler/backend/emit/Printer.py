@@ -13,8 +13,10 @@ from hermes_decompiler.ir import NodeVisitor
 from hermes_decompiler.ir import (
     precedence,
 )
+from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (
     Identifier,
+    Literal,
     ParenthesizedExpression,
     NumericLiteral,
     BigIntLiteral,
@@ -288,6 +290,28 @@ class Printer(NodeVisitor):
 
         if kind in (LoopKind.FOR_OF, LoopKind.FOR_IN):
             self._emit_for_each(region, lines)
+        elif kind is LoopKind.DO_WHILE:
+            # Bottom-tested: the body is guaranteed to run at least
+            # once before `condition` is ever checked. Printing this as
+            # a top-tested `while (cond) { body }` would be a real
+            # semantic change (zero executions instead of one whenever
+            # `cond` starts out false), not just a style difference -
+            # see LoopConditionExtractor's module docstring for why
+            # Hermes produces this shape even for a source-level
+            # `while` whose guard got optimized away.
+            cond = (
+                self.print_expression(region.condition)
+                if region.condition
+                else "true"
+            )
+
+            self._write(lines, "do {")
+
+            self._indent += 1
+            self._emit_region(region.body, lines)
+            self._indent -= 1
+
+            self._write(lines, f"}} while ({cond});")
         else:
             cond = (
                 self.print_expression(region.condition)

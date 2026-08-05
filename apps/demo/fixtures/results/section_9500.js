@@ -46,8 +46,6 @@ function nestedTemplateTest(param0, param1, param2) {
         // USED → r5 = "small (";
         // CODE → <Call3>: <Reg8: 5, Reg8: 7, Reg8: 5, Reg8: 8, Reg8: 6>
         r5 = globalThis.HermesInternal.concat.call("small (", param1 + param2, ")")
-        // CODE → <Jmp>: <Addr8: 31>  # Address: 00000063
-        goto label_99;
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)

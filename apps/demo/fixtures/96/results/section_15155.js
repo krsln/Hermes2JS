@@ -14,17 +14,10 @@ function defaultWithRestTest(param0) {
     // USED → r6 = 1;
     // CODE → <Mov>: <Reg8: 5, Reg8: 6>
     r5 = 1
-    if (arguments.length > 0) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <GetArgumentsPropByVal>: <Reg8: 1, Reg8: 8, Reg8: 7>
-        // USED → r1 = arguments[0];
-        // CODE → <Mov>: <Reg8: 5, Reg8: 6>
-        r5 = 1
-        if (arguments[0] !== undefined) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 8, Reg8: 7>
-            // USED → r5 = arguments[0];
-        }
+    if (arguments.length > 0 && arguments[0] !== undefined) {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 8, Reg8: 7>
+        // USED → r5 = arguments[0];
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>

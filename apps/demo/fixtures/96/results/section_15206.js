@@ -16,8 +16,6 @@ function _interopDefault(param0, param1) {
         // USED → r1 = param1.__esModule;
         // CODE → <Mov>: <Reg8: 0, Reg8: 2>
         r0 = param1
-        // CODE → <JmpTrue>: <Addr8: 12, Reg8: 1>  # Address: 0000001a
-        if (param1.__esModule) goto label_26;
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>

@@ -21,17 +21,17 @@ function forOfTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 4, Reg8: 3>
         // USED → r4 = GetIterator(r2);
-        // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 4, Reg8: 0>  # Address: 00000047
-        if (GetIterator(r2) === undefined) goto label_71;
-        // ──────────────── Block 2 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r5 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r4 = globalThis.console.log;
-        // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
-        r4 = globalThis.console.log(GetIterator(r2).next())
-        // CODE → <Jmp>: <Addr8: -27>  # Address: 00000023
-        goto label_35;
+        if (GetIterator(r2) !== undefined) {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r5 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r4 = globalThis.console.log;
+            // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
+            r4 = globalThis.console.log(GetIterator(r2).next())
+            // CODE → <Jmp>: <Addr8: -27>  # Address: 00000023
+            goto label_35;
+        }
     }
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 

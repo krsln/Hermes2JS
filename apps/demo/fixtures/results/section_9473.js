@@ -54,32 +54,32 @@ function tryCatchInsideLoopTest(param0, param1) {
             // USED → r11 = 0;
             // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
             // USED → r12 = param1[0];
-            // CODE → <JLess>: <Addr8: 30, Reg8: 12, Reg8: 9>  # Address: 00000064
-            if (param1[0] < 0) goto label_100;
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r14 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r13 = globalThis.console.log;
-            // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
-            // USED → r12 = param1[0];
-            // CODE → <Call3>: <Reg8: 12, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 12>
-            r12 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", param1[0])
-            // CODE → <Mov>: <Reg8: 12, Reg8: 11>
-            r12 = 0
-            // CODE → <Jmp>: <Addr8: 51>  # Address: 00000095
-            goto label_149;
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 8>
-            // USED → r4 = 0 + 1;
-            // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-            // USED → r2 = param1.length;
-            // CODE → <Mov>: <Reg8: 3, Reg8: 12>
-            // USED → r3 = 0 + 1;
-            // CODE → <Mov>: <Reg8: 0, Reg8: 3>
-            // USED → r0 = 0 + 1;
-            // CODE → <JLess>: <Addr8: -104, Reg8: 4, Reg8: 2>  # Address: 0000003c
-            if (0 + 1 < param1.length) goto label_60;
+            if (param1[0] >= 0) {
+                // ──────────────── Block 2 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+                // USED → r14 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+                // USED → r13 = globalThis.console.log;
+                // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
+                // USED → r12 = param1[0];
+                // CODE → <Call3>: <Reg8: 12, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 12>
+                r12 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", param1[0])
+                // CODE → <Mov>: <Reg8: 12, Reg8: 11>
+                r12 = 0
+                // CODE → <Jmp>: <Addr8: 51>  # Address: 00000095
+                goto label_149;
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 8>
+                // USED → r4 = 0 + 1;
+                // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+                // USED → r2 = param1.length;
+                // CODE → <Mov>: <Reg8: 3, Reg8: 12>
+                // USED → r3 = 0 + 1;
+                // CODE → <Mov>: <Reg8: 0, Reg8: 3>
+                // USED → r0 = 0 + 1;
+                // CODE → <JLess>: <Addr8: -104, Reg8: 4, Reg8: 2>  # Address: 0000003c
+                if (0 + 1 < param1.length) goto label_60;
+            }
         }
         // LOOP → END
         // ──────────────── Block 3 ──────────────── 

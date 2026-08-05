@@ -29,42 +29,42 @@ function closureLoopTest(param0) {
     r6 = _loop.call(undefined, 0)
     // CODE → <Inc>: <Reg8: 3, Reg8: 3>
     // USED → r3 = 0 + 1;
-    // CODE → <JLess>: <Addr8: -8, Reg8: 3, Reg8: 2>  # Address: 0000002c
-    if (0 + 1 < 3) goto label_44;
-    // ──────────────── Block 2 ──────────────── 
-    // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-    r2 = []
-    // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = GetIterator(r2);
-    // LOOP → START (for_of)
-    for (const r4 of r2) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        // USED → r5 = GetIterator(r2);
-        // CODE → <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000066
-        if (GetIterator(r2) === undefined) goto label_102;
-        // ──────────────── Block 4 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r6 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r5 = globalThis.console.log;
-        // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-        // USED → r4 = GetIterator(r2).next().call(undefined);
-        // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-        r4 = globalThis.console.log(GetIterator(r2).next().call(undefined))
-        // CODE → <Jmp>: <Addr8: -31>  # Address: 0000003e
-        goto label_62;
+    if (0 + 1 >= 3) {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → <Mov>: <Reg8: 2, Reg8: 4>
+        r2 = []
+        // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
+        // USED → r3 = GetIterator(r2);
+        // LOOP → START (for_of)
+        for (const r4 of r2) {
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → <Mov>: <Reg8: 5, Reg8: 3>
+            // USED → r5 = GetIterator(r2);
+            if (GetIterator(r2) !== undefined) {
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r6 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r5 = globalThis.console.log;
+                // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
+                // USED → r4 = GetIterator(r2).next().call(undefined);
+                // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+                r4 = globalThis.console.log(GetIterator(r2).next().call(undefined))
+                // CODE → <Jmp>: <Addr8: -31>  # Address: 0000003e
+                goto label_62;
+            }
+        }
+        // LOOP → END
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r3 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r2 = globalThis.console.log;
+        // CODE → <LoadConstString>: <Reg8: 1, string_id: 4766>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
+        // USED → r1 = "__BC:Functions/ClosureTests/closureLoopTest/end";
+        // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+        r1 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
+        // CODE → <Ret>: <Reg8: 0>
+        return undefined;
     }
-    // LOOP → END
-    // ──────────────── Block 6 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4766>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
-    // USED → r1 = "__BC:Functions/ClosureTests/closureLoopTest/end";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
-    // CODE → <Ret>: <Reg8: 0>
-    return undefined;
 }

@@ -36,25 +36,12 @@ function parameterDestructureTest(param0, param1, param2) {
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 6>
     r6 = undefined
-    if (GetIterator(r4) !== undefined) {
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
-        // USED → r4 = GetIterator(r4).next();
-        // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        // USED → r5 = GetIterator(r4);
-        // CODE → <StrictEq>: <Reg8: 2, Reg8: 5, Reg8: 1>
-        // USED → r2 = GetIterator(r4) === undefined;
-        // CODE → <LoadConstUndefined>: <Reg8: 6>
-        r6 = undefined
+    if (GetIterator(r4) !== undefined && GetIterator(r4) !== undefined) {
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <Mov>: <Reg8: 6, Reg8: 4>
+        // USED → r6 = GetIterator(r4).next();
         // CODE → <Mov>: <Reg8: 0, Reg8: 2>
-        r0 = GetIterator(r4) === undefined
-        if (GetIterator(r4) !== undefined) {
-            // ──────────────── Block 6 ──────────────── 
-            // CODE → <Mov>: <Reg8: 6, Reg8: 4>
-            // USED → r6 = GetIterator(r4).next();
-            // CODE → <Mov>: <Reg8: 0, Reg8: 2>
-            // USED → r0 = GetIterator(r4) === undefined;
-        }
+        // USED → r0 = GetIterator(r4) === undefined;
     }
     if (GetIterator(r4) !== undefined) {
         // ──────────────── Block 8 ──────────────── 

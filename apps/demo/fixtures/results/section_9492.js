@@ -96,15 +96,15 @@ function spreadArrayTest(param0) {
             // USED → r6 = GetIterator(r7) === undefined;
             // CODE → <Mov>: <Reg8: 9, Reg8: 2>
             // USED → r9 = 0;
-            // CODE → <JmpTrue>: <Addr8: 23, Reg8: 6>  # Address: 000000cc
-            if (GetIterator(r7) === undefined) goto label_204;
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
-            [][0] = GetIterator(r7).next()
-            // CODE → <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
-            r2 = 0 + 1
-            // CODE → <Jmp>: <Addr8: -28>  # Address: 000000a4
-            goto label_164;
+            if (GetIterator(r7) !== undefined) {
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
+                [][0] = GetIterator(r7).next()
+                // CODE → <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
+                r2 = 0 + 1
+                // CODE → <Jmp>: <Addr8: -28>  # Address: 000000a4
+                goto label_164;
+            }
         }
         // LOOP → END
         // LOOP → START (while)

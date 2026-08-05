@@ -39,27 +39,27 @@ async function* anon_15185(param0, param1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 3, Reg8: 4>
             // USED → r3 = GetIterator(r6);
-            // CODE → <JStrictEqual>: <Addr8: 45, Reg8: 3, Reg8: 7>  # Address: 00000063
-            if (GetIterator(r6) === undefined) goto label_99;
-            // ──────────────── Block 3 ──────────────── 
-            // CODE → <Mov>: <Reg8: 8, Reg8: 1>
-            // USED → r8 = 0;
-            // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
-            // USED → r3 = getEnvironment(2)[2];
-            // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
-            // USED → r3 = await getEnvironment(2)[2].call(undefined, GetIterator(r6).next());
-            // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
-            goto label_74;
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-            // USED → r3 = await yield;
-            // CODE → <JmpTrue>: <Addr8: 9, Reg8: 9>  # Address: 00000056
-            if (GetIterator(r6).next()) goto label_86;
-            // ──────────────── Block 6 ──────────────── 
-            // CODE → <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
-            // USED → r1 = 0 + await yield;
-            // CODE → <Jmp>: <Addr8: -37>  # Address: 0000002f
-            goto label_47;
+            if (GetIterator(r6) !== undefined) {
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → <Mov>: <Reg8: 8, Reg8: 1>
+                // USED → r8 = 0;
+                // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
+                // USED → r3 = getEnvironment(2)[2];
+                // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
+                // USED → r3 = await getEnvironment(2)[2].call(undefined, GetIterator(r6).next());
+                // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
+                goto label_74;
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 9>
+                // USED → r3 = await yield;
+                // CODE → <JmpTrue>: <Addr8: 9, Reg8: 9>  # Address: 00000056
+                if (GetIterator(r6).next()) goto label_86;
+                // ──────────────── Block 6 ──────────────── 
+                // CODE → <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
+                // USED → r1 = 0 + await yield;
+                // CODE → <Jmp>: <Addr8: -37>  # Address: 0000002f
+                goto label_47;
+            }
         }
         // LOOP → END
         // ──────────────── Block 9 ──────────────── 

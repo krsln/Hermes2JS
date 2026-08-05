@@ -45,16 +45,14 @@ function tryCatchInsideLoopTest(param0, param1) {
     } else {
         // LOOP → START (while)
         while (true) {
-            try {
-                // ──────────────── Block 1 ──────────────── 
-                // CODE → <Mov>: <Reg8: 3, Reg8: 7>
-                // USED → r3 = param1;
-                // CODE → <Mov>: <Reg8: 2, Reg8: 8>
-                // USED → r2 = 0;
-                // CODE → <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
-                // USED → r2 = param1[0];
-                // CODE → <JLess>: <Addr8: 33, Reg8: 2, Reg8: 6>  # Address: 00000065
-                if (param1[0] < 0) goto label_101;
+            // ──────────────── Block 1 ──────────────── 
+            // CODE → <Mov>: <Reg8: 3, Reg8: 7>
+            // USED → r3 = param1;
+            // CODE → <Mov>: <Reg8: 2, Reg8: 8>
+            // USED → r2 = 0;
+            // CODE → <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
+            // USED → r2 = param1[0];
+            if (param1[0] >= 0) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r9 = globalThis.console;
@@ -70,7 +68,6 @@ function tryCatchInsideLoopTest(param0, param1) {
                 r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", param1[0])
                 // CODE → <Jmp>: <Addr8: 59>  # Address: 0000009e
                 goto label_158;
-            } catch (caughtException) {
                 // LOOP → START (while)
                 while (true) {
                     // ──────────────── Block 5 ──────────────── 
@@ -84,19 +81,21 @@ function tryCatchInsideLoopTest(param0, param1) {
                     // USED → r2 = param1;
                     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
                     // USED → r2 = param1.length;
-                    // CODE → <JLess>: <Addr8: -117, Reg8: 3, Reg8: 2>  # Address: 0000003a
-                    if (0 + 1 < param1.length) goto label_58;
-                    // ──────────────── Block 4 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r3 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r2 = globalThis.console.log;
-                    // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 9>
-                    r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
-                    // CODE → <Mov>: <Reg8: 2, Reg8: 0>
-                    // USED → r2 = 0;
-                    // CODE → <Inc>: <Reg8: 0, Reg8: 2>
-                    // USED → r0 = 0 + 1;
+                    if (0 + 1 >= param1.length) {
+                        // ──────────────── Block 4 ──────────────── 
+                        // CODE → <Catch>: <Reg8: 9>
+                        // USED → r9 = caughtException;
+                        // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                        // USED → r3 = globalThis.console;
+                        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                        // USED → r2 = globalThis.console.log;
+                        // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 9>
+                        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
+                        // CODE → <Mov>: <Reg8: 2, Reg8: 0>
+                        // USED → r2 = 0;
+                        // CODE → <Inc>: <Reg8: 0, Reg8: 2>
+                        // USED → r0 = 0 + 1;
+                    }
                 }
                 // LOOP → END
             }

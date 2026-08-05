@@ -68,8 +68,6 @@ function function_15122(param0, param1, param2, param3, param4, param5, param6, 
         // USED → r3 = param2.call(undefined, param7[0]).__esModule;
         // CODE → <Mov>: <Reg8: 1, Reg8: 4>
         r1 = param2.call(undefined, param7[0])
-        // CODE → <JmpTrue>: <Addr8: 12, Reg8: 3>  # Address: 00000087
-        if (param2.call(undefined, param7[0]).__esModule) goto label_135;
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>

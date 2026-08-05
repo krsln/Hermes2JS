@@ -27,30 +27,30 @@ function forTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
         // USED → r1 = 0;
-        // CODE → <JStrictEqual>: <Addr8: 48, Reg8: 1, Reg8: 5>  # Address: 0000005b
-        if (0 === 3) goto label_91;
-        // ──────────────── Block 2 ──────────────── 
-        // CODE → <JStrictEqual>: <Addr8: 22, Reg8: 1, Reg8: 4>  # Address: 00000045
-        if (0 === 8) goto label_69;
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r10 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r9 = globalThis.console.log;
-        // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 1>
-        r9 = globalThis.console.log(0)
-        // CODE → <Jmp>: <Addr8: 40>  # Address: 0000006b
-        goto label_107;
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r10 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r9 = globalThis.console.log;
-        // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 8>
-        r9 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
-        // ──────────────── Block 6 ──────────────── 
-        // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-        // USED → r0 = 0 + 1;
+        if (0 !== 3) {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <JStrictEqual>: <Addr8: 22, Reg8: 1, Reg8: 4>  # Address: 00000045
+            if (0 === 8) goto label_69;
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+            // USED → r10 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+            // USED → r9 = globalThis.console.log;
+            // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 1>
+            r9 = globalThis.console.log(0)
+            // CODE → <Jmp>: <Addr8: 40>  # Address: 0000006b
+            goto label_107;
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+            // USED → r10 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+            // USED → r9 = globalThis.console.log;
+            // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 8>
+            r9 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
+            // ──────────────── Block 6 ──────────────── 
+            // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
+            // USED → r0 = 0 + 1;
+        }
     }
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 

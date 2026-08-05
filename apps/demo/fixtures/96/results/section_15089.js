@@ -41,53 +41,51 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                 // USED → r2 = 0;
                 // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
                 // USED → r2 = param1[0];
-                // CODE → <JLess>: <Addr8: 118, Reg8: 2, Reg8: 7>  # Address: 000000bc
-                if (param1[0] < 0) goto label_188;
-                // ──────────────── Block 2 ──────────────── 
-                // CODE → <Mov>: <Reg8: 4, Reg8: 8>
-                // USED → r4 = param1;
-                // CODE → <Mov>: <Reg8: 2, Reg8: 9>
-                // USED → r2 = 0;
-                // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
-                // USED → r2 = param1[0];
-                if (param1[0] === 0) {
-                    // ──────────────── Block 4 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r4 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r2 = globalThis.console.log;
-                    // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 4, Reg8: 6>
-                    r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue")
-                } else {
-                    // ──────────────── Block 3 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r10 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 10, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r4 = globalThis.console.log;
-                    // CODE → <Mov>: <Reg8: 11, Reg8: 8>
-                    // USED → r11 = param1;
+                if (param1[0] >= 0) {
+                    // ──────────────── Block 2 ──────────────── 
+                    // CODE → <Mov>: <Reg8: 4, Reg8: 8>
+                    // USED → r4 = param1;
                     // CODE → <Mov>: <Reg8: 2, Reg8: 9>
                     // USED → r2 = 0;
-                    // CODE → <GetByVal>: <Reg8: 2, Reg8: 11, Reg8: 2>
+                    // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
                     // USED → r2 = param1[0];
-                    // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 10, Reg8: 5, Reg8: 2>
-                    r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", param1[0])
-                    // CODE → <Jmp>: <Addr8: 34>  # Address: 000000a5
-                    goto label_165;
+                    if (param1[0] === 0) {
+                        // ──────────────── Block 4 ──────────────── 
+                        // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                        // USED → r4 = globalThis.console;
+                        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                        // USED → r2 = globalThis.console.log;
+                        // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 4, Reg8: 6>
+                        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue")
+                    } else {
+                        // ──────────────── Block 3 ──────────────── 
+                        // CODE → <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                        // USED → r10 = globalThis.console;
+                        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 10, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                        // USED → r4 = globalThis.console.log;
+                        // CODE → <Mov>: <Reg8: 11, Reg8: 8>
+                        // USED → r11 = param1;
+                        // CODE → <Mov>: <Reg8: 2, Reg8: 9>
+                        // USED → r2 = 0;
+                        // CODE → <GetByVal>: <Reg8: 2, Reg8: 11, Reg8: 2>
+                        // USED → r2 = param1[0];
+                        // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 10, Reg8: 5, Reg8: 2>
+                        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", param1[0])
+                    }
+                    // ──────────────── Block 5 ──────────────── 
+                    // CODE → <Mov>: <Reg8: 2, Reg8: 9>
+                    // USED → r2 = 0;
+                    // CODE → <Inc>: <Reg8: 4, Reg8: 2>
+                    // USED → r4 = 0 + 1;
+                    // CODE → <Mov>: <Reg8: 9, Reg8: 4>
+                    r9 = 0 + 1
+                    // CODE → <Mov>: <Reg8: 2, Reg8: 8>
+                    // USED → r2 = param1;
+                    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+                    // USED → r2 = param1.length;
+                    // CODE → <JLess>: <Addr8: -122, Reg8: 4, Reg8: 2>  # Address: 0000003c
+                    if (0 + 1 < param1.length) goto label_60;
                 }
-                // ──────────────── Block 5 ──────────────── 
-                // CODE → <Mov>: <Reg8: 2, Reg8: 9>
-                // USED → r2 = 0;
-                // CODE → <Inc>: <Reg8: 4, Reg8: 2>
-                // USED → r4 = 0 + 1;
-                // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-                r9 = 0 + 1
-                // CODE → <Mov>: <Reg8: 2, Reg8: 8>
-                // USED → r2 = param1;
-                // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-                // USED → r2 = param1.length;
-                // CODE → <JLess>: <Addr8: -122, Reg8: 4, Reg8: 2>  # Address: 0000003c
-                if (0 + 1 < param1.length) goto label_60;
             }
             // LOOP → END
             // ──────────────── Block 6 ──────────────── 

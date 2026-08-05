@@ -22,21 +22,21 @@ function forInTest(param0) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <GetNextPName>: <Reg8: 4, Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
             // USED → r4 = r6.next();
-            // CODE → <JmpUndefined>: <Addr8: 29, Reg8: 4>  # Address: 0000004a
-            if (r6.next() === undefined) goto label_74;
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <Mov>: <Reg8: 11, Reg8: 4>
-            // USED → r11 = r6.next();
-            // CODE → <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r10 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r9 = globalThis.console.log;
-            // CODE → <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
-            // USED → r8 = { "a": 1, "b": 2, "c": 3 }[r6.next()];
-            // CODE → <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
-            r8 = globalThis.console.log(r6.next(), { "a": 1, "b": 2, "c": 3 }[r6.next()])
-            // CODE → <Jmp>: <Addr8: -33>  # Address: 00000027
-            goto label_39;
+            if (r6.next() !== undefined) {
+                // ──────────────── Block 2 ──────────────── 
+                // CODE → <Mov>: <Reg8: 11, Reg8: 4>
+                // USED → r11 = r6.next();
+                // CODE → <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+                // USED → r10 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+                // USED → r9 = globalThis.console.log;
+                // CODE → <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
+                // USED → r8 = { "a": 1, "b": 2, "c": 3 }[r6.next()];
+                // CODE → <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
+                r8 = globalThis.console.log(r6.next(), { "a": 1, "b": 2, "c": 3 }[r6.next()])
+                // CODE → <Jmp>: <Addr8: -33>  # Address: 00000027
+                goto label_39;
+            }
         }
         // LOOP → END
     }

@@ -20,21 +20,21 @@ function forInTest(param0) {
         // LOOP → START (for_in)
         for (const r1 in r4) {
             // ──────────────── Block 1 ──────────────── 
-            // CODE → <JmpUndefined>: <Addr8: 29, Reg8: 1>  # Address: 0000004e
-            if (r5.next() === undefined) goto label_78;
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <Mov>: <Reg8: 10, Reg8: 1>
-            // USED → r10 = r5.next();
-            // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r9 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r8 = globalThis.console.log;
-            // CODE → <GetByVal>: <Reg8: 7, Reg8: 6, Reg8: 10>
-            // USED → r7 = { "a": 1, "b": 2, "c": 3 }[r5.next()];
-            // CODE → <Call3>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 7>
-            r7 = globalThis.console.log(r5.next(), { "a": 1, "b": 2, "c": 3 }[r5.next()])
-            // CODE → <Jmp>: <Addr8: -33>  # Address: 0000002b
-            goto label_43;
+            if (r5.next() !== undefined) {
+                // ──────────────── Block 2 ──────────────── 
+                // CODE → <Mov>: <Reg8: 10, Reg8: 1>
+                // USED → r10 = r5.next();
+                // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r9 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r8 = globalThis.console.log;
+                // CODE → <GetByVal>: <Reg8: 7, Reg8: 6, Reg8: 10>
+                // USED → r7 = { "a": 1, "b": 2, "c": 3 }[r5.next()];
+                // CODE → <Call3>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 7>
+                r7 = globalThis.console.log(r5.next(), { "a": 1, "b": 2, "c": 3 }[r5.next()])
+                // CODE → <Jmp>: <Addr8: -33>  # Address: 0000002b
+                goto label_43;
+            }
         }
         // LOOP → END
     }

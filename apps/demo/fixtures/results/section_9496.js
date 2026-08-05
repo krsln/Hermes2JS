@@ -55,7 +55,7 @@ function setTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    while (!(GetIterator(r2) === undefined)) {
+    while (true) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 2>
         r5 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)
@@ -63,15 +63,17 @@ function setTest(param0) {
         // USED → r7 = GetIterator(r2).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
         // USED → r5 = GetIterator(r2);
-        // ──────────────── Block 2 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r6 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r5 = globalThis.console.log;
-        // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-        r5 = globalThis.console.log(GetIterator(r2).next())
-        // CODE → <Jmp>: <Addr8: -30>  # Address: 0000007a
-        goto label_122;
+        if (GetIterator(r2) !== undefined) {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+            // USED → r6 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+            // USED → r5 = globalThis.console.log;
+            // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+            r5 = globalThis.console.log(GetIterator(r2).next())
+            // CODE → <Jmp>: <Addr8: -30>  # Address: 0000007a
+            goto label_122;
+        }
     }
     // LOOP → END
     // ──────────────── Block 3 ──────────────── 

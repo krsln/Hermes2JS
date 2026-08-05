@@ -44,25 +44,12 @@ function swapViaDestructureTest(param0) {
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
-    if (GetIterator(r6) !== undefined) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
-        // USED → r6 = GetIterator(r6).next();
-        // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-        // USED → r9 = GetIterator(r6);
-        // CODE → <StrictEq>: <Reg8: 3, Reg8: 9, Reg8: 2>
-        // USED → r3 = GetIterator(r6) === undefined;
-        // CODE → <LoadConstUndefined>: <Reg8: 7>
-        r7 = undefined
+    if (GetIterator(r6) !== undefined && GetIterator(r6) !== undefined) {
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → <Mov>: <Reg8: 7, Reg8: 6>
+        // USED → r7 = GetIterator(r6).next();
         // CODE → <Mov>: <Reg8: 1, Reg8: 3>
-        r1 = GetIterator(r6) === undefined
-        if (GetIterator(r6) !== undefined) {
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → <Mov>: <Reg8: 7, Reg8: 6>
-            // USED → r7 = GetIterator(r6).next();
-            // CODE → <Mov>: <Reg8: 1, Reg8: 3>
-            // USED → r1 = GetIterator(r6) === undefined;
-        }
+        // USED → r1 = GetIterator(r6) === undefined;
     }
     if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 6 ──────────────── 

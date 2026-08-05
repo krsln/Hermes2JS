@@ -28,28 +28,10 @@ function optionalChainingTest(param0) {
     // USED → r0 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     r4 = undefined
-    if ({ a: { b: {  } } } != null) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 3, string_id: 7189>  # String: 'a' (Identifier)
-        // USED → r3 = { a: { b: {  } } }.a;
-        // CODE → <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
-        // USED → r5 = { a: { b: {  } } }.a == null;
-        // CODE → <LoadConstUndefined>: <Reg8: 4>
-        r4 = undefined
-        if ({ a: { b: {  } } }.a != null) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 38>  # String: 'b' (Identifier)
-            // USED → r3 = { a: { b: {  } } }.a.b;
-            // CODE → <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
-            // USED → r5 = { a: { b: {  } } }.a.b == null;
-            // CODE → <LoadConstUndefined>: <Reg8: 4>
-            r4 = undefined
-            if ({ a: { b: {  } } }.a.b != null) {
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 7241>  # String: 'c' (Identifier)
-                // USED → r4 = { a: { b: {  } } }.a.b.c;
-            }
-        }
+    if ({ a: { b: {  } } } != null && ({ a: { b: {  } } }.a != null && { a: { b: {  } } }.a.b != null)) {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 7241>  # String: 'c' (Identifier)
+        // USED → r4 = { a: { b: {  } } }.a.b.c;
     }
     if ({ a: { b: {  } } }.a.b.c == null) {
         // ──────────────── Block 5 ──────────────── 
