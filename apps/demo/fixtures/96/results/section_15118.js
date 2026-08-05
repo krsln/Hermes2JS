@@ -53,7 +53,7 @@ function spreadArrayTest(param0) {
     // CODE → <PutOwnByVal>: <Reg8: 6, Reg8: 5, Reg8: 2, UInt8: 1>
     r6[arraySpread(r-2, r-1, r0, r1)] = 99
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 4>
-    r2 = arraySpread(r-2, r-1, r0, r1) + 1
+    r2 = r2 + r4
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

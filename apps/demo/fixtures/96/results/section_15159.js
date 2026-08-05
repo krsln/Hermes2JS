@@ -33,8 +33,8 @@ function restOnlyTest(param0) {
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // CODE → <Less>: <Reg8: 6, Reg8: 2, Reg8: 3>
-    // USED → r6 = 0 < arguments.length;
-    if (0 < arguments.length) {
+    // USED → r6 = r2 < r3;
+    if (r2 < r3) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetArgumentsPropByVal>: <Reg8: 6, Reg8: 2, Reg8: 4>
         // USED → r6 = arguments[0];

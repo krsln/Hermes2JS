@@ -49,13 +49,13 @@ function shortCircuitAssignTest(param0) {
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 7735>  # String: 'count' (Identifier)
-    // USED → r3 = {  }.count;
+    r3 = {  }.count
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
-    // USED → r2 = 1;
+    r2 = 1
     // CODE → <Add>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = {  }.count + 1;
+    // USED → r2 = r3 + r2;
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 7735>  # String: 'count' (Identifier)
-    {  }.count = {  }.count + 1
+    {  }.count = r3 + r2
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

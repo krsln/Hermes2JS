@@ -42,7 +42,7 @@ async function* anon_15185(param0, param1) {
             if (r3 !== r7) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <Mov>: <Reg8: 8, Reg8: 1>
-                // USED → r8 = 0;
+                r8 = 0
                 // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
                 // USED → r3 = getEnvironment(2)[2];
                 // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
@@ -56,7 +56,7 @@ async function* anon_15185(param0, param1) {
                 if (GetIterator(r6).next()) goto label_86;
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
-                // USED → r1 = 0 + await yield;
+                // USED → r1 = r8 + r3;
                 // CODE → <Jmp>: <Addr8: -37>  # Address: 0000002f
                 goto label_47;
             }
@@ -68,7 +68,7 @@ async function* anon_15185(param0, param1) {
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r3 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 1>
-        r3 = globalThis.console.log(0 + await yield)
+        r3 = globalThis.console.log(r8 + r3)
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r4 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -80,6 +80,6 @@ async function* anon_15185(param0, param1) {
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → <Ret>: <Reg8: 1>
-        return 0 + await yield;
+        return r8 + r3;
     }
 }

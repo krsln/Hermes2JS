@@ -5,32 +5,32 @@ function defaultParameterTest(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     r2 = undefined
     // CODE → <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = arguments.length;
+    r3 = arguments.length
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     // USED → r1 = 1;
     // CODE → <Greater>: <Reg8: 3, Reg8: 3, Reg8: 1>
-    // USED → r3 = arguments.length > 1;
+    // USED → r3 = r3 > r1;
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 10>
     // USED → r4 = 10;
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
     r5 = 10
-    if (arguments.length > 1 && r3 !== r0) {
+    if (r3 > r1 && r3 !== r0) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 1, Reg8: 2>
-        // USED → r5 = arguments[1];
+        r5 = arguments[1]
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = arguments.length;
+    r3 = arguments.length
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     // USED → r1 = 2;
     // CODE → <Greater>: <Reg8: 3, Reg8: 3, Reg8: 1>
-    // USED → r3 = arguments.length > 2;
+    // USED → r3 = r3 > r1;
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 7363>  # String: 'result' (Identifier)
     // USED → r6 = "result";
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
     r4 = "result"
-    if (arguments.length > 2 && r3 !== r0) {
+    if (r3 > r1 && r3 !== r0) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 1, Reg8: 2>
         // USED → r4 = arguments[2];
@@ -51,11 +51,11 @@ function defaultParameterTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
-    // USED → r1 = param1;
+    r1 = param1
     // CODE → <Add>: <Reg8: 1, Reg8: 1, Reg8: 5>
-    // USED → r1 = param1 + arguments[1];
+    // USED → r1 = r1 + r5;
     // CODE → <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1>
-    r1 = globalThis.console.log(arguments[2], param1 + arguments[1])
+    r1 = globalThis.console.log(arguments[2], r1 + r5)
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

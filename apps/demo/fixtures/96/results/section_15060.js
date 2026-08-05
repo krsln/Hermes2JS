@@ -13,11 +13,11 @@ function complexTest(param0) {
     // CODE → <NewArrayWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 5, UInt16: 23616>  # Array: [1, 2, 3, 4, 5]
     // USED → r12 = [1, 2, 3, 4, 5];
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    // USED → r1 = [1, 2, 3, 4, 5].length;
+    r1 = [1, 2, 3, 4, 5].length
     // CODE → <LoadConstZero>: <Reg8: 11>
     // USED → r11 = 0;
     // CODE → <Less>: <Reg8: 1, Reg8: 11, Reg8: 1>
-    // USED → r1 = 0 < [1, 2, 3, 4, 5].length;
+    // USED → r1 = r11 < r1;
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 855>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-1' (String)
     // USED → r10 = "__BC:ControlFlow/ComplexTests/complexTest/case-1";
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 4563>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-2-continue' (String)
@@ -36,7 +36,7 @@ function complexTest(param0) {
     r3 = 2
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     r2 = 1
-    if (0 < [1, 2, 3, 4, 5].length) {
+    if (r11 < r1) {
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 1 ──────────────── 

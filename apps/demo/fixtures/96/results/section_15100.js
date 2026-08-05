@@ -21,14 +21,14 @@ function optionalChainingTest(param0) {
     // CODE → <PutNewOwnById>: <Reg8: 3, Reg8: 0, string_id: 7189>  # String: 'a' (Identifier)
     // USED → r3 = { a: { b: {  } } };
     // CODE → <LoadConstNull>: <Reg8: 2>
-    // USED → r2 = null;
+    r2 = null
     // CODE → <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
-    // USED → r5 = { a: { b: {  } } } == null;
+    // USED → r5 = r3 == r2;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     r4 = undefined
-    if ({ a: { b: {  } } } != null && ({ a: { b: {  } } }.a != null && { a: { b: {  } } }.a.b != null)) {
+    if (r3 != r2 && (r3 != r2 && r3 != r2)) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 7241>  # String: 'c' (Identifier)
         r4 = { a: { b: {  } } }.a.b.c

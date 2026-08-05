@@ -27,8 +27,8 @@ class BaseBinaryOperator(OpcodeHandler):
 
         dest_reg, lhs, rhs = map(int, match.groups())
 
-        lhs_val = self.get_register_expression(analysis, lhs)
-        rhs_val = self.get_register_expression(analysis, rhs)
+        lhs_val = self.get_register_reference(analysis, lhs)
+        rhs_val = self.get_register_reference(analysis, rhs)
 
         expression = BinaryExpression(left=lhs_val, operator=self.operator, right=rhs_val)
 

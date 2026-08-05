@@ -41,11 +41,11 @@ function propertyAccessTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 41>  # String: 'x' (Identifier)
-    // USED → r2 = "x";
+    r2 = "x"
     // CODE → <IsIn>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = "x" in { "x": 1, "y": 2 };
+    // USED → r2 = r2 in r5;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 2>
-    r2 = globalThis.console.log("x" in { "x": 1, "y": 2 })
+    r2 = globalThis.console.log(r2 in r5)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 24>  # String: 'Object' (Identifier)
     // USED → r3 = globalThis.Object;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 7, string_id: 118>  # String: 'keys' (Identifier)

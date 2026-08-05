@@ -3,7 +3,7 @@ async function* anon_15167(param0, param1) {
     // CODE → <StartGenerator>: <>
     // StartGenerator
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 1>
-    // USED → r5 = param1;
+    r5 = param1
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
     if (r1) {
@@ -27,12 +27,12 @@ async function* anon_15167(param0, param1) {
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0;
         // CODE → <Less>: <Reg8: 6, Reg8: 4, Reg8: 5>
-        // USED → r6 = 0 < param1;
+        // USED → r6 = r4 < r5;
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 4783>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/skip' (String)
         // USED → r3 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/skip";
         // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
         r2 = 2
-        if (!(0 < param1)) {
+        if (!(r4 < r5)) {
             // ──────────────── Block 9 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r3 = globalThis.console;
@@ -53,11 +53,11 @@ async function* anon_15167(param0, param1) {
             while (true) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 4>
-                // USED → r6 = 0;
+                r6 = 0
                 if (r6 !== r2) {
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>
-                    // USED → r7 = 0 * 0;
+                    // USED → r7 = r6 * r6;
                     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003f
                     goto label_63;
                     // ──────────────── Block 5 ──────────────── 
@@ -83,7 +83,7 @@ async function* anon_15167(param0, param1) {
             // LOOP → END
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Ret>: <Reg8: 7>
-            return 0 * 0;
+            return r6 * r6;
             // ──────────────── Block 6 ──────────────── 
             // CODE → <CompleteGenerator>: <>
             // CompleteGenerator

@@ -49,9 +49,9 @@ function tryCatchRethrowDifferentTest(param0) {
             // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
             // USED → r3 = globalThis.Error;
             // CODE → <LoadConstString>: <Reg8: 0, string_id: 3427>  # String: 'wrapped: ' (String)
-            // USED → r0 = "wrapped: ";
+            r0 = "wrapped: "
             // CODE → <Add>: <Reg8: 5, Reg8: 0, Reg8: 2>
-            // USED → r5 = "wrapped: " + caughtException;
+            // USED → r5 = r0 + r2;
             // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
             // USED → r2 = globalThis.Error.prototype;
             // CODE → <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 3>
@@ -59,11 +59,11 @@ function tryCatchRethrowDifferentTest(param0) {
             // CODE → <Mov>: <Reg8: 6, Reg8: 2>
             r6 = createThis(globalThis.Error.prototype, globalThis.Error)
             // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-            // USED → r0 = new globalThis.Error("wrapped: " + caughtException);
+            // USED → r0 = new globalThis.Error(r0 + r2);
             // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-            // USED → r0 = new globalThis.Error("wrapped: " + caughtException);
+            // USED → r0 = new globalThis.Error(r0 + r2);
             // CODE → <Throw>: <Reg8: 0>
-            throw new globalThis.Error("wrapped: " + caughtException);
+            throw new globalThis.Error(r0 + r2);
         }
     } finally {
         // ──────────────── Block 2 ──────────────── 

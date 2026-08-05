@@ -3,11 +3,11 @@ function function_15131(param0, param1, param2, param3) {
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 3>
     // USED → r5 = param3;
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
-    // USED → r1 = param1;
+    r1 = param1
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 2>
-    // USED → r0 = param2;
+    r0 = param2
     // CODE → <Add>: <Reg8: 1, Reg8: 1, Reg8: 0>
-    // USED → r1 = param1 + param2;
+    r1 = r1 + r0
     // CODE → <GetEnvironment>: <Reg8: 2, UInt8: 0>
     // USED → r2 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 0>
@@ -29,11 +29,11 @@ function function_15131(param0, param1, param2, param3) {
         // CODE → <GetByVal>: <Reg8: 2, Reg8: 2, Reg8: 5>
         // USED → r2 = getEnvironment(0)[0][param3];
         // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 2>
-        // USED → r0 = globalThis.String.call(undefined, getEnvironment(0)[0][param3]);
+        r0 = globalThis.String.call(undefined, getEnvironment(0)[0][param3])
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Add>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = param1 + param2 + globalThis.String.call(undefined, getEnvironment(0)[0][param3]);
+    // USED → r0 = r1 + r0;
     // CODE → <Ret>: <Reg8: 0>
-    return param1 + param2 + globalThis.String.call(undefined, getEnvironment(0)[0][param3]);
+    return r1 + r0;
 }
