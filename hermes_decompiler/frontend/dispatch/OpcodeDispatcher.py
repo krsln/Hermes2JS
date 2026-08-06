@@ -50,17 +50,14 @@ class OpcodeDispatcher:
             raise OpcodeDispatchError(entry.opcode, entry.bytecode, e) from e
 
     @staticmethod
-    def dispatch_all(entries: List[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool = False) -> list[
-        OpcodeResult]:
+    def dispatch_all(entries: List[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool = False):
         dispatcher = OpcodeDispatcher(analysis)
-        results: List[OpcodeResult] = []
 
         for i, entry in enumerate(entries):
 
             if not entry.opcode:
                 result = OpcodeResult(entry, value=RawExpression(source=f"// Unparsed: {entry.bytecode}"))
                 analysis.add_result(result)
-                results.append(result)
                 continue
 
             try:
@@ -70,23 +67,18 @@ class OpcodeDispatcher:
                 if result.handler == "SaveGenerator":
                     OpcodeDispatcher._handle_generator_await(analysis)
 
-                results.append(result)
             except NoHandlerError as e:
                 logger.warning("No handler for opcode '%s' (line=%r)", e.opcode, entry.bytecode)
                 if strict:
                     raise
                 result = OpcodeResult(entry, value=RawExpression(source=f"// Unhandled opcode: {e.opcode}"))
                 analysis.add_result(result)
-                results.append(result)
             except OpcodeDispatchError as e:
                 logger.error("Dispatch error for opcode '%s': %s", e.opcode, e.cause, exc_info=True)
                 if strict:
                     raise
                 result = OpcodeResult(entry, value=RawExpression(source=f"// Error: {e.cause}"))
                 analysis.add_result(result)
-                results.append(result)
-
-        return results
 
     @staticmethod
     def _handle_generator_await(analysis: HermesAnalysis) -> None:
