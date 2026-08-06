@@ -58,7 +58,7 @@ class OpcodeDispatcher:
         for i, entry in enumerate(entries):
 
             if not entry.opcode:
-                result = OpcodeResult(ctx.entry, value=RawExpression(source=f"// Unparsed: {entry.bytecode}"))
+                result = OpcodeResult(entry, value=RawExpression(source=f"// Unparsed: {entry.bytecode}"))
                 analysis.add_result(result)
                 results.append(result)
                 continue
@@ -72,17 +72,17 @@ class OpcodeDispatcher:
 
                 results.append(result)
             except NoHandlerError as e:
-                logger.warning("No handler for opcode '%s' (line=%r)", e.opcode, raw_line)
+                logger.warning("No handler for opcode '%s' (line=%r)", e.opcode, entry.bytecode)
                 if strict:
                     raise
-                result = OpcodeResult(ctx.entry, value=RawExpression(source=f"// Unhandled opcode: {e.opcode}"))
+                result = OpcodeResult(entry, value=RawExpression(source=f"// Unhandled opcode: {e.opcode}"))
                 analysis.add_result(result)
                 results.append(result)
             except OpcodeDispatchError as e:
                 logger.error("Dispatch error for opcode '%s': %s", e.opcode, e.cause, exc_info=True)
                 if strict:
                     raise
-                result = OpcodeResult(ctx.entry, value=RawExpression(source=f"// Error: {e.cause}"))
+                result = OpcodeResult(entry, value=RawExpression(source=f"// Error: {e.cause}"))
                 analysis.add_result(result)
                 results.append(result)
 
