@@ -12,39 +12,54 @@ from hermes_decompiler.core.stages import (
 
 class Decompiler:
     """
-    Convert .hbc assembly content to JavaScript code.
+    High-level entry point for Hermes bytecode decompilation.
 
-    Unlike the previous implementation, JSConverter holds NO state of its
-    own (no `_functionTable` class attribute). Every call is fully
-    self-contained: a fresh HermesAnalysis is created internally, and any
-    cross-section knowledge (e.g., resolving function names across multiple
-    section_<n>.hbc files) must be passed in explicitly via
-    `function_registry`. This makes concurrent/parallel conversion safe and
-    keeps tests from bleeding state into one another.
+    The decompilation process is intentionally split into two phases:
+
+        1. build_context()
+           Executes the analysis pipeline and produces a fully populated
+           PipelineContext.
+
+        2. render()
+           Generates JavaScript from an existing PipelineContext.
+
+    Separating analysis from rendering allows the same context to be rendered
+    multiple times (for example, normal and raw output) without repeating
+    parsing, opcode dispatch, or control-flow analysis.
+
+    The class is stateless and therefore safe for concurrent use.
     """
 
     @staticmethod
-    def convert(
-            assembly_content: str, section_index: int,
-            *, strict: bool = False, verbose: bool = True, raw: bool = True,
-    ) -> str:
+    def build_context(assembly_content: str, section_index: int, *, strict: bool = False) -> PipelineContext:
         """
+        Execute the decompilation pipeline and return the resulting
+        PipelineContext.
+
+        The returned context contains all intermediate analysis results required
+        for code generation and may be rendered multiple times using different
+        rendering options.
+
         Args:
-            assembly_content: The .hbc assembly content.
-            section_index: The section index for naming anonymous functions.
-            strict: If True, raise immediately on the first opcode
-                dispatch failure instead of emitting an inline `// Error: ...` comment and continuing.
-            verbose: If True, annotate generated JS with `// CODE ->` source comments.
-            raw: If True, generates section_{section_index}_raw.js.
+            assembly_content:
+                Hermes assembly (.hbc) text.
+
+            section_index:
+                Section identifier used for naming generated artifacts and
+                anonymous functions.
+
+            strict:
+                If True, abort immediately on the first opcode dispatch error.
+                Otherwise, recover where possible and continue generating output.
 
         Returns:
-            The generated JavaScript code.
+            A fully populated PipelineContext.
 
         Raises:
-            ValueError: If the assembly content is empty or metadata is
-                unparseable (preserved for backwards compatibility with
-                callers catching ValueError, e.g., FileOps).
+            ValueError:
+                If the input is empty or metadata cannot be parsed.
         """
+
         if not assembly_content.strip():
             raise ValueError("Empty assembly content")
 
@@ -58,11 +73,10 @@ class Decompiler:
             ParsingStage(),
 
             DispatchStage(strict=strict),
-            CodeGenerationStage(verbose=verbose, raw=raw),
         ])
 
         try:
-            state = pipeline.run(state)
+            return pipeline.run(state)
         except Exception as e:
             # Preserve the original public contract: callers of convert()
             # historically only needed to catch ValueError for bad input.
@@ -71,4 +85,42 @@ class Decompiler:
                 raise ValueError(str(e)) from e
             raise
 
-        return '\n'.join(state.js_lines)
+    @staticmethod
+    def render(context: PipelineContext, *, verbose: bool = True, raw: bool = True) -> str:
+        """
+        Render JavaScript from an existing PipelineContext.
+
+        Unlike build_context(), this method performs no parsing or analysis.
+        It only executes the code generation stage, allowing the same analysis
+        result to be rendered with different formatting options.
+
+        Args:
+            context:
+                Previously built PipelineContext.
+
+            verbose:
+                Include source bytecode annotations.
+
+            raw:
+                Produce the raw renderer output.
+
+        Returns:
+            Generated JavaScript source code.
+        """
+
+        result = CodeGenerationStage(verbose=verbose, raw=raw).run(context)
+
+        return '\n'.join(result.js_lines)
+
+    @staticmethod
+    def convert(assembly_content, section_index, *, strict=False, verbose=True, raw=True) -> str:
+        """
+        Convenience wrapper combining build_context() and render().
+
+        This method preserves the historical public API while internally
+        splitting analysis from rendering.
+        """
+
+        context = Decompiler.build_context(assembly_content, section_index, strict=strict)
+
+        return Decompiler.render(context, verbose=verbose, raw=raw)

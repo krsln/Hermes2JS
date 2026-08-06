@@ -98,10 +98,14 @@ class FileOperations:
             return False
 
         try:
-            js_code = Decompiler.convert(hbc_content, section_index, verbose=verbose, raw=False, strict=strict)
-            js_code_raw = None
-            if raw:
-                js_code_raw = Decompiler.convert(hbc_content, section_index, verbose=True, raw=True, strict=strict)
+            context = Decompiler.build_context(hbc_content, section_index, strict=strict)
+
+            # Render the raw representation first, as it preserves the complete
+            # low-level output before any presentation-oriented formatting.
+            js_code_raw = Decompiler.render(context, verbose=True, raw=True) if raw else None
+
+            # Render the standard JavaScript output.
+            js_code = Decompiler.render(context, verbose=verbose, raw=False)
         except ValueError:
             # Bad/unparseable input for this specific section - log and let the
             # caller decide whether to continue with the rest of the batch.
