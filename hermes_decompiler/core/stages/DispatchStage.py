@@ -16,12 +16,19 @@ class DispatchStage(PipelineStage):
         if not context.bytecode_lines:
             return context
 
-        results = OpcodeDispatcher.dispatch_all(context.entries, context.analysis, strict=self._strict)
+        OpcodeDispatcher.dispatch_all(context.entries, context.analysis, strict=self._strict)
 
-        if len(results) != len(context.analysis.results):
+        processed = sum(1 for e in context.entries if e.opcode)
+        if len(context.analysis.results) < processed:
             logger.warning(
-                "Section section_%s: Dispatcher returned %s results but analysis.results has %s",
-                context.section_index, len(results), len(context.analysis.results),
+                "Section section_%s: analysis.results (%s) is fewer than processed entries (%s) — some opcode likely produced zero results",
+                context.section_index, len(context.analysis.results), processed,
             )
+
+        # if len(results) != len(context.analysis.results):
+        #     logger.warning(
+        #         "Section section_%s: Dispatcher returned %s results but analysis.results has %s",
+        #         context.section_index, len(results), len(context.analysis.results)
+        #     )
 
         return context

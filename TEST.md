@@ -35,6 +35,7 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/one -o ./apps/de
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/one -o ./apps/demo/fixtures/96/results --log-level DEBUG
 
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --strict
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
 
 # If Tests 15062, 15063
