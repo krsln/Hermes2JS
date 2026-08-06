@@ -20,6 +20,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 - IfStructurer fix
 - _raw.js
 - HermesAnalysis  self.registers: dict[str, RegisterState] = {}
+- Printer.py
 
 ## Testy
 

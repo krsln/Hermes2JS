@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import json
+from contextlib import contextmanager
+
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
@@ -8,15 +11,15 @@ from hermes_decompiler.analysis.regions.Regions import (
     IfRegion,
     TryRegion,
     SwitchRegion,
+    Region,
 )
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import NodeVisitor
 from hermes_decompiler.ir import (
     precedence,
 )
-from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (
     Identifier,
-    Literal,
     ParenthesizedExpression,
     NumericLiteral,
     BigIntLiteral,
@@ -65,6 +68,8 @@ __all__ = [
     "Printer",
 ]
 
+logger = get_logger(__name__)
+
 
 class Printer(NodeVisitor):
     """
@@ -94,6 +99,14 @@ class Printer(NodeVisitor):
         self.verbose = verbose
         self._indent = 0
 
+    @contextmanager
+    def _indented(self):
+        self._indent += 1
+        try:
+            yield
+        finally:
+            self._indent -= 1
+
     # ---------------------------------------------------------
     # public
     # ---------------------------------------------------------
@@ -112,8 +125,11 @@ class Printer(NodeVisitor):
     # dispatcher
     # ---------------------------------------------------------
 
-    def _emit_region(self, region, lines):
-
+    def _emit_region(
+            self,
+            region: Region | SequenceRegion | LoopRegion | IfRegion | TryRegion | SwitchRegion | BasicBlock,
+            lines: list[str]
+    ) -> None:
         match region:
 
             case SequenceRegion():
@@ -213,9 +229,8 @@ class Printer(NodeVisitor):
         else:
             self._write(lines, f"if ({cond}) {{")
 
-        self._indent += 1
-        self._emit_region(region.then_body, lines)
-        self._indent -= 1
+        with self._indented():
+            self._emit_region(region.then_body, lines)
 
         if region.else_body is None:
             self._write(lines, "}")
@@ -230,9 +245,10 @@ class Printer(NodeVisitor):
 
         # Ordinary else
         self._write(lines, "} else {")
-        self._indent += 1
-        self._emit_region(region.else_body, lines)
-        self._indent -= 1
+
+        with self._indented():
+            self._emit_region(region.else_body, lines)
+
         self._write(lines, "}")
 
     @staticmethod
@@ -307,9 +323,8 @@ class Printer(NodeVisitor):
 
             self._write(lines, "do {")
 
-            self._indent += 1
-            self._emit_region(region.body, lines)
-            self._indent -= 1
+            with self._indented():
+                self._emit_region(region.body, lines)
 
             self._write(lines, f"}} while ({cond});")
         else:
@@ -321,9 +336,8 @@ class Printer(NodeVisitor):
 
             self._write(lines, f"while ({cond}) {{")
 
-            self._indent += 1
-            self._emit_region(region.body, lines)
-            self._indent -= 1
+            with self._indented():
+                self._emit_region(region.body, lines)
 
             self._write(lines, "}")
 
@@ -346,9 +360,8 @@ class Printer(NodeVisitor):
 
         self._write(lines, f"for (const {binding} {keyword} {source}) {{")
 
-        self._indent += 1
-        self._emit_region(region.body, lines)
-        self._indent -= 1
+        with self._indented():
+            self._emit_region(region.body, lines)
 
         self._write(lines, "}")
 
@@ -360,25 +373,22 @@ class Printer(NodeVisitor):
 
         self._write(lines, "try {")
 
-        self._indent += 1
-        self._emit_region(region.try_body, lines)
-        self._indent -= 1
+        with self._indented():
+            self._emit_region(region.try_body, lines)
 
         if region.catch:
             name = region.catch.exception
 
             self._write(lines, f"}} catch ({name}) {{")
 
-            self._indent += 1
-            self._emit_region(region.catch.body, lines)
-            self._indent -= 1
+            with self._indented():
+                self._emit_region(region.catch.body, lines)
 
         if region.finally_:
             self._write(lines, "} finally {")
 
-            self._indent += 1
-            self._emit_region(region.finally_.body, lines)
-            self._indent -= 1
+            with self._indented():
+                self._emit_region(region.finally_.body, lines)
 
         self._write(lines, "}")
 
@@ -401,18 +411,16 @@ class Printer(NodeVisitor):
             for test in case.tests:
                 self._write(lines, f"case {self.print_expression(test)}:")
 
-            self._indent += 1
-            self._emit_region(case.body, lines)
-            self._ensure_case_terminated(lines)
-            self._indent -= 1
+            with self._indented():
+                self._emit_region(case.body, lines)
+                self._ensure_case_terminated(lines)
 
         if region.default_body is not None:
             self._write(lines, "default:")
 
-            self._indent += 1
-            self._emit_region(region.default_body, lines)
-            self._ensure_case_terminated(lines)
-            self._indent -= 1
+            with self._indented():
+                self._emit_region(region.default_body, lines)
+                self._ensure_case_terminated(lines)
 
         self._indent -= 1
         self._write(lines, "}")
@@ -431,10 +439,13 @@ class Printer(NodeVisitor):
         emitted program's behavior from the original.
         """
 
-        last = lines[-1].strip() if lines else ""
-
-        if last.startswith(("return", "throw", "break", "continue")):
-            return
+        for line in reversed(lines):
+            stripped = line.strip()
+            if not stripped or stripped.startswith("//"):
+                continue
+            if stripped.startswith(("return", "throw", "break", "continue")):
+                return
+            break
 
         self._write(lines, "break;")
 
@@ -463,6 +474,7 @@ class Printer(NodeVisitor):
     # ------------------------------------------------------------------
 
     def generic_visit(self, node) -> str:
+        logger.warning("Printer: unsupported node type %s", type(node).__name__)
         return f"/* unsupported: {type(node).__name__} */"
 
     # ------------------------------------------------------------------
@@ -483,13 +495,23 @@ class Printer(NodeVisitor):
     # ------------------------------------------------------------------
 
     def visit_NumericLiteral(self, node: NumericLiteral) -> str:
-        return repr(node.value)
+        value = node.value
+
+        if value != value:  # NaN
+            return "NaN"
+        if value == float("inf"):
+            return "Infinity"
+        if value == float("-inf"):
+            return "-Infinity"
+        if isinstance(value, float) and value.is_integer():
+            return str(int(value))
+
+        return repr(value)
 
     def visit_BigIntLiteral(self, node: BigIntLiteral) -> str:
         return f"{node.value}n"
 
     def visit_StringLiteral(self, node: StringLiteral) -> str:
-        import json
         return json.dumps(node.value)
 
     def visit_BooleanLiteral(self, node: BooleanLiteral) -> str:
