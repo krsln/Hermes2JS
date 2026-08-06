@@ -1,14 +1,24 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Dict, Optional, List
+from dataclasses import dataclass
+from typing import Dict, Optional
 
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import Expression, Identifier, RawExpression
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.ir.expressions import Expression, Identifier, RawExpression
 from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)
+
+
+@dataclass(slots=True)
+class OpcodeContext:
+    analysis: HermesAnalysis
+
+    entry: OpcodeEntry
+    entries: list[OpcodeEntry]
+    index: int
 
 
 class OpcodeHandler(ABC):
@@ -63,13 +73,7 @@ class OpcodeHandler(ABC):
         OpcodeHandler.registry[cls.__name__] = cls()
 
     @abstractmethod
-    def handle(
-            self,
-            analysis: HermesAnalysis,
-            entry: OpcodeEntry,
-            entries: Optional[List[OpcodeEntry]] = None,
-            index: Optional[int] = None
-    ) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         """
         Process a Hermes bytecode opcode and produce the corresponding
         `OpcodeResult`.

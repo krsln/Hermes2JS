@@ -3,7 +3,7 @@ from typing import List
 from hermes_decompiler.core.Exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import HandlerLoader, OpcodeHandler
+from hermes_decompiler.handlers import HandlerLoader, OpcodeHandler, OpcodeContext
 from hermes_decompiler.ir.expressions import AwaitExpression, Expression, RawExpression
 from hermes_decompiler.runtime import HermesAnalysis
 
@@ -26,7 +26,7 @@ class OpcodeDispatcher:
     def __init__(self, analysis: HermesAnalysis):
         if not analysis:
             raise AnalysisContextError("Analysis context cannot be None")
-        self.Analysis = analysis
+        self.analysis = analysis
 
     def dispatch(self, entry: OpcodeEntry, entries: List[OpcodeEntry], index: int) -> OpcodeResult:
         """
@@ -44,8 +44,8 @@ class OpcodeDispatcher:
             raise NoHandlerError(entry.opcode)
 
         try:
-            return handler_cls.handle(self.Analysis, entry)
-            # return handler_cls.handle(self.Analysis, entry, entries, index)
+            context = OpcodeContext(self.analysis, entry, entries, index)
+            return handler_cls.handle(context)
         except Exception as e:
             raise OpcodeDispatchError(entry.opcode, entry.bytecode, e) from e
 
@@ -58,7 +58,7 @@ class OpcodeDispatcher:
         for i, entry in enumerate(entries):
 
             if not entry.opcode:
-                result = OpcodeResult(entry, value=RawExpression(source=f"// Unparsed: {entry.bytecode}"))
+                result = OpcodeResult(ctx.entry, value=RawExpression(source=f"// Unparsed: {entry.bytecode}"))
                 analysis.add_result(result)
                 results.append(result)
                 continue
@@ -75,14 +75,14 @@ class OpcodeDispatcher:
                 logger.warning("No handler for opcode '%s' (line=%r)", e.opcode, raw_line)
                 if strict:
                     raise
-                result = OpcodeResult(entry, value=RawExpression(source=f"// Unhandled opcode: {e.opcode}"))
+                result = OpcodeResult(ctx.entry, value=RawExpression(source=f"// Unhandled opcode: {e.opcode}"))
                 analysis.add_result(result)
                 results.append(result)
             except OpcodeDispatchError as e:
                 logger.error("Dispatch error for opcode '%s': %s", e.opcode, e.cause, exc_info=True)
                 if strict:
                     raise
-                result = OpcodeResult(entry, value=RawExpression(source=f"// Error: {e.cause}"))
+                result = OpcodeResult(ctx.entry, value=RawExpression(source=f"// Error: {e.cause}"))
                 analysis.add_result(result)
                 results.append(result)
 

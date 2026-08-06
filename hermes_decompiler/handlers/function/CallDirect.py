@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT8, UINT16, UINT32
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT16, UINT32
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, UInt8, UInt16 (function_id) (total size 4)
@@ -9,16 +8,16 @@ from hermes_decompiler.runtime import HermesAnalysis
 class CallDirect(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8, UINT16)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         dest_reg, arg_count, func_index = map(int, match.groups())
 
         func_name = (
-            entry.function.name
-            if entry.function and entry.function.name
+            ctx.entry.function.name
+            if ctx.entry.function and ctx.entry.function.name
             else f"function_{func_index}"
         )
 
@@ -29,8 +28,8 @@ class CallDirect(OpcodeHandler):
 
         expression = CallExpression(callee=Identifier(name=func_name), arguments=arguments)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

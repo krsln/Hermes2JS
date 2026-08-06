@@ -1,7 +1,8 @@
 from typing import ClassVar
 
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, STRING_ID, UINT8, IMM32, DOUBLE, BIGINT_ID
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, STRING_ID, UINT8, IMM32, DOUBLE, \
+    BIGINT_ID
 from hermes_decompiler.ir.expressions import (
     Expression,
     UndefinedLiteral,
@@ -9,7 +10,6 @@ from hermes_decompiler.ir.expressions import (
     RawExpression,
     python_literal,
 )
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # ---------------------------------------------------------------------------
@@ -32,11 +32,11 @@ class LoadConstZero(OpcodeHandler):
 
     VALUE: ClassVar[Expression | object] = 0
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
 
-        match = self._PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8 argument")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8 argument")
 
         dest_reg = int(match.group(1))
 
@@ -45,8 +45,8 @@ class LoadConstZero(OpcodeHandler):
         if not isinstance(value, Expression):
             value = python_literal(value)
 
-        result = OpcodeResult(entry, value=value, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=value, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -102,16 +102,16 @@ class LoadConstUInt8(OpcodeHandler):
 
     _PATTERN = sequence(REG, UINT8)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, UInt8")
 
         dest_reg = int(match.group(1))
         value = python_literal(int(match.group(2)))
 
-        result = OpcodeResult(entry, value=value, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=value, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -124,16 +124,16 @@ class LoadConstInt(OpcodeHandler):
 
     _PATTERN = sequence(REG, IMM32)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Imm32")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Imm32")
 
         dest_reg = int(match.group(1))
         value = python_literal(int(match.group(2)))
 
-        result = OpcodeResult(entry, value=value, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=value, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -146,28 +146,28 @@ class LoadConstBigInt(OpcodeHandler):
 
     _PATTERN = sequence(REG, BIGINT_ID)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
-                analysis,
-                entry,
+                ctx.analysis,
+                ctx.entry,
                 "Expected Reg8, UInt16",
             )
 
         dest_reg = int(match.group(1))
         bigint_id = int(match.group(2))
 
-        resolved = entry.string_literal
+        resolved = ctx.entry.string_literal
 
         if resolved is None:
-            resolved = entry.identifier_name
+            resolved = ctx.entry.identifier_name
 
         if resolved is None:
             resolved = f"bigint_{bigint_id}"
 
-        result = OpcodeResult(entry, value=StringLiteral(resolved), dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=StringLiteral(resolved), dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -188,16 +188,16 @@ class LoadConstDouble(OpcodeHandler):
 
     _PATTERN = sequence(REG, DOUBLE)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Double")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Double")
 
         dest_reg = int(match.group(1))
         value = python_literal(float(match.group(2)))
 
-        result = OpcodeResult(entry, value=value, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=value, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -214,25 +214,25 @@ class LoadConstString(OpcodeHandler):
 
     _PATTERN = sequence(REG, STRING_ID)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
 
-        match = self._PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, string_id")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, string_id")
 
         dest_reg = int(match.group(1))
         string_id = match.group(2)
 
-        resolved = entry.string_literal
+        resolved = ctx.entry.string_literal
 
         if resolved is None:
-            resolved = entry.identifier_name
+            resolved = ctx.entry.identifier_name
 
         if resolved is None:
             resolved = f"str_{string_id}"
 
-        result = OpcodeResult(entry, value=StringLiteral(resolved), dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=StringLiteral(resolved), dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

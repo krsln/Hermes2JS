@@ -1,6 +1,5 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG
-from hermes_decompiler.runtime import HermesAnalysis
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
 
 
 # Reg8, Reg8 (total size 2)
@@ -11,19 +10,19 @@ class ToPropertyKey(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8 arguments")
 
         dest_reg, value_reg = map(int, match.groups())
 
         # No-op passthrough at the JS-source level: `obj[key]` already
         # implies ToPropertyKey coercion, so there's nothing additional
         # to render -- just forward the source value to the destination.
-        value = self.get_register_expression(analysis, value_reg)
+        value = self.get_register_expression(ctx.analysis, value_reg)
 
-        result = OpcodeResult(entry, value=value, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=value, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result

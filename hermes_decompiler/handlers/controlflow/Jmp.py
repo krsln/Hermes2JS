@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.terminators import TerminatorJump, TerminatorConditionalBranch
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, ADDR, UINT8, UINT16
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, ADDR, UINT8, UINT16
 from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (
@@ -13,7 +13,6 @@ from hermes_decompiler.ir.expressions import (
     StringLiteral,
     Identifier,
 )
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # --------------------------------------------------------------------------
@@ -27,20 +26,20 @@ class Jmp(OpcodeHandler):
 
     _PATTERN = sequence(ADDR)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, f"Invalid arguments: {entry.args}")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, f"Invalid arguments: {ctx.entry.args}")
 
         offset = int(match.group(1))
 
-        target = entry.target_address or (entry.address + offset)
-        analysis.gotoList.append(target)
+        target = ctx.entry.target_address or (ctx.entry.address + offset)
+        ctx.analysis.gotoList.append(target)
 
         terminator = TerminatorJump(target=target)
 
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -73,23 +72,23 @@ class JmpTrue(OpcodeHandler):
         """Subclasses override this to change only the condition."""
         return value
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, f"Invalid arguments: {entry.args}")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, f"Invalid arguments: {ctx.entry.args}")
 
         offset, reg = map(int, match.groups())
 
-        target = entry.target_address or (entry.address + offset)
-        analysis.gotoList.append(target)
+        target = ctx.entry.target_address or (ctx.entry.address + offset)
+        ctx.analysis.gotoList.append(target)
 
-        condition = self.build_condition(self.get_register_expression(analysis, reg))
+        condition = self.build_condition(self.get_register_expression(ctx.analysis, reg))
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -148,23 +147,23 @@ class JmpBuiltinIs(OpcodeHandler):
             Identifier(name=f"builtin_{builtin}"),
         )
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, f"Invalid arguments: {entry.args}")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, f"Invalid arguments: {ctx.entry.args}")
 
         offset, builtin, reg = map(int, match.groups())
 
-        target = entry.target_address or (entry.address + offset)
-        analysis.gotoList.append(target)
+        target = ctx.entry.target_address or (ctx.entry.address + offset)
+        ctx.analysis.gotoList.append(target)
 
-        condition = self.build_condition(self.get_register_expression(analysis, reg), builtin)
+        condition = self.build_condition(self.get_register_expression(ctx.analysis, reg), builtin)
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -225,25 +224,25 @@ class JmpTypeOfIs(OpcodeHandler):
         1 << 8: "object",
     }
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, f"Invalid arguments: {entry.args}")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, f"Invalid arguments: {ctx.entry.args}")
 
         offset, reg, type_id = map(int, match.groups())
 
-        target = entry.target_address if entry.target_address is not None else (entry.address + offset)
-        analysis.gotoList.append(target)
+        target = ctx.entry.target_address if ctx.entry.target_address is not None else (ctx.entry.address + offset)
+        ctx.analysis.gotoList.append(target)
 
         condition = self.build_typeof_condition(
-            self.get_register_expression(analysis, reg), type_id
+            self.get_register_expression(ctx.analysis, reg), type_id
         )
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 

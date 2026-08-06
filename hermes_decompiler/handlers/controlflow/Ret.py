@@ -1,8 +1,7 @@
 from hermes_decompiler.analysis.terminators import TerminatorReturn
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
 from hermes_decompiler.ir.statements import ReturnStatement
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8 (total size 1)
@@ -23,14 +22,14 @@ class Ret(OpcodeHandler):
 
     _PATTERN = sequence(REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         value_reg = int(match.group(1))
 
-        expression = self.get_register_expression(analysis, value_reg)
+        expression = self.get_register_expression(ctx.analysis, value_reg)
         terminator = TerminatorReturn(value=expression)
 
         # NOTE (fix): a `Return` terminator is never "consumed" by any
@@ -44,8 +43,8 @@ class Ret(OpcodeHandler):
         statement = ReturnStatement(argument=expression)
 
         result = OpcodeResult(
-            entry, value=expression, statement=statement, terminator=terminator, dest_reg=None
+            ctx.entry, value=expression, statement=statement, terminator=terminator, dest_reg=None
         )
-        analysis.add_result(result)
+        ctx.analysis.add_result(result)
 
         return result

@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT8
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, UInt8 (total size 2)
@@ -12,18 +11,18 @@ class GetBuiltinClosure(OpcodeHandler):
 
     _PATTERN = sequence(REG, UINT8)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, UInt8 arguments")
 
         dest_reg, builtin_number = map(int, match.groups())
 
-        builtin_name = getattr(entry, "builtin_name", None) or f"builtin_{builtin_number}"
+        builtin_name = getattr(ctx.entry, "builtin_name", None) or f"builtin_{builtin_number}"
 
         expression = Identifier(name=builtin_name)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result

@@ -1,8 +1,7 @@
 from hermes_decompiler.analysis.terminators import TerminatorSwitch
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, ADDR, UINT32
-from hermes_decompiler.runtime import HermesAnalysis
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, ADDR, UINT32
 
 logger = get_logger(__name__)
 
@@ -18,18 +17,14 @@ class SwitchImm(OpcodeHandler):
 
     _PATTERN = sequence(REG, UINT32, ADDR, UINT32, UINT32)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
 
-        match = self._PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(
-                analysis,
-                entry,
-                "Expected a leading Reg selector",
-            )
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected a leading Reg selector")
 
         selector_reg = int(match.group(1))
-        selector = self.get_register_expression(analysis, selector_reg)
+        selector = self.get_register_expression(ctx.analysis, selector_reg)
 
         # if entry.jump_table:
         #     targets = list(entry.jump_table)
@@ -39,27 +34,27 @@ class SwitchImm(OpcodeHandler):
 
         case_map = {}
 
-        if entry.jump_table:
+        if ctx.entry.jump_table:
             first_case = int(match.group(4))
             last_case = int(match.group(5))
 
             expected = last_case - first_case + 1
 
-            if len(entry.jump_table) != expected:
-                logger.warning("Jump table size mismatch: expected %d entries, got %d", expected, len(entry.jump_table))
+            if len(ctx.entry.jump_table) != expected:
+                logger.warning("Jump table size mismatch: expected %d entries, got %d", expected, len(ctx.entry.jump_table))
 
             for value, target in zip(
-                    range(first_case, first_case + len(entry.jump_table)),
-                    entry.jump_table,
+                    range(first_case, first_case + len(ctx.entry.jump_table)),
+                    ctx.entry.jump_table,
             ):
                 case_map[value] = target
         # print("case_map",case_map)
 
-        default_target = entry.target_address
+        default_target = ctx.entry.target_address
         terminator = TerminatorSwitch(selector=selector, case_map=case_map, default_target=default_target)
 
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -89,15 +84,15 @@ class StringSwitchImm(OpcodeHandler):
 
     _PATTERN = sequence(REG, UINT32, UINT32, ADDR, UINT32)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
-                analysis, entry, "Expected a leading Reg selector",
+                ctx.analysis, ctx.entry, "Expected a leading Reg selector",
             )
 
         selector_reg = int(match.group(1))
-        selector = self.get_register_expression(analysis, selector_reg)
+        selector = self.get_register_expression(ctx.analysis, selector_reg)
 
         # Case targets live in an out-of-line string-switch table (Arg3
         # offset) that this handler does not resolve -- see module
@@ -105,17 +100,17 @@ class StringSwitchImm(OpcodeHandler):
         # the disassembler surfaces it as a plain `Addr` token, same as
         # SwitchImm's existing regex.
         targets = []
-        for offset in sequence(ADDR).findall(entry.args):
-            target = entry.address + int(offset)
-            analysis.gotoList.append(target)
+        for offset in sequence(ADDR).findall(ctx.entry.args):
+            target = ctx.entry.address + int(offset)
+            ctx.analysis.gotoList.append(target)
             targets.append(target)
 
         case_map = {}
 
-        default_target = entry.target_address
+        default_target = ctx.entry.target_address
         terminator = TerminatorSwitch(selector=selector, case_map=case_map, default_target=default_target)
 
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result

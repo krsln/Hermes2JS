@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
 from hermes_decompiler.ir.expressions import AwaitExpression, YieldExpression, Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # /// Resume generator by performing one of the following user-requested actions:
@@ -20,21 +19,21 @@ class ResumeGenerator(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         dest_reg, flag_reg = map(int, match.groups())
 
         # value = await yield;   (normal next / return value)
         expression = AwaitExpression(argument=YieldExpression())
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         # Track the generator return flag for subsequent conditional jumps.
-        flag_result = OpcodeResult(entry, value=Identifier(name=f"__resumeIsReturn"), dest_reg=flag_reg)
-        analysis.add_result(flag_result)
+        flag_result = OpcodeResult(ctx.entry, value=Identifier(name=f"__resumeIsReturn"), dest_reg=flag_reg)
+        ctx.analysis.add_result(flag_result)
 
         return result

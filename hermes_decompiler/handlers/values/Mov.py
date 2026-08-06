@@ -1,6 +1,5 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG
-from hermes_decompiler.runtime import HermesAnalysis
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
 
 
 # Reg8, Reg8 (total size 2)
@@ -11,17 +10,17 @@ class Mov(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         dest_reg, src_reg = map(int, match.groups())
 
-        expression = self.get_register_expression(analysis, src_reg)
+        expression = self.get_register_expression(ctx.analysis, src_reg)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

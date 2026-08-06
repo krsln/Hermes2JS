@@ -1,8 +1,7 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
 from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 class BaseBinaryOperator(OpcodeHandler):
@@ -20,20 +19,20 @@ class BaseBinaryOperator(OpcodeHandler):
 
     operator = BinaryOperator.ADD
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
 
         dest_reg, lhs, rhs = map(int, match.groups())
 
-        lhs_val = self.get_register_expression(analysis, lhs)
-        rhs_val = self.get_register_expression(analysis, rhs)
+        lhs_val = self.get_register_expression(ctx.analysis, lhs)
+        rhs_val = self.get_register_expression(ctx.analysis, rhs)
 
         expression = BinaryExpression(left=lhs_val, operator=self.operator, right=rhs_val)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -109,21 +108,21 @@ class PrivateIsIn(OpcodeHandler):
 
     operator = BinaryOperator.IN
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, Reg8, Reg8 arguments"
+                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8, Reg8 arguments"
             )
 
         dest_reg, private_name_reg, obj_reg, _cache = map(int, match.groups())
 
-        private_name = self.get_register_expression(analysis, private_name_reg)
-        obj = self.get_register_expression(analysis, obj_reg)
+        private_name = self.get_register_expression(ctx.analysis, private_name_reg)
+        obj = self.get_register_expression(ctx.analysis, obj_reg)
 
         expression = BinaryExpression(left=private_name, operator=self.operator, right=obj)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result

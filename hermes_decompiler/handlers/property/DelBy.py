@@ -1,8 +1,7 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, STRING_ID, UINT8
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, STRING_ID, UINT8
 from hermes_decompiler.ir.Operators import UnaryOperator
 from hermes_decompiler.ir.expressions import UnaryExpression, MemberExpression, Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt16 (string_id) (total size 4)
@@ -11,15 +10,15 @@ from hermes_decompiler.runtime import HermesAnalysis
 class DelById(OpcodeHandler):
     _PATTERN = sequence(REG, REG, STRING_ID)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, UInt8, string_id arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8, string_id arguments")
 
         dest_reg, obj_reg, string_id = map(int, match.groups())
 
-        prop_name = entry.identifier_name or f"string_{string_id}"
-        obj = self.get_register_expression(analysis, obj_reg)
+        prop_name = ctx.entry.identifier_name or f"string_{string_id}"
+        obj = self.get_register_expression(ctx.analysis, obj_reg)
 
         expression = UnaryExpression(
             operator=UnaryOperator.DELETE,
@@ -29,8 +28,8 @@ class DelById(OpcodeHandler):
             ),
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -61,18 +60,18 @@ class DelByVal(OpcodeHandler):
     _PATTERN = sequence(REG, REG, REG, UINT8)
     _PATTERN_OLD = sequence(REG, REG, REG)  # DEFINE_OPCODE_3
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = (
-                self._PATTERN.match(entry.args.strip())
-                or self._PATTERN_OLD.match(entry.args.strip())
+                self._PATTERN.match(ctx.entry.args.strip())
+                or self._PATTERN_OLD.match(ctx.entry.args.strip())
         )
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
 
         dest_reg, obj_reg, prop_reg, *_ = map(int, match.groups())
 
-        obj = self.get_register_expression(analysis, obj_reg)
-        prop = self.get_register_expression(analysis, prop_reg)
+        obj = self.get_register_expression(ctx.analysis, obj_reg)
+        prop = self.get_register_expression(ctx.analysis, prop_reg)
 
         expression = UnaryExpression(
             operator=UnaryOperator.DELETE,
@@ -83,8 +82,8 @@ class DelByVal(OpcodeHandler):
             ),
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

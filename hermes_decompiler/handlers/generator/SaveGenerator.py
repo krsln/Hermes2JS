@@ -1,7 +1,6 @@
 from hermes_decompiler.analysis.terminators import TerminatorJump
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, ADDR
-from hermes_decompiler.runtime import HermesAnalysis
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, ADDR
 
 
 # Addr8 (total size 1)
@@ -20,25 +19,25 @@ class SaveGenerator(OpcodeHandler):
 
     _PATTERN = sequence(ADDR)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
 
-        match = self._PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         offset = int(match.group(1))
 
-        target = entry.target_address
+        target = ctx.entry.target_address
         if target is None:
-            target = entry.address + offset
+            target = ctx.entry.address + offset
 
-        analysis.gotoList.append(target)
+        ctx.analysis.gotoList.append(target)
 
         terminator = TerminatorJump(target=target)
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=target)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=target)
+        ctx.analysis.add_result(result)
 
         return result
 

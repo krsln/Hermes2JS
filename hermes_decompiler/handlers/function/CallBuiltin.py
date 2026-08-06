@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT8, UINT32
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT32
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # /// Call a builtin function.
@@ -17,16 +16,16 @@ from hermes_decompiler.runtime import HermesAnalysis
 class CallBuiltin(OpcodeHandler):
     _PATTERN = sequence(REG, UINT8, UINT8)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         dest_reg, builtin_id, arg_count = map(int, match.groups())
 
         callee = Identifier(
-            name=entry.builtin_function.name
-            if entry.builtin_function
+            name=ctx.entry.builtin_function.name
+            if ctx.entry.builtin_function
             else f"builtin_{builtin_id}/* unresolved arg */"
         )
 
@@ -37,8 +36,8 @@ class CallBuiltin(OpcodeHandler):
 
         expression = CallExpression(callee=callee, arguments=arguments, )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

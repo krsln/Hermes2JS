@@ -1,5 +1,5 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT16
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT16
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
@@ -9,7 +9,6 @@ from hermes_decompiler.ir.expressions import (
     MemberExpression,
     SpreadElement,
 )
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # FastArray is a React-Native/Hermes-specific typed array-storage
@@ -30,15 +29,15 @@ class NewFastArray(OpcodeHandler):
 
     _PATTERN = sequence(REG, UINT16)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt16")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, UInt16")
 
         dest_reg, _size_hint = map(int, match.groups())
 
-        result = OpcodeResult(entry, value=ArrayExpression(elements=()), dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=ArrayExpression(elements=()), dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -51,18 +50,18 @@ class FastArrayLength(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected two Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected two Reg8 arguments")
 
         dest_reg, array_reg = map(int, match.groups())
 
-        array_value = self.get_register_expression(analysis, array_reg)
+        array_value = self.get_register_expression(ctx.analysis, array_reg)
         expression = MemberExpression(receiver=array_value, member=Identifier(name="length"), computed=False)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -75,19 +74,19 @@ class FastArrayLoad(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
 
         dest_reg, array_reg, index_reg = map(int, match.groups())
 
-        array_value = self.get_register_expression(analysis, array_reg)
-        index_value = self.get_register_expression(analysis, index_reg)
+        array_value = self.get_register_expression(ctx.analysis, array_reg)
+        index_value = self.get_register_expression(ctx.analysis, index_reg)
         expression = MemberExpression(receiver=array_value, member=index_value, computed=True)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -100,23 +99,23 @@ class FastArrayStore(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
 
         array_reg, index_reg, value_reg = map(int, match.groups())
 
-        array_value = self.get_register_expression(analysis, array_reg)
-        index_value = self.get_register_expression(analysis, index_reg)
-        right = self.get_register_expression(analysis, value_reg)
+        array_value = self.get_register_expression(ctx.analysis, array_reg)
+        index_value = self.get_register_expression(ctx.analysis, index_reg)
+        right = self.get_register_expression(ctx.analysis, value_reg)
 
         left = MemberExpression(receiver=array_value, member=index_value, computed=True)
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
         # No destination register: statement-only, same pattern as PutById.
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -129,21 +128,21 @@ class FastArrayPush(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected two Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected two Reg8 arguments")
 
         array_reg, value_reg = map(int, match.groups())
 
-        array_value = self.get_register_expression(analysis, array_reg)
-        value = self.get_register_expression(analysis, value_reg)
+        array_value = self.get_register_expression(ctx.analysis, array_reg)
+        value = self.get_register_expression(ctx.analysis, value_reg)
 
         callee = MemberExpression(receiver=array_value, member=Identifier(name="push"), computed=False)
         expression = CallExpression(callee=callee, arguments=(value,))
 
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -156,20 +155,20 @@ class FastArrayAppend(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected two Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected two Reg8 arguments")
 
         dest_array_reg, src_array_reg = map(int, match.groups())
 
-        dest_array = self.get_register_expression(analysis, dest_array_reg)
-        src_array = self.get_register_expression(analysis, src_array_reg)
+        dest_array = self.get_register_expression(ctx.analysis, dest_array_reg)
+        src_array = self.get_register_expression(ctx.analysis, src_array_reg)
 
         callee = MemberExpression(receiver=dest_array, member=Identifier(name="push"), computed=False)
         expression = CallExpression(callee=callee, arguments=(SpreadElement(argument=src_array),))
 
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result

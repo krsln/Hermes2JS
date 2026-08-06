@@ -1,9 +1,8 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, STRING_ID
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, STRING_ID
 from hermes_decompiler.ir.Operators import VariableKind
 from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.ir.statements import VariableDeclaration, VariableDeclarator
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # UInt32 (string_id) (total size 4)
@@ -18,13 +17,13 @@ class DeclareGlobalVar(OpcodeHandler):
 
     _PATTERN = sequence(STRING_ID)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected a single string_id argument")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected a single string_id argument")
 
         string_id = int(match.group(1))
-        prop_name = entry.identifier_name or f"string_{string_id}"
+        prop_name = ctx.entry.identifier_name or f"string_{string_id}"
 
         # A real `var` declaration statement, not an Expression - this is
         # the `ir.statements.VariableDeclaration`, distinct from the old
@@ -35,7 +34,7 @@ class DeclareGlobalVar(OpcodeHandler):
             declarations=(VariableDeclarator(id=Identifier(name=prop_name)),),
         )
 
-        result = OpcodeResult(entry, value=None, statement=declaration, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, statement=declaration, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result

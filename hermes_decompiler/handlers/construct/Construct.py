@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT8, UINT32
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT32
 from hermes_decompiler.ir.expressions import Expression, Identifier, NewExpression, CallExpression
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt8 (total size 3)
@@ -14,23 +13,23 @@ class Construct(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, UINT8)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
 
-        match = self._PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, ArgCount")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, ArgCount")
 
         dest_reg, ctor_reg, arg_count = map(int, match.groups())
 
-        constructor = self.get_register_expression(analysis, ctor_reg)
+        constructor = self.get_register_expression(ctx.analysis, ctor_reg)
         arguments: list[OpcodeResult] = []
 
-        for result in reversed(analysis.results):
+        for result in reversed(ctx.analysis.results):
             if result.definition_used:
                 continue
             if result.dest_reg is None:
                 continue
-            if result.opcode.address >= entry.address:
+            if result.opcode.address >= ctx.entry.address:
                 continue
 
             arguments.append(result)
@@ -52,8 +51,8 @@ class Construct(OpcodeHandler):
         values = tuple(arg.value for arg in arguments)
         expression = NewExpression(callee=constructor, arguments=values)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

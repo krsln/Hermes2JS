@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT8, UINT16, UINT32
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT16, UINT32
 from hermes_decompiler.ir.expressions import Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, Reg8, UInt16 (total size 5)
@@ -12,31 +11,31 @@ class CreateBaseClass(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, REG, UINT8)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, Reg8, function_id arguments"
+                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8, function_id arguments"
             )
 
         closure_reg, home_object_reg, _env_reg, function_id = map(int, match.groups())
 
         func_name = (
-            entry.function.name
-            if entry.function and entry.function.name
+            ctx.entry.function.name
+            if ctx.entry.function and ctx.entry.function.name
             else f"function_{function_id}"
         )
         class_name = f"function_{function_id}"
         expression = Identifier(name=func_name)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=closure_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=closure_reg)
+        ctx.analysis.add_result(result)
 
         # Home object (used to resolve `super` inside methods) has no
         # direct JS-visible expression of its own.
         home_object_expr = Identifier(name=f"{class_name}.prototype")
-        home_result = OpcodeResult(entry, value=home_object_expr, dest_reg=home_object_reg)
-        analysis.add_result(home_result)
+        home_result = OpcodeResult(ctx.entry, value=home_object_expr, dest_reg=home_object_reg)
+        ctx.analysis.add_result(home_result)
 
         return result
 
@@ -55,29 +54,29 @@ class CreateDerivedClass(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, REG, REG, UINT16)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, Reg8, Reg8, function_id arguments"
+                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8, Reg8, function_id arguments"
             )
 
         closure_reg, home_object_reg, _env_reg, _super_class_reg, function_id = map(int, match.groups())
 
         func_name = (
-            entry.function.name
-            if entry.function and entry.function.name
+            ctx.entry.function.name
+            if ctx.entry.function and ctx.entry.function.name
             else f"function_{function_id}"
         )
         class_name = f"function_{function_id}"
         expression = Identifier(name=func_name)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=closure_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=closure_reg)
+        ctx.analysis.add_result(result)
 
         home_object_expr = Identifier(name=f"{class_name}.prototype")
-        home_result = OpcodeResult(entry, value=home_object_expr, dest_reg=home_object_reg)
-        analysis.add_result(home_result)
+        home_result = OpcodeResult(ctx.entry, value=home_object_expr, dest_reg=home_object_reg)
+        ctx.analysis.add_result(home_result)
 
         return result
 

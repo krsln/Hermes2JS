@@ -1,8 +1,8 @@
 import ast
 import re
 
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT16, UINT32
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT16, UINT32
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
     Expression,
@@ -11,7 +11,6 @@ from hermes_decompiler.ir.expressions import (
     StringLiteral,
     python_literal,
 )
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 def _json_to_expression(value: object) -> Expression:
@@ -44,25 +43,25 @@ class NewObjectWithBuffer(OpcodeHandler):
     _PATTERN = sequence(REG, UINT16, UINT16, UINT16, UINT16)
     _PATTERN_OLD = sequence(REG, UINT16, UINT16)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
 
         match = (
-                self._PATTERN.match(entry.args.strip())
-                or self._PATTERN_OLD.match(entry.args.strip())
+                self._PATTERN.match(ctx.entry.args.strip())
+                or self._PATTERN_OLD.match(ctx.entry.args.strip())
         )
         if not match:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         dest_reg = int(match.group(1))
 
-        expression = self._parse_object_from_comment(entry.comment)
+        expression = self._parse_object_from_comment(ctx.entry.comment)
 
         if expression is None:
-            error = f"// Warning: No valid object parsed from comment: {entry.comment}"
-            return self.build_exception_result(analysis, entry, error)
+            error = f"// Warning: No valid object parsed from comment: {ctx.entry.comment}"
+            return self.build_exception_result(ctx.analysis, ctx.entry, error)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -174,29 +173,29 @@ class NewObjectWithBufferAndParent(NewObjectWithBuffer):
 
     _PATTERN = sequence(REG, REG, UINT32, UINT32)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, UInt16, UInt16, UInt16, UInt16 arguments"
+                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt16, UInt16, UInt16, UInt16 arguments"
             )
 
         dest_reg, _parent_reg, *_buffer_operands = map(int, match.groups())
 
-        object_expr = self._parse_object_from_comment(entry.comment)
+        object_expr = self._parse_object_from_comment(ctx.entry.comment)
 
         if object_expr is None:
-            error = f"// Warning: No valid object parsed from comment: {entry.comment}"
-            return self.build_exception_result(analysis, entry, error)
+            error = f"// Warning: No valid object parsed from comment: {ctx.entry.comment}"
+            return self.build_exception_result(ctx.analysis, ctx.entry, error)
 
         # Parent register is resolved but not woven into `object_expr`
         # itself -- see module-level caveat above. Left available here
         # so a future fix can incorporate it (e.g. Object.create/
         # Object.setPrototypeOf) once the real IR shape for this is
         # decided.
-        _parent = self.get_register_expression(analysis, _parent_reg)
+        _parent = self.get_register_expression(ctx.analysis, _parent_reg)
 
-        result = OpcodeResult(entry, value=object_expr, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=object_expr, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result

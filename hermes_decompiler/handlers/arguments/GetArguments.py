@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
 from hermes_decompiler.ir.expressions import Identifier, MemberExpression
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8 (total size 2)
@@ -12,17 +11,17 @@ class GetArgumentsLength(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected two Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected two Reg8 arguments")
 
         dest_reg, _lazy_reg = map(int, match.groups())
 
         expression = MemberExpression(receiver=Identifier(name="arguments"), member=Identifier(name="length"))
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -35,21 +34,21 @@ class GetArgumentsPropByVal(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected three Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
 
         dest_reg, index_reg, _lazy_reg = map(int, match.groups())
-        index_value = self.get_register_expression(analysis, index_reg)
+        index_value = self.get_register_expression(ctx.analysis, index_reg)
 
         # `ComputedMemberExpression` was a separate legacy class for
         # `obj[x]`; the new IR unifies dot/bracket access into one
         # `MemberExpression` via `computed=`.
         expression = MemberExpression(receiver=Identifier(name="arguments"), member=index_value, computed=True)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

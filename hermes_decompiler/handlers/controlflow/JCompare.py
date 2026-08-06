@@ -3,12 +3,11 @@ from __future__ import annotations
 from typing import ClassVar, Optional
 
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import ADDR
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression, UnaryExpression
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 class BaseJCompare(OpcodeHandler):
@@ -72,29 +71,29 @@ class BaseJCompare(OpcodeHandler):
             f"{type(self).__name__}: neither `operator` nor `negated_operator` is set"
         )
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
 
-        match = self._PATTERN.match(entry.args.strip())
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, f"Invalid arguments: {entry.args}")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, f"Invalid arguments: {ctx.entry.args}")
 
         offset, lhs_reg, rhs_reg = map(int, match.groups())
 
-        target = entry.target_address
+        target = ctx.entry.target_address
         if target is None:
-            target = entry.address + offset
+            target = ctx.entry.address + offset
 
-        analysis.gotoList.append(target)
+        ctx.analysis.gotoList.append(target)
 
-        lhs = self.get_register_expression(analysis, lhs_reg)
-        rhs = self.get_register_expression(analysis, rhs_reg)
+        lhs = self.get_register_expression(ctx.analysis, lhs_reg)
+        rhs = self.get_register_expression(ctx.analysis, rhs_reg)
 
         condition = self.build_condition(lhs, rhs)
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 

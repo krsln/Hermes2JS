@@ -1,8 +1,7 @@
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT8
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)
 
@@ -22,13 +21,13 @@ class DirectEval(OpcodeHandler):
     _PATTERN = sequence(REG, REG, UINT8)
     _PATTERN_OLD = sequence(REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = (
-                self._PATTERN.match(entry.args.strip())
-                or self._PATTERN_OLD.match(entry.args.strip())
+                self._PATTERN.match(ctx.entry.args.strip())
+                or self._PATTERN_OLD.match(ctx.entry.args.strip())
         )
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, UInt8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8 arguments")
 
         dest_reg = int(match.group(1))
         eval_text_reg = int(match.group(2))
@@ -37,14 +36,14 @@ class DirectEval(OpcodeHandler):
         # eval() is emitted the same way regardless; the VM applies the
         # flag internally when it actually evaluates the source.
 
-        eval_text = self.get_register_expression(analysis, eval_text_reg)
+        eval_text = self.get_register_expression(ctx.analysis, eval_text_reg)
 
         expression = CallExpression(
             callee=Identifier(name="eval"),
             arguments=(eval_text,),
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result

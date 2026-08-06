@@ -1,12 +1,11 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT8
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
     CallExpression,
     Identifier,
     MemberExpression,
 )
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, Reg8, UInt8 (total size 4)
@@ -17,17 +16,17 @@ class CallWithNewTarget(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, REG, UINT8)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, Reg8, UInt8 arguments"
+                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8, UInt8 arguments"
             )
 
         dest_reg, func_reg, new_target_reg, num_args = map(int, match.groups())
 
-        callee = self.get_register_expression(analysis, func_reg)
-        new_target = self.get_register_expression(analysis, new_target_reg)
+        callee = self.get_register_expression(ctx.analysis, func_reg)
+        new_target = self.get_register_expression(ctx.analysis, new_target_reg)
 
         arg_regs = list(range(func_reg - num_args, func_reg))
         arguments = ArrayExpression(elements=tuple(Identifier(name=f"r{r}") for r in arg_regs))
@@ -43,8 +42,8 @@ class CallWithNewTarget(OpcodeHandler):
             arguments=(callee, arguments, new_target),
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

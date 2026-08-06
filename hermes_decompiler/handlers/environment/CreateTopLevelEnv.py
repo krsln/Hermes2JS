@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT32
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT32
 from hermes_decompiler.ir.expressions import Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, UInt32 (total size 5)
@@ -12,16 +11,16 @@ class CreateTopLevelEnvironment(OpcodeHandler):
 
     _PATTERN = sequence(REG, UINT32)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt32 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, UInt32 arguments")
 
         dest_reg, _size = map(int, match.groups())
 
         expression = Identifier(name="__environment__")
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result

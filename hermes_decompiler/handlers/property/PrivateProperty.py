@@ -1,8 +1,7 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT8
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpression, Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, Reg8 (total size 3)
@@ -13,26 +12,26 @@ class AddOwnPrivateBySym(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, Reg8 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8 arguments")
 
         obj_reg, private_name_reg, value_reg = map(int, match.groups())
 
-        field_name = entry.identifier_name or f"__private_{private_name_reg}__"
+        field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
 
         left = MemberExpression(
-            receiver=self.get_register_expression(analysis, obj_reg),
+            receiver=self.get_register_expression(ctx.analysis, obj_reg),
             member=Identifier(name=f"#{field_name}"),
             computed=False,
         )
-        right = self.get_register_expression(analysis, value_reg)
+        right = self.get_register_expression(ctx.analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -45,25 +44,25 @@ class GetOwnPrivateBySym(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, UINT8, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, UInt8, Reg8 arguments"
+                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8, Reg8 arguments"
             )
 
         dest_reg, obj_reg, _cache, private_name_reg = map(int, match.groups())
 
-        field_name = entry.identifier_name or f"__private_{private_name_reg}__"
+        field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
 
         expression = MemberExpression(
-            receiver=self.get_register_expression(analysis, obj_reg),
+            receiver=self.get_register_expression(ctx.analysis, obj_reg),
             member=Identifier(name=f"#{field_name}"),
             computed=False,
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -76,27 +75,27 @@ class PutOwnPrivateBySym(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, UINT8, REG)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, UInt8, Reg8 arguments"
+                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8, Reg8 arguments"
             )
 
         obj_reg, value_reg, _cache, private_name_reg = map(int, match.groups())
 
-        field_name = entry.identifier_name or f"__private_{private_name_reg}__"
+        field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
 
         left = MemberExpression(
-            receiver=self.get_register_expression(analysis, obj_reg),
+            receiver=self.get_register_expression(ctx.analysis, obj_reg),
             member=Identifier(name=f"#{field_name}"),
             computed=False,
         )
-        right = self.get_register_expression(analysis, value_reg)
+        right = self.get_register_expression(ctx.analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result

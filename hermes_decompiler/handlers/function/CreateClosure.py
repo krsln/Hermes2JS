@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, FUNCTION_ID
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, FUNCTION_ID
 from hermes_decompiler.ir.expressions import Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt16 (function_id) (total size 4)
@@ -14,16 +13,16 @@ class CreateClosure(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, FUNCTION_ID)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8 and function_id arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8 and function_id arguments")
 
         dest_reg, value_reg, func_id = (int(x) for x in match.groups())
 
         func_name = (
-            entry.function.name
-            if entry.function and entry.function.name
+            ctx.entry.function.name
+            if ctx.entry.function and ctx.entry.function.name
             else f"function_{func_id}"
         )
 
@@ -36,8 +35,8 @@ class CreateClosure(OpcodeHandler):
         # bytecode comment if needed for debugging.
         expression = Identifier(name=func_name)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -45,5 +44,5 @@ class CreateClosure(OpcodeHandler):
 # Reg8, Reg8, UInt32 (function_id) (total size 6)
 # DEFINE_OPCODE_3(CreateClosureLongIndex, Reg8, Reg8, UInt32)
 class CreateClosureLongIndex(CreateClosure):
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        return super().handle(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        return super().handle(ctx)

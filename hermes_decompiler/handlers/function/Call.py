@@ -1,10 +1,9 @@
 import re
 from typing import Dict
 
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT8
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt8 (total size 3)
@@ -29,20 +28,20 @@ class Call(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, UINT8)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         dest_reg, func_reg, num_args = map(int, match.groups())
 
         highest = max(
             int(r[1:])
-            for r in analysis.registers
+            for r in ctx.analysis.registers
         )
 
         if highest + 1 < num_args:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         # Arguments occupy the contiguous register range
         # [function - argCount, function). First argument is at the
@@ -55,15 +54,15 @@ class Call(OpcodeHandler):
         # here are a contiguous stack range that doesn't necessarily
         # correspond to individually tracked register assignments.
         arguments = tuple(
-            self.get_register_reference(analysis, r)
+            self.get_register_reference(ctx.analysis, r)
             for r in arg_regs
         )
 
-        callee = self.get_register_expression(analysis, func_reg)
+        callee = self.get_register_expression(ctx.analysis, func_reg)
         expression = CallExpression(callee=callee, arguments=arguments)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -104,14 +103,14 @@ class Call1(OpcodeHandler):
 
     num_args = 1  # to be overridden
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         reg_pattern = self._PATTERN.get(self.num_args)
         if not reg_pattern:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
-        match = re.match(reg_pattern, entry.args.strip())
+        match = re.match(reg_pattern, ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry)
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
 
@@ -119,14 +118,14 @@ class Call1(OpcodeHandler):
             # No registers at all means not even a `this` slot was
             # encoded - shouldn't happen for a real CallN, but don't
             # crash on malformed input.
-            return self.build_invalid_args_result(analysis, entry, "missing thisArg register")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "missing thisArg register")
 
         this_reg, *rest_arg_regs = arg_regs
 
-        callee = self.get_register_expression(analysis, func_reg)
-        this_value = self.get_register_expression(analysis, this_reg)
+        callee = self.get_register_expression(ctx.analysis, func_reg)
+        this_value = self.get_register_expression(ctx.analysis, this_reg)
         real_arguments = tuple(
-            self.get_register_expression(analysis, reg)
+            self.get_register_expression(ctx.analysis, reg)
             for reg in rest_arg_regs
         )
 
@@ -146,8 +145,8 @@ class Call1(OpcodeHandler):
             call_callee = MemberExpression(receiver=callee, member=Identifier(name="call"), computed=False)
             expression = CallExpression(callee=call_callee, arguments=(this_value, *real_arguments))
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

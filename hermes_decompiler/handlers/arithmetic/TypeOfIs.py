@@ -1,8 +1,7 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT16
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT16
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, StringLiteral, UnaryExpression
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt16 (total size 4)
@@ -33,14 +32,14 @@ class TypeOfIs(OpcodeHandler):
         1 << 7: "bigint",
     }
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, UInt16 arguments")
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt16 arguments")
 
         dest_reg, value_reg, type_mask = map(int, match.groups())
 
-        operand = self.get_register_expression(analysis, value_reg)
+        operand = self.get_register_expression(ctx.analysis, value_reg)
         type_of_expr = UnaryExpression(operator=UnaryOperator.TYPEOF, operand=operand)
 
         type_name = self._TYPE_BITS.get(type_mask)
@@ -64,7 +63,7 @@ class TypeOfIs(OpcodeHandler):
                 right=StringLiteral(value=f"<unresolved_typeof_mask_0x{type_mask:04x}>"),
             )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result

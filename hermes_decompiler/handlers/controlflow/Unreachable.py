@@ -1,6 +1,5 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence
-from hermes_decompiler.runtime import HermesAnalysis
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence
 
 
 # (total size 0)
@@ -10,6 +9,6 @@ class Unreachable(OpcodeHandler):
 
     _PATTERN = sequence()
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         error = "// Unreachable opcode encountered - see handlers/controlflow/Unreachable.py"
-        return self.build_exception_result(analysis, entry, error)
+        return self.build_exception_result(ctx.analysis, ctx.entry, error)

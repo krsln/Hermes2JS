@@ -1,9 +1,8 @@
 import re
 
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext
 from hermes_decompiler.ir.expressions import RawExpression
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # (total size 0)
@@ -14,13 +13,14 @@ class CompleteGenerator(OpcodeHandler):
 
     _PATTERN = re.compile(r'^(?:<>)?$')
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        if not self._PATTERN.match(entry.args.strip()):
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
+        if not match:
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
         expression = RawExpression(source="// CompleteGenerator")
 
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result

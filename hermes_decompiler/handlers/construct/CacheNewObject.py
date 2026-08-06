@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, sequence, REG, UINT8, UINT32
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT32
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt32, UInt8 (total size 7)
@@ -12,17 +11,17 @@ class CacheNewObject(OpcodeHandler):
 
     _PATTERN = sequence(REG, REG, UINT32, UINT8)
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self._PATTERN.match(ctx.entry.args.strip())
         if not match:
             return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, UInt32, UInt8 arguments"
+                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt32, UInt8 arguments"
             )
 
         this_reg, new_target_reg, _shape_idx, _cache_idx = map(int, match.groups())
 
-        this_value = self.get_register_expression(analysis, this_reg)
-        new_target = self.get_register_expression(analysis, new_target_reg)
+        this_value = self.get_register_expression(ctx.analysis, this_reg)
+        new_target = self.get_register_expression(ctx.analysis, new_target_reg)
 
         expression = CallExpression(
             callee=Identifier(name="__cacheNewObject__"),
@@ -30,7 +29,7 @@ class CacheNewObject(OpcodeHandler):
         )
 
         # No destination register -- this opcode doesn't produce a value.
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
