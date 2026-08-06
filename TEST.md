@@ -39,10 +39,22 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --strict
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
 
-# If Tests 15062, 15063
-# Exception Tests 15075-15090
-# IteratorTests 15092, 15093
+# ControlFlow
+################ 
+# whileTest 15047
+# forTest 15051
 # Switch 15056
+# nestedLoopTest 15058
+# complexTest 15060
+# IfTests 15062, 15063
+# Labeled Tests 15065, 15066, 15067, 15068
+# ternaryTest 15070, 15071, 15072, 15073
+
+# Exceptions
+# Exception Tests 15075-15090
+
+# Iterators
+# IteratorTests 15092, 15093
 
 ```
 
