@@ -121,7 +121,6 @@ class IfStructurer(RegionStructurer):
         self._prune_empty_blocks(self.graph.root)
         self.dump_region_tree_if_debug(type(self).__name__)
 
-
     # -------------------------------------------------------------
     # Tree traversal
     # -------------------------------------------------------------
@@ -871,7 +870,7 @@ class IfStructurer(RegionStructurer):
     # -------------------------------------------------------------
 
     @staticmethod
-    def _representative_block(item) -> BasicBlock:
+    def _representative_block(item) -> BasicBlock | None:
         """
         Any single `BasicBlock` that dominance checks against `item`
         can be run on. For a raw `BasicBlock`, that's `item` itself.
@@ -885,10 +884,14 @@ class IfStructurer(RegionStructurer):
         if isinstance(item, BasicBlock):
             return item
 
+        covered = item.covered_blocks
+        if not covered:
+            return None
+
         # `min(..., key=...)` rather than `next(iter(...))`: both are
         # deterministic now that `BasicBlock.__hash__` is id-based (see
         # that class), but picking explicitly by `.id` documents *why*
         # any element works (dominance is invariant across a single-entry
         # region's covered blocks) instead of leaving it to look like an
         # arbitrary/unspecified choice.
-        return min(item.covered_blocks, key=lambda b: b.id)
+        return min(covered, key=lambda b: b.id)
