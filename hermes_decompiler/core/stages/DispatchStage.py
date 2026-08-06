@@ -16,7 +16,8 @@ class DispatchStage(PipelineStage):
         if not context.bytecode_lines:
             return context
 
-        results = OpcodeDispatcher.dispatch_all(context.bytecode_lines, context.analysis, strict=self._strict)
+        results = OpcodeDispatcher.dispatch_all(context.entries, context.analysis, strict=self._strict)
+
         if len(results) != len(context.analysis.results):
             logger.warning(
                 "Section section_%s: Dispatcher returned %s results but analysis.results has %s",

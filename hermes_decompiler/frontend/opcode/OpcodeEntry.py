@@ -68,6 +68,8 @@ class OpcodeEntry:
     opcode: str = ""
     args: str = ""
 
+    index: int | None = None
+
     target_address: int | None = None
     jump_table: tuple[int, ...] | None = None
 

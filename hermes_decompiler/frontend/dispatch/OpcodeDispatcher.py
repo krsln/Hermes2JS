@@ -28,7 +28,7 @@ class OpcodeDispatcher:
             raise AnalysisContextError("Analysis context cannot be None")
         self.Analysis = analysis
 
-    def dispatch(self, entry: OpcodeEntry) -> OpcodeResult:
+    def dispatch(self, entry: OpcodeEntry, entries: List[OpcodeEntry], index: int) -> OpcodeResult:
         """
             Dispatch a single opcode to its handler.
 
@@ -38,50 +38,33 @@ class OpcodeDispatcher:
         """
 
         handler_cls = OpcodeHandler.get_handler(entry.opcode)
+
         if not handler_cls:
             logger.warning("TODO: NO HANDLER '%s' (line=%r)", entry.opcode, entry)
             raise NoHandlerError(entry.opcode)
 
         try:
             return handler_cls.handle(self.Analysis, entry)
+            # return handler_cls.handle(self.Analysis, entry, entries, index)
         except Exception as e:
             raise OpcodeDispatchError(entry.opcode, entry.bytecode, e) from e
 
     @staticmethod
-    def dispatch_all(bytecode_lines: List[str], analysis: HermesAnalysis, *, strict: bool = False) \
-            -> list[OpcodeResult]:
-        """
-            Process all bytecode lines with error resilience.
-
-            Args:
-                bytecode_lines: Raw bytecode listing lines.
-                analysis: Analysis context.
-                strict: If True, rise on the first error (useful for tests/CI).
-        """
-        # Local import to avoid a circular import between dispatch and parsing.
-        from hermes_decompiler.frontend.parsing import OpcodeParser
-
+    def dispatch_all(entries: List[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool = False) -> list[
+        OpcodeResult]:
         dispatcher = OpcodeDispatcher(analysis)
         results: List[OpcodeResult] = []
 
-        for raw_line in bytecode_lines:
-            line = raw_line.strip()
+        for i, entry in enumerate(entries):
 
-            if not line:
-                continue
-
-            parsed = OpcodeParser.parse(line)
-
-            if parsed is None:
-                logger.debug("Unparsed line: %s", line)
-                entry = OpcodeEntry(bytecode=line, hex_address="", opcode="", args="", comment="")
-                result = OpcodeResult(entry, value=RawExpression(source=f"// Unparsed: {line}"))
+            if not entry.opcode:
+                result = OpcodeResult(entry, value=RawExpression(source=f"// Unparsed: {entry.bytecode}"))
                 analysis.add_result(result)
                 results.append(result)
                 continue
 
             try:
-                result = dispatcher.dispatch(parsed)
+                result = dispatcher.dispatch(entry, entries, i)
 
                 # Special case for generator pattern
                 if result.handler == "SaveGenerator":
@@ -92,14 +75,14 @@ class OpcodeDispatcher:
                 logger.warning("No handler for opcode '%s' (line=%r)", e.opcode, raw_line)
                 if strict:
                     raise
-                result = OpcodeResult(parsed, value=RawExpression(source=f"// Unhandled opcode: {e.opcode}"))
+                result = OpcodeResult(entry, value=RawExpression(source=f"// Unhandled opcode: {e.opcode}"))
                 analysis.add_result(result)
                 results.append(result)
             except OpcodeDispatchError as e:
                 logger.error("Dispatch error for opcode '%s': %s", e.opcode, e.cause, exc_info=True)
                 if strict:
                     raise
-                result = OpcodeResult(parsed, value=RawExpression(source=f"// Error: {e.cause}"))
+                result = OpcodeResult(entry, value=RawExpression(source=f"// Error: {e.cause}"))
                 analysis.add_result(result)
                 results.append(result)
 

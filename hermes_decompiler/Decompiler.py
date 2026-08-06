@@ -6,6 +6,7 @@ from hermes_decompiler.core.stages import (
     BytecodeExtractionStage,
     DispatchStage,
     CodeGenerationStage,
+    ParsingStage,
 )
 
 
@@ -54,6 +55,8 @@ class Decompiler:
             MetadataStage(),
             SignatureStage(),
             BytecodeExtractionStage(),
+            ParsingStage(),
+
             DispatchStage(strict=strict),
             CodeGenerationStage(verbose=verbose, raw=raw),
         ])
