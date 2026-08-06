@@ -1,6 +1,3 @@
-import re
-from typing import Dict
-
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
@@ -97,30 +94,14 @@ class Call1(OpcodeHandler):
     explicitly via `.call(thisArg, ...)` to keep semantics correct.
     """
 
-    _PATTERN: Dict[int, "re.Pattern[str]"] = {
-        n: sequence(*([REG] * (n + 2))) for n in (1, 2, 3, 4)
-    }
-
-    num_args = 1  # to be overridden
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8 (dest, callee, thisArg)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        reg_pattern = self._PATTERN.get(self.num_args)
-        if not reg_pattern:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
-        match = re.match(reg_pattern, ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
-
-        dest_reg, func_reg, *arg_regs = (int(x) for x in match.groups())
-
-        if not arg_regs:
-            # No registers at all means not even a `this` slot was
-            # encoded - shouldn't happen for a real CallN, but don't
-            # crash on malformed input.
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "missing thisArg register")
-
-        this_reg, *rest_arg_regs = arg_regs
+        dest_reg, func_reg, this_reg, *rest_arg_regs = map(int, match.groups())
 
         callee = self.get_register_expression(ctx.analysis, func_reg)
         this_value = self.get_register_expression(ctx.analysis, this_reg)
@@ -132,13 +113,6 @@ class Call1(OpcodeHandler):
         if isinstance(callee, MemberExpression) and callee.receiver.structurally_equal(this_value):
             # Plain `obj.method(...)` - `this` is already implicit.
             expression = CallExpression(callee=callee, arguments=real_arguments)
-
-        # elif isinstance(this_value, UndefinedLiteral):
-        #     # `this` explicitly undefined and unrelated to callee's receiver -
-        #     # a bare call already has this=undefined in strict mode, so
-        #     # `.call(undefined, ...)` is semantically redundant here.
-        #     expression = CallExpression(callee=callee, arguments=real_arguments)
-
         else:
             # `this` doesn't match the callee's own receiver (or callee
             # isn't a member access at all) - preserve it explicitly.
@@ -153,17 +127,17 @@ class Call1(OpcodeHandler):
 
 # Reg8, Reg8, Reg8, Reg8 (total size 4)
 # DEFINE_OPCODE_4(Call2, Reg8, Reg8, Reg8, Reg8)
-# Example: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-class Call2(Call1): num_args = 2
+class Call2(Call1):
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, REG), "Reg8, Reg8, Reg8, Reg8")
 
 
 # Reg8, Reg8, Reg8, Reg8, Reg8 (total size 5)
 # DEFINE_OPCODE_5(Call3, Reg8, Reg8, Reg8, Reg8, Reg8)
-# Example: <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
-class Call3(Call1): num_args = 3
+class Call3(Call1):
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, REG, REG), "Reg8, Reg8, Reg8, Reg8, Reg8")
 
 
 # Reg8, Reg8, Reg8, Reg8, Reg8, Reg8 (total size 6)
 # DEFINE_OPCODE_6(Call4, Reg8, Reg8, Reg8, Reg8, Reg8, Reg8)
-# Example: <Call4>: <Reg8: 0, Reg8: 4, Reg8: 7, Reg8: 2, Reg8: 0, Reg8: 1>
-class Call4(Call1): num_args = 4
+class Call4(Call1):
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, REG, REG, REG), "Reg8 × 6")
