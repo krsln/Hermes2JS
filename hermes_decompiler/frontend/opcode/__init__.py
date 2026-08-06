@@ -1,12 +1,7 @@
-from .OpcodeEntry import *
-from .OpcodeResult import *
-from .OpcodeCatalog import OpcodeInfo, OpcodeStatus, classify, classify_all
+from .OpcodeEntry import OpcodeEntry
+from .OpcodeResult import OpcodeResult
 
 __all__ = [
     "OpcodeEntry",
     "OpcodeResult",
-    "OpcodeInfo",
-    "OpcodeStatus",
-    "classify",
-    "classify_all",
 ]

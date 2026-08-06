@@ -23,9 +23,10 @@ from __future__ import annotations
 
 import pytest
 
-from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.handlers import HandlerLoader, OpcodeHandler
-from hermes_decompiler.frontend.opcode import OpcodeStatus, classify_all
+from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
+from hermes_decompiler.handlers.HandlerLoader import HandlerLoader
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
+from tests.models.OpcodeCatalog import OpcodeStatus, classify_all
 
 # Helper/mixin classes that intentionally do not correspond to Hermes
 # bytecode opcodes.

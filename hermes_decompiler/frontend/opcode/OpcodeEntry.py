@@ -2,7 +2,7 @@ import re
 import ast
 from dataclasses import dataclass
 
-from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.core.logging.Setup import get_logger
 
 logger = get_logger(__name__)
 

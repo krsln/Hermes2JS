@@ -43,7 +43,12 @@ def _load_version_map() -> Dict[str, FrozenSet[int]]:
     Load `data/opcode_version_map.json`: opcode name -> set of bytecode
     versions (from the hbc51..hbc99 definitions) it appears in.
     """
-    raw = resources.files(__package__).joinpath("data/opcode_version_map.json").read_text()
+    raw = (
+        resources.files("tests.data")
+        .joinpath("opcode_version_map.json")
+        .read_text(encoding="utf-8")
+    )
+
     parsed = json.loads(raw)
     return {name: frozenset(versions) for name, versions in parsed.items()}
 

@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import List, Optional
 
+from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from .BasicBlock import BasicBlock
 
 
 class CFG:
@@ -21,20 +21,21 @@ class CFG:
 
     @classmethod
     def from_results(cls, results: List[OpcodeResult], exception_handlers: list[dict] | None = None) -> "CFG":
-        from .CFGBuilder import CFGBuilder
+        from hermes_decompiler.analysis.cfg.CFGBuilder import CFGBuilder
+
         return CFGBuilder().build(results, exception_handlers or [])
 
     # ---------------------------------------------------------
 
     def verify(self):
-        from .CFGVerifier import CFGVerifier
+        from hermes_decompiler.analysis.cfg.CFGVerifier import CFGVerifier
 
         CFGVerifier(self).verify()
 
     # ---------------------------------------------------------
 
     def compute_dominators(self):
-        from hermes_decompiler.analysis.dominance import DominatorTree
+        from hermes_decompiler.analysis.dominance.DominatorTree import DominatorTree
 
         self.dominator_tree = DominatorTree(self)
 
@@ -43,7 +44,7 @@ class CFG:
     # ---------------------------------------------------------
 
     def compute_post_dominators(self):
-        from hermes_decompiler.analysis.dominance import PostDominatorTree
+        from hermes_decompiler.analysis.dominance.PostDominatorTree import PostDominatorTree
 
         self.post_dominator_tree = PostDominatorTree(self)
 

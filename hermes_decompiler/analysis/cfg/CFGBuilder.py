@@ -4,8 +4,8 @@ from typing import Dict, List, Set
 
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from .BasicBlock import BasicBlock
-from .CFG import CFG
+from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
+from hermes_decompiler.analysis.cfg.CFG import CFG
 from ..terminators import (
     TerminatorConditionalBranch, TerminatorJump, TerminatorSwitch, TerminatorReturn, TerminatorThrow
 )

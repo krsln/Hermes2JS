@@ -7,9 +7,9 @@ The generated JSON is committed to the repository.
 
 Example:
 
-python ./hermes_decompiler/frontend/opcode/tools/update_opcode_catalog.py \
+python ./tests/tools/update_opcode_catalog.py \
     --hermes-dec ./vendor/hermes-dec \
-    --output ./hermes_decompiler/frontend/opcode/data/opcode_version_map.json
+    --output ./tests/data/opcode_version_map.json
 """
 
 from __future__ import annotations
