@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from hermes_decompiler.analysis.terminators import TerminatorJump, TerminatorConditionalBranch
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, ADDR, UINT8, UINT16
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, ADDR, UINT8, UINT16
 from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (
@@ -24,12 +24,12 @@ from hermes_decompiler.ir.expressions import (
 class Jmp(OpcodeHandler):
     """Unconditional jump."""
 
-    _PATTERN = sequence(ADDR)
+    ARGUMENTS = ArgsPattern(sequence(ADDR), "Addr8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, f"Invalid arguments: {ctx.entry.args}")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         offset = int(match.group(1))
 
@@ -66,16 +66,12 @@ class JmpTrue(OpcodeHandler):
     is used as the shared base.
     """
 
-    _PATTERN = sequence(ADDR, REG)
-
-    def build_condition(self, value: Expression) -> Expression:
-        """Subclasses override this to change only the condition."""
-        return value
+    ARGUMENTS = ArgsPattern(sequence(ADDR, REG), "Addr8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, f"Invalid arguments: {ctx.entry.args}")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         offset, reg = map(int, match.groups())
 
@@ -91,6 +87,10 @@ class JmpTrue(OpcodeHandler):
         ctx.analysis.add_result(result)
 
         return result
+
+    def build_condition(self, value: Expression) -> Expression:
+        """Subclasses override this to change only the condition."""
+        return value
 
 
 # Addr32, Reg8 (total size 5)
@@ -138,19 +138,12 @@ class JmpBuiltinIs(OpcodeHandler):
     non-opcode `ABC` class.
     """
 
-    _PATTERN = sequence(ADDR, UINT8, REG)
-
-    def build_condition(self, value: Expression, builtin: int) -> Expression:
-        return BinaryExpression(
-            value,
-            BinaryOperator.STRICT_EQUAL,
-            Identifier(name=f"builtin_{builtin}"),
-        )
+    ARGUMENTS = ArgsPattern(sequence(ADDR, UINT8, REG), "Addr8, UInt8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, f"Invalid arguments: {ctx.entry.args}")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         offset, builtin, reg = map(int, match.groups())
 
@@ -166,6 +159,13 @@ class JmpBuiltinIs(OpcodeHandler):
         ctx.analysis.add_result(result)
 
         return result
+
+    def build_condition(self, value: Expression, builtin: int) -> Expression:
+        return BinaryExpression(
+            value,
+            BinaryOperator.STRICT_EQUAL,
+            Identifier(name=f"builtin_{builtin}"),
+        )
 
 
 # Addr32, UInt8, Reg8 (total size 6)
@@ -210,8 +210,6 @@ class JmpBuiltinIsNotLong(JmpBuiltinIsNot):
 class JmpTypeOfIs(OpcodeHandler):
     """Jump if the type matches the TypeOfIsTypes in Arg3."""
 
-    _PATTERN = sequence(ADDR, REG, UINT16)
-
     TYPEOF_FLAGS = {
         1 << 0: "undefined",
         1 << 1: "null",
@@ -224,10 +222,12 @@ class JmpTypeOfIs(OpcodeHandler):
         1 << 8: "object",
     }
 
+    ARGUMENTS = ArgsPattern(sequence(ADDR, REG, UINT16), "Addr32, Reg8, UInt16")
+
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, f"Invalid arguments: {ctx.entry.args}")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         offset, reg, type_id = map(int, match.groups())
 

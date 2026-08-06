@@ -1,7 +1,7 @@
 import re
 
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern
 from hermes_decompiler.ir.expressions import RawExpression
 
 
@@ -11,12 +11,12 @@ from hermes_decompiler.ir.expressions import RawExpression
 class CompleteGenerator(OpcodeHandler):
     """Set the generator status to complete, but do not return."""
 
-    _PATTERN = re.compile(r'^(?:<>)?$')
+    ARGUMENTS = ArgsPattern(re.compile(r'^(?:<>)?$'), "<>")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         expression = RawExpression(source="// CompleteGenerator")
 

@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT16
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
@@ -27,12 +27,12 @@ from hermes_decompiler.ir.expressions import (
 class NewFastArray(OpcodeHandler):
     """Create a new FastArray. The UInt16 size hint has no JS-visible effect."""
 
-    _PATTERN = sequence(REG, UINT16)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT16), "Reg8, UInt16 (total size 3)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, UInt16")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, _size_hint = map(int, match.groups())
 
@@ -48,12 +48,12 @@ class NewFastArray(OpcodeHandler):
 class FastArrayLength(OpcodeHandler):
     """Get the length of a FastArray."""
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8 (total size 2)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected two Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, array_reg = map(int, match.groups())
 
@@ -72,12 +72,12 @@ class FastArrayLength(OpcodeHandler):
 class FastArrayLoad(OpcodeHandler):
     """Load an element from a FastArray by index."""
 
-    _PATTERN = sequence(REG, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8 (total size 3)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, array_reg, index_reg = map(int, match.groups())
 
@@ -97,12 +97,12 @@ class FastArrayLoad(OpcodeHandler):
 class FastArrayStore(OpcodeHandler):
     """Store a value into a FastArray by index."""
 
-    _PATTERN = sequence(REG, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8 (total size 3)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         array_reg, index_reg, value_reg = map(int, match.groups())
 
@@ -126,12 +126,12 @@ class FastArrayStore(OpcodeHandler):
 class FastArrayPush(OpcodeHandler):
     """Push a single element onto the end of a FastArray."""
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8 (total size 2)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected two Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         array_reg, value_reg = map(int, match.groups())
 
@@ -153,12 +153,12 @@ class FastArrayPush(OpcodeHandler):
 class FastArrayAppend(OpcodeHandler):
     """Append every element of one FastArray onto another."""
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8 (total size 2)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected two Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_array_reg, src_array_reg = map(int, match.groups())
 

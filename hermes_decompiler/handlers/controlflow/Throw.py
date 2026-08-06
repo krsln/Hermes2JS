@@ -1,6 +1,6 @@
 from hermes_decompiler.analysis.terminators import TerminatorThrow
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT32
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT32
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 from hermes_decompiler.ir.statements import ThrowStatement
 
@@ -11,12 +11,12 @@ from hermes_decompiler.ir.statements import ThrowStatement
 class Throw(OpcodeHandler):
     """Throw an exception."""
 
-    _PATTERN = sequence(REG)
+    ARGUMENTS = ArgsPattern(sequence(REG), "Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         value_reg = int(match.group(1))
 
@@ -51,12 +51,12 @@ class ThrowIfEmpty(OpcodeHandler):
         plain ThrowStatement.
     """
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         # value_reg = int(match.group(1))
         # error_reg = int(match.group(2))
@@ -75,12 +75,12 @@ class ThrowIfHasRestrictedGlobalProperty(OpcodeHandler):
         Exact runtime semantics need verification.
     """
 
-    _PATTERN = sequence(UINT32)
+    ARGUMENTS = ArgsPattern(sequence(UINT32), "UInt32 (string_id)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected UInt32 argument")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         # string_id = int(match.group(1))
 
@@ -101,12 +101,12 @@ class ThrowIfUndefined(OpcodeHandler):
         Conditional runtime check.
     """
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         # value_reg = int(match.group(1))
         # error_reg = int(match.group(2))
@@ -129,12 +129,12 @@ class ThrowIfUndefinedInst(OpcodeHandler):
         Exact runtime semantics need verification.
     """
 
-    _PATTERN = sequence(REG)
+    ARGUMENTS = ArgsPattern(sequence(REG), "Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8 argument")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         # value_reg = int(match.group(1))
 
@@ -158,13 +158,12 @@ class ThrowIfThisInitialized(OpcodeHandler):
         Conditional runtime check.
     """
 
-    _PATTERN = sequence(REG)
+    ARGUMENTS = ArgsPattern(sequence(REG), "Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8 argument", )
-
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
         this_reg = int(match.group(1))
 
         this_value = self.get_register_expression(ctx.analysis, this_reg)

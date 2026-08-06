@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT32
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, Identifier, MemberExpression
 
@@ -10,12 +10,12 @@ from hermes_decompiler.ir.expressions import AssignmentExpression, Identifier, M
 class PutOwnBySlotIdx(OpcodeHandler):
     """Write an own property by hidden-class slot index: obj.slot_N = value."""
 
-    _PATTERN = sequence(REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8), "Reg8, Reg8, UInt8 (total size 3)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, value_reg, slot_idx = map(int, match.groups())
 
@@ -42,4 +42,4 @@ class PutOwnBySlotIdx(OpcodeHandler):
 class PutOwnBySlotIdxLong(PutOwnBySlotIdx):
     """Set an existing own property identified at a slot index."""
 
-    _PATTERN = sequence(REG, REG, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT32), "Reg8, Reg8, UInt32 (total size 6)")

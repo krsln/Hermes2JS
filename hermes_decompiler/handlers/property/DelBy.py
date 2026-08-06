@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, STRING_ID, UINT8
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, STRING_ID, UINT8
 from hermes_decompiler.ir.Operators import UnaryOperator
 from hermes_decompiler.ir.expressions import UnaryExpression, MemberExpression, Identifier
 
@@ -8,12 +8,12 @@ from hermes_decompiler.ir.expressions import UnaryExpression, MemberExpression, 
 # DEFINE_OPCODE_3(DelById, Reg8, Reg8, UInt16)
 # Example: <DelById>: <Reg8: 11, Reg8: 11, string_id: 15620>  # String: 'channels' (Identifier)
 class DelById(OpcodeHandler):
-    _PATTERN = sequence(REG, REG, STRING_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, STRING_ID), "Reg8, Reg8, UInt16 (string_id)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8, string_id arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, obj_reg, string_id = map(int, match.groups())
 
@@ -57,16 +57,15 @@ class DelById(OpcodeHandler):
 class DelByVal(OpcodeHandler):
     """delete obj[prop]"""
 
-    _PATTERN = sequence(REG, REG, REG, UINT8)
-    _PATTERN_OLD = sequence(REG, REG, REG)  # DEFINE_OPCODE_3
+    ARGUMENTS = (
+        ArgsPattern(sequence(REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, UInt8"),
+        ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8"),  # DEFINE_OPCODE_3
+    )
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = (
-                self._PATTERN.match(ctx.entry.args.strip())
-                or self._PATTERN_OLD.match(ctx.entry.args.strip())
-        )
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, obj_reg, prop_reg, *_ = map(int, match.groups())
 

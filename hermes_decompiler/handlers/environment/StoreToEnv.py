@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT16
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT16
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpression, NumericLiteral
 
@@ -14,12 +14,12 @@ class StoreToEnvironment(OpcodeHandler):
         env[slot] = value
     """
 
-    _PATTERN = sequence(REG, UINT8, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT8, REG), "Reg8, UInt8, Reg8"),
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         env_reg, slot, value_reg = map(int, match.groups())
         env = self.get_register_expression(ctx.analysis, env_reg)
@@ -42,7 +42,7 @@ class StoreToEnvironment(OpcodeHandler):
 # DEFINE_OPCODE_3(StoreToEnvironmentL, Reg8, UInt16, Reg8)
 # Example: <StoreToEnvironmentL>: <Reg8: 5, UInt16: 385, Reg8: 4>
 class StoreToEnvironmentL(StoreToEnvironment):
-    _PATTERN = sequence(REG, UINT16, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT16, REG), "Reg8, UInt16, Reg8"),
 
 
 # Reg8, UInt8, Reg8 (total size 3)
@@ -65,6 +65,4 @@ class StoreNPToEnvironmentL(StoreToEnvironmentL):
     """
     Long non-pointer variant.
     """
-    _PATTERN = sequence(REG, UINT16, REG)
-
-    pass
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT16, REG), "Reg8, UInt16, Reg8"),

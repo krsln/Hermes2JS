@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, STRING_ID, UINT8
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, STRING_ID, UINT8
 from hermes_decompiler.ir.expressions import Identifier, MemberExpression, CallExpression, StringLiteral
 
 
@@ -9,12 +9,12 @@ from hermes_decompiler.ir.expressions import Identifier, MemberExpression, CallE
 class GetById(OpcodeHandler):
     """Get property by string ID: obj[propName]"""
 
-    _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, STRING_ID), "Reg8, Reg8, UInt8, UInt16 (string_id)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
@@ -49,14 +49,12 @@ class GetByIdLong(GetById):
 class GetByIdWithReceiverLong(OpcodeHandler):
     """obj[prop] lookup with an explicit receiver, e.g. super.prop / Reflect.get semantics."""
 
-    _PATTERN = sequence(REG, REG, UINT8, REG, STRING_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, REG, STRING_ID), "Reg8, Reg8, UInt8, Reg8, UInt32 (string_id)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8, Reg8, string_id arguments"
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, obj_reg, _cache, receiver_reg, string_id = map(int, match.groups())
 

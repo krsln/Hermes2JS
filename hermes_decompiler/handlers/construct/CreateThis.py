@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 
 
@@ -9,12 +9,12 @@ from hermes_decompiler.ir.expressions import CallExpression, Identifier
 class CreateThis(OpcodeHandler):
     """Represents `this` object allocation prior to a constructor call."""
 
-    _PATTERN = sequence(REG, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, func, new_target = (int(x) for x in match.groups())
 
@@ -42,16 +42,16 @@ class CreateThis(OpcodeHandler):
 class CreateThisForNew(OpcodeHandler):
     """Allocate the uninitialized `this` object ahead of a `new` call."""
 
-    _PATTERN = sequence(REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8), "Reg8, Reg8, UInt8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, constructor_reg, _cache = map(int, match.groups())
 
-        constructor = self.get_register_expression(ctx.analysis, constructor_reg)
+        # constructor = self.get_register_expression(ctx.analysis, constructor_reg)
 
         expression = Identifier(name="__uninitialized_this_for_new__")
 
@@ -67,19 +67,17 @@ class CreateThisForNew(OpcodeHandler):
 class CreateThisForSuper(OpcodeHandler):
     """Allocate the uninitialized `this` object ahead of a `super(...)` call."""
 
-    _PATTERN = sequence(REG, REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, UInt8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8, UInt8 arguments"
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, constructor_reg, new_target_reg, _cache = map(int, match.groups())
 
-        constructor = self.get_register_expression(ctx.analysis, constructor_reg)
-        new_target = self.get_register_expression(ctx.analysis, new_target_reg)
+        # constructor = self.get_register_expression(ctx.analysis, constructor_reg)
+        # new_target = self.get_register_expression(ctx.analysis, new_target_reg)
 
         expression = Identifier(name="__uninitialized_this_for_super__")
 

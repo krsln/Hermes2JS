@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.ir.expressions import Identifier
 
 
@@ -7,12 +7,12 @@ from hermes_decompiler.ir.expressions import Identifier
 # DEFINE_OPCODE_1(ReifyArguments, Reg8)
 # Example: <ReifyArguments>: <Reg8: 0>
 class ReifyArguments(OpcodeHandler):
-    _PATTERN = sequence(REG)
+    ARGUMENTS = ArgsPattern(sequence(REG), "Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8 argument")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
 

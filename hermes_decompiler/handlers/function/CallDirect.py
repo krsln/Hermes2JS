@@ -1,17 +1,17 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT16, UINT32
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT16, UINT32
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 
 
 # Reg8, UInt8, UInt16 (function_id) (total size 4)
 # DEFINE_OPCODE_3(CallDirect, Reg8, UInt8, UInt16)
 class CallDirect(OpcodeHandler):
-    _PATTERN = sequence(REG, UINT8, UINT16)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT8, UINT16), "Reg8, UInt8, UInt16")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, arg_count, func_index = map(int, match.groups())
 
@@ -36,4 +36,4 @@ class CallDirect(OpcodeHandler):
 
 # Reg8, UInt8, UInt32 (total size 6)
 class CallDirectLongIndex(CallDirect):
-    _PATTERN = sequence(REG, UINT8, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT8, UINT32), "Reg8, UInt8, UInt32")

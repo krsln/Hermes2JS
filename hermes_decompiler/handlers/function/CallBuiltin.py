@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT32
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 
 
@@ -14,12 +14,12 @@ from hermes_decompiler.ir.expressions import CallExpression, Identifier
 # DEFINE_OPCODE_3(CallBuiltin, Reg8, UInt8, UInt8)
 # Example: <CallBuiltin>: <Reg8: 1, UInt8: 46, UInt8: 3>  # Built-in function: [#46 arraySpread]
 class CallBuiltin(OpcodeHandler):
-    _PATTERN = sequence(REG, UINT8, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT8, UINT8), "Reg8, UInt8, UInt8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, builtin_id, arg_count = map(int, match.groups())
 
@@ -45,4 +45,4 @@ class CallBuiltin(OpcodeHandler):
 # Reg8, UInt8, UInt32 (total size 6)
 # DEFINE_OPCODE_3(CallBuiltinLong, Reg8, UInt8, UInt32)
 class CallBuiltinLong(CallBuiltin):
-    _PATTERN = sequence(REG, UINT8, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT8, UINT32), "Reg8, UInt8, UInt32")

@@ -83,44 +83,6 @@ def sequence(*parts: Union[Operand, str]) -> "re.Pattern[str]":
     return re.compile(r'^' + r',\s*'.join(fragments) + r'$')
 
 
-class MultiPattern:
-    """
-    Try several `_PATTERN`-shaped alternatives in order, for opcodes whose
-    operand encoding differs across bytecode versions (e.g. a `string_id`
-    that's `UInt16` in one HBC version and `UInt32` in another, or an
-    operand that was added/reordered between versions).
-
-    Drop-in replacement for a single compiled pattern: exposes the same
-    `.match(args) -> re.Match | None` interface handlers already call, so
-    existing `handle()` methods don't need to change - only the
-    `_PATTERN = sequence(...)` assignment becomes
-    `_PATTERN = MultiPattern(sequence(...), sequence(...))`.
-
-    Because different variants can have a different number of capture
-    groups, handlers that use `MultiPattern` should read matched values
-    by name (see `named` below) rather than by positional
-    `match.groups()` index, or should structure their `sequence(...)`
-    variants so the groups they care about are in the same position in
-    every variant.
-    """
-
-    def __init__(self, *variants: "re.Pattern[str]"):
-        if not variants:
-            raise ValueError("MultiPattern requires at least one variant")
-        self._variants = variants
-
-    def match(self, args: str) -> Optional["re.Match[str]"]:
-        for pattern in self._variants:
-            m = pattern.match(args)
-            if m is not None:
-                return m
-        return None
-
-    @property
-    def variants(self) -> tuple:
-        return self._variants
-
-
 def named(kind: str, group: int = 1) -> str:
     """
     Build a named-group version of an operand's capture, e.g.

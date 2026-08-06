@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.ir.expressions import Identifier, MemberExpression
 
 
@@ -9,12 +9,12 @@ from hermes_decompiler.ir.expressions import Identifier, MemberExpression
 class GetArgumentsLength(OpcodeHandler):
     """Get the length of the 'arguments' array."""
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected two Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, _lazy_reg = map(int, match.groups())
 
@@ -32,12 +32,12 @@ class GetArgumentsLength(OpcodeHandler):
 class GetArgumentsPropByVal(OpcodeHandler):
     """Get a property of the 'arguments' array by value."""
 
-    _PATTERN = sequence(REG, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, index_reg, _lazy_reg = map(int, match.groups())
         index_value = self.get_register_expression(ctx.analysis, index_reg)

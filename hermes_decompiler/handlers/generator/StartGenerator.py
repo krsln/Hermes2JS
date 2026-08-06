@@ -1,7 +1,7 @@
 import re
 
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler, OpcodeContext
+from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler, OpcodeContext, ArgsPattern
 from hermes_decompiler.ir.expressions import RawExpression
 
 
@@ -10,12 +10,12 @@ from hermes_decompiler.ir.expressions import RawExpression
 class StartGenerator(OpcodeHandler):
     """Initialize generator execution."""
 
-    _PATTERN = re.compile(r'^(?:<>)?$')
+    ARGUMENTS = ArgsPattern(re.compile(r'^(?:<>)?$'), "<>")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         # No JS-observable effect of its own; kept as a bare comment
         # marker via RawExpression, same as before.

@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT16, UINT32
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT16, UINT32
 from hermes_decompiler.ir.expressions import Identifier
 
 
@@ -9,14 +9,12 @@ from hermes_decompiler.ir.expressions import Identifier
 class CreateBaseClass(OpcodeHandler):
     """Create a base (non-derived) ES6 class closure."""
 
-    _PATTERN = sequence(REG, REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, UInt16")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8, function_id arguments"
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         closure_reg, home_object_reg, _env_reg, function_id = map(int, match.groups())
 
@@ -43,7 +41,7 @@ class CreateBaseClass(OpcodeHandler):
 # Reg8, Reg8, Reg8, UInt32 (total size 7)
 # DEFINE_OPCODE_4(CreateBaseClassLongIndex, Reg8, Reg8, Reg8, UInt32)
 class CreateBaseClassLongIndex(CreateBaseClass):
-    _PATTERN = sequence(REG, REG, REG, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, UINT32), "Reg8, Reg8, Reg8, UInt32")
 
 
 # Reg8, Reg8, Reg8, Reg8, UInt16 (total size 6)
@@ -52,14 +50,12 @@ class CreateBaseClassLongIndex(CreateBaseClass):
 class CreateDerivedClass(OpcodeHandler):
     """Create a derived (extends ...) ES6 class closure."""
 
-    _PATTERN = sequence(REG, REG, REG, REG, UINT16)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, REG, UINT16), "Reg8, Reg8, Reg8, Reg8, UInt16")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8, Reg8, function_id arguments"
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         closure_reg, home_object_reg, _env_reg, _super_class_reg, function_id = map(int, match.groups())
 
@@ -84,4 +80,4 @@ class CreateDerivedClass(OpcodeHandler):
 # Reg8, Reg8, Reg8, Reg8, UInt32 (total size 8)
 # DEFINE_OPCODE_5(CreateDerivedClassLongIndex, Reg8, Reg8, Reg8, Reg8, UInt32)
 class CreateDerivedClassLongIndex(CreateDerivedClass):
-    _PATTERN = sequence(REG, REG, REG, REG, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, REG, UINT32), "Reg8, Reg8, Reg8, Reg8, UInt32")

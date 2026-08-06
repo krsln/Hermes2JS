@@ -2,7 +2,7 @@ import re
 from typing import Dict
 
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
 
 
@@ -26,12 +26,12 @@ class Call(OpcodeHandler):
         r4 = r9(r3, r4, r5, r6, r7, r8)
     """
 
-    _PATTERN = sequence(REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8), "Reg8, Reg8, UInt8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, func_reg, num_args = map(int, match.groups())
 

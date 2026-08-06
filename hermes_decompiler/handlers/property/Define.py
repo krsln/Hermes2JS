@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8, UINT16, UINT32
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT16, UINT32
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
     AssignmentExpression,
@@ -18,12 +18,12 @@ from hermes_decompiler.ir.expressions import (
 class DefineOwnById(OpcodeHandler):
     """Define an own object property by string ID: obj.foo = value (fresh property)."""
 
-    _PATTERN = sequence(REG, REG, UINT8, UINT16)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, UINT16), "Reg8, Reg8, UInt8, UInt16")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, value_reg, _cache, string_id = map(int, match.groups())
 
@@ -57,14 +57,12 @@ class DefineOwnByIdLong(DefineOwnById):
 class DefineOwnByVal(OpcodeHandler):
     """Define an own object property by computed value: obj[key] = value (fresh property)."""
 
-    _PATTERN = sequence(REG, REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, UInt8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8, UInt8 arguments"
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, value_reg, key_reg, _enumerable = map(int, match.groups())
 
@@ -89,14 +87,12 @@ class DefineOwnByVal(OpcodeHandler):
 class DefineOwnGetterSetterByVal(OpcodeHandler):
     """Object.defineProperty(obj, key, { get, set, enumerable })."""
 
-    _PATTERN = sequence(REG, REG, REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, Reg8, UInt8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8, Reg8, UInt8 arguments"
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, key_reg, getter_reg, setter_reg, enumerable = map(int, match.groups())
 
@@ -150,12 +146,12 @@ class DefineOwnGetterSetterByVal(OpcodeHandler):
 class DefineOwnByIndex(OpcodeHandler):
     """Define an own indexed property: arr[N] = value (N is an immediate index)."""
 
-    _PATTERN = sequence(REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8), "Reg8, Reg8, UInt8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, value_reg, index = map(int, match.groups())
 
@@ -177,7 +173,7 @@ class DefineOwnByIndex(OpcodeHandler):
 # Reg8, Reg8, UInt32 (total size 6)
 # DEFINE_OPCODE_3(DefineOwnByIndexL, Reg8, Reg8, UInt32)
 class DefineOwnByIndexL(DefineOwnByIndex):
-    _PATTERN = sequence(REG, REG, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT32), "Reg8, Reg8, UInt32")
 
 
 # Reg8, Reg8, UInt8 (total size 3)
@@ -186,12 +182,12 @@ class DefineOwnByIndexL(DefineOwnByIndex):
 class DefineOwnInDenseArray(OpcodeHandler):
     """Define an own property directly in dense array storage: arr[N] = value."""
 
-    _PATTERN = sequence(REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8), "Reg8, Reg8, UInt8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, value_reg, index = map(int, match.groups())
 
@@ -213,4 +209,4 @@ class DefineOwnInDenseArray(OpcodeHandler):
 # Reg8, Reg8, UInt16 (total size 4)
 # DEFINE_OPCODE_3(DefineOwnInDenseArrayL, Reg8, Reg8, UInt16)
 class DefineOwnInDenseArrayL(DefineOwnInDenseArray):
-    _PATTERN = sequence(REG, REG, UINT16)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT16), "Reg8, Reg8, UInt16")

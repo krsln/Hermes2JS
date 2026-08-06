@@ -1,20 +1,20 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 
 
 # Reg8, Reg8 (total size 2)
-# DEFINE_OPCODE_2(<GetClosureEnvironment, Reg8>, Reg8)
+# DEFINE_OPCODE_2(GetClosureEnvironment, Reg8, Reg8)
 # Example: <GetClosureEnvironment>: <Reg8: 3, Reg8: 2>
 class GetClosureEnvironment(OpcodeHandler):
     """Fetch the environment/scope captured by an explicit closure register."""
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, closure_reg = map(int, match.groups())
 

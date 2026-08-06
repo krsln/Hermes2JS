@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpression, Identifier
 
@@ -10,12 +10,12 @@ from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpress
 class AddOwnPrivateBySym(OpcodeHandler):
     """Initialize a private class field on a fresh instance: obj.#field = value."""
 
-    _PATTERN = sequence(REG, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8 (total size 3)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, private_name_reg, value_reg = map(int, match.groups())
 
@@ -42,14 +42,12 @@ class AddOwnPrivateBySym(OpcodeHandler):
 class GetOwnPrivateBySym(OpcodeHandler):
     """Read a private class field: obj.#field"""
 
-    _PATTERN = sequence(REG, REG, UINT8, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, REG), "Reg8, Reg8, UInt8, Reg8 (total size 4)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8, Reg8 arguments"
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, obj_reg, _cache, private_name_reg = map(int, match.groups())
 
@@ -73,14 +71,12 @@ class GetOwnPrivateBySym(OpcodeHandler):
 class PutOwnPrivateBySym(OpcodeHandler):
     """Write a private class field on an already-initialized instance: obj.#field = value"""
 
-    _PATTERN = sequence(REG, REG, UINT8, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, REG), "Reg8, Reg8, UInt8, Reg8 (total size 4)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8, Reg8 arguments"
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, value_reg, _cache, private_name_reg = map(int, match.groups())
 

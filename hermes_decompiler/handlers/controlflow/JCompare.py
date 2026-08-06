@@ -5,7 +5,7 @@ from typing import ClassVar, Optional
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import ADDR
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression, UnaryExpression
 
@@ -46,7 +46,32 @@ class BaseJCompare(OpcodeHandler):
     operator: ClassVar[Optional[BinaryOperator]] = None
     negated_operator: ClassVar[Optional[BinaryOperator]] = None
 
-    _PATTERN = sequence(ADDR, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(ADDR, REG, REG), "ADDR, Reg8, Reg8")
+
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
+
+        offset, lhs_reg, rhs_reg = map(int, match.groups())
+
+        target = ctx.entry.target_address
+        if target is None:
+            target = ctx.entry.address + offset
+
+        ctx.analysis.gotoList.append(target)
+
+        lhs = self.get_register_expression(ctx.analysis, lhs_reg)
+        rhs = self.get_register_expression(ctx.analysis, rhs_reg)
+
+        condition = self.build_condition(lhs, rhs)
+        terminator = TerminatorConditionalBranch(condition=condition, target=target)
+
+        # pure control flow: no operand value of its own
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
+
+        return result
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -70,32 +95,6 @@ class BaseJCompare(OpcodeHandler):
         raise NotImplementedError(
             f"{type(self).__name__}: neither `operator` nor `negated_operator` is set"
         )
-
-    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, f"Invalid arguments: {ctx.entry.args}")
-
-        offset, lhs_reg, rhs_reg = map(int, match.groups())
-
-        target = ctx.entry.target_address
-        if target is None:
-            target = ctx.entry.address + offset
-
-        ctx.analysis.gotoList.append(target)
-
-        lhs = self.get_register_expression(ctx.analysis, lhs_reg)
-        rhs = self.get_register_expression(ctx.analysis, rhs_reg)
-
-        condition = self.build_condition(lhs, rhs)
-        terminator = TerminatorConditionalBranch(condition=condition, target=target)
-
-        # pure control flow: no operand value of its own
-        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
-        ctx.analysis.add_result(result)
-
-        return result
 
 
 # @formatter:off

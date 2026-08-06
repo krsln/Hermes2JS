@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
 
 
@@ -15,12 +15,12 @@ from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberE
 # DEFINE_OPCODE_5(GetNextPName, Reg8, Reg8, Reg8, Reg8, Reg8)
 # Example: <GetNextPName>: <Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 0, Reg8: 1>
 class GetNextPName(OpcodeHandler):
-    _PATTERN = sequence(REG, REG, REG, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, REG, REG), "Reg8, Reg8, Reg8, Reg8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected five Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, list_reg, _obj_reg, _index_reg, _size_reg = map(int, match.groups())
         list_val = self.get_register_reference(ctx.analysis, list_reg)

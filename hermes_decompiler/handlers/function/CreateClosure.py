@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, FUNCTION_ID
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, FUNCTION_ID
 from hermes_decompiler.ir.expressions import Identifier
 
 
@@ -11,12 +11,12 @@ class CreateClosure(OpcodeHandler):
     its display name from the function table (or a `function_N` fallback
     if the id isn't in the table)."""
 
-    _PATTERN = sequence(REG, REG, FUNCTION_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, FUNCTION_ID), "Reg8, Reg8, UInt16 (function_id)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8 and function_id arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, value_reg, func_id = (int(x) for x in match.groups())
 

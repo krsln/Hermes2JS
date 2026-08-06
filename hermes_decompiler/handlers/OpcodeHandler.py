@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Dict, Optional
@@ -19,6 +20,12 @@ class OpcodeContext:
     entry: OpcodeEntry
     entries: list[OpcodeEntry]
     index: int
+
+
+@dataclass(frozen=True, slots=True)
+class ArgsPattern:
+    regex: re.Pattern[str]
+    desc: str
 
 
 class OpcodeHandler(ABC):
@@ -50,6 +57,8 @@ class OpcodeHandler(ABC):
     that point. Don't rely on `ABC`/`@abstractmethod` alone to keep a base
     class out of the registry; use `_abstract = True` explicitly.
     """
+
+    ARGUMENTS: ArgsPattern | tuple[ArgsPattern, ...] = ()
 
     registry: Dict[str, "OpcodeHandler"] = {}
 
@@ -83,6 +92,32 @@ class OpcodeHandler(ABC):
     @classmethod
     def get_handler(cls, opcode: str) -> Optional["OpcodeHandler"]:
         return cls.registry.get(opcode)
+
+    def match_arguments(self, ctx: OpcodeContext) -> re.Match[str] | OpcodeResult:
+        patterns = self.ARGUMENTS
+        if not isinstance(patterns, tuple):
+            patterns = (patterns,)
+
+        args = ctx.entry.args.strip()
+
+        for item in patterns:
+            match = item.regex.match(args)
+            if match:
+                return match
+
+        return self.build_invalid_args_result(ctx.analysis, ctx.entry, self.expected_arguments_message())
+
+    def expected_arguments_message(self) -> str:
+        patterns = self.ARGUMENTS
+        if isinstance(patterns, ArgsPattern):
+            patterns = (patterns,)
+
+        descriptions = [p.desc for p in patterns]
+
+        if len(descriptions) == 1:
+            return f"Expected arguments: {descriptions[0]}"
+
+        return "Expected one of: " + "; ".join(descriptions)
 
     @classmethod
     def build_invalid_args_result(cls, analysis: HermesAnalysis, entry: OpcodeEntry,

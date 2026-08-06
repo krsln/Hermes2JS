@@ -1,6 +1,6 @@
 from hermes_decompiler.analysis.terminators import TerminatorJump
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, ADDR
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, ADDR
 
 
 # Addr8 (total size 1)
@@ -17,13 +17,12 @@ class SaveGenerator(OpcodeHandler):
     a `SaveGenerator` follows it.
     """
 
-    _PATTERN = sequence(ADDR)
+    ARGUMENTS = ArgsPattern(sequence(ADDR), "Addr8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         offset = int(match.group(1))
 

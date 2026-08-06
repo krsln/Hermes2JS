@@ -1,7 +1,7 @@
 import re
 
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern
 from hermes_decompiler.ir.expressions import RegExpLiteral
 
 
@@ -11,16 +11,16 @@ from hermes_decompiler.ir.expressions import RegExpLiteral
 class CreateRegExp(OpcodeHandler):
     """Create a RegExp literal."""
 
-    _PATTERN = re.compile(
-        r'^Reg\d+:\s*(\d+),\s*(?:string_id|UInt32):\s*(\d+),\s*(?:string_id|UInt32):\s*(\d+),\s*(?:UInt32|Reg\d+):\s*(\d+)$'
+    ARGUMENTS = ArgsPattern(
+        re.compile(
+            r'^Reg\d+:\s*(\d+),\s*(?:string_id|UInt32):\s*(\d+),\s*(?:string_id|UInt32):\s*(\d+),\s*(?:UInt32|Reg\d+):\s*(\d+)$'
+        ), "Reg8, UInt32, UInt32, UInt32"
     )
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            error = "Expected Reg8, (string_id|UInt32), (string_id|UInt32), UInt32"
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, error)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, pattern_id, flags_id, _ = map(int, match.groups())
 

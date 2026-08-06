@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, STRING_ID
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, STRING_ID
 from hermes_decompiler.ir.Operators import VariableKind
 from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.ir.statements import VariableDeclaration, VariableDeclarator
@@ -15,12 +15,12 @@ class DeclareGlobalVar(OpcodeHandler):
     Ret/Throw/PutByVal for statements with no downstream chainable value).
     """
 
-    _PATTERN = sequence(STRING_ID)
+    ARGUMENTS = ArgsPattern(sequence(STRING_ID), "UInt32 (string_id) (total size 4)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected a single string_id argument")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         string_id = int(match.group(1))
         prop_name = ctx.entry.identifier_name or f"string_{string_id}"

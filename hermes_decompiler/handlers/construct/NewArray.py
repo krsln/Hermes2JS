@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT16, UINT32
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16, UINT32
 from hermes_decompiler.ir.expressions import ArrayExpression, python_literal
 
 
@@ -9,12 +9,12 @@ from hermes_decompiler.ir.expressions import ArrayExpression, python_literal
 class NewArray(OpcodeHandler):
     """Create a new, empty Array with a preallocation size hint."""
 
-    _PATTERN = sequence(REG, UINT16)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT16), "Reg8, UInt16")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8 and UInt16 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, capacity_hint = map(int, match.groups())
 
@@ -36,13 +36,12 @@ class NewArray(OpcodeHandler):
 class NewArrayWithBuffer(OpcodeHandler):
     """Create a new array from a static buffer."""
 
-    _PATTERN = sequence(REG, UINT16, UINT16, UINT16)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT16, UINT16, UINT16), "Reg8, UInt16, UInt16, UInt16")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
 
@@ -66,4 +65,4 @@ class NewArrayWithBuffer(OpcodeHandler):
 # DEFINE_OPCODE_4(NewArrayWithBufferLong, Reg8, UInt16, UInt16, UInt32)
 class NewArrayWithBufferLong(NewArrayWithBuffer):
     """Long variant."""
-    _PATTERN = sequence(REG, UINT16, UINT16, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT16, UINT16, UINT32), "Reg8, UInt16, UInt16, UInt32")

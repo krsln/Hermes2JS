@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.ir.expressions import Identifier
 
 
@@ -9,12 +9,12 @@ from hermes_decompiler.ir.expressions import Identifier
 class LoadThisNS(OpcodeHandler):
     """Load and coerce `this` value."""
 
-    _PATTERN = sequence(REG)
+    ARGUMENTS = ArgsPattern(sequence(REG), "Reg8 (total size 1)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
 

@@ -1,6 +1,6 @@
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 
 logger = get_logger(__name__)
@@ -18,16 +18,15 @@ class DirectEval(OpcodeHandler):
     global eval).
     """
 
-    _PATTERN = sequence(REG, REG, UINT8)
-    _PATTERN_OLD = sequence(REG, REG)
+    ARGUMENTS = (
+        ArgsPattern(sequence(REG, REG, UINT8), "Reg8, Reg8, UInt8"),
+        ArgsPattern(sequence(REG, REG), "Reg8, Reg8"),  # DEFINE_OPCODE_2
+    )
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = (
-                self._PATTERN.match(ctx.entry.args.strip())
-                or self._PATTERN_OLD.match(ctx.entry.args.strip())
-        )
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
         eval_text_reg = int(match.group(2))
@@ -38,10 +37,7 @@ class DirectEval(OpcodeHandler):
 
         eval_text = self.get_register_expression(ctx.analysis, eval_text_reg)
 
-        expression = CallExpression(
-            callee=Identifier(name="eval"),
-            arguments=(eval_text,),
-        )
+        expression = CallExpression(callee=Identifier(name="eval"), arguments=(eval_text,))
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)

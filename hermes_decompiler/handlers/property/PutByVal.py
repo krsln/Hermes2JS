@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpression
 
@@ -10,12 +10,12 @@ from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpress
 class PutByVal(OpcodeHandler):
     """Set an existing own property identified at a slot index."""
 
-    _PATTERN = sequence(REG, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8 (total size 3)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected three Reg8 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, key_reg, value_reg = map(int, match.groups())
 
@@ -63,16 +63,12 @@ class PutByValWithReceiver(OpcodeHandler):
     receiver register and cache index are parsed but ignored.
     """
 
-    _PATTERN = sequence(REG, REG, REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, Reg8, UInt8 (total size 5)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis,
-                ctx.entry,
-                "Expected Reg8, Reg8, Reg8, Reg8, UInt8",
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, key_reg, value_reg, _receiver_reg, _cache_index = map(
             int, match.groups()
@@ -113,16 +109,12 @@ class PutOwnByVal(OpcodeHandler):
     currently ignored.
     """
 
-    _PATTERN = sequence(REG, REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, UInt8 (total size 4)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis,
-                ctx.entry,
-                "Expected Reg8, Reg8, Reg8, UInt8",
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, value_reg, key_reg, _flags = map(int, match.groups())
 

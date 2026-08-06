@@ -2,7 +2,7 @@ import ast
 import re
 
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT16, UINT32
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16, UINT32
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
     Expression,
@@ -40,17 +40,15 @@ def _json_to_expression(value: object) -> Expression:
 class NewObjectWithBuffer(OpcodeHandler):
     """Create an object from a static map of values using buffer."""
 
-    _PATTERN = sequence(REG, UINT16, UINT16, UINT16, UINT16)
-    _PATTERN_OLD = sequence(REG, UINT16, UINT16)
+    ARGUMENTS = (
+        ArgsPattern(sequence(REG, UINT16, UINT16, UINT16, UINT16), "Reg8, UInt16, UInt16, UInt16, UInt16"),
+        ArgsPattern(sequence(REG, UINT16, UINT16), "Reg8, UInt16, UInt16"),  # DEFINE_OPCODE_3
+    )
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-
-        match = (
-                self._PATTERN.match(ctx.entry.args.strip())
-                or self._PATTERN_OLD.match(ctx.entry.args.strip())
-        )
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
 
@@ -159,10 +157,10 @@ class NewObjectWithBuffer(OpcodeHandler):
 class NewObjectWithBufferLong(NewObjectWithBuffer):
     """Long variant."""
 
-    _PATTERN = sequence(REG, UINT16, UINT16, UINT32, UINT32)
-    _PATTERN_OLD = sequence(REG, UINT32, UINT32)
-
-    pass
+    ARGUMENTS = (
+        ArgsPattern(sequence(REG, UINT16, UINT16, UINT32, UINT32), "Reg8, UInt16, UInt16, UInt32, UInt32"),
+        ArgsPattern(sequence(REG, UINT32, UINT32), "Reg8, UInt32, UInt32"),  # DEFINE_OPCODE_3
+    )
 
 
 # Reg8, Reg8, UInt32, UInt32 (total size 10)
@@ -171,14 +169,12 @@ class NewObjectWithBufferLong(NewObjectWithBuffer):
 class NewObjectWithBufferAndParent(NewObjectWithBuffer):
     """Create an object from a static buffer with an explicit parent/prototype."""
 
-    _PATTERN = sequence(REG, REG, UINT32, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT32, UINT32), "Reg8, Reg8, UInt32, UInt32"),
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt16, UInt16, UInt16, UInt16 arguments"
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, _parent_reg, *_buffer_operands = map(int, match.groups())
 

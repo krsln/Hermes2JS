@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
 
 
@@ -9,12 +9,12 @@ from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberE
 class IteratorBegin(OpcodeHandler):
     """Begin iteration over an iterable."""
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         iterator_reg, iterable_reg = map(int, match.groups())
         iterable = self.get_register_reference(ctx.analysis, iterable_reg)
@@ -36,12 +36,12 @@ class IteratorBegin(OpcodeHandler):
 class IteratorNext(OpcodeHandler):
     """Advance iterator."""
 
-    _PATTERN = sequence(REG, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         result_reg, iterator_reg, _ = map(int, match.groups())
         iterator = self.get_register_expression(ctx.analysis, iterator_reg)
@@ -70,12 +70,12 @@ class IteratorClose(OpcodeHandler):
     real cleanup call silently vanished from the generated JS.
     """
 
-    _PATTERN = sequence(REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT8), "Reg8, UInt8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         iterator_reg = int(match.group(1))
         # match.group(2) is the ignore-inner-exception flag - not

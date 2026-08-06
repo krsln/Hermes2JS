@@ -1,8 +1,8 @@
 from typing import ClassVar
 
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, STRING_ID, UINT8, IMM32, DOUBLE, \
-    BIGINT_ID
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, STRING_ID, UINT8, \
+    IMM32, DOUBLE, BIGINT_ID
 from hermes_decompiler.ir.expressions import (
     Expression,
     UndefinedLiteral,
@@ -28,15 +28,14 @@ class LoadConstZero(OpcodeHandler):
     `handlers/arithmetic/Binary.py` for the rationale.
     """
 
-    _PATTERN = sequence(REG)
-
     VALUE: ClassVar[Expression | object] = 0
 
-    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+    ARGUMENTS = ArgsPattern(sequence(REG), "Reg8 (total size 1)")
 
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8 argument")
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
 
@@ -100,12 +99,12 @@ class LoadConstEmpty(LoadConstZero):
 class LoadConstUInt8(OpcodeHandler):
     """"Load a constant integer value."""
 
-    _PATTERN = sequence(REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT8), "Reg8, UInt8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, UInt8")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
         value = python_literal(int(match.group(2)))
@@ -122,12 +121,12 @@ class LoadConstUInt8(OpcodeHandler):
 class LoadConstInt(OpcodeHandler):
     """"Load a constant integer value."""
 
-    _PATTERN = sequence(REG, IMM32)
+    ARGUMENTS = ArgsPattern(sequence(REG, IMM32), "Reg8, Imm32")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Imm32")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
         value = python_literal(int(match.group(2)))
@@ -144,16 +143,12 @@ class LoadConstInt(OpcodeHandler):
 class LoadConstBigInt(OpcodeHandler):
     """a constant BigInt value by bigint table index."""
 
-    _PATTERN = sequence(REG, BIGINT_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, BIGINT_ID), "Reg8, UInt16 (bigint_id)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis,
-                ctx.entry,
-                "Expected Reg8, UInt16",
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
         bigint_id = int(match.group(2))
@@ -186,12 +181,12 @@ class LoadConstBigIntLongIndex(LoadConstBigInt):
 class LoadConstDouble(OpcodeHandler):
     """"Load a constant double value."""
 
-    _PATTERN = sequence(REG, DOUBLE)
+    ARGUMENTS = ArgsPattern(sequence(REG, DOUBLE), "Reg8, Double")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Double")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
         value = python_literal(float(match.group(2)))
@@ -212,13 +207,12 @@ class LoadConstDouble(OpcodeHandler):
 class LoadConstString(OpcodeHandler):
     """Load a constant string value by string table index."""
 
-    _PATTERN = sequence(REG, STRING_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, STRING_ID), "Reg8, UInt16 (string_id)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, string_id")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
         string_id = match.group(2)

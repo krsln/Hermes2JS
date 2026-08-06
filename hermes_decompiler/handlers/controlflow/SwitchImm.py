@@ -1,7 +1,7 @@
 from hermes_decompiler.analysis.terminators import TerminatorSwitch
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, ADDR, UINT32
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, ADDR, UINT32
 
 logger = get_logger(__name__)
 
@@ -15,13 +15,12 @@ class SwitchImm(OpcodeHandler):
     input or to the default block if out of range (or not right type)
     """
 
-    _PATTERN = sequence(REG, UINT32, ADDR, UINT32, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT32, ADDR, UINT32, UINT32), "Reg8, UInt32, Addr32, UInt32, UInt32")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected a leading Reg selector")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         selector_reg = int(match.group(1))
         selector = self.get_register_expression(ctx.analysis, selector_reg)
@@ -41,7 +40,8 @@ class SwitchImm(OpcodeHandler):
             expected = last_case - first_case + 1
 
             if len(ctx.entry.jump_table) != expected:
-                logger.warning("Jump table size mismatch: expected %d entries, got %d", expected, len(ctx.entry.jump_table))
+                logger.warning("Jump table size mismatch: expected %d entries, got %d", expected,
+                               len(ctx.entry.jump_table))
 
             for value, target in zip(
                     range(first_case, first_case + len(ctx.entry.jump_table)),
@@ -82,14 +82,12 @@ class UIntSwitchImm(SwitchImm):
 class StringSwitchImm(OpcodeHandler):
     """All-string `switch` statement. Case targets come from an out-of-line table this handler can't yet resolve."""
 
-    _PATTERN = sequence(REG, UINT32, UINT32, ADDR, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT32, UINT32, ADDR, UINT32), "Reg8, UInt32, UInt32, Addr32, UInt32")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                ctx.analysis, ctx.entry, "Expected a leading Reg selector",
-            )
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         selector_reg = int(match.group(1))
         selector = self.get_register_expression(ctx.analysis, selector_reg)

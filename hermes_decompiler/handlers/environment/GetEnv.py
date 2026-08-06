@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT8
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, NumericLiteral
 
 
@@ -17,16 +17,15 @@ class GetEnvironment(OpcodeHandler):
     ...
     """
 
-    _PATTERN = sequence(REG, REG, UINT8)
-    _PATTERN_OLD = sequence(REG, UINT8)  # DEFINE_OPCODE_2
+    ARGUMENTS = (
+        ArgsPattern(sequence(REG, REG, UINT8), "Reg8, Reg8, UInt8"),
+        ArgsPattern(sequence(REG, UINT8), "Reg8, UInt8"),  # DEFINE_OPCODE_2
+    )
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = (
-                self._PATTERN.match(ctx.entry.args.strip())
-                or self._PATTERN_OLD.match(ctx.entry.args.strip())
-        )
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, level = map(int, match.groups())
 

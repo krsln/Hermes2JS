@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, UINT16
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, StringLiteral, UnaryExpression
 
@@ -16,8 +16,6 @@ class TypeOfIs(OpcodeHandler):
     "type"` check; multi-bit masks fall back to a raw placeholder.
     """
 
-    _PATTERN = sequence(REG, REG, UINT16)
-
     # GUESSED bit assignments -- NOT sourced from Typeof.h. Placeholder
     # ordering based on common typeof-result enumeration; each bit
     # assumed to represent one typeof() result string.
@@ -32,10 +30,12 @@ class TypeOfIs(OpcodeHandler):
         1 << 7: "bigint",
     }
 
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT16), "Reg8, Reg8, UInt16")
+
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry, "Expected Reg8, Reg8, UInt16 arguments")
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, value_reg, type_mask = map(int, match.groups())
 

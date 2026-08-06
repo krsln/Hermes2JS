@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, sequence, REG, FUNCTION_ID
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, FUNCTION_ID
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 
 
@@ -9,16 +9,17 @@ from hermes_decompiler.ir.expressions import CallExpression, Identifier
 class CreateGenerator(OpcodeHandler):
     """Create a generator object."""
 
-    _PATTERN = sequence(REG, REG, FUNCTION_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, FUNCTION_ID), "Reg8, Reg8, UInt16 (function_id)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, env_reg, function_id = map(int, match.groups())
         env = self.get_register_expression(ctx.analysis, env_reg)
-        func_name = (ctx.entry.function.name if ctx.entry.function and ctx.entry.function.name else f"function_{function_id}")
+        func_name = (
+            ctx.entry.function.name if ctx.entry.function and ctx.entry.function.name else f"function_{function_id}")
 
         # Same named pseudo-call convention as createThis()/getEnvironment():
         # actually instantiating a generator object isn't plain JS syntax.
@@ -47,12 +48,12 @@ class CreateGeneratorLongIndex(CreateGenerator):
 class CreateGeneratorClosure(OpcodeHandler):
     """Create a closure for a GeneratorFunction."""
 
-    _PATTERN = sequence(REG, REG, FUNCTION_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, FUNCTION_ID), "Reg8, Reg8, UInt16 (function_id)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
-        match = self._PATTERN.match(ctx.entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, env_reg, function_id = map(int, match.groups())
 
