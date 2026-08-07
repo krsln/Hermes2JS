@@ -19,8 +19,9 @@ from hermes_decompiler.ir.expressions import (
     AssignmentExpression,
     UpdateExpression,
     AwaitExpression,
-    YieldExpression, )
+    YieldExpression, Identifier,StringLiteral, NumericLiteral, BooleanLiteral )
 
+_TRIVIAL_NODE_TYPES = (Identifier, StringLiteral, NumericLiteral, BooleanLiteral)  # adjust to actual literal type names
 
 class BooleanChainFolder:
     """
@@ -260,14 +261,17 @@ class BooleanChainFolder:
         if node is old_expr:
             return new_expr, True
 
-        # A Mov captures a register's value via a shallow copy
-        # (dataclasses.replace) at decode time, so downstream of a fold
-        # that supersedes the pre-fold value, a Mov'd copy is never
-        # identity-equal to old_expr - only structurally equal. Scoped by
-        # the caller's min_block_id (only blocks reachable AFTER the fold
-        # site are searched at all), so this can't reach backward into
-        # unrelated code the way an unscoped structural match would.
-        if isinstance(node, type(old_expr)) and node.structurally_equal(old_expr):
+        # Structural-equality fallback only for non-trivial expressions
+        # (BinaryExpression, ConditionalExpression, CallExpression, etc) -
+        # a bare Identifier or Literal is structurally equal to every OTHER
+        # unrelated read of the same name/value throughout the function, so
+        # matching those by structural equality corrupts every downstream
+        # occurrence, not just the intended Mov-copy target. Only apply this
+        # fallback when old_expr's shape is specific enough that a match is
+        # actually likely to BE the same logical value, not a coincidence.
+        if (not isinstance(old_expr, _TRIVIAL_NODE_TYPES)
+                and isinstance(node, type(old_expr))
+                and node.structurally_equal(old_expr)):
             return new_expr, True
 
         if not dataclasses.is_dataclass(node) or not isinstance(node, Node):
