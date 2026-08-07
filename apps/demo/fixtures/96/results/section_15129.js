@@ -17,36 +17,7 @@ function nestedTemplateTest(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 4, Reg8: 2, Reg8: 1>
     // USED → r4 = param1 + param2;
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 10>
-    // USED → r3 = 10;
-    if (param1 + param2 > 10) {
-        // ──────────────── Block 2 ──────────────── 
-        // CODE → <Add>: <Reg8: 5, Reg8: 2, Reg8: 1>
-        // USED → r5 = param1 + param2;
-        // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
-        // USED → r1 = globalThis.HermesInternal;
-        // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 4, string_id: 96>  # String: 'concat' (Identifier)
-        // USED → r4 = globalThis.HermesInternal.concat;
-        // CODE → <LoadConstString>: <Reg8: 2, string_id: 1940>  # String: 'big (' (String)
-        // USED → r2 = "big (";
-        // CODE → <LoadConstString>: <Reg8: 1, string_id: 876>  # String: ')' (String)
-        // USED → r1 = ")";
-        // CODE → <Call3>: <Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5, Reg8: 1>
-        // USED → r3 = globalThis.HermesInternal.concat.call("big (", param1 + param2, ")");
-    } else {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <Add>: <Reg8: 6, Reg8: 2, Reg8: 1>
-        // USED → r6 = param1 + param2;
-        // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
-        // USED → r3 = globalThis.HermesInternal;
-        // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 4, string_id: 96>  # String: 'concat' (Identifier)
-        // USED → r5 = globalThis.HermesInternal.concat;
-        // CODE → <LoadConstString>: <Reg8: 4, string_id: 524>  # String: 'small (' (String)
-        // USED → r4 = "small (";
-        // CODE → <LoadConstString>: <Reg8: 3, string_id: 876>  # String: ')' (String)
-        // USED → r3 = ")";
-        // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 4, Reg8: 6, Reg8: 3>
-        r3 = globalThis.HermesInternal.concat.call("small (", param1 + param2, ")")
-    }
+    // USED → r3 = (param1 + param2 <= 10) ? 10 : globalThis.HermesInternal.concat.call("big (", param1 + param2, ")");
     // ──────────────── Block 3 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
     // USED → r1 = globalThis.HermesInternal;
@@ -55,13 +26,13 @@ function nestedTemplateTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 1321>  # String: 'sum is ' (String)
     // USED → r1 = "sum is ";
     // CODE → <Call2>: <Reg8: 3, Reg8: 2, Reg8: 1, Reg8: 3>
-    // USED → r3 = globalThis.HermesInternal.concat.call("sum is ", globalThis.HermesInternal.concat.call("big (", param1 + param2, ")"));
+    // USED → r3 = globalThis.HermesInternal.concat.call("sum is ", (param1 + param2 <= 10) ? 10 : globalThis.HermesInternal.concat.call("big (", param1 + param2, ")"));
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    r1 = globalThis.console.log(globalThis.HermesInternal.concat.call("sum is ", globalThis.HermesInternal.concat.call("big (", param1 + param2, ")")))
+    r1 = globalThis.console.log(globalThis.HermesInternal.concat.call("sum is ", (param1 + param2 <= 10) ? 10 : globalThis.HermesInternal.concat.call("big (", param1 + param2, ")")))
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

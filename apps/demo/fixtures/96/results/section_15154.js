@@ -14,10 +14,12 @@ function defaultParameterTest(param0, param1) {
     // USED → r4 = 10;
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
     r5 = 10
-    if (arguments.length > 1 && arguments[1] !== undefined) {
-        // ──────────────── Block 2 ──────────────── 
-        // CODE → <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 1, Reg8: 2>
-        // USED → r5 = arguments[1];
+    if (arguments.length > 1) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
+        // USED → r3 = arguments[1];
+        // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+        r5 = (arguments[1] === undefined) ? 10 : arguments[1]
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
@@ -30,10 +32,12 @@ function defaultParameterTest(param0, param1) {
     // USED → r6 = "result";
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
     r4 = "result"
-    if (arguments.length > 2 && arguments[2] !== undefined) {
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 1, Reg8: 2>
-        // USED → r4 = arguments[2];
+    if (arguments.length > 2) {
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
+        // USED → r3 = arguments[2];
+        // CODE → <Mov>: <Reg8: 4, Reg8: 6>
+        r4 = (arguments[2] === undefined) ? "result" : arguments[2]
     }
     // ──────────────── Block 6 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
@@ -53,9 +57,9 @@ function defaultParameterTest(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <Add>: <Reg8: 1, Reg8: 1, Reg8: 5>
-    // USED → r1 = param1 + arguments[1];
+    // USED → r1 = param1 + ((arguments[1] === undefined) ? 10 : arguments[1]);
     // CODE → <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1>
-    r1 = globalThis.console.log(arguments[2], param1 + arguments[1])
+    r1 = globalThis.console.log((arguments[2] === undefined) ? "result" : arguments[2], param1 + ((arguments[1] === undefined) ? 10 : arguments[1]))
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

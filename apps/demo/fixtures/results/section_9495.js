@@ -108,21 +108,16 @@ function mapTest(param0) {
             // CODE → <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 0>
             // USED → r9 = GetIterator(r11) === undefined;
             // CODE → <LoadConstUndefined>: <Reg8: 10>
-            r10 = undefined
-            if (GetIterator(r11) !== undefined) {
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → <Mov>: <Reg8: 10, Reg8: 12>
-                // USED → r10 = GetIterator(r11).next();
-            }
+            r10 = (GetIterator(r11) === undefined) ? undefined : GetIterator(r11).next()
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Mov>: <Reg8: 7, Reg8: 10>
-            // USED → r7 = GetIterator(r11).next();
+            // USED → r7 = (GetIterator(r11) === undefined) ? undefined : GetIterator(r11).next();
             // CODE → <LoadConstUndefined>: <Reg8: 10>
             r10 = undefined
             if (GetIterator(r11) !== undefined) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 11>
-                // USED → r12 = GetIterator(r11).next();
+                // USED → r12 = (GetIterator(r11) === undefined) ? undefined : GetIterator(r11).next();
                 // CODE → <Mov>: <Reg8: 11, Reg8: 8>
                 // USED → r11 = GetIterator(r11);
                 // CODE → <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 0>
@@ -130,18 +125,11 @@ function mapTest(param0) {
                 // CODE → <LoadConstUndefined>: <Reg8: 10>
                 r10 = undefined
                 // CODE → <Mov>: <Reg8: 9, Reg8: 11>
-                r9 = GetIterator(r11) === undefined
-                if (GetIterator(r11) !== undefined) {
-                    // ──────────────── Block 6 ──────────────── 
-                    // CODE → <Mov>: <Reg8: 10, Reg8: 12>
-                    // USED → r10 = GetIterator(r11).next();
-                    // CODE → <Mov>: <Reg8: 9, Reg8: 11>
-                    // USED → r9 = GetIterator(r11) === undefined;
-                }
+                r9 = GetIterator(r11) === undefined || GetIterator(r11) === undefined
             }
             // ──────────────── Block 7 ──────────────── 
             // CODE → <Mov>: <Reg8: 6, Reg8: 10>
-            // USED → r6 = GetIterator(r11).next();
+            // USED → r6 = (GetIterator(r11) === undefined) ? undefined : GetIterator(r11).next();
             if (GetIterator(r11) !== undefined) {
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → <IteratorClose>: <Reg8: 8, UInt8: 0>
@@ -153,11 +141,11 @@ function mapTest(param0) {
             // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r10 = globalThis.console.log;
             // CODE → <Mov>: <Reg8: 9, Reg8: 7>
-            // USED → r9 = GetIterator(r11).next();
+            // USED → r9 = (GetIterator(r11) === undefined) ? undefined : GetIterator(r11).next();
             // CODE → <Mov>: <Reg8: 8, Reg8: 6>
-            // USED → r8 = GetIterator(r11).next();
+            // USED → r8 = (GetIterator(r11) === undefined) ? undefined : GetIterator(r11).next();
             // CODE → <Call3>: <Reg8: 8, Reg8: 10, Reg8: 11, Reg8: 9, Reg8: 8>
-            r8 = globalThis.console.log(GetIterator(r11).next(), GetIterator(r11).next())
+            r8 = globalThis.console.log((GetIterator(r11) === undefined) ? undefined : GetIterator(r11).next(), (GetIterator(r11) === undefined) ? undefined : GetIterator(r11).next())
             // CODE → <Jmp>: <Addr8: -107>  # Address: 000000ba
             goto label_186;
         }

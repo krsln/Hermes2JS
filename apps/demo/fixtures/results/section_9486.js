@@ -13,29 +13,19 @@ function renamedDefaultDestructureTest(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1919, UInt16: 19946>  # Object: {'timeout': 500}
     // USED → r3 = { "timeout": 500 };
     // CODE → <GetById>: <Reg8: 6, Reg8: 3, UInt8: 2, string_id: 8581>  # String: 'timeout' (Identifier)
-    // USED → r6 = { "timeout": 500 }.timeout;
+    // USED → r6 = ({ "timeout": 500 }.timeout !== undefined) ? { "timeout": 500 }.timeout : 1000;
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
-    if ({ "timeout": 500 }.timeout === undefined) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <LoadConstInt>: <Reg8: 6, Imm32: 1000>
-        // USED → r6 = 1000;
-    }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 9071>  # String: 'retries' (Identifier)
-    // USED → r5 = { "timeout": 500 }.retries;
-    if ({ "timeout": 500 }.retries === undefined) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 3>
-        // USED → r5 = 3;
-    }
+    // USED → r5 = ({ "timeout": 500 }.retries !== undefined) ? { "timeout": 500 }.retries : 3;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 6, Reg8: 5>
-    r3 = globalThis.console.log(1000, 3)
+    r3 = globalThis.console.log(({ "timeout": 500 }.timeout !== undefined) ? { "timeout": 500 }.timeout : 1000, ({ "timeout": 500 }.retries !== undefined) ? { "timeout": 500 }.retries : 3)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

@@ -35,21 +35,22 @@ function swapViaDestructureTest(param0) {
     // CODE → <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
     // USED → r1 = GetIterator(r6) === undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined
-    if (GetIterator(r6) !== undefined) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <Mov>: <Reg8: 8, Reg8: 7>
-        // USED → r8 = GetIterator(r6).next();
-    }
+    r8 = (GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next()
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
-    if (GetIterator(r6) !== undefined && GetIterator(r6) !== undefined) {
-        // ──────────────── Block 4 ──────────────── 
-        // CODE → <Mov>: <Reg8: 7, Reg8: 6>
-        // USED → r7 = GetIterator(r6).next();
+    if (GetIterator(r6) !== undefined) {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
+        // USED → r6 = (GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next();
+        // CODE → <Mov>: <Reg8: 9, Reg8: 5>
+        // USED → r9 = GetIterator(r6);
+        // CODE → <StrictEq>: <Reg8: 3, Reg8: 9, Reg8: 2>
+        // USED → r3 = GetIterator(r6) === undefined;
+        // CODE → <LoadConstUndefined>: <Reg8: 7>
+        r7 = undefined
         // CODE → <Mov>: <Reg8: 1, Reg8: 3>
-        // USED → r1 = GetIterator(r6) === undefined;
+        r1 = GetIterator(r6) === undefined || GetIterator(r6) === undefined
     }
     if (GetIterator(r6) !== undefined) {
         // ──────────────── Block 6 ──────────────── 
@@ -62,7 +63,7 @@ function swapViaDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 8, Reg8: 7>
-    r5 = globalThis.console.log(GetIterator(r6).next(), GetIterator(r6).next())
+    r5 = globalThis.console.log((GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next(), (GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next())
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

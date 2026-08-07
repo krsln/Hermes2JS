@@ -24,10 +24,14 @@ function optionalChainingTest(param0) {
     // USED → r2 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
-    if ({ "b": null } != null && { "b": null }.b != null) {
-        // ──────────────── Block 2 ──────────────── 
-        // CODE → <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 6562>  # String: 'c' (Identifier)
-        // USED → r7 = { "b": null }.b.c;
+    if ({ "b": null } != null) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 2, string_id: 36>  # String: 'b' (Identifier)
+        // USED → r5 = { "b": null }.b;
+        // CODE → <Eq>: <Reg8: 3, Reg8: 5, Reg8: 1>
+        // USED → r3 = { "b": null }.b == null;
+        // CODE → <LoadConstUndefined>: <Reg8: 7>
+        r7 = ({ "b": null }.b == null) ? undefined : { "b": null }.b.c
     }
     if ({ "b": null }.b.c == null) {
         // ──────────────── Block 4 ──────────────── 

@@ -17,12 +17,7 @@ function tag(param0, param1) {
     // CODE → <Greater>: <Reg8: 4, Reg8: 6, Reg8: 5>
     // USED → r4 = arguments.length > 1;
     // CODE → <LoadConstZero>: <Reg8: 2>
-    r2 = 0
-    if (arguments.length > 1) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <Sub>: <Reg8: 2, Reg8: 6, Reg8: 5>
-        // USED → r2 = arguments.length - 1;
-    }
+    r2 = (arguments.length <= 1) ? 0 : arguments.length - 1
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r4 = globalThis.Array.prototype;
@@ -31,13 +26,13 @@ function tag(param0, param1) {
     // CODE → <Mov>: <Reg8: 12, Reg8: 4>
     r12 = createThis(globalThis.Array.prototype, globalThis.Array)
     // CODE → <Mov>: <Reg8: 11, Reg8: 2>
-    // USED → r11 = arguments.length - 1;
+    // USED → r11 = (arguments.length <= 1) ? 0 : arguments.length - 1;
     // CODE → <Construct>: <Reg8: 2, Reg8: 8, UInt8: 2>
-    // USED → r2 = new globalThis.Array(arguments.length - 1);
+    // USED → r2 = new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1);
     // CODE → <SelectObject>: <Reg8: 4, Reg8: 4, Reg8: 2>
-    // USED → r4 = new globalThis.Array(arguments.length - 1);
+    // USED → r4 = new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
-    createEnvironment()[0] = new globalThis.Array(arguments.length - 1)
+    createEnvironment()[0] = new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1)
     // CODE → <Less>: <Reg8: 8, Reg8: 5, Reg8: 6>
     // USED → r8 = 1 < arguments.length;
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
@@ -49,7 +44,7 @@ function tag(param0, param1) {
         // CODE → <GetArgumentsPropByVal>: <Reg8: 8, Reg8: 2, Reg8: 7>
         // USED → r8 = arguments[1];
         // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
-        new globalThis.Array(arguments.length - 1)[1 - 1] = arguments[1]
+        new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1)[1 - 1] = arguments[1]
         // CODE → <Inc>: <Reg8: 2, Reg8: 2>
         // USED → r2 = 1 + 1;
         // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 6>  # Address: 00000047

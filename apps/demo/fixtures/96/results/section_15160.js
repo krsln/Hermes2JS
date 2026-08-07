@@ -23,12 +23,7 @@ function restAfterRequiredTest(param0, param1, param2) {
     // CODE → <Greater>: <Reg8: 6, Reg8: 4, Reg8: 3>
     // USED → r6 = arguments.length > 2;
     // CODE → <LoadConstZero>: <Reg8: 2>
-    r2 = 0
-    if (arguments.length > 2) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <Sub>: <Reg8: 2, Reg8: 4, Reg8: 3>
-        // USED → r2 = arguments.length - 2;
-    }
+    r2 = (arguments.length <= 2) ? 0 : arguments.length - 2
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r6 = globalThis.Array.prototype;
@@ -37,11 +32,11 @@ function restAfterRequiredTest(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 12, Reg8: 6>
     r12 = createThis(globalThis.Array.prototype, globalThis.Array)
     // CODE → <Mov>: <Reg8: 11, Reg8: 2>
-    // USED → r11 = arguments.length - 2;
+    // USED → r11 = (arguments.length <= 2) ? 0 : arguments.length - 2;
     // CODE → <Construct>: <Reg8: 2, Reg8: 7, UInt8: 2>
-    // USED → r2 = new globalThis.Array(arguments.length - 2);
+    // USED → r2 = new globalThis.Array((arguments.length <= 2) ? 0 : arguments.length - 2);
     // CODE → <SelectObject>: <Reg8: 6, Reg8: 6, Reg8: 2>
-    // USED → r6 = new globalThis.Array(arguments.length - 2);
+    // USED → r6 = new globalThis.Array((arguments.length <= 2) ? 0 : arguments.length - 2);
     // CODE → <Less>: <Reg8: 7, Reg8: 3, Reg8: 4>
     // USED → r7 = 2 < arguments.length;
     // CODE → <Mov>: <Reg8: 2, Reg8: 3>
@@ -53,7 +48,7 @@ function restAfterRequiredTest(param0, param1, param2) {
         // CODE → <GetArgumentsPropByVal>: <Reg8: 7, Reg8: 2, Reg8: 5>
         // USED → r7 = arguments[2];
         // CODE → <PutByVal>: <Reg8: 6, Reg8: 8, Reg8: 7>
-        new globalThis.Array(arguments.length - 2)[2 - 2] = arguments[2]
+        new globalThis.Array((arguments.length <= 2) ? 0 : arguments.length - 2)[2 - 2] = arguments[2]
         // CODE → <Inc>: <Reg8: 2, Reg8: 2>
         // USED → r2 = 2 + 1;
         // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 4>  # Address: 00000054
@@ -69,7 +64,7 @@ function restAfterRequiredTest(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 2>
     // USED → r2 = param2;
     // CODE → <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 2, Reg8: 6>
-    r2 = globalThis.console.log(param1, param2, new globalThis.Array(arguments.length - 2))
+    r2 = globalThis.console.log(param1, param2, new globalThis.Array((arguments.length <= 2) ? 0 : arguments.length - 2))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

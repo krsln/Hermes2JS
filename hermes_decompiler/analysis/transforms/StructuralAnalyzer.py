@@ -17,6 +17,7 @@ from hermes_decompiler.analysis.transforms.region_passes import (
     BooleanChainFolder,
     LoopConditionExtractor,
     ForEachRecognizer,
+    ConditionalExpressionFolder,
 )
 from hermes_decompiler.analysis.transforms.lowering import StatementBuilder
 from hermes_decompiler.core.logging import get_logger
@@ -115,7 +116,8 @@ class StructuralAnalyzer:
         SwitchStructurer(graph, self.cfg).run()  # ✅
 
         # ---- 3. region_passes -------------------------------------------
-        # BooleanChainFolder(self.cfg).run(graph.root) # ❌ no effect at all
+        BooleanChainFolder(self.cfg).run(graph.root) # ❌ no effect at all
+        ConditionalExpressionFolder(self.cfg).run(graph.root)
         LoopConditionExtractor(graph.root).run()
         ForEachRecognizer(graph).run()
 
