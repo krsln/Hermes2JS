@@ -1,0 +1,15 @@
+
+=> [Function #15073 "sideEffect" of 31 bytes]: 3 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x00268778
+
+Bytecode listing:
+
+==> 00000000: <GetGlobalObject>: <Reg8: 0>
+==> 00000002: <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000008: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000000d: <LoadConstString>: <Reg8: 1, string_id: 4634>  # String: '__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect' (String)
+==> 00000011: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000014: <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
+==> 0000001a: <LoadParam>: <Reg8: 0, UInt8: 2>
+==> 0000001d: <Ret>: <Reg8: 0>
+
+

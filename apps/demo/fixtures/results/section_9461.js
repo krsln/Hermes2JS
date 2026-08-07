@@ -40,13 +40,11 @@ function shortCircuitAssignTest(param0) {
     // USED → r4 = {  }.count;
     // CODE → <LoadConstNull>: <Reg8: 1>
     // USED → r1 = null;
-    if ({  }.count == null) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <LoadConstZero>: <Reg8: 0>
-        // USED → r0 = 0;
-        // CODE → <PutByIdStrict>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 7613>  # String: 'count' (Identifier)
-        {  }.count = 0
-    }
+    // ──────────────── Block 1 ──────────────── 
+    // CODE → <LoadConstZero>: <Reg8: 0>
+    // USED → r0 = 0;
+    // CODE → <PutByIdStrict>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 7613>  # String: 'count' (Identifier)
+    {  }.count ??= 0
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 7613>  # String: 'count' (Identifier)
     // USED → r4 = {  }.count;

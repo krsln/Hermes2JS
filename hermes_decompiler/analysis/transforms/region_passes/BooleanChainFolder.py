@@ -9,6 +9,7 @@ from hermes_decompiler.analysis.regions.Regions import (
     IfRegion, TryRegion,
 )
 from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import (
@@ -19,9 +20,13 @@ from hermes_decompiler.ir.expressions import (
     AssignmentExpression,
     UpdateExpression,
     AwaitExpression,
-    YieldExpression, Identifier,StringLiteral, NumericLiteral, BooleanLiteral )
+    YieldExpression,
+    Identifier, StringLiteral, NumericLiteral, BooleanLiteral)
 
 _TRIVIAL_NODE_TYPES = (Identifier, StringLiteral, NumericLiteral, BooleanLiteral)  # adjust to actual literal type names
+
+logger = get_logger(__name__)
+
 
 class BooleanChainFolder:
     """
@@ -152,6 +157,13 @@ class BooleanChainFolder:
 
         last = block.instructions[-1]
 
+        # logger.debug(
+        #     "BooleanChainFolder._try_fold: block=%d dest_reg=%r default_value=%r, "
+        #     "if_region.else_body=%r, if_region.condition=%r",
+        #     block.id, last.dest_reg if block.instructions else None,
+        #     last.value if block.instructions else None,
+        #     if_region.else_body, if_region.condition,
+        # )
         if last.dest_reg is None or not isinstance(last.value, Expression):
             return False
 
@@ -197,9 +209,15 @@ class BooleanChainFolder:
             return False
 
         old_tail_expr = then_result.value
-
+        # logger.debug(
+        #     "  fold: then_block=%d old_tail_expr=%r operator=%r -> new_expr left=%r",
+        #     then_block.id, old_tail_expr, operator, last.value,
+        # )
         last.value = BinaryExpression(left=last.value, operator=operator, right=old_tail_expr)
-        # last.refresh_result()
+        # logger.debug(
+        #     "  repointing old_expr=%r (id=%s) -> new_expr=%r, min_block_id=%d",
+        #     old_tail_expr, id(old_tail_expr), last.value, then_block.id,
+        # )
 
         self._repoint_references(old_tail_expr, last.value, min_block_id=then_block.id, exclude={then_result, last})
 

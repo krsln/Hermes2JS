@@ -6,7 +6,7 @@ function defaultWithRestTest(param0) {
     // USED → r1 = undefined;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 1>
-    r9 = (param1 !== undefined) ? param1 : 1
+    r9 = 1
     // CODE → <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 apply]
     // USED → r5 = apply(r3, r4);
     // CODE → <GetGlobalObject>: <Reg8: 2>

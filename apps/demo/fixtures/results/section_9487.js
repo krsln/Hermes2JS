@@ -196,13 +196,13 @@ function nestedArrayDestructureTest(param0) {
         r11 = (GetIterator(r17).next() !== undefined) ? GetIterator(r17) === undefined : GetIterator(r17) === undefined
         // ──────────────── Block 30 ──────────────── 
         // CODE → <Mov>: <Reg8: 14, Reg8: 12>
-        // USED → r14 = (GetIterator(r17) !== undefined) ? undefined : 0;
+        // USED → r14 = 0;
         // CODE → <NewArray>: <Reg8: 13, UInt16: 0>
         // USED → r13 = [];
         // CODE → <LoadConstUInt8>: <Reg8: 12, UInt8: 1>
         // USED → r12 = 1;
         // CODE → <LoadConstZero>: <Reg8: 16>
-        // USED → r16 = (GetIterator(r17) !== undefined) ? undefined : 0;
+        // USED → r16 = 0;
         if (GetIterator(r17) !== undefined) {
             // LOOP → START (while)
             while (true) {
@@ -216,13 +216,13 @@ function nestedArrayDestructureTest(param0) {
                 // CODE → <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
                 // USED → r11 = (GetIterator(r17).next() !== undefined) ? GetIterator(r17) === undefined : GetIterator(r17) === undefined;
                 // CODE → <Mov>: <Reg8: 18, Reg8: 16>
-                // USED → r18 = (GetIterator(r17) !== undefined) ? undefined : 0;
+                // USED → r18 = 0;
                 if (GetIterator(r17) !== undefined) {
                     // ──────────────── Block 32 ──────────────── 
                     // CODE → <PutByValStrict>: <Reg8: 13, Reg8: 18, Reg8: 19>
-                    [][(GetIterator(r17) !== undefined) ? undefined : 0] = GetIterator(r17).next()
+                    [][0] = GetIterator(r17).next()
                     // CODE → <AddN>: <Reg8: 16, Reg8: 18, Reg8: 12>
-                    r16 = ((GetIterator(r17) !== undefined) ? undefined : 0) + 1
+                    r16 = 0 + 1
                     // CODE → <Jmp>: <Addr8: -28>  # Address: 000001a9
                     goto label_425;
                 }
@@ -235,7 +235,7 @@ function nestedArrayDestructureTest(param0) {
         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r11 = globalThis.console.log;
         // CODE → <Call4>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 15, Reg8: 14, Reg8: 13>
-        r11 = globalThis.console.log((GetIterator(r17) !== undefined) ? undefined : 0, (GetIterator(r17) !== undefined) ? undefined : 0, [])
+        r11 = globalThis.console.log((GetIterator(r17) !== undefined) ? undefined : 0, 0, [])
         // CODE → <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r12 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

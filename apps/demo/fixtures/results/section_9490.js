@@ -36,7 +36,7 @@ function callDestructuringTests(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 200>
     // USED → r0 = 200;
     // CODE → <Call4>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 0, Reg8: 8, Reg8: 7>
-    r5 = globalThis.console.log(200, { "id": ({ "page": 1 }.page !== undefined) ? { "page": 1 }.page : 1, "name": "Ada" }.name, ({ "page": 1 }.page !== undefined) ? { "page": 1 }.page : 1)
+    r5 = globalThis.console.log(200, { "id": 1, "name": "Ada" }.name, ({ "page": 1 }.page !== undefined) ? { "page": 1 }.page : 1)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -173,9 +173,9 @@ function callDestructuringTests(param0) {
     // CODE → <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 0>
     [][0] = 2
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
-    // USED → r0 = ({ "page": 1 }.page !== undefined) ? { "page": 1 }.page : 1;
+    // USED → r0 = 1;
     // CODE → <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 1>
-    [][({ "page": 1 }.page !== undefined) ? { "page": 1 }.page : 1] = ({ "page": 1 }.page !== undefined) ? { "page": 1 }.page : 1
+    [][1] = 1
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
     // USED → r6 = [];
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 6>

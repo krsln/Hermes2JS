@@ -102,6 +102,13 @@ class ConditionalExpressionFolder:
         # FIRST one whose register also has a matching arm - not
         # positional order.
         for last in reversed(block.instructions):
+            # logger.debug(
+            #     "ConditionalExpressionFolder._try_fold: block=%d dest_reg=%r default_value=%r, "
+            #     "if_region.else_body=%r, if_region.condition=%r",
+            #     block.id, last.dest_reg if block.instructions else None,
+            #     last.value if block.instructions else None,
+            #     if_region.else_body, if_region.condition,
+            # )
             if last.dest_reg is None or not isinstance(last.value, Expression):
                 continue
             then_arm = self._single_result(if_region.then_body, last.dest_reg)
@@ -116,6 +123,10 @@ class ConditionalExpressionFolder:
                 consequent=default_expr,
                 alternate=arm_expr,
             )
+            # logger.debug(
+            #     "  no-else fold: arm_block=%d arm_expr=%r default_expr=%r -> new_expr test=%r",
+            #     arm_block.id, arm_expr, default_expr, _negate_condition(condition),
+            # )
             last.value = new_expr
             self._repoint_references(arm_expr, new_expr, min_block_id=arm_block.id, exclude={arm_result, last})
             return True
@@ -180,6 +191,7 @@ class ConditionalExpressionFolder:
         again the way this one did (this method didn't exist at all
         until now, despite the comment claiming parity).
         """
+
         if node is old_expr:
             return new_expr, True
 
