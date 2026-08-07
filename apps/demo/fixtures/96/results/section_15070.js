@@ -19,9 +19,17 @@ function ternaryTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 866>  # String: 'positive' (String)
     r5 = "positive"
     if (param1 <= 0 && param1 < 0) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <Less>: <Reg8: 4, Reg8: 2, Reg8: 1>
+        // USED → r4 = param1 < 0;
+        // CODE → <LoadConstString>: <Reg8: 3, string_id: 615>  # String: 'zero' (String)
+        r3 = "zero"
         // ──────────────── Block 2 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 1323>  # String: 'negative' (String)
         // USED → r3 = "negative";
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → <Mov>: <Reg8: 5, Reg8: 3>
+        // USED → r5 = "negative";
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -35,9 +43,17 @@ function ternaryTest(param0, param1) {
     // CODE → <Greater>: <Reg8: 4, Reg8: 2, Reg8: 3>
     // USED → r4 = param1 > 100;
     if (param1 <= 100 && param1 >= 0) {
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <Less>: <Reg8: 4, Reg8: 2, Reg8: 1>
+        // USED → r4 = param1 < 0;
+        // CODE → <LoadConstZero>: <Reg8: 1>
+        r1 = 0
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 2>
         // USED → r1 = param1;
+        // ──────────────── Block 7 ──────────────── 
+        // CODE → <Mov>: <Reg8: 3, Reg8: 1>
+        // USED → r3 = param1;
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
