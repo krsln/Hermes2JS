@@ -26,26 +26,16 @@ function ternaryTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
     r3 = globalThis.console.log((param1 > 0) ? "positive" : (param1 >= 0) ? "zero" : "negative")
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 100>
-    // USED → r3 = 100;
+    // USED → r3 = (param1 > 100) ? 100 : (param1 < 0) ? 0 : param1;
     // CODE → <Greater>: <Reg8: 4, Reg8: 2, Reg8: 3>
     // USED → r4 = param1 > 100;
-    if (param1 <= 100) {
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → <Less>: <Reg8: 4, Reg8: 2, Reg8: 1>
-        // USED → r4 = param1 < 0;
-        // CODE → <LoadConstZero>: <Reg8: 1>
-        r1 = (param1 < 0) ? 0 : param1
-        // ──────────────── Block 7 ──────────────── 
-        // CODE → <Mov>: <Reg8: 3, Reg8: 1>
-        // USED → r3 = (param1 < 0) ? 0 : param1;
-    }
     // ──────────────── Block 8 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    r1 = globalThis.console.log((param1 < 0) ? 0 : param1)
+    r1 = globalThis.console.log((param1 > 100) ? 100 : (param1 < 0) ? 0 : param1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
