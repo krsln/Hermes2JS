@@ -7,6 +7,7 @@ from hermes_decompiler.analysis.regions.Regions import (
     LoopRegion,
     SequenceRegion,
     TryRegion,
+    Region,
 )
 from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
@@ -532,17 +533,24 @@ class IfStructurer(RegionStructurer):
 
             # --- pattern 1: AND (then contains a single IfRegion, no else) ---
             inner = self._single_if_child(child.then_body)
-            if (inner is not None
-                    and child.else_body is None
-                    and inner.else_body is None):
-                # C1 && C2
-                child.condition = self._make_logical_and(
-                    child.condition, inner.condition
-                )
-                child.then_body = inner.then_body
-                child.then_body.parent = child
+            if inner is not None and child.else_body is None and inner.else_body is None:
+                child.condition = self._make_logical_and(child.condition, inner.condition)
+                # Splice inner's then_body in at inner's OWN position, preserving
+                # any sibling (e.g. Block1's real `r3 = "zero"`) that _single_if_child
+                # deemed "inert" for classification purposes only - that check exists
+                # to look PAST no-op clutter when deciding whether an IfRegion is the
+                # sole meaningful content, not to license discarding real statements
+                # that happen to sit alongside it. Outright reassigning then_body
+                # (the prior behavior) silently dropped those statements instead.
+                seq = child.then_body
+                idx = seq.children.index(inner)
+                replacement = inner.then_body.children
+                seq.children[idx:idx + 1] = replacement
+                for c in replacement:
+                    if isinstance(c, Region):
+                        c.parent = seq
+                seq.invalidate_coverage()
                 changed = True
-                # do not advance i – re-examine the same slot
                 continue
 
             # --- pattern 2 / 3: OR (empty then + single IfRegion in else) ---
