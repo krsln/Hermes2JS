@@ -59,7 +59,9 @@ class RegionStructurer(ABC):
         self._dump_region_tree(self.graph.root)
 
     def _dump_region_tree(self, node, indent: int = 0) -> None:
-        from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion
+        from hermes_decompiler.analysis.regions.Regions import (
+            SequenceRegion, LoopRegion, IfRegion, TryRegion,
+        )
 
         prefix = " " * indent
 
@@ -71,6 +73,25 @@ class RegionStructurer(ABC):
         elif isinstance(node, LoopRegion):
             logger.debug("%sLoopRegion(header=%d)", prefix, node.header_block.id)
             self._dump_region_tree(node.body, indent + 4)
+
+        elif isinstance(node, IfRegion):
+            logger.debug("%sIfRegion", prefix)
+            logger.debug("%s  then:", prefix)
+            self._dump_region_tree(node.then_body, indent + 8)
+            if node.else_body is not None:
+                logger.debug("%s  else:", prefix)
+                self._dump_region_tree(node.else_body, indent + 8)
+
+        elif isinstance(node, TryRegion):
+            logger.debug("%sTryRegion", prefix)
+            logger.debug("%s  try:", prefix)
+            self._dump_region_tree(node.try_body, indent + 8)
+            if node.catch is not None:
+                logger.debug("%s  catch:", prefix)
+                self._dump_region_tree(node.catch.body, indent + 8)
+            if node.finally_ is not None:
+                logger.debug("%s  finally:", prefix)
+                self._dump_region_tree(node.finally_.body, indent + 8)
 
         elif isinstance(node, BasicBlock):
             logger.debug("%sBlock %d", prefix, node.id)
