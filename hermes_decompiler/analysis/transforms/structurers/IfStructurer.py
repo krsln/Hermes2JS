@@ -11,12 +11,15 @@ from hermes_decompiler.analysis.regions.Regions import (
 )
 from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
+from hermes_decompiler.core.logging import get_logger
 
 from hermes_decompiler.ir.expressions import (
     BinaryExpression,
     UnaryExpression,
 )
 from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
+
+logger = get_logger(__name__)
 
 
 class IfStructurer(RegionStructurer):
@@ -614,8 +617,6 @@ class IfStructurer(RegionStructurer):
         branch = block.terminator
         assert isinstance(branch, TerminatorConditionalBranch)
 
-        # Everything after this block in the current sequence becomes
-        # the then-body of the new (negated) if.
         if index + 1 >= len(region.children):
             return False
 
@@ -820,6 +821,8 @@ class IfStructurer(RegionStructurer):
             return False
         for instr in item.instructions:
             if instr.statement is not None or instr.terminator is not None:
+                return False
+            if instr.dest_reg is not None and instr.definition_used:
                 return False
         return True
 

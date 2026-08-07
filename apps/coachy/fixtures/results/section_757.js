@@ -46,7 +46,57 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                     // USED → r11 = param1.subtreeFlags;
                     // CODE → <BitAnd>: <Reg8: 11, Reg8: 11, Reg8: 3>
                     // USED → r11 = param1.subtreeFlags & 16384;
-                    if (param1.subtreeFlags & 16384 && null === param1.child) {
+                    if (!(param1.subtreeFlags & 16384)) {
+                        if (param1 !== param1) {
+                            // ──────────────── Block 11 ──────────────── 
+                            // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
+                            // USED → r13 = param1.sibling;
+                            // CODE → <Mov>: <Reg8: 14, Reg8: 12>
+                            // USED → r14 = param1;
+                            // CODE → <Mov>: <Reg8: 11, Reg8: 14>
+                            r11 = param1
+                            // CODE → <JStrictNotEqual>: <Addr8: 45, Reg8: 4, Reg8: 13>  # Address: 000000f3
+                            if (null !== param1.sibling) goto label_243;
+                            // ──────────────── Block 15 ──────────────── 
+                            // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 11, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
+                            // USED → r14 = param1.return.sibling;
+                            // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
+                            // USED → r13 = param1.return.return;
+                            // CODE → <PutById>: <Reg8: 14, Reg8: 13, UInt8: 1, string_id: 209>  # String: 'return' (Identifier)
+                            param1.return.sibling.return = param1.return.return
+                            // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 11, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
+                            r0 = param1.return.sibling
+                            // CODE → <JmpLong>: <Addr32: -235>  # Address: 0000001d
+                            goto label_29;
+                            // LOOP → START (while)
+                            while (true) {
+                                // ──────────────── Block 12 ──────────────── 
+                                // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 14, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
+                                // USED → r15 = param1.return;
+                                // CODE → <Mov>: <Reg8: 13, Reg8: 14>
+                                // USED → r13 = param1;
+                                if (null !== param1.return) {
+                                    // ──────────────── Block 13 ──────────────── 
+                                    // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
+                                    // USED → r15 = param1.return;
+                                    // CODE → <JStrictEqual>: <Addr8: 50, Reg8: 15, Reg8: 10>  # Address: 0000010d
+                                    if (param1.return === param1) goto label_269;
+                                    // ──────────────── Block 14 ──────────────── 
+                                    // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
+                                    // USED → r15 = param1.return;
+                                    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 15, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
+                                    // USED → r13 = param1.return.sibling;
+                                    // CODE → <Mov>: <Reg8: 14, Reg8: 15>
+                                    // USED → r14 = param1.return;
+                                    // CODE → <Mov>: <Reg8: 11, Reg8: 14>
+                                    // USED → r11 = param1.return;
+                                    // CODE → <JStrictEqual>: <Addr8: -37, Reg8: 4, Reg8: 13>  # Address: 000000ca
+                                    if (null === param1.return.sibling) goto label_202;
+                                }
+                            }
+                            // LOOP → END
+                        }
+                    } else if (null === param1.child) {
                         // ──────────────── Block 18 ──────────────── 
                         // CODE → <Mov>: <Reg8: 11, Reg8: 6>
                         // USED → r11 = param1.child;
@@ -56,54 +106,6 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                         r0 = param1.child
                         // CODE → <JmpLong>: <Addr32: -260>  # Address: 0000001d
                         goto label_29;
-                    } else if (param1.subtreeFlags & 16384 || null === param1.child) {
-                        // ──────────────── Block 11 ──────────────── 
-                        // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 12, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
-                        // USED → r13 = param1.sibling;
-                        // CODE → <Mov>: <Reg8: 14, Reg8: 12>
-                        // USED → r14 = param1;
-                        // CODE → <Mov>: <Reg8: 11, Reg8: 14>
-                        r11 = param1
-                        // CODE → <JStrictNotEqual>: <Addr8: 45, Reg8: 4, Reg8: 13>  # Address: 000000f3
-                        if (null !== param1.sibling) goto label_243;
-                        // ──────────────── Block 15 ──────────────── 
-                        // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 11, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
-                        // USED → r14 = param1.return.sibling;
-                        // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 11, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
-                        // USED → r13 = param1.return.return;
-                        // CODE → <PutById>: <Reg8: 14, Reg8: 13, UInt8: 1, string_id: 209>  # String: 'return' (Identifier)
-                        param1.return.sibling.return = param1.return.return
-                        // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 11, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
-                        r0 = param1.return.sibling
-                        // CODE → <JmpLong>: <Addr32: -235>  # Address: 0000001d
-                        goto label_29;
-                        // LOOP → START (while)
-                        while (true) {
-                            // ──────────────── Block 12 ──────────────── 
-                            // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 14, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
-                            // USED → r15 = param1.return;
-                            // CODE → <Mov>: <Reg8: 13, Reg8: 14>
-                            // USED → r13 = param1;
-                            if (null !== param1.return) {
-                                // ──────────────── Block 13 ──────────────── 
-                                // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
-                                // USED → r15 = param1.return;
-                                // CODE → <JStrictEqual>: <Addr8: 50, Reg8: 15, Reg8: 10>  # Address: 0000010d
-                                if (param1.return === param1) goto label_269;
-                                // ──────────────── Block 14 ──────────────── 
-                                // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
-                                // USED → r15 = param1.return;
-                                // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 15, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
-                                // USED → r13 = param1.return.sibling;
-                                // CODE → <Mov>: <Reg8: 14, Reg8: 15>
-                                // USED → r14 = param1.return;
-                                // CODE → <Mov>: <Reg8: 11, Reg8: 14>
-                                // USED → r11 = param1.return;
-                                // CODE → <JStrictEqual>: <Addr8: -37, Reg8: 4, Reg8: 13>  # Address: 000000ca
-                                if (null === param1.return.sibling) goto label_202;
-                            }
-                        }
-                        // LOOP → END
                     }
                 } else if (null !== param1.updateQueue.stores) {
                     // ──────────────── Block 4 ──────────────── 

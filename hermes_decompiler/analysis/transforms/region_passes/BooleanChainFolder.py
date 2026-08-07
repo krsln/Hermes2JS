@@ -260,6 +260,16 @@ class BooleanChainFolder:
         if node is old_expr:
             return new_expr, True
 
+        # A Mov captures a register's value via a shallow copy
+        # (dataclasses.replace) at decode time, so downstream of a fold
+        # that supersedes the pre-fold value, a Mov'd copy is never
+        # identity-equal to old_expr - only structurally equal. Scoped by
+        # the caller's min_block_id (only blocks reachable AFTER the fold
+        # site are searched at all), so this can't reach backward into
+        # unrelated code the way an unscoped structural match would.
+        if isinstance(node, type(old_expr)) and node.structurally_equal(old_expr):
+            return new_expr, True
+
         if not dataclasses.is_dataclass(node) or not isinstance(node, Node):
             return node, False
 
@@ -307,14 +317,23 @@ class BooleanChainFolder:
         return value
 
     def _is_pure(self, instruction) -> bool:
+        """
+        True if `instruction`'s value can be safely absorbed into the
+        fold without needing its own printed statement.
 
+        "Pure" here means "not independently observable as a separate
+        statement" (instruction.statement is None) - NOT "side-effect
+        free". A CallExpression with no .statement of its own is still
+        fully consumed by the chain tail's expression tree (e.g.
+        `a && sideEffect(...)`), so folding it away from block.instructions
+        doesn't drop the call - it relocates it into `then_result.value`,
+        which is exactly what happens for any other value in this fold.
+        A block whose call genuinely needs independent evaluation order
+        would already have `.statement` set by whatever pass decides
+        that (unrelated to this pass), and is correctly rejected above.
+        """
         if instruction.statement is not None:
             return False
-
         if not isinstance(instruction.value, Expression):
             return False
-
-        if isinstance(instruction.value, self._IMPURE_EXPRESSION_TYPES):
-            return False
-
         return True
