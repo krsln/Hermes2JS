@@ -17,16 +17,16 @@ function ternaryTest(param0, param1) {
     // CODE → <Greater>: <Reg8: 3, Reg8: 2, Reg8: 1>
     // USED → r3 = param1 > 0;
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 866>  # String: 'positive' (String)
-    r5 = (param1 > 0) ? "positive" : (param1 >= 0) ? "zero" : "negative"
+    r5 = (param1 > 0) ? "positive" : "negative"
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
-    r3 = globalThis.console.log((param1 > 0) ? "positive" : (param1 >= 0) ? "zero" : "negative")
+    r3 = globalThis.console.log((param1 > 0) ? "positive" : "negative")
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 100>
-    // USED → r3 = (param1 > 100) ? 100 : (param1 < 0) ? 0 : param1;
+    // USED → r3 = (param1 > 100) ? 100 : param1;
     // CODE → <Greater>: <Reg8: 4, Reg8: 2, Reg8: 3>
     // USED → r4 = param1 > 100;
     // ──────────────── Block 8 ──────────────── 
@@ -35,7 +35,7 @@ function ternaryTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    r1 = globalThis.console.log((param1 > 100) ? 100 : (param1 < 0) ? 0 : param1)
+    r1 = globalThis.console.log((param1 > 100) ? 100 : param1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

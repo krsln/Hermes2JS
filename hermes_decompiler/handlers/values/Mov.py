@@ -1,3 +1,5 @@
+import dataclasses
+
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 
@@ -18,6 +20,7 @@ class Mov(OpcodeHandler):
         dest_reg, src_reg = map(int, match.groups())
 
         expression = self.get_register_expression(ctx.analysis, src_reg)
+        expression = dataclasses.replace(expression)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
