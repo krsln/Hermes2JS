@@ -219,45 +219,16 @@ function _request(param0, param1, param2) {
     // CODE → <Call4>: <Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 10, Reg8: 14, Reg8: 2>
     r14 = getEnvironment(1)[9].default.assertOptions(getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }), { baseUrl: getEnvironment(1)[11].spelling("baseURL"), withXsrfToken: getEnvironment(1)[11].spelling("withXSRFToken") }, true)
     // CODE → <GetById>: <Reg8: 15, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
-    // USED → r15 = getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method;
-    if (!getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).method) {
-        // ──────────────── Block 18 ──────────────── 
-        // CODE → <GetById>: <Reg8: 14, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
-        // USED → r14 = this.defaults;
-        // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
-        // USED → r15 = this.defaults.method;
-    }
-    if (!this.defaults.method) {
-        // ──────────────── Block 20 ──────────────── 
-        // CODE → <LoadConstString>: <Reg8: 15, string_id: 137>  # String: 'get' (Identifier)
-        // USED → r15 = "get";
-    }
+    // USED → r15 = this.defaults.method ? getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).method ? getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method : this.defaults.method : "get";
     // ──────────────── Block 21 ──────────────── 
     // CODE → <GetById>: <Reg8: 14, Reg8: 15, UInt8: 13, string_id: 20258>  # String: 'toLowerCase' (Identifier)
-    // USED → r14 = "get".toLowerCase;
+    // USED → r14 = (this.defaults.method ? getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).method ? getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method : this.defaults.method : "get").toLowerCase;
     // CODE → <Call1>: <Reg8: 14, Reg8: 14, Reg8: 15>
-    // USED → r14 = "get".toLowerCase();
+    // USED → r14 = (this.defaults.method ? getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).method ? getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method : this.defaults.method : "get").toLowerCase();
     // CODE → <PutById>: <Reg8: 10, Reg8: 14, UInt8: 4, string_id: 12916>  # String: 'method' (Identifier)
-    getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method = "get".toLowerCase()
+    getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method = (this.defaults.method ? getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).method ? getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method : this.defaults.method : "get").toLowerCase()
     // CODE → <Mov>: <Reg8: 16, Reg8: 17>
-    // USED → r16 = getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers;
-    if (getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).headers) {
-        // ──────────────── Block 22 ──────────────── 
-        // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
-        // USED → r14 = getEnvironment(1)[3];
-        // CODE → <GetByIdShort>: <Reg8: 19, Reg8: 14, UInt8: 1, string_id: 110>  # String: 'default' (Identifier)
-        // USED → r19 = getEnvironment(1)[3].default;
-        // CODE → <GetById>: <Reg8: 18, Reg8: 19, UInt8: 14, string_id: 12398>  # String: 'merge' (Identifier)
-        // USED → r18 = getEnvironment(1)[3].default.merge;
-        // CODE → <GetById>: <Reg8: 15, Reg8: 17, UInt8: 15, string_id: 12528>  # String: 'common' (Identifier)
-        // USED → r15 = getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers.common;
-        // CODE → <GetById>: <Reg8: 14, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
-        // USED → r14 = getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method;
-        // CODE → <GetByVal>: <Reg8: 14, Reg8: 17, Reg8: 14>
-        // USED → r14 = getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers[getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method];
-        // CODE → <Call3>: <Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 14>
-        // USED → r16 = getEnvironment(1)[3].default.merge(getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers.common, getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers[getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method]);
-    }
+    // USED → r16 = !getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).headers ? getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers : getEnvironment(1)[3].default.merge(getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers.common, getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers[getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method]);
     if (getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).headers) {
         // ──────────────── Block 24 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 3>
@@ -267,11 +238,11 @@ function _request(param0, param1, param2) {
         // CODE → <GetByIdShort>: <Reg8: 18, Reg8: 19, UInt8: 16, string_id: 135>  # String: 'forEach' (Identifier)
         // USED → r18 = getEnvironment(1)[3].default.forEach;
         // CODE → <NewArrayWithBuffer>: <Reg8: 15, UInt16: 7, UInt16: 7, UInt16: 21504>  # Array: ['delete', 'get', 'head', 'post', 'put', 'patch', 'common']
-        // USED → r15 = ["delete", "get", "head", "post", "put", "patch", "common"];
+        // USED → r15 = ["delete", this.defaults.method ? getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).method ? getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method : this.defaults.method : "get", "head", "post", "put", "patch", "common"];
         // CODE → <CreateClosure>: <Reg8: 14, Reg8: 9, function_id: 11949>  # Function: [#11949  of 18 bytes]: 2 params @ offset 0x002ba16a
         // USED → r14 = function_11949;
         // CODE → <Call3>: <Reg8: 14, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 14>
-        r14 = getEnvironment(1)[3].default.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function_11949)
+        r14 = getEnvironment(1)[3].default.forEach(["delete", this.defaults.method ? getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).method ? getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method : this.defaults.method : "get", "head", "post", "put", "patch", "common"], function_11949)
     }
     // ──────────────── Block 25 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 14, Reg8: 6, UInt8: 10>
@@ -281,9 +252,9 @@ function _request(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 15, UInt8: 17, string_id: 98>  # String: 'concat' (Identifier)
     // USED → r14 = getEnvironment(1)[10].default.concat;
     // CODE → <Call3>: <Reg8: 14, Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 17>
-    // USED → r14 = getEnvironment(1)[10].default.concat(getEnvironment(1)[3].default.merge(getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers.common, getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers[getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method]), getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers);
+    // USED → r14 = getEnvironment(1)[10].default.concat(!getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).headers ? getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers : getEnvironment(1)[3].default.merge(getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers.common, getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers[getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method]), getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers);
     // CODE → <PutById>: <Reg8: 10, Reg8: 14, UInt8: 5, string_id: 145>  # String: 'headers' (Identifier)
-    getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers = getEnvironment(1)[10].default.concat(getEnvironment(1)[3].default.merge(getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers.common, getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers[getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method]), getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers)
+    getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers = getEnvironment(1)[10].default.concat(!getEnvironment(1)[7].default.call(undefined, this.defaults, {  }).headers ? getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers : getEnvironment(1)[3].default.merge(getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers.common, getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers[getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).method]), getEnvironment(1)[7].default.call(undefined, this.defaults, param1 || {  }).headers)
     // CODE → <NewArray>: <Reg8: 14, UInt16: 0>
     // USED → r14 = [];
     // CODE → <Mov>: <Reg8: 12, Reg8: 14>

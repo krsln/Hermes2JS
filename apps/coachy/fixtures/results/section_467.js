@@ -2369,19 +2369,10 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
             // USED → r15 = globalThis.WeakSet;
             // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-            // USED → r15 = typeof globalThis.WeakSet;
-            if ("function" === typeof globalThis.WeakSet) {
-                // ──────────────── Block 23 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
-                // USED → r15 = globalThis.WeakSet;
-            } else {
-                // ──────────────── Block 22 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
-                r15 = globalThis.Set
-            }
+            // USED → r15 = ("function" !== typeof globalThis.WeakSet) ? typeof globalThis.WeakSet : globalThis.WeakSet;
             // ──────────────── Block 24 ──────────────── 
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 132, Reg8: 15>
-            createEnvironment()[132] = globalThis.WeakSet
+            createEnvironment()[132] = ("function" !== typeof globalThis.WeakSet) ? typeof globalThis.WeakSet : globalThis.WeakSet
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 133, Reg8: 11>
             createEnvironment()[133] = null
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 134, Reg8: 12>
@@ -2393,19 +2384,10 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
             // USED → r15 = globalThis.WeakMap;
             // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-            // USED → r15 = typeof globalThis.WeakMap;
-            if ("function" === typeof globalThis.WeakMap) {
-                // ──────────────── Block 26 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
-                // USED → r15 = globalThis.WeakMap;
-            } else {
-                // ──────────────── Block 25 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
-                r15 = globalThis.Map
-            }
+            // USED → r15 = ("function" !== typeof globalThis.WeakMap) ? typeof globalThis.WeakMap : globalThis.WeakMap;
             // ──────────────── Block 27 ──────────────── 
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
-            createEnvironment()[136] = globalThis.WeakMap
+            createEnvironment()[136] = ("function" !== typeof globalThis.WeakMap) ? typeof globalThis.WeakMap : globalThis.WeakMap
             // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
             // USED → r15 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
