@@ -26,9 +26,19 @@ function forTest(param0) {
         // CODE → <Mov>: <Reg8: 6, Reg8: 5>
         // USED → r6 = 0;
         if (0 !== 3) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <JStrictEqual>: <Addr8: 22, Reg8: 6, Reg8: 2>  # Address: 00000042
-            if (0 === 8) goto label_66;
+            if (0 === 8) {
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r9 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r8 = globalThis.console.log;
+                // CODE → <LoadConstString>: <Reg8: 7, string_id: 4583>  # String: '__BC:ControlFlow/ForTests/forTest/if-break' (String)
+                // USED → r7 = "__BC:ControlFlow/ForTests/forTest/if-break";
+                // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
+                r7 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-break")
+                // CODE → <Jmp>: <Addr8: 25>  # Address: 0000006f
+                break;
+            }
             // ──────────────── Block 3 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r8 = globalThis.console;
@@ -51,17 +61,6 @@ function forTest(param0) {
         }
     } while (0 + 1 < 10);
     // LOOP → END
-    // ──────────────── Block 4 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r9 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r8 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 7, string_id: 4583>  # String: '__BC:ControlFlow/ForTests/forTest/if-break' (String)
-    // USED → r7 = "__BC:ControlFlow/ForTests/forTest/if-break";
-    // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
-    r7 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-break")
-    // CODE → <Jmp>: <Addr8: 25>  # Address: 0000006f
-    goto label_111;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
