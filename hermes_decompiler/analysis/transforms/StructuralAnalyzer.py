@@ -116,8 +116,8 @@ class StructuralAnalyzer:
         SwitchStructurer(graph, self.cfg).run()  # ✅
 
         # ---- 3. region_passes -------------------------------------------
-        BooleanChainFolder(self.cfg).run(graph.root) # ❌ no effect at all
-        ConditionalExpressionFolder(self.cfg).run(graph.root)
+        BooleanChainFolder(self.cfg).run(graph.root) #`&&`/`||` (e.g. a bare`if (a || b) { ... }
+        ConditionalExpressionFolder(self.cfg).run(graph.root) # ternary
         NullishAssignmentFolder(self.cfg).run(graph.root)
         LoopConditionExtractor(graph.root).run()
         ForEachRecognizer(graph).run()
