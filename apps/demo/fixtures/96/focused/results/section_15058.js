@@ -24,8 +24,8 @@ function nestedLoopTest(param0) {
     // USED → r2 = 1;
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
-    // LOOP → START (while)
-    while (true) {
+    // LOOP → START (do_while)
+    do {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 9, Reg8: 1>
         // USED → r9 = 0;
@@ -34,38 +34,32 @@ function nestedLoopTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 9>
         // USED → r1 = 0 + 1;
-        if (0 + 1 >= 3) {
-            // LOOP → START (while)
-            while (true) {
-                // ──────────────── Block 2 ──────────────── 
-                // CODE → <Mov>: <Reg8: 11, Reg8: 10>
-                // USED → r11 = 0;
-                if (0 === 1) {
-                    if (0 === 2) {
-                        // ──────────────── Block 4 ──────────────── 
-                        // CODE → <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                        // USED → r13 = globalThis.console;
-                        // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                        // USED → r12 = globalThis.console.log;
-                        // CODE → <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 5>
-                        r12 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if")
-                        // CODE → <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                        // USED → r13 = globalThis.console;
-                        // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                        // USED → r12 = globalThis.console.log;
-                        // CODE → <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 4>
-                        r12 = globalThis.console.log("nested")
-                    }
-                    // ──────────────── Block 5 ──────────────── 
-                    // CODE → <Inc>: <Reg8: 10, Reg8: 11>
-                    // USED → r10 = 0 + 1;
-                    // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 6>  # Address: 00000031
-                    if (0 + 1 < 4) goto label_49;
-                }
+        // LOOP → START (do_while)
+        do {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <Mov>: <Reg8: 11, Reg8: 10>
+            // USED → r11 = 0;
+            if (0 === 1 && 0 === 2) {
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r13 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r12 = globalThis.console.log;
+                // CODE → <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 5>
+                r12 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if")
+                // CODE → <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r13 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r12 = globalThis.console.log;
+                // CODE → <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 4>
+                r12 = globalThis.console.log("nested")
             }
-            // LOOP → END
-        }
-    }
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → <Inc>: <Reg8: 10, Reg8: 11>
+            // USED → r10 = 0 + 1;
+        } while (0 + 1 < 4);
+        // LOOP → END
+    } while (0 + 1 < 3);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

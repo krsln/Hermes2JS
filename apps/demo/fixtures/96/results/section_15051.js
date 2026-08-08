@@ -25,7 +25,15 @@ function forTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 5>
         // USED → r6 = 0;
-        if (0 !== 3) {
+        if (0 === 3) {
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r8 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r7 = globalThis.console.log;
+            // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
+            r7 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
+        } else {
             if (0 === 8) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -48,17 +56,10 @@ function forTest(param0) {
             r7 = globalThis.console.log(0)
             // CODE → <Jmp>: <Addr8: 40>  # Address: 00000068
             goto label_104;
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r8 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r7 = globalThis.console.log;
-            // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
-            r7 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
-            // ──────────────── Block 6 ──────────────── 
-            // CODE → <Inc>: <Reg8: 5, Reg8: 6>
-            // USED → r5 = 0 + 1;
         }
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <Inc>: <Reg8: 5, Reg8: 6>
+        // USED → r5 = 0 + 1;
     } while (0 + 1 < 10);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
