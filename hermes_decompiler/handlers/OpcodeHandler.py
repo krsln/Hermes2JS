@@ -173,7 +173,7 @@ class OpcodeHandler(ABC):
         if isinstance(state_value, Expression):
             state.reads += 1
 
-            if isinstance(state.definition.value, _IDENTITY_SENSITIVE_TYPES):
+            if isinstance(state.value, _IDENTITY_SENSITIVE_TYPES):
                 return Identifier(name=f"r{reg}")
 
             if state.reads > 1:
