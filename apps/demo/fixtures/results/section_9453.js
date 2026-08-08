@@ -45,51 +45,49 @@ function complexTest(param0) {
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = 0;
             if (1 !== r14[0]) {
-                // ──────────────── Block 2 ──────────────── 
-                // CODE → <JStrictEqual>: <Addr8: 76, Reg8: 4, Reg8: 7>  # Address: 000000a7
-                if (2 === r14[0]) goto label_167;
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → <JStrictEqual>: <Addr8: 38, Reg8: 3, Reg8: 7>  # Address: 00000085
-                if (3 === r14[0]) goto label_133;
-                // ──────────────── Block 4 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                // USED → r15 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                // USED → r7 = globalThis.console.log;
-                // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 9>
-                r7 = globalThis.console.log("__BC:ControlFlow/ComplexTests/complexTest/case-default")
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                // USED → r15 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                // USED → r7 = globalThis.console.log;
-                // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 8>
-                r7 = globalThis.console.log("other")
-                // CODE → <Jmp>: <Addr8: 70>  # Address: 000000c9
-                goto label_201;
-                // ──────────────── Block 5 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                // USED → r15 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                // USED → r7 = globalThis.console.log;
-                // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 11>
-                r7 = globalThis.console.log("__BC:ControlFlow/ComplexTests/complexTest/case-3")
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                // USED → r15 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                // USED → r7 = globalThis.console.log;
-                // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 10>
-                r7 = globalThis.console.log("three")
-                // CODE → <Jmp>: <Addr8: 36>  # Address: 000000c9
-                goto label_201;
-                // ──────────────── Block 6 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                // USED → r15 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                // USED → r7 = globalThis.console.log;
-                // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 12>
-                r7 = globalThis.console.log("__BC:ControlFlow/ComplexTests/complexTest/case-2-continue")
-                // CODE → <Jmp>: <Addr8: 18>  # Address: 000000c9
-                goto label_201;
+                // Switch → START
+                switch (r14[0]) {
+                    case 2:
+                        // ──────────────── Block 6 ──────────────── 
+                        // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+                        // USED → r15 = globalThis.console;
+                        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+                        // USED → r7 = globalThis.console.log;
+                        // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 12>
+                        r7 = globalThis.console.log("__BC:ControlFlow/ComplexTests/complexTest/case-2-continue")
+                        break;
+                    case 3:
+                        // ──────────────── Block 5 ──────────────── 
+                        // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+                        // USED → r15 = globalThis.console;
+                        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+                        // USED → r7 = globalThis.console.log;
+                        // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 11>
+                        r7 = globalThis.console.log("__BC:ControlFlow/ComplexTests/complexTest/case-3")
+                        // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+                        // USED → r15 = globalThis.console;
+                        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+                        // USED → r7 = globalThis.console.log;
+                        // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 10>
+                        r7 = globalThis.console.log("three")
+                        break;
+                    default:
+                        // ──────────────── Block 4 ──────────────── 
+                        // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+                        // USED → r15 = globalThis.console;
+                        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+                        // USED → r7 = globalThis.console.log;
+                        // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 9>
+                        r7 = globalThis.console.log("__BC:ControlFlow/ComplexTests/complexTest/case-default")
+                        // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+                        // USED → r15 = globalThis.console;
+                        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+                        // USED → r7 = globalThis.console.log;
+                        // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 8>
+                        r7 = globalThis.console.log("other")
+                        break;
+                }
+                // Switch → END
                 // ──────────────── Block 7 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                 // USED → r15 = globalThis.console;

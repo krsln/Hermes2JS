@@ -337,42 +337,39 @@ function _request(param0, param1, param2) {
             // USED → r10 = +(+0 + 1) + 1;
             // CODE → <Mov>: <Reg8: 9, Reg8: 5>
             // USED → r9 = r14.length;
-            // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 9>  # Address: 00000362
-            if (+(+0 + 1) + 1 < r14.length) goto label_866;
-            // ──────────────── Block 31 ──────────────── 
-            // CODE → <Jmp>: <Addr8: 18>  # Address: 000003a6
-            goto label_934;
-            // ──────────────── Block 34 ──────────────── 
-            // CODE → <Mov>: <Reg8: 8, Reg8: 0>
-            // USED → r8 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2)));
-            // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
-            // USED → r7 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then;
-            // CODE → <Mov>: <Reg8: 9, Reg8: 3>
-            // USED → r9 = r2;
-            // CODE → <Mov>: <Reg8: 1, Reg8: 4>
-            // USED → r1 = 0;
-            // CODE → <ToNumeric>: <Reg8: 2, Reg8: 1>
-            // USED → r2 = +0;
-            // CODE → <Inc>: <Reg8: 1, Reg8: 2>
-            // USED → r1 = +0 + 1;
-            // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-            r4 = +0 + 1
-            // CODE → <GetByVal>: <Reg8: 6, Reg8: 9, Reg8: 2>
-            // USED → r6 = r2[+0];
-            // CODE → <ToNumeric>: <Reg8: 1, Reg8: 1>
-            // USED → r1 = +(+0 + 1);
-            // CODE → <Inc>: <Reg8: 2, Reg8: 1>
-            // USED → r2 = +(+0 + 1) + 1;
-            // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-            r4 = +(+0 + 1) + 1
-            // CODE → <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>
-            // USED → r1 = r2[+(+0 + 1)];
-            // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
-            // USED → r0 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(+0 + 1)]);
-            // CODE → <Mov>: <Reg8: 1, Reg8: 5>
-            // USED → r1 = r2.length;
-            // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
-            if (+(+0 + 1) + 1 < r2.length) goto label_971;
+            if (+(+0 + 1) + 1 >= r14.length) {
+            }
+        }
+        // ──────────────── Block 34 ──────────────── 
+        // CODE → <Mov>: <Reg8: 8, Reg8: 0>
+        // USED → r8 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2)));
+        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
+        // USED → r7 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then;
+        // CODE → <Mov>: <Reg8: 9, Reg8: 3>
+        // USED → r9 = r2;
+        // CODE → <Mov>: <Reg8: 1, Reg8: 4>
+        // USED → r1 = 0;
+        // CODE → <ToNumeric>: <Reg8: 2, Reg8: 1>
+        // USED → r2 = +0;
+        // CODE → <Inc>: <Reg8: 1, Reg8: 2>
+        // USED → r1 = +0 + 1;
+        // CODE → <Mov>: <Reg8: 4, Reg8: 1>
+        r4 = +0 + 1
+        // CODE → <GetByVal>: <Reg8: 6, Reg8: 9, Reg8: 2>
+        // USED → r6 = r2[+0];
+        // CODE → <ToNumeric>: <Reg8: 1, Reg8: 1>
+        // USED → r1 = +(+0 + 1);
+        // CODE → <Inc>: <Reg8: 2, Reg8: 1>
+        // USED → r2 = +(+0 + 1) + 1;
+        // CODE → <Mov>: <Reg8: 4, Reg8: 2>
+        r4 = +(+0 + 1) + 1
+        // CODE → <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>
+        // USED → r1 = r2[+(+0 + 1)];
+        // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
+        // USED → r0 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(+0 + 1)]);
+        // CODE → <Mov>: <Reg8: 1, Reg8: 5>
+        // USED → r1 = r2.length;
+        if (+(+0 + 1) + 1 >= r2.length) {
             // ──────────────── Block 35 ──────────────── 
             // CODE → <Ret>: <Reg8: 0>
             return getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(+0 + 1)]);

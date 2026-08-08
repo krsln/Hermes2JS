@@ -312,10 +312,33 @@ class IfStructurer(RegionStructurer):
                 else_items.append(item)
 
             else:
-                # Neither side dominates this item: it's reachable some
-                # other way we don't account for here (e.g. a join we
-                # didn't expect). Bail rather than misclassify it.
-                return False
+                # Neither side dominates this item. This is NOT
+                # necessarily an unexpected join we can't account for -
+                # it's the exact defining property of a true merge
+                # point: something reachable from BOTH arms cannot
+                # belong to only one of them. `merge_block` (the raw
+                # CFG's post-dominator of `block`) is only a heuristic
+                # shortcut for finding this boundary in advance; it can
+                # legitimately fail to equal this item when some OTHER
+                # edge leaving one arm bypasses the merge entirely on
+                # the raw CFG - most commonly a `break` (or any other
+                # loop-exit edge) that a prior pass has already carved
+                # out into its own region. That bypass edge is real for
+                # raw post-dominance purposes but no longer relevant to
+                # how this if/else should be shaped: the arm containing
+                # the break still legitimately ends there, and
+                # everything from here on is unambiguously "after the
+                # if/else", exactly like hitting `merge_block` would
+                # have signaled.
+                #
+                # Only safe once at least one item is already
+                # classified on the required side(s) below - guaranteed
+                # here since `then_root` itself (the loop's very first
+                # iteration) always self-dominates and is always
+                # appended to `then_items` before this branch can ever
+                # be reached.
+                boundary = index
+                break
 
             index += 1
 
