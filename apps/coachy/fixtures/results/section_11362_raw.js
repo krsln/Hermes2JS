@@ -1325,15 +1325,15 @@ function binl_md5(param0, param1, param2) {
     if (0 + 16 < param1.length) goto label_566;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>
-    // USED → r0 = [];
+    r0 = []
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 4, UInt8: 0>
-    // USED → r0 = [getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193)];
+    // USED → r0 = r0[0] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193);
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 3, UInt8: 1>
-    // USED → r0 = [getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193), getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -271733879)];
+    // USED → r0 = (r0[0] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193))[1] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -271733879);
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 2, UInt8: 2>
-    // USED → r0 = [getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193), getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -271733879), getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -1732584194)];
+    // USED → r0 = ((r0[0] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193))[1] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -271733879))[2] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -1732584194);
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 1, UInt8: 3>
-    // USED → r0 = [getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193), getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -271733879), getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -1732584194), getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 271733878)];
+    // USED → r0 = (((r0[0] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193))[1] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -271733879))[2] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -1732584194))[3] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 271733878);
     // CODE → <Ret>: <Reg8: 0>
-    return [getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193), getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -271733879), getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -1732584194), getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 271733878)];
+    return (((r0[0] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193))[1] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -271733879))[2] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -1732584194))[3] = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 271733878);
 }

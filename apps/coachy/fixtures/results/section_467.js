@@ -1217,39 +1217,39 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 40, Reg8: 39, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r40 = SyntheticEvent.prototype;
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 805>  # Function: [#805 preventDefault of 82 bytes]: 1 params @ offset 0x00188f55
     // USED → r43 = preventDefault;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 16522>  # String: 'preventDefault' (Identifier)
-    // USED → r37 = { preventDefault: preventDefault };
+    r37.preventDefault = preventDefault
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 806>  # Function: [#806 stopPropagation of 74 bytes]: 1 params @ offset 0x00188fa7
     // USED → r43 = stopPropagation;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 12808>  # String: 'stopPropagation' (Identifier)
-    // USED → r37 = { preventDefault: preventDefault, stopPropagation: stopPropagation };
+    r37.stopPropagation = stopPropagation
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 807>  # Function: [#807 persist of 20 bytes]: 1 params @ offset 0x00188ff1
     // USED → r43 = persist;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 16540>  # String: 'persist' (Identifier)
-    // USED → r37 = { preventDefault: preventDefault, stopPropagation: stopPropagation, persist: persist };
+    r37.persist = persist
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 23978>  # String: 'isPersistent' (Identifier)
-    // USED → r37 = { preventDefault: preventDefault, stopPropagation: stopPropagation, persist: persist, isPersistent: functionThatReturnsFalse };
+    r37.isPersistent = functionThatReturnsFalse
     // CODE → <CreateClosure>: <Reg8: 42, Reg8: 1, function_id: 808>  # Function: [#808 destructor of 98 bytes]: 1 params @ offset 0x00189005
     // USED → r42 = destructor;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12543>  # String: 'destructor' (Identifier)
-    // USED → r37 = { preventDefault: preventDefault, stopPropagation: stopPropagation, persist: persist, isPersistent: functionThatReturnsFalse, destructor: destructor };
+    r37.destructor = destructor
     // CODE → <Call3>: <Reg8: 37, Reg8: 41, Reg8: 2, Reg8: 40, Reg8: 37>
-    r37 = globalThis.Object.assign.call(undefined, SyntheticEvent.prototype, { preventDefault: preventDefault, stopPropagation: stopPropagation, persist: persist, isPersistent: functionThatReturnsFalse, destructor: destructor })
+    r37 = globalThis.Object.assign.call(undefined, SyntheticEvent.prototype, r37)
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 9, UInt16: 9, UInt16: 194, UInt16: 115>  # Object: {'type': null, 'target': null, 'currentTarget': null, 'eventPhase': null, 'bubbles': null, 'cancelable': null, 'timeStamp': null, 'defaultPrevented': null, 'isTrusted': null}
-    // USED → r37 = { "type": null, "target": null, "currentTarget": null, "eventPhase": null, "bubbles": null, "cancelable": null, "timeStamp": null, "defaultPrevented": null, "isTrusted": null };
+    r37 = { "type": null, "target": null, "currentTarget": null, "eventPhase": null, "bubbles": null, "cancelable": null, "timeStamp": null, "defaultPrevented": null, "isTrusted": null }
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 809>  # Function: [#809 currentTarget of 4 bytes]: 1 params @ offset 0x00188e5c
     // USED → r40 = currentTarget;
     // CODE → <PutById>: <Reg8: 37, Reg8: 40, UInt8: 1, string_id: 11848>  # String: 'currentTarget' (Identifier)
-    { "type": null, "target": null, "currentTarget": null, "eventPhase": null, "bubbles": null, "cancelable": null, "timeStamp": null, "defaultPrevented": null, "isTrusted": null }.currentTarget = currentTarget
+    r37.currentTarget = currentTarget
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 810>  # Function: [#810 timeStamp of 31 bytes]: 2 params @ offset 0x00189067
     // USED → r40 = timeStamp;
     // CODE → <PutById>: <Reg8: 37, Reg8: 40, UInt8: 2, string_id: 19393>  # String: 'timeStamp' (Identifier)
-    { "type": null, "target": null, "currentTarget": null, "eventPhase": null, "bubbles": null, "cancelable": null, "timeStamp": null, "defaultPrevented": null, "isTrusted": null }.timeStamp = timeStamp
+    r37.timeStamp = timeStamp
     // CODE → <PutById>: <Reg8: 39, Reg8: 37, UInt8: 3, string_id: 18542>  # String: 'Interface' (Identifier)
-    SyntheticEvent.Interface = { "type": null, "target": null, "currentTarget": null, "eventPhase": null, "bubbles": null, "cancelable": null, "timeStamp": null, "defaultPrevented": null, "isTrusted": null }
+    SyntheticEvent.Interface = r37
     // CODE → <CreateClosure>: <Reg8: 37, Reg8: 1, function_id: 811>  # Function: [#811  of 138 bytes]: 2 params @ offset 0x00189086
     // USED → r37 = function_811;
     // CODE → <PutById>: <Reg8: 39, Reg8: 37, UInt8: 4, string_id: 14224>  # String: 'extend' (Identifier)
@@ -1259,229 +1259,229 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 37, Reg8: 39, UInt8: 6, string_id: 14224>  # String: 'extend' (Identifier)
     // USED → r37 = SyntheticEvent.extend;
     // CODE → <NewObject>: <Reg8: 17>
-    // USED → r17 = {  };
+    r17 = {  }
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 814>  # Function: [#814 touchHistory of 4 bytes]: 1 params @ offset 0x00188e5c
     // USED → r40 = touchHistory;
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 40, string_id: 21539>  # String: 'touchHistory' (Identifier)
-    // USED → r17 = { touchHistory: touchHistory };
+    r17.touchHistory = touchHistory
     // CODE → <Call2>: <Reg8: 17, Reg8: 37, Reg8: 39, Reg8: 17>
-    // USED → r17 = SyntheticEvent.extend({ touchHistory: touchHistory });
+    // USED → r17 = SyntheticEvent.extend(r17);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 17>
-    createEnvironment()[9] = SyntheticEvent.extend({ touchHistory: touchHistory })
+    createEnvironment()[9] = SyntheticEvent.extend(r17)
     // CODE → <NewArrayWithBuffer>: <Reg8: 42, UInt16: 1, UInt16: 1, UInt16: 40883>  # Array: ['topTouchStart']
-    // USED → r42 = ["topTouchStart"];
+    r42 = ["topTouchStart"]
     // CODE → <NewArrayWithBuffer>: <Reg8: 41, UInt16: 1, UInt16: 1, UInt16: 40892>  # Array: ['topTouchMove']
-    // USED → r41 = ["topTouchMove"];
+    r41 = ["topTouchMove"]
     // CODE → <NewArrayWithBuffer>: <Reg8: 40, UInt16: 2, UInt16: 2, UInt16: 40895>  # Array: ['topTouchCancel', 'topTouchEnd']
-    // USED → r40 = ["topTouchCancel", "topTouchEnd"];
+    r40 = ["topTouchCancel", "topTouchEnd"]
     // CODE → <NewArray>: <Reg8: 17, UInt16: 0>
-    // USED → r17 = [];
+    r17 = []
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 10, Reg8: 17>
-    createEnvironment()[10] = []
+    createEnvironment()[10] = r17
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 4, UInt16: 4, UInt16: 250, UInt16: 141>  # Object: {'touchBank': null, 'numberActiveTouches': 0, 'indexOfSingleActiveTouch': 4294967295, 'mostRecentTimeStamp': 0}
-    // USED → r37 = { "touchBank": null, "numberActiveTouches": 0, "indexOfSingleActiveTouch": 4294967295, "mostRecentTimeStamp": 0 };
+    r37 = { "touchBank": null, "numberActiveTouches": 0, "indexOfSingleActiveTouch": 4294967295, "mostRecentTimeStamp": 0 }
     // CODE → <PutById>: <Reg8: 37, Reg8: 17, UInt8: 5, string_id: 21537>  # String: 'touchBank' (Identifier)
-    { "touchBank": null, "numberActiveTouches": 0, "indexOfSingleActiveTouch": 4294967295, "mostRecentTimeStamp": 0 }.touchBank = []
+    r37.touchBank = r17
     // CODE → <LoadConstInt>: <Reg8: 39, Imm32: -1>
     // USED → r39 = -1;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 11, Reg8: 37>
-    createEnvironment()[11] = { "touchBank": null, "numberActiveTouches": 0, "indexOfSingleActiveTouch": 4294967295, "mostRecentTimeStamp": 0 }
+    createEnvironment()[11] = r37
     // CODE → <NewObject>: <Reg8: 17>
-    // USED → r17 = {  };
+    r17 = {  }
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 815>  # Function: [#815 instrument of 14 bytes]: 2 params @ offset 0x0018912e
     // USED → r43 = instrument;
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 43, string_id: 23867>  # String: 'instrument' (Identifier)
-    // USED → r17 = { instrument: instrument };
+    r17.instrument = instrument
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 816>  # Function: [#816 recordTouchTrack of 328 bytes]: 3 params @ offset 0x0018913c
     // USED → r43 = recordTouchTrack;
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 43, string_id: 14419>  # String: 'recordTouchTrack' (Identifier)
-    // USED → r17 = { instrument: instrument, recordTouchTrack: recordTouchTrack };
+    r17.recordTouchTrack = recordTouchTrack
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21539>  # String: 'touchHistory' (Identifier)
-    // USED → r17 = { instrument: instrument, recordTouchTrack: recordTouchTrack, touchHistory: { "touchBank": null, "numberActiveTouches": 0, "indexOfSingleActiveTouch": 4294967295, "mostRecentTimeStamp": 0 } };
+    r17.touchHistory = r37
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 13, Reg8: 17>
-    createEnvironment()[13] = { instrument: instrument, recordTouchTrack: recordTouchTrack, touchHistory: { "touchBank": null, "numberActiveTouches": 0, "indexOfSingleActiveTouch": 4294967295, "mostRecentTimeStamp": 0 } }
+    createEnvironment()[13] = r17
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 14, Reg8: 11>
     createEnvironment()[14] = null
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 15, Reg8: 10>
     createEnvironment()[15] = 0
     // CODE → <NewObject>: <Reg8: 17>
-    // USED → r17 = {  };
+    r17 = {  }
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <NewObjectWithBuffer>: <Reg8: 43, UInt16: 2, UInt16: 2, UInt16: 263, UInt16: 159>  # Object: {'bubbled': 'onStartShouldSetResponder', 'captured': 'onStartShouldSetResponderCapture'}
-    // USED → r43 = { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" };
+    r43 = { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
-    // USED → r37 = { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" } };
+    r37.phasedRegistrationNames = r43
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] };
+    r37.dependencies = r42
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 24007>  # String: 'startShouldSetResponder' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] } };
+    r17.startShouldSetResponder = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <NewObjectWithBuffer>: <Reg8: 43, UInt16: 2, UInt16: 2, UInt16: 263, UInt16: 164>  # Object: {'bubbled': 'onScrollShouldSetResponder', 'captured': 'onScrollShouldSetResponderCapture'}
-    // USED → r43 = { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" };
+    r43 = { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
-    // USED → r37 = { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" } };
+    r37.phasedRegistrationNames = r43
     // CODE → <NewArrayWithBuffer>: <Reg8: 43, UInt16: 1, UInt16: 1, UInt16: 40881>  # Array: ['topScroll']
-    // USED → r43 = ["topScroll"];
+    r43 = ["topScroll"]
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] };
+    r37.dependencies = r43
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 17673>  # String: 'scrollShouldSetResponder' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] } };
+    r17.scrollShouldSetResponder = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <NewObjectWithBuffer>: <Reg8: 43, UInt16: 2, UInt16: 2, UInt16: 263, UInt16: 111>  # Object: {'bubbled': 'onSelectionChangeShouldSetResponder', 'captured': 'onSelectionChangeShouldSetResponderCapture'}
-    // USED → r43 = { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" };
+    r43 = { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
-    // USED → r37 = { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" } };
+    r37.phasedRegistrationNames = r43
     // CODE → <NewArrayWithBuffer>: <Reg8: 43, UInt16: 1, UInt16: 1, UInt16: 40900>  # Array: ['topSelectionChange']
-    // USED → r43 = ["topSelectionChange"];
+    r43 = ["topSelectionChange"]
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] };
+    r37.dependencies = r43
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 22946>  # String: 'selectionChangeShouldSetResponder' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] } };
+    r17.selectionChangeShouldSetResponder = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <NewObjectWithBuffer>: <Reg8: 43, UInt16: 2, UInt16: 2, UInt16: 263, UInt16: 184>  # Object: {'bubbled': 'onMoveShouldSetResponder', 'captured': 'onMoveShouldSetResponderCapture'}
-    // USED → r43 = { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" };
+    r43 = { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 20186>  # String: 'phasedRegistrationNames' (Identifier)
-    // USED → r37 = { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" } };
+    r37.phasedRegistrationNames = r43
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] };
+    r37.dependencies = r41
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 20089>  # String: 'moveShouldSetResponder' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] } };
+    r17.moveShouldSetResponder = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 43, string_id: 22333>  # String: 'onResponderStart' (Identifier)
     // USED → r43 = "onResponderStart";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 43, string_id: 204>  # String: 'registrationName' (Identifier)
-    // USED → r37 = { registrationName: "onResponderStart" };
+    r37.registrationName = "onResponderStart"
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { registrationName: "onResponderStart", dependencies: ["topTouchStart"] };
+    r37.dependencies = r42
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21573>  # String: 'responderStart' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] } };
+    r17.responderStart = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 42, string_id: 22238>  # String: 'onResponderMove' (Identifier)
     // USED → r42 = "onResponderMove";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 42, string_id: 204>  # String: 'registrationName' (Identifier)
-    // USED → r37 = { registrationName: "onResponderMove" };
+    r37.registrationName = "onResponderMove"
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { registrationName: "onResponderMove", dependencies: ["topTouchMove"] };
+    r37.dependencies = r41
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21199>  # String: 'responderMove' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] } };
+    r17.responderMove = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 41, string_id: 22198>  # String: 'onResponderEnd' (Identifier)
     // USED → r41 = "onResponderEnd";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 41, string_id: 204>  # String: 'registrationName' (Identifier)
-    // USED → r37 = { registrationName: "onResponderEnd" };
+    r37.registrationName = "onResponderEnd"
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] };
+    r37.dependencies = r40
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 15364>  # String: 'responderEnd' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] } };
+    r17.responderEnd = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 41, string_id: 22319>  # String: 'onResponderRelease' (Identifier)
     // USED → r41 = "onResponderRelease";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 41, string_id: 204>  # String: 'registrationName' (Identifier)
-    // USED → r37 = { registrationName: "onResponderRelease" };
+    r37.registrationName = "onResponderRelease"
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] };
+    r37.dependencies = r40
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 14449>  # String: 'responderRelease' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] } };
+    r17.responderRelease = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 19872>  # String: 'onResponderTerminationRequest' (Identifier)
     // USED → r40 = "onResponderTerminationRequest";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    // USED → r37 = { registrationName: "onResponderTerminationRequest" };
+    r37.registrationName = "onResponderTerminationRequest"
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-    // USED → r40 = [];
+    r40 = []
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { registrationName: "onResponderTerminationRequest", dependencies: [] };
+    r37.dependencies = r40
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21593>  # String: 'responderTerminationRequest' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] } };
+    r17.responderTerminationRequest = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 22208>  # String: 'onResponderGrant' (Identifier)
     // USED → r40 = "onResponderGrant";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    // USED → r37 = { registrationName: "onResponderGrant" };
+    r37.registrationName = "onResponderGrant"
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-    // USED → r40 = [];
+    r40 = []
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { registrationName: "onResponderGrant", dependencies: [] };
+    r37.dependencies = r40
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 18117>  # String: 'responderGrant' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] } };
+    r17.responderGrant = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 22270>  # String: 'onResponderReject' (Identifier)
     // USED → r40 = "onResponderReject";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    // USED → r37 = { registrationName: "onResponderReject" };
+    r37.registrationName = "onResponderReject"
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-    // USED → r40 = [];
+    r40 = []
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { registrationName: "onResponderReject", dependencies: [] };
+    r37.dependencies = r40
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21302>  # String: 'responderReject' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] } };
+    r17.responderReject = r37
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <LoadConstString>: <Reg8: 40, string_id: 22427>  # String: 'onResponderTerminate' (Identifier)
     // USED → r40 = "onResponderTerminate";
     // CODE → <PutNewOwnByIdShort>: <Reg8: 37, Reg8: 40, string_id: 204>  # String: 'registrationName' (Identifier)
-    // USED → r37 = { registrationName: "onResponderTerminate" };
+    r37.registrationName = "onResponderTerminate"
     // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-    // USED → r40 = [];
+    r40 = []
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 40, string_id: 12219>  # String: 'dependencies' (Identifier)
-    // USED → r37 = { registrationName: "onResponderTerminate", dependencies: [] };
+    r37.dependencies = r40
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21588>  # String: 'responderTerminate' (Identifier)
-    // USED → r17 = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } };
+    r17.responderTerminate = r37
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 16, Reg8: 17>
-    createEnvironment()[16] = { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }
+    createEnvironment()[16] = r17
     // CODE → <NewObject>: <Reg8: 40>
-    // USED → r40 = {  };
+    r40 = {  }
     // CODE → <CreateClosure>: <Reg8: 37, Reg8: 1, function_id: 817>  # Function: [#817 _getResponder of 9 bytes]: 1 params @ offset 0x00189284
     // USED → r37 = _getResponder;
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 37, string_id: 15697>  # String: '_getResponder' (Identifier)
-    // USED → r40 = { _getResponder: _getResponder };
+    r40._getResponder = _getResponder
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 17, string_id: 14917>  # String: 'eventTypes' (Identifier)
-    // USED → r40 = { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } } };
+    r40.eventTypes = r17
     // CODE → <CreateClosure>: <Reg8: 17, Reg8: 1, function_id: 818>  # Function: [#818 extractEvents of 1750 bytes]: 5 params @ offset 0x0018928d
     // USED → r17 = extractEvents;
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 17, string_id: 14577>  # String: 'extractEvents' (Identifier)
-    // USED → r40 = { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents };
+    r40.extractEvents = extractEvents
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 11, string_id: 21101>  # String: 'GlobalResponderHandler' (Identifier)
-    // USED → r40 = { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null };
+    r40.GlobalResponderHandler = null
     // CODE → <NewObject>: <Reg8: 17>
-    // USED → r17 = {  };
+    r17 = {  }
     // CODE → <CreateClosure>: <Reg8: 37, Reg8: 1, function_id: 819>  # Function: [#819 injectGlobalResponderHandler of 20 bytes]: 2 params @ offset 0x00189963
     // USED → r37 = injectGlobalResponderHandler;
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 37, string_id: 21100>  # String: 'injectGlobalResponderHandler' (Identifier)
-    // USED → r17 = { injectGlobalResponderHandler: injectGlobalResponderHandler };
+    r17.injectGlobalResponderHandler = injectGlobalResponderHandler
     // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 17, string_id: 15132>  # String: 'injection' (Identifier)
-    // USED → r40 = { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } };
+    r40.injection = r17
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 17, Reg8: 40>
-    createEnvironment()[17] = { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }
+    createEnvironment()[17] = r40
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 11>
     createEnvironment()[18] = null
     // CODE → <NewObject>: <Reg8: 51>
-    // USED → r51 = {  };
+    r51 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 19, Reg8: 51>
-    createEnvironment()[19] = {  }
+    createEnvironment()[19] = r51
     // CODE → <NewArray>: <Reg8: 17, UInt16: 0>
-    // USED → r17 = [];
+    r17 = []
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 20, Reg8: 17>
-    createEnvironment()[20] = []
+    createEnvironment()[20] = r17
     // CODE → <NewObject>: <Reg8: 17>
-    // USED → r17 = {  };
+    r17 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 21, Reg8: 17>
-    createEnvironment()[21] = {  }
+    createEnvironment()[21] = r17
     // CODE → <NewObject>: <Reg8: 17>
-    // USED → r17 = {  };
+    r17 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 22, Reg8: 17>
-    createEnvironment()[22] = {  }
+    createEnvironment()[22] = r17
     // CODE → <LoadConstUInt8>: <Reg8: 17, UInt8: 2>
     // USED → r17 = 2;
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
@@ -1513,31 +1513,31 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 11, string_id: 91>  # String: 'call' (Identifier)
     // USED → r41 = globalThis.Array.prototype.slice.call;
     // CODE → <NewArrayWithBuffer>: <Reg8: 37, UInt16: 2, UInt16: 2, UInt16: 40903>  # Array: ['ResponderEventPlugin', 'ReactNativeBridgeEventPlugin']
-    // USED → r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"];
+    r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]
     // CODE → <Call2>: <Reg8: 37, Reg8: 41, Reg8: 42, Reg8: 37>
-    // USED → r37 = globalThis.Array.prototype.slice.call(["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]);
+    // USED → r37 = globalThis.Array.prototype.slice.call(r37);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 37>
-    createEnvironment()[18] = globalThis.Array.prototype.slice.call(["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"])
+    createEnvironment()[18] = globalThis.Array.prototype.slice.call(r37)
     // CODE → <Call1>: <Reg8: 37, Reg8: 16, Reg8: 2>
     r37 = recomputePluginOrdering.call(undefined)
     // CODE → <NewObject>: <Reg8: 50>
-    // USED → r50 = {  };
+    r50 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 50, Reg8: 40, string_id: 14576>  # String: 'ResponderEventPlugin' (Identifier)
-    // USED → r50 = { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } } };
+    r50.ResponderEventPlugin = r40
     // CODE → <NewObject>: <Reg8: 37>
-    // USED → r37 = {  };
+    r37 = {  }
     // CODE → <NewObject>: <Reg8: 41>
-    // USED → r41 = {  };
+    r41 = {  }
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 14917>  # String: 'eventTypes' (Identifier)
-    // USED → r37 = { eventTypes: {  } };
+    r37.eventTypes = r41
     // CODE → <CreateClosure>: <Reg8: 41, Reg8: 1, function_id: 820>  # Function: [#820 extractEvents of 246 bytes]: 5 params @ offset 0x00189977
     // USED → r41 = extractEvents;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 41, string_id: 14577>  # String: 'extractEvents' (Identifier)
-    // USED → r37 = { eventTypes: {  }, extractEvents: extractEvents };
+    r37.extractEvents = extractEvents
     // CODE → <PutNewOwnById>: <Reg8: 50, Reg8: 37, string_id: 14569>  # String: 'ReactNativeBridgeEventPlugin' (Identifier)
-    // USED → r50 = { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } };
+    r50.ReactNativeBridgeEventPlugin = r37
     // CODE → <Mov>: <Reg8: 48, Reg8: 50>
-    r48 = { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }
+    r48 = r50
     // CODE → <LoadConstTrue>: <Reg8: 37>
     // USED → r37 = true;
     // CODE → <LoadConstFalse>: <Reg8: 43>
@@ -1556,19 +1556,19 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         }
         // ──────────────── Block 10 ──────────────── 
         // CODE → <NewObject>: <Reg8: 16>
-        // USED → r16 = {  };
+        r16 = {  }
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 25, Reg8: 16>
-        createEnvironment()[25] = {  }
+        createEnvironment()[25] = r16
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 26, Reg8: 11>
         createEnvironment()[26] = null
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 27, Reg8: 10>
         createEnvironment()[27] = 0
         // CODE → <NewObject>: <Reg8: 16>
-        // USED → r16 = {  };
+        r16 = {  }
         // CODE → <PutNewOwnById>: <Reg8: 16, Reg8: 37, string_id: 24472>  # String: 'unsafelyIgnoreFunctions' (Identifier)
-        // USED → r16 = { unsafelyIgnoreFunctions: true };
+        r16.unsafelyIgnoreFunctions = true
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 28, Reg8: 16>
-        createEnvironment()[28] = { unsafelyIgnoreFunctions: true }
+        createEnvironment()[28] = r16
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 29, Reg8: 12>
         createEnvironment()[29] = false
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
@@ -1723,17 +1723,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 7, Reg8: 41>
         createEnvironment()[7] = getNodeFromInstance$1
         // CODE → <GetById>: <Reg8: 42, Reg8: 40, UInt8: 36, string_id: 15132>  # String: 'injection' (Identifier)
-        // USED → r42 = { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }.injection;
+        // USED → r42 = r40.injection;
         // CODE → <GetById>: <Reg8: 41, Reg8: 42, UInt8: 37, string_id: 21100>  # String: 'injectGlobalResponderHandler' (Identifier)
-        // USED → r41 = { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }.injection.injectGlobalResponderHandler;
+        // USED → r41 = r40.injection.injectGlobalResponderHandler;
         // CODE → <NewObject>: <Reg8: 40>
-        // USED → r40 = {  };
+        r40 = {  }
         // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 823>  # Function: [#823 onChange of 122 bytes]: 4 params @ offset 0x00189aaf
         // USED → r43 = onChange;
         // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 43, string_id: 15401>  # String: 'onChange' (Identifier)
-        // USED → r40 = { onChange: onChange };
+        r40.onChange = onChange
         // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
-        r40 = { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }.injection.injectGlobalResponderHandler({ onChange: onChange })
+        r40 = r40.injection.injectGlobalResponderHandler(r40)
         // CODE → <TryGetById>: <Reg8: 42, Reg8: 0, UInt8: 38, string_id: 52>  # String: 'Symbol' (Identifier)
         // USED → r42 = globalThis.Symbol;
         // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 39, string_id: 39>  # String: 'for' (Identifier)
@@ -1929,15 +1929,15 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Call2>: <Reg8: 40, Reg8: 41, Reg8: 42, Reg8: 40>
         r40 = globalThis.Symbol.for("react.client.reference")
         // CODE → <NewArray>: <Reg8: 40, UInt16: 0>
-        // USED → r40 = [];
+        r40 = []
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 70, Reg8: 40>
-        createEnvironment()[70] = []
+        createEnvironment()[70] = r40
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 71, Reg8: 39>
         createEnvironment()[71] = -1
         // CODE → <NewObject>: <Reg8: 39>
-        // USED → r39 = {  };
+        r39 = {  }
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 72, Reg8: 39>
-        createEnvironment()[72] = {  }
+        createEnvironment()[72] = r39
         // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
         // USED → r39 = globalThis.Object;
         // CODE → <GetById>: <Reg8: 39, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
@@ -1969,9 +1969,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 77, Reg8: 11>
         createEnvironment()[77] = null
         // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
-        // USED → r38 = [];
+        r38 = []
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 78, Reg8: 38>
-        createEnvironment()[78] = []
+        createEnvironment()[78] = r38
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 79, Reg8: 10>
         createEnvironment()[79] = 0
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 80, Reg8: 10>
@@ -2015,13 +2015,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 90, Reg8: 38>
         createEnvironment()[90] = globalThis.Error.call(undefined, "Suspense Exception: This is not a real error, and should not leak into userspace. If you're seeing this, it's likely a bug in React.")
         // CODE → <NewObject>: <Reg8: 38>
-        // USED → r38 = {  };
+        r38 = {  }
         // CODE → <CreateClosure>: <Reg8: 39, Reg8: 1, function_id: 824>  # Function: [#824 then of 4 bytes]: 1 params @ offset 0x0016f98c
         // USED → r39 = then;
         // CODE → <PutNewOwnByIdShort>: <Reg8: 38, Reg8: 39, string_id: 231>  # String: 'then' (Identifier)
-        // USED → r38 = { then: then };
+        r38.then = then
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 91, Reg8: 38>
-        createEnvironment()[91] = { then: then }
+        createEnvironment()[91] = r38
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 92, Reg8: 11>
         createEnvironment()[92] = null
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 93, Reg8: 11>
@@ -2087,213 +2087,213 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 114, Reg8: 20>
         createEnvironment()[114] = createFunctionComponentUpdateQueue
         // CODE → <NewObject>: <Reg8: 20>
-        // USED → r20 = {  };
+        r20 = {  }
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-        // USED → r20 = { readContext: readContext };
+        r20.readContext = readContext
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use };
+        r20.use = use
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError };
+        r20.useCallback = throwInvalidHookError
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 228>  # String: 'useContext' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError };
+        r20.useContext = throwInvalidHookError
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 243>  # String: 'useEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError };
+        r20.useEffect = throwInvalidHookError
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError };
+        r20.useImperativeHandle = throwInvalidHookError
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError };
+        r20.useInsertionEffect = throwInvalidHookError
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError };
+        r20.useLayoutEffect = throwInvalidHookError
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 230>  # String: 'useMemo' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError, useMemo: throwInvalidHookError };
+        r20.useMemo = throwInvalidHookError
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 12216>  # String: 'useReducer' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError, useMemo: throwInvalidHookError, useReducer: throwInvalidHookError };
+        r20.useReducer = throwInvalidHookError
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 244>  # String: 'useRef' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError, useMemo: throwInvalidHookError, useReducer: throwInvalidHookError, useRef: throwInvalidHookError };
+        r20.useRef = throwInvalidHookError
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 246>  # String: 'useState' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError, useMemo: throwInvalidHookError, useReducer: throwInvalidHookError, useRef: throwInvalidHookError, useState: throwInvalidHookError };
+        r20.useState = throwInvalidHookError
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError, useMemo: throwInvalidHookError, useReducer: throwInvalidHookError, useRef: throwInvalidHookError, useState: throwInvalidHookError, useDebugValue: throwInvalidHookError };
+        r20.useDebugValue = throwInvalidHookError
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError, useMemo: throwInvalidHookError, useReducer: throwInvalidHookError, useRef: throwInvalidHookError, useState: throwInvalidHookError, useDebugValue: throwInvalidHookError, useDeferredValue: throwInvalidHookError };
+        r20.useDeferredValue = throwInvalidHookError
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24665>  # String: 'useTransition' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError, useMemo: throwInvalidHookError, useReducer: throwInvalidHookError, useRef: throwInvalidHookError, useState: throwInvalidHookError, useDebugValue: throwInvalidHookError, useDeferredValue: throwInvalidHookError, useTransition: throwInvalidHookError };
+        r20.useTransition = throwInvalidHookError
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError, useMemo: throwInvalidHookError, useReducer: throwInvalidHookError, useRef: throwInvalidHookError, useState: throwInvalidHookError, useDebugValue: throwInvalidHookError, useDeferredValue: throwInvalidHookError, useTransition: throwInvalidHookError, useSyncExternalStore: throwInvalidHookError };
+        r20.useSyncExternalStore = throwInvalidHookError
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 36, string_id: 24594>  # String: 'useId' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError, useMemo: throwInvalidHookError, useReducer: throwInvalidHookError, useRef: throwInvalidHookError, useState: throwInvalidHookError, useDebugValue: throwInvalidHookError, useDeferredValue: throwInvalidHookError, useTransition: throwInvalidHookError, useSyncExternalStore: throwInvalidHookError, useId: throwInvalidHookError };
+        r20.useId = throwInvalidHookError
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 115, Reg8: 20>
-        createEnvironment()[115] = { readContext: readContext, use: use, useCallback: throwInvalidHookError, useContext: throwInvalidHookError, useEffect: throwInvalidHookError, useImperativeHandle: throwInvalidHookError, useInsertionEffect: throwInvalidHookError, useLayoutEffect: throwInvalidHookError, useMemo: throwInvalidHookError, useReducer: throwInvalidHookError, useRef: throwInvalidHookError, useState: throwInvalidHookError, useDebugValue: throwInvalidHookError, useDeferredValue: throwInvalidHookError, useTransition: throwInvalidHookError, useSyncExternalStore: throwInvalidHookError, useId: throwInvalidHookError }
+        createEnvironment()[115] = r20
         // CODE → <NewObject>: <Reg8: 20>
-        // USED → r20 = {  };
+        r20 = {  }
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-        // USED → r20 = { readContext: readContext };
+        r20.readContext = readContext
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use };
+        r20.use = use
         // CODE → <CreateClosure>: <Reg8: 36, Reg8: 1, function_id: 826>  # Function: [#826 useCallback of 49 bytes]: 3 params @ offset 0x00189b35
         // USED → r36 = useCallback;
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 36, string_id: 242>  # String: 'useCallback' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback };
+        r20.useCallback = useCallback
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext };
+        r20.useContext = readContext
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 243>  # String: 'useEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect };
+        r20.useEffect = mountEffect
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 827>  # Function: [#827 useImperativeHandle of 90 bytes]: 4 params @ offset 0x00189b66
         // USED → r35 = useImperativeHandle;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle };
+        r20.useImperativeHandle = useImperativeHandle
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 828>  # Function: [#828 useLayoutEffect of 33 bytes]: 3 params @ offset 0x00189bc0
         // USED → r35 = useLayoutEffect;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect };
+        r20.useLayoutEffect = useLayoutEffect
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 829>  # Function: [#829 useInsertionEffect of 30 bytes]: 3 params @ offset 0x00189be1
         // USED → r35 = useInsertionEffect;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect };
+        r20.useInsertionEffect = useInsertionEffect
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 830>  # Function: [#830 useMemo of 64 bytes]: 3 params @ offset 0x00189bff
         // USED → r35 = useMemo;
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 230>  # String: 'useMemo' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect, useMemo: useMemo };
+        r20.useMemo = useMemo
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 831>  # Function: [#831 useReducer of 139 bytes]: 4 params @ offset 0x00189c3f
         // USED → r35 = useReducer;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 12216>  # String: 'useReducer' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect, useMemo: useMemo, useReducer: useReducer };
+        r20.useReducer = useReducer
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 832>  # Function: [#832 useRef of 31 bytes]: 2 params @ offset 0x00189cca
         // USED → r35 = useRef;
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 244>  # String: 'useRef' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect, useMemo: useMemo, useReducer: useReducer, useRef: useRef };
+        r20.useRef = useRef
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 833>  # Function: [#833 useState of 72 bytes]: 2 params @ offset 0x00189ce9
         // USED → r35 = useState;
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 35, string_id: 246>  # String: 'useState' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect, useMemo: useMemo, useReducer: useReducer, useRef: useRef, useState: useState };
+        r20.useState = useState
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect, useMemo: useMemo, useReducer: useReducer, useRef: useRef, useState: useState, useDebugValue: mountDebugValue };
+        r20.useDebugValue = mountDebugValue
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 834>  # Function: [#834 useDeferredValue of 34 bytes]: 3 params @ offset 0x00189d31
         // USED → r35 = useDeferredValue;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect, useMemo: useMemo, useReducer: useReducer, useRef: useRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue };
+        r20.useDeferredValue = useDeferredValue
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 835>  # Function: [#835 useTransition of 79 bytes]: 1 params @ offset 0x00189d53
         // USED → r35 = useTransition;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24665>  # String: 'useTransition' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect, useMemo: useMemo, useReducer: useReducer, useRef: useRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition };
+        r20.useTransition = useTransition
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 836>  # Function: [#836 useSyncExternalStore of 239 bytes]: 3 params @ offset 0x00189da2
         // USED → r35 = useSyncExternalStore;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect, useMemo: useMemo, useReducer: useReducer, useRef: useRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition, useSyncExternalStore: useSyncExternalStore };
+        r20.useSyncExternalStore = useSyncExternalStore
         // CODE → <CreateClosure>: <Reg8: 35, Reg8: 1, function_id: 837>  # Function: [#837 useId of 83 bytes]: 1 params @ offset 0x00189e91
         // USED → r35 = useId;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 35, string_id: 24594>  # String: 'useId' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect, useMemo: useMemo, useReducer: useReducer, useRef: useRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition, useSyncExternalStore: useSyncExternalStore, useId: useId };
+        r20.useId = useId
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 116, Reg8: 20>
-        createEnvironment()[116] = { readContext: readContext, use: use, useCallback: useCallback, useContext: readContext, useEffect: mountEffect, useImperativeHandle: useImperativeHandle, useLayoutEffect: useLayoutEffect, useInsertionEffect: useInsertionEffect, useMemo: useMemo, useReducer: useReducer, useRef: useRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition, useSyncExternalStore: useSyncExternalStore, useId: useId }
+        createEnvironment()[116] = r20
         // CODE → <NewObject>: <Reg8: 20>
-        // USED → r20 = {  };
+        r20 = {  }
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-        // USED → r20 = { readContext: readContext };
+        r20.readContext = readContext
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use };
+        r20.use = use
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback };
+        r20.useCallback = updateCallback
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext };
+        r20.useContext = readContext
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect };
+        r20.useEffect = updateEffect
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle };
+        r20.useImperativeHandle = updateImperativeHandle
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect };
+        r20.useInsertionEffect = updateInsertionEffect
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect };
+        r20.useLayoutEffect = updateLayoutEffect
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo };
+        r20.useMemo = updateMemo
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 12216>  # String: 'useReducer' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: updateReducer };
+        r20.useReducer = updateReducer
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: updateReducer, useRef: updateRef };
+        r20.useRef = updateRef
         // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 838>  # Function: [#838 useState of 22 bytes]: 1 params @ offset 0x00189ee4
         // USED → r34 = useState;
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 34, string_id: 246>  # String: 'useState' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: updateReducer, useRef: updateRef, useState: useState };
+        r20.useState = useState
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: updateReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue };
+        r20.useDebugValue = mountDebugValue
         // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 839>  # Function: [#839 useDeferredValue of 42 bytes]: 3 params @ offset 0x00189efa
         // USED → r34 = useDeferredValue;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: updateReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue };
+        r20.useDeferredValue = useDeferredValue
         // CODE → <CreateClosure>: <Reg8: 34, Reg8: 1, function_id: 840>  # Function: [#840 useTransition of 78 bytes]: 1 params @ offset 0x00189f24
         // USED → r34 = useTransition;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 34, string_id: 24665>  # String: 'useTransition' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: updateReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition };
+        r20.useTransition = useTransition
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: updateReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition, useSyncExternalStore: updateSyncExternalStore };
+        r20.useSyncExternalStore = updateSyncExternalStore
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: updateReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition, useSyncExternalStore: updateSyncExternalStore, useId: updateId };
+        r20.useId = updateId
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 117, Reg8: 20>
-        createEnvironment()[117] = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: updateReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition, useSyncExternalStore: updateSyncExternalStore, useId: updateId }
+        createEnvironment()[117] = r20
         // CODE → <NewObject>: <Reg8: 20>
-        // USED → r20 = {  };
+        r20 = {  }
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 31, string_id: 20330>  # String: 'readContext' (Identifier)
-        // USED → r20 = { readContext: readContext };
+        r20.readContext = readContext
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 33, string_id: 12261>  # String: 'use' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use };
+        r20.use = use
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 32, string_id: 242>  # String: 'useCallback' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback };
+        r20.useCallback = updateCallback
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 31, string_id: 228>  # String: 'useContext' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext };
+        r20.useContext = readContext
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 30, string_id: 243>  # String: 'useEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect };
+        r20.useEffect = updateEffect
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 29, string_id: 24596>  # String: 'useImperativeHandle' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle };
+        r20.useImperativeHandle = updateImperativeHandle
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 28, string_id: 24597>  # String: 'useInsertionEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect };
+        r20.useInsertionEffect = updateInsertionEffect
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 27, string_id: 24614>  # String: 'useLayoutEffect' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect };
+        r20.useLayoutEffect = updateLayoutEffect
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 26, string_id: 230>  # String: 'useMemo' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo };
+        r20.useMemo = updateMemo
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 25, string_id: 12216>  # String: 'useReducer' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: rerenderReducer };
+        r20.useReducer = rerenderReducer
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 244>  # String: 'useRef' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: rerenderReducer, useRef: updateRef };
+        r20.useRef = updateRef
         // CODE → <CreateClosure>: <Reg8: 24, Reg8: 1, function_id: 841>  # Function: [#841 useState of 22 bytes]: 1 params @ offset 0x00189f72
         // USED → r24 = useState;
         // CODE → <PutNewOwnByIdShort>: <Reg8: 20, Reg8: 24, string_id: 246>  # String: 'useState' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: rerenderReducer, useRef: updateRef, useState: useState };
+        r20.useState = useState
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24567>  # String: 'useDebugValue' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: rerenderReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue };
+        r20.useDebugValue = mountDebugValue
         // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 842>  # Function: [#842 useDeferredValue of 75 bytes]: 3 params @ offset 0x00189f88
         // USED → r23 = useDeferredValue;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24568>  # String: 'useDeferredValue' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: rerenderReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue };
+        r20.useDeferredValue = useDeferredValue
         // CODE → <CreateClosure>: <Reg8: 23, Reg8: 1, function_id: 843>  # Function: [#843 useTransition of 78 bytes]: 1 params @ offset 0x00189fd3
         // USED → r23 = useTransition;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 23, string_id: 24665>  # String: 'useTransition' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: rerenderReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition };
+        r20.useTransition = useTransition
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 22, string_id: 20645>  # String: 'useSyncExternalStore' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: rerenderReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition, useSyncExternalStore: updateSyncExternalStore };
+        r20.useSyncExternalStore = updateSyncExternalStore
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 24594>  # String: 'useId' (Identifier)
-        // USED → r20 = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: rerenderReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition, useSyncExternalStore: updateSyncExternalStore, useId: updateId };
+        r20.useId = updateId
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 118, Reg8: 20>
-        createEnvironment()[118] = { readContext: readContext, use: use, useCallback: updateCallback, useContext: readContext, useEffect: updateEffect, useImperativeHandle: updateImperativeHandle, useInsertionEffect: updateInsertionEffect, useLayoutEffect: updateLayoutEffect, useMemo: updateMemo, useReducer: rerenderReducer, useRef: updateRef, useState: useState, useDebugValue: mountDebugValue, useDeferredValue: useDeferredValue, useTransition: useTransition, useSyncExternalStore: updateSyncExternalStore, useId: updateId }
+        createEnvironment()[118] = r20
         // CODE → <NewObject>: <Reg8: 20>
-        // USED → r20 = {  };
+        r20 = {  }
         // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 844>  # Function: [#844 isMounted of 34 bytes]: 2 params @ offset 0x0018a021
         // USED → r21 = isMounted;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 16785>  # String: 'isMounted' (Identifier)
-        // USED → r20 = { isMounted: isMounted };
+        r20.isMounted = isMounted
         // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 845>  # Function: [#845 enqueueSetState of 109 bytes]: 4 params @ offset 0x0018a043
         // USED → r21 = enqueueSetState;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22773>  # String: 'enqueueSetState' (Identifier)
-        // USED → r20 = { isMounted: isMounted, enqueueSetState: enqueueSetState };
+        r20.enqueueSetState = enqueueSetState
         // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 846>  # Function: [#846 enqueueReplaceState of 118 bytes]: 4 params @ offset 0x0018a0b0
         // USED → r21 = enqueueReplaceState;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 22685>  # String: 'enqueueReplaceState' (Identifier)
-        // USED → r20 = { isMounted: isMounted, enqueueSetState: enqueueSetState, enqueueReplaceState: enqueueReplaceState };
+        r20.enqueueReplaceState = enqueueReplaceState
         // CODE → <CreateClosure>: <Reg8: 21, Reg8: 1, function_id: 847>  # Function: [#847 enqueueForceUpdate of 109 bytes]: 3 params @ offset 0x0018a126
         // USED → r21 = enqueueForceUpdate;
         // CODE → <PutNewOwnById>: <Reg8: 20, Reg8: 21, string_id: 17151>  # String: 'enqueueForceUpdate' (Identifier)
-        // USED → r20 = { isMounted: isMounted, enqueueSetState: enqueueSetState, enqueueReplaceState: enqueueReplaceState, enqueueForceUpdate: enqueueForceUpdate };
+        r20.enqueueForceUpdate = enqueueForceUpdate
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 119, Reg8: 20>
-        createEnvironment()[119] = { isMounted: isMounted, enqueueSetState: enqueueSetState, enqueueReplaceState: enqueueReplaceState, enqueueForceUpdate: enqueueForceUpdate }
+        createEnvironment()[119] = r20
         // CODE → <TryGetById>: <Reg8: 20, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
         // USED → r20 = globalThis.WeakMap;
         // CODE → <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
@@ -2345,9 +2345,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 123, Reg8: 12>
             createEnvironment()[123] = false
             // CODE → <NewObjectWithBuffer>: <Reg8: 17, UInt16: 3, UInt16: 3, UInt16: 64, UInt16: 225>  # Object: {'dehydrated': null, 'treeContext': null, 'retryLane': 0}
-            // USED → r17 = { "dehydrated": null, "treeContext": null, "retryLane": 0 };
+            r17 = { "dehydrated": null, "treeContext": null, "retryLane": 0 }
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
-            createEnvironment()[124] = { "dehydrated": null, "treeContext": null, "retryLane": 0 }
+            createEnvironment()[124] = r17
             // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
             // USED → r15 = createCursor.call(undefined, null);
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
@@ -2477,19 +2477,19 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 168, Reg8: 10>
             createEnvironment()[168] = new globalThis.Map()
             // CODE → <NewObjectWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 4, UInt16: 340, UInt16: 302>  # Object: {'findFiberByHostInstance': null, 'bundleType': 0, 'version': '18.3.0-canary-9372c6311-20240315', 'rendererPackageName': 'react-native-renderer'}
-            // USED → r12 = { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer" };
+            r12 = { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer" }
             // CODE → <PutById>: <Reg8: 12, Reg8: 8, UInt8: 6, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-            { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer" }.findFiberByHostInstance = getInstanceFromNode
+            r12.findFiberByHostInstance = getInstanceFromNode
             // CODE → <LoadConstString>: <Reg8: 10, string_id: 1866>  # String: '18.3.0-canary-9372c6311-20240315' (String)
             // USED → r10 = "18.3.0-canary-9372c6311-20240315";
             // CODE → <NewObject>: <Reg8: 8>
-            // USED → r8 = {  };
+            r8 = {  }
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 4, string_id: 14222>  # String: 'getInspectorDataForInstance' (Identifier)
-            // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance };
+            r8.getInspectorDataForInstance = getInspectorDataForInstance
             // CODE → <CreateClosure>: <Reg8: 15, Reg8: 1, function_id: 849>  # Function: [#849 getInspectorDataForViewTag of 21 bytes]: 1 params @ offset 0x0018a245
             // USED → r15 = getInspectorDataForViewTag;
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12857>  # String: 'getInspectorDataForViewTag' (Identifier)
-            // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag };
+            r8.getInspectorDataForViewTag = getInspectorDataForViewTag
             // CODE → <CreateClosure>: <Reg8: 16, Reg8: 1, function_id: 850>  # Function: [#850  of 21 bytes]: 1 params @ offset 0x0018a25a
             // USED → r16 = function_850;
             // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
@@ -2497,72 +2497,72 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
             // USED → r15 = function_850.bind(null, findNodeHandle);
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-            // USED → r8 = { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) };
+            r8.getInspectorDataForViewAtPoint = function_850.bind(null, findNodeHandle)
             // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-            // USED → r12 = { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } };
+            r12.rendererConfig = r8
             // CODE → <NewObject>: <Reg8: 8>
-            // USED → r8 = {  };
+            r8 = {  }
             // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 53, string_id: 18532>  # String: 'bundleType' (Identifier)
-            // USED → r15 = { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType;
+            // USED → r15 = r12.bundleType;
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 18532>  # String: 'bundleType' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType };
+            r8.bundleType = r12.bundleType
             // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 54, string_id: 12196>  # String: 'version' (Identifier)
-            // USED → r15 = { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version;
+            // USED → r15 = r12.version;
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 12196>  # String: 'version' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version };
+            r8.version = r12.version
             // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 55, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-            // USED → r15 = { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName;
+            // USED → r15 = r12.rendererPackageName;
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 22187>  # String: 'rendererPackageName' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName };
+            r8.rendererPackageName = r12.rendererPackageName
             // CODE → <GetById>: <Reg8: 15, Reg8: 12, UInt8: 56, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-            // USED → r15 = { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig;
+            // USED → r15 = r12.rendererConfig;
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 14815>  # String: 'rendererConfig' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig };
+            r8.rendererConfig = r12.rendererConfig
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18506>  # String: 'overrideHookState' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null };
+            r8.overrideHookState = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 18507>  # String: 'overrideHookStateDeletePath' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null };
+            r8.overrideHookStateDeletePath = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14986>  # String: 'overrideHookStateRenamePath' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null };
+            r8.overrideHookStateRenamePath = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15629>  # String: 'overrideProps' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null };
+            r8.overrideProps = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15630>  # String: 'overridePropsDeletePath' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null };
+            r8.overridePropsDeletePath = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 13868>  # String: 'overridePropsRenamePath' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null };
+            r8.overridePropsRenamePath = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 15428>  # String: 'setErrorHandler' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null };
+            r8.setErrorHandler = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 14649>  # String: 'setSuspenseHandler' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null };
+            r8.setSuspenseHandler = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null };
+            r8.scheduleUpdate = null
             // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
             // USED → r14 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher };
+            r8.currentDispatcherRef = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
             // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
             // USED → r14 = findHostInstanceByFiber;
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber };
+            r8.findHostInstanceByFiber = findHostInstanceByFiber
             // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-            // USED → r12 = { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance;
+            // USED → r12 = r12.findFiberByHostInstance || emptyFindFiberByHostInstance;
             // ──────────────── Block 29 ──────────────── 
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 12, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance };
+            r8.findFiberByHostInstance = r12.findFiberByHostInstance || emptyFindFiberByHostInstance
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20510>  # String: 'findHostInstancesForRefresh' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null };
+            r8.findHostInstancesForRefresh = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17297>  # String: 'scheduleRefresh' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null };
+            r8.scheduleRefresh = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17366>  # String: 'scheduleRoot' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null };
+            r8.scheduleRoot = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 20484>  # String: 'setRefreshHandler' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null };
+            r8.setRefreshHandler = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17221>  # String: 'getCurrentFiber' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null };
+            r8.getCurrentFiber = null
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 10, string_id: 19409>  # String: 'reconcilerVersion' (Identifier)
-            // USED → r8 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" };
+            r8.reconcilerVersion = "18.3.0-canary-9372c6311-20240315"
             // CODE → <Mov>: <Reg8: 7, Reg8: 8>
-            // USED → r7 = { bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" };
+            // USED → r7 = r8;
             // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
             // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
             // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
@@ -2586,9 +2586,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
                         // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
                         // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject;
                         // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-                        // USED → r7 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject({ bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" });
+                        // USED → r7 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r8);
                         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
-                        createEnvironment()[31] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject({ bundleType: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.bundleType, version: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.version, rendererPackageName: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererPackageName, rendererConfig: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.rendererConfig, overrideHookState: null, overrideHookStateDeletePath: null, overrideHookStateRenamePath: null, overrideProps: null, overridePropsDeletePath: null, overridePropsRenamePath: null, setErrorHandler: null, setSuspenseHandler: null, scheduleUpdate: null, currentDispatcherRef: param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher, findHostInstanceByFiber: findHostInstanceByFiber, findFiberByHostInstance: { "findFiberByHostInstance": null, "bundleType": 0, "version": "18.3.0-canary-9372c6311-20240315", "rendererPackageName": "react-native-renderer", rendererConfig: { getInspectorDataForInstance: getInspectorDataForInstance, getInspectorDataForViewTag: getInspectorDataForViewTag, getInspectorDataForViewAtPoint: function_850.bind(null, findNodeHandle) } }.findFiberByHostInstance || emptyFindFiberByHostInstance, findHostInstancesForRefresh: null, scheduleRefresh: null, scheduleRoot: null, setRefreshHandler: null, getCurrentFiber: null, reconcilerVersion: "18.3.0-canary-9372c6311-20240315" })
+                        createEnvironment()[31] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r8)
                         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
                         createEnvironment()[32] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
                     }
@@ -2610,45 +2610,45 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
                 // CODE → <Mov>: <Reg8: 44, Reg8: 45>
                 // USED → r44 = r49.next();
                 // CODE → <GetByIdShort>: <Reg8: 52, Reg8: 50, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-                // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }.hasOwnProperty;
+                // USED → r52 = r50.hasOwnProperty;
                 // CODE → <Call2>: <Reg8: 52, Reg8: 52, Reg8: 50, Reg8: 44>
-                // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }.hasOwnProperty(r49.next());
+                // USED → r52 = r50.hasOwnProperty(r49.next());
                 // CODE → <Mov>: <Reg8: 43, Reg8: 54>
                 r43 = false
                 // CODE → <JmpFalse>: <Addr8: -31, Reg8: 52>  # Address: 00000e5d
-                if (!{ ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }.hasOwnProperty(r49.next())) goto label_3677;
+                if (!r50.hasOwnProperty(r49.next())) goto label_3677;
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
-                // USED → r52 = { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }[r49.next()];
+                // USED → r52 = r50[r49.next()];
                 // CODE → <GetByIdShort>: <Reg8: 53, Reg8: 51, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-                // USED → r53 = {  }.hasOwnProperty;
+                // USED → r53 = r51.hasOwnProperty;
                 // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
-                // USED → r53 = {  }.hasOwnProperty(r49.next());
-                if (!{  }.hasOwnProperty(r49.next())) {
+                // USED → r53 = r51.hasOwnProperty(r49.next());
+                if (!r51.hasOwnProperty(r49.next())) {
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-                    // USED → r53 = {  }[r49.next()];
-                    if (!{  }[r49.next()]) {
+                    // USED → r53 = r51[r49.next()];
+                    if (!r51[r49.next()]) {
                         // ──────────────── Block 6 ──────────────── 
                         // CODE → <PutByVal>: <Reg8: 51, Reg8: 44, Reg8: 52>
-                        {  }[r49.next()] = { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }[r49.next()]
+                        r51[r49.next()] = r50[r49.next()]
                         // CODE → <LoadConstTrue>: <Reg8: 43>
                         r43 = true
                         // CODE → <Mov>: <Reg8: 42, Reg8: 52>
-                        r42 = { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }[r49.next()]
+                        r42 = r50[r49.next()]
                         // CODE → <Jmp>: <Addr8: -81>  # Address: 00000e5d
                         goto label_3677;
                     }
                 } else {
                     // ──────────────── Block 4 ──────────────── 
                     // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-                    // USED → r53 = {  }[r49.next()];
+                    // USED → r53 = r51[r49.next()];
                     // CODE → <Mov>: <Reg8: 43, Reg8: 54>
                     r43 = false
                     // CODE → <Mov>: <Reg8: 42, Reg8: 52>
-                    r42 = { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }[r49.next()]
+                    r42 = r50[r49.next()]
                     // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
-                    if ({  }[r49.next()] === { ResponderEventPlugin: { _getResponder: _getResponder, eventTypes: { startShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onStartShouldSetResponder", "captured": "onStartShouldSetResponderCapture" }, dependencies: ["topTouchStart"] }, scrollShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onScrollShouldSetResponder", "captured": "onScrollShouldSetResponderCapture" }, dependencies: ["topScroll"] }, selectionChangeShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onSelectionChangeShouldSetResponder", "captured": "onSelectionChangeShouldSetResponderCapture" }, dependencies: ["topSelectionChange"] }, moveShouldSetResponder: { phasedRegistrationNames: { "bubbled": "onMoveShouldSetResponder", "captured": "onMoveShouldSetResponderCapture" }, dependencies: ["topTouchMove"] }, responderStart: { registrationName: "onResponderStart", dependencies: ["topTouchStart"] }, responderMove: { registrationName: "onResponderMove", dependencies: ["topTouchMove"] }, responderEnd: { registrationName: "onResponderEnd", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderRelease: { registrationName: "onResponderRelease", dependencies: ["topTouchCancel", "topTouchEnd"] }, responderTerminationRequest: { registrationName: "onResponderTerminationRequest", dependencies: [] }, responderGrant: { registrationName: "onResponderGrant", dependencies: [] }, responderReject: { registrationName: "onResponderReject", dependencies: [] }, responderTerminate: { registrationName: "onResponderTerminate", dependencies: [] } }, extractEvents: extractEvents, GlobalResponderHandler: null, injection: { injectGlobalResponderHandler: injectGlobalResponderHandler } }, ReactNativeBridgeEventPlugin: { eventTypes: {  }, extractEvents: extractEvents } }[r49.next()]) goto label_3677;
+                    if (r51[r49.next()] === r50[r49.next()]) goto label_3677;
                 }
             }
         }

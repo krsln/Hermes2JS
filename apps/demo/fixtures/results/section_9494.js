@@ -15,13 +15,13 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r4 = globalThis.console.log;
     // CODE → <NewArray>: <Reg8: 6, UInt16: 0>
-    // USED → r6 = [];
+    r6 = []
     // CODE → <LoadConstZero>: <Reg8: 7>
     r7 = 0
     // CODE → <NewArrayWithBuffer>: <Reg8: 8, UInt16: 3, UInt16: 3, UInt16: 19164>  # Array: [1, 2, 3]
     r8 = [1, 2, 3]
     // CODE → <Mov>: <Reg8: 9, Reg8: 6>
-    r9 = []
+    r9 = r6
     // CODE → <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
     r0 = applyArguments(r-4, r-3, r-2, r-1)
     // CODE → <LoadConstUndefined>: <Reg8: 1>
@@ -29,7 +29,7 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 12477>  # Function: [#12477 sum of 19 bytes]: 4 params @ offset 0x00243e3c
     r9 = sum
     // CODE → <Mov>: <Reg8: 8, Reg8: 6>
-    r8 = []
+    r8 = r6
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 49, UInt8: 4>  # Built-in function: [#49 applyWithNewTarget]

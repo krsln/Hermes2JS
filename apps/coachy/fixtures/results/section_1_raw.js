@@ -69,15 +69,15 @@ function function_1(param0, param1) {
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 7>
     createEnvironment()[1] = clear.call(undefined)
     // CODE → <NewObject>: <Reg8: 7>
-    // USED → r7 = {  };
+    r7 = {  }
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 7>
-    createEnvironment()[2] = {  }
+    createEnvironment()[2] = r7
     // CODE → <NewObject>: <Reg8: 7>
-    // USED → r7 = {  };
+    r7 = {  }
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 7, UInt8: 4, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
-    // USED → r7 = {  }.hasOwnProperty;
+    // USED → r7 = r7.hasOwnProperty;
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 7>
-    createEnvironment()[3] = {  }.hasOwnProperty
+    createEnvironment()[3] = r7.hasOwnProperty
     // CODE → <PutById>: <Reg8: 4, Reg8: 6, UInt8: 4, string_id: 21604>  # String: 'importDefault' (Identifier)
     metroRequire.importDefault = metroImportDefault
     // CODE → <PutById>: <Reg8: 4, Reg8: 5, UInt8: 5, string_id: 23806>  # String: 'importAll' (Identifier)
@@ -109,9 +109,9 @@ function function_1(param0, param1) {
     // CODE → <PutById>: <Reg8: 4, Reg8: 3, UInt8: 9, string_id: 24224>  # String: 'packModuleId' (Identifier)
     metroRequire.packModuleId = packModuleId
     // CODE → <NewArray>: <Reg8: 3, UInt16: 0>
-    // USED → r3 = [];
+    r3 = []
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 7, Reg8: 3>
-    createEnvironment()[7] = []
+    createEnvironment()[7] = r3
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 5, string_id: 26>  # String: 'Map' (Identifier)
     // USED → r1 = globalThis.Map;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 158>  # String: 'prototype' (Identifier)

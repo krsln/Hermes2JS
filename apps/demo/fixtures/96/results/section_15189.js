@@ -39,22 +39,22 @@ async function* anon_15189(param0) {
         // CODE → <Call2>: <Reg8: 6, Reg8: 9, Reg8: 2, Reg8: 5>
         // USED → r6 = getEnvironment(2)[2].call(undefined, 1);
         // CODE → <NewArray>: <Reg8: 1, UInt16: 2>
-        // USED → r1 = [];
+        r1 = []
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 6, UInt8: 0>
-        // USED → r1 = [getEnvironment(2)[2].call(undefined, 1)];
+        // USED → r1 = r1[0] = getEnvironment(2)[2].call(undefined, 1);
         // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 2>
         // USED → r6 = 2;
         // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 2, Reg8: 6>
         // USED → r9 = getEnvironment(2)[2].call(undefined, 2);
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
-        // USED → r1 = [getEnvironment(2)[2].call(undefined, 1), getEnvironment(2)[2].call(undefined, 2)];
+        // USED → r1 = (r1[0] = getEnvironment(2)[2].call(undefined, 1))[1] = getEnvironment(2)[2].call(undefined, 2);
         // CODE → <Call2>: <Reg8: 1, Reg8: 7, Reg8: 8, Reg8: 1>
-        // USED → r1 = await globalThis.Promise.all([getEnvironment(2)[2].call(undefined, 1), getEnvironment(2)[2].call(undefined, 2)]);
+        // USED → r1 = await globalThis.Promise.all((r1[0] = getEnvironment(2)[2].call(undefined, 1))[1] = getEnvironment(2)[2].call(undefined, 2));
         // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000005a
         goto label_90;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
-        return await globalThis.Promise.all([getEnvironment(2)[2].call(undefined, 1), getEnvironment(2)[2].call(undefined, 2)]);
+        return await globalThis.Promise.all((r1[0] = getEnvironment(2)[2].call(undefined, 1))[1] = getEnvironment(2)[2].call(undefined, 2));
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 7>
         // USED → r1 = await yield;

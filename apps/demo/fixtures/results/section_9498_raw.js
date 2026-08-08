@@ -41,13 +41,13 @@ function callMapSetTests(param0) {
     // CODE → <SelectObject>: <Reg8: 7, Reg8: 4, Reg8: 3>
     // USED → r7 = new globalThis.WeakMap(__uninitialized_this_for_new__);
     // CODE → <NewObject>: <Reg8: 6>
-    // USED → r6 = {  };
+    r6 = {  }
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 55>  # String: 'set' (Identifier)
     // USED → r4 = new globalThis.WeakMap(__uninitialized_this_for_new__).set;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 211>  # String: 'value' (Identifier)
     // USED → r3 = "value";
     // CODE → <Call3>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 6, Reg8: 3>
-    r3 = new globalThis.WeakMap(__uninitialized_this_for_new__).set({  }, "value")
+    r3 = new globalThis.WeakMap(__uninitialized_this_for_new__).set(r6, "value")
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -55,9 +55,9 @@ function callMapSetTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 7, UInt8: 5, string_id: 11>  # String: 'has' (Identifier)
     // USED → r3 = new globalThis.WeakMap(__uninitialized_this_for_new__).has;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 6>
-    // USED → r3 = new globalThis.WeakMap(__uninitialized_this_for_new__).has({  });
+    // USED → r3 = new globalThis.WeakMap(__uninitialized_this_for_new__).has(r6);
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log(new globalThis.WeakMap(__uninitialized_this_for_new__).has({  }))
+    r3 = globalThis.console.log(new globalThis.WeakMap(__uninitialized_this_for_new__).has(r6))
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -65,9 +65,9 @@ function callMapSetTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 7, UInt8: 6, string_id: 49>  # String: 'get' (Identifier)
     // USED → r3 = new globalThis.WeakMap(__uninitialized_this_for_new__).get;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 6>
-    // USED → r3 = new globalThis.WeakMap(__uninitialized_this_for_new__).get({  });
+    // USED → r3 = new globalThis.WeakMap(__uninitialized_this_for_new__).get(r6);
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log(new globalThis.WeakMap(__uninitialized_this_for_new__).get({  }))
+    r3 = globalThis.console.log(new globalThis.WeakMap(__uninitialized_this_for_new__).get(r6))
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

@@ -8,7 +8,7 @@ from typing import Dict, Optional
 
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.ir.expressions import Expression, Identifier, RawExpression
+from hermes_decompiler.ir.expressions import Expression, Identifier, RawExpression, ObjectExpression, ArrayExpression
 from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)
@@ -27,6 +27,9 @@ class OpcodeContext:
 class ArgsPattern:
     regex: re.Pattern[str]
     desc: str
+
+
+_IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
 
 
 class OpcodeHandler(ABC):
@@ -169,11 +172,14 @@ class OpcodeHandler(ABC):
         state_value = state.value
         if isinstance(state_value, Expression):
             state.reads += 1
-            state.definition.definition_used = True
+
+            if isinstance(state.definition.value, _IDENTITY_SENSITIVE_TYPES):
+                return Identifier(name=f"r{reg}")
 
             if state.reads > 1:
                 state_value = dataclasses.replace(state_value)
 
+            state.definition.definition_used = True
             return state_value
 
         return Identifier(name=f"r{reg}")

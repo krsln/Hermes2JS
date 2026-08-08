@@ -23,13 +23,13 @@ function weakMapTest(param0) {
     // CODE → <SelectObject>: <Reg8: 5, Reg8: 2, Reg8: 1>
     // USED → r5 = new globalThis.WeakMap();
     // CODE → <NewObject>: <Reg8: 4>
-    // USED → r4 = {  };
+    r4 = {  }
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 185>  # String: 'set' (Identifier)
     // USED → r2 = new globalThis.WeakMap().set;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 205>  # String: 'value' (Identifier)
     // USED → r1 = "value";
     // CODE → <Call3>: <Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 4, Reg8: 1>
-    r1 = new globalThis.WeakMap().set({  }, "value")
+    r1 = new globalThis.WeakMap().set(r4, "value")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -37,9 +37,9 @@ function weakMapTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 5, UInt8: 6, string_id: 153>  # String: 'has' (Identifier)
     // USED → r1 = new globalThis.WeakMap().has;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 5, Reg8: 4>
-    // USED → r1 = new globalThis.WeakMap().has({  });
+    // USED → r1 = new globalThis.WeakMap().has(r4);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log(new globalThis.WeakMap().has({  }))
+    r1 = globalThis.console.log(new globalThis.WeakMap().has(r4))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -47,9 +47,9 @@ function weakMapTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 5, UInt8: 7, string_id: 50>  # String: 'get' (Identifier)
     // USED → r1 = new globalThis.WeakMap().get;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 5, Reg8: 4>
-    // USED → r1 = new globalThis.WeakMap().get({  });
+    // USED → r1 = new globalThis.WeakMap().get(r4);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log(new globalThis.WeakMap().get({  }))
+    r1 = globalThis.console.log(new globalThis.WeakMap().get(r4))
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

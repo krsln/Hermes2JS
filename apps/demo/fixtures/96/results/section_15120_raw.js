@@ -15,13 +15,13 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <NewArray>: <Reg8: 5, UInt16: 0>
-    // USED → r5 = [];
+    r5 = []
     // CODE → <NewArrayWithBuffer>: <Reg8: 7, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
     r7 = [1, 2, 3]
     // CODE → <LoadConstZero>: <Reg8: 6>
     r6 = 0
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>
-    r8 = []
+    r8 = r5
     // CODE → <CallBuiltin>: <Reg8: 0, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
     r0 = arraySpread(r-4, r-3, r-2, r-1)
     // CODE → <CreateEnvironment>: <Reg8: 0>
@@ -31,7 +31,7 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Mov>: <Reg8: 7, Reg8: 5>
-    r7 = []
+    r7 = r5
     // CODE → <LoadConstUndefined>: <Reg8: 6>
     r6 = undefined
     // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 4>  # Built-in function: [#47 apply]

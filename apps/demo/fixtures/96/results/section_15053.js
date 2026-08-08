@@ -11,15 +11,15 @@ function forEachTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     r1 = globalThis.console.log("__BC:ControlFlow/ForEachTests/forEachTest/start")
     // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 4, UInt16: 4, UInt16: 23599>  # Array: [10, 20, 30, 40]
-    // USED → r3 = [10, 20, 30, 40];
+    r3 = [10, 20, 30, 40]
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 144>  # String: 'forEach' (Identifier)
-    // USED → r2 = [10, 20, 30, 40].forEach;
+    // USED → r2 = r3.forEach;
     // CODE → <CreateEnvironment>: <Reg8: 1>
     r1 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 15054>  # Function: [#15054  of 78 bytes]: 3 params @ offset 0x00267dd1
     // USED → r1 = function_15054;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = [10, 20, 30, 40].forEach(function_15054)
+    r1 = r3.forEach(function_15054)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -11,29 +11,29 @@ function optionalChainingTest(param0) {
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     r5 = globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1916, UInt16: 20>  # Object: {'b': null}
-    // USED → r5 = { "b": null };
+    r5 = { "b": null }
     // CODE → <NewObject>: <Reg8: 6>
-    // USED → r6 = {  };
+    r6 = {  }
     // CODE → <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 6, UInt8: 0>
-    { "b": null }.slot_0 = {  }
+    r5.slot_0 = r6
     // CODE → <LoadConstNull>: <Reg8: 1>
     // USED → r1 = null;
     // CODE → <Eq>: <Reg8: 3, Reg8: 5, Reg8: 1>
-    // USED → r3 = { "b": null } == null;
+    // USED → r3 = r5 == null;
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
-    if ({ "b": null } != null) {
+    if (r5 != null) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 2, string_id: 36>  # String: 'b' (Identifier)
-        // USED → r5 = { "b": null }.b;
+        // USED → r5 = r5.b;
         // CODE → <Eq>: <Reg8: 3, Reg8: 5, Reg8: 1>
-        // USED → r3 = { "b": null }.b == null;
+        // USED → r3 = r5.b == null;
         // CODE → <LoadConstUndefined>: <Reg8: 7>
-        r7 = ({ "b": null }.b == null) ? undefined : { "b": null }.b.c
+        r7 = (r5.b == null) ? undefined : r5.b.c
     }
-    if ({ "b": null }.b.c == null) {
+    if (r5.b.c == null) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → <LoadConstInt>: <Reg8: 7, Imm32: -1>
         // USED → r7 = -1;

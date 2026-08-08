@@ -21,15 +21,15 @@ function function_15205(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r8 = globalThis.Object.defineProperty;
     // CODE → <NewObject>: <Reg8: 3>
-    // USED → r3 = {  };
+    r3 = {  }
     // CODE → <LoadConstTrue>: <Reg8: 0>
     // USED → r0 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
-    // USED → r3 = { value: true };
+    r3.value = true
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 8, Reg8: 9, Reg8: 1, Reg8: 0, Reg8: 3>
-    r0 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
+    r0 = globalThis.Object.defineProperty(param6, "__esModule", r3)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 5, function_id: 15208>  # Function: [#15208 privateStaticTest of 262 bytes]: 1 params @ offset 0x0026bc7a
     // USED → r0 = privateStaticTest;
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10854>  # String: 'privateStaticTest' (Identifier)
@@ -129,9 +129,9 @@ function function_15205(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r7 = globalThis.Object.defineProperty;
     // CODE → <NewObjectWithBuffer>: <Reg8: 4, UInt16: 2, UInt16: 2, UInt16: 43, UInt16: 45>  # Object: {'writable': true, 'value': 0}
-    // USED → r4 = { "writable": true, "value": 0 };
+    r4 = { "writable": true, "value": 0 }
     // CODE → <Call4>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 9, Reg8: 4>
-    r4 = globalThis.Object.defineProperty(function_15209.call(undefined), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "instances"), { "writable": true, "value": 0 })
+    r4 = globalThis.Object.defineProperty(function_15209.call(undefined), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "instances"), r4)
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 100>
     // USED → r4 = 100;
     // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 11547>  # String: 'MAX' (Identifier)
@@ -155,9 +155,9 @@ function function_15205(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r6 = globalThis.Object.defineProperty;
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 2, UInt16: 43, UInt16: 219>  # Object: {'writable': true, 'value': 'configured'}
-    // USED → r5 = { "writable": true, "value": "configured" };
+    r5 = { "writable": true, "value": "configured" }
     // CODE → <Call4>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 4, Reg8: 3, Reg8: 5>
-    r5 = globalThis.Object.defineProperty(function_15217.call(undefined, function_15209.call(undefined)), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label"), { "writable": true, "value": "configured" })
+    r5 = globalThis.Object.defineProperty(function_15217.call(undefined, function_15209.call(undefined)), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label"), r5)
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 4, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 5, string_id: 90>  # String: 'log' (Identifier)

@@ -60,14 +60,14 @@ async function* anon_15193(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 7>
     // USED → r7 = getEnvironment(2)[7];
     // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
-    // USED → r3 = [1, 2, 3];
+    r3 = [1, 2, 3]
     // CODE → <Call2>: <Reg8: 3, Reg8: 7, Reg8: 5, Reg8: 3>
-    // USED → r3 = await getEnvironment(2)[7].call(undefined, [1, 2, 3]);
+    // USED → r3 = await getEnvironment(2)[7].call(undefined, r3);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000005e
     goto label_94;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
-    return await getEnvironment(2)[7].call(undefined, [1, 2, 3]);
+    return await getEnvironment(2)[7].call(undefined, r3);
     // ──────────────── Block 9 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 7>
     // USED → r3 = await yield;

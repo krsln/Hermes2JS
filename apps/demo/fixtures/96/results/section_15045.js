@@ -175,17 +175,17 @@ async function* anon_15045(param0) {
         // CODE → <GetById>: <Reg8: 7, Reg8: 1, UInt8: 24, string_id: 10295>  # String: 'tryLoopMultiReturnTest' (Identifier)
         // USED → r7 = getEnvironment(2)[11].tryLoopMultiReturnTest;
         // CODE → <NewArrayWithBuffer>: <Reg8: 1, UInt16: 4, UInt16: 2, UInt16: 23560>  # Array: [1, 0]
-        // USED → r1 = [1, 0];
+        r1 = [1, 0]
         // CODE → <LoadConstInt>: <Reg8: 8, Imm32: -1>
         // USED → r8 = -1;
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 8, UInt8: 2>
-        // USED → r1 = [1, 0, -1];
+        // USED → r1 = r1[2] = -1;
         // CODE → <LoadConstUInt8>: <Reg8: 9, UInt8: 2>
         // USED → r9 = 2;
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 3>
-        // USED → r1 = [1, 0, -1, 2];
+        // USED → r1 = (r1[2] = -1)[3] = 2;
         // CODE → <Call2>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 1>
-        r1 = getEnvironment(2)[11].tryLoopMultiReturnTest.call(undefined, [1, 0, -1, 2])
+        r1 = getEnvironment(2)[11].tryLoopMultiReturnTest.call(undefined, (r1[2] = -1)[3] = 2)
         // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
         // USED → r1 = getEnvironment(2)[11];
         // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 25, string_id: 11002>  # String: 'nestedTryCatchTest' (Identifier)
@@ -209,25 +209,25 @@ async function* anon_15045(param0) {
         // CODE → <GetById>: <Reg8: 7, Reg8: 1, UInt8: 28, string_id: 11112>  # String: 'tryFinallyLoopBreakTest' (Identifier)
         // USED → r7 = getEnvironment(2)[11].tryFinallyLoopBreakTest;
         // CODE → <NewArrayWithBuffer>: <Reg8: 1, UInt16: 4, UInt16: 4, UInt16: 23569>  # Array: [1, 2, 0, 3]
-        // USED → r1 = [1, 2, 0, 3];
+        r1 = [1, 2, 0, 3]
         // CODE → <Call2>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 1>
-        r1 = getEnvironment(2)[11].tryFinallyLoopBreakTest.call(undefined, [1, 2, 0, 3])
+        r1 = getEnvironment(2)[11].tryFinallyLoopBreakTest.call(undefined, r1)
         // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
         // USED → r1 = getEnvironment(2)[11];
         // CODE → <GetById>: <Reg8: 9, Reg8: 1, UInt8: 29, string_id: 8691>  # String: 'tryCatchInsideLoopTest' (Identifier)
         // USED → r9 = getEnvironment(2)[11].tryCatchInsideLoopTest;
         // CODE → <NewArrayWithBuffer>: <Reg8: 1, UInt16: 3, UInt16: 1, UInt16: 3>  # Array: [1]
-        // USED → r1 = [1];
+        r1 = [1]
         // CODE → <LoadConstInt>: <Reg8: 7, Imm32: -2>
         // USED → r7 = -2;
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 1>
-        // USED → r1 = [1, -2];
+        // USED → r1 = r1[1] = -2;
         // CODE → <LoadConstUInt8>: <Reg8: 7, UInt8: 3>
         // USED → r7 = 3;
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 2>
-        // USED → r1 = [1, -2, 3];
+        // USED → r1 = (r1[1] = -2)[2] = 3;
         // CODE → <Call2>: <Reg8: 1, Reg8: 9, Reg8: 2, Reg8: 1>
-        r1 = getEnvironment(2)[11].tryCatchInsideLoopTest.call(undefined, [1, -2, 3])
+        r1 = getEnvironment(2)[11].tryCatchInsideLoopTest.call(undefined, (r1[1] = -2)[2] = 3)
         // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
         // USED → r1 = getEnvironment(2)[11];
         // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 30, string_id: 8711>  # String: 'tryCatchFinallyBranchInFinallyTest' (Identifier)
@@ -247,13 +247,13 @@ async function* anon_15045(param0) {
         // CODE → <GetById>: <Reg8: 5, Reg8: 1, UInt8: 32, string_id: 10975>  # String: 'loopBreakCrossesTryBoundaryTest' (Identifier)
         // USED → r5 = getEnvironment(2)[11].loopBreakCrossesTryBoundaryTest;
         // CODE → <NewArrayWithBuffer>: <Reg8: 1, UInt16: 5, UInt16: 3, UInt16: 23586>  # Array: [1, 0, 2]
-        // USED → r1 = [1, 0, 2];
+        r1 = [1, 0, 2]
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 8, UInt8: 3>
-        // USED → r1 = [1, 0, 2, -1];
+        // USED → r1 = r1[3] = -1;
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 4>
-        // USED → r1 = [1, 0, 2, -1, 3];
+        // USED → r1 = (r1[3] = -1)[4] = 3;
         // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
-        r1 = getEnvironment(2)[11].loopBreakCrossesTryBoundaryTest.call(undefined, [1, 0, 2, -1, 3])
+        r1 = getEnvironment(2)[11].loopBreakCrossesTryBoundaryTest.call(undefined, (r1[3] = -1)[4] = 3)
         // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
         // USED → r1 = getEnvironment(2)[11];
         // CODE → <GetById>: <Reg8: 5, Reg8: 1, UInt8: 33, string_id: 8763>  # String: 'switchInsideTryTest' (Identifier)

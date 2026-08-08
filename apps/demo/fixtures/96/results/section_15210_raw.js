@@ -25,13 +25,13 @@ function Counter(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 7>
     // USED → r5 = getEnvironment(1)[7];
     // CODE → <NewObject>: <Reg8: 4>
-    // USED → r4 = {  };
+    r4 = {  }
     // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 3, UInt8: 11>
     // USED → r9 = getEnvironment(1)[11];
     // CODE → <PutNewOwnByIdShort>: <Reg8: 4, Reg8: 9, string_id: 205>  # String: 'value' (Identifier)
-    // USED → r4 = { value: getEnvironment(1)[11] };
+    r4.value = getEnvironment(1)[11]
     // CODE → <Call4>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5, Reg8: 4>
-    r4 = globalThis.Object.defineProperty(this, getEnvironment(1)[7], { value: getEnvironment(1)[11] })
+    r4 = globalThis.Object.defineProperty(this, getEnvironment(1)[7], r4)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 2, string_id: 24>  # String: 'Object' (Identifier)
     // USED → r7 = globalThis.Object;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 3, string_id: 108>  # String: 'defineProperty' (Identifier)
@@ -39,9 +39,9 @@ function Counter(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 5>
     // USED → r5 = getEnvironment(1)[5];
     // CODE → <NewObjectWithBuffer>: <Reg8: 4, UInt16: 2, UInt16: 2, UInt16: 43, UInt16: 45>  # Object: {'writable': true, 'value': 0}
-    // USED → r4 = { "writable": true, "value": 0 };
+    r4 = { "writable": true, "value": 0 }
     // CODE → <Call4>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5, Reg8: 4>
-    r4 = globalThis.Object.defineProperty(this, getEnvironment(1)[5], { "writable": true, "value": 0 })
+    r4 = globalThis.Object.defineProperty(this, getEnvironment(1)[5], r4)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 4, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 5, string_id: 90>  # String: 'log' (Identifier)

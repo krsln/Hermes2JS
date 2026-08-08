@@ -19,13 +19,13 @@ function callDestructuringTests(param0) {
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     r5 = globalThis.console.log("__BC:Objects/DestructuringTests/nestedObjectDestructureTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1917, UInt16: 48463>  # Object: {'id': 1, 'name': 'Ada'}
-    // USED → r5 = { "id": 1, "name": "Ada" };
+    r5 = { "id": 1, "name": "Ada" }
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 5, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
-    // USED → r8 = { "id": 1, "name": "Ada" }.name;
+    // USED → r8 = r5.name;
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1918, UInt16: 93>  # Object: {'page': 1}
-    // USED → r5 = { "page": 1 };
+    r5 = { "page": 1 }
     // CODE → <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 12200>  # String: 'page' (Identifier)
-    // USED → r7 = ({ "page": 1 }.page !== undefined) ? { "page": 1 }.page : 1;
+    // USED → r7 = (r5.page !== undefined) ? r5.page : 1;
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // ──────────────── Block 2 ──────────────── 
@@ -36,7 +36,7 @@ function callDestructuringTests(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 200>
     // USED → r0 = 200;
     // CODE → <Call4>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 0, Reg8: 8, Reg8: 7>
-    r5 = globalThis.console.log(200, { "id": 1, "name": "Ada" }.name, ({ "page": 1 }.page !== undefined) ? { "page": 1 }.page : 1)
+    r5 = globalThis.console.log(200, r5.name, (r5.page !== undefined) ? r5.page : 1)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -54,12 +54,12 @@ function callDestructuringTests(param0) {
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     r5 = globalThis.console.log("__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1919, UInt16: 19946>  # Object: {'timeout': 500}
-    // USED → r5 = { "timeout": 500 };
+    r5 = { "timeout": 500 }
     // CODE → <GetById>: <Reg8: 9, Reg8: 5, UInt8: 4, string_id: 8581>  # String: 'timeout' (Identifier)
-    // USED → r9 = ({ "timeout": 500 }.timeout !== undefined) ? { "timeout": 500 }.timeout : 1000;
+    // USED → r9 = (r5.timeout !== undefined) ? r5.timeout : 1000;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetById>: <Reg8: 8, Reg8: 5, UInt8: 5, string_id: 9071>  # String: 'retries' (Identifier)
-    // USED → r8 = ({ "timeout": 500 }.retries !== undefined) ? { "timeout": 500 }.retries : 3;
+    // USED → r8 = (r5.retries !== undefined) ? r5.retries : 3;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <GetParentEnvironment>: <Reg8: 5, UInt8: 0>
     // USED → r5 = getParentEnvironment(0);
@@ -68,7 +68,7 @@ function callDestructuringTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r6 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 9, Reg8: 8>
-    r6 = globalThis.console.log(({ "timeout": 500 }.timeout !== undefined) ? { "timeout": 500 }.timeout : 1000, ({ "timeout": 500 }.retries !== undefined) ? { "timeout": 500 }.retries : 3)
+    r6 = globalThis.console.log((r5.timeout !== undefined) ? r5.timeout : 1000, (r5.retries !== undefined) ? r5.retries : 3)
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r8 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -82,20 +82,20 @@ function callDestructuringTests(param0) {
     // CODE → <Call1>: <Reg8: 1, Reg8: 5, Reg8: 2>
     r1 = getParentEnvironment(0)[0].call(undefined)
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1920, UInt16: 48495>  # Object: {'id': 7}
-    // USED → r5 = { "id": 7 };
+    r5 = { "id": 7 }
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 5, UInt8: 6, string_id: 28>  # String: 'id' (Identifier)
-    // USED → r10 = { "id": 7 }.id;
+    // USED → r10 = r5.id;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 5, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
-    // USED → r9 = ({ "id": 7 }.name !== undefined) ? { "id": 7 }.name : "anon";
+    // USED → r9 = (r5.name !== undefined) ? r5.name : "anon";
     // ──────────────── Block 8 ──────────────── 
     // CODE → <NewArrayWithBuffer>: <Reg8: 7, UInt16: 2, UInt16: 2, UInt16: 48486>  # Array: [9, 10]
-    // USED → r7 = [9, 10];
+    r7 = [9, 10]
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
-    // USED → r6 = [9, 10];
+    // USED → r6 = r7;
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 6>
     // USED → r5 = GetIterator(r6);
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = [9, 10]
+    r7 = r7
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
     // USED → r7 = GetIterator(r6).next();
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>
@@ -141,9 +141,9 @@ function callDestructuringTests(param0) {
     // CODE → <Mov>: <Reg8: 16, Reg8: 6>
     r16 = globalThis.console
     // CODE → <Mov>: <Reg8: 15, Reg8: 10>
-    r15 = { "id": 7 }.id
+    r15 = r5.id
     // CODE → <Mov>: <Reg8: 14, Reg8: 9>
-    r14 = ({ "id": 7 }.name !== undefined) ? { "id": 7 }.name : "anon"
+    r14 = (r5.name !== undefined) ? r5.name : "anon"
     // CODE → <Mov>: <Reg8: 13, Reg8: 8>
     r13 = (GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next()
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>
@@ -167,21 +167,21 @@ function callDestructuringTests(param0) {
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     r5 = globalThis.console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/start")
     // CODE → <NewArray>: <Reg8: 7, UInt16: 2>
-    // USED → r7 = [];
+    r7 = []
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 0>
-    [][0] = 2
+    r7[0] = 2
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1;
     // CODE → <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 1>
-    [][1] = 1
+    r7[1] = 1
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
-    // USED → r6 = [];
+    // USED → r6 = r7;
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 6>
     // USED → r5 = GetIterator(r6);
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = []
+    r7 = r7
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
     // USED → r7 = (GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next();
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>

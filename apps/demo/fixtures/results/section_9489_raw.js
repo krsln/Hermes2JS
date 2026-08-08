@@ -11,21 +11,21 @@ function swapViaDestructureTest(param0) {
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     r5 = globalThis.console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/start")
     // CODE → <NewArray>: <Reg8: 7, UInt16: 2>
-    // USED → r7 = [];
+    r7 = []
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 0>
-    [][0] = 2
+    r7[0] = 2
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1;
     // CODE → <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 1>
-    [][1] = 1
+    r7[1] = 1
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
-    // USED → r6 = [];
+    // USED → r6 = r7;
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 6>
     // USED → r5 = GetIterator(r6);
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = []
+    r7 = r7
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
     // USED → r7 = GetIterator(r6).next();
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>

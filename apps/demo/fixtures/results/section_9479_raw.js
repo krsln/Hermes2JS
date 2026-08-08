@@ -11,14 +11,14 @@ function forOfTest(param0) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     r0 = globalThis.console.log("__BC:Iterators/IteratorTests/forOfTest/start")
     // CODE → <NewArrayWithBuffer>: <Reg8: 2, UInt16: 4, UInt16: 4, UInt16: 37098>  # Array: [1, 2, 3, 4]
-    // USED → r2 = [1, 2, 3, 4];
+    r2 = [1, 2, 3, 4]
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
     // USED → r3 = GetIterator(r2);
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-    r4 = [1, 2, 3, 4]
+    r4 = r2
     // CODE → <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 4>
     // USED → r6 = GetIterator(r2).next();
     // CODE → <Mov>: <Reg8: 4, Reg8: 3>

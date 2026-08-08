@@ -11,9 +11,9 @@ function forInTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     r1 = globalThis.console.log("__BC:Iterators/IteratorTests/forInTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 6, UInt16: 3, UInt16: 3, UInt16: 1155, UInt16: 1179>  # Object: {'a': 1, 'b': 2, 'c': 3}
-    // USED → r6 = { "a": 1, "b": 2, "c": 3 };
+    r6 = { "a": 1, "b": 2, "c": 3 }
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-    r4 = { "a": 1, "b": 2, "c": 3 }
+    r4 = r6
     // CODE → <GetPNameList>: <Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 2>
     // USED → r5 = HermesPropertyIterator(r4);
     // CODE → <JmpUndefined>: <Addr8: 38, Reg8: 5>  # Address: 0000004e
@@ -31,9 +31,9 @@ function forInTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r8 = globalThis.console.log;
     // CODE → <GetByVal>: <Reg8: 7, Reg8: 6, Reg8: 10>
-    // USED → r7 = { "a": 1, "b": 2, "c": 3 }[r5.next()];
+    // USED → r7 = r6[r5.next()];
     // CODE → <Call3>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 7>
-    r7 = globalThis.console.log(r5.next(), { "a": 1, "b": 2, "c": 3 }[r5.next()])
+    r7 = globalThis.console.log(r5.next(), r6[r5.next()])
     // CODE → <Jmp>: <Addr8: -33>  # Address: 0000002b
     goto label_43;
     // ──────────────── Block 3 ──────────────── 

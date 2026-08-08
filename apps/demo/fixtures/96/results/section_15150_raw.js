@@ -13,9 +13,9 @@ function closureLoopTest(param0) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     r2 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/start")
     // CODE → <NewArray>: <Reg8: 4, UInt16: 0>
-    // USED → r4 = [];
+    r4 = []
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
-    createEnvironment()[0] = []
+    createEnvironment()[0] = r4
     // CODE → <CreateClosure>: <Reg8: 5, Reg8: 0, function_id: 15151>  # Function: [#15151 _loop of 35 bytes]: 2 params @ offset 0x0026aa27
     // USED → r5 = _loop;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
@@ -33,7 +33,7 @@ function closureLoopTest(param0) {
     if (0 + 1 < 3) goto label_44;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-    r2 = []
+    r2 = r4
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
     // USED → r3 = GetIterator(r2);
     // ──────────────── Block 3 ──────────────── 

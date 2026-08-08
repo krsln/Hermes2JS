@@ -11,42 +11,42 @@ function optionalChainingTest(param0) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     r0 = globalThis.console.log("__BC:Objects/PropertyTests/optionalChainingTest/start")
     // CODE → <NewObject>: <Reg8: 3>
-    // USED → r3 = {  };
+    r3 = {  }
     // CODE → <NewObject>: <Reg8: 0>
-    // USED → r0 = {  };
+    r0 = {  }
     // CODE → <NewObject>: <Reg8: 2>
-    // USED → r2 = {  };
+    r2 = {  }
     // CODE → <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 2, string_id: 38>  # String: 'b' (Identifier)
-    // USED → r0 = { b: {  } };
+    r0.b = r2
     // CODE → <PutNewOwnById>: <Reg8: 3, Reg8: 0, string_id: 7189>  # String: 'a' (Identifier)
-    // USED → r3 = { a: { b: {  } } };
+    r3.a = r0
     // CODE → <LoadConstNull>: <Reg8: 2>
     // USED → r2 = null;
     // CODE → <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
-    // USED → r5 = { a: { b: {  } } } == null;
+    // USED → r5 = r3 == null;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     r4 = undefined
-    if ({ a: { b: {  } } } != null) {
+    if (r3 != null) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 3, string_id: 7189>  # String: 'a' (Identifier)
-        // USED → r3 = { a: { b: {  } } }.a;
+        // USED → r3 = r3.a;
         // CODE → <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
-        // USED → r5 = { a: { b: {  } } }.a == null;
+        // USED → r5 = r3.a == null;
         // CODE → <LoadConstUndefined>: <Reg8: 4>
         r4 = undefined
-        if ({ a: { b: {  } } }.a != null) {
+        if (r3.a != null) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 38>  # String: 'b' (Identifier)
-            // USED → r3 = { a: { b: {  } } }.a.b;
+            // USED → r3 = r3.a.b;
             // CODE → <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
-            // USED → r5 = { a: { b: {  } } }.a.b == null;
+            // USED → r5 = r3.a.b == null;
             // CODE → <LoadConstUndefined>: <Reg8: 4>
-            r4 = ({ a: { b: {  } } }.a.b == null) ? undefined : { a: { b: {  } } }.a.b.c
+            r4 = (r3.a.b == null) ? undefined : r3.a.b.c
         }
     }
-    if ({ a: { b: {  } } }.a.b.c == null) {
+    if (r3.a.b.c == null) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <LoadConstInt>: <Reg8: 4, Imm32: -1>
         // USED → r4 = -1;

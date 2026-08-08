@@ -17,15 +17,15 @@ function function_15194(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r7 = globalThis.Object.defineProperty;
     // CODE → <NewObject>: <Reg8: 6>
-    // USED → r6 = {  };
+    r6 = {  }
     // CODE → <LoadConstTrue>: <Reg8: 0>
     // USED → r0 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
-    // USED → r6 = { value: true };
+    r6.value = true
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 0, Reg8: 6>
-    r0 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
+    r0 = globalThis.Object.defineProperty(param6, "__esModule", r6)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15196>  # Function: [#15196 classTest of 193 bytes]: 1 params @ offset 0x0026b75b
     // USED → r0 = classTest;
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10812>  # String: 'classTest' (Identifier)

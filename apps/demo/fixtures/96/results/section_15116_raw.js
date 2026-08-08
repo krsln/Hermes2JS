@@ -11,9 +11,9 @@ function function_15116(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15117>  # Function: [#15117 _interopDefault of 28 bytes]: 2 params @ offset 0x00104cff
     // USED → r3 = _interopDefault;
     // CODE → <NewArrayWithBuffer>: <Reg8: 0, UInt16: 1, UInt16: 1, UInt16: 23669>  # Array: ['x']
-    // USED → r0 = ["x"];
+    r0 = ["x"]
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
-    createEnvironment()[0] = ["x"]
+    createEnvironment()[0] = r0
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
@@ -21,15 +21,15 @@ function function_15116(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r7 = globalThis.Object.defineProperty;
     // CODE → <NewObject>: <Reg8: 6>
-    // USED → r6 = {  };
+    r6 = {  }
     // CODE → <LoadConstTrue>: <Reg8: 0>
     // USED → r0 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
-    // USED → r6 = { value: true };
+    r6.value = true
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 0, Reg8: 6>
-    r0 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
+    r0 = globalThis.Object.defineProperty(param6, "__esModule", r6)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15118>  # Function: [#15118 spreadArrayTest of 203 bytes]: 1 params @ offset 0x00269d08
     // USED → r0 = spreadArrayTest;
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10787>  # String: 'spreadArrayTest' (Identifier)

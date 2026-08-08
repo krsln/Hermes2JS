@@ -11,13 +11,13 @@ function spreadArrayTest(param0) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     r0 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadArrayTest/start")
     // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 19164>  # Array: [1, 2, 3]
-    // USED → r3 = [1, 2, 3];
+    r3 = [1, 2, 3]
     // CODE → <NewArray>: <Reg8: 0, UInt16: 0>
-    // USED → r0 = [];
+    r0 = []
     // CODE → <Mov>: <Reg8: 13, Reg8: 0>
-    r13 = []
+    r13 = r0
     // CODE → <Mov>: <Reg8: 12, Reg8: 3>
-    r12 = [1, 2, 3]
+    r12 = r3
     // CODE → <LoadConstZero>: <Reg8: 11>
     r11 = 0
     // CODE → <CallBuiltin>: <Reg8: 11, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
@@ -25,7 +25,7 @@ function spreadArrayTest(param0) {
     // CODE → <NewArrayWithBuffer>: <Reg8: 12, UInt16: 3, UInt16: 3, UInt16: 11325>  # Array: [4, 5, 6]
     r12 = [4, 5, 6]
     // CODE → <Mov>: <Reg8: 13, Reg8: 0>
-    r13 = []
+    r13 = r0
     // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
     r4 = applyArguments(r0, r1, r2, r3)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -33,15 +33,15 @@ function spreadArrayTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r4 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 0>
-    r4 = globalThis.console.log([])
+    r4 = globalThis.console.log(r0)
     // CODE → <NewArrayWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 1, UInt16: 17298>  # Array: [0]
-    // USED → r5 = [0];
+    r5 = [0]
     // CODE → <LoadConstUInt8>: <Reg8: 8, UInt8: 1>
     // USED → r8 = 1;
     // CODE → <Mov>: <Reg8: 13, Reg8: 5>
-    r13 = [0]
+    r13 = r5
     // CODE → <Mov>: <Reg8: 12, Reg8: 3>
-    r12 = [1, 2, 3]
+    r12 = r3
     // CODE → <Mov>: <Reg8: 11, Reg8: 8>
     r11 = 1
     // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
@@ -49,19 +49,19 @@ function spreadArrayTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 99>
     // USED → r3 = 99;
     // CODE → <DefineOwnByVal>: <Reg8: 5, Reg8: 3, Reg8: 4, UInt8: 1>
-    [0][applyArguments(r0, r1, r2, r3)] = 99
+    r5[applyArguments(r0, r1, r2, r3)] = 99
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
-    r3 = globalThis.console.log([0])
+    r3 = globalThis.console.log(r5)
     // CODE → <Mov>: <Reg8: 7, Reg8: 0>
-    // USED → r7 = [];
+    // USED → r7 = r0;
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 7>
     // USED → r3 = GetIterator(r7);
     // CODE → <Mov>: <Reg8: 0, Reg8: 7>
-    r0 = []
+    r0 = r0
     // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 0>
     // USED → r4 = GetIterator(r7).next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
@@ -74,7 +74,7 @@ function spreadArrayTest(param0) {
     r5 = (GetIterator(r7) === undefined) ? undefined : GetIterator(r7).next()
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 4, UInt16: 0>
-    // USED → r4 = [];
+    r4 = []
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     if (GetIterator(r7) !== undefined) {
@@ -82,7 +82,7 @@ function spreadArrayTest(param0) {
         while (true) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Mov>: <Reg8: 6, Reg8: 7>
-            r6 = []
+            r6 = r0
             // CODE → <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>
             // USED → r10 = (GetIterator(r7) === undefined) ? undefined : GetIterator(r7).next();
             // CODE → <Mov>: <Reg8: 6, Reg8: 3>
@@ -94,7 +94,7 @@ function spreadArrayTest(param0) {
             if (GetIterator(r7) !== undefined) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
-                [][0] = (GetIterator(r7) === undefined) ? undefined : GetIterator(r7).next()
+                r4[0] = (GetIterator(r7) === undefined) ? undefined : GetIterator(r7).next()
                 // CODE → <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
                 r2 = 0 + 1
                 // CODE → <Jmp>: <Addr8: -28>  # Address: 000000a4
@@ -128,7 +128,7 @@ function spreadArrayTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
-    r2 = globalThis.console.log((GetIterator(r7) === undefined) ? undefined : GetIterator(r7).next(), [])
+    r2 = globalThis.console.log((GetIterator(r7) === undefined) ? undefined : GetIterator(r7).next(), r4)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

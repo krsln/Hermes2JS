@@ -15,9 +15,9 @@ function computedPropertyTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <NewObjectWithBuffer>: <Reg8: 2, UInt16: 1915, UInt16: 46772>  # Object: {'dynamic': 42, 'staticKey': 'value'}
-    // USED → r2 = { "dynamic": 42, "staticKey": "value" };
+    r2 = { "dynamic": 42, "staticKey": "value" }
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log({ "dynamic": 42, "staticKey": "value" })
+    r2 = globalThis.console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

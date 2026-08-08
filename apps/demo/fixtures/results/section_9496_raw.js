@@ -81,11 +81,11 @@ function setTest(param0) {
     throw caughtException;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <NewArray>: <Reg8: 4, UInt16: 0>
-    // USED → r4 = [];
+    r4 = []
     // CODE → <LoadConstZero>: <Reg8: 8>
     r8 = 0
     // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-    r10 = []
+    r10 = r4
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     r9 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)
     // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
@@ -95,7 +95,7 @@ function setTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
-    r2 = globalThis.console.log([])
+    r2 = globalThis.console.log(r4)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

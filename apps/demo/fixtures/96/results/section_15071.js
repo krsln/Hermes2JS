@@ -35,33 +35,33 @@ function shortCircuitAssignTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     r1 = globalThis.console.log(20)
     // CODE → <NewObject>: <Reg8: 1>
-    // USED → r1 = {  };
+    r1 = {  }
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 7735>  # String: 'count' (Identifier)
-    // USED → r3 = {  }.count;
+    // USED → r3 = r1.count;
     // CODE → <LoadConstNull>: <Reg8: 2>
     // USED → r2 = null;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 7735>  # String: 'count' (Identifier)
-    {  }.count ??= 0
+    r1.count ??= 0
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 7735>  # String: 'count' (Identifier)
-    // USED → r3 = {  }.count;
+    // USED → r3 = r1.count;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → <Add>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = {  }.count + 1;
+    // USED → r2 = r1.count + 1;
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 7735>  # String: 'count' (Identifier)
-    {  }.count = {  }.count + 1
+    r1.count = r1.count + 1
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 7735>  # String: 'count' (Identifier)
-    // USED → r1 = {  }.count;
+    // USED → r1 = r1.count;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log({  }.count)
+    r1 = globalThis.console.log(r1.count)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

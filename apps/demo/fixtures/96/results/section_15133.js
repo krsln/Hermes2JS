@@ -27,15 +27,15 @@ function function_15133(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r8 = globalThis.Object.defineProperty;
     // CODE → <NewObject>: <Reg8: 7>
-    // USED → r7 = {  };
+    r7 = {  }
     // CODE → <LoadConstTrue>: <Reg8: 6>
     // USED → r6 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 7, Reg8: 6, string_id: 205>  # String: 'value' (Identifier)
-    // USED → r7 = { value: true };
+    r7.value = true
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r6 = "__esModule";
     // CODE → <Call4>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 1, Reg8: 6, Reg8: 7>
-    r6 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
+    r6 = globalThis.Object.defineProperty(param6, "__esModule", r7)
     // CODE → <PutById>: <Reg8: 1, Reg8: 5, UInt8: 1, string_id: 7656>  # String: 'basicRegExpTest' (Identifier)
     param6.basicRegExpTest = basicRegExpTest
     // CODE → <PutById>: <Reg8: 1, Reg8: 4, UInt8: 2, string_id: 11315>  # String: 'regExpFlagsTest' (Identifier)

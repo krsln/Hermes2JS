@@ -57,15 +57,15 @@ function function_15171(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r11 = globalThis.Object.defineProperty;
     // CODE → <NewObject>: <Reg8: 10>
-    // USED → r10 = {  };
+    r10 = {  }
     // CODE → <LoadConstTrue>: <Reg8: 9>
     // USED → r9 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 10, Reg8: 9, string_id: 205>  # String: 'value' (Identifier)
-    // USED → r10 = { value: true };
+    r10.value = true
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r9 = "__esModule";
     // CODE → <Call4>: <Reg8: 9, Reg8: 11, Reg8: 12, Reg8: 1, Reg8: 9, Reg8: 10>
-    r9 = globalThis.Object.defineProperty(param6, "__esModule", { value: true })
+    r9 = globalThis.Object.defineProperty(param6, "__esModule", r10)
     // CODE → <PutById>: <Reg8: 1, Reg8: 8, UInt8: 1, string_id: 11171>  # String: 'simpleAsyncTest' (Identifier)
     param6.simpleAsyncTest = simpleAsyncTest
     // CODE → <PutById>: <Reg8: 1, Reg8: 7, UInt8: 2, string_id: 7300>  # String: 'asyncTryCatchTest' (Identifier)

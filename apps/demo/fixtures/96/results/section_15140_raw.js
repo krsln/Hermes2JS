@@ -29,19 +29,19 @@ function arrowFunctionTest(param0) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     r2 = globalThis.console.log(16)
     // CODE → <NewArrayWithBuffer>: <Reg8: 4, UInt16: 4, UInt16: 4, UInt16: 20817>  # Array: [1, 2, 3, 4]
-    // USED → r4 = [1, 2, 3, 4];
+    r4 = [1, 2, 3, 4]
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 170>  # String: 'map' (Identifier)
-    // USED → r3 = [1, 2, 3, 4].map;
+    // USED → r3 = r4.map;
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15141>  # Function: [#15141  of 12 bytes]: 2 params @ offset 0x00269c4e
     // USED → r2 = function_15141;
     // CODE → <Call2>: <Reg8: 4, Reg8: 3, Reg8: 4, Reg8: 2>
-    // USED → r4 = [1, 2, 3, 4].map(function_15141);
+    // USED → r4 = r4.map(function_15141);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
-    r2 = globalThis.console.log([1, 2, 3, 4].map(function_15141))
+    r2 = globalThis.console.log(r4.map(function_15141))
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 15142>  # Function: [#15142 makeMultiplier of 16 bytes]: 2 params @ offset 0x0026a8a3
     // USED → r3 = makeMultiplier;
     // CODE → <LoadConstUndefined>: <Reg8: 0>

@@ -15,27 +15,27 @@ function propertyAccessTest(param0) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
     r2 = globalThis.console.log("__BC:Objects/PropertyTests/propertyAccessTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 2, UInt16: 317, UInt16: 19852>  # Object: {'x': 1, 'y': 2}
-    // USED → r5 = { "x": 1, "y": 2 };
+    r5 = { "x": 1, "y": 2 }
     // CODE → <Mov>: <Reg8: 4, Reg8: 5>
-    // USED → r4 = { "x": 1, "y": 2 };
+    // USED → r4 = r5;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
     // USED → r2 = 3;
     // CODE → <PutById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 7612>  # String: 'z' (Identifier)
-    { "x": 1, "y": 2 }.z = 3
+    r5.z = 3
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r8 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r7 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 3, string_id: 41>  # String: 'x' (Identifier)
-    // USED → r6 = { "x": 1, "y": 2 }.x;
+    // USED → r6 = r5.x;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 7>  # String: 'y' (Identifier)
-    // USED → r3 = { "x": 1, "y": 2 }.y;
+    // USED → r3 = r5.y;
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 7612>  # String: 'z' (Identifier)
-    // USED → r2 = { "x": 1, "y": 2 }.z;
+    // USED → r2 = r5.z;
     // CODE → <Call4>: <Reg8: 2, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 3, Reg8: 2>
-    r2 = globalThis.console.log({ "x": 1, "y": 2 }.x, { "x": 1, "y": 2 }.y, { "x": 1, "y": 2 }.z)
+    r2 = globalThis.console.log(r5.x, r5.y, r5.z)
     // CODE → <DelById>: <Reg8: 2, Reg8: 5, string_id: 41>  # String: 'x' (Identifier)
-    r2 = delete { "x": 1, "y": 2 }.x
+    r2 = delete r5.x
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -43,17 +43,17 @@ function propertyAccessTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 41>  # String: 'x' (Identifier)
     // USED → r2 = "x";
     // CODE → <IsIn>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = "x" in { "x": 1, "y": 2 };
+    // USED → r2 = "x" in r5;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 2>
-    r2 = globalThis.console.log("x" in { "x": 1, "y": 2 })
+    r2 = globalThis.console.log("x" in r5)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 24>  # String: 'Object' (Identifier)
     // USED → r3 = globalThis.Object;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 7, string_id: 118>  # String: 'keys' (Identifier)
     // USED → r2 = globalThis.Object.keys;
     // CODE → <Call2>: <Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 5>
-    // USED → r5 = globalThis.Object.keys({ "x": 1, "y": 2 });
+    // USED → r5 = globalThis.Object.keys(r5);
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
-    r2 = globalThis.Object.keys({ "x": 1, "y": 2 })
+    r2 = globalThis.Object.keys(r5)
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
     // USED → r3 = GetIterator(r2);
     // LOOP → START (for_of)
@@ -68,11 +68,11 @@ function propertyAccessTest(param0) {
             // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r6 = globalThis.console.log;
             // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-            // USED → r5 = { "x": 1, "y": 2 };
+            // USED → r5 = r5;
             // CODE → <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 8>
-            // USED → r5 = { "x": 1, "y": 2 }[GetIterator(r2).next()];
+            // USED → r5 = r5[GetIterator(r2).next()];
             // CODE → <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
-            r5 = globalThis.console.log(GetIterator(r2).next(), { "x": 1, "y": 2 }[GetIterator(r2).next()])
+            r5 = globalThis.console.log(GetIterator(r2).next(), r5[GetIterator(r2).next()])
             // CODE → <Jmp>: <Addr8: -35>  # Address: 00000085
             goto label_133;
         }
