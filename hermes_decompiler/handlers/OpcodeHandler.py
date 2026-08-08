@@ -42,7 +42,7 @@ class OpcodeHandler(ABC):
     (one instance per opcode, populated via __init_subclass__). That's a
     legitimate use of class-level storage and is left as-is.
 
-    Dispatch resolves handlers by exact class name (`OpcodeEntry.opcode`),
+    Dispatch resolves handlers by the exact class name (`OpcodeEntry.opcode`),
     so every registered class name must be a real Hermes opcode. Shared
     logic between related opcodes should live directly on one of the real
     opcode classes (the others subclass it and override just what differs -
@@ -55,7 +55,7 @@ class OpcodeHandler(ABC):
     `_abstract` is deliberately a plain class attribute rather than relying
     on `abc.abstractmethod` + instantiation failure: `__init_subclass__`
     runs *during* class creation, before `ABCMeta` finishes computing
-    `__abstractmethods__` on the new class, so instantiating an
+    `__abstract_methods__` on the new class, so instantiating an
     ABC-abstract subclass here can silently succeed instead of raising -
     the instantiation-time abstractness check simply isn't active yet at
     that point. Don't rely on `ABC`/`@abstractmethod` alone to keep a base
@@ -66,9 +66,9 @@ class OpcodeHandler(ABC):
 
     registry: Dict[str, "OpcodeHandler"] = {}
 
-    #: Set to True on a class (not inherited implicitly - see
-    #: `__init_subclass__` below) to opt it out of registration. Only
-    #: meant for genuine non-opcode helper/mixin classes.
+    # Set to True on a class (not inherited implicitly - see
+    # `__init_subclass__` below) to opt it out of registration. Only
+    # meant for genuine non-opcode helper/mixin classes.
     _abstract: bool = False
 
     def __init_subclass__(cls, **kwargs):
@@ -191,7 +191,7 @@ class OpcodeHandler(ABC):
 
         Unlike get_register_expression(), this never inlines the expression
         currently stored in the register. It always returns the register
-        identifier itself (e.g. Identifier('r3')).
+        identifier itself (e.g., Identifier('r3')).
 
         This should be used by almost every opcode handler because Hermes
         bytecode operands refer to registers, not to the expressions that
