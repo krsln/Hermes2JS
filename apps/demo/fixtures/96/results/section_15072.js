@@ -32,7 +32,7 @@ function logicalShortCircuitTest(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 4, Reg8: 7, Reg8: 0, Reg8: 4, Reg8: 3>
     r4 = sideEffect.call(undefined, "or-left", param1)
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = param1 || param1 && param2;
+    // USED → r5 = param1 || param2;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 74>  # String: 'left' (Identifier)
     r4 = !param1 ? "left" : null
@@ -44,9 +44,9 @@ function logicalShortCircuitTest(param0, param1, param2) {
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 3574>  # String: 'nullish-right' (String)
         // USED → r3 = "nullish-right";
         // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 0, Reg8: 3, Reg8: 2>
-        r3 = sideEffect.call(undefined, "nullish-right", param1 || param1 && param2)
+        r3 = sideEffect.call(undefined, "nullish-right", param2)
         // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-        // USED → r4 = param1 || param1 && param2;
+        // USED → r4 = param2;
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -54,7 +54,7 @@ function logicalShortCircuitTest(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 5, Reg8: 4>
-    r2 = globalThis.console.log(param1 || param1 && param2, param1 || param1 && param2, param1 || param1 && param2)
+    r2 = globalThis.console.log(param1 && param2, param1 || param2, param2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

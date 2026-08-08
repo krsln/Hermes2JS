@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -169,6 +170,10 @@ class OpcodeHandler(ABC):
         if isinstance(state_value, Expression):
             state.reads += 1
             state.definition.definition_used = True
+
+            if state.reads > 1:
+                state_value = dataclasses.replace(state_value)
+
             return state_value
 
         return Identifier(name=f"r{reg}")
