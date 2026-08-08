@@ -25,15 +25,15 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 ## Testy
 
 ```shell
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/one -o ./apps/demo/fixtures/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/one -o ./apps/demo/fixtures/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/focused -o ./apps/demo/fixtures/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/focused -o ./apps/demo/fixtures/results --log-level DEBUG
 
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --no-verbose
 
 # 96
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/one -o ./apps/demo/fixtures/96/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/one -o ./apps/demo/fixtures/96/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results --log-level DEBUG
 
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --strict
@@ -61,7 +61,7 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 ## Coach
 
 ```shell
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/one -o ./apps/coachy/fixtures/results
+python scripts/decompile_sections.py -i ./apps/coachy/fixtures/focused -o ./apps/coachy/fixtures/results
 
 python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results
 
