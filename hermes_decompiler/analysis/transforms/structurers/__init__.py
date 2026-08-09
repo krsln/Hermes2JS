@@ -2,7 +2,7 @@ from ._base import RegionStructurer
 from .SequenceStructurer import SequenceStructurer
 from .LoopStructurer import LoopStructurer
 from .LoopBreakStructurer import LoopBreakStructurer
-from .IfStructurer import IfStructurer
+from .if_structurer import IfStructurer
 from .TryStructurer import TryStructurer
 from .SwitchStructurer import SwitchStructurer
 
