@@ -28,8 +28,8 @@ function tryFinallyLoopBreakTest(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 4, string_id: 4735>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
         // USED → r4 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item";
         if (0 < param1.length) {
-            // LOOP → START (while)
-            while (true) {
+            // LOOP → START (do_while)
+            do {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → <Mov>: <Reg8: 3, Reg8: 6>
                 // USED → r3 = param1;
@@ -57,10 +57,8 @@ function tryFinallyLoopBreakTest(param0, param1) {
                     r7 = 0 + 1
                     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
                     // USED → r2 = param1.length;
-                    // CODE → <JLess>: <Addr8: -52, Reg8: 3, Reg8: 2>  # Address: 00000031
-                    if (0 + 1 < param1.length) goto label_49;
                 }
-            }
+            } while (0 + 1 < param1.length);
             // LOOP → END
         }
         // ──────────────── Block 3 ──────────────── 

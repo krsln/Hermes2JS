@@ -65,14 +65,12 @@ function processColorsInProps(param0, param1) {
                         // CODE → <IteratorBegin>: <Reg8: 12, Reg8: 11>
                         // USED → r12 = GetIterator(r11);
                         // LOOP → START (while)
-                        while (true) {
+                        while (!(GetIterator(r11) === undefined)) {
                             // ──────────────── Block 5 ──────────────── 
                             // CODE → <IteratorNext>: <Reg8: 14, Reg8: 12, Reg8: 11>
                             // USED → r14 = GetIterator(r11).next();
                             // CODE → <Mov>: <Reg8: 13, Reg8: 12>
                             // USED → r13 = GetIterator(r11);
-                            // CODE → <JStrictEqual>: <Addr8: -69, Reg8: 13, Reg8: 0>  # Address: 0000001c
-                            if (GetIterator(r11) === undefined) goto label_28;
                             // ──────────────── Block 6 ──────────────── 
                             // CODE → <Mov>: <Reg8: 8, Reg8: 14>
                             // USED → r8 = GetIterator(r11).next();

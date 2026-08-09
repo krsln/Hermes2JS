@@ -308,8 +308,8 @@ function _request(param0, param1, param2) {
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0;
         if (0 < r14.length) {
-            // LOOP → START (while)
-            while (true) {
+            // LOOP → START (do_while)
+            do {
                 // ──────────────── Block 30 ──────────────── 
                 // CODE → <Mov>: <Reg8: 10, Reg8: 12>
                 // USED → r10 = r14;
@@ -339,13 +339,11 @@ function _request(param0, param1, param2) {
                 // USED → r10 = +(+0 + 1) + 1;
                 // CODE → <Mov>: <Reg8: 9, Reg8: 5>
                 // USED → r9 = r14.length;
-                // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 9>  # Address: 00000362
-                if (+(+0 + 1) + 1 < r14.length) goto label_866;
-            }
+            } while (+(+0 + 1) + 1 < r14.length);
             // LOOP → END
         }
-        // LOOP → START (while)
-        while (true) {
+        // LOOP → START (do_while)
+        do {
             // ──────────────── Block 34 ──────────────── 
             // CODE → <Mov>: <Reg8: 8, Reg8: 0>
             // USED → r8 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2)));
@@ -375,9 +373,7 @@ function _request(param0, param1, param2) {
             // USED → r0 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(+0 + 1)]);
             // CODE → <Mov>: <Reg8: 1, Reg8: 5>
             // USED → r1 = r2.length;
-            // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
-            if (+(+0 + 1) + 1 < r2.length) goto label_971;
-        }
+        } while (+(+0 + 1) + 1 < r2.length);
         // LOOP → END
         // ──────────────── Block 35 ──────────────── 
         // CODE → <Ret>: <Reg8: 0>
@@ -429,8 +425,8 @@ function _request(param0, param1, param2) {
         // CODE → <Mov>: <Reg8: 9, Reg8: 4>
         // USED → r9 = 0;
         if (0 < ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length) {
-            // LOOP → START (while)
-            while (true) {
+            // LOOP → START (do_while)
+            do {
                 // ──────────────── Block 27 ──────────────── 
                 // CODE → <Mov>: <Reg8: 18, Reg8: 0>
                 // USED → r18 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
@@ -458,9 +454,7 @@ function _request(param0, param1, param2) {
                 // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2)).then(((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+0], ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+(+0 + 1)]);
                 // CODE → <Mov>: <Reg8: 9, Reg8: 5>
                 // USED → r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length;
-                // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
-                if (+(+0 + 1) + 1 < ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length) goto label_791;
-            }
+            } while (+(+0 + 1) + 1 < ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length);
             // LOOP → END
         }
         // ──────────────── Block 28 ──────────────── 

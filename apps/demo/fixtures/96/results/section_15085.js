@@ -43,8 +43,8 @@ function tryCatchInsideLoopTest(param0, param1) {
         // CODE → <Ret>: <Reg8: 0>
         return 0 + 1;
     } else {
-        // LOOP → START (while)
-        while (true) {
+        // LOOP → START (do_while)
+        do {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <Mov>: <Reg8: 3, Reg8: 7>
             // USED → r3 = param1;
@@ -81,8 +81,6 @@ function tryCatchInsideLoopTest(param0, param1) {
                     // USED → r2 = param1;
                     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
                     // USED → r2 = param1.length;
-                    // CODE → <JLess>: <Addr8: -117, Reg8: 3, Reg8: 2>  # Address: 0000003a
-                    if (0 + 1 < param1.length) goto label_58;
                     // ──────────────── Block 4 ──────────────── 
                     // CODE → <Catch>: <Reg8: 9>
                     // USED → r9 = caughtException;
@@ -99,7 +97,7 @@ function tryCatchInsideLoopTest(param0, param1) {
                 }
                 // LOOP → END
             }
-        }
+        } while (0 + 1 < param1.length);
         // LOOP → END
         // ──────────────── Block 3 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)

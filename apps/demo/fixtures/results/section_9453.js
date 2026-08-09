@@ -37,8 +37,8 @@ function complexTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
     // USED → r4 = 2;
     if (0 < r14.length) {
-        // LOOP → START (while)
-        while (true) {
+        // LOOP → START (do_while)
+        do {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
             // USED → r7 = r14[0];
@@ -101,9 +101,7 @@ function complexTest(param0) {
             // USED → r0 = 0 + 1;
             // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
             // USED → r7 = r14.length;
-            // CODE → <JLessLong>: <Addr32: -130, Reg8: 0, Reg8: 7>  # Address: 00000050
-            if (0 + 1 < r14.length) goto label_80;
-        }
+        } while (0 + 1 < r14.length);
         // LOOP → END
     }
     // ──────────────── Block 9 ──────────────── 

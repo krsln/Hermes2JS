@@ -29,8 +29,8 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     if (0 < param1.length) {
-        // LOOP → START (while)
-        while (true) {
+        // LOOP → START (do_while)
+        do {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <Mov>: <Reg8: 0, Reg8: 2>
             // USED → r0 = 0;
@@ -76,10 +76,8 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                 // USED → r2 = 0 + 1;
                 // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 8, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
                 // USED → r0 = param1.length;
-                // CODE → <JLess>: <Addr8: -99, Reg8: 2, Reg8: 0>  # Address: 0000003b
-                if (0 + 1 < param1.length) goto label_59;
             }
-        }
+        } while (0 + 1 < param1.length);
         // LOOP → END
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Jmp>: <Addr8: 38>  # Address: 000000c8

@@ -231,8 +231,8 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
     r1 = 271733878
     if (0 < param1.length) {
-        // LOOP → START (while)
-        while (true) {
+        // LOOP → START (do_while)
+        do {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <LoadFromEnvironment>: <Reg8: 119, Reg8: 92, UInt8: 10>
             // USED → r119 = getEnvironment(0)[10];
@@ -1322,9 +1322,7 @@ function binl_md5(param0, param1, param2) {
             // USED → r2 = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), -1732584194);
             // CODE → <Mov>: <Reg8: 1, Reg8: 6>
             // USED → r1 = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 271733878);
-            // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
-            if (0 + 16 < param1.length) goto label_566;
-        }
+        } while (0 + 16 < param1.length);
         // LOOP → END
     }
     // ──────────────── Block 2 ──────────────── 

@@ -31,8 +31,8 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
             // USED → r0 = undefined;
             // CODE → <Ret>: <Reg8: 0>
             return undefined;
-            // LOOP → START (while)
-            while (true) {
+            // LOOP → START (do_while)
+            do {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <LoadConstString>: <Reg8: 0, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
@@ -40,7 +40,7 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
                 r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
                 // CODE → <Jmp>: <Addr8: 11>  # Address: 00000076
                 goto label_118;
-            }
+            } while (!param1);
             // LOOP → END
             // LOOP → START (while)
             while (true) {
@@ -60,8 +60,6 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
                 // USED → r3 = globalThis.console;
                 // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
                 // USED → r2 = globalThis.console.log;
-                // CODE → <JmpTrue>: <Addr8: 14, Reg8: 0>  # Address: 0000006d
-                if (param1) goto label_109;
             }
             // LOOP → END
         }
@@ -71,8 +69,8 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
             // ──────────────── Block 8 ──────────────── 
             // CODE → <Throw>: <Reg8: 0>
             throw caughtException;
-            // LOOP → START (while)
-            while (true) {
+            // LOOP → START (do_while)
+            do {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <LoadConstString>: <Reg8: 1, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
                 // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
@@ -80,7 +78,7 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
                 r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
                 // CODE → <Jmp>: <Addr8: 11>  # Address: 000000a0
                 goto label_160;
-            }
+            } while (!param1);
             // LOOP → END
             // LOOP → START (while)
             while (true) {
@@ -101,7 +99,5 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
         // USED → r3 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r2 = globalThis.console.log;
-        // CODE → <JmpTrue>: <Addr8: 14, Reg8: 1>  # Address: 00000097
-        if (param1) goto label_151;
     }
 }

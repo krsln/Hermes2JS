@@ -107,17 +107,15 @@ function spreadArrayTest(param0) {
             // ──────────────── Block 7 ──────────────── 
             // CODE → <Throw>: <Reg8: 2>
             throw caughtException;
-            // LOOP → START (while)
-            while (true) {
+            // LOOP → START (do_while)
+            do {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
                 GetIterator(r7).return()
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <Catch>: <Reg8: 2>
                 // USED → r2 = caughtException;
-                // CODE → <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 000000ca
-                if (GetIterator(r7) === undefined) goto label_202;
-            }
+            } while (!(GetIterator(r7) === undefined));
             // LOOP → END
         }
         // LOOP → END

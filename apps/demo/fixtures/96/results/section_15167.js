@@ -51,8 +51,8 @@ async function* anon_15167(param0, param1) {
             // CODE → <Ret>: <Reg8: 1>
             return undefined;
         } else {
-            // LOOP → START (while)
-            while (true) {
+            // LOOP → START (do_while)
+            do {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 4>
                 // USED → r6 = 0;
@@ -81,9 +81,7 @@ async function* anon_15167(param0, param1) {
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → <Inc>: <Reg8: 4, Reg8: 6>
                 // USED → r4 = 0 + 1;
-                // CODE → <JLess>: <Addr8: -43, Reg8: 4, Reg8: 5>  # Address: 00000030
-                if (0 + 1 < param1) goto label_48;
-            }
+            } while (0 + 1 < param1);
             // LOOP → END
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Ret>: <Reg8: 7>

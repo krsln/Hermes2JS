@@ -186,8 +186,8 @@ async function* anon_11947(param0, param1, param2) {
                                                                     // USED → r4 = new globalThis.Error();
                                                                     // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
                                                                     r4 = globalThis.Error.captureStackTrace(new globalThis.Error())
-                                                                    // LOOP → START (while)
-                                                                    while (true) {
+                                                                    // LOOP → START (do_while)
+                                                                    do {
                                                                         // ──────────────── Block 7 ──────────────── 
                                                                         // CODE → <NewObject>: <Reg8: 6>
                                                                         r6 = {  }
@@ -207,10 +207,8 @@ async function* anon_11947(param0, param1, param2) {
                                                                             // USED → r4 = globalThis.Error;
                                                                             // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
                                                                             // USED → r4 = caughtException instanceof globalThis.Error;
-                                                                            // CODE → <JmpFalseLong>: <Addr32: 246, Reg8: 4>  # Address: 0000013c
-                                                                            if (!(caughtException instanceof globalThis.Error)) goto label_316;
                                                                         }
-                                                                    }
+                                                                    } while (!!(caughtException instanceof globalThis.Error));
                                                                     // LOOP → END
                                                                 }
                                                                 // LOOP → END

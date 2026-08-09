@@ -62,8 +62,8 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                         r0 = param1.return.sibling
                         // CODE → <JmpLong>: <Addr32: -235>  # Address: 0000001d
                         goto label_29;
-                        // LOOP → START (while)
-                        while (true) {
+                        // LOOP → START (do_while)
+                        do {
                             // ──────────────── Block 12 ──────────────── 
                             // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 14, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
                             // USED → r15 = param1.return;
@@ -84,10 +84,8 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                                 // USED → r14 = param1.return;
                                 // CODE → <Mov>: <Reg8: 11, Reg8: 14>
                                 // USED → r11 = param1.return;
-                                // CODE → <JStrictEqual>: <Addr8: -37, Reg8: 4, Reg8: 13>  # Address: 000000ca
-                                if (null === param1.return.sibling) goto label_202;
                             }
-                        }
+                        } while (null === param1.return.sibling);
                         // LOOP → END
                     }
                 } else if (null === param1.child) {
@@ -120,8 +118,8 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                 // USED → r11 = param1.updateQueue.stores.length;
                 // CODE → <JNotLess>: <Addr8: 76, Reg8: 2, Reg8: 11>  # Address: 0000009e
                 if (!(0 < param1.updateQueue.stores.length)) goto label_158;
-                // LOOP → START (while)
-                while (true) {
+                // LOOP → START (do_while)
+                do {
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → <Mov>: <Reg8: 13, Reg8: 6>
                     // USED → r13 = param1.updateQueue.stores;
@@ -157,10 +155,8 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                         // USED → r11 = param1.updateQueue.stores;
                         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 4, string_id: 139>  # String: 'length' (Identifier)
                         // USED → r11 = param1.updateQueue.stores.length;
-                        // CODE → <JLess>: <Addr8: -68, Reg8: 13, Reg8: 11>  # Address: 00000056
-                        if (0 + 1 < param1.updateQueue.stores.length) goto label_86;
                     }
-                }
+                } while (0 + 1 < param1.updateQueue.stores.length);
                 // LOOP → END
             }
         }

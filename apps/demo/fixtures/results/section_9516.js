@@ -35,8 +35,8 @@ function legacyArgumentsTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     // USED → r1 = 1;
     if (0 < arguments.length) {
-        // LOOP → START (while)
-        while (true) {
+        // LOOP → START (do_while)
+        do {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 9, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r9 = globalThis.console;
@@ -52,9 +52,7 @@ function legacyArgumentsTest(param0) {
             r6 = undefined
             // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
             // USED → r6 = arguments.length;
-            // CODE → <JLess>: <Addr8: -30, Reg8: 0, Reg8: 6>  # Address: 00000042
-            if (0 + 1 < arguments.length) goto label_66;
-        }
+        } while (0 + 1 < arguments.length);
         // LOOP → END
     }
     // ──────────────── Block 2 ──────────────── 
