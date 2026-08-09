@@ -20,8 +20,8 @@ function labeledContinueTest(param0) {
     // USED → r2 = 1;
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
-    // LOOP → START (while)
-    while (true) {
+    // LOOP → START (do_while)
+    do {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 7, Reg8: 1>
         // USED → r7 = 0;
@@ -46,29 +46,25 @@ function labeledContinueTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 7>
         // USED → r1 = 0 + 1;
-        if (0 + 1 >= 3) {
-            // LOOP → START (while)
-            while (true) {
-                // ──────────────── Block 2 ──────────────── 
-                // CODE → <Mov>: <Reg8: 9, Reg8: 8>
-                // USED → r9 = 0;
-                if (0 !== 1) {
-                    // ──────────────── Block 3 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r11 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r10 = globalThis.console.log;
-                    // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
-                    r10 = globalThis.console.log(0, 0)
-                    // CODE → <Inc>: <Reg8: 8, Reg8: 9>
-                    // USED → r8 = 0 + 1;
-                    // CODE → <JLess>: <Addr8: -27, Reg8: 8, Reg8: 5>  # Address: 0000002b
-                    if (0 + 1 < 3) goto label_43;
-                }
+        // LOOP → START (do_while)
+        do {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <Mov>: <Reg8: 9, Reg8: 8>
+            // USED → r9 = 0;
+            if (0 !== 1) {
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r11 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r10 = globalThis.console.log;
+                // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
+                r10 = globalThis.console.log(0, 0)
+                // CODE → <Inc>: <Reg8: 8, Reg8: 9>
+                // USED → r8 = 0 + 1;
             }
-            // LOOP → END
-        }
-    }
+        } while (0 + 1 < 3);
+        // LOOP → END
+    } while (0 + 1 < 3);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

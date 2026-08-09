@@ -33,12 +33,7 @@ function whileTest(param0) {
         r10 = globalThis.console.log("while", 0)
         // CODE → <Mov>: <Reg8: 2, Reg8: 1>
         // USED → r2 = 0;
-        if (0 !== 2) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <AddN>: <Reg8: 0, Reg8: 2, Reg8: 3>
-            r0 = 0 + 1
-            // CODE → <Jmp>: <Addr8: 22>  # Address: 0000005b
-            goto label_91;
+        if (0 === 2) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r11 = globalThis.console;
@@ -48,10 +43,14 @@ function whileTest(param0) {
             r10 = globalThis.console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
             // CODE → <AddN>: <Reg8: 0, Reg8: 2, Reg8: 3>
             // USED → r0 = 0 + 1;
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-            // USED → r1 = 0 + 1;
+        } else {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <AddN>: <Reg8: 0, Reg8: 2, Reg8: 3>
+            r0 = 0 + 1
         }
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → <Mov>: <Reg8: 1, Reg8: 0>
+        // USED → r1 = 0 + 1;
     } while (0 + 1 < 5);
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 

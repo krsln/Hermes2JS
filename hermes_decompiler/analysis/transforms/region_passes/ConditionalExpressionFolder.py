@@ -9,11 +9,32 @@ from hermes_decompiler.analysis.regions.Regions import (
 from hermes_decompiler.analysis.transforms._shared import _negate_condition
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
-from hermes_decompiler.ir.expressions import ConditionalExpression, Expression, Identifier,StringLiteral, NumericLiteral, BooleanLiteral
+from hermes_decompiler.ir.expressions import (
+    ConditionalExpression, Expression, Identifier, StringLiteral,
+    NumericLiteral, BooleanLiteral,
+    CallExpression, NewExpression, AssignmentExpression,
+    UpdateExpression, AwaitExpression, YieldExpression,
+)
 
 logger = get_logger(__name__)
 
 _TRIVIAL_NODE_TYPES = (Identifier, StringLiteral, NumericLiteral, BooleanLiteral)  # adjust to actual literal type names
+
+# Same set BooleanChainFolder guards against in `_is_pure` - an
+# instruction whose value is one of these is independently observable
+# (a call's side effect, an assignment's mutation, ...) even when it
+# hasn't yet been promoted to its own `.statement` node. Absorbing one
+# of these into a ConditionalExpression's operand silently drops or
+# reorders that side effect.
+_IMPURE_EXPRESSION_TYPES = (
+    CallExpression,
+    NewExpression,
+    AssignmentExpression,
+    UpdateExpression,
+    AwaitExpression,
+    YieldExpression,
+)
+
 
 class ConditionalExpressionFolder:
     """
@@ -89,9 +110,22 @@ class ConditionalExpressionFolder:
             return False
 
         if if_region.else_body is not None:
-            # two-armed case unchanged, still uses last instruction - TODO:
-            # same fix may be needed here too, not yet confirmed necessary
-            ...
+            # Two-armed if/else (both `then` and `else` present) is a
+            # genuinely different shape from the no-else case below and
+            # is NOT handled by it: the no-else logic treats
+            # `if_region.then_body` as a single value-producing arm to
+            # merge against a "default" expression sitting in `block`
+            # - which is meaningless once there's a real `else_body`
+            # too (there's no single "default", there are two full
+            # arms, each of which may hold real, order-sensitive
+            # statements - e.g. a `console.log` call - that must stay
+            # as statements, not get silently absorbed into a
+            # ConditionalExpression's operand). Falling through to that
+            # logic here would misapply it to an unrelated shape and
+            # can silently drop real side-effecting statements from
+            # one arm. Explicitly bail; two-armed folding is not yet
+            # implemented.
+            return False
 
         # no-else case: don't assume block.instructions[-1] is the default
         # value - it may instead be the branch-condition-computing
@@ -151,11 +185,24 @@ class ConditionalExpressionFolder:
         # Every instruction across the WHOLE arm except this final merge
         # write must be non-observable-as-its-own-statement - same bar as
         # before, just checked over every block in the arm, not just one.
+        #
+        # `.statement is not None` alone isn't sufficient: an
+        # instruction can be independently observable (a call's side
+        # effect, an assignment's mutation) WITHOUT yet having been
+        # promoted to its own `.statement` node at this point in the
+        # pipeline - Printer falls back to printing such instructions
+        # as bare expression statements from `.value` directly (see
+        # `Printer._emit_block`). Also reject by expression TYPE, same
+        # as `BooleanChainFolder._is_pure` already does, so a call
+        # (etc.) sitting earlier in the arm can't be silently absorbed
+        # into the folded ConditionalExpression's operand tree.
         for blk in children:
             for instr in blk.instructions:
                 if instr is result:
                     continue
                 if instr.statement is not None:
+                    return None
+                if isinstance(instr.value, _IMPURE_EXPRESSION_TYPES):
                     return None
 
         return last_block, result

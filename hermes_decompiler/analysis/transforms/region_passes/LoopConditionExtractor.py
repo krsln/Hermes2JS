@@ -61,6 +61,31 @@ class LoopConditionExtractor:
         if header is None:
             return
 
+        # A self-loop (single block, its own back edge) makes the
+        # header its own sole latch. Structurally that block always
+        # runs body-then-test on every entry, including the first -
+        # there is no separate top-of-loop check physically preceding
+        # it, since header and latch are literally the same
+        # instruction stream. That's definitionally bottom-tested
+        # (do-while), even though `_consume_guard`'s generic edge-shape
+        # check on the header can't tell the difference and would
+        # happily also accept it as WHILE. Must check for this case
+        # BEFORE attempting the top-tested path below, or a self-loop
+        # gets silently misclassified as `while (cond) { body }`,
+        # which is a real semantic change (predicts zero executions
+        # whenever `cond` starts false, when the actual bytecode
+        # always executes the body at least once).
+        if header in loop.latches:
+            if self._consume_guard(header, loop, LoopKind.DO_WHILE):
+                return
+
+            logger.warning(
+                "Loop header block %d (0x%x): self-loop with no valid "
+                "guard on its own branch - leaving as `while (true)`.",
+                header.id, header.address,
+            )
+            return
+
         # 1) Top-tested: does the header itself carry a valid guard?
         if self._consume_guard(header, loop, LoopKind.WHILE):
             return

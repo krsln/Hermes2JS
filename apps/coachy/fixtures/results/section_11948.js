@@ -308,72 +308,80 @@ function _request(param0, param1, param2) {
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0;
         if (0 < r14.length) {
-            // ──────────────── Block 30 ──────────────── 
-            // CODE → <Mov>: <Reg8: 10, Reg8: 12>
-            // USED → r10 = r14;
-            // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-            // USED → r9 = 0;
-            // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
-            // USED → r14 = +0;
-            // CODE → <Inc>: <Reg8: 9, Reg8: 14>
-            // USED → r9 = +0 + 1;
-            // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-            r4 = +0 + 1
-            // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 14>
-            // USED → r13 = r14[+0];
-            // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
-            // USED → r9 = +(+0 + 1);
-            // CODE → <Inc>: <Reg8: 4, Reg8: 9>
-            // USED → r4 = +(+0 + 1) + 1;
-            // CODE → <GetByVal>: <Reg8: 7, Reg8: 10, Reg8: 9>
-            // USED → r7 = r14[+(+0 + 1)];
-            // CODE → <Mov>: <Reg8: 10, Reg8: 13>
-            // USED → r10 = r14[+0];
-            // CODE → <Mov>: <Reg8: 9, Reg8: 1>
-            // USED → r9 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2);
-            // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
-            // USED → r1 = r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
-            // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-            // USED → r10 = +(+0 + 1) + 1;
-            // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-            // USED → r9 = r14.length;
-            if (+(+0 + 1) + 1 >= r14.length) {
+            // LOOP → START (while)
+            while (true) {
+                // ──────────────── Block 30 ──────────────── 
+                // CODE → <Mov>: <Reg8: 10, Reg8: 12>
+                // USED → r10 = r14;
+                // CODE → <Mov>: <Reg8: 9, Reg8: 4>
+                // USED → r9 = 0;
+                // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
+                // USED → r14 = +0;
+                // CODE → <Inc>: <Reg8: 9, Reg8: 14>
+                // USED → r9 = +0 + 1;
+                // CODE → <Mov>: <Reg8: 4, Reg8: 9>
+                r4 = +0 + 1
+                // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 14>
+                // USED → r13 = r14[+0];
+                // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
+                // USED → r9 = +(+0 + 1);
+                // CODE → <Inc>: <Reg8: 4, Reg8: 9>
+                // USED → r4 = +(+0 + 1) + 1;
+                // CODE → <GetByVal>: <Reg8: 7, Reg8: 10, Reg8: 9>
+                // USED → r7 = r14[+(+0 + 1)];
+                // CODE → <Mov>: <Reg8: 10, Reg8: 13>
+                // USED → r10 = r14[+0];
+                // CODE → <Mov>: <Reg8: 9, Reg8: 1>
+                // USED → r9 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2);
+                // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
+                // USED → r1 = r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
+                // CODE → <Mov>: <Reg8: 10, Reg8: 4>
+                // USED → r10 = +(+0 + 1) + 1;
+                // CODE → <Mov>: <Reg8: 9, Reg8: 5>
+                // USED → r9 = r14.length;
+                // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 9>  # Address: 00000362
+                if (+(+0 + 1) + 1 < r14.length) goto label_866;
             }
+            // LOOP → END
         }
-        // ──────────────── Block 34 ──────────────── 
-        // CODE → <Mov>: <Reg8: 8, Reg8: 0>
-        // USED → r8 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2)));
-        // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
-        // USED → r7 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then;
-        // CODE → <Mov>: <Reg8: 9, Reg8: 3>
-        // USED → r9 = r2;
-        // CODE → <Mov>: <Reg8: 1, Reg8: 4>
-        // USED → r1 = 0;
-        // CODE → <ToNumeric>: <Reg8: 2, Reg8: 1>
-        // USED → r2 = +0;
-        // CODE → <Inc>: <Reg8: 1, Reg8: 2>
-        // USED → r1 = +0 + 1;
-        // CODE → <Mov>: <Reg8: 4, Reg8: 1>
-        r4 = +0 + 1
-        // CODE → <GetByVal>: <Reg8: 6, Reg8: 9, Reg8: 2>
-        // USED → r6 = r2[+0];
-        // CODE → <ToNumeric>: <Reg8: 1, Reg8: 1>
-        // USED → r1 = +(+0 + 1);
-        // CODE → <Inc>: <Reg8: 2, Reg8: 1>
-        // USED → r2 = +(+0 + 1) + 1;
-        // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-        r4 = +(+0 + 1) + 1
-        // CODE → <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>
-        // USED → r1 = r2[+(+0 + 1)];
-        // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
-        // USED → r0 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(+0 + 1)]);
-        // CODE → <Mov>: <Reg8: 1, Reg8: 5>
-        // USED → r1 = r2.length;
-        if (+(+0 + 1) + 1 >= r2.length) {
-            // ──────────────── Block 35 ──────────────── 
-            // CODE → <Ret>: <Reg8: 0>
-            return getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(+0 + 1)]);
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 34 ──────────────── 
+            // CODE → <Mov>: <Reg8: 8, Reg8: 0>
+            // USED → r8 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2)));
+            // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
+            // USED → r7 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then;
+            // CODE → <Mov>: <Reg8: 9, Reg8: 3>
+            // USED → r9 = r2;
+            // CODE → <Mov>: <Reg8: 1, Reg8: 4>
+            // USED → r1 = 0;
+            // CODE → <ToNumeric>: <Reg8: 2, Reg8: 1>
+            // USED → r2 = +0;
+            // CODE → <Inc>: <Reg8: 1, Reg8: 2>
+            // USED → r1 = +0 + 1;
+            // CODE → <Mov>: <Reg8: 4, Reg8: 1>
+            r4 = +0 + 1
+            // CODE → <GetByVal>: <Reg8: 6, Reg8: 9, Reg8: 2>
+            // USED → r6 = r2[+0];
+            // CODE → <ToNumeric>: <Reg8: 1, Reg8: 1>
+            // USED → r1 = +(+0 + 1);
+            // CODE → <Inc>: <Reg8: 2, Reg8: 1>
+            // USED → r2 = +(+0 + 1) + 1;
+            // CODE → <Mov>: <Reg8: 4, Reg8: 2>
+            r4 = +(+0 + 1) + 1
+            // CODE → <GetByVal>: <Reg8: 1, Reg8: 9, Reg8: 1>
+            // USED → r1 = r2[+(+0 + 1)];
+            // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
+            // USED → r0 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(+0 + 1)]);
+            // CODE → <Mov>: <Reg8: 1, Reg8: 5>
+            // USED → r1 = r2.length;
+            // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
+            if (+(+0 + 1) + 1 < r2.length) goto label_971;
         }
+        // LOOP → END
+        // ──────────────── Block 35 ──────────────── 
+        // CODE → <Ret>: <Reg8: 0>
+        return getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(+0 + 1)]);
     } else {
         // ──────────────── Block 26 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 6, UInt8: 6>
@@ -421,35 +429,39 @@ function _request(param0, param1, param2) {
         // CODE → <Mov>: <Reg8: 9, Reg8: 4>
         // USED → r9 = 0;
         if (0 < ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length) {
-            // ──────────────── Block 27 ──────────────── 
-            // CODE → <Mov>: <Reg8: 18, Reg8: 0>
-            // USED → r18 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
-            // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
-            // USED → r17 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2)).then;
-            // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-            // USED → r9 = 0;
-            // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
-            // USED → r14 = +0;
-            // CODE → <Inc>: <Reg8: 9, Reg8: 14>
-            // USED → r9 = +0 + 1;
-            // CODE → <Mov>: <Reg8: 4, Reg8: 9>
-            r4 = +0 + 1
-            // CODE → <GetByVal>: <Reg8: 16, Reg8: 15, Reg8: 14>
-            // USED → r16 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+0];
-            // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
-            // USED → r9 = +(+0 + 1);
-            // CODE → <Inc>: <Reg8: 14, Reg8: 9>
-            // USED → r14 = +(+0 + 1) + 1;
-            // CODE → <Mov>: <Reg8: 4, Reg8: 14>
-            r4 = +(+0 + 1) + 1
-            // CODE → <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
-            // USED → r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+(+0 + 1)];
-            // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
-            // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2)).then(((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+0], ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+(+0 + 1)]);
-            // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-            // USED → r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length;
-            // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
-            if (+(+0 + 1) + 1 < ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length) goto label_791;
+            // LOOP → START (while)
+            while (true) {
+                // ──────────────── Block 27 ──────────────── 
+                // CODE → <Mov>: <Reg8: 18, Reg8: 0>
+                // USED → r18 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
+                // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 28, string_id: 231>  # String: 'then' (Identifier)
+                // USED → r17 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2)).then;
+                // CODE → <Mov>: <Reg8: 9, Reg8: 4>
+                // USED → r9 = 0;
+                // CODE → <ToNumeric>: <Reg8: 14, Reg8: 9>
+                // USED → r14 = +0;
+                // CODE → <Inc>: <Reg8: 9, Reg8: 14>
+                // USED → r9 = +0 + 1;
+                // CODE → <Mov>: <Reg8: 4, Reg8: 9>
+                r4 = +0 + 1
+                // CODE → <GetByVal>: <Reg8: 16, Reg8: 15, Reg8: 14>
+                // USED → r16 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+0];
+                // CODE → <ToNumeric>: <Reg8: 9, Reg8: 9>
+                // USED → r9 = +(+0 + 1);
+                // CODE → <Inc>: <Reg8: 14, Reg8: 9>
+                // USED → r14 = +(+0 + 1) + 1;
+                // CODE → <Mov>: <Reg8: 4, Reg8: 14>
+                r4 = +(+0 + 1) + 1
+                // CODE → <GetByVal>: <Reg8: 9, Reg8: 15, Reg8: 9>
+                // USED → r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+(+0 + 1)];
+                // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
+                // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2)).then(((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+0], ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+(+0 + 1)]);
+                // CODE → <Mov>: <Reg8: 9, Reg8: 5>
+                // USED → r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length;
+                // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
+                if (+(+0 + 1) + 1 < ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length) goto label_791;
+            }
+            // LOOP → END
         }
         // ──────────────── Block 28 ──────────────── 
         // CODE → <Mov>: <Reg8: 9, Reg8: 0>

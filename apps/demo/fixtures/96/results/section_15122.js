@@ -49,14 +49,29 @@ function function_15122(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 1, Reg8: 0>
     // USED → r3 = param7[0];
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 2>
-    // USED → r1 = param2.call(undefined, param7[0]) ? param2 : r3;
+    // USED → r1 = param2;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call2>: <Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 3>
     // USED → r4 = param2.call(undefined, param7[0]);
+    if (!param2.call(undefined, param7[0])) {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → <NewObject>: <Reg8: 3>
+        r3 = {  }
+        // CODE → <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 4, string_id: 107>  # String: 'default' (Identifier)
+        r3.default = param2.call(undefined, param7[0])
+        // CODE → <Mov>: <Reg8: 1, Reg8: 3>
+        // USED → r1 = r3;
+    } else {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 48>  # String: '__esModule' (Identifier)
+        // USED → r3 = param2.call(undefined, param7[0]).__esModule;
+        // CODE → <Mov>: <Reg8: 1, Reg8: 4>
+        r1 = param2.call(undefined, param7[0])
+    }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
-    createEnvironment()[0] = param2.call(undefined, param7[0]) ? param2 : r3
+    createEnvironment()[0] = r3
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

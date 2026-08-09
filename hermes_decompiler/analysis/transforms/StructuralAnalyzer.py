@@ -9,6 +9,7 @@ from hermes_decompiler.analysis.transforms.cfg_passes import (
 from hermes_decompiler.analysis.transforms.structurers import (
     SequenceStructurer,
     LoopStructurer,
+    LoopBreakRecognizer,
     IfStructurer,
     TryStructurer,
     SwitchStructurer,
@@ -92,6 +93,14 @@ class StructuralAnalyzer:
         graph = RegionGraph(root)
 
         LoopStructurer(graph, self.cfg).run()
+
+        # Must run after LoopStructurer (needs LoopRegion.body.covered_blocks
+        # to tell loop-internal blocks from break targets) and before
+        # IfStructurer (which would otherwise permanently strand the
+        # break-test block's terminator - see StructuralAnalyzer's
+        # unstructured-block audit for exactly this shape).
+        LoopBreakRecognizer(graph, self.cfg).run()  # ✅
+
         IfStructurer(graph, self.cfg).run()
 
         # Runs after Loop/If: try/catch bodies routinely wrap only a
@@ -116,8 +125,8 @@ class StructuralAnalyzer:
         SwitchStructurer(graph, self.cfg).run()  # ✅
 
         # ---- 3. region_passes -------------------------------------------
-        BooleanChainFolder(self.cfg).run(graph.root) #`&&`/`||` (e.g. a bare`if (a || b) { ... }
-        ConditionalExpressionFolder(self.cfg).run(graph.root) # ternary
+        BooleanChainFolder(self.cfg).run(graph.root)  # `&&`/`||` (e.g. a bare`if (a || b) { ... }
+        ConditionalExpressionFolder(self.cfg).run(graph.root)  # ternary
         NullishAssignmentFolder(self.cfg).run(graph.root)
         LoopConditionExtractor(graph.root).run()
         ForEachRecognizer(graph).run()

@@ -42,17 +42,21 @@ function restAfterRequiredTest(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 3>
     // USED → r2 = 2;
     if (2 < arguments.length) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <Sub>: <Reg8: 8, Reg8: 2, Reg8: 3>
-        // USED → r8 = 2 - 2;
-        // CODE → <GetArgumentsPropByVal>: <Reg8: 7, Reg8: 2, Reg8: 5>
-        // USED → r7 = arguments[2];
-        // CODE → <PutByVal>: <Reg8: 6, Reg8: 8, Reg8: 7>
-        new globalThis.Array((arguments.length <= 2) ? 0 : arguments.length - 2)[2 - 2] = arguments[2]
-        // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-        // USED → r2 = 2 + 1;
-        // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 4>  # Address: 00000054
-        if (2 + 1 < arguments.length) goto label_84;
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → <Sub>: <Reg8: 8, Reg8: 2, Reg8: 3>
+            // USED → r8 = 2 - 2;
+            // CODE → <GetArgumentsPropByVal>: <Reg8: 7, Reg8: 2, Reg8: 5>
+            // USED → r7 = arguments[2];
+            // CODE → <PutByVal>: <Reg8: 6, Reg8: 8, Reg8: 7>
+            new globalThis.Array((arguments.length <= 2) ? 0 : arguments.length - 2)[2 - 2] = arguments[2]
+            // CODE → <Inc>: <Reg8: 2, Reg8: 2>
+            // USED → r2 = 2 + 1;
+            // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 4>  # Address: 00000054
+            if (2 + 1 < arguments.length) goto label_84;
+        }
+        // LOOP → END
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

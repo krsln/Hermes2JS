@@ -38,17 +38,21 @@ function tag(param0, param1) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
     // USED → r2 = 1;
     if (1 < arguments.length) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <Sub>: <Reg8: 9, Reg8: 2, Reg8: 5>
-        // USED → r9 = 1 - 1;
-        // CODE → <GetArgumentsPropByVal>: <Reg8: 8, Reg8: 2, Reg8: 7>
-        // USED → r8 = arguments[1];
-        // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
-        new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1)[1 - 1] = arguments[1]
-        // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-        // USED → r2 = 1 + 1;
-        // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 6>  # Address: 00000047
-        if (1 + 1 < arguments.length) goto label_71;
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → <Sub>: <Reg8: 9, Reg8: 2, Reg8: 5>
+            // USED → r9 = 1 - 1;
+            // CODE → <GetArgumentsPropByVal>: <Reg8: 8, Reg8: 2, Reg8: 7>
+            // USED → r8 = arguments[1];
+            // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
+            new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1)[1 - 1] = arguments[1]
+            // CODE → <Inc>: <Reg8: 2, Reg8: 2>
+            // USED → r2 = 1 + 1;
+            // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 6>  # Address: 00000047
+            if (1 + 1 < arguments.length) goto label_71;
+        }
+        // LOOP → END
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 99>  # String: 'console' (Identifier)

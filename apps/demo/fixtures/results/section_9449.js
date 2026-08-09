@@ -27,7 +27,15 @@ function forTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
         // USED → r1 = 0;
-        if (0 !== 3) {
+        if (0 === 3) {
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+            // USED → r10 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+            // USED → r9 = globalThis.console.log;
+            // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 8>
+            r9 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
+        } else {
             if (0 === 8) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -50,17 +58,10 @@ function forTest(param0) {
             r9 = globalThis.console.log(0)
             // CODE → <Jmp>: <Addr8: 40>  # Address: 0000006b
             goto label_107;
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r10 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r9 = globalThis.console.log;
-            // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 8>
-            r9 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
-            // ──────────────── Block 6 ──────────────── 
-            // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-            // USED → r0 = 0 + 1;
         }
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
+        // USED → r0 = 0 + 1;
     } while (0 + 1 < 10);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

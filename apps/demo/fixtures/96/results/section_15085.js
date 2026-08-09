@@ -81,21 +81,21 @@ function tryCatchInsideLoopTest(param0, param1) {
                     // USED → r2 = param1;
                     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
                     // USED → r2 = param1.length;
-                    if (0 + 1 >= param1.length) {
-                        // ──────────────── Block 4 ──────────────── 
-                        // CODE → <Catch>: <Reg8: 9>
-                        // USED → r9 = caughtException;
-                        // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                        // USED → r3 = globalThis.console;
-                        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                        // USED → r2 = globalThis.console.log;
-                        // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 9>
-                        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
-                        // CODE → <Mov>: <Reg8: 2, Reg8: 0>
-                        // USED → r2 = 0;
-                        // CODE → <Inc>: <Reg8: 0, Reg8: 2>
-                        // USED → r0 = 0 + 1;
-                    }
+                    // CODE → <JLess>: <Addr8: -117, Reg8: 3, Reg8: 2>  # Address: 0000003a
+                    if (0 + 1 < param1.length) goto label_58;
+                    // ──────────────── Block 4 ──────────────── 
+                    // CODE → <Catch>: <Reg8: 9>
+                    // USED → r9 = caughtException;
+                    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                    // USED → r3 = globalThis.console;
+                    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                    // USED → r2 = globalThis.console.log;
+                    // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 9>
+                    r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
+                    // CODE → <Mov>: <Reg8: 2, Reg8: 0>
+                    // USED → r2 = 0;
+                    // CODE → <Inc>: <Reg8: 0, Reg8: 2>
+                    // USED → r0 = 0 + 1;
                 }
                 // LOOP → END
             }

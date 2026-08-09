@@ -140,7 +140,12 @@ class IfStructurer(RegionStructurer):
             return
 
         if isinstance(region, LoopRegion):
-            self._visit(region.body, frozenset({region.header_block}))
+            exclude = (
+                frozenset({region.header_block})
+                if self._is_loop_guard_shaped(region.header_block, region)
+                else frozenset()
+            )
+            self._visit(region.body, exclude)
             return
 
         if isinstance(region, IfRegion):
@@ -164,6 +169,44 @@ class IfStructurer(RegionStructurer):
 
         if hasattr(region, "body"):
             self._visit(region.body, frozenset())
+
+    # -------------------------------------------------------------
+
+    @staticmethod
+    def _is_loop_guard_shaped(header: BasicBlock, loop_region) -> bool:
+        """
+        True iff `header`'s own terminator is plausibly the loop's
+        continuation test - i.e. it's a conditional branch where at
+        least one outgoing edge actually LEAVES the loop
+        (`loop_region.exits`, populated by `LoopAnalysis`).
+
+        `LoopStructurer` picks a loop's header purely by CFG dominance
+        (the natural loop's unique entry block) - that says nothing
+        about whether the header's OWN branch is the loop's
+        continuation test. It only is for a top-tested `while`; for a
+        bottom-tested `do-while` (or any loop whose real guard lives at
+        the latch), the header can hold an entirely ordinary in-body
+        `if` whose both edges stay inside the loop. Excluding such a
+        header from `_structure_sequence` unconditionally (the old
+        behavior) forces that ordinary if through
+        `_absorb_residual_conditional`'s crude "wrap everything
+        remaining, unconditionally" fallback instead of a proper
+        dominance-based then/else split - which, for a header whose
+        two arms don't include the loop's own increment/latch code,
+        can silently skip code (e.g. the increment) on one arm. See
+        `LoopConditionExtractor`, which performs the equivalent
+        header-vs-latch guard check for *building* the while/do-while
+        shape; this must agree with it, since a header this function
+        says isn't guard-shaped is exactly a header
+        `LoopConditionExtractor` will also skip when looking for the
+        loop's condition.
+        """
+        if not isinstance(header.terminator, TerminatorConditionalBranch):
+            return False
+
+        exits = set(loop_region.exits)
+
+        return any(successor in exits for successor in header.successors)
 
     # -------------------------------------------------------------
     # Sequence conversion
@@ -206,10 +249,37 @@ class IfStructurer(RegionStructurer):
             if item in exclude:
                 continue
 
-            if isinstance(item.terminator, TerminatorConditionalBranch):
-                return item
+            if not isinstance(item.terminator, TerminatorConditionalBranch):
+                continue
+
+            if self._is_backward_branch(item):
+                # A conditional branch whose target address is <= its
+                # own block's address is always loop machinery (a
+                # guard or continue-test), never a genuine forward
+                # if/goto-merge residual - the same criterion
+                # ShortCircuitConditionMerger already relies on for
+                # the identical reason. `_convert`'s dominance-based
+                # classification has no concept of "this is really a
+                # back-edge"; it would try to treat the loop's own
+                # prior iteration content as an "else" arm reachable
+                # through this "goto", corrupting the loop. Must be
+                # left completely untouched for LoopConditionExtractor
+                # (which runs much later, in region_passes) to
+                # recognize as the loop's actual guard.
+                continue
+
+            return item
 
         return None
+
+    # -------------------------------------------------------------
+
+    @staticmethod
+    def _is_backward_branch(block: BasicBlock) -> bool:
+        branch = block.terminator
+        if not isinstance(branch, TerminatorConditionalBranch):
+            return False
+        return branch.target <= block.address
 
     # -------------------------------------------------------------
 
@@ -543,8 +613,10 @@ class IfStructurer(RegionStructurer):
             child = region.children[i]
             if not isinstance(child, IfRegion):
                 # --- pattern 4: residual conditional block ---
-                if isinstance(child, BasicBlock) and isinstance(
-                        child.terminator, TerminatorConditionalBranch
+                if (
+                        isinstance(child, BasicBlock)
+                        and isinstance(child.terminator, TerminatorConditionalBranch)
+                        and not self._is_backward_branch(child)
                 ):
                     if self._absorb_residual_conditional(region, i):
                         changed = True

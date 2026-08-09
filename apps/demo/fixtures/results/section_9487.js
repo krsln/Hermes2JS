@@ -152,7 +152,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <IteratorBegin>: <Reg8: 7, Reg8: 17>
     // USED → r7 = GetIterator(r17);
     // CODE → <LoadConstUndefined>: <Reg8: 12>
-    r12 = (GetIterator(r17) !== undefined) ? undefined : 0
+    r12 = undefined
     // CODE → <Mov>: <Reg8: 0, Reg8: 17>
     r0 = r17
     // CODE → <IteratorNext>: <Reg8: 0, Reg8: 7, Reg8: 0>
@@ -161,9 +161,18 @@ function nestedArrayDestructureTest(param0) {
     // USED → r8 = GetIterator(r17);
     // CODE → <StrictEq>: <Reg8: 9, Reg8: 8, Reg8: 3>
     // USED → r9 = GetIterator(r17) === undefined;
+    if (GetIterator(r17) === undefined) {
+        // ──────────────── Block 23 ──────────────── 
+        // CODE → <LoadConstZero>: <Reg8: 12>
+        // USED → r12 = 0;
+    } else {
+        // ──────────────── Block 22 ──────────────── 
+        // CODE → <Mov>: <Reg8: 12, Reg8: 0>
+        r12 = GetIterator(r17).next()
+    }
     // ──────────────── Block 24 ──────────────── 
     // CODE → <Mov>: <Reg8: 15, Reg8: 12>
-    // USED → r15 = (GetIterator(r17) !== undefined) ? undefined : 0;
+    // USED → r15 = 0;
     // CODE → <LoadConstUndefined>: <Reg8: 12>
     r12 = undefined
     // CODE → <Mov>: <Reg8: 11, Reg8: 9>
@@ -244,7 +253,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r11 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 15, Reg8: 14, Reg8: 13>
-    r11 = globalThis.console.log((GetIterator(r17) !== undefined) ? undefined : 0, 0, r13)
+    r11 = globalThis.console.log(0, 0, r13)
     // CODE → <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r12 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

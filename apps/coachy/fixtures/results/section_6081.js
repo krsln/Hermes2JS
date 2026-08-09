@@ -53,59 +53,59 @@ function processColorsInProps(param0, param1) {
                         // USED → r11 = r6.next();
                         // CODE → <GetByVal>: <Reg8: 11, Reg8: 12, Reg8: 11>
                         // USED → r11 = getEnvironment(1)[18][r6.next()];
-                        if (getEnvironment(1)[18][r6.next()]) {
-                            // ──────────────── Block 4 ──────────────── 
-                            // CODE → <Mov>: <Reg8: 11, Reg8: 7>
-                            // USED → r11 = r6.next();
-                            // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 11>
-                            // USED → r13 = param1[r6.next()];
-                            // CODE → <Mov>: <Reg8: 11, Reg8: 13>
-                            r11 = param1[r6.next()]
-                            // CODE → <IteratorBegin>: <Reg8: 12, Reg8: 11>
-                            // USED → r12 = GetIterator(r11);
-                            // LOOP → START (while)
-                            while (true) {
-                                // ──────────────── Block 5 ──────────────── 
-                                // CODE → <IteratorNext>: <Reg8: 14, Reg8: 12, Reg8: 11>
-                                // USED → r14 = GetIterator(r11).next();
-                                // CODE → <Mov>: <Reg8: 13, Reg8: 12>
-                                // USED → r13 = GetIterator(r11);
-                                if (GetIterator(r11) !== undefined) {
-                                    // ──────────────── Block 6 ──────────────── 
-                                    // CODE → <Mov>: <Reg8: 8, Reg8: 14>
-                                    // USED → r8 = GetIterator(r11).next();
-                                    // CODE → <LoadFromEnvironment>: <Reg8: 15, Reg8: 1, UInt8: 18>
-                                    // USED → r15 = getEnvironment(1)[18];
-                                    // CODE → <Mov>: <Reg8: 13, Reg8: 7>
-                                    // USED → r13 = r6.next();
-                                    // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 13>
-                                    // USED → r13 = getEnvironment(1)[18][r6.next()];
-                                    // CODE → <Mov>: <Reg8: 9, Reg8: 13>
-                                    // USED → r9 = getEnvironment(1)[18][r6.next()];
-                                    // CODE → <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 13>
-                                    // USED → r13 = GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]];
-                                    if (GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]] !== undefined) {
-                                        // ──────────────── Block 7 ──────────────── 
-                                        // CODE → <Mov>: <Reg8: 15, Reg8: 8>
-                                        // USED → r15 = GetIterator(r11).next();
-                                        // CODE → <Mov>: <Reg8: 14, Reg8: 9>
-                                        // USED → r14 = getEnvironment(1)[18][r6.next()];
-                                        // CODE → <LoadFromEnvironment>: <Reg8: 16, Reg8: 1, UInt8: 36>
-                                        // USED → r16 = getEnvironment(1)[36];
-                                        // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 14>
-                                        // USED → r13 = GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]];
-                                        // CODE → <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
-                                        // USED → r13 = getEnvironment(1)[36].call(undefined, GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]]);
-                                        // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
-                                        GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]] = getEnvironment(1)[36].call(undefined, GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]])
-                                    }
-                                    // ──────────────── Block 8 ──────────────── 
-                                    // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
-                                    goto label_90;
-                                }
+                        // CODE → <JmpFalse>: <Addr8: -46, Reg8: 11>  # Address: 0000001c
+                        if (!getEnvironment(1)[18][r6.next()]) goto label_28;
+                        // ──────────────── Block 4 ──────────────── 
+                        // CODE → <Mov>: <Reg8: 11, Reg8: 7>
+                        // USED → r11 = r6.next();
+                        // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 11>
+                        // USED → r13 = param1[r6.next()];
+                        // CODE → <Mov>: <Reg8: 11, Reg8: 13>
+                        r11 = param1[r6.next()]
+                        // CODE → <IteratorBegin>: <Reg8: 12, Reg8: 11>
+                        // USED → r12 = GetIterator(r11);
+                        // LOOP → START (while)
+                        while (true) {
+                            // ──────────────── Block 5 ──────────────── 
+                            // CODE → <IteratorNext>: <Reg8: 14, Reg8: 12, Reg8: 11>
+                            // USED → r14 = GetIterator(r11).next();
+                            // CODE → <Mov>: <Reg8: 13, Reg8: 12>
+                            // USED → r13 = GetIterator(r11);
+                            // CODE → <JStrictEqual>: <Addr8: -69, Reg8: 13, Reg8: 0>  # Address: 0000001c
+                            if (GetIterator(r11) === undefined) goto label_28;
+                            // ──────────────── Block 6 ──────────────── 
+                            // CODE → <Mov>: <Reg8: 8, Reg8: 14>
+                            // USED → r8 = GetIterator(r11).next();
+                            // CODE → <LoadFromEnvironment>: <Reg8: 15, Reg8: 1, UInt8: 18>
+                            // USED → r15 = getEnvironment(1)[18];
+                            // CODE → <Mov>: <Reg8: 13, Reg8: 7>
+                            // USED → r13 = r6.next();
+                            // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 13>
+                            // USED → r13 = getEnvironment(1)[18][r6.next()];
+                            // CODE → <Mov>: <Reg8: 9, Reg8: 13>
+                            // USED → r9 = getEnvironment(1)[18][r6.next()];
+                            // CODE → <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 13>
+                            // USED → r13 = GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]];
+                            if (GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]] !== undefined) {
+                                // ──────────────── Block 7 ──────────────── 
+                                // CODE → <Mov>: <Reg8: 15, Reg8: 8>
+                                // USED → r15 = GetIterator(r11).next();
+                                // CODE → <Mov>: <Reg8: 14, Reg8: 9>
+                                // USED → r14 = getEnvironment(1)[18][r6.next()];
+                                // CODE → <LoadFromEnvironment>: <Reg8: 16, Reg8: 1, UInt8: 36>
+                                // USED → r16 = getEnvironment(1)[36];
+                                // CODE → <GetByVal>: <Reg8: 13, Reg8: 15, Reg8: 14>
+                                // USED → r13 = GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]];
+                                // CODE → <Call2>: <Reg8: 13, Reg8: 16, Reg8: 0, Reg8: 13>
+                                // USED → r13 = getEnvironment(1)[36].call(undefined, GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]]);
+                                // CODE → <PutByVal>: <Reg8: 15, Reg8: 14, Reg8: 13>
+                                GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]] = getEnvironment(1)[36].call(undefined, GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]])
                             }
-                            // LOOP → END
+                            // ──────────────── Block 8 ──────────────── 
+                            // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
+                            goto label_90;
                         }
+                        // LOOP → END
                     }
                 }
             }

@@ -35,23 +35,27 @@ function legacyArgumentsTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     // USED → r1 = 1;
     if (0 < arguments.length) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 9, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r9 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r8 = globalThis.console.log;
-        // CODE → <GetArgumentsPropByValStrict>: <Reg8: 6, Reg8: 0, Reg8: 7>
-        // USED → r6 = arguments[0];
-        // CODE → <Call2>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 6>
-        r6 = globalThis.console.log(arguments[0])
-        // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
-        // USED → r0 = 0 + 1;
-        // CODE → <Mov>: <Reg8: 6, Reg8: 7>
-        r6 = undefined
-        // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
-        // USED → r6 = arguments.length;
-        // CODE → <JLess>: <Addr8: -30, Reg8: 0, Reg8: 6>  # Address: 00000042
-        if (0 + 1 < arguments.length) goto label_66;
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 1 ──────────────── 
+            // CODE → <TryGetById>: <Reg8: 9, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+            // USED → r9 = globalThis.console;
+            // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+            // USED → r8 = globalThis.console.log;
+            // CODE → <GetArgumentsPropByValStrict>: <Reg8: 6, Reg8: 0, Reg8: 7>
+            // USED → r6 = arguments[0];
+            // CODE → <Call2>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 6>
+            r6 = globalThis.console.log(arguments[0])
+            // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
+            // USED → r0 = 0 + 1;
+            // CODE → <Mov>: <Reg8: 6, Reg8: 7>
+            r6 = undefined
+            // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
+            // USED → r6 = arguments.length;
+            // CODE → <JLess>: <Addr8: -30, Reg8: 0, Reg8: 6>  # Address: 00000042
+            if (0 + 1 < arguments.length) goto label_66;
+        }
+        // LOOP → END
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

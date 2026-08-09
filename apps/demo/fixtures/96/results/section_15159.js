@@ -35,15 +35,19 @@ function restOnlyTest(param0) {
     // CODE → <Less>: <Reg8: 6, Reg8: 2, Reg8: 3>
     // USED → r6 = 0 < arguments.length;
     if (0 < arguments.length) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <GetArgumentsPropByVal>: <Reg8: 6, Reg8: 2, Reg8: 4>
-        // USED → r6 = arguments[0];
-        // CODE → <PutByVal>: <Reg8: 5, Reg8: 2, Reg8: 6>
-        new globalThis.Array(arguments.length)[0] = arguments[0]
-        // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-        // USED → r2 = 0 + 1;
-        // CODE → <JLess>: <Addr8: -11, Reg8: 2, Reg8: 3>  # Address: 00000043
-        if (0 + 1 < arguments.length) goto label_67;
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 1 ──────────────── 
+            // CODE → <GetArgumentsPropByVal>: <Reg8: 6, Reg8: 2, Reg8: 4>
+            // USED → r6 = arguments[0];
+            // CODE → <PutByVal>: <Reg8: 5, Reg8: 2, Reg8: 6>
+            new globalThis.Array(arguments.length)[0] = arguments[0]
+            // CODE → <Inc>: <Reg8: 2, Reg8: 2>
+            // USED → r2 = 0 + 1;
+            // CODE → <JLess>: <Addr8: -11, Reg8: 2, Reg8: 3>  # Address: 00000043
+            if (0 + 1 < arguments.length) goto label_67;
+        }
+        // LOOP → END
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
