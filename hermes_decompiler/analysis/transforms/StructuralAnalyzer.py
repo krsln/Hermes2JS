@@ -99,7 +99,7 @@ class StructuralAnalyzer:
         # IfStructurer (which would otherwise permanently strand the
         # break-test block's terminator - see StructuralAnalyzer's
         # unstructured-block audit for exactly this shape).
-        LoopBreakRecognizer(graph, self.cfg).run()  # ✅
+        LoopBreakRecognizer(graph, self.cfg).run()
 
         IfStructurer(graph, self.cfg).run()
 
@@ -109,7 +109,7 @@ class StructuralAnalyzer:
         # the try range's blocks need to already be resolved into
         # their final loop/if nesting before we can find them as flat
         # siblings within whatever SequenceRegion they now live in.
-        TryStructurer(graph, self.cfg).run()  # ✅
+        TryStructurer(graph, self.cfg).run()
 
         # SwitchStructurer runs after the other structurers because it
         # recognizes two different switch representations:
@@ -122,7 +122,7 @@ class StructuralAnalyzer:
         #
         # Running here allows it to fold both forms into a single
         # SwitchRegion representation before lowering.
-        SwitchStructurer(graph, self.cfg).run()  # ✅
+        SwitchStructurer(graph, self.cfg).run()
 
         # ---- 3. region_passes -------------------------------------------
         BooleanChainFolder(self.cfg).run(graph.root)  # `&&`/`||` (e.g. a bare`if (a || b) { ... }

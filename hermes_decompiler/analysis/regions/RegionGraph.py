@@ -6,6 +6,11 @@ from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     SwitchRegion,
 )
+from hermes_decompiler.core.logging import get_logger
+
+logger = get_logger(__name__)
+
+_MAX_ANCESTOR_WALK = 20
 
 
 class RegionGraph:
@@ -97,13 +102,11 @@ class RegionGraph:
             next_seq = seq.parent if isinstance(seq.parent, SequenceRegion) else self._enclosing_sequence(seq)
             seq = next_seq
             depth += 1
-            if depth > 20:
+            if depth > _MAX_ANCESTOR_WALK:
+                logger.warning(f"depth limit reached while walking LCS of {block_a} and {block_b}")
                 break
 
         return None
-
-    def _sequence_contains_block(self, seq: SequenceRegion, block: BasicBlock) -> bool:
-        return block in seq.covered_blocks
 
     def _enclosing_sequence(self, region: Region) -> SequenceRegion | None:
         """Walks .parent up until hitting a SequenceRegion (region.parent

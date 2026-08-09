@@ -14,7 +14,7 @@ class Region(ABC):
     `covered_blocks` is the set of every raw BasicBlock reachable
     anywhere under this region. It's lazily computed and cached;
     `invalidate_coverage()` must be called whenever the subtree
-    changes shape, and propagates up through `.parent` so an ancestor
+    changes shape and propagates up through `.parent` so an ancestor
     never serves a stale answer.
     """
 
@@ -26,6 +26,7 @@ class Region(ABC):
     def covered_blocks(self) -> set[BasicBlock]:
         if self._covered_blocks is None:
             self._covered_blocks = self._compute_covered_blocks()
+
         return self._covered_blocks
 
     def invalidate_coverage(self) -> None:
@@ -134,7 +135,7 @@ class LoopRegion(Region):
     (as opposed to mutating `loop_region.body.children` in place, which
     `LoopStructurer` does) automatically reparents `x` and invalidates
     coverage - this is what makes the earlier bug (structurers
-    silently overwriting a sub-region without fixing its `.parent`)
+    silently overwriting a subregion without fixing its `.parent`)
     structurally impossible instead of a discipline problem.
     """
 
@@ -144,8 +145,8 @@ class LoopRegion(Region):
 
         self.condition = None
         self.loop_kind = LoopKind.WHILE
-        self.iterable = None  # for-of: dizilebilir ifade, for-in: obje ifadesi
-        self.loop_binding = None  # döngü değişkeninin geldiği dest_reg
+        self.iterable = None  # for-of: arrays, for-in: objects
+        self.loop_binding = None  # dest_reg
 
         self._body = SequenceRegion()
         self._body.parent = self
