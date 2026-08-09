@@ -21,7 +21,6 @@ from hermes_decompiler.analysis.transforms.region_passes import (
     LoopConditionRegionPass,
     NullishAssignmentRegionPass,
 )
-from hermes_decompiler.analysis.transforms.lowering import StatementBuilder
 from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -69,12 +68,6 @@ class StructuralAnalyzer:
                                 introducing a new region *kind*.
                                 e.g. `BooleanChainFolder`,
                                 `LoopConditionExtractor`.
-
-        4. `lowering/`       - turn the final region tree into the
-                                flat per-block statement list
-                                (`region.items`) that `JSEmitter`/
-                                `Printer` render from.
-                                e.g. `StatementBuilder`.
 
     A pass never reaches into a later stage's concerns and never runs
     outside this method - if a new pass is added, it's wired in here,
@@ -132,8 +125,7 @@ class StructuralAnalyzer:
         LoopConditionRegionPass(graph.root).run()
         ForEachRegionPass(graph).run()
 
-        # ---- 4. lowering ------------------------------------------------
-        # StatementBuilder().build(root) # ❌ no effect at all
+        # ---- 4.  ------------------------------------------------
 
         self._audit_unstructured_blocks(root, graph, self.cfg)
 

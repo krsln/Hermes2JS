@@ -39,10 +39,6 @@ class ForEachRegionPass:
                                 reliably the IteratorNext/GetNextPName
                                 call and nothing else
 
-    Must run BEFORE StatementBuilder (stage 4): it deletes the header
-    instruction it recognizes, so lowering never sees it as an
-    ordinary statement.
-
     Conservative by design: any pattern that doesn't match exactly
     (wrong callee, mismatched iterator identity, unexpected finally
     content) is left as a plain `while` loop rather than guessed at -
