@@ -6,34 +6,17 @@ from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion, LoopRegion, IfRegion, TryRegion,
 )
-from hermes_decompiler.analysis.transforms._shared import _negate_condition
+from hermes_decompiler.analysis.transforms._shared import (
+    _negate_condition,
+    _TRIVIAL_NODE_TYPES,
+    _IMPURE_EXPRESSION_TYPES
+)
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import (
-    ConditionalExpression, Expression, Identifier, StringLiteral,
-    NumericLiteral, BooleanLiteral,
-    CallExpression, NewExpression, AssignmentExpression,
-    UpdateExpression, AwaitExpression, YieldExpression,
-)
+    ConditionalExpression, Expression, )
 
 logger = get_logger(__name__)
-
-_TRIVIAL_NODE_TYPES = (Identifier, StringLiteral, NumericLiteral, BooleanLiteral)  # adjust to actual literal type names
-
-# Same set BooleanChainFolder guards against in `_is_pure` - an
-# instruction whose value is one of these is independently observable
-# (a call's side effect, an assignment's mutation, ...) even when it
-# hasn't yet been promoted to its own `.statement` node. Absorbing one
-# of these into a ConditionalExpression's operand silently drops or
-# reorders that side effect.
-_IMPURE_EXPRESSION_TYPES = (
-    CallExpression,
-    NewExpression,
-    AssignmentExpression,
-    UpdateExpression,
-    AwaitExpression,
-    YieldExpression,
-)
 
 
 class ConditionalExpressionRegionPass:
@@ -193,7 +176,7 @@ class ConditionalExpressionRegionPass:
         # pipeline - Printer falls back to printing such instructions
         # as bare expression statements from `.value` directly (see
         # `Printer._emit_block`). Also reject by expression TYPE, same
-        # as `BooleanChainFolder._is_pure` already does, so a call
+        # as `BooleanChainRegionPass._is_pure` already does, so a call
         # (etc.) sitting earlier in the arm can't be silently absorbed
         # into the folded ConditionalExpression's operand tree.
         for blk in children:
@@ -233,10 +216,7 @@ class ConditionalExpressionRegionPass:
         rationale, including why the structural-equality branch is
         needed for Mov-introduced copies. Kept duplicated here rather
         than shared, per earlier decision to avoid guessing at an
-        extraction target; TODO: extract to a shared helper once both
-        copies are confirmed working, so they can't silently diverge
-        again the way this one did (this method didn't exist at all
-        until now, despite the comment claiming parity).
+        extraction target.
         """
 
         if node is old_expr:

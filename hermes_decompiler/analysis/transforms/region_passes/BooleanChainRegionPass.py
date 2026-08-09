@@ -6,24 +6,20 @@ from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.Regions import (
     SequenceRegion,
     LoopRegion,
-    IfRegion, TryRegion,
+    IfRegion,
+    TryRegion,
 )
-from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
+from hermes_decompiler.analysis.transforms._shared import (
+    _negate_condition,
+    _is_pure,
+    _TRIVIAL_NODE_TYPES
+)
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import (
     BinaryExpression,
-    Expression,
-    CallExpression,
-    NewExpression,
-    AssignmentExpression,
-    UpdateExpression,
-    AwaitExpression,
-    YieldExpression,
-    Identifier, StringLiteral, NumericLiteral, BooleanLiteral)
-
-_TRIVIAL_NODE_TYPES = (Identifier, StringLiteral, NumericLiteral, BooleanLiteral)  # adjust to actual literal type names
+    Expression)
 
 logger = get_logger(__name__)
 
@@ -72,15 +68,6 @@ class BooleanChainRegionPass:
     """
 
     _LOGICAL_OPERATORS = (LogicalOperator.OR, LogicalOperator.AND)
-
-    _IMPURE_EXPRESSION_TYPES = (
-        CallExpression,
-        NewExpression,
-        AssignmentExpression,
-        UpdateExpression,
-        AwaitExpression,
-        YieldExpression,
-    )
 
     def __init__(self, cfg):
         self.cfg = cfg
@@ -189,7 +176,7 @@ class BooleanChainRegionPass:
             return False
 
         for earlier in then_block.instructions[:-1]:
-            if not self._is_pure(earlier):
+            if not _is_pure(earlier):
                 return False
 
         condition = if_region.condition
@@ -337,25 +324,3 @@ class BooleanChainRegionPass:
             return value.right
 
         return value
-
-    def _is_pure(self, instruction) -> bool:
-        """
-        True if `instruction`'s value can be safely absorbed into the
-        fold without needing its own printed statement.
-
-        "Pure" here means "not independently observable as a separate
-        statement" (instruction.statement is None) - NOT "side-effect
-        free". A CallExpression with no .statement of its own is still
-        fully consumed by the chain tail's expression tree (e.g.
-        `a && sideEffect(...)`), so folding it away from block.instructions
-        doesn't drop the call - it relocates it into `then_result.value`,
-        which is exactly what happens for any other value in this fold.
-        A block whose call genuinely needs independent evaluation order
-        would already have `.statement` set by whatever pass decides
-        that (unrelated to this pass), and is correctly rejected above.
-        """
-        if instruction.statement is not None:
-            return False
-        if not isinstance(instruction.value, Expression):
-            return False
-        return True
