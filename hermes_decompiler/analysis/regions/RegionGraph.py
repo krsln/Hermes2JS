@@ -100,7 +100,6 @@ class RegionGraph:
             if depth > 20:
                 break
 
-        print("DEBUG returning None")
         return None
 
     def _sequence_contains_block(self, seq: SequenceRegion, block: BasicBlock) -> bool:
