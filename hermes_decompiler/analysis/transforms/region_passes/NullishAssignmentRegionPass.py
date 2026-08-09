@@ -11,7 +11,7 @@ from hermes_decompiler.ir.expressions import (
 logger = get_logger(__name__)
 
 
-class NullishAssignmentFolder:
+class NullishAssignmentRegionPass:
     """
     Folds:
         if (obj.prop == null) { obj.prop = default; }

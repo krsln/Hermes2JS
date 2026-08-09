@@ -10,7 +10,7 @@ from hermes_decompiler.ir.expressions import Expression, UnaryExpression
 logger = get_logger(__name__)
 
 
-class LoopConditionExtractor:
+class LoopConditionRegionPass:
     """
     Determines a loop's real continuation test (if any) and, from where
     that test physically sits in the CFG, whether the loop is top-tested

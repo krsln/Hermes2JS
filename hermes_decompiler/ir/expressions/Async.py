@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from hermes_decompiler.ir.Node import Node
-from ._Base import Expression
+from ._base import Expression
 
 __all__ = [
     "AwaitExpression",

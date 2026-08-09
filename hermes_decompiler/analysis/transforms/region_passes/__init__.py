@@ -1,13 +1,13 @@
-from .BooleanChainFolder import BooleanChainFolder
-from .ConditionalExpressionFolder import ConditionalExpressionFolder
-from .ForEachRecognizer import ForEachRecognizer
-from .LoopConditionExtractor import LoopConditionExtractor
-from .NullishAssignmentFolder import NullishAssignmentFolder
+from .BooleanChainRegionPass import BooleanChainRegionPass
+from .ConditionalExpressionRegionPass import ConditionalExpressionRegionPass
+from .ForEachRegionPass import ForEachRegionPass
+from .LoopConditionRegionPass import LoopConditionRegionPass
+from .NullishAssignmentRegionPass import NullishAssignmentRegionPass
 
 __all__ = [
-    "BooleanChainFolder",
-    "ConditionalExpressionFolder",
-    "ForEachRecognizer",
-    "LoopConditionExtractor",
-    "NullishAssignmentFolder",
+    "BooleanChainRegionPass",
+    "ConditionalExpressionRegionPass",
+    "ForEachRegionPass",
+    "LoopConditionRegionPass",
+    "NullishAssignmentRegionPass",
 ]

@@ -36,7 +36,7 @@ _IMPURE_EXPRESSION_TYPES = (
 )
 
 
-class ConditionalExpressionFolder:
+class ConditionalExpressionRegionPass:
     """
     Folds Hermes' bytecode encoding of a *value-producing* ternary
     (`c ? a : b`) back into a single ConditionalExpression, once

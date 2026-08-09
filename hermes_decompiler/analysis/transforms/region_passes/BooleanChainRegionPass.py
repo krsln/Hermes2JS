@@ -28,7 +28,7 @@ _TRIVIAL_NODE_TYPES = (Identifier, StringLiteral, NumericLiteral, BooleanLiteral
 logger = get_logger(__name__)
 
 
-class BooleanChainFolder:
+class BooleanChainRegionPass:
     """
     Folds the common short-circuit `||`/`&&` compiled idiom back into a
     single expression, once `IfStructurer` has already turned the raw

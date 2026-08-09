@@ -1,4 +1,4 @@
-from ._IterativeSetAnalysis import _IterativeSetAnalysis
+from ._iterative_set_analysis import _IterativeSetAnalysis
 from .DominatorTree import DominatorTree
 from .PostDominatorTree import PostDominatorTree
 

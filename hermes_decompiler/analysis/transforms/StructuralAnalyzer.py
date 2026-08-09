@@ -4,21 +4,22 @@ from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorSwitch
 from hermes_decompiler.analysis.transforms.cfg_passes import (
-    ShortCircuitConditionMerger,
+    ShortCircuitConditionCfgPass,
 )
 from hermes_decompiler.analysis.transforms.structurers import (
     SequenceStructurer,
     LoopStructurer,
-    LoopBreakRecognizer,
+    LoopBreakStructurer,
     IfStructurer,
     TryStructurer,
     SwitchStructurer,
 )
 from hermes_decompiler.analysis.transforms.region_passes import (
-    BooleanChainFolder,
-    LoopConditionExtractor,
-    ForEachRecognizer,
-    ConditionalExpressionFolder, NullishAssignmentFolder,
+    BooleanChainRegionPass,
+    ConditionalExpressionRegionPass,
+    ForEachRegionPass,
+    LoopConditionRegionPass,
+    NullishAssignmentRegionPass,
 )
 from hermes_decompiler.analysis.transforms.lowering import StatementBuilder
 from hermes_decompiler.core.logging import get_logger
@@ -86,7 +87,7 @@ class StructuralAnalyzer:
 
     def build(self):
         # ---- 1. cfg_passes --------------------------------------------
-        ShortCircuitConditionMerger(self.cfg).run()
+        ShortCircuitConditionCfgPass(self.cfg).run()
 
         # ---- 2. structurers -------------------------------------------
         root = SequenceStructurer(self.cfg).run()
@@ -99,7 +100,7 @@ class StructuralAnalyzer:
         # IfStructurer (which would otherwise permanently strand the
         # break-test block's terminator - see StructuralAnalyzer's
         # unstructured-block audit for exactly this shape).
-        LoopBreakRecognizer(graph, self.cfg).run()
+        LoopBreakStructurer(graph, self.cfg).run()
 
         IfStructurer(graph, self.cfg).run()
 
@@ -125,11 +126,11 @@ class StructuralAnalyzer:
         SwitchStructurer(graph, self.cfg).run()
 
         # ---- 3. region_passes -------------------------------------------
-        BooleanChainFolder(self.cfg).run(graph.root)  # `&&`/`||` (e.g. a bare`if (a || b) { ... }
-        ConditionalExpressionFolder(self.cfg).run(graph.root)  # ternary
-        NullishAssignmentFolder(self.cfg).run(graph.root)
-        LoopConditionExtractor(graph.root).run()
-        ForEachRecognizer(graph).run()
+        BooleanChainRegionPass(self.cfg).run(graph.root)  # `&&`/`||` (e.g. a bare`if (a || b) { ... }
+        ConditionalExpressionRegionPass(self.cfg).run(graph.root)  # ternary
+        NullishAssignmentRegionPass(self.cfg).run(graph.root)
+        LoopConditionRegionPass(graph.root).run()
+        ForEachRegionPass(graph).run()
 
         # ---- 4. lowering ------------------------------------------------
         # StatementBuilder().build(root) # ❌ no effect at all

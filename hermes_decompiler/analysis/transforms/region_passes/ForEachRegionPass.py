@@ -12,7 +12,7 @@ from hermes_decompiler.analysis.regions.Regions import (
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
 
 
-class ForEachRecognizer:
+class ForEachRegionPass:
     """
     Stage-3 region pass. Reclassifies a plain `LoopRegion`
     (`loop_kind == LoopKind.WHILE`, the default `LoopStructurer` /
@@ -303,11 +303,11 @@ class ForEachRecognizer:
         register-free, dataclass-aware value comparison."""
         if dataclasses.is_dataclass(value) and not isinstance(value, type):
             return tuple(
-                ForEachRecognizer._structural_key(getattr(value, f.name))
+                ForEachRegionPass._structural_key(getattr(value, f.name))
                 for f in dataclasses.fields(value)
             )
         if isinstance(value, (list, tuple)):
-            return tuple(ForEachRecognizer._structural_key(v) for v in value)
+            return tuple(ForEachRegionPass._structural_key(v) for v in value)
         try:
             hash(value)
             return value

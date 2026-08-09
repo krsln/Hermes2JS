@@ -11,7 +11,7 @@ from hermes_decompiler.ir.statements import BreakStatement
 logger = get_logger(__name__)
 
 
-class LoopBreakRecognizer(RegionStructurer):
+class LoopBreakStructurer(RegionStructurer):
     """
     Recognizes the CFG shape Hermes emits for a mid-loop `break`:
 
