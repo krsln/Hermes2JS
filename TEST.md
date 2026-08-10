@@ -19,26 +19,24 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 - io/ moved into core/IO.py
 - IfStructurer fix
 - _raw.js
-- HermesAnalysis  self.registers: dict[str, RegisterState] = {}
+- HermesAnalysis self.registers: dict[str, RegisterState] = {}
 - Printer.py
+
+## Coach
+
+```shell
+python scripts/decompile_sections.py -i ./apps/coachy/fixtures/focused -o ./apps/coachy/fixtures/results
+
+python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results
+
+python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --no-verbose
+python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict
+python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict --no-verbose
+```
 
 ## Testy
 
 ```shell
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/focused -o ./apps/demo/fixtures/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/focused -o ./apps/demo/fixtures/results --log-level DEBUG
-
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --no-verbose
-
-# 96
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results --log-level DEBUG
-
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level DEBUG
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
-
 # ControlFlow
 ################ 
 # whileTest 15047
@@ -55,81 +53,32 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 
 # Iterators
 # IteratorTests 15092, 15093
-
 ```
 
-## Coach
-
 ```shell
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/focused -o ./apps/coachy/fixtures/results
+# 98
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/focused -o ./apps/demo/fixtures/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/focused -o ./apps/demo/fixtures/results --log-level DEBUG
 
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --no-verbose
 
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --no-verbose
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict --no-verbose
+# 96
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results --log-level DEBUG
 
-```
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
+ 
 
-**Examples**
-
-```shell
-python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ 
-python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --no-verbose
-python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --log-level DEBUG
-python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --strict
-
+## whole sections
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 999 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 999 --end 1999 
-python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1999 --end 2999 
 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 4999 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 5000 --end 9999 
-
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 10000 --end 14999 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 15000 --end 19999
-
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 20000 --end 24999 
-
-python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```
-
-## Region Tree
-
-Un-comment or change logging level to `logging.DEBUG` → scripts/decompile_sections.py
-
-```python
-import logging
-from hermes_decompiler.core.logging import configure_logging, logging_test, get_logger
-
-logger = get_logger(__name__)
-# configure_logging(level=logging.INFO, use_color=True)
-configure_logging(level=logging.DEBUG, use_color=True)
-logging_test()
-```
-
-```text
-===== REGION TREE =====
-SequenceRegion
-    Block 0
-    LoopRegion(header=1)
-        SequenceRegion
-            Block 1
-            Block 2
-            Block 3
-            LoopRegion(header=10)
-                SequenceRegion
-                    Block 10
-                    Block 9
-    Block 4
-    LoopRegion(header=5)
-        SequenceRegion
-            Block 5
-            Block 6
-            Block 7
-            Block 8
-    Block 11
-```
-
-
-
