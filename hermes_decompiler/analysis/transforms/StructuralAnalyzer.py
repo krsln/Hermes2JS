@@ -19,6 +19,7 @@ from hermes_decompiler.analysis.transforms.region_passes import (
     ConditionalExpressionRegionPass,
     ForEachRegionPass,
     LoopConditionRegionPass,
+    LoopContinueRegionPass,
     NullishAssignmentRegionPass,
 )
 from hermes_decompiler.core.logging import get_logger
@@ -48,7 +49,7 @@ class StructuralAnalyzer:
     `StructuralAnalyzer(cfg).build()` and take the resulting root -
     no pass is ever wired up or called from anywhere else.
 
-    Passes run in four stages, each living in its own subpackage under
+    Passes run in three stages, each living in its own subpackage under
     `transforms/`:
 
         1. `cfg_passes/`     - rewrite the raw CFG (blocks, edges,
@@ -67,7 +68,11 @@ class StructuralAnalyzer:
                                 tree (fold/extract) without
                                 introducing a new region *kind*.
                                 e.g. `BooleanChainRegionPass`,
-                                `LoopConditionRegionPass`.
+                                `LoopConditionRegionPass`. Every pass
+                                extends the common `RegionPass` base -
+                                the same `__init__(graph, cfg)` /
+                                `run() -> None` contract as
+                                `RegionStructurer`.
 
     A pass never reaches into a later stage's concerns and never runs
     outside this method - if a new pass is added, it's wired in here,
@@ -123,9 +128,19 @@ class StructuralAnalyzer:
         ConditionalExpressionRegionPass(graph, self.cfg).run()  # ternary
         NullishAssignmentRegionPass(graph, self.cfg).run()
         LoopConditionRegionPass(graph, self.cfg).run()
+
+        # Must run after IfStructurer: recognizes a residual,
+        # already-unconditional jump - wherever IfStructurer's own
+        # nesting left it - whose target is the loop's own latch
+        # block, and rewrites it in place as `continue;`. See its own
+        # docstring for why no structurer ever strips this jump
+        # itself. Order relative to the other region passes doesn't
+        # matter - see its docstring for the disjointness argument.
+        LoopContinueRegionPass(graph, self.cfg).run()
+
         ForEachRegionPass(graph, self.cfg).run()
 
-        # ---- 4.  ------------------------------------------------
+        # ---- Diagnostics ------------------------------------------------
 
         self._audit_unstructured_blocks(root, graph, self.cfg)
 

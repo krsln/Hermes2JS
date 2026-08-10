@@ -35,7 +35,7 @@ function labeledContinueTest(param0) {
         // CODE → <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
         console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
         // CODE → <Jmp>: <Addr8: 18>  # Address: 0000006c
-        goto label_108;
+        continue;
         // ──────────────── Block 5 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r9 = globalThis.console;

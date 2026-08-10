@@ -67,7 +67,7 @@ function tryCatchInsideLoopTest(param0, param1) {
                 // CODE → <Call3>: <Reg8: 2, Reg8: 3, Reg8: 9, Reg8: 4, Reg8: 2>
                 console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", param1[0])
                 // CODE → <Jmp>: <Addr8: 59>  # Address: 0000009e
-                goto label_158;
+                continue;
                 // LOOP → START (while)
                 while (true) {
                     // ──────────────── Block 5 ──────────────── 

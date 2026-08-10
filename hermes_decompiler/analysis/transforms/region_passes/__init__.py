@@ -3,6 +3,7 @@ from .BooleanChainRegionPass import BooleanChainRegionPass
 from .ConditionalExpressionRegionPass import ConditionalExpressionRegionPass
 from .ForEachRegionPass import ForEachRegionPass
 from .LoopConditionRegionPass import LoopConditionRegionPass
+from .LoopContinueRegionPass import LoopContinueRegionPass
 from .NullishAssignmentRegionPass import NullishAssignmentRegionPass
 
 __all__ = [
@@ -11,5 +12,6 @@ __all__ = [
     "ConditionalExpressionRegionPass",
     "ForEachRegionPass",
     "LoopConditionRegionPass",
+    "LoopContinueRegionPass",
     "NullishAssignmentRegionPass",
 ]

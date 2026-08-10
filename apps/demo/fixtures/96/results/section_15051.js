@@ -55,7 +55,7 @@ function forTest(param0) {
             // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 6>
             console.log(0)
             // CODE → <Jmp>: <Addr8: 40>  # Address: 00000068
-            goto label_104;
+            continue;
         }
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 5, Reg8: 6>
