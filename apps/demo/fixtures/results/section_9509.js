@@ -9,7 +9,7 @@ function closureTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4932>  # String: '__BC:Functions/ClosureTests/closureTest/start' (String)
     // USED → r3 = "__BC:Functions/ClosureTests/closureTest/start";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Functions/ClosureTests/closureTest/start")
+    console.log("__BC:Functions/ClosureTests/closureTest/start")
     // CODE → <CreateFunctionEnvironment>: <Reg8: 3, UInt8: 1>
     // USED → r3 = __environment__;
     // CODE → <LoadConstZero>: <Reg8: 0>
@@ -51,7 +51,7 @@ function closureTest(param0) {
     // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 6>
     // USED → r3 = r6.value();
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log(r6.value())
+    console.log(r6.value())
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -59,7 +59,7 @@ function closureTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4931>  # String: '__BC:Functions/ClosureTests/closureTest/end' (String)
     // USED → r2 = "__BC:Functions/ClosureTests/closureTest/end";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Functions/ClosureTests/closureTest/end")
+    console.log("__BC:Functions/ClosureTests/closureTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Ret>: <Reg8: 1>

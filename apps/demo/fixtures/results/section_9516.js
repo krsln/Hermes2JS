@@ -13,7 +13,7 @@ function legacyArgumentsTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 4953>  # String: '__BC:Functions/RestParameterTests/legacyArgumentsTest/start' (String)
     // USED → r6 = "__BC:Functions/RestParameterTests/legacyArgumentsTest/start";
     // CODE → <Call2>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 6>
-    r6 = globalThis.console.log("__BC:Functions/RestParameterTests/legacyArgumentsTest/start")
+    console.log("__BC:Functions/RestParameterTests/legacyArgumentsTest/start")
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r9 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -23,7 +23,7 @@ function legacyArgumentsTest(param0) {
     // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
     // USED → r6 = arguments.length;
     // CODE → <Call2>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 6>
-    r6 = globalThis.console.log(arguments.length)
+    console.log(arguments.length)
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
     r6 = undefined
     // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
@@ -45,7 +45,7 @@ function legacyArgumentsTest(param0) {
             // CODE → <GetArgumentsPropByValStrict>: <Reg8: 6, Reg8: 0, Reg8: 7>
             // USED → r6 = arguments[0];
             // CODE → <Call2>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 6>
-            r6 = globalThis.console.log(arguments[0])
+            console.log(arguments[0])
             // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
             // USED → r0 = 0 + 1;
             // CODE → <Mov>: <Reg8: 6, Reg8: 7>
@@ -63,7 +63,7 @@ function legacyArgumentsTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 4952>  # String: '__BC:Functions/RestParameterTests/legacyArgumentsTest/end' (String)
     // USED → r5 = "__BC:Functions/RestParameterTests/legacyArgumentsTest/end";
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
-    r5 = globalThis.console.log("__BC:Functions/RestParameterTests/legacyArgumentsTest/end")
+    console.log("__BC:Functions/RestParameterTests/legacyArgumentsTest/end")
     // CODE → <Ret>: <Reg8: 4>
     return undefined;
 }

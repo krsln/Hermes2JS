@@ -9,7 +9,7 @@ function nestedObjectDestructureTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4814>  # String: '__BC:Objects/DestructuringTests/nestedObjectDestructureTest/start' (String)
     // USED → r0 = "__BC:Objects/DestructuringTests/nestedObjectDestructureTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Objects/DestructuringTests/nestedObjectDestructureTest/start")
+    console.log("__BC:Objects/DestructuringTests/nestedObjectDestructureTest/start")
     // CODE → <NewObject>: <Reg8: 0>
     r0 = {  }
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 200>
@@ -63,7 +63,7 @@ function nestedObjectDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4, Reg8: 6>
-    r2 = globalThis.console.log(r0.status, r0.body.user.name, r2.page)
+    console.log(r0.status, r0.body.user.name, r2.page)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -71,7 +71,7 @@ function nestedObjectDestructureTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4813>  # String: '__BC:Objects/DestructuringTests/nestedObjectDestructureTest/end' (String)
     // USED → r1 = "__BC:Objects/DestructuringTests/nestedObjectDestructureTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Objects/DestructuringTests/nestedObjectDestructureTest/end")
+    console.log("__BC:Objects/DestructuringTests/nestedObjectDestructureTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

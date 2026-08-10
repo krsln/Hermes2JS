@@ -27,7 +27,7 @@ async function* anon_15185(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 4754>  # String: '__BC:Functions/AsyncTests/asyncLoopTest/start' (String)
         // USED → r3 = "__BC:Functions/AsyncTests/asyncLoopTest/start";
         // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-        r3 = globalThis.console.log("__BC:Functions/AsyncTests/asyncLoopTest/start")
+        console.log("__BC:Functions/AsyncTests/asyncLoopTest/start")
         // CODE → <LoadConstZero>: <Reg8: 1>
         // USED → r1 = 0;
         // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>
@@ -72,7 +72,7 @@ async function* anon_15185(param0, param1) {
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r3 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 1>
-        r3 = globalThis.console.log(0 + await yield)
+        console.log(0 + await yield)
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r4 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -80,7 +80,7 @@ async function* anon_15185(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 4751>  # String: '__BC:Functions/AsyncTests/asyncLoopTest/end' (String)
         // USED → r2 = "__BC:Functions/AsyncTests/asyncLoopTest/end";
         // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-        r2 = globalThis.console.log("__BC:Functions/AsyncTests/asyncLoopTest/end")
+        console.log("__BC:Functions/AsyncTests/asyncLoopTest/end")
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → <Ret>: <Reg8: 1>

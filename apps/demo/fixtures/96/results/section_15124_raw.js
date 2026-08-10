@@ -9,7 +9,7 @@ function setTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4559>  # String: '__BC:Collections/MapSetTests/setTest/start' (String)
     // USED → r0 = "__BC:Collections/MapSetTests/setTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Collections/MapSetTests/setTest/start")
+    console.log("__BC:Collections/MapSetTests/setTest/start")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 32>  # String: 'Set' (Identifier)
     // USED → r3 = globalThis.Set;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
@@ -31,7 +31,7 @@ function setTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 5, string_id: 226>  # String: 'size' (Identifier)
     // USED → r0 = new globalThis.Set([1, 2, 2, 3, 3, 3]).size;
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-    r0 = globalThis.console.log(new globalThis.Set([1, 2, 2, 3, 3, 3]).size)
+    console.log(new Set([1, 2, 2, 3, 3, 3]).size)
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 6, string_id: 59>  # String: 'add' (Identifier)
     // USED → r2 = new globalThis.Set([1, 2, 2, 3, 3, 3]).add;
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
@@ -49,7 +49,7 @@ function setTest(param0) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 5, Reg8: 3, Reg8: 0>
     // USED → r0 = new globalThis.Set([1, 2, 2, 3, 3, 3]).has(2);
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-    r0 = globalThis.console.log(new globalThis.Set([1, 2, 2, 3, 3, 3]).has(2))
+    console.log(new Set([1, 2, 2, 3, 3, 3]).has(2))
     // CODE → <Mov>: <Reg8: 2, Reg8: 3>
     r2 = new globalThis.Set([1, 2, 2, 3, 3, 3])
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 2>
@@ -69,7 +69,7 @@ function setTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-    r5 = globalThis.console.log(GetIterator(r2).next())
+    console.log(GetIterator(r2).next())
     // CODE → <Jmp>: <Addr8: -27>  # Address: 0000007f
     goto label_127;
     // ──────────────── Block 3 ──────────────── 
@@ -95,7 +95,7 @@ function setTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
-    r2 = globalThis.console.log(r4)
+    console.log(r4)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -103,7 +103,7 @@ function setTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4558>  # String: '__BC:Collections/MapSetTests/setTest/end' (String)
     // USED → r1 = "__BC:Collections/MapSetTests/setTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Collections/MapSetTests/setTest/end")
+    console.log("__BC:Collections/MapSetTests/setTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

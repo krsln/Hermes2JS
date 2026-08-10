@@ -9,7 +9,7 @@ function forEachTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4760>  # String: '__BC:ControlFlow/ForEachTests/forEachTest/start' (String)
     // USED → r2 = "__BC:ControlFlow/ForEachTests/forEachTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:ControlFlow/ForEachTests/forEachTest/start")
+    console.log("__BC:ControlFlow/ForEachTests/forEachTest/start")
     // CODE → <NewArrayWithBuffer>: <Reg8: 4, UInt16: 4, UInt16: 4, UInt16: 48446>  # Array: [10, 20, 30, 40]
     r4 = [10, 20, 30, 40]
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 148>  # String: 'forEach' (Identifier)
@@ -27,7 +27,7 @@ function forEachTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4756>  # String: '__BC:ControlFlow/ForEachTests/forEachTest/end' (String)
     // USED → r1 = "__BC:ControlFlow/ForEachTests/forEachTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:ControlFlow/ForEachTests/forEachTest/end")
+    console.log("__BC:ControlFlow/ForEachTests/forEachTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

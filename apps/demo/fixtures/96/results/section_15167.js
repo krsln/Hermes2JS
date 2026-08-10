@@ -25,7 +25,7 @@ async function* anon_15167(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 4786>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/start' (String)
         // USED → r2 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/start";
         // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-        r2 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/start")
+        console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/start")
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0;
         // CODE → <Less>: <Reg8: 6, Reg8: 4, Reg8: 5>
@@ -43,7 +43,7 @@ async function* anon_15167(param0, param1) {
             // CODE → <LoadConstString>: <Reg8: 1, string_id: 4782>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/end' (String)
             // USED → r1 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/end";
             // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-            r1 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/end")
+            console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/end")
             // CODE → <LoadConstUndefined>: <Reg8: 1>
             // USED → r1 = undefined;
             // CODE → <CompleteGenerator>: <>
@@ -63,7 +63,7 @@ async function* anon_15167(param0, param1) {
                     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
                     // USED → r7 = globalThis.console.log;
                     // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
-                    r7 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip")
+                    console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip")
                 } else {
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>

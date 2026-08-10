@@ -9,7 +9,7 @@ function nestedLoopTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4627>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/NestedTests/nestedLoopTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/start")
+    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 7, UInt8: 3>
     // USED → r7 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 4>
@@ -43,13 +43,13 @@ function nestedLoopTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r12 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 5>
-    r12 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if")
+    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/deep-if")
     // CODE → <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r13 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r12 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 12, Reg8: 12, Reg8: 13, Reg8: 4>
-    r12 = globalThis.console.log("nested")
+    console.log("nested")
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Inc>: <Reg8: 10, Reg8: 11>
     // USED → r10 = 0 + 1;
@@ -68,7 +68,7 @@ function nestedLoopTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4625>  # String: '__BC:ControlFlow/NestedTests/nestedLoopTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/NestedTests/nestedLoopTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/end")
+    console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

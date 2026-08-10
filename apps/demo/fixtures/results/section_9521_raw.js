@@ -11,7 +11,7 @@ function callGeneratorTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4939>  # String: '__BC:Functions/GeneratorTests/callGeneratorTests/start' (String)
     // USED → r0 = "__BC:Functions/GeneratorTests/callGeneratorTests/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Functions/GeneratorTests/callGeneratorTests/start")
+    console.log("__BC:Functions/GeneratorTests/callGeneratorTests/start")
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
     // USED → r3 = getParentEnvironment(0)[0];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
@@ -37,7 +37,7 @@ function callGeneratorTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-    r5 = globalThis.console.log(GetIterator(r3).next())
+    console.log(GetIterator(r3).next())
     // CODE → <Jmp>: <Addr8: -30>  # Address: 00000029
     goto label_41;
     // ──────────────── Block 3 ──────────────── 
@@ -73,7 +73,7 @@ function callGeneratorTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-    r5 = globalThis.console.log(GetIterator(r3).next())
+    console.log(GetIterator(r3).next())
     // CODE → <Jmp>: <Addr8: -30>  # Address: 00000062
     goto label_98;
     // ──────────────── Block 7 ──────────────── 
@@ -97,7 +97,7 @@ function callGeneratorTests(param0) {
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
     // USED → r2 = getParentEnvironment(0)[2].call(undefined).next();
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(getParentEnvironment(0)[2].call(undefined).next())
+    console.log(getParentEnvironment(0)[2].call(undefined).next())
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -107,7 +107,7 @@ function callGeneratorTests(param0) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 0>
     // USED → r2 = getParentEnvironment(0)[2].call(undefined).return(undefined);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(getParentEnvironment(0)[2].call(undefined).return(undefined))
+    console.log(getParentEnvironment(0)[2].call(undefined).return(undefined))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -115,7 +115,7 @@ function callGeneratorTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4937>  # String: '__BC:Functions/GeneratorTests/callGeneratorTests/end' (String)
     // USED → r1 = "__BC:Functions/GeneratorTests/callGeneratorTests/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/GeneratorTests/callGeneratorTests/end")
+    console.log("__BC:Functions/GeneratorTests/callGeneratorTests/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

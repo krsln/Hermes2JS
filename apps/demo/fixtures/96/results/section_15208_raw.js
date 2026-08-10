@@ -9,7 +9,7 @@ function privateStaticTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4554>  # String: '__BC:Classes/PrivateStaticTests/privateStaticTest/start' (String)
     // USED → r1 = "__BC:Classes/PrivateStaticTests/privateStaticTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Classes/PrivateStaticTests/privateStaticTest/start")
+    console.log("__BC:Classes/PrivateStaticTests/privateStaticTest/start")
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 8>
@@ -51,7 +51,7 @@ function privateStaticTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 205>  # String: 'value' (Identifier)
     // USED → r2 = new getEnvironment(0)[8]().value;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(new getEnvironment(0)[8]().value)
+    console.log(new getEnvironment(0)[8]().value)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -61,7 +61,7 @@ function privateStaticTest(param0) {
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
     // USED → r2 = new getEnvironment(0)[8]().describe();
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(new getEnvironment(0)[8]().describe())
+    console.log(new getEnvironment(0)[8]().describe())
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -71,7 +71,7 @@ function privateStaticTest(param0) {
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 7, string_id: 10838>  # String: 'instanceCount' (Identifier)
     // USED → r2 = getEnvironment(0)[8].instanceCount;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(getEnvironment(0)[8].instanceCount)
+    console.log(getEnvironment(0)[8].instanceCount)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -83,7 +83,7 @@ function privateStaticTest(param0) {
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
     // USED → r2 = getEnvironment(0)[10].describeLabel();
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(getEnvironment(0)[10].describeLabel())
+    console.log(getEnvironment(0)[10].describeLabel())
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 8>
     // USED → r3 = getEnvironment(0)[8];
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 9, string_id: 7840>  # String: 'reset' (Identifier)
@@ -99,7 +99,7 @@ function privateStaticTest(param0) {
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 7, string_id: 10838>  # String: 'instanceCount' (Identifier)
     // USED → r1 = getEnvironment(0)[8].instanceCount;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log(getEnvironment(0)[8].instanceCount)
+    console.log(getEnvironment(0)[8].instanceCount)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -107,7 +107,7 @@ function privateStaticTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4551>  # String: '__BC:Classes/PrivateStaticTests/privateStaticTest/end' (String)
     // USED → r0 = "__BC:Classes/PrivateStaticTests/privateStaticTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Classes/PrivateStaticTests/privateStaticTest/end")
+    console.log("__BC:Classes/PrivateStaticTests/privateStaticTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

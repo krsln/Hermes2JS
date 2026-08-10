@@ -13,7 +13,7 @@ function restOnlyTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4799>  # String: '__BC:Functions/RestParameterTests/restOnlyTest/start' (String)
     // USED → r2 = "__BC:Functions/RestParameterTests/restOnlyTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Functions/RestParameterTests/restOnlyTest/start")
+    console.log("__BC:Functions/RestParameterTests/restOnlyTest/start")
     // CODE → <GetArgumentsLength>: <Reg8: 3, Reg8: 4>
     // USED → r3 = arguments.length;
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 6>  # String: 'Array' (Identifier)
@@ -53,7 +53,7 @@ function restOnlyTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 169>  # String: 'length' (Identifier)
     // USED → r2 = new globalThis.Array(arguments.length).length;
     // CODE → <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
-    r2 = globalThis.console.log(new globalThis.Array(arguments.length).length, new globalThis.Array(arguments.length))
+    console.log(new Array(arguments.length).length, new Array(arguments.length))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -61,7 +61,7 @@ function restOnlyTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4798>  # String: '__BC:Functions/RestParameterTests/restOnlyTest/end' (String)
     // USED → r1 = "__BC:Functions/RestParameterTests/restOnlyTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/RestParameterTests/restOnlyTest/end")
+    console.log("__BC:Functions/RestParameterTests/restOnlyTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

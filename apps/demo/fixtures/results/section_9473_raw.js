@@ -11,7 +11,7 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4879>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start")
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     // USED → r0 = param1.length;
     // CODE → <LoadConstZero>: <Reg8: 9>
@@ -51,7 +51,7 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
     // USED → r12 = param1[0];
     // CODE → <Call3>: <Reg8: 12, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 12>
-    r12 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", param1[0])
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", param1[0])
     // CODE → <Mov>: <Reg8: 12, Reg8: 11>
     r12 = 0
     // CODE → <Jmp>: <Addr8: 51>  # Address: 00000095
@@ -78,7 +78,7 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r13 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7, Reg8: 15>
-    r13 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
     // CODE → <AddN>: <Reg8: 12, Reg8: 11, Reg8: 8>
     // USED → r12 = 0 + 1;
     // ──────────────── Block 4 ──────────────── 
@@ -100,7 +100,7 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4876>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return 0 + 1;
 }

@@ -12,7 +12,7 @@ function switchInsideTryTest(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 4684>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/start' (String)
         // USED → r2 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/start";
         // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start")
+        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start")
         // CODE → <Mov>: <Reg8: 2, Reg8: 0>
         // USED → r2 = param1;
         // CODE → <LoadConstZero>: <Reg8: 0>
@@ -28,7 +28,7 @@ function switchInsideTryTest(param0, param1) {
                 // CODE → <LoadConstString>: <Reg8: 0, string_id: 2266>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0' (String)
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0";
                 // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-                r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0")
+                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-0")
                 break;
             case 1:
                 // ──────────────── Block 3 ──────────────── 
@@ -57,7 +57,7 @@ function switchInsideTryTest(param0, param1) {
                 // CODE → <LoadConstString>: <Reg8: 0, string_id: 4678>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default' (String)
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default";
                 // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-                r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default")
+                console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default")
                 // CODE → <Jmp>: <Addr8: 54>  # Address: 00000073
                 goto label_115;
                 break;
@@ -77,7 +77,7 @@ function switchInsideTryTest(param0, param1) {
             // CODE → <LoadConstString>: <Reg8: 0, string_id: 4682>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/end' (String)
             // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/end";
             // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-            r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end")
+            console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end")
             // CODE → <LoadConstUndefined>: <Reg8: 0>
             // USED → r0 = undefined;
             // CODE → <Ret>: <Reg8: 0>
@@ -90,7 +90,7 @@ function switchInsideTryTest(param0, param1) {
             // CODE → <LoadConstString>: <Reg8: 0, string_id: 4680>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block' (String)
             // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block";
             // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-            r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block")
+            console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block")
         }
         // LOOP → END
     } finally {
@@ -102,6 +102,6 @@ function switchInsideTryTest(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4683>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block";
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block")
+        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block")
     }
 }

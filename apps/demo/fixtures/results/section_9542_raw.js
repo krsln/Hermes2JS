@@ -11,7 +11,7 @@ function reset(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4732>  # String: '__BC:Classes/PrivateStaticTests/Counter/static-reset' (String)
     // USED → r3 = "__BC:Classes/PrivateStaticTests/Counter/static-reset";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/static-reset")
+    console.log("__BC:Classes/PrivateStaticTests/Counter/static-reset")
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 2>
     // USED → r3 = getParentEnvironment(0)[2];
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 4>

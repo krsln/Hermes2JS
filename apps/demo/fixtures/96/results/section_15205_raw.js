@@ -165,7 +165,7 @@ function function_15205(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 2815>  # String: '__BC:Classes/PrivateStaticTests/ConfiguredCounter/static-block' (String)
     // USED → r2 = "__BC:Classes/PrivateStaticTests/ConfiguredCounter/static-block";
     // CODE → <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Classes/PrivateStaticTests/ConfiguredCounter/static-block")
+    console.log("__BC:Classes/PrivateStaticTests/ConfiguredCounter/static-block")
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
     // USED → r2 = _interopDefault.call(undefined, param2.call(undefined, param7[4])).default;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 4, Reg8: 3>

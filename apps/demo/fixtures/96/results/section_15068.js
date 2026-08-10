@@ -9,7 +9,7 @@ function tripleNestedLabeledTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4622>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start")
+    console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
     // USED → r6 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 2>
@@ -79,7 +79,7 @@ function tripleNestedLabeledTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4620>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits' (String)
     // USED → r1 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits";
     // CODE → <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 4>
-    r1 = globalThis.console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits", 0 + 1)
+    console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits", 0 + 1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -87,7 +87,7 @@ function tripleNestedLabeledTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4284>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end")
+    console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

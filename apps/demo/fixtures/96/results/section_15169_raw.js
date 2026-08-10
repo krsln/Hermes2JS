@@ -18,7 +18,7 @@ async function* anon_15169(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4779>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/start' (String)
     // USED → r1 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/start")
+    console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/start")
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 7189>  # String: 'a' (Identifier)
     // USED → r1 = "a";
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000028
@@ -56,7 +56,7 @@ async function* anon_15169(param0) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
     // USED → r4 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-    r4 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
+    console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;
     // CODE → <CompleteGenerator>: <>
@@ -71,7 +71,7 @@ async function* anon_15169(param0) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
     // USED → r4 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-    r4 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
+    console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 3>
@@ -84,7 +84,7 @@ async function* anon_15169(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
     // USED → r3 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
+    console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>
@@ -99,7 +99,7 @@ async function* anon_15169(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
     // USED → r2 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
+    console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
     // CODE → <Throw>: <Reg8: 1>
     throw caughtException;
     // ──────────────── Block 11 ──────────────── 

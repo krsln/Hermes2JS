@@ -17,7 +17,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4656>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start' (String)
     // USED → r3 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start")
     // CODE → <LoadConstZero>: <Reg8: 7>
     // USED → r7 = 0;
     // CODE → <LoadConstZero>: <Reg8: 9>
@@ -56,7 +56,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
                         // USED → r2 = globalThis.console.log;
                         // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 4, Reg8: 6>
-                        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue")
+                        console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue")
                     } else {
                         // ──────────────── Block 3 ──────────────── 
                         // CODE → <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -70,7 +70,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                         // CODE → <GetByVal>: <Reg8: 2, Reg8: 11, Reg8: 2>
                         // USED → r2 = param1[0];
                         // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 10, Reg8: 5, Reg8: 2>
-                        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", param1[0])
+                        console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", param1[0])
                     }
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → <Mov>: <Reg8: 2, Reg8: 9>
@@ -97,7 +97,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
             // CODE → <LoadConstString>: <Reg8: 2, string_id: 4648>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break' (String)
             // USED → r2 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break";
             // CODE → <Call2>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 2>
-            r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break")
+            console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break")
         }
         // ──────────────── Block 8 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -107,7 +107,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 4652>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end' (String)
         // USED → r2 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end";
         // CODE → <Call2>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 2>
-        r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end")
+        console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end")
         // CODE → <Ret>: <Reg8: 0>
         return undefined;
     } finally {
@@ -117,6 +117,6 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r1 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-        r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
+        console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
     }
 }

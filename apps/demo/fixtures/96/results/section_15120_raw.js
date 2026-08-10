@@ -9,7 +9,7 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 993>  # String: '__BC:Arrays/SpreadTests/spreadFunctionArgsTest/start' (String)
     // USED → r0 = "__BC:Arrays/SpreadTests/spreadFunctionArgsTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadFunctionArgsTest/start")
+    console.log("__BC:Arrays/SpreadTests/spreadFunctionArgsTest/start")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -37,7 +37,7 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 4>  # Built-in function: [#47 apply]
     // USED → r2 = apply(r-2, r-1, r0, r1);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(apply(r-2, r-1, r0, r1))
+    console.log(apply(r-2, r-1, r0, r1))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -45,7 +45,7 @@ function spreadFunctionArgsTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4526>  # String: '__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end' (String)
     // USED → r1 = "__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end")
+    console.log("__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

@@ -9,7 +9,7 @@ function callMapSetTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4555>  # String: '__BC:Collections/MapSetTests/callMapSetTests/start' (String)
     // USED → r0 = "__BC:Collections/MapSetTests/callMapSetTests/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Collections/MapSetTests/callMapSetTests/start")
+    console.log("__BC:Collections/MapSetTests/callMapSetTests/start")
     // CODE → <GetEnvironment>: <Reg8: 2, UInt8: 0>
     // USED → r2 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 1>
@@ -33,7 +33,7 @@ function callMapSetTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 317>  # String: '__BC:Collections/MapSetTests/callMapSetTests/end' (String)
     // USED → r1 = "__BC:Collections/MapSetTests/callMapSetTests/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Collections/MapSetTests/callMapSetTests/end")
+    console.log("__BC:Collections/MapSetTests/callMapSetTests/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

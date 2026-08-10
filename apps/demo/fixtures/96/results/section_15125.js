@@ -9,7 +9,7 @@ function weakMapTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4562>  # String: '__BC:Collections/MapSetTests/weakMapTest/start' (String)
     // USED → r1 = "__BC:Collections/MapSetTests/weakMapTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Collections/MapSetTests/weakMapTest/start")
+    console.log("__BC:Collections/MapSetTests/weakMapTest/start")
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 7238>  # String: 'WeakMap' (Identifier)
     // USED → r1 = globalThis.WeakMap;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
@@ -39,7 +39,7 @@ function weakMapTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 5, Reg8: 4>
     // USED → r1 = new globalThis.WeakMap().has(r4);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log(new globalThis.WeakMap().has(r4))
+    console.log(new WeakMap().has(r4))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -49,7 +49,7 @@ function weakMapTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 5, Reg8: 4>
     // USED → r1 = new globalThis.WeakMap().get(r4);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log(new globalThis.WeakMap().get(r4))
+    console.log(new WeakMap().get(r4))
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -57,7 +57,7 @@ function weakMapTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4560>  # String: '__BC:Collections/MapSetTests/weakMapTest/end' (String)
     // USED → r0 = "__BC:Collections/MapSetTests/weakMapTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Collections/MapSetTests/weakMapTest/end")
+    console.log("__BC:Collections/MapSetTests/weakMapTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

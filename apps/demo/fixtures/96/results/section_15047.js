@@ -9,7 +9,7 @@ function whileTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4647>  # String: '__BC:ControlFlow/WhileTests/whileTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/WhileTests/whileTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:ControlFlow/WhileTests/whileTest/start")
+    console.log("__BC:ControlFlow/WhileTests/whileTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 5>
     // USED → r4 = 5;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4131>  # String: '__BC:ControlFlow/WhileTests/whileTest/if-continue' (String)
@@ -28,7 +28,7 @@ function whileTest(param0) {
         // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r6 = globalThis.console.log;
         // CODE → <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
-        r6 = globalThis.console.log("while", 0)
+        console.log("while", 0)
         // CODE → <Mov>: <Reg8: 7, Reg8: 5>
         // USED → r7 = 0;
         if (0 === 2) {
@@ -38,7 +38,7 @@ function whileTest(param0) {
             // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r8 = globalThis.console.log;
             // CODE → <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
-            r8 = globalThis.console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
+            console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
             // CODE → <Inc>: <Reg8: 6, Reg8: 7>
             // USED → r6 = 0 + 1;
         } else {
@@ -59,7 +59,7 @@ function whileTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4644>  # String: '__BC:ControlFlow/WhileTests/whileTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/WhileTests/whileTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:ControlFlow/WhileTests/whileTest/end")
+    console.log("__BC:ControlFlow/WhileTests/whileTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

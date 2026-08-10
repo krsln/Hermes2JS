@@ -9,7 +9,7 @@ function labeledContinueTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4618>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/start")
+    console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 3>
     // USED → r5 = 3;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4616>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer' (String)
@@ -33,7 +33,7 @@ function labeledContinueTest(param0) {
         // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r8 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
-        r8 = globalThis.console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
+        console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
         // CODE → <Jmp>: <Addr8: 18>  # Address: 0000006c
         goto label_108;
         // ──────────────── Block 5 ──────────────── 
@@ -42,7 +42,7 @@ function labeledContinueTest(param0) {
         // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r8 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 4>
-        r8 = globalThis.console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
+        console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 7>
         // USED → r1 = 0 + 1;
@@ -58,7 +58,7 @@ function labeledContinueTest(param0) {
                 // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
                 // USED → r10 = globalThis.console.log;
                 // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
-                r10 = globalThis.console.log(0, 0)
+                console.log(0, 0)
                 // CODE → <Inc>: <Reg8: 8, Reg8: 9>
                 // USED → r8 = 0 + 1;
             }
@@ -74,7 +74,7 @@ function labeledContinueTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 2050>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/end")
+    console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

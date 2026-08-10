@@ -13,7 +13,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4895>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start' (String)
     // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start")
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>
     // USED → r6 = param1;
     // CODE → <LoadConstZero>: <Reg8: 5>
@@ -43,7 +43,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 6, Reg8: 2>
     // USED → r3 = param1[0];
     // CODE → <Call3>: <Reg8: 3, Reg8: 8, Reg8: 9, Reg8: 4, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", param1[0])
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", param1[0])
     // CODE → <Inc>: <Reg8: 3, Reg8: 2>
     // USED → r3 = 0 + 1;
     // CODE → <Mov>: <Reg8: 7, Reg8: 3>
@@ -60,7 +60,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4893>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block' (String)
     // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -68,7 +68,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4892>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end' (String)
     // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end")
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
     // CODE → <Catch>: <Reg8: 0>
@@ -80,7 +80,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4893>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
     // CODE → <Throw>: <Reg8: 0>
     throw caughtException;
 }

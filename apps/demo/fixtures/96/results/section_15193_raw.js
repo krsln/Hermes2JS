@@ -18,7 +18,7 @@ async function* anon_15193(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4759>  # String: '__BC:Functions/AsyncTests/callAsyncTests/start' (String)
     // USED → r1 = "__BC:Functions/AsyncTests/callAsyncTests/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/AsyncTests/callAsyncTests/start")
+    console.log("__BC:Functions/AsyncTests/callAsyncTests/start")
     // CODE → <GetEnvironment>: <Reg8: 4, UInt8: 2>
     // USED → r4 = getEnvironment(2);
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 3>
@@ -100,7 +100,7 @@ async function* anon_15193(param0) {
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 2895>  # String: '__BC:Functions/AsyncTests/callAsyncTests/end' (String)
     // USED → r6 = "__BC:Functions/AsyncTests/callAsyncTests/end";
     // CODE → <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
-    r6 = globalThis.console.log("__BC:Functions/AsyncTests/callAsyncTests/end")
+    console.log("__BC:Functions/AsyncTests/callAsyncTests/end")
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 5>

@@ -9,7 +9,7 @@ function basicTemplateTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4855>  # String: '__BC:Strings/TemplateLiteralTests/basicTemplateTest/start' (String)
     // USED → r1 = "__BC:Strings/TemplateLiteralTests/basicTemplateTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Strings/TemplateLiteralTests/basicTemplateTest/start")
+    console.log("__BC:Strings/TemplateLiteralTests/basicTemplateTest/start")
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
     // USED → r1 = globalThis.HermesInternal;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 1, UInt8: 4, string_id: 96>  # String: 'concat' (Identifier)
@@ -31,7 +31,7 @@ function basicTemplateTest(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    r1 = globalThis.console.log(globalThis.HermesInternal.concat(r11, r10, r9, r8, r7))
+    console.log(HermesInternal.concat(r11, r10, r9, r8, r7))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -39,7 +39,7 @@ function basicTemplateTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4515>  # String: 'line one\nline two' (String)
     // USED → r1 = "line one\\nline two";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("line one\\nline two")
+    console.log("line one\\nline two")
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -47,7 +47,7 @@ function basicTemplateTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4854>  # String: '__BC:Strings/TemplateLiteralTests/basicTemplateTest/end' (String)
     // USED → r0 = "__BC:Strings/TemplateLiteralTests/basicTemplateTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Strings/TemplateLiteralTests/basicTemplateTest/end")
+    console.log("__BC:Strings/TemplateLiteralTests/basicTemplateTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

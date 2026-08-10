@@ -11,7 +11,7 @@ function regExpFlagsTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4849>  # String: '__BC:Strings/RegExpTests/regExpFlagsTest/start' (String)
     // USED → r1 = "__BC:Strings/RegExpTests/regExpFlagsTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Strings/RegExpTests/regExpFlagsTest/start")
+    console.log("__BC:Strings/RegExpTests/regExpFlagsTest/start")
     // CODE → <CreateRegExp>: <Reg8: 6, string_id: 6584, string_id: 268, UInt32: 191>  # String: 'hello' (String)  # String: 'i' (String)
     // USED → r6 = /hello/i;
     // CODE → <CreateRegExp>: <Reg8: 4, string_id: 4514, string_id: 7179, UInt32: 192>  # String: '^line' (String)  # String: 'm' (Identifier)
@@ -25,7 +25,7 @@ function regExpFlagsTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 6, Reg8: 5>
     // USED → r1 = /hello/i.test(param1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log(/hello/i.test(param1))
+    console.log(/hello/i.test(param1))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -35,7 +35,7 @@ function regExpFlagsTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 4, Reg8: 5>
     // USED → r1 = /^line/m.test(param1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log(/^line/m.test(param1))
+    console.log(/^line/m.test(param1))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -47,7 +47,7 @@ function regExpFlagsTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
     // USED → r1 = param1.match(/[0-9A-Z_a-z]+/g);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log(param1.match(/[0-9A-Z_a-z]+/g))
+    console.log(param1.match(/[0-9A-Z_a-z]+/g))
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -55,7 +55,7 @@ function regExpFlagsTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4845>  # String: '__BC:Strings/RegExpTests/regExpFlagsTest/end' (String)
     // USED → r0 = "__BC:Strings/RegExpTests/regExpFlagsTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Strings/RegExpTests/regExpFlagsTest/end")
+    console.log("__BC:Strings/RegExpTests/regExpFlagsTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

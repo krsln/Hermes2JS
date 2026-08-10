@@ -9,7 +9,7 @@ function callDestructuringTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4805>  # String: '__BC:Objects/DestructuringTests/callDestructuringTests/start' (String)
     // USED → r0 = "__BC:Objects/DestructuringTests/callDestructuringTests/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Objects/DestructuringTests/callDestructuringTests/start")
+    console.log("__BC:Objects/DestructuringTests/callDestructuringTests/start")
     // CODE → <GetEnvironment>: <Reg8: 2, UInt8: 0>
     // USED → r2 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 2>
@@ -49,7 +49,7 @@ function callDestructuringTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4291>  # String: '__BC:Objects/DestructuringTests/callDestructuringTests/end' (String)
     // USED → r1 = "__BC:Objects/DestructuringTests/callDestructuringTests/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Objects/DestructuringTests/callDestructuringTests/end")
+    console.log("__BC:Objects/DestructuringTests/callDestructuringTests/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

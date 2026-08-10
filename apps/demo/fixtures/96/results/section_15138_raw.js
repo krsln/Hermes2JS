@@ -9,7 +9,7 @@ function callRegExpTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4844>  # String: '__BC:Strings/RegExpTests/callRegExpTests/start' (String)
     // USED → r0 = "__BC:Strings/RegExpTests/callRegExpTests/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Strings/RegExpTests/callRegExpTests/start")
+    console.log("__BC:Strings/RegExpTests/callRegExpTests/start")
     // CODE → <GetEnvironment>: <Reg8: 2, UInt8: 0>
     // USED → r2 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 0>
@@ -45,7 +45,7 @@ function callRegExpTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4841>  # String: '__BC:Strings/RegExpTests/callRegExpTests/end' (String)
     // USED → r1 = "__BC:Strings/RegExpTests/callRegExpTests/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Strings/RegExpTests/callRegExpTests/end")
+    console.log("__BC:Strings/RegExpTests/callRegExpTests/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

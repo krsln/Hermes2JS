@@ -13,7 +13,7 @@ function describe(param0) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 2588>  # String: '__BC:Classes/PrivateStaticTests/Counter/describe' (String)
     // USED → r4 = "__BC:Classes/PrivateStaticTests/Counter/describe";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-    r4 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/describe")
+    console.log("__BC:Classes/PrivateStaticTests/Counter/describe")
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 5>
     // USED → r4 = getParentEnvironment(0)[5];
     // CODE → <PrivateIsIn>: <Reg8: 0, Reg8: 4, Reg8: 3, Reg8: 0>

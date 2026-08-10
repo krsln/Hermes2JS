@@ -13,7 +13,7 @@ function nestedTemplateTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 705>  # String: '__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start' (String)
     // USED → r5 = "__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start";
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
-    r5 = globalThis.console.log("__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start")
+    console.log("__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start")
     // CODE → <Add>: <Reg8: 5, Reg8: 4, Reg8: 3>
     // USED → r5 = param1 + param2;
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 10>
@@ -62,7 +62,7 @@ function nestedTemplateTest(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
-    r3 = globalThis.console.log(globalThis.HermesInternal.concat.call("sum is ", globalThis.HermesInternal.concat.call("big (", param1 + param2, ")")))
+    console.log(HermesInternal.concat.call("sum is ", HermesInternal.concat.call("big (", param1 + param2, ")")))
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -70,7 +70,7 @@ function nestedTemplateTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 5011>  # String: '__BC:Strings/TemplateLiteralTests/nestedTemplateTest/end' (String)
     // USED → r2 = "__BC:Strings/TemplateLiteralTests/nestedTemplateTest/end";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Strings/TemplateLiteralTests/nestedTemplateTest/end")
+    console.log("__BC:Strings/TemplateLiteralTests/nestedTemplateTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Ret>: <Reg8: 1>

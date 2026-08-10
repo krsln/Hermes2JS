@@ -9,7 +9,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4816>  # String: '__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/start' (String)
     // USED → r3 = "__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/start";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/start")
+    console.log("__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/start")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -17,7 +17,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 5>
     // USED → r0 = 5;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0>
-    r3 = globalThis.console.log(5)
+    console.log(5)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -25,7 +25,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 10>
     // USED → r0 = 10;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0>
-    r3 = globalThis.console.log(10)
+    console.log(10)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -33,7 +33,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 20>
     // USED → r0 = 20;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0>
-    r3 = globalThis.console.log(20)
+    console.log(20)
     // CODE → <NewObject>: <Reg8: 3>
     r3 = {  }
     // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 7613>  # String: 'count' (Identifier)
@@ -63,7 +63,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 7613>  # String: 'count' (Identifier)
     // USED → r3 = r3.count;
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log(r3.count)
+    console.log(r3.count)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -71,7 +71,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4813>  # String: '__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/end' (String)
     // USED → r2 = "__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/end";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/end")
+    console.log("__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Ret>: <Reg8: 1>

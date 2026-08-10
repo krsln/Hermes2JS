@@ -49,7 +49,7 @@ function Counter(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 290>  # String: '__BC:Classes/PrivateStaticTests/Counter/constructor' (String)
     // USED → r1 = "__BC:Classes/PrivateStaticTests/Counter/constructor";
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/constructor")
+    console.log("__BC:Classes/PrivateStaticTests/Counter/constructor")
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 3, UInt8: 4>
     // USED → r1 = getEnvironment(1)[4];
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)

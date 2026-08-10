@@ -9,7 +9,7 @@ function mapTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4557>  # String: '__BC:Collections/MapSetTests/mapTest/start' (String)
     // USED → r0 = "__BC:Collections/MapSetTests/mapTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Collections/MapSetTests/mapTest/start")
+    console.log("__BC:Collections/MapSetTests/mapTest/start")
     // CODE → <TryGetById>: <Reg8: 0, Reg8: 1, UInt8: 3, string_id: 20>  # String: 'Map' (Identifier)
     // USED → r0 = globalThis.Map;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
@@ -55,7 +55,7 @@ function mapTest(param0) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 4>
     // USED → r0 = new globalThis.Map().get("bob");
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 5, Reg8: 0>
-    r0 = globalThis.console.log(new globalThis.Map().get("bob"))
+    console.log(new Map().get("bob"))
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -67,7 +67,7 @@ function mapTest(param0) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 6, Reg8: 2, Reg8: 0>
     // USED → r0 = new globalThis.Map().has("dave");
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 5, Reg8: 0>
-    r0 = globalThis.console.log(new globalThis.Map().has("dave"))
+    console.log(new Map().has("dave"))
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -75,7 +75,7 @@ function mapTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 8, string_id: 226>  # String: 'size' (Identifier)
     // USED → r0 = new globalThis.Map().size;
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 5, Reg8: 0>
-    r0 = globalThis.console.log(new globalThis.Map().size)
+    console.log(new Map().size)
     // CODE → <Mov>: <Reg8: 9, Reg8: 2>
     r9 = new globalThis.Map()
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 9>
@@ -113,7 +113,7 @@ function mapTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r10 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 13, Reg8: 12>
-    r10 = globalThis.console.log(getEnvironment(0)[0].default.call(undefined, GetIterator(r9).next(), 2)[0], getEnvironment(0)[0].default.call(undefined, GetIterator(r9).next(), 2)[1])
+    console.log(getEnvironment(0)[0].default.call(undefined, GetIterator(r9).next(), 2)[0], getEnvironment(0)[0].default.call(undefined, GetIterator(r9).next(), 2)[1])
     // CODE → <Jmp>: <Addr8: -51>  # Address: 000000c6
     goto label_198;
     // ──────────────── Block 3 ──────────────── 
@@ -135,7 +135,7 @@ function mapTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 226>  # String: 'size' (Identifier)
     // USED → r2 = new globalThis.Map().size;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(new globalThis.Map().size)
+    console.log(new Map().size)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -143,7 +143,7 @@ function mapTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4556>  # String: '__BC:Collections/MapSetTests/mapTest/end' (String)
     // USED → r1 = "__BC:Collections/MapSetTests/mapTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Collections/MapSetTests/mapTest/end")
+    console.log("__BC:Collections/MapSetTests/mapTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

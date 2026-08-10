@@ -23,7 +23,7 @@ function defaultWithRestTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4936>  # String: '__BC:Functions/DefaultParameterTests/defaultWithRestTest/start' (String)
     // USED → r3 = "__BC:Functions/DefaultParameterTests/defaultWithRestTest/start";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 7, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Functions/DefaultParameterTests/defaultWithRestTest/start")
+    console.log("__BC:Functions/DefaultParameterTests/defaultWithRestTest/start")
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 213>  # String: 'reduce' (Identifier)
     // USED → r4 = apply(r3, r4).reduce;
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 12481>  # Function: [#12481  of 12 bytes]: 3 params @ offset 0x00243e24
@@ -35,7 +35,7 @@ function defaultWithRestTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
-    r2 = globalThis.console.log(apply(r3, r4).reduce(function_12481, 1))
+    console.log(apply(r3, r4).reduce(function_12481, 1))
     // CODE → <Ret>: <Reg8: 1>
     return undefined;
 }

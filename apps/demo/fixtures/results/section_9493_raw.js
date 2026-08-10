@@ -9,7 +9,7 @@ function spreadObjectTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4722>  # String: '__BC:Arrays/SpreadTests/spreadObjectTest/start' (String)
     // USED → r3 = "__BC:Arrays/SpreadTests/spreadObjectTest/start";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadObjectTest/start")
+    console.log("__BC:Arrays/SpreadTests/spreadObjectTest/start")
     // CODE → <NewObject>: <Reg8: 5>
     r5 = {  }
     // CODE → <NewObjectWithBuffer>: <Reg8: 8, UInt16: 61, UInt16: 42665>  # Object: {'x': 1, 'y': 2}
@@ -27,7 +27,7 @@ function spreadObjectTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
-    r3 = globalThis.console.log(r5)
+    console.log(r5)
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 2, string_id: 30>  # String: 'x' (Identifier)
     // USED → r6 = r5.x;
     // CODE → <NewObject>: <Reg8: 9>
@@ -45,7 +45,7 @@ function spreadObjectTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 6, Reg8: 5>
-    r3 = globalThis.console.log(r5.x, arraySpread(r1, r2, r3, r4))
+    console.log(r5.x, arraySpread(r1, r2, r3, r4))
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -53,7 +53,7 @@ function spreadObjectTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4721>  # String: '__BC:Arrays/SpreadTests/spreadObjectTest/end' (String)
     // USED → r2 = "__BC:Arrays/SpreadTests/spreadObjectTest/end";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadObjectTest/end")
+    console.log("__BC:Arrays/SpreadTests/spreadObjectTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Ret>: <Reg8: 1>

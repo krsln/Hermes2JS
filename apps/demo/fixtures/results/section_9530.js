@@ -11,7 +11,7 @@ function makeSound(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4093>  # String: '__BC:Classes/ClassTests/Animal/makeSound' (String)
     // USED → r3 = "__BC:Classes/ClassTests/Animal/makeSound";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Classes/ClassTests/Animal/makeSound")
+    console.log("__BC:Classes/ClassTests/Animal/makeSound")
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -23,7 +23,7 @@ function makeSound(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 2412>  # String: 'says' (String)
     // USED → r1 = "says";
     // CODE → <Call4>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>
-    r1 = globalThis.console.log(this.name, "says", this.sound)
+    console.log(this.name, "says", this.sound)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

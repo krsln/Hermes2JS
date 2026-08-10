@@ -23,7 +23,7 @@ async function* anon_15189(param0) {
         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4761>  # String: '__BC:Functions/AsyncTests/parallelAwaitTest/start' (String)
         // USED → r1 = "__BC:Functions/AsyncTests/parallelAwaitTest/start";
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
-        r1 = globalThis.console.log("__BC:Functions/AsyncTests/parallelAwaitTest/start")
+        console.log("__BC:Functions/AsyncTests/parallelAwaitTest/start")
         // CODE → <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 3, string_id: 27>  # String: 'Promise' (Identifier)
         // USED → r8 = globalThis.Promise;
         // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 4, string_id: 7443>  # String: 'all' (Identifier)
@@ -85,7 +85,7 @@ async function* anon_15189(param0) {
             // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r4 = globalThis.console.log;
             // CODE → <Call3>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 7, Reg8: 6>
-            r4 = globalThis.console.log(getEnvironment(2)[0].default.call(undefined, await yield, 2)[0], getEnvironment(2)[0].default.call(undefined, await yield, 2)[1])
+            console.log(getEnvironment(2)[0].default.call(undefined, await yield, 2)[0], getEnvironment(2)[0].default.call(undefined, await yield, 2)[1])
             // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r5 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -93,7 +93,7 @@ async function* anon_15189(param0) {
             // CODE → <LoadConstString>: <Reg8: 3, string_id: 4760>  # String: '__BC:Functions/AsyncTests/parallelAwaitTest/end' (String)
             // USED → r3 = "__BC:Functions/AsyncTests/parallelAwaitTest/end";
             // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-            r3 = globalThis.console.log("__BC:Functions/AsyncTests/parallelAwaitTest/end")
+            console.log("__BC:Functions/AsyncTests/parallelAwaitTest/end")
             // CODE → <CompleteGenerator>: <>
             // CompleteGenerator
             // CODE → <Ret>: <Reg8: 2>

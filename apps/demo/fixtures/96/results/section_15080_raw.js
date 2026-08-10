@@ -13,7 +13,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4748>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start")
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // CODE → <LoadConstZero>: <Reg8: 4>
@@ -59,7 +59,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <GetByVal>: <Reg8: 6, Reg8: 6, Reg8: 5>
     // USED → r6 = param1[0];
     // CODE → <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
-    r6 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", param1[0])
+    console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", param1[0])
     // CODE → <Inc>: <Reg8: 4, Reg8: 5>
     // USED → r4 = 0 + 1;
     // CODE → <Jmp>: <Addr8: -73>  # Address: 00000023
@@ -91,7 +91,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 3905>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block")
+    console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block")
     // CODE → <LoadConstFalse>: <Reg8: 0>
     // USED → r0 = false;
     // CODE → <Ret>: <Reg8: 0>

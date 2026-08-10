@@ -9,7 +9,7 @@ function forEachTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4582>  # String: '__BC:ControlFlow/ForEachTests/forEachTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/ForEachTests/forEachTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:ControlFlow/ForEachTests/forEachTest/start")
+    console.log("__BC:ControlFlow/ForEachTests/forEachTest/start")
     // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 4, UInt16: 4, UInt16: 23599>  # Array: [10, 20, 30, 40]
     r3 = [10, 20, 30, 40]
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 144>  # String: 'forEach' (Identifier)
@@ -27,7 +27,7 @@ function forEachTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4578>  # String: '__BC:ControlFlow/ForEachTests/forEachTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/ForEachTests/forEachTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:ControlFlow/ForEachTests/forEachTest/end")
+    console.log("__BC:ControlFlow/ForEachTests/forEachTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

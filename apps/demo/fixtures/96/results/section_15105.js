@@ -9,7 +9,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4811>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start' (String)
     // USED → r0 = "__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start")
+    console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start")
     // CODE → <NewArray>: <Reg8: 3, UInt16: 3>
     r3 = []
     // CODE → <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23637>  # Array: [1, 2]
@@ -61,7 +61,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 3, Reg8: 3, Reg8: 5, Reg8: 10, Reg8: 9, Reg8: 8>
-    r3 = globalThis.console.log(getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[0], 2)[0], getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[0], 2)[1], getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[2], 2)[1])
+    console.log(getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[0], 2)[0], getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[0], 2)[1], getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[2], 2)[1])
     // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 1, UInt16: 1, UInt16: 23655>  # Array: [10]
     r3 = [10]
     // CODE → <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 6>
@@ -89,7 +89,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 6, Reg8: 4>
-    r2 = globalThis.console.log((r3[0] === undefined) ? 0 : r3[0], (r3[1] === undefined) ? 0 : r3[1], getEnvironment(0)[0].default.call(undefined, r3).slice(2))
+    console.log((r3[0] === undefined) ? 0 : r3[0], (r3[1] === undefined) ? 0 : r3[1], getEnvironment(0)[0].default.call(undefined, r3).slice(2))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -97,7 +97,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4808>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end' (String)
     // USED → r1 = "__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end")
+    console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

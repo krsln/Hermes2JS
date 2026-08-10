@@ -9,7 +9,7 @@ function labeledBreakTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 4789>  # String: '__BC:ControlFlow/LabeledTests/labeledBreakTest/start' (String)
     // USED → r9 = "__BC:ControlFlow/LabeledTests/labeledBreakTest/start";
     // CODE → <Call2>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 9>
-    r9 = globalThis.console.log("__BC:ControlFlow/LabeledTests/labeledBreakTest/start")
+    console.log("__BC:ControlFlow/LabeledTests/labeledBreakTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
     // USED → r3 = 1;
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
@@ -38,7 +38,7 @@ function labeledBreakTest(param0) {
                 // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                 // USED → r9 = globalThis.console.log;
                 // CODE → <Call3>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 2, Reg8: 1>
-                r9 = globalThis.console.log(0, 0)
+                console.log(0, 0)
                 // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 3>
                 // USED → r0 = 0 + 1;
             } else {
@@ -61,7 +61,7 @@ function labeledBreakTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 4783>  # String: '__BC:ControlFlow/LabeledTests/labeledBreakTest/break-outer' (String)
     // USED → r9 = "__BC:ControlFlow/LabeledTests/labeledBreakTest/break-outer";
     // CODE → <Call2>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 9>
-    r9 = globalThis.console.log("__BC:ControlFlow/LabeledTests/labeledBreakTest/break-outer")
+    console.log("__BC:ControlFlow/LabeledTests/labeledBreakTest/break-outer")
     // ──────────────── Block 8 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r10 = globalThis.console;
@@ -70,7 +70,7 @@ function labeledBreakTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 4784>  # String: '__BC:ControlFlow/LabeledTests/labeledBreakTest/end' (String)
     // USED → r8 = "__BC:ControlFlow/LabeledTests/labeledBreakTest/end";
     // CODE → <Call2>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 8>
-    r8 = globalThis.console.log("__BC:ControlFlow/LabeledTests/labeledBreakTest/end")
+    console.log("__BC:ControlFlow/LabeledTests/labeledBreakTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     // USED → r7 = undefined;
     // CODE → <Ret>: <Reg8: 7>

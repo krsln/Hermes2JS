@@ -9,7 +9,7 @@ function increment(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4542>  # String: '__BC:Classes/PrivateStaticTests/Counter/increment' (String)
     // USED → r0 = "__BC:Classes/PrivateStaticTests/Counter/increment";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/increment")
+    console.log("__BC:Classes/PrivateStaticTests/Counter/increment")
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 1>
     // USED → r0 = getEnvironment(1);
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 4>

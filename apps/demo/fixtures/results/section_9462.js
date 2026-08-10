@@ -13,7 +13,7 @@ function logicalShortCircuitTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4812>  # String: '__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/start' (String)
     // USED → r4 = "__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/start";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-    r4 = globalThis.console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/start")
+    console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/start")
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -23,7 +23,7 @@ function logicalShortCircuitTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 4811>  # String: '__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect' (String)
     // USED → r9 = "__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect";
     // CODE → <Call3>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 9, Reg8: 4>
-    r4 = globalThis.console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "and-left")
+    console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "and-left")
     // CODE → <Mov>: <Reg8: 6, Reg8: 3>
     r6 = param1 && param2
     // ──────────────── Block 2 ──────────────── 
@@ -34,7 +34,7 @@ function logicalShortCircuitTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 1150>  # String: 'or-left' (String)
     // USED → r4 = "or-left";
     // CODE → <Call3>: <Reg8: 4, Reg8: 5, Reg8: 7, Reg8: 9, Reg8: 4>
-    r4 = globalThis.console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "or-left")
+    console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "or-left")
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
     // USED → r5 = param1 || param2;
     // ──────────────── Block 4 ──────────────── 
@@ -52,7 +52,7 @@ function logicalShortCircuitTest(param0, param1, param2) {
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 6243>  # String: 'nullish-right' (String)
         // USED → r3 = "nullish-right";
         // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 3>
-        r3 = globalThis.console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "nullish-right")
+        console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "nullish-right")
         // CODE → <Mov>: <Reg8: 4, Reg8: 2>
         // USED → r4 = param2;
     }
@@ -62,7 +62,7 @@ function logicalShortCircuitTest(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 5, Reg8: 4>
-    r2 = globalThis.console.log(param1 && param2, param1 || param2, param2)
+    console.log(param1 && param2, param1 || param2, param2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -70,7 +70,7 @@ function logicalShortCircuitTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4809>  # String: '__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/end' (String)
     // USED → r1 = "__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/end")
+    console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

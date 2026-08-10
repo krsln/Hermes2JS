@@ -11,7 +11,7 @@ function taggedTemplateTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 5015>  # String: '__BC:Strings/TemplateLiteralTests/taggedTemplateTest/start' (String)
     // USED → r4 = "__BC:Strings/TemplateLiteralTests/taggedTemplateTest/start";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-    r4 = globalThis.console.log("__BC:Strings/TemplateLiteralTests/taggedTemplateTest/start")
+    console.log("__BC:Strings/TemplateLiteralTests/taggedTemplateTest/start")
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 6457>  # String: '' (Identifier)
     r7 = ""
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 1303>  # String: 'x squared is ' (String)
@@ -37,7 +37,7 @@ function taggedTemplateTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
-    r3 = globalThis.console.log(getParentEnvironment(0)[0].call(undefined, getMethod(r0, r1, r2, r3, r4), param1 * param1))
+    console.log(getParentEnvironment(0)[0].call(undefined, getMethod(r0, r1, r2, r3, r4), param1 * param1))
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -45,7 +45,7 @@ function taggedTemplateTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1383>  # String: '__BC:Strings/TemplateLiteralTests/taggedTemplateTest/end' (String)
     // USED → r2 = "__BC:Strings/TemplateLiteralTests/taggedTemplateTest/end";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Strings/TemplateLiteralTests/taggedTemplateTest/end")
+    console.log("__BC:Strings/TemplateLiteralTests/taggedTemplateTest/end")
     // CODE → <Ret>: <Reg8: 1>
     return undefined;
 }

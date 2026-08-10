@@ -9,7 +9,7 @@ function spreadObjectTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4529>  # String: '__BC:Arrays/SpreadTests/spreadObjectTest/start' (String)
     // USED → r0 = "__BC:Arrays/SpreadTests/spreadObjectTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadObjectTest/start")
+    console.log("__BC:Arrays/SpreadTests/spreadObjectTest/start")
     // CODE → <NewObject>: <Reg8: 4>
     r4 = {  }
     // CODE → <NewObjectWithBuffer>: <Reg8: 6, UInt16: 2, UInt16: 2, UInt16: 317, UInt16: 19852>  # Object: {'x': 1, 'y': 2}
@@ -29,7 +29,7 @@ function spreadObjectTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r0 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 4>
-    r0 = globalThis.console.log(r4)
+    console.log(r4)
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 41>  # String: 'x' (Identifier)
     // USED → r5 = r4.x;
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
@@ -49,7 +49,7 @@ function spreadObjectTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
-    r2 = globalThis.console.log(r4.x, getEnvironment(0)[1].default.call(undefined, r4, getEnvironment(0)[0]))
+    console.log(r4.x, getEnvironment(0)[1].default.call(undefined, r4, getEnvironment(0)[0]))
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -57,7 +57,7 @@ function spreadObjectTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4527>  # String: '__BC:Arrays/SpreadTests/spreadObjectTest/end' (String)
     // USED → r1 = "__BC:Arrays/SpreadTests/spreadObjectTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Arrays/SpreadTests/spreadObjectTest/end")
+    console.log("__BC:Arrays/SpreadTests/spreadObjectTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

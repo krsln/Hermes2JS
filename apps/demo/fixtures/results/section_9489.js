@@ -9,7 +9,7 @@ function swapViaDestructureTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 4986>  # String: '__BC:Objects/DestructuringTests/swapViaDestructureTest/start' (String)
     // USED → r5 = "__BC:Objects/DestructuringTests/swapViaDestructureTest/start";
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
-    r5 = globalThis.console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/start")
+    console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/start")
     // CODE → <NewArray>: <Reg8: 7, UInt16: 2>
     r7 = []
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
@@ -63,7 +63,7 @@ function swapViaDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 8, Reg8: 7>
-    r5 = globalThis.console.log((GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next(), (GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next())
+    console.log((GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next(), (GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next())
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -71,7 +71,7 @@ function swapViaDestructureTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4984>  # String: '__BC:Objects/DestructuringTests/swapViaDestructureTest/end' (String)
     // USED → r4 = "__BC:Objects/DestructuringTests/swapViaDestructureTest/end";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-    r4 = globalThis.console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/end")
+    console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/end")
     // CODE → <Ret>: <Reg8: 2>
     return undefined;
 }

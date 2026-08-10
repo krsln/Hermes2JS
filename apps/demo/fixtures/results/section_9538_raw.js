@@ -11,7 +11,7 @@ function value(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4730>  # String: '__BC:Classes/PrivateStaticTests/Counter/set-value' (String)
     // USED → r3 = "__BC:Classes/PrivateStaticTests/Counter/set-value";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/set-value")
+    console.log("__BC:Classes/PrivateStaticTests/Counter/set-value")
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 6>
     r3 = getParentEnvironment(0)[6]
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 2, string_id: 19>  # String: 'Math' (Identifier)

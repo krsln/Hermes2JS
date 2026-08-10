@@ -23,7 +23,7 @@ async function* anon_15181(param0) {
         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4758>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/start' (String)
         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/start";
         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-        r1 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/start")
+        console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/start")
         // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 2>
         // USED → r1 = getEnvironment(2);
         // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
@@ -53,7 +53,7 @@ async function* anon_15181(param0) {
             // CODE → <LoadConstString>: <Reg8: 3, string_id: 4757>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/finally' (String)
             // USED → r3 = "__BC:Functions/AsyncTests/asyncTryCatchTest/finally";
             // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-            r3 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
+            console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
             // CODE → <CompleteGenerator>: <>
             // CompleteGenerator
             // CODE → <Ret>: <Reg8: 1>
@@ -67,7 +67,7 @@ async function* anon_15181(param0) {
             // CODE → <LoadConstString>: <Reg8: 4, string_id: 401>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/awaited' (String)
             // USED → r4 = "__BC:Functions/AsyncTests/asyncTryCatchTest/awaited";
             // CODE → <Call3>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
-            r4 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", await yield)
+            console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", await yield)
             if (await yield === 1) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
@@ -101,7 +101,7 @@ async function* anon_15181(param0) {
                         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4756>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/end' (String)
                         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/end";
                         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-                        r1 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/end")
+                        console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/end")
                         // CODE → <LoadConstUndefined>: <Reg8: 1>
                         // USED → r1 = undefined;
                         // CODE → <CompleteGenerator>: <>
@@ -118,7 +118,7 @@ async function* anon_15181(param0) {
                         // CODE → <LoadConstString>: <Reg8: 1, string_id: 2140>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/caught' (String)
                         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/caught";
                         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-                        r1 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/caught")
+                        console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/caught")
                     }
                     // LOOP → END
                 } finally {
@@ -130,7 +130,7 @@ async function* anon_15181(param0) {
                     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4757>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/finally' (String)
                     // USED → r2 = "__BC:Functions/AsyncTests/asyncTryCatchTest/finally";
                     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-                    r2 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
+                    console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
                 }
             }
         }

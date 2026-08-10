@@ -11,7 +11,7 @@ function makeSound(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4534>  # String: '__BC:Classes/ClassTests/Dog/makeSound-override' (String)
     // USED → r0 = "__BC:Classes/ClassTests/Dog/makeSound-override";
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Classes/ClassTests/Dog/makeSound-override")
+    console.log("__BC:Classes/ClassTests/Dog/makeSound-override")
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 1>
     // USED → r0 = getEnvironment(1);
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 1>
@@ -49,7 +49,7 @@ function makeSound(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 1894>  # String: 'is a' (String)
     // USED → r1 = "is a";
     // CODE → <Call4>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>
-    r1 = globalThis.console.log(this.name, "is a", this.breed)
+    console.log(this.name, "is a", this.breed)
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

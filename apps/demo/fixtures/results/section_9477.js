@@ -11,7 +11,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4831>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start")
+    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start")
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 8, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     // USED → r0 = param1.length;
     // CODE → <LoadConstZero>: <Reg8: 7>
@@ -47,13 +47,13 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r9 = globalThis.console.log;
                     // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 5>
-                    r9 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue")
+                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue")
                     // CODE → <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                     // USED → r10 = globalThis.console;
                     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r9 = globalThis.console.log;
                     // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 3>
-                    r9 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
+                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
                 } else {
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -63,13 +63,13 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                     // CODE → <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
                     // USED → r9 = param1[0];
                     // CODE → <Call3>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 4, Reg8: 9>
-                    r9 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", param1[0])
+                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", param1[0])
                     // CODE → <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                     // USED → r10 = globalThis.console;
                     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                     // USED → r9 = globalThis.console.log;
                     // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 3>
-                    r9 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
+                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
                 }
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <AddN>: <Reg8: 2, Reg8: 0, Reg8: 6>
@@ -90,13 +90,13 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 0, string_id: 4823>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break";
         // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-        r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break")
+        console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/break")
         // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r2 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r0 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 3>
-        r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
+        console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -106,7 +106,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4825>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end")
+    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>
@@ -118,7 +118,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r1 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    r1 = globalThis.console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
+    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
     // CODE → <Throw>: <Reg8: 0>
     throw caughtException;
 }

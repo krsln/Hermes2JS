@@ -11,7 +11,7 @@ function instanceCount(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 3596>  # String: '__BC:Classes/PrivateStaticTests/Counter/static-get-instanceCount' (String)
     // USED → r1 = "__BC:Classes/PrivateStaticTests/Counter/static-get-instanceCount";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/static-get-instanceCount")
+    console.log("__BC:Classes/PrivateStaticTests/Counter/static-get-instanceCount")
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 2>
     // USED → r1 = getParentEnvironment(0)[2];
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 4>

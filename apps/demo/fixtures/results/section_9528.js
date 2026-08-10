@@ -11,7 +11,7 @@ function classTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 3972>  # String: '__BC:Classes/ClassTests/classTest/start' (String)
     // USED → r3 = "__BC:Classes/ClassTests/classTest/start";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:Classes/ClassTests/classTest/start")
+    console.log("__BC:Classes/ClassTests/classTest/start")
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
     // USED → r3 = getParentEnvironment(0)[0];
     // CODE → <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 2>
@@ -35,7 +35,7 @@ function classTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 2576>  # String: '__BC:Classes/ClassTests/Animal/constructor' (String)
     // USED → r4 = "__BC:Classes/ClassTests/Animal/constructor";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-    r4 = globalThis.console.log("__BC:Classes/ClassTests/Animal/constructor")
+    console.log("__BC:Classes/ClassTests/Animal/constructor")
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 3351>  # String: 'Generic' (String)
     // USED → r4 = "Generic";
     // CODE → <PutByIdStrict>: <Reg8: 3, Reg8: 4, UInt8: 0, string_id: 187>  # String: 'name' (Identifier)
@@ -55,7 +55,7 @@ function classTest(param0) {
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 11115>  # String: 'description' (Identifier)
     // USED → r3 = Object.create(getParentEnvironment(0)[0].prototype).description;
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log(Object.create(getParentEnvironment(0)[0].prototype).description)
+    console.log(Object.create(getParentEnvironment(0)[0].prototype).description)
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
     // USED → r4 = getParentEnvironment(0)[1];
     // CODE → <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 2>
@@ -95,7 +95,7 @@ function classTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 2259>  # String: '__BC:Classes/ClassTests/Dog/constructor' (String)
     // USED → r2 = "__BC:Classes/ClassTests/Dog/constructor";
     // CODE → <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Classes/ClassTests/Dog/constructor")
+    console.log("__BC:Classes/ClassTests/Dog/constructor")
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 2387>  # String: 'Labrador' (String)
     // USED → r2 = "Labrador";
     // CODE → <PutByIdStrict>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 16255>  # String: 'breed' (Identifier)
@@ -125,7 +125,7 @@ function classTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4251>  # String: '__BC:Classes/ClassTests/classTest/end' (String)
     // USED → r1 = "__BC:Classes/ClassTests/classTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Classes/ClassTests/classTest/end")
+    console.log("__BC:Classes/ClassTests/classTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

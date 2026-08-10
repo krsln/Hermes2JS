@@ -15,7 +15,7 @@ function Animal(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 2576>  # String: '__BC:Classes/ClassTests/Animal/constructor' (String)
     // USED → r1 = "__BC:Classes/ClassTests/Animal/constructor";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Classes/ClassTests/Animal/constructor")
+    console.log("__BC:Classes/ClassTests/Animal/constructor")
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <PutByIdStrict>: <Reg8: 0, Reg8: 1, UInt8: 0, string_id: 187>  # String: 'name' (Identifier)

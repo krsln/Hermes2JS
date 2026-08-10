@@ -15,7 +15,7 @@ function function_15054(param0, param1, param2) {
         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4581>  # String: '__BC:ControlFlow/ForEachTests/forEachTest/if-middle' (String)
         // USED → r1 = "__BC:ControlFlow/ForEachTests/forEachTest/if-middle";
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
-        r1 = globalThis.console.log("__BC:ControlFlow/ForEachTests/forEachTest/if-middle")
+        console.log("__BC:ControlFlow/ForEachTests/forEachTest/if-middle")
         // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r2 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -23,7 +23,7 @@ function function_15054(param0, param1, param2) {
         // CODE → <LoadConstString>: <Reg8: 0, string_id: 8469>  # String: 'middle' (Identifier)
         // USED → r0 = "middle";
         // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-        r0 = globalThis.console.log("middle")
+        console.log("middle")
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 0>
@@ -35,7 +35,7 @@ function function_15054(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 1>
     // USED → r0 = param1;
     // CODE → <Call3>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log(param2, param1)
+    console.log(param2, param1)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

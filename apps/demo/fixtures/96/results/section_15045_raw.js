@@ -18,7 +18,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4866>  # String: '__BC:index/runAllTests/start' (String)
     // USED → r1 = "__BC:index/runAllTests/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
-    r1 = globalThis.console.log("__BC:index/runAllTests/start")
+    console.log("__BC:index/runAllTests/start")
     // CODE → <GetEnvironment>: <Reg8: 4, UInt8: 2>
     // USED → r4 = getEnvironment(2);
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 1>
@@ -60,7 +60,7 @@ async function* anon_15045(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 6>
     // USED → r1 = getEnvironment(2)[5].switchTest.call(undefined, 4);
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 7, Reg8: 1>
-    r1 = globalThis.console.log(getEnvironment(2)[5].switchTest.call(undefined, 4))
+    console.log(getEnvironment(2)[5].switchTest.call(undefined, 4))
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 6>
     // USED → r1 = getEnvironment(2)[6];
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 8, string_id: 10944>  # String: 'nestedLoopTest' (Identifier)
@@ -435,7 +435,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4865>  # String: '__BC:index/runAllTests/end' (String)
     // USED → r3 = "__BC:index/runAllTests/end";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    r3 = globalThis.console.log("__BC:index/runAllTests/end")
+    console.log("__BC:index/runAllTests/end")
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 2>

@@ -11,7 +11,7 @@ function create(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 550>  # String: '__BC:Classes/ClassTests/Dog/static-create' (String)
     // USED → r2 = "__BC:Classes/ClassTests/Dog/static-create";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Classes/ClassTests/Dog/static-create")
+    console.log("__BC:Classes/ClassTests/Dog/static-create")
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 0, UInt8: 2>
     // USED → r5 = getParentEnvironment(0)[2];
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 5, UInt8: 2>
@@ -51,7 +51,7 @@ function create(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 2259>  # String: '__BC:Classes/ClassTests/Dog/constructor' (String)
     // USED → r1 = "__BC:Classes/ClassTests/Dog/constructor";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Classes/ClassTests/Dog/constructor")
+    console.log("__BC:Classes/ClassTests/Dog/constructor")
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 3660>  # String: 'Mixed' (String)
     // USED → r1 = "Mixed";
     // CODE → <PutByIdStrict>: <Reg8: 0, Reg8: 1, UInt8: 0, string_id: 16255>  # String: 'breed' (Identifier)

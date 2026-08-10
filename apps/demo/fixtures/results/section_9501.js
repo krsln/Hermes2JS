@@ -19,7 +19,7 @@ function tag(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 5013>  # String: '__BC:Strings/TemplateLiteralTests/tag/invoked' (String)
     // USED → r2 = "__BC:Strings/TemplateLiteralTests/tag/invoked";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Strings/TemplateLiteralTests/tag/invoked")
+    console.log("__BC:Strings/TemplateLiteralTests/tag/invoked")
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 213>  # String: 'reduce' (Identifier)
     // USED → r3 = param1.reduce;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 6457>  # String: '' (Identifier)

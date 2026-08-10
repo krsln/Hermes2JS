@@ -11,7 +11,7 @@ function closureLoopTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4927>  # String: '__BC:Functions/ClosureTests/closureLoopTest/start' (String)
     // USED → r0 = "__BC:Functions/ClosureTests/closureLoopTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/start")
+    console.log("__BC:Functions/ClosureTests/closureLoopTest/start")
     // CODE → <NewArray>: <Reg8: 0, UInt16: 0>
     r0 = []
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
@@ -60,7 +60,7 @@ function closureLoopTest(param0) {
             // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
             // USED → r4 = GetIterator(r2).next().call(undefined);
             // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-            r4 = globalThis.console.log(GetIterator(r2).next().call(undefined))
+            console.log(GetIterator(r2).next().call(undefined))
             // CODE → <Jmp>: <Addr8: -34>  # Address: 00000045
             goto label_69;
         }
@@ -81,7 +81,7 @@ function closureLoopTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4924>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
     // USED → r1 = "__BC:Functions/ClosureTests/closureLoopTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
+    console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

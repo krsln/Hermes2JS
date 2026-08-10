@@ -31,7 +31,7 @@ function defaultWithRestTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4773>  # String: '__BC:Functions/DefaultParameterTests/defaultWithRestTest/start' (String)
     // USED → r2 = "__BC:Functions/DefaultParameterTests/defaultWithRestTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Functions/DefaultParameterTests/defaultWithRestTest/start")
+    console.log("__BC:Functions/DefaultParameterTests/defaultWithRestTest/start")
     // CODE → <GetArgumentsLength>: <Reg8: 3, Reg8: 7>
     // USED → r3 = arguments.length;
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 6>  # String: 'Array' (Identifier)
@@ -86,7 +86,7 @@ function defaultWithRestTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    r1 = globalThis.console.log(new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1).reduce(function_15156, (arguments[0] === undefined) ? 1 : arguments[0]))
+    console.log(new Array((arguments.length <= 1) ? 0 : arguments.length - 1).reduce(function_15156, (arguments[0] === undefined) ? 1 : arguments[0]))
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

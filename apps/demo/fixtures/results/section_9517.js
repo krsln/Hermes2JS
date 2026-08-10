@@ -11,7 +11,7 @@ function callRestParameterTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 4082>  # String: '__BC:Functions/RestParameterTests/callRestParameterTests/start' (String)
     // USED → r7 = "__BC:Functions/RestParameterTests/callRestParameterTests/start";
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
-    r7 = globalThis.console.log("__BC:Functions/RestParameterTests/callRestParameterTests/start")
+    console.log("__BC:Functions/RestParameterTests/callRestParameterTests/start")
     // CODE → <LoadFromEnvironment>: <Reg8: 7, Reg8: 6, UInt8: 0>
     // USED → r7 = getParentEnvironment(0)[0];
     // CODE → <LoadConstUndefined>: <Reg8: 3>
@@ -57,7 +57,7 @@ function callRestParameterTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 4950>  # String: '__BC:Functions/RestParameterTests/callRestParameterTests/end' (String)
     // USED → r5 = "__BC:Functions/RestParameterTests/callRestParameterTests/end";
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
-    r5 = globalThis.console.log("__BC:Functions/RestParameterTests/callRestParameterTests/end")
+    console.log("__BC:Functions/RestParameterTests/callRestParameterTests/end")
     // CODE → <Ret>: <Reg8: 3>
     return undefined;
 }

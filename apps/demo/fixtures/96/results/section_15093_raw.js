@@ -9,7 +9,7 @@ function forInTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4802>  # String: '__BC:Iterators/IteratorTests/forInTest/start' (String)
     // USED → r1 = "__BC:Iterators/IteratorTests/forInTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Iterators/IteratorTests/forInTest/start")
+    console.log("__BC:Iterators/IteratorTests/forInTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 6, UInt16: 3, UInt16: 3, UInt16: 1155, UInt16: 1179>  # Object: {'a': 1, 'b': 2, 'c': 3}
     r6 = { "a": 1, "b": 2, "c": 3 }
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
@@ -33,7 +33,7 @@ function forInTest(param0) {
     // CODE → <GetByVal>: <Reg8: 7, Reg8: 6, Reg8: 10>
     // USED → r7 = r6[r5.next()];
     // CODE → <Call3>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 7>
-    r7 = globalThis.console.log(r5.next(), r6[r5.next()])
+    console.log(r5.next(), r6[r5.next()])
     // CODE → <Jmp>: <Addr8: -33>  # Address: 0000002b
     goto label_43;
     // ──────────────── Block 3 ──────────────── 
@@ -44,7 +44,7 @@ function forInTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4800>  # String: '__BC:Iterators/IteratorTests/forInTest/end' (String)
     // USED → r0 = "__BC:Iterators/IteratorTests/forInTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Iterators/IteratorTests/forInTest/end")
+    console.log("__BC:Iterators/IteratorTests/forInTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

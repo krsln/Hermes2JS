@@ -9,7 +9,7 @@ function classTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4539>  # String: '__BC:Classes/ClassTests/classTest/start' (String)
     // USED → r1 = "__BC:Classes/ClassTests/classTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Classes/ClassTests/classTest/start")
+    console.log("__BC:Classes/ClassTests/classTest/start")
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 5>
@@ -39,7 +39,7 @@ function classTest(param0) {
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 10805>  # String: 'description' (Identifier)
     // USED → r2 = new getEnvironment(0)[5]("...", "Generic").description;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(new getEnvironment(0)[5]("...", "Generic").description)
+    console.log(new getEnvironment(0)[5]("...", "Generic").description)
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 6>
     // USED → r5 = getEnvironment(0)[6];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
@@ -83,7 +83,7 @@ function classTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4537>  # String: '__BC:Classes/ClassTests/classTest/end' (String)
     // USED → r0 = "__BC:Classes/ClassTests/classTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Classes/ClassTests/classTest/end")
+    console.log("__BC:Classes/ClassTests/classTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

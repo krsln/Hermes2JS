@@ -18,7 +18,7 @@ async function* anon_15177(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4765>  # String: '__BC:Functions/AsyncTests/simpleAsyncTest/start' (String)
     // USED → r1 = "__BC:Functions/AsyncTests/simpleAsyncTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/AsyncTests/simpleAsyncTest/start")
+    console.log("__BC:Functions/AsyncTests/simpleAsyncTest/start")
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 2>
     // USED → r1 = getEnvironment(2);
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
@@ -47,7 +47,7 @@ async function* anon_15177(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 1>
-    r3 = globalThis.console.log(await yield)
+    console.log(await yield)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -55,7 +55,7 @@ async function* anon_15177(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4764>  # String: '__BC:Functions/AsyncTests/simpleAsyncTest/end' (String)
     // USED → r2 = "__BC:Functions/AsyncTests/simpleAsyncTest/end";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Functions/AsyncTests/simpleAsyncTest/end")
+    console.log("__BC:Functions/AsyncTests/simpleAsyncTest/end")
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 1>

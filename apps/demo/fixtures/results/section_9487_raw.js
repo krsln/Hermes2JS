@@ -17,7 +17,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4967>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start' (String)
     // USED → r1 = "__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start")
+    console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start")
     // CODE → <NewArray>: <Reg8: 2, UInt16: 3>
     r2 = []
     // CODE → <NewArrayWithBuffer>: <Reg8: 1, UInt16: 2, UInt16: 2, UInt16: 42665>  # Array: [1, 2]
@@ -202,7 +202,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r9 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 0, Reg8: 9, Reg8: 11, Reg8: 8, Reg8: 7, Reg8: 0>
-    r0 = globalThis.console.log(GetIterator(r11).next(), GetIterator(r11).next(), GetIterator(r12).next())
+    console.log(GetIterator(r11).next(), GetIterator(r11).next(), GetIterator(r12).next())
     // CODE → <NewArrayWithBuffer>: <Reg8: 17, UInt16: 1, UInt16: 1, UInt16: 20024>  # Array: [10]
     r17 = [10]
     // CODE → <IteratorBegin>: <Reg8: 7, Reg8: 17>
@@ -319,7 +319,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r11 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 15, Reg8: 14, Reg8: 13>
-    r11 = globalThis.console.log(0, 0, r13)
+    console.log(0, 0, r13)
     // CODE → <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r12 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -327,7 +327,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 4966>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end' (String)
     // USED → r10 = "__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end";
     // CODE → <Call2>: <Reg8: 10, Reg8: 11, Reg8: 12, Reg8: 10>
-    r10 = globalThis.console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end")
+    console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end")
     // CODE → <Ret>: <Reg8: 3>
     return undefined;
     // CODE → <Catch>: <Reg8: 0>

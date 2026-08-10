@@ -9,7 +9,7 @@ function forTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 4767>  # String: '__BC:ControlFlow/ForTests/forTest/start' (String)
     // USED → r8 = "__BC:ControlFlow/ForTests/forTest/start";
     // CODE → <Call2>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 8>
-    r8 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/start")
+    console.log("__BC:ControlFlow/ForTests/forTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 10>
@@ -34,7 +34,7 @@ function forTest(param0) {
             // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r9 = globalThis.console.log;
             // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 8>
-            r9 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
+            console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
         } else {
             if (0 === 8) {
                 // ──────────────── Block 4 ──────────────── 
@@ -45,7 +45,7 @@ function forTest(param0) {
                 // CODE → <LoadConstString>: <Reg8: 9, string_id: 4765>  # String: '__BC:ControlFlow/ForTests/forTest/if-break' (String)
                 // USED → r9 = "__BC:ControlFlow/ForTests/forTest/if-break";
                 // CODE → <Call2>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 9>
-                r9 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/if-break")
+                console.log("__BC:ControlFlow/ForTests/forTest/if-break")
                 // CODE → <Jmp>: <Addr8: 26>  # Address: 00000073
                 break;
             }
@@ -55,7 +55,7 @@ function forTest(param0) {
             // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r9 = globalThis.console.log;
             // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 1>
-            r9 = globalThis.console.log(0)
+            console.log(0)
             // CODE → <Jmp>: <Addr8: 40>  # Address: 0000006b
             goto label_107;
         }
@@ -72,7 +72,7 @@ function forTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 4763>  # String: '__BC:ControlFlow/ForTests/forTest/end' (String)
     // USED → r7 = "__BC:ControlFlow/ForTests/forTest/end";
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
-    r7 = globalThis.console.log("__BC:ControlFlow/ForTests/forTest/end")
+    console.log("__BC:ControlFlow/ForTests/forTest/end")
     // CODE → <LoadConstUndefined>: <Reg8: 6>
     // USED → r6 = undefined;
     // CODE → <Ret>: <Reg8: 6>

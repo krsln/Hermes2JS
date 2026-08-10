@@ -194,12 +194,14 @@ class Printer(NodeVisitor):
             rendered = self.print_expression(instruction.value)
 
             if instruction.dest_reg is not None:
-                rendered = f"r{instruction.dest_reg} = {rendered}"
+                if not instruction.definition_used and rendered.startswith("globalThis.console.log"):
+                    rendered = rendered.replace("globalThis.", "")
+                else:
+                    rendered = f"r{instruction.dest_reg} = {rendered}"
 
             if instruction.definition_used:
                 if self.verbose:
                     self._write(lines, f"// USED → {rendered};")
-
             else:
                 self._write(lines, rendered)
 

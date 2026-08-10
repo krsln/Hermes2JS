@@ -9,7 +9,7 @@ function create(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 555>  # String: '__BC:Classes/ClassTests/Dog/static-create' (String)
     // USED → r0 = "__BC:Classes/ClassTests/Dog/static-create";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Classes/ClassTests/Dog/static-create")
+    console.log("__BC:Classes/ClassTests/Dog/static-create")
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
     // USED → r0 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 0>

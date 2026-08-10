@@ -9,7 +9,7 @@ function get(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 342>  # String: '__BC:Classes/PrivateStaticTests/Counter/get-value' (String)
     // USED → r0 = "__BC:Classes/PrivateStaticTests/Counter/get-value";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/get-value")
+    console.log("__BC:Classes/PrivateStaticTests/Counter/get-value")
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 1>
     // USED → r0 = getEnvironment(1);
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 4>

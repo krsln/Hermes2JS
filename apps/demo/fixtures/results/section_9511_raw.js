@@ -29,7 +29,7 @@ function defaultParameterTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4935>  # String: '__BC:Functions/DefaultParameterTests/defaultParameterTest/start' (String)
     // USED → r4 = "__BC:Functions/DefaultParameterTests/defaultParameterTest/start";
     // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
-    r4 = globalThis.console.log("__BC:Functions/DefaultParameterTests/defaultParameterTest/start")
+    console.log("__BC:Functions/DefaultParameterTests/defaultParameterTest/start")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -37,7 +37,7 @@ function defaultParameterTest(param0, param1) {
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 6>
     // USED → r2 = param1 + 10;
     // CODE → <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 2>
-    r2 = globalThis.console.log("result", param1 + 10)
+    console.log("result", param1 + 10)
     // CODE → <Ret>: <Reg8: 1>
     return undefined;
 }

@@ -45,7 +45,7 @@ function parameterDestructureTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4817>  # String: '__BC:Objects/DestructuringTests/parameterDestructureTest/start' (String)
     // USED → r2 = "__BC:Objects/DestructuringTests/parameterDestructureTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 8, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Objects/DestructuringTests/parameterDestructureTest/start")
+    console.log("__BC:Objects/DestructuringTests/parameterDestructureTest/start")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 90>  # String: 'log' (Identifier)
@@ -57,7 +57,7 @@ function parameterDestructureTest(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 6>
     r11 = param1.name
     // CODE → <Call>: <Reg8: 2, Reg8: 2, UInt8: 5>
-    r2 = globalThis.console.log(r13, r12, r11, r10, r9)
+    console.log(r13, r12, r11, r10, r9)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 90>  # String: 'log' (Identifier)
@@ -65,7 +65,7 @@ function parameterDestructureTest(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4816>  # String: '__BC:Objects/DestructuringTests/parameterDestructureTest/end' (String)
     // USED → r1 = "__BC:Objects/DestructuringTests/parameterDestructureTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Objects/DestructuringTests/parameterDestructureTest/end")
+    console.log("__BC:Objects/DestructuringTests/parameterDestructureTest/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

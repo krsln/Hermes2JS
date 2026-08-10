@@ -60,7 +60,7 @@ function tag(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4861>  # String: '__BC:Strings/TemplateLiteralTests/tag/invoked' (String)
     // USED → r1 = "__BC:Strings/TemplateLiteralTests/tag/invoked";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Strings/TemplateLiteralTests/tag/invoked")
+    console.log("__BC:Strings/TemplateLiteralTests/tag/invoked")
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)
     // USED → r2 = param1.reduce;
     // CODE → <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 15131>  # Function: [#15131  of 61 bytes]: 4 params @ offset 0x0026a42e
