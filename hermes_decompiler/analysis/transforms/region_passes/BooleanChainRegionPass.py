@@ -3,12 +3,8 @@ from __future__ import annotations
 import dataclasses
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.Regions import (
-    SequenceRegion,
-    LoopRegion,
-    IfRegion,
-    TryRegion,
-)
+from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
+from hermes_decompiler.analysis.regions.Regions import IfRegion, SequenceRegion
 from hermes_decompiler.analysis.transforms._shared import (
     _negate_condition,
     _is_pure,
@@ -21,10 +17,12 @@ from hermes_decompiler.ir.expressions import (
     BinaryExpression,
     Expression)
 
+from ._base import RegionPass
+
 logger = get_logger(__name__)
 
 
-class BooleanChainRegionPass:
+class BooleanChainRegionPass(RegionPass, RegionVisitor):
     """
     Folds the common short-circuit `||`/`&&` compiled idiom back into a
     single expression, once `IfStructurer` has already turned the raw
@@ -65,46 +63,31 @@ class BooleanChainRegionPass:
     a plain mutable attribute and can be reassigned directly;
     `ReturnStatement` is a frozen dataclass, so its `argument` field
     is swapped via `dataclasses.replace` instead of direct mutation.
+
+    Traversal is inherited from `RegionVisitor` rather than
+    hand-rolled here: the previous hand-rolled `_visit` had no case
+    for `SwitchRegion` (and its `hasattr(region, "body")` fallback
+    doesn't match it either, since a `SwitchRegion`'s children live
+    under `.cases`/`.default_body`, not `.body`) - a chain idiom
+    sitting inside a `switch` case or `default` body was silently
+    never folded. `RegionVisitor` already knows how to reach those.
     """
 
     _LOGICAL_OPERATORS = (LogicalOperator.OR, LogicalOperator.AND)
 
-    def __init__(self, cfg):
-        self.cfg = cfg
-
-    def run(self, root: SequenceRegion):
-        self._visit(root)
+    def run(self) -> None:
+        self.visit(self.graph.root)
 
     # ------------------------------------------------------------------
+    # Traversal - only SequenceRegion needs pass-specific behavior
+    # (fold after descending); every other region kind uses
+    # RegionVisitor's default recursion unchanged.
+    # ------------------------------------------------------------------
 
-    def _visit(self, region):
-
-        if isinstance(region, SequenceRegion):
-            for child in region.children:
-                self._visit(child)
-            self._fold_sequence(region)
-            return
-
-        if isinstance(region, LoopRegion):
-            self._visit(region.body)
-            return
-
-        if isinstance(region, IfRegion):
-            self._visit(region.then_body)
-            if region.else_body:
-                self._visit(region.else_body)
-            return
-
-        if isinstance(region, TryRegion):
-            self._visit(region.try_body)
-            if region.catch:
-                self._visit(region.catch.body)
-            if region.finally_:
-                self._visit(region.finally_.body)
-            return
-
-        if hasattr(region, "body"):
-            self._visit(region.body)
+    def visit_SequenceRegion(self, node: SequenceRegion) -> None:
+        for child in node.children:
+            self.visit(child)
+        self._fold_sequence(node)
 
     # ------------------------------------------------------------------
 
@@ -144,13 +127,6 @@ class BooleanChainRegionPass:
 
         last = block.instructions[-1]
 
-        # logger.debug(
-        #     "BooleanChainFolder._try_fold: block=%d dest_reg=%r default_value=%r, "
-        #     "if_region.else_body=%r, if_region.condition=%r",
-        #     block.id, last.dest_reg if block.instructions else None,
-        #     last.value if block.instructions else None,
-        #     if_region.else_body, if_region.condition,
-        # )
         if last.dest_reg is None or not isinstance(last.value, Expression):
             return False
 
@@ -196,15 +172,7 @@ class BooleanChainRegionPass:
             return False
 
         old_tail_expr = then_result.value
-        # logger.debug(
-        #     "  fold: then_block=%d old_tail_expr=%r operator=%r -> new_expr left=%r",
-        #     then_block.id, old_tail_expr, operator, last.value,
-        # )
         last.value = BinaryExpression(left=last.value, operator=operator, right=old_tail_expr)
-        # logger.debug(
-        #     "  repointing old_expr=%r (id=%s) -> new_expr=%r, min_block_id=%d",
-        #     old_tail_expr, id(old_tail_expr), last.value, then_block.id,
-        # )
 
         self._repoint_references(old_tail_expr, last.value, min_block_id=then_block.id, exclude={then_result, last})
 

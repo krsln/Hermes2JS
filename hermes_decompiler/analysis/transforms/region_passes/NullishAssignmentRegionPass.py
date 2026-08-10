@@ -1,25 +1,28 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion, IfRegion, TryRegion
+from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
+from hermes_decompiler.analysis.regions.Regions import IfRegion, SequenceRegion
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import AssignmentOperator, BinaryOperator
 from hermes_decompiler.ir.expressions import (
     AssignmentExpression, BinaryExpression, MemberExpression, NullLiteral,
 )
 
+from ._base import RegionPass
+
 logger = get_logger(__name__)
 
 
-class NullishAssignmentRegionPass:
+class NullishAssignmentRegionPass(RegionPass, RegionVisitor):
     """
     Folds:
         if (obj.prop == null) { obj.prop = default; }
     into:
         obj.prop ??= default;
 
-    Distinct from BooleanChainFolder/ConditionalExpressionFolder: those
-    match by dest_reg (a register-valued merge). PutById has NO
+    Distinct from BooleanChainRegionPass/ConditionalExpressionRegionPass:
+    those match by dest_reg (a register-valued merge). PutById has NO
     dest_reg (see PutById.handle - it's rendered as a bare statement,
     not a register-producing expression), so there is no register to
     key off. This pass instead matches by structural equality of the
@@ -31,37 +34,20 @@ class NullishAssignmentRegionPass:
     truthy/falsy guard variants - not implemented here, no evidence
     yet that Hermes emits them for member-expression targets the same
     way it does for registers.
+
+    Traversal is inherited from `RegionVisitor` - see
+    `BooleanChainRegionPass`'s docstring for why the previous
+    hand-rolled `_visit` (identical shape to this one) silently
+    skipped `SwitchRegion` bodies.
     """
 
-    def __init__(self, cfg):
-        self.cfg = cfg
+    def run(self) -> None:
+        self.visit(self.graph.root)
 
-    def run(self, root: SequenceRegion):
-        self._visit(root)
-
-    def _visit(self, region):
-        if isinstance(region, SequenceRegion):
-            for child in region.children:
-                self._visit(child)
-            self._fold_sequence(region)
-            return
-        if isinstance(region, LoopRegion):
-            self._visit(region.body)
-            return
-        if isinstance(region, IfRegion):
-            self._visit(region.then_body)
-            if region.else_body:
-                self._visit(region.else_body)
-            return
-        if isinstance(region, TryRegion):
-            self._visit(region.try_body)
-            if region.catch:
-                self._visit(region.catch.body)
-            if region.finally_:
-                self._visit(region.finally_.body)
-            return
-        if hasattr(region, "body"):
-            self._visit(region.body)
+    def visit_SequenceRegion(self, node: SequenceRegion) -> None:
+        for child in node.children:
+            self.visit(child)
+        self._fold_sequence(node)
 
     def _fold_sequence(self, region: SequenceRegion):
         region.children = [
@@ -81,24 +67,16 @@ class NullishAssignmentRegionPass:
 
     def _try_fold(self, if_region: IfRegion):
         target_member = self._extract_null_check_target(if_region.condition)
-        # logger.debug(
-        #     "NullishAssignmentFolder._try_fold: condition=%r -> target_member=%r",
-        #     if_region.condition, target_member,
-        # )
         if if_region.else_body is not None:
-            # logger.debug("  bail: has else_body")
             return None
         if target_member is None:
-            # logger.debug("  bail: condition isn't a MemberExpression == null check")
             return None
 
         children = [
             c for c in if_region.then_body.children
             if not (isinstance(c, BasicBlock) and not c.instructions)
         ]
-        # logger.debug("  then_body children=%r", children)
         if len(children) != 1 or not isinstance(children[0], BasicBlock):
-            # logger.debug("  bail: then_body isn't exactly one BasicBlock")
             return None
 
         block = children[0]
@@ -117,12 +95,11 @@ class NullishAssignmentRegionPass:
 
         # Every earlier instruction in the block must be inlined-and-consumed
         # (LoadConstZero etc.), not an independently observable statement -
-        # same purity bar as ConditionalExpressionFolder._single_result.
+        # same purity bar as ConditionalExpressionRegionPass._single_result.
         for earlier in block.instructions[:-1]:
             if earlier.statement is not None:
                 return None
 
-        # logger.debug("  FOLDING to ??=")
         instr.value = AssignmentExpression(
             left=instr.value.left,
             operator=AssignmentOperator.NULLISH_ASSIGN,

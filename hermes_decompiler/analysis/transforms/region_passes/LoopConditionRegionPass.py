@@ -1,16 +1,19 @@
+from __future__ import annotations
+
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.Regions import (
-    SequenceRegion, LoopRegion, LoopKind, IfRegion, TryRegion, SwitchRegion,
-)
+from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
+from hermes_decompiler.analysis.regions.Regions import LoopKind, LoopRegion
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import UnaryOperator
 from hermes_decompiler.ir.expressions import Expression, UnaryExpression
 
+from ._base import RegionPass
+
 logger = get_logger(__name__)
 
 
-class LoopConditionRegionPass:
+class LoopConditionRegionPass(RegionPass, RegionVisitor):
     """
     Determines a loop's real continuation test (if any) and, from where
     that test physically sits in the CFG, whether the loop is top-tested
@@ -38,62 +41,20 @@ class LoopConditionRegionPass:
     "body runs, then test" control flow, whereas silently defaulting to
     `while (cond) {...}` here would misrepresent loops that must execute
     at least once as ones that might execute zero times.
+
+    Traversal is a single override: every region kind other than
+    `LoopRegion` already recurses exactly the way `RegionVisitor`'s
+    default does (including `SwitchRegion`, which the original
+    hand-rolled `_visit` had to explicitly special-case to reach at
+    all - here it's inherited for free).
     """
 
-    def __init__(self, root):
-        self.root = root
+    def run(self) -> None:
+        self.visit(self.graph.root)
 
-    def run(self):
-        self._visit(self.root)
-
-    def _visit(self, region):
-
-        if isinstance(region, SequenceRegion):
-            for child in region.children:
-                self._visit(child)
-            return
-
-        if isinstance(region, LoopRegion):
-            self._extract(region)
-            self._visit(region.body)
-            return
-
-        if isinstance(region, IfRegion):
-            # A loop very commonly ends up nested inside an IfRegion -
-            # e.g. Hermes' standard "pre-header guard" idiom for a
-            # rotated for/while loop (`if (i < len) { while (true) {
-            # ... } }`, where the outer `if` exists purely so the loop
-            # is never entered at all when the guard is false on
-            # entry). Without descending here, any loop living behind
-            # such a guard - or inside an ordinary nested `if` - is
-            # never reached by `_extract` at all: its guard branch
-            # survives untouched and later shows up as a raw,
-            # unstructured `if (...) goto label_N;` in the output (see
-            # `StructuralAnalyzer._audit_unstructured_blocks`), not
-            # because the guard itself couldn't be recognized, but
-            # because this walker never got there to look.
-            self._visit(region.then_body)
-            if region.else_body:
-                self._visit(region.else_body)
-            return
-
-        if isinstance(region, TryRegion):
-            self._visit(region.try_body)
-            if region.catch:
-                self._visit(region.catch.body)
-            if region.finally_:
-                self._visit(region.finally_.body)
-            return
-
-        if isinstance(region, SwitchRegion):
-            for case in region.cases:
-                self._visit(case.body)
-            if region.default_body:
-                self._visit(region.default_body)
-            return
-
-        if hasattr(region, "body"):
-            self._visit(region.body)
+    def visit_LoopRegion(self, node: LoopRegion) -> None:
+        self._extract(node)
+        self.visit(node.body)
 
     def _extract(self, loop: LoopRegion):
 

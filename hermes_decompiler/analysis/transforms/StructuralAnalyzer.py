@@ -119,11 +119,11 @@ class StructuralAnalyzer:
         SwitchStructurer(graph, self.cfg).run()
 
         # ---- 3. region_passes -------------------------------------------
-        BooleanChainRegionPass(self.cfg).run(graph.root)  # `&&`/`||` (e.g. a bare`if (a || b) { ... }
-        ConditionalExpressionRegionPass(self.cfg).run(graph.root)  # ternary
-        NullishAssignmentRegionPass(self.cfg).run(graph.root)
-        LoopConditionRegionPass(graph.root).run()
-        ForEachRegionPass(graph).run()
+        BooleanChainRegionPass(graph, self.cfg).run()  # `&&`/`||` (e.g. a bare-if (a || b) { ... }
+        ConditionalExpressionRegionPass(graph, self.cfg).run()  # ternary
+        NullishAssignmentRegionPass(graph, self.cfg).run()
+        LoopConditionRegionPass(graph, self.cfg).run()
+        ForEachRegionPass(graph, self.cfg).run()
 
         # ---- 4.  ------------------------------------------------
 

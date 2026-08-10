@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-import dataclasses
-
 from hermes_decompiler.analysis.regions.Regions import SequenceRegion
+from hermes_decompiler.analysis.transforms._shared import _structural_key as structural_key
 
 """
 Pure, stateless helpers shared by `_finally_matcher` and
@@ -12,34 +11,14 @@ whether a wider handler's body is a duplicate of code already inside
 a narrower handler's try/catch (i.e. it's really a `finally`), the
 attacher to then strip those duplicated copies out once a real
 `finally` clause is being emitted instead.
+
+`structural_key` itself now lives in `transforms._shared` - see that
+module's docstring; it used to be defined locally here (and, third
+copy, independently again in `region_passes.ForEachRegionPass`) before
+being consolidated.
 """
 
-
-def structural_key(value):
-    """
-    Value-based key for an expression node, independent of whether its
-    class defines `__eq__` (many of the IR expression classes don't,
-    so plain `==` silently falls back to object identity and never
-    matches two separately-built-but-equivalent trees). Deeply unpacks
-    dataclasses into tuples so structurally identical trees -
-    regardless of which registers produced them - compare equal.
-    Falls back to `repr()` for anything that isn't a dataclass.
-    """
-
-    if dataclasses.is_dataclass(value) and not isinstance(value, type):
-        return tuple(
-            structural_key(getattr(value, f.name))
-            for f in dataclasses.fields(value)
-        )
-
-    if isinstance(value, (list, tuple)):
-        return tuple(structural_key(v) for v in value)
-
-    try:
-        hash(value)
-        return value
-    except TypeError:
-        return repr(value)
+__all__ = ["structural_key", "strip_duplicate_run"]
 
 
 def strip_duplicate_run(region: SequenceRegion, finally_values: list) -> None:

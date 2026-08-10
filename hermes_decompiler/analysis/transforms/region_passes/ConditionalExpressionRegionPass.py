@@ -3,9 +3,8 @@ from __future__ import annotations
 import dataclasses
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.Regions import (
-    SequenceRegion, LoopRegion, IfRegion, TryRegion,
-)
+from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
+from hermes_decompiler.analysis.regions.Regions import IfRegion, SequenceRegion
 from hermes_decompiler.analysis.transforms._shared import (
     _negate_condition,
     _TRIVIAL_NODE_TYPES,
@@ -16,56 +15,41 @@ from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import (
     ConditionalExpression, Expression, )
 
+from ._base import RegionPass
+
 logger = get_logger(__name__)
 
 
-class ConditionalExpressionRegionPass:
+class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
     """
     Folds Hermes' bytecode encoding of a *value-producing* ternary
     (`c ? a : b`) back into a single ConditionalExpression, once
     IfStructurer has already built an IfRegion WITH an else_body.
 
-    Sibling to BooleanChainFolder, not a replacement: that pass
+    Sibling to BooleanChainRegionPass, not a replacement: that pass
     explicitly declines whenever `if_region.else_body is not None`
     (see its `_try_fold`) - this pass exists specifically to cover
     that declined case. The two are disjoint on that one condition,
     so both can run in the same stage without overlap.
 
-    Must run after BooleanChainFolder in the pass ordering: a
+    Must run after BooleanChainRegionPass in the pass ordering: a
     then/else arm's own condition may itself be an `&&`/`||` chain
     that needs folding first, so this pass reads clean conditions
     rather than needing to fold sub-chains itself.
+
+    Traversal is inherited from `RegionVisitor` - see
+    `BooleanChainRegionPass`'s docstring for why the previous
+    hand-rolled `_visit` (identical shape to this one) silently
+    skipped `SwitchRegion` bodies.
     """
 
-    def __init__(self, cfg):
-        self.cfg = cfg
+    def run(self) -> None:
+        self.visit(self.graph.root)
 
-    def run(self, root: SequenceRegion):
-        self._visit(root)
-
-    def _visit(self, region):
-        if isinstance(region, SequenceRegion):
-            for child in region.children:
-                self._visit(child)
-            self._fold_sequence(region)
-            return
-        if isinstance(region, LoopRegion):
-            self._visit(region.body)
-            return
-        if isinstance(region, IfRegion):
-            self._visit(region.then_body)
-            if region.else_body:
-                self._visit(region.else_body)
-            return
-        if isinstance(region, TryRegion):
-            self._visit(region.try_body)
-            if region.catch:
-                self._visit(region.catch.body)
-            if region.finally_:
-                self._visit(region.finally_.body)
-            return
-        if hasattr(region, "body"):
-            self._visit(region.body)
+    def visit_SequenceRegion(self, node: SequenceRegion) -> None:
+        for child in node.children:
+            self.visit(child)
+        self._fold_sequence(node)
 
     def _fold_sequence(self, region: SequenceRegion):
         region.children = [
@@ -119,13 +103,6 @@ class ConditionalExpressionRegionPass:
         # FIRST one whose register also has a matching arm - not
         # positional order.
         for last in reversed(block.instructions):
-            # logger.debug(
-            #     "ConditionalExpressionFolder._try_fold: block=%d dest_reg=%r default_value=%r, "
-            #     "if_region.else_body=%r, if_region.condition=%r",
-            #     block.id, last.dest_reg if block.instructions else None,
-            #     last.value if block.instructions else None,
-            #     if_region.else_body, if_region.condition,
-            # )
             if last.dest_reg is None or not isinstance(last.value, Expression):
                 continue
             then_arm = self._single_result(if_region.then_body, last.dest_reg)
@@ -140,10 +117,6 @@ class ConditionalExpressionRegionPass:
                 consequent=default_expr,
                 alternate=arm_expr,
             )
-            # logger.debug(
-            #     "  no-else fold: arm_block=%d arm_expr=%r default_expr=%r -> new_expr test=%r",
-            #     arm_block.id, arm_expr, default_expr, _negate_condition(condition),
-            # )
             last.value = new_expr
             self._repoint_references(arm_expr, new_expr, min_block_id=arm_block.id, exclude={arm_result, last})
             return True
@@ -212,24 +185,16 @@ class ConditionalExpressionRegionPass:
     def _repoint_node(self, node, old_expr, new_expr):
         """
         Same generic identity/structural-equality deep-replace as
-        BooleanChainFolder._repoint_node - see that class for the full
-        rationale, including why the structural-equality branch is
-        needed for Mov-introduced copies. Kept duplicated here rather
-        than shared, per earlier decision to avoid guessing at an
-        extraction target.
+        BooleanChainRegionPass._repoint_node - see that class for the
+        full rationale, including why the structural-equality branch
+        is needed for Mov-introduced copies. Kept duplicated here
+        rather than shared, per earlier decision to avoid guessing at
+        an extraction target.
         """
 
         if node is old_expr:
             return new_expr, True
 
-        # Structural-equality fallback only for non-trivial expressions
-        # (BinaryExpression, ConditionalExpression, CallExpression, etc) -
-        # a bare Identifier or Literal is structurally equal to every OTHER
-        # unrelated read of the same name/value throughout the function, so
-        # matching those by structural equality corrupts every downstream
-        # occurrence, not just the intended Mov-copy target. Only apply this
-        # fallback when old_expr's shape is specific enough that a match is
-        # actually likely to BE the same logical value, not a coincidence.
         if (not isinstance(old_expr, _TRIVIAL_NODE_TYPES)
                 and isinstance(node, type(old_expr))
                 and node.structurally_equal(old_expr)):

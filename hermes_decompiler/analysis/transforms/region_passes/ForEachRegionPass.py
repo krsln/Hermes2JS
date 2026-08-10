@@ -1,24 +1,25 @@
 from __future__ import annotations
 
-import dataclasses
-
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
 from hermes_decompiler.analysis.regions.Regions import (
-    SequenceRegion,
-    LoopRegion,
-    TryRegion,
     LoopKind,
+    LoopRegion,
+    SequenceRegion,
+    TryRegion,
 )
+from hermes_decompiler.analysis.transforms._shared import _structural_key
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
 
+from ._base import RegionPass
 
-class ForEachRegionPass:
+
+class ForEachRegionPass(RegionPass, RegionVisitor):
     """
-    Stage-3 region pass. Reclassifies a plain `LoopRegion`
-    (`loop_kind == LoopKind.WHILE`, the default `LoopStructurer` /
-    `LoopConditionExtractor` leave every loop in) as `FOR_OF` or
-    `FOR_IN` when its header matches the fixed instruction sequence
-    Hermes emits for those constructs:
+    Reclassifies a plain `LoopRegion` (`loop_kind == LoopKind.WHILE`,
+    the default `LoopStructurer` / `LoopConditionRegionPass` leave
+    every loop in) as `FOR_OF` or `FOR_IN` when its header matches the
+    fixed instruction sequence Hermes emits for those constructs:
 
         for-of:  IteratorBegin (before the loop) -> IteratorNext
                  (loop header's first instruction) -> optional
@@ -28,16 +29,16 @@ class ForEachRegionPass:
                  (loop header's first instruction), no try/finally
 
     Must run AFTER LoopStructurer, TryStructurer and
-    LoopConditionExtractor:
-      - LoopStructurer:        loop.header_block must exist
-      - TryStructurer:         for-of's IteratorClose must already be
-                                folded into a real FinallyRegion, or
-                                there is nothing here to match against
-      - LoopConditionExtractor: header.terminator has already been
-                                consumed into loop.condition, so the
-                                header's *first* instruction is
-                                reliably the IteratorNext/GetNextPName
-                                call and nothing else
+    LoopConditionRegionPass:
+      - LoopStructurer:         loop.header_block must exist
+      - TryStructurer:          for-of's IteratorClose must already be
+                                 folded into a real FinallyRegion, or
+                                 there is nothing here to match against
+      - LoopConditionRegionPass: header.terminator has already been
+                                 consumed into loop.condition, so the
+                                 header's *first* instruction is
+                                 reliably the IteratorNext/GetNextPName
+                                 call and nothing else
 
     Conservative by design: any pattern that doesn't match exactly
     (wrong callee, mismatched iterator identity, unexpected finally
@@ -46,53 +47,32 @@ class ForEachRegionPass:
     is a correctness regression (silently drops real cleanup code).
     """
 
-    def __init__(self, graph):
-        self.graph = graph
-
     def run(self) -> None:
-        self._visit(self.graph.root)
+        self.visit(self.graph.root)
 
     # -----------------------------------------------------------------
-    # Tree walk - mirrors StatementBuilder's dispatch shape so this
-    # stays in sync if new region kinds are added there.
+    # Tree walk - only TryRegion and LoopRegion need pass-specific
+    # ordering (recognize-then-descend / descend-then-recognize);
+    # every other region kind uses RegionVisitor's default recursion
+    # unchanged, which already reaches SwitchRegion case/default
+    # bodies without any special-casing here.
     # -----------------------------------------------------------------
 
-    def _visit(self, region) -> None:
+    def visit_TryRegion(self, node: TryRegion) -> None:
+        self.visit(node.try_body)
+        # Check for-of *after* descending, so a nested loop inside
+        # try_body is already itself recognized/unwrapped if it's
+        # for-of; `_try_recognize_for_of` only acts on a LoopRegion
+        # that is a *direct* child of try_body.
+        self._try_recognize_for_of(node)
+        if node.catch:
+            self.visit(node.catch.body)
+        if node.finally_:
+            self.visit(node.finally_.body)
 
-        if isinstance(region, SequenceRegion):
-            for child in list(region.children):
-                self._visit(child)
-            return
-
-        if isinstance(region, TryRegion):
-            self._visit(region.try_body)
-            # Check for-of *after* descending, so a nested loop inside
-            # try_body is already itself recognized/unwrapped if it's
-            # for-of; _try_recognize_for_of only acts on a LoopRegion
-            # that is a *direct* child of try_body.
-            self._try_recognize_for_of(region)
-            if region.catch:
-                self._visit(region.catch.body)
-            if region.finally_:
-                self._visit(region.finally_.body)
-            return
-
-        if isinstance(region, LoopRegion):
-            self._try_recognize_for_in(region)
-            self._visit(region.body)
-            return
-
-        for attr in ("then_body", "else_body", "body"):
-            child = getattr(region, attr, None)
-            if child is not None:
-                self._visit(child)
-
-        for case in getattr(region, "cases", []):
-            self._visit(case.body)
-
-        default_body = getattr(region, "default_body", None)
-        if default_body is not None:
-            self._visit(default_body)
+    def visit_LoopRegion(self, node: LoopRegion) -> None:
+        self._try_recognize_for_in(node)
+        self.visit(node.body)
 
     # -----------------------------------------------------------------
     # for-of
@@ -169,8 +149,8 @@ class ForEachRegionPass:
         GetNextPName's `list_val`, precisely to avoid re-embedding a
         large/side-effecting expression at every `.next()` call site).
 
-        `ForEachRecognizer` needs the *actual* defining expression
-        either way to recognize `GetIterator(...)` / `HermesPropertyIterator(...)`,
+        This pass needs the *actual* defining expression either way to
+        recognize `GetIterator(...)` / `HermesPropertyIterator(...)`,
         so when `expr` is still a bare `r{N}` reference, resolve it by
         finding that register's defining instruction among every block
         currently in the region tree. This pass has no access to
@@ -222,9 +202,6 @@ class ForEachRegionPass:
         if first is None:
             return None, None, None
 
-        if first is None:
-            return None, None, None
-
         value = first.value
         if not isinstance(value, CallExpression):
             return None, None, None
@@ -257,14 +234,14 @@ class ForEachRegionPass:
             return expr.arguments[0]
         return None
 
-    @classmethod
-    def _finally_matches_iterator_close(cls, try_region: TryRegion, iterator_expr) -> bool:
+    @staticmethod
+    def _finally_matches_iterator_close(try_region: TryRegion, iterator_expr) -> bool:
         """
         True iff the entire finally body is a single `.return()` call
         on the same iterator expression IteratorNext was called on.
         Expression trees don't reliably define `__eq__` (see
-        TryStructurer._structural_key's docstring for the same
-        problem) so identity is compared structurally, not with `==`.
+        `_structural_key`'s own docstring for the same problem) so
+        identity is compared structurally, not with `==`.
         """
         finally_body = try_region.finally_.body
 
@@ -291,24 +268,7 @@ class ForEachRegionPass:
         if not isinstance(prop, Identifier) or prop.name != "return":
             return False
 
-        return cls._structural_key(value.callee.receiver) == cls._structural_key(iterator_expr)
-
-    @staticmethod
-    def _structural_key(value):
-        """Same approach as TryStructurer._structural_key - deep,
-        register-free, dataclass-aware value comparison."""
-        if dataclasses.is_dataclass(value) and not isinstance(value, type):
-            return tuple(
-                ForEachRegionPass._structural_key(getattr(value, f.name))
-                for f in dataclasses.fields(value)
-            )
-        if isinstance(value, (list, tuple)):
-            return tuple(ForEachRegionPass._structural_key(v) for v in value)
-        try:
-            hash(value)
-            return value
-        except TypeError:
-            return repr(value)
+        return _structural_key(value.callee.receiver) == _structural_key(iterator_expr)
 
     # -----------------------------------------------------------------
     # Mutation

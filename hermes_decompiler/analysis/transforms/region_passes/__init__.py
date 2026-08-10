@@ -1,3 +1,4 @@
+from ._base import RegionPass
 from .BooleanChainRegionPass import BooleanChainRegionPass
 from .ConditionalExpressionRegionPass import ConditionalExpressionRegionPass
 from .ForEachRegionPass import ForEachRegionPass
