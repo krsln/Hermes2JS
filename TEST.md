@@ -41,6 +41,7 @@ python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./app
 ################ 
 # whileTest 15047
 # forTest 15051
+# forEachTest 15053, 15054
 # Switch 15056
 # nestedLoopTest 15058
 # complexTest 15060
