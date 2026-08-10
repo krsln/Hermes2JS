@@ -22,7 +22,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 - HermesAnalysis self.registers: dict[str, RegisterState] = {}
 - Printer.py
 
-## Coach
+## Testy
 
 ```shell
 python scripts/decompile_sections.py -i ./apps/coachy/fixtures/focused -o ./apps/coachy/fixtures/results
@@ -32,28 +32,6 @@ python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./app
 python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --no-verbose
 python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict
 python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict --no-verbose
-```
-
-## Testy
-
-```shell
-# ControlFlow
-################ 
-# whileTest 15047
-# forTest 15051
-# forEachTest 15053, 15054
-# Switch 15056
-# nestedLoopTest 15058
-# complexTest 15060
-# IfTests 15062, 15063
-# Labeled Tests 15065, 15066, 15067, 15068
-# ternaryTest 15070, 15071, 15072, 15073
-
-# Exceptions
-# Exception Tests 15075-15090
-
-# Iterators
-# IteratorTests 15092, 15093
 ```
 
 ```shell
@@ -71,7 +49,24 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./app
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level DEBUG
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
- 
+
+# ControlFlow
+################ 
+# whileTest 15047
+# forTest 15051
+# forEachTest 15053, 15054
+# Switch 15056
+# nestedLoopTest 15058
+# complexTest 15060
+# IfTests 15062, 15063
+# Labeled Tests 15065, 15066, 15067, 15068
+# ternaryTest 15070, 15071, 15072, 15073
+
+# Exceptions
+# Exception Tests 15075-15090
+
+# Iterators
+# IteratorTests 15092, 15093
 
 ## whole sections
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 999 
