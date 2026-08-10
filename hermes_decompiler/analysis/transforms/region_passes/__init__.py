@@ -6,6 +6,7 @@ from .LoopConditionRegionPass import LoopConditionRegionPass
 from .NullishAssignmentRegionPass import NullishAssignmentRegionPass
 
 __all__ = [
+    "RegionPass",
     "BooleanChainRegionPass",
     "ConditionalExpressionRegionPass",
     "ForEachRegionPass",

@@ -53,7 +53,7 @@ class StructuralAnalyzer:
 
         1. `cfg_passes/`     - rewrite the raw CFG (blocks, edges,
                                 terminators) before any region exists.
-                                e.g. `ShortCircuitConditionMerger`.
+                                e.g. `ShortCircuitConditionCfgPass`.
 
         2. `structurers/`    - build the region tree (Sequence, Loop,
                                 If, Try, Switch regions) out of the
@@ -66,8 +66,8 @@ class StructuralAnalyzer:
         3. `region_passes/`  - post-process the already-built region
                                 tree (fold/extract) without
                                 introducing a new region *kind*.
-                                e.g. `BooleanChainFolder`,
-                                `LoopConditionExtractor`.
+                                e.g. `BooleanChainRegionPass`,
+                                `LoopConditionRegionPass`.
 
     A pass never reaches into a later stage's concerns and never runs
     outside this method - if a new pass is added, it's wired in here,
