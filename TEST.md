@@ -21,6 +21,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 - _raw.js
 - HermesAnalysis self.registers: dict[str, RegisterState] = {}
 - Printer.py
+- hermes_decompiler/analysis/transforms renames
 
 ## Testy
 
