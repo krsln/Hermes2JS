@@ -49,7 +49,7 @@ function function_12825(param0, param1, param2, param3, param4) {
                 // CODE → <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
                 // USED → r0 = param1.slice().pop().call(undefined, param2) === false;
                 // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
-                goto label_122;
+                continue;
             } catch (caughtException) {
                 // LOOP → START (while)
                 while (true) {

@@ -31,9 +31,6 @@ function nestedLoopTest(param0) {
         // USED → r4 = 0;
         // CODE → <LoadConstZero>: <Reg8: 0>
         // USED → r0 = 0;
-        // ──────────────── Block 6 ──────────────── 
-        // CODE → <AddN>: <Reg8: 3, Reg8: 4, Reg8: 2>
-        // USED → r3 = 0 + 1;
         // LOOP → START (do_while)
         do {
             // ──────────────── Block 2 ──────────────── 
@@ -59,6 +56,9 @@ function nestedLoopTest(param0) {
             // USED → r0 = 0 + 1;
         } while (0 + 1 < 4);
         // LOOP → END
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <AddN>: <Reg8: 3, Reg8: 4, Reg8: 2>
+        // USED → r3 = 0 + 1;
     } while (0 + 1 < 3);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

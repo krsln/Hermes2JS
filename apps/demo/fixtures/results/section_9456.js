@@ -23,9 +23,6 @@ function labeledBreakTest(param0) {
         // USED → r2 = 0;
         // CODE → <LoadConstZero>: <Reg8: 0>
         // USED → r0 = 0;
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
-        // USED → r4 = 0 + 1;
         // LOOP → START (do_while)
         do {
             // ──────────────── Block 2 ──────────────── 
@@ -48,6 +45,9 @@ function labeledBreakTest(param0) {
             }
         } while (0 + 1 < 3);
         // LOOP → END
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
+        // USED → r4 = 0 + 1;
     } while (0 + 1 < 3);
     // LOOP → END
     // ──────────────── Block 6 ──────────────── 

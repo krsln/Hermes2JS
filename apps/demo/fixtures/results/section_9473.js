@@ -67,7 +67,7 @@ function tryCatchInsideLoopTest(param0, param1) {
                 // CODE → <Mov>: <Reg8: 12, Reg8: 11>
                 r12 = 0
                 // CODE → <Jmp>: <Addr8: 51>  # Address: 00000095
-                goto label_149;
+                continue;
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 8>
                 // USED → r4 = 0 + 1;

@@ -17,6 +17,36 @@ class LoopStructurer(RegionStructurer):
     `region.children`/`block_owner` manipulation - so `covered_blocks`
     caching stays correct for every pass that runs after this one
     (`IfStructurer`, `TryStructurer`, both of which rely on it).
+
+    Ordering within a loop's own body (bug fix)
+    --------------------------------------------
+    `_build_loop` must place two kinds of items directly into
+    `region.body`: plain "loose" blocks the loop owns directly (most
+    commonly its own latch/increment block), and nested child loops
+    (built recursively). These need to end up in `region.body` in
+    their real relative source order - a loop's own latch/increment
+    code almost always comes AFTER any loop nested inside it, since
+    it's textually the loop's last statement.
+
+    An earlier version of this method moved every loose block first
+    (in a single pass over `sorted(loop.members, key=id)`, skipping
+    child-owned members) and only afterward recursed into
+    `loop.children`, appending each child's freshly-built `LoopRegion`
+    last, UNCONDITIONALLY - regardless of whether that child loop
+    should have appeared before or after the loose blocks just moved.
+    Since a loop's own latch is a loose (non-child) member and nearly
+    always sits textually after any nested loop, this was silently
+    wrong for essentially every doubly-or-more-nested loop: the
+    nested loop would end up placed AFTER the outer loop's own
+    increment/back-edge test in the region tree, i.e. printed as if
+    it ran after the very code that's supposed to run once the
+    nested loop has already finished each outer iteration.
+
+    Fixed by computing one merged, id-ordered list of "everything to
+    place next" - loose block ids and immediate child loops' header
+    ids together - and interleaving `graph.move()` calls with
+    recursive `_build_loop()` calls in that single order, instead of
+    processing all loose blocks up front and all children last.
     """
 
     def run(self) -> None:
@@ -77,19 +107,33 @@ class LoopStructurer(RegionStructurer):
         self.graph.replace_block(loop.header, region)
         self.graph.append(region.body, loop.header)
 
+        children_by_header_id = {}
         child_members = set()
 
         for child in loop.children:
+            children_by_header_id[child.header.id] = child
             child_members.update(child.members)
 
-        for block in sorted(loop.members, key=lambda b: b.id):
+        loose_blocks_by_id = {
+            block.id: block
+            for block in loop.members
+            if block is not loop.header and block not in child_members
+        }
 
-            if block is loop.header or block in child_members:
+        # One merged, id-ordered worklist covering both kinds of item
+        # this loop directly owns - see class docstring for why this
+        # single order (rather than "loose blocks, then children")
+        # matters.
+        ordered_ids = sorted(set(loose_blocks_by_id) | set(children_by_header_id))
+
+        for item_id in ordered_ids:
+
+            child = children_by_header_id.get(item_id)
+
+            if child is not None:
+                self._build_loop(child, region.body)
                 continue
 
-            self.graph.move(block, region.body)
-
-        for child in sorted(loop.children, key=lambda l: l.header.id):
-            self._build_loop(child, region.body)
+            self.graph.move(loose_blocks_by_id[item_id], region.body)
 
     # -------------------------------------------------------------

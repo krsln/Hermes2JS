@@ -27,25 +27,6 @@ function labeledContinueTest(param0) {
         // USED → r2 = 0;
         // CODE → <LoadConstZero>: <Reg8: 0>
         // USED → r0 = 0;
-        // ──────────────── Block 4 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r12 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r11 = globalThis.console.log;
-        // CODE → <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 9>
-        console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
-        // CODE → <Jmp>: <Addr8: 18>  # Address: 0000006d
-        goto label_109;
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r12 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r11 = globalThis.console.log;
-        // CODE → <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 10>
-        console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
-        // ──────────────── Block 6 ──────────────── 
-        // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
-        // USED → r4 = 0 + 1;
         // LOOP → START (do_while)
         do {
             // ──────────────── Block 2 ──────────────── 
@@ -64,6 +45,25 @@ function labeledContinueTest(param0) {
             }
         } while (0 + 1 < 3);
         // LOOP → END
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r12 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r11 = globalThis.console.log;
+        // CODE → <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 9>
+        console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
+        // CODE → <Jmp>: <Addr8: 18>  # Address: 0000006d
+        continue;
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r12 = globalThis.console;
+        // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r11 = globalThis.console.log;
+        // CODE → <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 10>
+        console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
+        // USED → r4 = 0 + 1;
     } while (0 + 1 < 3);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

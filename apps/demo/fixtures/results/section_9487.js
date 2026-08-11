@@ -295,14 +295,14 @@ function nestedArrayDestructureTest(param0) {
                     // CODE → <Catch>: <Reg8: 0>
                     r0 = caughtException
                     // CODE → <Jmp>: <Addr8: 99>  # Address: 000001fb
-                    goto label_507;
+                    continue;
                     // ──────────────── Block 33 ──────────────── 
                     // CODE → <Catch>: <Reg8: 0>
                     r0 = caughtException
                     // CODE → <Mov>: <Reg8: 8, Reg8: 11>
                     r8 = GetIterator(r17) === undefined
                     // CODE → <Jmp>: <Addr8: 47>  # Address: 000001fb
-                    goto label_507;
+                    continue;
                 }
             }
             // LOOP → END
@@ -329,14 +329,14 @@ function nestedArrayDestructureTest(param0) {
                     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
                     r2 = GetIterator(r6) === undefined || GetIterator(r6) === undefined || (GetIterator(r6) === undefined || GetIterator(r6) === undefined || (GetIterator(r6) === undefined || GetIterator(r6) === undefined))
                     // CODE → <Jmp>: <Addr8: 13>  # Address: 00000220
-                    goto label_544;
+                    continue;
                     // ──────────────── Block 39 ──────────────── 
                     // CODE → <Catch>: <Reg8: 0>
                     r0 = caughtException
                     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
                     r2 = GetIterator(r6) === undefined || GetIterator(r6) === undefined || (GetIterator(r6) === undefined || GetIterator(r6) === undefined || (GetIterator(r6) === undefined || GetIterator(r6) === undefined))
                     // CODE → <Jmp>: <Addr8: 6>  # Address: 00000220
-                    goto label_544;
+                    continue;
                     // ──────────────── Block 40 ──────────────── 
                     // CODE → <Catch>: <Reg8: 0>
                     // USED → r0 = caughtException;

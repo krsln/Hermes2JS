@@ -27,6 +27,24 @@ function labeledContinueTest(param0) {
         // USED → r7 = 0;
         // CODE → <LoadConstZero>: <Reg8: 8>
         // USED → r8 = 0;
+        // LOOP → START (do_while)
+        do {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <Mov>: <Reg8: 9, Reg8: 8>
+            // USED → r9 = 0;
+            if (0 !== 1) {
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r11 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r10 = globalThis.console.log;
+                // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
+                console.log(0, 0)
+                // CODE → <Inc>: <Reg8: 8, Reg8: 9>
+                // USED → r8 = 0 + 1;
+            }
+        } while (0 + 1 < 3);
+        // LOOP → END
         // ──────────────── Block 4 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r9 = globalThis.console;
@@ -46,24 +64,6 @@ function labeledContinueTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 7>
         // USED → r1 = 0 + 1;
-        // LOOP → START (do_while)
-        do {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <Mov>: <Reg8: 9, Reg8: 8>
-            // USED → r9 = 0;
-            if (0 !== 1) {
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r11 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r10 = globalThis.console.log;
-                // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
-                console.log(0, 0)
-                // CODE → <Inc>: <Reg8: 8, Reg8: 9>
-                // USED → r8 = 0 + 1;
-            }
-        } while (0 + 1 < 3);
-        // LOOP → END
     } while (0 + 1 < 3);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
