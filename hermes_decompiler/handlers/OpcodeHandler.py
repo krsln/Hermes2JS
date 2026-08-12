@@ -212,18 +212,21 @@ class OpcodeHandler(ABC):
         if state is None or state.definition is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        defn = state.definition
-        opcode = getattr(getattr(defn, "entry", None), "opcode", None)
-        value = state.value
+        definition = state.definition
+        value = definition.value
+
+        opcode = getattr(getattr(definition, "entry", None), "opcode", None)
 
         if (
                 opcode in _CONST_LOAD_OPCODES
                 and isinstance(value, Literal)
         ):
             state.reads += 1
-            defn.definition_used = True
+            definition.definition_used = True
+
             if state.reads > 1:
                 return dataclasses.replace(value)
+
             return value
 
         # Mov / Inc / Add / GetById / param / ... → always symbolic
