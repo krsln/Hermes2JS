@@ -148,6 +148,14 @@ class LoopRegion(Region):
         self.iterable = None  # for-of: arrays, for-in: objects
         self.loop_binding = None  # dest_reg
 
+        # Set only when some construct inside this loop (or a loop
+        # nested inside it) needs to `break`/`continue` THIS loop
+        # specifically by name - see `LoopLabeledExitStructurer`. None
+        # for the overwhelming majority of loops, which never need a
+        # label at all; `Printer._emit_loop` only emits a label line
+        # when this is set.
+        self.label: str | None = None
+
         self._body = SequenceRegion()
         self._body.parent = self
 

@@ -10,6 +10,7 @@ from hermes_decompiler.analysis.transforms.structurers import (
     SequenceStructurer,
     LoopStructurer,
     LoopBreakStructurer,
+    LoopLabeledExitStructurer,
     IfStructurer,
     TryStructurer,
     SwitchStructurer,
@@ -99,6 +100,15 @@ class StructuralAnalyzer:
         # break-test block's terminator - see StructuralAnalyzer's
         # unstructured-block audit for exactly this shape).
         LoopBreakStructurer(graph, self.cfg).run()
+
+        # Handles the shapes LoopBreakStructurer declines: an exit edge
+        # escaping not just its own loop but one or more ENCLOSING
+        # loops too (labeled `break`/`continue` targeting an ancestor
+        # loop by name). Must run in this same slot, still before
+        # IfStructurer - see its own docstring for why running any
+        # later would let IfStructurer silently build a broken,
+        # infinite-loop-risking shape out of the same edge instead.
+        LoopLabeledExitStructurer(graph, self.cfg).run()
 
         IfStructurer(graph, self.cfg).run()
 

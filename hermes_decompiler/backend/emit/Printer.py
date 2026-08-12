@@ -91,6 +91,10 @@ class Printer(NodeVisitor):
     * Verbose block / bytecode comments appear only when `verbose=True`.
     * Dead register assignments (`rN = call(…)`) are omitted when the
       definition is unused.
+    * A `LoopRegion` with `.label` set (see `LoopLabeledExitStructurer`
+      - assigned only when some `break`/`continue` inside it, or
+      inside a loop nested inside it, needs to target it by name)
+      gets an explicit `label:` line immediately before it.
     """
 
     INDENT = "    "
@@ -301,6 +305,9 @@ class Printer(NodeVisitor):
     # ---------------------------------------------------------
 
     def _emit_loop(self, region: LoopRegion, lines):
+
+        if region.label is not None:
+            self._write(lines, f"{region.label}:")
 
         kind = region.loop_kind
         if self.verbose:
