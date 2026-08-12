@@ -1,12 +1,24 @@
 from __future__ import annotations
 
+import dataclasses
+
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
-from hermes_decompiler.analysis.regions.Regions import IfRegion, SequenceRegion
+from hermes_decompiler.analysis.regions.Regions import (
+    IfRegion,
+    SequenceRegion,
+)
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.Operators import AssignmentOperator, BinaryOperator
+from hermes_decompiler.ir.Operators import (
+    AssignmentOperator,
+    BinaryOperator,
+)
 from hermes_decompiler.ir.expressions import (
-    AssignmentExpression, BinaryExpression, MemberExpression, NullLiteral,
+    AssignmentExpression,
+    BinaryExpression,
+    Identifier,
+    MemberExpression,
+    NullLiteral,
 )
 
 from ._base import RegionPass
@@ -16,112 +28,513 @@ logger = get_logger(__name__)
 
 class NullishAssignmentRegionPass(RegionPass, RegionVisitor):
     """
-    Folds:
-        if (obj.prop == null) { obj.prop = default; }
+    Fold:
+
+        if (obj.prop == null) {
+            obj.prop = value;
+        }
+
     into:
-        obj.prop ??= default;
 
-    Distinct from BooleanChainRegionPass/ConditionalExpressionRegionPass:
-    those match by dest_reg (a register-valued merge). PutById has NO
-    dest_reg (see PutById.handle - it's rendered as a bare statement,
-    not a register-producing expression), so there is no register to
-    key off. This pass instead matches by structural equality of the
-    MemberExpression lvalue between the guard condition and the
-    then-body's assignment.
+        obj.prop ??= value;
 
-    Deliberately narrow: only the `== null` guard / plain assignment
-    shape. `||=`/`&&=` on a member expression would need the analogous
-    truthy/falsy guard variants - not implemented here, no evidence
-    yet that Hermes emits them for member-expression targets the same
-    way it does for registers.
+    The Hermes bytecode usually represents the nullish check through
+    temporary registers:
 
-    Traversal is inherited from `RegionVisitor` - see
-    `BooleanChainRegionPass`'s docstring for why the previous
-    hand-rolled `_visit` (identical shape to this one) silently
-    skipped `SwitchRegion` bodies.
+        r3 = obj.prop
+        r2 = null
+
+        if (r3 == r2) {
+            r1.prop = value
+        }
+
+    Therefore this pass resolves register definitions locally instead
+    of requiring the condition itself to contain a MemberExpression.
+
+    The pass deliberately remains narrow:
+
+    - equality only (`==`)
+    - null only
+    - no else branch
+    - exactly one executable then-block
+    - exactly one final assignment
+    - assignment target must match the checked MemberExpression
+    - no observable statements before the assignment
+
+    This keeps the transformation semantics-preserving.
     """
 
     def run(self) -> None:
         self.visit(self.graph.root)
 
+    # ------------------------------------------------------------------
+    # Traversal
+    # ------------------------------------------------------------------
+
     def visit_SequenceRegion(self, node: SequenceRegion) -> None:
         for child in node.children:
             self.visit(child)
+
         self._fold_sequence(node)
 
-    def _fold_sequence(self, region: SequenceRegion):
+    def _fold_sequence(self, region: SequenceRegion) -> None:
+        # Remove empty blocks first. They are not semantically relevant
+        # for the structural pattern matching below.
         region.children = [
-            c for c in region.children
-            if not (isinstance(c, BasicBlock) and not c.instructions)
+            child
+            for child in region.children
+            if not (
+                    isinstance(child, BasicBlock)
+                    and not child.instructions
+            )
         ]
+
         index = 0
+
         while index < len(region.children):
-            if_region = region.children[index]
-            if isinstance(if_region, IfRegion):
-                replacement = self._try_fold(if_region)
+            child = region.children[index]
+
+            if isinstance(child, IfRegion):
+                replacement = self._try_fold(child)
+
                 if replacement is not None:
                     region.children[index] = replacement
-                    index += 1
-                    continue
+
             index += 1
 
+    # ------------------------------------------------------------------
+    # Main pattern
+    # ------------------------------------------------------------------
+
     def _try_fold(self, if_region: IfRegion):
-        target_member = self._extract_null_check_target(if_region.condition)
+        """
+        Try to transform:
+
+            if (X == null) {
+                X = value;
+            }
+
+        into:
+
+            X ??= value;
+        """
+
+        # `??=` only represents the no-else form.
         if if_region.else_body is not None:
             return None
+
+        target_member = self._extract_null_check_target(
+            if_region.condition,
+            if_region,
+        )
+
         if target_member is None:
             return None
 
+        assignment_block = self._get_single_assignment_block(
+            if_region
+        )
+
+        if assignment_block is None:
+            return None
+
+        assignment = assignment_block.instructions[-1]
+
+        if not isinstance(
+                assignment.value,
+                AssignmentExpression,
+        ):
+            return None
+
+        expression = assignment.value
+
+        if expression.operator != AssignmentOperator.ASSIGN:
+            return None
+
+        if not isinstance(
+                expression.left,
+                MemberExpression,
+        ):
+            return None
+
+        # The checked property and assigned property must be the same.
+        if not expression.left.structurally_equal(target_member):
+            return None
+
+        # Anything before the assignment must be non-observable.
+        if not self._has_only_consumable_setup(
+                assignment_block
+        ):
+            return None
+
+        # The condition was only needed to establish the nullish guard.
+        # Its register definitions can now be marked as consumed.
+        self._mark_guard_definitions_used(
+            if_region.condition,
+            if_region,
+        )
+
+        # Replace:
+        #
+        #     obj.prop = value
+        #
+        # with:
+        #
+        #     obj.prop ??= value
+        #
+        assignment.value = dataclasses.replace(
+            expression,
+            operator=AssignmentOperator.NULLISH_ASSIGN,
+        )
+
+        return assignment_block
+
+    # ------------------------------------------------------------------
+    # Then-body validation
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _get_single_assignment_block(
+            if_region: IfRegion,
+    ) -> BasicBlock | None:
+
         children = [
-            c for c in if_region.then_body.children
-            if not (isinstance(c, BasicBlock) and not c.instructions)
+            child
+            for child in if_region.then_body.children
+            if not (
+                    isinstance(child, BasicBlock)
+                    and not child.instructions
+            )
         ]
-        if len(children) != 1 or not isinstance(children[0], BasicBlock):
+
+        if len(children) != 1:
             return None
 
         block = children[0]
+
+        if not isinstance(block, BasicBlock):
+            return None
+
         if not block.instructions:
             return None
 
-        instr = block.instructions[-1]
-        if not isinstance(instr.value, AssignmentExpression):
-            return None
-        if instr.value.operator != AssignmentOperator.ASSIGN:
-            return None
-        if not isinstance(instr.value.left, MemberExpression):
-            return None
-        if not instr.value.left.structurally_equal(target_member):
-            return None
-
-        # Every earlier instruction in the block must be inlined-and-consumed
-        # (LoadConstZero etc.), not an independently observable statement -
-        # same purity bar as ConditionalExpressionRegionPass._single_result.
-        for earlier in block.instructions[:-1]:
-            if earlier.statement is not None:
-                return None
-
-        instr.value = AssignmentExpression(
-            left=instr.value.left,
-            operator=AssignmentOperator.NULLISH_ASSIGN,
-            right=instr.value.right,
-        )
         return block
 
     @staticmethod
-    def _extract_null_check_target(condition):
+    def _has_only_consumable_setup(
+            block: BasicBlock,
+    ) -> bool:
         """
-        Matches `X == null` (Hermes' `== null` idiom for nullish
-        checks) and returns X if it's a MemberExpression, else None.
-        Deliberately narrow to `==`/null - not `===`, not `undefined`,
-        not the negated form - no evidence yet those show up for this
-        lvalue shape; widen only against a real fixture that needs it.
+        Everything before the final assignment must be compiler
+        bookkeeping / inlineable setup.
+
+        We must not remove observable statements such as:
+
+            foo();
+
+        from the original branch.
         """
+
+        for instruction in block.instructions[:-1]:
+            if instruction.statement is not None:
+                return False
+
+        return True
+
+    # ------------------------------------------------------------------
+    # Condition analysis
+    # ------------------------------------------------------------------
+
+    def _extract_null_check_target(
+            self,
+            condition,
+            if_region: IfRegion,
+    ) -> MemberExpression | None:
+        """
+        Resolve:
+
+            obj.prop == null
+
+        as well as the register-based form:
+
+            r3 == r2
+
+        where:
+
+            r3 = obj.prop
+            r2 = null
+        """
+
         if not isinstance(condition, BinaryExpression):
             return None
+
         if condition.operator != BinaryOperator.EQUAL:
             return None
-        if isinstance(condition.left, MemberExpression) and isinstance(condition.right, NullLiteral):
-            return condition.left
-        if isinstance(condition.right, MemberExpression) and isinstance(condition.left, NullLiteral):
-            return condition.right
+
+        # --------------------------------------------------------------
+        # Direct form:
+        #
+        #     obj.prop == null
+        # --------------------------------------------------------------
+
+        direct = self._extract_direct_member_null_check(condition)
+
+        if direct is not None:
+            return direct
+
+        # --------------------------------------------------------------
+        # Register form:
+        #
+        #     r3 == r2
+        #
+        # Resolve whichever side is the member register and whichever
+        # side is the null register.
+        # --------------------------------------------------------------
+
+        left = condition.left
+        right = condition.right
+
+        if isinstance(left, Identifier):
+            if self._is_nullish_value(right, if_region):
+                member = self._resolve_member_register(
+                    left.name,
+                    if_region,
+                )
+
+                if member is not None:
+                    return member
+
+        if isinstance(right, Identifier):
+            if self._is_nullish_value(left, if_region):
+                member = self._resolve_member_register(
+                    right.name,
+                    if_region,
+                )
+
+                if member is not None:
+                    return member
+
         return None
+
+    @staticmethod
+    def _extract_direct_member_null_check(
+            condition: BinaryExpression,
+    ) -> MemberExpression | None:
+
+        left = condition.left
+        right = condition.right
+
+        if (
+                isinstance(left, MemberExpression)
+                and isinstance(right, NullLiteral)
+        ):
+            return left
+
+        if (
+                isinstance(right, MemberExpression)
+                and isinstance(left, NullLiteral)
+        ):
+            return right
+
+        return None
+
+    # ------------------------------------------------------------------
+    # Register resolution
+    # ------------------------------------------------------------------
+
+    def _is_nullish_value(
+            self,
+            expression,
+            if_region: IfRegion,
+    ) -> bool:
+        """
+        Return True when `expression` is either:
+
+            null
+
+        or a register whose definition is:
+
+            rX = null
+        """
+
+        if isinstance(expression, NullLiteral):
+            return True
+
+        if not isinstance(expression, Identifier):
+            return False
+
+        if not expression.name.startswith("r"):
+            return False
+
+        value = self._find_register_definition(
+            expression.name,
+            if_region,
+        )
+
+        return isinstance(value, NullLiteral)
+
+    def _resolve_member_register(
+            self,
+            register_name: str,
+            if_region: IfRegion,
+    ) -> MemberExpression | None:
+        """
+        Resolve:
+
+            r3
+
+        to its preceding definition:
+
+            r3 = obj.prop
+        """
+
+        value = self._find_register_definition(
+            register_name,
+            if_region,
+        )
+
+        if isinstance(value, MemberExpression):
+            return value
+
+        return None
+
+    def _find_register_definition(
+            self,
+            register_name: str,
+            if_region: IfRegion,
+    ):
+        """
+        Find the nearest dominating definition of `register_name`
+        immediately before the IfRegion in its parent SequenceRegion.
+
+        This is intentionally local. We do not perform arbitrary CFG
+        data-flow here.
+        """
+
+        parent = if_region.parent
+
+        if not isinstance(parent, SequenceRegion):
+            return None
+
+        try:
+            index = parent.children.index(if_region)
+        except ValueError:
+            return None
+
+        for previous in reversed(parent.children[:index]):
+            if not isinstance(previous, BasicBlock):
+                continue
+
+            for instruction in reversed(
+                    previous.instructions or []
+            ):
+                dest_reg = getattr(
+                    instruction,
+                    "dest_reg",
+                    None,
+                )
+
+                if dest_reg is None:
+                    continue
+
+                if f"r{dest_reg}" != register_name:
+                    continue
+
+                return getattr(
+                    instruction,
+                    "value",
+                    None,
+                )
+
+        return None
+
+    # ------------------------------------------------------------------
+    # Definition usage
+    # ------------------------------------------------------------------
+
+    def _mark_guard_definitions_used(
+            self,
+            condition,
+            if_region: IfRegion,
+    ) -> None:
+        """
+        The condition's temporary registers become dead after folding.
+
+        Example:
+
+            r3 = obj.count
+            r2 = null
+
+            if (r3 == r2) {
+                ...
+            }
+
+        After folding:
+
+            obj.count ??= 0
+
+        therefore r3/r2 should not be emitted as standalone definitions.
+        """
+
+        if not isinstance(condition, BinaryExpression):
+            return
+
+        for operand in (
+                condition.left,
+                condition.right,
+        ):
+            if not isinstance(operand, Identifier):
+                continue
+
+            if not operand.name.startswith("r"):
+                continue
+
+            self._mark_register_definition_used(
+                operand.name,
+                if_region,
+            )
+
+    def _mark_register_definition_used(
+            self,
+            register_name: str,
+            if_region: IfRegion,
+    ) -> None:
+        """
+        Mark the actual defining OpcodeResult as consumed.
+
+        This works on the region structure rather than depending on
+        HermesAnalysis.registers still representing the exact point
+        at which the region pass runs.
+        """
+
+        parent = if_region.parent
+
+        if not isinstance(parent, SequenceRegion):
+            return
+
+        try:
+            index = parent.children.index(if_region)
+        except ValueError:
+            return
+
+        for previous in reversed(parent.children[:index]):
+            if not isinstance(previous, BasicBlock):
+                continue
+
+            for instruction in reversed(
+                    previous.instructions or []
+            ):
+                dest_reg = getattr(
+                    instruction,
+                    "dest_reg",
+                    None,
+                )
+
+                if dest_reg is None:
+                    continue
+
+                if f"r{dest_reg}" != register_name:
+                    continue
+
+                instruction.definition_used = True
+                return

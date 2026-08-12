@@ -8,7 +8,8 @@ from typing import Dict, Optional
 
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.ir.expressions import Expression, Identifier, RawExpression, ObjectExpression, ArrayExpression
+from hermes_decompiler.ir.expressions import Expression, Identifier, RawExpression, ObjectExpression, ArrayExpression, \
+    Literal
 from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)
@@ -30,6 +31,19 @@ class ArgsPattern:
 
 
 _IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
+_CONST_LOAD_OPCODES = frozenset({
+    "LoadConstZero",
+    "LoadConstUInt8",
+    "LoadConstInt",
+    "LoadConstDouble",
+    "LoadConstString",
+    "LoadConstNull",
+    "LoadConstUndefined",
+    "LoadConstTrue",
+    "LoadConstFalse",
+    "LoadConstBigInt",
+    # real const-load opcode names
+})
 
 
 class OpcodeHandler(ABC):
@@ -182,6 +196,38 @@ class OpcodeHandler(ABC):
             state.definition.definition_used = True
             return state_value
 
+        return Identifier(name=f"r{reg}")
+
+    @classmethod
+    def get_register_for_condition(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+        """
+        Jump/branch condition operands.
+
+        Inline ONLY when this register was defined by a const-load opcode.
+        That preserves switch case labels (r1 = 0; if (r1 === disc)) while
+        keeping Mov/Inc/phi-carried values symbolic for loops.
+        """
+        state = analysis.registers.get(f"r{reg}")
+
+        if state is None or state.definition is None:
+            return Identifier(name=f"r{reg}_undefined")
+
+        defn = state.definition
+        opcode = getattr(getattr(defn, "entry", None), "opcode", None)
+        value = state.value
+
+        if (
+                opcode in _CONST_LOAD_OPCODES
+                and isinstance(value, Literal)
+        ):
+            state.reads += 1
+            defn.definition_used = True
+            if state.reads > 1:
+                return dataclasses.replace(value)
+            return value
+
+        # Mov / Inc / Add / GetById / param / ... → always symbolic
+        state.reads += 1
         return Identifier(name=f"r{reg}")
 
     @classmethod
