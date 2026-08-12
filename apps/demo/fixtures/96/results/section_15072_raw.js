@@ -58,12 +58,12 @@ function logicalShortCircuitTest(param0, param1, param2) {
     if (!param1) goto label_104;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <LoadConstNull>: <Reg8: 4>
-    r4 = null
+    // USED → r4 = null;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <LoadConstNull>: <Reg8: 3>
-    r3 = null
+    // USED → r3 = null;
     // CODE → <JNotEqual>: <Addr8: 17, Reg8: 4, Reg8: 3>  # Address: 0000007b
-    if (r4 != r3) goto label_123;
+    if (null != null) goto label_123;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 3574>  # String: 'nullish-right' (String)
     // USED → r3 = "nullish-right";

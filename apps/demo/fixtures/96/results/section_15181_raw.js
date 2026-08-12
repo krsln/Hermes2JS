@@ -51,7 +51,7 @@ async function* anon_15181(param0) {
     // CODE → <Call3>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
     console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", await yield)
     // CODE → <JStrictEqual>: <Addr8: 6, Reg8: 1, Reg8: 3>  # Address: 00000056
-    if (r1 === r3) goto label_86;
+    if (r1 === 1) goto label_86;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Jmp>: <Addr8: 79>  # Address: 000000a3
     goto label_163;

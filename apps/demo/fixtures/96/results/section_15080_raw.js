@@ -15,7 +15,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start")
     // CODE → <LoadConstZero>: <Reg8: 2>
-    r2 = 0
+    // USED → r2 = 0;
     // CODE → <LoadConstZero>: <Reg8: 4>
     // USED → r4 = 0;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4747>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
@@ -37,7 +37,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
     r5 = param1[0]
     // CODE → <JLess>: <Addr8: 58, Reg8: 5, Reg8: 2>  # Address: 00000076
-    if (r5 < r2) goto label_118;
+    if (r5 < 0) goto label_118;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 3>
     // USED → r6 = param1;
@@ -46,7 +46,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
     r5 = param1[0]
     // CODE → <JStrictEqual>: <Addr8: 36, Reg8: 5, Reg8: 2>  # Address: 0000006e
-    if (r5 === r2) goto label_110;
+    if (r5 === 0) goto label_110;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r8 = globalThis.console;

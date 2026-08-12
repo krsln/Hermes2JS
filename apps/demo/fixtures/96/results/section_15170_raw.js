@@ -28,7 +28,7 @@ function callGeneratorTests(param0) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
     r5 = GetIterator(r3)
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 0000004d
-    if (r5 === r0) goto label_77;
+    if (r5 === undefined) goto label_77;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
@@ -62,7 +62,7 @@ function callGeneratorTests(param0) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
     r5 = GetIterator(r3)
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000083
-    if (r5 === r0) goto label_131;
+    if (r5 === undefined) goto label_131;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;

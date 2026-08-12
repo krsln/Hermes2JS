@@ -22,7 +22,7 @@ function defaultWithRestTest(param0) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 6>
     r5 = 1
     // CODE → <JStrictEqual>: <Addr8: 8, Reg8: 1, Reg8: 0>  # Address: 00000025
-    if (r1 === r0) goto label_37;
+    if (r1 === undefined) goto label_37;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 8, Reg8: 7>
     // USED → r5 = arguments[0];

@@ -3,8 +3,8 @@ function function_15054(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 2>
     // USED → r3 = param2;
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
-    r0 = 2
-    if (r3 === r0) {
+    // USED → r0 = 2;
+    if (r3 === 2) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetGlobalObject>: <Reg8: 0>
         // USED → r0 = globalThis;

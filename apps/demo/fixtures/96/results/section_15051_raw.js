@@ -11,23 +11,23 @@ function forTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/ForTests/forTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 10>
-    r4 = 10
+    // USED → r4 = 10;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4584>  # String: '__BC:ControlFlow/ForTests/forTest/if-continue' (String)
     // USED → r3 = "__BC:ControlFlow/ForTests/forTest/if-continue";
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 8>
-    r2 = 8
+    // USED → r2 = 8;
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
-    r1 = 3
+    // USED → r1 = 3;
     // CODE → <LoadConstZero>: <Reg8: 5>
     // USED → r5 = 0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 5>
     // USED → r6 = 0;
     // CODE → <JStrictEqual>: <Addr8: 48, Reg8: 6, Reg8: 1>  # Address: 00000058
-    if (r6 === r1) goto label_88;
+    if (r6 === 3) goto label_88;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <JStrictEqual>: <Addr8: 22, Reg8: 6, Reg8: 2>  # Address: 00000042
-    if (r6 === r2) goto label_66;
+    if (r6 === 8) goto label_66;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r8 = globalThis.console;
@@ -59,7 +59,7 @@ function forTest(param0) {
     // CODE → <Inc>: <Reg8: 5, Reg8: 6>
     r5 = r6 + 1
     // CODE → <JLess>: <Addr8: -70, Reg8: 5, Reg8: 4>  # Address: 00000025
-    if (r5 < r4) goto label_37;
+    if (r5 < 10) goto label_37;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;

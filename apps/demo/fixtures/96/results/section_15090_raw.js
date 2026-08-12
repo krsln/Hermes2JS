@@ -15,14 +15,14 @@ function switchInsideTryTest(param0, param1) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 0>
     r2 = param1
     // CODE → <LoadConstZero>: <Reg8: 0>
-    r0 = 0
+    // USED → r0 = 0;
     // CODE → <JStrictEqual>: <Addr8: 65, Reg8: 0, Reg8: 2>  # Address: 0000005f
-    if (r0 === r2) goto label_95;
+    if (0 === r2) goto label_95;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
-    r0 = 1
+    // USED → r0 = 1;
     // CODE → <JStrictEqual>: <Addr8: 26, Reg8: 0, Reg8: 2>  # Address: 0000003f
-    if (r0 === r2) goto label_63;
+    if (1 === r2) goto label_63;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;

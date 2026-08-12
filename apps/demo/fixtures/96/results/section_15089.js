@@ -19,7 +19,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/start")
     // CODE → <LoadConstZero>: <Reg8: 7>
-    r7 = 0
+    // USED → r7 = 0;
     // CODE → <LoadConstZero>: <Reg8: 9>
     // USED → r9 = 0;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
@@ -31,7 +31,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 4655>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item' (String)
     // USED → r5 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item";
     try {
-        if (r7 < r2) {
+        if (0 < r2) {
             // LOOP → START (do_while)
             do {
                 // ──────────────── Block 1 ──────────────── 
@@ -41,7 +41,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                 // USED → r2 = 0;
                 // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
                 r2 = param1[0]
-                if (r2 >= r7) {
+                if (r2 >= 0) {
                     // ──────────────── Block 2 ──────────────── 
                     // CODE → <Mov>: <Reg8: 4, Reg8: 8>
                     // USED → r4 = param1;
@@ -49,7 +49,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                     // USED → r2 = 0;
                     // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
                     r2 = param1[0]
-                    if (r2 === r7) {
+                    if (r2 === 0) {
                         // ──────────────── Block 4 ──────────────── 
                         // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                         // USED → r4 = globalThis.console;

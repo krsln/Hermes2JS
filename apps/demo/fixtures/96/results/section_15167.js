@@ -33,7 +33,7 @@ async function* anon_15167(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 4783>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/skip' (String)
         // USED → r3 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/skip";
         // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
-        r2 = 2
+        // USED → r2 = 2;
         if (!(0 < param1)) {
             // ──────────────── Block 9 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -56,7 +56,7 @@ async function* anon_15167(param0, param1) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 4>
                 // USED → r6 = 0;
-                if (r6 === r2) {
+                if (r6 === 2) {
                     // ──────────────── Block 7 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                     // USED → r8 = globalThis.console;

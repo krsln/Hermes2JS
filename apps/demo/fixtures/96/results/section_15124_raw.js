@@ -62,7 +62,7 @@ function setTest(param0) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
     r5 = GetIterator(r2)
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 000000a3
-    if (r5 === r0) goto label_163;
+    if (r5 === undefined) goto label_163;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;

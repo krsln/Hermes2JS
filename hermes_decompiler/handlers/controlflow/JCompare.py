@@ -61,8 +61,9 @@ class BaseJCompare(OpcodeHandler):
 
         ctx.analysis.gotoList.append(target)
 
-        lhs = self.get_register_expression(ctx.analysis, lhs_reg)
-        rhs = self.get_register_expression(ctx.analysis, rhs_reg)
+        # Jump conditions must stay symbolic — do not inline definitions.
+        lhs = self.get_register_for_condition(ctx.analysis, lhs_reg)
+        rhs = self.get_register_for_condition(ctx.analysis, rhs_reg)
 
         condition = self.build_condition(lhs, rhs)
         terminator = TerminatorConditionalBranch(condition=condition, target=target)

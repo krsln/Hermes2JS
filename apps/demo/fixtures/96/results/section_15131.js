@@ -15,12 +15,12 @@ function function_15131(param0, param1, param2, param3) {
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 0, Reg8: 5>
     r3 = getEnvironment(0)[0][param3]
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 7163>  # String: '' (Identifier)
-    r0 = (r3 === r4) ? "" : globalThis.String.call(undefined, getEnvironment(0)[0][param3])
+    r0 = (r3 === undefined) ? "" : globalThis.String.call(undefined, getEnvironment(0)[0][param3])
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Add>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = param1 + param2 + ((r3 === r4) ? "" : globalThis.String.call(undefined, getEnvironment(0)[0][param3]));
+    // USED → r0 = param1 + param2 + ((r3 === undefined) ? "" : globalThis.String.call(undefined, getEnvironment(0)[0][param3]));
     // CODE → <Ret>: <Reg8: 0>
-    return param1 + param2 + ((r3 === r4) ? "" : globalThis.String.call(undefined, getEnvironment(0)[0][param3]));
+    return param1 + param2 + ((r3 === undefined) ? "" : globalThis.String.call(undefined, getEnvironment(0)[0][param3]));
 }

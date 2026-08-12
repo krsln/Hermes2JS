@@ -53,7 +53,7 @@ function optionalChainingTest(param0) {
     r4 = r3.a.b.c
     // ──────────────── Block 4 ──────────────── 
     // CODE → <JNotEqual>: <Addr8: 10, Reg8: 4, Reg8: 2>  # Address: 0000005f
-    if (r4 != r2) goto label_95;
+    if (r4 != null) goto label_95;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <LoadConstInt>: <Reg8: 4, Imm32: -1>
     // USED → r4 = -1;

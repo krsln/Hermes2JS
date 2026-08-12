@@ -11,9 +11,9 @@ function labeledBreakTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/LabeledTests/labeledBreakTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
-    r3 = 3
+    // USED → r3 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
-    r2 = 1
+    // USED → r2 = 1;
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     // LOOP → START (do_while)
@@ -28,7 +28,7 @@ function labeledBreakTest(param0) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 7, Reg8: 6>
             // USED → r7 = 0;
-            if (r5 !== r2) {
+            if (r5 !== 1) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r9 = globalThis.console;
@@ -41,14 +41,14 @@ function labeledBreakTest(param0) {
             } else {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 2>  # Address: 0000004f
-                if (r7 === r2) goto label_79;
+                if (r7 === 1) goto label_79;
             }
-        } while (r6 < r3);
+        } while (r6 < 3);
         // LOOP → END
         // ──────────────── Block 5 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 5>
         r1 = r5 + 1
-    } while (r1 < r3);
+    } while (r1 < 3);
     // LOOP → END
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Jmp>: <Addr8: 22>  # Address: 00000063

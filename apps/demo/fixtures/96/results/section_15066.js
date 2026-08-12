@@ -11,13 +11,13 @@ function labeledContinueTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 3>
-    r5 = 3
+    // USED → r5 = 3;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4616>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer' (String)
     // USED → r4 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer";
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4619>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1' (String)
     // USED → r3 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1";
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
-    r2 = 1
+    // USED → r2 = 1;
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     loop_1:
@@ -33,7 +33,7 @@ function labeledContinueTest(param0) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 9, Reg8: 8>
             // USED → r9 = 0;
-            if (r9 === r2) {
+            if (r9 === 1) {
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → ContinueStatement
                 continue loop_1;
@@ -47,7 +47,7 @@ function labeledContinueTest(param0) {
             console.log(0, 0)
             // CODE → <Inc>: <Reg8: 8, Reg8: 9>
             r8 = r9 + 1
-        } while (r8 < r5);
+        } while (r8 < 3);
         // LOOP → END
         // ──────────────── Block 4 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -68,7 +68,7 @@ function labeledContinueTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 7>
         r1 = r7 + 1
-    } while (r1 < r5);
+    } while (r1 < 3);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

@@ -41,7 +41,7 @@ async function* anon_15185(param0, param1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 3, Reg8: 4>
             r3 = GetIterator(r6)
-            if (r3 !== r7) {
+            if (r3 !== undefined) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <Mov>: <Reg8: 8, Reg8: 1>
                 // USED → r8 = 0;

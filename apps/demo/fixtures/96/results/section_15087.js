@@ -3,8 +3,8 @@ function mayThrow(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <LoadConstZero>: <Reg8: 0>
-    r0 = 0
-    if (r1 < r0) {
+    // USED → r0 = 0;
+    if (r1 < 0) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <GetGlobalObject>: <Reg8: 0>
         // USED → r0 = globalThis;

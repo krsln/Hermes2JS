@@ -21,7 +21,7 @@ function forOfTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 4, Reg8: 3>
         r4 = GetIterator(r2)
-        if (r4 !== r0) {
+        if (r4 !== undefined) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r5 = globalThis.console;

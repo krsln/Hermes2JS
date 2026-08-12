@@ -11,7 +11,7 @@ function doWhileTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/DoWhileTests/doWhileTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 5>
-    r1 = 5
+    // USED → r1 = 5;
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // LOOP → START (do_while)
@@ -25,7 +25,7 @@ function doWhileTest(param0) {
         console.log(0)
         // CODE → <Inc>: <Reg8: 2, Reg8: 2>
         r2 = r2 + 1
-    } while (r2 < r1);
+    } while (r2 < 5);
     // LOOP → END
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

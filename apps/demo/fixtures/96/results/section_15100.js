@@ -51,7 +51,7 @@ function optionalChainingTest(param0) {
             }
         }
     }
-    if (r4 == r2) {
+    if (r4 == null) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <LoadConstInt>: <Reg8: 4, Imm32: -1>
         // USED → r4 = -1;

@@ -19,7 +19,7 @@ function function_15131(param0, param1, param2, param3) {
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;
     // CODE → <JStrictEqual>: <Addr8: 25, Reg8: 3, Reg8: 4>  # Address: 00000037
-    if (r3 === r4) goto label_55;
+    if (r3 === undefined) goto label_55;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis;

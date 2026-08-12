@@ -214,13 +214,9 @@ class OpcodeHandler(ABC):
 
         definition = state.definition
         value = definition.value
+        opcode = definition.handler
 
-        opcode = getattr(getattr(definition, "entry", None), "opcode", None)
-
-        if (
-                opcode in _CONST_LOAD_OPCODES
-                and isinstance(value, Literal)
-        ):
+        if opcode in _CONST_LOAD_OPCODES  and isinstance(value, Literal):
             state.reads += 1
             definition.definition_used = True
 
@@ -241,10 +237,6 @@ class OpcodeHandler(ABC):
         Unlike get_register_expression(), this never inlines the expression
         currently stored in the register. It always returns the register
         identifier itself (e.g., Identifier('r3')).
-
-        This should be used by almost every opcode handler because Hermes
-        bytecode operands refer to registers, not to the expressions that
-        originally defined them.
         """
 
         state = analysis.registers.get(f"r{reg}")

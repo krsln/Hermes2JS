@@ -21,7 +21,7 @@ function closureLoopTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
-    r2 = 3
+    // USED → r2 = 3;
     // CODE → <LoadConstZero>: <Reg8: 3>
     // USED → r3 = 0;
     // LOOP → START (do_while)
@@ -31,7 +31,7 @@ function closureLoopTest(param0) {
         r6 = _loop.call(undefined, 0)
         // CODE → <Inc>: <Reg8: 3, Reg8: 3>
         r3 = r3 + 1
-    } while (r3 < r2);
+    } while (r3 < 3);
     // LOOP → END
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
@@ -43,7 +43,7 @@ function closureLoopTest(param0) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
         r5 = GetIterator(r2)
-        if (r5 !== r0) {
+        if (r5 !== undefined) {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r6 = globalThis.console;

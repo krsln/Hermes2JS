@@ -17,9 +17,9 @@ function nestedTemplateTest(param0, param1, param2) {
     // CODE → <Add>: <Reg8: 4, Reg8: 2, Reg8: 1>
     r4 = param1 + param2
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 10>
-    r3 = 10
+    // USED → r3 = 10;
     // CODE → <JGreater>: <Addr8: 35, Reg8: 4, Reg8: 3>  # Address: 00000046
-    if (r4 > r3) goto label_70;
+    if (r4 > 10) goto label_70;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Add>: <Reg8: 6, Reg8: 2, Reg8: 1>
     // USED → r6 = param1 + param2;

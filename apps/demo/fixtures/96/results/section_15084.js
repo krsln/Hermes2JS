@@ -18,7 +18,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
         // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
         console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start")
         // CODE → <LoadConstZero>: <Reg8: 5>
-        r5 = 0
+        // USED → r5 = 0;
         // CODE → <LoadConstZero>: <Reg8: 7>
         // USED → r7 = 0;
         // CODE → <Mov>: <Reg8: 2, Reg8: 6>
@@ -27,7 +27,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
         r2 = param1.length
         // CODE → <LoadConstString>: <Reg8: 4, string_id: 4735>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
         // USED → r4 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item";
-        if (r5 < r2) {
+        if (0 < r2) {
             // LOOP → START (do_while)
             do {
                 // ──────────────── Block 1 ──────────────── 
@@ -37,7 +37,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
                 // USED → r2 = 0;
                 // CODE → <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
                 r2 = param1[0]
-                if (r2 !== r5) {
+                if (r2 !== 0) {
                     // ──────────────── Block 2 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                     // USED → r10 = globalThis.console;

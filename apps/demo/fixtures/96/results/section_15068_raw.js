@@ -11,11 +11,11 @@ function tripleNestedLabeledTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
-    r6 = 3
+    // USED → r6 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 2>
-    r5 = 2
+    // USED → r5 = 2;
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
-    r3 = 1
+    // USED → r3 = 1;
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // CODE → <LoadConstZero>: <Reg8: 1>
@@ -40,34 +40,34 @@ function tripleNestedLabeledTest(param0) {
     // CODE → <Mov>: <Reg8: 14, Reg8: 12>
     r14 = 0
     // CODE → <JStrictEqual>: <Addr8: 22, Reg8: 14, Reg8: 3>  # Address: 0000004f
-    if (r14 === r3) goto label_79;
+    if (r14 === 1) goto label_79;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <JStrictNotEqual>: <Addr8: 8, Reg8: 8, Reg8: 5>  # Address: 00000045
-    if (r8 !== r5) goto label_69;
+    if (r8 !== 2) goto label_69;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <JStrictEqual>: <Addr8: 34, Reg8: 11, Reg8: 5>  # Address: 00000063
-    if (r11 === r5) goto label_99;
+    if (r11 === 2) goto label_99;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Inc>: <Reg8: 12, Reg8: 14>
     r12 = r14 + 1
     // CODE → <Mov>: <Reg8: 13, Reg8: 4>
     r13 = r13 + 1
     // CODE → <JLess>: <Addr8: -24, Reg8: 12, Reg8: 6>  # Address: 00000033
-    if (r12 < r6) goto label_51;
+    if (r12 < 3) goto label_51;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <Inc>: <Reg8: 9, Reg8: 11>
     r9 = r11 + 1
     // CODE → <Mov>: <Reg8: 10, Reg8: 4>
     r10 = r13 + 1
     // CODE → <JLess>: <Addr8: -42, Reg8: 9, Reg8: 6>  # Address: 0000002b
-    if (r9 < r6) goto label_43;
+    if (r9 < 3) goto label_43;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <Inc>: <Reg8: 1, Reg8: 8>
     r1 = r8 + 1
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
     r2 = r13 + 1
     // CODE → <JLess>: <Addr8: -60, Reg8: 1, Reg8: 6>  # Address: 00000023
-    if (r1 < r6) goto label_35;
+    if (r1 < 3) goto label_35;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;

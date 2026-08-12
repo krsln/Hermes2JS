@@ -39,9 +39,9 @@ function shortCircuitAssignTest(param0) {
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 7735>  # String: 'count' (Identifier)
     r3 = r1.count
     // CODE → <LoadConstNull>: <Reg8: 2>
-    r2 = null
+    // USED → r2 = null;
     // CODE → <JNotEqual>: <Addr8: 12, Reg8: 3, Reg8: 2>  # Address: 00000065
-    if (r3 != r2) goto label_101;
+    if (r3 != null) goto label_101;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
