@@ -188,15 +188,6 @@ class LoopLabeledExitStructurer(RegionStructurer):
         else:
             exit_block, condition = target_block, branch.condition
 
-        # ---- CRITICAL: natural exit of THIS loop is not a labeled exit ----
-        # For nested loops, inner's natural merge address == parent's latch.
-        # Without this filter those edges become spurious `continue parent`.
-        natural_merge = self._natural_loop_merge(loop)
-        exit_addrs = {exit_block.address}
-        for s in exit_block.successors:
-            exit_addrs.add(s.address)
-
-
         # Also skip if this block is one of the current loop's own latches
         # (back-edge test belongs to LoopConditionRegionPass / LoopBreak).
         if block in getattr(loop, "latches", ()):
