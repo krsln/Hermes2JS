@@ -41,7 +41,7 @@ function tryCatchInsideLoopTest(param0, param1) {
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
         // CODE → <Ret>: <Reg8: 0>
-        return 0 + 1;
+        return r2 + 1;
     } else {
         // LOOP → START (do_while)
         do {
@@ -72,11 +72,11 @@ function tryCatchInsideLoopTest(param0, param1) {
                 while (true) {
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → <Mov>: <Reg8: 2, Reg8: 8>
-                    // USED → r2 = 0;
+                    r2 = 0
                     // CODE → <Inc>: <Reg8: 3, Reg8: 2>
-                    // USED → r3 = 0 + 1;
+                    // USED → r3 = r2 + 1;
                     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
-                    r8 = 0 + 1
+                    r8 = r2 + 1
                     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
                     // USED → r2 = param1;
                     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
@@ -91,13 +91,13 @@ function tryCatchInsideLoopTest(param0, param1) {
                     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 9>
                     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
                     // CODE → <Mov>: <Reg8: 2, Reg8: 0>
-                    // USED → r2 = 0;
+                    r2 = 0
                     // CODE → <Inc>: <Reg8: 0, Reg8: 2>
-                    // USED → r0 = 0 + 1;
+                    // USED → r0 = r2 + 1;
                 }
                 // LOOP → END
             }
-        } while (0 + 1 < param1.length);
+        } while (r2 + 1 < param1.length);
         // LOOP → END
         // ──────────────── Block 3 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)

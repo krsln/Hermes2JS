@@ -53,13 +53,13 @@ function nestedLoopTest(param0) {
             }
             // ──────────────── Block 5 ──────────────── 
             // CODE → <Inc>: <Reg8: 10, Reg8: 11>
-            // USED → r10 = 0 + 1;
-        } while (0 + 1 < 4);
+            // USED → r10 = r11 + 1;
+        } while (r11 + 1 < 4);
         // LOOP → END
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 9>
-        // USED → r1 = 0 + 1;
-    } while (0 + 1 < 3);
+        // USED → r1 = r9 + 1;
+    } while (r9 + 1 < 3);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

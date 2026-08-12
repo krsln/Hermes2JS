@@ -68,8 +68,8 @@ function defaultWithRestTest(param0) {
             // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
             new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1)[1 - 1] = arguments[1]
             // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-            // USED → r2 = 1 + 1;
-        } while (1 + 1 < arguments.length);
+            // USED → r2 = r2 + 1;
+        } while (r2 + 1 < arguments.length);
         // LOOP → END
     }
     // ──────────────── Block 7 ──────────────── 

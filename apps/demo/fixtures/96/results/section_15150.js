@@ -30,8 +30,8 @@ function closureLoopTest(param0) {
         // CODE → <Call2>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 3>
         r6 = _loop.call(undefined, 0)
         // CODE → <Inc>: <Reg8: 3, Reg8: 3>
-        // USED → r3 = 0 + 1;
-    } while (0 + 1 < 3);
+        // USED → r3 = r3 + 1;
+    } while (r3 + 1 < 3);
     // LOOP → END
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>

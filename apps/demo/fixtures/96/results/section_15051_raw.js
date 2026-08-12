@@ -57,9 +57,9 @@ function forTest(param0) {
     console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Inc>: <Reg8: 5, Reg8: 6>
-    // USED → r5 = 0 + 1;
+    // USED → r5 = r6 + 1;
     // CODE → <JLess>: <Addr8: -70, Reg8: 5, Reg8: 4>  # Address: 00000025
-    if (0 + 1 < 10) goto label_37;
+    if (r6 + 1 < 10) goto label_37;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;

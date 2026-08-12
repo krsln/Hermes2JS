@@ -26,12 +26,15 @@ class BaseUnaryOperator(OpcodeHandler):
 
         dest_reg, src_reg = map(int, match.groups())
 
-        src_val = self.get_register_expression(ctx.analysis, src_reg)
+        src_val = self.get_source_value(ctx, src_reg)
 
         result = OpcodeResult(ctx.entry, value=self.expression(src_val), dest_reg=dest_reg)
         ctx.analysis.add_result(result)
 
         return result
+
+    def get_source_value(self, ctx: OpcodeContext, src_reg: int) -> Expression:
+        return self.get_register_expression(ctx.analysis, src_reg)
 
     def expression(self, value: Expression) -> Expression:
         """
@@ -72,6 +75,10 @@ class ToNumber(BaseUnaryOperator):
 
 
 class Inc(BaseUnaryOperator):
+
+    def get_source_value(self, ctx: OpcodeContext, src_reg: int) -> Expression:
+        return self.get_register_reference(ctx.analysis, src_reg)
+
     def expression(self, value: Expression):
         return BinaryExpression(left=value, operator=BinaryOperator.ADD, right=NumericLiteral(1))
 

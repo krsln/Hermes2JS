@@ -42,7 +42,7 @@ function complexTest(param0) {
     // CODE → <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 11>
     // USED → r13 = r12[0];
     // CODE → <Mov>: <Reg8: 1, Reg8: 11>
-    // USED → r1 = 0;
+    r1 = 0
     // CODE → <JStrictEqual>: <Addr8: 98, Reg8: 2, Reg8: 13>  # Address: 000000b9
     if (1 === r12[0]) goto label_185;
     // ──────────────── Block 2 ──────────────── 
@@ -99,11 +99,11 @@ function complexTest(param0) {
     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
     // ──────────────── Block 8 ──────────────── 
     // CODE → <Inc>: <Reg8: 11, Reg8: 1>
-    // USED → r11 = 0 + 1;
+    // USED → r11 = r1 + 1;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     // USED → r1 = r12.length;
     // CODE → <JLessLong>: <Addr32: -129, Reg8: 11, Reg8: 1>  # Address: 00000050
-    if (0 + 1 < r12.length) goto label_80;
+    if (r1 + 1 < r12.length) goto label_80;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;

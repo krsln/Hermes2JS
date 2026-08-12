@@ -38,9 +38,9 @@ function labeledContinueTest(param0) {
     // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
     console.log(0, 0)
     // CODE → <Inc>: <Reg8: 8, Reg8: 9>
-    // USED → r8 = 0 + 1;
+    // USED → r8 = r9 + 1;
     // CODE → <JLess>: <Addr8: -27, Reg8: 8, Reg8: 5>  # Address: 0000002b
-    if (0 + 1 < 3) goto label_43;
+    if (r9 + 1 < 3) goto label_43;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r9 = globalThis.console;
@@ -59,9 +59,9 @@ function labeledContinueTest(param0) {
     console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Inc>: <Reg8: 1, Reg8: 7>
-    // USED → r1 = 0 + 1;
+    // USED → r1 = r7 + 1;
     // CODE → <JLess>: <Addr8: -73, Reg8: 1, Reg8: 5>  # Address: 00000026
-    if (0 + 1 < 3) goto label_38;
+    if (r7 + 1 < 3) goto label_38;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;

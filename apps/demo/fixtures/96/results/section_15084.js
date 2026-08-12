@@ -52,13 +52,13 @@ function tryFinallyLoopBreakTest(param0, param1) {
                     // CODE → <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 4, Reg8: 8>
                     console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", param1[0])
                     // CODE → <Inc>: <Reg8: 3, Reg8: 3>
-                    // USED → r3 = 0 + 1;
+                    // USED → r3 = r3 + 1;
                     // CODE → <Mov>: <Reg8: 7, Reg8: 3>
-                    r7 = 0 + 1
+                    r7 = r3 + 1
                     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
                     // USED → r2 = param1.length;
                 }
-            } while (0 + 1 < param1.length);
+            } while (r3 + 1 < param1.length);
             // LOOP → END
         }
         // ──────────────── Block 3 ──────────────── 

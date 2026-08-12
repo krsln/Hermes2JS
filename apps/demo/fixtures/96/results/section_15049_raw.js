@@ -22,9 +22,9 @@ function doWhileTest(param0) {
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(0)
     // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-    // USED → r2 = 0 + 1;
+    // USED → r2 = r2 + 1;
     // CODE → <JLess>: <Addr8: -19, Reg8: 2, Reg8: 1>  # Address: 0000001b
-    if (0 + 1 < 5) goto label_27;
+    if (r2 + 1 < 5) goto label_27;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;

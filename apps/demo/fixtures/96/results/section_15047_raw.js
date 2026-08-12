@@ -33,7 +33,7 @@ function whileTest(param0) {
     if (0 === 2) goto label_67;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Inc>: <Reg8: 6, Reg8: 7>
-    r6 = 0 + 1
+    r6 = r7 + 1
     // CODE → <Jmp>: <Addr8: 21>  # Address: 00000056
     goto label_86;
     // ──────────────── Block 3 ──────────────── 
@@ -44,12 +44,12 @@ function whileTest(param0) {
     // CODE → <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
     console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
     // CODE → <Inc>: <Reg8: 6, Reg8: 7>
-    // USED → r6 = 0 + 1;
+    // USED → r6 = r7 + 1;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <Mov>: <Reg8: 5, Reg8: 6>
-    // USED → r5 = 0 + 1;
+    // USED → r5 = r7 + 1;
     // CODE → <JLess>: <Addr8: -51, Reg8: 5, Reg8: 4>  # Address: 00000026
-    if (0 + 1 < 5) goto label_38;
+    if (r7 + 1 < 5) goto label_38;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;

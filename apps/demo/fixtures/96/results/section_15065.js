@@ -37,18 +37,18 @@ function labeledBreakTest(param0) {
                 // CODE → <Call3>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 5, Reg8: 7>
                 console.log(0, 0)
                 // CODE → <Inc>: <Reg8: 6, Reg8: 7>
-                // USED → r6 = 0 + 1;
+                // USED → r6 = r7 + 1;
             } else {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 2>  # Address: 0000004f
                 if (0 === 1) goto label_79;
             }
-        } while (0 + 1 < 3);
+        } while (r7 + 1 < 3);
         // LOOP → END
         // ──────────────── Block 5 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 5>
-        // USED → r1 = 0 + 1;
-    } while (0 + 1 < 3);
+        // USED → r1 = r5 + 1;
+    } while (r5 + 1 < 3);
     // LOOP → END
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Jmp>: <Addr8: 22>  # Address: 00000063

@@ -86,17 +86,17 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 9>
-    // USED → r2 = 0;
+    r2 = 0
     // CODE → <Inc>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = 0 + 1;
+    // USED → r4 = r2 + 1;
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-    r9 = 0 + 1
+    r9 = r2 + 1
     // CODE → <Mov>: <Reg8: 2, Reg8: 8>
     // USED → r2 = param1;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     // USED → r2 = param1.length;
     // CODE → <JLess>: <Addr8: -122, Reg8: 4, Reg8: 2>  # Address: 0000003c
-    if (0 + 1 < param1.length) goto label_60;
+    if (r2 + 1 < param1.length) goto label_60;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Jmp>: <Addr8: 38>  # Address: 000000e0
     goto label_224;

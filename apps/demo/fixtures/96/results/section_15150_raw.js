@@ -28,9 +28,9 @@ function closureLoopTest(param0) {
     // CODE → <Call2>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 3>
     r6 = _loop.call(undefined, 0)
     // CODE → <Inc>: <Reg8: 3, Reg8: 3>
-    // USED → r3 = 0 + 1;
+    // USED → r3 = r3 + 1;
     // CODE → <JLess>: <Addr8: -8, Reg8: 3, Reg8: 2>  # Address: 0000002c
-    if (0 + 1 < 3) goto label_44;
+    if (r3 + 1 < 3) goto label_44;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
     r2 = r4

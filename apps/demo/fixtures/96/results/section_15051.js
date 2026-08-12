@@ -59,8 +59,8 @@ function forTest(param0) {
         }
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 5, Reg8: 6>
-        // USED → r5 = 0 + 1;
-    } while (0 + 1 < 10);
+        // USED → r5 = r6 + 1;
+    } while (r6 + 1 < 10);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
