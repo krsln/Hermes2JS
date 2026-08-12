@@ -27,7 +27,7 @@ function forTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
         // USED → r1 = 0;
-        if (0 === 3) {
+        if (r1 === 3) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r10 = globalThis.console;
@@ -36,7 +36,7 @@ function forTest(param0) {
             // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 8>
             console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
         } else {
-            if (0 === 8) {
+            if (r1 === 8) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                 // USED → r11 = globalThis.console;
@@ -61,8 +61,8 @@ function forTest(param0) {
         }
         // ──────────────── Block 6 ──────────────── 
         // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-        // USED → r0 = 0 + 1;
-    } while (0 + 1 < 10);
+        r0 = 0 + 1
+    } while (r0 < 10);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

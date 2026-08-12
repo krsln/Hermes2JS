@@ -180,7 +180,7 @@ function nestedArrayDestructureTest(param0) {
     if (GetIterator(r17) === undefined) {
         // ──────────────── Block 27 ──────────────── 
         // CODE → <Mov>: <Reg8: 0, Reg8: 12>
-        // USED → r0 = GetIterator(r17).next();
+        r0 = GetIterator(r17).next()
         // CODE → <Mov>: <Reg8: 8, Reg8: 11>
         // USED → r8 = GetIterator(r17) === undefined;
         // CODE → <Mov>: <Reg8: 11, Reg8: 8>

@@ -173,7 +173,7 @@ class Printer(NodeVisitor):
         for instruction in block.instructions:
 
             if self.verbose:
-                bytecode = instruction.opcode.bytecode
+                bytecode = instruction.entry.bytecode
                 bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
 
                 self._write(lines, f"// CODE → {bytecode}")

@@ -11,11 +11,11 @@ function switchInsideTryTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start")
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
-    // USED → r2 = param1;
+    r2 = param1
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // Switch → START
-    switch (param1) {
+    switch (r2) {
         case 0:
             // ──────────────── Block 4 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

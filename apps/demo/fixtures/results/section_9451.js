@@ -11,11 +11,11 @@ function switchTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:ControlFlow/SwitchTests/switchTest/start")
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
-    // USED → r2 = param1;
+    r2 = param1
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // Switch → START
-    switch (param1) {
+    switch (r2) {
         case 0:
             // ──────────────── Block 9 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

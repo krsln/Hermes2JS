@@ -29,11 +29,11 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <TypeOf>: <Reg8: 14, Reg8: 6>
-    // USED → r14 = typeof param1;
+    r14 = typeof param1
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
     // USED → r10 = "string";
     // CODE → <JStrictEqual>: <Addr8: 18, Reg8: 14, Reg8: 10>  # Address: 0000003a
-    if (typeof param1 === "string") goto label_58;
+    if (r14 === "string") goto label_58;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 14, Reg8: 6>
     // USED → r14 = param1;
@@ -82,7 +82,7 @@ function _request(param0, param1, param2) {
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 17>
     createEnvironment()[1] = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).headers
     // CODE → <JStrictEqual>: <Addr8: 100, Reg8: 19, Reg8: 11>  # Address: 000000e1
-    if (getEnvironment(1)[7].default.call(undefined, this.defaults, r2).transitional === undefined) goto label_225;
+    if (r19 === undefined) goto label_225;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
     // USED → r2 = getEnvironment(1)[9];
@@ -126,7 +126,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstNull>: <Reg8: 2>
     // USED → r2 = null;
     // CODE → <JEqual>: <Addr8: 94, Reg8: 14, Reg8: 2>  # Address: 00000141
-    if (getEnvironment(1)[7].default.call(undefined, this.defaults, r2).paramsSerializer == null) goto label_321;
+    if (r14 == null) goto label_321;
     // ──────────────── Block 10 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 3>
     // USED → r2 = getEnvironment(1)[3];
@@ -172,16 +172,16 @@ function _request(param0, param1, param2) {
     getEnvironment(1)[7].default.call(undefined, this.defaults, r2).paramsSerializer = r2
     // ──────────────── Block 13 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 10, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    // USED → r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls;
+    r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls
     // CODE → <JStrictNotEqual>: <Addr8: 48, Reg8: 2, Reg8: 11>  # Address: 00000177
-    if (getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls !== undefined) goto label_375;
+    if (r2 !== undefined) goto label_375;
     // ──────────────── Block 14 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
     // USED → r2 = this.defaults;
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    // USED → r2 = this.defaults.allowAbsoluteUrls;
+    r2 = this.defaults.allowAbsoluteUrls
     // CODE → <JStrictNotEqual>: <Addr8: 14, Reg8: 2, Reg8: 11>  # Address: 00000165
-    if (this.defaults.allowAbsoluteUrls !== undefined) goto label_357;
+    if (r2 !== undefined) goto label_357;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <LoadConstTrue>: <Reg8: 2>
     // USED → r2 = true;
@@ -381,9 +381,9 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
     // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-    // USED → r9 = 0;
+    r9 = 0
     // CODE → <JNotLess>: <Addr8: 54, Reg8: 9, Reg8: 14>  # Address: 00000349
-    if (!(0 < ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length)) goto label_841;
+    if (!(r9 < r14)) goto label_841;
     // ──────────────── Block 27 ──────────────── 
     // CODE → <Mov>: <Reg8: 18, Reg8: 0>
     // USED → r18 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
@@ -410,9 +410,9 @@ function _request(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
     // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2)).then(((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+0], ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+(r14 + 1)]);
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-    // USED → r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length;
+    r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length
     // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
-    if (r9 + 1 < ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length) goto label_791;
+    if (r14 < r9) goto label_791;
     // ──────────────── Block 28 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 0>
     // USED → r9 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2)).then(((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+0], ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+(r14 + 1)]);
@@ -430,7 +430,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstZero>: <Reg8: 4>
     // USED → r4 = 0;
     // CODE → <JNotLess>: <Addr8: 72, Reg8: 2, Reg8: 9>  # Address: 000003a6
-    if (!(0 < r14.length)) goto label_934;
+    if (!(0 < r9)) goto label_934;
     // ──────────────── Block 30 ──────────────── 
     // CODE → <Mov>: <Reg8: 10, Reg8: 12>
     // USED → r10 = r14;
@@ -457,11 +457,11 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
     // USED → r1 = r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
     // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-    // USED → r10 = r9 + 1;
+    r10 = r9 + 1
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-    // USED → r9 = r14.length;
+    r9 = r14.length
     // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 9>  # Address: 00000362
-    if (r9 + 1 < r14.length) goto label_866;
+    if (r10 < r9) goto label_866;
     // ──────────────── Block 31 ──────────────── 
     // CODE → <Jmp>: <Addr8: 18>  # Address: 000003a6
     goto label_934;
@@ -492,7 +492,7 @@ function _request(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 1>
     // USED → r5 = r2.length;
     // CODE → <JNotLess>: <Addr8: 57, Reg8: 2, Reg8: 1>  # Address: 00000400
-    if (!(0 < r2.length)) goto label_1024;
+    if (!(0 < r1)) goto label_1024;
     // ──────────────── Block 34 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 0>
     // USED → r8 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2)));
@@ -521,9 +521,9 @@ function _request(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
     // USED → r0 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(r2 + 1)]);
     // CODE → <Mov>: <Reg8: 1, Reg8: 5>
-    // USED → r1 = r2.length;
+    r1 = r2.length
     // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
-    if (r1 + 1 < r2.length) goto label_971;
+    if (r2 < r1) goto label_971;
     // ──────────────── Block 35 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
     return getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(r2 + 1)]);

@@ -60,8 +60,8 @@ function propertyAccessTest(param0) {
         // CODE → <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 5>
         // USED → r8 = GetIterator(r2).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        // USED → r5 = GetIterator(r2);
-        if (GetIterator(r2) !== undefined) {
+        r5 = GetIterator(r2)
+        if (r5 !== undefined) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r7 = globalThis.console;

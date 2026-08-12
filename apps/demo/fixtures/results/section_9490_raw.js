@@ -25,11 +25,11 @@ function callDestructuringTests(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1918, UInt16: 93>  # Object: {'page': 1}
     r5 = { "page": 1 }
     // CODE → <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 12200>  # String: 'page' (Identifier)
-    // USED → r7 = r5.page;
+    r7 = r5.page
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → <JStrictNotEqual>: <Addr8: 7, Reg8: 7, Reg8: 2>  # Address: 0000004a
-    if (r5.page !== undefined) goto label_74;
+    if (r7 !== undefined) goto label_74;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
     // USED → r7 = 1;
@@ -61,17 +61,17 @@ function callDestructuringTests(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1919, UInt16: 19946>  # Object: {'timeout': 500}
     r5 = { "timeout": 500 }
     // CODE → <GetById>: <Reg8: 9, Reg8: 5, UInt8: 4, string_id: 8581>  # String: 'timeout' (Identifier)
-    // USED → r9 = r5.timeout;
+    r9 = r5.timeout
     // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 9, Reg8: 2>  # Address: 0000009d
-    if (r5.timeout !== undefined) goto label_157;
+    if (r9 !== undefined) goto label_157;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <LoadConstInt>: <Reg8: 9, Imm32: 1000>
     // USED → r9 = 1000;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetById>: <Reg8: 8, Reg8: 5, UInt8: 5, string_id: 9071>  # String: 'retries' (Identifier)
-    // USED → r8 = r5.retries;
+    r8 = r5.retries
     // CODE → <JStrictNotEqual>: <Addr8: 7, Reg8: 8, Reg8: 2>  # Address: 000000aa
-    if (r5.retries !== undefined) goto label_170;
+    if (r8 !== undefined) goto label_170;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 8, UInt8: 3>
     // USED → r8 = 3;
@@ -101,9 +101,9 @@ function callDestructuringTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 5, UInt8: 6, string_id: 28>  # String: 'id' (Identifier)
     // USED → r10 = r5.id;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 5, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
-    // USED → r9 = r5.name;
+    r9 = r5.name
     // CODE → <JStrictNotEqual>: <Addr8: 8, Reg8: 9, Reg8: 2>  # Address: 000000f2
-    if (r5.name !== undefined) goto label_242;
+    if (r9 !== undefined) goto label_242;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 514>  # String: 'anon' (String)
     // USED → r9 = "anon";

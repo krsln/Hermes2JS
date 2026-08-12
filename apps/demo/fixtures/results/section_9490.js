@@ -25,7 +25,7 @@ function callDestructuringTests(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1918, UInt16: 93>  # Object: {'page': 1}
     r5 = { "page": 1 }
     // CODE → <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 12200>  # String: 'page' (Identifier)
-    // USED → r7 = (r5.page !== undefined) ? r5.page : 1;
+    r7 = (r7 !== undefined) ? r5.page : 1
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // ──────────────── Block 2 ──────────────── 
@@ -36,7 +36,7 @@ function callDestructuringTests(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 200>
     // USED → r0 = 200;
     // CODE → <Call4>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 0, Reg8: 8, Reg8: 7>
-    console.log(200, r5.name, (r5.page !== undefined) ? r5.page : 1)
+    console.log(200, r5.name, (r7 !== undefined) ? r5.page : 1)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -56,10 +56,10 @@ function callDestructuringTests(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1919, UInt16: 19946>  # Object: {'timeout': 500}
     r5 = { "timeout": 500 }
     // CODE → <GetById>: <Reg8: 9, Reg8: 5, UInt8: 4, string_id: 8581>  # String: 'timeout' (Identifier)
-    // USED → r9 = (r5.timeout !== undefined) ? r5.timeout : 1000;
+    r9 = (r9 !== undefined) ? r5.timeout : 1000
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetById>: <Reg8: 8, Reg8: 5, UInt8: 5, string_id: 9071>  # String: 'retries' (Identifier)
-    // USED → r8 = (r5.retries !== undefined) ? r5.retries : 3;
+    r8 = (r8 !== undefined) ? r5.retries : 3
     // ──────────────── Block 6 ──────────────── 
     // CODE → <GetParentEnvironment>: <Reg8: 5, UInt8: 0>
     // USED → r5 = getParentEnvironment(0);
@@ -68,7 +68,7 @@ function callDestructuringTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r6 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 9, Reg8: 8>
-    console.log((r5.timeout !== undefined) ? r5.timeout : 1000, (r5.retries !== undefined) ? r5.retries : 3)
+    console.log((r9 !== undefined) ? r5.timeout : 1000, (r8 !== undefined) ? r5.retries : 3)
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r8 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -86,7 +86,7 @@ function callDestructuringTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 5, UInt8: 6, string_id: 28>  # String: 'id' (Identifier)
     // USED → r10 = r5.id;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 5, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
-    // USED → r9 = (r5.name !== undefined) ? r5.name : "anon";
+    r9 = (r9 !== undefined) ? r5.name : "anon"
     // ──────────────── Block 8 ──────────────── 
     // CODE → <NewArrayWithBuffer>: <Reg8: 7, UInt16: 2, UInt16: 2, UInt16: 48486>  # Array: [9, 10]
     r7 = [9, 10]
@@ -143,7 +143,7 @@ function callDestructuringTests(param0) {
     // CODE → <Mov>: <Reg8: 15, Reg8: 10>
     r15 = r5.id
     // CODE → <Mov>: <Reg8: 14, Reg8: 9>
-    r14 = (r5.name !== undefined) ? r5.name : "anon"
+    r14 = (r9 !== undefined) ? r5.name : "anon"
     // CODE → <Mov>: <Reg8: 13, Reg8: 8>
     r13 = (GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next()
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>

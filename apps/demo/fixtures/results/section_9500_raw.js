@@ -15,11 +15,11 @@ function nestedTemplateTest(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     console.log("__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start")
     // CODE → <Add>: <Reg8: 5, Reg8: 4, Reg8: 3>
-    // USED → r5 = param1 + param2;
+    r5 = param1 + param2
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 10>
     // USED → r0 = 10;
     // CODE → <JGreater>: <Addr8: 35, Reg8: 5, Reg8: 0>  # Address: 00000046
-    if (param1 + param2 > 10) goto label_70;
+    if (r5 > 10) goto label_70;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Add>: <Reg8: 8, Reg8: 4, Reg8: 3>
     // USED → r8 = param1 + param2;

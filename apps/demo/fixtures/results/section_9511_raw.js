@@ -1,19 +1,19 @@
 function defaultParameterTest(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 2>
-    // USED → r6 = param2;
+    r6 = param2
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <JStrictNotEqual>: <Addr8: 7, Reg8: 6, Reg8: 1>  # Address: 0000000c
-    if (param2 !== undefined) goto label_12;
+    if (r6 !== undefined) goto label_12;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 10>
     // USED → r6 = 10;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 3>
-    // USED → r5 = param3;
+    r5 = param3
     // CODE → <JStrictNotEqual>: <Addr8: 8, Reg8: 5, Reg8: 1>  # Address: 00000017
-    if (param3 !== undefined) goto label_23;
+    if (r5 !== undefined) goto label_23;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 7900>  # String: 'result' (Identifier)
     // USED → r5 = "result";

@@ -29,10 +29,10 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <TypeOf>: <Reg8: 14, Reg8: 6>
-    // USED → r14 = typeof param1;
+    r14 = typeof param1
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
     // USED → r10 = "string";
-    if (typeof param1 === "string") {
+    if (r14 === "string") {
         if (!param2) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → <NewObject>: <Reg8: 2>
@@ -74,7 +74,7 @@ function _request(param0, param1, param2) {
     // USED → r17 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).headers;
     // CODE → <StoreToEnvironment>: <Reg8: 9, UInt8: 1, Reg8: 17>
     createEnvironment()[1] = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).headers
-    if (getEnvironment(1)[7].default.call(undefined, this.defaults, r2).transitional !== undefined) {
+    if (r19 !== undefined) {
         // ──────────────── Block 8 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 9>
         // USED → r2 = getEnvironment(1)[9];
@@ -118,7 +118,7 @@ function _request(param0, param1, param2) {
     // ──────────────── Block 9 ──────────────── 
     // CODE → <LoadConstNull>: <Reg8: 2>
     // USED → r2 = null;
-    if (getEnvironment(1)[7].default.call(undefined, this.defaults, r2).paramsSerializer != null) {
+    if (r14 != null) {
         // ──────────────── Block 10 ──────────────── 
         // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 6, UInt8: 3>
         // USED → r2 = getEnvironment(1)[3];
@@ -164,14 +164,14 @@ function _request(param0, param1, param2) {
     }
     // ──────────────── Block 13 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 10, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    // USED → r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls;
-    if (getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls === undefined) {
+    r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls
+    if (r2 === undefined) {
         // ──────────────── Block 14 ──────────────── 
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
         // USED → r2 = this.defaults;
         // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-        // USED → r2 = this.defaults.allowAbsoluteUrls;
-        if (this.defaults.allowAbsoluteUrls !== undefined) {
+        r2 = this.defaults.allowAbsoluteUrls
+        if (r2 !== undefined) {
             // ──────────────── Block 16 ──────────────── 
             // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
             // USED → r2 = this.defaults;
@@ -307,7 +307,7 @@ function _request(param0, param1, param2) {
         // USED → r1 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2);
         // CODE → <LoadConstZero>: <Reg8: 4>
         // USED → r4 = 0;
-        if (0 < r14.length) {
+        if (0 < r9) {
             // LOOP → START (do_while)
             do {
                 // ──────────────── Block 30 ──────────────── 
@@ -336,10 +336,10 @@ function _request(param0, param1, param2) {
                 // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
                 // USED → r1 = r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
                 // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-                // USED → r10 = r9 + 1;
+                r10 = r9 + 1
                 // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-                // USED → r9 = r14.length;
-            } while (r9 + 1 < r14.length);
+                r9 = r14.length
+            } while (r10 < r9);
             // LOOP → END
         }
         // LOOP → START (do_while)
@@ -372,8 +372,8 @@ function _request(param0, param1, param2) {
             // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
             // USED → r0 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(r2 + 1)]);
             // CODE → <Mov>: <Reg8: 1, Reg8: 5>
-            // USED → r1 = r2.length;
-        } while (r1 + 1 < r2.length);
+            r1 = r2.length
+        } while (r2 < r1);
         // LOOP → END
         // ──────────────── Block 35 ──────────────── 
         // CODE → <Ret>: <Reg8: 0>
@@ -423,8 +423,8 @@ function _request(param0, param1, param2) {
         // CODE → <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
         // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
         // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-        // USED → r9 = 0;
-        if (0 < ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length) {
+        r9 = 0
+        if (r9 < r14) {
             // LOOP → START (do_while)
             do {
                 // ──────────────── Block 27 ──────────────── 
@@ -453,8 +453,8 @@ function _request(param0, param1, param2) {
                 // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
                 // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2)).then(((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+0], ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+(r14 + 1)]);
                 // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-                // USED → r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length;
-            } while (r9 + 1 < ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length);
+                r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length
+            } while (r14 < r9);
             // LOOP → END
         }
         // ──────────────── Block 28 ──────────────── 
@@ -482,7 +482,7 @@ function _request(param0, param1, param2) {
                 // USED → r1 = r2.length;
                 // CODE → <Mov>: <Reg8: 5, Reg8: 1>
                 // USED → r5 = r2.length;
-                if (0 < r2.length) {
+                if (0 < r1) {
                     // ──────────────── Block 32 ──────────────── 
                     // CODE → <Catch>: <Reg8: 10>
                     // USED → r10 = caughtException;

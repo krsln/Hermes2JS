@@ -5,7 +5,7 @@ function mayThrow(param0, param1) {
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // CODE → <JLess>: <Addr8: 13, Reg8: 1, Reg8: 0>  # Address: 00000012
-    if (param1 < 0) goto label_18;
+    if (r1 < 0) goto label_18;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;

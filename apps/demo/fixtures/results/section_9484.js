@@ -31,9 +31,14 @@ function optionalChainingTest(param0) {
         // CODE → <Eq>: <Reg8: 3, Reg8: 5, Reg8: 1>
         // USED → r3 = r5.b == null;
         // CODE → <LoadConstUndefined>: <Reg8: 7>
-        r7 = (r5.b == null) ? undefined : r5.b.c
+        r7 = undefined
+        if (r5.b != null) {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 6562>  # String: 'c' (Identifier)
+            r7 = r5.b.c
+        }
     }
-    if (r5.b.c == null) {
+    if (r7 == null) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → <LoadConstInt>: <Reg8: 7, Imm32: -1>
         // USED → r7 = -1;

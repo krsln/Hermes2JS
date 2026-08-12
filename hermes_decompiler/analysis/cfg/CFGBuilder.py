@@ -47,7 +47,7 @@ class CFGBuilder:
         exception_handlers = exception_handlers or []
 
         self.address_to_index = {
-            r.opcode.address: i
+            r.entry.address: i
             for i, r in enumerate(results)
         }
 

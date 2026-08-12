@@ -33,10 +33,10 @@ function AcquisitionManager(param0, param1, param2) {
     // CODE → <LoadConstInt>: <Reg8: 2, Imm32: -1>
     // USED → r2 = -1;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    // USED → r2 = this._serverUrl.slice(-1);
+    r2 = this._serverUrl.slice(-1)
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 592>  # String: '/' (String)
     // USED → r3 = "/";
-    if (this._serverUrl.slice(-1) !== "/") {
+    if (r2 !== "/") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 22212>  # String: '_serverUrl' (Identifier)
         // USED → r2 = this._serverUrl;

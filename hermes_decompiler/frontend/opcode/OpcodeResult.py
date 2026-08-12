@@ -41,7 +41,7 @@ class OpcodeResult:
                 writes one. Used to derive `name` (`"r{dest_reg}"`).
         """
 
-        self.opcode = entry
+        self.entry = entry
         self.value = value
         self.terminator = terminator
         self.statement = statement
@@ -56,11 +56,11 @@ class OpcodeResult:
 
     @property
     def address(self):
-        return self.opcode.address
+        return self.entry.address
 
     @property
     def handler(self):
-        return self.opcode.opcode
+        return self.entry.opcode
 
     @property
     def name(self):

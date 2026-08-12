@@ -1,12 +1,12 @@
 function defaultParameterTest(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 2>
-    // USED → r6 = (param2 !== undefined) ? param2 : 10;
+    r6 = (r6 !== undefined) ? param2 : 10
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 3>
-    // USED → r5 = (param3 !== undefined) ? param3 : "result";
+    r5 = (r5 !== undefined) ? param3 : "result"
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
     // USED → r2 = param1;
@@ -25,9 +25,9 @@ function defaultParameterTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 6>
-    // USED → r2 = param1 + ((param2 !== undefined) ? param2 : 10);
+    // USED → r2 = param1 + ((r6 !== undefined) ? param2 : 10);
     // CODE → <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 2>
-    console.log((param3 !== undefined) ? param3 : "result", param1 + ((param2 !== undefined) ? param2 : 10))
+    console.log((r5 !== undefined) ? param3 : "result", param1 + ((r6 !== undefined) ? param2 : 10))
     // CODE → <Ret>: <Reg8: 1>
     return undefined;
 }

@@ -28,7 +28,7 @@ class Construct(OpcodeHandler):
                 continue
             if result.dest_reg is None:
                 continue
-            if result.opcode.address >= ctx.entry.address:
+            if result.entry.address >= ctx.entry.address:
                 continue
 
             arguments.append(result)

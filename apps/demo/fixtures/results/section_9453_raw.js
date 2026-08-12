@@ -40,17 +40,17 @@ function complexTest(param0) {
     if (!(0 < r14.length)) goto label_217;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
-    // USED → r7 = r14[0];
+    r7 = r14[0]
     // CODE → <Mov>: <Reg8: 1, Reg8: 0>
     // USED → r1 = 0;
     // CODE → <JStrictEqual>: <Addr8: 98, Reg8: 2, Reg8: 7>  # Address: 000000b9
-    if (1 === r14[0]) goto label_185;
+    if (1 === r7) goto label_185;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <JStrictEqual>: <Addr8: 76, Reg8: 4, Reg8: 7>  # Address: 000000a7
-    if (2 === r14[0]) goto label_167;
+    if (2 === r7) goto label_167;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <JStrictEqual>: <Addr8: 38, Reg8: 3, Reg8: 7>  # Address: 00000085
-    if (3 === r14[0]) goto label_133;
+    if (3 === r7) goto label_133;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r15 = globalThis.console;
@@ -99,11 +99,11 @@ function complexTest(param0) {
     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
     // ──────────────── Block 8 ──────────────── 
     // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-    // USED → r0 = 0 + 1;
+    r0 = 0 + 1
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-    // USED → r7 = r14.length;
+    r7 = r14.length
     // CODE → <JLessLong>: <Addr32: -130, Reg8: 0, Reg8: 7>  # Address: 00000050
-    if (0 + 1 < r14.length) goto label_80;
+    if (r0 < r7) goto label_80;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r8 = globalThis.console;

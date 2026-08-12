@@ -17,7 +17,7 @@ function nestedObjectDestructureTest(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1918, UInt16: 93>  # Object: {'page': 1}
     r3 = { "page": 1 }
     // CODE → <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 12200>  # String: 'page' (Identifier)
-    // USED → r5 = (r3.page !== undefined) ? r3.page : 1;
+    r5 = (r5 !== undefined) ? r3.page : 1
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // ──────────────── Block 2 ──────────────── 
@@ -28,7 +28,7 @@ function nestedObjectDestructureTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 200>
     // USED → r0 = 200;
     // CODE → <Call4>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 6, Reg8: 5>
-    console.log(200, r3.name, (r3.page !== undefined) ? r3.page : 1)
+    console.log(200, r3.name, (r5 !== undefined) ? r3.page : 1)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

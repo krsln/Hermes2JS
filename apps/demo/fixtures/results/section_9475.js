@@ -4,7 +4,7 @@ function mayThrow(param0, param1) {
     // USED → r1 = param1;
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
-    if (param1 < 0) {
+    if (r1 < 0) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <GetGlobalObject>: <Reg8: 1>
         // USED → r1 = globalThis;

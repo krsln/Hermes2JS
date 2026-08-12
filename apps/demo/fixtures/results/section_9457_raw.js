@@ -29,7 +29,7 @@ function labeledContinueTest(param0) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 0>
     // USED → r1 = 0;
     // CODE → <JStrictEqual>: <Addr8: 47, Reg8: 1, Reg8: 3>  # Address: 0000005d
-    if (0 === 1) goto label_93;
+    if (r1 === 1) goto label_93;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r12 = globalThis.console;
@@ -38,9 +38,9 @@ function labeledContinueTest(param0) {
     // CODE → <Call3>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 2, Reg8: 1>
     console.log(0, 0)
     // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 3>
-    // USED → r0 = 0 + 1;
+    r0 = 0 + 1
     // CODE → <JLessN>: <Addr8: -28, Reg8: 0, Reg8: 6>  # Address: 0000002b
-    if (0 + 1 < 3) goto label_43;
+    if (r0 < 3) goto label_43;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r12 = globalThis.console;
@@ -59,9 +59,9 @@ function labeledContinueTest(param0) {
     console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
     // ──────────────── Block 6 ──────────────── 
     // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
-    // USED → r4 = 0 + 1;
+    r4 = 0 + 1
     // CODE → <JLessN>: <Addr8: -75, Reg8: 4, Reg8: 6>  # Address: 00000026
-    if (0 + 1 < 3) goto label_38;
+    if (r4 < 3) goto label_38;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r10 = globalThis.console;

@@ -26,10 +26,10 @@ function forTest(param0) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 0>
     // USED → r1 = 0;
     // CODE → <JStrictEqual>: <Addr8: 48, Reg8: 1, Reg8: 5>  # Address: 0000005b
-    if (0 === 3) goto label_91;
+    if (r1 === 3) goto label_91;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <JStrictEqual>: <Addr8: 22, Reg8: 1, Reg8: 4>  # Address: 00000045
-    if (0 === 8) goto label_69;
+    if (r1 === 8) goto label_69;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r10 = globalThis.console;
@@ -59,9 +59,9 @@ function forTest(param0) {
     console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
     // ──────────────── Block 6 ──────────────── 
     // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-    // USED → r0 = 0 + 1;
+    r0 = 0 + 1
     // CODE → <JLessN>: <Addr8: -71, Reg8: 0, Reg8: 3>  # Address: 00000028
-    if (0 + 1 < 10) goto label_40;
+    if (r0 < 10) goto label_40;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r9 = globalThis.console;

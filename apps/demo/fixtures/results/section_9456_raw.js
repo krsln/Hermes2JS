@@ -25,10 +25,10 @@ function labeledBreakTest(param0) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 0>
     // USED → r1 = 0;
     // CODE → <JStrictNotEqual>: <Addr8: 8, Reg8: 2, Reg8: 3>  # Address: 0000002e
-    if (0 !== 1) goto label_46;
+    if (r2 !== 1) goto label_46;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <JStrictEqual>: <Addr8: 39, Reg8: 1, Reg8: 3>  # Address: 00000051
-    if (0 === 1) goto label_81;
+    if (r1 === 1) goto label_81;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r10 = globalThis.console;
@@ -37,14 +37,14 @@ function labeledBreakTest(param0) {
     // CODE → <Call3>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 2, Reg8: 1>
     console.log(0, 0)
     // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 3>
-    // USED → r0 = 0 + 1;
+    r0 = 0 + 1
     // CODE → <JLessN>: <Addr8: -32, Reg8: 0, Reg8: 6>  # Address: 00000023
-    if (0 + 1 < 3) goto label_35;
+    if (r0 < 3) goto label_35;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
-    // USED → r4 = 0 + 1;
+    r4 = 0 + 1
     // CODE → <JLessN>: <Addr8: -45, Reg8: 4, Reg8: 6>  # Address: 0000001e
-    if (0 + 1 < 3) goto label_30;
+    if (r4 < 3) goto label_30;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Jmp>: <Addr8: 22>  # Address: 00000065
     goto label_101;

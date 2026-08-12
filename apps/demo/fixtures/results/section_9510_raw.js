@@ -30,9 +30,9 @@ function closureLoopTest(param0) {
     // CODE → <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 2>
     r7 = _loop.call(0, 0)
     // CODE → <AddN>: <Reg8: 2, Reg8: 2, Reg8: 4>
-    // USED → r2 = 0 + 1;
+    r2 = 0 + 1
     // CODE → <JLessN>: <Addr8: -9, Reg8: 2, Reg8: 3>  # Address: 00000030
-    if (0 + 1 < 3) goto label_48;
+    if (r2 < 3) goto label_48;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 0>
     // USED → r2 = r0;
@@ -46,9 +46,9 @@ function closureLoopTest(param0) {
     // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
     // USED → r4 = GetIterator(r2).next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = GetIterator(r2);
+    r5 = GetIterator(r2)
     // CODE → <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000070
-    if (GetIterator(r2) === undefined) goto label_112;
+    if (r5 === undefined) goto label_112;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;

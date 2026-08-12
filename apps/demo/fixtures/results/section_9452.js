@@ -36,7 +36,7 @@ function nestedLoopTest(param0) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = 0;
-            if (0 === 1 && 0 === 2) {
+            if (r4 === 1 && r1 === 2) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 14, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                 // USED → r14 = globalThis.console;
@@ -53,13 +53,13 @@ function nestedLoopTest(param0) {
             }
             // ──────────────── Block 5 ──────────────── 
             // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-            // USED → r0 = 0 + 1;
-        } while (0 + 1 < 4);
+            r0 = 0 + 1
+        } while (r0 < 4);
         // LOOP → END
         // ──────────────── Block 6 ──────────────── 
         // CODE → <AddN>: <Reg8: 3, Reg8: 4, Reg8: 2>
-        // USED → r3 = 0 + 1;
-    } while (0 + 1 < 3);
+        r3 = 0 + 1
+    } while (r3 < 3);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

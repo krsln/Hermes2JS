@@ -34,14 +34,14 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <Mov>: <Reg8: 0, Reg8: 2>
     // USED → r0 = 0;
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
-    // USED → r9 = param1[0];
+    r9 = param1[0]
     // CODE → <JLess>: <Addr8: 98, Reg8: 9, Reg8: 7>  # Address: 000000a4
-    if (param1[0] < 0) goto label_164;
+    if (r9 < 0) goto label_164;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
-    // USED → r9 = param1[0];
+    r9 = param1[0]
     // CODE → <JStrictEqual>: <Addr8: 43, Reg8: 9, Reg8: 7>  # Address: 00000075
-    if (param1[0] === 0) goto label_117;
+    if (r9 === 0) goto label_117;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r11 = globalThis.console;
@@ -74,11 +74,11 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
     // ──────────────── Block 5 ──────────────── 
     // CODE → <AddN>: <Reg8: 2, Reg8: 0, Reg8: 6>
-    // USED → r2 = 0 + 1;
+    r2 = 0 + 1
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 8, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-    // USED → r0 = param1.length;
+    r0 = param1.length
     // CODE → <JLess>: <Addr8: -99, Reg8: 2, Reg8: 0>  # Address: 0000003b
-    if (0 + 1 < param1.length) goto label_59;
+    if (r2 < r0) goto label_59;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Jmp>: <Addr8: 38>  # Address: 000000c8
     goto label_200;

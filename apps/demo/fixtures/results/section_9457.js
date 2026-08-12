@@ -33,7 +33,7 @@ function labeledContinueTest(param0) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = 0;
-            if (0 === 1) {
+            if (r1 === 1) {
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → ContinueStatement
                 continue loop_1;
@@ -46,8 +46,8 @@ function labeledContinueTest(param0) {
             // CODE → <Call3>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 2, Reg8: 1>
             console.log(0, 0)
             // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 3>
-            // USED → r0 = 0 + 1;
-        } while (0 + 1 < 3);
+            r0 = 0 + 1
+        } while (r0 < 3);
         // LOOP → END
         // ──────────────── Block 4 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -67,8 +67,8 @@ function labeledContinueTest(param0) {
         console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
         // ──────────────── Block 6 ──────────────── 
         // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
-        // USED → r4 = 0 + 1;
-    } while (0 + 1 < 3);
+        r4 = 0 + 1
+    } while (r4 < 3);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

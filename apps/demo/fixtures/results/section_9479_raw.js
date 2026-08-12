@@ -22,9 +22,9 @@ function forOfTest(param0) {
     // CODE → <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 4>
     // USED → r6 = GetIterator(r2).next();
     // CODE → <Mov>: <Reg8: 4, Reg8: 3>
-    // USED → r4 = GetIterator(r2);
+    r4 = GetIterator(r2)
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 4, Reg8: 0>  # Address: 0000004a
-    if (GetIterator(r2) === undefined) goto label_74;
+    if (r4 === undefined) goto label_74;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;

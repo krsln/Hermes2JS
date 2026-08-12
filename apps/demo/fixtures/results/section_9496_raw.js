@@ -60,9 +60,9 @@ function setTest(param0) {
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
     // USED → r7 = GetIterator(r2).next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-    // USED → r5 = GetIterator(r2);
+    r5 = GetIterator(r2)
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 000000a1
-    if (GetIterator(r2) === undefined) goto label_161;
+    if (r5 === undefined) goto label_161;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;

@@ -38,11 +38,11 @@ async function* anon_17161(param0, param1) {
     if (await yield.ok) goto label_140;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
-    // USED → r4 = await yield.status;
+    r4 = await yield.status
     // CODE → <LoadConstZero>: <Reg8: 3>
     // USED → r3 = 0;
     // CODE → <JStrictNotEqual>: <Addr8: 22, Reg8: 4, Reg8: 3>  # Address: 00000050
-    if (await yield.status !== 0) goto label_80;
+    if (r4 !== 0) goto label_80;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 19693>  # String: 'startsWith' (Identifier)
     // USED → r4 = param1.startsWith;

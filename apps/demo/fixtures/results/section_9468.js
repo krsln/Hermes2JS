@@ -24,23 +24,23 @@ function tryLoopMultiReturnTest(param0, param1) {
     while (true) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 4>
-        // USED → r6 = 0;
+        r6 = 0
         // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-        // USED → r5 = param1.length;
-        if (0 < param1.length) {
+        r5 = param1.length
+        if (r6 < r5) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 5, Reg8: 4>
             // USED → r5 = 0;
             // CODE → <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
-            // USED → r5 = param1[0];
+            r5 = param1[0]
             // CODE → <JLess>: <Addr8: 52, Reg8: 5, Reg8: 2>  # Address: 0000006a
-            if (param1[0] < 0) goto label_106;
+            if (r5 < 0) goto label_106;
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Mov>: <Reg8: 5, Reg8: 4>
             // USED → r5 = 0;
             // CODE → <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
-            // USED → r5 = param1[0];
-            if (param1[0] === 0) {
+            r5 = param1[0]
+            if (r5 === 0) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <Mov>: <Reg8: 5, Reg8: 4>
                 r5 = r5 + 1

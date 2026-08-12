@@ -26,8 +26,8 @@ function doWhileTest(param0) {
         // CODE → <Call2>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 0>
         console.log(0)
         // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
-        // USED → r0 = 0 + 1;
-    } while (0 + 1 < 5);
+        r0 = 0 + 1
+    } while (r0 < 5);
     // LOOP → END
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

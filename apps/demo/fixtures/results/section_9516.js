@@ -47,12 +47,12 @@ function legacyArgumentsTest(param0) {
             // CODE → <Call2>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 6>
             console.log(arguments[0])
             // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
-            // USED → r0 = 0 + 1;
+            r0 = 0 + 1
             // CODE → <Mov>: <Reg8: 6, Reg8: 7>
             r6 = undefined
             // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
-            // USED → r6 = arguments.length;
-        } while (0 + 1 < arguments.length);
+            r6 = arguments.length
+        } while (r0 < r6);
         // LOOP → END
     }
     // ──────────────── Block 2 ──────────────── 

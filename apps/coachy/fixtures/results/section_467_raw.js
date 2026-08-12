@@ -1581,13 +1581,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     if (!r51.hasOwnProperty(r49.next())) goto label_3742;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
-    // USED → r53 = r51[r49.next()];
+    r53 = r51[r49.next()]
     // CODE → <Mov>: <Reg8: 43, Reg8: 54>
     r43 = false
     // CODE → <Mov>: <Reg8: 42, Reg8: 52>
     r42 = r50[r49.next()]
     // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
-    if (r51[r49.next()] === r50[r49.next()]) goto label_3677;
+    if (r53 === r52) goto label_3677;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
     // USED → r53 = r51[r49.next()];
@@ -1781,9 +1781,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <LoadConstString>: <Reg8: 16, string_id: 12255>  # String: 'function' (Identifier)
     // USED → r16 = "function";
     // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
-    // USED → r42 = typeof globalThis.queueMicrotask;
+    r42 = typeof globalThis.queueMicrotask
     // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 16, Reg8: 42>  # Address: 0000103e
-    if ("function" !== typeof globalThis.queueMicrotask) goto label_4158;
+    if ("function" !== r42) goto label_4158;
     // ──────────────── Block 17 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
     // USED → r41 = globalThis.queueMicrotask;
@@ -2021,9 +2021,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 39, Reg8: 39, UInt8: 41, string_id: 11558>  # String: 'is' (Identifier)
     // USED → r39 = globalThis.Object.is;
     // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
-    // USED → r39 = typeof globalThis.Object.is;
+    r39 = typeof globalThis.Object.is
     // CODE → <JStrictNotEqual>: <Addr8: 16, Reg8: 16, Reg8: 39>  # Address: 0000127e
-    if ("function" !== typeof globalThis.Object.is) goto label_4734;
+    if ("function" !== r39) goto label_4734;
     // ──────────────── Block 19 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
     // USED → r39 = globalThis.Object;
@@ -2395,9 +2395,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
     // USED → r17 = param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog;
     // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
-    // USED → r17 = typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog;
+    r17 = typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog
     // CODE → <JStrictNotEqualLong>: <Addr32: 774, Reg8: 16, Reg8: 17>  # Address: 000018b9
-    if ("function" !== typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog) goto label_6329;
+    if ("function" !== r17) goto label_6329;
     // ──────────────── Block 21 ──────────────── 
     // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
     // USED → r17 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
@@ -2438,9 +2438,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
     // USED → r15 = globalThis.WeakSet;
     // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-    // USED → r15 = typeof globalThis.WeakSet;
+    r15 = typeof globalThis.WeakSet
     // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
-    if ("function" === typeof globalThis.WeakSet) goto label_5669;
+    if ("function" === r15) goto label_5669;
     // ──────────────── Block 22 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
     r15 = globalThis.Set
@@ -2463,9 +2463,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
     // USED → r15 = globalThis.WeakMap;
     // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
-    // USED → r15 = typeof globalThis.WeakMap;
+    r15 = typeof globalThis.WeakMap
     // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
-    if ("function" === typeof globalThis.WeakMap) goto label_5717;
+    if ("function" === r15) goto label_5717;
     // ──────────────── Block 25 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
     r15 = globalThis.Map
@@ -2660,9 +2660,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
     // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
     // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
-    // USED → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+    r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
     // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
-    if ("undefined" === typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__) goto label_6205;
+    if ("undefined" === r8) goto label_6205;
     // ──────────────── Block 30 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
     // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;

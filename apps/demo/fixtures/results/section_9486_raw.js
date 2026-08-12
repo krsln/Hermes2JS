@@ -13,19 +13,19 @@ function renamedDefaultDestructureTest(param0) {
     // CODE → <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1919, UInt16: 19946>  # Object: {'timeout': 500}
     r3 = { "timeout": 500 }
     // CODE → <GetById>: <Reg8: 6, Reg8: 3, UInt8: 2, string_id: 8581>  # String: 'timeout' (Identifier)
-    // USED → r6 = r3.timeout;
+    r6 = r3.timeout
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 6, Reg8: 1>  # Address: 0000002e
-    if (r3.timeout !== undefined) goto label_46;
+    if (r6 !== undefined) goto label_46;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstInt>: <Reg8: 6, Imm32: 1000>
     // USED → r6 = 1000;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 9071>  # String: 'retries' (Identifier)
-    // USED → r5 = r3.retries;
+    r5 = r3.retries
     // CODE → <JStrictNotEqual>: <Addr8: 7, Reg8: 5, Reg8: 1>  # Address: 0000003b
-    if (r3.retries !== undefined) goto label_59;
+    if (r5 !== undefined) goto label_59;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 3>
     // USED → r5 = 3;
