@@ -73,19 +73,6 @@ class BaseJCompare(OpcodeHandler):
 
         return result
 
-    def __init_subclass__(cls, **kwargs):
-        super().__init_subclass__(**kwargs)
-        # Only validate concrete leaf-ish classes that actually set one of
-        # the two class vars in their own __dict__; classes that merely
-        # inherit (e.g. the *Long / *N aliases) are left alone.
-        own_operator = cls.__dict__.get("operator")
-        own_negated_operator = cls.__dict__.get("negated_operator")
-        if own_operator is not None and own_negated_operator is not None:
-            raise TypeError(
-                f"{cls.__name__}: set exactly one of `operator` or "
-                f"`negated_operator`, not both"
-            )
-
     def build_condition(self, lhs: Expression, rhs: Expression) -> Expression:
         if self.operator is not None:
             return BinaryExpression(left=lhs, operator=self.operator, right=rhs)
