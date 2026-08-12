@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.analysis.regions.Regions import SequenceRegion, LoopRegion, IfRegion
+from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
