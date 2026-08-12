@@ -11,13 +11,13 @@ function whileTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/WhileTests/whileTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 5>
-    // USED → r4 = 5;
+    r4 = 5
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4131>  # String: '__BC:ControlFlow/WhileTests/whileTest/if-continue' (String)
     // USED → r3 = "__BC:ControlFlow/WhileTests/whileTest/if-continue";
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 2406>  # String: 'while' (String)
     // USED → r2 = "while";
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
-    // USED → r1 = 2;
+    r1 = 2
     // CODE → <LoadConstZero>: <Reg8: 5>
     // USED → r5 = 0;
     // LOOP → START (do_while)
@@ -30,8 +30,8 @@ function whileTest(param0) {
         // CODE → <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
         console.log("while", 0)
         // CODE → <Mov>: <Reg8: 7, Reg8: 5>
-        // USED → r7 = 0;
-        if (0 === 2) {
+        r7 = 0
+        if (r7 === r1) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r9 = globalThis.console;
@@ -48,8 +48,8 @@ function whileTest(param0) {
         }
         // ──────────────── Block 4 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 6>
-        // USED → r5 = r7 + 1;
-    } while (r7 + 1 < 5);
+        r5 = r7 + 1
+    } while (r5 < r4);
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

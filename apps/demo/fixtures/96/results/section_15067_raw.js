@@ -23,11 +23,11 @@ function labeledBlockBreakTest(param0) {
     // CODE → <GetById>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 9292>  # String: 'random' (Identifier)
     // USED → r1 = globalThis.Math.random;
     // CODE → <Call1>: <Reg8: 2, Reg8: 1, Reg8: 2>
-    // USED → r2 = globalThis.Math.random();
+    r2 = globalThis.Math.random()
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
-    // USED → r1 = 2;
+    r1 = 2
     // CODE → <JLess>: <Addr8: 24, Reg8: 2, Reg8: 1>  # Address: 00000055
-    if (globalThis.Math.random() < 2) goto label_85;
+    if (r2 < r1) goto label_85;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;

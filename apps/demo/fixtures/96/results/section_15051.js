@@ -11,13 +11,13 @@ function forTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/ForTests/forTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 10>
-    // USED → r4 = 10;
+    r4 = 10
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4584>  # String: '__BC:ControlFlow/ForTests/forTest/if-continue' (String)
     // USED → r3 = "__BC:ControlFlow/ForTests/forTest/if-continue";
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 8>
-    // USED → r2 = 8;
+    r2 = 8
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
-    // USED → r1 = 3;
+    r1 = 3
     // CODE → <LoadConstZero>: <Reg8: 5>
     // USED → r5 = 0;
     // LOOP → START (do_while)
@@ -25,7 +25,7 @@ function forTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 5>
         // USED → r6 = 0;
-        if (0 === 3) {
+        if (r6 === r1) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r8 = globalThis.console;
@@ -34,7 +34,7 @@ function forTest(param0) {
             // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
             console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
         } else {
-            if (0 === 8) {
+            if (r6 === r2) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r9 = globalThis.console;
@@ -59,8 +59,8 @@ function forTest(param0) {
         }
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 5, Reg8: 6>
-        // USED → r5 = r6 + 1;
-    } while (r6 + 1 < 10);
+        r5 = r6 + 1
+    } while (r5 < r4);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

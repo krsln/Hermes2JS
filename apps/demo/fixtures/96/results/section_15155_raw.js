@@ -18,11 +18,11 @@ function defaultWithRestTest(param0) {
     if (!(arguments.length > 0)) goto label_37;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetArgumentsPropByVal>: <Reg8: 1, Reg8: 8, Reg8: 7>
-    // USED → r1 = arguments[0];
+    r1 = arguments[0]
     // CODE → <Mov>: <Reg8: 5, Reg8: 6>
     r5 = 1
     // CODE → <JStrictEqual>: <Addr8: 8, Reg8: 1, Reg8: 0>  # Address: 00000025
-    if (arguments[0] === undefined) goto label_37;
+    if (r1 === r0) goto label_37;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 8, Reg8: 7>
     // USED → r5 = arguments[0];
@@ -77,9 +77,9 @@ function defaultWithRestTest(param0) {
     // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
     new globalThis.Array(arguments.length - 1)[1 - 1] = arguments[1]
     // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-    // USED → r2 = r2 + 1;
+    r2 = r2 + 1
     // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 3>  # Address: 00000072
-    if (r2 + 1 < arguments.length) goto label_114;
+    if (r2 < r3) goto label_114;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)
     // USED → r3 = new globalThis.Array(arguments.length - 1).reduce;

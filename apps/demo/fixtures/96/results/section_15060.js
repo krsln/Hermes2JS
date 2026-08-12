@@ -31,77 +31,70 @@ function complexTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 1881>  # String: 'other' (String)
     // USED → r5 = "other";
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
-    // USED → r4 = 3;
+    r4 = 3
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 2>
-    // USED → r3 = 2;
+    r3 = 2
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
-    // USED → r2 = 1;
+    r2 = 1
     if (0 < r12.length) {
         // LOOP → START (do_while)
         do {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 11>
-            // USED → r13 = r12[0];
+            r13 = r12[0]
             // CODE → <Mov>: <Reg8: 1, Reg8: 11>
             r1 = 0
-            // Switch → START
-            switch (r12[0]) {
-                case 1:
-                    // ──────────────── Block 7 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r14 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r13 = globalThis.console.log;
-                    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 10>
-                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
-                    break;
-                case 2:
-                    // ──────────────── Block 6 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r14 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r13 = globalThis.console.log;
-                    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 9>
-                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-2-continue")
-                    break;
-                case 3:
-                    // ──────────────── Block 5 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r14 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r13 = globalThis.console.log;
-                    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 8>
-                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-3")
-                    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r14 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r13 = globalThis.console.log;
-                    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7>
-                    console.log("three")
-                    break;
-                default:
-                    // ──────────────── Block 4 ──────────────── 
-                    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r14 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r13 = globalThis.console.log;
-                    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 6>
-                    console.log("__BC:ControlFlow/ComplexTests/complexTest/case-default")
-                    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r14 = globalThis.console;
-                    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r13 = globalThis.console.log;
-                    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 5>
-                    console.log("other")
-                    break;
+            if (r2 === r13) {
+                // ──────────────── Block 7 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r14 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r13 = globalThis.console.log;
+                // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 10>
+                console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
+            } else if (r3 === r13) {
+                // ──────────────── Block 6 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r14 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r13 = globalThis.console.log;
+                // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 9>
+                console.log("__BC:ControlFlow/ComplexTests/complexTest/case-2-continue")
+            } else if (r4 === r13) {
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r14 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r13 = globalThis.console.log;
+                // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 8>
+                console.log("__BC:ControlFlow/ComplexTests/complexTest/case-3")
+                // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r14 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r13 = globalThis.console.log;
+                // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7>
+                console.log("three")
+            } else {
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r14 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r13 = globalThis.console.log;
+                // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 6>
+                console.log("__BC:ControlFlow/ComplexTests/complexTest/case-default")
+                // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r14 = globalThis.console;
+                // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r13 = globalThis.console.log;
+                // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 5>
+                console.log("other")
             }
-            // Switch → END
             // ──────────────── Block 8 ──────────────── 
             // CODE → <Inc>: <Reg8: 11, Reg8: 1>
-            // USED → r11 = r1 + 1;
+            r11 = r1 + 1
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-            // USED → r1 = r12.length;
-        } while (r1 + 1 < r12.length);
+            r1 = r12.length
+        } while (r11 < r1);
         // LOOP → END
     }
     // ──────────────── Block 9 ──────────────── 

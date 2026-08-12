@@ -43,10 +43,15 @@ function optionalChainingTest(param0) {
             // CODE → <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
             // USED → r5 = r3.a.b == null;
             // CODE → <LoadConstUndefined>: <Reg8: 4>
-            r4 = (r3.a.b == null) ? undefined : r3.a.b.c
+            r4 = undefined
+            if (r3.a.b != null) {
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 7241>  # String: 'c' (Identifier)
+                r4 = r3.a.b.c
+            }
         }
     }
-    if (r3.a.b.c == null) {
+    if (r4 == r2) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <LoadConstInt>: <Reg8: 4, Imm32: -1>
         // USED → r4 = -1;

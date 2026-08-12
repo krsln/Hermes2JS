@@ -11,11 +11,11 @@ function tripleNestedLabeledTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
-    // USED → r6 = 3;
+    r6 = 3
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 2>
-    // USED → r5 = 2;
+    r5 = 2
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
-    // USED → r3 = 1;
+    r3 = 1
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // CODE → <LoadConstZero>: <Reg8: 1>
@@ -27,7 +27,7 @@ function tripleNestedLabeledTest(param0) {
         // CODE → <Mov>: <Reg8: 10, Reg8: 2>
         // USED → r10 = 0;
         // CODE → <Mov>: <Reg8: 8, Reg8: 1>
-        // USED → r8 = 0;
+        r8 = 0
         // CODE → <LoadConstZero>: <Reg8: 9>
         // USED → r9 = 0;
         loop_2:
@@ -37,7 +37,7 @@ function tripleNestedLabeledTest(param0) {
             // CODE → <Mov>: <Reg8: 13, Reg8: 10>
             r13 = 0
             // CODE → <Mov>: <Reg8: 11, Reg8: 9>
-            // USED → r11 = 0;
+            r11 = 0
             // CODE → <LoadConstZero>: <Reg8: 12>
             // USED → r12 = 0;
             // LOOP → START (do_while)
@@ -46,39 +46,39 @@ function tripleNestedLabeledTest(param0) {
                 // CODE → <Inc>: <Reg8: 4, Reg8: 13>
                 // USED → r4 = r13 + 1;
                 // CODE → <Mov>: <Reg8: 14, Reg8: 12>
-                // USED → r14 = 0;
-                if (0 === 1) {
+                r14 = 0
+                if (r14 === r3) {
                     // ──────────────── Block 10 ──────────────── 
                     // CODE → ContinueStatement
                     continue loop_2;
                 }
-                if (0 === 2) {
-                    if (0 === 2) {
+                if (r8 === r5) {
+                    if (r11 === r5) {
                         // ──────────────── Block 11 ──────────────── 
                         // CODE → BreakStatement
                         break loop_1;
                     }
                     // ──────────────── Block 6 ──────────────── 
                     // CODE → <Inc>: <Reg8: 12, Reg8: 14>
-                    // USED → r12 = r14 + 1;
+                    r12 = r14 + 1
                     // CODE → <Mov>: <Reg8: 13, Reg8: 4>
                     r13 = r13 + 1
                 }
-            } while (r14 + 1 < 3);
+            } while (r12 < r6);
             // LOOP → END
             // ──────────────── Block 7 ──────────────── 
             // CODE → <Inc>: <Reg8: 9, Reg8: 11>
-            // USED → r9 = r11 + 1;
+            r9 = r11 + 1
             // CODE → <Mov>: <Reg8: 10, Reg8: 4>
             r10 = r13 + 1
-        } while (r11 + 1 < 3);
+        } while (r9 < r6);
         // LOOP → END
         // ──────────────── Block 8 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 8>
-        // USED → r1 = r8 + 1;
+        r1 = r8 + 1
         // CODE → <Mov>: <Reg8: 2, Reg8: 4>
         r2 = r13 + 1
-    } while (r8 + 1 < 3);
+    } while (r1 < r6);
     // LOOP → END
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

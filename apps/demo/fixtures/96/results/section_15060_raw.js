@@ -31,26 +31,26 @@ function complexTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 1881>  # String: 'other' (String)
     // USED → r5 = "other";
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
-    // USED → r4 = 3;
+    r4 = 3
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 2>
-    // USED → r3 = 2;
+    r3 = 2
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
-    // USED → r2 = 1;
+    r2 = 1
     // CODE → <JmpFalseLong>: <Addr32: 142, Reg8: 1>  # Address: 000000d8
     if (!(0 < r12.length)) goto label_216;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 11>
-    // USED → r13 = r12[0];
+    r13 = r12[0]
     // CODE → <Mov>: <Reg8: 1, Reg8: 11>
     r1 = 0
     // CODE → <JStrictEqual>: <Addr8: 98, Reg8: 2, Reg8: 13>  # Address: 000000b9
-    if (1 === r12[0]) goto label_185;
+    if (r2 === r13) goto label_185;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <JStrictEqual>: <Addr8: 76, Reg8: 3, Reg8: 13>  # Address: 000000a7
-    if (2 === r12[0]) goto label_167;
+    if (r3 === r13) goto label_167;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <JStrictEqual>: <Addr8: 38, Reg8: 4, Reg8: 13>  # Address: 00000085
-    if (3 === r12[0]) goto label_133;
+    if (r4 === r13) goto label_133;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r14 = globalThis.console;
@@ -99,11 +99,11 @@ function complexTest(param0) {
     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
     // ──────────────── Block 8 ──────────────── 
     // CODE → <Inc>: <Reg8: 11, Reg8: 1>
-    // USED → r11 = r1 + 1;
+    r11 = r1 + 1
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    // USED → r1 = r12.length;
+    r1 = r12.length
     // CODE → <JLessLong>: <Addr32: -129, Reg8: 11, Reg8: 1>  # Address: 00000050
-    if (r1 + 1 < r12.length) goto label_80;
+    if (r11 < r1) goto label_80;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;

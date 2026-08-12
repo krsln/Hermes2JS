@@ -35,9 +35,9 @@ async function* anon_15185(param0, param1) {
     // CODE → <IteratorNext>: <Reg8: 9, Reg8: 4, Reg8: 6>
     // USED → r9 = GetIterator(r6).next();
     // CODE → <Mov>: <Reg8: 3, Reg8: 4>
-    // USED → r3 = GetIterator(r6);
+    r3 = GetIterator(r6)
     // CODE → <JStrictEqual>: <Addr8: 45, Reg8: 3, Reg8: 7>  # Address: 00000063
-    if (GetIterator(r6) === undefined) goto label_99;
+    if (r3 === r7) goto label_99;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 1>
     // USED → r8 = 0;

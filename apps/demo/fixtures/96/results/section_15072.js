@@ -35,11 +35,16 @@ function logicalShortCircuitTest(param0, param1, param2) {
     // USED → r5 = param1 || param2;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 74>  # String: 'left' (Identifier)
-    r4 = !param1 ? "left" : null
+    r4 = "left"
+    if (param1) {
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <LoadConstNull>: <Reg8: 4>
+        r4 = null
+    }
     // ──────────────── Block 6 ──────────────── 
     // CODE → <LoadConstNull>: <Reg8: 3>
-    // USED → r3 = !param1 ? "left" : null;
-    if (null == null) {
+    r3 = null
+    if (r4 == r3) {
         // ──────────────── Block 7 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 3574>  # String: 'nullish-right' (String)
         // USED → r3 = "nullish-right";

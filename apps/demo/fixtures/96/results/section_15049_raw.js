@@ -11,7 +11,7 @@ function doWhileTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/DoWhileTests/doWhileTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 5>
-    // USED → r1 = 5;
+    r1 = 5
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // ──────────────── Block 1 ──────────────── 
@@ -22,9 +22,9 @@ function doWhileTest(param0) {
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(0)
     // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-    // USED → r2 = r2 + 1;
+    r2 = r2 + 1
     // CODE → <JLess>: <Addr8: -19, Reg8: 2, Reg8: 1>  # Address: 0000001b
-    if (r2 + 1 < 5) goto label_27;
+    if (r2 < r1) goto label_27;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;

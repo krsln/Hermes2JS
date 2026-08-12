@@ -15,10 +15,10 @@ function nestedTemplateTest(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:Strings/TemplateLiteralTests/nestedTemplateTest/start")
     // CODE → <Add>: <Reg8: 4, Reg8: 2, Reg8: 1>
-    // USED → r4 = param1 + param2;
+    r4 = param1 + param2
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 10>
-    // USED → r3 = 10;
-    if (param1 + param2 > 10) {
+    r3 = 10
+    if (r4 > r3) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Add>: <Reg8: 5, Reg8: 2, Reg8: 1>
         // USED → r5 = param1 + param2;

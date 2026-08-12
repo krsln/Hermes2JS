@@ -19,28 +19,28 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start")
     // CODE → <LoadConstZero>: <Reg8: 6>
-    // USED → r6 = 0;
+    r6 = 0
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // CODE → <LoadConstZero>: <Reg8: 8>
     // USED → r8 = 0;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    // USED → r2 = param1.length;
+    r2 = param1.length
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 2131>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught' (String)
     // USED → r5 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught";
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4701>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok";
     // CODE → <JNotLessLong>: <Addr32: 128, Reg8: 6, Reg8: 2>  # Address: 000000b3
-    if (!(0 < param1.length)) goto label_179;
+    if (!(r6 < r2)) goto label_179;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 3, Reg8: 7>
     // USED → r3 = param1;
     // CODE → <Mov>: <Reg8: 2, Reg8: 8>
     // USED → r2 = 0;
     // CODE → <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = param1[0];
+    r2 = param1[0]
     // CODE → <JLess>: <Addr8: 33, Reg8: 2, Reg8: 6>  # Address: 00000065
-    if (param1[0] < 0) goto label_101;
+    if (r2 < r6) goto label_101;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r9 = globalThis.console;
@@ -96,9 +96,9 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
     // USED → r2 = param1;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    // USED → r2 = param1.length;
+    r2 = param1.length
     // CODE → <JLess>: <Addr8: -117, Reg8: 3, Reg8: 2>  # Address: 0000003a
-    if (r2 + 1 < param1.length) goto label_58;
+    if (r3 < r2) goto label_58;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
