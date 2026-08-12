@@ -88,17 +88,17 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     return false;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <Mov>: <Reg8: 11, Reg8: 7>
-    // USED → r11 = 0;
+    r11 = 0
     // CODE → <Inc>: <Reg8: 13, Reg8: 11>
-    // USED → r13 = 0 + 1;
+    // USED → r13 = r11 + 1;
     // CODE → <Mov>: <Reg8: 7, Reg8: 13>
-    r7 = 0 + 1
+    r7 = r11 + 1
     // CODE → <Mov>: <Reg8: 11, Reg8: 6>
     // USED → r11 = param1.updateQueue.stores;
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 4, string_id: 139>  # String: 'length' (Identifier)
     // USED → r11 = param1.updateQueue.stores.length;
     // CODE → <JLess>: <Addr8: -68, Reg8: 13, Reg8: 11>  # Address: 00000056
-    if (0 + 1 < param1.updateQueue.stores.length) goto label_86;
+    if (r11 + 1 < param1.updateQueue.stores.length) goto label_86;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 12, UInt8: 7, string_id: 96>  # String: 'child' (Identifier)
     // USED → r6 = param1.child;

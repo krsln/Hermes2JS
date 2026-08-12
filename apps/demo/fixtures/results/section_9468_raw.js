@@ -53,14 +53,14 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
     console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", param1[0])
     // CODE → <Inc>: <Reg8: 4, Reg8: 5>
-    // USED → r4 = 0 + 1;
+    // USED → r4 = r5 + 1;
     // CODE → <Jmp>: <Addr8: -61>  # Address: 00000023
     goto label_35;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-    // USED → r5 = 0 + 1;
+    r5 = r5 + 1
     // CODE → <Inc>: <Reg8: 4, Reg8: 5>
-    r4 = 0 + 1 + 1
+    r4 = r5 + 1
     // CODE → <Jmp>: <Addr8: -69>  # Address: 00000023
     goto label_35;
     // ──────────────── Block 6 ──────────────── 

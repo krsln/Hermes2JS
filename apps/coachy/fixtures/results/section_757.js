@@ -147,17 +147,17 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                     if (!getEnvironment(0)[73].call(undefined, param1.updateQueue.stores[0].getSnapshot.call(undefined), param1.updateQueue.stores[0].value)) {
                         // ──────────────── Block 7 ──────────────── 
                         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
-                        // USED → r11 = 0;
+                        r11 = 0
                         // CODE → <Inc>: <Reg8: 13, Reg8: 11>
-                        // USED → r13 = 0 + 1;
+                        // USED → r13 = r11 + 1;
                         // CODE → <Mov>: <Reg8: 7, Reg8: 13>
-                        r7 = 0 + 1
+                        r7 = r11 + 1
                         // CODE → <Mov>: <Reg8: 11, Reg8: 6>
                         // USED → r11 = param1.updateQueue.stores;
                         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 4, string_id: 139>  # String: 'length' (Identifier)
                         // USED → r11 = param1.updateQueue.stores.length;
                     }
-                } while (0 + 1 < param1.updateQueue.stores.length);
+                } while (r11 + 1 < param1.updateQueue.stores.length);
                 // LOOP → END
             }
         }

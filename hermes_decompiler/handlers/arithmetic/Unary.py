@@ -84,6 +84,10 @@ class Inc(BaseUnaryOperator):
 
 
 class Dec(BaseUnaryOperator):
+
+    def get_source_value(self, ctx: OpcodeContext, src_reg: int) -> Expression:
+        return self.get_register_reference(ctx.analysis, src_reg)
+
     def expression(self, value: Expression):
         return BinaryExpression(left=value, operator=BinaryOperator.SUBTRACT, right=NumericLiteral(1))
 
