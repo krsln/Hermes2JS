@@ -105,26 +105,6 @@ class LoopLabeledExitStructurer(RegionStructurer):
 
     # -------------------------------------------------------------
 
-    def _try_recognize_labeled_exits(self, loop: LoopRegion) -> None:
-        """
-        Same "find one, convert, restart" shape as
-        `LoopBreakStructurer._try_recognize_breaks` - mutation
-        invalidates iteration over `loop.body.children`, and a block
-        `_convert` declines is added to `failed` so it isn't retried
-        forever.
-        """
-
-        failed: set = set()
-
-        while True:
-            block = self._find_candidate(loop, failed)
-
-            if block is None:
-                return
-
-            if not self._convert(loop, block):
-                failed.add(block)
-
     def _find_candidate(self, loop: LoopRegion, exclude: set) -> BasicBlock | None:
         """
         Unlike `LoopBreakStructurer._find_candidate`, the loop's own
@@ -158,8 +138,33 @@ class LoopLabeledExitStructurer(RegionStructurer):
 
         return None
 
-    def _convert(self, loop: LoopRegion, block: BasicBlock) -> bool:
+    def _try_recognize_labeled_exits(self, loop: LoopRegion) -> None:
+        failed: set = set()
+        while True:
+            # Collect ALL candidates first (stable snapshot), then try one.
+            candidates = []
+            for item in list(loop.body.children):
+                if not isinstance(item, BasicBlock):
+                    continue
+                if item in failed:
+                    continue
+                if isinstance(item.terminator, TerminatorConditionalBranch):
+                    candidates.append(item)
 
+            if not candidates:
+                return
+
+            converted_any = False
+            for block in candidates:
+                if self._convert(loop, block):
+                    converted_any = True
+                    break  # body mutated — restart full scan
+                failed.add(block)
+
+            if not converted_any:
+                return
+
+    def _convert(self, loop: LoopRegion, block: BasicBlock) -> bool:
         branch = block.terminator
         assert isinstance(branch, TerminatorConditionalBranch)
 
@@ -168,20 +173,14 @@ class LoopLabeledExitStructurer(RegionStructurer):
         target_block = next(
             (s for s in block.successors if s.address == branch.target), None
         )
-        fallthrough_candidates = [s for s in block.successors if s is not target_block]
-        fallthrough_block = fallthrough_candidates[0] if len(fallthrough_candidates) == 1 else None
-
-        if target_block is None or fallthrough_block is None:
+        fallthrough = [s for s in block.successors if s is not target_block]
+        if target_block is None or len(fallthrough) != 1:
             return False
+        fallthrough_block = fallthrough[0]
 
         target_inside = target_block in covered
         fallthrough_inside = fallthrough_block in covered
-
         if target_inside == fallthrough_inside:
-            # Both inside (ordinary in-loop if) or both outside (not
-            # this pass's shape) - `LoopBreakStructurer` already
-            # claimed the "leaves THIS loop to its own natural merge"
-            # case, earlier in the pipeline.
             return False
 
         if target_inside:
@@ -189,21 +188,31 @@ class LoopLabeledExitStructurer(RegionStructurer):
         else:
             exit_block, condition = target_block, branch.condition
 
-        if list(exit_block.predecessors) != [block]:
-            # Reached some other way too - not a clean single-purpose
-            # exit body, don't risk duplicating/misplacing it.
+        # ---- CRITICAL: natural exit of THIS loop is not a labeled exit ----
+        # For nested loops, inner's natural merge address == parent's latch.
+        # Without this filter those edges become spurious `continue parent`.
+        natural_merge = self._natural_loop_merge(loop)
+        exit_addrs = {exit_block.address}
+        for s in exit_block.successors:
+            exit_addrs.add(s.address)
+
+
+        # Also skip if this block is one of the current loop's own latches
+        # (back-edge test belongs to LoopConditionRegionPass / LoopBreak).
+        if block in getattr(loop, "latches", ()):
             return False
 
-        if self.graph.owner(exit_block) is None:
-            return False
+        target_loop, kind = self._find_target_loop_for_address(loop, exit_block.address)
+        if target_loop is None and len(list(exit_block.successors)) == 1:
+            target_loop, kind = self._find_target_loop_for_address(
+                loop, list(exit_block.successors)[0].address
+            )
 
-        target_loop, kind = self._find_target_loop(loop, exit_block)
-
-        if target_loop is None:
-            # No enclosing loop's latch/merge address matches where
-            # this edge actually goes - could be a genuinely different
-            # shape (e.g. escaping into unrelated cleanup code, or a
-            # skip depth this pass doesn't try to classify). Don't guess.
+        if target_loop is None or target_loop is loop:
+            logger.debug(
+                "LLExit no-match block=%s exit=%s addr=%s",
+                block.id, exit_block.id, exit_block.address,
+            )
             return False
 
         if target_loop.label is None:
@@ -216,33 +225,16 @@ class LoopLabeledExitStructurer(RegionStructurer):
             else BreakStatement(label=label_node)
         )
 
-        # ---- convert `block`'s branch into a structured IfRegion ----
-
         if block.instructions and block.instructions[-1].terminator is branch:
             block.instructions.pop()
         block.terminator = None
 
-        # ---- drop exit_block's own trailing jump, if it has one ----
-
-        exit_terminator = exit_block.terminator
-
-        if isinstance(exit_terminator, TerminatorJump):
-            if exit_block.instructions and exit_block.instructions[-1].terminator is exit_terminator:
-                exit_block.instructions.pop()
-            exit_block.terminator = None
-        elif exit_terminator is not None:
-            # Some other terminator kind on this "single exit block" -
-            # not the shape this pass expects; bail rather than guess.
-            return False
-
-        self._append_labeled_statement(exit_block, statement)
-
-        # ---- move exit_block out of its old home, into a fresh then_body ----
-
-        self.graph.extract_block(exit_block)
+        synth_id = self._allocate_block_id()
+        synth = BasicBlock(synth_id, address=0)
+        self._append_labeled_statement(synth, statement)
 
         then_body = SequenceRegion()
-        self.graph.transfer([exit_block], then_body)
+        self.graph.transfer([synth], then_body)
 
         if_region = IfRegion()
         if_region.condition = condition
@@ -252,7 +244,152 @@ class LoopLabeledExitStructurer(RegionStructurer):
         insert_at = loop.body.children.index(block) + 1
         self.graph.insert_at(loop.body, insert_at, if_region)
 
+        if hasattr(self.graph, "remove_edge"):
+            self.graph.remove_edge(block, exit_block)
+        else:
+            block.successors = [s for s in block.successors if s is not exit_block]
+            exit_block.predecessors = [
+                p for p in exit_block.predecessors if p is not block
+            ]
+
+        logger.debug(
+            "LLExit OK block=%s -> %s %s (header=%s)",
+            block.id, kind, target_loop.label, target_loop.header_block.id,
+        )
         return True
+
+    def _allocate_block_id(self) -> int:
+        if not hasattr(self, "_synth_id_counter"):
+            max_id = 0
+            cfg = getattr(self, "cfg", None)
+            if cfg is not None and hasattr(cfg, "blocks"):
+                for b in cfg.blocks:
+                    if b.id > max_id:
+                        max_id = b.id
+            self._synth_id_counter = max_id + 1
+        bid = self._synth_id_counter
+        self._synth_id_counter += 1
+        return bid
+
+    @staticmethod
+    def _find_target_loop_for_address(inner_loop: LoopRegion, target_address: int):
+        node = inner_loop.parent
+        while node is not None:
+            if isinstance(node, LoopRegion):
+                latch_addrs = {latch.address for latch in node.latches}
+                if target_address in latch_addrs:
+                    return node, "continue"
+
+                header_addr = getattr(node.header_block, "address", None)
+                if header_addr is not None and target_address == header_addr:
+                    return node, "continue"
+
+                merge = LoopLabeledExitStructurer._natural_loop_merge(node)
+                if merge is not None and target_address == merge:
+                    return node, "break"
+
+            node = node.parent
+        return None, None
+
+    @staticmethod
+    def _find_target_loop(inner_loop: LoopRegion, exit_block: BasicBlock):
+        succs = list(exit_block.successors)
+        if len(succs) != 1:
+            return None, None
+        target_address = succs[0].address
+
+        node = inner_loop.parent
+        while node is not None:
+            if isinstance(node, LoopRegion):
+                latch_addrs = {latch.address for latch in node.latches}
+
+                # continue: must land on a latch of this ancestor
+                if target_address in latch_addrs:
+                    return node, "continue"
+
+                # continue (alt): some Hermes builds jump to the header
+                # of the target loop for continue. Accept only if header
+                # is not also a latch of a deeper loop we already passed.
+                header_addr = getattr(node.header_block, "address", None)
+                if header_addr is not None and target_address == header_addr:
+                    return node, "continue"
+
+                # break: natural merge (first successor of any latch that
+                # leaves the loop body)
+                merge = LoopLabeledExitStructurer._natural_loop_merge(node)
+                if merge is not None and target_address == merge:
+                    return node, "break"
+
+            node = node.parent
+        return None, None
+
+    @staticmethod
+    def _resolve_exit_target_address(exit_block: BasicBlock) -> int | None:
+        """
+        Follow a chain of pure jump blocks (no real instructions, single
+        successor) to the real destination address. Hermes often emits a
+        bare physical fallthrough or a one-instruction Jmp block between
+        the conditional and the ancestor latch/merge.
+        """
+        seen: set[int] = set()
+        current = exit_block
+
+        while True:
+            if id(current) in seen:
+                return None
+            seen.add(id(current))
+
+            succs = list(current.successors)
+            if len(succs) != 1:
+                # Not a pure forward edge — use this block's own address
+                # only if we never moved (caller will decide).
+                return current.address if current is exit_block else None
+
+            # Pure jump / empty block → keep walking.
+            has_real_work = any(
+                getattr(ins, "statement", None) is not None
+                or (getattr(ins, "terminator", None) is not None
+                    and not isinstance(getattr(ins, "terminator", None), TerminatorJump))
+                for ins in (current.instructions or [])
+            )
+            # Also treat "only a TerminatorJump" as pure.
+            only_jump = (
+                    current.terminator is not None
+                    and isinstance(current.terminator, TerminatorJump)
+                    and (
+                            not current.instructions
+                            or (
+                                    len(current.instructions) == 1
+                                    and current.instructions[-1].terminator is current.terminator
+                            )
+                    )
+            )
+
+            if current is not exit_block and (has_real_work and not only_jump):
+                # Landed on a block that does real work — that address is the target.
+                return current.address
+
+            nxt = succs[0]
+            # Stop when successor looks like a loop header / latch candidate
+            # (multiple preds or already visited); still return its address.
+            if nxt is current:
+                return current.address
+
+            # Prefer the successor address when we are still on a pure edge.
+            if only_jump or current is exit_block:
+                current = nxt
+                continue
+
+            return current.address
+
+    @staticmethod
+    def _natural_loop_merge(loop: LoopRegion) -> int | None:
+        covered = loop.body.covered_blocks
+        for latch in loop.latches:
+            for succ in latch.successors:
+                if succ not in covered:
+                    return succ.address
+        return None
 
     # -------------------------------------------------------------
 
@@ -276,62 +413,3 @@ class LoopLabeledExitStructurer(RegionStructurer):
         )
 
         block.instructions.append(OpcodeResult(entry, statement=statement))
-
-    # -------------------------------------------------------------
-
-    @staticmethod
-    def _find_target_loop(inner_loop: LoopRegion, exit_block: BasicBlock):
-        """
-        Walk every `LoopRegion` enclosing `inner_loop`, nearest first,
-        testing whether `exit_block`'s own single CFG successor
-        matches that ancestor's latch (a `continue`) or its natural
-        merge/exit address (a `break`). Returns `(LoopRegion, "break"
-        | "continue")` for the first match, or `(None, None)` if no
-        enclosing loop's shape matches - safer to leave the edge
-        unconverted than to guess which ancestor was really intended.
-        """
-
-        successors = list(exit_block.successors)
-
-        if len(successors) != 1:
-            return None, None
-
-        target_address = successors[0].address
-
-        node = inner_loop.parent
-
-        while node is not None:
-
-            if isinstance(node, LoopRegion):
-
-                latch_addresses = {latch.address for latch in node.latches}
-
-                if target_address in latch_addresses:
-                    return node, "continue"
-
-                merge_address = LoopLabeledExitStructurer._natural_loop_merge(node)
-
-                if merge_address is not None and target_address == merge_address:
-                    return node, "break"
-
-            node = node.parent
-
-        return None, None
-
-    @staticmethod
-    def _natural_loop_merge(loop: LoopRegion) -> int | None:
-        """
-        Same computation as `LoopBreakStructurer._natural_loop_merge`
-        (see that class for the full rationale) - duplicated rather
-        than imported since it's a small, self-contained static method
-        and the two classes are independent siblings, not one
-        depending on the other.
-        """
-        covered = loop.body.covered_blocks
-
-        for latch in loop.latches:
-            for succ in latch.successors:
-                if succ not in covered:
-                    return succ.address
-
-        return None

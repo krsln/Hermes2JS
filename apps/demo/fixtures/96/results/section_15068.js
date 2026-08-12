@@ -20,6 +20,7 @@ function tripleNestedLabeledTest(param0) {
     // USED → r2 = 0;
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
+    loop_1:
     // LOOP → START (do_while)
     do {
         // ──────────────── Block 1 ──────────────── 
@@ -29,6 +30,7 @@ function tripleNestedLabeledTest(param0) {
         // USED → r8 = 0;
         // CODE → <LoadConstZero>: <Reg8: 9>
         // USED → r9 = 0;
+        loop_2:
         // LOOP → START (do_while)
         do {
             // ──────────────── Block 2 ──────────────── 
@@ -45,15 +47,22 @@ function tripleNestedLabeledTest(param0) {
                 // USED → r4 = 0 + 1;
                 // CODE → <Mov>: <Reg8: 14, Reg8: 12>
                 // USED → r14 = 0;
-                if (0 !== 1) {
-                    if (0 !== 2) {
-                        // ──────────────── Block 6 ──────────────── 
-                        // CODE → <Inc>: <Reg8: 12, Reg8: 14>
-                        // USED → r12 = 0 + 1;
-                        // CODE → <Mov>: <Reg8: 13, Reg8: 4>
-                        r13 = 0 + 1
-                    } else {
+                if (0 === 1) {
+                    // ──────────────── Block 10 ──────────────── 
+                    // CODE → ContinueStatement
+                    continue loop_2;
+                }
+                if (0 === 2) {
+                    if (0 === 2) {
+                        // ──────────────── Block 11 ──────────────── 
+                        // CODE → BreakStatement
+                        break loop_1;
                     }
+                    // ──────────────── Block 6 ──────────────── 
+                    // CODE → <Inc>: <Reg8: 12, Reg8: 14>
+                    // USED → r12 = 0 + 1;
+                    // CODE → <Mov>: <Reg8: 13, Reg8: 4>
+                    r13 = 0 + 1
                 }
             } while (0 + 1 < 3);
             // LOOP → END

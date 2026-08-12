@@ -18,6 +18,7 @@ function processColorsInProps(param0, param1) {
     // USED → r6 = HermesPropertyIterator(r5);
     if (HermesPropertyIterator(r5) !== undefined) {
         try {
+            loop_1:
             // LOOP → START (for_in)
             for (const r2 in r5) {
                 // ──────────────── Block 1 ──────────────── 
@@ -65,12 +66,17 @@ function processColorsInProps(param0, param1) {
                         // CODE → <IteratorBegin>: <Reg8: 12, Reg8: 11>
                         // USED → r12 = GetIterator(r11);
                         // LOOP → START (while)
-                        while (!(GetIterator(r11) === undefined)) {
+                        while (true) {
                             // ──────────────── Block 5 ──────────────── 
                             // CODE → <IteratorNext>: <Reg8: 14, Reg8: 12, Reg8: 11>
                             // USED → r14 = GetIterator(r11).next();
                             // CODE → <Mov>: <Reg8: 13, Reg8: 12>
                             // USED → r13 = GetIterator(r11);
+                            if (GetIterator(r11) === undefined) {
+                                // ──────────────── Block 12 ──────────────── 
+                                // CODE → ContinueStatement
+                                continue loop_1;
+                            }
                             // ──────────────── Block 6 ──────────────── 
                             // CODE → <Mov>: <Reg8: 8, Reg8: 14>
                             // USED → r8 = GetIterator(r11).next();
