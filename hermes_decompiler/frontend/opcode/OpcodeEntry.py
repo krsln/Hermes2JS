@@ -16,7 +16,7 @@ _FUNCTION_RE = re.compile(
     r'(?:\s*@\s*offset\s*(0x[0-9A-Fa-f]+))?'
 )
 
-# ==> 00000009: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 86>  # String: 'apply' (Identifier)
+# ==> 00000009: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 86> # String: 'apply' (Identifier)
 # Quoting switches to double quotes whenever the literal itself
 # contains an unescaped single quote (see e.g. `String: "'" (String)`
 # for the one-character string "'"), so both delimiters must be
@@ -26,7 +26,7 @@ _IDENTIFIER_RE = re.compile(
     r"String:\s*(?:'([^']*)'|\"([^\"]*)\")\s*\(Identifier\)"
 )
 
-# ==> 00000196: <LoadConstString>: <Reg8: 11, string_id: 4>  # String: 'Generator functions may not be called on executing generators' (String)
+# ==> 00000196: <LoadConstString>: <Reg8: 11, string_id: 4> # String: 'Generator functions may not be called on executing generators' (String)
 _STRING_RE = re.compile(
     r"String:\s*(?:'([^']*)'|\"([^\"]*)\")\s*\(String\)"
 )
@@ -182,7 +182,7 @@ class OpcodeEntry:
     def resolve_pattern_and_flags(self) -> tuple[str | None, str | None]:
         # `finditer` (unlike `findall`) leaves a non-participating
         # alternation group as None rather than '', so an empty-but-real
-        # match (e.g. flags == '') can be told apart from "the other
+        # match (e.g., flags == '') can be told apart from "the other
         # delimiter matched instead".
         matches = [
             m.group(1) if m.group(1) is not None else m.group(2)
