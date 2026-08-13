@@ -21,15 +21,15 @@ function labeledContinueTest(param0) {
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     loop_1:
-    // LOOP → START (do_while)
-    do {
+    // LOOP → START (for)
+    for (; r1 < 3; ) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 7, Reg8: 1>
         // USED → r7 = 0;
         // CODE → <LoadConstZero>: <Reg8: 8>
         // USED → r8 = 0;
-        // LOOP → START (do_while)
-        do {
+        // LOOP → START (for)
+        for (; r8 < 3; ) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 9, Reg8: 8>
             // USED → r9 = 0;
@@ -48,8 +48,7 @@ function labeledContinueTest(param0) {
             console.log(r7, r9)
             // CODE → <Inc>: <Reg8: 8, Reg8: 9>
             // USED → r8 = r9 + 1;
-        // → r8 = r9 + 1
-        } while (r8 < 3);
+        }
         // LOOP → END
         // ──────────────── Block 4 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -59,7 +58,7 @@ function labeledContinueTest(param0) {
         // CODE → <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
         console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
         // CODE → <Jmp>: <Addr8: 18>  # Address: 0000006c
-        continue;
+        goto label_108;
         // ──────────────── Block 5 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r9 = globalThis.console;
@@ -70,8 +69,7 @@ function labeledContinueTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 7>
         // USED → r1 = r7 + 1;
-    // → r1 = r7 + 1
-    } while (r1 < 3);
+    }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

@@ -21,8 +21,8 @@ function tripleNestedLabeledTest(param0) {
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     loop_1:
-    // LOOP → START (do_while)
-    do {
+    // LOOP → START (for)
+    for (; r1 < 3; ) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 10, Reg8: 2>
         // USED → r10 = 0;
@@ -31,8 +31,8 @@ function tripleNestedLabeledTest(param0) {
         // CODE → <LoadConstZero>: <Reg8: 9>
         // USED → r9 = 0;
         loop_2:
-        // LOOP → START (do_while)
-        do {
+        // LOOP → START (for)
+        for (; r9 < 3; ) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 13, Reg8: 10>
             r13 = 0
@@ -40,8 +40,8 @@ function tripleNestedLabeledTest(param0) {
             // USED → r11 = 0;
             // CODE → <LoadConstZero>: <Reg8: 12>
             // USED → r12 = 0;
-            // LOOP → START (do_while)
-            do {
+            // LOOP → START (for)
+            for (; r12 < 3; ) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <Inc>: <Reg8: 4, Reg8: 13>
                 // USED → r4 = r13 + 1;
@@ -65,24 +65,21 @@ function tripleNestedLabeledTest(param0) {
                     // CODE → <Mov>: <Reg8: 13, Reg8: 4>
                     r13 = r13 + 1
                 }
-            // → r12 = r14 + 1
-            } while (r12 < 3);
+            }
             // LOOP → END
             // ──────────────── Block 7 ──────────────── 
             // CODE → <Inc>: <Reg8: 9, Reg8: 11>
             // USED → r9 = r11 + 1;
             // CODE → <Mov>: <Reg8: 10, Reg8: 4>
             r10 = r13 + 1
-        // → r9 = r11 + 1
-        } while (r9 < 3);
+        }
         // LOOP → END
         // ──────────────── Block 8 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 8>
         // USED → r1 = r8 + 1;
         // CODE → <Mov>: <Reg8: 2, Reg8: 4>
         r2 = r13 + 1
-    // → r1 = r8 + 1
-    } while (r1 < 3);
+    }
     // LOOP → END
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

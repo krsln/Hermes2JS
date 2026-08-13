@@ -31,8 +31,8 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
             // USED → r0 = undefined;
             // CODE → <Ret>: <Reg8: 0>
             return undefined;
-            // LOOP → START (do_while)
-            do {
+            // LOOP → START (for)
+            for (; !param1; ) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <LoadConstString>: <Reg8: 0, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
@@ -40,7 +40,7 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
                 console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
                 // CODE → <Jmp>: <Addr8: 11>  # Address: 00000076
                 goto label_118;
-            } while (!param1);
+            }
             // LOOP → END
             // LOOP → START (while)
             while (true) {
@@ -69,8 +69,8 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
             // ──────────────── Block 8 ──────────────── 
             // CODE → <Throw>: <Reg8: 0>
             throw caughtException;
-            // LOOP → START (do_while)
-            do {
+            // LOOP → START (for)
+            for (; !param1; ) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <LoadConstString>: <Reg8: 1, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
                 // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
@@ -78,7 +78,7 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
                 console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
                 // CODE → <Jmp>: <Addr8: 11>  # Address: 000000a0
                 goto label_160;
-            } while (!param1);
+            }
             // LOOP → END
             // LOOP → START (while)
             while (true) {

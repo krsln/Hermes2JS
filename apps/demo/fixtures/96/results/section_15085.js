@@ -44,8 +44,9 @@ function tryCatchInsideLoopTest(param0, param1) {
         // CODE → <Ret>: <Reg8: 0>
         return r2 + 1;
     } else {
-        // LOOP → START (do_while)
-        do {
+        // LOOP → START (for)
+        // → r2 = param1[0]; r3 = param1
+        for (; r3 < r2; ) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <Mov>: <Reg8: 3, Reg8: 7>
             // USED → r3 = param1;
@@ -99,8 +100,7 @@ function tryCatchInsideLoopTest(param0, param1) {
                 }
                 // LOOP → END
             }
-        // → r2 = param1.length; r3 = r2 + 1
-        } while (r3 < r2);
+        }
         // LOOP → END
         // ──────────────── Block 3 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)

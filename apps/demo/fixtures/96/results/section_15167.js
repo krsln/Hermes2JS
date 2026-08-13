@@ -51,8 +51,8 @@ async function* anon_15167(param0, param1) {
             // CODE → <Ret>: <Reg8: 1>
             return undefined;
         } else {
-            // LOOP → START (do_while)
-            do {
+            // LOOP → START (for)
+            for (; r4 < r5; ) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 4>
                 // USED → r6 = 0;
@@ -82,8 +82,7 @@ async function* anon_15167(param0, param1) {
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → <Inc>: <Reg8: 4, Reg8: 6>
                 // USED → r4 = r6 + 1;
-            // → r4 = r6 + 1
-            } while (r4 < r5);
+            }
             // LOOP → END
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Ret>: <Reg8: 7>

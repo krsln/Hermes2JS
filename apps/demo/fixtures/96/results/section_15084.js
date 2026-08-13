@@ -29,8 +29,9 @@ function tryFinallyLoopBreakTest(param0, param1) {
         // USED → r4 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item";
         // → r2 = param1.length
         if (0 < r2) {
-            // LOOP → START (do_while)
-            do {
+            // LOOP → START (for)
+            // → r2 = param1[0]; r3 = param1
+            for (; r3 < r2; ) {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → <Mov>: <Reg8: 3, Reg8: 6>
                 // USED → r3 = param1;
@@ -60,8 +61,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
                     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
                     // USED → r2 = param1.length;
                 }
-            // → r2 = param1.length; r3 = r3 + 1
-            } while (r3 < r2);
+            }
             // LOOP → END
         }
         // ──────────────── Block 3 ──────────────── 

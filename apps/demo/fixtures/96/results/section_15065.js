@@ -16,15 +16,15 @@ function labeledBreakTest(param0) {
     // USED → r2 = 1;
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
-    // LOOP → START (do_while)
-    do {
+    // LOOP → START (for)
+    for (; r1 < 3; ) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 1>
         // USED → r5 = 0;
         // CODE → <LoadConstZero>: <Reg8: 6>
         // USED → r6 = 0;
-        // LOOP → START (do_while)
-        do {
+        // LOOP → START (for)
+        for (; r6 < 3; ) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 7, Reg8: 6>
             // USED → r7 = 0;
@@ -43,14 +43,12 @@ function labeledBreakTest(param0) {
                 // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 2>  # Address: 0000004f
                 if (r7 === 1) goto label_79;
             }
-        // → r6 = r7 + 1
-        } while (r6 < 3);
+        }
         // LOOP → END
         // ──────────────── Block 5 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 5>
         // USED → r1 = r5 + 1;
-    // → r1 = r5 + 1
-    } while (r1 < 3);
+    }
     // LOOP → END
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Jmp>: <Addr8: 22>  # Address: 00000063

@@ -38,8 +38,9 @@ function complexTest(param0) {
     // USED → r2 = 1;
     // → r12 = [1, 2, 3, 4, 5]
     if (0 < r12.length) {
-        // LOOP → START (do_while)
-        do {
+        // LOOP → START (for)
+        // → r1 = 0
+        for (; r11 < r1; ) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 11>
             // USED → r13 = r12[0];
@@ -102,8 +103,7 @@ function complexTest(param0) {
             // USED → r11 = r1 + 1;
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
             // USED → r1 = r12.length;
-        // → r1 = r12.length; r11 = r1 + 1
-        } while (r11 < r1);
+        }
         // LOOP → END
     }
     // ──────────────── Block 9 ──────────────── 

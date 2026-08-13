@@ -20,8 +20,8 @@ function forTest(param0) {
     // USED → r1 = 3;
     // CODE → <LoadConstZero>: <Reg8: 5>
     // USED → r5 = 0;
-    // LOOP → START (do_while)
-    do {
+    // LOOP → START (for)
+    for (; r5 < 10; ) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 5>
         // USED → r6 = 0;
@@ -61,8 +61,7 @@ function forTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 5, Reg8: 6>
         // USED → r5 = r6 + 1;
-    // → r5 = r6 + 1
-    } while (r5 < 10);
+    }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
