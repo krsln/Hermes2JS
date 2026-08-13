@@ -206,7 +206,9 @@ class Printer(NodeVisitor):
         outside `source_block` entirely, it's just omitted - this is a
         display convenience, not an analysis.
         """
-        if not self.verbose or condition is None or source_block is None:
+        # if not self.verbose:
+        #     return
+        if condition is None or source_block is None:
             return
 
         names = sorted(self.__collect_register_names(condition))
