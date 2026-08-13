@@ -30,6 +30,7 @@ function whileTest(param0) {
     // CODE → <Mov>: <Reg8: 7, Reg8: 5>
     r7 = 0
     // CODE → <JStrictEqual>: <Addr8: 9, Reg8: 7, Reg8: 1>  # Address: 00000043
+    // r7 = 0
     if (r7 === 2) goto label_67;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Inc>: <Reg8: 6, Reg8: 7>
@@ -49,6 +50,7 @@ function whileTest(param0) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 6>
     r5 = r7 + 1
     // CODE → <JLess>: <Addr8: -51, Reg8: 5, Reg8: 4>  # Address: 00000026
+    // r5 = r7 + 1
     if (r5 < 5) goto label_38;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

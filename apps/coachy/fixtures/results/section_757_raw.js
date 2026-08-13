@@ -37,6 +37,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <Mov>: <Reg8: 6, Reg8: 11>
     // USED → r6 = param1.updateQueue;
     // CODE → <JStrictEqual>: <Addr8: 106, Reg8: 4, Reg8: 11>  # Address: 0000009e
+    // r11 = param1.updateQueue
     if (null === r11) goto label_158;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Mov>: <Reg8: 11, Reg8: 6>
@@ -46,6 +47,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <Mov>: <Reg8: 6, Reg8: 11>
     // USED → r6 = param1.updateQueue.stores;
     // CODE → <JStrictEqual>: <Addr8: 90, Reg8: 4, Reg8: 11>  # Address: 0000009e
+    // r11 = param1.updateQueue.stores
     if (null === r11) goto label_158;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadConstZero>: <Reg8: 7>
@@ -55,6 +57,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 4, string_id: 139>  # String: 'length' (Identifier)
     r11 = param1.updateQueue.stores.length
     // CODE → <JNotLess>: <Addr8: 76, Reg8: 2, Reg8: 11>  # Address: 0000009e
+    // r11 = param1.updateQueue.stores.length
     if (!(0 < r11)) goto label_158;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Mov>: <Reg8: 13, Reg8: 6>
@@ -98,6 +101,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 4, string_id: 139>  # String: 'length' (Identifier)
     r11 = param1.updateQueue.stores.length
     // CODE → <JLess>: <Addr8: -68, Reg8: 13, Reg8: 11>  # Address: 00000056
+    // r11 = param1.updateQueue.stores.length; r13 = r11 + 1
     if (r13 < r11) goto label_86;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 12, UInt8: 7, string_id: 96>  # String: 'child' (Identifier)
@@ -112,6 +116,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 6>
     r11 = param1.child
     // CODE → <JStrictNotEqual>: <Addr8: 98, Reg8: 4, Reg8: 11>  # Address: 00000115
+    // r11 = param1.child
     if (null !== r11) goto label_277;
     // ──────────────── Block 10 ──────────────── 
     // CODE → <JStrictEqual>: <Addr8: 90, Reg8: 12, Reg8: 10>  # Address: 00000111
@@ -124,6 +129,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 14>
     r11 = param1
     // CODE → <JStrictNotEqual>: <Addr8: 45, Reg8: 4, Reg8: 13>  # Address: 000000f3
+    // r13 = param1.sibling
     if (null !== r13) goto label_243;
     // ──────────────── Block 12 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 14, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
@@ -131,11 +137,13 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <Mov>: <Reg8: 13, Reg8: 14>
     // USED → r13 = param1;
     // CODE → <JStrictEqual>: <Addr8: 59, Reg8: 4, Reg8: 15>  # Address: 0000010d
+    // r15 = param1.return
     if (null === r15) goto label_269;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
     r15 = param1.return
     // CODE → <JStrictEqual>: <Addr8: 50, Reg8: 15, Reg8: 10>  # Address: 0000010d
+    // r15 = param1.return
     if (r15 === r10) goto label_269;
     // ──────────────── Block 14 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
@@ -147,6 +155,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 14>
     // USED → r11 = param1.return;
     // CODE → <JStrictEqual>: <Addr8: -37, Reg8: 4, Reg8: 13>  # Address: 000000ca
+    // r13 = param1.return.sibling
     if (null === r13) goto label_202;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 11, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)

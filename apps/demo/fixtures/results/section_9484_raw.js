@@ -25,6 +25,7 @@ function optionalChainingTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <JmpTrue>: <Addr8: 23, Reg8: 3>  # Address: 00000043
+    // r5 = { "b": null }
     if (r5 == null) goto label_67;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 2, string_id: 36>  # String: 'b' (Identifier)
@@ -34,6 +35,7 @@ function optionalChainingTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000043
+    // r5 = r5.b
     if (r5.b == null) goto label_67;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 6562>  # String: 'c' (Identifier)

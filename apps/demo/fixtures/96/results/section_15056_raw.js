@@ -15,6 +15,7 @@ function switchTest(param0, param1) {
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     // CODE → <JStrictEqualLong>: <Addr32: 139, Reg8: 1, Reg8: 2>  # Address: 000000a6
+    // r2 = param1
     if (0 === r2) goto label_166;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>

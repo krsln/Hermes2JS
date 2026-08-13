@@ -11,6 +11,7 @@ function parameterDestructureTest(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <JStrictEqual>: <Addr8: 7, Reg8: 1, Reg8: 0>  # Address: 0000001a
+    // r1 = param1.name
     if (r1 === undefined) goto label_26;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 1>

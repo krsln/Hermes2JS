@@ -15,6 +15,7 @@ function ifTest(param0, param1) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 10>
     // USED → r1 = 10;
     // CODE → <JGreaterLong>: <Addr32: 149, Reg8: 2, Reg8: 1>  # Address: 000000b1
+    // r2 = param1
     if (r2 > 10) goto label_177;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 5>

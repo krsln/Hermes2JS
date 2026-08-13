@@ -73,6 +73,7 @@ function spreadArrayTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 5>
     r5 = undefined
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 0000009b
+    // r7 = r0
     if (GetIterator(r7) === undefined) goto label_155;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>

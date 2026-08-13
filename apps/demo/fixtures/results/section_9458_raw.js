@@ -27,6 +27,7 @@ function labeledBlockBreakTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → <JLess>: <Addr8: 24, Reg8: 3, Reg8: 0>  # Address: 00000055
+    // r3 = globalThis.Math.random()
     if (r3 < 2) goto label_85;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

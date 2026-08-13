@@ -17,6 +17,7 @@ function forInTest(param0) {
     // CODE → <GetPNameList>: <Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 2>
     // USED → r5 = HermesPropertyIterator(r4);
     // CODE → <JmpUndefined>: <Addr8: 38, Reg8: 5>  # Address: 0000004e
+    // r4 = r6
     if (HermesPropertyIterator(r4) === undefined) goto label_78;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetNextPName>: <Reg8: 1, Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 2>

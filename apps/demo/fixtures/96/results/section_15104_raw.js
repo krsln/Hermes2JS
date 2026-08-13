@@ -23,6 +23,7 @@ function renamedDefaultDestructureTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <JStrictEqual>: <Addr8: 7, Reg8: 3, Reg8: 0>  # Address: 00000038
+    // r3 = r2.timeout
     if (r3 === undefined) goto label_56;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
@@ -33,6 +34,7 @@ function renamedDefaultDestructureTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
     r4 = 3
     // CODE → <JStrictEqual>: <Addr8: 7, Reg8: 2, Reg8: 0>  # Address: 00000048
+    // r2 = r2.retries
     if (r2 === undefined) goto label_72;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>

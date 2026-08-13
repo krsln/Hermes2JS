@@ -2666,6 +2666,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
                     // CODE → <Mov>: <Reg8: 42, Reg8: 52>
                     r42 = r50[r49.next()]
                     // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
+                    // r53 = r51[r49.next()]
                     if (r53 === r52) goto label_3677;
                 }
             }

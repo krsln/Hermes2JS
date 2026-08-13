@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 import json
 from contextlib import contextmanager
 
@@ -170,7 +171,7 @@ class Printer(NodeVisitor):
         if self.verbose:
             self._write(lines, f"// ──────────────── Block {block.id} ──────────────── ")
 
-        for instruction in block.instructions:
+        for index, instruction in enumerate(block.instructions):
 
             if self.verbose:
                 bytecode = instruction.entry.bytecode
@@ -186,6 +187,8 @@ class Printer(NodeVisitor):
                 continue
 
             if instruction.terminator is not None:
+                self._emit_condition_comment(block, index, instruction.terminator, lines)
+
                 rendered = self.print_terminator(instruction.terminator)
 
                 self._write(lines, rendered)
@@ -208,6 +211,99 @@ class Printer(NodeVisitor):
                     self._write(lines, f"// USED → {rendered};")
             else:
                 self._write(lines, rendered)
+
+    # ---------------------------------------------------------
+    # unstructured-condition readability annotation
+    # ---------------------------------------------------------
+
+    def _emit_condition_comment(self, block: BasicBlock, index: int, terminator, lines: list[str]) -> None:
+        """
+        A `TerminatorConditionalBranch`/`TerminatorSwitch` that survives
+        all the way to the Printer means no structurer consumed it (see
+        `StructuralAnalyzer._audit_unstructured_blocks`) - it prints as a
+        raw `if (...) goto label_N;`. Its operands are often bare `rN`
+        identifiers left symbolic on purpose (e.g. a loop-carried counter
+        resolved via `get_register_symbolic` - see OpcodeHandler resolver
+        notes: inlining these would risk a stale-value correctness bug),
+        which makes the raw goto line unreadable in isolation without
+        scrolling back through every `// USED →` comment above it.
+
+        This does NOT change what gets rendered as code - only adds a
+        verbose-only comment restating each `rN` operand's last known
+        definition WITHIN THIS SAME BLOCK, purely for readability. No
+        register resolution, no inlining, no cross-block/cross-pass
+        lookups: if a `rN` was defined in an earlier block (e.g. a loop
+        header's own init), it's simply omitted here - this is a local
+        convenience, not a data-flow analysis.
+        """
+        if not self.verbose:
+            return
+
+        condition = getattr(terminator, "condition", None)
+        if condition is None:
+            return
+
+        names = sorted(self._collect_register_names(condition))
+        if not names:
+            return
+
+        parts = []
+        for name in names:
+            definition_text = self._find_local_definition_text(block, index, name)
+            if definition_text is not None:
+                parts.append(f"{name} = {definition_text}")
+
+        if parts:
+            self._write(lines, "// " + "; ".join(parts))
+
+    @staticmethod
+    def _collect_register_names(node) -> set[str]:
+        """
+        Every bare `rN` Identifier reachable inside `node`'s expression
+        tree, found generically via the same field-walk shape used by
+        `_repoint_node` in the region passes - no per-expression-type
+        special-casing needed.
+        """
+        found: set[str] = set()
+
+        def walk(n):
+            if isinstance(n, Identifier):
+                if n.name.startswith("r") and n.name[1:].isdigit():
+                    found.add(n.name)
+                return
+
+            if not dataclasses.is_dataclass(n):
+                return
+
+            for field in dataclasses.fields(n):
+                value = getattr(n, field.name)
+                if dataclasses.is_dataclass(value):
+                    walk(value)
+                elif isinstance(value, tuple):
+                    for item in value:
+                        if dataclasses.is_dataclass(item):
+                            walk(item)
+
+        walk(node)
+        return found
+
+    def _find_local_definition_text(self, block: BasicBlock, before_index: int, name: str) -> str | None:
+        """
+        Last instruction in `block` (strictly before `before_index`) whose
+        `dest_reg` matches `name`, rendered as plain text. Purely a
+        display convenience - see `_emit_condition_comment`'s docstring
+        for why this deliberately doesn't search outside the block.
+        """
+        reg = int(name[1:])
+
+        for earlier in reversed(block.instructions[:before_index]):
+            if earlier.dest_reg == reg and earlier.value is not None:
+                try:
+                    return self.print_expression(earlier.value)
+                except Exception:
+                    return None
+
+        return None
 
     # ---------------------------------------------------------
     # sequence

@@ -9,6 +9,7 @@ function parameterDestructureTest(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <JStrictNotEqual>: <Addr8: 8, Reg8: 8, Reg8: 1>  # Address: 00000017
+    // r8 = param1.name
     if (r8 !== undefined) goto label_23;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 514>  # String: 'anon' (String)
@@ -29,6 +30,7 @@ function parameterDestructureTest(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000033
+    // r4 = param2
     if (GetIterator(r4) === undefined) goto label_51;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Mov>: <Reg8: 7, Reg8: 5>
@@ -50,6 +52,7 @@ function parameterDestructureTest(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 0, Reg8: 2>
     r0 = GetIterator(r4) === undefined
     // CODE → <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 00000051
+    // r4 = GetIterator(r4).next()
     if (GetIterator(r4) === undefined) goto label_81;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 4>

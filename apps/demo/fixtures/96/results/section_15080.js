@@ -39,6 +39,7 @@ function tryLoopMultiReturnTest(param0, param1) {
                 // CODE → <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
                 r5 = param1[0]
                 // CODE → <JLess>: <Addr8: 58, Reg8: 5, Reg8: 2>  # Address: 00000076
+                // r5 = param1[0]
                 if (r5 < 0) goto label_118;
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 3>

@@ -17,6 +17,7 @@ function processColorsInProps(param0, param1) {
     // CODE → <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 3>
     // USED → r6 = HermesPropertyIterator(r5);
     // CODE → <JmpUndefinedLong>: <Addr32: 161, Reg8: 6>  # Address: 000000b7
+    // r5 = param1
     if (HermesPropertyIterator(r5) === undefined) goto label_183;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetNextPName>: <Reg8: 2, Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 3>
@@ -60,6 +61,7 @@ function processColorsInProps(param0, param1) {
     // CODE → <Mov>: <Reg8: 13, Reg8: 12>
     r13 = GetIterator(r11)
     // CODE → <JStrictEqual>: <Addr8: -69, Reg8: 13, Reg8: 0>  # Address: 0000001c
+    // r13 = GetIterator(r11)
     if (r13 === undefined) goto label_28;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 14>
@@ -75,6 +77,7 @@ function processColorsInProps(param0, param1) {
     // CODE → <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 13>
     r13 = GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]]
     // CODE → <JStrictEqual>: <Addr8: 27, Reg8: 13, Reg8: 0>  # Address: 00000095
+    // r13 = GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]]
     if (r13 === undefined) goto label_149;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <Mov>: <Reg8: 15, Reg8: 8>

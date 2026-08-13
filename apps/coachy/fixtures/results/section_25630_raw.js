@@ -37,6 +37,7 @@ function AcquisitionManager(param0, param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 592>  # String: '/' (String)
     // USED → r3 = "/";
     // CODE → <JStrictEqual>: <Addr8: 20, Reg8: 2, Reg8: 3>  # Address: 0000006a
+    // r2 = this._serverUrl.slice(-1)
     if (r2 === "/") goto label_106;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 22212>  # String: '_serverUrl' (Identifier)
