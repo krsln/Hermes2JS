@@ -42,7 +42,7 @@ function complexTest(param0) {
         do {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
-            r7 = r14[0]
+            // USED → r7 = r14[0];
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = 0;
             // Switch → START
@@ -99,9 +99,9 @@ function complexTest(param0) {
             // Switch → END
             // ──────────────── Block 8 ──────────────── 
             // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-            r0 = 0 + 1
+            // USED → r0 = 0 + 1;
             // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-            r7 = r14.length
+            // USED → r7 = r14.length;
         // → r0 = 0 + 1; r7 = r14.length
         } while (r0 < r7);
         // LOOP → END

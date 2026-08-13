@@ -11,7 +11,7 @@ function switchTest(param0, param1) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:ControlFlow/SwitchTests/switchTest/start")
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
-    r2 = param1
+    // USED → r2 = param1;
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // CODE → <JStrictEqualLong>: <Addr32: 139, Reg8: 0, Reg8: 2>  # Address: 000000a6

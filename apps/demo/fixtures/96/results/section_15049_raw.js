@@ -22,7 +22,7 @@ function doWhileTest(param0) {
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(0)
     // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-    r2 = r2 + 1
+    // USED → r2 = r2 + 1;
     // CODE → <JLess>: <Addr8: -19, Reg8: 2, Reg8: 1>  # Address: 0000001b
     // → r2 = r2 + 1
     if (r2 < 5) goto label_27;

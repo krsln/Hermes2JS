@@ -20,7 +20,7 @@ function forOfTest(param0) {
     // CODE → <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 2>
     // USED → r6 = GetIterator(r2).next();
     // CODE → <Mov>: <Reg8: 4, Reg8: 3>
-    r4 = GetIterator(r2)
+    // USED → r4 = GetIterator(r2);
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 4, Reg8: 0>  # Address: 00000047
     // → r4 = GetIterator(r2)
     if (r4 === undefined) goto label_71;

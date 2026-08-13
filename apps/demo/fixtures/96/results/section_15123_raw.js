@@ -94,7 +94,7 @@ function mapTest(param0) {
     // CODE → <IteratorNext>: <Reg8: 11, Reg8: 5, Reg8: 9>
     // USED → r11 = GetIterator(r9).next();
     // CODE → <Mov>: <Reg8: 10, Reg8: 5>
-    r10 = GetIterator(r9)
+    // USED → r10 = GetIterator(r9);
     // CODE → <JStrictEqual>: <Addr8: 53, Reg8: 10, Reg8: 0>  # Address: 00000102
     // → r10 = GetIterator(r9)
     if (r10 === undefined) goto label_258;

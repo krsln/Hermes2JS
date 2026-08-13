@@ -60,7 +60,7 @@ function propertyAccessTest(param0) {
     // CODE → <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 2>
     // USED → r8 = GetIterator(r2).next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-    r5 = GetIterator(r2)
+    // USED → r5 = GetIterator(r2);
     // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 5, Reg8: 0>  # Address: 000000b1
     // → r5 = GetIterator(r2)
     if (r5 === undefined) goto label_177;

@@ -72,7 +72,7 @@ function processColorsInProps(param0, param1) {
                             // CODE → <IteratorNext>: <Reg8: 14, Reg8: 12, Reg8: 11>
                             // USED → r14 = GetIterator(r11).next();
                             // CODE → <Mov>: <Reg8: 13, Reg8: 12>
-                            r13 = GetIterator(r11)
+                            // USED → r13 = GetIterator(r11);
                             // → r13 = GetIterator(r11)
                             if (r13 === undefined) {
                                 // ──────────────── Block 12 ──────────────── 
@@ -91,7 +91,7 @@ function processColorsInProps(param0, param1) {
                             // CODE → <Mov>: <Reg8: 9, Reg8: 13>
                             // USED → r9 = getEnvironment(1)[18][r6.next()];
                             // CODE → <GetByVal>: <Reg8: 13, Reg8: 14, Reg8: 13>
-                            r13 = GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]]
+                            // USED → r13 = GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]];
                             // → r13 = GetIterator(r11).next()[getEnvironment(1)[18][r6.next()]]
                             if (r13 !== undefined) {
                                 // ──────────────── Block 7 ──────────────── 

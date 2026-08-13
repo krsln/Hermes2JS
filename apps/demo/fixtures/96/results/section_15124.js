@@ -60,7 +60,7 @@ function setTest(param0) {
     for (const r7 of r2) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        r5 = GetIterator(r2)
+        // USED → r5 = GetIterator(r2);
         // → r5 = GetIterator(r2)
         if (r5 !== undefined) {
             // ──────────────── Block 2 ──────────────── 

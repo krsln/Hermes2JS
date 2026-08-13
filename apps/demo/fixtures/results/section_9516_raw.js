@@ -46,11 +46,11 @@ function legacyArgumentsTest(param0) {
     // CODE → <Call2>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 6>
     console.log(arguments[0])
     // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
-    r0 = 0 + 1
+    // USED → r0 = 0 + 1;
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
     r6 = undefined
     // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
-    r6 = arguments.length
+    // USED → r6 = arguments.length;
     // CODE → <JLess>: <Addr8: -30, Reg8: 0, Reg8: 6>  # Address: 00000042
     // → r0 = 0 + 1; r6 = arguments.length
     if (r0 < r6) goto label_66;

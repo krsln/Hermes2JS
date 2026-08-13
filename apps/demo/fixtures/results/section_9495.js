@@ -92,7 +92,7 @@ function mapTest(param0) {
         // CODE → <IteratorNext>: <Reg8: 9, Reg8: 5, Reg8: 8>
         // USED → r9 = GetIterator(r3).next();
         // CODE → <Mov>: <Reg8: 8, Reg8: 5>
-        r8 = GetIterator(r3)
+        // USED → r8 = GetIterator(r3);
         // → r8 = GetIterator(r3)
         if (r8 !== undefined) {
             // ──────────────── Block 2 ──────────────── 

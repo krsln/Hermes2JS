@@ -38,7 +38,7 @@ async function* anon_17161(param0, param1) {
     if (await yield.ok) goto label_140;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 12514>  # String: 'status' (Identifier)
-    r4 = await yield.status
+    // USED → r4 = await yield.status;
     // CODE → <LoadConstZero>: <Reg8: 3>
     // USED → r3 = 0;
     // CODE → <JStrictNotEqual>: <Addr8: 22, Reg8: 4, Reg8: 3>  # Address: 00000050

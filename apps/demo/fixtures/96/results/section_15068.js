@@ -27,7 +27,7 @@ function tripleNestedLabeledTest(param0) {
         // CODE → <Mov>: <Reg8: 10, Reg8: 2>
         // USED → r10 = 0;
         // CODE → <Mov>: <Reg8: 8, Reg8: 1>
-        r8 = 0
+        // USED → r8 = 0;
         // CODE → <LoadConstZero>: <Reg8: 9>
         // USED → r9 = 0;
         loop_2:
@@ -37,7 +37,7 @@ function tripleNestedLabeledTest(param0) {
             // CODE → <Mov>: <Reg8: 13, Reg8: 10>
             r13 = 0
             // CODE → <Mov>: <Reg8: 11, Reg8: 9>
-            r11 = 0
+            // USED → r11 = 0;
             // CODE → <LoadConstZero>: <Reg8: 12>
             // USED → r12 = 0;
             // LOOP → START (do_while)
@@ -46,7 +46,7 @@ function tripleNestedLabeledTest(param0) {
                 // CODE → <Inc>: <Reg8: 4, Reg8: 13>
                 // USED → r4 = r13 + 1;
                 // CODE → <Mov>: <Reg8: 14, Reg8: 12>
-                r14 = 0
+                // USED → r14 = 0;
                 // → r14 = 0
                 if (r14 === 1) {
                     // ──────────────── Block 10 ──────────────── 
@@ -61,7 +61,7 @@ function tripleNestedLabeledTest(param0) {
                     }
                     // ──────────────── Block 6 ──────────────── 
                     // CODE → <Inc>: <Reg8: 12, Reg8: 14>
-                    r12 = r14 + 1
+                    // USED → r12 = r14 + 1;
                     // CODE → <Mov>: <Reg8: 13, Reg8: 4>
                     r13 = r13 + 1
                 }
@@ -70,7 +70,7 @@ function tripleNestedLabeledTest(param0) {
             // LOOP → END
             // ──────────────── Block 7 ──────────────── 
             // CODE → <Inc>: <Reg8: 9, Reg8: 11>
-            r9 = r11 + 1
+            // USED → r9 = r11 + 1;
             // CODE → <Mov>: <Reg8: 10, Reg8: 4>
             r10 = r13 + 1
         // → r9 = r11 + 1
@@ -78,7 +78,7 @@ function tripleNestedLabeledTest(param0) {
         // LOOP → END
         // ──────────────── Block 8 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 8>
-        r1 = r8 + 1
+        // USED → r1 = r8 + 1;
         // CODE → <Mov>: <Reg8: 2, Reg8: 4>
         r2 = r13 + 1
     // → r1 = r8 + 1

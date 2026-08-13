@@ -1310,9 +1310,9 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 6, Reg8: 0, Reg8: 91, Reg8: 99, Reg8: 6>
     // USED → r6 = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 271733878);
     // CODE → <Add>: <Reg8: 5, Reg8: 5, Reg8: 42>
-    r5 = 0 + 16
+    // USED → r5 = 0 + 16;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 98, UInt8: 1, string_id: 139>  # String: 'length' (Identifier)
-    r0 = param1.length
+    // USED → r0 = param1.length;
     // CODE → <Mov>: <Reg8: 4, Reg8: 9>
     // USED → r4 = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 1732584193);
     // CODE → <Mov>: <Reg8: 3, Reg8: 8>

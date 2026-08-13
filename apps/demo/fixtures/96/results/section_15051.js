@@ -60,7 +60,7 @@ function forTest(param0) {
         }
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 5, Reg8: 6>
-        r5 = r6 + 1
+        // USED → r5 = r6 + 1;
     // → r5 = r6 + 1
     } while (r5 < 10);
     // LOOP → END

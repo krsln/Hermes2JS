@@ -13,7 +13,14 @@ function defaultParameterTest(param0, param1) {
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 10>
     // USED → r4 = 10;
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-    r5 = !(arguments.length > 1 && r3 !== undefined) ? 10 : arguments[1]
+    r5 = 10
+    if (arguments.length > 1) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
+        // USED → r3 = arguments[1];
+        // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+        r5 = (r3 === undefined) ? 10 : arguments[1]
+    }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
     // USED → r3 = arguments.length;
@@ -24,7 +31,14 @@ function defaultParameterTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 7363>  # String: 'result' (Identifier)
     // USED → r6 = "result";
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-    r4 = !(arguments.length > 2 && r3 !== undefined) ? "result" : arguments[2]
+    r4 = "result"
+    if (arguments.length > 2) {
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
+        // USED → r3 = arguments[2];
+        // CODE → <Mov>: <Reg8: 4, Reg8: 6>
+        r4 = (r3 === undefined) ? "result" : arguments[2]
+    }
     // ──────────────── Block 6 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
@@ -43,9 +57,9 @@ function defaultParameterTest(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <Add>: <Reg8: 1, Reg8: 1, Reg8: 5>
-    // USED → r1 = param1 + (!(arguments.length > 1 && r3 !== undefined) ? 10 : arguments[1]);
+    // USED → r1 = param1 + ((r3 === undefined) ? 10 : arguments[1]);
     // CODE → <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1>
-    console.log(!(arguments.length > 2 && r3 !== undefined) ? "result" : arguments[2], param1 + (!(arguments.length > 1 && r3 !== undefined) ? 10 : arguments[1]))
+    console.log((r3 === undefined) ? "result" : arguments[2], param1 + ((r3 === undefined) ? 10 : arguments[1]))
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

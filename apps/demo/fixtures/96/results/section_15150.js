@@ -30,7 +30,7 @@ function closureLoopTest(param0) {
         // CODE → <Call2>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 3>
         r6 = _loop.call(undefined, 0)
         // CODE → <Inc>: <Reg8: 3, Reg8: 3>
-        r3 = r3 + 1
+        // USED → r3 = r3 + 1;
     // → r3 = r3 + 1
     } while (r3 < 3);
     // LOOP → END
@@ -43,7 +43,7 @@ function closureLoopTest(param0) {
     for (const r4 of r2) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        r5 = GetIterator(r2)
+        // USED → r5 = GetIterator(r2);
         // → r5 = GetIterator(r2)
         if (r5 !== undefined) {
             // ──────────────── Block 4 ──────────────── 

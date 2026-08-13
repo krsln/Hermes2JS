@@ -18,7 +18,7 @@ function defaultParameterTest(param0, param1) {
     if (!(arguments.length > 1)) goto label_38;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
-    r3 = arguments[1]
+    // USED → r3 = arguments[1];
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
     r5 = 10
     // CODE → <JStrictEqual>: <Addr8: 8, Reg8: 3, Reg8: 0>  # Address: 00000026
@@ -42,7 +42,7 @@ function defaultParameterTest(param0, param1) {
     if (!(arguments.length > 2)) goto label_73;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
-    r3 = arguments[2]
+    // USED → r3 = arguments[2];
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
     r4 = "result"
     // CODE → <JStrictEqual>: <Addr8: 8, Reg8: 3, Reg8: 0>  # Address: 00000049

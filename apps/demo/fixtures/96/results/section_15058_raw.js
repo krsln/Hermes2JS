@@ -26,12 +26,12 @@ function nestedLoopTest(param0) {
     // USED → r1 = 0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 1>
-    r9 = 0
+    // USED → r9 = 0;
     // CODE → <LoadConstZero>: <Reg8: 10>
     // USED → r10 = 0;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 11, Reg8: 10>
-    r11 = 0
+    // USED → r11 = 0;
     // CODE → <JStrictNotEqual>: <Addr8: 40, Reg8: 9, Reg8: 2>  # Address: 0000005c
     if (r9 !== 1) goto label_92;
     // ──────────────── Block 3 ──────────────── 
@@ -52,13 +52,13 @@ function nestedLoopTest(param0) {
     console.log("nested")
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Inc>: <Reg8: 10, Reg8: 11>
-    r10 = r11 + 1
+    // USED → r10 = r11 + 1;
     // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 6>  # Address: 00000031
     // → r10 = r11 + 1
     if (r10 < 4) goto label_49;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Inc>: <Reg8: 1, Reg8: 9>
-    r1 = r9 + 1
+    // USED → r1 = r9 + 1;
     // CODE → <JLess>: <Addr8: -58, Reg8: 1, Reg8: 7>  # Address: 0000002c
     // → r1 = r9 + 1
     if (r1 < 3) goto label_44;

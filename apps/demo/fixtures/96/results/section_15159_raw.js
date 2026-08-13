@@ -42,7 +42,7 @@ function restOnlyTest(param0) {
     // CODE → <PutByVal>: <Reg8: 5, Reg8: 2, Reg8: 6>
     new globalThis.Array(arguments.length)[0] = arguments[0]
     // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-    r2 = r2 + 1
+    // USED → r2 = r2 + 1;
     // CODE → <JLess>: <Addr8: -11, Reg8: 2, Reg8: 3>  # Address: 00000043
     // → r2 = r2 + 1
     if (r2 < r3) goto label_67;

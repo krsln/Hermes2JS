@@ -1,12 +1,12 @@
 function defaultParameterTest(param0, param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 2>
-    r6 = (r6 !== undefined) ? param2 : 10
+    // USED → r6 = (r6 !== undefined) ? param2 : 10;
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 3>
-    r5 = (r5 !== undefined) ? param3 : "result"
+    // USED → r5 = (r5 !== undefined) ? param3 : "result";
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
     // USED → r2 = param1;

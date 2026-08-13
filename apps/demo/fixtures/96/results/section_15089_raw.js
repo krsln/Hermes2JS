@@ -23,7 +23,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <LoadConstZero>: <Reg8: 9>
     // USED → r9 = 0;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    r2 = param1.length
+    // USED → r2 = param1.length;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4653>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally' (String)
     // USED → r3 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally";
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 4650>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue' (String)
@@ -39,7 +39,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 9>
     // USED → r2 = 0;
     // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
-    r2 = param1[0]
+    // USED → r2 = param1[0];
     // CODE → <JLess>: <Addr8: 118, Reg8: 2, Reg8: 7>  # Address: 000000bc
     // → r2 = param1[0]
     if (r2 < 0) goto label_188;
@@ -49,7 +49,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 9>
     // USED → r2 = 0;
     // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
-    r2 = param1[0]
+    // USED → r2 = param1[0];
     // CODE → <JStrictEqual>: <Addr8: 49, Reg8: 2, Reg8: 7>  # Address: 00000085
     // → r2 = param1[0]
     if (r2 === 0) goto label_133;
@@ -97,7 +97,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 8>
     // USED → r2 = param1;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    r2 = param1.length
+    // USED → r2 = param1.length;
     // CODE → <JLess>: <Addr8: -122, Reg8: 4, Reg8: 2>  # Address: 0000003c
     // → r2 = param1.length; r4 = r2 + 1
     if (r4 < r2) goto label_60;

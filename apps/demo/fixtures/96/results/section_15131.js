@@ -13,7 +13,7 @@ function function_15131(param0, param1, param2, param3) {
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 0>
     // USED → r0 = getEnvironment(0)[0];
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 0, Reg8: 5>
-    r3 = getEnvironment(0)[0][param3]
+    // USED → r3 = getEnvironment(0)[0][param3];
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 7163>  # String: '' (Identifier)
     r0 = (r3 === undefined) ? "" : globalThis.String.call(undefined, getEnvironment(0)[0][param3])
     // CODE → <LoadConstUndefined>: <Reg8: 4>

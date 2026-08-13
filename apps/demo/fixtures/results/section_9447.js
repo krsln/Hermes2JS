@@ -51,7 +51,7 @@ function whileTest(param0) {
         }
         // ──────────────── Block 4 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-        r1 = 0 + 1
+        // USED → r1 = 0 + 1;
     // → r1 = 0 + 1
     } while (r1 < 5);
     // LOOP → END

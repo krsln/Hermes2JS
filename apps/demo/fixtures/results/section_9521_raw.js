@@ -28,7 +28,7 @@ function callGeneratorTests(param0) {
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
     // USED → r7 = GetIterator(r3).next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-    r5 = GetIterator(r3)
+    // USED → r5 = GetIterator(r3);
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000050
     // → r5 = GetIterator(r3)
     if (r5 === undefined) goto label_80;
@@ -65,7 +65,7 @@ function callGeneratorTests(param0) {
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
     // USED → r7 = GetIterator(r3).next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-    r5 = GetIterator(r3)
+    // USED → r5 = GetIterator(r3);
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000089
     // → r5 = GetIterator(r3)
     if (r5 === undefined) goto label_137;

@@ -25,7 +25,7 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <LoadConstZero>: <Reg8: 8>
     // USED → r8 = 0;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    r2 = param1.length
+    // USED → r2 = param1.length;
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 2131>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught' (String)
     // USED → r5 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught";
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4701>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok' (String)
@@ -52,7 +52,7 @@ function tryCatchInsideLoopTest(param0, param1) {
             // CODE → <Mov>: <Reg8: 2, Reg8: 8>
             // USED → r2 = 0;
             // CODE → <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
-            r2 = param1[0]
+            // USED → r2 = param1[0];
             // → r2 = param1[0]
             if (r2 >= 0) {
                 // ──────────────── Block 2 ──────────────── 
@@ -82,7 +82,7 @@ function tryCatchInsideLoopTest(param0, param1) {
                     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
                     // USED → r2 = param1;
                     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-                    r2 = param1.length
+                    // USED → r2 = param1.length;
                     // ──────────────── Block 4 ──────────────── 
                     // CODE → <Catch>: <Reg8: 9>
                     // USED → r9 = caughtException;

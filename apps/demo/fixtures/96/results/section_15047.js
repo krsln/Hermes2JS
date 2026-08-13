@@ -30,7 +30,7 @@ function whileTest(param0) {
         // CODE → <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
         console.log("while", 0)
         // CODE → <Mov>: <Reg8: 7, Reg8: 5>
-        r7 = 0
+        // USED → r7 = 0;
         // → r7 = 0
         if (r7 === 2) {
             // ──────────────── Block 3 ──────────────── 
@@ -49,7 +49,7 @@ function whileTest(param0) {
         }
         // ──────────────── Block 4 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 6>
-        r5 = r7 + 1
+        // USED → r5 = r7 + 1;
     // → r5 = r7 + 1
     } while (r5 < 5);
     // LOOP → END

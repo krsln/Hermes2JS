@@ -54,13 +54,13 @@ function nestedLoopTest(param0) {
             }
             // ──────────────── Block 5 ──────────────── 
             // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-            r0 = 0 + 1
+            // USED → r0 = 0 + 1;
         // → r0 = 0 + 1
         } while (r0 < 4);
         // LOOP → END
         // ──────────────── Block 6 ──────────────── 
         // CODE → <AddN>: <Reg8: 3, Reg8: 4, Reg8: 2>
-        r3 = 0 + 1
+        // USED → r3 = 0 + 1;
     // → r3 = 0 + 1
     } while (r3 < 3);
     // LOOP → END

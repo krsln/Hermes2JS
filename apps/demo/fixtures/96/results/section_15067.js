@@ -23,7 +23,7 @@ function labeledBlockBreakTest(param0) {
     // CODE → <GetById>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 9292>  # String: 'random' (Identifier)
     // USED → r1 = globalThis.Math.random;
     // CODE → <Call1>: <Reg8: 2, Reg8: 1, Reg8: 2>
-    r2 = globalThis.Math.random()
+    // USED → r2 = globalThis.Math.random();
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     // USED → r1 = 2;
     // → r2 = globalThis.Math.random()

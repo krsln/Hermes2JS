@@ -50,7 +50,7 @@ function whileTest(param0) {
     // USED → r0 = 0 + 1;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-    r1 = 0 + 1
+    // USED → r1 = 0 + 1;
     // CODE → <JLessN>: <Addr8: -53, Reg8: 1, Reg8: 4>  # Address: 00000029
     // → r1 = 0 + 1
     if (r1 < 5) goto label_41;

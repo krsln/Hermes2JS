@@ -52,13 +52,13 @@ function nestedLoopTest(param0) {
     console.log("nested")
     // ──────────────── Block 5 ──────────────── 
     // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-    r0 = 0 + 1
+    // USED → r0 = 0 + 1;
     // CODE → <JLessN>: <Addr8: -47, Reg8: 0, Reg8: 7>  # Address: 00000031
     // → r0 = 0 + 1
     if (r0 < 4) goto label_49;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <AddN>: <Reg8: 3, Reg8: 4, Reg8: 2>
-    r3 = 0 + 1
+    // USED → r3 = 0 + 1;
     // CODE → <JLessN>: <Addr8: -60, Reg8: 3, Reg8: 6>  # Address: 0000002c
     // → r3 = 0 + 1
     if (r3 < 3) goto label_44;

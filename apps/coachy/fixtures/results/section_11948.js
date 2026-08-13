@@ -29,7 +29,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <TypeOf>: <Reg8: 14, Reg8: 6>
-    r14 = typeof param1
+    // USED → r14 = typeof param1;
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
     // USED → r10 = "string";
     // → r14 = typeof param1
@@ -167,14 +167,14 @@ function _request(param0, param1, param2) {
     }
     // ──────────────── Block 13 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 10, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls
+    // USED → r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls;
     // → r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls
     if (r2 === undefined) {
         // ──────────────── Block 14 ──────────────── 
         // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
         // USED → r2 = this.defaults;
         // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-        r2 = this.defaults.allowAbsoluteUrls
+        // USED → r2 = this.defaults.allowAbsoluteUrls;
         // → r2 = this.defaults.allowAbsoluteUrls
         if (r2 !== undefined) {
             // ──────────────── Block 16 ──────────────── 
@@ -342,9 +342,9 @@ function _request(param0, param1, param2) {
                 // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
                 // USED → r1 = r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
                 // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-                r10 = r9 + 1
+                // USED → r10 = r9 + 1;
                 // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-                r9 = r14.length
+                // USED → r9 = r14.length;
             // → r10 = r9 + 1; r9 = r14.length
             } while (r10 < r9);
             // LOOP → END
@@ -379,7 +379,7 @@ function _request(param0, param1, param2) {
             // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
             // USED → r0 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(r2 + 1)]);
             // CODE → <Mov>: <Reg8: 1, Reg8: 5>
-            r1 = r2.length
+            // USED → r1 = r2.length;
         // → r1 = r2.length; r2 = r1 + 1
         } while (r2 < r1);
         // LOOP → END
@@ -431,7 +431,7 @@ function _request(param0, param1, param2) {
         // CODE → <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
         // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
         // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-        r9 = 0
+        // USED → r9 = 0;
         // → r14 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length; r9 = 0
         if (r9 < r14) {
             // LOOP → START (do_while)
@@ -462,7 +462,7 @@ function _request(param0, param1, param2) {
                 // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
                 // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2)).then(((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+0], ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+(r14 + 1)]);
                 // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-                r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length
+                // USED → r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length;
             // → r14 = r9 + 1; r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length
             } while (r14 < r9);
             // LOOP → END

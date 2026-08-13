@@ -1,7 +1,7 @@
 function defaultWithRestTest(param0) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>
-    r6 = param1
+    // USED → r6 = param1;
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <JStrictNotEqual>: <Addr8: 7, Reg8: 6, Reg8: 1>  # Address: 0000000c

@@ -29,7 +29,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → <TypeOf>: <Reg8: 14, Reg8: 6>
-    r14 = typeof param1
+    // USED → r14 = typeof param1;
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 12185>  # String: 'string' (Identifier)
     // USED → r10 = "string";
     // CODE → <JStrictEqual>: <Addr8: 18, Reg8: 14, Reg8: 10>  # Address: 0000003a
@@ -175,7 +175,7 @@ function _request(param0, param1, param2) {
     getEnvironment(1)[7].default.call(undefined, this.defaults, r2).paramsSerializer = r2
     // ──────────────── Block 13 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 10, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls
+    // USED → r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls;
     // CODE → <JStrictNotEqual>: <Addr8: 48, Reg8: 2, Reg8: 11>  # Address: 00000177
     // → r2 = getEnvironment(1)[7].default.call(undefined, this.defaults, r2).allowAbsoluteUrls
     if (r2 !== undefined) goto label_375;
@@ -183,7 +183,7 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 2, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
     // USED → r2 = this.defaults;
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 10, string_id: 12108>  # String: 'allowAbsoluteUrls' (Identifier)
-    r2 = this.defaults.allowAbsoluteUrls
+    // USED → r2 = this.defaults.allowAbsoluteUrls;
     // CODE → <JStrictNotEqual>: <Addr8: 14, Reg8: 2, Reg8: 11>  # Address: 00000165
     // → r2 = this.defaults.allowAbsoluteUrls
     if (r2 !== undefined) goto label_357;
@@ -387,7 +387,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 9, Reg8: 16, Reg8: 10>
     // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-    r9 = 0
+    // USED → r9 = 0;
     // CODE → <JNotLess>: <Addr8: 54, Reg8: 9, Reg8: 14>  # Address: 00000349
     // → r14 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length; r9 = 0
     if (!(r9 < r14)) goto label_841;
@@ -417,7 +417,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 0, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 9>
     // USED → r0 = globalThis.Promise.resolve(getEnvironment(1)[7].default.call(undefined, this.defaults, r2)).then(((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+0], ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined)[+(r14 + 1)]);
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-    r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length
+    // USED → r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length;
     // CODE → <JLess>: <Addr8: -46, Reg8: 14, Reg8: 9>  # Address: 00000317
     // → r14 = r9 + 1; r9 = ((r15[0] = getEnvironment(1)[6].default.bind(this))[1] = undefined).length
     if (r14 < r9) goto label_791;
@@ -466,9 +466,9 @@ function _request(param0, param1, param2) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 10, Reg8: 11, Reg8: 9>
     // USED → r1 = r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2));
     // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-    r10 = r9 + 1
+    // USED → r10 = r9 + 1;
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-    r9 = r14.length
+    // USED → r9 = r14.length;
     // CODE → <JLess>: <Addr8: -46, Reg8: 10, Reg8: 9>  # Address: 00000362
     // → r10 = r9 + 1; r9 = r14.length
     if (r10 < r9) goto label_866;
@@ -532,7 +532,7 @@ function _request(param0, param1, param2) {
     // CODE → <Call3>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 1>
     // USED → r0 = getEnvironment(1)[6].default.call(this, r14[+0].call(undefined, getEnvironment(1)[7].default.call(undefined, this.defaults, r2))).then(r2[+0], r2[+(r2 + 1)]);
     // CODE → <Mov>: <Reg8: 1, Reg8: 5>
-    r1 = r2.length
+    // USED → r1 = r2.length;
     // CODE → <JLess>: <Addr8: -49, Reg8: 2, Reg8: 1>  # Address: 000003cb
     // → r1 = r2.length; r2 = r1 + 1
     if (r2 < r1) goto label_971;

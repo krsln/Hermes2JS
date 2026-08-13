@@ -47,7 +47,7 @@ function labeledContinueTest(param0) {
             // CODE → <Call3>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 2, Reg8: 1>
             console.log(0, 0)
             // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 3>
-            r0 = 0 + 1
+            // USED → r0 = 0 + 1;
         // → r0 = 0 + 1
         } while (r0 < 3);
         // LOOP → END
@@ -69,7 +69,7 @@ function labeledContinueTest(param0) {
         console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
         // ──────────────── Block 6 ──────────────── 
         // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
-        r4 = 0 + 1
+        // USED → r4 = 0 + 1;
     // → r4 = 0 + 1
     } while (r4 < 3);
     // LOOP → END

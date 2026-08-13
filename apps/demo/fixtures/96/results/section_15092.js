@@ -20,7 +20,7 @@ function forOfTest(param0) {
     for (const r6 of r2) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 4, Reg8: 3>
-        r4 = GetIterator(r2)
+        // USED → r4 = GetIterator(r2);
         // → r4 = GetIterator(r2)
         if (r4 !== undefined) {
             // ──────────────── Block 2 ──────────────── 

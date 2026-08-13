@@ -24,7 +24,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
         // CODE → <Mov>: <Reg8: 2, Reg8: 6>
         // USED → r2 = param1;
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-        r2 = param1.length
+        // USED → r2 = param1.length;
         // CODE → <LoadConstString>: <Reg8: 4, string_id: 4735>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
         // USED → r4 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item";
         // → r2 = param1.length
@@ -37,7 +37,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
                 // CODE → <Mov>: <Reg8: 2, Reg8: 7>
                 // USED → r2 = 0;
                 // CODE → <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
-                r2 = param1[0]
+                // USED → r2 = param1[0];
                 // → r2 = param1[0]
                 if (r2 !== 0) {
                     // ──────────────── Block 2 ──────────────── 
@@ -58,7 +58,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
                     // CODE → <Mov>: <Reg8: 7, Reg8: 3>
                     r7 = r3 + 1
                     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-                    r2 = param1.length
+                    // USED → r2 = param1.length;
                 }
             // → r2 = param1.length; r3 = r3 + 1
             } while (r3 < r2);

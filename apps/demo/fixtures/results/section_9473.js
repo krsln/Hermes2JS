@@ -53,7 +53,7 @@ function tryCatchInsideLoopTest(param0, param1) {
             // CODE → <Mov>: <Reg8: 11, Reg8: 3>
             // USED → r11 = 0;
             // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
-            r12 = param1[0]
+            // USED → r12 = param1[0];
             // → r12 = param1[0]
             if (r12 >= 0) {
                 // ──────────────── Block 2 ──────────────── 
@@ -71,9 +71,9 @@ function tryCatchInsideLoopTest(param0, param1) {
                 continue;
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 8>
-                r4 = 0 + 1
+                // USED → r4 = 0 + 1;
                 // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-                r2 = param1.length
+                // USED → r2 = param1.length;
                 // CODE → <Mov>: <Reg8: 3, Reg8: 12>
                 // USED → r3 = 0 + 1;
                 // CODE → <Mov>: <Reg8: 0, Reg8: 3>

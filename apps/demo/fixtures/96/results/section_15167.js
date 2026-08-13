@@ -81,7 +81,7 @@ async function* anon_15167(param0, param1) {
                 }
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → <Inc>: <Reg8: 4, Reg8: 6>
-                r4 = r6 + 1
+                // USED → r4 = r6 + 1;
             // → r4 = r6 + 1
             } while (r4 < r5);
             // LOOP → END

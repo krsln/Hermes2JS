@@ -60,7 +60,7 @@ function forTest(param0) {
     console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
     // ──────────────── Block 6 ──────────────── 
     // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-    r0 = 0 + 1
+    // USED → r0 = 0 + 1;
     // CODE → <JLessN>: <Addr8: -71, Reg8: 0, Reg8: 3>  # Address: 00000028
     // → r0 = 0 + 1
     if (r0 < 10) goto label_40;

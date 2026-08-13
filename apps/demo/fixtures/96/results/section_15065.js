@@ -37,7 +37,7 @@ function labeledBreakTest(param0) {
                 // CODE → <Call3>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 5, Reg8: 7>
                 console.log(0, 0)
                 // CODE → <Inc>: <Reg8: 6, Reg8: 7>
-                r6 = r7 + 1
+                // USED → r6 = r7 + 1;
             } else {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 2>  # Address: 0000004f
@@ -48,7 +48,7 @@ function labeledBreakTest(param0) {
         // LOOP → END
         // ──────────────── Block 5 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 5>
-        r1 = r5 + 1
+        // USED → r1 = r5 + 1;
     // → r1 = r5 + 1
     } while (r1 < 3);
     // LOOP → END

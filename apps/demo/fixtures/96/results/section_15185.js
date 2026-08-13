@@ -40,7 +40,7 @@ async function* anon_15185(param0, param1) {
         for (const r9 of r6) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 3, Reg8: 4>
-            r3 = GetIterator(r6)
+            // USED → r3 = GetIterator(r6);
             // → r3 = GetIterator(r6)
             if (r3 !== undefined) {
                 // ──────────────── Block 3 ──────────────── 

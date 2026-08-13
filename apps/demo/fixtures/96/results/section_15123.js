@@ -94,7 +94,7 @@ function mapTest(param0) {
     for (const r11 of r9) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 10, Reg8: 5>
-        r10 = GetIterator(r9)
+        // USED → r10 = GetIterator(r9);
         // → r10 = GetIterator(r9)
         if (r10 !== undefined) {
             // ──────────────── Block 2 ──────────────── 

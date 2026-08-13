@@ -13,7 +13,14 @@ function defaultWithRestTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 1>
     // USED → r6 = 1;
     // CODE → <Mov>: <Reg8: 5, Reg8: 6>
-    r5 = !(arguments.length > 0 && r1 !== undefined) ? 1 : arguments[0]
+    r5 = 1
+    if (arguments.length > 0) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <GetArgumentsPropByVal>: <Reg8: 1, Reg8: 8, Reg8: 7>
+        // USED → r1 = arguments[0];
+        // CODE → <Mov>: <Reg8: 5, Reg8: 6>
+        r5 = (r1 === undefined) ? 1 : arguments[0]
+    }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
@@ -61,7 +68,7 @@ function defaultWithRestTest(param0) {
             // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
             new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1)[1 - 1] = arguments[1]
             // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-            r2 = r2 + 1
+            // USED → r2 = r2 + 1;
         // → r2 = r2 + 1
         } while (r2 < r3);
         // LOOP → END
@@ -74,13 +81,13 @@ function defaultWithRestTest(param0) {
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 15156>  # Function: [#15156  of 12 bytes]: 3 params @ offset 0x00269c66
     // USED → r2 = function_15156;
     // CODE → <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
-    // USED → r3 = new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1).reduce(function_15156, !(arguments.length > 0 && r1 !== undefined) ? 1 : arguments[0]);
+    // USED → r3 = new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1).reduce(function_15156, (r1 === undefined) ? 1 : arguments[0]);
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    console.log(new Array((arguments.length <= 1) ? 0 : arguments.length - 1).reduce(function_15156, !(arguments.length > 0 && r1 !== undefined) ? 1 : arguments[0]))
+    console.log(new Array((arguments.length <= 1) ? 0 : arguments.length - 1).reduce(function_15156, (r1 === undefined) ? 1 : arguments[0]))
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }
