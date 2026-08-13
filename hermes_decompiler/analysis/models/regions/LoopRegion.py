@@ -60,6 +60,8 @@ class LoopRegion(Region):
         # Block reached by an ordinary break.
         self.break_target: BasicBlock | None = None
 
+        self.update_block: BasicBlock | None = None
+
         # ---------------------------------------------------------
         # Classic `for (...)` metadata
         # ---------------------------------------------------------
