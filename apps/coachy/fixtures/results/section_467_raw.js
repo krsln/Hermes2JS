@@ -1549,7 +1549,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetPNameList>: <Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
     // USED → r49 = HermesPropertyIterator(r48);
     // CODE → <JmpUndefined>: <Addr8: 115, Reg8: 49>  # Address: 00000ecd
-    // r48 = r50
+    // → r48 = r50
     if (HermesPropertyIterator(r48) === undefined) goto label_3789;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 54, Reg8: 43>
@@ -1588,7 +1588,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <Mov>: <Reg8: 42, Reg8: 52>
     r42 = r50[r49.next()]
     // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
-    // r53 = r51[r49.next()]
+    // → r53 = r51[r49.next()]
     if (r53 === r52) goto label_3677;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
@@ -1785,7 +1785,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
     r42 = typeof globalThis.queueMicrotask
     // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 16, Reg8: 42>  # Address: 0000103e
-    // r42 = typeof globalThis.queueMicrotask
+    // → r42 = typeof globalThis.queueMicrotask
     if ("function" !== r42) goto label_4158;
     // ──────────────── Block 17 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
@@ -2026,7 +2026,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
     r39 = typeof globalThis.Object.is
     // CODE → <JStrictNotEqual>: <Addr8: 16, Reg8: 16, Reg8: 39>  # Address: 0000127e
-    // r39 = typeof globalThis.Object.is
+    // → r39 = typeof globalThis.Object.is
     if ("function" !== r39) goto label_4734;
     // ──────────────── Block 19 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
@@ -2401,7 +2401,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
     r17 = typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog
     // CODE → <JStrictNotEqualLong>: <Addr32: 774, Reg8: 16, Reg8: 17>  # Address: 000018b9
-    // r17 = typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog
+    // → r17 = typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog
     if ("function" !== r17) goto label_6329;
     // ──────────────── Block 21 ──────────────── 
     // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
@@ -2445,7 +2445,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
     r15 = typeof globalThis.WeakSet
     // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001625
-    // r15 = typeof globalThis.WeakSet
+    // → r15 = typeof globalThis.WeakSet
     if ("function" === r15) goto label_5669;
     // ──────────────── Block 22 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 49, string_id: 12170>  # String: 'Set' (Identifier)
@@ -2471,7 +2471,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
     r15 = typeof globalThis.WeakMap
     // CODE → <JStrictEqual>: <Addr8: 12, Reg8: 16, Reg8: 15>  # Address: 00001655
-    // r15 = typeof globalThis.WeakMap
+    // → r15 = typeof globalThis.WeakMap
     if ("function" === r15) goto label_5717;
     // ──────────────── Block 25 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
@@ -2643,7 +2643,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetById>: <Reg8: 12, Reg8: 12, UInt8: 57, string_id: 23266>  # String: 'findFiberByHostInstance' (Identifier)
     // USED → r12 = r12.findFiberByHostInstance;
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 12>  # Address: 000017d5
-    // r12 = r12.findFiberByHostInstance
+    // → r12 = r12.findFiberByHostInstance
     if (r12.findFiberByHostInstance) goto label_6101;
     // ──────────────── Block 28 ──────────────── 
     // CODE → <Mov>: <Reg8: 12, Reg8: 13>
@@ -2670,7 +2670,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
     r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
     // CODE → <JStrictEqual>: <Addr8: 57, Reg8: 9, Reg8: 8>  # Address: 0000183d
-    // r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+    // → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
     if ("undefined" === r8) goto label_6205;
     // ──────────────── Block 30 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)

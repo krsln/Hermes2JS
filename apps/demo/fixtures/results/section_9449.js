@@ -27,6 +27,7 @@ function forTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
         // USED → r1 = 0;
+        // → r1 = 0
         if (r1 === 3) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -62,6 +63,7 @@ function forTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
         r0 = 0 + 1
+    // → r0 = 0 + 1
     } while (r0 < 10);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

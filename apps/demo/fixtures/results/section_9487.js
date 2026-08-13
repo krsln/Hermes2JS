@@ -110,6 +110,7 @@ function nestedArrayDestructureTest(param0) {
     // USED → r9 = GetIterator(r12) === undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 11>
     r11 = undefined
+    // → r12 = (GetIterator(r6) === undefined) ? undefined : GetIterator(r6).next()
     if (GetIterator(r12) !== undefined) {
         // ──────────────── Block 15 ──────────────── 
         // CODE → <IteratorNext>: <Reg8: 13, Reg8: 6, Reg8: 12>
@@ -161,6 +162,7 @@ function nestedArrayDestructureTest(param0) {
     // USED → r8 = GetIterator(r17);
     // CODE → <StrictEq>: <Reg8: 9, Reg8: 8, Reg8: 3>
     // USED → r9 = GetIterator(r17) === undefined;
+    // → r17 = [10]
     if (GetIterator(r17) === undefined) {
         // ──────────────── Block 23 ──────────────── 
         // CODE → <LoadConstZero>: <Reg8: 12>

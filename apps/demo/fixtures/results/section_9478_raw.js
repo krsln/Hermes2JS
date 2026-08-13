@@ -15,7 +15,7 @@ function switchInsideTryTest(param0, param1) {
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // CODE → <JStrictEqual>: <Addr8: 60, Reg8: 0, Reg8: 2>  # Address: 00000057
-    // r2 = param1
+    // → r2 = param1
     if (0 === r2) goto label_87;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>

@@ -25,6 +25,7 @@ function doWhileTest(param0) {
         console.log(0)
         // CODE → <Inc>: <Reg8: 2, Reg8: 2>
         r2 = r2 + 1
+    // → r2 = r2 + 1
     } while (r2 < 5);
     // LOOP → END
     // ──────────────── Block 2 ──────────────── 

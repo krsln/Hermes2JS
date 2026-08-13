@@ -28,7 +28,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     r5 = param1.length
     // CODE → <JGreaterEqual>: <Addr8: 76, Reg8: 6, Reg8: 5>  # Address: 0000007a
-    // r5 = param1.length; r6 = 0
+    // → r5 = param1.length; r6 = 0
     if (r6 >= r5) goto label_122;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 3>
@@ -38,7 +38,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
     r5 = param1[0]
     // CODE → <JLess>: <Addr8: 58, Reg8: 5, Reg8: 2>  # Address: 00000076
-    // r5 = param1[0]
+    // → r5 = param1[0]
     if (r5 < 0) goto label_118;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 3>
@@ -48,7 +48,7 @@ function tryLoopMultiReturnTest(param0, param1) {
     // CODE → <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
     r5 = param1[0]
     // CODE → <JStrictEqual>: <Addr8: 36, Reg8: 5, Reg8: 2>  # Address: 0000006e
-    // r5 = param1[0]
+    // → r5 = param1[0]
     if (r5 === 0) goto label_110;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

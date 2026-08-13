@@ -1548,6 +1548,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     r41 = false
     // CODE → <GetPNameList>: <Reg8: 49, Reg8: 48, Reg8: 47, Reg8: 46>
     // USED → r49 = HermesPropertyIterator(r48);
+    // → r48 = r50
     if (HermesPropertyIterator(r48) === undefined) {
         if (false) {
             // ──────────────── Block 9 ──────────────── 
@@ -1704,6 +1705,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // USED → r16 = "function";
         // CODE → <TypeOf>: <Reg8: 42, Reg8: 42>
         r42 = typeof globalThis.queueMicrotask
+        // → r42 = typeof globalThis.queueMicrotask
         if ("function" === r42) {
             // ──────────────── Block 17 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 35, string_id: 16391>  # String: 'queueMicrotask' (Identifier)
@@ -1944,6 +1946,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // USED → r39 = globalThis.Object.is;
         // CODE → <TypeOf>: <Reg8: 39, Reg8: 39>
         r39 = typeof globalThis.Object.is
+        // → r39 = typeof globalThis.Object.is
         if ("function" === r39) {
             // ──────────────── Block 19 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 39, Reg8: 0, UInt8: 3, string_id: 37>  # String: 'Object' (Identifier)
@@ -2318,6 +2321,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // USED → r17 = param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog;
         // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
         r17 = typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog
+        // → r17 = typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog
         if ("function" !== r17) {
             // ──────────────── Block 35 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
@@ -2370,6 +2374,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // USED → r15 = globalThis.WeakSet;
             // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
             r15 = typeof globalThis.WeakSet
+            // → r15 = typeof globalThis.WeakSet
             if ("function" === r15) {
                 // ──────────────── Block 23 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 48, string_id: 16750>  # String: 'WeakSet' (Identifier)
@@ -2394,6 +2399,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // USED → r15 = globalThis.WeakMap;
             // CODE → <TypeOf>: <Reg8: 15, Reg8: 15>
             r15 = typeof globalThis.WeakMap
+            // → r15 = typeof globalThis.WeakMap
             if ("function" === r15) {
                 // ──────────────── Block 26 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 15, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
@@ -2585,6 +2591,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__;
             // CODE → <TypeOf>: <Reg8: 8, Reg8: 8>
             r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
+            // → r8 = typeof globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
             if ("undefined" !== r8) {
                 // ──────────────── Block 30 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 58, string_id: 16819>  # String: '__REACT_DEVTOOLS_GLOBAL_HOOK__' (Identifier)
@@ -2666,7 +2673,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
                     // CODE → <Mov>: <Reg8: 42, Reg8: 52>
                     r42 = r50[r49.next()]
                     // CODE → <JStrictEqual>: <Addr8: -61, Reg8: 53, Reg8: 52>  # Address: 00000e5d
-                    // r53 = r51[r49.next()]
+                    // → r53 = r51[r49.next()]
                     if (r53 === r52) goto label_3677;
                 }
             }

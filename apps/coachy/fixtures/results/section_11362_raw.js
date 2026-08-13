@@ -1322,7 +1322,7 @@ function binl_md5(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 6>
     // USED → r1 = getEnvironment(0)[14].call(undefined, getEnvironment(0)[13](r127, r126, r125, r124, r123, r122, r121, r120), 271733878);
     // CODE → <JLessLong>: <Addr32: -1795, Reg8: 5, Reg8: 0>  # Address: 00000236
-    // r0 = param1.length; r5 = 0 + 16
+    // → r0 = param1.length; r5 = 0 + 16
     if (r5 < r0) goto label_566;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 0, UInt16: 4>

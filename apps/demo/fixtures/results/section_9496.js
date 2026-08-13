@@ -63,6 +63,7 @@ function setTest(param0) {
         // USED → r7 = GetIterator(r2).next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
         r5 = GetIterator(r2)
+        // → r5 = GetIterator(r2)
         if (r5 !== undefined) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

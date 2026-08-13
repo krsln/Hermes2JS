@@ -56,6 +56,7 @@ async function* anon_15167(param0, param1) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 4>
                 // USED → r6 = 0;
+                // → r6 = 0
                 if (r6 === 2) {
                     // ──────────────── Block 7 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -81,6 +82,7 @@ async function* anon_15167(param0, param1) {
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → <Inc>: <Reg8: 4, Reg8: 6>
                 r4 = r6 + 1
+            // → r4 = r6 + 1
             } while (r4 < r5);
             // LOOP → END
             // ──────────────── Block 4 ──────────────── 

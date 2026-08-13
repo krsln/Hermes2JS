@@ -44,6 +44,7 @@ function restOnlyTest(param0) {
             new globalThis.Array(arguments.length)[0] = arguments[0]
             // CODE → <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
+        // → r2 = r2 + 1
         } while (r2 < r3);
         // LOOP → END
     }

@@ -92,7 +92,7 @@ function mapTest(param0) {
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>
     r8 = GetIterator(r3)
     // CODE → <JStrictEqual>: <Addr8: 106, Reg8: 8, Reg8: 0>  # Address: 0000012e
-    // r8 = GetIterator(r3)
+    // → r8 = GetIterator(r3)
     if (r8 === undefined) goto label_302;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 11, Reg8: 9>
@@ -110,7 +110,7 @@ function mapTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 10>
     r10 = undefined
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 9>  # Address: 000000e4
-    // r11 = GetIterator(r3).next()
+    // → r11 = GetIterator(r3).next()
     if (GetIterator(r11) === undefined) goto label_228;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Mov>: <Reg8: 10, Reg8: 12>
@@ -134,7 +134,7 @@ function mapTest(param0) {
     // CODE → <Mov>: <Reg8: 9, Reg8: 11>
     r9 = GetIterator(r11) === undefined
     // CODE → <JmpTrue>: <Addr8: 9, Reg8: 11>  # Address: 00000105
-    // r11 = GetIterator(r11) === undefined
+    // → r11 = GetIterator(r11) === undefined
     if (GetIterator(r11) === undefined) goto label_261;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Mov>: <Reg8: 10, Reg8: 12>

@@ -41,7 +41,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <LoadConstNull>: <Reg8: 2>
     // USED → r2 = null;
     // CODE → <JNotEqual>: <Addr8: 12, Reg8: 3, Reg8: 2>  # Address: 00000065
-    // r3 = r1.count
+    // → r3 = r1.count
     if (r3 != null) goto label_101;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstZero>: <Reg8: 2>

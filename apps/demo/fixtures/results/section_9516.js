@@ -52,6 +52,7 @@ function legacyArgumentsTest(param0) {
             r6 = undefined
             // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
             r6 = arguments.length
+        // → r0 = 0 + 1; r6 = arguments.length
         } while (r0 < r6);
         // LOOP → END
     }

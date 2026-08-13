@@ -24,6 +24,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
     r2 = param1.length
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4894>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item";
+    // → r2 = param1.length
     if (0 < r2) {
         // LOOP → START (do_while)
         do {
@@ -32,6 +33,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
             // USED → r2 = 0;
             // CODE → <GetByVal>: <Reg8: 2, Reg8: 6, Reg8: 2>
             r2 = param1[0]
+            // → r2 = param1[0]
             if (r2 !== 0) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -51,6 +53,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
                 // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
                 r2 = param1.length
             }
+        // → r2 = param1.length; r3 = r2 + 1
         } while (r3 < r2);
         // LOOP → END
     }

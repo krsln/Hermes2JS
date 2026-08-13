@@ -159,105 +159,73 @@ class Printer(NodeVisitor):
                 raise TypeError(type(region))
 
     # ---------------------------------------------------------
-    # basic block
+    # shared condition-readability annotation
     # ---------------------------------------------------------
 
-    def _emit_block(
+    def _emit_condition_comment(
             self,
-            block: BasicBlock,
+            condition,
             lines: list[str],
-    ):
-
-        if self.verbose:
-            self._write(lines, f"// ──────────────── Block {block.id} ──────────────── ")
-
-        for index, instruction in enumerate(block.instructions):
-
-            if self.verbose:
-                bytecode = instruction.entry.bytecode
-                bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
-
-                self._write(lines, f"// CODE → {bytecode}")
-
-            if instruction.statement is not None:
-                rendered = self.print_statement(instruction.statement)
-
-                self._write(lines, rendered)
-
-                continue
-
-            if instruction.terminator is not None:
-                self._emit_condition_comment(block, index, instruction.terminator, lines)
-
-                rendered = self.print_terminator(instruction.terminator)
-
-                self._write(lines, rendered)
-
-                continue
-
-            if instruction.value is None:
-                continue
-
-            rendered = self.print_expression(instruction.value)
-
-            if instruction.dest_reg is not None:
-                if not instruction.definition_used and rendered.startswith("globalThis.console.log"):
-                    rendered = rendered.replace("globalThis.", "")
-                else:
-                    rendered = f"r{instruction.dest_reg} = {rendered}"
-
-            if instruction.definition_used:
-                if self.verbose:
-                    self._write(lines, f"// USED → {rendered};")
-            else:
-                self._write(lines, rendered)
-
-    # ---------------------------------------------------------
-    # unstructured-condition readability annotation
-    # ---------------------------------------------------------
-
-    def _emit_condition_comment(self, block: BasicBlock, index: int, terminator, lines: list[str]) -> None:
+            *,
+            source_block: BasicBlock | None,
+            before_index: int | None = None,
+    ) -> None:
         """
-        A `TerminatorConditionalBranch`/`TerminatorSwitch` that survives
-        all the way to the Printer means no structurer consumed it (see
-        `StructuralAnalyzer._audit_unstructured_blocks`) - it prints as a
-        raw `if (...) goto label_N;`. Its operands are often bare `rN`
-        identifiers left symbolic on purpose (e.g. a loop-carried counter
-        resolved via `get_register_symbolic` - see OpcodeHandler resolver
-        notes: inlining these would risk a stale-value correctness bug),
-        which makes the raw goto line unreadable in isolation without
-        scrolling back through every `// USED →` comment above it.
+        Single shared readability aid for every place a structured or
+        unstructured CONDITION can still carry bare `rN` operands that
+        were deliberately left symbolic (loop-carried values resolved via
+        `get_register_symbolic` - see OpcodeHandler resolver notes:
+        inlining these risks a stale-value correctness bug). Restates
+        each `rN`'s last known definition IN A COMMENT, purely for
+        readability - never changes the rendered expression itself.
 
-        This does NOT change what gets rendered as code - only adds a
-        verbose-only comment restating each `rN` operand's last known
-        definition WITHIN THIS SAME BLOCK, purely for readability. No
-        register resolution, no inlining, no cross-block/cross-pass
-        lookups: if a `rN` was defined in an earlier block (e.g. a loop
-        header's own init), it's simply omitted here - this is a local
-        convenience, not a data-flow analysis.
+        Two distinct call shapes feed into this one method:
+
+        - A still-unconsumed `instruction.terminator` (`_emit_block`):
+          the guard instruction is still physically present in
+          `source_block`, so `before_index` is that instruction's own
+          index - only strictly earlier instructions in the same block
+          are eligible definitions.
+
+        - An already-consumed `region.condition` (`_emit_loop`, and
+          potentially `_emit_if`/`_emit_switch`): the original guard
+          instruction was popped from `source_block` once its condition
+          was extracted (see `LoopConditionRegionPass._consume_guard`),
+          so there's no specific index to stop at - `before_index`
+          defaults to `len(source_block.instructions)`, i.e. "every
+          instruction still in this block is eligible."
+
+        `source_block=None` (or an empty/unknown block) is a silent
+        no-op - some conditions (e.g. a loop with no `latches`/`header`
+        resolvable, or a condition that's already a clean expression with
+        no `rN` operands at all) simply have nothing local to show, which
+        isn't an error.
+
+        Deliberately local-only: no cross-block/cross-pass data-flow
+        lookup, no register-state resolution. If a `rN` was defined
+        outside `source_block` entirely, it's just omitted - this is a
+        display convenience, not an analysis.
         """
-        if not self.verbose:
+        if not self.verbose or condition is None or source_block is None:
             return
 
-        condition = getattr(terminator, "condition", None)
-        if condition is None:
-            return
-
-        names = sorted(self._collect_register_names(condition))
+        names = sorted(self.__collect_register_names(condition))
         if not names:
             return
 
+        index = len(source_block.instructions) if before_index is None else before_index
+
         parts = []
         for name in names:
-            definition_text = self._find_local_definition_text(block, index, name)
+            definition_text = self.__find_local_definition_text(source_block, index, name)
             if definition_text is not None:
                 parts.append(f"{name} = {definition_text}")
 
         if parts:
-            self._write(lines, "// " + "; ".join(parts))
+            self._write(lines, "// → " + "; ".join(parts))
 
     @staticmethod
-    def _collect_register_names(node) -> set[str]:
+    def __collect_register_names(node) -> set[str]:
         """
         Every bare `rN` Identifier reachable inside `node`'s expression
         tree, found generically via the same field-walk shape used by
@@ -287,12 +255,10 @@ class Printer(NodeVisitor):
         walk(node)
         return found
 
-    def _find_local_definition_text(self, block: BasicBlock, before_index: int, name: str) -> str | None:
+    def __find_local_definition_text(self, block: BasicBlock, before_index: int, name: str) -> str | None:
         """
         Last instruction in `block` (strictly before `before_index`) whose
-        `dest_reg` matches `name`, rendered as plain text. Purely a
-        display convenience - see `_emit_condition_comment`'s docstring
-        for why this deliberately doesn't search outside the block.
+        `dest_reg` matches `name`, rendered as plain text.
         """
         reg = int(name[1:])
 
@@ -304,6 +270,64 @@ class Printer(NodeVisitor):
                     return None
 
         return None
+
+    # ---------------------------------------------------------
+    # basic block
+    # ---------------------------------------------------------
+
+    def _emit_block(
+            self,
+            block: BasicBlock,
+            lines: list[str],
+    ):
+
+        if self.verbose:
+            self._write(lines, f"// ──────────────── Block {block.id} ──────────────── ")
+
+        for index, instruction in enumerate(block.instructions):
+
+            if self.verbose:
+                bytecode = instruction.entry.bytecode
+                bytecode = bytecode.split(":", 1)[1].strip() if ":" in bytecode else bytecode.strip()
+
+                self._write(lines, f"// CODE → {bytecode}")
+
+            if instruction.statement is not None:
+                rendered = self.print_statement(instruction.statement)
+
+                self._write(lines, rendered)
+
+                continue
+
+            if instruction.terminator is not None:
+                self._emit_condition_comment(
+                    getattr(instruction.terminator, "condition", None),
+                    lines,
+                    source_block=block,
+                    before_index=index,
+                )
+                rendered = self.print_terminator(instruction.terminator)
+
+                self._write(lines, rendered)
+
+                continue
+
+            if instruction.value is None:
+                continue
+
+            rendered = self.print_expression(instruction.value)
+
+            if instruction.dest_reg is not None:
+                if not instruction.definition_used and rendered.startswith("globalThis.console.log"):
+                    rendered = rendered.replace("globalThis.", "")
+                else:
+                    rendered = f"r{instruction.dest_reg} = {rendered}"
+
+            if instruction.definition_used:
+                if self.verbose:
+                    self._write(lines, f"// USED → {rendered};")
+            else:
+                self._write(lines, rendered)
 
     # ---------------------------------------------------------
     # sequence
@@ -325,6 +349,11 @@ class Printer(NodeVisitor):
         nested braces – matching the original source style.
         """
         cond = self.print_expression(region.condition)
+
+        self._emit_condition_comment(
+            region.condition, lines,
+            source_block=self.__nearest_preceding_block(region),
+        )
 
         if _chain:
             self._write(lines, f"}} else if ({cond}) {{")
@@ -352,6 +381,55 @@ class Printer(NodeVisitor):
             self._emit_region(region.else_body, lines)
 
         self._write(lines, "}")
+
+    @staticmethod
+    def __nearest_preceding_block(region: IfRegion) -> BasicBlock | None:
+        """
+        The nearest `BasicBlock` sibling immediately preceding `region`
+        in its own parent `SequenceRegion`, if any - this is where the
+        guard's operands (the `Greater`/`Less`/`JStrictEqual`/... setup
+        instructions IfStructurer consumed into `region.condition`) still
+        physically live, same as how `LoopConditionRegionPass._consume_guard`
+        leaves everything except the branch instruction itself sitting in
+        the header/latch block.
+
+        Only ever walks LOCAL siblings within the immediate parent - never
+        crosses into a grandparent `SequenceRegion` (e.g. stepping out of
+        a nested `if`/`try` into whatever encloses it). A condition whose
+        operands were defined further out than that has nothing reliable
+        to show here anyway; returning `None` in that case is correct,
+        not a bug to work around - see `_emit_condition_comment`'s own
+        docstring for why this stays a local convenience rather than a
+        real data-flow lookup.
+
+        Returns `None` if:
+          - `region.parent` isn't a `SequenceRegion` (shouldn't normally
+            happen post-structuring, but IfRegion.parent is only ever
+            actually guaranteed to exist once some structurer has run),
+          - `region` isn't found in its own parent's `children` (stale
+            reference after a mutation that didn't update `.parent`), or
+          - no `BasicBlock` sibling precedes it (e.g. `region` is the very
+            first child of its `SequenceRegion`).
+        """
+        parent = region.parent
+
+        if not isinstance(parent, SequenceRegion):
+            return None
+
+        try:
+            index = parent.children.index(region)
+        except ValueError:
+            return None
+
+        for sibling in reversed(parent.children[:index]):
+            if isinstance(sibling, BasicBlock):
+                return sibling
+            # A non-BasicBlock sibling (another Region) sitting directly
+            # before this IfRegion means there's no flat block adjacency
+            # to walk back into - stop rather than reaching past it.
+            return None
+
+        return None
 
     @staticmethod
     def _is_skippable_prefix(item) -> bool:
@@ -431,6 +509,10 @@ class Printer(NodeVisitor):
             with self._indented():
                 self._emit_region(region.body, lines)
 
+            self._emit_condition_comment(
+                region.condition, lines,
+                source_block=self.__condition_source_block(region, is_do_while=True),
+            )
             self._write(lines, f"}} while ({cond});")
         else:
             cond = (
@@ -439,6 +521,10 @@ class Printer(NodeVisitor):
                 else "true"
             )
 
+            self._emit_condition_comment(
+                region.condition, lines,
+                source_block=self.__condition_source_block(region, is_do_while=False),
+            )
             self._write(lines, f"while ({cond}) {{")
 
             with self._indented():
@@ -448,6 +534,25 @@ class Printer(NodeVisitor):
 
         if self.verbose:
             self._write(lines, "// LOOP → END")
+
+    @staticmethod
+    def __condition_source_block(region: LoopRegion, *, is_do_while: bool) -> BasicBlock | None:
+        """
+        The block `LoopConditionRegionPass._consume_guard` actually pulled
+        the condition off of: the header for a top-tested (WHILE) loop,
+        the single latch for a bottom-tested (DO_WHILE) one - mirrors that
+        pass's own `_extract` logic exactly (including the self-loop case,
+        where header IS the latch).
+        """
+        if not is_do_while:
+            return region.header_block
+
+        latches = getattr(region, "latches", None)
+        if latches and len(latches) == 1:
+            return next(iter(latches))
+
+        # Self-loop: header is its own sole latch.
+        return region.header_block
 
     def _emit_for_each(self, region: LoopRegion, lines):
         """

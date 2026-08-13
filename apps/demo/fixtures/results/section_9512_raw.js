@@ -5,7 +5,7 @@ function defaultWithRestTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <JStrictNotEqual>: <Addr8: 7, Reg8: 6, Reg8: 1>  # Address: 0000000c
-    // r6 = param1
+    // → r6 = param1
     if (r6 !== undefined) goto label_12;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 1>

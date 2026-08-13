@@ -40,6 +40,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                 // USED → r11 = param1.subtreeFlags;
                 // CODE → <BitAnd>: <Reg8: 11, Reg8: 11, Reg8: 3>
                 // USED → r11 = param1.subtreeFlags & 16384;
+                // → r11 = param1.subtreeFlags & 16384
                 if (param1.subtreeFlags & 16384 && null === r11) {
                     // ──────────────── Block 18 ──────────────── 
                     // CODE → <Mov>: <Reg8: 11, Reg8: 6>
@@ -58,6 +59,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                     // USED → r14 = param1;
                     // CODE → <Mov>: <Reg8: 11, Reg8: 14>
                     r11 = param1
+                    // → r13 = param1.sibling
                     if (null !== r13) {
                         // ──────────────── Block 15 ──────────────── 
                         // CODE → <GetByIdShort>: <Reg8: 14, Reg8: 11, UInt8: 9, string_id: 215>  # String: 'sibling' (Identifier)
@@ -78,12 +80,13 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                             r15 = param1.return
                             // CODE → <Mov>: <Reg8: 13, Reg8: 14>
                             // USED → r13 = param1;
+                            // → r15 = param1.return
                             if (null !== r15) {
                                 // ──────────────── Block 13 ──────────────── 
                                 // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
                                 r15 = param1.return
                                 // CODE → <JStrictEqual>: <Addr8: 50, Reg8: 15, Reg8: 10>  # Address: 0000010d
-                                // r15 = param1.return
+                                // → r15 = param1.return
                                 if (r15 === r10) goto label_269;
                                 // ──────────────── Block 14 ──────────────── 
                                 // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 13, UInt8: 10, string_id: 209>  # String: 'return' (Identifier)
@@ -95,10 +98,12 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                                 // CODE → <Mov>: <Reg8: 11, Reg8: 14>
                                 // USED → r11 = param1.return;
                             }
+                        // → r13 = param1.return.sibling
                         } while (null === r13);
                         // LOOP → END
                     }
                 }
+            // → r11 = param1.updateQueue
             } else if (null !== r11) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <Mov>: <Reg8: 11, Reg8: 6>
@@ -108,7 +113,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                 // CODE → <Mov>: <Reg8: 6, Reg8: 11>
                 // USED → r6 = param1.updateQueue.stores;
                 // CODE → <JStrictEqual>: <Addr8: 90, Reg8: 4, Reg8: 11>  # Address: 0000009e
-                // r11 = param1.updateQueue.stores
+                // → r11 = param1.updateQueue.stores
                 if (null === r11) goto label_158;
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <LoadConstZero>: <Reg8: 7>
@@ -118,7 +123,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                 // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 4, string_id: 139>  # String: 'length' (Identifier)
                 r11 = param1.updateQueue.stores.length
                 // CODE → <JNotLess>: <Addr8: 76, Reg8: 2, Reg8: 11>  # Address: 0000009e
-                // r11 = param1.updateQueue.stores.length
+                // → r11 = param1.updateQueue.stores.length
                 if (!(0 < r11)) goto label_158;
                 // LOOP → START (do_while)
                 do {
@@ -158,6 +163,7 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                         // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 11, UInt8: 4, string_id: 139>  # String: 'length' (Identifier)
                         r11 = param1.updateQueue.stores.length
                     }
+                // → r11 = param1.updateQueue.stores.length; r13 = r11 + 1
                 } while (r13 < r11);
                 // LOOP → END
             }

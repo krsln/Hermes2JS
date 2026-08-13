@@ -95,6 +95,7 @@ function mapTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 10, Reg8: 5>
         r10 = GetIterator(r9)
+        // → r10 = GetIterator(r9)
         if (r10 !== undefined) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>

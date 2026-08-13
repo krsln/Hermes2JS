@@ -18,6 +18,7 @@ function nestedTemplateTest(param0, param1, param2) {
     r4 = param1 + param2
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 10>
     // USED → r3 = 10;
+    // → r4 = param1 + param2
     if (r4 > 10) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Add>: <Reg8: 5, Reg8: 2, Reg8: 1>

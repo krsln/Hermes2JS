@@ -31,6 +31,7 @@ function closureLoopTest(param0) {
         r6 = _loop.call(undefined, 0)
         // CODE → <Inc>: <Reg8: 3, Reg8: 3>
         r3 = r3 + 1
+    // → r3 = r3 + 1
     } while (r3 < 3);
     // LOOP → END
     // ──────────────── Block 2 ──────────────── 
@@ -43,6 +44,7 @@ function closureLoopTest(param0) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
         r5 = GetIterator(r2)
+        // → r5 = GetIterator(r2)
         if (r5 !== undefined) {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

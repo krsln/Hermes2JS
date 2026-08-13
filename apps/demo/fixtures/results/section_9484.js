@@ -24,6 +24,7 @@ function optionalChainingTest(param0) {
     // USED → r2 = undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
+    // → r5 = { "b": null }
     if (r5 != null) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 2, string_id: 36>  # String: 'b' (Identifier)
@@ -32,6 +33,7 @@ function optionalChainingTest(param0) {
         // USED → r3 = r5.b == null;
         // CODE → <LoadConstUndefined>: <Reg8: 7>
         r7 = undefined
+        // → r5 = r5.b
         if (r5.b != null) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 6562>  # String: 'c' (Identifier)

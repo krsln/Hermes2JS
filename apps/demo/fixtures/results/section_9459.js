@@ -47,6 +47,7 @@ function tripleNestedLabeledTest(param0) {
                 // USED → r3 = 0 + 1;
                 // CODE → <Mov>: <Reg8: 4, Reg8: 1>
                 // USED → r4 = 0;
+                // → r4 = 0
                 if (r4 === 1) {
                     // ──────────────── Block 10 ──────────────── 
                     // CODE → ContinueStatement
@@ -64,6 +65,7 @@ function tripleNestedLabeledTest(param0) {
                     // CODE → <Mov>: <Reg8: 0, Reg8: 3>
                     r0 = 0 + 1
                 }
+            // → r1 = 0 + 1
             } while (r1 < 3);
             // LOOP → END
             // ──────────────── Block 7 ──────────────── 
@@ -71,6 +73,7 @@ function tripleNestedLabeledTest(param0) {
             r6 = 0 + 1
             // CODE → <Mov>: <Reg8: 5, Reg8: 3>
             r5 = 0 + 1
+        // → r6 = 0 + 1
         } while (r6 < 3);
         // LOOP → END
         // ──────────────── Block 8 ──────────────── 
@@ -78,6 +81,7 @@ function tripleNestedLabeledTest(param0) {
         r9 = 0 + 1
         // CODE → <Mov>: <Reg8: 10, Reg8: 3>
         r10 = 0 + 1
+    // → r9 = 0 + 1
     } while (r9 < 3);
     // LOOP → END
     // ──────────────── Block 9 ──────────────── 

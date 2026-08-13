@@ -33,6 +33,7 @@ function whileTest(param0) {
         console.log("while", 0)
         // CODE → <Mov>: <Reg8: 2, Reg8: 1>
         // USED → r2 = 0;
+        // → r2 = 0
         if (r2 === 2) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -51,6 +52,7 @@ function whileTest(param0) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
         r1 = 0 + 1
+    // → r1 = 0 + 1
     } while (r1 < 5);
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 

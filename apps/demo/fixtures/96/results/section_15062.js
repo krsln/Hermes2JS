@@ -14,6 +14,7 @@ function ifTest(param0, param1) {
     console.log("__BC:ControlFlow/IfTests/ifTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 10>
     // USED → r1 = 10;
+    // → r2 = param1
     if (r2 > 10) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

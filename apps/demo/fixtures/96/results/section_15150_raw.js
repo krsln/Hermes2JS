@@ -30,7 +30,7 @@ function closureLoopTest(param0) {
     // CODE → <Inc>: <Reg8: 3, Reg8: 3>
     r3 = r3 + 1
     // CODE → <JLess>: <Addr8: -8, Reg8: 3, Reg8: 2>  # Address: 0000002c
-    // r3 = r3 + 1
+    // → r3 = r3 + 1
     if (r3 < 3) goto label_44;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
@@ -43,7 +43,7 @@ function closureLoopTest(param0) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
     r5 = GetIterator(r2)
     // CODE → <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000066
-    // r5 = GetIterator(r2)
+    // → r5 = GetIterator(r2)
     if (r5 === undefined) goto label_102;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

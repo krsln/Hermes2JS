@@ -5,7 +5,7 @@ function function_15054(param0, param1, param2) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → <JStrictNotEqual>: <Addr8: 46, Reg8: 3, Reg8: 0>  # Address: 00000034
-    // r3 = param2
+    // → r3 = param2
     if (r3 !== 2) goto label_52;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 0>

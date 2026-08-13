@@ -53,6 +53,7 @@ function restAfterRequiredTest(param0, param1, param2) {
             new globalThis.Array((arguments.length <= 2) ? 0 : arguments.length - 2)[2 - 2] = arguments[2]
             // CODE → <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
+        // → r2 = r2 + 1
         } while (r2 < r4);
         // LOOP → END
     }

@@ -29,7 +29,7 @@ function callDestructuringTests(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → <JStrictNotEqual>: <Addr8: 7, Reg8: 7, Reg8: 2>  # Address: 0000004a
-    // r7 = r5.page
+    // → r7 = r5.page
     if (r7 !== undefined) goto label_74;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
@@ -64,7 +64,7 @@ function callDestructuringTests(param0) {
     // CODE → <GetById>: <Reg8: 9, Reg8: 5, UInt8: 4, string_id: 8581>  # String: 'timeout' (Identifier)
     r9 = r5.timeout
     // CODE → <JStrictNotEqual>: <Addr8: 10, Reg8: 9, Reg8: 2>  # Address: 0000009d
-    // r9 = r5.timeout
+    // → r9 = r5.timeout
     if (r9 !== undefined) goto label_157;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <LoadConstInt>: <Reg8: 9, Imm32: 1000>
@@ -73,7 +73,7 @@ function callDestructuringTests(param0) {
     // CODE → <GetById>: <Reg8: 8, Reg8: 5, UInt8: 5, string_id: 9071>  # String: 'retries' (Identifier)
     r8 = r5.retries
     // CODE → <JStrictNotEqual>: <Addr8: 7, Reg8: 8, Reg8: 2>  # Address: 000000aa
-    // r8 = r5.retries
+    // → r8 = r5.retries
     if (r8 !== undefined) goto label_170;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 8, UInt8: 3>
@@ -106,7 +106,7 @@ function callDestructuringTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 5, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
     r9 = r5.name
     // CODE → <JStrictNotEqual>: <Addr8: 8, Reg8: 9, Reg8: 2>  # Address: 000000f2
-    // r9 = r5.name
+    // → r9 = r5.name
     if (r9 !== undefined) goto label_242;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 514>  # String: 'anon' (String)
@@ -129,7 +129,7 @@ function callDestructuringTests(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 8>
     r8 = undefined
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 00000116
-    // r6 = r7
+    // → r6 = r7
     if (GetIterator(r6) === undefined) goto label_278;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 7>
@@ -151,7 +151,7 @@ function callDestructuringTests(param0) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 3>
     r1 = GetIterator(r6) === undefined
     // CODE → <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000134
-    // r6 = GetIterator(r6).next()
+    // → r6 = GetIterator(r6).next()
     if (GetIterator(r6) === undefined) goto label_308;
     // ──────────────── Block 12 ──────────────── 
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>
@@ -230,7 +230,7 @@ function callDestructuringTests(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 8>
     r8 = undefined
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 000001c2
-    // r6 = r7
+    // → r6 = r7
     if (GetIterator(r6) === undefined) goto label_450;
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 7>
@@ -252,7 +252,7 @@ function callDestructuringTests(param0) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 3>
     r1 = GetIterator(r6) === undefined
     // CODE → <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 000001e0
-    // r6 = GetIterator(r6).next()
+    // → r6 = GetIterator(r6).next()
     if (GetIterator(r6) === undefined) goto label_480;
     // ──────────────── Block 19 ──────────────── 
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>

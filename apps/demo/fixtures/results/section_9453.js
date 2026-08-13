@@ -36,6 +36,7 @@ function complexTest(param0) {
     // USED → r3 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
     // USED → r4 = 2;
+    // → r14 = [1, 2, 3, 4, 5]
     if (0 < r14.length) {
         // LOOP → START (do_while)
         do {
@@ -101,6 +102,7 @@ function complexTest(param0) {
             r0 = 0 + 1
             // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
             r7 = r14.length
+        // → r0 = 0 + 1; r7 = r14.length
         } while (r0 < r7);
         // LOOP → END
     }

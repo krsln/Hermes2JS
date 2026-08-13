@@ -268,6 +268,7 @@ class OpcodeHandler(ABC):
             # get_register_for_condition): Mov/Inc/Add/GetById/Call/
             # param/... never inlined, might be loop-carried.
             state.reads += 1
+            # definition.definition_used = True
             return Identifier(name=f"r{reg}")
 
         state_value = state.value

@@ -49,6 +49,7 @@ function tag(param0, param1) {
             new globalThis.Array((arguments.length <= 1) ? 0 : arguments.length - 1)[1 - 1] = arguments[1]
             // CODE → <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
+        // → r2 = r2 + 1
         } while (r2 < r6);
         // LOOP → END
     }

@@ -43,11 +43,13 @@ function labeledBreakTest(param0) {
                 // CODE → <JStrictEqual>: <Addr8: 39, Reg8: 1, Reg8: 3>  # Address: 00000051
                 if (r1 === 1) goto label_81;
             }
+        // → r0 = 0 + 1
         } while (r0 < 3);
         // LOOP → END
         // ──────────────── Block 5 ──────────────── 
         // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
         r4 = 0 + 1
+    // → r4 = 0 + 1
     } while (r4 < 3);
     // LOOP → END
     // ──────────────── Block 6 ──────────────── 

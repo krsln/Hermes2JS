@@ -16,6 +16,7 @@ function forInTest(param0) {
     r4 = r6
     // CODE → <GetPNameList>: <Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 2>
     // USED → r5 = HermesPropertyIterator(r4);
+    // → r4 = r6
     if (HermesPropertyIterator(r4) !== undefined) {
         // LOOP → START (for_in)
         for (const r1 in r4) {

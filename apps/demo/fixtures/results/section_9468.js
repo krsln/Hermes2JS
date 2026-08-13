@@ -27,6 +27,7 @@ function tryLoopMultiReturnTest(param0, param1) {
         r6 = 0
         // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
         r5 = param1.length
+        // → r5 = param1.length; r6 = 0
         if (r6 < r5) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 5, Reg8: 4>
@@ -34,13 +35,14 @@ function tryLoopMultiReturnTest(param0, param1) {
             // CODE → <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
             r5 = param1[0]
             // CODE → <JLess>: <Addr8: 52, Reg8: 5, Reg8: 2>  # Address: 0000006a
-            // r5 = param1[0]
+            // → r5 = param1[0]
             if (r5 < 0) goto label_106;
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Mov>: <Reg8: 5, Reg8: 4>
             // USED → r5 = 0;
             // CODE → <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
             r5 = param1[0]
+            // → r5 = param1[0]
             if (r5 === 0) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <Mov>: <Reg8: 5, Reg8: 4>

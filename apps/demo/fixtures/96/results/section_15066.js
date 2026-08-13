@@ -33,6 +33,7 @@ function labeledContinueTest(param0) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 9, Reg8: 8>
             // USED → r9 = 0;
+            // → r9 = 0
             if (r9 === 1) {
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → ContinueStatement
@@ -47,6 +48,7 @@ function labeledContinueTest(param0) {
             console.log(0, 0)
             // CODE → <Inc>: <Reg8: 8, Reg8: 9>
             r8 = r9 + 1
+        // → r8 = r9 + 1
         } while (r8 < 3);
         // LOOP → END
         // ──────────────── Block 4 ──────────────── 
@@ -68,6 +70,7 @@ function labeledContinueTest(param0) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 7>
         r1 = r7 + 1
+    // → r1 = r7 + 1
     } while (r1 < 3);
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

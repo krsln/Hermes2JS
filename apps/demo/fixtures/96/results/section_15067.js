@@ -26,6 +26,7 @@ function labeledBlockBreakTest(param0) {
     r2 = globalThis.Math.random()
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     // USED → r1 = 2;
+    // → r2 = globalThis.Math.random()
     if (r2 >= 2) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

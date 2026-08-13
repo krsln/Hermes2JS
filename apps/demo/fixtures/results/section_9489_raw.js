@@ -37,7 +37,7 @@ function swapViaDestructureTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 8>
     r8 = undefined
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 00000046
-    // r6 = r7
+    // → r6 = r7
     if (GetIterator(r6) === undefined) goto label_70;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 7>
@@ -59,7 +59,7 @@ function swapViaDestructureTest(param0) {
     // CODE → <Mov>: <Reg8: 1, Reg8: 3>
     r1 = GetIterator(r6) === undefined
     // CODE → <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000064
-    // r6 = GetIterator(r6).next()
+    // → r6 = GetIterator(r6).next()
     if (GetIterator(r6) === undefined) goto label_100;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>

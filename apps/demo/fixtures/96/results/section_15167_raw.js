@@ -35,7 +35,7 @@ async function* anon_15167(param0, param1) {
     // CODE → <Mov>: <Reg8: 6, Reg8: 4>
     // USED → r6 = 0;
     // CODE → <JStrictEqual>: <Addr8: 21, Reg8: 6, Reg8: 2>  # Address: 00000048
-    // r6 = 0
+    // → r6 = 0
     if (r6 === 2) goto label_72;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>
@@ -68,7 +68,7 @@ async function* anon_15167(param0, param1) {
     // CODE → <Inc>: <Reg8: 4, Reg8: 6>
     r4 = r6 + 1
     // CODE → <JLess>: <Addr8: -43, Reg8: 4, Reg8: 5>  # Address: 00000030
-    // r4 = r6 + 1
+    // → r4 = r6 + 1
     if (r4 < r5) goto label_48;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

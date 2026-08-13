@@ -41,6 +41,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                 // USED → r2 = 0;
                 // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
                 r2 = param1[0]
+                // → r2 = param1[0]
                 if (r2 >= 0) {
                     // ──────────────── Block 2 ──────────────── 
                     // CODE → <Mov>: <Reg8: 4, Reg8: 8>
@@ -49,6 +50,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                     // USED → r2 = 0;
                     // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
                     r2 = param1[0]
+                    // → r2 = param1[0]
                     if (r2 === 0) {
                         // ──────────────── Block 4 ──────────────── 
                         // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -84,6 +86,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
                     r2 = param1.length
                 }
+            // → r2 = param1.length; r4 = r2 + 1
             } while (r4 < r2);
             // LOOP → END
             // ──────────────── Block 6 ──────────────── 

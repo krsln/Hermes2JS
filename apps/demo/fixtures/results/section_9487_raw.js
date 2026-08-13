@@ -47,7 +47,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 5>
     r5 = undefined
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000062
-    // r6 = r2
+    // → r6 = r2
     if (GetIterator(r6) === undefined) goto label_98;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
@@ -68,7 +68,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 9>
     r9 = undefined
     // CODE → <JmpTrue>: <Addr8: 6, Reg8: 5>  # Address: 0000007e
-    // r11 = GetIterator(r6).next()
+    // → r11 = GetIterator(r6).next()
     if (GetIterator(r11) === undefined) goto label_126;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
@@ -92,7 +92,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 11>
     r5 = GetIterator(r11) === undefined
     // CODE → <JmpTrue>: <Addr8: 9, Reg8: 11>  # Address: 0000009f
-    // r11 = GetIterator(r11) === undefined
+    // → r11 = GetIterator(r11) === undefined
     if (GetIterator(r11) === undefined) goto label_159;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
@@ -140,7 +140,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 6>
     r2 = GetIterator(r6) === undefined
     // CODE → <JmpTrue>: <Addr8: 9, Reg8: 6>  # Address: 000000dd
-    // r6 = GetIterator(r6) === undefined
+    // → r6 = GetIterator(r6) === undefined
     if (GetIterator(r6) === undefined) goto label_221;
     // ──────────────── Block 13 ──────────────── 
     // CODE → <Mov>: <Reg8: 9, Reg8: 11>
@@ -163,7 +163,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 11>
     r11 = undefined
     // CODE → <JmpTrue>: <Addr8: 28, Reg8: 9>  # Address: 0000010f
-    // r12 = GetIterator(r6).next()
+    // → r12 = GetIterator(r6).next()
     if (GetIterator(r12) === undefined) goto label_271;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <IteratorNext>: <Reg8: 13, Reg8: 6, Reg8: 12>
@@ -177,7 +177,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>
     r9 = GetIterator(r12) === undefined
     // CODE → <JmpTrue>: <Addr8: 9, Reg8: 12>  # Address: 0000010f
-    // r12 = GetIterator(r12) === undefined
+    // → r12 = GetIterator(r12) === undefined
     if (GetIterator(r12) === undefined) goto label_271;
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Mov>: <Reg8: 11, Reg8: 13>
@@ -224,7 +224,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <StrictEq>: <Reg8: 9, Reg8: 8, Reg8: 3>
     // USED → r9 = GetIterator(r17) === undefined;
     // CODE → <JmpTrue>: <Addr8: 10, Reg8: 9>  # Address: 0000015b
-    // r17 = [10]
+    // → r17 = [10]
     if (GetIterator(r17) === undefined) goto label_347;
     // ──────────────── Block 22 ──────────────── 
     // CODE → <Mov>: <Reg8: 12, Reg8: 0>
@@ -269,7 +269,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <Mov>: <Reg8: 11, Reg8: 8>
     r11 = GetIterator(r17) === undefined
     // CODE → <JStrictNotEqual>: <Addr8: 15, Reg8: 0, Reg8: 3>  # Address: 0000019a
-    // r0 = GetIterator(r17).next()
+    // → r0 = GetIterator(r17).next()
     if (r0 !== undefined) goto label_410;
     // ──────────────── Block 28 ──────────────── 
     // CODE → <LoadConstZero>: <Reg8: 12>

@@ -66,6 +66,7 @@ async function* anon_17161(param0, param1) {
                 // CODE → <Ret>: <Reg8: 2>
                 return await yield;
             }
+        // → r4 = await yield.status
         } else if (r4 !== 0) {
             // ──────────────── Block 7 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 14>  # String: 'Error' (Identifier)

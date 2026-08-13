@@ -24,7 +24,7 @@ function forOfTest(param0) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 3>
     r4 = GetIterator(r2)
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 4, Reg8: 0>  # Address: 0000004a
-    // r4 = GetIterator(r2)
+    // → r4 = GetIterator(r2)
     if (r4 === undefined) goto label_74;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

@@ -4,6 +4,7 @@ function function_15054(param0, param1, param2) {
     // USED → r3 = param2;
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
+    // → r3 = param2
     if (r3 === 2) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetGlobalObject>: <Reg8: 0>
