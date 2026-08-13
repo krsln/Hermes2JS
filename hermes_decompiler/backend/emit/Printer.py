@@ -480,7 +480,7 @@ class Printer(NodeVisitor):
     # loop
     # ---------------------------------------------------------
 
-    def _emit_loop(self, region: LoopRegion, lines: list[str]) -> None:
+    def _emit_loop(self, region: LoopRegion, lines):
         """
         Render an already-structured LoopRegion.
 
@@ -497,33 +497,26 @@ class Printer(NodeVisitor):
         if self.verbose:
             self._write(
                 lines,
-                f"// LOOP → START ({kind.value if kind else 'unknown'})",
+                f"// LOOP → START ({kind.value if kind else 'unknown'})"
             )
 
-        match kind:
+        if kind in (LoopKind.FOR_OF, LoopKind.FOR_IN):
+            self._emit_for_each(region, lines)
 
-            case LoopKind.FOR:
-                self._emit_for(region, lines)
+        elif kind is LoopKind.FOR:
+            self._emit_for(region, lines)
 
-            case LoopKind.FOR_OF | LoopKind.FOR_IN:
-                self._emit_for_each(region, lines)
+        elif kind is LoopKind.DO_WHILE:
+            self._emit_do_while(region, lines)
 
-            case LoopKind.DO_WHILE:
-                self._emit_do_while(region, lines)
+        elif kind is LoopKind.WHILE:
+            self._emit_while(region, lines)
 
-            case LoopKind.WHILE:
-                self._emit_while(region, lines)
+        elif kind is LoopKind.ENDLESS:
+            self._emit_endless_loop(region, lines)
 
-            case LoopKind.ENDLESS:
-                self._emit_endless_loop(region, lines)
-
-            case _:
-                logger.warning(
-                    "Printer: unknown loop kind %r; "
-                    "falling back to while(true)",
-                    kind,
-                )
-                self._emit_endless_loop(region, lines)
+        else:
+            self._emit_while(region, lines)
 
         if self.verbose:
             self._write(lines, "// LOOP → END")
