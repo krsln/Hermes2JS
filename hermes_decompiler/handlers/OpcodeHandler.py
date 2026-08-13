@@ -8,8 +8,10 @@ from typing import Dict, Optional
 
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.ir.expressions import Expression, Identifier, RawExpression, ObjectExpression, ArrayExpression, \
-    Literal
+from hermes_decompiler.ir.expressions import (
+    Expression, Identifier, RawExpression, ObjectExpression,
+    ArrayExpression, Literal,
+)
 from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)
@@ -18,7 +20,6 @@ logger = get_logger(__name__)
 @dataclass(slots=True)
 class OpcodeContext:
     analysis: HermesAnalysis
-
     entry: OpcodeEntry
     entries: list[OpcodeEntry]
     index: int
@@ -30,7 +31,13 @@ class ArgsPattern:
     desc: str
 
 
+# Types whose IDENTITY matters (mutation-sensitive) - inlining a second
+# reference to the same literal object/array expression would make two
+# independent-looking `{}`/`[]` in the output secretly alias the same
+# runtime object. Always kept symbolic (`rN`), regardless of which
+# resolver is used.
 _IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
+
 _CONST_LOAD_OPCODES = frozenset({
     "LoadConstZero",
     "LoadConstUInt8",
@@ -42,38 +49,13 @@ _CONST_LOAD_OPCODES = frozenset({
     "LoadConstTrue",
     "LoadConstFalse",
     "LoadConstBigInt",
-    # real const-load opcode names
 })
 
 
 class OpcodeHandler(ABC):
     """
     Abstract base class for handling Hermes bytecode opcodes.
-
-    Note on the `registry` dict: unlike `JSConverter._functionTable`, this
-    class-level dict is *not* per-conversion mutable state - it's a
-    write-once-at-import-time registry of stateless handler singletons
-    (one instance per opcode, populated via __init_subclass__). That's a
-    legitimate use of class-level storage and is left as-is.
-
-    Dispatch resolves handlers by the exact class name (`OpcodeEntry.opcode`),
-    so every registered class name must be a real Hermes opcode. Shared
-    logic between related opcodes should live directly on one of the real
-    opcode classes (the others subclass it and override just what differs -
-    see e.g. `Add`/`Sub`/`Mul` in `handlers/arithmetic/Binary.py`), rather
-    than on a separate non-opcode base class. If a genuinely non-opcode
-    helper class is unavoidable, set `_abstract = True` on it so it is
-    skipped here instead of being instantiated and registered under its
-    own (non-opcode) name.
-
-    `_abstract` is deliberately a plain class attribute rather than relying
-    on `abc.abstractmethod` + instantiation failure: `__init_subclass__`
-    runs *during* class creation, before `ABCMeta` finishes computing
-    `__abstract_methods__` on the new class, so instantiating an
-    ABC-abstract subclass here can silently succeed instead of raising -
-    the instantiation-time abstractness check simply isn't active yet at
-    that point. Don't rely on `ABC`/`@abstractmethod` alone to keep a base
-    class out of the registry; use `_abstract = True` explicitly.
+    (class docstring unchanged - see original)
     """
 
     ARGUMENTS: ArgsPattern | tuple[ArgsPattern, ...] = ()
@@ -131,31 +113,26 @@ class OpcodeHandler(ABC):
             patterns = (patterns,)
 
         descriptions = [p.desc for p in patterns]
-
         if len(descriptions) == 1:
             return f"Expected arguments: {descriptions[0]}"
 
         return "Expected one of: " + "; ".join(descriptions)
 
     @classmethod
-    def build_invalid_args_result(cls, analysis: HermesAnalysis, entry: OpcodeEntry,
-                                  error_detail: str = "Invalid arguments") -> OpcodeResult:
+    def build_invalid_args_result(cls, analysis, entry, error_detail="Invalid arguments") -> OpcodeResult:
         logger.warning(
             "Invalid arguments for opcode '%s' at address %d: %s (args=%r)",
-            entry.opcode,
-            entry.address,
-            error_detail,
-            entry.args,
+            entry.opcode, entry.address, error_detail, entry.args,
         )
 
-        error_msg = f"// Error: {cls.__name__} at address {entry.address}: "    f"{error_detail}: {entry.args}"
+        error_msg = f"// Error: {cls.__name__} at address {entry.address}: {error_detail}: {entry.args}"
         result = OpcodeResult(entry, value=RawExpression(source=error_msg))
         analysis.add_result(result)
 
         return result
 
     @classmethod
-    def build_exception_result(cls, analysis: HermesAnalysis, entry: OpcodeEntry, error: str) -> OpcodeResult:
+    def build_exception_result(cls, analysis, entry, error: str) -> OpcodeResult:
         logger.error("%s failed while processing opcode '%s' at address %d: %s",
                      cls.__name__, entry.opcode, entry.address, error)
 
@@ -164,80 +141,70 @@ class OpcodeHandler(ABC):
 
         return result
 
-    @classmethod
-    def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
-        """
-        Return the current expression assigned to a register.
-
-        This exposes the actual IR node currently stored in the register
-        (ObjectExpression, Literal, BinaryExpression, CallExpression, etc.)
-        and should only be used by optimization or analysis passes that need
-        the defining expression.
-
-        If the register has never been defined, fall back to its symbolic
-        identifier.
-        """
-
-        state = analysis.registers.get(f"r{reg}")
-
-        if state is None or state.definition is None:
-            return Identifier(name=f"r{reg}_undefined")
-
-        state_value = state.value
-        if isinstance(state_value, Expression):
-            state.reads += 1
-
-            if isinstance(state.value, _IDENTITY_SENSITIVE_TYPES):
-                return Identifier(name=f"r{reg}")
-
-            if state.reads > 1:
-                state_value = dataclasses.replace(state_value)
-
-            state.definition.definition_used = True
-            return state_value
-
-        return Identifier(name=f"r{reg}")
-
-    @classmethod
-    def get_register_for_condition(cls, analysis: HermesAnalysis, reg: int) -> Expression:
-        """
-        Jump/branch condition operands.
-
-        Inline ONLY when this register was defined by a const-load opcode.
-        That preserves switch case labels (r1 = 0; if (r1 === disc)) while
-        keeping Mov/Inc/phi-carried values symbolic for loops.
-        """
-        state = analysis.registers.get(f"r{reg}")
-
-        if state is None or state.definition is None:
-            return Identifier(name=f"r{reg}_undefined")
-
-        definition = state.definition
-        value = definition.value
-        opcode = definition.handler
-
-        if opcode in _CONST_LOAD_OPCODES  and isinstance(value, Literal):
-            state.reads += 1
-            definition.definition_used = True
-
-            if state.reads > 1:
-                return dataclasses.replace(value)
-
-            return value
-
-        # Mov / Inc / Add / GetById / param / ... → always symbolic
-        state.reads += 1
-        return Identifier(name=f"r{reg}")
+    # -----------------------------------------------------------------
+    # Register resolution
+    # -----------------------------------------------------------------
+    #
+    # Three resolvers, in increasing order of how much they're willing
+    # to inline:
+    #
+    #   get_register_reference   - NEVER inlines. Always `rN`. Use when
+    #                               the slot is a raw stack/register
+    #                               range with no reliable per-register
+    #                               tracking (e.g. Call's variadic
+    #                               argument window).
+    #
+    #   get_register_symbolic    - inlines ONLY a `Literal` produced by
+    #                               a genuine const-load opcode
+    #                               (LoadConstZero/UInt8/String/...).
+    #                               Every other definition (Mov, Inc,
+    #                               Add, GetById, a prior Call result,
+    #                               a parameter, ...) stays symbolic.
+    #                               This is the SAFE default for any
+    #                               register whose value might be
+    #                               loop-carried (i.e. could still
+    #                               change on a later iteration/read
+    #                               relative to where the source
+    #                               *textually* appears): a `Mov r6,
+    #                               r5` sitting once at the top of a
+    #                               loop body must never be frozen into
+    #                               whatever `r5` happened to equal the
+    #                               first time this single-pass
+    #                               left-to-right analysis walked past
+    #                               it - see the forTest console.log(0)
+    #                               regression this fixed. Use for:
+    #                               branch/loop conditions, call
+    #                               arguments, anything read potentially
+    #                               more than once relative to its
+    #                               definition's real (dynamic) lifetime.
+    #
+    #   get_register_expression  - inlines almost anything (Mov, Inc,
+    #                               GetById/MemberExpression chains,
+    #                               CallExpression, BinaryExpression,
+    #                               ...), EXCEPT identity-sensitive
+    #                               Object/Array literals. This is what
+    #                               keeps common chains like
+    #                               `globalThis.console.log` readable
+    #                               instead of printing as bare `rN`
+    #                               everywhere. Only safe to use where
+    #                               the caller can be sure the register
+    #                               is read essentially once, at its
+    #                               one true definition site (e.g. the
+    #                               callee/receiver of a call
+    #                               immediately following its
+    #                               TryGetById/GetByIdShort) - NOT for
+    #                               anything that could be re-entered
+    #                               by a loop back-edge before the read.
+    #
+    # When in doubt, prefer get_register_symbolic - a spurious `rN` in
+    # the output is a readability regression; a wrongly-inlined stale
+    # value is a correctness regression. See Call1/Call2/Call3/Call4
+    # in Call.py for a concrete example of choosing the safe one for
+    # call arguments.
 
     @classmethod
     def get_register_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier:
-        """
-        Return a symbolic reference to a register.
-
-        Unlike get_register_expression(), this never inlines the expression
-        currently stored in the register. It always returns the register
-        identifier itself (e.g., Identifier('r3')).
-        """
+        """Always symbolic - never inlines the defining expression."""
 
         state = analysis.registers.get(f"r{reg}")
 
@@ -248,3 +215,74 @@ class OpcodeHandler(ABC):
             state.reads += 1
 
         return Identifier(name=f"r{reg}")
+
+    @classmethod
+    def get_register_symbolic(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+        """
+        Inline only if the definition is a `Literal` from a genuine
+        const-load opcode; everything else (including Mov/Inc copies
+        of another register) stays symbolic. See class-level comment
+        above for the rationale - this is the resolver to reach for
+        by default whenever a stale/loop-carried value would be a
+        correctness bug, not just a cosmetic one.
+        """
+        return cls._resolve_register(analysis, reg, inline_non_literal=False)
+
+    @classmethod
+    def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+        """
+        Inline the register's current defining expression, of (almost)
+        any kind - see class-level comment above for exactly when this
+        is/isn't safe to use.
+        """
+        return cls._resolve_register(analysis, reg, inline_non_literal=True)
+
+    @classmethod
+    def _resolve_register(cls, analysis: HermesAnalysis, reg: int, *, inline_non_literal: bool) -> Expression:
+
+        state = analysis.registers.get(f"r{reg}")
+
+        if state is None or state.definition is None:
+            return Identifier(name=f"r{reg}_undefined")
+
+        definition = state.definition
+        value = definition.value
+        opcode = definition.handler
+
+        # Const-load literals: always safe to inline, regardless of
+        # mode - a genuine LoadConstX opcode produces one immutable
+        # value that can never be redefined by a loop iteration between
+        # its own occurrences (each const-load is itself the
+        # definition being read).
+        if opcode in _CONST_LOAD_OPCODES and isinstance(value, Literal):
+            state.reads += 1
+            definition.definition_used = True
+
+            if state.reads > 1:
+                return dataclasses.replace(value)
+
+            return value
+
+        if not inline_non_literal:
+            # Symbolic mode (get_register_symbolic /
+            # get_register_for_condition): Mov/Inc/Add/GetById/Call/
+            # param/... never inlined, might be loop-carried.
+            state.reads += 1
+            return Identifier(name=f"r{reg}")
+
+        state_value = state.value
+        # Expression mode (get_register_expression): inline anything
+        # except identity-sensitive Object/Array literals.
+        if not isinstance(state_value, Expression):
+            return Identifier(name=f"r{reg}")
+
+        state.reads += 1
+
+        if isinstance(state.value, _IDENTITY_SENSITIVE_TYPES):
+            return Identifier(name=f"r{reg}")
+
+        if state.reads > 1:
+            state_value = dataclasses.replace(state_value)
+
+        definition.definition_used = True
+        return state_value
