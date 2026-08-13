@@ -33,31 +33,18 @@ class LoopRegion(Region):
     def __init__(self, loop):
         super().__init__()
 
-        # ---------------------------------------------------------
-        # CFG identity
-        # ---------------------------------------------------------
-
         self.header_block: BasicBlock = loop.header
 
         self.exits = list(loop.exits)
         self.latches = list(loop.latches)
 
-        # ---------------------------------------------------------
-        # Loop shape
-        # ---------------------------------------------------------
-
-        self.loop_kind: LoopKind = LoopKind.WHILE
+        # Not yet classified.
+        self.loop_kind: LoopKind = LoopKind.UNKNOWN
 
         self.condition = None
-
-        # Block containing the condition branch after CFG analysis.
         self.condition_block: BasicBlock | None = None
 
-        # Block executed when a continue reaches the loop's next
-        # iteration.
         self.continue_target: BasicBlock | None = None
-
-        # Block reached by an ordinary break.
         self.break_target: BasicBlock | None = None
 
         self.update_block: BasicBlock | None = None
