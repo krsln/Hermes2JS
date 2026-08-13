@@ -198,10 +198,21 @@ class CFGBuilder:
                             result.terminator,
                             result.handler,
                         )
-                        # Hermes 98 is not stable, so just warning not raise error for now
+                        # Hermes 98 is not stable, so just warning to not raise error for now
                         # raise RuntimeError(f"Block {current_block.id} already has a terminator.")
                 # else:
                 current_block.add_instruction(result)
+
+                # reg_definitions'ı aynı tek geçişte, program-order sırasıyla doldur.
+                # dest_reg is None -> bu opcode hiçbir register'a yazmıyor (örn. Jmp).
+                # value is None ile birlikte gelen dest_reg (varsa) şu an göz ardı
+                # ediliyor: LoopConditionRegionPass zaten yalnızca `.value is not
+                # None` olan tanımları "gerçek" bir def olarak sayıyor
+                # (`_extract_update`/`_extract_initializer` ile tutarlı).
+                if result.dest_reg is not None and result.value is not None:
+                    self.cfg.reg_definitions.setdefault(result.dest_reg, []).append(
+                        (result.address, current_block, result)
+                    )
 
     # -------------------------------------------------------------
 

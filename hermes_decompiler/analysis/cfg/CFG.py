@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.frontend.opcode import OpcodeResult
@@ -18,6 +18,15 @@ class CFG:
         self.post_dominator_tree = None
 
         self.exception_handlers: list[dict] = []
+
+        # dest_reg -> [(address, BasicBlock, OpcodeResult), ...]
+        # program-order sırasında. HermesAnalysis.registers'ın aksine
+        # yalnızca SON tanımı değil, register'ın tüm tanımlarını,
+        # hangi BasicBlock'ta olduklarıyla birlikte tutar. reaching-
+        # definition tarzı sorgular (loop induction register tespiti,
+        # initializer/update ayrıştırma) için CFGBuilder tarafından
+        # tek geçişte doldurulur.
+        self.reg_definitions: Dict[int, List[Tuple[int, BasicBlock, OpcodeResult]]] = {}
 
     @classmethod
     def from_results(cls, results: List[OpcodeResult], exception_handlers: list[dict] | None = None) -> "CFG":

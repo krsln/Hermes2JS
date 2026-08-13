@@ -18,10 +18,8 @@ function forTest(param0) {
     // USED → r2 = 8;
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
     // USED → r1 = 3;
-    // CODE → <LoadConstZero>: <Reg8: 5>
-    // USED → r5 = 0;
     // LOOP → START (for)
-    for (; r5 < 10; ) {
+    for (r5 = 0; r5 < 10; r5 = r6 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 6, Reg8: 5>
         // USED → r6 = 0;
@@ -59,8 +57,6 @@ function forTest(param0) {
             continue;
         }
         // ──────────────── Block 6 ──────────────── 
-        // CODE → <Inc>: <Reg8: 5, Reg8: 6>
-        // USED → r5 = r6 + 1;
     }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

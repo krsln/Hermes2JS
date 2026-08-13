@@ -22,17 +22,13 @@ function nestedLoopTest(param0) {
     // USED → r11 = "nested";
     // CODE → <LoadConstUInt8>: <Reg8: 8, UInt8: 2>
     // USED → r8 = 2;
-    // CODE → <LoadConstZero>: <Reg8: 3>
-    // USED → r3 = 0;
-    // LOOP → START (do_while)
-    do {
+    // LOOP → START (for)
+    for (r3 = 0; r3 < 3; r3 = 0 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 4, Reg8: 3>
         // USED → r4 = 0;
-        // CODE → <LoadConstZero>: <Reg8: 0>
-        // USED → r0 = 0;
-        // LOOP → START (do_while)
-        do {
+        // LOOP → START (for)
+        for (r0 = 0; r0 < 4; r0 = 0 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = 0;
@@ -53,16 +49,10 @@ function nestedLoopTest(param0) {
                 console.log("nested")
             }
             // ──────────────── Block 5 ──────────────── 
-            // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-            // USED → r0 = 0 + 1;
-        // → r0 = 0 + 1
-        } while (r0 < 4);
+        }
         // LOOP → END
         // ──────────────── Block 6 ──────────────── 
-        // CODE → <AddN>: <Reg8: 3, Reg8: 4, Reg8: 2>
-        // USED → r3 = 0 + 1;
-    // → r3 = 0 + 1
-    } while (r3 < 3);
+    }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

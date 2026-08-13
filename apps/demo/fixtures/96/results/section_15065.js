@@ -14,17 +14,13 @@ function labeledBreakTest(param0) {
     // USED → r3 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
-    // CODE → <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0;
     // LOOP → START (for)
-    for (; r1 < 3; ) {
+    for (r1 = 0; r1 < 3; r1 = r5 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 1>
         // USED → r5 = 0;
-        // CODE → <LoadConstZero>: <Reg8: 6>
-        // USED → r6 = 0;
         // LOOP → START (for)
-        for (; r6 < 3; ) {
+        for (r6 = 0; r6 < 3; r6 = r7 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 7, Reg8: 6>
             // USED → r7 = 0;
@@ -36,8 +32,6 @@ function labeledBreakTest(param0) {
                 // USED → r8 = globalThis.console.log;
                 // CODE → <Call3>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 5, Reg8: 7>
                 console.log(r5, r7)
-                // CODE → <Inc>: <Reg8: 6, Reg8: 7>
-                // USED → r6 = r7 + 1;
             } else {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 7, Reg8: 2>  # Address: 0000004f
@@ -46,8 +40,6 @@ function labeledBreakTest(param0) {
         }
         // LOOP → END
         // ──────────────── Block 5 ──────────────── 
-        // CODE → <Inc>: <Reg8: 1, Reg8: 5>
-        // USED → r1 = r5 + 1;
     }
     // LOOP → END
     // ──────────────── Block 6 ──────────────── 

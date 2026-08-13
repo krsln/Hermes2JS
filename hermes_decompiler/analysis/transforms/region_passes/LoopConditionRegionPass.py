@@ -5,12 +5,25 @@ from hermes_decompiler.analysis.models import RegionVisitor
 from hermes_decompiler.analysis.models.regions import LoopKind, LoopRegion
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir import AssignmentOperator
 from hermes_decompiler.ir.Operators import UnaryOperator
-from hermes_decompiler.ir.expressions import Expression, UnaryExpression
-
+from hermes_decompiler.ir.expressions import (
+    Expression,
+    UnaryExpression,
+    BinaryExpression,
+    AssignmentExpression,
+    Identifier,
+    NumericLiteral, NullLiteral,
+    UndefinedLiteral, StringLiteral, BooleanLiteral,
+)
 from ._base import RegionPass
 
 logger = get_logger(__name__)
+
+_SAFE_INIT_VALUE_TYPES = (
+    NumericLiteral, StringLiteral, BooleanLiteral,
+    NullLiteral, UndefinedLiteral, Identifier,  # Identifier = plain register/Mov copy
+)
 
 
 class LoopConditionRegionPass(RegionPass, RegionVisitor):
@@ -65,6 +78,12 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
     The pass is deliberately conservative. If the CFG does not provide
     enough evidence to distinguish the shapes, it does not invent a
     `for` loop.
+
+    Once a loop is classified as `FOR`, this pass also attempts to
+    recover the `initializer` and `update` expressions (see
+    `_extract_for_components`) so the Printer can render a proper
+    `for (init; cond; update)` header instead of leaving those slots
+    empty.
     """
 
     def run(self) -> None:
@@ -91,8 +110,9 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         loop.update_block = None
         loop.continue_target = None
         loop.break_target = None
+        loop.initializer = None
+        loop.update = None
         loop.loop_kind = LoopKind.WHILE
-        # loop.loop_kind = LoopKind.UNKNOWN
 
         # ------------------------------------------------------------------
         # 1. Self-loop
@@ -180,6 +200,13 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             ):
                 loop.update_block = update_block
                 loop.continue_target = update_block
+
+                # Best-effort recovery of `initializer` / `update` so the
+                # Printer can render a real `for (init; cond; update)`
+                # header instead of leaving those slots blank. This is
+                # purely cosmetic metadata extraction - it never changes
+                # the loop's classification or its condition.
+                self._extract_for_components(loop) # NOTE: latest change
                 return
 
         # Otherwise it is a normal bottom-tested loop.
@@ -354,3 +381,168 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             return None
 
         return candidate
+
+    # ------------------------------------------------------------------
+    # FOR component recovery (initializer / update)
+    # ------------------------------------------------------------------
+
+    def _extract_for_components(self, loop: LoopRegion) -> None:
+        """
+        Best-effort recovery of the classic `for (initializer; condition;
+        update)` slots for a loop already classified as `LoopKind.FOR`.
+
+        This is purely cosmetic: it only affects what the Printer shows
+        in the `for (...)` header. It never touches `loop.condition` or
+        `loop.loop_kind`, which are already final by the time this runs.
+
+        Two independent lookups happen here:
+
+        1. `update`: the trailing register-defining instruction still
+           sitting in `loop.update_block` (e.g. `Inc r5, r6` /
+           `Mov r5, r6`). That instruction is removed from the block so
+           it isn't ALSO rendered as an ordinary statement inside the
+           loop body - it now lives exclusively in the `for` header.
+
+        2. `initializer`: the last assignment to the loop's induction
+           register found in the loop header's single out-of-loop
+           predecessor (e.g. `LoadConstZero r5` -> `let r5 = 0`).
+           Likewise removed from that block once captured.
+
+        Both lookups are deliberately conservative and bail out (leaving
+        `loop.initializer` / `loop.update` as `None`) whenever the shape
+        isn't the simple, unambiguous case described above. A missing
+        initializer or update is not an error - the Printer already
+        renders an empty slot for either (`for (; cond; update)` etc.),
+        which is a strictly worse but still correct fallback.
+        """
+
+        self._extract_update(loop)
+        self._extract_initializer(loop)
+
+    @staticmethod
+    def _extract_update(loop: LoopRegion) -> None:
+        """
+        Pull the trailing register-defining instruction out of
+        `loop.update_block` and turn it into `loop.update`.
+
+        Only the LAST such instruction is taken, since Hermes' canonical
+        lowering places exactly one update instruction (`Inc`/`Mov`/...)
+        immediately before the guard in that block. Any earlier
+        instructions in the same block belong to the loop body proper
+        and are left untouched.
+        """
+        update_block = loop.update_block
+
+        if update_block is None:
+            return
+
+        for instruction in reversed(update_block.instructions):
+            if instruction.terminator is not None:
+                continue
+
+            if instruction.value is None or instruction.dest_reg is None:
+                continue
+
+            loop.update = AssignmentExpression(
+                left=Identifier(name=f"r{instruction.dest_reg}"),
+                operator="=",
+                right=instruction.value,
+            )
+
+            update_block.instructions.remove(instruction)
+            return
+
+    def _extract_initializer(self, loop: LoopRegion) -> None:
+        """
+        Pull the induction register's initial assignment out of the loop
+        header's single out-of-loop predecessor and turn it into
+        `loop.initializer`.
+
+        Requires:
+
+        - Exactly one predecessor of the header lies outside the loop
+          body (the natural fall-in edge). Multiple out-of-loop
+          predecessors mean there's no single unambiguous place the
+          initializer could live, so this bails out.
+        - The induction register can be inferred from `loop.condition`
+          (see `_infer_induction_register`).
+        - That predecessor actually contains an assignment to the
+          induction register.
+        """
+        header = loop.header_block
+
+        if header is None:
+            return
+
+        covered = loop.body.covered_blocks
+
+        outside_predecessors = [
+            predecessor
+            for predecessor in header.predecessors
+            if predecessor not in covered
+        ]
+
+        if len(outside_predecessors) != 1:
+            return
+
+        predecessor = outside_predecessors[0]
+
+        induction_reg = self._infer_induction_register(loop.condition, loop.update_block)
+
+        if induction_reg is None:
+            return
+
+        for instruction in reversed(predecessor.instructions):
+            if instruction.terminator is not None:
+                continue
+
+            if instruction.dest_reg != induction_reg or instruction.value is None:
+                continue
+
+            if not isinstance(instruction.value, _SAFE_INIT_VALUE_TYPES):
+                continue
+
+            loop.initializer = AssignmentExpression(
+                left=Identifier(name=f"r{induction_reg}"),
+                operator=AssignmentOperator.ASSIGN,
+                right=instruction.value,
+            )
+
+            predecessor.instructions.remove(instruction)
+            return
+
+    def _infer_induction_register(
+            self,
+            condition: Expression | None,
+            update_block: BasicBlock,
+    ) -> int | None:
+        """
+        Reaching-definition tabanlı tespit: koşulun sol VE sağ operandı
+        register ise, hangisi update_block içinde yeniden tanımlanıyorsa
+        (adres-sıralı reg_definitions üzerinden) o, induction register'dır.
+        Operand sırasına (sol/sağ) bağımlı değildir - eski davranışın
+        aksine.
+        """
+
+        node = condition
+        if isinstance(node, UnaryExpression) and node.operator == UnaryOperator.LOGICAL_NOT:
+            node = node.operand
+
+        if not isinstance(node, BinaryExpression):
+            return None
+
+        candidates = []
+        for operand in (node.left, node.right):
+            if isinstance(operand, Identifier) and operand.name.startswith("r") and operand.name[1:].isdigit():
+                candidates.append(int(operand.name[1:]))
+
+        for reg in candidates:
+            defs = self.cfg.reg_definitions.get(reg, [])
+            if any(block is update_block for _, block, _ in defs):
+                return reg
+
+        # Hiçbiri update_block'ta tanımlanmıyorsa eski davranışa (sol
+        # operand varsayımı) düş - update ayrı bir blokta olabilir
+        # (separated-update formu), bu durumda reaching-def bu basit
+        # kontrolle bulunamaz.
+        return candidates[0] if candidates else None

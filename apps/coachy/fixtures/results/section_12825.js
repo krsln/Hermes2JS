@@ -26,8 +26,9 @@ function function_12825(param0, param1, param2, param3, param4) {
     // USED → r3 = "Error occurred in ";
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 11214>  # String: ' callback, continuing anyway…' (String)
     // USED → r2 = " callback, continuing anyway\u2026";
-    // LOOP → START (do_while)
-    do {
+    // LOOP → START (for)
+    // → r1 = param1.slice().length
+    for (; !(param1.slice().pop().call(undefined, r1) === false); r1 = param1.slice().pop().call(undefined, r1) === false) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 10>
         // USED → r1 = param1.slice();
@@ -54,8 +55,6 @@ function function_12825(param0, param1, param2, param3, param4) {
                 // LOOP → START (while)
                 while (true) {
                     // ──────────────── Block 4 ──────────────── 
-                    // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-                    // USED → r1 = param1.slice().pop().call(undefined, r1) === false;
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → <Mov>: <Reg8: 11, Reg8: 9>
                     // USED → r11 = param4;
@@ -79,8 +78,7 @@ function function_12825(param0, param1, param2, param3, param4) {
                 // LOOP → END
             }
         }
-    // → r1 = param1.slice().pop().call(undefined, r1) === false
-    } while (!(param1.slice().pop().call(undefined, r1) === false));
+    }
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>

@@ -26,8 +26,6 @@ async function* anon_15167(param0, param1) {
         // USED → r2 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/start";
         // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
         console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/start")
-        // CODE → <LoadConstZero>: <Reg8: 4>
-        // USED → r4 = 0;
         // CODE → <Less>: <Reg8: 6, Reg8: 4, Reg8: 5>
         // USED → r6 = 0 < param1;
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 4783>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/skip' (String)
@@ -52,7 +50,7 @@ async function* anon_15167(param0, param1) {
             return undefined;
         } else {
             // LOOP → START (for)
-            for (; r4 < r5; ) {
+            for (r4 = 0; r4 < r5; r4 = r6 + 1) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 4>
                 // USED → r6 = 0;
@@ -80,8 +78,6 @@ async function* anon_15167(param0, param1) {
                     if (!__resumeIsReturn) goto label_88;
                 }
                 // ──────────────── Block 8 ──────────────── 
-                // CODE → <Inc>: <Reg8: 4, Reg8: 6>
-                // USED → r4 = r6 + 1;
             }
             // LOOP → END
             // ──────────────── Block 4 ──────────────── 

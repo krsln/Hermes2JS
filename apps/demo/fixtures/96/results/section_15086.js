@@ -32,7 +32,7 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
             // CODE → <Ret>: <Reg8: 0>
             return undefined;
             // LOOP → START (for)
-            for (; !param1; ) {
+            for (; !param1; r2 = globalThis.console.log) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <LoadConstString>: <Reg8: 0, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
@@ -58,8 +58,6 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
                 // USED → r0 = param1;
                 // CODE → <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r3 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r2 = globalThis.console.log;
             }
             // LOOP → END
         }
@@ -70,7 +68,7 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
             // CODE → <Throw>: <Reg8: 0>
             throw caughtException;
             // LOOP → START (for)
-            for (; !param1; ) {
+            for (; !param1; r2 = globalThis.console.log) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <LoadConstString>: <Reg8: 1, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
                 // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
@@ -97,7 +95,5 @@ function tryCatchFinallyBranchInFinallyTest(param0, param1) {
         // USED → r2 = globalThis;
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r2 = globalThis.console.log;
     }
 }

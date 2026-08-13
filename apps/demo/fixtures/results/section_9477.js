@@ -26,11 +26,10 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
     // USED → r5 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue";
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4830>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item";
-    // CODE → <LoadConstZero>: <Reg8: 2>
-    // USED → r2 = 0;
     if (0 < param1.length) {
-        // LOOP → START (do_while)
-        do {
+        // LOOP → START (for)
+        // → r0 = 0
+        for (r2 = 0; r2 < r0; r0 = param1.length) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <Mov>: <Reg8: 0, Reg8: 2>
             // USED → r0 = 0;
@@ -76,11 +75,8 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <AddN>: <Reg8: 2, Reg8: 0, Reg8: 6>
                 // USED → r2 = 0 + 1;
-                // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 8, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-                // USED → r0 = param1.length;
             }
-        // → r0 = param1.length; r2 = 0 + 1
-        } while (r2 < r0);
+        }
         // LOOP → END
         // ──────────────── Block 6 ──────────────── 
         // CODE → <Jmp>: <Addr8: 38>  # Address: 000000c8

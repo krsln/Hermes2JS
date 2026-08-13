@@ -22,17 +22,13 @@ function nestedLoopTest(param0) {
     // USED → r3 = 2;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
-    // CODE → <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0;
     // LOOP → START (for)
-    for (; r1 < 3; ) {
+    for (r1 = 0; r1 < 3; r1 = r9 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 9, Reg8: 1>
         // USED → r9 = 0;
-        // CODE → <LoadConstZero>: <Reg8: 10>
-        // USED → r10 = 0;
         // LOOP → START (for)
-        for (; r10 < 4; ) {
+        for (r10 = 0; r10 < 4; r10 = r11 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 11, Reg8: 10>
             // USED → r11 = 0;
@@ -53,13 +49,9 @@ function nestedLoopTest(param0) {
                 console.log("nested")
             }
             // ──────────────── Block 5 ──────────────── 
-            // CODE → <Inc>: <Reg8: 10, Reg8: 11>
-            // USED → r10 = r11 + 1;
         }
         // LOOP → END
         // ──────────────── Block 6 ──────────────── 
-        // CODE → <Inc>: <Reg8: 1, Reg8: 9>
-        // USED → r1 = r9 + 1;
     }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

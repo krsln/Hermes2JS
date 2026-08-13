@@ -31,7 +31,7 @@ function tryFinallyLoopBreakTest(param0, param1) {
         if (0 < r2) {
             // LOOP → START (for)
             // → r2 = param1[0]; r3 = param1
-            for (; r3 < r2; ) {
+            for (; r3 < r2; r2 = param1.length) {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → <Mov>: <Reg8: 3, Reg8: 6>
                 // USED → r3 = param1;
@@ -58,8 +58,6 @@ function tryFinallyLoopBreakTest(param0, param1) {
                     // USED → r3 = r3 + 1;
                     // CODE → <Mov>: <Reg8: 7, Reg8: 3>
                     r7 = r3 + 1
-                    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-                    // USED → r2 = param1.length;
                 }
             }
             // LOOP → END

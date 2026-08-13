@@ -18,18 +18,14 @@ function labeledContinueTest(param0) {
     // USED → r3 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1";
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
-    // CODE → <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0;
     loop_1:
     // LOOP → START (for)
-    for (; r1 < 3; ) {
+    for (r1 = 0; r1 < 3; r1 = r7 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 7, Reg8: 1>
         // USED → r7 = 0;
-        // CODE → <LoadConstZero>: <Reg8: 8>
-        // USED → r8 = 0;
         // LOOP → START (for)
-        for (; r8 < 3; ) {
+        for (r8 = 0; r8 < 3; r8 = r9 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 9, Reg8: 8>
             // USED → r9 = 0;
@@ -46,8 +42,6 @@ function labeledContinueTest(param0) {
             // USED → r10 = globalThis.console.log;
             // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
             console.log(r7, r9)
-            // CODE → <Inc>: <Reg8: 8, Reg8: 9>
-            // USED → r8 = r9 + 1;
         }
         // LOOP → END
         // ──────────────── Block 4 ──────────────── 
@@ -67,8 +61,6 @@ function labeledContinueTest(param0) {
         // CODE → <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 4>
         console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
         // ──────────────── Block 6 ──────────────── 
-        // CODE → <Inc>: <Reg8: 1, Reg8: 7>
-        // USED → r1 = r7 + 1;
     }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

@@ -14,17 +14,13 @@ function labeledBreakTest(param0) {
     // USED → r3 = 1;
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
     // USED → r6 = 3;
-    // CODE → <LoadConstZero>: <Reg8: 4>
-    // USED → r4 = 0;
-    // LOOP → START (do_while)
-    do {
+    // LOOP → START (for)
+    for (r4 = 0; r4 < 3; r4 = 0 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 2, Reg8: 4>
         // USED → r2 = 0;
-        // CODE → <LoadConstZero>: <Reg8: 0>
-        // USED → r0 = 0;
-        // LOOP → START (do_while)
-        do {
+        // LOOP → START (for)
+        for (r0 = 0; r0 < 3; r0 = 0 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = 0;
@@ -36,21 +32,15 @@ function labeledBreakTest(param0) {
                 // USED → r9 = globalThis.console.log;
                 // CODE → <Call3>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 2, Reg8: 1>
                 console.log(r2, r1)
-                // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 3>
-                // USED → r0 = 0 + 1;
             } else {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <JStrictEqual>: <Addr8: 39, Reg8: 1, Reg8: 3>  # Address: 00000051
                 if (r1 === 1) goto label_81;
             }
-        // → r0 = 0 + 1
-        } while (r0 < 3);
+        }
         // LOOP → END
         // ──────────────── Block 5 ──────────────── 
-        // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
-        // USED → r4 = 0 + 1;
-    // → r4 = 0 + 1
-    } while (r4 < 3);
+    }
     // LOOP → END
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Jmp>: <Addr8: 22>  # Address: 00000065

@@ -18,30 +18,24 @@ function tripleNestedLabeledTest(param0) {
     // USED → r3 = 1;
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
-    // CODE → <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0;
     loop_1:
     // LOOP → START (for)
-    for (; r1 < 3; ) {
+    for (r1 = 0; r1 < 3; r2 = r13 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 10, Reg8: 2>
         // USED → r10 = 0;
         // CODE → <Mov>: <Reg8: 8, Reg8: 1>
         // USED → r8 = 0;
-        // CODE → <LoadConstZero>: <Reg8: 9>
-        // USED → r9 = 0;
         loop_2:
         // LOOP → START (for)
-        for (; r9 < 3; ) {
+        for (r9 = 0; r9 < 3; r10 = r13 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 13, Reg8: 10>
             r13 = 0
             // CODE → <Mov>: <Reg8: 11, Reg8: 9>
             // USED → r11 = 0;
-            // CODE → <LoadConstZero>: <Reg8: 12>
-            // USED → r12 = 0;
             // LOOP → START (for)
-            for (; r12 < 3; ) {
+            for (r12 = 0; r12 < 3; r13 = r13 + 1) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <Inc>: <Reg8: 4, Reg8: 13>
                 // USED → r4 = r13 + 1;
@@ -62,23 +56,17 @@ function tripleNestedLabeledTest(param0) {
                     // ──────────────── Block 6 ──────────────── 
                     // CODE → <Inc>: <Reg8: 12, Reg8: 14>
                     // USED → r12 = r14 + 1;
-                    // CODE → <Mov>: <Reg8: 13, Reg8: 4>
-                    r13 = r13 + 1
                 }
             }
             // LOOP → END
             // ──────────────── Block 7 ──────────────── 
             // CODE → <Inc>: <Reg8: 9, Reg8: 11>
             // USED → r9 = r11 + 1;
-            // CODE → <Mov>: <Reg8: 10, Reg8: 4>
-            r10 = r13 + 1
         }
         // LOOP → END
         // ──────────────── Block 8 ──────────────── 
         // CODE → <Inc>: <Reg8: 1, Reg8: 8>
         // USED → r1 = r8 + 1;
-        // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-        r2 = r13 + 1
     }
     // LOOP → END
     // ──────────────── Block 9 ──────────────── 

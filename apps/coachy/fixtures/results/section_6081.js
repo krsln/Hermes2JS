@@ -111,7 +111,7 @@ function processColorsInProps(param0, param1) {
                             }
                             // ──────────────── Block 8 ──────────────── 
                             // CODE → <Jmp>: <Addr8: -59>  # Address: 0000005a
-                            continue;
+                            goto label_90;
                         }
                         // LOOP → END
                     }

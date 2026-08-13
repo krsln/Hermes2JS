@@ -75,7 +75,7 @@ async function* anon_11947(param0, param1, param2) {
                                 // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
                                 caughtException.stack = new globalThis.Error().stack.replace(r6, "")
                                 // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
-                                continue;
+                                goto label_312;
                             }
                             // LOOP → END
                             // LOOP → START (while)
@@ -173,7 +173,7 @@ async function* anon_11947(param0, param1, param2) {
                                                                         // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>
                                                                         // USED → r6 = new globalThis.Error();
                                                                         // CODE → <Jmp>: <Addr8: 16>  # Address: 00000087
-                                                                        continue;
+                                                                        goto label_135;
                                                                     }
                                                                     // LOOP → END
                                                                     // LOOP → START (while)
@@ -185,8 +185,8 @@ async function* anon_11947(param0, param1, param2) {
                                                                         // USED → r4 = new globalThis.Error();
                                                                         // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
                                                                         r4 = globalThis.Error.captureStackTrace(r4)
-                                                                        // LOOP → START (do_while)
-                                                                        do {
+                                                                        // LOOP → START (for)
+                                                                        for (; !!(caughtException instanceof globalThis.Error); r4 = caughtException instanceof globalThis.Error) {
                                                                             // ──────────────── Block 7 ──────────────── 
                                                                             // CODE → <NewObject>: <Reg8: 6>
                                                                             r6 = {  }
@@ -204,10 +204,8 @@ async function* anon_11947(param0, param1, param2) {
                                                                                 // USED → r3 = globalThis;
                                                                                 // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 2, string_id: 14>  # String: 'Error' (Identifier)
                                                                                 // USED → r4 = globalThis.Error;
-                                                                                // CODE → <InstanceOf>: <Reg8: 4, Reg8: 7, Reg8: 4>
-                                                                                // USED → r4 = caughtException instanceof globalThis.Error;
                                                                             }
-                                                                        } while (!!(caughtException instanceof globalThis.Error));
+                                                                        }
                                                                         // LOOP → END
                                                                     }
                                                                     // LOOP → END

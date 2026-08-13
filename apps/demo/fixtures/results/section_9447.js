@@ -20,10 +20,8 @@ function whileTest(param0) {
     // USED → r8 = "while";
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 2>
     // USED → r5 = 2;
-    // CODE → <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0;
-    // LOOP → START (do_while)
-    do {
+    // LOOP → START (for)
+    for (r1 = 0; r1 < 5; r1 = 0 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r11 = globalThis.console;
@@ -50,10 +48,7 @@ function whileTest(param0) {
             r0 = 0 + 1
         }
         // ──────────────── Block 4 ──────────────── 
-        // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-        // USED → r1 = 0 + 1;
-    // → r1 = 0 + 1
-    } while (r1 < 5);
+    }
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

@@ -14,8 +14,6 @@ function complexTest(param0) {
     r14 = [1, 2, 3, 4, 5]
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     // USED → r7 = r14.length;
-    // CODE → <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
     // CODE → <Less>: <Reg8: 5, Reg8: 0, Reg8: 7>
     // USED → r5 = 0 < r14.length;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
@@ -38,8 +36,9 @@ function complexTest(param0) {
     // USED → r4 = 2;
     // → r14 = [1, 2, 3, 4, 5]
     if (0 < r14.length) {
-        // LOOP → START (do_while)
-        do {
+        // LOOP → START (for)
+        // → r7 = r14[0]
+        for (r0 = 0; r0 < r7; r7 = r14.length) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
             // USED → r7 = r14[0];
@@ -100,10 +99,7 @@ function complexTest(param0) {
             // ──────────────── Block 8 ──────────────── 
             // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
             // USED → r0 = 0 + 1;
-            // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-            // USED → r7 = r14.length;
-        // → r0 = 0 + 1; r7 = r14.length
-        } while (r0 < r7);
+        }
         // LOOP → END
     }
     // ──────────────── Block 9 ──────────────── 
