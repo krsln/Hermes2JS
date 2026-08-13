@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
-from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
+from hermes_decompiler.analysis.models import RegionGraph
 
 
 class RegionPass(ABC):

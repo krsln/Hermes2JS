@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hermes_decompiler.analysis.regions.Regions import SequenceRegion
+from hermes_decompiler.analysis.models.regions import SequenceRegion
 from hermes_decompiler.analysis.transforms._shared import _structural_key as structural_key
 
 """

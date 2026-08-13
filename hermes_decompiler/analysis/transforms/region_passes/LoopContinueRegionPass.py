@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
-from hermes_decompiler.analysis.regions.Regions import LoopRegion
+from hermes_decompiler.analysis.models import RegionVisitor
+from hermes_decompiler.analysis.models.regions import LoopKind, LoopRegion
 from hermes_decompiler.analysis.terminators import TerminatorJump
 from hermes_decompiler.ir.statements import ContinueStatement
 
@@ -11,56 +11,43 @@ from ._base import RegionPass
 
 class LoopContinueRegionPass(RegionPass, RegionVisitor):
     """
-    Recognizes a residual, already-unconditional jump inside a loop's
-    body whose target is the loop's own latch block - exactly what a
-    `continue` compiles to - and rewrites that terminator instruction
-    into an explicit `ContinueStatement` in place.
+    Converts residual unconditional jumps into `continue`.
 
-    Unlike `LoopBreakStructurer`, no block relocation or new region is
-    built: the jump already sits at the tail of whatever block emits
-    it, in whatever if/else nesting `IfStructurer` already gave it,
-    and a `continue;` there is a plain leaf statement - not a
-    control-flow region. That's why this is a `RegionPass`, not a
-    `RegionStructurer` (see that distinction in each base class's own
-    docstring).
+    A jump is considered a genuine unlabelled continue only when:
 
-    Why this residual survives every structurer untouched:
-    `IfStructurer`'s own trailing-jump stripping only removes a jump
-    whose target is exactly the natural merge point of the SPECIFIC
-    if/else level being converted at that step. A jump sitting several
-    nesting levels deep - e.g. inside a second, inner `if` - has its
-    own, different immediate post-dominator at that inner step, which
-    doesn't have to equal the loop's latch address even though the
-    jump's actual target does. The jump is consequently never anyone's
-    responsibility to strip until now: nothing else revisits an
-    already-built region tree looking specifically for "a jump to this
-    loop's own latch, wherever it ended up nested."
+        1. It is inside the current loop.
+        2. It is an unconditional TerminatorJump.
+        3. Its target is the semantic continue target selected by
+           LoopConditionRegionPass.
+        4. It is not the loop's ordinary sequential completion edge.
 
-    Must run in `region_passes` (stage 3), after every structurer:
-    - after `LoopStructurer` (needs `loop.latches` to know each
-      candidate jump's real target address)
-    - after `IfStructurer` in particular - not because converting the
-      terminator earlier would corrupt anything (dominance and
-      post-dominance are computed once on the raw CFG and don't depend
-      on this pass having run), but because there is no reason for a
-      pass that never restructures the tree to run any earlier than
-      the stage its own base class belongs to.
+    This distinction is important for `for` loops.
 
-    Order relative to `LoopBreakStructurer`, `LoopConditionRegionPass`,
-    and every other region pass does not matter: each recognizes a
-    disjoint terminator shape on a disjoint block (this one only
-    touches an already-unconditional `TerminatorJump`, never the
-    loop's own header/latch guard, which is always a
-    `TerminatorConditionalBranch`), so none of their outputs can ever
-    become a valid input for another.
+    Example:
 
-    Deliberately narrow, same philosophy as `LoopBreakStructurer`:
-    only the single-instruction unconditional-jump shape is
-    recognized. A residual CONDITIONAL branch whose guard should
-    become `if (cond) continue;` is not handled here - no fixture seen
-    so far leaves that shape unresolved by the time this pass runs; if
-    one is found, this class should gain a sibling case rather than
-    being stretched to guess at it.
+        if (i === 3) {
+            continue;
+        }
+
+        console.log(i);
+
+    Hermes may compile both paths to the same update block:
+
+        conditional continue path ──┐
+                                    │
+        normal body completion ────┤──> update
+                                    │
+                                    v
+                                  update
+                                    |
+                                  guard
+
+    Therefore `target == update` alone is NOT enough to identify a
+    continue.
+
+    The pass intentionally remains conservative. A jump whose structural
+    role cannot be established is left untouched rather than being
+    incorrectly rendered as `continue`.
     """
 
     def run(self) -> None:
@@ -70,24 +57,20 @@ class LoopContinueRegionPass(RegionPass, RegionVisitor):
         self._try_recognize_continues(node)
         self.visit(node.body)
 
-    # -------------------------------------------------------------
+    # ------------------------------------------------------------------
+    # Main recognition
+    # ------------------------------------------------------------------
 
     def _try_recognize_continues(self, loop: LoopRegion) -> None:
+        target = loop.continue_target
 
-        latch_addresses = {latch.address for latch in loop.latches}
-
-        if not latch_addresses:
+        if target is None:
             return
 
-        for block in loop.body.covered_blocks:
+        covered = loop.body.covered_blocks
 
+        for block in list(covered):
             if block is loop.header_block:
-                # The header's own back-edge test is consumed
-                # separately, by LoopConditionRegionPass, and is
-                # always a conditional branch, never the plain
-                # unconditional jump this pass looks for - excluded
-                # defensively for the same reason LoopBreakStructurer
-                # excludes it from its own candidate search.
                 continue
 
             terminator = block.terminator
@@ -95,23 +78,142 @@ class LoopContinueRegionPass(RegionPass, RegionVisitor):
             if not isinstance(terminator, TerminatorJump):
                 continue
 
-            if terminator.target not in latch_addresses:
+            if terminator.target != target.address:
+                continue
+
+            if not self._is_continue_edge(loop, block, target):
                 continue
 
             self._convert(block, terminator)
 
-    @staticmethod
-    def _convert(block: BasicBlock, terminator: TerminatorJump) -> None:
+    # ------------------------------------------------------------------
+    # Structural validation
+    # ------------------------------------------------------------------
 
+    def _is_continue_edge(
+            self,
+            loop: LoopRegion,
+            block: BasicBlock,
+            target: BasicBlock,
+    ) -> bool:
+        """
+        Determine whether `block -> target` is a semantic continue edge.
+
+        We deliberately distinguish:
+
+            branch-arm -> update
+                = continue
+
+        from:
+
+            final-body-block -> update
+                = ordinary loop completion
+
+        The distinction is made from the region tree rather than from
+        the target address alone.
+        """
+
+        # --------------------------------------------------------------
+        # A direct jump from the loop's condition/update block is never
+        # a source-level continue.
+        # --------------------------------------------------------------
+
+        if block is loop.condition_block:
+            return False
+
+        if block is loop.update_block:
+            return False
+
+        # --------------------------------------------------------------
+        # If the block is owned directly by an IfRegion, a jump from that
+        # branch to the loop's continue target is the canonical residual
+        # continue shape.
+        # --------------------------------------------------------------
+
+        if self._is_inside_if_branch(block, loop):
+            return True
+
+        # --------------------------------------------------------------
+        # A block may be the final block of a nested SequenceRegion.
+        # Walk upward and determine whether it is part of a conditional
+        # branch that bypasses the remainder of the current loop body.
+        # --------------------------------------------------------------
+
+        if self._has_conditional_ancestor(block, loop):
+            return True
+
+        # --------------------------------------------------------------
+        # Do NOT turn the ordinary final-body jump into `continue`.
+        # --------------------------------------------------------------
+
+        return False
+
+    # ------------------------------------------------------------------
+    # Region ownership helpers
+    # ------------------------------------------------------------------
+
+    def _is_inside_if_branch(
+            self,
+            block: BasicBlock,
+            loop: LoopRegion,
+    ) -> bool:
+        """
+        True when the block belongs to an IfRegion contained by this loop.
+
+        We intentionally stop at the current LoopRegion so an enclosing
+        loop's IfRegion cannot accidentally cause a local continue.
+        """
+
+        region = self.graph.owner(block)
+
+        while region is not None and region is not loop:
+            if region.__class__.__name__ == "IfRegion":
+                return True
+
+            region = getattr(region, "parent", None)
+
+        return False
+
+    def _has_conditional_ancestor(
+            self,
+            block: BasicBlock,
+            loop: LoopRegion,
+    ) -> bool:
+        """
+        Walk the region ancestry and detect whether this block is nested
+        below an IfRegion before reaching the current loop.
+        """
+
+        region = self.graph.owner(block)
+
+        while region is not None:
+            if region is loop:
+                return False
+
+            if region.__class__.__name__ == "IfRegion":
+                return True
+
+            region = getattr(region, "parent", None)
+
+        return False
+
+    # ------------------------------------------------------------------
+    # Conversion
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _convert(
+            block: BasicBlock,
+            terminator: TerminatorJump,
+    ) -> None:
         if not block.instructions:
             return
 
         last = block.instructions[-1]
 
         if last.terminator is not terminator:
-            # Shouldn't happen (the terminator is always its own
-            # instruction's), but don't guess if the invariant this
-            # relies on doesn't hold.
+            # Preserve the invariant: only mutate the instruction that
+            # actually owns the CFG terminator.
             return
 
         last.terminator = None

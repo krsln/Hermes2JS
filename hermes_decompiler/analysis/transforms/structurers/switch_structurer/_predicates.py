@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.Regions import SequenceRegion
+from hermes_decompiler.analysis.models.regions import SequenceRegion
 
 """
 Predicates specific to `_ComparisonChainSwitchBuilder`. Not shared with

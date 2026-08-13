@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hermes_decompiler.analysis.regions.Regions import SequenceRegion
+from hermes_decompiler.analysis.models.regions import SequenceRegion
 
 
 class SequenceStructurer:

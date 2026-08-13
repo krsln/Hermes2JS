@@ -1,10 +1,18 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
+from hermes_decompiler.analysis.models import RegionGraph
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorSwitch
 from hermes_decompiler.analysis.transforms.cfg_passes import (
     ShortCircuitConditionCfgPass,
+)
+from hermes_decompiler.analysis.transforms.region_passes import (
+    BooleanChainRegionPass,
+    ConditionalExpressionRegionPass,
+    ForEachRegionPass,
+    LoopConditionRegionPass,
+    LoopContinueRegionPass,
+    NullishAssignmentRegionPass,
 )
 from hermes_decompiler.analysis.transforms.structurers import (
     SequenceStructurer,
@@ -14,14 +22,6 @@ from hermes_decompiler.analysis.transforms.structurers import (
     IfStructurer,
     TryStructurer,
     SwitchStructurer,
-)
-from hermes_decompiler.analysis.transforms.region_passes import (
-    BooleanChainRegionPass,
-    ConditionalExpressionRegionPass,
-    ForEachRegionPass,
-    LoopConditionRegionPass,
-    LoopContinueRegionPass,
-    NullishAssignmentRegionPass,
 )
 from hermes_decompiler.core.logging import get_logger
 

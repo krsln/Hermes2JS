@@ -5,10 +5,10 @@ import json
 from contextlib import contextmanager
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.Regions import (
+from hermes_decompiler.analysis.models.regions import (
     SequenceRegion,
-    LoopRegion,
     LoopKind,
+    LoopRegion,
     IfRegion,
     TryRegion,
     SwitchRegion,
@@ -480,59 +480,50 @@ class Printer(NodeVisitor):
     # loop
     # ---------------------------------------------------------
 
-    def _emit_loop(self, region: LoopRegion, lines):
+    def _emit_loop(self, region: LoopRegion, lines: list[str]) -> None:
+        """
+        Render an already-structured LoopRegion.
+
+        This method deliberately does not infer loop shape from CFG.
+        All loop classification and metadata recovery belongs to the
+        analysis / region-pass layer.
+        """
 
         if region.label is not None:
             self._write(lines, f"{region.label}:")
 
         kind = region.loop_kind
+
         if self.verbose:
-            self._write(lines, f"// LOOP → START ({kind.value if kind else 'unknown'})")
-
-        if kind in (LoopKind.FOR_OF, LoopKind.FOR_IN):
-            self._emit_for_each(region, lines)
-        elif kind is LoopKind.DO_WHILE:
-            # Bottom-tested: the body is guaranteed to run at least
-            # once before `condition` is ever checked. Printing this as
-            # a top-tested `while (cond) { body }` would be a real
-            # semantic change (zero executions instead of one whenever
-            # `cond` starts out false), not just a style difference -
-            # see LoopConditionExtractor's module docstring for why
-            # Hermes produces this shape even for a source-level
-            # `while` whose guard got optimized away.
-            cond = (
-                self.print_expression(region.condition)
-                if region.condition
-                else "true"
+            self._write(
+                lines,
+                f"// LOOP → START ({kind.value if kind else 'unknown'})",
             )
 
-            self._write(lines, "do {")
+        match kind:
 
-            with self._indented():
-                self._emit_region(region.body, lines)
+            case LoopKind.FOR:
+                self._emit_for(region, lines)
 
-            self._emit_condition_comment(
-                region.condition, lines,
-                source_block=self.__condition_source_block(region, is_do_while=True),
-            )
-            self._write(lines, f"}} while ({cond});")
-        else:
-            cond = (
-                self.print_expression(region.condition)
-                if region.condition
-                else "true"
-            )
+            case LoopKind.FOR_OF | LoopKind.FOR_IN:
+                self._emit_for_each(region, lines)
 
-            self._emit_condition_comment(
-                region.condition, lines,
-                source_block=self.__condition_source_block(region, is_do_while=False),
-            )
-            self._write(lines, f"while ({cond}) {{")
+            case LoopKind.DO_WHILE:
+                self._emit_do_while(region, lines)
 
-            with self._indented():
-                self._emit_region(region.body, lines)
+            case LoopKind.WHILE:
+                self._emit_while(region, lines)
 
-            self._write(lines, "}")
+            case LoopKind.ENDLESS:
+                self._emit_endless_loop(region, lines)
+
+            case _:
+                logger.warning(
+                    "Printer: unknown loop kind %r; "
+                    "falling back to while(true)",
+                    kind,
+                )
+                self._emit_endless_loop(region, lines)
 
         if self.verbose:
             self._write(lines, "// LOOP → END")
@@ -556,21 +547,141 @@ class Printer(NodeVisitor):
         # Self-loop: header is its own sole latch.
         return region.header_block
 
-    def _emit_for_each(self, region: LoopRegion, lines):
-        """
-        Renders a `LoopRegion` that `ForEachRecognizer` has already
-        reclassified as FOR_OF/FOR_IN and populated `.iterable` /
-        `.loop_binding` on. `region.body` still contains the loop's
-        remaining statements (the header's IteratorNext/GetNextPName
-        instruction was already stripped by the recognizer, so it
-        won't be re-emitted here as a plain statement).
-        """
+    def _render_for_component(self, value) -> str:
+        if value is None:
+            return ""
 
-        keyword = "of" if region.loop_kind is LoopKind.FOR_OF else "in"
-        source = self.print_expression(region.iterable)
-        binding = f"r{region.loop_binding}"
+        if isinstance(value, str):
+            return value
 
-        self._write(lines, f"for (const {binding} {keyword} {source}) {{")
+        return self.print_expression(value)
+
+    def _emit_for(self, region: LoopRegion, lines: list[str]) -> None:
+        initializer = self._render_for_component(region.initializer)
+        condition = (
+            self.print_expression(region.condition)
+            if region.condition is not None
+            else ""
+        )
+        update = self._render_for_component(region.update)
+
+        self._emit_condition_comment(
+            region.condition,
+            lines,
+            source_block=self.__condition_source_block(
+                region,
+                is_do_while=False,
+            ),
+        )
+
+        self._write(
+            lines,
+            f"for ({initializer}; {condition}; {update}) {{",
+        )
+
+        with self._indented():
+            self._emit_region(region.body, lines)
+
+        self._write(lines, "}")
+
+    def _emit_for_each(
+            self,
+            region: LoopRegion,
+            lines: list[str],
+    ) -> None:
+
+        keyword = (
+            "of"
+            if region.loop_kind is LoopKind.FOR_OF
+            else "in"
+        )
+
+        source = (
+            self.print_expression(region.iterable)
+            if region.iterable is not None
+            else "/* missing iterable */"
+        )
+
+        if region.loop_binding is None:
+            binding = "item"
+        elif isinstance(region.loop_binding, str):
+            binding = region.loop_binding
+        else:
+            binding = f"r{region.loop_binding}"
+
+        self._write(
+            lines,
+            f"for (const {binding} {keyword} {source}) {{",
+        )
+
+        with self._indented():
+            self._emit_region(region.body, lines)
+
+        self._write(lines, "}")
+
+    def _emit_while(
+            self,
+            region: LoopRegion,
+            lines: list[str],
+    ) -> None:
+
+        condition = (
+            self.print_expression(region.condition)
+            if region.condition is not None
+            else "true"
+        )
+
+        self._emit_condition_comment(
+            region.condition,
+            lines,
+            source_block=self.__condition_source_block(
+                region,
+                is_do_while=False,
+            ),
+        )
+
+        self._write(lines, f"while ({condition}) {{")
+
+        with self._indented():
+            self._emit_region(region.body, lines)
+
+        self._write(lines, "}")
+
+    def _emit_do_while(
+            self,
+            region: LoopRegion,
+            lines: list[str],
+    ) -> None:
+
+        condition = (
+            self.print_expression(region.condition)
+            if region.condition is not None
+            else "true"
+        )
+
+        self._write(lines, "do {")
+
+        with self._indented():
+            self._emit_region(region.body, lines)
+
+        self._emit_condition_comment(
+            region.condition,
+            lines,
+            source_block=self.__condition_source_block(
+                region,
+                is_do_while=True,
+            ),
+        )
+
+        self._write(lines, f"}} while ({condition});")
+
+    def _emit_endless_loop(
+            self,
+            region: LoopRegion,
+            lines: list[str],
+    ) -> None:
+
+        self._write(lines, "while (true) {")
 
         with self._indented():
             self._emit_region(region.body, lines)

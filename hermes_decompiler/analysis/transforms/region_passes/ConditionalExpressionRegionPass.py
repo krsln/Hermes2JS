@@ -3,8 +3,8 @@ from __future__ import annotations
 import dataclasses
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
-from hermes_decompiler.analysis.regions.Regions import IfRegion, SequenceRegion
+from hermes_decompiler.analysis.models import RegionVisitor
+from hermes_decompiler.analysis.models.regions import IfRegion, SequenceRegion
 from hermes_decompiler.analysis.transforms._shared import (
     _negate_condition,
     _TRIVIAL_NODE_TYPES,

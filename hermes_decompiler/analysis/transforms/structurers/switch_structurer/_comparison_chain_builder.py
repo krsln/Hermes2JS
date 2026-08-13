@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hermes_decompiler.analysis.regions.Regions import IfRegion, SequenceRegion, SwitchCase, SwitchRegion
+from hermes_decompiler.analysis.models.regions import IfRegion, SequenceRegion, SwitchCase, SwitchRegion
 from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression
 from hermes_decompiler.ir.expressions.Literals import Literal

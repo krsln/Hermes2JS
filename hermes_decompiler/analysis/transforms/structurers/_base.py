@@ -3,8 +3,7 @@ from __future__ import annotations
 import logging
 from abc import ABC, abstractmethod
 
-from hermes_decompiler.analysis.regions.RegionGraph import RegionGraph
-from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
+from hermes_decompiler.analysis.models import RegionGraph, RegionVisitor
 from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)

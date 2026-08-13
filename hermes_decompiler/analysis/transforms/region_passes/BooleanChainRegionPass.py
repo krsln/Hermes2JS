@@ -3,8 +3,8 @@ from __future__ import annotations
 import dataclasses
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
-from hermes_decompiler.analysis.regions.Regions import IfRegion, SequenceRegion
+from hermes_decompiler.analysis.models import RegionVisitor
+from hermes_decompiler.analysis.models.regions import IfRegion, SequenceRegion
 from hermes_decompiler.analysis.transforms._shared import (
     _negate_condition,
     _is_pure,
@@ -16,7 +16,6 @@ from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import (
     BinaryExpression,
     Expression)
-
 from ._base import RegionPass
 
 logger = get_logger(__name__)

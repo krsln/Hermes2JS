@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hermes_decompiler.analysis.regions.Regions import TryRegion
+from hermes_decompiler.analysis.models.regions import TryRegion
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 
 from ._finally_attacher import _FinallyAttacher

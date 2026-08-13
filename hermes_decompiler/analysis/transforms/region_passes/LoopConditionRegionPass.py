@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.regions.RegionVisitor import RegionVisitor
-from hermes_decompiler.analysis.regions.Regions import LoopKind, LoopRegion
+from hermes_decompiler.analysis.models import RegionVisitor
+from hermes_decompiler.analysis.models.regions import LoopKind, LoopRegion
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import UnaryOperator
@@ -15,38 +15,56 @@ logger = get_logger(__name__)
 
 class LoopConditionRegionPass(RegionPass, RegionVisitor):
     """
-    Determines a loop's real continuation test (if any) and, from where
-    that test physically sits in the CFG, whether the loop is top-tested
-    (`while`) or bottom-tested (`do-while`):
+    Extracts the loop condition and classifies the physical loop shape.
 
-    - If the HEADER block (the first block executed every iteration,
-      including the first) ends in a valid loop-guard branch, the test
-      runs before the body can execute at all -> `while (cond) { body }`.
-    - Otherwise, if the loop's single LATCH block (the block that jumps
-      back to the header - i.e. the last block executed each iteration)
-      ends in one, the body always runs at least once before the test
-      -> `do { body } while (cond)`.
-    - If neither has a valid guard-shaped branch, no condition is
-      extracted and the loop stays `while (true)` (with whatever
-      unresolved conditional branch remains inside the body still
-      visible - see `StructuralAnalyzer._audit_unstructured_blocks`).
+    Supported shapes:
 
-    This distinction is not cosmetic: Hermes (like most compilers)
-    performs loop rotation, so a source-level `while (cond) { body }`
-    whose guard is provably true on entry commonly loses its separate
-    top-of-loop check entirely and compiles down to exactly the
-    bottom-tested shape above - indistinguishable, from bytecode alone,
-    from a `do-while` written in the source. Rendering it as `do-while`
-    is the structurally honest choice: it matches the actual
-    "body runs, then test" control flow, whereas silently defaulting to
-    `while (cond) {...}` here would misrepresent loops that must execute
-    at least once as ones that might execute zero times.
+        while:
 
-    Traversal is a single override: every region kind other than
-    `LoopRegion` already recurses exactly the way `RegionVisitor`'s
-    default does (including `SwitchRegion`, which the original
-    hand-rolled `_visit` had to explicitly special-case to reach at
-    all - here it's inherited for free).
+            header
+              |
+              +-- condition false --> exit
+              |
+              v
+             body
+              |
+              +--------------------> header
+
+
+        do-while:
+
+            header
+              |
+             body
+              |
+            condition
+              |
+              +-- true ------------> header
+              |
+              +-- false -----------> exit
+
+
+        for:
+
+            header
+              |
+             body
+              |
+             update
+              |
+            condition
+              |
+              +-- true ------------> header
+              |
+              +-- false -----------> exit
+
+    The important distinction between `do-while` and `for` is that a
+    source-level `for` has a distinct update phase immediately before
+    the loop guard.
+
+    The pass is deliberately conservative. If the CFG does not provide
+    enough evidence to distinguish the shapes, it does not invent a
+    `for` loop.
     """
 
     def run(self) -> None:
@@ -56,111 +74,282 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         self._extract(node)
         self.visit(node.body)
 
-    def _extract(self, loop: LoopRegion):
+    # ------------------------------------------------------------------
+    # Main extraction
+    # ------------------------------------------------------------------
 
+    def _extract(self, loop: LoopRegion) -> None:
         header = loop.header_block
+
         if header is None:
             return
 
-        # A self-loop (single block, its own back edge) makes the
-        # header its own sole latch. Structurally that block always
-        # runs body-then-test on every entry, including the first -
-        # there is no separate top-of-loop check physically preceding
-        # it, since header and latch are literally the same
-        # instruction stream. That's definitionally bottom-tested
-        # (do-while), even though `_consume_guard`'s generic edge-shape
-        # check on the header can't tell the difference and would
-        # happily also accept it as WHILE. Must check for this case
-        # BEFORE attempting the top-tested path below, or a self-loop
-        # gets silently misclassified as `while (cond) { body }`,
-        # which is a real semantic change (predicts zero executions
-        # whenever `cond` starts false, when the actual bytecode
-        # always executes the body at least once).
+        # Defensive reset. This matters if the pass is ever run twice
+        # against the same region tree.
+        loop.condition = None
+        loop.condition_block = None
+        loop.update_block = None
+        loop.continue_target = None
+        loop.break_target = None
+        loop.loop_kind = LoopKind.WHILE
+
+        # ------------------------------------------------------------------
+        # 1. Self-loop
+        # ------------------------------------------------------------------
+
         if header in loop.latches:
-            if self._consume_guard(header, loop, LoopKind.DO_WHILE):
+            if self._consume_guard(
+                    header,
+                    loop,
+                    LoopKind.DO_WHILE,
+                    update_block=None,
+            ):
+                loop.continue_target = header
                 return
 
             logger.warning(
                 "Loop header block %d (0x%x): self-loop with no valid "
-                "guard on its own branch - leaving as `while (true)`.",
-                header.id, header.address,
+                "guard; leaving loop unclassified.",
+                header.id,
+                header.address,
             )
             return
 
-        # 1) Top-tested: does the header itself carry a valid guard?
-        if self._consume_guard(header, loop, LoopKind.WHILE):
+        # ------------------------------------------------------------------
+        # 2. Top-tested loop: while (...)
+        # ------------------------------------------------------------------
+
+        if self._consume_guard(
+                header,
+                loop,
+                LoopKind.WHILE,
+                update_block=None,
+        ):
+            loop.continue_target = header
             return
 
-        # 2) Bottom-tested: does the loop's one latch carry a valid
-        # guard? (Multiple latches - e.g. two different `continue`-like
-        # back edges with different conditions - don't collapse to a
-        # single trailing `while (cond)` unambiguously, so those are
-        # deliberately left alone rather than guessed at.)
-        if len(loop.latches) == 1:
-            latch = next(iter(loop.latches))
-            if latch is not header and self._consume_guard(latch, loop, LoopKind.DO_WHILE):
+        # ------------------------------------------------------------------
+        # 3. Bottom-tested loop
+        # ------------------------------------------------------------------
+
+        if len(loop.latches) != 1:
+            logger.warning(
+                "Loop header block %d (0x%x): expected exactly one latch "
+                "for bottom-tested loop classification, got %d.",
+                header.id,
+                header.address,
+                len(loop.latches),
+            )
+            return
+
+        latch = next(iter(loop.latches))
+
+        if latch is header:
+            return
+
+        # The latch must carry the actual loop guard.
+        if not isinstance(latch.terminator, TerminatorConditionalBranch):
+            logger.debug(
+                "Loop header block %d (0x%x): latch block %d (0x%x) "
+                "does not contain a conditional guard.",
+                header.id,
+                header.address,
+                latch.id,
+                latch.address,
+            )
+            return
+
+        # A bottom-tested loop can be either:
+        #
+        #     do { body } while (cond)
+        #
+        # or:
+        #
+        #     for (...; cond; update) { body }
+        #
+        # First determine whether this is the canonical `for` shape.
+        update_block = self._find_for_update_block(loop, latch)
+
+        if update_block is not None:
+            if self._consume_guard(
+                    latch,
+                    loop,
+                    LoopKind.FOR,
+                    update_block=update_block,
+            ):
+                loop.update_block = update_block
+                loop.continue_target = update_block
                 return
 
+        # Otherwise it is a normal bottom-tested loop.
+        if self._consume_guard(
+                latch,
+                loop,
+                LoopKind.DO_WHILE,
+                update_block=None,
+        ):
+            loop.continue_target = latch
+            return
+
         logger.warning(
-            "Loop header block %d (0x%x): no valid guard found on the "
-            "header or its single latch - leaving as `while (true)`.",
-            header.id, header.address,
+            "Loop header block %d (0x%x): no valid loop guard found.",
+            header.id,
+            header.address,
         )
 
-    def _consume_guard(self, block: BasicBlock, loop: LoopRegion, kind: LoopKind) -> bool:
+    # ------------------------------------------------------------------
+    # Guard extraction
+    # ------------------------------------------------------------------
+
+    def _consume_guard(
+            self,
+            block: BasicBlock,
+            loop: LoopRegion,
+            kind: LoopKind,
+            update_block: BasicBlock | None,
+    ) -> bool:
         """
-        If `block`'s terminator is a conditional branch with exactly one
-        edge leaving the loop (a real loop guard's defining shape),
-        extract it as `loop.condition`, set `loop.loop_kind`, and remove
-        the now-redundant terminator/instruction from `block`. Returns
-        whether extraction succeeded; does nothing and returns False
-        otherwise, so the caller can try the next candidate block.
+        Consume a conditional branch that has exactly one edge leaving
+        the current loop.
+
+        The branch is removed from the BasicBlock because its condition
+        becomes `loop.condition`.
+
+        `update_block` is metadata only; it is not used to determine
+        the condition itself.
         """
 
         branch = block.terminator
+
         if not isinstance(branch, TerminatorConditionalBranch):
             return False
 
         exits = set(loop.exits)
 
-        target_block = next((s for s in block.successors if s.address == branch.target), None)
-        fallthrough_candidates = [s for s in block.successors if s is not target_block]
-        fallthrough_block = fallthrough_candidates[0] if len(fallthrough_candidates) == 1 else None
+        target_block = next(
+            (
+                successor
+                for successor in block.successors
+                if successor.address == branch.target
+            ),
+            None,
+        )
 
-        target_is_exit = target_block is not None and target_block in exits
-        fallthrough_is_exit = fallthrough_block is not None and fallthrough_block in exits
+        fallthrough_candidates = [
+            successor
+            for successor in block.successors
+            if successor is not target_block
+        ]
 
-        condition: Expression
-        if target_is_exit and not fallthrough_is_exit:
-            # `if (condition) goto <outside the loop>` - taking the
-            # branch means leaving; the loop keeps iterating exactly
-            # when the condition does NOT hold.
-            condition = UnaryExpression(UnaryOperator.LOGICAL_NOT, branch.condition)
-        elif fallthrough_is_exit and not target_is_exit:
-            # `if (condition) goto <still inside the loop>`, and falling
-            # through (condition false) leaves the loop - the loop keeps
-            # iterating exactly when the condition holds, as-is.
-            condition = branch.condition
-        else:
-            # Neither edge cleanly identifies a single loop-exit - this
-            # branch doesn't have the shape a loop guard must have (e.g.
-            # it belongs to an unrelated `if` that happens to sit in
-            # this block). Don't guess.
+        if len(fallthrough_candidates) != 1:
             return False
 
-        block.terminator = None
-        loop.condition = condition
-        loop.loop_kind = kind
+        fallthrough_block = fallthrough_candidates[0]
 
-        # `block.terminator` is only consulted for CFG edges - Printer
-        # renders per-*instruction* terminators (`instruction.terminator`
-        # in `_emit_block`), a separate field on whichever OpcodeResult
-        # originally produced this branch. Nulling `block.terminator`
-        # alone leaves that instruction sitting in `block.instructions`,
-        # so it would still print as a standalone `if (...) goto label;`
-        # even though its condition was "consumed" into `loop.condition`.
-        # Must also drop the instruction itself.
-        if block.instructions and block.instructions[-1].terminator is branch:
+        target_is_exit = (
+                target_block is not None
+                and target_block in exits
+        )
+
+        fallthrough_is_exit = fallthrough_block in exits
+
+        if target_is_exit and not fallthrough_is_exit:
+            # if (condition) goto exit
+            #
+            # Continue looping while !condition.
+            condition: Expression = UnaryExpression(
+                UnaryOperator.LOGICAL_NOT,
+                branch.condition,
+            )
+
+        elif fallthrough_is_exit and not target_is_exit:
+            # if (condition) goto body
+            #
+            # Continue looping while condition.
+            condition = branch.condition
+
+        else:
+            # Both edges leave, or both edges stay inside.
+            # This is not a loop guard.
+            return False
+
+        # ------------------------------------------------------------------
+        # Consume the terminator.
+        # ------------------------------------------------------------------
+
+        block.terminator = None
+
+        if (
+                block.instructions
+                and block.instructions[-1].terminator is branch
+        ):
             block.instructions.pop()
 
+        loop.condition = condition
+        loop.condition_block = block
+        loop.loop_kind = kind
+
+        if update_block is not None:
+            loop.update_block = update_block
+
         return True
+
+    # ------------------------------------------------------------------
+    # FOR detection
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _find_for_update_block(
+            loop: LoopRegion,
+            condition_block: BasicBlock,
+    ) -> BasicBlock | None:
+        """
+        For Hermes' canonical numeric-for lowering, the update operation
+        and the loop guard can live in the same BasicBlock:
+
+            Inc ...
+            JLess ... -> header
+
+        In that shape the condition block itself is the update block.
+
+        For a separated update block, use the unique in-loop predecessor.
+        """
+
+        covered = loop.body.covered_blocks
+
+        # Canonical Hermes:
+        #
+        #     update instruction
+        #     conditional guard
+        #
+        # in the same block.
+        if condition_block.instructions:
+            non_terminator_instructions = [
+                instruction
+                for instruction in condition_block.instructions
+                if instruction.terminator is None
+            ]
+
+            if non_terminator_instructions:
+                return condition_block
+
+        # Generic separated-update form:
+        candidates = [
+            predecessor
+            for predecessor in condition_block.predecessors
+            if predecessor in covered
+               and predecessor is not condition_block
+        ]
+
+        if len(candidates) != 1:
+            return None
+
+        candidate = candidates[0]
+
+        if candidate is loop.header_block:
+            return None
+
+        if condition_block not in candidate.successors:
+            return None
+
+        return candidate
