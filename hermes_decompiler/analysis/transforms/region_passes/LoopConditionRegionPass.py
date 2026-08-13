@@ -92,6 +92,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         loop.continue_target = None
         loop.break_target = None
         loop.loop_kind = LoopKind.WHILE
+        # loop.loop_kind = LoopKind.UNKNOWN
 
         # ------------------------------------------------------------------
         # 1. Self-loop
