@@ -502,7 +502,7 @@ function _request(param0, param1, param2) {
                     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
                     // USED → r7 = r14[+(r14 + 1)].call;
                     // CODE → <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
-                    r7 = r14[+(r14 + 1)].call(r8, r10)
+                    r7 = r14[+(r14 + 1)].call(r8, caughtException)
                 }
             }
             // LOOP → END
@@ -515,9 +515,9 @@ function _request(param0, param1, param2) {
             // CODE → <GetById>: <Reg8: 0, Reg8: 1, UInt8: 30, string_id: 13645>  # String: 'reject' (Identifier)
             // USED → r0 = globalThis.Promise.reject;
             // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
-            // USED → r0 = globalThis.Promise.reject(r2);
+            // USED → r0 = globalThis.Promise.reject(caughtException);
             // CODE → <Ret>: <Reg8: 0>
-            return globalThis.Promise.reject(r2);
+            return globalThis.Promise.reject(caughtException);
         }
     }
 }

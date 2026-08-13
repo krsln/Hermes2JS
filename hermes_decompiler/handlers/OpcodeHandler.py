@@ -38,6 +38,16 @@ class ArgsPattern:
 # resolver is used.
 _IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
 
+# Opcodes whose produced value, though not a Literal, is still safe to
+# inline even in "symbolic" resolution mode: the value is bound EXACTLY
+# ONCE per scope entry and never redefined afterward within that scope
+# (unlike Mov/Inc/Add/GetById, which can sit inside a loop and be
+# re-evaluated on every iteration - see get_register_symbolic's own
+# docstring for why those must stay symbolic). `Catch` is the first
+# case: `caughtException` is bound once at catch-block entry and never
+# reassigned for the rest of that block.
+_SAFE_IDENTIFIER_INLINE_OPCODES = frozenset({"Catch"})
+
 _CONST_LOAD_OPCODES = frozenset({
     "LoadConstZero",
     "LoadConstUInt8",
@@ -261,6 +271,14 @@ class OpcodeHandler(ABC):
             if state.reads > 1:
                 return dataclasses.replace(value)
 
+            return value
+
+        # Catch (and any future single-bind-per-scope opcode): safe to
+        # inline even in symbolic mode - see _SAFE_IDENTIFIER_INLINE_OPCODES
+        # docstring above.
+        if opcode in _SAFE_IDENTIFIER_INLINE_OPCODES and isinstance(value, Identifier):
+            state.reads += 1
+            definition.definition_used = True
             return value
 
         if not inline_non_literal:
