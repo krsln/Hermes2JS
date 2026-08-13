@@ -36,7 +36,7 @@ function callGeneratorTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-    console.log(GetIterator(r3).next())
+    console.log(r7)
     // CODE → <Jmp>: <Addr8: -27>  # Address: 00000029
     goto label_41;
     // ──────────────── Block 3 ──────────────── 
@@ -71,7 +71,7 @@ function callGeneratorTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-    console.log(GetIterator(r3).next())
+    console.log(r7)
     // CODE → <Jmp>: <Addr8: -27>  # Address: 0000005f
     goto label_95;
     // ──────────────── Block 7 ──────────────── 
@@ -95,7 +95,7 @@ function callGeneratorTests(param0) {
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
     // USED → r2 = getEnvironment(0)[2].call(undefined).next();
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log(getEnvironment(0)[2].call(undefined).next())
+    console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -105,7 +105,7 @@ function callGeneratorTests(param0) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 0>
     // USED → r2 = getEnvironment(0)[2].call(undefined).return(undefined);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log(getEnvironment(0)[2].call(undefined).return(undefined))
+    console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

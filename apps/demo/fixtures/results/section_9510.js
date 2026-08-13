@@ -62,7 +62,7 @@ function closureLoopTest(param0) {
             // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
             // USED → r4 = GetIterator(r2).next().call(undefined);
             // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-            console.log(GetIterator(r2).next().call(undefined))
+            console.log(r4)
             // CODE → <Jmp>: <Addr8: -34>  # Address: 00000045
             goto label_69;
         }

@@ -35,7 +35,7 @@ function forTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r7 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 6>
-    console.log(0)
+    console.log(r6)
     // CODE → <Jmp>: <Addr8: 40>  # Address: 00000068
     goto label_104;
     // ──────────────── Block 4 ──────────────── 

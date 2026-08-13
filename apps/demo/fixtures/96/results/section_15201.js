@@ -17,7 +17,7 @@ function function_15201(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
     // USED → r2 = param1;
     // CODE → <Call3>: <Reg8: 2, Reg8: 5, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = getEnvironment(0)[2].default.call(undefined, Dog, param1)
+    r2 = getEnvironment(0)[2].default.call(undefined, r4, r2)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 4>
     // USED → r1 = getEnvironment(0)[4];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
@@ -51,7 +51,7 @@ function function_15201(param0, param1) {
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 0>
     // USED → r0 = r0[0] = r5;
     // CODE → <Call4>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0>
-    // USED → r0 = getEnvironment(0)[4].default.call(undefined, Dog, r1[0] = r5, r0[0] = r5);
+    // USED → r0 = getEnvironment(0)[4].default.call(undefined, r4, r1, r0);
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(0)[4].default.call(undefined, Dog, r1[0] = r5, r0[0] = r5);
+    return getEnvironment(0)[4].default.call(undefined, r4, r1, r0);
 }

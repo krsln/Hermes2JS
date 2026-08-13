@@ -11,7 +11,7 @@ function spreadObjectTest(param0) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Arrays/SpreadTests/spreadObjectTest/start")
     // CODE → <NewObject>: <Reg8: 4>
-    r4 = {  }
+    // USED → r4 = {  };
     // CODE → <NewObjectWithBuffer>: <Reg8: 6, UInt16: 2, UInt16: 2, UInt16: 317, UInt16: 19852>  # Object: {'x': 1, 'y': 2}
     r6 = { "x": 1, "y": 2 }
     // CODE → <Mov>: <Reg8: 7, Reg8: 4>
@@ -43,13 +43,13 @@ function spreadObjectTest(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call3>: <Reg8: 4, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2>
-    // USED → r4 = getEnvironment(0)[1].default.call(undefined, r4, getEnvironment(0)[0]);
+    // USED → r4 = getEnvironment(0)[1].default.call(undefined, r4, r2);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
-    console.log(r4.x, getEnvironment(0)[1].default.call(undefined, r4, getEnvironment(0)[0]))
+    console.log(r5, r4)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

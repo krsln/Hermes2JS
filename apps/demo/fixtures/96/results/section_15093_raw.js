@@ -34,7 +34,7 @@ function forInTest(param0) {
     // CODE → <GetByVal>: <Reg8: 7, Reg8: 6, Reg8: 10>
     // USED → r7 = r6[r5.next()];
     // CODE → <Call3>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 7>
-    console.log(r5.next(), r6[r5.next()])
+    console.log(r10, r7)
     // CODE → <Jmp>: <Addr8: -33>  # Address: 0000002b
     goto label_43;
     // ──────────────── Block 3 ──────────────── 

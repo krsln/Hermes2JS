@@ -9,7 +9,7 @@ function delay(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 1>
     // USED → r0 = param1;
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    // USED → r0 = globalThis.Promise.resolve(param1);
+    // USED → r0 = globalThis.Promise.resolve(r0);
     // CODE → <Ret>: <Reg8: 0>
-    return globalThis.Promise.resolve(param1);
+    return globalThis.Promise.resolve(r0);
 }

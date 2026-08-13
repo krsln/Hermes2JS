@@ -22,7 +22,7 @@ function tryCatchFinallyImplicitThrowTest(param0, param1) {
         // CODE → <LoadConstUndefined>: <Reg8: 0>
         // USED → r0 = undefined;
         // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2>
-        // USED → r0 = getEnvironment(0)[0].call(undefined, param1);
+        // USED → r0 = getEnvironment(0)[0].call(undefined, r2);
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r4 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -30,9 +30,9 @@ function tryCatchFinallyImplicitThrowTest(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 4697>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result' (String)
         // USED → r2 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result";
         // CODE → <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 0>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result", getEnvironment(0)[0].call(undefined, param1))
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/result", r0)
         // CODE → <Ret>: <Reg8: 0>
-        return getEnvironment(0)[0].call(undefined, param1);
+        return getEnvironment(0)[0].call(undefined, r2);
     } catch (caughtException) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

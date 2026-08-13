@@ -45,9 +45,9 @@ function function_12825(param0, param1, param2, param3, param4) {
                 // CODE → <Mov>: <Reg8: 1, Reg8: 7>
                 // USED → r1 = param2;
                 // CODE → <Call2>: <Reg8: 1, Reg8: 11, Reg8: 6, Reg8: 1>
-                // USED → r1 = param1.slice().pop().call(undefined, param2);
+                // USED → r1 = param1.slice().pop().call(undefined, r1);
                 // CODE → <StrictEq>: <Reg8: 0, Reg8: 1, Reg8: 5>
-                // USED → r0 = param1.slice().pop().call(undefined, param2) === false;
+                // USED → r0 = param1.slice().pop().call(undefined, r1) === false;
                 // CODE → <Jmp>: <Addr8: 47>  # Address: 0000007a
                 continue;
             } catch (caughtException) {
@@ -55,7 +55,7 @@ function function_12825(param0, param1, param2, param3, param4) {
                 while (true) {
                     // ──────────────── Block 4 ──────────────── 
                     // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-                    // USED → r1 = param1.slice().pop().call(undefined, param2) === false;
+                    // USED → r1 = param1.slice().pop().call(undefined, r1) === false;
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → <Mov>: <Reg8: 11, Reg8: 9>
                     // USED → r11 = param4;
@@ -68,20 +68,21 @@ function function_12825(param0, param1, param2, param3, param4) {
                     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 98>  # String: 'concat' (Identifier)
                     // USED → r1 = globalThis.HermesInternal.concat;
                     // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 3, Reg8: 14, Reg8: 2>
-                    // USED → r1 = globalThis.HermesInternal.concat.call("Error occurred in ", param3, " callback, continuing anyway\u2026");
+                    // USED → r1 = globalThis.HermesInternal.concat.call("Error occurred in ", r14, " callback, continuing anyway\u2026");
                     // CODE → <Call2>: <Reg8: 1, Reg8: 13, Reg8: 11, Reg8: 1>
-                    r1 = param4.error(globalThis.HermesInternal.concat.call("Error occurred in ", param3, " callback, continuing anyway\u2026"))
+                    r1 = param4.error(r1)
                     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
                     // USED → r1 = param4.error;
                     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>
-                    r1 = param4.error(caughtException)
+                    r1 = param4.error(r12)
                 }
                 // LOOP → END
             }
         }
-    } while (!(param1.slice().pop().call(undefined, param2) === false));
+    // → r1 = param1.slice().pop().call(undefined, r1) === false
+    } while (!(param1.slice().pop().call(undefined, r1) === false));
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Ret>: <Reg8: 0>
-    return param1.slice().pop().call(undefined, param2) === false;
+    return param1.slice().pop().call(undefined, r1) === false;
 }

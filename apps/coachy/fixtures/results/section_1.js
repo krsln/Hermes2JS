@@ -51,11 +51,11 @@ function function_1(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 64>  # String: '__d' (Identifier)
     // USED → r0 = "__d";
     // CODE → <Call3>: <Reg8: 9, Reg8: 10, Reg8: 9, Reg8: 11, Reg8: 0>
-    // USED → r9 = globalThis.HermesInternal.concat.call("", globalThis.__METRO_GLOBAL_PREFIX__, "__d");
+    // USED → r9 = globalThis.HermesInternal.concat.call("", r11, "__d");
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 3>  # Function: [#3 define of 107 bytes]: 4 params @ offset 0x0016e029
     // USED → r0 = define;
     // CODE → <PutByVal>: <Reg8: 8, Reg8: 9, Reg8: 0>
-    param1[globalThis.HermesInternal.concat.call("", globalThis.__METRO_GLOBAL_PREFIX__, "__d")] = define
+    param1[globalThis.HermesInternal.concat.call("", r11, "__d")] = define
     // CODE → <PutById>: <Reg8: 8, Reg8: 7, UInt8: 2, string_id: 11632>  # String: '__c' (Identifier)
     param1.__c = clear
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 10>  # Function: [#10 registerSegment of 48 bytes]: 4 params @ offset 0x0016e278

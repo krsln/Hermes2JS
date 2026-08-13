@@ -21,7 +21,7 @@ function restOnlyTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     // USED → r3 = apply(r4, r5).length;
     // CODE → <Call3>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 6>
-    console.log(apply(r4, r5).length, apply(r4, r5))
+    console.log(r3, r6)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

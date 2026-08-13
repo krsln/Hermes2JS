@@ -23,7 +23,7 @@ function function_15122(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r7 = globalThis.Object.defineProperty;
     // CODE → <NewObject>: <Reg8: 6>
-    r6 = {  }
+    // USED → r6 = {  };
     // CODE → <LoadConstTrue>: <Reg8: 5>
     // USED → r5 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 5, string_id: 205>  # String: 'value' (Identifier)
@@ -31,7 +31,7 @@ function function_15122(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r5 = "__esModule";
     // CODE → <Call4>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 5, Reg8: 6>
-    r5 = globalThis.Object.defineProperty(param6, "__esModule", r6)
+    r5 = globalThis.Object.defineProperty(r1, "__esModule", r6)
     // CODE → <PutById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 10859>  # String: 'mapTest' (Identifier)
     param6.mapTest = mapTest
     // CODE → <PutById>: <Reg8: 1, Reg8: 3, UInt8: 2, string_id: 10864>  # String: 'setTest' (Identifier)
@@ -53,21 +53,22 @@ function function_15122(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call2>: <Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 3>
-    // USED → r4 = param2.call(undefined, param7[0]);
-    if (!param2.call(undefined, param7[0])) {
+    // USED → r4 = param2.call(undefined, r3);
+    // → r3 = param7[0]
+    if (!param2.call(undefined, r3)) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <NewObject>: <Reg8: 3>
         r3 = {  }
         // CODE → <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 4, string_id: 107>  # String: 'default' (Identifier)
-        r3.default = param2.call(undefined, param7[0])
+        r3.default = param2.call(undefined, r3)
         // CODE → <Mov>: <Reg8: 1, Reg8: 3>
         // USED → r1 = r3;
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 48>  # String: '__esModule' (Identifier)
-        // USED → r3 = param2.call(undefined, param7[0]).__esModule;
+        // USED → r3 = param2.call(undefined, r3).__esModule;
         // CODE → <Mov>: <Reg8: 1, Reg8: 4>
-        r1 = param2.call(undefined, param7[0])
+        r1 = param2.call(undefined, r3)
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>

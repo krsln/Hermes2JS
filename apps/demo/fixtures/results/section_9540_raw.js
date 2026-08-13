@@ -37,7 +37,7 @@ function describe(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 3789>  # String: 'count=' (String)
     // USED → r1 = "count=";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 1, Reg8: 3>
-    // USED → r1 = globalThis.HermesInternal.concat.call("count=", this.#__private_2__);
+    // USED → r1 = globalThis.HermesInternal.concat.call("count=", r3);
     // CODE → <Ret>: <Reg8: 1>
-    return globalThis.HermesInternal.concat.call("count=", this.#__private_2__);
+    return globalThis.HermesInternal.concat.call("count=", r3);
 }

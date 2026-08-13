@@ -106,7 +106,7 @@ class Call1(OpcodeHandler):
         callee = self.get_register_expression(ctx.analysis, func_reg)
         this_value = self.get_register_expression(ctx.analysis, this_reg)
         real_arguments = tuple(
-            self.get_register_expression(ctx.analysis, reg)
+            self.get_register_symbolic(ctx.analysis, reg)
             for reg in rest_arg_regs
         )
 

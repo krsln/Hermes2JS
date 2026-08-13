@@ -72,7 +72,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                         // CODE → <GetByVal>: <Reg8: 2, Reg8: 11, Reg8: 2>
                         // USED → r2 = param1[0];
                         // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 10, Reg8: 5, Reg8: 2>
-                        console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", param1[0])
+                        console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", r2)
                     }
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → <Mov>: <Reg8: 2, Reg8: 9>

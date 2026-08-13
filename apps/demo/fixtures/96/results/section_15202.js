@@ -15,7 +15,7 @@ function Dog(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3>
-    r1 = getEnvironment(1)[3].default.call(undefined, this, getEnvironment(0)[0])
+    r1 = getEnvironment(1)[3].default.call(undefined, r4, r3)
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 0>
     // USED → r0 = getEnvironment(1)[0];
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
@@ -31,7 +31,7 @@ function Dog(param0, param1, param2) {
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 1>
     // USED → r0 = (r0[0] = param1)[1] = "Woof";
     // CODE → <Call4>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 0>
-    // USED → r0 = getEnvironment(1)[0].default.call(undefined, this, getEnvironment(0)[0], (r0[0] = param1)[1] = "Woof");
+    // USED → r0 = getEnvironment(1)[0].default.call(undefined, r4, r3, r0);
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 99>  # String: 'console' (Identifier)
@@ -45,7 +45,7 @@ function Dog(param0, param1, param2) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 2>
     // USED → r1 = param2;
     // CODE → <PutById>: <Reg8: 0, Reg8: 1, UInt8: 1, string_id: 16784>  # String: 'breed' (Identifier)
-    getEnvironment(1)[0].default.call(undefined, this, getEnvironment(0)[0], (r0[0] = param1)[1] = "Woof").breed = param2
+    getEnvironment(1)[0].default.call(undefined, r4, r3, r0).breed = param2
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(1)[0].default.call(undefined, this, getEnvironment(0)[0], (r0[0] = param1)[1] = "Woof");
+    return getEnvironment(1)[0].default.call(undefined, r4, r3, r0);
 }

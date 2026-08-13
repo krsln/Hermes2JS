@@ -29,13 +29,13 @@ function callDestructuringTests(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 5>
     // USED → r5 = getEnvironment(0)[5];
     // CODE → <NewObject>: <Reg8: 4>
-    r4 = {  }
+    // USED → r4 = {  };
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 7>
     // USED → r3 = 7;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 4, Reg8: 3, string_id: 29>  # String: 'id' (Identifier)
     r4.id = 7
     // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 2, UInt16: 2, UInt16: 23660>  # Array: [9, 10]
-    r3 = [9, 10]
+    // USED → r3 = [9, 10];
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 4, Reg8: 3>
     r3 = getEnvironment(0)[5].call(undefined, r4, r3)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 6>

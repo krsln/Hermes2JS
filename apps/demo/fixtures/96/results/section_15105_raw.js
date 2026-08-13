@@ -39,13 +39,13 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
     // USED → r4 = 2;
     // CODE → <Call3>: <Reg8: 5, Reg8: 7, Reg8: 0, Reg8: 5, Reg8: 4>
-    // USED → r5 = getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[0], 2);
+    // USED → r5 = getEnvironment(0)[1].default.call(undefined, r5, 2);
     // CODE → <GetByVal>: <Reg8: 10, Reg8: 5, Reg8: 6>
-    // USED → r10 = getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[0], 2)[0];
+    // USED → r10 = getEnvironment(0)[1].default.call(undefined, r5, 2)[0];
     // CODE → <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
     // USED → r7 = 1;
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 5, Reg8: 7>
-    // USED → r9 = getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[0], 2)[1];
+    // USED → r9 = getEnvironment(0)[1].default.call(undefined, r5, 2)[1];
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 1>
     // USED → r5 = getEnvironment(0)[1];
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
@@ -53,17 +53,17 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 4>
     // USED → r3 = (((r3[0] = r0)[1] = r0)[2] = r0)[2];
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
-    // USED → r3 = getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[2], 2);
+    // USED → r3 = getEnvironment(0)[1].default.call(undefined, r3, 2);
     // CODE → <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 7>
-    // USED → r8 = getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[2], 2)[1];
+    // USED → r8 = getEnvironment(0)[1].default.call(undefined, r3, 2)[1];
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 3, Reg8: 3, Reg8: 5, Reg8: 10, Reg8: 9, Reg8: 8>
-    console.log(getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[0], 2)[0], getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[0], 2)[1], getEnvironment(0)[1].default.call(undefined, (((r3[0] = r0)[1] = r0)[2] = r0)[2], 2)[1])
+    console.log(r10, r9, r8)
     // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 1, UInt16: 1, UInt16: 23655>  # Array: [10]
-    r3 = [10]
+    // USED → r3 = [10];
     // CODE → <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 6>
     // USED → r8 = r3[0];
     // CODE → <LoadConstZero>: <Reg8: 5>
@@ -101,7 +101,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 6, Reg8: 4>
-    console.log(r3[0], r3[1], getEnvironment(0)[0].default.call(undefined, r3).slice(2))
+    console.log(r5, r6, r4)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -39,7 +39,7 @@ function ternaryTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
-    console.log("negative")
+    console.log(r5)
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 100>
     // USED → r3 = 100;
     // CODE → <Greater>: <Reg8: 4, Reg8: 2, Reg8: 3>
@@ -65,7 +65,7 @@ function ternaryTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    console.log(param1)
+    console.log(r3)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

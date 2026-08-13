@@ -83,7 +83,7 @@ function function_15209(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2, Reg8: 1>
-    // USED → r0 = getEnvironment(0)[3].default.call(undefined, Counter, ((r2[0] = r0)[1] = r0)[2] = r0, (r1[0] = r0)[1] = r0);
+    // USED → r0 = getEnvironment(0)[3].default.call(undefined, r4, r2, r1);
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(0)[3].default.call(undefined, Counter, ((r2[0] = r0)[1] = r0)[2] = r0, (r1[0] = r0)[1] = r0);
+    return getEnvironment(0)[3].default.call(undefined, r4, r2, r1);
 }

@@ -49,7 +49,7 @@ async function* anon_15185(param0, param1) {
                 // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
                 // USED → r3 = getEnvironment(2)[2];
                 // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
-                // USED → r3 = await getEnvironment(2)[2].call(undefined, GetIterator(r6).next());
+                // USED → r3 = await getEnvironment(2)[2].call(undefined, r9);
                 // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
                 goto label_74;
                 // ──────────────── Block 5 ──────────────── 
@@ -73,7 +73,7 @@ async function* anon_15185(param0, param1) {
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r3 = globalThis.console.log;
         // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 1>
-        console.log(0 + await yield)
+        console.log(r1)
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r4 = globalThis.console;
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

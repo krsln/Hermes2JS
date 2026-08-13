@@ -27,7 +27,7 @@ function defaultParameterTest(param0, param1) {
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 6>
     // USED → r2 = param1 + ((r6 !== undefined) ? param2 : 10);
     // CODE → <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 2>
-    console.log((r5 !== undefined) ? param3 : "result", param1 + ((r6 !== undefined) ? param2 : 10))
+    console.log((r5 !== undefined) ? param3 : "result", r2)
     // CODE → <Ret>: <Reg8: 1>
     return undefined;
 }

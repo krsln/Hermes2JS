@@ -30,7 +30,7 @@ function forOfTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r4 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
-    console.log(GetIterator(r2).next())
+    console.log(r6)
     // CODE → <Jmp>: <Addr8: -27>  # Address: 00000023
     goto label_35;
     // ──────────────── Block 3 ──────────────── 

@@ -21,7 +21,7 @@ function legacyArgumentsTest(param0) {
     // CODE → <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
     // USED → r2 = arguments.length;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
-    console.log(arguments.length)
+    console.log(r2)
     // CODE → <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
     // USED → r2 = arguments.length;
     // CODE → <LoadConstZero>: <Reg8: 3>
@@ -38,7 +38,7 @@ function legacyArgumentsTest(param0) {
     // CODE → <GetArgumentsPropByVal>: <Reg8: 2, Reg8: 3, Reg8: 4>
     // USED → r2 = arguments[0];
     // CODE → <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
-    console.log(arguments[0])
+    console.log(r2)
     // CODE → <Inc>: <Reg8: 3, Reg8: 3>
     // USED → r3 = r3 + 1;
     // CODE → <GetArgumentsLength>: <Reg8: 2, Reg8: 4>

@@ -17,7 +17,7 @@ function simpleAsyncTest(param0) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → <Call4>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1, Reg8: 4>
-    // USED → r1 = builtin_57.call(undefined, ?anon_0_simpleAsyncTest, this, arguments);
+    // USED → r1 = builtin_57.call(undefined, r2, r1, r4);
     // CODE → <Ret>: <Reg8: 1>
-    return builtin_57.call(undefined, ?anon_0_simpleAsyncTest, this, arguments);
+    return builtin_57.call(undefined, r2, r1, r4);
 }

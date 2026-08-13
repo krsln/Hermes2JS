@@ -23,7 +23,7 @@ function set(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 0>
     // USED → r3 = this;
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
-    // USED → r3 = getEnvironment(1)[4].default.call(undefined, this, getEnvironment(1)[5]);
+    // USED → r3 = getEnvironment(1)[4].default.call(undefined, r3, r4);
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 5>
     // USED → r2 = getEnvironment(1)[5];
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 4, string_id: 21>  # String: 'Math' (Identifier)
@@ -39,9 +39,9 @@ function set(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 1, Reg8: 4>
-    // USED → r1 = globalThis.Math.min(param1, getEnvironment(0)[0].MAX);
+    // USED → r1 = globalThis.Math.min(r1, r4);
     // CODE → <PutByVal>: <Reg8: 3, Reg8: 2, Reg8: 1>
-    getEnvironment(1)[4].default.call(undefined, this, getEnvironment(1)[5])[getEnvironment(1)[5]] = globalThis.Math.min(param1, getEnvironment(0)[0].MAX)
+    getEnvironment(1)[4].default.call(undefined, r3, r4)[getEnvironment(1)[5]] = globalThis.Math.min(r1, r4)
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

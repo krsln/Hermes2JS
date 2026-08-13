@@ -71,7 +71,7 @@ function defaultParameterTest(param0, param1) {
     // CODE → <Add>: <Reg8: 1, Reg8: 1, Reg8: 5>
     // USED → r1 = param1 + arguments[1];
     // CODE → <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1>
-    console.log(arguments[2], param1 + arguments[1])
+    console.log(r4, r1)
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

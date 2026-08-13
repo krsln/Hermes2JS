@@ -23,7 +23,7 @@ function makeSound(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 2375>  # String: 'says' (String)
     // USED → r0 = "says";
     // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 0, Reg8: 1>
-    console.log(this.name, "says", this.sound)
+    console.log(r2, "says", r1)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

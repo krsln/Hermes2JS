@@ -65,7 +65,7 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                     // CODE → <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
                     // USED → r9 = param1[0];
                     // CODE → <Call3>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 4, Reg8: 9>
-                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", param1[0])
+                    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", r9)
                     // CODE → <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                     // USED → r10 = globalThis.console;
                     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

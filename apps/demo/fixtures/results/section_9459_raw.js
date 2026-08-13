@@ -80,7 +80,7 @@ function tripleNestedLabeledTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 16, string_id: 4801>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits' (String)
     // USED → r16 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits";
     // CODE → <Call3>: <Reg8: 16, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 3>
-    console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits", 0 + 1)
+    console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits", r3)
     // CODE → <TryGetById>: <Reg8: 17, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r17 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 16, Reg8: 17, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

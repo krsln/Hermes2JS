@@ -11,7 +11,7 @@ function propertyAccessTest(param0) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Objects/PropertyTests/propertyAccessTest/start")
     // CODE → <NewObjectWithBuffer>: <Reg8: 4, UInt16: 61, UInt16: 42665>  # Object: {'x': 1, 'y': 2}
-    r4 = { "x": 1, "y": 2 }
+    // USED → r4 = { "x": 1, "y": 2 };
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
     // USED → r0 = 3;
     // CODE → <PutByIdStrict>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 6711>  # String: 'z' (Identifier)
@@ -27,7 +27,7 @@ function propertyAccessTest(param0) {
     // CODE → <GetById>: <Reg8: 0, Reg8: 4, UInt8: 4, string_id: 6711>  # String: 'z' (Identifier)
     // USED → r0 = r4.z;
     // CODE → <Call4>: <Reg8: 0, Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 2, Reg8: 0>
-    console.log(r4.x, r4.y, r4.z)
+    console.log(r3, r2, r0)
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 30>  # String: 'x' (Identifier)
     // USED → r0 = "x";
     // CODE → <DelByVal>: <Reg8: 2, Reg8: 4, Reg8: 0, UInt8: 1>
@@ -39,7 +39,7 @@ function propertyAccessTest(param0) {
     // CODE → <IsIn>: <Reg8: 0, Reg8: 0, Reg8: 4>
     // USED → r0 = "x" in r4;
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    console.log("x" in r4)
+    console.log(r0)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 5, string_id: 23>  # String: 'Object' (Identifier)
     // USED → r2 = globalThis.Object;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 6, string_id: 173>  # String: 'keys' (Identifier)
@@ -71,7 +71,7 @@ function propertyAccessTest(param0) {
             // CODE → <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 8>
             // USED → r5 = r4[GetIterator(r2).next()];
             // CODE → <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
-            console.log(GetIterator(r2).next(), r4[GetIterator(r2).next()])
+            console.log(r8, r5)
             // CODE → <Jmp>: <Addr8: -35>  # Address: 0000007c
             goto label_124;
         }

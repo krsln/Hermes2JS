@@ -23,7 +23,7 @@ function legacyArgumentsTest(param0) {
     // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
     // USED → r6 = arguments.length;
     // CODE → <Call2>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 6>
-    console.log(arguments.length)
+    console.log(r6)
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
     r6 = undefined
     // CODE → <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
@@ -45,7 +45,7 @@ function legacyArgumentsTest(param0) {
             // CODE → <GetArgumentsPropByValStrict>: <Reg8: 6, Reg8: 0, Reg8: 7>
             // USED → r6 = arguments[0];
             // CODE → <Call2>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 6>
-            console.log(arguments[0])
+            console.log(r6)
             // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
             // USED → r0 = 0 + 1;
             // CODE → <Mov>: <Reg8: 6, Reg8: 7>

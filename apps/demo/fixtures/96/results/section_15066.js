@@ -45,7 +45,7 @@ function labeledContinueTest(param0) {
             // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r10 = globalThis.console.log;
             // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
-            console.log(0, 0)
+            console.log(r7, r9)
             // CODE → <Inc>: <Reg8: 8, Reg8: 9>
             // USED → r8 = r9 + 1;
         // → r8 = r9 + 1

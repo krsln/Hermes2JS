@@ -60,7 +60,7 @@ async function* anon_15045(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 6>
     // USED → r1 = getEnvironment(2)[5].switchTest.call(undefined, 4);
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 7, Reg8: 1>
-    console.log(getEnvironment(2)[5].switchTest.call(undefined, 4))
+    console.log(r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 6>
     // USED → r1 = getEnvironment(2)[6];
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 8, string_id: 10944>  # String: 'nestedLoopTest' (Identifier)
@@ -180,7 +180,7 @@ async function* anon_15045(param0) {
     // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 3>
     // USED → r1 = (r1[2] = -1)[3] = 2;
     // CODE → <Call2>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 1>
-    r1 = getEnvironment(2)[11].tryLoopMultiReturnTest.call(undefined, (r1[2] = -1)[3] = 2)
+    r1 = getEnvironment(2)[11].tryLoopMultiReturnTest.call(undefined, r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     // USED → r1 = getEnvironment(2)[11];
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 25, string_id: 11002>  # String: 'nestedTryCatchTest' (Identifier)
@@ -204,7 +204,7 @@ async function* anon_15045(param0) {
     // CODE → <GetById>: <Reg8: 7, Reg8: 1, UInt8: 28, string_id: 11112>  # String: 'tryFinallyLoopBreakTest' (Identifier)
     // USED → r7 = getEnvironment(2)[11].tryFinallyLoopBreakTest;
     // CODE → <NewArrayWithBuffer>: <Reg8: 1, UInt16: 4, UInt16: 4, UInt16: 23569>  # Array: [1, 2, 0, 3]
-    r1 = [1, 2, 0, 3]
+    // USED → r1 = [1, 2, 0, 3];
     // CODE → <Call2>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 1>
     r1 = getEnvironment(2)[11].tryFinallyLoopBreakTest.call(undefined, r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
@@ -222,7 +222,7 @@ async function* anon_15045(param0) {
     // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 2>
     // USED → r1 = (r1[1] = -2)[2] = 3;
     // CODE → <Call2>: <Reg8: 1, Reg8: 9, Reg8: 2, Reg8: 1>
-    r1 = getEnvironment(2)[11].tryCatchInsideLoopTest.call(undefined, (r1[1] = -2)[2] = 3)
+    r1 = getEnvironment(2)[11].tryCatchInsideLoopTest.call(undefined, r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     // USED → r1 = getEnvironment(2)[11];
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 30, string_id: 8711>  # String: 'tryCatchFinallyBranchInFinallyTest' (Identifier)
@@ -248,7 +248,7 @@ async function* anon_15045(param0) {
     // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 4>
     // USED → r1 = (r1[3] = -1)[4] = 3;
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
-    r1 = getEnvironment(2)[11].loopBreakCrossesTryBoundaryTest.call(undefined, (r1[3] = -1)[4] = 3)
+    r1 = getEnvironment(2)[11].loopBreakCrossesTryBoundaryTest.call(undefined, r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     // USED → r1 = getEnvironment(2)[11];
     // CODE → <GetById>: <Reg8: 5, Reg8: 1, UInt8: 33, string_id: 8763>  # String: 'switchInsideTryTest' (Identifier)

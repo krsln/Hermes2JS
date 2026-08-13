@@ -25,11 +25,11 @@ function reset(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 1, Reg8: 3>
-    // USED → r2 = getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6]);
+    // USED → r2 = getEnvironment(1)[4].default.call(undefined, r1, r3);
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     // CODE → <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>
-    getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6])[getEnvironment(1)[6]] = 0
+    getEnvironment(1)[4].default.call(undefined, r1, r3)[getEnvironment(1)[6]] = 0
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

@@ -23,9 +23,9 @@ function regExpFlagsTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
     // USED → r1 = /hello/i.test;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 6, Reg8: 5>
-    // USED → r1 = /hello/i.test(param1);
+    // USED → r1 = /hello/i.test(r5);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(/hello/i.test(param1))
+    console.log(r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -33,9 +33,9 @@ function regExpFlagsTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
     // USED → r1 = /^line/m.test;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 4, Reg8: 5>
-    // USED → r1 = /^line/m.test(param1);
+    // USED → r1 = /^line/m.test(r5);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(/^line/m.test(param1))
+    console.log(r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -45,9 +45,9 @@ function regExpFlagsTest(param0, param1) {
     // CODE → <CreateRegExp>: <Reg8: 1, string_id: 4336, string_id: 35, UInt32: 193>  # String: '[0-9A-Z_a-z]+' (String)  # String: 'g' (Identifier)
     // USED → r1 = /[0-9A-Z_a-z]+/g;
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
-    // USED → r1 = param1.match(/[0-9A-Z_a-z]+/g);
+    // USED → r1 = param1.match(r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(param1.match(/[0-9A-Z_a-z]+/g))
+    console.log(r1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

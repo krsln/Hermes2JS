@@ -23,9 +23,9 @@ function regExpSingleQuotePatternTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 7151>  # String: '’' (String)
     // USED → r1 = "\u2019";
     // CODE → <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
-    // USED → r1 = param1.replace(/'/g, "\u2019");
+    // USED → r1 = param1.replace(r4, "\u2019");
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(param1.replace(/'/g, "\u2019"))
+    console.log(r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -37,9 +37,9 @@ function regExpSingleQuotePatternTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 389>  # String: '_' (String)
     // USED → r1 = "_";
     // CODE → <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
-    // USED → r1 = param1.replace(/['-]/g, "_");
+    // USED → r1 = param1.replace(r4, "_");
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(param1.replace(/['-]/g, "_"))
+    console.log(r1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

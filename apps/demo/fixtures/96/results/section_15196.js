@@ -39,7 +39,7 @@ function classTest(param0) {
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 10805>  # String: 'description' (Identifier)
     // USED → r2 = new getEnvironment(0)[5]("...", "Generic").description;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log(new getEnvironment(0)[5]("...", "Generic").description)
+    console.log(r2)
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 6>
     // USED → r5 = getEnvironment(0)[6];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)

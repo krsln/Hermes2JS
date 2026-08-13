@@ -21,7 +21,7 @@ function weakMapTest(param0) {
     // CODE → <SelectObject>: <Reg8: 6, Reg8: 3, Reg8: 2>
     // USED → r6 = new globalThis.WeakMap(__uninitialized_this_for_new__);
     // CODE → <NewObject>: <Reg8: 5>
-    r5 = {  }
+    // USED → r5 = {  };
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 4, string_id: 55>  # String: 'set' (Identifier)
     // USED → r3 = new globalThis.WeakMap(__uninitialized_this_for_new__).set;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 211>  # String: 'value' (Identifier)
@@ -37,7 +37,7 @@ function weakMapTest(param0) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 6, Reg8: 5>
     // USED → r2 = new globalThis.WeakMap(__uninitialized_this_for_new__).has(r5);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log(new WeakMap(__uninitialized_this_for_new__).has(r5))
+    console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -47,7 +47,7 @@ function weakMapTest(param0) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 6, Reg8: 5>
     // USED → r2 = new globalThis.WeakMap(__uninitialized_this_for_new__).get(r5);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log(new WeakMap(__uninitialized_this_for_new__).get(r5))
+    console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

@@ -35,7 +35,7 @@ function makeSound(param0) {
     // CODE → <Call>: <Reg8: 4, Reg8: 6, UInt8: 5>
     // USED → r4 = getEnvironment(1)[1].default(r11, r10, r9, r8, r7);
     // CODE → <NewArray>: <Reg8: 3, UInt16: 0>
-    r3 = []
+    // USED → r3 = [];
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
     r3 = getEnvironment(1)[1].default(r11, r10, r9, r8, r7).call(undefined, r3)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -49,7 +49,7 @@ function makeSound(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 1894>  # String: 'is a' (String)
     // USED → r1 = "is a";
     // CODE → <Call4>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>
-    console.log(this.name, "is a", this.breed)
+    console.log(r3, "is a", r2)
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

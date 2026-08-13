@@ -25,9 +25,9 @@ function get(param0) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call3>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
-    // USED → r0 = getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6]);
+    // USED → r0 = getEnvironment(1)[4].default.call(undefined, r2, r1);
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 0, Reg8: 1>
-    // USED → r0 = getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6])[getEnvironment(1)[6]];
+    // USED → r0 = getEnvironment(1)[4].default.call(undefined, r2, r1)[getEnvironment(1)[6]];
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(1)[4].default.call(undefined, getEnvironment(0)[0], getEnvironment(1)[6])[getEnvironment(1)[6]];
+    return getEnvironment(1)[4].default.call(undefined, r2, r1)[getEnvironment(1)[6]];
 }

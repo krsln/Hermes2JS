@@ -29,7 +29,7 @@ function setTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 69>  # String: 'size' (Identifier)
     // USED → r0 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).size;
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-    console.log(new Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).size)
+    console.log(r0)
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 79>  # String: 'add' (Identifier)
     // USED → r2 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).add;
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
@@ -47,7 +47,7 @@ function setTest(param0) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 5, Reg8: 3, Reg8: 0>
     // USED → r0 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).has(2);
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-    console.log(new Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__).has(2))
+    console.log(r0)
     // CODE → <Mov>: <Reg8: 2, Reg8: 3>
     // USED → r2 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__);
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 2>
@@ -70,7 +70,7 @@ function setTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-    console.log(GetIterator(r2).next())
+    console.log(r7)
     // CODE → <Jmp>: <Addr8: -30>  # Address: 0000007a
     goto label_122;
     // ──────────────── Block 3 ──────────────── 
@@ -82,7 +82,7 @@ function setTest(param0) {
     throw caughtException;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <NewArray>: <Reg8: 4, UInt16: 0>
-    r4 = []
+    // USED → r4 = [];
     // CODE → <LoadConstZero>: <Reg8: 8>
     r8 = 0
     // CODE → <Mov>: <Reg8: 10, Reg8: 4>

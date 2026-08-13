@@ -11,7 +11,7 @@ function computedPropertyTest(param0) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/PropertyTests/computedPropertyTest/start")
     // CODE → <NewObject>: <Reg8: 3>
-    r3 = {  }
+    // USED → r3 = {  };
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 42>
     // USED → r2 = 42;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 8980>  # String: 'dynamic' (Identifier)

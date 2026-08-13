@@ -67,7 +67,7 @@ async function* anon_15181(param0) {
             // CODE → <LoadConstString>: <Reg8: 4, string_id: 401>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/awaited' (String)
             // USED → r4 = "__BC:Functions/AsyncTests/asyncTryCatchTest/awaited";
             // CODE → <Call3>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
-            console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", await yield)
+            console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", r1)
             if (r1 === 1) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)

@@ -15,7 +15,7 @@ function _loop(param0, param1) {
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15152>  # Function: [#15152  of 9 bytes]: 1 params @ offset 0x000f7bb4
     // USED → r0 = function_15152;
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
-    r0 = getEnvironment(0)[0].push(function_15152)
+    r0 = getEnvironment(0)[0].push(r0)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

@@ -147,7 +147,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r9 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 0, Reg8: 9, Reg8: 11, Reg8: 8, Reg8: 7, Reg8: 0>
-    console.log((GetIterator(r11) === undefined) ? undefined : GetIterator(r11).next(), (GetIterator(r11) === undefined) ? undefined : GetIterator(r11).next(), GetIterator(r12).next())
+    console.log(r8, r7, r0)
     // CODE → <NewArrayWithBuffer>: <Reg8: 17, UInt16: 1, UInt16: 1, UInt16: 20024>  # Array: [10]
     r17 = [10]
     // CODE → <IteratorBegin>: <Reg8: 7, Reg8: 17>
@@ -218,7 +218,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <Mov>: <Reg8: 14, Reg8: 12>
     // USED → r14 = 0;
     // CODE → <NewArray>: <Reg8: 13, UInt16: 0>
-    r13 = []
+    // USED → r13 = [];
     // CODE → <LoadConstUInt8>: <Reg8: 12, UInt8: 1>
     // USED → r12 = 1;
     // CODE → <LoadConstZero>: <Reg8: 16>
@@ -255,7 +255,7 @@ function nestedArrayDestructureTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r11 = globalThis.console.log;
     // CODE → <Call4>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 15, Reg8: 14, Reg8: 13>
-    console.log(0, 0, r13)
+    console.log(r15, r14, r13)
     // CODE → <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r12 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

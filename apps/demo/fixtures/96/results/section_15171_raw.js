@@ -57,7 +57,7 @@ function function_15171(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r11 = globalThis.Object.defineProperty;
     // CODE → <NewObject>: <Reg8: 10>
-    r10 = {  }
+    // USED → r10 = {  };
     // CODE → <LoadConstTrue>: <Reg8: 9>
     // USED → r9 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 10, Reg8: 9, string_id: 205>  # String: 'value' (Identifier)
@@ -65,7 +65,7 @@ function function_15171(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r9 = "__esModule";
     // CODE → <Call4>: <Reg8: 9, Reg8: 11, Reg8: 12, Reg8: 1, Reg8: 9, Reg8: 10>
-    r9 = globalThis.Object.defineProperty(param6, "__esModule", r10)
+    r9 = globalThis.Object.defineProperty(r1, "__esModule", r10)
     // CODE → <PutById>: <Reg8: 1, Reg8: 8, UInt8: 1, string_id: 11171>  # String: 'simpleAsyncTest' (Identifier)
     param6.simpleAsyncTest = simpleAsyncTest
     // CODE → <PutById>: <Reg8: 1, Reg8: 7, UInt8: 2, string_id: 7300>  # String: 'asyncTryCatchTest' (Identifier)
@@ -85,21 +85,21 @@ function function_15171(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, param7[0]);
+    // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[0]));
+    // USED → r1 = _interopDefault.call(undefined, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
-    createEnvironment()[0] = _interopDefault.call(undefined, param2.call(undefined, param7[0]))
+    createEnvironment()[0] = _interopDefault.call(undefined, r1)
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     // USED → r1 = 1;
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
     // USED → r1 = param7[1];
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, param7[1]);
+    // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[1]));
+    // USED → r1 = _interopDefault.call(undefined, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
-    createEnvironment()[1] = _interopDefault.call(undefined, param2.call(undefined, param7[1]))
+    createEnvironment()[1] = _interopDefault.call(undefined, r1)
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

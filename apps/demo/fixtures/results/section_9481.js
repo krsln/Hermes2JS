@@ -27,7 +27,7 @@ function objectLiteralTest(param0) {
     // CODE → <GetById>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 7158>  # String: 'age' (Identifier)
     // USED → r3 = r2.age;
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 3>
-    console.log(r2.name, r2.age)
+    console.log(r4, r3)
     // CODE → <GetById>: <Reg8: 3, Reg8: 2, UInt8: 4, string_id: 17251>  # String: 'greet' (Identifier)
     // USED → r3 = r2.greet;
     // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 2>
@@ -41,7 +41,7 @@ function objectLiteralTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
-    console.log(r2.name, r2.age)
+    console.log(r5, r4)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -51,7 +51,7 @@ function objectLiteralTest(param0) {
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 6520>  # String: 'e' (Identifier)
     // USED → r2 = r2.e;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log(r2.e)
+    console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

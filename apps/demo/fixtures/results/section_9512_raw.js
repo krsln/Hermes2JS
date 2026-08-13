@@ -30,13 +30,13 @@ function defaultWithRestTest(param0) {
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 12481>  # Function: [#12481  of 12 bytes]: 3 params @ offset 0x00243e24
     // USED → r3 = function_12481;
     // CODE → <Call3>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 6>
-    // USED → r4 = apply(r3, r4).reduce(function_12481, 1);
+    // USED → r4 = apply(r3, r4).reduce(r3, 1);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
-    console.log(apply(r3, r4).reduce(function_12481, 1))
+    console.log(r4)
     // CODE → <Ret>: <Reg8: 1>
     return undefined;
 }

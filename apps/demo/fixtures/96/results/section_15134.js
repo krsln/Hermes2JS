@@ -21,9 +21,9 @@ function basicRegExpTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
     // USED → r1 = /^\\d+$/.test;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 4, Reg8: 5>
-    // USED → r1 = /^\\d+$/.test(param1);
+    // USED → r1 = /^\\d+$/.test(r5);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(/^\\d+$/.test(param1))
+    console.log(r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -33,9 +33,9 @@ function basicRegExpTest(param0, param1) {
     // CODE → <CreateRegExp>: <Reg8: 1, string_id: 7189, string_id: 35, UInt32: 190>  # String: 'a' (Identifier)  # String: 'g' (Identifier)
     // USED → r1 = /a/g;
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
-    // USED → r1 = param1.match(/a/g);
+    // USED → r1 = param1.match(r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(param1.match(/a/g))
+    console.log(r1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

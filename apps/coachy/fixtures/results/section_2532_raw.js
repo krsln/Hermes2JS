@@ -16,9 +16,9 @@ function describeFiber(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 2>
-    // USED → r1 = getEnvironment(0)[258].call(undefined, param1.type);
+    // USED → r1 = getEnvironment(0)[258].call(undefined, r2);
     // CODE → <Ret>: <Reg8: 1>
-    return getEnvironment(0)[258].call(undefined, param1.type);
+    return getEnvironment(0)[258].call(undefined, r2);
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
@@ -31,9 +31,9 @@ function describeFiber(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 2>
-    // USED → r1 = getEnvironment(0)[258].call(undefined, param1.type.render);
+    // USED → r1 = getEnvironment(0)[258].call(undefined, r2);
     // CODE → <Ret>: <Reg8: 1>
-    return getEnvironment(0)[258].call(undefined, param1.type.render);
+    return getEnvironment(0)[258].call(undefined, r2);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
@@ -44,9 +44,9 @@ function describeFiber(param0, param1) {
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 1, Reg8: 2>
-    // USED → r1 = getEnvironment(0)[258].call(undefined, param1.type);
+    // USED → r1 = getEnvironment(0)[258].call(undefined, r2);
     // CODE → <Ret>: <Reg8: 1>
-    return getEnvironment(0)[258].call(undefined, param1.type);
+    return getEnvironment(0)[258].call(undefined, r2);
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
@@ -104,9 +104,9 @@ function describeFiber(param0, param1) {
     // CODE → <LoadConstNull>: <Reg8: 0>
     // USED → r0 = null;
     // CODE → <Call3>: <Reg8: 0, Reg8: 3, Reg8: 1, Reg8: 2, Reg8: 0>
-    // USED → r0 = getEnvironment(0)[257].call(undefined, param1.type, null);
+    // USED → r0 = getEnvironment(0)[257].call(undefined, r2, null);
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(0)[257].call(undefined, param1.type, null);
+    return getEnvironment(0)[257].call(undefined, r2, null);
     // ──────────────── Block 8 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 11303>  # String: '' (Identifier)
     // USED → r0 = "";

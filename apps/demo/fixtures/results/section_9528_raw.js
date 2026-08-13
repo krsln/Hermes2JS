@@ -55,7 +55,7 @@ function classTest(param0) {
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 11115>  # String: 'description' (Identifier)
     // USED → r3 = Object.create(getParentEnvironment(0)[0].prototype).description;
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    console.log(Object.create(getParentEnvironment(0)[0].prototype).description)
+    console.log(r3)
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
     // USED → r4 = getParentEnvironment(0)[1];
     // CODE → <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 2>

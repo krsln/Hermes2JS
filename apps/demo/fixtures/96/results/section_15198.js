@@ -15,7 +15,7 @@ function Animal(param0, param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call3>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
-    r1 = getEnvironment(1)[3].default.call(undefined, this, getEnvironment(0)[0])
+    r1 = getEnvironment(1)[3].default.call(undefined, r2, r1)
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 2, string_id: 99>  # String: 'console' (Identifier)

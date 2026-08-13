@@ -23,7 +23,7 @@ function description(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 6457>  # String: '' (Identifier)
     // USED → r0 = "";
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 0, Reg8: 3, Reg8: 1>
-    // USED → r0 = globalThis.HermesInternal.concat.call("", this.name, " the animal");
+    // USED → r0 = globalThis.HermesInternal.concat.call("", r3, " the animal");
     // CODE → <Ret>: <Reg8: 0>
-    return globalThis.HermesInternal.concat.call("", this.name, " the animal");
+    return globalThis.HermesInternal.concat.call("", r3, " the animal");
 }

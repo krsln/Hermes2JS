@@ -21,7 +21,7 @@ function function_15205(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r8 = globalThis.Object.defineProperty;
     // CODE → <NewObject>: <Reg8: 3>
-    r3 = {  }
+    // USED → r3 = {  };
     // CODE → <LoadConstTrue>: <Reg8: 0>
     // USED → r0 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
@@ -29,7 +29,7 @@ function function_15205(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 8, Reg8: 9, Reg8: 1, Reg8: 0, Reg8: 3>
-    r0 = globalThis.Object.defineProperty(param6, "__esModule", r3)
+    r0 = globalThis.Object.defineProperty(r1, "__esModule", r3)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 5, function_id: 15208>  # Function: [#15208 privateStaticTest of 262 bytes]: 1 params @ offset 0x0026bc7a
     // USED → r0 = privateStaticTest;
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10854>  # String: 'privateStaticTest' (Identifier)
@@ -41,83 +41,83 @@ function function_15205(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call2>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, param7[0]);
+    // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[0]));
+    // USED → r1 = _interopDefault.call(undefined, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 0, Reg8: 1>
-    createEnvironment()[0] = _interopDefault.call(undefined, param2.call(undefined, param7[0]))
+    createEnvironment()[0] = _interopDefault.call(undefined, r1)
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     // USED → r1 = 1;
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 7, Reg8: 1>
     // USED → r1 = param7[1];
     // CODE → <Call2>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, param7[1]);
+    // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[1]));
+    // USED → r1 = _interopDefault.call(undefined, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 1, Reg8: 1>
-    createEnvironment()[1] = _interopDefault.call(undefined, param2.call(undefined, param7[1]))
+    createEnvironment()[1] = _interopDefault.call(undefined, r1)
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     // USED → r1 = 2;
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 7, Reg8: 1>
     // USED → r1 = param7[2];
     // CODE → <Call2>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, param7[2]);
+    // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[2]));
+    // USED → r1 = _interopDefault.call(undefined, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 2, Reg8: 1>
-    createEnvironment()[2] = _interopDefault.call(undefined, param2.call(undefined, param7[2]))
+    createEnvironment()[2] = _interopDefault.call(undefined, r1)
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
     // USED → r1 = 3;
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 7, Reg8: 1>
     // USED → r1 = param7[3];
     // CODE → <Call2>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, param7[3]);
+    // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[3]));
+    // USED → r1 = _interopDefault.call(undefined, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 3, Reg8: 1>
-    createEnvironment()[3] = _interopDefault.call(undefined, param2.call(undefined, param7[3]))
+    createEnvironment()[3] = _interopDefault.call(undefined, r1)
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 4>
     // USED → r1 = 4;
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 7, Reg8: 1>
     // USED → r1 = param7[4];
     // CODE → <Call2>: <Reg8: 1, Reg8: 6, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, param7[4]);
+    // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[4]));
+    // USED → r1 = _interopDefault.call(undefined, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 4, Reg8: 1>
-    createEnvironment()[4] = _interopDefault.call(undefined, param2.call(undefined, param7[4]))
+    createEnvironment()[4] = _interopDefault.call(undefined, r1)
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 5>
     // USED → r3 = 5;
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 7, Reg8: 3>
     // USED → r3 = param7[5];
     // CODE → <Call2>: <Reg8: 3, Reg8: 6, Reg8: 0, Reg8: 3>
-    // USED → r3 = param2.call(undefined, param7[5]);
+    // USED → r3 = param2.call(undefined, r3);
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
-    // USED → r3 = _interopDefault.call(undefined, param2.call(undefined, param7[5]));
+    // USED → r3 = _interopDefault.call(undefined, r3);
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r6 = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default;
+    // USED → r6 = _interopDefault.call(undefined, r3).default;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 7735>  # String: 'count' (Identifier)
     // USED → r4 = "count";
     // CODE → <Call2>: <Reg8: 4, Reg8: 6, Reg8: 0, Reg8: 4>
-    // USED → r4 = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "count");
+    // USED → r4 = _interopDefault.call(undefined, r3).default.call(undefined, "count");
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 5, Reg8: 4>
-    createEnvironment()[5] = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "count")
+    createEnvironment()[5] = _interopDefault.call(undefined, r3).default.call(undefined, "count")
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r6 = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default;
+    // USED → r6 = _interopDefault.call(undefined, r3).default;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 1521>  # String: 'instances' (String)
     // USED → r4 = "instances";
     // CODE → <Call2>: <Reg8: 9, Reg8: 6, Reg8: 0, Reg8: 4>
-    // USED → r9 = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "instances");
+    // USED → r9 = _interopDefault.call(undefined, r3).default.call(undefined, "instances");
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 6, Reg8: 9>
-    createEnvironment()[6] = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "instances")
+    createEnvironment()[6] = _interopDefault.call(undefined, r3).default.call(undefined, "instances")
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r6 = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default;
+    // USED → r6 = _interopDefault.call(undefined, r3).default;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 5021>  # String: 'privateHelper' (String)
     // USED → r4 = "privateHelper";
     // CODE → <Call2>: <Reg8: 4, Reg8: 6, Reg8: 0, Reg8: 4>
-    // USED → r4 = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "privateHelper");
+    // USED → r4 = _interopDefault.call(undefined, r3).default.call(undefined, "privateHelper");
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 7, Reg8: 4>
-    createEnvironment()[7] = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "privateHelper")
+    createEnvironment()[7] = _interopDefault.call(undefined, r3).default.call(undefined, "privateHelper")
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 5, function_id: 15209>  # Function: [#15209  of 166 bytes]: 1 params @ offset 0x0026bd80
     // USED → r4 = function_15209;
     // CODE → <Call1>: <Reg8: 6, Reg8: 4, Reg8: 0>
@@ -129,35 +129,35 @@ function function_15205(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r7 = globalThis.Object.defineProperty;
     // CODE → <NewObjectWithBuffer>: <Reg8: 4, UInt16: 2, UInt16: 2, UInt16: 43, UInt16: 45>  # Object: {'writable': true, 'value': 0}
-    r4 = { "writable": true, "value": 0 }
+    // USED → r4 = { "writable": true, "value": 0 };
     // CODE → <Call4>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 9, Reg8: 4>
-    r4 = globalThis.Object.defineProperty(function_15209.call(undefined), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "instances"), r4)
+    r4 = globalThis.Object.defineProperty(r6, r9, r4)
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 100>
     // USED → r4 = 100;
     // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 11547>  # String: 'MAX' (Identifier)
     function_15209.call(undefined).MAX = 100
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 3, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r4 = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default;
+    // USED → r4 = _interopDefault.call(undefined, r3).default;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 7671>  # String: 'label' (Identifier)
     // USED → r3 = "label";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
-    // USED → r3 = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label");
+    // USED → r3 = _interopDefault.call(undefined, r3).default.call(undefined, "label");
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 9, Reg8: 3>
-    createEnvironment()[9] = _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label")
+    createEnvironment()[9] = _interopDefault.call(undefined, r3).default.call(undefined, "label")
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 5, function_id: 15217>  # Function: [#15217  of 81 bytes]: 2 params @ offset 0x0026c046
     // USED → r4 = function_15217;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 0, Reg8: 6>
-    // USED → r4 = function_15217.call(undefined, function_15209.call(undefined));
+    // USED → r4 = function_15217.call(undefined, r6);
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 10, Reg8: 4>
-    createEnvironment()[10] = function_15217.call(undefined, function_15209.call(undefined))
+    createEnvironment()[10] = function_15217.call(undefined, r6)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 2, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
     // USED → r7 = globalThis.Object;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r6 = globalThis.Object.defineProperty;
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 2, UInt16: 43, UInt16: 219>  # Object: {'writable': true, 'value': 'configured'}
-    r5 = { "writable": true, "value": "configured" }
+    // USED → r5 = { "writable": true, "value": "configured" };
     // CODE → <Call4>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 4, Reg8: 3, Reg8: 5>
-    r5 = globalThis.Object.defineProperty(function_15217.call(undefined, function_15209.call(undefined)), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label"), r5)
+    r5 = globalThis.Object.defineProperty(r4, r3, r5)
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 4, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 5, string_id: 90>  # String: 'log' (Identifier)
@@ -167,21 +167,21 @@ function function_15205(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
     console.log("__BC:Classes/PrivateStaticTests/ConfiguredCounter/static-block")
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r2 = _interopDefault.call(undefined, param2.call(undefined, param7[4])).default;
+    // USED → r2 = _interopDefault.call(undefined, r1).default;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 4, Reg8: 3>
-    // USED → r2 = _interopDefault.call(undefined, param2.call(undefined, param7[4])).default.call(undefined, function_15217.call(undefined, function_15209.call(undefined)), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label"));
+    // USED → r2 = _interopDefault.call(undefined, r1).default.call(undefined, r4, r3);
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[4])).default;
+    // USED → r1 = _interopDefault.call(undefined, r1).default;
     // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 4, Reg8: 3>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[4])).default.call(undefined, function_15217.call(undefined, function_15209.call(undefined)), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label"));
+    // USED → r1 = _interopDefault.call(undefined, r1).default.call(undefined, r4, r3);
     // CODE → <GetByVal>: <Reg8: 4, Reg8: 1, Reg8: 3>
-    // USED → r4 = _interopDefault.call(undefined, param2.call(undefined, param7[4])).default.call(undefined, function_15217.call(undefined, function_15209.call(undefined)), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label"))[_interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label")];
+    // USED → r4 = _interopDefault.call(undefined, r1).default.call(undefined, r4, r3)[_interopDefault.call(undefined, r3).default.call(undefined, "label")];
     // CODE → <GetById>: <Reg8: 1, Reg8: 4, UInt8: 6, string_id: 10961>  # String: 'toUpperCase' (Identifier)
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[4])).default.call(undefined, function_15217.call(undefined, function_15209.call(undefined)), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label"))[_interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label")].toUpperCase;
+    // USED → r1 = _interopDefault.call(undefined, r1).default.call(undefined, r4, r3)[_interopDefault.call(undefined, r3).default.call(undefined, "label")].toUpperCase;
     // CODE → <Call1>: <Reg8: 1, Reg8: 1, Reg8: 4>
-    // USED → r1 = _interopDefault.call(undefined, param2.call(undefined, param7[4])).default.call(undefined, function_15217.call(undefined, function_15209.call(undefined)), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label"))[_interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label")].toUpperCase();
+    // USED → r1 = _interopDefault.call(undefined, r1).default.call(undefined, r4, r3)[_interopDefault.call(undefined, r3).default.call(undefined, "label")].toUpperCase();
     // CODE → <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>
-    _interopDefault.call(undefined, param2.call(undefined, param7[4])).default.call(undefined, function_15217.call(undefined, function_15209.call(undefined)), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label"))[_interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label")] = _interopDefault.call(undefined, param2.call(undefined, param7[4])).default.call(undefined, function_15217.call(undefined, function_15209.call(undefined)), _interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label"))[_interopDefault.call(undefined, param2.call(undefined, param7[5])).default.call(undefined, "label")].toUpperCase()
+    _interopDefault.call(undefined, r1).default.call(undefined, r4, r3)[_interopDefault.call(undefined, r3).default.call(undefined, "label")] = _interopDefault.call(undefined, r1).default.call(undefined, r4, r3)[_interopDefault.call(undefined, r3).default.call(undefined, "label")].toUpperCase()
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

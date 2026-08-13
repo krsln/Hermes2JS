@@ -151,8 +151,9 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                     // CODE → <Mov>: <Reg8: 11, Reg8: 8>
                     // USED → r11 = param1.updateQueue.stores[0].value;
                     // CODE → <Call3>: <Reg8: 11, Reg8: 14, Reg8: 5, Reg8: 13, Reg8: 11>
-                    // USED → r11 = getEnvironment(0)[73].call(undefined, param1.updateQueue.stores[0].getSnapshot.call(undefined), param1.updateQueue.stores[0].value);
-                    if (!getEnvironment(0)[73].call(undefined, param1.updateQueue.stores[0].getSnapshot.call(undefined), param1.updateQueue.stores[0].value)) {
+                    // USED → r11 = getEnvironment(0)[73].call(undefined, r13, r11);
+                    // → r11 = getEnvironment(0)[73].call(undefined, r13, r11); r13 = param1.updateQueue.stores[0].getSnapshot.call(undefined)
+                    if (!getEnvironment(0)[73].call(undefined, r13, r11)) {
                         // ──────────────── Block 7 ──────────────── 
                         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
                         r11 = 0

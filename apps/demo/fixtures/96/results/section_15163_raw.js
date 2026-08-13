@@ -23,7 +23,7 @@ function function_15163(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r7 = globalThis.Object.defineProperty;
     // CODE → <NewObject>: <Reg8: 6>
-    r6 = {  }
+    // USED → r6 = {  };
     // CODE → <LoadConstTrue>: <Reg8: 5>
     // USED → r5 = true;
     // CODE → <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 5, string_id: 205>  # String: 'value' (Identifier)
@@ -31,7 +31,7 @@ function function_15163(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r5 = "__esModule";
     // CODE → <Call4>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 5, Reg8: 6>
-    r5 = globalThis.Object.defineProperty(param6, "__esModule", r6)
+    r5 = globalThis.Object.defineProperty(r1, "__esModule", r6)
     // CODE → <PutById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 8828>  # String: 'simpleGeneratorTest' (Identifier)
     param6.simpleGeneratorTest = simpleGeneratorTest
     // CODE → <PutById>: <Reg8: 1, Reg8: 3, UInt8: 2, string_id: 8827>  # String: 'generatorWithLoopTest' (Identifier)

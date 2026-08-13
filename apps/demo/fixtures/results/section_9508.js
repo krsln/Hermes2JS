@@ -35,13 +35,13 @@ function arrowFunctionTest(param0) {
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 12479>  # Function: [#12479  of 12 bytes]: 2 params @ offset 0x00243e0c
     // USED → r3 = function_12479;
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r5 = r5.map(function_12479);
+    // USED → r5 = r5.map(r3);
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
-    console.log(r5.map(function_12479))
+    console.log(r5)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

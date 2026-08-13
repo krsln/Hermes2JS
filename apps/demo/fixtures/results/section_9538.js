@@ -25,11 +25,11 @@ function value(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2>
-    // USED → r2 = globalThis.Math.min(param1, getParentEnvironment(0)[2].MAX);
+    // USED → r2 = globalThis.Math.min(r1, r2);
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → <PutOwnPrivateBySym>: <Reg8: 1, Reg8: 2, UInt8: 0, Reg8: 3>
-    this.#__private_3__ = globalThis.Math.min(param1, getParentEnvironment(0)[2].MAX)
+    this.#__private_3__ = globalThis.Math.min(r1, r2)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

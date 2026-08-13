@@ -1179,13 +1179,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 19, Reg8: 10>
     // USED → r0 = param7[0];
     // CODE → <Call2>: <Reg8: 0, Reg8: 18, Reg8: 2, Reg8: 0>
-    r0 = param2.call(undefined, param7[0])
+    r0 = param2.call(undefined, r0)
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1;
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 19, Reg8: 0>
     // USED → r0 = param7[1];
     // CODE → <Call2>: <Reg8: 14, Reg8: 18, Reg8: 2, Reg8: 0>
-    // USED → r14 = param2.call(undefined, param7[1]);
+    // USED → r14 = param2.call(undefined, r0);
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
@@ -1217,7 +1217,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 40, Reg8: 39, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r40 = SyntheticEvent.prototype;
     // CODE → <NewObject>: <Reg8: 37>
-    r37 = {  }
+    // USED → r37 = {  };
     // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 805>  # Function: [#805 preventDefault of 82 bytes]: 1 params @ offset 0x00188f55
     // USED → r43 = preventDefault;
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 43, string_id: 16522>  # String: 'preventDefault' (Identifier)
@@ -1237,7 +1237,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutNewOwnById>: <Reg8: 37, Reg8: 42, string_id: 12543>  # String: 'destructor' (Identifier)
     r37.destructor = destructor
     // CODE → <Call3>: <Reg8: 37, Reg8: 41, Reg8: 2, Reg8: 40, Reg8: 37>
-    r37 = globalThis.Object.assign.call(undefined, SyntheticEvent.prototype, r37)
+    r37 = globalThis.Object.assign.call(undefined, r40, r37)
     // CODE → <NewObjectWithBuffer>: <Reg8: 37, UInt16: 9, UInt16: 9, UInt16: 194, UInt16: 115>  # Object: {'type': null, 'target': null, 'currentTarget': null, 'eventPhase': null, 'bubbles': null, 'cancelable': null, 'timeStamp': null, 'defaultPrevented': null, 'isTrusted': null}
     r37 = { "type": null, "target": null, "currentTarget": null, "eventPhase": null, "bubbles": null, "cancelable": null, "timeStamp": null, "defaultPrevented": null, "isTrusted": null }
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 809>  # Function: [#809 currentTarget of 4 bytes]: 1 params @ offset 0x00188e5c
@@ -1255,11 +1255,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <PutById>: <Reg8: 39, Reg8: 37, UInt8: 4, string_id: 14224>  # String: 'extend' (Identifier)
     SyntheticEvent.extend = function_811
     // CODE → <Call2>: <Reg8: 17, Reg8: 17, Reg8: 2, Reg8: 39>
-    r17 = addEventPoolingTo.call(undefined, SyntheticEvent)
+    r17 = addEventPoolingTo.call(undefined, r39)
     // CODE → <GetById>: <Reg8: 37, Reg8: 39, UInt8: 6, string_id: 14224>  # String: 'extend' (Identifier)
     // USED → r37 = SyntheticEvent.extend;
     // CODE → <NewObject>: <Reg8: 17>
-    r17 = {  }
+    // USED → r17 = {  };
     // CODE → <CreateClosure>: <Reg8: 40, Reg8: 1, function_id: 814>  # Function: [#814 touchHistory of 4 bytes]: 1 params @ offset 0x00188e5c
     // USED → r40 = touchHistory;
     // CODE → <PutNewOwnById>: <Reg8: 17, Reg8: 40, string_id: 21539>  # String: 'touchHistory' (Identifier)
@@ -1487,23 +1487,23 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
     // USED → r37 = param7[2];
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
-    // USED → r37 = param2.call(undefined, param7[2]);
+    // USED → r37 = param2.call(undefined, r37);
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = param2.call(undefined, param7[2]).ReactNativeViewConfigRegistry;
+    // USED → r37 = param2.call(undefined, r37).ReactNativeViewConfigRegistry;
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 8, string_id: 22641>  # String: 'customBubblingEventTypes' (Identifier)
-    // USED → r37 = param2.call(undefined, param7[2]).ReactNativeViewConfigRegistry.customBubblingEventTypes;
+    // USED → r37 = param2.call(undefined, r37).ReactNativeViewConfigRegistry.customBubblingEventTypes;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 23, Reg8: 37>
-    createEnvironment()[23] = param2.call(undefined, param7[2]).ReactNativeViewConfigRegistry.customBubblingEventTypes
+    createEnvironment()[23] = param2.call(undefined, r37).ReactNativeViewConfigRegistry.customBubblingEventTypes
     // CODE → <GetByVal>: <Reg8: 37, Reg8: 19, Reg8: 17>
     // USED → r37 = param7[2];
     // CODE → <Call2>: <Reg8: 37, Reg8: 18, Reg8: 2, Reg8: 37>
-    // USED → r37 = param2.call(undefined, param7[2]);
+    // USED → r37 = param2.call(undefined, r37);
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-    // USED → r37 = param2.call(undefined, param7[2]).ReactNativeViewConfigRegistry;
+    // USED → r37 = param2.call(undefined, r37).ReactNativeViewConfigRegistry;
     // CODE → <GetById>: <Reg8: 37, Reg8: 37, UInt8: 9, string_id: 21940>  # String: 'customDirectEventTypes' (Identifier)
-    // USED → r37 = param2.call(undefined, param7[2]).ReactNativeViewConfigRegistry.customDirectEventTypes;
+    // USED → r37 = param2.call(undefined, r37).ReactNativeViewConfigRegistry.customDirectEventTypes;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 24, Reg8: 37>
-    createEnvironment()[24] = param2.call(undefined, param7[2]).ReactNativeViewConfigRegistry.customDirectEventTypes
+    createEnvironment()[24] = param2.call(undefined, r37).ReactNativeViewConfigRegistry.customDirectEventTypes
     // CODE → <TryGetById>: <Reg8: 37, Reg8: 0, UInt8: 1, string_id: 2>  # String: 'Array' (Identifier)
     // USED → r37 = globalThis.Array;
     // CODE → <GetByIdShort>: <Reg8: 37, Reg8: 37, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
@@ -1513,7 +1513,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 41, Reg8: 42, UInt8: 11, string_id: 91>  # String: 'call' (Identifier)
     // USED → r41 = globalThis.Array.prototype.slice.call;
     // CODE → <NewArrayWithBuffer>: <Reg8: 37, UInt16: 2, UInt16: 2, UInt16: 40903>  # Array: ['ResponderEventPlugin', 'ReactNativeBridgeEventPlugin']
-    r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"]
+    // USED → r37 = ["ResponderEventPlugin", "ReactNativeBridgeEventPlugin"];
     // CODE → <Call2>: <Reg8: 37, Reg8: 41, Reg8: 42, Reg8: 37>
     // USED → r37 = globalThis.Array.prototype.slice.call(r37);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 18, Reg8: 37>
@@ -1575,7 +1575,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 30, Reg8: 11>
         createEnvironment()[30] = null
         // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 14, string_id: 21563>  # String: '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED' (Identifier)
-        // USED → r14 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        // USED → r14 = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 11>
         createEnvironment()[31] = null
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 11>
@@ -1663,13 +1663,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetByVal>: <Reg8: 9, Reg8: 19, Reg8: 17>
         // USED → r9 = param7[2];
         // CODE → <Call2>: <Reg8: 9, Reg8: 18, Reg8: 2, Reg8: 9>
-        // USED → r9 = param2.call(undefined, param7[2]);
+        // USED → r9 = param2.call(undefined, r9);
         // CODE → <GetById>: <Reg8: 9, Reg8: 9, UInt8: 7, string_id: 13517>  # String: 'ReactNativeViewConfigRegistry' (Identifier)
-        // USED → r9 = param2.call(undefined, param7[2]).ReactNativeViewConfigRegistry;
+        // USED → r9 = param2.call(undefined, r9).ReactNativeViewConfigRegistry;
         // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 9, UInt8: 31, string_id: 137>  # String: 'get' (Identifier)
-        // USED → r9 = param2.call(undefined, param7[2]).ReactNativeViewConfigRegistry.get;
+        // USED → r9 = param2.call(undefined, r9).ReactNativeViewConfigRegistry.get;
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 49, Reg8: 9>
-        createEnvironment()[49] = param2.call(undefined, param7[2]).ReactNativeViewConfigRegistry.get
+        createEnvironment()[49] = param2.call(undefined, r9).ReactNativeViewConfigRegistry.get
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 50, Reg8: 17>
         createEnvironment()[50] = 2
         if (globalThis.nativeFabricUIManager.registerEventHandler) {
@@ -1677,7 +1677,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 510>  # Function: [#510 dispatchEvent of 81 bytes]: 4 params @ offset 0x0017ac46
             // USED → r9 = dispatchEvent;
             // CODE → <Call2>: <Reg8: 9, Reg8: 16, Reg8: 2, Reg8: 9>
-            r9 = globalThis.nativeFabricUIManager.registerEventHandler.call(undefined, dispatchEvent)
+            r9 = globalThis.nativeFabricUIManager.registerEventHandler.call(undefined, r9)
         }
         // ──────────────── Block 14 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 41, Reg8: 0, UInt8: 32, string_id: 214>  # String: 'setTimeout' (Identifier)
@@ -1729,7 +1729,7 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetById>: <Reg8: 41, Reg8: 42, UInt8: 37, string_id: 21100>  # String: 'injectGlobalResponderHandler' (Identifier)
         // USED → r41 = r40.injection.injectGlobalResponderHandler;
         // CODE → <NewObject>: <Reg8: 40>
-        r40 = {  }
+        // USED → r40 = {  };
         // CODE → <CreateClosure>: <Reg8: 43, Reg8: 1, function_id: 823>  # Function: [#823 onChange of 122 bytes]: 4 params @ offset 0x00189aaf
         // USED → r43 = onChange;
         // CODE → <PutNewOwnById>: <Reg8: 40, Reg8: 43, string_id: 15401>  # String: 'onChange' (Identifier)
@@ -2058,13 +2058,13 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 101, Reg8: 20>
         createEnvironment()[101] = createCursor.call(undefined, 0)
         // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-        // USED → r20 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
+        // USED → r20 = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 102, Reg8: 20>
-        createEnvironment()[102] = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+        createEnvironment()[102] = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
         // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-        // USED → r20 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+        // USED → r20 = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 103, Reg8: 20>
-        createEnvironment()[103] = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+        createEnvironment()[103] = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 104, Reg8: 10>
         createEnvironment()[104] = 0
         // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 105, Reg8: 11>
@@ -2314,14 +2314,14 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <GetByVal>: <Reg8: 17, Reg8: 19, Reg8: 17>
         // USED → r17 = param7[2];
         // CODE → <Call2>: <Reg8: 17, Reg8: 18, Reg8: 2, Reg8: 17>
-        // USED → r17 = param2.call(undefined, param7[2]);
+        // USED → r17 = param2.call(undefined, r17);
         // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 45, string_id: 14613>  # String: 'ReactFiberErrorDialog' (Identifier)
-        // USED → r17 = param2.call(undefined, param7[2]).ReactFiberErrorDialog;
+        // USED → r17 = param2.call(undefined, r17).ReactFiberErrorDialog;
         // CODE → <GetById>: <Reg8: 17, Reg8: 17, UInt8: 46, string_id: 14615>  # String: 'showErrorDialog' (Identifier)
-        // USED → r17 = param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog;
+        // USED → r17 = param2.call(undefined, r17).ReactFiberErrorDialog.showErrorDialog;
         // CODE → <TypeOf>: <Reg8: 17, Reg8: 17>
-        // USED → r17 = typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog;
-        // → r17 = typeof param2.call(undefined, param7[2]).ReactFiberErrorDialog.showErrorDialog
+        // USED → r17 = typeof param2.call(undefined, r17).ReactFiberErrorDialog.showErrorDialog;
+        // → r17 = typeof param2.call(undefined, r17).ReactFiberErrorDialog.showErrorDialog
         if ("function" !== r17) {
             // ──────────────── Block 35 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
@@ -2335,9 +2335,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         } else {
             // ──────────────── Block 21 ──────────────── 
             // CODE → <GetById>: <Reg8: 17, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-            // USED → r17 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+            // USED → r17 = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 121, Reg8: 17>
-            createEnvironment()[121] = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+            createEnvironment()[121] = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
             // CODE → <TryGetById>: <Reg8: 18, Reg8: 0, UInt8: 13, string_id: 14>  # String: 'Error' (Identifier)
             // USED → r18 = globalThis.Error;
             // CODE → <LoadConstString>: <Reg8: 17, string_id: 6991>  # String: "This is not a real error. It's an implementation detail of React's selective hydration feature. If this leaks into userspace, it's a bug in React. Please file an issue." (String)
@@ -2363,9 +2363,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 128, Reg8: 11>
             createEnvironment()[128] = null
             // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-            // USED → r15 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+            // USED → r15 = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 129, Reg8: 15>
-            createEnvironment()[129] = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+            createEnvironment()[129] = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 130, Reg8: 12>
             createEnvironment()[130] = false
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 131, Reg8: 12>
@@ -2413,17 +2413,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 136, Reg8: 15>
             createEnvironment()[136] = globalThis.WeakMap
             // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-            // USED → r15 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
+            // USED → r15 = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 137, Reg8: 15>
-            createEnvironment()[137] = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+            createEnvironment()[137] = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
             // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 47, string_id: 21355>  # String: 'ReactCurrentOwner' (Identifier)
-            // USED → r15 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
+            // USED → r15 = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner;
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 138, Reg8: 15>
-            createEnvironment()[138] = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
+            createEnvironment()[138] = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner
             // CODE → <GetById>: <Reg8: 15, Reg8: 14, UInt8: 43, string_id: 17455>  # String: 'ReactCurrentBatchConfig' (Identifier)
-            // USED → r15 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
+            // USED → r15 = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig;
             // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 139, Reg8: 15>
-            createEnvironment()[139] = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
+            createEnvironment()[139] = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentBatchConfig
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 140, Reg8: 10>
             createEnvironment()[140] = 0
             // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 141, Reg8: 11>
@@ -2519,9 +2519,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
             // USED → r15 = function_850.bind;
             // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
-            // USED → r15 = function_850.bind(null, findNodeHandle);
+            // USED → r15 = function_850.bind(null, r5);
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-            r8.getInspectorDataForViewAtPoint = function_850.bind(null, findNodeHandle)
+            r8.getInspectorDataForViewAtPoint = function_850.bind(null, r5)
             // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
             r12.rendererConfig = r8
             // CODE → <NewObject>: <Reg8: 8>
@@ -2561,9 +2561,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 11, string_id: 17062>  # String: 'scheduleUpdate' (Identifier)
             r8.scheduleUpdate = null
             // CODE → <GetById>: <Reg8: 14, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
-            // USED → r14 = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
+            // USED → r14 = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 18383>  # String: 'currentDispatcherRef' (Identifier)
-            r8.currentDispatcherRef = param2.call(undefined, param7[1]).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
+            r8.currentDispatcherRef = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher
             // CODE → <CreateClosure>: <Reg8: 14, Reg8: 1, function_id: 851>  # Function: [#851 findHostInstanceByFiber of 30 bytes]: 2 params @ offset 0x0018a26f
             // USED → r14 = findHostInstanceByFiber;
             // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 14, string_id: 23271>  # String: 'findHostInstanceByFiber' (Identifier)
@@ -2611,9 +2611,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
                         // CODE → <GetById>: <Reg8: 8, Reg8: 6, UInt8: 61, string_id: 14570>  # String: 'inject' (Identifier)
                         // USED → r8 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject;
                         // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 7>
-                        // USED → r7 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r8);
+                        // USED → r7 = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r7);
                         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 31, Reg8: 7>
-                        createEnvironment()[31] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r8)
+                        createEnvironment()[31] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject(r7)
                         // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 32, Reg8: 6>
                         createEnvironment()[32] = globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__
                     }
@@ -2637,19 +2637,20 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
                 // CODE → <GetByIdShort>: <Reg8: 52, Reg8: 50, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
                 // USED → r52 = r50.hasOwnProperty;
                 // CODE → <Call2>: <Reg8: 52, Reg8: 52, Reg8: 50, Reg8: 44>
-                // USED → r52 = r50.hasOwnProperty(r49.next());
+                // USED → r52 = r50.hasOwnProperty(r44);
                 // CODE → <Mov>: <Reg8: 43, Reg8: 54>
                 r43 = false
                 // CODE → <JmpFalse>: <Addr8: -31, Reg8: 52>  # Address: 00000e5d
-                if (!r50.hasOwnProperty(r49.next())) goto label_3677;
+                // → r44 = r49.next()
+                if (!r50.hasOwnProperty(r44)) goto label_3677;
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <GetByVal>: <Reg8: 52, Reg8: 50, Reg8: 44>
                 // USED → r52 = r50[r49.next()];
                 // CODE → <GetByIdShort>: <Reg8: 53, Reg8: 51, UInt8: 12, string_id: 143>  # String: 'hasOwnProperty' (Identifier)
                 // USED → r53 = r51.hasOwnProperty;
                 // CODE → <Call2>: <Reg8: 53, Reg8: 53, Reg8: 51, Reg8: 44>
-                // USED → r53 = r51.hasOwnProperty(r49.next());
-                if (!r51.hasOwnProperty(r49.next())) {
+                // USED → r53 = r51.hasOwnProperty(r44);
+                if (!r51.hasOwnProperty(r44)) {
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → <GetByVal>: <Reg8: 53, Reg8: 51, Reg8: 44>
                     // USED → r53 = r51[r49.next()];
@@ -2691,9 +2692,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
         // CODE → <Add>: <Reg8: 42, Reg8: 42, Reg8: 44>
         // USED → r42 = "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r49.next() + "`.");
         // CODE → <Call2>: <Reg8: 42, Reg8: 43, Reg8: 2, Reg8: 42>
-        // USED → r42 = globalThis.Error.call(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r49.next() + "`."));
+        // USED → r42 = globalThis.Error.call(undefined, r42);
         // CODE → <Throw>: <Reg8: 42>
-        throw globalThis.Error.call(undefined, "EventPluginRegistry: Cannot inject two different event plugins using the same name, `" + (r49.next() + "`."));
+        throw globalThis.Error.call(undefined, r42);
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 34 ──────────────── 

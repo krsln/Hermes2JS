@@ -35,7 +35,7 @@ function labeledBreakTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r8 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 5, Reg8: 7>
-    console.log(0, 0)
+    console.log(r5, r7)
     // CODE → <Inc>: <Reg8: 6, Reg8: 7>
     // USED → r6 = r7 + 1;
     // CODE → <JLess>: <Addr8: -31, Reg8: 6, Reg8: 3>  # Address: 00000023

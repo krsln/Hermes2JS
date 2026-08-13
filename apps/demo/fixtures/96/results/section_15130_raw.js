@@ -72,7 +72,7 @@ function tag(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 7163>  # String: '' (Identifier)
     // USED → r0 = "";
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
-    // USED → r0 = param1.reduce(function_15131, "");
+    // USED → r0 = param1.reduce(r1, "");
     // CODE → <Ret>: <Reg8: 0>
-    return param1.reduce(function_15131, "");
+    return param1.reduce(r1, "");
 }

@@ -24,12 +24,12 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 17057>  # String: '_request' (Identifier)
     // USED → r7 = this._request;
     // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 4, Reg8: 3>
-    // USED → r3 = await this._request(param1, param2);
+    // USED → r3 = await this._request(r4, r3);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000029
     goto label_41;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
-    return await this._request(param1, param2);
+    return await this._request(r4, r3);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
     // USED → r3 = await yield;
@@ -90,7 +90,7 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
     // USED → r4 = new globalThis.Error();
     // CODE → <Call2>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 4>
-    r4 = globalThis.Error.captureStackTrace(new globalThis.Error())
+    r4 = globalThis.Error.captureStackTrace(r4)
     // ──────────────── Block 10 ──────────────── 
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
     // USED → r4 = new globalThis.Error();
@@ -110,10 +110,10 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <CreateRegExp>: <Reg8: 6, string_id: 7558, string_id: 11303, UInt32: 168>  # String: '^.+\\n' (String)  # String: '' (Identifier)
     // USED → r6 = /^.+\\n/;
     // CODE → <Call3>: <Reg8: 4, Reg8: 7, Reg8: 9, Reg8: 6, Reg8: 8>
-    // USED → r4 = new globalThis.Error().stack.replace(/^.+\\n/, "");
+    // USED → r4 = new globalThis.Error().stack.replace(r6, "");
     // ──────────────── Block 12 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-    // USED → r2 = new globalThis.Error().stack.replace(/^.+\\n/, "");
+    // USED → r2 = new globalThis.Error().stack.replace(r6, "");
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
     // USED → r4 = caughtException;
     // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
@@ -124,16 +124,16 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <Mov>: <Reg8: 6, Reg8: 1>
     // USED → r6 = caughtException;
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = new globalThis.Error().stack.replace(/^.+\\n/, "");
+    // USED → r4 = new globalThis.Error().stack.replace(r6, "");
     // CODE → <PutById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    caughtException.stack = new globalThis.Error().stack.replace(/^.+\\n/, "")
+    caughtException.stack = new globalThis.Error().stack.replace(r6, "")
     // CODE → <Jmp>: <Addr8: 100>  # Address: 00000138
     goto label_312;
     // ──────────────── Block 14 ──────────────── 
     // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = new globalThis.Error().stack.replace(/^.+\\n/, "");
+    // USED → r4 = new globalThis.Error().stack.replace(r6, "");
     // CODE → <JmpFalse>: <Addr8: 95, Reg8: 4>  # Address: 00000138
-    if (!new globalThis.Error().stack.replace(/^.+\\n/, "")) goto label_312;
+    if (!new globalThis.Error().stack.replace(r6, "")) goto label_312;
     // ──────────────── Block 15 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 7, string_id: 50>  # String: 'String' (Identifier)
     // USED → r4 = globalThis.String;
@@ -142,36 +142,37 @@ async function* anon_11947(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
     // USED → r3 = caughtException.stack;
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r5 = globalThis.String.call(undefined, caughtException.stack);
+    // USED → r5 = globalThis.String.call(undefined, r3);
     // CODE → <GetById>: <Reg8: 4, Reg8: 5, UInt8: 8, string_id: 19080>  # String: 'endsWith' (Identifier)
-    // USED → r4 = globalThis.String.call(undefined, caughtException.stack).endsWith;
+    // USED → r4 = globalThis.String.call(undefined, r3).endsWith;
     // CODE → <Mov>: <Reg8: 7, Reg8: 2>
-    // USED → r7 = new globalThis.Error().stack.replace(/^.+\\n/, "");
+    // USED → r7 = new globalThis.Error().stack.replace(r6, "");
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 6, string_id: 206>  # String: 'replace' (Identifier)
-    // USED → r6 = new globalThis.Error().stack.replace(/^.+\\n/, "").replace;
+    // USED → r6 = new globalThis.Error().stack.replace(r6, "").replace;
     // CODE → <CreateRegExp>: <Reg8: 3, string_id: 7559, string_id: 11303, UInt32: 169>  # String: '^.+\\n.+\\n' (String)  # String: '' (Identifier)
     // USED → r3 = /^.+\\n.+\\n/;
     // CODE → <Call3>: <Reg8: 3, Reg8: 6, Reg8: 7, Reg8: 3, Reg8: 8>
-    // USED → r3 = new globalThis.Error().stack.replace(/^.+\\n/, "").replace(/^.+\\n.+\\n/, "");
+    // USED → r3 = new globalThis.Error().stack.replace(r6, "").replace(r3, "");
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    // USED → r3 = globalThis.String.call(undefined, caughtException.stack).endsWith(new globalThis.Error().stack.replace(/^.+\\n/, "").replace(/^.+\\n.+\\n/, ""));
+    // USED → r3 = globalThis.String.call(undefined, r3).endsWith(r3);
     // CODE → <JmpTrue>: <Addr8: 33, Reg8: 3>  # Address: 00000138
-    if (globalThis.String.call(undefined, caughtException.stack).endsWith(new globalThis.Error().stack.replace(/^.+\\n/, "").replace(/^.+\\n.+\\n/, ""))) goto label_312;
+    // → r3 = globalThis.String.call(undefined, r3).endsWith(r3)
+    if (globalThis.String.call(undefined, r3).endsWith(r3)) goto label_312;
     // ──────────────── Block 16 ──────────────── 
     // CODE → <Mov>: <Reg8: 3, Reg8: 1>
     // USED → r3 = caughtException;
     // CODE → <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 12363>  # String: 'stack' (Identifier)
     // USED → r4 = caughtException.stack;
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-    // USED → r5 = new globalThis.Error().stack.replace(/^.+\\n/, "");
+    // USED → r5 = new globalThis.Error().stack.replace(r6, "");
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 12321>  # String: '\n' (Identifier)
     // USED → r2 = "\\n";
     // CODE → <Add>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = "\\n" + new globalThis.Error().stack.replace(/^.+\\n/, "");
+    // USED → r2 = "\\n" + new globalThis.Error().stack.replace(r6, "");
     // CODE → <Add>: <Reg8: 2, Reg8: 4, Reg8: 2>
-    // USED → r2 = caughtException.stack + ("\\n" + new globalThis.Error().stack.replace(/^.+\\n/, ""));
+    // USED → r2 = caughtException.stack + ("\\n" + new globalThis.Error().stack.replace(r6, ""));
     // CODE → <PutById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 12363>  # String: 'stack' (Identifier)
-    caughtException.stack = caughtException.stack + ("\\n" + new globalThis.Error().stack.replace(/^.+\\n/, ""))
+    caughtException.stack = caughtException.stack + ("\\n" + new globalThis.Error().stack.replace(r6, ""))
     // ──────────────── Block 17 ──────────────── 
     // CODE → <Jmp>: <Addr8: 4>  # Address: 0000013c
     goto label_316;

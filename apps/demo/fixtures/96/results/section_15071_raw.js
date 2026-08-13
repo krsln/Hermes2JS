@@ -64,7 +64,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 7735>  # String: 'count' (Identifier)
     // USED → r1 = r1.count;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(r1.count)
+    console.log(r1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
