@@ -19,7 +19,10 @@ class SignatureStage(PipelineStage):
         context.function_name = function_name
 
         param_count = metadata.get('param_count', 0)
-        context.params = [f'param{i}' for i in range(param_count)]
+        context.params = [
+            f"param{i}"
+            for i in range(1, param_count)
+        ]
 
         joined = '\n'.join(context.lines)
         context.is_async = '<StartGenerator>' in joined
