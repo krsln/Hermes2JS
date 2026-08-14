@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Tuple
 
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.frontend.opcode import OpcodeResult
