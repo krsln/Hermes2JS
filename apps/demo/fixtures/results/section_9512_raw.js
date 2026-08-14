@@ -28,9 +28,9 @@ function defaultWithRestTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 213>  # String: 'reduce' (Identifier)
     // USED → r4 = copyRestArgs(r3, r4).reduce;
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 12481>  # Function: [#12481  of 12 bytes]: 3 params @ offset 0x00243e24
-    // USED → r3 = function_12481;
+    // USED → r3 = function_12481(param0, param1, param2);
     // CODE → <Call3>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 6>
-    // USED → r4 = copyRestArgs(r3, r4).reduce(r3, r6);
+    // USED → r4 = copyRestArgs(r3, r4).reduce(function_12481(param0, param1, param2), r6);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

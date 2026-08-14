@@ -20,20 +20,28 @@ class CreateClosure(OpcodeHandler):
 
         dest_reg, value_reg, func_id = (int(x) for x in match.groups())
 
-        func_name = (
-            ctx.entry.function.name
-            if ctx.entry.function and ctx.entry.function.name
-            else f"function_{func_id}"
-        )
+        function_info = ctx.entry.function
 
-        # NOTE: `environment_register`/`environment` (the old
-        # `ClosureValue`'s comment about which env the closure captures)
-        # is dropped here. In real JS, a closure's environment capture
-        # is implicit lexical scoping, not syntax - a plain reference to
-        # the function name is the correct AST shape. The captured env
-        # register is still visible in verbose mode via the `// CODE ->`
-        # bytecode comment if needed for debugging.
-        expression = Identifier(name=func_name)
+        if function_info is not None:
+            params = (
+                ", ".join(f"param{i}" for i in range(function_info.param_count))
+                if function_info.param_count is not None
+                else ""
+            )
+
+            name = function_info.name or f"function_{func_id}"
+            function = f"{name}({params})"
+        else:
+            function = f"function_{func_id}"
+
+        # NOTE: The environment register is intentionally not represented in
+        # the JavaScript expression. It identifies the lexical environment
+        # captured by the closure at the bytecode level, while lexical
+        # environment capture is implicit in JavaScript syntax.
+        #
+        # Therefore, the closure is represented by its function reference;
+        # the captured environment does not require a separate AST node.
+        expression = Identifier(name=function)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)

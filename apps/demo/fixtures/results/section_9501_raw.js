@@ -25,9 +25,9 @@ function tag(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 6457>  # String: '' (Identifier)
     // USED → r2 = "";
     // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 12478>  # Function: [#12478  of 57 bytes]: 4 params @ offset 0x00243e4f
-    // USED → r1 = function_12478;
+    // USED → r1 = function_12478(param0, param1, param2, param3);
     // CODE → <Call3>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 2>
-    // USED → r1 = param1.reduce(r1, "");
+    // USED → r1 = param1.reduce(function_12478(param0, param1, param2, param3), "");
     // CODE → <Ret>: <Reg8: 1>
-    return param1.reduce(r1, "");
+    return param1.reduce(function_12478(param0, param1, param2, param3), "");
 }

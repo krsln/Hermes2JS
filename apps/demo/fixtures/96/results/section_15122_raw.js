@@ -5,17 +5,17 @@ function function_15122(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
     // USED → r1 = param6;
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 15123>  # Function: [#15123 mapTest of 311 bytes]: 1 params @ offset 0x00269f5f
-    // USED → r4 = mapTest;
+    // USED → r4 = mapTest(param0);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 4>
-    createEnvironment()[1] = mapTest
+    createEnvironment()[1] = mapTest(param0)
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15124>  # Function: [#15124 setTest of 217 bytes]: 1 params @ offset 0x0026a096
-    // USED → r3 = setTest;
+    // USED → r3 = setTest(param0);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 3>
-    createEnvironment()[2] = setTest
+    createEnvironment()[2] = setTest(param0)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15125>  # Function: [#15125 weakMapTest of 141 bytes]: 1 params @ offset 0x0026a16f
-    // USED → r0 = weakMapTest;
+    // USED → r0 = weakMapTest(param0);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 0>
-    createEnvironment()[3] = weakMapTest
+    createEnvironment()[3] = weakMapTest(param0)
     // CODE → <GetGlobalObject>: <Reg8: 5>
     // USED → r5 = globalThis;
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
@@ -33,15 +33,15 @@ function function_15122(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <Call4>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 5, Reg8: 6>
     r5 = globalThis.Object.defineProperty(r1, "__esModule", r6)
     // CODE → <PutById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 10859>  # String: 'mapTest' (Identifier)
-    param6.mapTest = mapTest
+    param6.mapTest = mapTest(param0)
     // CODE → <PutById>: <Reg8: 1, Reg8: 3, UInt8: 2, string_id: 10864>  # String: 'setTest' (Identifier)
-    param6.setTest = setTest
+    param6.setTest = setTest(param0)
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 10868>  # String: 'weakMapTest' (Identifier)
-    param6.weakMapTest = weakMapTest
+    param6.weakMapTest = weakMapTest(param0)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15126>  # Function: [#15126 callMapSetTests of 73 bytes]: 1 params @ offset 0x0026a1fc
-    // USED → r0 = callMapSetTests;
+    // USED → r0 = callMapSetTests(param0);
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 7228>  # String: 'callMapSetTests' (Identifier)
-    param6.callMapSetTests = callMapSetTests
+    param6.callMapSetTests = callMapSetTests(param0)
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 7>
     // USED → r1 = param7;
     // CODE → <LoadConstZero>: <Reg8: 0>

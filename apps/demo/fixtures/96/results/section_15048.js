@@ -21,9 +21,9 @@ function function_15048(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15049>  # Function: [#15049 doWhileTest of 74 bytes]: 1 params @ offset 0x00267c51
-    // USED → r0 = doWhileTest;
+    // USED → r0 = doWhileTest(param0);
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10882>  # String: 'doWhileTest' (Identifier)
-    param6.doWhileTest = doWhileTest
+    param6.doWhileTest = doWhileTest(param0)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

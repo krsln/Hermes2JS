@@ -21,13 +21,13 @@ function function_15091(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
     r2 = globalThis.Object.defineProperty(r1, "__esModule", r3)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15092>  # Function: [#15092 forOfTest of 93 bytes]: 1 params @ offset 0x00269315
-    // USED → r2 = forOfTest;
+    // USED → r2 = forOfTest(param0);
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 11254>  # String: 'forOfTest' (Identifier)
-    param6.forOfTest = forOfTest
+    param6.forOfTest = forOfTest(param0)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15093>  # Function: [#15093 forInTest of 102 bytes]: 1 params @ offset 0x00269372
-    // USED → r0 = forInTest;
+    // USED → r0 = forInTest(param0);
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 11239>  # String: 'forInTest' (Identifier)
-    param6.forInTest = forInTest
+    param6.forInTest = forInTest(param0)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

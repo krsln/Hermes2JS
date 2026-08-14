@@ -17,7 +17,7 @@ function closureLoopTest(param0) {
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
     createEnvironment()[0] = r4
     // CODE → <CreateClosure>: <Reg8: 5, Reg8: 0, function_id: 15151>  # Function: [#15151 _loop of 35 bytes]: 2 params @ offset 0x0026aa27
-    // USED → r5 = _loop;
+    // USED → r5 = _loop(param0, param1);
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
@@ -28,7 +28,7 @@ function closureLoopTest(param0) {
     do {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Call2>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 3>
-        r6 = _loop.call(undefined, r3)
+        r6 = _loop(param0, param1).call(undefined, r3)
         // CODE → <Inc>: <Reg8: 3, Reg8: 3>
         // USED → r3 = r3++;
     // → r3 = r3++

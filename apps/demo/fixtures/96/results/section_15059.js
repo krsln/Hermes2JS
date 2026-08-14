@@ -21,9 +21,9 @@ function function_15059(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15060>  # Function: [#15060 complexTest of 240 bytes]: 1 params @ offset 0x00267ffd
-    // USED → r0 = complexTest;
+    // USED → r0 = complexTest(param0);
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 7792>  # String: 'complexTest' (Identifier)
-    param6.complexTest = complexTest
+    param6.complexTest = complexTest(param0)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

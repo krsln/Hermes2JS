@@ -39,9 +39,9 @@ function function_15163(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 3, string_id: 8821>  # String: 'generatorTryFinallyTest' (Identifier)
     param6.generatorTryFinallyTest = generatorTryFinallyTest
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15170>  # Function: [#15170 callGeneratorTests of 212 bytes]: 1 params @ offset 0x0026b07d
-    // USED → r0 = callGeneratorTests;
+    // USED → r0 = callGeneratorTests(param0);
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 11199>  # String: 'callGeneratorTests' (Identifier)
-    param6.callGeneratorTests = callGeneratorTests
+    param6.callGeneratorTests = callGeneratorTests(param0)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

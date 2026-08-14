@@ -5,13 +5,13 @@ function function_15153(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
     // USED → r1 = param6;
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 15154>  # Function: [#15154 defaultParameterTest of 121 bytes]: 2 params @ offset 0x0026aa9c
-    // USED → r3 = defaultParameterTest;
+    // USED → r3 = defaultParameterTest(param0, param1);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 3>
-    createEnvironment()[0] = defaultParameterTest
+    createEnvironment()[0] = defaultParameterTest(param0, param1)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15155>  # Function: [#15155 defaultWithRestTest of 169 bytes]: 1 params @ offset 0x0026ab15
-    // USED → r2 = defaultWithRestTest;
+    // USED → r2 = defaultWithRestTest(param0);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 2>
-    createEnvironment()[1] = defaultWithRestTest
+    createEnvironment()[1] = defaultWithRestTest(param0)
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis;
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
@@ -29,13 +29,13 @@ function function_15153(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <Call4>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 1, Reg8: 4, Reg8: 5>
     r4 = globalThis.Object.defineProperty(r1, "__esModule", r5)
     // CODE → <PutById>: <Reg8: 1, Reg8: 3, UInt8: 1, string_id: 11191>  # String: 'defaultParameterTest' (Identifier)
-    param6.defaultParameterTest = defaultParameterTest
+    param6.defaultParameterTest = defaultParameterTest(param0, param1)
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 11193>  # String: 'defaultWithRestTest' (Identifier)
-    param6.defaultWithRestTest = defaultWithRestTest
+    param6.defaultWithRestTest = defaultWithRestTest(param0)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15157>  # Function: [#15157 callDefaultParameterTests of 105 bytes]: 1 params @ offset 0x0026abbe
-    // USED → r0 = callDefaultParameterTests;
+    // USED → r0 = callDefaultParameterTests(param0);
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 11182>  # String: 'callDefaultParameterTests' (Identifier)
-    param6.callDefaultParameterTests = callDefaultParameterTests
+    param6.callDefaultParameterTests = callDefaultParameterTests(param0)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

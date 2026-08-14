@@ -17,9 +17,9 @@ function forEachTest(param0) {
     // CODE → <CreateEnvironment>: <Reg8: 1>
     r1 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 15054>  # Function: [#15054  of 78 bytes]: 3 params @ offset 0x00267dd1
-    // USED → r1 = function_15054;
+    // USED → r1 = function_15054(param0, param1, param2);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = r3.forEach(r1)
+    r1 = r3.forEach(function_15054(param0, param1, param2))
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -13,11 +13,11 @@ function asyncTryCatchTest(param0) {
     // CODE → <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getParentEnvironment(0)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 12486>  # Function: [#12486 ?anon_0_asyncTryCatchTest of 24 bytes]: 1 params @ offset 0x00244394
-    // USED → r2 = ?anon_0_asyncTryCatchTest;
+    // USED → r2 = ?anon_0_asyncTryCatchTest(param0);
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → <Call4>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1, Reg8: 4>
-    // USED → r1 = spawnAsync.call(undefined, r2, r1, r4);
+    // USED → r1 = spawnAsync.call(undefined, ?anon_0_asyncTryCatchTest(param0), r1, r4);
     // CODE → <Ret>: <Reg8: 1>
-    return spawnAsync.call(undefined, r2, r1, r4);
+    return spawnAsync.call(undefined, ?anon_0_asyncTryCatchTest(param0), r1, r4);
 }

@@ -21,9 +21,9 @@ function function_15057(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15058>  # Function: [#15058 nestedLoopTest of 130 bytes]: 1 params @ offset 0x00267f47
-    // USED → r0 = nestedLoopTest;
+    // USED → r0 = nestedLoopTest(param0);
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10944>  # String: 'nestedLoopTest' (Identifier)
-    param6.nestedLoopTest = nestedLoopTest
+    param6.nestedLoopTest = nestedLoopTest(param0)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

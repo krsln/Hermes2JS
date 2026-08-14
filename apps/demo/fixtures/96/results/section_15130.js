@@ -65,11 +65,11 @@ function tag(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)
     // USED → r2 = param1.reduce;
     // CODE → <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 15131>  # Function: [#15131  of 61 bytes]: 4 params @ offset 0x0026a42e
-    // USED → r1 = function_15131;
+    // USED → r1 = function_15131(param0, param1, param2, param3);
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 7163>  # String: '' (Identifier)
     // USED → r0 = "";
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
-    // USED → r0 = param1.reduce(r1, "");
+    // USED → r0 = param1.reduce(function_15131(param0, param1, param2, param3), "");
     // CODE → <Ret>: <Reg8: 0>
-    return param1.reduce(r1, "");
+    return param1.reduce(function_15131(param0, param1, param2, param3), "");
 }

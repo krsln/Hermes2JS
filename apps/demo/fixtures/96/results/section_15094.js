@@ -21,9 +21,9 @@ function function_15094(param0, param1, param2, param3, param4, param5, param6, 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15095>  # Function: [#15095 objectLiteralTest of 206 bytes]: 1 params @ offset 0x0026940c
-    // USED → r0 = objectLiteralTest;
+    // USED → r0 = objectLiteralTest(param0);
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 11286>  # String: 'objectLiteralTest' (Identifier)
-    param6.objectLiteralTest = objectLiteralTest
+    param6.objectLiteralTest = objectLiteralTest(param0)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

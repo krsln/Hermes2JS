@@ -100,6 +100,7 @@ class Call1(OpcodeHandler):
 
     _CALL_ARGUMENT_INLINE_OPCODES = frozenset({
         "LoadConstString",
+        "CreateClosure",
     })
 
     ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8 (dest, callee, thisArg)")
@@ -147,17 +148,22 @@ class Call1(OpcodeHandler):
         definition = state.definition
         value = definition.value
 
-        if (
-                definition.handler in cls._CALL_ARGUMENT_INLINE_OPCODES
-                and isinstance(value, Literal)
-        ):
-            state.reads += 1
-            definition.definition_used = True
+        if definition.handler in cls._CALL_ARGUMENT_INLINE_OPCODES:
+            if isinstance(value, Literal):
+                state.reads += 1
+                definition.definition_used = True
 
-            if state.reads > 1:
-                return dataclasses.replace(value)
+                if state.reads > 1:
+                    return dataclasses.replace(value)
 
-            return value
+                return value
+            elif isinstance(value, Identifier):
+                state.reads += 1
+                definition.definition_used = True
+
+                return value
+            else:
+                print(f"Unexpected value type in Call argument: {type(value)}")
 
         state.reads += 1
         definition.definition_used = True
