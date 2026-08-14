@@ -15,18 +15,17 @@ function ifTest(param1) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 10>
     // USED → r1 = 10;
     // CODE → <JGreaterLong>: <Addr32: 149, Reg8: 2, Reg8: 1>  # Address: 000000b1
-    // → r2 = param1
-    if (r2 > 10) goto label_177;
+    if (param1 > 10) goto label_177;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 5>
     // USED → r1 = 5;
     // CODE → <JGreater>: <Addr8: 97, Reg8: 2, Reg8: 1>  # Address: 00000087
-    if (r2 > 5) goto label_135;
+    if (param1 > 5) goto label_135;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     // CODE → <JStrictEqual>: <Addr8: 49, Reg8: 2, Reg8: 1>  # Address: 0000005d
-    if (r2 === 0) goto label_93;
+    if (param1 === 0) goto label_93;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;

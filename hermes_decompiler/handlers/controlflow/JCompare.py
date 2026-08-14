@@ -14,7 +14,7 @@ class BaseJCompare(OpcodeHandler):
     """
     `BaseJCompare` comparison jump, and shared base implementation for every
     other comparison jump opcode. A real opcode is used as the shared
-    base  - see `Add` in `handlers/arithmetic/Binary.py` for the rationale.
+    base - see `Add` in `handlers/arithmetic/Binary.py` for the rationale.
 
     Two ways to express a comparison, mutually exclusive:
 
@@ -33,8 +33,8 @@ class BaseJCompare(OpcodeHandler):
     `lhs >= rhs`, but in JavaScript it is NOT equivalent whenever a
     comparison involves `NaN`:
 
-        !(NaN < 5)   === true
-        (NaN >= 5)   === false
+        !(NaN < 5) === true
+        (NaN >= 5) === false
 
     Collapsing `JNotLess` straight to `GREATER_EQUAL` would silently
     change program behavior for NaN operands. Modeling it as
@@ -62,8 +62,8 @@ class BaseJCompare(OpcodeHandler):
         ctx.analysis.gotoList.append(target)
 
         # Jump conditions must stay symbolic — do not inline definitions.
-        lhs = self.get_register_for_condition(ctx.analysis, lhs_reg)
-        rhs = self.get_register_for_condition(ctx.analysis, rhs_reg)
+        lhs = self.resolve_condition_argument(ctx.analysis, lhs_reg)
+        rhs = self.resolve_condition_argument(ctx.analysis, rhs_reg)
 
         condition = self.build_condition(lhs, rhs)
         terminator = TerminatorConditionalBranch(condition=condition, target=target)

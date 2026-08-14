@@ -69,7 +69,7 @@ async function* anon_15167(param1) {
     // USED → r4 = r6 + 1;
     // CODE → <JLess>: <Addr8: -43, Reg8: 4, Reg8: 5>  # Address: 00000030
     // → r4 = r6 + 1
-    if (r4 < r5) goto label_48;
+    if (r4 < param1) goto label_48;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;

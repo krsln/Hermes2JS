@@ -15,28 +15,27 @@ function switchTest(param1) {
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // CODE → <JStrictEqualLong>: <Addr32: 139, Reg8: 0, Reg8: 2>  # Address: 000000a6
-    // → r2 = param1
-    if (0 === r2) goto label_166;
+    if (0 === param1) goto label_166;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1;
     // CODE → <JStrictEqual>: <Addr8: 103, Reg8: 0, Reg8: 2>  # Address: 0000008c
-    if (1 === r2) goto label_140;
+    if (1 === param1) goto label_140;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → <JStrictEqual>: <Addr8: 70, Reg8: 0, Reg8: 2>  # Address: 00000072
-    if (2 === r2) goto label_114;
+    if (2 === param1) goto label_114;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
     // USED → r0 = 3;
     // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 0, Reg8: 2>  # Address: 00000058
-    if (3 === r2) goto label_88;
+    if (3 === param1) goto label_88;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
     // USED → r0 = 4;
     // CODE → <JStrictEqual>: <Addr8: 30, Reg8: 0, Reg8: 2>  # Address: 00000058
-    if (4 === r2) goto label_88;
+    if (4 === param1) goto label_88;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;

@@ -15,7 +15,7 @@ function switchTest(param1) {
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     // Switch → START
-    switch (r2) {
+    switch (param1) {
         case 0:
             // ──────────────── Block 9 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

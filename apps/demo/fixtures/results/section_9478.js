@@ -15,7 +15,7 @@ function switchInsideTryTest(param1) {
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // Switch → START
-    switch (r2) {
+    switch (param1) {
         case 0:
             // ──────────────── Block 4 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

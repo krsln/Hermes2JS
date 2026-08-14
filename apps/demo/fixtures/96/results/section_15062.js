@@ -14,8 +14,7 @@ function ifTest(param1) {
     console.log("__BC:ControlFlow/IfTests/ifTest/start")
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 10>
     // USED → r1 = 10;
-    // → r2 = param1
-    if (r2 > 10) {
+    if (param1 > 10) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = globalThis.console;
@@ -33,7 +32,7 @@ function ifTest(param1) {
         // USED → r1 = "big";
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("big")
-    } else if (r2 > 5) {
+    } else if (param1 > 5) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = globalThis.console;
@@ -51,7 +50,7 @@ function ifTest(param1) {
         // USED → r1 = "medium";
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("medium")
-    } else if (r2 === 0) {
+    } else if (param1 === 0) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = globalThis.console;

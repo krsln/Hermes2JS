@@ -38,7 +38,13 @@ class ArgsPattern:
 # resolver is used.
 _IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
 
-_CONST_LOAD_OPCODES = frozenset({
+_CALL_ARGUMENT_INLINE_OPCODES = frozenset({
+    "LoadConstString",
+    "CreateClosure",
+})
+
+_CONDITION_ARGUMENT_INLINE_OPCODES = frozenset({
+    "LoadParam",
     "LoadConstZero",
     "LoadConstUInt8",
     "LoadConstInt",
@@ -190,7 +196,39 @@ class OpcodeHandler(ABC):
         return Identifier(name=f"r{reg}")
 
     @classmethod
-    def get_register_for_condition(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+    def resolve_call_argument(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+        state = analysis.registers.get(f"r{reg}")
+
+        if state is None or state.definition is None:
+            return Identifier(name=f"r{reg}_undefined")
+
+        definition = state.definition
+        value = definition.value
+
+        if definition.handler in _CALL_ARGUMENT_INLINE_OPCODES:
+            if isinstance(value, Literal):
+                state.reads += 1
+                definition.definition_used = True
+
+                if state.reads > 1:
+                    return dataclasses.replace(value)
+
+                return value
+            elif isinstance(value, Identifier):
+                state.reads += 1
+                definition.definition_used = True
+
+                return value
+            else:
+                print(f"Unexpected value type in Call argument: {type(value)}")
+
+        state.reads += 1
+        definition.definition_used = True
+
+        return Identifier(name=f"r{reg}")
+
+    @classmethod
+    def resolve_condition_argument(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """
         Jump/branch condition operands.
 
@@ -205,25 +243,30 @@ class OpcodeHandler(ABC):
 
         definition = state.definition
         value = definition.value
-        opcode = definition.handler
 
         # Const-load literals: always safe to inline, regardless of
         # mode - a genuine LoadConstX opcode produces one immutable
         # value that can never be redefined by a loop iteration between
         # its own occurrences (each const-load is itself the
         # definition being read).
-        if opcode in _CONST_LOAD_OPCODES and isinstance(value, Literal):
-            state.reads += 1
-            definition.definition_used = True
+        if definition.handler in _CONDITION_ARGUMENT_INLINE_OPCODES:
+            if isinstance(value, Literal):
+                state.reads += 1
+                definition.definition_used = True
 
-            if state.reads > 1:
-                return dataclasses.replace(value)
+                if state.reads > 1:
+                    return dataclasses.replace(value)
 
-            return value
+                return value
+            elif isinstance(value, Identifier):
+                state.reads += 1
+                definition.definition_used = True
 
-        # Symbolic mode (get_register_symbolic /
-        # get_register_for_condition): Mov/Inc/Add/GetById/Call/
-        # param/... never inlined, might be loop-carried.
+                return value
+            else:
+                print(f"Unexpected value type in Jump condition argument: {type(value)}")
+
         state.reads += 1
         definition.definition_used = True
+
         return Identifier(name=f"r{reg}")

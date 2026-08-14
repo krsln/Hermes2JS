@@ -98,11 +98,6 @@ class Call1(OpcodeHandler):
     explicitly via `.call(thisArg, ...)` to keep semantics correct.
     """
 
-    _CALL_ARGUMENT_INLINE_OPCODES = frozenset({
-        "LoadConstString",
-        "CreateClosure",
-    })
-
     ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8 (dest, callee, thisArg)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
@@ -116,7 +111,7 @@ class Call1(OpcodeHandler):
         this_value = self.get_register_expression(ctx.analysis, this_reg)
 
         real_arguments = tuple(
-            self._resolve_call_argument(ctx.analysis, reg)
+            self.resolve_call_argument(ctx.analysis, reg)
             for reg in rest_arg_regs
         )
 
@@ -133,42 +128,6 @@ class Call1(OpcodeHandler):
         ctx.analysis.add_result(result)
 
         return result
-
-    @classmethod
-    def _resolve_call_argument(
-            cls,
-            analysis: HermesAnalysis,
-            reg: int,
-    ) -> Expression:
-        state = analysis.registers.get(f"r{reg}")
-
-        if state is None or state.definition is None:
-            return Identifier(name=f"r{reg}_undefined")
-
-        definition = state.definition
-        value = definition.value
-
-        if definition.handler in cls._CALL_ARGUMENT_INLINE_OPCODES:
-            if isinstance(value, Literal):
-                state.reads += 1
-                definition.definition_used = True
-
-                if state.reads > 1:
-                    return dataclasses.replace(value)
-
-                return value
-            elif isinstance(value, Identifier):
-                state.reads += 1
-                definition.definition_used = True
-
-                return value
-            else:
-                print(f"Unexpected value type in Call argument: {type(value)}")
-
-        state.reads += 1
-        definition.definition_used = True
-
-        return Identifier(name=f"r{reg}")
 
 
 # Reg8, Reg8, Reg8, Reg8 (total size 4)
