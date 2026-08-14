@@ -157,9 +157,9 @@ function isRenderConsistentWithExternalStores(param0, param1) {
                         // CODE → <Mov>: <Reg8: 11, Reg8: 7>
                         r11 = 0
                         // CODE → <Inc>: <Reg8: 13, Reg8: 11>
-                        // USED → r13 = r11 + 1;
+                        // USED → r13 = r11++;
                         // CODE → <Mov>: <Reg8: 7, Reg8: 13>
-                        r7 = r11 + 1
+                        r7 = r11++
                         // CODE → <Mov>: <Reg8: 11, Reg8: 6>
                         // USED → r11 = param1.updateQueue.stores;
                     }

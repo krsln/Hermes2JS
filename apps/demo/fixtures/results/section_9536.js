@@ -47,9 +47,9 @@ function Counter(param0) {
         // CODE → <GetOwnPrivateBySym>: <Reg8: 3, Reg8: 5, UInt8: 1, Reg8: 4>
         r3 = getParentEnvironment(0)[2].#__private_4__
         // CODE → <Inc>: <Reg8: 3, Reg8: 3>
-        // USED → r3 = r3 + 1;
+        // USED → r3 = r3++;
         // CODE → <PutOwnPrivateBySym>: <Reg8: 5, Reg8: 3, UInt8: 1, Reg8: 4>
-        getParentEnvironment(0)[2].#__private_4__ = r3 + 1
+        getParentEnvironment(0)[2].#__private_4__ = r3++
         // CODE → <Ret>: <Reg8: 2>
         return Object.create(new.target.prototype);
     }

@@ -19,9 +19,9 @@ function increment(param0) {
     // CODE → <GetOwnPrivateBySym>: <Reg8: 0, Reg8: 2, UInt8: 0, Reg8: 1>
     r0 = this.#__private_1__
     // CODE → <Inc>: <Reg8: 0, Reg8: 0>
-    // USED → r0 = r0 + 1;
+    // USED → r0 = r0++;
     // CODE → <PutOwnPrivateBySym>: <Reg8: 2, Reg8: 0, UInt8: 0, Reg8: 1>
-    this.#__private_1__ = r0 + 1
+    this.#__private_1__ = r0++
     // CODE → <Ret>: <Reg8: 0>
-    return r0 + 1;
+    return r0++;
 }

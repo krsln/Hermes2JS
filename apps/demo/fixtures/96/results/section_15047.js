@@ -19,7 +19,7 @@ function whileTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     // USED → r1 = 2;
     // LOOP → START (for)
-    for (r5 = 0; r5 < 5; r5 = r7 + 1) {
+    for (r5 = 0; r5 < 5; r5 = r7++) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r7 = globalThis.console;
@@ -39,11 +39,11 @@ function whileTest(param0) {
             // CODE → <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
             console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
             // CODE → <Inc>: <Reg8: 6, Reg8: 7>
-            // USED → r6 = r7 + 1;
+            // USED → r6 = r7++;
         } else {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Inc>: <Reg8: 6, Reg8: 7>
-            r6 = r7 + 1
+            r6 = r7++
         }
         // ──────────────── Block 4 ──────────────── 
     }

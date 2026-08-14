@@ -20,12 +20,12 @@ function labeledContinueTest(param0) {
     // USED → r2 = 1;
     loop_1:
     // LOOP → START (for)
-    for (r1 = 0; r1 < 3; r1 = r7 + 1) {
+    for (r1 = 0; r1 < 3; r1 = r7++) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 7, Reg8: 1>
         // USED → r7 = 0;
         // LOOP → START (for)
-        for (r8 = 0; r8 < 3; r8 = r9 + 1) {
+        for (r8 = 0; r8 < 3; r8 = r9++) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 9, Reg8: 8>
             // USED → r9 = 0;

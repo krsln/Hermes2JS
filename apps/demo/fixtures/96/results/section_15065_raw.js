@@ -37,15 +37,15 @@ function labeledBreakTest(param0) {
     // CODE → <Call3>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 5, Reg8: 7>
     console.log(r5, r7)
     // CODE → <Inc>: <Reg8: 6, Reg8: 7>
-    // USED → r6 = r7 + 1;
+    // USED → r6 = r7++;
     // CODE → <JLess>: <Addr8: -31, Reg8: 6, Reg8: 3>  # Address: 00000023
-    // → r6 = r7 + 1
+    // → r6 = r7++
     if (r6 < 3) goto label_35;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Inc>: <Reg8: 1, Reg8: 5>
-    // USED → r1 = r5 + 1;
+    // USED → r1 = r5++;
     // CODE → <JLess>: <Addr8: -43, Reg8: 1, Reg8: 3>  # Address: 0000001e
-    // → r1 = r5 + 1
+    // → r1 = r5++
     if (r1 < 3) goto label_30;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <Jmp>: <Addr8: 22>  # Address: 00000063

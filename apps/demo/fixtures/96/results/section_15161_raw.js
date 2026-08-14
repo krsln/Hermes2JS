@@ -40,11 +40,11 @@ function legacyArgumentsTest(param0) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
     console.log(r2)
     // CODE → <Inc>: <Reg8: 3, Reg8: 3>
-    // USED → r3 = r3 + 1;
+    // USED → r3 = r3++;
     // CODE → <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
     // USED → r2 = arguments.length;
     // CODE → <JLess>: <Addr8: -26, Reg8: 3, Reg8: 2>  # Address: 00000039
-    // → r2 = arguments.length; r3 = r3 + 1
+    // → r2 = arguments.length; r3 = r3++
     if (r3 < r2) goto label_57;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

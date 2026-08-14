@@ -52,9 +52,9 @@ function tag(param0, param1) {
     // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
     new globalThis.Array(arguments.length - 1)[1 - 1] = arguments[1]
     // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-    // USED → r2 = r2 + 1;
+    // USED → r2 = r2++;
     // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 6>  # Address: 00000047
-    // → r2 = r2 + 1
+    // → r2 = r2++
     if (r2 < r6) goto label_71;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 99>  # String: 'console' (Identifier)

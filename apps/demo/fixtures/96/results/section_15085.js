@@ -40,7 +40,7 @@ function tryCatchInsideLoopTest(param0, param1) {
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
         // CODE → <Ret>: <Reg8: 0>
-        return r2 + 1;
+        return r2++;
     } else {
         // LOOP → START (for)
         // → r2 = param1[0]; r3 = param1
@@ -75,9 +75,9 @@ function tryCatchInsideLoopTest(param0, param1) {
                     // CODE → <Mov>: <Reg8: 2, Reg8: 8>
                     r2 = 0
                     // CODE → <Inc>: <Reg8: 3, Reg8: 2>
-                    // USED → r3 = r2 + 1;
+                    // USED → r3 = r2++;
                     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
-                    r8 = r2 + 1
+                    r8 = r2++
                     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
                     // USED → r2 = param1;
                     // ──────────────── Block 4 ──────────────── 
@@ -92,7 +92,7 @@ function tryCatchInsideLoopTest(param0, param1) {
                     // CODE → <Mov>: <Reg8: 2, Reg8: 0>
                     r2 = 0
                     // CODE → <Inc>: <Reg8: 0, Reg8: 2>
-                    // USED → r0 = r2 + 1;
+                    // USED → r0 = r2++;
                 }
                 // LOOP → END
             }
