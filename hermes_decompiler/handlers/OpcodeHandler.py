@@ -167,17 +167,87 @@ class OpcodeHandler(ABC):
 
         return Identifier(name=f"r{reg}")
 
+    # @classmethod
+    # def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+    #     """
+    #     Inline the register's current defining expression, of (almost)
+    #     any kind - see class-level comment above for exactly when this
+    #     is/isn't safe to use.
+    #     """
+    #     return cls._resolve_register(analysis, reg, inline_non_literal=True)
+
     @classmethod
     def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """
-        Inline the register's current defining expression, of (almost)
-        any kind - see class-level comment above for exactly when this
-        is/isn't safe to use.
+        Return the current expression assigned to a register.
+
+        This exposes the actual IR node currently stored in the register
+        (ObjectExpression, Literal, BinaryExpression, CallExpression, etc.)
+        and should only be used by optimization or analysis passes that need
+        the defining expression.
+
+        If the register has never been defined, fall back to its symbolic
+        identifier.
         """
-        return cls._resolve_register(analysis, reg, inline_non_literal=True)
+
+        state = analysis.registers.get(f"r{reg}")
+
+        if state is None or state.definition is None:
+            return Identifier(name=f"r{reg}_undefined")
+
+        state_value = state.value
+        if isinstance(state_value, Expression):
+            state.reads += 1
+
+            if isinstance(state.value, _IDENTITY_SENSITIVE_TYPES):
+                return Identifier(name=f"r{reg}")
+
+            if state.reads > 1:
+                state_value = dataclasses.replace(state_value)
+
+            state.definition.definition_used = True
+            return state_value
+
+        return Identifier(name=f"r{reg}")
 
     @classmethod
-    def get_register_symbolic(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+    def get_register_for_condition_(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+        """
+        Jump/branch condition operands.
+
+        Inline ONLY when this register was defined by a const-load opcode.
+        That preserves switch case labels (r1 = 0; if (r1 === disc)) while
+        keeping Mov/Inc/phi-carried values symbolic for loops.
+        """
+        state = analysis.registers.get(f"r{reg}")
+
+        if state is None or state.definition is None:
+            return Identifier(name=f"r{reg}_undefined")
+
+        definition = state.definition
+        value = definition.value
+        opcode = definition.handler
+
+        # Const-load literals: always safe to inline, regardless of
+        # mode - a genuine LoadConstX opcode produces one immutable
+        # value that can never be redefined by a loop iteration between
+        # its own occurrences (each const-load is itself the
+        # definition being read).
+        if opcode in _CONST_LOAD_OPCODES and isinstance(value, Literal):
+            state.reads += 1
+            definition.definition_used = True
+
+            if state.reads > 1:
+                return dataclasses.replace(value)
+
+            return value
+
+        # Mov / Inc / Add / GetById / param / ... → always symbolic
+        state.reads += 1
+        return Identifier(name=f"r{reg}")
+
+    @classmethod
+    def get_register_for_condition(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """
         Inline only if the definition is a `Literal` from a genuine
         const-load opcode; everything else (including Mov/Inc copies
