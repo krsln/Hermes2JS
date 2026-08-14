@@ -46,7 +46,9 @@ _IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
 # docstring for why those must stay symbolic). `Catch` is the first
 # case: `caughtException` is bound once at catch-block entry and never
 # reassigned for the rest of that block.
-_SAFE_IDENTIFIER_INLINE_OPCODES = frozenset({"Catch"})
+_SAFE_IDENTIFIER_INLINE_OPCODES = frozenset({
+    "Catch",
+})
 
 _CONST_LOAD_OPCODES = frozenset({
     "LoadConstZero",
