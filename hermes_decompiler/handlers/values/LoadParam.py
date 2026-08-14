@@ -18,7 +18,7 @@ class LoadParam(OpcodeHandler):
 
         dest_reg, param_index = map(int, match.groups())
 
-        # param0 = this, others = paramN
+        # Load a function parameter by index. Starts at 0 with 'this'.
         name = "this" if param_index == 0 else f"param{param_index}"
         expression = Identifier(name=name)
 
