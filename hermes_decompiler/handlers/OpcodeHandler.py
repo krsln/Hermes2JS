@@ -38,18 +38,6 @@ class ArgsPattern:
 # resolver is used.
 _IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
 
-# Opcodes whose produced value, though not a Literal, is still safe to
-# inline even in "symbolic" resolution mode: the value is bound EXACTLY
-# ONCE per scope entry and never redefined afterward within that scope
-# (unlike Mov/Inc/Add/GetById, which can sit inside a loop and be
-# re-evaluated on every iteration - see get_register_symbolic's own
-# docstring for why those must stay symbolic). `Catch` is the first
-# case: `caughtException` is bound once at catch-block entry and never
-# reassigned for the rest of that block.
-_SAFE_IDENTIFIER_INLINE_OPCODES = frozenset({
-    "Catch",
-})
-
 _CONST_LOAD_OPCODES = frozenset({
     "LoadConstZero",
     "LoadConstUInt8",
@@ -167,15 +155,6 @@ class OpcodeHandler(ABC):
 
         return Identifier(name=f"r{reg}")
 
-    # @classmethod
-    # def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
-    #     """
-    #     Inline the register's current defining expression, of (almost)
-    #     any kind - see class-level comment above for exactly when this
-    #     is/isn't safe to use.
-    #     """
-    #     return cls._resolve_register(analysis, reg, inline_non_literal=True)
-
     @classmethod
     def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """
@@ -211,7 +190,7 @@ class OpcodeHandler(ABC):
         return Identifier(name=f"r{reg}")
 
     @classmethod
-    def get_register_for_condition_(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+    def get_register_for_condition(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """
         Jump/branch condition operands.
 
@@ -242,78 +221,9 @@ class OpcodeHandler(ABC):
 
             return value
 
-        # Mov / Inc / Add / GetById / param / ... → always symbolic
+        # Symbolic mode (get_register_symbolic /
+        # get_register_for_condition): Mov/Inc/Add/GetById/Call/
+        # param/... never inlined, might be loop-carried.
         state.reads += 1
-        return Identifier(name=f"r{reg}")
-
-    @classmethod
-    def get_register_for_condition(cls, analysis: HermesAnalysis, reg: int) -> Expression:
-        """
-        Inline only if the definition is a `Literal` from a genuine
-        const-load opcode; everything else (including Mov/Inc copies
-        of another register) stays symbolic. See class-level comment
-        above for the rationale - this is the resolver to reach for
-        by default whenever a stale/loop-carried value would be a
-        correctness bug, not just a cosmetic one.
-        """
-        return cls._resolve_register(analysis, reg, inline_non_literal=False)
-
-    @classmethod
-    def _resolve_register(cls, analysis: HermesAnalysis, reg: int, *, inline_non_literal: bool) -> Expression:
-
-        state = analysis.registers.get(f"r{reg}")
-
-        if state is None or state.definition is None:
-            return Identifier(name=f"r{reg}_undefined")
-
-        definition = state.definition
-        value = definition.value
-        opcode = definition.handler
-
-        # Const-load literals: always safe to inline, regardless of
-        # mode - a genuine LoadConstX opcode produces one immutable
-        # value that can never be redefined by a loop iteration between
-        # its own occurrences (each const-load is itself the
-        # definition being read).
-        if opcode in _CONST_LOAD_OPCODES and isinstance(value, Literal):
-            state.reads += 1
-            definition.definition_used = True
-
-            if state.reads > 1:
-                return dataclasses.replace(value)
-
-            return value
-
-        # Catch (and any future single-bind-per-scope opcode): safe to
-        # inline even in symbolic mode - see _SAFE_IDENTIFIER_INLINE_OPCODES
-        # docstring above.
-        if opcode in _SAFE_IDENTIFIER_INLINE_OPCODES and isinstance(value, Identifier):
-            state.reads += 1
-            definition.definition_used = True
-            return value
-
-        if not inline_non_literal:
-            # Symbolic mode (get_register_symbolic /
-            # get_register_for_condition): Mov/Inc/Add/GetById/Call/
-            # param/... never inlined, might be loop-carried.
-            state.reads += 1
-            definition.definition_used = True
-            return Identifier(name=f"r{reg}")
-
-        state_value = state.value
-
-        # Expression mode (get_register_expression): inline anything
-        # except identity-sensitive Object/Array literals.
-        if not isinstance(state_value, Expression):
-            return Identifier(name=f"r{reg}")
-
-        state.reads += 1
-
-        if isinstance(state.value, _IDENTITY_SENSITIVE_TYPES):
-            return Identifier(name=f"r{reg}")
-
-        if state.reads > 1:
-            state_value = dataclasses.replace(state_value)
-
         definition.definition_used = True
-        return state_value
+        return Identifier(name=f"r{reg}")
