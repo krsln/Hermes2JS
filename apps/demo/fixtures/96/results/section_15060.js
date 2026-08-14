@@ -98,7 +98,7 @@ function complexTest(param0) {
             // Switch → END
             // ──────────────── Block 8 ──────────────── 
             // CODE → <Inc>: <Reg8: 11, Reg8: 1>
-            // USED → r11 = r1++;
+            // USED → r11 = r1 + 1;
         }
         // LOOP → END
     }

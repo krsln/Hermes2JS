@@ -53,13 +53,13 @@ function tryFinallyLoopBreakTest(param0, param1) {
     // CODE → <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 4, Reg8: 8>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", r8)
     // CODE → <Inc>: <Reg8: 3, Reg8: 3>
-    // USED → r3 = r3++;
+    // USED → r3 = r3 + 1;
     // CODE → <Mov>: <Reg8: 7, Reg8: 3>
-    r7 = r3++
+    r7 = r3 + 1
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     // USED → r2 = param1.length;
     // CODE → <JLess>: <Addr8: -52, Reg8: 3, Reg8: 2>  # Address: 00000031
-    // → r2 = param1.length; r3 = r3++
+    // → r2 = param1.length; r3 = r3 + 1
     if (r3 < r2) goto label_49;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

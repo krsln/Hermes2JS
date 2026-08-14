@@ -15,12 +15,12 @@ function labeledBreakTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // LOOP → START (for)
-    for (r1 = 0; r1 < 3; r1 = r5++) {
+    for (r1 = 0; r1 < 3; r1 = r5 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 5, Reg8: 1>
         // USED → r5 = 0;
         // LOOP → START (for)
-        for (r6 = 0; r6 < 3; r6 = r7++) {
+        for (r6 = 0; r6 < 3; r6 = r7 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 7, Reg8: 6>
             // USED → r7 = 0;

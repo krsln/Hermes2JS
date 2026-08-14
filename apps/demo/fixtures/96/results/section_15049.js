@@ -24,8 +24,8 @@ function doWhileTest(param0) {
         // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
         console.log(r2)
         // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-        // USED → r2 = r2++;
-    // → r2 = r2++
+        // USED → r2 = r2 + 1;
+    // → r2 = r2 + 1
     } while (r2 < 5);
     // LOOP → END
     // ──────────────── Block 2 ──────────────── 

@@ -1,15 +1,12 @@
-from typing import ClassVar
-
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
-from hermes_decompiler.ir import UpdateOperator
 from hermes_decompiler.ir.Operators import UnaryOperator, BinaryOperator
 from hermes_decompiler.ir.expressions import (
     Expression,
     UnaryExpression,
     BinaryExpression,
     NumericLiteral,
-    StringLiteral, UpdateExpression,
+    StringLiteral,
 )
 
 
@@ -81,8 +78,8 @@ class Inc(BaseUnaryOperator):
         return self.get_register_reference(ctx.analysis, src_reg)
 
     def expression(self, value: Expression):
-        # return BinaryExpression(left=value, operator=BinaryOperator.ADD, right=NumericLiteral(1))
-        return UpdateExpression(operator=UpdateOperator.INCREMENT, argument=value, prefix=False)
+        return BinaryExpression(left=value, operator=BinaryOperator.ADD, right=NumericLiteral(1))  # x +1
+        # return UpdateExpression(operator=UpdateOperator.INCREMENT, argument=value, prefix=False) # x++
 
 
 class Dec(BaseUnaryOperator):
@@ -91,8 +88,8 @@ class Dec(BaseUnaryOperator):
         return self.get_register_reference(ctx.analysis, src_reg)
 
     def expression(self, value: Expression):
-        # return BinaryExpression(left=value, operator=BinaryOperator.SUBTRACT, right=NumericLiteral(1))
-        return UpdateExpression(operator=UpdateOperator.DECREMENT, argument=value, prefix=True)
+        return BinaryExpression(left=value, operator=BinaryOperator.SUBTRACT, right=NumericLiteral(1))  # x -1
+        # return UpdateExpression(operator=UpdateOperator.DECREMENT, argument=value, prefix=True) # x--
 
 
 class Negate(BaseUnaryOperator):

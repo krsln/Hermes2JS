@@ -66,9 +66,9 @@ async function* anon_15167(param0, param1) {
     console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip")
     // ──────────────── Block 8 ──────────────── 
     // CODE → <Inc>: <Reg8: 4, Reg8: 6>
-    // USED → r4 = r6++;
+    // USED → r4 = r6 + 1;
     // CODE → <JLess>: <Addr8: -43, Reg8: 4, Reg8: 5>  # Address: 00000030
-    // → r4 = r6++
+    // → r4 = r6 + 1
     if (r4 < r5) goto label_48;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

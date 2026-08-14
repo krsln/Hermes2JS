@@ -78,9 +78,9 @@ function defaultWithRestTest(param0) {
     // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
     new globalThis.Array(arguments.length - 1)[1 - 1] = arguments[1]
     // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-    // USED → r2 = r2++;
+    // USED → r2 = r2 + 1;
     // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 3>  # Address: 00000072
-    // → r2 = r2++
+    // → r2 = r2 + 1
     if (r2 < r3) goto label_114;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)

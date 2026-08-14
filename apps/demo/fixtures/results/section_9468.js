@@ -46,9 +46,9 @@ function tryLoopMultiReturnTest(param0, param1) {
             if (r5 === 0) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-                r5 = r5++
+                r5 = r5 + 1
                 // CODE → <Inc>: <Reg8: 4, Reg8: 5>
-                r4 = r5++
+                r4 = r5 + 1
             } else {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -62,7 +62,7 @@ function tryLoopMultiReturnTest(param0, param1) {
                 // CODE → <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
                 console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", r6)
                 // CODE → <Inc>: <Reg8: 4, Reg8: 5>
-                // USED → r4 = r5++;
+                // USED → r4 = r5 + 1;
             }
         }
     }

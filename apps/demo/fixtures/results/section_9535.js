@@ -65,9 +65,9 @@ function privateStaticTest(param0) {
         // CODE → <GetOwnPrivateBySym>: <Reg8: 6, Reg8: 8, UInt8: 1, Reg8: 7>
         r6 = getParentEnvironment(0)[2].#__private_7__
         // CODE → <Inc>: <Reg8: 6, Reg8: 6>
-        // USED → r6 = r6++;
+        // USED → r6 = r6 + 1;
         // CODE → <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
-        getParentEnvironment(0)[2].#__private_7__ = r6++
+        getParentEnvironment(0)[2].#__private_7__ = r6 + 1
         // CODE → <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
         r6 = CreateThisForNew(r4)
         if (typeof getParentEnvironment(0)[0] !== "function") {
@@ -105,9 +105,9 @@ function privateStaticTest(param0) {
             // CODE → <GetOwnPrivateBySym>: <Reg8: 6, Reg8: 8, UInt8: 1, Reg8: 7>
             r6 = getParentEnvironment(0)[2].#__private_7__
             // CODE → <Inc>: <Reg8: 6, Reg8: 6>
-            // USED → r6 = r6++;
+            // USED → r6 = r6 + 1;
             // CODE → <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
-            getParentEnvironment(0)[2].#__private_7__ = r6++
+            getParentEnvironment(0)[2].#__private_7__ = r6 + 1
             // CODE → <GetById>: <Reg8: 6, Reg8: 9, UInt8: 3, string_id: 11123>  # String: 'increment' (Identifier)
             // USED → r6 = Object.create(getParentEnvironment(0)[0].prototype).increment;
             // CODE → <Call1>: <Reg8: 6, Reg8: 6, Reg8: 9>

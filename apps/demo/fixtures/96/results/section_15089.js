@@ -79,9 +79,9 @@ function loopBreakCrossesTryBoundaryTest(param0, param1) {
                     // CODE → <Mov>: <Reg8: 2, Reg8: 9>
                     r2 = 0
                     // CODE → <Inc>: <Reg8: 4, Reg8: 2>
-                    // USED → r4 = r2++;
+                    // USED → r4 = r2 + 1;
                     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-                    r9 = r2++
+                    r9 = r2 + 1
                     // CODE → <Mov>: <Reg8: 2, Reg8: 8>
                     // USED → r2 = param1;
                 }

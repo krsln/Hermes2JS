@@ -29,9 +29,9 @@ function increment(param0) {
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 2, Reg8: 1>
     r0 = getEnvironment(1)[4].default.call(undefined, r1, r3)[getEnvironment(1)[5]]
     // CODE → <Inc>: <Reg8: 0, Reg8: 0>
-    // USED → r0 = r0++;
+    // USED → r0 = r0 + 1;
     // CODE → <PutByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
-    getEnvironment(1)[4].default.call(undefined, r1, r3)[getEnvironment(1)[5]] = r0++
+    getEnvironment(1)[4].default.call(undefined, r1, r3)[getEnvironment(1)[5]] = r0 + 1
     // CODE → <Ret>: <Reg8: 0>
-    return r0++;
+    return r0 + 1;
 }

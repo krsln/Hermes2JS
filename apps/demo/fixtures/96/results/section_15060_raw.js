@@ -101,11 +101,11 @@ function complexTest(param0) {
     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
     // ──────────────── Block 8 ──────────────── 
     // CODE → <Inc>: <Reg8: 11, Reg8: 1>
-    // USED → r11 = r1++;
+    // USED → r11 = r1 + 1;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     // USED → r1 = r12.length;
     // CODE → <JLessLong>: <Addr32: -129, Reg8: 11, Reg8: 1>  # Address: 00000050
-    // → r1 = r12.length; r11 = r1++
+    // → r1 = r12.length; r11 = r1 + 1
     if (r11 < r1) goto label_80;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
