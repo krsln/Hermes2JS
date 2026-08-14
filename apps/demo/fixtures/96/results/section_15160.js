@@ -26,11 +26,11 @@ function restAfterRequiredTest(param0, param1, param2) {
     r2 = (arguments.length <= 2) ? 0 : arguments.length - 2
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    // USED → r6 = globalThis.Array.prototype;
+    r6 = globalThis.Array.prototype
     // CODE → <CreateThis>: <Reg8: 6, Reg8: 6, Reg8: 7>
-    // USED → r6 = createThis(globalThis.Array.prototype, globalThis.Array);
+    // USED → r6 = CreateThis(r6);
     // CODE → <Mov>: <Reg8: 12, Reg8: 6>
-    r12 = createThis(globalThis.Array.prototype, globalThis.Array)
+    // USED → r12 = CreateThis(r6);
     // CODE → <Mov>: <Reg8: 11, Reg8: 2>
     // USED → r11 = (arguments.length <= 2) ? 0 : arguments.length - 2;
     // CODE → <Construct>: <Reg8: 2, Reg8: 7, UInt8: 2>

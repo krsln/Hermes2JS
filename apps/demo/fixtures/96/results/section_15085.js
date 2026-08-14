@@ -102,13 +102,13 @@ function tryCatchInsideLoopTest(param0, param1) {
         // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)
         // USED → r9 = globalThis.Error;
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 9, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
-        // USED → r2 = globalThis.Error.prototype;
+        r2 = globalThis.Error.prototype
         // CODE → <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 9>
-        // USED → r3 = createThis(globalThis.Error.prototype, globalThis.Error);
+        // USED → r3 = CreateThis(r2);
         // CODE → <LoadConstString>: <Reg8: 12, string_id: 839>  # String: 'negative value' (String)
         // USED → r12 = "negative value";
         // CODE → <Mov>: <Reg8: 13, Reg8: 3>
-        r13 = createThis(globalThis.Error.prototype, globalThis.Error)
+        // USED → r13 = CreateThis(r2);
         // CODE → <Construct>: <Reg8: 2, Reg8: 9, UInt8: 2>
         // USED → r2 = new globalThis.Error("negative value");
         // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>

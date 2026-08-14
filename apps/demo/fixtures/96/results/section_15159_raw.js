@@ -19,11 +19,11 @@ function restOnlyTest(param0) {
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 6>  # String: 'Array' (Identifier)
     // USED → r2 = globalThis.Array;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    // USED → r5 = globalThis.Array.prototype;
+    r5 = globalThis.Array.prototype
     // CODE → <CreateThis>: <Reg8: 5, Reg8: 5, Reg8: 2>
-    // USED → r5 = createThis(globalThis.Array.prototype, globalThis.Array);
+    // USED → r5 = CreateThis(r5);
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>
-    r9 = createThis(globalThis.Array.prototype, globalThis.Array)
+    // USED → r9 = CreateThis(r5);
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
     // USED → r8 = arguments.length;
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 2>

@@ -37,17 +37,17 @@ function switchInsideTryTest(param0, param1) {
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
     // USED → r3 = globalThis.Error;
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
-    // USED → r2 = __uninitialized_this_for_new__r3;
+    // USED → r2 = CreateThisForNew(r3);
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 5232>  # String: 'case 1 throws' (String)
     // USED → r4 = "case 1 throws";
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
-    // USED → r5 = __uninitialized_this_for_new__r3;
+    // USED → r5 = CreateThisForNew(r3);
     // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = new globalThis.Error("case 1 throws", __uninitialized_this_for_new__r3);
+    // USED → r0 = new globalThis.Error("case 1 throws");
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = new globalThis.Error("case 1 throws", __uninitialized_this_for_new__r3);
+    // USED → r0 = new globalThis.Error("case 1 throws");
     // CODE → <Throw>: <Reg8: 0>
-    throw new globalThis.Error("case 1 throws", __uninitialized_this_for_new__r3);
+    throw new globalThis.Error("case 1 throws");
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;

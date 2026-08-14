@@ -31,13 +31,13 @@ function nestedTryCatchTest(param0) {
             // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
             // USED → r3 = globalThis.Error;
             // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-            // USED → r1 = globalThis.Error.prototype;
+            r1 = globalThis.Error.prototype
             // CODE → <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
-            // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error);
+            // USED → r2 = CreateThis(r1);
             // CODE → <LoadConstString>: <Reg8: 5, string_id: 7723>  # String: 'inner' (Identifier)
             // USED → r5 = "inner";
             // CODE → <Mov>: <Reg8: 6, Reg8: 2>
-            r6 = createThis(globalThis.Error.prototype, globalThis.Error)
+            // USED → r6 = CreateThis(r1);
             // CODE → <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
             // USED → r1 = new globalThis.Error("inner");
             // CODE → <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
@@ -59,19 +59,19 @@ function nestedTryCatchTest(param0) {
             // CODE → <LoadConstString>: <Reg8: 1, string_id: 6991>  # String: 'rethrown from inner: ' (String)
             // USED → r1 = "rethrown from inner: ";
             // CODE → <Add>: <Reg8: 5, Reg8: 1, Reg8: 2>
-            // USED → r5 = "rethrown from inner: " + caughtException;
+            r5 = "rethrown from inner: " + caughtException
             // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
             // USED → r2 = globalThis.Error.prototype;
             // CODE → <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 3>
-            // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error);
+            // USED → r2 = CreateThis(r2);
             // CODE → <Mov>: <Reg8: 6, Reg8: 2>
-            r6 = createThis(globalThis.Error.prototype, globalThis.Error)
+            // USED → r6 = CreateThis(r2);
             // CODE → <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
-            // USED → r1 = new globalThis.Error("rethrown from inner: " + caughtException);
+            // USED → r1 = new globalThis.Error(globalThis.Error.prototype);
             // CODE → <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-            // USED → r1 = new globalThis.Error("rethrown from inner: " + caughtException);
+            // USED → r1 = new globalThis.Error(globalThis.Error.prototype);
             // CODE → <Throw>: <Reg8: 1>
-            throw new globalThis.Error("rethrown from inner: " + caughtException);
+            throw new globalThis.Error(globalThis.Error.prototype);
         }
     } catch (caughtException) {
         // ──────────────── Block 2 ──────────────── 

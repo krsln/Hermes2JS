@@ -25,11 +25,11 @@ function tag(param0, param1) {
     // USED → r2 = arguments.length - 1;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
-    // USED → r4 = globalThis.Array.prototype;
+    r4 = globalThis.Array.prototype
     // CODE → <CreateThis>: <Reg8: 4, Reg8: 4, Reg8: 8>
-    // USED → r4 = createThis(globalThis.Array.prototype, globalThis.Array);
+    // USED → r4 = CreateThis(r4);
     // CODE → <Mov>: <Reg8: 12, Reg8: 4>
-    r12 = createThis(globalThis.Array.prototype, globalThis.Array)
+    // USED → r12 = CreateThis(r4);
     // CODE → <Mov>: <Reg8: 11, Reg8: 2>
     // USED → r11 = arguments.length - 1;
     // CODE → <Construct>: <Reg8: 2, Reg8: 8, UInt8: 2>

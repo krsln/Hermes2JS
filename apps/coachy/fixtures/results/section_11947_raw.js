@@ -73,11 +73,11 @@ async function* anon_11947(param0, param1, param2) {
     if (globalThis.Error.captureStackTrace) goto label_121;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 4, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r4 = globalThis.Error.prototype;
+    r4 = globalThis.Error.prototype
     // CODE → <CreateThis>: <Reg8: 7, Reg8: 4, Reg8: 8>
-    // USED → r7 = createThis(globalThis.Error.prototype, globalThis.Error);
+    // USED → r7 = CreateThis(r4);
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>
-    r12 = createThis(globalThis.Error.prototype, globalThis.Error)
+    // USED → r12 = CreateThis(r4);
     // CODE → <Construct>: <Reg8: 4, Reg8: 8, UInt8: 1>
     // USED → r4 = new globalThis.Error();
     // CODE → <SelectObject>: <Reg8: 6, Reg8: 7, Reg8: 4>

@@ -29,17 +29,17 @@ function nestedTryCatchTest(param0) {
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
     // USED → r3 = globalThis.Error;
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
-    // USED → r2 = __uninitialized_this_for_new__r3;
+    // USED → r2 = CreateThisForNew(r3);
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 9220>  # String: 'inner' (Identifier)
     // USED → r5 = "inner";
     // CODE → <Mov>: <Reg8: 6, Reg8: 2>
-    // USED → r6 = __uninitialized_this_for_new__r3;
+    // USED → r6 = CreateThisForNew(r3);
     // CODE → <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
-    // USED → r1 = new globalThis.Error("inner", __uninitialized_this_for_new__r3);
+    // USED → r1 = new globalThis.Error("inner");
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    // USED → r1 = new globalThis.Error("inner", __uninitialized_this_for_new__r3);
+    // USED → r1 = new globalThis.Error("inner");
     // CODE → <Throw>: <Reg8: 1>
-    throw new globalThis.Error("inner", __uninitialized_this_for_new__r3);
+    throw new globalThis.Error("inner");
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -57,15 +57,15 @@ function nestedTryCatchTest(param0) {
     // CODE → <Add>: <Reg8: 5, Reg8: 1, Reg8: 2>
     // USED → r5 = "rethrown from inner: " + caughtException;
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
-    // USED → r2 = __uninitialized_this_for_new__r3;
+    // USED → r2 = CreateThisForNew(r3);
     // CODE → <Mov>: <Reg8: 6, Reg8: 2>
-    // USED → r6 = __uninitialized_this_for_new__r3;
+    // USED → r6 = CreateThisForNew(r3);
     // CODE → <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
-    // USED → r1 = new globalThis.Error("rethrown from inner: " + caughtException, __uninitialized_this_for_new__r3);
+    // USED → r1 = new globalThis.Error("rethrown from inner: " + caughtException);
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    // USED → r1 = new globalThis.Error("rethrown from inner: " + caughtException, __uninitialized_this_for_new__r3);
+    // USED → r1 = new globalThis.Error("rethrown from inner: " + caughtException);
     // CODE → <Throw>: <Reg8: 1>
-    throw new globalThis.Error("rethrown from inner: " + caughtException, __uninitialized_this_for_new__r3);
+    throw new globalThis.Error("rethrown from inner: " + caughtException);
     // CODE → <Catch>: <Reg8: 3>
     // USED → r3 = caughtException;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

@@ -49,6 +49,7 @@ from hermes_decompiler.ir.expressions import (
     AwaitExpression,
     YieldExpression,
     RawExpression,
+    ThisPlaceholder,
 )
 from hermes_decompiler.ir.statements import (
 
@@ -805,6 +806,9 @@ class Printer(NodeVisitor):
 
     def visit_RawExpression(self, node: RawExpression) -> str:
         return node.source
+
+    def visit_ThisPlaceholder(self, node: ThisPlaceholder) -> str:
+        return f"{node.origin}(r{node.source_reg})"
 
     # ------------------------------------------------------------------
     # Expressions - literals

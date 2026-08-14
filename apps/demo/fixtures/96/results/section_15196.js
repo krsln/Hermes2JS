@@ -15,15 +15,15 @@ function classTest(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 5>
     // USED → r5 = getEnvironment(0)[5];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
-    // USED → r2 = getEnvironment(0)[5].prototype;
+    r2 = getEnvironment(0)[5].prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
-    // USED → r3 = createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5]);
+    // USED → r3 = CreateThis(r2);
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 3213>  # String: 'Generic' (String)
     // USED → r7 = "Generic";
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 597>  # String: '...' (String)
     // USED → r6 = "...";
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
-    r8 = createThis(getEnvironment(0)[5].prototype, getEnvironment(0)[5])
+    // USED → r8 = CreateThis(r2);
     // CODE → <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
     // USED → r2 = new getEnvironment(0)[5]("...", "Generic");
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
@@ -43,15 +43,15 @@ function classTest(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 6>
     // USED → r5 = getEnvironment(0)[6];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
-    // USED → r2 = getEnvironment(0)[6].prototype;
+    r2 = getEnvironment(0)[6].prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
-    // USED → r3 = createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6]);
+    // USED → r3 = CreateThis(r2);
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 3886>  # String: 'Rex' (String)
     // USED → r7 = "Rex";
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 3434>  # String: 'Labrador' (String)
     // USED → r6 = "Labrador";
     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
-    r8 = createThis(getEnvironment(0)[6].prototype, getEnvironment(0)[6])
+    // USED → r8 = CreateThis(r2);
     // CODE → <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
     // USED → r2 = new getEnvironment(0)[6]("Labrador", "Rex");
     // CODE → <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>

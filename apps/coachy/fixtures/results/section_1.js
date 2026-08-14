@@ -115,11 +115,11 @@ function function_1(param0, param1) {
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 5, string_id: 26>  # String: 'Map' (Identifier)
     // USED → r1 = globalThis.Map;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r3 = globalThis.Map.prototype;
+    r3 = globalThis.Map.prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 1>
-    // USED → r3 = createThis(globalThis.Map.prototype, globalThis.Map);
+    // USED → r3 = CreateThis(r3);
     // CODE → <Mov>: <Reg8: 14, Reg8: 3>
-    r14 = createThis(globalThis.Map.prototype, globalThis.Map)
+    // USED → r14 = CreateThis(r3);
     // CODE → <Construct>: <Reg8: 1, Reg8: 1, UInt8: 1>
     // USED → r1 = new globalThis.Map();
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 3, Reg8: 1>

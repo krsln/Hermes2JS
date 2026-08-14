@@ -21,13 +21,13 @@ function tryCatchTest(param0) {
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
     // USED → r3 = globalThis.Error;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    // USED → r0 = globalThis.Error.prototype;
+    r0 = globalThis.Error.prototype
     // CODE → <CreateThis>: <Reg8: 2, Reg8: 0, Reg8: 3>
-    // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error);
+    // USED → r2 = CreateThis(r0);
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 238>  # String: 'test' (Identifier)
     // USED → r5 = "test";
     // CODE → <Mov>: <Reg8: 6, Reg8: 2>
-    r6 = createThis(globalThis.Error.prototype, globalThis.Error)
+    // USED → r6 = CreateThis(r0);
     // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new globalThis.Error("test");
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>

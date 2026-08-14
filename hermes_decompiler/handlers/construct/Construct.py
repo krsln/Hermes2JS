@@ -1,6 +1,6 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
-from hermes_decompiler.ir.expressions import Expression, Identifier, NewExpression, CallExpression
+from hermes_decompiler.ir.expressions import Expression, NewExpression, ThisPlaceholder
 
 
 # Reg8, Reg8, UInt8 (total size 3)
@@ -32,20 +32,24 @@ class Construct(OpcodeHandler):
                 continue
 
             arguments.append(result)
-
             if len(arguments) == arg_count:
                 break
 
         # Register frame order
         arguments.sort(key=lambda r: r.dest_reg)
 
-        # Son register CreateThis ise kaldır
-        if arguments and self._is_this_value(arguments[-1].value):
-            arguments.pop()
+        this_slots = [i for i, arg in enumerate(arguments) if self._is_this_value(arg.value)]
+        if len(this_slots) > 1:
+            raise AssertionError(
+                f"Construct@{ctx.entry.address}: expected at most one this-placeholder, "
+                f"found {len(this_slots)}"
+            )
 
-        # Kullanıldı olarak işaretle
         for arg in arguments:
             arg.definition_used = True
+
+        for i in reversed(this_slots):
+            arguments.pop(i)
 
         values = tuple(arg.value for arg in arguments)
         expression = NewExpression(callee=constructor, arguments=values)
@@ -57,16 +61,7 @@ class Construct(OpcodeHandler):
 
     @staticmethod
     def _is_this_value(expr: Expression) -> bool:
-        """
-        Return True if the expression represents the synthetic CreateThis value
-        produced by the Hermes CreateThis opcode.
-        """
-
-        return (
-                isinstance(expr, CallExpression)
-                and isinstance(expr.callee, Identifier)
-                and expr.callee.name == "createThis"
-        )
+        return isinstance(expr, ThisPlaceholder)
 
 
 # Reg8, Reg8, UInt32 (total size 6)

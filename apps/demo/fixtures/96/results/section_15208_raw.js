@@ -15,11 +15,11 @@ function privateStaticTest(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 8>
     // USED → r2 = getEnvironment(0)[8];
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
-    // USED → r3 = getEnvironment(0)[8].prototype;
+    r3 = getEnvironment(0)[8].prototype
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    // USED → r3 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8]);
+    // USED → r3 = CreateThis(r3);
     // CODE → <Mov>: <Reg8: 7, Reg8: 3>
-    r7 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])
+    // USED → r7 = CreateThis(r3);
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
     // USED → r2 = new getEnvironment(0)[8]();
     // CODE → <SelectObject>: <Reg8: 5, Reg8: 3, Reg8: 2>
@@ -27,9 +27,9 @@ function privateStaticTest(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 8>
     // USED → r3 = getEnvironment(0)[8];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
-    // USED → r2 = getEnvironment(0)[8].prototype;
+    r2 = getEnvironment(0)[8].prototype
     // CODE → <CreateThis>: <Reg8: 7, Reg8: 2, Reg8: 3>
-    r7 = createThis(getEnvironment(0)[8].prototype, getEnvironment(0)[8])
+    // USED → r7 = CreateThis(r2);
     // CODE → <Construct>: <Reg8: 2, Reg8: 3, UInt8: 1>
     r2 = new getEnvironment(0)[8]()
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 10830>  # String: 'increment' (Identifier)

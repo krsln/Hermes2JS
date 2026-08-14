@@ -2380,11 +2380,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TryGetById>: <Reg8: 20, Reg8: 0, UInt8: 44, string_id: 24>  # String: 'WeakMap' (Identifier)
     // USED → r20 = globalThis.WeakMap;
     // CODE → <GetByIdShort>: <Reg8: 21, Reg8: 20, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r21 = globalThis.WeakMap.prototype;
+    r21 = globalThis.WeakMap.prototype
     // CODE → <CreateThis>: <Reg8: 21, Reg8: 21, Reg8: 20>
-    // USED → r21 = createThis(globalThis.WeakMap.prototype, globalThis.WeakMap);
+    // USED → r21 = CreateThis(r21);
     // CODE → <Mov>: <Reg8: 57, Reg8: 21>
-    r57 = createThis(globalThis.WeakMap.prototype, globalThis.WeakMap)
+    // USED → r57 = CreateThis(r21);
     // CODE → <Construct>: <Reg8: 20, Reg8: 20, UInt8: 1>
     // USED → r20 = new globalThis.WeakMap();
     // CODE → <SelectObject>: <Reg8: 20, Reg8: 21, Reg8: 20>
@@ -2562,11 +2562,11 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 0, UInt8: 50, string_id: 26>  # String: 'Map' (Identifier)
     // USED → r10 = globalThis.Map;
     // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 10, UInt8: 5, string_id: 158>  # String: 'prototype' (Identifier)
-    // USED → r12 = globalThis.Map.prototype;
+    r12 = globalThis.Map.prototype
     // CODE → <CreateThis>: <Reg8: 12, Reg8: 12, Reg8: 10>
-    // USED → r12 = createThis(globalThis.Map.prototype, globalThis.Map);
+    // USED → r12 = CreateThis(r12);
     // CODE → <Mov>: <Reg8: 57, Reg8: 12>
-    r57 = createThis(globalThis.Map.prototype, globalThis.Map)
+    // USED → r57 = CreateThis(r12);
     // CODE → <Construct>: <Reg8: 10, Reg8: 10, UInt8: 1>
     // USED → r10 = new globalThis.Map();
     // CODE → <SelectObject>: <Reg8: 10, Reg8: 12, Reg8: 10>

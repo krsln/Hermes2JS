@@ -13,11 +13,11 @@ function weakMapTest(param0) {
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 7238>  # String: 'WeakMap' (Identifier)
     // USED → r1 = globalThis.WeakMap;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    // USED → r2 = globalThis.WeakMap.prototype;
+    r2 = globalThis.WeakMap.prototype
     // CODE → <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 1>
-    // USED → r2 = createThis(globalThis.WeakMap.prototype, globalThis.WeakMap);
+    // USED → r2 = CreateThis(r2);
     // CODE → <Mov>: <Reg8: 8, Reg8: 2>
-    r8 = createThis(globalThis.WeakMap.prototype, globalThis.WeakMap)
+    // USED → r8 = CreateThis(r2);
     // CODE → <Construct>: <Reg8: 1, Reg8: 1, UInt8: 1>
     // USED → r1 = new globalThis.WeakMap();
     // CODE → <SelectObject>: <Reg8: 5, Reg8: 2, Reg8: 1>

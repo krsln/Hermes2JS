@@ -1,6 +1,6 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
-from hermes_decompiler.ir.expressions import CallExpression, Identifier
+from hermes_decompiler.ir.expressions import ThisPlaceholder
 
 
 # Reg8, Reg8, Reg8 (total size 3)
@@ -18,19 +18,9 @@ class CreateThis(OpcodeHandler):
 
         dest_reg, func, new_target = (int(x) for x in match.groups())
 
-        prototype = self.get_register_expression(ctx.analysis, func)
-        constructor = self.get_register_expression(ctx.analysis, new_target)
+        this_expr = ThisPlaceholder(origin="CreateThis", source_reg=func)
 
-        # `CreateThisExpression` had no JS equivalent and isn't part of
-        # the new `ir` package; represented as a named pseudo-call,
-        # matching the same convention already used for
-        # getEnvironment()/HermesPropertyIterator() elsewhere.
-        expression = CallExpression(
-            callee=Identifier(name="createThis"),
-            arguments=(prototype, constructor),
-        )
-
-        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        result = OpcodeResult(ctx.entry, value=this_expr, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
 
         return result
@@ -51,8 +41,7 @@ class CreateThisForNew(OpcodeHandler):
 
         dest_reg, constructor_reg, _cache = map(int, match.groups())
 
-        # constructor = self.get_register_expression(ctx.analysis, constructor_reg)
-        this_expr = Identifier(name=f"__uninitialized_this_for_new__r{constructor_reg}")
+        this_expr = ThisPlaceholder(origin="CreateThisForNew", source_reg=constructor_reg)
 
         result = OpcodeResult(ctx.entry, value=this_expr, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
@@ -75,12 +64,9 @@ class CreateThisForSuper(OpcodeHandler):
 
         dest_reg, constructor_reg, new_target_reg, _cache = map(int, match.groups())
 
-        # constructor = self.get_register_expression(ctx.analysis, constructor_reg)
-        # new_target = self.get_register_expression(ctx.analysis, new_target_reg)
+        this_expr = ThisPlaceholder(origin="CreateThisForSuper", source_reg=constructor_reg)
 
-        expression = Identifier(name="__uninitialized_this_for_super__")
-
-        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        result = OpcodeResult(ctx.entry, value=this_expr, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
 
         return result

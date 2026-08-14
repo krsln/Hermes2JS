@@ -15,7 +15,7 @@ function classTest(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
     // USED → r3 = getParentEnvironment(0)[0];
     // CODE → <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 2>
-    r4 = __uninitialized_this_for_new__r3
+    r4 = CreateThisForNew(r3)
     if (typeof getParentEnvironment(0)[0] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
@@ -59,7 +59,7 @@ function classTest(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
     // USED → r4 = getParentEnvironment(0)[1];
     // CODE → <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 2>
-    r3 = __uninitialized_this_for_new__r4
+    r3 = CreateThisForNew(r4)
     if (typeof getParentEnvironment(0)[1] !== "function") {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
@@ -73,17 +73,17 @@ function classTest(param0) {
     // CODE → <LoadParentNoTraps>: <Reg8: 6, Reg8: 2>
     // USED → r6 = __getPrototypeOfNoTraps__(getParentEnvironment(0)[4]);
     // CODE → <CreateThisForSuper>: <Reg8: 3, Reg8: 6, Reg8: 4, UInt8: 2>
-    // USED → r3 = __uninitialized_this_for_super__;
+    // USED → r3 = CreateThisForSuper(r6);
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 4424>  # String: 'Woof' (String)
     r7 = "Woof"
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 3592>  # String: 'Rex' (String)
     r8 = "Rex"
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
-    r9 = __uninitialized_this_for_super__
+    r9 = CreateThisForSuper(r6)
     // CODE → <CallWithNewTarget>: <Reg8: 2, Reg8: 6, Reg8: 4, UInt8: 3>
     // USED → r2 = Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1]);
     // CODE → <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    // USED → r3 = __uninitialized_this_for_super__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])];
+    // USED → r3 = CreateThisForSuper(r6)[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])];
     // CODE → <LoadConstEmpty>: <Reg8: 2>
     // USED → r2 = /* empty */;
     // CODE → <ThrowIfThisInitialized>: <Reg8: 2>
@@ -99,15 +99,15 @@ function classTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 2387>  # String: 'Labrador' (String)
     // USED → r2 = "Labrador";
     // CODE → <PutByIdStrict>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 16255>  # String: 'breed' (Identifier)
-    __uninitialized_this_for_super__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])].breed = "Labrador"
+    CreateThisForSuper(r6)[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])].breed = "Labrador"
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 10532>  # String: 'makeSound' (Identifier)
-    // USED → r2 = __uninitialized_this_for_super__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])].makeSound;
+    // USED → r2 = CreateThisForSuper(r6)[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])].makeSound;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    r2 = __uninitialized_this_for_super__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])].makeSound()
+    r2 = CreateThisForSuper(r6)[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])].makeSound()
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 10532>  # String: 'makeSound' (Identifier)
-    // USED → r2 = __uninitialized_this_for_super__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])].makeSound;
+    // USED → r2 = CreateThisForSuper(r6)[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])].makeSound;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    r2 = __uninitialized_this_for_super__[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])].makeSound()
+    r2 = CreateThisForSuper(r6)[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r3, r4, r5], getParentEnvironment(0)[1])].makeSound()
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 44>  # String: 'create' (Identifier)
     // USED → r3 = getParentEnvironment(0)[1].create;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 2777>  # String: 'Buddy' (String)

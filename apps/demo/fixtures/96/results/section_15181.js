@@ -73,13 +73,13 @@ async function* anon_15181(param0) {
                 // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
                 // USED → r5 = globalThis.Error;
                 // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-                // USED → r3 = globalThis.Error.prototype;
+                r3 = globalThis.Error.prototype
                 // CODE → <CreateThis>: <Reg8: 4, Reg8: 3, Reg8: 5>
-                // USED → r4 = createThis(globalThis.Error.prototype, globalThis.Error);
+                // USED → r4 = CreateThis(r3);
                 // CODE → <LoadConstString>: <Reg8: 8, string_id: 6849>  # String: 'post-await failure' (String)
                 // USED → r8 = "post-await failure";
                 // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-                r9 = createThis(globalThis.Error.prototype, globalThis.Error)
+                // USED → r9 = CreateThis(r3);
                 // CODE → <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
                 // USED → r3 = new globalThis.Error("post-await failure");
                 // CODE → <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>

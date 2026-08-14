@@ -67,19 +67,19 @@ async function* anon_17161(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1468>  # String: ' failed with status ' (String)
     // USED → r2 = " failed with status ";
     // CODE → <Call4>: <Reg8: 10, Reg8: 5, Reg8: 3, Reg8: 7, Reg8: 2, Reg8: 6>
-    // USED → r10 = globalThis.HermesInternal.concat.call("Fetching ", r7, " failed with status ", r6);
+    r10 = globalThis.HermesInternal.concat.call("Fetching ", r7, " failed with status ", r6)
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 158>  # String: 'prototype' (Identifier)
     // USED → r3 = globalThis.Error.prototype;
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 4>
-    // USED → r3 = createThis(globalThis.Error.prototype, globalThis.Error);
+    // USED → r3 = CreateThis(r3);
     // CODE → <Mov>: <Reg8: 11, Reg8: 3>
-    r11 = createThis(globalThis.Error.prototype, globalThis.Error)
+    // USED → r11 = CreateThis(r3);
     // CODE → <Construct>: <Reg8: 2, Reg8: 4, UInt8: 2>
-    // USED → r2 = new globalThis.Error(globalThis.HermesInternal.concat.call("Fetching ", r7, " failed with status ", r6));
+    // USED → r2 = new globalThis.Error(globalThis.Error.prototype);
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = new globalThis.Error(globalThis.HermesInternal.concat.call("Fetching ", r7, " failed with status ", r6));
+    // USED → r2 = new globalThis.Error(globalThis.Error.prototype);
     // CODE → <Throw>: <Reg8: 2>
-    throw new globalThis.Error(globalThis.HermesInternal.concat.call("Fetching ", r7, " failed with status ", r6));
+    throw new globalThis.Error(globalThis.Error.prototype);
     // ──────────────── Block 8 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 9, string_id: 229>  # String: 'text' (Identifier)
     // USED → r2 = await yield.text;

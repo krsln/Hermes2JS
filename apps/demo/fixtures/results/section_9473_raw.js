@@ -61,17 +61,17 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <TryGetById>: <Reg8: 13, Reg8: 1, UInt8: 3, string_id: 9>  # String: 'Error' (Identifier)
     // USED → r13 = globalThis.Error;
     // CODE → <CreateThisForNew>: <Reg8: 14, Reg8: 13, UInt8: 4>
-    // USED → r14 = __uninitialized_this_for_new__r13;
+    // USED → r14 = CreateThisForNew(r13);
     // CODE → <Mov>: <Reg8: 18, Reg8: 14>
-    // USED → r18 = __uninitialized_this_for_new__r13;
+    // USED → r18 = CreateThisForNew(r13);
     // CODE → <Mov>: <Reg8: 17, Reg8: 6>
     // USED → r17 = "negative value";
     // CODE → <Construct>: <Reg8: 13, Reg8: 13, UInt8: 2>
-    // USED → r13 = new globalThis.Error("negative value", __uninitialized_this_for_new__r13);
+    // USED → r13 = new globalThis.Error("negative value");
     // CODE → <SelectObject>: <Reg8: 13, Reg8: 14, Reg8: 13>
-    // USED → r13 = new globalThis.Error("negative value", __uninitialized_this_for_new__r13);
+    // USED → r13 = new globalThis.Error("negative value");
     // CODE → <Throw>: <Reg8: 13>
-    throw new globalThis.Error("negative value", __uninitialized_this_for_new__r13);
+    throw new globalThis.Error("negative value");
     // CODE → <Catch>: <Reg8: 15>
     // USED → r15 = caughtException;
     // CODE → <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

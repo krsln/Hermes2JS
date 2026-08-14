@@ -13,11 +13,11 @@ function mapTest(param0) {
     // CODE → <TryGetById>: <Reg8: 0, Reg8: 1, UInt8: 3, string_id: 20>  # String: 'Map' (Identifier)
     // USED → r0 = globalThis.Map;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    // USED → r2 = globalThis.Map.prototype;
+    r2 = globalThis.Map.prototype
     // CODE → <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 0>
-    // USED → r2 = createThis(globalThis.Map.prototype, globalThis.Map);
+    // USED → r2 = CreateThis(r2);
     // CODE → <Mov>: <Reg8: 16, Reg8: 2>
-    r16 = createThis(globalThis.Map.prototype, globalThis.Map)
+    // USED → r16 = CreateThis(r2);
     // CODE → <Construct>: <Reg8: 0, Reg8: 0, UInt8: 1>
     // USED → r0 = new globalThis.Map();
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 2, Reg8: 0>

@@ -22,13 +22,13 @@ function tryCatchNoFinallyTest(param0) {
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
         // USED → r3 = globalThis.Error;
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-        // USED → r1 = globalThis.Error.prototype;
+        r1 = globalThis.Error.prototype
         // CODE → <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
-        // USED → r2 = createThis(globalThis.Error.prototype, globalThis.Error);
+        // USED → r2 = CreateThis(r1);
         // CODE → <LoadConstString>: <Reg8: 5, string_id: 6728>  # String: 'no finally here' (String)
         // USED → r5 = "no finally here";
         // CODE → <Mov>: <Reg8: 6, Reg8: 2>
-        r6 = createThis(globalThis.Error.prototype, globalThis.Error)
+        // USED → r6 = CreateThis(r1);
         // CODE → <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
         // USED → r1 = new globalThis.Error("no finally here");
         // CODE → <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
