@@ -107,7 +107,7 @@ class OpcodeHandler(ABC):
         args = ctx.entry.args.strip()
 
         for item in patterns:
-            match = item.regex.match(args)
+            match = item.regex.fullmatch(args)
             if match:
                 return match
 
@@ -156,9 +156,7 @@ class OpcodeHandler(ABC):
         if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        if state is not None:
-            state.reads += 1
-
+        state.reads += 1
         return Identifier(name=f"r{reg}")
 
     @classmethod
@@ -193,6 +191,9 @@ class OpcodeHandler(ABC):
             state.definition.definition_used = True
             return state_value
 
+        logger.warning("Unexpected value type in argument: %s", type(state.value))
+
+        state.reads += 1
         return Identifier(name=f"r{reg}")
 
     @classmethod
@@ -220,7 +221,7 @@ class OpcodeHandler(ABC):
 
                 return value
             else:
-                print(f"Unexpected value type in Call argument: {type(value)}")
+                logger.warning("Unexpected value type in Call argument: %s", type(value))
 
         state.reads += 1
         definition.definition_used = True
@@ -264,7 +265,7 @@ class OpcodeHandler(ABC):
 
                 return value
             else:
-                print(f"Unexpected value type in Jump condition argument: {type(value)}")
+                logger.warning("Unexpected value type in Jump condition argument: %s", type(value))
 
         state.reads += 1
         definition.definition_used = True
