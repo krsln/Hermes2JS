@@ -9,27 +9,27 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 7>
     // USED → r5 = param7;
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15102>  # Function: [#15102 _interopDefault of 28 bytes]: 2 params @ offset 0x00104cff
-    // USED → r3 = _interopDefault(param0, param1);
+    // USED → r3 = _interopDefault(param1);
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 2, function_id: 15103>  # Function: [#15103 nestedObjectDestructureTest of 157 bytes]: 1 params @ offset 0x0026979f
-    // USED → r9 = nestedObjectDestructureTest(param0);
+    // USED → r9 = nestedObjectDestructureTest();
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 9>
-    createEnvironment()[2] = nestedObjectDestructureTest(param0)
+    createEnvironment()[2] = nestedObjectDestructureTest()
     // CODE → <CreateClosure>: <Reg8: 8, Reg8: 2, function_id: 15104>  # Function: [#15104 renamedDefaultDestructureTest of 111 bytes]: 1 params @ offset 0x0026983c
-    // USED → r8 = renamedDefaultDestructureTest(param0);
+    // USED → r8 = renamedDefaultDestructureTest();
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 8>
-    createEnvironment()[3] = renamedDefaultDestructureTest(param0)
+    createEnvironment()[3] = renamedDefaultDestructureTest()
     // CODE → <CreateClosure>: <Reg8: 7, Reg8: 2, function_id: 15105>  # Function: [#15105 nestedArrayDestructureTest of 241 bytes]: 1 params @ offset 0x002698ab
-    // USED → r7 = nestedArrayDestructureTest(param0);
+    // USED → r7 = nestedArrayDestructureTest();
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 7>
-    createEnvironment()[4] = nestedArrayDestructureTest(param0)
+    createEnvironment()[4] = nestedArrayDestructureTest()
     // CODE → <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 15106>  # Function: [#15106 parameterDestructureTest of 131 bytes]: 3 params @ offset 0x0026999c
-    // USED → r6 = parameterDestructureTest(param0, param1, param2);
+    // USED → r6 = parameterDestructureTest(param1, param2);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 5, Reg8: 6>
-    createEnvironment()[5] = parameterDestructureTest(param0, param1, param2)
+    createEnvironment()[5] = parameterDestructureTest(param1, param2)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15107>  # Function: [#15107 swapViaDestructureTest of 91 bytes]: 1 params @ offset 0x00269a1f
-    // USED → r0 = swapViaDestructureTest(param0);
+    // USED → r0 = swapViaDestructureTest();
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 6, Reg8: 0>
-    createEnvironment()[6] = swapViaDestructureTest(param0)
+    createEnvironment()[6] = swapViaDestructureTest()
     // CODE → <GetGlobalObject>: <Reg8: 10>
     // USED → r10 = globalThis;
     // CODE → <TryGetById>: <Reg8: 13, Reg8: 10, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
@@ -47,19 +47,19 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call4>: <Reg8: 10, Reg8: 12, Reg8: 13, Reg8: 1, Reg8: 10, Reg8: 11>
     r10 = globalThis.Object.defineProperty(r1, "__esModule", r11)
     // CODE → <PutById>: <Reg8: 1, Reg8: 9, UInt8: 1, string_id: 11263>  # String: 'nestedObjectDestructureTest' (Identifier)
-    param6.nestedObjectDestructureTest = nestedObjectDestructureTest(param0)
+    param6.nestedObjectDestructureTest = nestedObjectDestructureTest()
     // CODE → <PutById>: <Reg8: 1, Reg8: 8, UInt8: 2, string_id: 11276>  # String: 'renamedDefaultDestructureTest' (Identifier)
-    param6.renamedDefaultDestructureTest = renamedDefaultDestructureTest(param0)
+    param6.renamedDefaultDestructureTest = renamedDefaultDestructureTest()
     // CODE → <PutById>: <Reg8: 1, Reg8: 7, UInt8: 3, string_id: 11259>  # String: 'nestedArrayDestructureTest' (Identifier)
-    param6.nestedArrayDestructureTest = nestedArrayDestructureTest(param0)
+    param6.nestedArrayDestructureTest = nestedArrayDestructureTest()
     // CODE → <PutById>: <Reg8: 1, Reg8: 6, UInt8: 4, string_id: 11272>  # String: 'parameterDestructureTest' (Identifier)
-    param6.parameterDestructureTest = parameterDestructureTest(param0, param1, param2)
+    param6.parameterDestructureTest = parameterDestructureTest(param1, param2)
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 5, string_id: 11280>  # String: 'swapViaDestructureTest' (Identifier)
-    param6.swapViaDestructureTest = swapViaDestructureTest(param0)
+    param6.swapViaDestructureTest = swapViaDestructureTest()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15108>  # Function: [#15108 callDestructuringTests of 108 bytes]: 1 params @ offset 0x00269a7a
-    // USED → r0 = callDestructuringTests(param0);
+    // USED → r0 = callDestructuringTests();
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 6, string_id: 10657>  # String: 'callDestructuringTests' (Identifier)
-    param6.callDestructuringTests = callDestructuringTests(param0)
+    param6.callDestructuringTests = callDestructuringTests()
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
@@ -69,9 +69,9 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
     // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault(param0, param1).call(undefined, r1);
+    // USED → r1 = _interopDefault(param1).call(undefined, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
-    createEnvironment()[0] = _interopDefault(param0, param1).call(undefined, r1)
+    createEnvironment()[0] = _interopDefault(param1).call(undefined, r1)
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     // USED → r1 = 1;
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
@@ -79,9 +79,9 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
     // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault(param0, param1).call(undefined, r1);
+    // USED → r1 = _interopDefault(param1).call(undefined, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
-    createEnvironment()[1] = _interopDefault(param0, param1).call(undefined, r1)
+    createEnvironment()[1] = _interopDefault(param1).call(undefined, r1)
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

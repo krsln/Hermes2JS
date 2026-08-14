@@ -24,7 +24,7 @@ class CreateClosure(OpcodeHandler):
 
         if function_info is not None:
             params = (
-                ", ".join(f"param{i}" for i in range(function_info.param_count))
+                ", ".join(f"param{i}" for i in range(1, function_info.param_count))
                 if function_info.param_count is not None
                 else ""
             )

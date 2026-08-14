@@ -21,9 +21,9 @@ function function_15109(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15110>  # Function: [#15110 arrayTest of 308 bytes]: 1 params @ offset 0x00269b1a
-    // USED → r0 = arrayTest(param0);
+    // USED → r0 = arrayTest();
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 7969>  # String: 'arrayTest' (Identifier)
-    param6.arrayTest = arrayTest(param0)
+    param6.arrayTest = arrayTest()
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

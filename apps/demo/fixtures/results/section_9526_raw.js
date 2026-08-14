@@ -13,11 +13,11 @@ function parallelAwaitTest() {
     // CODE → <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getParentEnvironment(0)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 12488>  # Function: [#12488 ?anon_0_parallelAwaitTest of 20 bytes]: 1 params @ offset 0x002443cb
-    // USED → r2 = ?anon_0_parallelAwaitTest(param0);
+    // USED → r2 = ?anon_0_parallelAwaitTest();
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → <Call4>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1, Reg8: 4>
-    // USED → r1 = spawnAsync.call(undefined, ?anon_0_parallelAwaitTest(param0), r1, r4);
+    // USED → r1 = spawnAsync.call(undefined, ?anon_0_parallelAwaitTest(), r1, r4);
     // CODE → <Ret>: <Reg8: 1>
-    return spawnAsync.call(undefined, ?anon_0_parallelAwaitTest(param0), r1, r4);
+    return spawnAsync.call(undefined, ?anon_0_parallelAwaitTest(), r1, r4);
 }

@@ -13,11 +13,11 @@ function callAsyncTests() {
     // CODE → <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getParentEnvironment(0)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 12489>  # Function: [#12489 ?anon_0_callAsyncTests of 20 bytes]: 1 params @ offset 0x002443df
-    // USED → r2 = ?anon_0_callAsyncTests(param0);
+    // USED → r2 = ?anon_0_callAsyncTests();
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → <Call4>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1, Reg8: 4>
-    // USED → r1 = spawnAsync.call(undefined, ?anon_0_callAsyncTests(param0), r1, r4);
+    // USED → r1 = spawnAsync.call(undefined, ?anon_0_callAsyncTests(), r1, r4);
     // CODE → <Ret>: <Reg8: 1>
-    return spawnAsync.call(undefined, ?anon_0_callAsyncTests(param0), r1, r4);
+    return spawnAsync.call(undefined, ?anon_0_callAsyncTests(), r1, r4);
 }

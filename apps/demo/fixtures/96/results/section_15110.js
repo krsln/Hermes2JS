@@ -47,9 +47,9 @@ function arrayTest() {
     // CODE → <GetById>: <Reg8: 3, Reg8: 6, UInt8: 6, string_id: 7576>  # String: 'sort' (Identifier)
     // USED → r3 = r6.sort;
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15111>  # Function: [#15111  of 12 bytes]: 3 params @ offset 0x001f6a9c
-    // USED → r2 = function_15111(param0, param1, param2);
+    // USED → r2 = function_15111(param1, param2);
     // CODE → <Call2>: <Reg8: 6, Reg8: 3, Reg8: 6, Reg8: 2>
-    // USED → r6 = r6.sort(function_15111(param0, param1, param2));
+    // USED → r6 = r6.sort(function_15111(param1, param2));
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -59,9 +59,9 @@ function arrayTest() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 7, string_id: 170>  # String: 'map' (Identifier)
     // USED → r3 = r4.map;
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15112>  # Function: [#15112  of 12 bytes]: 2 params @ offset 0x00269c4e
-    // USED → r2 = function_15112(param0, param1);
+    // USED → r2 = function_15112(param1);
     // CODE → <Call2>: <Reg8: 6, Reg8: 3, Reg8: 4, Reg8: 2>
-    // USED → r6 = r4.map(function_15112(param0, param1));
+    // USED → r6 = r4.map(function_15112(param1));
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -71,9 +71,9 @@ function arrayTest() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 137>  # String: 'filter' (Identifier)
     // USED → r3 = r4.filter;
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15113>  # Function: [#15113  of 12 bytes]: 2 params @ offset 0x00269c5a
-    // USED → r2 = function_15113(param0, param1);
+    // USED → r2 = function_15113(param1);
     // CODE → <Call2>: <Reg8: 6, Reg8: 3, Reg8: 4, Reg8: 2>
-    // USED → r6 = r4.filter(function_15113(param0, param1));
+    // USED → r6 = r4.filter(function_15113(param1));
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -83,9 +83,9 @@ function arrayTest() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 9, string_id: 210>  # String: 'reduce' (Identifier)
     // USED → r3 = r4.reduce;
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15114>  # Function: [#15114  of 12 bytes]: 3 params @ offset 0x00269c66
-    // USED → r2 = function_15114(param0, param1, param2);
+    // USED → r2 = function_15114(param1, param2);
     // CODE → <Call3>: <Reg8: 5, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
-    // USED → r5 = r4.reduce(function_15114(param0, param1, param2), r5);
+    // USED → r5 = r4.reduce(function_15114(param1, param2), r5);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -95,9 +95,9 @@ function arrayTest() {
     // CODE → <GetById>: <Reg8: 2, Reg8: 4, UInt8: 10, string_id: 8819>  # String: 'find' (Identifier)
     // USED → r2 = r4.find;
     // CODE → <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 15115>  # Function: [#15115  of 12 bytes]: 2 params @ offset 0x00269c72
-    // USED → r1 = function_15115(param0, param1);
+    // USED → r1 = function_15115(param1);
     // CODE → <Call2>: <Reg8: 3, Reg8: 2, Reg8: 4, Reg8: 1>
-    // USED → r3 = r4.find(function_15115(param0, param1));
+    // USED → r3 = r4.find(function_15115(param1));
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

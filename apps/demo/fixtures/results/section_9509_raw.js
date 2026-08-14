@@ -19,17 +19,17 @@ function closureTest() {
     // CODE → <NewObjectWithBuffer>: <Reg8: 6, UInt16: 1921, UInt16: 17424>  # Object: {'increment': null, 'decrement': null, 'value': null}
     r6 = { "increment": null, "decrement": null, "value": null }
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 3, function_id: 13738>  # Function: [#13738 increment of 20 bytes]: 1 params @ offset 0x00261027
-    // USED → r4 = increment(param0);
+    // USED → r4 = increment();
     // CODE → <PutOwnBySlotIdx>: <Reg8: 6, Reg8: 4, UInt8: 0>
-    r6.slot_0 = increment(param0)
+    r6.slot_0 = increment()
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 3, function_id: 13739>  # Function: [#13739 decrement of 20 bytes]: 1 params @ offset 0x0026103b
-    // USED → r4 = decrement(param0);
+    // USED → r4 = decrement();
     // CODE → <PutOwnBySlotIdx>: <Reg8: 6, Reg8: 4, UInt8: 1>
-    r6.slot_1 = decrement(param0)
+    r6.slot_1 = decrement()
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 3, function_id: 13740>  # Function: [#13740 value of 9 bytes]: 1 params @ offset 0x00193d54
-    // USED → r3 = value(param0);
+    // USED → r3 = value();
     // CODE → <PutOwnBySlotIdx>: <Reg8: 6, Reg8: 3, UInt8: 2>
-    r6.slot_2 = value(param0)
+    r6.slot_2 = value()
     // CODE → <GetById>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 11123>  # String: 'increment' (Identifier)
     // USED → r3 = r6.increment;
     // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 6>

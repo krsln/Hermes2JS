@@ -27,7 +27,7 @@ function spreadFunctionArgsTest() {
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 8, Reg8: 0, function_id: 15121>  # Function: [#15121 sum of 19 bytes]: 4 params @ offset 0x00269ebf
-    r8 = sum(param0, param1, param2, param3)
+    r8 = sum(param1, param2, param3)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Mov>: <Reg8: 7, Reg8: 5>

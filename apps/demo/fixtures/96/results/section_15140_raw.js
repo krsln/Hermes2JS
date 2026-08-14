@@ -33,9 +33,9 @@ function arrowFunctionTest() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 170>  # String: 'map' (Identifier)
     // USED → r3 = r4.map;
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15141>  # Function: [#15141  of 12 bytes]: 2 params @ offset 0x00269c4e
-    // USED → r2 = function_15141(param0, param1);
+    // USED → r2 = function_15141(param1);
     // CODE → <Call2>: <Reg8: 4, Reg8: 3, Reg8: 4, Reg8: 2>
-    // USED → r4 = r4.map(function_15141(param0, param1));
+    // USED → r4 = r4.map(function_15141(param1));
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -43,19 +43,19 @@ function arrowFunctionTest() {
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
     console.log(r4)
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 15142>  # Function: [#15142 makeMultiplier of 16 bytes]: 2 params @ offset 0x0026a8a3
-    // USED → r3 = makeMultiplier(param0, param1);
+    // USED → r3 = makeMultiplier(param1);
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
     // USED → r2 = 3;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 2>
-    // USED → r2 = makeMultiplier(param0, param1).call(undefined, r2);
+    // USED → r2 = makeMultiplier(param1).call(undefined, r2);
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 5>
-    // USED → r2 = makeMultiplier(param0, param1).call(undefined, r2).call(undefined, r5);
+    // USED → r2 = makeMultiplier(param1).call(undefined, r2).call(undefined, r5);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

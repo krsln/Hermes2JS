@@ -21,9 +21,9 @@ function function_15055(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15056>  # Function: [#15056 switchTest of 192 bytes]: 2 params @ offset 0x00267e53
-    // USED → r0 = switchTest(param0, param1);
+    // USED → r0 = switchTest(param1);
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 8729>  # String: 'switchTest' (Identifier)
-    param6.switchTest = switchTest(param0, param1)
+    param6.switchTest = switchTest(param1)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

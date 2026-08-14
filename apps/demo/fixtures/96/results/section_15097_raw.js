@@ -21,17 +21,17 @@ function function_15097(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
     r2 = globalThis.Object.defineProperty(r1, "__esModule", r3)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15098>  # Function: [#15098 propertyAccessTest of 199 bytes]: 1 params @ offset 0x00269547
-    // USED → r2 = propertyAccessTest(param0);
+    // USED → r2 = propertyAccessTest();
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 11307>  # String: 'propertyAccessTest' (Identifier)
-    param6.propertyAccessTest = propertyAccessTest(param0)
+    param6.propertyAccessTest = propertyAccessTest()
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15099>  # Function: [#15099 computedPropertyTest of 89 bytes]: 1 params @ offset 0x0026960e
-    // USED → r2 = computedPropertyTest(param0);
+    // USED → r2 = computedPropertyTest();
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 11290>  # String: 'computedPropertyTest' (Identifier)
-    param6.computedPropertyTest = computedPropertyTest(param0)
+    param6.computedPropertyTest = computedPropertyTest()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15100>  # Function: [#15100 optionalChainingTest of 133 bytes]: 1 params @ offset 0x00269667
-    // USED → r0 = optionalChainingTest(param0);
+    // USED → r0 = optionalChainingTest();
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 11295>  # String: 'optionalChainingTest' (Identifier)
-    param6.optionalChainingTest = optionalChainingTest(param0)
+    param6.optionalChainingTest = optionalChainingTest()
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

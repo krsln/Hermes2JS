@@ -21,9 +21,9 @@ function function_15139(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15140>  # Function: [#15140 arrowFunctionTest of 159 bytes]: 1 params @ offset 0x0026a804
-    // USED → r0 = arrowFunctionTest(param0);
+    // USED → r0 = arrowFunctionTest();
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 11139>  # String: 'arrowFunctionTest' (Identifier)
-    param6.arrowFunctionTest = arrowFunctionTest(param0)
+    param6.arrowFunctionTest = arrowFunctionTest()
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>
