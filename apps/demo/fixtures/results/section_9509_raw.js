@@ -1,4 +1,4 @@
-function closureTest(param0) {
+function closureTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;

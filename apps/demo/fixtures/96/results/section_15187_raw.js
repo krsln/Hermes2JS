@@ -1,4 +1,4 @@
-function _parallelAwaitTest(param0) {
+function _parallelAwaitTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;

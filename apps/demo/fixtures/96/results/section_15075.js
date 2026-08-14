@@ -1,4 +1,4 @@
-function tryCatchTest(param0) {
+function tryCatchTest() {
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → <GetGlobalObject>: <Reg8: 1>

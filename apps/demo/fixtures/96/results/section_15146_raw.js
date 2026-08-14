@@ -1,4 +1,4 @@
-function makeCounter(param0) {
+function makeCounter() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 1>
     // USED → r1 = createEnvironment();

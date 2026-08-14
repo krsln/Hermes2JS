@@ -1,4 +1,4 @@
-function arrayTest(param0) {
+function arrayTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis;

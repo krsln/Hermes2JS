@@ -1,4 +1,4 @@
-function makeSound(param0) {
+function makeSound() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this;

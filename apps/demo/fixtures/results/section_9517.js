@@ -1,4 +1,4 @@
-function callRestParameterTests(param0) {
+function callRestParameterTests() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetParentEnvironment>: <Reg8: 6, UInt8: 0>
     // USED → r6 = getParentEnvironment(0);

@@ -1,4 +1,4 @@
-function closureLoopTest(param0) {
+function closureLoopTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateFunctionEnvironment>: <Reg8: 2, UInt8: 1>
     // USED → r2 = __environment__;

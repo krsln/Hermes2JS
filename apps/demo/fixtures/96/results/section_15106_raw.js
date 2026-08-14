@@ -1,4 +1,4 @@
-function parameterDestructureTest(param0, param1, param2) {
+function parameterDestructureTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 1>
     // USED → r0 = param1;

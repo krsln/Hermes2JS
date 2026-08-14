@@ -1,4 +1,4 @@
-function tryCatchFinallyEarlyReturnTest(param0) {
+function tryCatchFinallyEarlyReturnTest() {
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → <GetGlobalObject>: <Reg8: 0>

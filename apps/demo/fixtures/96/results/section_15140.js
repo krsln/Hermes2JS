@@ -1,4 +1,4 @@
-function arrowFunctionTest(param0) {
+function arrowFunctionTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()

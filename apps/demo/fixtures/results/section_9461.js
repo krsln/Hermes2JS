@@ -1,4 +1,4 @@
-function shortCircuitAssignTest(param0) {
+function shortCircuitAssignTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;

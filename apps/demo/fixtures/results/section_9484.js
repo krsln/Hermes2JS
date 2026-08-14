@@ -1,4 +1,4 @@
-function optionalChainingTest(param0) {
+function optionalChainingTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis;

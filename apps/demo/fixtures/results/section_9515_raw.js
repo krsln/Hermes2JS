@@ -1,4 +1,4 @@
-function restAfterRequiredTest(param0, param1, param2) {
+function restAfterRequiredTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUInt8>: <Reg8: 10, UInt8: 2>
     r10 = 2

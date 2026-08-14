@@ -1,4 +1,4 @@
-function get(param0) {
+function get() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;

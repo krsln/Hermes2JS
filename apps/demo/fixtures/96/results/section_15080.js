@@ -1,4 +1,4 @@
-function tryLoopMultiReturnTest(param0, param1) {
+function tryLoopMultiReturnTest(param1) {
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → <LoadParam>: <Reg8: 3, UInt8: 1>

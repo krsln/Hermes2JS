@@ -1,4 +1,4 @@
-function restOnlyTest(param0) {
+function restOnlyTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstZero>: <Reg8: 8>
     r8 = 0

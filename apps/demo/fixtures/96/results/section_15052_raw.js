@@ -1,4 +1,4 @@
-function function_15052(param0, param1, param2, param3, param4, param5, param6, param7) {
+function function_15052(param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
     // USED → r1 = param6;

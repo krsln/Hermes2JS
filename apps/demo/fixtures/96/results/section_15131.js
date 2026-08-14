@@ -1,4 +1,4 @@
-function function_15131(param0, param1, param2, param3) {
+function function_15131(param1, param2, param3) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 3>
     // USED → r5 = param3;

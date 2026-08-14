@@ -1,4 +1,4 @@
-function spreadFunctionArgsTest(param0) {
+function spreadFunctionArgsTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;

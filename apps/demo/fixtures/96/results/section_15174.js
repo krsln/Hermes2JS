@@ -1,4 +1,4 @@
-function simpleAsyncTest(param0) {
+function simpleAsyncTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined

@@ -1,4 +1,4 @@
-function taggedTemplateTest(param0, param1) {
+function taggedTemplateTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 1>
     // USED → r3 = param1;

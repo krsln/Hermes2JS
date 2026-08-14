@@ -1,4 +1,4 @@
-function basicTemplateTest(param0, param1, param2) {
+function basicTemplateTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;

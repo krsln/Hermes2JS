@@ -1,4 +1,4 @@
-function arrowFunctionTest(param0) {
+function arrowFunctionTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;

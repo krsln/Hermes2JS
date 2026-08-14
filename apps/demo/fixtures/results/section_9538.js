@@ -1,4 +1,4 @@
-function value(param0, param1) {
+function value(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getParentEnvironment(0);

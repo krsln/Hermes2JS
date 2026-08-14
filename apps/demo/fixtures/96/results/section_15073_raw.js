@@ -1,4 +1,4 @@
-function sideEffect(param0, param1, param2) {
+function sideEffect(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;

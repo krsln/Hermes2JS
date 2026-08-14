@@ -1,4 +1,4 @@
-function simpleGeneratorTest(param0) {
+function simpleGeneratorTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     // USED → r0 = createEnvironment();

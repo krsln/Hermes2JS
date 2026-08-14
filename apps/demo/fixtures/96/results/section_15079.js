@@ -1,4 +1,4 @@
-function tryCatchRethrowDifferentTest(param0) {
+function tryCatchRethrowDifferentTest() {
     try {
         try {
             // ──────────────── Block 0 ──────────────── 

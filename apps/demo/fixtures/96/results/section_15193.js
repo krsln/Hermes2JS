@@ -1,4 +1,4 @@
-async function* anon_15193(param0) {
+async function* anon_15193() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
     // StartGenerator

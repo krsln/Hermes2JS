@@ -1,4 +1,4 @@
-function swapViaDestructureTest(param0) {
+function swapViaDestructureTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis;

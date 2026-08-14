@@ -1,4 +1,4 @@
-function function_15209(param0) {
+function function_15209() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 5>
     // USED → r5 = createEnvironment();

@@ -1,4 +1,4 @@
-function callRestParameterTests(param0) {
+function callRestParameterTests() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;

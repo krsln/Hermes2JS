@@ -1,4 +1,4 @@
-function tryCatchFinallyBranchInFinallyTest(param0, param1) {
+function tryCatchFinallyBranchInFinallyTest(param1) {
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>

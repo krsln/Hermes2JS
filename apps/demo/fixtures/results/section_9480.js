@@ -1,4 +1,4 @@
-function forInTest(param0) {
+function forInTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis;

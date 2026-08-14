@@ -1,4 +1,4 @@
-function propertyAccessTest(param0) {
+function propertyAccessTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;

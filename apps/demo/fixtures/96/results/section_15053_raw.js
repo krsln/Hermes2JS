@@ -1,4 +1,4 @@
-function forEachTest(param0) {
+function forEachTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;

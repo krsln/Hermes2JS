@@ -1,4 +1,4 @@
-function objectLiteralTest(param0) {
+function objectLiteralTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;

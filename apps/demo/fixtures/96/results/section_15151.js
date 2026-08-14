@@ -1,4 +1,4 @@
-function _loop(param0, param1) {
+function _loop(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     // USED → r0 = createEnvironment();

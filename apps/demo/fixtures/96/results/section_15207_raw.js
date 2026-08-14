@@ -1,4 +1,4 @@
-function _privateHelper2(param0) {
+function _privateHelper2() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
     // USED → r0 = getEnvironment(0);

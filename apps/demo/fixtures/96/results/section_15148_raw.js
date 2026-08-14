@@ -1,4 +1,4 @@
-function decrement(param0) {
+function decrement() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);

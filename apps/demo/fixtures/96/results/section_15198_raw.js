@@ -1,4 +1,4 @@
-function Animal(param0, param1, param2) {
+function Animal(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 0>
     // USED → r2 = this;

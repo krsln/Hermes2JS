@@ -1,4 +1,4 @@
-function basicRegExpTest(param0, param1) {
+function basicRegExpTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 1>
     // USED → r5 = param1;

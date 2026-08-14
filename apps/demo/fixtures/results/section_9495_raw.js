@@ -1,4 +1,4 @@
-function mapTest(param0) {
+function mapTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;

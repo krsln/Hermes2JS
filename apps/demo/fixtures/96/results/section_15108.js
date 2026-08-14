@@ -1,4 +1,4 @@
-function callDestructuringTests(param0) {
+function callDestructuringTests() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;

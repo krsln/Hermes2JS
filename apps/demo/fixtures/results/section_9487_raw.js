@@ -1,4 +1,4 @@
-function nestedArrayDestructureTest(param0) {
+function nestedArrayDestructureTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 3>
     // USED → r3 = undefined;

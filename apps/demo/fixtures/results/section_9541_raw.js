@@ -1,4 +1,4 @@
-function instanceCount(param0) {
+function instanceCount() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetParentEnvironment>: <Reg8: 0, UInt8: 0>
     // USED → r0 = getParentEnvironment(0);

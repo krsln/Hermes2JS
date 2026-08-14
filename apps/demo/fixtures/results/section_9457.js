@@ -1,4 +1,4 @@
-function labeledContinueTest(param0) {
+function labeledContinueTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 8>
     // USED → r8 = globalThis;

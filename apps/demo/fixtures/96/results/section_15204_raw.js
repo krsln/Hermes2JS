@@ -1,4 +1,4 @@
-function create(param0, param1) {
+function create(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;

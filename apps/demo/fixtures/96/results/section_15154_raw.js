@@ -1,4 +1,4 @@
-function defaultParameterTest(param0, param1) {
+function defaultParameterTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;

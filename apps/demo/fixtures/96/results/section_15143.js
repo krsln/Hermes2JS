@@ -1,4 +1,4 @@
-function function_15143(param0, param1) {
+function function_15143(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
     // USED → r0 = getEnvironment(0);

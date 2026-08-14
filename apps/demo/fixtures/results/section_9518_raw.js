@@ -1,4 +1,4 @@
-function simpleGeneratorTest(param0) {
+function simpleGeneratorTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 2>
     // USED → r1 = __environment__;

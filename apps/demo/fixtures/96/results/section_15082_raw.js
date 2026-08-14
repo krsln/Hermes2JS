@@ -1,4 +1,4 @@
-function nestedTryCatchFinallyTest(param0) {
+function nestedTryCatchFinallyTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;

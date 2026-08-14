@@ -1,4 +1,4 @@
-function generatorWithLoopTest(param0, param1) {
+function generatorWithLoopTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 4>
     // USED → r1 = __environment__;

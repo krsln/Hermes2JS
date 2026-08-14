@@ -1,4 +1,4 @@
-function logicalShortCircuitTest(param0, param1, param2) {
+function logicalShortCircuitTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 1>
     // USED → r3 = param1;

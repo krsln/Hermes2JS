@@ -1,4 +1,4 @@
-function whileTest(param0) {
+function whileTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 7>
     // USED → r7 = globalThis;

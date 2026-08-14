@@ -1,4 +1,4 @@
-function setTest(param0) {
+function setTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;

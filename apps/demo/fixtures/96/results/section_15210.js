@@ -1,4 +1,4 @@
-function Counter(param0) {
+function Counter() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 0>
     // USED → r8 = this;

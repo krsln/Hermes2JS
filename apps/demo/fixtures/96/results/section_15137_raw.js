@@ -1,4 +1,4 @@
-function regExpGroupsAndReplaceTest(param0, param1) {
+function regExpGroupsAndReplaceTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 1>
     // USED → r4 = param1;

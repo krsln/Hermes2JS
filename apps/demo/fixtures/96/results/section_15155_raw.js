@@ -1,4 +1,4 @@
-function defaultWithRestTest(param0) {
+function defaultWithRestTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;

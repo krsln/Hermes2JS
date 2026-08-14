@@ -1,4 +1,4 @@
-function defaultWithRestTest(param0) {
+function defaultWithRestTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>
     // USED → r6 = param1;

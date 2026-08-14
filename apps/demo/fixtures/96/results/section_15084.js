@@ -1,4 +1,4 @@
-function tryFinallyLoopBreakTest(param0, param1) {
+function tryFinallyLoopBreakTest(param1) {
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>

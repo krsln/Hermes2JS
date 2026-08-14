@@ -1,4 +1,4 @@
-function nestedTryCatchTest(param0) {
+function nestedTryCatchTest() {
     try {
         try {
             // ──────────────── Block 0 ──────────────── 

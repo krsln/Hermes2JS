@@ -1,4 +1,4 @@
-function legacyArgumentsTest(param0) {
+function legacyArgumentsTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;

@@ -1,4 +1,4 @@
-function increment(param0) {
+function increment() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 0>
     // USED → r2 = this;

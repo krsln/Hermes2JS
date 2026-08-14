@@ -1,4 +1,4 @@
-function tryFinallyNoCatchTest(param0) {
+function tryFinallyNoCatchTest() {
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → <GetGlobalObject>: <Reg8: 1>

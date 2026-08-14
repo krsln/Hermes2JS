@@ -1,4 +1,4 @@
-function function_15180(param0) {
+function function_15180() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     // USED → r0 = createEnvironment();

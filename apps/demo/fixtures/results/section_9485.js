@@ -1,4 +1,4 @@
-function nestedObjectDestructureTest(param0) {
+function nestedObjectDestructureTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;

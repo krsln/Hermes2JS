@@ -1,4 +1,4 @@
-function doWhileTest(param0) {
+function doWhileTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;

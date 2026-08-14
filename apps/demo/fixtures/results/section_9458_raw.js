@@ -1,4 +1,4 @@
-function labeledBlockBreakTest(param0) {
+function labeledBlockBreakTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;

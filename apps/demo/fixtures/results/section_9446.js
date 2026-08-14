@@ -1,4 +1,4 @@
-function runAllTests(param0) {
+function runAllTests() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;

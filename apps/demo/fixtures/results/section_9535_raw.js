@@ -1,4 +1,4 @@
-function privateStaticTest(param0) {
+function privateStaticTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetParentEnvironment>: <Reg8: 5, UInt8: 0>
     // USED → r5 = getParentEnvironment(0);

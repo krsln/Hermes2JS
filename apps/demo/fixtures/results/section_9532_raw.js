@@ -1,4 +1,4 @@
-function Dog(param0, param1, param2) {
+function Dog(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetNewTarget>: <Reg8: 4>
     // USED → r4 = new.target;

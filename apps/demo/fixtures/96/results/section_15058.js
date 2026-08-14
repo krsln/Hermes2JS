@@ -1,4 +1,4 @@
-function nestedLoopTest(param0) {
+function nestedLoopTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;

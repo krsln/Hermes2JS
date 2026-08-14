@@ -1,4 +1,4 @@
-function _callAsyncTests(param0) {
+function _callAsyncTests() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;

@@ -1,4 +1,4 @@
-function complexTest(param0) {
+function complexTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 6>
     // USED → r6 = globalThis;

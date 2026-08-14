@@ -1,4 +1,4 @@
-function classTest(param0) {
+function classTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetParentEnvironment>: <Reg8: 2, UInt8: 0>
     // USED → r2 = getParentEnvironment(0);

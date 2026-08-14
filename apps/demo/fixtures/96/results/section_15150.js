@@ -1,4 +1,4 @@
-function closureLoopTest(param0) {
+function closureLoopTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     // USED → r0 = createEnvironment();

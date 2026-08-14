@@ -1,4 +1,4 @@
-function Dog(param0, param1, param2) {
+function Dog(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 0>
     // USED → r4 = this;

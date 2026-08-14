@@ -1,4 +1,4 @@
-function generatorTryFinallyTest(param0) {
+function generatorTryFinallyTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
     // USED → r0 = createEnvironment();

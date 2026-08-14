@@ -1,4 +1,4 @@
-function Counter(param0) {
+function Counter() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
     // USED → r3 = getParentEnvironment(0);

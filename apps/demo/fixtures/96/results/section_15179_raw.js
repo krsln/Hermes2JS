@@ -1,4 +1,4 @@
-function _asyncTryCatchTest(param0) {
+function _asyncTryCatchTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;

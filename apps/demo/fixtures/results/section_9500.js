@@ -1,4 +1,4 @@
-function nestedTemplateTest(param0, param1, param2) {
+function nestedTemplateTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 1>
     // USED → r4 = param1;

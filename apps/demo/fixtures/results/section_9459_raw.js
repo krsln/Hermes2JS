@@ -1,4 +1,4 @@
-function tripleNestedLabeledTest(param0) {
+function tripleNestedLabeledTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 15>
     // USED → r15 = globalThis;

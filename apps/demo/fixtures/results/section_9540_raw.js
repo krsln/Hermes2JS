@@ -1,4 +1,4 @@
-function describe(param0) {
+function describe() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 0>
     // USED → r3 = this;

@@ -1,4 +1,4 @@
-function regExpSingleQuotePatternTest(param0, param1) {
+function regExpSingleQuotePatternTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 7, UInt8: 1>
     // USED → r7 = param1;

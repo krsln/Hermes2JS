@@ -1,4 +1,4 @@
-function defaultParameterTest(param0, param1) {
+function defaultParameterTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 2>
     // USED → r6 = param2;

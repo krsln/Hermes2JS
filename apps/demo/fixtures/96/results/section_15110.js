@@ -1,4 +1,4 @@
-function arrayTest(param0) {
+function arrayTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 1>
     r1 = createEnvironment()

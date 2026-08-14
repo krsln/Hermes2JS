@@ -1,4 +1,4 @@
-function tryFinallyNormalCompletionTest(param0) {
+function tryFinallyNormalCompletionTest() {
     try {
         // ──────────────── Block 0 ──────────────── 
         // CODE → <GetGlobalObject>: <Reg8: 1>

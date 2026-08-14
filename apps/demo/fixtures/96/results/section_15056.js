@@ -1,4 +1,4 @@
-function switchTest(param0, param1) {
+function switchTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
     // USED → r2 = param1;

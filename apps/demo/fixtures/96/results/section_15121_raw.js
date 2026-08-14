@@ -1,4 +1,4 @@
-function sum(param0, param1, param2, param3) {
+function sum(param1, param2, param3) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;

@@ -1,4 +1,4 @@
-function Animal(param0, param1, param2) {
+function Animal(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetNewTarget>: <Reg8: 0>
     // USED → r0 = new.target;
