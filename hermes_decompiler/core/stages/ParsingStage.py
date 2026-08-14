@@ -22,7 +22,8 @@ class ParsingStage(PipelineStage):
             if parsed is None:
                 parsed = OpcodeEntry(bytecode=line, hex_address="", opcode="", args="", comment="")
 
-            parsed.index = i
+            # parsed.index = i # starts from 1
+            parsed.index = len(entries)  # starts from 0
             entries.append(parsed)
 
         context.entries = entries
