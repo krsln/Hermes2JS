@@ -150,7 +150,14 @@ class JmpBuiltinIs(OpcodeHandler):
         target = ctx.entry.target_address or (ctx.entry.address + offset)
         ctx.analysis.gotoList.append(target)
 
-        condition = self.build_condition(self.get_register_expression(ctx.analysis, reg), builtin)
+        builtin_name = f"builtin_{builtin}"
+        if ctx.entry.builtin_function is not None:
+            builtin_name = ctx.entry.builtin_function.name
+
+        expression = self.get_register_expression(ctx.analysis, reg)
+        builtin_expression = Identifier(name=builtin_name)
+
+        condition = self.build_condition(expression, builtin_expression)
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
 
@@ -160,12 +167,8 @@ class JmpBuiltinIs(OpcodeHandler):
 
         return result
 
-    def build_condition(self, value: Expression, builtin: int) -> Expression:
-        return BinaryExpression(
-            value,
-            BinaryOperator.STRICT_EQUAL,
-            Identifier(name=f"builtin_{builtin}"),
-        )
+    def build_condition(self, value: Expression, builtin: Expression) -> Expression:
+        return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, builtin)
 
 
 # Addr32, UInt8, Reg8 (total size 6)
@@ -179,12 +182,8 @@ class JmpBuiltinIsLong(JmpBuiltinIs):
 # DEFINE_OPCODE_3(JmpBuiltinIsNot, Addr8, UInt8, Reg8)
 # Example:
 class JmpBuiltinIsNot(JmpBuiltinIs):
-    def build_condition(self, value: Expression, builtin: int) -> Expression:
-        return BinaryExpression(
-            value,
-            BinaryOperator.STRICT_NOT_EQUAL,
-            Identifier(name=f"builtin_{builtin}"),
-        )
+    def build_condition(self, value: Expression, builtin: Expression) -> Expression:
+        return BinaryExpression(value, BinaryOperator.STRICT_NOT_EQUAL, builtin)
 
 
 # Addr32, UInt8, Reg8 (total size 6)
