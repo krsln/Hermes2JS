@@ -15,7 +15,7 @@ function classTest(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
     // USED → r3 = getParentEnvironment(0)[0];
     // CODE → <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 2>
-    r4 = __uninitialized_this_for_new__
+    r4 = __uninitialized_this_for_new__r3
     // CODE → <JmpTypeOfIs>: <Addr32: 16, Reg8: 3, UInt16: 128>  # Address: 00000031
     if (typeof getParentEnvironment(0)[0] === "function") goto label_49;
     // ──────────────── Block 1 ──────────────── 
@@ -59,7 +59,7 @@ function classTest(param0) {
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
     // USED → r4 = getParentEnvironment(0)[1];
     // CODE → <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 2>
-    r3 = __uninitialized_this_for_new__
+    r3 = __uninitialized_this_for_new__r4
     // CODE → <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000099
     if (typeof getParentEnvironment(0)[1] === "function") goto label_153;
     // ──────────────── Block 3 ──────────────── 

@@ -13,17 +13,17 @@ function tryCatchFinallyEarlyReturnTest(param0) {
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
     // USED → r2 = globalThis.Error;
     // CODE → <CreateThisForNew>: <Reg8: 1, Reg8: 2, UInt8: 3>
-    // USED → r1 = __uninitialized_this_for_new__;
+    // USED → r1 = __uninitialized_this_for_new__r2;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 47>  # String: 'test' (Identifier)
     // USED → r4 = "test";
     // CODE → <Mov>: <Reg8: 5, Reg8: 1>
-    // USED → r5 = __uninitialized_this_for_new__;
+    // USED → r5 = __uninitialized_this_for_new__r2;
     // CODE → <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
-    // USED → r0 = new globalThis.Error("test", __uninitialized_this_for_new__);
+    // USED → r0 = new globalThis.Error("test", __uninitialized_this_for_new__r2);
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = new globalThis.Error("test", __uninitialized_this_for_new__);
+    // USED → r0 = new globalThis.Error("test", __uninitialized_this_for_new__r2);
     // CODE → <Throw>: <Reg8: 0>
-    throw new globalThis.Error("test", __uninitialized_this_for_new__);
+    throw new globalThis.Error("test", __uninitialized_this_for_new__r2);
     // CODE → <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → <GetGlobalObject>: <Reg8: 0>

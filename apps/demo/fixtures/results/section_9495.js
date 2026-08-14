@@ -19,45 +19,45 @@ function mapTest(param0) {
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 18>  # String: 'Map' (Identifier)
     // USED → r2 = globalThis.Map;
     // CODE → <CreateThisForNew>: <Reg8: 3, Reg8: 2, UInt8: 3>
-    // USED → r3 = __uninitialized_this_for_new__;
+    // USED → r3 = __uninitialized_this_for_new__r2;
     // CODE → <Mov>: <Reg8: 15, Reg8: 3>
-    // USED → r15 = __uninitialized_this_for_new__;
+    // USED → r15 = __uninitialized_this_for_new__r2;
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
-    // USED → r2 = new globalThis.Map(__uninitialized_this_for_new__);
+    // USED → r2 = new globalThis.Map(__uninitialized_this_for_new__r2);
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = new globalThis.Map(__uninitialized_this_for_new__);
+    // USED → r2 = new globalThis.Map(__uninitialized_this_for_new__r2);
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 4, string_id: 55>  # String: 'set' (Identifier)
-    // USED → r5 = new globalThis.Map(__uninitialized_this_for_new__).set;
+    // USED → r5 = new globalThis.Map(__uninitialized_this_for_new__r2).set;
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 90>
     // USED → r4 = 90;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5119>  # String: 'alice' (String)
     // USED → r3 = "alice";
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 4>
-    r3 = new globalThis.Map(__uninitialized_this_for_new__).set("alice", r4)
+    r3 = new globalThis.Map(__uninitialized_this_for_new__r2).set("alice", r4)
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 4, string_id: 55>  # String: 'set' (Identifier)
-    // USED → r5 = new globalThis.Map(__uninitialized_this_for_new__).set;
+    // USED → r5 = new globalThis.Map(__uninitialized_this_for_new__r2).set;
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 75>
     // USED → r3 = 75;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4356>  # String: 'bob' (String)
     // USED → r4 = "bob";
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 2, Reg8: 4, Reg8: 3>
-    r3 = new globalThis.Map(__uninitialized_this_for_new__).set("bob", r3)
+    r3 = new globalThis.Map(__uninitialized_this_for_new__r2).set("bob", r3)
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 2, UInt8: 4, string_id: 55>  # String: 'set' (Identifier)
-    // USED → r8 = new globalThis.Map(__uninitialized_this_for_new__).set;
+    // USED → r8 = new globalThis.Map(__uninitialized_this_for_new__r2).set;
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 88>
     // USED → r5 = 88;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 666>  # String: 'carol' (String)
     // USED → r3 = "carol";
     // CODE → <Call3>: <Reg8: 3, Reg8: 8, Reg8: 2, Reg8: 3, Reg8: 5>
-    r3 = new globalThis.Map(__uninitialized_this_for_new__).set("carol", r5)
+    r3 = new globalThis.Map(__uninitialized_this_for_new__r2).set("carol", r5)
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r8 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 5, string_id: 49>  # String: 'get' (Identifier)
-    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__).get;
+    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__r2).get;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 2, Reg8: 4>
-    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__).get("bob");
+    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__r2).get("bob");
     // CODE → <Call2>: <Reg8: 3, Reg8: 5, Reg8: 8, Reg8: 3>
     console.log(r3)
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -65,11 +65,11 @@ function mapTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 2, UInt8: 6, string_id: 11>  # String: 'has' (Identifier)
-    // USED → r9 = new globalThis.Map(__uninitialized_this_for_new__).has;
+    // USED → r9 = new globalThis.Map(__uninitialized_this_for_new__r2).has;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5331>  # String: 'dave' (String)
     // USED → r3 = "dave";
     // CODE → <Call2>: <Reg8: 3, Reg8: 9, Reg8: 2, Reg8: 3>
-    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__).has("dave");
+    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__r2).has("dave");
     // CODE → <Call2>: <Reg8: 3, Reg8: 5, Reg8: 8, Reg8: 3>
     console.log(r3)
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -77,18 +77,18 @@ function mapTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 7, string_id: 69>  # String: 'size' (Identifier)
-    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__).size;
+    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__r2).size;
     // CODE → <Call2>: <Reg8: 3, Reg8: 5, Reg8: 8, Reg8: 3>
     console.log(r3)
     // CODE → <Mov>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__);
+    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__r2);
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 3>
     // USED → r5 = GetIterator(r3);
     // LOOP → START (while)
     while (true) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 8, Reg8: 3>
-        r8 = new globalThis.Map(__uninitialized_this_for_new__)
+        r8 = new globalThis.Map(__uninitialized_this_for_new__r2)
         // CODE → <IteratorNext>: <Reg8: 9, Reg8: 5, Reg8: 8>
         // USED → r9 = GetIterator(r3).next();
         // CODE → <Mov>: <Reg8: 8, Reg8: 5>
@@ -161,15 +161,15 @@ function mapTest(param0) {
     throw caughtException;
     // ──────────────── Block 11 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 8, string_id: 118>  # String: 'delete' (Identifier)
-    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__).delete;
+    // USED → r3 = new globalThis.Map(__uninitialized_this_for_new__r2).delete;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 2, Reg8: 4>
-    r3 = new globalThis.Map(__uninitialized_this_for_new__).delete("bob")
+    r3 = new globalThis.Map(__uninitialized_this_for_new__r2).delete("bob")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 7, string_id: 69>  # String: 'size' (Identifier)
-    // USED → r2 = new globalThis.Map(__uninitialized_this_for_new__).size;
+    // USED → r2 = new globalThis.Map(__uninitialized_this_for_new__r2).size;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

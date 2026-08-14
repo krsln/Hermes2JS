@@ -15,7 +15,7 @@ function create(param0, param1) {
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 0, UInt8: 2>
     // USED → r5 = getParentEnvironment(0)[2];
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 5, UInt8: 2>
-    r2 = __uninitialized_this_for_new__
+    r2 = __uninitialized_this_for_new__r5
     // CODE → <JmpTypeOfIs>: <Addr32: 16, Reg8: 5, UInt16: 128>  # Address: 00000031
     if (typeof getParentEnvironment(0)[2] === "function") goto label_49;
     // ──────────────── Block 1 ──────────────── 

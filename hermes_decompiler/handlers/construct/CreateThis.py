@@ -52,10 +52,9 @@ class CreateThisForNew(OpcodeHandler):
         dest_reg, constructor_reg, _cache = map(int, match.groups())
 
         # constructor = self.get_register_expression(ctx.analysis, constructor_reg)
+        this_expr = Identifier(name=f"__uninitialized_this_for_new__r{constructor_reg}")
 
-        expression = Identifier(name="__uninitialized_this_for_new__")
-
-        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        result = OpcodeResult(ctx.entry, value=this_expr, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
 
         return result
