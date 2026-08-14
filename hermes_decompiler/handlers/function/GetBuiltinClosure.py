@@ -18,7 +18,9 @@ class GetBuiltinClosure(OpcodeHandler):
 
         dest_reg, builtin_number = map(int, match.groups())
 
-        builtin_name = getattr(ctx.entry, "builtin_name", None) or f"builtin_{builtin_number}"
+        builtin_name = f"builtin_{builtin_number}"
+        if ctx.entry.builtin_function is not None:
+            builtin_name = ctx.entry.builtin_function.name
 
         expression = Identifier(name=builtin_name)
 
