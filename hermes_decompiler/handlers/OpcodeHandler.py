@@ -153,67 +153,6 @@ class OpcodeHandler(ABC):
 
         return result
 
-    # -----------------------------------------------------------------
-    # Register resolution
-    # -----------------------------------------------------------------
-    #
-    # Three resolvers, in increasing order of how much they're willing
-    # to inline:
-    #
-    #   get_register_reference   - NEVER inlines. Always `rN`. Use when
-    #                               the slot is a raw stack/register
-    #                               range with no reliable per-register
-    #                               tracking (e.g. Call's variadic
-    #                               argument window).
-    #
-    #   get_register_symbolic    - inlines ONLY a `Literal` produced by
-    #                               a genuine const-load opcode
-    #                               (LoadConstZero/UInt8/String/...).
-    #                               Every other definition (Mov, Inc,
-    #                               Add, GetById, a prior Call result,
-    #                               a parameter, ...) stays symbolic.
-    #                               This is the SAFE default for any
-    #                               register whose value might be
-    #                               loop-carried (i.e. could still
-    #                               change on a later iteration/read
-    #                               relative to where the source
-    #                               *textually* appears): a `Mov r6,
-    #                               r5` sitting once at the top of a
-    #                               loop body must never be frozen into
-    #                               whatever `r5` happened to equal the
-    #                               first time this single-pass
-    #                               left-to-right analysis walked past
-    #                               it - see the forTest console.log(0)
-    #                               regression this fixed. Use for:
-    #                               branch/loop conditions, call
-    #                               arguments, anything read potentially
-    #                               more than once relative to its
-    #                               definition's real (dynamic) lifetime.
-    #
-    #   get_register_expression  - inlines almost anything (Mov, Inc,
-    #                               GetById/MemberExpression chains,
-    #                               CallExpression, BinaryExpression,
-    #                               ...), EXCEPT identity-sensitive
-    #                               Object/Array literals. This is what
-    #                               keeps common chains like
-    #                               `globalThis.console.log` readable
-    #                               instead of printing as bare `rN`
-    #                               everywhere. Only safe to use where
-    #                               the caller can be sure the register
-    #                               is read essentially once, at its
-    #                               one true definition site (e.g. the
-    #                               callee/receiver of a call
-    #                               immediately following its
-    #                               TryGetById/GetByIdShort) - NOT for
-    #                               anything that could be re-entered
-    #                               by a loop back-edge before the read.
-    #
-    # When in doubt, prefer get_register_symbolic - a spurious `rN` in
-    # the output is a readability regression; a wrongly-inlined stale
-    # value is a correctness regression. See Call1/Call2/Call3/Call4
-    # in Call.py for a concrete example of choosing the safe one for
-    # call arguments.
-
     @classmethod
     def get_register_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier:
         """Always symbolic - never inlines the defining expression."""
@@ -229,6 +168,15 @@ class OpcodeHandler(ABC):
         return Identifier(name=f"r{reg}")
 
     @classmethod
+    def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
+        """
+        Inline the register's current defining expression, of (almost)
+        any kind - see class-level comment above for exactly when this
+        is/isn't safe to use.
+        """
+        return cls._resolve_register(analysis, reg, inline_non_literal=True)
+
+    @classmethod
     def get_register_symbolic(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """
         Inline only if the definition is a `Literal` from a genuine
@@ -239,15 +187,6 @@ class OpcodeHandler(ABC):
         correctness bug, not just a cosmetic one.
         """
         return cls._resolve_register(analysis, reg, inline_non_literal=False)
-
-    @classmethod
-    def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
-        """
-        Inline the register's current defining expression, of (almost)
-        any kind - see class-level comment above for exactly when this
-        is/isn't safe to use.
-        """
-        return cls._resolve_register(analysis, reg, inline_non_literal=True)
 
     @classmethod
     def _resolve_register(cls, analysis: HermesAnalysis, reg: int, *, inline_non_literal: bool) -> Expression:
@@ -292,6 +231,7 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}")
 
         state_value = state.value
+
         # Expression mode (get_register_expression): inline anything
         # except identity-sensitive Object/Array literals.
         if not isinstance(state_value, Expression):
