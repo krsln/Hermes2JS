@@ -37,7 +37,7 @@ function setTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
     // USED → r0 = 4;
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = new globalThis.Set([1, 2, 2, 3, 3, 3]).add(4)
+    r0 = new globalThis.Set([1, 2, 2, 3, 3, 3]).add(r0)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -47,7 +47,7 @@ function setTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → <Call2>: <Reg8: 0, Reg8: 5, Reg8: 3, Reg8: 0>
-    // USED → r0 = new globalThis.Set([1, 2, 2, 3, 3, 3]).has(2);
+    // USED → r0 = new globalThis.Set([1, 2, 2, 3, 3, 3]).has(r0);
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
     console.log(r0)
     // CODE → <Mov>: <Reg8: 2, Reg8: 3>

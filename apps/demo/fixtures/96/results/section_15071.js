@@ -17,7 +17,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 5>
     // USED → r1 = 5;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(5)
+    console.log(r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -25,7 +25,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 10>
     // USED → r1 = 10;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(10)
+    console.log(r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -33,7 +33,7 @@ function shortCircuitAssignTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 20>
     // USED → r1 = 20;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    console.log(20)
+    console.log(r1)
     // CODE → <NewObject>: <Reg8: 1>
     r1 = {  }
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 7735>  # String: 'count' (Identifier)

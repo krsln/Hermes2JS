@@ -58,7 +58,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 4>
     // USED → r6 = 4;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 6>
-    // USED → r1 = getEnvironment(2)[5].switchTest.call(undefined, 4);
+    // USED → r1 = getEnvironment(2)[5].switchTest.call(undefined, r6);
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 7, Reg8: 1>
     console.log(r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 6>
@@ -80,7 +80,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 7>
     // USED → r1 = 7;
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
-    r1 = getEnvironment(2)[8].ifTest.call(undefined, 7)
+    r1 = getEnvironment(2)[8].ifTest.call(undefined, r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 8>
     // USED → r1 = getEnvironment(2)[8];
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 11, string_id: 10899>  # String: 'ifElseChainTest' (Identifier)
@@ -90,7 +90,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstFalse>: <Reg8: 7>
     // USED → r7 = false;
     // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 7>
-    r1 = getEnvironment(2)[8].ifElseChainTest.call(undefined, true, false)
+    r1 = getEnvironment(2)[8].ifElseChainTest.call(undefined, r5, r7)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 9>
     // USED → r1 = getEnvironment(2)[9];
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 12, string_id: 10933>  # String: 'labeledBreakTest' (Identifier)
@@ -122,7 +122,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstInt>: <Reg8: 1, Imm32: -3>
     // USED → r1 = -3;
     // CODE → <Call2>: <Reg8: 1, Reg8: 8, Reg8: 2, Reg8: 1>
-    r1 = getEnvironment(2)[10].ternaryTest.call(undefined, -3)
+    r1 = getEnvironment(2)[10].ternaryTest.call(undefined, r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 10>
     // USED → r1 = getEnvironment(2)[10];
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 17, string_id: 10963>  # String: 'shortCircuitAssignTest' (Identifier)
@@ -134,7 +134,7 @@ async function* anon_15045(param0) {
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 18, string_id: 10952>  # String: 'logicalShortCircuitTest' (Identifier)
     // USED → r1 = getEnvironment(2)[10].logicalShortCircuitTest;
     // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 7>
-    r1 = getEnvironment(2)[10].logicalShortCircuitTest.call(undefined, true, false)
+    r1 = getEnvironment(2)[10].logicalShortCircuitTest.call(undefined, r5, r7)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     // USED → r1 = getEnvironment(2)[11];
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 19, string_id: 11096>  # String: 'tryCatchTest' (Identifier)
@@ -228,7 +228,7 @@ async function* anon_15045(param0) {
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 30, string_id: 8711>  # String: 'tryCatchFinallyBranchInFinallyTest' (Identifier)
     // USED → r1 = getEnvironment(2)[11].tryCatchFinallyBranchInFinallyTest;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 5>
-    r1 = getEnvironment(2)[11].tryCatchFinallyBranchInFinallyTest.call(undefined, true)
+    r1 = getEnvironment(2)[11].tryCatchFinallyBranchInFinallyTest.call(undefined, r5)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     // USED → r1 = getEnvironment(2)[11];
     // CODE → <GetById>: <Reg8: 5, Reg8: 1, UInt8: 31, string_id: 11038>  # String: 'tryCatchFinallyImplicitThrowTest' (Identifier)
@@ -236,7 +236,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 5>
     // USED → r1 = 5;
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
-    r1 = getEnvironment(2)[11].tryCatchFinallyImplicitThrowTest.call(undefined, 5)
+    r1 = getEnvironment(2)[11].tryCatchFinallyImplicitThrowTest.call(undefined, r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
     // USED → r1 = getEnvironment(2)[11];
     // CODE → <GetById>: <Reg8: 5, Reg8: 1, UInt8: 32, string_id: 10975>  # String: 'loopBreakCrossesTryBoundaryTest' (Identifier)
@@ -256,7 +256,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     // USED → r1 = 1;
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
-    r1 = getEnvironment(2)[11].switchInsideTryTest.call(undefined, 1)
+    r1 = getEnvironment(2)[11].switchInsideTryTest.call(undefined, r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 12>
     // USED → r1 = getEnvironment(2)[12];
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 34, string_id: 11254>  # String: 'forOfTest' (Identifier)
@@ -338,7 +338,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 30>
     // USED → r1 = 30;
     // CODE → <Call3>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 5, Reg8: 1>
-    r1 = getEnvironment(2)[19].basicTemplateTest.call(undefined, "Ada", 30)
+    r1 = getEnvironment(2)[19].basicTemplateTest.call(undefined, "Ada", r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 19>
     // USED → r1 = getEnvironment(2)[19];
     // CODE → <GetById>: <Reg8: 5, Reg8: 1, UInt8: 47, string_id: 11332>  # String: 'nestedTemplateTest' (Identifier)
@@ -346,7 +346,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 9>
     // USED → r1 = 9;
     // CODE → <Call3>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 6, Reg8: 1>
-    r1 = getEnvironment(2)[19].nestedTemplateTest.call(undefined, 4, 9)
+    r1 = getEnvironment(2)[19].nestedTemplateTest.call(undefined, r6, r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 19>
     // USED → r1 = getEnvironment(2)[19];
     // CODE → <GetById>: <Reg8: 5, Reg8: 1, UInt8: 48, string_id: 11337>  # String: 'taggedTemplateTest' (Identifier)
@@ -354,7 +354,7 @@ async function* anon_15045(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 6>
     // USED → r1 = 6;
     // CODE → <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
-    r1 = getEnvironment(2)[19].taggedTemplateTest.call(undefined, 6)
+    r1 = getEnvironment(2)[19].taggedTemplateTest.call(undefined, r1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 20>
     // USED → r1 = getEnvironment(2)[20];
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 49, string_id: 11311>  # String: 'callRegExpTests' (Identifier)

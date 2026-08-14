@@ -54,14 +54,14 @@ function callGeneratorTests(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 5>
     // USED → r3 = 5;
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 0, Reg8: 3>
-    // USED → r5 = getParentEnvironment(0)[1].call(undefined, 5);
+    // USED → r5 = getParentEnvironment(0)[1].call(undefined, r3);
     // CODE → <Mov>: <Reg8: 3, Reg8: 5>
-    // USED → r3 = getParentEnvironment(0)[1].call(undefined, 5);
+    // USED → r3 = getParentEnvironment(0)[1].call(undefined, r3);
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
     // USED → r4 = GetIterator(r3);
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-    r5 = getParentEnvironment(0)[1].call(undefined, 5)
+    r5 = getParentEnvironment(0)[1].call(undefined, r3)
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
     // USED → r7 = GetIterator(r3).next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
@@ -107,7 +107,7 @@ function callGeneratorTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
     // USED → r2 = getParentEnvironment(0)[2].call(undefined).return;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 0>
-    // USED → r2 = getParentEnvironment(0)[2].call(undefined).return(undefined);
+    // USED → r2 = getParentEnvironment(0)[2].call(undefined).return(r0);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

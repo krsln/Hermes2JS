@@ -17,7 +17,7 @@ function arrowFunctionTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 5>
     // USED → r0 = 5;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0>
-    console.log(5)
+    console.log(r0)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -25,7 +25,7 @@ function arrowFunctionTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 16>
     // USED → r0 = 16;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0>
-    console.log(16)
+    console.log(r0)
     // CODE → <NewArrayWithBuffer>: <Reg8: 5, UInt16: 4, UInt16: 4, UInt16: 37098>  # Array: [1, 2, 3, 4]
     r5 = [1, 2, 3, 4]
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 126>  # String: 'map' (Identifier)
@@ -49,7 +49,7 @@ function arrowFunctionTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 15>
     // USED → r0 = 15;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 0>
-    console.log(15)
+    console.log(r0)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

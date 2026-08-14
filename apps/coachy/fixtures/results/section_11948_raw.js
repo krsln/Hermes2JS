@@ -123,7 +123,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstFalse>: <Reg8: 2>
     // USED → r2 = false;
     // CODE → <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 19, Reg8: 15, Reg8: 2>
-    r2 = getEnvironment(1)[9].default.assertOptions(r19, r15, false)
+    r2 = getEnvironment(1)[9].default.assertOptions(r19, r15, r2)
     // ──────────────── Block 9 ──────────────── 
     // CODE → <LoadConstNull>: <Reg8: 2>
     // USED → r2 = null;
@@ -162,7 +162,7 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstTrue>: <Reg8: 2>
     // USED → r2 = true;
     // CODE → <Call4>: <Reg8: 2, Reg8: 16, Reg8: 18, Reg8: 14, Reg8: 15, Reg8: 2>
-    r2 = getEnvironment(1)[9].default.assertOptions(r14, r15, true)
+    r2 = getEnvironment(1)[9].default.assertOptions(r14, r15, r2)
     // CODE → <Jmp>: <Addr8: 15>  # Address: 00000141
     goto label_321;
     // ──────────────── Block 12 ──────────────── 
@@ -230,11 +230,11 @@ function _request(param0, param1, param2) {
     // CODE → <LoadConstTrue>: <Reg8: 2>
     // USED → r2 = true;
     // CODE → <Call4>: <Reg8: 14, Reg8: 15, Reg8: 16, Reg8: 10, Reg8: 14, Reg8: 2>
-    r14 = getEnvironment(1)[9].default.assertOptions(r10, r14, true)
+    r14 = getEnvironment(1)[9].default.assertOptions(r10, r14, r2)
     // CODE → <GetById>: <Reg8: 15, Reg8: 10, UInt8: 12, string_id: 12916>  # String: 'method' (Identifier)
     // USED → r15 = getEnvironment(1)[7].default.call(undefined, r2, r14).method;
     // CODE → <JmpTrue>: <Addr8: 15, Reg8: 15>  # Address: 000001d2
-    // → r14 = getEnvironment(1)[9].default.assertOptions(r10, r14, true); r2 = true
+    // → r14 = getEnvironment(1)[9].default.assertOptions(r10, r14, r2); r2 = true
     if (getEnvironment(1)[7].default.call(undefined, r2, r14).method) goto label_466;
     // ──────────────── Block 18 ──────────────── 
     // CODE → <GetById>: <Reg8: 14, Reg8: 8, UInt8: 2, string_id: 14042>  # String: 'defaults' (Identifier)
@@ -483,7 +483,7 @@ function _request(param0, param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 9, UInt8: 29, string_id: 91>  # String: 'call' (Identifier)
     // USED → r7 = r14[+(r14 + 1)].call;
     // CODE → <Call3>: <Reg8: 7, Reg8: 7, Reg8: 9, Reg8: 8, Reg8: 10>
-    r7 = r14[+(r14 + 1)].call(r8, caughtException)
+    r7 = r14[+(r14 + 1)].call(r8, r10)
     // ──────────────── Block 33 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 6>
     // USED → r6 = getEnvironment(1)[6];
@@ -549,7 +549,7 @@ function _request(param0, param1, param2) {
     // CODE → <GetById>: <Reg8: 0, Reg8: 1, UInt8: 30, string_id: 13645>  # String: 'reject' (Identifier)
     // USED → r0 = globalThis.Promise.reject;
     // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 1, Reg8: 2>
-    // USED → r0 = globalThis.Promise.reject(caughtException);
+    // USED → r0 = globalThis.Promise.reject(r2);
     // CODE → <Ret>: <Reg8: 0>
-    return globalThis.Promise.reject(caughtException);
+    return globalThis.Promise.reject(r2);
 }

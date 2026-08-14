@@ -60,9 +60,9 @@ function describeFiber(param0, param1) {
             // CODE → <LoadConstNull>: <Reg8: 1>
             // USED → r1 = null;
             // CODE → <Call3>: <Reg8: 1, Reg8: 4, Reg8: 3, Reg8: 2, Reg8: 1>
-            // USED → r1 = getEnvironment(0)[257].call(undefined, "SuspenseList", null);
+            // USED → r1 = getEnvironment(0)[257].call(undefined, "SuspenseList", r1);
             // CODE → <Ret>: <Reg8: 1>
-            return getEnvironment(0)[257].call(undefined, "SuspenseList", null);
+            return getEnvironment(0)[257].call(undefined, "SuspenseList", r1);
         case 13:
             // ──────────────── Block 5 ──────────────── 
             // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
@@ -76,9 +76,9 @@ function describeFiber(param0, param1) {
             // CODE → <LoadConstNull>: <Reg8: 1>
             // USED → r1 = null;
             // CODE → <Call3>: <Reg8: 1, Reg8: 4, Reg8: 3, Reg8: 2, Reg8: 1>
-            // USED → r1 = getEnvironment(0)[257].call(undefined, "Suspense", null);
+            // USED → r1 = getEnvironment(0)[257].call(undefined, "Suspense", r1);
             // CODE → <Ret>: <Reg8: 1>
-            return getEnvironment(0)[257].call(undefined, "Suspense", null);
+            return getEnvironment(0)[257].call(undefined, "Suspense", r1);
         case 16:
             // ──────────────── Block 6 ──────────────── 
             // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
@@ -92,9 +92,9 @@ function describeFiber(param0, param1) {
             // CODE → <LoadConstNull>: <Reg8: 1>
             // USED → r1 = null;
             // CODE → <Call3>: <Reg8: 1, Reg8: 4, Reg8: 3, Reg8: 2, Reg8: 1>
-            // USED → r1 = getEnvironment(0)[257].call(undefined, "Lazy", null);
+            // USED → r1 = getEnvironment(0)[257].call(undefined, "Lazy", r1);
             // CODE → <Ret>: <Reg8: 1>
-            return getEnvironment(0)[257].call(undefined, "Lazy", null);
+            return getEnvironment(0)[257].call(undefined, "Lazy", r1);
         case 5:
         case 26:
         case 27:
@@ -110,9 +110,9 @@ function describeFiber(param0, param1) {
             // CODE → <LoadConstNull>: <Reg8: 0>
             // USED → r0 = null;
             // CODE → <Call3>: <Reg8: 0, Reg8: 3, Reg8: 1, Reg8: 2, Reg8: 0>
-            // USED → r0 = getEnvironment(0)[257].call(undefined, r2, null);
+            // USED → r0 = getEnvironment(0)[257].call(undefined, r2, r0);
             // CODE → <Ret>: <Reg8: 0>
-            return getEnvironment(0)[257].call(undefined, r2, null);
+            return getEnvironment(0)[257].call(undefined, r2, r0);
         default:
             // ──────────────── Block 8 ──────────────── 
             // CODE → <LoadConstString>: <Reg8: 0, string_id: 11303>  # String: '' (Identifier)

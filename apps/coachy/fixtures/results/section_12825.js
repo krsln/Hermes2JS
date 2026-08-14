@@ -73,7 +73,7 @@ function function_12825(param0, param1, param2, param3, param4) {
                     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 11, UInt8: 4, string_id: 123>  # String: 'error' (Identifier)
                     // USED → r1 = param4.error;
                     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 11, Reg8: 12>
-                    r1 = param4.error(caughtException)
+                    r1 = param4.error(r12)
                 }
                 // LOOP → END
             }

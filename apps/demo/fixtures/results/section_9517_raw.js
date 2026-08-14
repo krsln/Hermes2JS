@@ -25,7 +25,7 @@ function callRestParameterTests(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → <Call4>: <Reg8: 4, Reg8: 7, Reg8: 3, Reg8: 2, Reg8: 1, Reg8: 0>
-    r4 = getParentEnvironment(0)[0].call(undefined, 1, 2, 3)
+    r4 = getParentEnvironment(0)[0].call(undefined, r2, r1, r0)
     // CODE → <LoadFromEnvironment>: <Reg8: 11, Reg8: 6, UInt8: 1>
     // USED → r11 = getParentEnvironment(0)[1];
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 36>  # String: 'b' (Identifier)

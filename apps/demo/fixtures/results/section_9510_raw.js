@@ -28,7 +28,7 @@ function closureLoopTest(param0) {
     // USED → r2 = 0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 2>
-    r7 = _loop.call(0, 0)
+    r7 = _loop.call(0, r2)
     // CODE → <AddN>: <Reg8: 2, Reg8: 2, Reg8: 4>
     // USED → r2 = 0 + 1;
     // CODE → <JLessN>: <Addr8: -9, Reg8: 2, Reg8: 3>  # Address: 00000030

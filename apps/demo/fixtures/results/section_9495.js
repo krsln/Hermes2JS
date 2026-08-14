@@ -33,7 +33,7 @@ function mapTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5119>  # String: 'alice' (String)
     // USED → r3 = "alice";
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 4>
-    r3 = new globalThis.Map(__uninitialized_this_for_new__).set("alice", 90)
+    r3 = new globalThis.Map(__uninitialized_this_for_new__).set("alice", r4)
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 4, string_id: 55>  # String: 'set' (Identifier)
     // USED → r5 = new globalThis.Map(__uninitialized_this_for_new__).set;
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 75>
@@ -41,7 +41,7 @@ function mapTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4356>  # String: 'bob' (String)
     // USED → r4 = "bob";
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 2, Reg8: 4, Reg8: 3>
-    r3 = new globalThis.Map(__uninitialized_this_for_new__).set("bob", 75)
+    r3 = new globalThis.Map(__uninitialized_this_for_new__).set("bob", r3)
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 2, UInt8: 4, string_id: 55>  # String: 'set' (Identifier)
     // USED → r8 = new globalThis.Map(__uninitialized_this_for_new__).set;
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 88>
@@ -49,7 +49,7 @@ function mapTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 666>  # String: 'carol' (String)
     // USED → r3 = "carol";
     // CODE → <Call3>: <Reg8: 3, Reg8: 8, Reg8: 2, Reg8: 3, Reg8: 5>
-    r3 = new globalThis.Map(__uninitialized_this_for_new__).set("carol", 88)
+    r3 = new globalThis.Map(__uninitialized_this_for_new__).set("carol", r5)
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r8 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

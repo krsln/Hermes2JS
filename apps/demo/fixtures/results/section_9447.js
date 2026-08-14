@@ -28,7 +28,7 @@ function whileTest(param0) {
         // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r10 = globalThis.console.log;
         // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 8, Reg8: 1>
-        console.log("while", 0)
+        console.log("while", r1)
         // CODE → <Mov>: <Reg8: 2, Reg8: 1>
         // USED → r2 = 0;
         // → r2 = 0

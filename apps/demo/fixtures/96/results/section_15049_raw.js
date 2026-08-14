@@ -20,7 +20,7 @@ function doWhileTest(param0) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = globalThis.console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log(0)
+    console.log(r2)
     // CODE → <Inc>: <Reg8: 2, Reg8: 2>
     // USED → r2 = r2 + 1;
     // CODE → <JLess>: <Addr8: -19, Reg8: 2, Reg8: 1>  # Address: 0000001b

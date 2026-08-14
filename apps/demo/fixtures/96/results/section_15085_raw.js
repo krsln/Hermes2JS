@@ -83,7 +83,7 @@ function tryCatchInsideLoopTest(param0, param1) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = globalThis.console.log;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 9>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", r9)
     // CODE → <Mov>: <Reg8: 2, Reg8: 0>
     r2 = 0
     // CODE → <Inc>: <Reg8: 0, Reg8: 2>

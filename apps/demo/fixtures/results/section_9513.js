@@ -27,7 +27,7 @@ function callDefaultParameterTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 7900>  # String: 'result' (Identifier)
     // USED → r9 = "result";
     // CODE → <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 9, Reg8: 0>
-    console.log("result", 15)
+    console.log("result", r0)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -41,7 +41,7 @@ function callDefaultParameterTests(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 25>
     // USED → r0 = 25;
     // CODE → <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 9, Reg8: 0>
-    console.log("result", 25)
+    console.log("result", r0)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -55,7 +55,7 @@ function callDefaultParameterTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 1414>  # String: 'sum' (String)
     // USED → r6 = "sum";
     // CODE → <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 0>
-    console.log("sum", 25)
+    console.log("sum", r0)
     // CODE → <GetParentEnvironment>: <Reg8: 6, UInt8: 0>
     // USED → r6 = getParentEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 0>
@@ -71,7 +71,7 @@ function callDefaultParameterTests(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → <Call4>: <Reg8: 4, Reg8: 6, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
-    r4 = getParentEnvironment(0)[0].call(undefined, 2, 3, 4)
+    r4 = getParentEnvironment(0)[0].call(undefined, r0, r2, r1)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

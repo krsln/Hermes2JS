@@ -25,7 +25,7 @@ function arrayTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 100>
     // USED → r0 = 100;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 0>
-    r4 = r5.push(100)
+    r4 = r5.push(r0)
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 206>  # String: 'pop' (Identifier)
     // USED → r4 = r5.pop;
     // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
@@ -85,7 +85,7 @@ function arrayTest(param0) {
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 12475>  # Function: [#12475  of 12 bytes]: 3 params @ offset 0x00243e24
     // USED → r4 = function_12475;
     // CODE → <Call3>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 0>
-    // USED → r7 = r5.reduce(r4, 0);
+    // USED → r7 = r5.reduce(r4, r0);
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -111,7 +111,7 @@ function arrayTest(param0) {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1;
     // CODE → <Call3>: <Reg8: 6, Reg8: 4, Reg8: 5, Reg8: 0, Reg8: 1>
-    // USED → r6 = r5.slice(1, 3);
+    // USED → r6 = r5.slice(r0, r1);
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

@@ -2038,17 +2038,17 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 73, Reg8: 38>
     createEnvironment()[73] = globalThis.Object.is
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r38 = createCursor.call(undefined, null);
+    // USED → r38 = createCursor.call(undefined, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 74, Reg8: 38>
-    createEnvironment()[74] = createCursor.call(undefined, null)
+    createEnvironment()[74] = createCursor.call(undefined, r11)
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r38 = createCursor.call(undefined, null);
+    // USED → r38 = createCursor.call(undefined, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 75, Reg8: 38>
-    createEnvironment()[75] = createCursor.call(undefined, null)
+    createEnvironment()[75] = createCursor.call(undefined, r11)
     // CODE → <Call2>: <Reg8: 38, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r38 = createCursor.call(undefined, null);
+    // USED → r38 = createCursor.call(undefined, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 76, Reg8: 38>
-    createEnvironment()[76] = createCursor.call(undefined, null)
+    createEnvironment()[76] = createCursor.call(undefined, r11)
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 77, Reg8: 11>
     createEnvironment()[77] = null
     // CODE → <NewArray>: <Reg8: 38, UInt16: 0>
@@ -2112,31 +2112,31 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 94, Reg8: 10>
     createEnvironment()[94] = 0
     // CODE → <Call2>: <Reg8: 37, Reg8: 20, Reg8: 2, Reg8: 37>
-    // USED → r37 = createChildReconciler.call(undefined, true);
+    // USED → r37 = createChildReconciler.call(undefined, r37);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 95, Reg8: 37>
-    createEnvironment()[95] = createChildReconciler.call(undefined, true)
+    createEnvironment()[95] = createChildReconciler.call(undefined, r37)
     // CODE → <Call2>: <Reg8: 20, Reg8: 20, Reg8: 2, Reg8: 12>
-    // USED → r20 = createChildReconciler.call(undefined, false);
+    // USED → r20 = createChildReconciler.call(undefined, r12);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 96, Reg8: 20>
-    createEnvironment()[96] = createChildReconciler.call(undefined, false)
+    createEnvironment()[96] = createChildReconciler.call(undefined, r12)
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r20 = createCursor.call(undefined, null);
+    // USED → r20 = createCursor.call(undefined, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 97, Reg8: 20>
-    createEnvironment()[97] = createCursor.call(undefined, null)
+    createEnvironment()[97] = createCursor.call(undefined, r11)
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-    // USED → r20 = createCursor.call(undefined, 0);
+    // USED → r20 = createCursor.call(undefined, r10);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 98, Reg8: 20>
-    createEnvironment()[98] = createCursor.call(undefined, 0)
+    createEnvironment()[98] = createCursor.call(undefined, r10)
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r20 = createCursor.call(undefined, null);
+    // USED → r20 = createCursor.call(undefined, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 99, Reg8: 20>
-    createEnvironment()[99] = createCursor.call(undefined, null)
+    createEnvironment()[99] = createCursor.call(undefined, r11)
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 100, Reg8: 11>
     createEnvironment()[100] = null
     // CODE → <Call2>: <Reg8: 20, Reg8: 15, Reg8: 2, Reg8: 10>
-    // USED → r20 = createCursor.call(undefined, 0);
+    // USED → r20 = createCursor.call(undefined, r10);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 101, Reg8: 20>
-    createEnvironment()[101] = createCursor.call(undefined, 0)
+    createEnvironment()[101] = createCursor.call(undefined, r10)
     // CODE → <GetById>: <Reg8: 20, Reg8: 14, UInt8: 42, string_id: 21353>  # String: 'ReactCurrentDispatcher' (Identifier)
     // USED → r20 = param2.call(undefined, r0).__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentDispatcher;
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 102, Reg8: 20>
@@ -2424,9 +2424,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 124, Reg8: 17>
     createEnvironment()[124] = r17
     // CODE → <Call2>: <Reg8: 15, Reg8: 15, Reg8: 2, Reg8: 11>
-    // USED → r15 = createCursor.call(undefined, null);
+    // USED → r15 = createCursor.call(undefined, r11);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 125, Reg8: 15>
-    createEnvironment()[125] = createCursor.call(undefined, null)
+    createEnvironment()[125] = createCursor.call(undefined, r11)
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 126, Reg8: 11>
     createEnvironment()[126] = null
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 127, Reg8: 11>
@@ -2592,9 +2592,9 @@ function function_467(param0, param1, param2, param3, param4, param5, param6, pa
     // CODE → <GetByIdShort>: <Reg8: 15, Reg8: 16, UInt8: 52, string_id: 87>  # String: 'bind' (Identifier)
     // USED → r15 = function_850.bind;
     // CODE → <Call3>: <Reg8: 15, Reg8: 15, Reg8: 16, Reg8: 11, Reg8: 5>
-    // USED → r15 = function_850.bind(null, r5);
+    // USED → r15 = function_850.bind(r11, r5);
     // CODE → <PutNewOwnById>: <Reg8: 8, Reg8: 15, string_id: 11566>  # String: 'getInspectorDataForViewAtPoint' (Identifier)
-    r8.getInspectorDataForViewAtPoint = function_850.bind(null, r5)
+    r8.getInspectorDataForViewAtPoint = function_850.bind(r11, r5)
     // CODE → <PutNewOwnById>: <Reg8: 12, Reg8: 8, string_id: 14815>  # String: 'rendererConfig' (Identifier)
     r12.rendererConfig = r8
     // CODE → <NewObject>: <Reg8: 8>
