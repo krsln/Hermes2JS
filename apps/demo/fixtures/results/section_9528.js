@@ -20,8 +20,8 @@ function classTest(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
         r8 = "Trying to call a non-function"
-        // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r4 = copyDataProperties(r2, r3)
+        // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+        r4 = throwTypeError(r2, r3)
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
@@ -64,8 +64,8 @@ function classTest(param0) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
         r8 = "Trying to call a non-function"
-        // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r3 = copyDataProperties(r1, r2)
+        // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+        r3 = throwTypeError(r1, r2)
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 4>

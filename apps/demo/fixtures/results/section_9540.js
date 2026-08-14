@@ -22,8 +22,8 @@ function describe(param0) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 7, string_id: 3847>  # String: 'Private element not found' (String)
         r7 = "Private element not found"
-        // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r4 = copyDataProperties(r2, r3)
+        // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+        r4 = throwTypeError(r2, r3)
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 6>

@@ -21,8 +21,8 @@ function privateStaticTest(param0) {
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
     r13 = "Trying to call a non-function"
-    // CODE → <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-    r6 = copyDataProperties(r4, r5)
+    // CODE → <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+    r6 = throwTypeError(r4, r5)
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
     // USED → r6 = getParentEnvironment(0)[0].prototype;
@@ -70,8 +70,8 @@ function privateStaticTest(param0) {
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
     r13 = "Trying to call a non-function"
-    // CODE → <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-    r6 = copyDataProperties(r4, r5)
+    // CODE → <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+    r6 = throwTypeError(r4, r5)
     // ──────────────── Block 5 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
     // USED → r6 = getParentEnvironment(0)[0].prototype;
@@ -173,11 +173,11 @@ function privateStaticTest(param0) {
     // ──────────────── Block 7 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
     r13 = "Cannot initialize private field twice."
-    // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-    r3 = copyDataProperties(r1, r2)
+    // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+    r3 = throwTypeError(r1, r2)
     // ──────────────── Block 8 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
     r13 = "Cannot initialize private field twice."
-    // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-    r3 = copyDataProperties(r1, r2)
+    // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+    r3 = throwTypeError(r1, r2)
 }

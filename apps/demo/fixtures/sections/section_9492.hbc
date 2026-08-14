@@ -13,10 +13,10 @@ Bytecode listing:
 ==> 00000022: <Mov>: <Reg8: 13, Reg8: 0>
 ==> 00000025: <Mov>: <Reg8: 12, Reg8: 3>
 ==> 00000028: <LoadConstZero>: <Reg8: 11>
-==> 0000002a: <CallBuiltin>: <Reg8: 11, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
+==> 0000002a: <CallBuiltin>: <Reg8: 11, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
 ==> 0000002e: <NewArrayWithBuffer>: <Reg8: 12, UInt16: 3, UInt16: 3, UInt16: 11325>  # Array: [4, 5, 6]
 ==> 00000036: <Mov>: <Reg8: 13, Reg8: 0>
-==> 00000039: <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
+==> 00000039: <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
 ==> 0000003d: <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
 ==> 00000043: <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
 ==> 00000048: <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 0>
@@ -25,7 +25,7 @@ Bytecode listing:
 ==> 00000058: <Mov>: <Reg8: 13, Reg8: 5>
 ==> 0000005b: <Mov>: <Reg8: 12, Reg8: 3>
 ==> 0000005e: <Mov>: <Reg8: 11, Reg8: 8>
-==> 00000061: <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
+==> 00000061: <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
 ==> 00000065: <LoadConstUInt8>: <Reg8: 3, UInt8: 99>
 ==> 00000068: <DefineOwnByVal>: <Reg8: 5, Reg8: 3, Reg8: 4, UInt8: 1>
 ==> 0000006d: <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

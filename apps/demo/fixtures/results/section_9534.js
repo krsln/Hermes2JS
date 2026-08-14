@@ -20,8 +20,8 @@ function create(param0, param1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 7, string_id: 4299>  # String: 'Trying to call a non-function' (String)
         r7 = "Trying to call a non-function"
-        // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r2 = copyDataProperties(r0, r1)
+        // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+        r2 = throwTypeError(r0, r1)
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 7, UInt8: 1>

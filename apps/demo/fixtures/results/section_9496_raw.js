@@ -89,8 +89,8 @@ function setTest(param0) {
     r10 = r4
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     r9 = new globalThis.Set([1, 2, 2, 3, 3, 3], __uninitialized_this_for_new__)
-    // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
-    r2 = applyArguments(r-2, r-1, r0, r1)
+    // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+    r2 = arraySpread(r-2, r-1, r0, r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

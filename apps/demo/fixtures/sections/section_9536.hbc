@@ -27,6 +27,6 @@ Bytecode listing:
 ==> 0000004f: <PutOwnPrivateBySym>: <Reg8: 5, Reg8: 3, UInt8: 1, Reg8: 4>
 ==> 00000054: <Ret>: <Reg8: 2>
 ==> 00000056: <LoadConstString>: <Reg8: 7, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
-==> 0000005a: <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 0000005a: <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
 
 

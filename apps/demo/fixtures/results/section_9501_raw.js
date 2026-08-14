@@ -6,10 +6,10 @@ function tag(param0, param1) {
     // USED → r4 = param1;
     // CODE → <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
     r7 = 1
-    // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 2>  # Built-in function: [#47 apply]
-    // USED → r2 = apply(r0, r1);
+    // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 2>  # Built-in function: [#47 copyRestArgs]
+    // USED → r2 = copyRestArgs(r0, r1);
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 2>
-    __environment__[0] = apply(r0, r1)
+    __environment__[0] = copyRestArgs(r0, r1)
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

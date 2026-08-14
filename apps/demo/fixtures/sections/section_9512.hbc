@@ -8,7 +8,7 @@ Bytecode listing:
 ==> 00000005: <JStrictNotEqual>: <Addr8: 7, Reg8: 6, Reg8: 1>  # Address: 0000000c
 ==> 00000009: <LoadConstUInt8>: <Reg8: 6, UInt8: 1>
 ==> 0000000c: <LoadConstUInt8>: <Reg8: 9, UInt8: 1>
-==> 0000000f: <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 apply]
+==> 0000000f: <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 copyRestArgs]
 ==> 00000013: <GetGlobalObject>: <Reg8: 2>
 ==> 00000015: <TryGetById>: <Reg8: 7, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
 ==> 0000001b: <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

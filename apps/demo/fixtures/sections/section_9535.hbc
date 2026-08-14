@@ -13,7 +13,7 @@ Bytecode listing:
 ==> 0000001d: <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
 ==> 00000021: <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000031
 ==> 00000029: <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
-==> 0000002d: <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 0000002d: <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
 ==> 00000031: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
 ==> 00000036: <NewObjectWithParent>: <Reg8: 9, Reg8: 6>
 ==> 00000039: <LoadFromEnvironment>: <Reg8: 12, Reg8: 5, UInt8: 5>
@@ -36,7 +36,7 @@ Bytecode listing:
 ==> 00000081: <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
 ==> 00000085: <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000095
 ==> 0000008d: <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
-==> 00000091: <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 00000091: <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
 ==> 00000095: <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
 ==> 0000009a: <NewObjectWithParent>: <Reg8: 6, Reg8: 6>
 ==> 0000009d: <PrivateIsIn>: <Reg8: 2, Reg8: 12, Reg8: 6, Reg8: 2>
@@ -86,8 +86,8 @@ Bytecode listing:
 ==> 0000017c: <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
 ==> 00000181: <Ret>: <Reg8: 1>
 ==> 00000183: <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
-==> 00000187: <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 00000187: <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
 ==> 0000018b: <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
-==> 0000018f: <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 0000018f: <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
 
 

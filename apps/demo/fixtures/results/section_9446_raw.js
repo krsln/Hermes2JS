@@ -8,7 +8,7 @@ function runAllTests(param0) {
     // USED → r1 = arguments;
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
     // USED → r4 = arguments;
-    // CODE → <GetBuiltinClosure>: <Reg8: 3, UInt8: 57>  # Built-in function: [#57 makeAsyncIterator]
+    // CODE → <GetBuiltinClosure>: <Reg8: 3, UInt8: 57>  # Built-in function: [#57 spawnAsync]
     // USED → r3 = builtin_57;
     // CODE → <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getParentEnvironment(0)

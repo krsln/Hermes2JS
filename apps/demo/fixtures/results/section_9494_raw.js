@@ -22,8 +22,8 @@ function spreadFunctionArgsTest(param0) {
     r8 = [1, 2, 3]
     // CODE → <Mov>: <Reg8: 9, Reg8: 6>
     r9 = r6
-    // CODE → <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 applyArguments]
-    r0 = applyArguments(r-4, r-3, r-2, r-1)
+    // CODE → <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+    r0 = arraySpread(r-4, r-3, r-2, r-1)
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 12477>  # Function: [#12477 sum of 19 bytes]: 4 params @ offset 0x00243e3c
@@ -32,8 +32,8 @@ function spreadFunctionArgsTest(param0) {
     r8 = r6
     // CODE → <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
-    // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 49, UInt8: 4>  # Built-in function: [#49 applyWithNewTarget]
-    // USED → r3 = applyWithNewTarget(r-1, r0, r1, r2);
+    // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 49, UInt8: 4>  # Built-in function: [#49 apply]
+    // USED → r3 = apply(r-1, r0, r1, r2);
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log(r3)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
