@@ -43,7 +43,7 @@ function complexTest() {
             // CODE → <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
             // USED → r7 = r14[0];
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-            // USED → r1 = 0;
+            r1 = 0
             // Switch → START
             switch (r7) {
                 case 1:
@@ -98,7 +98,7 @@ function complexTest() {
             // Switch → END
             // ──────────────── Block 8 ──────────────── 
             // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-            // USED → r0 = 0 + 1;
+            // USED → r0 = r1 + 1;
         }
         // LOOP → END
     }

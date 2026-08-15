@@ -31,12 +31,12 @@ function tripleNestedLabeledTest() {
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>
     // USED → r7 = 0;
     // CODE → <Mov>: <Reg8: 0, Reg8: 5>
-    // USED → r0 = 0;
+    r0 = 0
     // CODE → <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <AddN>: <Reg8: 3, Reg8: 0, Reg8: 2>
-    // USED → r3 = 0 + 1;
+    // USED → r3 = r0 + 1;
     // CODE → <Mov>: <Reg8: 4, Reg8: 1>
     // USED → r4 = 0;
     // CODE → <JStrictEqual>: <Addr8: 23, Reg8: 4, Reg8: 2>  # Address: 00000051
@@ -50,27 +50,27 @@ function tripleNestedLabeledTest() {
     if (r7 === 2) goto label_103;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <AddN>: <Reg8: 1, Reg8: 4, Reg8: 2>
-    // USED → r1 = 0 + 1;
+    // USED → r1 = r4 + 1;
     // CODE → <Mov>: <Reg8: 0, Reg8: 3>
-    r0 = 0 + 1
+    r0 = r0 + 1
     // CODE → <JLessN>: <Addr8: -26, Reg8: 1, Reg8: 12>  # Address: 00000033
-    // → r1 = 0 + 1
+    // → r1 = r4 + 1
     if (r1 < 3) goto label_51;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <AddN>: <Reg8: 6, Reg8: 7, Reg8: 2>
-    // USED → r6 = 0 + 1;
+    // USED → r6 = r7 + 1;
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-    r5 = 0 + 1
+    r5 = r0 + 1
     // CODE → <JLessN>: <Addr8: -45, Reg8: 6, Reg8: 12>  # Address: 0000002b
-    // → r6 = 0 + 1
+    // → r6 = r7 + 1
     if (r6 < 3) goto label_43;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <AddN>: <Reg8: 9, Reg8: 11, Reg8: 2>
-    // USED → r9 = 0 + 1;
+    // USED → r9 = r11 + 1;
     // CODE → <Mov>: <Reg8: 10, Reg8: 3>
-    r10 = 0 + 1
+    r10 = r0 + 1
     // CODE → <JLessN>: <Addr8: -64, Reg8: 9, Reg8: 12>  # Address: 00000023
-    // → r9 = 0 + 1
+    // → r9 = r11 + 1
     if (r9 < 3) goto label_35;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 18, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

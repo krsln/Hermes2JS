@@ -1,5 +1,7 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
+from hermes_decompiler.handlers import (
+    OpcodeHandler, OpcodeContext, ArgsPattern, OperandMode, sequence, REG,
+)
 from hermes_decompiler.ir.Operators import UnaryOperator, BinaryOperator
 from hermes_decompiler.ir.expressions import (
     Expression,
@@ -17,6 +19,12 @@ class BaseUnaryOperator(OpcodeHandler):
 
     ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
 
+    # Per-class override point: how the single source register operand
+    # is resolved. EXPRESSION (default) substitutes/folds the register's
+    # current value; REFERENCE keeps it as a bare `rN` identifier.
+    # See `OperandMode` in OpcodeHandler.py for the full rationale.
+    SOURCE_MODE: OperandMode = OperandMode.EXPRESSION
+
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = self.match_arguments(ctx)
         if isinstance(match, OpcodeResult):
@@ -32,7 +40,7 @@ class BaseUnaryOperator(OpcodeHandler):
         return result
 
     def get_source_value(self, ctx: OpcodeContext, src_reg: int) -> Expression:
-        return self.get_register_expression(ctx.analysis, src_reg)
+        return self.resolve_operand(ctx.analysis, src_reg, self.SOURCE_MODE)
 
     def expression(self, value: Expression) -> Expression:
         """
@@ -73,9 +81,14 @@ class ToNumber(BaseUnaryOperator):
 
 
 class Inc(BaseUnaryOperator):
+    """
+    x + 1. The source register is typically the loop/accumulator
+    variable itself, reassigned on the next iteration via a back-edge
+    Mov, so it must stay symbolic (REFERENCE) rather than being
+    substituted with a traced snapshot value.
+    """
 
-    def get_source_value(self, ctx: OpcodeContext, src_reg: int) -> Expression:
-        return self.get_register_reference(ctx.analysis, src_reg)
+    SOURCE_MODE = OperandMode.REFERENCE
 
     def expression(self, value: Expression):
         return BinaryExpression(left=value, operator=BinaryOperator.ADD, right=NumericLiteral(1))  # x +1
@@ -83,9 +96,9 @@ class Inc(BaseUnaryOperator):
 
 
 class Dec(BaseUnaryOperator):
+    """x - 1. See `Inc` docstring - same symbolic-operand requirement."""
 
-    def get_source_value(self, ctx: OpcodeContext, src_reg: int) -> Expression:
-        return self.get_register_reference(ctx.analysis, src_reg)
+    SOURCE_MODE = OperandMode.REFERENCE
 
     def expression(self, value: Expression):
         return BinaryExpression(left=value, operator=BinaryOperator.SUBTRACT, right=NumericLiteral(1))  # x -1

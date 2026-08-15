@@ -4,6 +4,7 @@ import dataclasses
 import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from enum import Enum, auto
 from typing import Dict, Optional
 
 from hermes_decompiler.core.logging import get_logger
@@ -56,6 +57,33 @@ _CONDITION_ARGUMENT_INLINE_OPCODES = frozenset({
     "LoadConstFalse",
     "LoadConstBigInt",
 })
+
+
+class OperandMode(Enum):
+    """
+    Controls how a register operand is resolved into an IR expression.
+    Opcode subclasses declare *which* mode each of their operands needs
+    (class attribute), instead of each one hand-rolling its own
+    resolution override the way `Inc`/`Dec` previously did.
+
+    EXPRESSION - substitute the register's current defining expression
+        (constant folding / inlining, via `get_register_expression`).
+        This is the default and matches all pre-existing behavior for
+        opcodes that don't opt into REFERENCE.
+
+    REFERENCE - always resolve to a bare symbolic identifier `rN` (via
+        `get_register_reference`), never inlining the defining
+        expression. Required whenever an operand is a loop/accumulator
+        register that gets redefined on a back-edge (e.g. the `x` in
+        `Inc`/`Dec`, or the counter operand of `AddN`/`SubN` when they
+        desugar `i++`/`i--`): substituting a traced snapshot value there
+        silently bakes a single iteration's value into every iteration
+        (e.g. `r0 = 0 + 1` instead of `r0 = r1 + 1`), which can produce
+        a non-advancing loop counter.
+    """
+
+    EXPRESSION = auto()
+    REFERENCE = auto()
 
 
 class OpcodeHandler(ABC):
@@ -158,6 +186,20 @@ class OpcodeHandler(ABC):
 
         state.reads += 1
         return Identifier(name=f"r{reg}")
+
+    @classmethod
+    def resolve_operand(cls, analysis: HermesAnalysis, reg: int, mode: "OperandMode") -> Expression:
+        """
+        Resolve a register operand according to `mode`. Single dispatch
+        point shared by `BaseUnaryOperator` and `BaseBinaryOperator` (and
+        any future handler) so the EXPRESSION-vs-REFERENCE choice lives
+        in one place instead of being reimplemented per subclass.
+        """
+
+        if mode is OperandMode.REFERENCE:
+            return cls.get_register_reference(analysis, reg)
+
+        return cls.get_register_expression(analysis, reg)
 
     @classmethod
     def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:

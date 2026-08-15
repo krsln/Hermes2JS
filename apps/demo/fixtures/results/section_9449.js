@@ -21,7 +21,7 @@ function forTest() {
     // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 3>
     // USED → r5 = 3;
     // LOOP → START (for)
-    for (r0 = 0; r0 < 10; r0 = 0 + 1) {
+    for (r0 = 0; r0 < 10; r0 = r1 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 1, Reg8: 0>
         // USED → r1 = 0;

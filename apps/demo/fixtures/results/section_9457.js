@@ -20,12 +20,12 @@ function labeledContinueTest() {
     // USED → r9 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1";
     loop_1:
     // LOOP → START (for)
-    for (r4 = 0; r4 < 3; r4 = 0 + 1) {
+    for (r4 = 0; r4 < 3; r4 = r2 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 2, Reg8: 4>
         // USED → r2 = 0;
         // LOOP → START (for)
-        for (r0 = 0; r0 < 3; r0 = 0 + 1) {
+        for (r0 = 0; r0 < 3; r0 = r1 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             // USED → r1 = 0;

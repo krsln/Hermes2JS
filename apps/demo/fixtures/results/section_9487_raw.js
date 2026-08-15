@@ -311,7 +311,7 @@ function nestedArrayDestructureTest() {
     // CODE → <PutByValStrict>: <Reg8: 13, Reg8: 18, Reg8: 19>
     r13[0] = GetIterator(r17).next()
     // CODE → <AddN>: <Reg8: 16, Reg8: 18, Reg8: 12>
-    r16 = 0 + 1
+    r16 = r18 + 1
     // CODE → <Jmp>: <Addr8: -28>  # Address: 000001a9
     goto label_425;
     // ──────────────── Block 33 ──────────────── 

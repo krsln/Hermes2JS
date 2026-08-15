@@ -81,18 +81,18 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → <Call3>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7, Reg8: 15>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", r15)
     // CODE → <AddN>: <Reg8: 12, Reg8: 11, Reg8: 8>
-    // USED → r12 = 0 + 1;
+    // USED → r12 = r11 + 1;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 8>
-    // USED → r4 = 0 + 1;
+    // USED → r4 = r2 + 1;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     // USED → r2 = param1.length;
     // CODE → <Mov>: <Reg8: 3, Reg8: 12>
-    // USED → r3 = 0 + 1;
+    // USED → r3 = r11 + 1;
     // CODE → <Mov>: <Reg8: 0, Reg8: 3>
-    // USED → r0 = 0 + 1;
+    // USED → r0 = r11 + 1;
     // CODE → <JLess>: <Addr8: -104, Reg8: 4, Reg8: 2>  # Address: 0000003c
-    // → r2 = param1.length; r4 = 0 + 1
+    // → r2 = param1.length; r4 = r2 + 1
     if (r4 < r2) goto label_60;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -104,5 +104,5 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
     // CODE → <Ret>: <Reg8: 0>
-    return 0 + 1;
+    return r11 + 1;
 }

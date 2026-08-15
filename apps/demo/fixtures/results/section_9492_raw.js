@@ -102,7 +102,7 @@ function spreadArrayTest() {
     // CODE → <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
     r4[0] = GetIterator(r7).next()
     // CODE → <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
-    r2 = 0 + 1
+    r2 = r9 + 1
     // CODE → <Jmp>: <Addr8: -28>  # Address: 000000a4
     goto label_164;
     // ──────────────── Block 5 ──────────────── 

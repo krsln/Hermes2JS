@@ -74,7 +74,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                 }
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <AddN>: <Reg8: 2, Reg8: 0, Reg8: 6>
-                // USED → r2 = 0 + 1;
+                // USED → r2 = r0 + 1;
             }
         }
         // LOOP → END
