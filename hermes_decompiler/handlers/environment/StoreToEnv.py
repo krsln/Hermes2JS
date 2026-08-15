@@ -25,7 +25,7 @@ class StoreToEnvironment(OpcodeHandler):
         env = self.get_register_expression(ctx.analysis, env_reg)
         value = self.get_register_expression(ctx.analysis, value_reg)
 
-        left = MemberExpression(receiver=env, member=NumericLiteral(slot), computed=True)
+        left = MemberExpression(obj=env, prop=NumericLiteral(slot), computed=True)
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=value)
 
         # No destination register (name=""): OpcodeResult/JSRenderer

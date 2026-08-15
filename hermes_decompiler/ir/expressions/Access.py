@@ -19,21 +19,25 @@ class MemberExpression(Expression):
     Property access, static or computed.
 
     Examples:
-        receiver.property
-        receiver["property"]
-        receiver[index]
-        receiver?.property
-        receiver?.[index]
+        obj.property
+        obj["property"]
+        obj?.[index]
+
+        # with explicit receiver (e.g., Reflect.get semantics)
+        obj[index] /* via receiver */
     """
 
-    receiver: Expression
-    member: Expression
+    obj: Expression
+    prop: Expression
+    receiver: Expression | None = None  # explicit [[Get]] receiver, if distinct from `obj`
+
     computed: bool = False
     optional: bool = False
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return self.receiver, self.member
+        base = (self.obj, self.prop)
+        return (base + (self.receiver,)) if (self.receiver is not None) else base
 
 
 @dataclass(frozen=True, slots=True, eq=False)

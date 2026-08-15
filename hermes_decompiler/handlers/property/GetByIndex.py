@@ -18,10 +18,10 @@ class GetByIndex(OpcodeHandler):
 
         dest_reg, obj_reg, index = map(int, match.groups())
 
-        receiver = self.get_register_expression(ctx.analysis, obj_reg)
+        obj = self.get_register_expression(ctx.analysis, obj_reg)
         member = NumericLiteral(value=index)
 
-        expression = MemberExpression(receiver=receiver, member=member, computed=True)
+        expression = MemberExpression(obj=obj, prop=member, computed=True)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)

@@ -18,10 +18,10 @@ class GetByVal(OpcodeHandler):
 
         dest_reg, base_reg, prop_reg = map(int, match.groups())
 
-        receiver = self.get_register_expression(ctx.analysis, base_reg)
+        obj = self.get_register_expression(ctx.analysis, base_reg)
         index = self.get_register_reference(ctx.analysis, prop_reg)
 
-        expression = MemberExpression(receiver=receiver, member=index, computed=True)
+        expression = MemberExpression(obj=obj, prop=index, computed=True)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
@@ -53,11 +53,11 @@ class GetByValWithReceiver(OpcodeHandler):
 
         dest_reg, base_reg, prop_reg, receiver_reg = map(int, match.groups())
 
-        receiver = self.get_register_expression(ctx.analysis, base_reg)
+        obj = self.get_register_expression(ctx.analysis, base_reg)
         index = self.get_register_reference(ctx.analysis, prop_reg)
-        # TODO: receiver_reg
+        receiver = self.get_register_expression(ctx.analysis, receiver_reg)
 
-        expression = MemberExpression(receiver=receiver, member=index, computed=True, )
+        expression = MemberExpression(obj=obj, prop=index, receiver=receiver, computed=True)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)

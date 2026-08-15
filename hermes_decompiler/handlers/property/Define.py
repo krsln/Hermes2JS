@@ -30,8 +30,8 @@ class DefineOwnById(OpcodeHandler):
         property_name = ctx.entry.identifier_name or f"string_{string_id}"
 
         left = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=Identifier(name=property_name),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=Identifier(name=property_name),
             computed=False,
         )
         right = self.get_register_expression(ctx.analysis, value_reg)
@@ -67,8 +67,8 @@ class DefineOwnByVal(OpcodeHandler):
         obj_reg, value_reg, key_reg, _enumerable = map(int, match.groups())
 
         left = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=self.get_register_expression(ctx.analysis, key_reg),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=self.get_register_expression(ctx.analysis, key_reg),
             computed=True,
         )
         right = self.get_register_expression(ctx.analysis, value_reg)
@@ -97,8 +97,8 @@ class DefineOwnGetterSetterByVal(OpcodeHandler):
         obj_reg, key_reg, getter_reg, setter_reg, enumerable = map(int, match.groups())
 
         callee = MemberExpression(
-            receiver=Identifier(name="Object"),
-            member=Identifier(name="defineProperty"),
+            obj=Identifier(name="Object"),
+            prop=Identifier(name="defineProperty"),
             computed=False,
         )
 
@@ -156,8 +156,8 @@ class DefineOwnByIndex(OpcodeHandler):
         obj_reg, value_reg, index = map(int, match.groups())
 
         left = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=NumericLiteral(value=index),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=NumericLiteral(value=index),
             computed=True,
         )
         right = self.get_register_expression(ctx.analysis, value_reg)
@@ -192,8 +192,8 @@ class DefineOwnInDenseArray(OpcodeHandler):
         obj_reg, value_reg, index = map(int, match.groups())
 
         left = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=NumericLiteral(value=index),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=NumericLiteral(value=index),
             computed=True,
         )
         right = self.get_register_expression(ctx.analysis, value_reg)

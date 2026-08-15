@@ -90,7 +90,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         if next_call is None:
             return
 
-        iterator_expr = self._resolve_identifier(next_call.callee.receiver)
+        iterator_expr = self._resolve_identifier(next_call.callee.obj)
 
         iterable = self._match_call(iterator_expr, "GetIterator")
 
@@ -127,7 +127,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         if next_call is None:
             return
 
-        list_expr = self._resolve_identifier(next_call.callee.receiver)
+        list_expr = self._resolve_identifier(next_call.callee.obj)
 
         obj = self._match_call(list_expr, "HermesPropertyIterator")
 
@@ -211,7 +211,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         if not isinstance(callee, MemberExpression):
             return None, None, None
 
-        prop = callee.member
+        prop = callee.prop
 
         if not isinstance(prop, Identifier) or prop.name != method_name:
             return None, None, None
@@ -263,12 +263,12 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         if not isinstance(value.callee, MemberExpression):
             return False
 
-        prop = value.callee.member
+        prop = value.callee.prop
 
         if not isinstance(prop, Identifier) or prop.name != "return":
             return False
 
-        return _structural_key(value.callee.receiver) == _structural_key(iterator_expr)
+        return _structural_key(value.callee.obj) == _structural_key(iterator_expr)
 
     # -----------------------------------------------------------------
     # Mutation

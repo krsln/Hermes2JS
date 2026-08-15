@@ -22,8 +22,8 @@ class AddOwnPrivateBySym(OpcodeHandler):
         field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
 
         left = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=Identifier(name=f"#{field_name}"),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=Identifier(name=f"#{field_name}"),
             computed=False,
         )
         right = self.get_register_expression(ctx.analysis, value_reg)
@@ -54,8 +54,8 @@ class GetOwnPrivateBySym(OpcodeHandler):
         field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
 
         expression = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=Identifier(name=f"#{field_name}"),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=Identifier(name=f"#{field_name}"),
             computed=False,
         )
 
@@ -83,8 +83,8 @@ class PutOwnPrivateBySym(OpcodeHandler):
         field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
 
         left = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=Identifier(name=f"#{field_name}"),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=Identifier(name=f"#{field_name}"),
             computed=False,
         )
         right = self.get_register_expression(ctx.analysis, value_reg)

@@ -41,11 +41,7 @@ class PutOwnByIndex(OpcodeHandler):
             expression = ArrayExpression(elements=tuple(elements))
         else:
             expression = AssignmentExpression(
-                left=MemberExpression(
-                    receiver=array,
-                    member=NumericLiteral(index),
-                    computed=True,
-                ),
+                left=MemberExpression(obj=array, prop=NumericLiteral(index), computed=True),
                 operator=AssignmentOperator.ASSIGN,
                 right=value,
             )

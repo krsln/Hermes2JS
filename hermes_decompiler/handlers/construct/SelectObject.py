@@ -32,7 +32,7 @@ class SelectObject(OpcodeHandler):
             expression = obj
         else:
             # Standart computed member access (fallback)
-            expression = MemberExpression(receiver=obj, member=selector, computed=True)
+            expression = MemberExpression(obj=obj, prop=selector, computed=True)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)

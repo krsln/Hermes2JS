@@ -900,16 +900,28 @@ class Printer(NodeVisitor):
     # ------------------------------------------------------------------
 
     def visit_MemberExpression(self, node: MemberExpression) -> str:
-        receiver = self._wrap_operand(node.receiver, node)
+        obj = self._wrap_operand(node.obj, node)
+        prop = self.visit(node.prop)
+
+        if node.receiver is not None:
+            receiver = self.visit(node.receiver)
+            # Explicit receiver can't be expressed with plain obj[prop] syntax;
+            # fall back to Reflect.get semantics.
+            if node.optional:
+                # Reflect.get has no optional-chaining equivalent; represent
+                # explicitly rather than silently dropping the receiver.
+                return f"Reflect.get({obj}, {prop}, {receiver}) /* optional receiver access */"
+            return f"Reflect.get({obj}, {prop}, {receiver})"
+
         access = "?." if node.optional else ""
 
         if node.computed:
-            return f"{receiver}{access}[{self.visit(node.member)}]"
+            return f"{obj}{access}[{prop}]"
 
         if node.optional:
-            return f"{receiver}?.{self.visit(node.member)}"
+            return f"{obj}?.{prop}"
 
-        return f"{receiver}.{self.visit(node.member)}"
+        return f"{obj}.{prop}"
 
     def visit_CallExpression(self, node: CallExpression) -> str:
         callee = self._wrap_operand(node.callee, node)

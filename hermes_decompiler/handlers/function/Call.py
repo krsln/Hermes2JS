@@ -115,13 +115,13 @@ class Call1(OpcodeHandler):
             for reg in rest_arg_regs
         )
 
-        if isinstance(callee, MemberExpression) and callee.receiver.structurally_equal(this_value):
+        if isinstance(callee, MemberExpression) and callee.obj.structurally_equal(this_value):
             # Plain `obj.method(...)` - `this` is already implicit.
             expression = CallExpression(callee=callee, arguments=real_arguments)
         else:
             # `this` doesn't match the callee's own receiver (or callee
             # isn't a member access at all) - preserve it explicitly.
-            call_callee = MemberExpression(receiver=callee, member=Identifier(name="call"), computed=False)
+            call_callee = MemberExpression(obj=callee, prop=Identifier(name="call"), computed=False)
             expression = CallExpression(callee=call_callee, arguments=(this_value, *real_arguments))
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)

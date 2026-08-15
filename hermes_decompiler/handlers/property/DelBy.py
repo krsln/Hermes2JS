@@ -22,10 +22,7 @@ class DelById(OpcodeHandler):
 
         expression = UnaryExpression(
             operator=UnaryOperator.DELETE,
-            operand=MemberExpression(
-                receiver=obj,
-                member=Identifier(name=prop_name),
-            ),
+            operand=MemberExpression(obj=obj, prop=Identifier(name=prop_name)),
         )
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
@@ -75,8 +72,8 @@ class DelByVal(OpcodeHandler):
         expression = UnaryExpression(
             operator=UnaryOperator.DELETE,
             operand=MemberExpression(
-                receiver=obj,
-                member=prop,
+                obj=obj,
+                prop=prop,
                 computed=True,
             ),
         )
