@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
-from typing import Any, Tuple
-
 from hermes_decompiler.analysis.terminators import TerminatorJump, TerminatorConditionalBranch
-from hermes_decompiler.handlers import OpcodeHandler, REG, ADDR, UINT8, UINT16, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, ADDR, UINT8, UINT16
+from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (
     Expression,
@@ -14,205 +13,252 @@ from hermes_decompiler.ir.expressions import (
     StringLiteral,
     Identifier,
 )
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
-
-# --------------------------------------------------------------------------
-# Patterns
-# --------------------------------------------------------------------------
-_JMP_PATTERN = sequence(ADDR)
-_JMP_CONDITIONAL_PATTERN = sequence(ADDR, REG)
-_JMP_BUILTIN_PATTERN = sequence(ADDR, UINT8, REG)
-_JMP_TYPEOF_PATTERN = sequence(ADDR, REG, UINT16)
-
-TYPEOF_MAP = {
-    0: "undefined",
-    1: "object",
-    2: "function",
-    3: "string",
-    4: "number",
-    5: "boolean",
-    6: "symbol",
-    7: "bigint",
-}
 
 
 # --------------------------------------------------------------------------
-# Parsers
+# Jmp (Unconditional)
 # --------------------------------------------------------------------------
-def _parse_jump(entry: OpcodeEntry) -> int:
-    match = _JMP_PATTERN.match(entry.args.strip())
-    if not match:
-        raise ValueError(f"Invalid arguments: {entry.args}")
-    return int(match.group(1))
 
+# Addr8 (total size 1)
+# Example: <Jmp>: <Addr8: 40>  # Address: 00000068
+class Jmp(OpcodeHandler):
+    """Unconditional jump."""
 
-def _parse_conditional(entry: OpcodeEntry) -> Tuple[int, int]:
-    match = _JMP_CONDITIONAL_PATTERN.match(entry.args.strip())
-    if not match:
-        raise ValueError(f"Invalid arguments: {entry.args}")
-    return int(match.group(1)), int(match.group(2))
+    ARGUMENTS = ArgsPattern(sequence(ADDR), "Addr8")
 
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
-def _parse_builtin(entry: OpcodeEntry) -> Tuple[int, int, int]:
-    match = _JMP_BUILTIN_PATTERN.match(entry.args.strip())
-    if not match:
-        raise ValueError(f"Invalid arguments: {entry.args}")
-    return int(match.group(1)), int(match.group(2)), int(match.group(3))
+        offset = int(match.group(1))
 
-
-def _parse_typeof(entry: OpcodeEntry) -> Tuple[int, int, int]:
-    match = _JMP_TYPEOF_PATTERN.match(entry.args.strip())
-    if not match:
-        raise ValueError(f"Invalid arguments: {entry.args}")
-    return int(match.group(1)), int(match.group(2)), int(match.group(3))
-
-
-# --------------------------------------------------------------------------
-# Base Jump (Unconditional)
-# --------------------------------------------------------------------------
-class Jump(OpcodeHandler):
-    """Base class for unconditional jumps."""
-
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        try:
-            offset = _parse_jump(entry)
-        except ValueError as e:
-            return self.build_invalid_args_result(analysis, entry, str(e))
-
-        target = entry.target_address or (entry.address + offset)
-        analysis.gotoList.append(target)
+        target = ctx.entry.target_address or (ctx.entry.address + offset)
+        ctx.analysis.gotoList.append(target)
 
         terminator = TerminatorJump(target=target)
 
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
 
-class Jmp(Jump):
-    pass
-
-
-class JmpLong(Jump):
+# Addr32 (total size 4)
+# Example: <JmpLong>: <Addr32: 129>  # Address: 000000d9
+class JmpLong(Jmp):
+    """Long unconditional jump."""
     pass
 
 
 # --------------------------------------------------------------------------
-# Base Conditional Jump
+# Conditional jumps
 # --------------------------------------------------------------------------
-class ConditionalJumpBase(OpcodeHandler, ABC):
-    @abstractmethod
-    def parse(self, entry: OpcodeEntry) -> tuple[int, int, tuple]:
-        """Returns: (offset, register, extra_args)"""
-        ...
 
-    @abstractmethod
-    def build_condition(self, value: Expression, *extra: Any) -> Expression:
-        ...
+# Addr8, Reg8 (total size 2)
+# Example: <JmpTrue>: <Addr8: 54, Reg8: 5>  # Address: 000003e6
+class JmpTrue(OpcodeHandler):
+    """
+    Conditional jump on Arg2 truthiness, and shared base implementation
+    for the rest of the single-register conditional jumps (`JmpFalse`,
+    `JmpUndefined`). See `Add` in `handlers/arithmetic/Binary.py` for why
+    a real opcode - rather than a separate non-opcode `ABC` base class -
+    is used as the shared base.
+    """
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        try:
-            offset, reg, extra = self.parse(entry)
-        except ValueError as e:
-            return self.build_invalid_args_result(analysis, entry, str(e))
+    ARGUMENTS = ArgsPattern(sequence(ADDR, REG), "Addr8, Reg8")
 
-        target = entry.target_address or (entry.address + offset)
-        analysis.gotoList.append(target)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
-        value = self.get_register_expression(analysis, reg)
-        condition = self.build_condition(value, *extra)
+        offset, reg = map(int, match.groups())
+
+        target = ctx.entry.target_address or (ctx.entry.address + offset)
+        ctx.analysis.gotoList.append(target)
+
+        condition = self.build_condition(self.get_register_expression(ctx.analysis, reg))
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(entry, value=None, terminator=terminator, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
-
-# --------------------------------------------------------------------------
-# Normal Conditional Jumps
-# --------------------------------------------------------------------------
-class ConditionalJump(ConditionalJumpBase, ABC):
-    def parse(self, entry: OpcodeEntry) -> tuple[int, int, tuple]:
-        offset, reg = _parse_conditional(entry)
-        return offset, reg, ()
-
-
-class JmpTrue(ConditionalJump):
-    def build_condition(self, value: Expression, *extra: Any):
+    def build_condition(self, value: Expression) -> Expression:
+        """Subclasses override this to change only the condition."""
         return value
 
 
-class JmpFalse(ConditionalJump):
-    def build_condition(self, value: Expression, *extra: Any) -> Expression:
+# Addr32, Reg8 (total size 5)
+# Example: <JmpTrueLong>: <Addr32: 997, Reg8: 1>  # Address: 000003e9
+class JmpTrueLong(JmpTrue):
+    pass
+
+
+# Addr8, Reg8 (total size 2)
+# Example: <JmpFalse>: <Addr8: 18, Reg8: 1>  # Address: 00000025
+class JmpFalse(JmpTrue):
+    def build_condition(self, value: Expression) -> Expression:
         return UnaryExpression(UnaryOperator.LOGICAL_NOT, value)
 
 
-class JmpUndefined(ConditionalJump):
-    def build_condition(self, value: Expression, *extra: Any) -> Expression:
+# Addr32, Reg8 (total size 5)
+# Example: <JmpFalseLong>: <Addr32: 143, Reg8: 5>  # Address: 000000d9
+class JmpFalseLong(JmpFalse):
+    pass
+
+
+# Addr8, Reg8 (total size 2)
+# Example: <JmpUndefined>: <Addr8: 38, Reg8: 5>  # Address: 0000004e
+class JmpUndefined(JmpTrue):
+    def build_condition(self, value: Expression) -> Expression:
         return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, UndefinedLiteral())
 
 
-class JmpTrueLong(JmpTrue): pass
-
-
-class JmpFalseLong(JmpFalse): pass
-
-
-class JmpUndefinedLong(JmpUndefined): pass
+# Addr32, Reg8 (total size 5)
+class JmpUndefinedLong(JmpUndefined):
+    pass
 
 
 # --------------------------------------------------------------------------
-# Builtin Conditional Jumps
+# Builtin conditional jumps
 # --------------------------------------------------------------------------
-class BuiltinConditionalJump(ConditionalJumpBase, ABC):
-    def parse(self, entry: OpcodeEntry) -> tuple[int, int, tuple]:
-        offset, builtin, reg = _parse_builtin(entry)
-        return offset, reg, (builtin,)
-
-
+# Addr8, UInt8, Reg8 (total size 3)
 # DEFINE_OPCODE_3(JmpBuiltinIs, Addr8, UInt8, Reg8)
-class JmpBuiltinIs(BuiltinConditionalJump):
-    def build_condition(self, value: Expression, *extra: Any) -> Expression:
-        builtin = extra[0]
-        return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, Identifier(name=f"builtin_{builtin}"))
+# Example:
+class JmpBuiltinIs(OpcodeHandler):
+    """
+    `JmpBuiltinIs` conditional jump, and shared base implementation for
+    `JmpBuiltinIsNot`. See `Add` in `handlers/arithmetic/Binary.py` for
+    why a real opcode is used as the shared base instead of a separate
+    non-opcode `ABC` class.
+    """
+
+    ARGUMENTS = ArgsPattern(sequence(ADDR, UINT8, REG), "Addr8, UInt8, Reg8")
+
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
+
+        offset, builtin, reg = map(int, match.groups())
+
+        target = ctx.entry.target_address or (ctx.entry.address + offset)
+        ctx.analysis.gotoList.append(target)
+
+        builtin_name = f"builtin_{builtin}"
+        if ctx.entry.builtin_function is not None:
+            builtin_name = ctx.entry.builtin_function.name
+
+        expression = self.get_register_expression(ctx.analysis, reg)
+        builtin_expression = Identifier(name=builtin_name)
+
+        condition = self.build_condition(expression, builtin_expression)
+
+        terminator = TerminatorConditionalBranch(condition=condition, target=target)
+
+        # pure control flow: no operand value of its own
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
+
+        return result
+
+    def build_condition(self, value: Expression, builtin: Expression) -> Expression:
+        return BinaryExpression(value, BinaryOperator.STRICT_EQUAL, builtin)
 
 
-# DEFINE_OPCODE_3(JmpBuiltinIsNot, Addr8, UInt8, Reg8)
-class JmpBuiltinIsNot(BuiltinConditionalJump):
-    def build_condition(self, value: Expression, *extra: Any) -> Expression:
-        builtin = extra[0]
-        return BinaryExpression(value, BinaryOperator.STRICT_NOT_EQUAL, Identifier(name=f"builtin_{builtin}"))
-
-
+# Addr32, UInt8, Reg8 (total size 6)
 # DEFINE_OPCODE_3(JmpBuiltinIsLong, Addr32, UInt8, Reg8)
-class JmpBuiltinIsLong(JmpBuiltinIs): pass
+# Example:
+class JmpBuiltinIsLong(JmpBuiltinIs):
+    pass
 
 
+# Addr8, UInt8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(JmpBuiltinIsNot, Addr8, UInt8, Reg8)
+# Example:
+class JmpBuiltinIsNot(JmpBuiltinIs):
+    def build_condition(self, value: Expression, builtin: Expression) -> Expression:
+        return BinaryExpression(value, BinaryOperator.STRICT_NOT_EQUAL, builtin)
+
+
+# Addr32, UInt8, Reg8 (total size 6)
 # DEFINE_OPCODE_3(JmpBuiltinIsNotLong, Addr32, UInt8, Reg8)
-class JmpBuiltinIsNotLong(JmpBuiltinIsNot): pass
+# Example:
+class JmpBuiltinIsNotLong(JmpBuiltinIsNot):
+    pass
 
 
 # --------------------------------------------------------------------------
-# TypeOf Conditional Jump
+# TypeOf conditional jumps
 # --------------------------------------------------------------------------
-class TypeOfConditionalJump(ConditionalJumpBase, ABC):
-    def parse(self, entry: OpcodeEntry) -> tuple[int, int, tuple]:
-        offset, reg, type_id = _parse_typeof(entry)
-        type_name = TYPEOF_MAP.get(type_id, f"<{type_id}>")
-        return offset, reg, (type_name,)
 
-
+# /// Jump if the type matches the TypeOfIsTypes in Arg3.
+# /// Arg1 is the target.
+# /// Arg2 is the value to test.
+# /// Arg3 is the TypeOfIsTypes (see Typeof.h).
 # DEFINE_OPCODE_3(JmpTypeOfIs, Addr32, Reg8, UInt16)
-class JmpTypeOfIs(TypeOfConditionalJump):
-    def build_condition(self, value: Expression, *extra: Any) -> Expression:
-        type_name = extra[0]
-        return BinaryExpression(
-            UnaryExpression(UnaryOperator.TYPEOF, value),
-            BinaryOperator.STRICT_EQUAL,
-            StringLiteral(type_name),
+
+# Addr32, Reg8, UInt16 (total size 7)
+# DEFINE_OPCODE_3(JmpTypeOfIs, Addr32, Reg8, UInt16)
+# Example: <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000031
+class JmpTypeOfIs(OpcodeHandler):
+    """Jump if the type matches the TypeOfIsTypes in Arg3."""
+
+    TYPEOF_FLAGS = {
+        1 << 0: "undefined",
+        1 << 1: "null",
+        1 << 2: "boolean",
+        1 << 3: "number",
+        1 << 4: "string",
+        1 << 5: "symbol",
+        1 << 6: "bigint",
+        1 << 7: "function",
+        1 << 8: "object",
+    }
+
+    ARGUMENTS = ArgsPattern(sequence(ADDR, REG, UINT16), "Addr32, Reg8, UInt16")
+
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
+
+        offset, reg, type_id = map(int, match.groups())
+
+        target = ctx.entry.target_address if ctx.entry.target_address is not None else (ctx.entry.address + offset)
+        ctx.analysis.gotoList.append(target)
+
+        condition = self.build_typeof_condition(
+            self.get_register_expression(ctx.analysis, reg), type_id
         )
+
+        terminator = TerminatorConditionalBranch(condition=condition, target=target)
+
+        # pure control flow: no operand value of its own
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
+        ctx.analysis.add_result(result)
+
+        return result
+
+    @classmethod
+    def build_typeof_condition(cls, value: Expression, mask: int) -> Expression:
+        typeof_expr = UnaryExpression(UnaryOperator.TYPEOF, value)
+        conditions = [
+            BinaryExpression(typeof_expr, BinaryOperator.STRICT_EQUAL, StringLiteral(name))
+            for bit, name in cls.TYPEOF_FLAGS.items()
+            if mask & bit
+        ]
+
+        if not conditions:
+            return BinaryExpression(typeof_expr, BinaryOperator.STRICT_EQUAL, StringLiteral(f"<mask:{mask}>"))
+
+        result = conditions[0]
+        for cond in conditions[1:]:
+            result = BinaryExpression(result, LogicalOperator.OR, cond)
+
+        return result

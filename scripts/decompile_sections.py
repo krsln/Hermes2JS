@@ -3,8 +3,8 @@ import argparse
 import logging
 from pathlib import Path
 
+from hermes_decompiler.core.io import FileOperations
 from hermes_decompiler.core.logging import configure_logging, get_logger
-from hermes_decompiler.io import get_section_files, process_section
 
 logger = get_logger(__name__)
 
@@ -28,6 +28,7 @@ def main() -> None:
     DESC_END = "Last section number to process."
     DESC_STRICT = "Fail on first opcode error."
     DESC_NO_VERBOSE = "Disable source comments."
+    DESC_NO_RAW = "Disable raw files."
     DESC_LOG_LEVEL = "Logging verbosity."
 
     parser.add_argument("-i", "--input", required=True, type=Path, help=DESC_INPUT)
@@ -36,9 +37,11 @@ def main() -> None:
     parser.add_argument("--end", type=int, help=DESC_END)
     parser.add_argument("--strict", action="store_true", help=DESC_STRICT)
     parser.add_argument("--no-verbose", action="store_false", dest="verbose", help=DESC_NO_VERBOSE)
+    parser.add_argument("--no-raw", action="store_false", dest="raw", help=DESC_NO_RAW)
     parser.add_argument("--log-level", default="INFO", choices=LOG_LEVELS, help=DESC_LOG_LEVEL)
 
     parser.set_defaults(verbose=True)
+    parser.set_defaults(raw=True)
 
     args = parser.parse_args()
 
@@ -57,7 +60,7 @@ def main() -> None:
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    files = get_section_files(
+    files = FileOperations.get_section_files(
         str(input_dir),
         str(output_dir),
         start=args.start,
@@ -74,7 +77,10 @@ def main() -> None:
 
     for filename, section_index in files:
         file_path = input_dir / filename
-        process_section(section_index, str(file_path), str(output_dir), args.verbose, args.strict)
+        FileOperations.process_section(
+            section_index, str(file_path), str(output_dir),
+            args.verbose, args.raw, args.strict
+        )
 
     logger.info("Conversion completed successfully")
 

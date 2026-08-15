@@ -2,7 +2,7 @@ from hermes_decompiler.core.Exceptions import MetadataParseError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.core.PipelineContext import PipelineContext
 from hermes_decompiler.core.PipelineStage import PipelineStage
-from hermes_decompiler.parsing import FunctionMetadataParser
+from hermes_decompiler.frontend.parsing import FunctionMetadataParser
 
 logger = get_logger(__name__)
 

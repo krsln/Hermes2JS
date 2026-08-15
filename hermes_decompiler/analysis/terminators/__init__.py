@@ -1,4 +1,6 @@
-from .Terminator import *
+from .Terminator import (
+    Terminator, TerminatorConditionalBranch, TerminatorThrow, TerminatorSwitch, TerminatorReturn, TerminatorJump
+)
 
 __all__ = [
     "Terminator",

@@ -1,7 +1,6 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, FUNCTION_ID, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, FUNCTION_ID
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt16 (function_id) (total size 4)
@@ -10,16 +9,17 @@ from hermes_decompiler.runtime import HermesAnalysis
 class CreateGenerator(OpcodeHandler):
     """Create a generator object."""
 
-    _PATTERN = sequence(REG, REG, FUNCTION_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, FUNCTION_ID), "Reg8, Reg8, UInt16 (function_id)")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, env_reg, function_id = map(int, match.groups())
-        env = self.get_register_expression(analysis, env_reg)
-        func_name = (entry.function.name if entry.function and entry.function.name else f"function_{function_id}")
+        env = self.get_register_expression(ctx.analysis, env_reg)
+        func_name = (
+            ctx.entry.function.name if ctx.entry.function and ctx.entry.function.name else f"function_{function_id}")
 
         # Same named pseudo-call convention as createThis()/getEnvironment():
         # actually instantiating a generator object isn't plain JS syntax.
@@ -28,8 +28,8 @@ class CreateGenerator(OpcodeHandler):
             arguments=(env, Identifier(name=func_name)),
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -48,18 +48,18 @@ class CreateGeneratorLongIndex(CreateGenerator):
 class CreateGeneratorClosure(OpcodeHandler):
     """Create a closure for a GeneratorFunction."""
 
-    _PATTERN = sequence(REG, REG, FUNCTION_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, FUNCTION_ID), "Reg8, Reg8, UInt16 (function_id)")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, env_reg, function_id = map(int, match.groups())
 
         func_name = (
-            entry.function.name
-            if entry.function and entry.function.name
+            ctx.entry.function.name
+            if ctx.entry.function and ctx.entry.function.name
             else f"function_{function_id}"
         )
 
@@ -68,8 +68,8 @@ class CreateGeneratorClosure(OpcodeHandler):
         # captured environment register is dropped (see CreateClosure.py).
         expression = Identifier(name=func_name)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

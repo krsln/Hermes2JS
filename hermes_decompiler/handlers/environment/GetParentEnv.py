@@ -1,7 +1,6 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, NumericLiteral
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, UInt8 (total size 2)
@@ -10,12 +9,12 @@ from hermes_decompiler.runtime import HermesAnalysis
 class GetParentEnvironment(OpcodeHandler):
     """Fetch an environment N levels up the *enclosing* scope chain."""
 
-    _PATTERN = sequence(REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT8), "Reg8, UInt8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, UInt8 arguments")
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, levels = map(int, match.groups())
 
@@ -24,7 +23,7 @@ class GetParentEnvironment(OpcodeHandler):
             arguments=(NumericLiteral(value=levels),),
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result

@@ -1,7 +1,6 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, STRING_ID, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, STRING_ID, UINT8
 from hermes_decompiler.ir.expressions import Identifier, MemberExpression, CallExpression, StringLiteral
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
@@ -10,22 +9,22 @@ from hermes_decompiler.runtime import HermesAnalysis
 class GetById(OpcodeHandler):
     """Get property by string ID: obj[propName]"""
 
-    _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, STRING_ID), "Reg8, Reg8, UInt8, UInt16 (string_id)")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
-        prop_name = entry.identifier_name or f"string_{string_id}"
-        receiver = self.get_register_expression(analysis, obj_reg)
+        prop_name = ctx.entry.identifier_name or f"string_{string_id}"
+        receiver = self.get_register_expression(ctx.analysis, obj_reg)
 
         expression = MemberExpression(receiver=receiver, member=Identifier(name=prop_name))
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -50,20 +49,18 @@ class GetByIdLong(GetById):
 class GetByIdWithReceiverLong(OpcodeHandler):
     """obj[prop] lookup with an explicit receiver, e.g. super.prop / Reflect.get semantics."""
 
-    _PATTERN = sequence(REG, REG, UINT8, REG, STRING_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, REG, STRING_ID), "Reg8, Reg8, UInt8, Reg8, UInt32 (string_id)")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, UInt8, Reg8, string_id arguments"
-            )
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, obj_reg, _cache, receiver_reg, string_id = map(int, match.groups())
 
-        prop_name = entry.identifier_name or f"string_{string_id}"
-        obj = self.get_register_expression(analysis, obj_reg)
-        receiver = self.get_register_expression(analysis, receiver_reg)
+        prop_name = ctx.entry.identifier_name or f"string_{string_id}"
+        obj = self.get_register_expression(ctx.analysis, obj_reg)
+        receiver = self.get_register_expression(ctx.analysis, receiver_reg)
 
         callee = MemberExpression(
             receiver=Identifier(name="Reflect"),
@@ -76,8 +73,8 @@ class GetByIdWithReceiverLong(OpcodeHandler):
             arguments=(obj, StringLiteral(value=prop_name), receiver),
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

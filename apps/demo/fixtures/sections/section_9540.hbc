@@ -14,7 +14,7 @@ Bytecode listing:
 ==> 00000020: <PrivateIsIn>: <Reg8: 0, Reg8: 4, Reg8: 3, Reg8: 0>
 ==> 00000025: <JmpTrue>: <Addr8: 11, Reg8: 0>  # Address: 00000030
 ==> 00000028: <LoadConstString>: <Reg8: 7, string_id: 3847>  # String: 'Private element not found' (String)
-==> 0000002c: <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
+==> 0000002c: <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
 ==> 00000030: <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 6>
 ==> 00000034: <GetOwnPrivateBySym>: <Reg8: 3, Reg8: 3, UInt8: 1, Reg8: 2>
 ==> 00000039: <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)

@@ -1,12 +1,11 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
     CallExpression,
     Identifier,
     MemberExpression,
 )
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, Reg8, UInt8 (total size 4)
@@ -15,19 +14,17 @@ from hermes_decompiler.runtime import HermesAnalysis
 class CallWithNewTarget(OpcodeHandler):
     """Call a function with an explicit `new.target`, e.g. super(...) plumbing."""
 
-    _PATTERN = sequence(REG, REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, UInt8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, Reg8, UInt8 arguments"
-            )
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, func_reg, new_target_reg, num_args = map(int, match.groups())
 
-        callee = self.get_register_expression(analysis, func_reg)
-        new_target = self.get_register_expression(analysis, new_target_reg)
+        callee = self.get_register_expression(ctx.analysis, func_reg)
+        new_target = self.get_register_expression(ctx.analysis, new_target_reg)
 
         arg_regs = list(range(func_reg - num_args, func_reg))
         arguments = ArrayExpression(elements=tuple(Identifier(name=f"r{r}") for r in arg_regs))
@@ -43,8 +40,8 @@ class CallWithNewTarget(OpcodeHandler):
             arguments=(callee, arguments, new_target),
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -53,3 +50,4 @@ class CallWithNewTarget(OpcodeHandler):
 # DEFINE_OPCODE_4(CallWithNewTargetLong, Reg8, Reg8, Reg8, Reg8)
 class CallWithNewTargetLong(CallWithNewTarget):
     _PATTERN = sequence(REG, REG, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, REG), "Reg8, Reg8, Reg8, Reg8")

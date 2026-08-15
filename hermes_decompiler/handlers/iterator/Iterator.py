@@ -1,7 +1,6 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, sequence, UINT8
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8 (total size 2)
@@ -10,23 +9,23 @@ from hermes_decompiler.runtime import HermesAnalysis
 class IteratorBegin(OpcodeHandler):
     """Begin iteration over an iterable."""
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         iterator_reg, iterable_reg = map(int, match.groups())
-        iterable = self.get_register_expression(analysis, iterable_reg)
+        iterable = self.get_register_reference(ctx.analysis, iterable_reg)
 
         # Named pseudo-call, same convention as getEnvironment()/
         # HermesPropertyIterator() elsewhere - GetIterator() is not
         # real JS syntax but a VM-level operation.
         expression = CallExpression(callee=Identifier(name="GetIterator"), arguments=(iterable,))
 
-        result = OpcodeResult(entry, value=expression, dest_reg=iterator_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=iterator_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -37,21 +36,21 @@ class IteratorBegin(OpcodeHandler):
 class IteratorNext(OpcodeHandler):
     """Advance iterator."""
 
-    _PATTERN = sequence(REG, REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         result_reg, iterator_reg, _ = map(int, match.groups())
-        iterator = self.get_register_expression(analysis, iterator_reg)
+        iterator = self.get_register_expression(ctx.analysis, iterator_reg)
 
         callee = MemberExpression(iterator, Identifier(name="next"))
         expression = CallExpression(callee=callee, arguments=())
 
-        result = OpcodeResult(entry, value=expression, dest_reg=result_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=result_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -71,22 +70,22 @@ class IteratorClose(OpcodeHandler):
     real cleanup call silently vanished from the generated JS.
     """
 
-    _PATTERN = sequence(REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT8), "Reg8, UInt8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         iterator_reg = int(match.group(1))
         # match.group(2) is the ignore-inner-exception flag - not
         # needed for rendering `.return()` itself.
-        iterator = self.get_register_expression(analysis, iterator_reg)
+        iterator = self.get_register_expression(ctx.analysis, iterator_reg)
 
         callee = MemberExpression(iterator, Identifier(name="return"))
         expression = CallExpression(callee=callee, arguments=())
 
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result

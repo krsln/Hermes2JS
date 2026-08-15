@@ -1,6 +1,20 @@
+from dataclasses import dataclass
 from typing import Dict, Any, Optional, List
 
-from hermes_decompiler.opcode import OpcodeResult
+from hermes_decompiler.analysis.transforms.structurers import SequenceStructurer
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.ir import Expression
+
+
+@dataclass
+class RegisterState:
+    definition: Optional[OpcodeResult]
+    version: int = 0
+    reads: int = 0
+
+    @property
+    def value(self) -> Optional[Expression]:
+        return self.definition.value if self.definition else None
 
 
 class HermesAnalysis:
@@ -20,7 +34,7 @@ class HermesAnalysis:
         conversions - see core/registry.py for how cross-section data
         (function names) is shared explicitly instead.
         """
-        self.registers: dict[str, OpcodeResult] = {}
+        self.registers: dict[str, RegisterState] = {}
         self.metadataList = []
         self.metadata = metadata if metadata is not None else {}
 
@@ -30,30 +44,23 @@ class HermesAnalysis:
         self.results: List[OpcodeResult] = []
 
     def add_result(self, result: OpcodeResult) -> None:
-        """
-        Register a single `OpcodeResult` produced by a handler.
-
-        Handlers now construct exactly one `OpcodeResult` per opcode and
-        pass that same instance both here and as their `handle()` return
-        value. Previously `add_result(entry, variable, goto, extra_gotos)`
-        built its own internal `OpcodeResult` while the handler
-        separately constructed and returned a second, different
-        `OpcodeResult` for the same opcode - the two were only kept in
-        sync by convention.
-        """
-
         self.results.append(result)
 
-        if result.name:
-            self.registers[result.name] = result
+        if not result.name:
+            return
 
-    def generate_js(self, verbose: bool = False) -> list[str]:
-        return self.generate_js_v1(verbose)
+        prev = self.registers.get(result.name)
+        version = prev.version + 1 if prev else 0
 
-    def generate_js_v1(self, verbose: bool = False) -> list[str]:
+        self.registers[result.name] = RegisterState(definition=result, version=version)
+
+    def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
+        return self.generate_js_v1(verbose, raw)
+
+    def generate_js_v1(self, verbose: bool = False, raw: bool = False) -> list[str]:
         from hermes_decompiler.analysis.cfg import CFG
         from hermes_decompiler.analysis.transforms import StructuralAnalyzer
-        from hermes_decompiler.emit import JSEmitter
+        from hermes_decompiler.backend.emit import JSEmitter
 
         cfg = CFG.from_results(
             self.results,
@@ -73,6 +80,9 @@ class HermesAnalysis:
         # by the time build() runs.
         cfg.compute_loops()
 
-        root = StructuralAnalyzer(cfg).build()
+        if raw:
+            root = SequenceStructurer(cfg).run()
+        else:
+            root = StructuralAnalyzer(cfg).build()
 
         return JSEmitter(verbose).emit(root)

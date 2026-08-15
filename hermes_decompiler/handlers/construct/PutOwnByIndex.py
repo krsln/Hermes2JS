@@ -1,4 +1,5 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT32, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
@@ -7,8 +8,6 @@ from hermes_decompiler.ir.expressions import (
     NumericLiteral,
     UndefinedLiteral,
 )
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt8 (total size 3)
@@ -17,20 +16,17 @@ from hermes_decompiler.runtime import HermesAnalysis
 class PutOwnByIndex(OpcodeHandler):
     """Set an array element by (statically known) numeric index."""
 
-    _PATTERN = sequence(REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8), "Reg8, Reg8, UInt8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
-        # Try both UInt8 and UInt32 variants
-        match = self._PATTERN.match(entry.args.strip())  # or  self._PATTERN_LONG.match(entry.args.strip())
-
-        if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8 and UInt8/UInt32 arguments")
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, value_reg, index = map(int, match.groups())
 
-        value = self.get_register_expression(analysis, value_reg)
-        array = self.get_register_expression(analysis, dest_reg)
+        value = self.get_register_expression(ctx.analysis, value_reg)
+        array = self.get_register_expression(ctx.analysis, dest_reg)
 
         if isinstance(array, ArrayExpression):
             # ArrayExpression is frozen/immutable: pad-and-replace has to
@@ -54,8 +50,8 @@ class PutOwnByIndex(OpcodeHandler):
                 right=value,
             )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -65,4 +61,4 @@ class PutOwnByIndex(OpcodeHandler):
 class PutOwnByIndexL(PutOwnByIndex):
     """Long index variant (UInt32)."""
 
-    _PATTERN = sequence(REG, REG, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT32), "Reg8, Reg8, UInt32")

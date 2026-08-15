@@ -10,7 +10,7 @@ from hermes_decompiler.ir.Operators import (
     UnaryOperator,
     UpdateOperator,
 )
-from ._Base import Expression
+from ._base import Expression
 
 __all__ = [
     "UnaryExpression",

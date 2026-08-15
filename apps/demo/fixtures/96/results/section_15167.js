@@ -1,4 +1,4 @@
-async function* anon_15167(param0, param1) {
+async function* anon_15167(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
     // StartGenerator
@@ -6,7 +6,9 @@ async function* anon_15167(param0, param1) {
     // USED → r5 = param1;
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
-    if (r1) {
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // USED → r1 = __resumeIsReturn;
+    if (__resumeIsReturn) {
         // ──────────────── Block 10 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
@@ -23,9 +25,7 @@ async function* anon_15167(param0, param1) {
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 4786>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/start' (String)
         // USED → r2 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/start";
         // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-        r2 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/start")
-        // CODE → <LoadConstZero>: <Reg8: 4>
-        // USED → r4 = 0;
+        console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/start")
         // CODE → <Less>: <Reg8: 6, Reg8: 4, Reg8: 5>
         // USED → r6 = 0 < param1;
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 4783>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/skip' (String)
@@ -41,7 +41,7 @@ async function* anon_15167(param0, param1) {
             // CODE → <LoadConstString>: <Reg8: 1, string_id: 4782>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/end' (String)
             // USED → r1 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/end";
             // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-            r1 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/end")
+            console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/end")
             // CODE → <LoadConstUndefined>: <Reg8: 1>
             // USED → r1 = undefined;
             // CODE → <CompleteGenerator>: <>
@@ -49,36 +49,35 @@ async function* anon_15167(param0, param1) {
             // CODE → <Ret>: <Reg8: 1>
             return undefined;
         } else {
-            // LOOP → START (while)
-            while (true) {
+            // LOOP → START (for)
+            for (r4 = 0; r4 < param1; r4 = r6 + 1) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 4>
                 // USED → r6 = 0;
-                // CODE → <JStrictEqual>: <Addr8: 21, Reg8: 6, Reg8: 2>  # Address: 00000048
-                if (0 === 2) goto label_72;
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>
-                // USED → r7 = 0 * 0;
-                // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003f
-                goto label_63;
-                // ──────────────── Block 5 ──────────────── 
-                // CODE → <ResumeGenerator>: <Reg8: 7, Reg8: 8>
-                // USED → r7 = await yield;
-                if (!r8) {
-                    // ──────────────── Block 8 ──────────────── 
-                    // CODE → <Inc>: <Reg8: 4, Reg8: 6>
-                    // USED → r4 = 0 + 1;
-                    // CODE → <JLess>: <Addr8: -43, Reg8: 4, Reg8: 5>  # Address: 00000030
-                    if (0 + 1 < param1) goto label_48;
-                } else {
+                // → r6 = 0
+                if (r6 === 2) {
                     // ──────────────── Block 7 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                     // USED → r8 = globalThis.console;
                     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
                     // USED → r7 = globalThis.console.log;
                     // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 8, Reg8: 3>
-                    r7 = globalThis.console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip")
+                    console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/skip")
+                } else {
+                    // ──────────────── Block 3 ──────────────── 
+                    // CODE → <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>
+                    // USED → r7 = 0 * 0;
+                    // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000003f
+                    goto label_63;
+                    // ──────────────── Block 5 ──────────────── 
+                    // CODE → <ResumeGenerator>: <Reg8: 7, Reg8: 8>
+                    // USED → r7 = await yield;
+                    // CODE → <ResumeGenerator>: <Reg8: 7, Reg8: 8>
+                    // USED → r8 = __resumeIsReturn;
+                    // CODE → <JmpFalse>: <Addr8: 22, Reg8: 8>  # Address: 00000058
+                    if (!__resumeIsReturn) goto label_88;
                 }
+                // ──────────────── Block 8 ──────────────── 
             }
             // LOOP → END
             // ──────────────── Block 4 ──────────────── 

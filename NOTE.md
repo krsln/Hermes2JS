@@ -30,17 +30,17 @@ python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py apps/tes
 
 ```shell
 find . -name "hermesc" -type f
-./HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc hermesc -version
-./HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
+./projects/hermes-test-sdk-55/node_modules/hermes-compiler/hermesc/osx-bin/hermesc hermesc -version
+./projects/hermes-test-sdk-55/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
     -b \
     -dump-bytecode \
-    "apps/testy/index.android.bundle" > "apps/testy/output/hermesc-output.hbc"
+    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hbc"
 
-./HermesTestApp/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
+./projects/hermes-test-sdk-55/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
     -b \
     -dump-bytecode \
     -pretty \
-    "apps/testy/index.android.bundle" > "apps/testy/output/hermesc-output.hbc"
+    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hbc"
 ```
 
 ### Notes: Hermes JavaScript bytecode, version 98

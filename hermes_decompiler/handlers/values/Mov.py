@@ -1,6 +1,5 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 
 
 # Reg8, Reg8 (total size 2)
@@ -9,19 +8,19 @@ from hermes_decompiler.runtime import HermesAnalysis
 class Mov(OpcodeHandler):
     """Move value between registers: rX = rY"""
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8 (total size 2)")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, src_reg = map(int, match.groups())
 
-        expression = self.get_register_expression(analysis, src_reg)
+        expression = self.get_register_expression(ctx.analysis, src_reg)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 

@@ -1,7 +1,6 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, STRING_ID, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, STRING_ID
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, StringLiteral
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, UInt32 (string_id) (total size 5)
@@ -10,23 +9,23 @@ from hermes_decompiler.runtime import HermesAnalysis
 class CreatePrivateName(OpcodeHandler):
     """Create a private-name symbol: Symbol('#fieldName')."""
 
-    _PATTERN = sequence(REG, STRING_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, STRING_ID), "Reg8, UInt32 (string_id)")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, string_id arguments")
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, string_id = map(int, match.groups())
 
-        name = entry.identifier_name or f"string_{string_id}"
+        name = ctx.entry.identifier_name or f"string_{string_id}"
 
         expression = CallExpression(
             callee=Identifier(name="Symbol"),
             arguments=(StringLiteral(value=name),),
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result

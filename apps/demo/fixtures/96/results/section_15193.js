@@ -1,10 +1,12 @@
-async function* anon_15193(param0) {
+async function* anon_15193() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
     // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
-    if (r1) {
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // USED → r1 = __resumeIsReturn;
+    if (__resumeIsReturn) {
         // ──────────────── Block 18 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
@@ -21,7 +23,7 @@ async function* anon_15193(param0) {
         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4759>  # String: '__BC:Functions/AsyncTests/callAsyncTests/start' (String)
         // USED → r1 = "__BC:Functions/AsyncTests/callAsyncTests/start";
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        r1 = globalThis.console.log("__BC:Functions/AsyncTests/callAsyncTests/start")
+        console.log("__BC:Functions/AsyncTests/callAsyncTests/start")
         // CODE → <GetEnvironment>: <Reg8: 4, UInt8: 2>
         // USED → r4 = getEnvironment(2);
         // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 3>
@@ -38,7 +40,9 @@ async function* anon_15193(param0) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
         // USED → r1 = await yield;
-        if (globalThis.console.log) {
+        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
+        // USED → r2 = __resumeIsReturn;
+        if (__resumeIsReturn) {
             // ──────────────── Block 17 ──────────────── 
             // CODE → <CompleteGenerator>: <>
             // CompleteGenerator
@@ -58,7 +62,9 @@ async function* anon_15193(param0) {
             // ──────────────── Block 6 ──────────────── 
             // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
             // USED → r2 = await yield;
-            if (globalThis.console) {
+            // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
+            // USED → r3 = __resumeIsReturn;
+            if (__resumeIsReturn) {
                 // ──────────────── Block 16 ──────────────── 
                 // CODE → <CompleteGenerator>: <>
                 // CompleteGenerator
@@ -71,16 +77,18 @@ async function* anon_15193(param0) {
                 // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
                 // USED → r3 = [1, 2, 3];
                 // CODE → <Call2>: <Reg8: 3, Reg8: 7, Reg8: 5, Reg8: 3>
-                // USED → r3 = await getEnvironment(2)[7].call(undefined, [1, 2, 3]);
+                // USED → r3 = await getEnvironment(2)[7].call(undefined, r3);
                 // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000005e
                 goto label_94;
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → <Ret>: <Reg8: 3>
-                return await getEnvironment(2)[7].call(undefined, [1, 2, 3]);
+                return await getEnvironment(2)[7].call(undefined, r3);
                 // ──────────────── Block 9 ──────────────── 
                 // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 7>
                 // USED → r3 = await yield;
-                if (getEnvironment(2)[7]) {
+                // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 7>
+                // USED → r7 = __resumeIsReturn;
+                if (__resumeIsReturn) {
                     // ──────────────── Block 15 ──────────────── 
                     // CODE → <CompleteGenerator>: <>
                     // CompleteGenerator
@@ -100,7 +108,9 @@ async function* anon_15193(param0) {
                     // ──────────────── Block 12 ──────────────── 
                     // CODE → <ResumeGenerator>: <Reg8: 4, Reg8: 7>
                     // USED → r4 = await yield;
-                    if (getEnvironment(2)[7]) {
+                    // CODE → <ResumeGenerator>: <Reg8: 4, Reg8: 7>
+                    // USED → r7 = __resumeIsReturn;
+                    if (__resumeIsReturn) {
                         // ──────────────── Block 14 ──────────────── 
                         // CODE → <CompleteGenerator>: <>
                         // CompleteGenerator
@@ -115,7 +125,7 @@ async function* anon_15193(param0) {
                         // CODE → <LoadConstString>: <Reg8: 6, string_id: 2895>  # String: '__BC:Functions/AsyncTests/callAsyncTests/end' (String)
                         // USED → r6 = "__BC:Functions/AsyncTests/callAsyncTests/end";
                         // CODE → <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
-                        r6 = globalThis.console.log("__BC:Functions/AsyncTests/callAsyncTests/end")
+                        console.log("__BC:Functions/AsyncTests/callAsyncTests/end")
                         // CODE → <CompleteGenerator>: <>
                         // CompleteGenerator
                         // CODE → <Ret>: <Reg8: 5>

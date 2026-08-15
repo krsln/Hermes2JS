@@ -1,7 +1,6 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, FUNCTION_ID, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, FUNCTION_ID
 from hermes_decompiler.ir.expressions import Identifier
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt16 (function_id) (total size 4)
@@ -12,32 +11,40 @@ class CreateClosure(OpcodeHandler):
     its display name from the function table (or a `function_N` fallback
     if the id isn't in the table)."""
 
-    _PATTERN = sequence(REG, REG, FUNCTION_ID)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, FUNCTION_ID), "Reg8, Reg8, UInt16 (function_id)")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8 and function_id arguments")
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, value_reg, func_id = (int(x) for x in match.groups())
 
-        func_name = (
-            entry.function.name
-            if entry.function and entry.function.name
-            else f"function_{func_id}"
-        )
+        function_info = ctx.entry.function
 
-        # NOTE: `environment_register`/`environment` (the old
-        # `ClosureValue`'s comment about which env the closure captures)
-        # is dropped here. In real JS, a closure's environment capture
-        # is implicit lexical scoping, not syntax - a plain reference to
-        # the function name is the correct AST shape. The captured env
-        # register is still visible in verbose mode via the `// CODE ->`
-        # bytecode comment if needed for debugging.
-        expression = Identifier(name=func_name)
+        if function_info is not None:
+            params = (
+                ", ".join(f"param{i}" for i in range(1, function_info.param_count))
+                if function_info.param_count is not None
+                else ""
+            )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+            name = function_info.name or f"function_{func_id}"
+            function = f"{name}({params})"
+        else:
+            function = f"function_{func_id}"
+
+        # NOTE: The environment register is intentionally not represented in
+        # the JavaScript expression. It identifies the lexical environment
+        # captured by the closure at the bytecode level, while lexical
+        # environment capture is implicit in JavaScript syntax.
+        #
+        # Therefore, the closure is represented by its function reference;
+        # the captured environment does not require a separate AST node.
+        expression = Identifier(name=function)
+
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -45,5 +52,5 @@ class CreateClosure(OpcodeHandler):
 # Reg8, Reg8, UInt32 (function_id) (total size 6)
 # DEFINE_OPCODE_3(CreateClosureLongIndex, Reg8, Reg8, UInt32)
 class CreateClosureLongIndex(CreateClosure):
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        return super().handle(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        return super().handle(ctx)

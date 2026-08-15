@@ -3,9 +3,9 @@ from __future__ import annotations
 from typing import Dict, List, Set
 
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.opcode import OpcodeResult
-from .BasicBlock import BasicBlock
-from .CFG import CFG
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
+from hermes_decompiler.analysis.cfg.CFG import CFG
 from ..terminators import (
     TerminatorConditionalBranch, TerminatorJump, TerminatorSwitch, TerminatorReturn, TerminatorThrow
 )
@@ -47,7 +47,7 @@ class CFGBuilder:
         exception_handlers = exception_handlers or []
 
         self.address_to_index = {
-            r.opcode.address: i
+            r.entry.address: i
             for i, r in enumerate(results)
         }
 
@@ -154,7 +154,21 @@ class CFGBuilder:
 
             address = result.address
 
-            if address in leaders:
+            # A single instruction (e.g. ResumeGenerator) can now yield more
+            # than one OpcodeResult sharing the same `entry.address` (dest_reg
+            # + flag_reg). Only the FIRST result at a given address should
+            # start a new block; subsequent results at that same address are
+            # additional instructions in the block already opened for it.
+            # Without this guard, each same-address result re-triggers the
+            # `address in leaders` branch, opening a second BasicBlock at the
+            # same address and overwriting `address_to_block[address]` to
+            # point at that later block - any real jump target aimed at this
+            # address then gets misdirected to the second block, orphaning
+            # the first and confusing loop detection into inventing a
+            # spurious back-edge / while(true).
+            is_new_address = current_block is None or current_block.address != address
+
+            if address in leaders and is_new_address:
 
                 current_block = BasicBlock(block_id, address)
 
@@ -167,25 +181,9 @@ class CFGBuilder:
 
                 block_id += 1
 
-            # NOTE (fix): terminator-bearing results (Ret, Throw, Jmp,
-            # JCompare, SwitchImm) used to be routed *only* into
-            # `block.terminator` and excluded from `block.instructions`,
-            # which meant Printer/StatementBuilder - which only ever
-            # walk `block.instructions` - could never render them. Any
-            # terminator the structurers didn't explicitly consume
-            # (only ConditionalBranch is folded into if/while
-            # conditions) was silently dropped: `Return`/`Throw` are
-            # *never* consumed by a structurer, so every `return`/
-            # `throw` in the program was being lost. Terminator-bearing
-            # results are now always added to `instructions` too, so
-            # they always get a chance to render (via `result.statement`
-            # - see Ret.py/Throw.py) or at minimum keep their verbose
-            # `// CODE ->` trace line; `block.terminator` below is still
-            # populated for the structurers' own CFG-level analysis.
             if current_block:
 
                 if result.terminator:
-                    # TODO: blockta irden fazla terminator varsa?
 
                     if current_block.terminator is None:
                         current_block.terminator = result.terminator
@@ -200,9 +198,21 @@ class CFGBuilder:
                             result.terminator,
                             result.handler,
                         )
+                        # Hermes 98 is not stable, so just warning to not raise error for now
                         # raise RuntimeError(f"Block {current_block.id} already has a terminator.")
                 # else:
                 current_block.add_instruction(result)
+
+                # reg_definitions'ı aynı tek geçişte, program-order sırasıyla doldur.
+                # dest_reg is None -> bu opcode hiçbir register'a yazmıyor (örn. Jmp).
+                # value is None ile birlikte gelen dest_reg (varsa) şu an göz ardı
+                # ediliyor: LoopConditionRegionPass zaten yalnızca `.value is not
+                # None` olan tanımları "gerçek" bir def olarak sayıyor
+                # (`_extract_update`/`_extract_initializer` ile tutarlı).
+                if result.dest_reg is not None and result.value is not None:
+                    self.cfg.reg_definitions.setdefault(result.dest_reg, []).append(
+                        (result.address, current_block, result)
+                    )
 
     # -------------------------------------------------------------
 

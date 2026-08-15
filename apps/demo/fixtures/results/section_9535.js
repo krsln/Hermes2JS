@@ -1,4 +1,4 @@
-function privateStaticTest(param0) {
+function privateStaticTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetParentEnvironment>: <Reg8: 5, UInt8: 0>
     // USED → r5 = getParentEnvironment(0);
@@ -11,17 +11,17 @@ function privateStaticTest(param0) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4735>  # String: '__BC:Classes/PrivateStaticTests/privateStaticTest/start' (String)
     // USED → r4 = "__BC:Classes/PrivateStaticTests/privateStaticTest/start";
     // CODE → <Call2>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 4>
-    r4 = globalThis.console.log("__BC:Classes/PrivateStaticTests/privateStaticTest/start")
+    console.log("__BC:Classes/PrivateStaticTests/privateStaticTest/start")
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 5, UInt8: 0>
     // USED → r4 = getParentEnvironment(0)[0];
     // CODE → <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
-    r6 = __uninitialized_this_for_new__
-    if (typeof getParentEnvironment(0)[0] !== "<128>") {
+    r6 = CreateThisForNew(r4)
+    if (typeof getParentEnvironment(0)[0] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
         r13 = "Trying to call a non-function"
-        // CODE → <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r6 = copyDataProperties(r4, r5)
+        // CODE → <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+        r6 = throwTypeError(r4, r5)
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
@@ -36,8 +36,8 @@ function privateStaticTest(param0) {
         // ──────────────── Block 8 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
         r13 = "Cannot initialize private field twice."
-        // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r3 = copyDataProperties(r1, r2)
+        // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+        r3 = throwTypeError(r1, r2)
     } else {
         // ──────────────── Block 3 ──────────────── 
         // CODE → <LoadConstUndefined>: <Reg8: 1>
@@ -57,25 +57,25 @@ function privateStaticTest(param0) {
         // CODE → <LoadConstString>: <Reg8: 11, string_id: 4728>  # String: '__BC:Classes/PrivateStaticTests/Counter/constructor' (String)
         // USED → r11 = "__BC:Classes/PrivateStaticTests/Counter/constructor";
         // CODE → <Call2>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 11>
-        r6 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/constructor")
+        console.log("__BC:Classes/PrivateStaticTests/Counter/constructor")
         // CODE → <LoadFromEnvironment>: <Reg8: 8, Reg8: 5, UInt8: 2>
         // USED → r8 = getParentEnvironment(0)[2];
         // CODE → <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 4>
         r7 = getParentEnvironment(0)[4]
         // CODE → <GetOwnPrivateBySym>: <Reg8: 6, Reg8: 8, UInt8: 1, Reg8: 7>
-        // USED → r6 = getParentEnvironment(0)[2].#__private_7__;
+        r6 = getParentEnvironment(0)[2].#__private_7__
         // CODE → <Inc>: <Reg8: 6, Reg8: 6>
-        // USED → r6 = getParentEnvironment(0)[2].#__private_7__ + 1;
+        // USED → r6 = r6 + 1;
         // CODE → <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
-        getParentEnvironment(0)[2].#__private_7__ = getParentEnvironment(0)[2].#__private_7__ + 1
+        getParentEnvironment(0)[2].#__private_7__ = r6 + 1
         // CODE → <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
-        r6 = __uninitialized_this_for_new__
-        if (typeof getParentEnvironment(0)[0] !== "<128>") {
+        r6 = CreateThisForNew(r4)
+        if (typeof getParentEnvironment(0)[0] !== "function") {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
             r13 = "Trying to call a non-function"
-            // CODE → <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-            r6 = copyDataProperties(r4, r5)
+            // CODE → <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+            r6 = throwTypeError(r4, r5)
         }
         // ──────────────── Block 5 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
@@ -88,8 +88,8 @@ function privateStaticTest(param0) {
             // ──────────────── Block 7 ──────────────── 
             // CODE → <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
             r13 = "Cannot initialize private field twice."
-            // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-            r3 = copyDataProperties(r1, r2)
+            // CODE → <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+            r3 = throwTypeError(r1, r2)
         } else {
             // ──────────────── Block 6 ──────────────── 
             // CODE → <AddOwnPrivateBySym>: <Reg8: 6, Reg8: 1, Reg8: 12>
@@ -101,13 +101,13 @@ function privateStaticTest(param0) {
             // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r6 = globalThis.console.log;
             // CODE → <Call2>: <Reg8: 6, Reg8: 6, Reg8: 10, Reg8: 11>
-            r6 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/constructor")
+            console.log("__BC:Classes/PrivateStaticTests/Counter/constructor")
             // CODE → <GetOwnPrivateBySym>: <Reg8: 6, Reg8: 8, UInt8: 1, Reg8: 7>
-            // USED → r6 = getParentEnvironment(0)[2].#__private_7__;
+            r6 = getParentEnvironment(0)[2].#__private_7__
             // CODE → <Inc>: <Reg8: 6, Reg8: 6>
-            // USED → r6 = getParentEnvironment(0)[2].#__private_7__ + 1;
+            // USED → r6 = r6 + 1;
             // CODE → <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
-            getParentEnvironment(0)[2].#__private_7__ = getParentEnvironment(0)[2].#__private_7__ + 1
+            getParentEnvironment(0)[2].#__private_7__ = r6 + 1
             // CODE → <GetById>: <Reg8: 6, Reg8: 9, UInt8: 3, string_id: 11123>  # String: 'increment' (Identifier)
             // USED → r6 = Object.create(getParentEnvironment(0)[0].prototype).increment;
             // CODE → <Call1>: <Reg8: 6, Reg8: 6, Reg8: 9>
@@ -127,7 +127,7 @@ function privateStaticTest(param0) {
             // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 9, UInt8: 4, string_id: 211>  # String: 'value' (Identifier)
             // USED → r6 = Object.create(getParentEnvironment(0)[0].prototype).value;
             // CODE → <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
-            r6 = globalThis.console.log(Object.create(getParentEnvironment(0)[0].prototype).value)
+            console.log(r6)
             // CODE → <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r8 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -137,7 +137,7 @@ function privateStaticTest(param0) {
             // CODE → <Call1>: <Reg8: 6, Reg8: 6, Reg8: 9>
             // USED → r6 = Object.create(getParentEnvironment(0)[0].prototype).describe();
             // CODE → <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
-            r6 = globalThis.console.log(Object.create(getParentEnvironment(0)[0].prototype).describe())
+            console.log(r6)
             // CODE → <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r8 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -145,7 +145,7 @@ function privateStaticTest(param0) {
             // CODE → <GetById>: <Reg8: 6, Reg8: 4, UInt8: 6, string_id: 9807>  # String: 'instanceCount' (Identifier)
             // USED → r6 = getParentEnvironment(0)[0].instanceCount;
             // CODE → <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
-            r6 = globalThis.console.log(getParentEnvironment(0)[0].instanceCount)
+            console.log(r6)
             // CODE → <TryGetById>: <Reg8: 7, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r7 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -157,7 +157,7 @@ function privateStaticTest(param0) {
             // CODE → <Call1>: <Reg8: 5, Reg8: 5, Reg8: 8>
             // USED → r5 = getParentEnvironment(0)[1].describeLabel();
             // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
-            r5 = globalThis.console.log(getParentEnvironment(0)[1].describeLabel())
+            console.log(r5)
             // CODE → <GetById>: <Reg8: 5, Reg8: 4, UInt8: 8, string_id: 7259>  # String: 'reset' (Identifier)
             // USED → r5 = getParentEnvironment(0)[0].reset;
             // CODE → <Call1>: <Reg8: 5, Reg8: 5, Reg8: 4>
@@ -169,7 +169,7 @@ function privateStaticTest(param0) {
             // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 6, string_id: 9807>  # String: 'instanceCount' (Identifier)
             // USED → r4 = getParentEnvironment(0)[0].instanceCount;
             // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-            r4 = globalThis.console.log(getParentEnvironment(0)[0].instanceCount)
+            console.log(r4)
             // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r5 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -177,7 +177,7 @@ function privateStaticTest(param0) {
             // CODE → <LoadConstString>: <Reg8: 3, string_id: 4734>  # String: '__BC:Classes/PrivateStaticTests/privateStaticTest/end' (String)
             // USED → r3 = "__BC:Classes/PrivateStaticTests/privateStaticTest/end";
             // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-            r3 = globalThis.console.log("__BC:Classes/PrivateStaticTests/privateStaticTest/end")
+            console.log("__BC:Classes/PrivateStaticTests/privateStaticTest/end")
             // CODE → <Ret>: <Reg8: 1>
             return undefined;
         }

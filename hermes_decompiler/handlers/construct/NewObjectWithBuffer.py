@@ -1,8 +1,8 @@
-import json
-import re
 import ast
+import re
 
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence, UINT32
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16, UINT32
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
     Expression,
@@ -11,8 +11,6 @@ from hermes_decompiler.ir.expressions import (
     StringLiteral,
     python_literal,
 )
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 def _json_to_expression(value: object) -> Expression:
@@ -42,28 +40,26 @@ def _json_to_expression(value: object) -> Expression:
 class NewObjectWithBuffer(OpcodeHandler):
     """Create an object from a static map of values using buffer."""
 
-    _PATTERN = sequence(REG, UINT16, UINT16, UINT16, UINT16)
-    _PATTERN_OLD = sequence(REG, UINT16, UINT16)
+    ARGUMENTS = (
+        ArgsPattern(sequence(REG, UINT16, UINT16, UINT16, UINT16), "Reg8, UInt16, UInt16, UInt16, UInt16"),
+        ArgsPattern(sequence(REG, UINT16, UINT16), "Reg8, UInt16, UInt16"),  # DEFINE_OPCODE_3
+    )
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-
-        match = (
-                self._PATTERN.match(entry.args.strip())
-                or self._PATTERN_OLD.match(entry.args.strip())
-        )
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg = int(match.group(1))
 
-        expression = self._parse_object_from_comment(entry.comment)
+        expression = self._parse_object_from_comment(ctx.entry.comment)
 
         if expression is None:
-            error = f"// Warning: No valid object parsed from comment: {entry.comment}"
-            return self.build_exception_result(analysis, entry, error)
+            error = f"// Warning: No valid object parsed from comment: {ctx.entry.comment}"
+            return self.build_exception_result(ctx.analysis, ctx.entry, error)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -161,10 +157,10 @@ class NewObjectWithBuffer(OpcodeHandler):
 class NewObjectWithBufferLong(NewObjectWithBuffer):
     """Long variant."""
 
-    _PATTERN = sequence(REG, UINT16, UINT16, UINT32, UINT32)
-    _PATTERN_OLD = sequence(REG, UINT32, UINT32)
-
-    pass
+    ARGUMENTS = (
+        ArgsPattern(sequence(REG, UINT16, UINT16, UINT32, UINT32), "Reg8, UInt16, UInt16, UInt32, UInt32"),
+        ArgsPattern(sequence(REG, UINT32, UINT32), "Reg8, UInt32, UInt32"),  # DEFINE_OPCODE_3
+    )
 
 
 # Reg8, Reg8, UInt32, UInt32 (total size 10)
@@ -173,35 +169,29 @@ class NewObjectWithBufferLong(NewObjectWithBuffer):
 class NewObjectWithBufferAndParent(NewObjectWithBuffer):
     """Create an object from a static buffer with an explicit parent/prototype."""
 
-    _PATTERN = sequence(REG, REG, UINT32, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT32, UINT32), "Reg8, Reg8, UInt32, UInt32"),
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                analysis, entry, "Expected Reg8, Reg8, UInt16, UInt16, UInt16, UInt16 arguments"
-            )
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, _parent_reg, *_buffer_operands = map(int, match.groups())
 
-        object_expr = self._parse_object_from_comment(entry.comment)
+        object_expr = self._parse_object_from_comment(ctx.entry.comment)
 
         if object_expr is None:
-            error = f"// Warning: No valid object parsed from comment: {entry.comment}"
-            return self.build_exception_result(analysis, entry, error)
+            error = f"// Warning: No valid object parsed from comment: {ctx.entry.comment}"
+            return self.build_exception_result(ctx.analysis, ctx.entry, error)
 
         # Parent register is resolved but not woven into `object_expr`
         # itself -- see module-level caveat above. Left available here
         # so a future fix can incorporate it (e.g. Object.create/
         # Object.setPrototypeOf) once the real IR shape for this is
         # decided.
-        _parent = self.get_register_expression(analysis, _parent_reg)
+        _parent = self.get_register_expression(ctx.analysis, _parent_reg)
 
-        result = OpcodeResult(entry, value=object_expr, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=object_expr, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
-
-
-class NewObjectWithBufferAndParentLong(NewObjectWithBufferAndParent):
-    pass

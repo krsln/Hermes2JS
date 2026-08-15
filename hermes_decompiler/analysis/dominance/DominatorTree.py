@@ -4,7 +4,7 @@ from typing import Dict, List, Optional, Set
 
 from hermes_decompiler.analysis.cfg.CFG import CFG
 from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
-from hermes_decompiler.analysis.dominance._IterativeSetAnalysis import _IterativeSetAnalysis
+from hermes_decompiler.analysis.dominance._iterative_set_analysis import _IterativeSetAnalysis
 
 
 class DominatorTree(_IterativeSetAnalysis):

@@ -1,3 +1,5 @@
-from .BranchChainMerger import BranchChainMerger
+from .ShortCircuitConditionCfgPass import ShortCircuitConditionCfgPass
 
-__all__ = ["BranchChainMerger"]
+__all__ = [
+    "ShortCircuitConditionCfgPass",
+]

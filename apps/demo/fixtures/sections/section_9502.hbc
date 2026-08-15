@@ -13,7 +13,7 @@ Bytecode listing:
 ==> 0000001d: <LoadConstString>: <Reg8: 8, string_id: 1303>  # String: 'x squared is ' (String)
 ==> 00000021: <LoadConstTrue>: <Reg8: 9>
 ==> 00000023: <LoadConstUInt8>: <Reg8: 10, UInt8: 1>
-==> 00000026: <CallBuiltin>: <Reg8: 5, UInt8: 41, UInt8: 5>  # Built-in function: [#41 getMethod]
+==> 00000026: <CallBuiltin>: <Reg8: 5, UInt8: 41, UInt8: 5>  # Built-in function: [#41 getTemplateObject]
 ==> 0000002a: <Mul>: <Reg8: 4, Reg8: 3, Reg8: 3>
 ==> 0000002e: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
 ==> 00000031: <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 0>

@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from hermes_decompiler.ir.Node import Node
-from ._Base import Expression, Identifier
+from ._base import Expression, Identifier
 
 if TYPE_CHECKING:
     # Deferred to avoid a runtime circular import: `statements` imports

@@ -1,4 +1,5 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.ir.expressions import (
     CallExpression,
     Identifier,
@@ -7,8 +8,6 @@ from hermes_decompiler.ir.expressions import (
     ObjectProperty,
     python_literal,
 )
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, Reg8, Reg8, UInt8 (total size 5)
@@ -16,16 +15,15 @@ from hermes_decompiler.runtime import HermesAnalysis
 class PutOwnGetterSetterByVal(OpcodeHandler):
     """Add a getter and a setter for a property by value."""
 
-    _PATTERN = sequence(REG, REG, REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(
+        sequence(REG, REG, REG, REG, UINT8),
+        "Reg8, Reg8, Reg8, Reg8, UInt8 (total size 5)"
+    )
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                analysis,
-                entry,
-                "Expected 4 Reg + UInt8",
-            )
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, key_reg, getter_reg, setter_reg, enumerable_flag = map(
             int,
@@ -37,8 +35,8 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
         # this migration), so getter/setter are unconditionally
         # included - same as before.
         properties = (
-            ObjectProperty(key=Identifier(name="get"), value=self.get_register_expression(analysis, getter_reg)),
-            ObjectProperty(key=Identifier(name="set"), value=self.get_register_expression(analysis, setter_reg)),
+            ObjectProperty(key=Identifier(name="get"), value=self.get_register_expression(ctx.analysis, getter_reg)),
+            ObjectProperty(key=Identifier(name="set"), value=self.get_register_expression(ctx.analysis, setter_reg)),
             ObjectProperty(key=Identifier(name="enumerable"), value=python_literal(bool(enumerable_flag))),
             ObjectProperty(key=Identifier(name="configurable"), value=python_literal(True)),
         )
@@ -51,13 +49,13 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
                 member=Identifier(name="defineProperty"),
             ),
             arguments=(
-                self.get_register_expression(analysis, obj_reg),
-                self.get_register_expression(analysis, key_reg),
+                self.get_register_expression(ctx.analysis, obj_reg),
+                self.get_register_expression(ctx.analysis, key_reg),
                 descriptor,
             ),
         )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result

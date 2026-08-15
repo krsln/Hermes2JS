@@ -1,28 +1,39 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
-from hermes_decompiler.ir.expressions import AwaitExpression, YieldExpression
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
+from hermes_decompiler.ir.expressions import AwaitExpression, YieldExpression, Identifier
 
+
+# /// Resume generator by performing one of the following user-requested actions:
+# /// - next(val): Set Arg1 to val, Arg2 to false, run next instruction
+# /// - return(val): Set Arg1 to val, Arg2 to true, run next instruction
+# /// - throw(val): Throw val as an error
+# /// Arg1 is the result provided by the user.
+# /// Arg2 is a boolean which is true if the user requested a return().
+# DEFINE_OPCODE_2(ResumeGenerator, Reg8, Reg8)
 
 # Reg8, Reg8 (total size 2)
+# DEFINE_OPCODE_2(ResumeGenerator, Reg8, Reg8)
 # Example: <ResumeGenerator>: <Reg8: 0, Reg8: 2>
 class ResumeGenerator(OpcodeHandler):
     """Resume a suspended generator."""
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
-        dest_reg, _flag_reg = map(int, match.groups())
+        dest_reg, flag_reg = map(int, match.groups())
 
-        # `await yield` is real, expressible JS - modeled directly
-        # instead of the previous comment-annotated string.
+        # value = await yield;   (normal next / return value)
         expression = AwaitExpression(argument=YieldExpression())
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
+
+        # Track the generator return flag for subsequent conditional jumps.
+        flag_result = OpcodeResult(ctx.entry, value=Identifier(name=f"__resumeIsReturn"), dest_reg=flag_reg)
+        ctx.analysis.add_result(flag_result)
 
         return result

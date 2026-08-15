@@ -1,4 +1,4 @@
-function defaultParameterTest(param0, param1) {
+function defaultParameterTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
@@ -19,12 +19,7 @@ function defaultParameterTest(param0, param1) {
         // CODE → <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
         // USED → r3 = arguments[1];
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        r5 = 10
-        if (arguments[1] !== undefined) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 1, Reg8: 2>
-            // USED → r5 = arguments[1];
-        }
+        r5 = (r3 === undefined) ? 10 : arguments[1]
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
@@ -42,12 +37,7 @@ function defaultParameterTest(param0, param1) {
         // CODE → <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
         // USED → r3 = arguments[2];
         // CODE → <Mov>: <Reg8: 4, Reg8: 6>
-        r4 = "result"
-        if (arguments[2] !== undefined) {
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 1, Reg8: 2>
-            // USED → r4 = arguments[2];
-        }
+        r4 = (r3 === undefined) ? "result" : arguments[2]
     }
     // ──────────────── Block 6 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
@@ -59,7 +49,7 @@ function defaultParameterTest(param0, param1) {
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4772>  # String: '__BC:Functions/DefaultParameterTests/defaultParameterTest/start' (String)
     // USED → r2 = "__BC:Functions/DefaultParameterTests/defaultParameterTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 2>
-    r2 = globalThis.console.log("__BC:Functions/DefaultParameterTests/defaultParameterTest/start")
+    console.log("__BC:Functions/DefaultParameterTests/defaultParameterTest/start")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -67,9 +57,9 @@ function defaultParameterTest(param0, param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <Add>: <Reg8: 1, Reg8: 1, Reg8: 5>
-    // USED → r1 = param1 + arguments[1];
+    // USED → r1 = param1 + ((r3 === undefined) ? 10 : arguments[1]);
     // CODE → <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1>
-    r1 = globalThis.console.log(arguments[2], param1 + arguments[1])
+    console.log(r4, r1)
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

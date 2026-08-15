@@ -1,7 +1,6 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT32, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
 from hermes_decompiler.ir.expressions import Identifier
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, UInt8 (total size 2)
@@ -10,21 +9,21 @@ from hermes_decompiler.runtime import HermesAnalysis
 class LoadParam(OpcodeHandler):
     """Load function parameter (including this at index 0)."""
 
-    _PATTERN = sequence(REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT8), "Reg8, UInt8 (total size 2)")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, param_index = map(int, match.groups())
 
-        # param0 = this, others = paramN
+        # Load a function parameter by index. Starts at 0 with 'this'.
         name = "this" if param_index == 0 else f"param{param_index}"
         expression = Identifier(name=name)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -35,4 +34,4 @@ class LoadParam(OpcodeHandler):
 class LoadParamLong(LoadParam):
     """Like LoadParam, but allows accessing arguments >= 255."""
 
-    _PATTERN = sequence(REG, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, UINT32), "Reg8, UInt32 (total size 5)")

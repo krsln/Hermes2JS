@@ -1,8 +1,7 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT16, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, StringLiteral, UnaryExpression
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt16 (total size 4)
@@ -16,8 +15,6 @@ class TypeOfIs(OpcodeHandler):
     -- only the single-bit case is decoded to a plain `typeof x ===
     "type"` check; multi-bit masks fall back to a raw placeholder.
     """
-
-    _PATTERN = sequence(REG, REG, UINT16)
 
     # GUESSED bit assignments -- NOT sourced from Typeof.h. Placeholder
     # ordering based on common typeof-result enumeration; each bit
@@ -33,14 +30,16 @@ class TypeOfIs(OpcodeHandler):
         1 << 7: "bigint",
     }
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, UInt16 arguments")
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT16), "Reg8, Reg8, UInt16")
+
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         dest_reg, value_reg, type_mask = map(int, match.groups())
 
-        operand = self.get_register_expression(analysis, value_reg)
+        operand = self.get_register_expression(ctx.analysis, value_reg)
         type_of_expr = UnaryExpression(operator=UnaryOperator.TYPEOF, operand=operand)
 
         type_name = self._TYPE_BITS.get(type_mask)
@@ -64,7 +63,7 @@ class TypeOfIs(OpcodeHandler):
                 right=StringLiteral(value=f"<unresolved_typeof_mask_0x{type_mask:04x}>"),
             )
 
-        result = OpcodeResult(entry, value=expression, dest_reg=dest_reg)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
 
         return result

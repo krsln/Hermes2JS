@@ -4,7 +4,7 @@ from abc import ABC
 from dataclasses import dataclass
 
 from hermes_decompiler.ir.Node import Node
-from ._Base import Expression
+from ._base import Expression
 
 __all__ = [
     "Literal",

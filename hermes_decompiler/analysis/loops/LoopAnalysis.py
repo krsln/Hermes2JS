@@ -21,9 +21,6 @@ class LoopAnalysis:
 
             for header in tail.successors:
 
-                if header is tail:
-                    continue
-
                 if not tree.dominates(header, tail):
                     continue
 
@@ -68,6 +65,23 @@ class LoopAnalysis:
             header,
             tail,
     ):
+
+        if header is tail:
+            # Single-block self-loop (the block's own back edge targets
+            # itself - e.g. a single-statement `do { ... } while (cond)`
+            # entirely contained in one BasicBlock). The general walk
+            # below assumes header != tail and relies on stopping the
+            # backward traversal exactly AT header (never pushing
+            # header's own external predecessors onto the stack) to
+            # keep the walk from escaping the loop. When header IS
+            # tail, that stop condition (`pred != header`) never
+            # actually triggers for header's real external
+            # predecessors (e.g. the block that falls into the loop
+            # from before it) - they'd get pulled in as false loop
+            # members and the walk would keep expanding backward
+            # through them. A self-loop's body is exactly the one
+            # block; no walk is needed at all.
+            return {header}
 
         members = {header, tail}
 

@@ -1,10 +1,12 @@
-async function* anon_15181(param0) {
+async function* anon_15181() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <StartGenerator>: <>
     // StartGenerator
     // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
-    if (r1) {
+    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // USED → r1 = __resumeIsReturn;
+    if (__resumeIsReturn) {
         // ──────────────── Block 11 ──────────────── 
         // CODE → <CompleteGenerator>: <>
         // CompleteGenerator
@@ -21,7 +23,7 @@ async function* anon_15181(param0) {
         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4758>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/start' (String)
         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/start";
         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-        r1 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/start")
+        console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/start")
         // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 2>
         // USED → r1 = getEnvironment(2);
         // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
@@ -31,16 +33,18 @@ async function* anon_15181(param0) {
         // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
         // USED → r3 = 1;
         // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 3>
-        // USED → r1 = await getEnvironment(2)[2].call(undefined, 1);
+        // USED → r1 = await getEnvironment(2)[2].call(undefined, r3);
         // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000035
         goto label_53;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
-        return await getEnvironment(2)[2].call(undefined, 1);
+        return await getEnvironment(2)[2].call(undefined, r3);
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 4>
         // USED → r1 = await yield;
-        if (getEnvironment(2)[2]) {
+        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 4>
+        // USED → r4 = __resumeIsReturn;
+        if (__resumeIsReturn) {
             // ──────────────── Block 7 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r5 = globalThis.console;
@@ -49,7 +53,7 @@ async function* anon_15181(param0) {
             // CODE → <LoadConstString>: <Reg8: 3, string_id: 4757>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/finally' (String)
             // USED → r3 = "__BC:Functions/AsyncTests/asyncTryCatchTest/finally";
             // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-            r3 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
+            console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
             // CODE → <CompleteGenerator>: <>
             // CompleteGenerator
             // CODE → <Ret>: <Reg8: 1>
@@ -63,19 +67,19 @@ async function* anon_15181(param0) {
             // CODE → <LoadConstString>: <Reg8: 4, string_id: 401>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/awaited' (String)
             // USED → r4 = "__BC:Functions/AsyncTests/asyncTryCatchTest/awaited";
             // CODE → <Call3>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
-            r4 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", await yield)
-            if (await yield === 1) {
+            console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", r1)
+            if (r1 === 1) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
                 // USED → r5 = globalThis.Error;
                 // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-                // USED → r3 = globalThis.Error.prototype;
+                r3 = globalThis.Error.prototype
                 // CODE → <CreateThis>: <Reg8: 4, Reg8: 3, Reg8: 5>
-                // USED → r4 = createThis(globalThis.Error.prototype, globalThis.Error);
+                // USED → r4 = CreateThis(r3);
                 // CODE → <LoadConstString>: <Reg8: 8, string_id: 6849>  # String: 'post-await failure' (String)
                 // USED → r8 = "post-await failure";
                 // CODE → <Mov>: <Reg8: 9, Reg8: 4>
-                r9 = createThis(globalThis.Error.prototype, globalThis.Error)
+                // USED → r9 = CreateThis(r3);
                 // CODE → <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
                 // USED → r3 = new globalThis.Error("post-await failure");
                 // CODE → <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
@@ -97,7 +101,7 @@ async function* anon_15181(param0) {
                         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4756>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/end' (String)
                         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/end";
                         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-                        r1 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/end")
+                        console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/end")
                         // CODE → <LoadConstUndefined>: <Reg8: 1>
                         // USED → r1 = undefined;
                         // CODE → <CompleteGenerator>: <>
@@ -114,7 +118,7 @@ async function* anon_15181(param0) {
                         // CODE → <LoadConstString>: <Reg8: 1, string_id: 2140>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/caught' (String)
                         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/caught";
                         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-                        r1 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/caught")
+                        console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/caught")
                     }
                     // LOOP → END
                 } finally {
@@ -126,7 +130,7 @@ async function* anon_15181(param0) {
                     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4757>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/finally' (String)
                     // USED → r2 = "__BC:Functions/AsyncTests/asyncTryCatchTest/finally";
                     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-                    r2 = globalThis.console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
+                    console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
                 }
             }
         }

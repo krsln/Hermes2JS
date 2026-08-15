@@ -1,9 +1,8 @@
 from hermes_decompiler.analysis.terminators import TerminatorThrow
-from hermes_decompiler.handlers import OpcodeHandler, REG, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT32
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
 from hermes_decompiler.ir.statements import ThrowStatement
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8 (total size 1)
@@ -12,16 +11,16 @@ from hermes_decompiler.runtime import HermesAnalysis
 class Throw(OpcodeHandler):
     """Throw an exception."""
 
-    _PATTERN = sequence(REG)
+    ARGUMENTS = ArgsPattern(sequence(REG), "Reg8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         value_reg = int(match.group(1))
 
-        expression = self.get_register_expression(analysis, value_reg)
+        expression = self.get_register_expression(ctx.analysis, value_reg)
         terminator = TerminatorThrow(value=expression)
 
         # NOTE (fix): same reasoning as Ret.py - `Throw` terminators are
@@ -32,16 +31,11 @@ class Throw(OpcodeHandler):
         statement = ThrowStatement(argument=expression)
 
         result = OpcodeResult(
-            entry, value=expression, statement=statement, terminator=terminator, dest_reg=None
+            ctx.entry, value=expression, statement=statement, terminator=terminator, dest_reg=None
         )
-        analysis.add_result(result)
+        ctx.analysis.add_result(result)
 
         return result
-
-
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT32, sequence
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8 (total size 2)
@@ -57,25 +51,17 @@ class ThrowIfEmpty(OpcodeHandler):
         plain ThrowStatement.
     """
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                analysis,
-                entry,
-                "Expected Reg8, Reg8 arguments",
-            )
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         # value_reg = int(match.group(1))
         # error_reg = int(match.group(2))
 
-        return self.build_exception_result(
-            analysis,
-            entry,
-            "// TODO: ThrowIfEmpty is not implemented",
-        )
+        return self.build_exception_result(ctx.analysis, ctx.entry, "// TODO: ThrowIfEmpty is not implemented")
 
 
 # UInt32 (string_id) (total size 4)
@@ -89,22 +75,17 @@ class ThrowIfHasRestrictedGlobalProperty(OpcodeHandler):
         Exact runtime semantics need verification.
     """
 
-    _PATTERN = sequence(UINT32)
+    ARGUMENTS = ArgsPattern(sequence(UINT32), "UInt32 (string_id)")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                analysis,
-                entry,
-                "Expected UInt32 argument",
-            )
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         # string_id = int(match.group(1))
 
         return self.build_exception_result(
-            analysis,
-            entry,
+            ctx.analysis, ctx.entry,
             "// TODO: ThrowIfHasRestrictedGlobalProperty is not implemented",
         )
 
@@ -120,23 +101,19 @@ class ThrowIfUndefined(OpcodeHandler):
         Conditional runtime check.
     """
 
-    _PATTERN = sequence(REG, REG)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                analysis,
-                entry,
-                "Expected Reg8, Reg8 arguments",
-            )
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         # value_reg = int(match.group(1))
         # error_reg = int(match.group(2))
 
         return self.build_exception_result(
-            analysis,
-            entry,
+            ctx.analysis,
+            ctx.entry,
             "// TODO: ThrowIfUndefined is not implemented",
         )
 
@@ -152,22 +129,18 @@ class ThrowIfUndefinedInst(OpcodeHandler):
         Exact runtime semantics need verification.
     """
 
-    _PATTERN = sequence(REG)
+    ARGUMENTS = ArgsPattern(sequence(REG), "Reg8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                analysis,
-                entry,
-                "Expected Reg8 argument",
-            )
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         # value_reg = int(match.group(1))
 
         return self.build_exception_result(
-            analysis,
-            entry,
+            ctx.analysis,
+            ctx.entry,
             "// TODO: ThrowIfUndefinedInst is not implemented",
         )
 
@@ -185,20 +158,15 @@ class ThrowIfThisInitialized(OpcodeHandler):
         Conditional runtime check.
     """
 
-    _PATTERN = sequence(REG)
+    ARGUMENTS = ArgsPattern(sequence(REG), "Reg8")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(
-                analysis,
-                entry,
-                "Expected Reg8 argument",
-            )
-
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
         this_reg = int(match.group(1))
 
-        this_value = self.get_register_expression(analysis, this_reg)
+        this_value = self.get_register_expression(ctx.analysis, this_reg)
 
         # No JS-visible expression on the success path; modeled as an
         # inert pseudo-call so it's still traceable in output rather
@@ -211,7 +179,7 @@ class ThrowIfThisInitialized(OpcodeHandler):
         )
         # // TODO: ThrowIfThisInitialized is not implemented
 
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result

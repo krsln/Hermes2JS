@@ -1,8 +1,7 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, STRING_ID, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, STRING_ID, UINT8
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, Identifier, MemberExpression
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
@@ -18,32 +17,35 @@ class PutById(OpcodeHandler):
         rObj.foo = rValue;
     """
 
-    _PATTERN = sequence(REG, REG, UINT8, STRING_ID)
+    ARGUMENTS = ArgsPattern(
+        sequence(REG, REG, UINT8, STRING_ID),
+        "Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)"
+    )
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry)
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, value_reg, _cache, string_id = map(int, match.groups())
 
-        property_name = (entry.identifier_name or f"string_{string_id}")
+        property_name = (ctx.entry.identifier_name or f"string_{string_id}")
 
         left = MemberExpression(
-            receiver=self.get_register_expression(analysis, obj_reg),
+            receiver=self.get_register_expression(ctx.analysis, obj_reg),
             member=Identifier(name=property_name),
             computed=False,
         )
 
-        right = self.get_register_expression(analysis, value_reg)
+        right = self.get_register_expression(ctx.analysis, value_reg)
 
         # No destination register (name=""): OpcodeResult/JSRenderer
         # already render a name-less Expression as a bare statement
         # (`obj.foo = value;`), same pattern as StoreToEnvironment.
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -81,9 +83,26 @@ class PutByIdLoose(PutById):
 class PutByIdLooseLong(PutByIdLoose):
     pass
 
-# TryPutById
-# TryPutByIdLong
-# TryPutByIdLoose
-# TryPutByIdLooseLong
-# TryPutByIdStrict
-# TryPutByIdStrictLong
+
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
+# DEFINE_OPCODE_4(TryPutByIdLoose, Reg8, Reg8, UInt8, UInt16)
+class TryPutByIdLoose(PutById):
+    pass
+
+
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
+# DEFINE_OPCODE_4(TryPutByIdStrict, Reg8, Reg8, UInt8, UInt16)
+class TryPutByIdStrict(PutById):
+    pass
+
+
+# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
+# DEFINE_OPCODE_4(TryPutByIdLooseLong, Reg8, Reg8, UInt8, UInt32)
+class TryPutByIdLooseLong(TryPutByIdLoose):
+    pass
+
+
+# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
+# DEFINE_OPCODE_4(TryPutByIdStrictLong, Reg8, Reg8, UInt8, UInt32)
+class TryPutByIdStrictLong(TryPutByIdStrict):
+    pass

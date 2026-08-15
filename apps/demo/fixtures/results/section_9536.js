@@ -1,4 +1,4 @@
-function Counter(param0) {
+function Counter() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
     // USED → r3 = getParentEnvironment(0);
@@ -16,8 +16,8 @@ function Counter(param0) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 7, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
         r7 = "Cannot initialize private field twice."
-        // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 copyDataProperties]
-        r2 = copyDataProperties(r0, r1)
+        // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+        r2 = throwTypeError(r0, r1)
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <LoadConstUndefined>: <Reg8: 1>
@@ -39,17 +39,17 @@ function Counter(param0) {
         // CODE → <LoadConstString>: <Reg8: 4, string_id: 4728>  # String: '__BC:Classes/PrivateStaticTests/Counter/constructor' (String)
         // USED → r4 = "__BC:Classes/PrivateStaticTests/Counter/constructor";
         // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-        r4 = globalThis.console.log("__BC:Classes/PrivateStaticTests/Counter/constructor")
+        console.log("__BC:Classes/PrivateStaticTests/Counter/constructor")
         // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 2>
         // USED → r5 = getParentEnvironment(0)[2];
         // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 4>
         r4 = getParentEnvironment(0)[4]
         // CODE → <GetOwnPrivateBySym>: <Reg8: 3, Reg8: 5, UInt8: 1, Reg8: 4>
-        // USED → r3 = getParentEnvironment(0)[2].#__private_4__;
+        r3 = getParentEnvironment(0)[2].#__private_4__
         // CODE → <Inc>: <Reg8: 3, Reg8: 3>
-        // USED → r3 = getParentEnvironment(0)[2].#__private_4__ + 1;
+        // USED → r3 = r3 + 1;
         // CODE → <PutOwnPrivateBySym>: <Reg8: 5, Reg8: 3, UInt8: 1, Reg8: 4>
-        getParentEnvironment(0)[2].#__private_4__ = getParentEnvironment(0)[2].#__private_4__ + 1
+        getParentEnvironment(0)[2].#__private_4__ = r3 + 1
         // CODE → <Ret>: <Reg8: 2>
         return Object.create(new.target.prototype);
     }

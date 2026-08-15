@@ -1,4 +1,4 @@
-function callGeneratorTests(param0) {
+function callGeneratorTests() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
@@ -9,7 +9,7 @@ function callGeneratorTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4776>  # String: '__BC:Functions/GeneratorTests/callGeneratorTests/start' (String)
     // USED → r0 = "__BC:Functions/GeneratorTests/callGeneratorTests/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = globalThis.console.log("__BC:Functions/GeneratorTests/callGeneratorTests/start")
+    console.log("__BC:Functions/GeneratorTests/callGeneratorTests/start")
     // CODE → <GetEnvironment>: <Reg8: 2, UInt8: 0>
     // USED → r2 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
@@ -19,72 +19,58 @@ function callGeneratorTests(param0) {
     // CODE → <Call1>: <Reg8: 5, Reg8: 3, Reg8: 0>
     // USED → r5 = getEnvironment(0)[0].call(undefined);
     // CODE → <Mov>: <Reg8: 3, Reg8: 5>
-    // USED → r3 = getEnvironment(0)[0].call(undefined);
+    r3 = getEnvironment(0)[0].call(undefined)
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
-    // USED → r4 = GetIterator(getEnvironment(0)[0].call(undefined));
-    try {
-        // LOOP → START (while)
-        while (true) {
-            // ──────────────── Block 1 ──────────────── 
-            // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 3>
-            // USED → r7 = GetIterator(getEnvironment(0)[0].call(undefined)).next();
-            // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-            // USED → r5 = GetIterator(getEnvironment(0)[0].call(undefined));
-            // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 0000004d
-            if (GetIterator(getEnvironment(0)[0].call(undefined)) === undefined) goto label_77;
+    // USED → r4 = GetIterator(r3);
+    // LOOP → START (for_of)
+    for (const r7 of r3) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+        // USED → r5 = GetIterator(r3);
+        // → r5 = GetIterator(r3)
+        if (r5 !== undefined) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r6 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r5 = globalThis.console.log;
             // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-            r5 = globalThis.console.log(GetIterator(getEnvironment(0)[0].call(undefined)).next())
+            console.log(r7)
             // CODE → <Jmp>: <Addr8: -27>  # Address: 00000029
             goto label_41;
         }
-        // LOOP → END
-    } finally {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
-        GetIterator(getEnvironment(0)[0].call(undefined)).return()
     }
+    // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
     // USED → r4 = getEnvironment(0)[1];
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 5>
     // USED → r3 = 5;
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 0, Reg8: 3>
-    // USED → r5 = getEnvironment(0)[1].call(undefined, 5);
+    // USED → r5 = getEnvironment(0)[1].call(undefined, r3);
     // CODE → <Mov>: <Reg8: 3, Reg8: 5>
-    // USED → r3 = getEnvironment(0)[1].call(undefined, 5);
+    r3 = getEnvironment(0)[1].call(undefined, r3)
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
-    // USED → r4 = GetIterator(getEnvironment(0)[1].call(undefined, 5));
-    try {
-        // LOOP → START (while)
-        while (true) {
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 3>
-            // USED → r7 = GetIterator(getEnvironment(0)[1].call(undefined, 5)).next();
-            // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-            // USED → r5 = GetIterator(getEnvironment(0)[1].call(undefined, 5));
-            // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000083
-            if (GetIterator(getEnvironment(0)[1].call(undefined, 5)) === undefined) goto label_131;
+    // USED → r4 = GetIterator(r3);
+    // LOOP → START (for_of)
+    for (const r7 of r3) {
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+        // USED → r5 = GetIterator(r3);
+        // → r5 = GetIterator(r3)
+        if (r5 !== undefined) {
             // ──────────────── Block 6 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r6 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r5 = globalThis.console.log;
             // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-            r5 = globalThis.console.log(GetIterator(getEnvironment(0)[1].call(undefined, 5)).next())
+            console.log(r7)
             // CODE → <Jmp>: <Addr8: -27>  # Address: 0000005f
             goto label_95;
         }
-        // LOOP → END
-    } finally {
-        // ──────────────── Block 7 ──────────────── 
-        // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
-        GetIterator(getEnvironment(0)[1].call(undefined, 5)).return()
     }
+    // LOOP → END
     // ──────────────── Block 8 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 2>
     // USED → r2 = getEnvironment(0)[2];
@@ -99,7 +85,7 @@ function callGeneratorTests(param0) {
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
     // USED → r2 = getEnvironment(0)[2].call(undefined).next();
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(getEnvironment(0)[2].call(undefined).next())
+    console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -107,9 +93,9 @@ function callGeneratorTests(param0) {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 214>  # String: 'return' (Identifier)
     // USED → r2 = getEnvironment(0)[2].call(undefined).return;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 0>
-    // USED → r2 = getEnvironment(0)[2].call(undefined).return(undefined);
+    // USED → r2 = getEnvironment(0)[2].call(undefined).return(r0);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = globalThis.console.log(getEnvironment(0)[2].call(undefined).return(undefined))
+    console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -117,7 +103,7 @@ function callGeneratorTests(param0) {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4775>  # String: '__BC:Functions/GeneratorTests/callGeneratorTests/end' (String)
     // USED → r1 = "__BC:Functions/GeneratorTests/callGeneratorTests/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = globalThis.console.log("__BC:Functions/GeneratorTests/callGeneratorTests/end")
+    console.log("__BC:Functions/GeneratorTests/callGeneratorTests/end")
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

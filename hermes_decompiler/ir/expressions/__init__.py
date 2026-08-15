@@ -1,5 +1,6 @@
-from ._Base import *
-from ._Raw import *
+from ._base import *
+from ._raw import *
+from ._this import *
 
 from .Literals import *
 from .Operations import *

@@ -1,8 +1,7 @@
-from hermes_decompiler.handlers import OpcodeHandler, REG, UINT8, UINT32, sequence
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, Identifier, MemberExpression
-from hermes_decompiler.opcode import OpcodeEntry, OpcodeResult
-from hermes_decompiler.runtime import HermesAnalysis
 
 
 # Reg8, Reg8, UInt8 (total size 3)
@@ -11,28 +10,28 @@ from hermes_decompiler.runtime import HermesAnalysis
 class PutOwnBySlotIdx(OpcodeHandler):
     """Write an own property by hidden-class slot index: obj.slot_N = value."""
 
-    _PATTERN = sequence(REG, REG, UINT8)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8), "Reg8, Reg8, UInt8 (total size 3)")
 
-    def handle(self, analysis: HermesAnalysis, entry: OpcodeEntry) -> OpcodeResult:
-        match = self._PATTERN.match(entry.args.strip())
-        if not match:
-            return self.build_invalid_args_result(analysis, entry, "Expected Reg8, Reg8, UInt8 arguments")
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
 
         obj_reg, value_reg, slot_idx = map(int, match.groups())
 
-        property_name = entry.identifier_name or f"slot_{slot_idx}"
+        property_name = ctx.entry.identifier_name or f"slot_{slot_idx}"
 
         left = MemberExpression(
-            receiver=self.get_register_expression(analysis, obj_reg),
+            receiver=self.get_register_expression(ctx.analysis, obj_reg),
             member=Identifier(name=property_name),
             computed=False,
         )
-        right = self.get_register_expression(analysis, value_reg)
+        right = self.get_register_expression(ctx.analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
-        result = OpcodeResult(entry, value=expression, dest_reg=None)
-        analysis.add_result(result)
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
 
         return result
 
@@ -43,4 +42,4 @@ class PutOwnBySlotIdx(OpcodeHandler):
 class PutOwnBySlotIdxLong(PutOwnBySlotIdx):
     """Set an existing own property identified at a slot index."""
 
-    _PATTERN = sequence(REG, REG, UINT32)
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT32), "Reg8, Reg8, UInt32 (total size 6)")
