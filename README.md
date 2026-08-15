@@ -2,26 +2,26 @@
 
 **Hermes Assembly (HASM) → JavaScript**
 
-Takes an already-built Hermes bytecode bundle from a React Native app (`index.android.bundle`), disassembles it, splits
-it into one file per function, and reconstructs each function as readable JavaScript.
+Hermes2JS takes an already-built Hermes bytecode bundle from a React Native app (for example, `index.android.bundle`),
+disassembles it, splits it into one file per function, and reconstructs each function as readable JavaScript.
 
 ```text
 ┌────────────────────────┐      scripts/run-hermes-dec.sh        ┌────────────┐
 │  index.android.bundle  │ ────────────────────────────────────► │ output.hbc │
-│                        │    (vendor/hermes-dec, Python)        └─────┬──────┘
+│                        │    (external hermes-dec tool)         └─────┬──────┘
 │ (Prebuilt Hermes BC)   │                                             │
 └────────────────────────┘                                             │
                                                                        ▼
 ┌────────────────────────┐      scripts/decompile_sections.py   scripts/split_output_file.py
 │     results/*.js       │ ◄───────────────────────────────        sections/*.hbc
-│                        │       (one file per function)     
+│                        │       (one file per function)
 │ (Decompiled JS source) │
 └────────────────────────┘
 ```
 
 > **Important**
 >
-> Hermes2JS is a decompiler, **not** a compiler. It accepts existing Hermes
+> Hermes2JS is a decompiler, **not a compiler**. It accepts existing Hermes
 > bytecode as input and reconstructs an equivalent JavaScript representation.
 >
 > Because Hermes bytecode does not preserve all source-level information,
@@ -30,18 +30,19 @@ it into one file per function, and reconstructs each function as readable JavaSc
 
 ## Sources
 
-- [hermes_rs docs](https://docs.rs/hermes_rs/latest/hermes_rs/all.html)
-- [hermes_rs v96 bytecode module](https://docs.rs/hermes_rs/latest/hermes_rs/hermes/v96/index.html)
-- [hermes_rs v96 source](https://docs.rs/hermes_rs/latest/src/hermes_rs/hermes/v96/mod.rs.html#3-210)
-- [Hermes `BytecodeList.def`](https://github.com/facebook/hermes/blob/main/include/hermes/BCGen/HBC/BytecodeList.def)
-- [P1sec/hermes-dec](https://github.com/P1sec/hermes-dec) — vendored disassembly/decompilation toolkit used by
-  `run-hermes-dec.sh`
+* [hermes_rs documentation](https://docs.rs/hermes_rs/latest/hermes_rs/all.html)
+* [Hermes `BytecodeList.def`](https://github.com/facebook/hermes/blob/main/include/hermes/BCGen/HBC/BytecodeList.def)
+* [hermes-dec](https://github.com/P1sec/hermes-dec) — external Hermes bytecode disassembly tool
 
-| Step                        | Done by            | Purpose                             |
-|-----------------------------|--------------------|-------------------------------------|
-| TypeScript/JSX → JavaScript | tsc / Babel        | Make code Hermes-compatible         |
-| JavaScript → Bytecode       | Hermes (`hermesc`) | Speed up startup & execution        |
-| Runtime Execution           | Hermes engine      | Run the compiled bytecode on device |
+## Hermes Bytecode Pipeline
+
+| Step                        | Done by            | Purpose                               |
+|-----------------------------|--------------------|---------------------------------------|
+| TypeScript/JSX → JavaScript | `tsc` / Babel      | Make code Hermes-compatible           |
+| JavaScript → Bytecode       | Hermes (`hermesc`) | Compile JavaScript to Hermes bytecode |
+| Runtime Execution           | Hermes engine      | Run the compiled bytecode on device   |
+| Bytecode → Assembly         | `hermes-dec`       | Disassemble existing Hermes bytecode  |
+| Assembly → JavaScript       | Hermes2JS          | Reconstruct readable JavaScript       |
 
 ## Workflow
 
@@ -76,3 +77,26 @@ Emit
     ▼
 JavaScript
 ```
+
+## Third-Party Tools
+
+Hermes2JS uses [hermes-dec](https://github.com/P1sec/hermes-dec) as an **external tool** for disassembling Hermes
+`.bundle` files.
+
+`hermes-dec` is licensed separately under **AGPL-3.0**. It is **not included in this repository** and is fetched
+separately by:
+
+```bash
+./scripts/fetch-hermes-dec.sh
+```
+
+The fetched `hermes-dec` source remains subject to its own license terms.
+
+## License
+
+Hermes2JS is licensed under the **MIT License**.
+
+See [LICENSE](LICENSE) for the full license text.
+
+The MIT License applies to the Hermes2JS source code itself. Third-party tools and dependencies remain subject to their
+respective licenses.
