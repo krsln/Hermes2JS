@@ -39,8 +39,13 @@ class BaseBinaryOperator(OpcodeHandler):
 
 
 # @formatter:off
+# /// Arg1 = Arg2 + Arg3 (JS addition/concatenation)
+# DEFINE_OPCODE_3(Add, Reg8, Reg8, Reg8)
 class Add(BaseBinaryOperator): operator = BinaryOperator.ADD
+# /// Arg1 = Arg2 + Arg3 (Numeric addition, skips number check)
+# DEFINE_OPCODE_3(AddN, Reg8, Reg8, Reg8)
 class AddN(Add): pass
+
 class Sub(BaseBinaryOperator): operator = BinaryOperator.SUBTRACT
 class SubN(Sub): pass
 class Mul(BaseBinaryOperator): operator = BinaryOperator.MULTIPLY
@@ -48,13 +53,10 @@ class MulN(Mul): pass
 class Div(BaseBinaryOperator): operator = BinaryOperator.DIVIDE
 class DivN(Div): pass
 class Mod(BaseBinaryOperator): operator = BinaryOperator.MODULO
-# class ModN(Mod): pass
 
 class BitAnd(BaseBinaryOperator): operator = BinaryOperator.BITWISE_AND
 class BitOr(BaseBinaryOperator): operator = BinaryOperator.BITWISE_OR
-# class BitOrN(BitOr): pass
 class BitXor(BaseBinaryOperator): operator = BinaryOperator.BITWISE_XOR
-# class BitXorN(BitXor): pass
 
 class LShift(BaseBinaryOperator): operator = BinaryOperator.LEFT_SHIFT
 class RShift(BaseBinaryOperator): operator = BinaryOperator.RIGHT_SHIFT
