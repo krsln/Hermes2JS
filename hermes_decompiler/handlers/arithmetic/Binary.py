@@ -59,7 +59,7 @@ class Add(BaseBinaryOperator): operator = BinaryOperator.ADD
 class AddN(Add):
     """
     Numeric-only fast-path Add. Hermes emits this for `i++` / `i += 1`
-    style loop increments as `AddN i_next, i, 1`. The lhs operand (`i`)
+    style loop incrementing as `AddN i_next, i, 1`. The lhs operand (`i`)
     must stay symbolic: it's the loop counter and gets reassigned every
     iteration via a back-edge Mov, so substituting its traced value here
     would bake a single iteration's snapshot into the expression (e.g.
