@@ -10,18 +10,9 @@ https://p1sec.github.io/hermes-dec/opcodes_table.html
 tree -I '__pycache__|__init__.py' hermes_decompiler
 ```
 
-## Done Stuff | from 2025-08-01
+## Done Stuff | feature/from-2025-08-15
 
-- LoopKind +-> FOR_OF, FOR_IN | ForEachRecognizer
-- handler fix: Jmp, JCompare, Call, ResumeGenerator, CreateClosure
-- dispatch/, opcode/, parsing/ moved into frontend/ folder
-- OpcodeCatalog, opcode verification tests
-- io/ moved into core/IO.py
-- IfStructurer fix
-- _raw.js
-- HermesAnalysis self.registers: dict[str, RegisterState] = {}
-- Printer.py
-- hermes_decompiler/analysis/transforms renames
+- 
 
 ## Testy
 
