@@ -23,8 +23,8 @@ class MemberExpression(Expression):
         obj["property"]
         obj?.[index]
 
-        # with explicit receiver (e.g., Reflect.get semantics)
-        obj[index] /* via receiver */
+    `receiver` preserves an explicit ECMAScript [[Get]] receiver
+    when it differs from `obj`.
     """
 
     obj: Expression
