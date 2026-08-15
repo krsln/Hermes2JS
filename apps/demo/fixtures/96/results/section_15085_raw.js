@@ -37,11 +37,11 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → <Mov>: <Reg8: 3, Reg8: 7>
     // USED → r3 = param1;
     // CODE → <Mov>: <Reg8: 2, Reg8: 8>
-    // USED → r2 = 0;
+    r2 = 0
     // CODE → <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = param1[0];
+    // USED → r2 = param1[r2];
     // CODE → <JLess>: <Addr8: 33, Reg8: 2, Reg8: 6>  # Address: 00000065
-    // → r2 = param1[0]
+    // → r2 = param1[r2]
     if (r2 < 0) goto label_101;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -51,9 +51,9 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → <Mov>: <Reg8: 10, Reg8: 7>
     // USED → r10 = param1;
     // CODE → <Mov>: <Reg8: 2, Reg8: 8>
-    // USED → r2 = 0;
+    r2 = 0
     // CODE → <GetByVal>: <Reg8: 2, Reg8: 10, Reg8: 2>
-    // USED → r2 = param1[0];
+    // USED → r2 = param1[r2];
     // CODE → <Call3>: <Reg8: 2, Reg8: 3, Reg8: 9, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r2)
     // CODE → <Jmp>: <Addr8: 59>  # Address: 0000009e

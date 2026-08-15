@@ -59,7 +59,7 @@ function Counter() {
     // CODE → <Call3>: <Reg8: 2, Reg8: 1, Reg8: 0, Reg8: 2, Reg8: 3>
     // USED → r2 = getEnvironment(1)[4].default.call(undefined, r2, r3);
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 2, Reg8: 3>
-    r1 = getEnvironment(1)[4].default.call(undefined, r2, r3)[getEnvironment(1)[6]]
+    r1 = getEnvironment(1)[4].default.call(undefined, r2, r3)[r3]
     // CODE → <Inc>: <Reg8: 1, Reg8: 1>
     // USED → r1 = r1 + 1;
     // CODE → <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>

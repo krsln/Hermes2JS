@@ -36,13 +36,13 @@ function tryCatchInsideLoopTest(param1) {
     if (!(0 < param1.length)) goto label_168;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
-    // USED → r2 = 0;
+    r2 = 0
     // CODE → <Mov>: <Reg8: 11, Reg8: 3>
     // USED → r11 = 0;
     // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
-    // USED → r12 = param1[0];
+    // USED → r12 = param1[r2];
     // CODE → <JLess>: <Addr8: 30, Reg8: 12, Reg8: 9>  # Address: 00000064
-    // → r12 = param1[0]
+    // → r12 = param1[r2]
     if (r12 < 0) goto label_100;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -50,7 +50,7 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r13 = globalThis.console.log;
     // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
-    // USED → r12 = param1[0];
+    // USED → r12 = param1[r2];
     // CODE → <Call3>: <Reg8: 12, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 12>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r12)
     // CODE → <Mov>: <Reg8: 12, Reg8: 11>

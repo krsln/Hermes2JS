@@ -41,11 +41,11 @@ function complexTest() {
     if (!(0 < r12.length)) goto label_216;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 11>
-    // USED → r13 = r12[0];
+    // USED → r13 = r12[r11];
     // CODE → <Mov>: <Reg8: 1, Reg8: 11>
     r1 = 0
     // CODE → <JStrictEqual>: <Addr8: 98, Reg8: 2, Reg8: 13>  # Address: 000000b9
-    // → r13 = r12[0]
+    // → r13 = r12[r11]
     if (1 === r13) goto label_185;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <JStrictEqual>: <Addr8: 76, Reg8: 3, Reg8: 13>  # Address: 000000a7

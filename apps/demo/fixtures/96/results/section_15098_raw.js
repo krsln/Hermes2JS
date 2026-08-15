@@ -72,7 +72,7 @@ function propertyAccessTest() {
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
     // USED → r5 = r5;
     // CODE → <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 8>
-    // USED → r5 = r5[GetIterator(r2).next()];
+    // USED → r5 = r5[r8];
     // CODE → <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
     console.log(r8, r5)
     // CODE → <Jmp>: <Addr8: -35>  # Address: 00000085

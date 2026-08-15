@@ -61,9 +61,9 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 6, string_id: 10657>  # String: 'callDestructuringTests' (Identifier)
     param6.callDestructuringTests = callDestructuringTests()
     // CODE → <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
+    r0 = 0
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
-    // USED → r1 = param7[0];
+    // USED → r1 = param7[r0];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
@@ -73,9 +73,9 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
     createEnvironment()[0] = _interopDefault(param1).call(undefined, r1)
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
-    // USED → r1 = 1;
+    r1 = 1
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-    // USED → r1 = param7[1];
+    // USED → r1 = param7[r1];
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
     // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>

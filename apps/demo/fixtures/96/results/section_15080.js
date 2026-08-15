@@ -36,20 +36,20 @@ function tryLoopMultiReturnTest(param1) {
                 // CODE → <Mov>: <Reg8: 6, Reg8: 3>
                 // USED → r6 = param1;
                 // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-                // USED → r5 = 0;
+                r5 = 0
                 // CODE → <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
-                // USED → r5 = param1[0];
+                // USED → r5 = param1[r5];
                 // CODE → <JLess>: <Addr8: 58, Reg8: 5, Reg8: 2>  # Address: 00000076
-                // → r5 = param1[0]
+                // → r5 = param1[r5]
                 if (r5 < 0) goto label_118;
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 3>
                 // USED → r6 = param1;
                 // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-                // USED → r5 = 0;
+                r5 = 0
                 // CODE → <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
-                // USED → r5 = param1[0];
-                // → r5 = param1[0]
+                // USED → r5 = param1[r5];
+                // → r5 = param1[r5]
                 if (r5 === 0) {
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
@@ -65,9 +65,9 @@ function tryLoopMultiReturnTest(param1) {
                     // CODE → <Mov>: <Reg8: 6, Reg8: 3>
                     // USED → r6 = param1;
                     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-                    // USED → r5 = 0;
+                    r5 = 0
                     // CODE → <GetByVal>: <Reg8: 6, Reg8: 6, Reg8: 5>
-                    // USED → r6 = param1[0];
+                    // USED → r6 = param1[r5];
                     // CODE → <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
                     console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", r6)
                     // CODE → <Inc>: <Reg8: 4, Reg8: 5>

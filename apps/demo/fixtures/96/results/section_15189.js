@@ -75,11 +75,11 @@ async function* anon_15189() {
             // CODE → <Call3>: <Reg8: 4, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 6>
             // USED → r4 = getEnvironment(2)[0].default.call(undefined, r1, r6);
             // CODE → <LoadConstZero>: <Reg8: 6>
-            // USED → r6 = 0;
+            r6 = 0
             // CODE → <GetByVal>: <Reg8: 7, Reg8: 4, Reg8: 6>
-            // USED → r7 = getEnvironment(2)[0].default.call(undefined, r1, r6)[0];
+            // USED → r7 = getEnvironment(2)[0].default.call(undefined, r1, r6)[r6];
             // CODE → <GetByVal>: <Reg8: 6, Reg8: 4, Reg8: 5>
-            // USED → r6 = getEnvironment(2)[0].default.call(undefined, r1, r6)[1];
+            // USED → r6 = getEnvironment(2)[0].default.call(undefined, r1, r6)[r5];
             // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r5 = globalThis.console;
             // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

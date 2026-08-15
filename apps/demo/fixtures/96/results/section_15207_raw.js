@@ -15,9 +15,9 @@ function _privateHelper2() {
     // CODE → <Call3>: <Reg8: 1, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 3>
     // USED → r1 = getEnvironment(0)[4].default.call(undefined, r1, r3);
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 5>
-    // USED → r0 = getEnvironment(0)[5];
+    r0 = getEnvironment(0)[5]
     // CODE → <GetByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
-    // USED → r2 = getEnvironment(0)[4].default.call(undefined, r1, r3)[getEnvironment(0)[5]];
+    // USED → r2 = getEnvironment(0)[4].default.call(undefined, r1, r3)[r0];
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 2, string_id: 14>  # String: 'HermesInternal' (Identifier)

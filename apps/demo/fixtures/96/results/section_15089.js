@@ -33,25 +33,25 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     try {
         if (0 < r2) {
             // LOOP → START (for)
-            // → r2 = param1[0]; r4 = param1
+            // → r2 = param1[r2]; r4 = param1
             for (; r4 < r2; r2 = param1.length) {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → <Mov>: <Reg8: 4, Reg8: 8>
                 // USED → r4 = param1;
                 // CODE → <Mov>: <Reg8: 2, Reg8: 9>
-                // USED → r2 = 0;
+                r2 = 0
                 // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
-                // USED → r2 = param1[0];
-                // → r2 = param1[0]
+                // USED → r2 = param1[r2];
+                // → r2 = param1[r2]
                 if (r2 >= 0) {
                     // ──────────────── Block 2 ──────────────── 
                     // CODE → <Mov>: <Reg8: 4, Reg8: 8>
                     // USED → r4 = param1;
                     // CODE → <Mov>: <Reg8: 2, Reg8: 9>
-                    // USED → r2 = 0;
+                    r2 = 0
                     // CODE → <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
-                    // USED → r2 = param1[0];
-                    // → r2 = param1[0]
+                    // USED → r2 = param1[r2];
+                    // → r2 = param1[r2]
                     if (r2 === 0) {
                         // ──────────────── Block 4 ──────────────── 
                         // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -69,9 +69,9 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                         // CODE → <Mov>: <Reg8: 11, Reg8: 8>
                         // USED → r11 = param1;
                         // CODE → <Mov>: <Reg8: 2, Reg8: 9>
-                        // USED → r2 = 0;
+                        r2 = 0
                         // CODE → <GetByVal>: <Reg8: 2, Reg8: 11, Reg8: 2>
-                        // USED → r2 = param1[0];
+                        // USED → r2 = param1[r2];
                         // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 10, Reg8: 5, Reg8: 2>
                         console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", r2)
                     }

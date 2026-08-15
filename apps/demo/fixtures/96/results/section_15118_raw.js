@@ -15,7 +15,7 @@ function spreadArrayTest() {
     // CODE → <NewArray>: <Reg8: 3, UInt16: 0>
     // USED → r3 = [];
     // CODE → <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
+    r0 = 0
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     r9 = r3
     // CODE → <Mov>: <Reg8: 8, Reg8: 2>
@@ -61,7 +61,7 @@ function spreadArrayTest() {
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 6>
     console.log(r6)
     // CODE → <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 0>
-    // USED → r5 = r3[0];
+    // USED → r5 = r3[r0];
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
     // USED → r0 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 2>

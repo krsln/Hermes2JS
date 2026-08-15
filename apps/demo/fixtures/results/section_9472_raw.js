@@ -29,11 +29,11 @@ function tryFinallyLoopBreakTest(param1) {
     if (!(0 < r2)) goto label_96;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
-    // USED → r2 = 0;
+    r2 = 0
     // CODE → <GetByVal>: <Reg8: 2, Reg8: 6, Reg8: 2>
-    // USED → r2 = param1[0];
+    // USED → r2 = param1[r2];
     // CODE → <JStrictEqual>: <Addr8: 43, Reg8: 2, Reg8: 5>  # Address: 00000060
-    // → r2 = param1[0]
+    // → r2 = param1[r2]
     if (r2 === 0) goto label_96;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -41,9 +41,9 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r8 = globalThis.console.log;
     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
-    // USED → r2 = 0;
+    r2 = 0
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 6, Reg8: 2>
-    // USED → r3 = param1[0];
+    // USED → r3 = param1[r2];
     // CODE → <Call3>: <Reg8: 3, Reg8: 8, Reg8: 9, Reg8: 4, Reg8: 3>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", r3)
     // CODE → <Inc>: <Reg8: 3, Reg8: 2>

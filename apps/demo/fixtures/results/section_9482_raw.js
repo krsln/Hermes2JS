@@ -68,7 +68,7 @@ function propertyAccessTest() {
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r6 = globalThis.console.log;
     // CODE → <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 8>
-    // USED → r5 = r4[GetIterator(r2).next()];
+    // USED → r5 = r4[r8];
     // CODE → <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
     console.log(r8, r5)
     // CODE → <Jmp>: <Addr8: -35>  # Address: 0000007c

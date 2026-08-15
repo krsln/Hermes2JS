@@ -45,9 +45,9 @@ function function_15122(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 7>
     // USED → r1 = param7;
     // CODE → <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
+    r0 = 0
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 1, Reg8: 0>
-    // USED → r3 = param7[0];
+    // USED → r3 = param7[r0];
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 2>
     // USED → r1 = param2;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
@@ -55,7 +55,7 @@ function function_15122(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call2>: <Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 3>
     // USED → r4 = param2.call(undefined, r3);
     // CODE → <JmpFalse>: <Addr8: 14, Reg8: 4>  # Address: 0000007e
-    // → r3 = param7[0]
+    // → r3 = param7[r0]
     if (!param2.call(undefined, r3)) goto label_126;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 48>  # String: '__esModule' (Identifier)

@@ -12,7 +12,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 
 ## Done Stuff | feature/from-2025-08-15
 
-- 
+- /handlers/ GetByVal
 
 ## Testy
 

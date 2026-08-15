@@ -25,9 +25,9 @@ function describe() {
     // CODE → <Call3>: <Reg8: 1, Reg8: 3, Reg8: 2, Reg8: 1, Reg8: 0>
     // USED → r1 = getEnvironment(1)[4].default.call(undefined, r1, r0);
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = getEnvironment(1)[4].default.call(undefined, r1, r0)[getEnvironment(1)[7]];
+    // USED → r0 = getEnvironment(1)[4].default.call(undefined, r1, r0)[r0];
     // CODE → <Call1>: <Reg8: 0, Reg8: 0, Reg8: 1>
-    // USED → r0 = getEnvironment(1)[4].default.call(undefined, r1, r0)[getEnvironment(1)[7]]();
+    // USED → r0 = getEnvironment(1)[4].default.call(undefined, r1, r0)[r0]();
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(1)[4].default.call(undefined, r1, r0)[getEnvironment(1)[7]]();
+    return getEnvironment(1)[4].default.call(undefined, r1, r0)[r0]();
 }

@@ -32,7 +32,7 @@ function forInTest() {
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r9 = globalThis.console.log;
     // CODE → <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
-    // USED → r8 = r7[r6.next()];
+    // USED → r8 = r7[r11];
     // CODE → <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
     console.log(r11, r8)
     // CODE → <Jmp>: <Addr8: -33>  # Address: 00000027
