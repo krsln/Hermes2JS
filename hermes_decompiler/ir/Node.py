@@ -29,12 +29,7 @@ class Node(ABC):
           operands or register indices).
     """
 
-    loc: SourceLocation | None = field(
-        default=None,
-        kw_only=True,
-        compare=False,
-        repr=False,
-    )
+    loc: SourceLocation | None = field(default=None, kw_only=True, compare=False, repr=False)
 
     @property
     @abstractmethod
