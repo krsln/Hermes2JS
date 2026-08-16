@@ -19,14 +19,13 @@ class NodeVisitor:
 
     Example:
 
-        class NameCollector(NodeVisitor):
-            def __init__(self):
-                self.names: list[str] = []
-
-    # noinspection GrazieInspection
-            def visit_Identifier(self, node: Identifier) -> None:
-                self.names.append(node.name)
-                self.generic_visit(node)
+        >>> class NameCollector(NodeVisitor):
+        ...     def __init__(self):
+        ...         self.names: list[str] = []
+        ...
+        ...     def visit_Identifier(self, node) -> None:
+        ...         self.names.append(node.name)
+        ...         self.generic_visit(node)
     """
 
     def visit(self, node: Node) -> Any:
