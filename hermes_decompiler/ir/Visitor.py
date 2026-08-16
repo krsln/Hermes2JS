@@ -18,10 +18,12 @@ class NodeVisitor:
     children unchanged.
 
     Example:
+
         class NameCollector(NodeVisitor):
             def __init__(self):
                 self.names: list[str] = []
 
+    # noinspection GrazieInspection
             def visit_Identifier(self, node: Identifier) -> None:
                 self.names.append(node.name)
                 self.generic_visit(node)
@@ -29,13 +31,16 @@ class NodeVisitor:
 
     def visit(self, node: Node) -> Any:
         method_name = f"visit_{type(node).__name__}"
-        visitor = getattr(self, method_name, self.generic_visit)
-        return visitor(node)
+
+        if hasattr(self, method_name):
+            method = getattr(self, method_name)
+            return method(node)
+
+        return self.generic_visit(node)
 
     def generic_visit(self, node: Node) -> None:
         for child in node.children:
             self.visit(child)
-
 
 # class NodeTransformer(NodeVisitor):
 #     """
