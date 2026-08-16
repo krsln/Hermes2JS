@@ -44,10 +44,7 @@ class PutOwnGetterSetterByVal(OpcodeHandler):
         descriptor = ObjectExpression(properties=properties)
 
         expression = CallExpression(
-            callee=MemberExpression(
-                obj=Identifier(name="Object"),
-                prop=Identifier(name="defineProperty"),
-            ),
+            callee=MemberExpression(obj=Identifier(name="Object"), prop=Identifier(name="defineProperty")),
             arguments=(
                 self.get_register_expression(ctx.analysis, obj_reg),
                 self.get_register_expression(ctx.analysis, key_reg),
