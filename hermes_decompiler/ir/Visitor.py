@@ -1,13 +1,11 @@
 from __future__ import annotations
 
-import dataclasses
 from typing import Any
 
 from hermes_decompiler.ir.Node import Node
 
 __all__ = [
     "NodeVisitor",
-    "NodeTransformer",
 ]
 
 
@@ -39,57 +37,57 @@ class NodeVisitor:
             self.visit(child)
 
 
-class NodeTransformer(NodeVisitor):
-    """
-    Tree-to-tree rewriting of an IR tree.
-
-    `visit_<ClassName>` methods may return a new node, `None` (to drop
-    the node, only meaningful within tuple fields), or the original node
-    unchanged. Since nodes are frozen, new instances are produced via
-    `dataclasses.replace` rather than mutation.
-
-    Example:
-        class ConstantFolder(NodeTransformer):
-            def visit_BinaryExpression(self, node: BinaryExpression):
-                node = self.generic_visit(node)
-                # ... fold constants, return new node ...
-                return node
-    """
-
-    def generic_visit(self, node: Node) -> Node:
-        replacements: dict[str, Any] = {}
-
-        for f in dataclasses.fields(node):
-            if f.name == "loc":
-                continue
-
-            value = getattr(node, f.name)
-
-            if isinstance(value, Node):
-                new_value = self.visit(value)
-                if new_value is not value:
-                    replacements[f.name] = new_value
-
-            elif isinstance(value, tuple):
-                new_items = []
-                changed = False
-
-                for item in value:
-                    if isinstance(item, Node):
-                        new_item = self.visit(item)
-                        if new_item is None:
-                            changed = True
-                            continue
-                        if new_item is not item:
-                            changed = True
-                        new_items.append(new_item)
-                    else:
-                        new_items.append(item)
-
-                if changed:
-                    replacements[f.name] = tuple(new_items)
-
-        if not replacements:
-            return node
-
-        return dataclasses.replace(node, **replacements)
+# class NodeTransformer(NodeVisitor):
+#     """
+#     Tree-to-tree rewriting of an IR tree.
+#
+#     `visit_<ClassName>` methods may return a new node, `None` (to drop
+#     the node, only meaningful within tuple fields), or the original node
+#     unchanged. Since nodes are frozen, new instances are produced via
+#     `dataclasses.replace` rather than mutation.
+#
+#     Example:
+#         class ConstantFolder(NodeTransformer):
+#             def visit_BinaryExpression(self, node: BinaryExpression):
+#                 node = self.generic_visit(node)
+#                 # ... fold constants, return new node ...
+#                 return node
+#     """
+#
+#     def generic_visit(self, node: Node) -> Node:
+#         replacements: dict[str, Any] = {}
+#
+#         for f in dataclasses.fields(node):
+#             if f.name == "loc":
+#                 continue
+#
+#             value = getattr(node, f.name)
+#
+#             if isinstance(value, Node):
+#                 new_value = self.visit(value)
+#                 if new_value is not value:
+#                     replacements[f.name] = new_value
+#
+#             elif isinstance(value, tuple):
+#                 new_items = []
+#                 changed = False
+#
+#                 for item in value:
+#                     if isinstance(item, Node):
+#                         new_item = self.visit(item)
+#                         if new_item is None:
+#                             changed = True
+#                             continue
+#                         if new_item is not item:
+#                             changed = True
+#                         new_items.append(new_item)
+#                     else:
+#                         new_items.append(item)
+#
+#                 if changed:
+#                     replacements[f.name] = tuple(new_items)
+#
+#         if not replacements:
+#             return node
+#
+#         return dataclasses.replace(node, **replacements)
