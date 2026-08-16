@@ -25,7 +25,7 @@ class Node(ABC):
           `eq=False` does not inherit automatically; omitting it
           silently restores structural `__eq__`/`__hash__`.
         - Implement `children` explicitly, listing only the fields
-          that are semantically child nodes (e.g. excluding raw
+          that are semantically child nodes (e.g., excluding raw
           operands or register indices).
     """
 
