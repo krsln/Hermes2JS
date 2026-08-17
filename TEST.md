@@ -1,8 +1,8 @@
-# CFG - Control Flow Graph
+# CFG – Control Flow Graph
 
 https://raw.githubusercontent.com/facebook/hermes/hermes-v260318099.0.1/include/hermes/BCGen/HBC/BytecodeList.def
 
-# IR - Intermediate Representation
+# IR – Intermediate Representation
 
 https://p1sec.github.io/hermes-dec/opcodes_table.html
 
@@ -14,6 +14,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 
 - /handlers/ GetByVal
 - /ir/expressions/ Acess.MemberExpression
+- Printer.py to composition/facade architechture printer/
 
 ## Testy
 
