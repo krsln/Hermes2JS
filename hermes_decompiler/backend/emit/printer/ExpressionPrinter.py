@@ -61,38 +61,23 @@ class ExpressionPrinter(PrinterVisitor):
     # primitives
     # ------------------------------------------------------------------
 
-    def visit_Identifier(
-            self,
-            node: Identifier,
-    ) -> str:
+    def visit_Identifier(self, node: Identifier) -> str:
         return node.name
 
-    def visit_ParenthesizedExpression(
-            self,
-            node: ParenthesizedExpression,
-    ) -> str:
+    def visit_ParenthesizedExpression(self, node: ParenthesizedExpression) -> str:
         return f"({self.visit(node.expression)})"
 
-    def visit_RawExpression(
-            self,
-            node: RawExpression,
-    ) -> str:
+    def visit_RawExpression(self, node: RawExpression) -> str:
         return node.source
 
-    def visit_ThisPlaceholder(
-            self,
-            node: ThisPlaceholder,
-    ) -> str:
+    def visit_ThisPlaceholder(self, node: ThisPlaceholder) -> str:
         return f"{node.origin}(r{node.source_reg})"
 
     # ------------------------------------------------------------------
     # literals
     # ------------------------------------------------------------------
 
-    def visit_NumericLiteral(
-            self,
-            node: NumericLiteral,
-    ) -> str:
+    def visit_NumericLiteral(self, node: NumericLiteral) -> str:
         value = node.value
 
         if value != value:  # NaN
@@ -109,57 +94,32 @@ class ExpressionPrinter(PrinterVisitor):
 
         return repr(value)
 
-    def visit_BigIntLiteral(
-            self,
-            node: BigIntLiteral,
-    ) -> str:
+    def visit_BigIntLiteral(self, node: BigIntLiteral) -> str:
         return f"{node.value}n"
 
-    def visit_StringLiteral(
-            self,
-            node: StringLiteral,
-    ) -> str:
+    def visit_StringLiteral(self, node: StringLiteral) -> str:
         return json.dumps(node.value)
 
-    def visit_BooleanLiteral(
-            self,
-            node: BooleanLiteral,
-    ) -> str:
+    def visit_BooleanLiteral(self, node: BooleanLiteral) -> str:
         return "true" if node.value else "false"
 
-    def visit_NullLiteral(
-            self,
-            node: NullLiteral,
-    ) -> str:
+    def visit_NullLiteral(self, node: NullLiteral) -> str:
         return "null"
 
-    def visit_UndefinedLiteral(
-            self,
-            node: UndefinedLiteral,
-    ) -> str:
+    def visit_UndefinedLiteral(self, node: UndefinedLiteral) -> str:
         return "undefined"
 
-    def visit_RegExpLiteral(
-            self,
-            node: RegExpLiteral,
-    ) -> str:
+    def visit_RegExpLiteral(self, node: RegExpLiteral) -> str:
         return f"/{node.pattern}/{node.flags}"
 
-    def visit_TemplateLiteral(
-            self,
-            node: TemplateLiteral,
-    ) -> str:
+    def visit_TemplateLiteral(self, node: TemplateLiteral) -> str:
         parts: list[str] = []
 
         for index, quasi in enumerate(node.quasis):
             parts.append(quasi.raw)
 
             if index < len(node.expressions):
-                parts.append(
-                    "${"
-                    + self.visit(node.expressions[index])
-                    + "}"
-                )
+                parts.append("${" + self.visit(node.expressions[i]) + "}")
 
         return "`" + "".join(parts) + "`"
 
@@ -167,17 +127,11 @@ class ExpressionPrinter(PrinterVisitor):
     # operations
     # ------------------------------------------------------------------
 
-    def visit_UnaryExpression(
-            self,
-            node: UnaryExpression,
-    ) -> str:
+    def visit_UnaryExpression(self, node: UnaryExpression) -> str:
         operand = self._wrap_operand(node.operand, node)
         return f"{node.operator}{operand}"
 
-    def visit_UpdateExpression(
-            self,
-            node: UpdateExpression,
-    ) -> str:
+    def visit_UpdateExpression(self, node: UpdateExpression) -> str:
         argument = self.visit(node.argument)
 
         if node.prefix:
@@ -185,46 +139,26 @@ class ExpressionPrinter(PrinterVisitor):
 
         return f"{argument}{node.operator}"
 
-    def visit_BinaryExpression(
-            self,
-            node: BinaryExpression,
-    ) -> str:
-        left = self._wrap_side(
-            node.left,
-            node,
-            is_right=False,
-        )
-        right = self._wrap_side(
-            node.right,
-            node,
-            is_right=True,
-        )
+    def visit_BinaryExpression(self, node: BinaryExpression) -> str:
+        left = self._wrap_side(node.left, node, is_right=False)
+        right = self._wrap_side(node.right, node, is_right=True)
 
         return f"{left} {node.operator} {right}"
 
-    def visit_AssignmentExpression(
-            self,
-            node: AssignmentExpression,
-    ) -> str:
+    def visit_AssignmentExpression(self, node: AssignmentExpression) -> str:
         left = self.visit(node.left)
         right = self.visit(node.right)
 
         return f"{left} {node.operator} {right}"
 
-    def visit_ConditionalExpression(
-            self,
-            node: ConditionalExpression,
-    ) -> str:
+    def visit_ConditionalExpression(self, node: ConditionalExpression) -> str:
         test = self._wrap_operand(node.test, node)
         consequent = self.visit(node.consequent)
         alternate = self.visit(node.alternate)
 
         return f"{test} ? {consequent} : {alternate}"
 
-    def visit_SequenceExpression(
-            self,
-            node: SequenceExpression,
-    ) -> str:
+    def visit_SequenceExpression(self, node: SequenceExpression) -> str:
         return ", ".join(
             self.visit(expression)
             for expression in node.expressions
@@ -234,10 +168,7 @@ class ExpressionPrinter(PrinterVisitor):
     # access / calls
     # ------------------------------------------------------------------
 
-    def visit_MemberExpression(
-            self,
-            node: MemberExpression,
-    ) -> str:
+    def visit_MemberExpression(self, node: MemberExpression) -> str:
         obj = self._wrap_operand(node.obj, node)
         prop = self.visit(node.prop)
 
@@ -263,10 +194,7 @@ class ExpressionPrinter(PrinterVisitor):
 
         return f"{obj}.{prop}"
 
-    def visit_CallExpression(
-            self,
-            node: CallExpression,
-    ) -> str:
+    def visit_CallExpression(self, node: CallExpression) -> str:
         callee = self._wrap_operand(node.callee, node)
         args = ", ".join(
             self.visit(argument)
@@ -277,10 +205,7 @@ class ExpressionPrinter(PrinterVisitor):
 
         return f"{callee}{call}{args})"
 
-    def visit_NewExpression(
-            self,
-            node: NewExpression,
-    ) -> str:
+    def visit_NewExpression(self, node: NewExpression) -> str:
         callee = self._wrap_operand(node.callee, node)
         args = ", ".join(
             self.visit(argument)
@@ -289,46 +214,20 @@ class ExpressionPrinter(PrinterVisitor):
 
         return f"new {callee}({args})"
 
-    def visit_SpreadElement(
-            self,
-            node: SpreadElement,
-    ) -> str:
+    def visit_SpreadElement(self, node: SpreadElement) -> str:
         return f"...{self.visit(node.argument)}"
 
     # ------------------------------------------------------------------
     # collections
     # ------------------------------------------------------------------
 
-    def visit_ArrayExpression(
-            self,
-            node: ArrayExpression,
-    ) -> str:
-        return (
-                "["
-                + ", ".join(
-            self.visit(element)
-            for element in node.elements
-        )
-                + "]"
-        )
+    def visit_ArrayExpression(self, node: ArrayExpression) -> str:
+        return "[" + ", ".join(self.visit(e) for e in node.elements) + "]"
 
-    def visit_ObjectExpression(
-            self,
-            node: ObjectExpression,
-    ) -> str:
-        return (
-                "{ "
-                + ", ".join(
-            self.visit(property_)
-            for property_ in node.properties
-        )
-                + " }"
-        )
+    def visit_ObjectExpression(self, node: ObjectExpression) -> str:
+        return "{ " + ", ".join(self.visit(p) for p in node.properties) + " }"
 
-    def visit_ObjectProperty(
-            self,
-            node: ObjectProperty,
-    ) -> str:
+    def visit_ObjectProperty(self, node: ObjectProperty) -> str:
         if node.shorthand:
             return self.visit(node.value)
 
@@ -351,51 +250,25 @@ class ExpressionPrinter(PrinterVisitor):
     # functions
     # ------------------------------------------------------------------
 
-    def visit_FunctionExpression(
-            self,
-            node: FunctionExpression,
-    ) -> str:
-        name = (
-            self.visit(node.name)
-            if node.name
-            else ""
-        )
-        params = ", ".join(
-            self.visit(parameter)
-            for parameter in node.parameters
-        )
+    def visit_FunctionExpression(self, node: FunctionExpression) -> str:
+        name = self.visit(node.name) if node.name else ""
+        params = ", ".join(self.visit(param) for param in node.parameters)
 
-        prefix = (
-            "async function"
-            if node.async_
-            else "function"
-        )
+        prefix = "async function" if node.async_ else "function"
         star = "*" if node.generator else ""
 
         return f"{prefix}{star} {name}({params}) {{ ... }}"
 
-    def visit_ArrowFunctionExpression(
-            self,
-            node: ArrowFunctionExpression,
-    ) -> str:
-        params = ", ".join(
-            self.visit(parameter)
-            for parameter in node.parameters
-        )
+    def visit_ArrowFunctionExpression(self, node: ArrowFunctionExpression) -> str:
+        params = ", ".join(self.visit(param) for param in node.parameters)
         prefix = "async " if node.async_ else ""
 
         return f"{prefix}({params}) => {{ ... }}"
 
-    def visit_AwaitExpression(
-            self,
-            node: AwaitExpression,
-    ) -> str:
+    def visit_AwaitExpression(self, node: AwaitExpression) -> str:
         return f"await {self._wrap_operand(node.argument, node)}"
 
-    def visit_YieldExpression(
-            self,
-            node: YieldExpression,
-    ) -> str:
+    def visit_YieldExpression(self, node: YieldExpression) -> str:
         star = "*" if node.delegate else ""
 
         if node.argument is None:
@@ -407,11 +280,7 @@ class ExpressionPrinter(PrinterVisitor):
     # precedence
     # ------------------------------------------------------------------
 
-    def _wrap_operand(
-            self,
-            operand,
-            parent,
-    ) -> str:
+    def _wrap_operand(self, operand, parent) -> str:
         """
         Parenthesize operands whose syntax cannot safely be emitted
         without grouping.
@@ -431,13 +300,7 @@ class ExpressionPrinter(PrinterVisitor):
 
         return text
 
-    def _wrap_side(
-            self,
-            side,
-            parent: BinaryExpression,
-            *,
-            is_right: bool,
-    ) -> str:
+    def _wrap_side(self, side, parent: BinaryExpression, is_right: bool) -> str:
         text = self.visit(side)
 
         if isinstance(side, BinaryExpression):
@@ -446,21 +309,11 @@ class ExpressionPrinter(PrinterVisitor):
 
             if (
                     side_precedence < parent_precedence
-                    or (
-                    is_right
-                    and side_precedence == parent_precedence
-            )
+                    or (is_right and side_precedence == parent_precedence)
             ):
                 return f"({text})"
 
-        elif isinstance(
-                side,
-                (
-                        ConditionalExpression,
-                        AssignmentExpression,
-                        SequenceExpression,
-                ),
-        ):
+        elif isinstance(side, (ConditionalExpression, AssignmentExpression, SequenceExpression)):
             return f"({text})"
 
         return text

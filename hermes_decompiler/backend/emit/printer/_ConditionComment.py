@@ -47,9 +47,7 @@ class ConditionCommentPrinter:
         if condition is None or source_block is None:
             return
 
-        names = sorted(
-            self._collect_register_names(condition)
-        )
+        names = sorted(self._collect_register_names(condition))
 
         if not names:
             return
@@ -108,29 +106,20 @@ class ConditionCommentPrinter:
 
         return found
 
-    def _find_local_definition_text(
-            self,
-            block: BasicBlock,
-            before_index: int,
-            name: str,
-    ) -> str | None:
+    def _find_local_definition_text(self, block: BasicBlock, before_index: int, name: str) -> str | None:
         """
         Find the last local definition of `name` before `before_index`.
         """
         register = int(name[1:])
 
-        for instruction in reversed(
-                block.instructions[:before_index]
-        ):
+        for instruction in reversed(block.instructions[:before_index]):
             if (
                     instruction.dest_reg == register
                     and instruction.value is not None
             ):
                 try:
-                    return self.expressions.print(
-                        instruction.value
-                    )
-                except Exception:
+                    return self.expressions.print(instruction.value)
+                except (ValueError, TypeError, AttributeError):
                     return None
 
         return None
