@@ -256,7 +256,7 @@ class RegionPrinter:
         return None
 
     @staticmethod
-    def _is_skippable_prefix(item) -> bool:
+    def _is_skippable_prefix(item: BasicBlock | Region) -> bool:
         """True for BasicBlocks that only prepare values (loads / consts)
         and have no terminator and no side-effecting statements.
 
@@ -296,7 +296,7 @@ class RegionPrinter:
         return True
 
     @classmethod
-    def _extract_single_if(cls, body) -> IfRegion | None:
+    def _extract_single_if(cls, body: Region) -> IfRegion | None:
         if isinstance(body, IfRegion):
             return body
 
@@ -311,17 +311,19 @@ class RegionPrinter:
             if not cls._is_skippable_prefix(child)
         ]
 
-        if (
-                len(meaningful) == 1
-                and isinstance(meaningful[0], IfRegion)
-        ):
-            return meaningful[0]
+        if len(meaningful) == 1:
+            value = meaningful[0]
 
-        if (
-                len(body.children) == 1
-                and isinstance(body.children[0], IfRegion)
-        ):
-            return body.children[0]
+            if isinstance(value, IfRegion):
+                return value
+
+        children = body.children
+
+        if len(children) == 1:
+            child = children[0]
+
+            if isinstance(child, IfRegion):
+                return child
 
         return None
 
@@ -381,7 +383,7 @@ class RegionPrinter:
         if not is_do_while:
             return region.header_block
 
-        latches = getattr(region, "latches", None)
+        latches = region.latches
 
         if latches and len(latches) == 1:
             return next(iter(latches))

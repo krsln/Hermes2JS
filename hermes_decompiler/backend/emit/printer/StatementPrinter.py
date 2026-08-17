@@ -22,6 +22,7 @@ __all__ = [
 ]
 
 
+# noinspection PyMethodMayBeStatic
 class StatementPrinter(PrinterVisitor):
     """
     Converts IR statements and raw terminators into JavaScript text.

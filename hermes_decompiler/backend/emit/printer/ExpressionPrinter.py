@@ -43,6 +43,7 @@ __all__ = [
 ]
 
 
+# noinspection PyMethodMayBeStatic
 class ExpressionPrinter(PrinterVisitor):
     """
     Converts IR expressions into JavaScript source text.
