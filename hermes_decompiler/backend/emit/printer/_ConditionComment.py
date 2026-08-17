@@ -3,6 +3,7 @@ from __future__ import annotations
 import dataclasses
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import Identifier
 
 from ._PrinterContext import PrinterContext
@@ -11,6 +12,8 @@ from .ExpressionPrinter import ExpressionPrinter
 __all__ = [
     "ConditionCommentPrinter",
 ]
+
+logger = get_logger(__name__)
 
 
 class ConditionCommentPrinter:
@@ -115,7 +118,10 @@ class ConditionCommentPrinter:
             ):
                 try:
                     return self.expressions.print(instruction.value)
-                except (ValueError, TypeError, AttributeError):
+                except Exception as exc:
+                    # Condition comments are diagnostic-only. A failure while rendering
+                    # one must never affect the actual JavaScript emission.
+                    logger.debug("Failed to render condition comment expression: %s", exc)
                     return None
 
         return None
