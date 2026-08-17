@@ -31,19 +31,15 @@ class Printer:
             *,
             verbose: bool = False,
     ) -> None:
-        context = PrinterContext(
-            verbose=verbose,
-        )
+        ctx = PrinterContext(verbose=verbose)
 
         expressions = ExpressionPrinter()
         statements = StatementPrinter(expressions)
-        condition_comments = ConditionCommentPrinter(context, expressions)
+        condition_comments = ConditionCommentPrinter(ctx, expressions)
 
-        regions = RegionPrinter(
-            context, expressions, statements, condition_comments,
-        )
+        regions = RegionPrinter(ctx, expressions, statements, condition_comments)
 
-        self._context = context
+        self._context = ctx
         self._expressions = expressions
         self._statements = statements
         self._condition_comments = condition_comments

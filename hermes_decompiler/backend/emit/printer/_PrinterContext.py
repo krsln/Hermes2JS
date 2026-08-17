@@ -26,6 +26,7 @@ class PrinterContext:
     @contextmanager
     def indented(self) -> Iterator[None]:
         """Temporarily increase the current output indentation."""
+
         self.indent += 1
         try:
             yield
@@ -34,8 +35,10 @@ class PrinterContext:
 
     def write(self, lines: list[str], text: str) -> None:
         """Append one correctly indented line to the output."""
+
         lines.append(f"{self.INDENT * self.indent}{text}")
 
     def reset(self) -> None:
         """Reset per-document rendering state."""
+
         self.indent = 1

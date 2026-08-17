@@ -23,12 +23,8 @@ class ConditionCommentPrinter:
     cross-block lookup, or expression rewriting.
     """
 
-    def __init__(
-            self,
-            context: PrinterContext,
-            expressions: ExpressionPrinter,
-    ) -> None:
-        self.context = context
+    def __init__(self, context: PrinterContext, expressions: ExpressionPrinter) -> None:
+        self.ctx = context
         self.expressions = expressions
 
     def emit(
@@ -67,7 +63,7 @@ class ConditionCommentPrinter:
                 parts.append(f"{name} = {definition}")
 
         if parts:
-            self.context.write(lines, "// → " + "; ".join(parts))
+            self.ctx.write(lines, "// → " + "; ".join(parts))
 
     @staticmethod
     def _collect_register_names(node) -> set[str]:

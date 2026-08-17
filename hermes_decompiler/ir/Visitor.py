@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Optional
 
 from hermes_decompiler.ir.Node import Node
 
@@ -37,7 +37,7 @@ class NodeVisitor:
 
         return self.generic_visit(node)
 
-    def generic_visit(self, node: Node) -> None:
+    def generic_visit(self, node: Node) -> Optional[str]:
         for child in node.children:
             self.visit(child)
 

@@ -25,10 +25,6 @@ class PrinterVisitor(NodeVisitor):
     def generic_visit(self, node: Any) -> str:
         node_type = type(node).__name__
 
-        logger.warning(
-            "%s: unsupported node type %s",
-            self.printer_name,
-            node_type,
-        )
+        logger.warning("%s: unsupported node type %s", self.printer_name, node_type)
 
         return f"/* unsupported: {node_type} */"

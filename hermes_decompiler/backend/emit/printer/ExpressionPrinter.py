@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from typing import Any
 
 from hermes_decompiler.ir import precedence
 from hermes_decompiler.ir.expressions import (
@@ -35,7 +36,6 @@ from hermes_decompiler.ir.expressions import (
     RawExpression,
     ThisPlaceholder,
 )
-
 from ._PrinterVisitor import PrinterVisitor
 
 __all__ = [
@@ -103,10 +103,10 @@ class ExpressionPrinter(PrinterVisitor):
     def visit_BooleanLiteral(self, node: BooleanLiteral) -> str:
         return "true" if node.value else "false"
 
-    def visit_NullLiteral(self, node: NullLiteral) -> str:
+    def visit_NullLiteral(self, _node: NullLiteral) -> str:
         return "null"
 
-    def visit_UndefinedLiteral(self, node: UndefinedLiteral) -> str:
+    def visit_UndefinedLiteral(self, _node: UndefinedLiteral) -> str:
         return "undefined"
 
     def visit_RegExpLiteral(self, node: RegExpLiteral) -> str:
@@ -119,7 +119,7 @@ class ExpressionPrinter(PrinterVisitor):
             parts.append(quasi.raw)
 
             if index < len(node.expressions):
-                parts.append("${" + self.visit(node.expressions[i]) + "}")
+                parts.append("${" + self.visit(node.expressions[index]) + "}")
 
         return "`" + "".join(parts) + "`"
 
@@ -280,22 +280,20 @@ class ExpressionPrinter(PrinterVisitor):
     # precedence
     # ------------------------------------------------------------------
 
-    def _wrap_operand(self, operand, parent) -> str:
+    def _wrap_operand(self, operand: Any, _parent: Any) -> str:
         """
         Parenthesize operands whose syntax cannot safely be emitted
         without grouping.
         """
         text = self.visit(operand)
 
-        if isinstance(
-                operand,
-                (
-                        BinaryExpression,
-                        ConditionalExpression,
-                        AssignmentExpression,
-                        SequenceExpression,
-                ),
-        ):
+        tuple_expressions = (
+            BinaryExpression,
+            ConditionalExpression,
+            AssignmentExpression,
+            SequenceExpression,
+        )
+        if isinstance(operand, tuple_expressions):
             return f"({text})"
 
         return text

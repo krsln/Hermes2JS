@@ -47,28 +47,19 @@ class StatementPrinter(PrinterVisitor):
     # statements
     # ------------------------------------------------------------------
 
-    def visit_BlockStatement(
-            self,
-            node: BlockStatement,
-    ) -> str:
+    def visit_BlockStatement(self, _node: BlockStatement) -> str:
+        # Multi-statement expansion is JSRenderer's responsibility (it
+        # walks the region tree, not this flat block). Used only when a
+        # BlockStatement shows up inline (e.g., as a function body stub).
         return "{ ... }"
 
-    def visit_EmptyStatement(
-            self,
-            node: EmptyStatement,
-    ) -> str:
+    def visit_EmptyStatement(self, _node: EmptyStatement) -> str:
         return ";"
 
-    def visit_ExpressionStatement(
-            self,
-            node: ExpressionStatement,
-    ) -> str:
+    def visit_ExpressionStatement(self, node: ExpressionStatement) -> str:
         return f"{self.expressions.print(node.expression)};"
 
-    def visit_VariableDeclaration(
-            self,
-            node: VariableDeclaration,
-    ) -> str:
+    def visit_VariableDeclaration(self, node: VariableDeclaration) -> str:
         parts: list[str] = []
 
         for declaration in node.declarations:
@@ -86,73 +77,36 @@ class StatementPrinter(PrinterVisitor):
 
         return f"{node.kind} " + ", ".join(parts) + ";"
 
-    def visit_IfStatement(
-            self,
-            node: IfStatement,
-    ) -> str:
-        return (
-            f"if ({self.expressions.print(node.test)})"
-        )
+    def visit_IfStatement(self, node: IfStatement) -> str:
+        # JSRenderer renders if/else structurally via IfRegion; this
+        # covers the case of printing just the condition/header text.
+        return f"if ({self.expressions.print(node.test)})"
 
-    def visit_ReturnStatement(
-            self,
-            node: ReturnStatement,
-    ) -> str:
+    def visit_ReturnStatement(self, node: ReturnStatement) -> str:
         if node.argument is None:
             return "return;"
 
-        return (
-                "return "
-                + self.expressions.print(node.argument)
-                + ";"
-        )
+        return f"return {self.expressions.print(node.argument)};"
 
-    def visit_DebuggerStatement(
-            self,
-            node: DebuggerStatement,
-    ) -> str:
+    def visit_DebuggerStatement(self, _node: DebuggerStatement) -> str:
         return "debugger;"
 
-    def visit_ThrowStatement(
-            self,
-            node: ThrowStatement,
-    ) -> str:
-        return (
-                "throw "
-                + self.expressions.print(node.argument)
-                + ";"
-        )
+    def visit_ThrowStatement(self, node: ThrowStatement) -> str:
+        return f"throw {self.expressions.print(node.argument)};"
 
-    def visit_BreakStatement(
-            self,
-            node: BreakStatement,
-    ) -> str:
+    def visit_BreakStatement(self, node: BreakStatement) -> str:
         if node.label is None:
             return "break;"
 
-        return (
-                "break "
-                + self.expressions.print(node.label)
-                + ";"
-        )
+        return f"break {self.expressions.print(node.label)};"
 
-    def visit_ContinueStatement(
-            self,
-            node: ContinueStatement,
-    ) -> str:
+    def visit_ContinueStatement(self, node: ContinueStatement) -> str:
         if node.label is None:
             return "continue;"
 
-        return (
-                "continue "
-                + self.expressions.print(node.label)
-                + ";"
-        )
+        return f"continue {self.expressions.print(node.label)};"
 
-    def visit_LabeledStatement(
-            self,
-            node: LabeledStatement,
-    ) -> str:
+    def visit_LabeledStatement(self, node: LabeledStatement) -> str:
         return f"{self.expressions.print(node.label)}:"
 
     # ------------------------------------------------------------------
@@ -162,10 +116,7 @@ class StatementPrinter(PrinterVisitor):
     def visit_TerminatorJump(self, node) -> str:
         return f"goto label_{node.target};"
 
-    def visit_TerminatorConditionalBranch(
-            self,
-            node,
-    ) -> str:
+    def visit_TerminatorConditionalBranch(self, node) -> str:
         condition = self.expressions.print(node.condition)
 
         return (
@@ -173,7 +124,7 @@ class StatementPrinter(PrinterVisitor):
             f"goto label_{node.target};"
         )
 
-    def visit_TerminatorSwitch(self, node) -> str:
+    def visit_TerminatorSwitch(self, _) -> str:
         return (
             "// Raw TerminatorSwitch reached Printer. "
             "SwitchStructurer should have converted it "
