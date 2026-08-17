@@ -1,7 +1,21 @@
+# JetBrains IDE project settings
 /.idea/
 
+# Python bytecode and macOS Finder metadata
+__pycache__/
+*.py[cod]
+*.pyo
+.DS_Store
+
+# Python package build artifacts
+build/
+dist/
+*.egg-info/
+
+# Third-party source fetched by scripts/fetch-hermes-dec.sh
+/vendor/
+
+# Generated Hermes bytecode-disassembly output
 /apps/testy/96/output
 /apps/testy/98/output
-
 /apps/coachy/output
-/vendor/
