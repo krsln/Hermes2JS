@@ -10,7 +10,7 @@ from typing import Dict, Optional
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.ir.expressions import (
-    Expression, Identifier, RawExpression, ObjectExpression, ArrayExpression, Literal,
+    Expression, Identifier, RawExpression, ObjectExpression, ArrayExpression, Literal, CallExpression,
 )
 from hermes_decompiler.runtime import HermesAnalysis
 
@@ -21,7 +21,7 @@ logger = get_logger(__name__)
 # independent-looking `{}`/`[]` in the output secretly alias the same
 # runtime object. Always kept symbolic (`rN`), regardless of which
 # resolver is used.
-_IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
+_IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression, )
 
 _CALL_ARGUMENT_INLINE_OPCODES = frozenset({
     "CreateClosure",
