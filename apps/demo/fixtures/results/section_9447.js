@@ -3,9 +3,9 @@ function whileTest() {
     // CODE → <GetGlobalObject>: <Reg8: 7>
     // USED → r7 = globalThis;
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r10 = globalThis.console;
+    // USED → r10 = console;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r9 = globalThis.console.log;
+    // USED → r9 = console.log;
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 4822>  # String: '__BC:ControlFlow/WhileTests/whileTest/start' (String)
     // USED → r8 = "__BC:ControlFlow/WhileTests/whileTest/start";
     // CODE → <Call2>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 8>
@@ -24,9 +24,9 @@ function whileTest() {
     for (r1 = 0; r1 < 5; r1 = r2 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r11 = globalThis.console;
+        // USED → r11 = console;
         // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r10 = globalThis.console.log;
+        // USED → r10 = console.log;
         // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 8, Reg8: 1>
         console.log("while", r1)
         // CODE → <Mov>: <Reg8: 2, Reg8: 1>
@@ -35,9 +35,9 @@ function whileTest() {
         if (r2 === 2) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r11 = globalThis.console;
+            // USED → r11 = console;
             // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r10 = globalThis.console.log;
+            // USED → r10 = console.log;
             // CODE → <Call2>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 9>
             console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
             // CODE → <AddN>: <Reg8: 0, Reg8: 2, Reg8: 3>
@@ -52,9 +52,9 @@ function whileTest() {
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r9 = globalThis.console;
+    // USED → r9 = console;
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r8 = globalThis.console.log;
+    // USED → r8 = console.log;
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 4819>  # String: '__BC:ControlFlow/WhileTests/whileTest/end' (String)
     // USED → r7 = "__BC:ControlFlow/WhileTests/whileTest/end";
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>

@@ -1,25 +1,25 @@
 function function_15133(param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    // USED → r0 = createEnvironment();
+    r0 = createEnvironment()
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
     // USED → r1 = param6;
     // CODE → <CreateClosure>: <Reg8: 5, Reg8: 0, function_id: 15134>  # Function: [#15134 basicRegExpTest of 129 bytes]: 2 params @ offset 0x0026a53e
     // USED → r5 = basicRegExpTest(param1);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 5>
-    createEnvironment()[0] = basicRegExpTest(param1)
+    r0[0] = basicRegExpTest(param1)
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 0, function_id: 15135>  # Function: [#15135 regExpFlagsTest of 169 bytes]: 2 params @ offset 0x0026a5bf
     // USED → r4 = regExpFlagsTest(param1);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 4>
-    createEnvironment()[1] = regExpFlagsTest(param1)
+    r0[1] = regExpFlagsTest(param1)
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 15136>  # Function: [#15136 regExpSingleQuotePatternTest of 139 bytes]: 2 params @ offset 0x0026a668
     // USED → r3 = regExpSingleQuotePatternTest(param1);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 2, Reg8: 3>
-    createEnvironment()[2] = regExpSingleQuotePatternTest(param1)
+    r0[2] = regExpSingleQuotePatternTest(param1)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15137>  # Function: [#15137 regExpGroupsAndReplaceTest of 120 bytes]: 2 params @ offset 0x0026a6f3
     // USED → r2 = regExpGroupsAndReplaceTest(param1);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 3, Reg8: 2>
-    createEnvironment()[3] = regExpGroupsAndReplaceTest(param1)
+    r0[3] = regExpGroupsAndReplaceTest(param1)
     // CODE → <GetGlobalObject>: <Reg8: 6>
     // USED → r6 = globalThis;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 6, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)

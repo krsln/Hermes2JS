@@ -3,25 +3,25 @@ function computedPropertyTest() {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4993>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/start' (String)
     // USED → r2 = "__BC:Objects/PropertyTests/computedPropertyTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Objects/PropertyTests/computedPropertyTest/start")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <NewObjectWithBuffer>: <Reg8: 2, UInt16: 1915, UInt16: 46772>  # Object: {'dynamic': 42, 'staticKey': 'value'}
     // USED → r2 = { "dynamic": 42, "staticKey": "value" };
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4992>  # String: '__BC:Objects/PropertyTests/computedPropertyTest/end' (String)
     // USED → r1 = "__BC:Objects/PropertyTests/computedPropertyTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>

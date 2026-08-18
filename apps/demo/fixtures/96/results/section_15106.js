@@ -12,25 +12,25 @@ function parameterDestructureTest(param1, param2) {
     // USED → r0 = undefined;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
-    // USED → r1 = getEnvironment(0);
+    r1 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 1>
-    // USED → r1 = getEnvironment(0)[1];
+    // USED → r1 = r1[1];
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r3 = getEnvironment(0)[1].default;
+    // USED → r3 = r1[1].default;
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 2>
     // USED → r2 = param2;
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     // USED → r1 = 2;
     // CODE → <Call3>: <Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
-    // USED → r2 = getEnvironment(0)[1].default.call(undefined, param2, 2);
+    r2 = r1[1].default.call(undefined, param2, 2)
     // CODE → <LoadConstZero>: <Reg8: 1>
     r1 = 0
     // CODE → <GetByVal>: <Reg8: 10, Reg8: 2, Reg8: 1>
-    r10 = getEnvironment(0)[1].default.call(undefined, param2, 2)[r1]
+    r10 = r2[r1]
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     r1 = 1
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 2, Reg8: 1>
-    r9 = getEnvironment(0)[1].default.call(undefined, param2, 2)[r1]
+    r9 = r2[r1]
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 4, string_id: 99>  # String: 'console' (Identifier)

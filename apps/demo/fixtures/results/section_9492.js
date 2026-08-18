@@ -3,9 +3,9 @@ function spreadArrayTest() {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4718>  # String: '__BC:Arrays/SpreadTests/spreadArrayTest/start' (String)
     // USED → r0 = "__BC:Arrays/SpreadTests/spreadArrayTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
@@ -29,9 +29,9 @@ function spreadArrayTest() {
     // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
     r4 = arraySpread(r0, r1, r2, r3)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 0>
     console.log(r0)
     // CODE → <NewArrayWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 1, UInt16: 17298>  # Array: [0]
@@ -45,56 +45,56 @@ function spreadArrayTest() {
     // CODE → <Mov>: <Reg8: 11, Reg8: 8>
     r11 = 1
     // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
-    // USED → r4 = arraySpread(r0, r1, r2, r3);
+    r4 = arraySpread(r0, r1, r2, r3)
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 99>
     // USED → r3 = 99;
     // CODE → <DefineOwnByVal>: <Reg8: 5, Reg8: 3, Reg8: 4, UInt8: 1>
-    r5[arraySpread(r0, r1, r2, r3)] = 99
+    r5[r4] = 99
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
     console.log(r5)
     // CODE → <Mov>: <Reg8: 7, Reg8: 0>
     // USED → r7 = r0;
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 7>
-    // USED → r3 = GetIterator(r7);
+    r3 = GetIterator(r7)
     // CODE → <Mov>: <Reg8: 0, Reg8: 7>
     r0 = r0
     // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 0>
-    // USED → r4 = GetIterator(r7).next();
+    r4 = r3.next()
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = GetIterator(r7);
+    // USED → r5 = r3;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <StrictEq>: <Reg8: 6, Reg8: 5, Reg8: 0>
-    // USED → r6 = GetIterator(r7) === undefined;
+    // USED → r6 = r3 === undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 5>
-    r5 = (GetIterator(r7) === undefined) ? undefined : GetIterator(r7).next()
+    r5 = (r3 === undefined) ? undefined : r4
     // ──────────────── Block 2 ──────────────── 
     // CODE → <NewArray>: <Reg8: 4, UInt16: 0>
     // USED → r4 = [];
     // CODE → <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
-    if (GetIterator(r7) !== undefined) {
+    if (r3 !== undefined) {
         // LOOP → START (while)
         while (true) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → <Mov>: <Reg8: 6, Reg8: 7>
             r6 = r0
             // CODE → <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>
-            // USED → r10 = (GetIterator(r7) === undefined) ? undefined : GetIterator(r7).next();
+            r10 = r3.next()
             // CODE → <Mov>: <Reg8: 6, Reg8: 3>
-            // USED → r6 = GetIterator(r7);
+            // USED → r6 = r3;
             // CODE → <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 0>
-            // USED → r6 = GetIterator(r7) === undefined;
+            // USED → r6 = r3 === undefined;
             // CODE → <Mov>: <Reg8: 9, Reg8: 2>
             // USED → r9 = 0;
-            if (GetIterator(r7) !== undefined) {
+            if (r3 !== undefined) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
-                r4[0] = (GetIterator(r7) === undefined) ? undefined : GetIterator(r7).next()
+                r4[0] = r10
                 // CODE → <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
                 r2 = r9 + 1
                 // CODE → <Jmp>: <Addr8: -28>  # Address: 000000a4
@@ -108,10 +108,10 @@ function spreadArrayTest() {
             // CODE → <Throw>: <Reg8: 2>
             throw caughtException;
             // LOOP → START (for)
-            for (; !(GetIterator(r7) === undefined); r2 = caughtException) {
+            for (; !(r3 === undefined); r2 = caughtException) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-                GetIterator(r7).return()
+                r3.return()
                 // ──────────────── Block 5 ──────────────── 
             }
             // LOOP → END
@@ -120,15 +120,15 @@ function spreadArrayTest() {
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
     console.log(r5, r4)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4717>  # String: '__BC:Arrays/SpreadTests/spreadArrayTest/end' (String)
     // USED → r1 = "__BC:Arrays/SpreadTests/spreadArrayTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>

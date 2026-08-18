@@ -17,7 +17,7 @@ function mayThrow(param1) {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 9>  # String: 'Error' (Identifier)
-    // USED → r3 = globalThis.Error;
+    // USED → r3 = Error;
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 1>
     // USED → r2 = CreateThisForNew(r3);
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 1300>  # String: 'negative' (String)
@@ -25,9 +25,9 @@ function mayThrow(param1) {
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
     // USED → r5 = CreateThisForNew(r3);
     // CODE → <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
-    // USED → r1 = new globalThis.Error("negative");
+    // USED → r1 = new Error("negative");
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    // USED → r1 = new globalThis.Error("negative");
+    // USED → r1 = new Error("negative");
     // CODE → <Throw>: <Reg8: 1>
-    throw new globalThis.Error("negative");
+    throw new Error("negative");
 }

@@ -21,7 +21,7 @@ logger = get_logger(__name__)
 # independent-looking `{}`/`[]` in the output secretly alias the same
 # runtime object. Always kept symbolic (`rN`), regardless of which
 # resolver is used.
-_IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression, )
+_IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression, CallExpression)
 
 _CALL_ARGUMENT_INLINE_OPCODES = frozenset({
     "CreateClosure",

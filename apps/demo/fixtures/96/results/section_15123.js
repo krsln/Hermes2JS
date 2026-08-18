@@ -79,9 +79,9 @@ function mapTest() {
     // CODE → <Mov>: <Reg8: 9, Reg8: 2>
     r9 = new Map()
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 9>
-    // USED → r5 = GetIterator(r9);
+    r5 = GetIterator(r9)
     // CODE → <GetEnvironment>: <Reg8: 8, UInt8: 0>
-    // USED → r8 = getEnvironment(0);
+    r8 = getEnvironment(0)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <LoadConstUInt8>: <Reg8: 7, UInt8: 2>
@@ -90,35 +90,43 @@ function mapTest() {
     r6 = 0
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
     r3 = 1
-    // LOOP → START (for_of)
-    for (const r11 of r9) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <Mov>: <Reg8: 10, Reg8: 5>
-        // USED → r10 = GetIterator(r9);
-        // → r10 = GetIterator(r9)
-        if (r10 !== undefined) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>
-            // USED → r10 = getEnvironment(0)[0];
-            // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 9, string_id: 107>  # String: 'default' (Identifier)
-            // USED → r10 = getEnvironment(0)[0].default;
-            // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 0, Reg8: 11, Reg8: 7>
-            // USED → r10 = getEnvironment(0)[0].default.call(undefined, r11, 2);
-            // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 6>
-            // USED → r13 = getEnvironment(0)[0].default.call(undefined, r11, 2)[r6];
-            // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 3>
-            // USED → r12 = getEnvironment(0)[0].default.call(undefined, r11, 2)[r3];
-            // CODE → <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r11 = console;
-            // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r10 = console.log;
-            // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 13, Reg8: 12>
-            console.log(r13, r12)
-            // CODE → <Jmp>: <Addr8: -51>  # Address: 000000c6
-            goto label_198;
+    try {
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 1 ──────────────── 
+            // CODE → <IteratorNext>: <Reg8: 11, Reg8: 5, Reg8: 9>
+            // USED → r11 = r5.next();
+            // CODE → <Mov>: <Reg8: 10, Reg8: 5>
+            // USED → r10 = r5;
+            // → r10 = r5
+            if (r10 !== undefined) {
+                // ──────────────── Block 2 ──────────────── 
+                // CODE → <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>
+                // USED → r10 = r8[0];
+                // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 9, string_id: 107>  # String: 'default' (Identifier)
+                // USED → r10 = r8[0].default;
+                // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 0, Reg8: 11, Reg8: 7>
+                r10 = r8[0].default.call(undefined, r11, 2)
+                // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 6>
+                // USED → r13 = r10[r6];
+                // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 3>
+                // USED → r12 = r10[r3];
+                // CODE → <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r11 = console;
+                // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r10 = console.log;
+                // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 13, Reg8: 12>
+                console.log(r13, r12)
+                // CODE → <Jmp>: <Addr8: -51>  # Address: 000000c6
+                goto label_198;
+            }
         }
+        // LOOP → END
+    } finally {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → <IteratorClose>: <Reg8: 5, UInt8: 1>
+        r5.return()
     }
-    // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 10, string_id: 114>  # String: 'delete' (Identifier)
     // USED → r3 = new Map().delete;

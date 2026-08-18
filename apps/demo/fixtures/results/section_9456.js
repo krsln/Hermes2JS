@@ -3,9 +3,9 @@ function labeledBreakTest() {
     // CODE → <GetGlobalObject>: <Reg8: 8>
     // USED → r8 = globalThis;
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r11 = globalThis.console;
+    // USED → r11 = console;
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r10 = globalThis.console.log;
+    // USED → r10 = console.log;
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 4789>  # String: '__BC:ControlFlow/LabeledTests/labeledBreakTest/start' (String)
     // USED → r9 = "__BC:ControlFlow/LabeledTests/labeledBreakTest/start";
     // CODE → <Call2>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 9>
@@ -27,9 +27,9 @@ function labeledBreakTest() {
             if (r2 !== 1) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                // USED → r10 = globalThis.console;
+                // USED → r10 = console;
                 // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                // USED → r9 = globalThis.console.log;
+                // USED → r9 = console.log;
                 // CODE → <Call3>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 2, Reg8: 1>
                 console.log(r2, r1)
             } else {
@@ -47,18 +47,18 @@ function labeledBreakTest() {
     goto label_101;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r11 = globalThis.console;
+    // USED → r11 = console;
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r10 = globalThis.console.log;
+    // USED → r10 = console.log;
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 4783>  # String: '__BC:ControlFlow/LabeledTests/labeledBreakTest/break-outer' (String)
     // USED → r9 = "__BC:ControlFlow/LabeledTests/labeledBreakTest/break-outer";
     // CODE → <Call2>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 9>
     console.log("__BC:ControlFlow/LabeledTests/labeledBreakTest/break-outer")
     // ──────────────── Block 8 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r10 = globalThis.console;
+    // USED → r10 = console;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r9 = globalThis.console.log;
+    // USED → r9 = console.log;
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 4784>  # String: '__BC:ControlFlow/LabeledTests/labeledBreakTest/end' (String)
     // USED → r8 = "__BC:ControlFlow/LabeledTests/labeledBreakTest/end";
     // CODE → <Call2>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 8>

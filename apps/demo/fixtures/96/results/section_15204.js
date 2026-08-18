@@ -11,11 +11,11 @@ function create(param1) {
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Classes/ClassTests/Dog/static-create")
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
-    // USED → r0 = getEnvironment(0);
+    r0 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 0>
-    // USED → r3 = getEnvironment(0)[0];
+    // USED → r3 = r0[0];
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
-    r0 = getEnvironment(0)[0].prototype
+    r0 = r0[0].prototype
     // CODE → <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 3>
     // USED → r1 = CreateThis(r0);
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 1>
@@ -25,9 +25,9 @@ function create(param1) {
     // CODE → <Mov>: <Reg8: 6, Reg8: 1>
     // USED → r6 = CreateThis(r0);
     // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 3>
-    // USED → r0 = new getEnvironment(0)[0]("Mixed", param1);
+    // USED → r0 = new r0[0]("Mixed", param1);
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = new getEnvironment(0)[0]("Mixed", param1);
+    // USED → r0 = new r0[0]("Mixed", param1);
     // CODE → <Ret>: <Reg8: 0>
-    return new getEnvironment(0)[0]("Mixed", param1);
+    return new r0[0]("Mixed", param1);
 }

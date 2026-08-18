@@ -51,34 +51,42 @@ function propertyAccessTest() {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 7, string_id: 118>  # String: 'keys' (Identifier)
     // USED → r2 = Object.keys;
     // CODE → <Call2>: <Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 5>
-    // USED → r5 = Object.keys(r5);
+    r5 = Object.keys(r5)
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
-    r2 = Object.keys(r5)
+    r2 = r5
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = GetIterator(r2);
-    // LOOP → START (for_of)
-    for (const r8 of r2) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        // USED → r5 = GetIterator(r2);
-        // → r5 = GetIterator(r2)
-        if (r5 !== undefined) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r7 = console;
-            // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r6 = console.log;
-            // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-            // USED → r5 = r5;
-            // CODE → <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 8>
-            // USED → r5 = r5[r8];
-            // CODE → <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
-            console.log(r8, r5)
-            // CODE → <Jmp>: <Addr8: -35>  # Address: 00000085
-            goto label_133;
+    r3 = GetIterator(r2)
+    try {
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 1 ──────────────── 
+            // CODE → <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 2>
+            // USED → r8 = r3.next();
+            // CODE → <Mov>: <Reg8: 5, Reg8: 3>
+            // USED → r5 = r3;
+            // → r5 = r3
+            if (r5 !== undefined) {
+                // ──────────────── Block 2 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r7 = console;
+                // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r6 = console.log;
+                // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+                // USED → r5 = r5;
+                // CODE → <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 8>
+                // USED → r5 = r5[r8];
+                // CODE → <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
+                console.log(r8, r5)
+                // CODE → <Jmp>: <Addr8: -35>  # Address: 00000085
+                goto label_133;
+            }
         }
+        // LOOP → END
+    } finally {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
+        r3.return()
     }
-    // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;

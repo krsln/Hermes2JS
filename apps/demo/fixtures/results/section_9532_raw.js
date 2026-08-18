@@ -3,11 +3,11 @@ function Dog(param1, param2) {
     // CODE → <GetNewTarget>: <Reg8: 4>
     // USED → r4 = new.target;
     // CODE → <GetParentEnvironment>: <Reg8: 0, UInt8: 0>
-    // USED → r0 = getParentEnvironment(0);
+    r0 = getParentEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 4>
-    // USED → r0 = getParentEnvironment(0)[4];
+    // USED → r0 = r0[4];
     // CODE → <LoadParentNoTraps>: <Reg8: 3, Reg8: 0>
-    // USED → r3 = __getPrototypeOfNoTraps__(getParentEnvironment(0)[4]);
+    r3 = __getPrototypeOfNoTraps__(r0[4])
     // CODE → <CreateThisForSuper>: <Reg8: 1, Reg8: 3, Reg8: 4, UInt8: 0>
     // USED → r1 = CreateThisForSuper(r3);
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 4424>  # String: 'Woof' (String)
@@ -17,9 +17,9 @@ function Dog(param1, param2) {
     // CODE → <Mov>: <Reg8: 7, Reg8: 1>
     r7 = CreateThisForSuper(r3)
     // CODE → <CallWithNewTarget>: <Reg8: 0, Reg8: 3, Reg8: 4, UInt8: 3>
-    // USED → r0 = Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], new.target);
+    r0 = Reflect.construct(r3, [r0, r1, r2], new.target)
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = CreateThisForSuper(r3)[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], new.target)];
+    // USED → r0 = CreateThisForSuper(r3)[r0];
     // CODE → <LoadConstEmpty>: <Reg8: 1>
     // USED → r1 = /* empty */;
     // CODE → <ThrowIfThisInitialized>: <Reg8: 1>
@@ -27,9 +27,9 @@ function Dog(param1, param2) {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 2259>  # String: '__BC:Classes/ClassTests/Dog/constructor' (String)
     // USED → r1 = "__BC:Classes/ClassTests/Dog/constructor";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
@@ -37,7 +37,7 @@ function Dog(param1, param2) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 2>
     // USED → r1 = param2;
     // CODE → <PutByIdStrict>: <Reg8: 0, Reg8: 1, UInt8: 0, string_id: 16255>  # String: 'breed' (Identifier)
-    CreateThisForSuper(r3)[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], new.target)].breed = param2
+    CreateThisForSuper(r3)[r0].breed = param2
     // CODE → <Ret>: <Reg8: 0>
-    return CreateThisForSuper(r3)[Reflect.construct(__getPrototypeOfNoTraps__(getParentEnvironment(0)[4]), [r0, r1, r2], new.target)];
+    return CreateThisForSuper(r3)[r0];
 }

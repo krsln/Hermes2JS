@@ -1,17 +1,17 @@
 function function_15153(param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    // USED → r0 = createEnvironment();
+    r0 = createEnvironment()
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
     // USED → r1 = param6;
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 15154>  # Function: [#15154 defaultParameterTest of 121 bytes]: 2 params @ offset 0x0026aa9c
     // USED → r3 = defaultParameterTest(param1);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 3>
-    createEnvironment()[0] = defaultParameterTest(param1)
+    r0[0] = defaultParameterTest(param1)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15155>  # Function: [#15155 defaultWithRestTest of 169 bytes]: 1 params @ offset 0x0026ab15
     // USED → r2 = defaultWithRestTest();
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 2>
-    createEnvironment()[1] = defaultWithRestTest()
+    r0[1] = defaultWithRestTest()
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis;
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)

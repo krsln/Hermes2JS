@@ -13,15 +13,15 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/start")
     // CODE → <GetEnvironment>: <Reg8: 2, UInt8: 0>
-    // USED → r2 = getEnvironment(0);
+    r2 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
-    // USED → r3 = getEnvironment(0)[0];
+    // USED → r3 = r2[0];
     // CODE → <Mov>: <Reg8: 2, Reg8: 0>
     // USED → r2 = param1;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2>
-    // USED → r0 = getEnvironment(0)[0].call(undefined, r2);
+    // USED → r0 = r2[0].call(undefined, r2);
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -39,7 +39,7 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block")
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(0)[0].call(undefined, r2);
+    return r0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Catch>: <Reg8: 0>
     r0 = caughtException

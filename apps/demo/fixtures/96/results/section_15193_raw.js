@@ -20,18 +20,18 @@ async function* anon_15193() {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/AsyncTests/callAsyncTests/start")
     // CODE → <GetEnvironment>: <Reg8: 4, UInt8: 2>
-    // USED → r4 = getEnvironment(2);
+    r4 = getEnvironment(2)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 3>
-    // USED → r1 = getEnvironment(2)[3];
+    // USED → r1 = r4[3];
     // CODE → <LoadConstUndefined>: <Reg8: 5>
     // USED → r5 = undefined;
     // CODE → <Call1>: <Reg8: 1, Reg8: 1, Reg8: 5>
-    // USED → r1 = await getEnvironment(2)[3].call(undefined);
+    // USED → r1 = await r4[3].call(undefined);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000031
     goto label_49;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Ret>: <Reg8: 1>
-    return await getEnvironment(2)[3].call(undefined);
+    return await r4[3].call(undefined);
     // ──────────────── Block 3 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 2>
     // USED → r1 = await yield;
@@ -41,14 +41,14 @@ async function* anon_15193() {
     if (__resumeIsReturn) goto label_150;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 5>
-    // USED → r2 = getEnvironment(2)[5];
+    // USED → r2 = r4[5];
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = await getEnvironment(2)[5].call(undefined);
+    // USED → r2 = await r4[5].call(undefined);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000043
     goto label_67;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <Ret>: <Reg8: 2>
-    return await getEnvironment(2)[5].call(undefined);
+    return await r4[5].call(undefined);
     // ──────────────── Block 6 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 2, Reg8: 3>
     // USED → r2 = await yield;
@@ -58,16 +58,16 @@ async function* anon_15193() {
     if (__resumeIsReturn) goto label_147;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 7>
-    // USED → r7 = getEnvironment(2)[7];
+    // USED → r7 = r4[7];
     // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
     // USED → r3 = [1, 2, 3];
     // CODE → <Call2>: <Reg8: 3, Reg8: 7, Reg8: 5, Reg8: 3>
-    // USED → r3 = await getEnvironment(2)[7].call(undefined, r3);
+    // USED → r3 = await r4[7].call(undefined, r3);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000005e
     goto label_94;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
-    return await getEnvironment(2)[7].call(undefined, r3);
+    return await r4[7].call(undefined, r3);
     // ──────────────── Block 9 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 7>
     // USED → r3 = await yield;
@@ -77,14 +77,14 @@ async function* anon_15193() {
     if (__resumeIsReturn) goto label_144;
     // ──────────────── Block 10 ──────────────── 
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 9>
-    // USED → r4 = getEnvironment(2)[9];
+    // USED → r4 = r4[9];
     // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
-    // USED → r4 = await getEnvironment(2)[9].call(undefined);
+    // USED → r4 = await r4[9].call(undefined);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000070
     goto label_112;
     // ──────────────── Block 11 ──────────────── 
     // CODE → <Ret>: <Reg8: 4>
-    return await getEnvironment(2)[9].call(undefined);
+    return await r4[9].call(undefined);
     // ──────────────── Block 12 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 4, Reg8: 7>
     // USED → r4 = await yield;

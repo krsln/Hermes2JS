@@ -1,27 +1,27 @@
 function function_15201(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    // USED → r0 = createEnvironment();
+    r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 0, function_id: 15202>  # Function: [#15202 Dog of 98 bytes]: 3 params @ offset 0x0026b998
     // USED → r4 = Dog(param1, param2);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
-    createEnvironment()[0] = Dog(param1, param2)
+    r0[0] = Dog(param1, param2)
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
-    // USED → r1 = getEnvironment(0);
+    r1 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 2>
-    // USED → r2 = getEnvironment(0)[2];
+    // USED → r2 = r1[2];
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r5 = getEnvironment(0)[2].default;
+    // USED → r5 = r1[2].default;
     // CODE → <LoadConstUndefined>: <Reg8: 3>
     // USED → r3 = undefined;
     // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
     // USED → r2 = param1;
     // CODE → <Call3>: <Reg8: 2, Reg8: 5, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = getEnvironment(0)[2].default.call(undefined, Dog(param1, param2), param1)
+    r2 = r1[2].default.call(undefined, Dog(param1, param2), param1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 4>
-    // USED → r1 = getEnvironment(0)[4];
+    // USED → r1 = r1[4];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r2 = getEnvironment(0)[4].default;
+    // USED → r2 = r1[4].default;
     // CODE → <NewObject>: <Reg8: 5>
     r5 = {  }
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 10340>  # String: 'makeSound' (Identifier)
@@ -51,7 +51,7 @@ function function_15201(param1) {
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 0>
     // USED → r0 = r0[0] = r5;
     // CODE → <Call4>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0>
-    // USED → r0 = getEnvironment(0)[4].default.call(undefined, Dog(param1, param2), r1, r0);
+    r0 = r1[4].default.call(undefined, Dog(param1, param2), r1, r0)
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(0)[4].default.call(undefined, Dog(param1, param2), r1, r0);
+    return r0;
 }

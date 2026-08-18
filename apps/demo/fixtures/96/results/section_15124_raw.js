@@ -53,16 +53,16 @@ function setTest() {
     // CODE → <Mov>: <Reg8: 2, Reg8: 3>
     r2 = new Set([1, 2, 2, 3, 3, 3])
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = GetIterator(r2);
+    r4 = GetIterator(r2)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 2>
-    // USED → r7 = GetIterator(r2).next();
+    // USED → r7 = r4.next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-    // USED → r5 = GetIterator(r2);
+    // USED → r5 = r4;
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 000000a3
-    // → r5 = GetIterator(r2)
+    // → r5 = r4
     if (r5 === undefined) goto label_163;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -77,7 +77,7 @@ function setTest() {
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
-    GetIterator(r2).return()
+    r4.return()
     // CODE → <Throw>: <Reg8: 2>
     throw caughtException;
     // ──────────────── Block 4 ──────────────── 

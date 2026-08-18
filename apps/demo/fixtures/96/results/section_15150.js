@@ -1,7 +1,7 @@
 function closureLoopTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    // USED → r0 = createEnvironment();
+    r0 = createEnvironment()
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -15,7 +15,7 @@ function closureLoopTest() {
     // CODE → <NewArray>: <Reg8: 4, UInt16: 0>
     r4 = []
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
-    createEnvironment()[0] = r4
+    r0[0] = r4
     // CODE → <CreateClosure>: <Reg8: 5, Reg8: 0, function_id: 15151>  # Function: [#15151 _loop of 35 bytes]: 2 params @ offset 0x0026aa27
     // USED → r5 = _loop(param1);
     // CODE → <LoadConstUndefined>: <Reg8: 0>
@@ -38,28 +38,36 @@ function closureLoopTest() {
     // CODE → <Mov>: <Reg8: 2, Reg8: 4>
     r2 = r4
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = GetIterator(r2);
-    // LOOP → START (for_of)
-    for (const r4 of r2) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        // USED → r5 = GetIterator(r2);
-        // → r5 = GetIterator(r2)
-        if (r5 !== undefined) {
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r6 = console;
-            // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r5 = console.log;
-            // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-            // USED → r4 = GetIterator(r2).next().call(undefined);
-            // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-            console.log(r4)
-            // CODE → <Jmp>: <Addr8: -31>  # Address: 0000003e
-            goto label_62;
+    r3 = GetIterator(r2)
+    try {
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 2>
+            r4 = r3.next()
+            // CODE → <Mov>: <Reg8: 5, Reg8: 3>
+            // USED → r5 = r3;
+            // → r5 = r3
+            if (r5 !== undefined) {
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r6 = console;
+                // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r5 = console.log;
+                // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
+                // USED → r4 = r4.call(undefined);
+                // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+                console.log(r4)
+                // CODE → <Jmp>: <Addr8: -31>  # Address: 0000003e
+                goto label_62;
+            }
         }
+        // LOOP → END
+    } finally {
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
+        r3.return()
     }
-    // LOOP → END
     // ──────────────── Block 6 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;

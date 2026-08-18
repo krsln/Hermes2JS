@@ -1,13 +1,13 @@
 function function_15074(param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    // USED → r0 = createEnvironment();
+    r0 = createEnvironment()
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
     // USED → r1 = param6;
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15087>  # Function: [#15087 mayThrow of 52 bytes]: 2 params @ offset 0x0026902a
     // USED → r2 = mayThrow(param1);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 2>
-    createEnvironment()[0] = mayThrow(param1)
+    r0[0] = mayThrow(param1)
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)

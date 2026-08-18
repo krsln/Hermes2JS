@@ -3,9 +3,9 @@ function description() {
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4723>  # String: '__BC:Classes/ClassTests/Animal/get-description' (String)
     // USED → r1 = "__BC:Classes/ClassTests/Animal/get-description";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
@@ -15,15 +15,15 @@ function description() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
     // USED → r3 = this.name;
     // CODE → <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 3, string_id: 10>  # String: 'HermesInternal' (Identifier)
-    // USED → r0 = globalThis.HermesInternal;
+    // USED → r0 = HermesInternal;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 105>  # String: 'concat' (Identifier)
-    // USED → r2 = globalThis.HermesInternal.concat;
+    // USED → r2 = HermesInternal.concat;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 1429>  # String: ' the animal' (String)
     // USED → r1 = " the animal";
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 6457>  # String: '' (Identifier)
     // USED → r0 = "";
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 0, Reg8: 3, Reg8: 1>
-    // USED → r0 = globalThis.HermesInternal.concat.call("", r3, " the animal");
+    r0 = HermesInternal.concat.call("", r3, " the animal")
     // CODE → <Ret>: <Reg8: 0>
-    return globalThis.HermesInternal.concat.call("", r3, " the animal");
+    return r0;
 }

@@ -1,21 +1,21 @@
 function function_15163(param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    // USED → r0 = createEnvironment();
+    r0 = createEnvironment()
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
     // USED → r1 = param6;
     // CODE → <CreateGeneratorClosure>: <Reg8: 4, Reg8: 0, function_id: 15164>  # Function: [#15164 simpleGeneratorTest of 9 bytes]: 1 params @ offset 0x0026aee0
     // USED → r4 = simpleGeneratorTest;
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
-    createEnvironment()[0] = simpleGeneratorTest
+    r0[0] = simpleGeneratorTest
     // CODE → <CreateGeneratorClosure>: <Reg8: 3, Reg8: 0, function_id: 15166>  # Function: [#15166 generatorWithLoopTest of 9 bytes]: 2 params @ offset 0x0026af52
     // USED → r3 = generatorWithLoopTest;
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 3>
-    createEnvironment()[1] = generatorWithLoopTest
+    r0[1] = generatorWithLoopTest
     // CODE → <CreateGeneratorClosure>: <Reg8: 2, Reg8: 0, function_id: 15168>  # Function: [#15168 generatorTryFinallyTest of 9 bytes]: 1 params @ offset 0x0026afd6
     // USED → r2 = generatorTryFinallyTest;
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 2, Reg8: 2>
-    createEnvironment()[2] = generatorTryFinallyTest
+    r0[2] = generatorTryFinallyTest
     // CODE → <GetGlobalObject>: <Reg8: 5>
     // USED → r5 = globalThis;
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)

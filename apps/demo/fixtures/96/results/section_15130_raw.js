@@ -1,7 +1,7 @@
 function tag(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    // USED → r0 = createEnvironment();
+    r0 = createEnvironment()
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 1>
     // USED → r3 = param1;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
@@ -37,7 +37,7 @@ function tag(param1) {
     // CODE → <SelectObject>: <Reg8: 4, Reg8: 4, Reg8: 2>
     // USED → r4 = new Array(arguments.length - 1);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
-    createEnvironment()[0] = new Array(arguments.length - 1)
+    r0[0] = new Array(arguments.length - 1)
     // CODE → <Less>: <Reg8: 8, Reg8: 5, Reg8: 6>
     // USED → r8 = 1 < arguments.length;
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
@@ -72,7 +72,7 @@ function tag(param1) {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 7163>  # String: '' (Identifier)
     // USED → r0 = "";
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
-    // USED → r0 = param1.reduce(function_15131(param1, param2, param3), "");
+    r0 = param1.reduce(function_15131(param1, param2, param3), "")
     // CODE → <Ret>: <Reg8: 0>
-    return param1.reduce(function_15131(param1, param2, param3), "");
+    return r0;
 }

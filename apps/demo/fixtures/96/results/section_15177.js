@@ -25,20 +25,20 @@ async function* anon_15177() {
         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
         console.log("__BC:Functions/AsyncTests/simpleAsyncTest/start")
         // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 2>
-        // USED → r1 = getEnvironment(2);
+        r1 = getEnvironment(2)
         // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
-        // USED → r4 = getEnvironment(2)[2];
+        // USED → r4 = r1[2];
         // CODE → <LoadConstUndefined>: <Reg8: 3>
         // USED → r3 = undefined;
         // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 42>
         // USED → r1 = 42;
         // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 3, Reg8: 1>
-        // USED → r1 = await getEnvironment(2)[2].call(undefined, 42);
+        // USED → r1 = await r1[2].call(undefined, 42);
         // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000032
         goto label_50;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
-        return await getEnvironment(2)[2].call(undefined, 42);
+        return await r1[2].call(undefined, 42);
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
         // USED → r1 = await yield;

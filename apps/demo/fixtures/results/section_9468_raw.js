@@ -7,9 +7,9 @@ function tryLoopMultiReturnTest(param1) {
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4906>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 1>
@@ -46,9 +46,9 @@ function tryLoopMultiReturnTest(param1) {
     if (r5 === 0) goto label_98;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r8 = globalThis.console;
+    // USED → r8 = console;
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r7 = globalThis.console.log;
+    // USED → r7 = console.log;
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
     r5 = 0
     // CODE → <GetByVal>: <Reg8: 6, Reg8: 3, Reg8: 5>
@@ -79,9 +79,9 @@ function tryLoopMultiReturnTest(param1) {
     // CODE → <Catch>: <Reg8: 1>
     r1 = caughtException
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r2 = globalThis.console;
+    // USED → r2 = console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r1 = globalThis.console.log;
+    // USED → r1 = console.log;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4905>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>

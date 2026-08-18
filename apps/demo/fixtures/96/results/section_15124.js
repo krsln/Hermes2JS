@@ -53,28 +53,36 @@ function setTest() {
     // CODE → <Mov>: <Reg8: 2, Reg8: 3>
     r2 = new Set([1, 2, 2, 3, 3, 3])
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = GetIterator(r2);
+    r4 = GetIterator(r2)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // LOOP → START (for_of)
-    for (const r7 of r2) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        // USED → r5 = GetIterator(r2);
-        // → r5 = GetIterator(r2)
-        if (r5 !== undefined) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r6 = console;
-            // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r5 = console.log;
-            // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-            console.log(r7)
-            // CODE → <Jmp>: <Addr8: -27>  # Address: 0000007f
-            goto label_127;
+    try {
+        // LOOP → START (while)
+        while (true) {
+            // ──────────────── Block 1 ──────────────── 
+            // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 2>
+            // USED → r7 = r4.next();
+            // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+            // USED → r5 = r4;
+            // → r5 = r4
+            if (r5 !== undefined) {
+                // ──────────────── Block 2 ──────────────── 
+                // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r6 = console;
+                // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r5 = console.log;
+                // CODE → <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+                console.log(r7)
+                // CODE → <Jmp>: <Addr8: -27>  # Address: 0000007f
+                goto label_127;
+            }
         }
+        // LOOP → END
+    } finally {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
+        r4.return()
     }
-    // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → <NewArray>: <Reg8: 4, UInt16: 0>
     // USED → r4 = [];

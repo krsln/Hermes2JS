@@ -3,9 +3,9 @@ function forTest() {
     // CODE → <GetGlobalObject>: <Reg8: 7>
     // USED → r7 = globalThis;
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r10 = globalThis.console;
+    // USED → r10 = console;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r9 = globalThis.console.log;
+    // USED → r9 = console.log;
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 4767>  # String: '__BC:ControlFlow/ForTests/forTest/start' (String)
     // USED → r8 = "__BC:ControlFlow/ForTests/forTest/start";
     // CODE → <Call2>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 8>
@@ -33,18 +33,18 @@ function forTest() {
     if (r1 === 8) goto label_69;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r10 = globalThis.console;
+    // USED → r10 = console;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r9 = globalThis.console.log;
+    // USED → r9 = console.log;
     // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 1>
     console.log(r1)
     // CODE → <Jmp>: <Addr8: 40>  # Address: 0000006b
     goto label_107;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r11 = globalThis.console;
+    // USED → r11 = console;
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r10 = globalThis.console.log;
+    // USED → r10 = console.log;
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 4765>  # String: '__BC:ControlFlow/ForTests/forTest/if-break' (String)
     // USED → r9 = "__BC:ControlFlow/ForTests/forTest/if-break";
     // CODE → <Call2>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 9>
@@ -53,9 +53,9 @@ function forTest() {
     goto label_115;
     // ──────────────── Block 5 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r10 = globalThis.console;
+    // USED → r10 = console;
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r9 = globalThis.console.log;
+    // USED → r9 = console.log;
     // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 8>
     console.log("__BC:ControlFlow/ForTests/forTest/if-continue")
     // ──────────────── Block 6 ──────────────── 
@@ -66,9 +66,9 @@ function forTest() {
     if (r0 < 10) goto label_40;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r9 = globalThis.console;
+    // USED → r9 = console;
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r8 = globalThis.console.log;
+    // USED → r8 = console.log;
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 4763>  # String: '__BC:ControlFlow/ForTests/forTest/end' (String)
     // USED → r7 = "__BC:ControlFlow/ForTests/forTest/end";
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>

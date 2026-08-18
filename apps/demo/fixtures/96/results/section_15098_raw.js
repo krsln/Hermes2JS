@@ -51,18 +51,18 @@ function propertyAccessTest() {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 7, string_id: 118>  # String: 'keys' (Identifier)
     // USED → r2 = Object.keys;
     // CODE → <Call2>: <Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 5>
-    // USED → r5 = Object.keys(r5);
+    r5 = Object.keys(r5)
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
-    r2 = Object.keys(r5)
+    r2 = r5
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = GetIterator(r2);
+    r3 = GetIterator(r2)
     // ──────────────── Block 1 ──────────────── 
     // CODE → <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 2>
-    // USED → r8 = GetIterator(r2).next();
+    // USED → r8 = r3.next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = GetIterator(r2);
+    // USED → r5 = r3;
     // CODE → <JStrictEqual>: <Addr8: 37, Reg8: 5, Reg8: 0>  # Address: 000000b1
-    // → r5 = GetIterator(r2)
+    // → r5 = r3
     if (r5 === undefined) goto label_177;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -81,7 +81,7 @@ function propertyAccessTest() {
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-    GetIterator(r2).return()
+    r3.return()
     // CODE → <Throw>: <Reg8: 2>
     throw caughtException;
     // ──────────────── Block 4 ──────────────── 

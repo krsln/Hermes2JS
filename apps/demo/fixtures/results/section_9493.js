@@ -3,9 +3,9 @@ function spreadObjectTest() {
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4722>  # String: '__BC:Arrays/SpreadTests/spreadObjectTest/start' (String)
     // USED → r3 = "__BC:Arrays/SpreadTests/spreadObjectTest/start";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
@@ -23,9 +23,9 @@ function spreadObjectTest() {
     // CODE → <DefineOwnById>: <Reg8: 5, Reg8: 0, UInt8: 0, UInt16: 6711>
     r5.string_6711 = 3
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
     console.log(r5)
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 2, string_id: 30>  # String: 'x' (Identifier)
@@ -41,15 +41,15 @@ function spreadObjectTest() {
     // CODE → <CallBuiltin>: <Reg8: 5, UInt8: 46, UInt8: 4>  # Built-in function: [#46 copyDataProperties]
     // USED → r5 = copyDataProperties(r1, r2, r3, r4);
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 6, Reg8: 5>
     console.log(r6, r5)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4721>  # String: '__BC:Arrays/SpreadTests/spreadObjectTest/end' (String)
     // USED → r2 = "__BC:Arrays/SpreadTests/spreadObjectTest/end";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>

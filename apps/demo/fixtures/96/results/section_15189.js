@@ -29,25 +29,25 @@ async function* anon_15189() {
         // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 4, string_id: 7443>  # String: 'all' (Identifier)
         // USED → r7 = Promise.all;
         // CODE → <GetEnvironment>: <Reg8: 4, UInt8: 2>
-        // USED → r4 = getEnvironment(2);
+        r4 = getEnvironment(2)
         // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 4, UInt8: 2>
-        // USED → r9 = getEnvironment(2)[2];
+        // USED → r9 = r4[2];
         // CODE → <LoadConstUndefined>: <Reg8: 2>
         // USED → r2 = undefined;
         // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
         // USED → r5 = 1;
         // CODE → <Call2>: <Reg8: 6, Reg8: 9, Reg8: 2, Reg8: 5>
-        // USED → r6 = getEnvironment(2)[2].call(undefined, 1);
+        r6 = r4[2].call(undefined, 1)
         // CODE → <NewArray>: <Reg8: 1, UInt16: 2>
         r1 = []
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 6, UInt8: 0>
-        // USED → r1 = r1[0] = getEnvironment(2)[2].call(undefined, 1);
+        // USED → r1 = r1[0] = r6;
         // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 2>
         // USED → r6 = 2;
         // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 2, Reg8: 6>
-        // USED → r9 = getEnvironment(2)[2].call(undefined, 2);
+        r9 = r4[2].call(undefined, 2)
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
-        // USED → r1 = (r1[0] = getEnvironment(2)[2].call(undefined, 1))[1] = getEnvironment(2)[2].call(undefined, 2);
+        // USED → r1 = (r1[0] = r6)[1] = r9;
         // CODE → <Call2>: <Reg8: 1, Reg8: 7, Reg8: 8, Reg8: 1>
         // USED → r1 = await Promise.all(r1);
         // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000005a
@@ -69,17 +69,17 @@ async function* anon_15189() {
         } else {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 0>
-            // USED → r4 = getEnvironment(2)[0];
+            // USED → r4 = r4[0];
             // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 107>  # String: 'default' (Identifier)
-            // USED → r4 = getEnvironment(2)[0].default;
+            // USED → r4 = r4[0].default;
             // CODE → <Call3>: <Reg8: 4, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 6>
-            // USED → r4 = getEnvironment(2)[0].default.call(undefined, r1, 2);
+            r4 = r4[0].default.call(undefined, r1, 2)
             // CODE → <LoadConstZero>: <Reg8: 6>
             r6 = 0
             // CODE → <GetByVal>: <Reg8: 7, Reg8: 4, Reg8: 6>
-            // USED → r7 = getEnvironment(2)[0].default.call(undefined, r1, 2)[r6];
+            // USED → r7 = r4[r6];
             // CODE → <GetByVal>: <Reg8: 6, Reg8: 4, Reg8: 5>
-            // USED → r6 = getEnvironment(2)[0].default.call(undefined, r1, 2)[r5];
+            // USED → r6 = r4[r5];
             // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r5 = console;
             // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

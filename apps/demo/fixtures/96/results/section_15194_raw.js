@@ -1,7 +1,7 @@
 function function_15194(param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 2>
-    // USED → r2 = createEnvironment();
+    r2 = createEnvironment()
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 2>
     // USED → r4 = param2;
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
@@ -39,9 +39,9 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
     // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault(param1).call(undefined, r1);
+    r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
-    createEnvironment()[0] = _interopDefault(param1).call(undefined, r1)
+    r2[0] = r1
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     r1 = 1
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
@@ -49,9 +49,9 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
     // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault(param1).call(undefined, r1);
+    r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
-    createEnvironment()[1] = _interopDefault(param1).call(undefined, r1)
+    r2[1] = r1
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     r1 = 2
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
@@ -59,9 +59,9 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
     // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault(param1).call(undefined, r1);
+    r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 1>
-    createEnvironment()[2] = _interopDefault(param1).call(undefined, r1)
+    r2[2] = r1
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
     r1 = 3
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
@@ -69,9 +69,9 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
     // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault(param1).call(undefined, r1);
+    r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 1>
-    createEnvironment()[3] = _interopDefault(param1).call(undefined, r1)
+    r2[3] = r1
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 4>
     r1 = 4
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
@@ -79,21 +79,21 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
     // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault(param1).call(undefined, r1);
+    r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 1>
-    createEnvironment()[4] = _interopDefault(param1).call(undefined, r1)
+    r2[4] = r1
     // CODE → <CreateClosure>: <Reg8: 1, Reg8: 2, function_id: 15197>  # Function: [#15197  of 83 bytes]: 1 params @ offset 0x0026b81c
     // USED → r1 = function_15197();
     // CODE → <Call1>: <Reg8: 3, Reg8: 1, Reg8: 0>
     // USED → r3 = function_15197().call(undefined);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 5, Reg8: 3>
-    createEnvironment()[5] = function_15197().call(undefined)
+    r2[5] = r3
     // CODE → <CreateClosure>: <Reg8: 1, Reg8: 2, function_id: 15201>  # Function: [#15201  of 106 bytes]: 2 params @ offset 0x0026b92e
     // USED → r1 = function_15201(param1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 3>
-    // USED → r1 = function_15201(param1).call(undefined, r3);
+    r1 = function_15201(param1).call(undefined, r3)
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 6, Reg8: 1>
-    createEnvironment()[6] = function_15201(param1).call(undefined, r3)
+    r2[6] = r1
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

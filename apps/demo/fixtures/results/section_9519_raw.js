@@ -13,7 +13,7 @@ function generatorWithLoopTest(param1) {
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 0>
     __environment__[3] = 0
     // CODE → <CreateGenerator>: <Reg8: 1, Reg8: 1, function_id: 12483>  # Function: [#12483 generatorWithLoopTest of 399 bytes]: 2 params @ offset 0x0024403d
-    // USED → r1 = createGenerator(__environment__, generatorWithLoopTest);
+    r1 = createGenerator(__environment__, generatorWithLoopTest)
     // CODE → <Ret>: <Reg8: 1>
-    return createGenerator(__environment__, generatorWithLoopTest);
+    return r1;
 }

@@ -33,17 +33,17 @@ function spreadObjectTest() {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 4, UInt8: 3, string_id: 41>  # String: 'x' (Identifier)
     // USED → r5 = r4.x;
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
-    // USED → r0 = getEnvironment(0);
+    r0 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 1>
-    // USED → r2 = getEnvironment(0)[1];
+    // USED → r2 = r0[1];
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 4, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r3 = getEnvironment(0)[1].default;
+    // USED → r3 = r0[1].default;
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
-    // USED → r2 = getEnvironment(0)[0];
+    // USED → r2 = r0[0];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call3>: <Reg8: 4, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2>
-    // USED → r4 = getEnvironment(0)[1].default.call(undefined, r4, r2);
+    // USED → r4 = r0[1].default.call(undefined, r4, r2);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

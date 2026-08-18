@@ -3,9 +3,9 @@ function renamedDefaultDestructureTest() {
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4980>  # String: '__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/start' (String)
     // USED → r3 = "__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/start";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
@@ -21,15 +21,15 @@ function renamedDefaultDestructureTest() {
     // USED → r5 = (r5 !== undefined) ? r3.retries : 3;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 6, Reg8: 5>
-    console.log(r6, r5)
+    console.log(r6, (r5 !== undefined) ? r3.retries : 3)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4979>  # String: '__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/end' (String)
     // USED → r2 = "__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/end";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>

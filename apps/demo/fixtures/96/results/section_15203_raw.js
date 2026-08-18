@@ -13,15 +13,15 @@ function makeSound() {
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
     console.log("__BC:Classes/ClassTests/Dog/makeSound-override")
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 1>
-    // USED → r0 = getEnvironment(1);
+    r0 = getEnvironment(1)
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 1>
-    // USED → r0 = getEnvironment(1)[1];
+    // USED → r0 = r0[1];
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r6 = getEnvironment(1)[1].default;
+    // USED → r6 = r0[1].default;
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
-    // USED → r0 = getEnvironment(0);
+    r0 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 10, Reg8: 0, UInt8: 0>
-    r10 = getEnvironment(0)[0]
+    r10 = r0[0]
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 10340>  # String: 'makeSound' (Identifier)
@@ -33,11 +33,11 @@ function makeSound() {
     // CODE → <Mov>: <Reg8: 8, Reg8: 1>
     r8 = this
     // CODE → <Call>: <Reg8: 4, Reg8: 6, UInt8: 5>
-    // USED → r4 = getEnvironment(1)[1].default(r11, r10, r9, r8, r7);
+    r4 = r0[1].default(r11, r10, r9, r8, r7)
     // CODE → <NewArray>: <Reg8: 3, UInt16: 0>
     // USED → r3 = [];
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
-    r3 = getEnvironment(1)[1].default(r11, r10, r9, r8, r7).call(undefined, r3)
+    r3 = r4.call(undefined, r3)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

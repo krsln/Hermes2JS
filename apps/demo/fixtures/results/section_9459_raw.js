@@ -3,9 +3,9 @@ function tripleNestedLabeledTest() {
     // CODE → <GetGlobalObject>: <Reg8: 15>
     // USED → r15 = globalThis;
     // CODE → <TryGetById>: <Reg8: 18, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r18 = globalThis.console;
+    // USED → r18 = console;
     // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r17 = globalThis.console.log;
+    // USED → r17 = console.log;
     // CODE → <LoadConstString>: <Reg8: 16, string_id: 4804>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start' (String)
     // USED → r16 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/start";
     // CODE → <Call2>: <Reg8: 16, Reg8: 17, Reg8: 18, Reg8: 16>
@@ -74,17 +74,17 @@ function tripleNestedLabeledTest() {
     if (r9 < 3) goto label_35;
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 18, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r18 = globalThis.console;
+    // USED → r18 = console;
     // CODE → <GetByIdShort>: <Reg8: 17, Reg8: 18, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r17 = globalThis.console.log;
+    // USED → r17 = console.log;
     // CODE → <LoadConstString>: <Reg8: 16, string_id: 4801>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits' (String)
     // USED → r16 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits";
     // CODE → <Call3>: <Reg8: 16, Reg8: 17, Reg8: 18, Reg8: 16, Reg8: 3>
     console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/hits", r3)
     // CODE → <TryGetById>: <Reg8: 17, Reg8: 15, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r17 = globalThis.console;
+    // USED → r17 = console;
     // CODE → <GetByIdShort>: <Reg8: 16, Reg8: 17, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r16 = globalThis.console.log;
+    // USED → r16 = console.log;
     // CODE → <LoadConstString>: <Reg8: 15, string_id: 4798>  # String: '__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end' (String)
     // USED → r15 = "__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end";
     // CODE → <Call2>: <Reg8: 15, Reg8: 16, Reg8: 17, Reg8: 15>

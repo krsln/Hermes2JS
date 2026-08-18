@@ -3,23 +3,23 @@ function tryFinallyNoCatchTest() {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4899>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/start' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/start")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4900>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/try-block' (String)
     // USED → r0 = "__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/try-block";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/try-block")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
-    // USED → r3 = globalThis.Error;
+    // USED → r3 = Error;
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
     // USED → r2 = CreateThisForNew(r3);
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 3960>  # String: 'no catch here' (String)
@@ -27,17 +27,17 @@ function tryFinallyNoCatchTest() {
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
     // USED → r5 = CreateThisForNew(r3);
     // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = new globalThis.Error("no catch here");
+    // USED → r0 = new Error("no catch here");
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = new globalThis.Error("no catch here");
+    // USED → r0 = new Error("no catch here");
     // CODE → <Throw>: <Reg8: 0>
-    throw new globalThis.Error("no catch here");
+    throw new Error("no catch here");
     // CODE → <Catch>: <Reg8: 0>
     // USED → r0 = caughtException;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4896>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/finally-block' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/finally-block";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>

@@ -3,9 +3,9 @@ function complexTest() {
     // CODE → <GetGlobalObject>: <Reg8: 6>
     // USED → r6 = globalThis;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r9 = globalThis.console;
+    // USED → r9 = console;
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r8 = globalThis.console.log;
+    // USED → r8 = console.log;
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 4754>  # String: '__BC:ControlFlow/ComplexTests/complexTest/start' (String)
     // USED → r7 = "__BC:ControlFlow/ComplexTests/complexTest/start";
     // CODE → <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
@@ -49,48 +49,48 @@ function complexTest() {
                 case 1:
                     // ──────────────── Block 7 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                    // USED → r15 = globalThis.console;
+                    // USED → r15 = console;
                     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                    // USED → r7 = globalThis.console.log;
+                    // USED → r7 = console.log;
                     // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 13>
                     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
                     break;
                 case 2:
                     // ──────────────── Block 6 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                    // USED → r15 = globalThis.console;
+                    // USED → r15 = console;
                     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                    // USED → r7 = globalThis.console.log;
+                    // USED → r7 = console.log;
                     // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 12>
                     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-2-continue")
                     break;
                 case 3:
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                    // USED → r15 = globalThis.console;
+                    // USED → r15 = console;
                     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                    // USED → r7 = globalThis.console.log;
+                    // USED → r7 = console.log;
                     // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 11>
                     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-3")
                     // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                    // USED → r15 = globalThis.console;
+                    // USED → r15 = console;
                     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                    // USED → r7 = globalThis.console.log;
+                    // USED → r7 = console.log;
                     // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 10>
                     console.log("three")
                     break;
                 default:
                     // ──────────────── Block 4 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                    // USED → r15 = globalThis.console;
+                    // USED → r15 = console;
                     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                    // USED → r7 = globalThis.console.log;
+                    // USED → r7 = console.log;
                     // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 9>
                     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-default")
                     // CODE → <TryGetById>: <Reg8: 15, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                    // USED → r15 = globalThis.console;
+                    // USED → r15 = console;
                     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 15, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                    // USED → r7 = globalThis.console.log;
+                    // USED → r7 = console.log;
                     // CODE → <Call2>: <Reg8: 7, Reg8: 7, Reg8: 15, Reg8: 8>
                     console.log("other")
                     break;
@@ -104,9 +104,9 @@ function complexTest() {
     }
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r8 = globalThis.console;
+    // USED → r8 = console;
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r7 = globalThis.console.log;
+    // USED → r7 = console.log;
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 4751>  # String: '__BC:ControlFlow/ComplexTests/complexTest/end' (String)
     // USED → r6 = "__BC:ControlFlow/ComplexTests/complexTest/end";
     // CODE → <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>

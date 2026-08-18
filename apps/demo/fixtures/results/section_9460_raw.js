@@ -5,9 +5,9 @@ function ternaryTest(param1) {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4818>  # String: '__BC:ControlFlow/TernaryTests/ternaryTest/start' (String)
     // USED → r2 = "__BC:ControlFlow/TernaryTests/ternaryTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 2>
@@ -35,9 +35,9 @@ function ternaryTest(param1) {
     // USED → r6 = "negative";
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
     console.log(r6)
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 100>
@@ -61,15 +61,15 @@ function ternaryTest(param1) {
     // USED → r4 = param1;
     // ──────────────── Block 8 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
     console.log(r4)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4817>  # String: '__BC:ControlFlow/TernaryTests/ternaryTest/end' (String)
     // USED → r1 = "__BC:ControlFlow/TernaryTests/ternaryTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>

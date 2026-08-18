@@ -28,29 +28,29 @@ async function* anon_15185(param1) {
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>
     r6 = param1
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 6>
-    // USED → r4 = GetIterator(r6);
+    r4 = GetIterator(r6)
     // CODE → <GetEnvironment>: <Reg8: 5, UInt8: 2>
-    // USED → r5 = getEnvironment(2);
+    r5 = getEnvironment(2)
     // ──────────────── Block 2 ──────────────── 
     // CODE → <IteratorNext>: <Reg8: 9, Reg8: 4, Reg8: 6>
-    // USED → r9 = GetIterator(r6).next();
+    // USED → r9 = r4.next();
     // CODE → <Mov>: <Reg8: 3, Reg8: 4>
-    // USED → r3 = GetIterator(r6);
+    // USED → r3 = r4;
     // CODE → <JStrictEqual>: <Addr8: 45, Reg8: 3, Reg8: 7>  # Address: 00000063
-    // → r3 = GetIterator(r6)
+    // → r3 = r4
     if (r3 === undefined) goto label_99;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <Mov>: <Reg8: 8, Reg8: 1>
     // USED → r8 = 0;
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
-    // USED → r3 = getEnvironment(2)[2];
+    // USED → r3 = r5[2];
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
-    // USED → r3 = await getEnvironment(2)[2].call(undefined, r9);
+    // USED → r3 = await r5[2].call(undefined, r9);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
     goto label_74;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <Ret>: <Reg8: 3>
-    return await getEnvironment(2)[2].call(undefined, r9);
+    return await r5[2].call(undefined, r9);
     // ──────────────── Block 5 ──────────────── 
     // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 9>
     // USED → r3 = await yield;
@@ -65,7 +65,7 @@ async function* anon_15185(param1) {
     goto label_47;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <IteratorClose>: <Reg8: 4, UInt8: 0>
-    GetIterator(r6).return()
+    r4.return()
     // CODE → <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → <Ret>: <Reg8: 3>
@@ -74,7 +74,7 @@ async function* anon_15185(param1) {
     // CODE → <Catch>: <Reg8: 3>
     // USED → r3 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 4, UInt8: 1>
-    GetIterator(r6).return()
+    r4.return()
     // CODE → <Throw>: <Reg8: 3>
     throw caughtException;
     // ──────────────── Block 9 ──────────────── 

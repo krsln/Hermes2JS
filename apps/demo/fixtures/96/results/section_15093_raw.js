@@ -15,18 +15,19 @@ function forInTest() {
     // CODE → <Mov>: <Reg8: 4, Reg8: 6>
     r4 = r6
     // CODE → <GetPNameList>: <Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 2>
-    // USED → r5 = HermesPropertyIterator(r4);
+    r5 = HermesPropertyIterator(r4)
     // CODE → <JmpUndefined>: <Addr8: 38, Reg8: 5>  # Address: 0000004e
-    // → r4 = r6
-    if (HermesPropertyIterator(r4) === undefined) goto label_78;
+    // → r5 = HermesPropertyIterator(r4)
+    if (r5 === undefined) goto label_78;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetNextPName>: <Reg8: 1, Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 2>
-    // USED → r1 = r5.next();
+    r1 = r5.next()
     // CODE → <JmpUndefined>: <Addr8: 29, Reg8: 1>  # Address: 0000004e
-    if (r5.next() === undefined) goto label_78;
+    // → r1 = r5.next()
+    if (r1 === undefined) goto label_78;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 10, Reg8: 1>
-    // USED → r10 = r5.next();
+    // USED → r10 = r1;
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r9 = console;
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -3,9 +3,9 @@ function arrayTest() {
     // CODE → <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis;
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r6 = globalThis.console;
+    // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r5 = globalThis.console.log;
+    // USED → r5 = console.log;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4712>  # String: '__BC:Arrays/ArrayTests/arrayTest/start' (String)
     // USED → r4 = "__BC:Arrays/ArrayTests/arrayTest/start";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
@@ -13,9 +13,9 @@ function arrayTest() {
     // CODE → <NewArrayWithBuffer>: <Reg8: 5, UInt16: 5, UInt16: 5, UInt16: 15071>  # Array: [5, 3, 8, 1, 9]
     r5 = [5, 3, 8, 1, 9]
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r7 = globalThis.console;
+    // USED → r7 = console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r6 = globalThis.console.log;
+    // USED → r6 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     // USED → r4 = r5.length;
     // CODE → <Call2>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 4>
@@ -25,7 +25,7 @@ function arrayTest() {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 100>
     // USED → r0 = 100;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 0>
-    r4 = r5.push(r0)
+    r4 = r5.push(100)
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 206>  # String: 'pop' (Identifier)
     // USED → r4 = r5.pop;
     // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 5>
@@ -51,9 +51,9 @@ function arrayTest() {
     // CODE → <Call2>: <Reg8: 7, Reg8: 6, Reg8: 7, Reg8: 4>
     // USED → r7 = r7.sort(function_12472(param1, param2));
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r6 = globalThis.console;
+    // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 6, Reg8: 7>
     console.log(r7)
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 6, string_id: 126>  # String: 'map' (Identifier)
@@ -63,9 +63,9 @@ function arrayTest() {
     // CODE → <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4>
     // USED → r7 = r5.map(function_12473(param1));
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r6 = globalThis.console;
+    // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 6, Reg8: 7>
     console.log(r7)
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 7, string_id: 142>  # String: 'filter' (Identifier)
@@ -75,9 +75,9 @@ function arrayTest() {
     // CODE → <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4>
     // USED → r7 = r5.filter(function_12474(param1));
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r6 = globalThis.console;
+    // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 6, Reg8: 7>
     console.log(r7)
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 8, string_id: 213>  # String: 'reduce' (Identifier)
@@ -87,9 +87,9 @@ function arrayTest() {
     // CODE → <Call3>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 0>
     // USED → r7 = r5.reduce(function_12475(param1, param2), r0);
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r6 = globalThis.console;
+    // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 6, Reg8: 7>
     console.log(r7)
     // CODE → <GetById>: <Reg8: 6, Reg8: 5, UInt8: 9, string_id: 8919>  # String: 'find' (Identifier)
@@ -99,9 +99,9 @@ function arrayTest() {
     // CODE → <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4>
     // USED → r7 = r5.find(function_12476(param1));
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r6 = globalThis.console;
+    // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 6, Reg8: 7>
     console.log(r7)
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 10, string_id: 120>  # String: 'slice' (Identifier)
@@ -111,17 +111,17 @@ function arrayTest() {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1;
     // CODE → <Call3>: <Reg8: 6, Reg8: 4, Reg8: 5, Reg8: 0, Reg8: 1>
-    // USED → r6 = r5.slice(r0, r1);
+    // USED → r6 = r5.slice(1, 3);
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
     console.log(r6)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4711>  # String: '__BC:Arrays/ArrayTests/arrayTest/end' (String)
     // USED → r3 = "__BC:Arrays/ArrayTests/arrayTest/end";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>

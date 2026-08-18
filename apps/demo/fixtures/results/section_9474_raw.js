@@ -5,15 +5,15 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4862>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/try-block' (String)
     // USED → r2 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/try-block";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/try-block")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
-    // USED → r3 = globalThis.Error;
+    // USED → r3 = Error;
     // CODE → <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
     // USED → r2 = CreateThisForNew(r3);
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 47>  # String: 'test' (Identifier)
@@ -21,27 +21,27 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
     // CODE → <Mov>: <Reg8: 6, Reg8: 2>
     // USED → r6 = CreateThisForNew(r3);
     // CODE → <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = new globalThis.Error("test");
+    // USED → r0 = new Error("test");
     // CODE → <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = new globalThis.Error("test");
+    // USED → r0 = new Error("test");
     // CODE → <Throw>: <Reg8: 0>
-    throw new globalThis.Error("test");
+    throw new Error("test");
     // CODE → <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 2163>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block' (String)
     // USED → r2 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <JmpTrue>: <Addr8: 14, Reg8: 1>  # Address: 00000065
     if (param1) goto label_101;
     // ──────────────── Block 1 ──────────────── 
@@ -66,9 +66,9 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
     // CODE → <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <JmpTrue>: <Addr8: 14, Reg8: 1>  # Address: 0000008f
     if (param1) goto label_143;
     // ──────────────── Block 4 ──────────────── 

@@ -1,7 +1,7 @@
 function function_15101(param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 2>
-    // USED → r2 = createEnvironment();
+    r2 = createEnvironment()
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 2>
     // USED → r4 = param2;
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
@@ -13,23 +13,23 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <CreateClosure>: <Reg8: 9, Reg8: 2, function_id: 15103>  # Function: [#15103 nestedObjectDestructureTest of 157 bytes]: 1 params @ offset 0x0026979f
     // USED → r9 = nestedObjectDestructureTest();
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 9>
-    createEnvironment()[2] = nestedObjectDestructureTest()
+    r2[2] = nestedObjectDestructureTest()
     // CODE → <CreateClosure>: <Reg8: 8, Reg8: 2, function_id: 15104>  # Function: [#15104 renamedDefaultDestructureTest of 111 bytes]: 1 params @ offset 0x0026983c
     // USED → r8 = renamedDefaultDestructureTest();
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 8>
-    createEnvironment()[3] = renamedDefaultDestructureTest()
+    r2[3] = renamedDefaultDestructureTest()
     // CODE → <CreateClosure>: <Reg8: 7, Reg8: 2, function_id: 15105>  # Function: [#15105 nestedArrayDestructureTest of 241 bytes]: 1 params @ offset 0x002698ab
     // USED → r7 = nestedArrayDestructureTest();
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 7>
-    createEnvironment()[4] = nestedArrayDestructureTest()
+    r2[4] = nestedArrayDestructureTest()
     // CODE → <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 15106>  # Function: [#15106 parameterDestructureTest of 131 bytes]: 3 params @ offset 0x0026999c
     // USED → r6 = parameterDestructureTest(param1, param2);
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 5, Reg8: 6>
-    createEnvironment()[5] = parameterDestructureTest(param1, param2)
+    r2[5] = parameterDestructureTest(param1, param2)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15107>  # Function: [#15107 swapViaDestructureTest of 91 bytes]: 1 params @ offset 0x00269a1f
     // USED → r0 = swapViaDestructureTest();
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 6, Reg8: 0>
-    createEnvironment()[6] = swapViaDestructureTest()
+    r2[6] = swapViaDestructureTest()
     // CODE → <GetGlobalObject>: <Reg8: 10>
     // USED → r10 = globalThis;
     // CODE → <TryGetById>: <Reg8: 13, Reg8: 10, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
@@ -69,9 +69,9 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
     // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault(param1).call(undefined, r1);
+    r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
-    createEnvironment()[0] = _interopDefault(param1).call(undefined, r1)
+    r2[0] = r1
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     r1 = 1
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
@@ -79,9 +79,9 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
     // USED → r1 = param2.call(undefined, r1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r1 = _interopDefault(param1).call(undefined, r1);
+    r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
-    createEnvironment()[1] = _interopDefault(param1).call(undefined, r1)
+    r2[1] = r1
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

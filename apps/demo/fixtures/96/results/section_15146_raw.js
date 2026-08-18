@@ -1,11 +1,11 @@
 function makeCounter() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 1>
-    // USED → r1 = createEnvironment();
+    r1 = createEnvironment()
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
-    createEnvironment()[0] = 0
+    r1[0] = 0
     // CODE → <NewObject>: <Reg8: 0>
     r0 = {  }
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15147>  # Function: [#15147 increment of 16 bytes]: 1 params @ offset 0x0026a98b

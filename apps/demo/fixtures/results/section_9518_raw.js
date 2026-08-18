@@ -9,7 +9,7 @@ function simpleGeneratorTest() {
     // CODE → <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
     __environment__[0] = 0
     // CODE → <CreateGenerator>: <Reg8: 1, Reg8: 1, function_id: 12482>  # Function: [#12482 simpleGeneratorTest of 398 bytes]: 1 params @ offset 0x00243eaf
-    // USED → r1 = createGenerator(__environment__, simpleGeneratorTest);
+    r1 = createGenerator(__environment__, simpleGeneratorTest)
     // CODE → <Ret>: <Reg8: 1>
-    return createGenerator(__environment__, simpleGeneratorTest);
+    return r1;
 }

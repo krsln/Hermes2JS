@@ -7,9 +7,9 @@ function ifElseChainTest(param1, param2) {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r6 = globalThis.console;
+    // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r5 = globalThis.console.log;
+    // USED → r5 = console.log;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4773>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/start' (String)
     // USED → r4 = "__BC:ControlFlow/IfTests/ifElseChainTest/start";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
@@ -17,17 +17,17 @@ function ifElseChainTest(param1, param2) {
     if (param1 && param2) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r5 = globalThis.console;
+        // USED → r5 = console;
         // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r4 = globalThis.console.log;
+        // USED → r4 = console.log;
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 4768>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-both' (String)
         // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-both";
         // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
         console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-both")
         // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r5 = globalThis.console;
+        // USED → r5 = console;
         // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r4 = globalThis.console.log;
+        // USED → r4 = console.log;
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 381>  # String: 'both' (String)
         // USED → r3 = "both";
         // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
@@ -35,17 +35,17 @@ function ifElseChainTest(param1, param2) {
     } else if (param1 || param2) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r5 = globalThis.console;
+        // USED → r5 = console;
         // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r4 = globalThis.console.log;
+        // USED → r4 = console.log;
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 4769>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-either' (String)
         // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-either";
         // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
         console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-either")
         // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r5 = globalThis.console;
+        // USED → r5 = console;
         // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r4 = globalThis.console.log;
+        // USED → r4 = console.log;
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 1890>  # String: 'either' (String)
         // USED → r3 = "either";
         // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
@@ -53,17 +53,17 @@ function ifElseChainTest(param1, param2) {
     } else {
         // ──────────────── Block 4 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r5 = globalThis.console;
+        // USED → r5 = console;
         // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r4 = globalThis.console.log;
+        // USED → r4 = console.log;
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 4770>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither' (String)
         // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither";
         // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
         console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither")
         // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r5 = globalThis.console;
+        // USED → r5 = console;
         // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r4 = globalThis.console.log;
+        // USED → r4 = console.log;
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 1889>  # String: 'neither' (String)
         // USED → r3 = "neither";
         // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
@@ -72,17 +72,17 @@ function ifElseChainTest(param1, param2) {
     if (!param1) {
         // ──────────────── Block 8 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r4 = globalThis.console;
+        // USED → r4 = console;
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r3 = globalThis.console.log;
+        // USED → r3 = console.log;
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 4771>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-not-a' (String)
         // USED → r2 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-not-a";
         // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
         console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-not-a")
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r4 = globalThis.console;
+        // USED → r4 = console;
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r3 = globalThis.console.log;
+        // USED → r3 = console.log;
         // CODE → <LoadConstString>: <Reg8: 2, string_id: 669>  # String: 'not a' (String)
         // USED → r2 = "not a";
         // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
@@ -90,9 +90,9 @@ function ifElseChainTest(param1, param2) {
     }
     // ──────────────── Block 9 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 2026>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/end' (String)
     // USED → r1 = "__BC:ControlFlow/IfTests/ifElseChainTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>

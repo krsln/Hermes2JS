@@ -13,16 +13,16 @@ function forOfTest() {
     // CODE → <NewArrayWithBuffer>: <Reg8: 2, UInt16: 4, UInt16: 4, UInt16: 20817>  # Array: [1, 2, 3, 4]
     r2 = [1, 2, 3, 4]
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = GetIterator(r2);
+    r3 = GetIterator(r2)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 2>
-    // USED → r6 = GetIterator(r2).next();
+    // USED → r6 = r3.next();
     // CODE → <Mov>: <Reg8: 4, Reg8: 3>
-    // USED → r4 = GetIterator(r2);
+    // USED → r4 = r3;
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 4, Reg8: 0>  # Address: 00000047
-    // → r4 = GetIterator(r2)
+    // → r4 = r3
     if (r4 === undefined) goto label_71;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -37,7 +37,7 @@ function forOfTest() {
     // CODE → <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
-    GetIterator(r2).return()
+    r3.return()
     // CODE → <Throw>: <Reg8: 2>
     throw caughtException;
     // ──────────────── Block 4 ──────────────── 

@@ -1,17 +1,17 @@
 function function_15209() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 5>
-    // USED → r5 = createEnvironment();
+    r5 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 5, function_id: 15210>  # Function: [#15210 Counter of 148 bytes]: 1 params @ offset 0x0026be26
     // USED → r4 = Counter();
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 0, Reg8: 4>
-    createEnvironment()[0] = Counter()
+    r5[0] = Counter()
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
-    // USED → r0 = getEnvironment(0);
+    r0 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 3>
-    // USED → r0 = getEnvironment(0)[3];
+    // USED → r0 = r0[3];
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r3 = getEnvironment(0)[3].default;
+    // USED → r3 = r0[3].default;
     // CODE → <NewObject>: <Reg8: 0>
     r0 = {  }
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 205>  # String: 'value' (Identifier)
@@ -83,7 +83,7 @@ function function_15209() {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2, Reg8: 1>
-    // USED → r0 = getEnvironment(0)[3].default.call(undefined, Counter(), r2, r1);
+    r0 = r0[3].default.call(undefined, Counter(), r2, r1)
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(0)[3].default.call(undefined, Counter(), r2, r1);
+    return r0;
 }

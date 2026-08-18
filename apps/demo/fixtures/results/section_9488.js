@@ -12,69 +12,69 @@ function parameterDestructureTest(param1, param2) {
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 2>
     // USED → r4 = param2;
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 4>
-    // USED → r3 = GetIterator(r4);
+    r3 = GetIterator(r4)
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
     r5 = param2
     // CODE → <IteratorNext>: <Reg8: 5, Reg8: 3, Reg8: 5>
-    // USED → r5 = GetIterator(r4).next();
+    r5 = r3.next()
     // CODE → <Mov>: <Reg8: 6, Reg8: 3>
-    // USED → r6 = GetIterator(r4);
+    // USED → r6 = r3;
     // CODE → <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 1>
-    // USED → r0 = GetIterator(r4) === undefined;
+    // USED → r0 = r3 === undefined;
     // CODE → <LoadConstUndefined>: <Reg8: 7>
-    r7 = (GetIterator(r4) === undefined) ? undefined : GetIterator(r4).next()
+    r7 = (r3 === undefined) ? undefined : r5
     // ──────────────── Block 4 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 6>
     r6 = undefined
-    if (GetIterator(r4) !== undefined) {
+    if (r3 !== undefined) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
-        // USED → r4 = (GetIterator(r4) === undefined) ? undefined : GetIterator(r4).next();
+        r4 = r3.next()
         // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-        // USED → r5 = GetIterator(r4);
+        // USED → r5 = r3;
         // CODE → <StrictEq>: <Reg8: 2, Reg8: 5, Reg8: 1>
-        // USED → r2 = GetIterator(r4) === undefined;
+        // USED → r2 = r3 === undefined;
         // CODE → <LoadConstUndefined>: <Reg8: 6>
         r6 = undefined
         // CODE → <Mov>: <Reg8: 0, Reg8: 2>
-        r0 = GetIterator(r4) === undefined || GetIterator(r4) === undefined
+        r0 = r3 === undefined || r3 === undefined
     }
-    if (GetIterator(r4) !== undefined) {
+    if (r3 !== undefined) {
         // ──────────────── Block 8 ──────────────── 
         // CODE → <IteratorClose>: <Reg8: 3, UInt8: 0>
-        GetIterator(r4).return()
+        r3.return()
     }
     // ──────────────── Block 9 ──────────────── 
     // CODE → <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis;
     // CODE → <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r10 = globalThis.console;
+    // USED → r10 = console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 10, UInt8: 3, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r5 = globalThis.console.log;
+    // USED → r5 = console.log;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4978>  # String: '__BC:Objects/DestructuringTests/parameterDestructureTest/start' (String)
     // USED → r4 = "__BC:Objects/DestructuringTests/parameterDestructureTest/start";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 10, Reg8: 4>
     console.log("__BC:Objects/DestructuringTests/parameterDestructureTest/start")
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 3, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <Mov>: <Reg8: 15, Reg8: 5>
-    r15 = globalThis.console
+    r15 = console
     // CODE → <Mov>: <Reg8: 14, Reg8: 9>
     r14 = param1.id
     // CODE → <Mov>: <Reg8: 13, Reg8: 8>
     r13 = (r8 !== undefined) ? param1.name : "anon"
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>
-    r12 = (GetIterator(r4) === undefined) ? undefined : GetIterator(r4).next()
+    r12 = (r3 === undefined) ? undefined : r5
     // CODE → <Mov>: <Reg8: 11, Reg8: 6>
-    r11 = (GetIterator(r4) === undefined) ? undefined : GetIterator(r4).next()
+    r11 = r4
     // CODE → <Call>: <Reg8: 4, Reg8: 4, UInt8: 5>
     console.log(r15, r14, r13, r12, r11)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 3, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4975>  # String: '__BC:Objects/DestructuringTests/parameterDestructureTest/end' (String)
     // USED → r3 = "__BC:Objects/DestructuringTests/parameterDestructureTest/end";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>

@@ -1,21 +1,21 @@
 function function_15158(param1, param2, param3, param4, param5, param6, param7) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    // USED → r0 = createEnvironment();
+    r0 = createEnvironment()
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 6>
     // USED → r1 = param6;
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 0, function_id: 15159>  # Function: [#15159 restOnlyTest of 126 bytes]: 1 params @ offset 0x0026ac88
     // USED → r4 = restOnlyTest();
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 0, Reg8: 4>
-    createEnvironment()[0] = restOnlyTest()
+    r0[0] = restOnlyTest()
     // CODE → <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 15160>  # Function: [#15160 restAfterRequiredTest of 149 bytes]: 3 params @ offset 0x0026ad06
     // USED → r3 = restAfterRequiredTest(param1, param2);
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 1, Reg8: 3>
-    createEnvironment()[1] = restAfterRequiredTest(param1, param2)
+    r0[1] = restAfterRequiredTest(param1, param2)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15161>  # Function: [#15161 legacyArgumentsTest of 109 bytes]: 1 params @ offset 0x0026ad9b
     // USED → r2 = legacyArgumentsTest();
     // CODE → <StoreToEnvironment>: <Reg8: 0, UInt8: 2, Reg8: 2>
-    createEnvironment()[2] = legacyArgumentsTest()
+    r0[2] = legacyArgumentsTest()
     // CODE → <GetGlobalObject>: <Reg8: 5>
     // USED → r5 = globalThis;
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
