@@ -170,6 +170,17 @@ class ExpressionPrinter(PrinterVisitor):
     # ------------------------------------------------------------------
 
     def visit_MemberExpression(self, node: MemberExpression) -> str:
+        if (
+                not node.computed
+                and isinstance(node.obj, Identifier)
+                and node.obj.name == "globalThis"
+        ):
+            # Hermes represents global property access explicitly through
+            # `globalThis`, but source-level JavaScript typically uses the
+            # global binding directly (e.g. `Promise` instead of
+            # `globalThis.Promise`).
+            return self.visit(node.prop)
+
         obj = self._wrap_operand(node.obj, node)
         prop = self.visit(node.prop)
 

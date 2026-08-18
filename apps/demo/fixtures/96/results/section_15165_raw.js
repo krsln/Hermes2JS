@@ -12,9 +12,9 @@ async function* anon_15165() {
     // CODE → <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4789>  # String: '__BC:Functions/GeneratorTests/simpleGeneratorTest/start' (String)
     // USED → r1 = "__BC:Functions/GeneratorTests/simpleGeneratorTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
@@ -65,9 +65,9 @@ async function* anon_15165() {
     if (__resumeIsReturn) goto label_93;
     // ──────────────── Block 10 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r6 = globalThis.console;
+    // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r5 = globalThis.console.log;
+    // USED → r5 = console.log;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4197>  # String: '__BC:Functions/GeneratorTests/simpleGeneratorTest/end' (String)
     // USED → r4 = "__BC:Functions/GeneratorTests/simpleGeneratorTest/end";
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>

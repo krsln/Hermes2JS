@@ -5,9 +5,9 @@ function closureLoopTest() {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4767>  # String: '__BC:Functions/ClosureTests/closureLoopTest/start' (String)
     // USED → r2 = "__BC:Functions/ClosureTests/closureLoopTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
@@ -47,9 +47,9 @@ function closureLoopTest() {
     if (r5 === undefined) goto label_102;
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r6 = globalThis.console;
+    // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r5 = globalThis.console.log;
+    // USED → r5 = console.log;
     // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
     // USED → r4 = GetIterator(r2).next().call(undefined);
     // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
@@ -65,9 +65,9 @@ function closureLoopTest() {
     throw caughtException;
     // ──────────────── Block 6 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4766>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
     // USED → r1 = "__BC:Functions/ClosureTests/closureLoopTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>

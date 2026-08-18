@@ -7,9 +7,9 @@ function propertyAccessTest() {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4839>  # String: '__BC:Objects/PropertyTests/propertyAccessTest/start' (String)
     // USED → r2 = "__BC:Objects/PropertyTests/propertyAccessTest/start";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
@@ -23,9 +23,9 @@ function propertyAccessTest() {
     // CODE → <PutById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 7612>  # String: 'z' (Identifier)
     r5.z = 3
     // CODE → <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r8 = globalThis.console;
+    // USED → r8 = console;
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r7 = globalThis.console.log;
+    // USED → r7 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 3, string_id: 41>  # String: 'x' (Identifier)
     // USED → r6 = r5.x;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 7>  # String: 'y' (Identifier)
@@ -37,9 +37,9 @@ function propertyAccessTest() {
     // CODE → <DelById>: <Reg8: 2, Reg8: 5, string_id: 41>  # String: 'x' (Identifier)
     r2 = delete r5.x
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r6 = globalThis.console;
+    // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 41>  # String: 'x' (Identifier)
     // USED → r2 = "x";
     // CODE → <IsIn>: <Reg8: 2, Reg8: 2, Reg8: 5>
@@ -47,13 +47,13 @@ function propertyAccessTest() {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 24>  # String: 'Object' (Identifier)
-    // USED → r3 = globalThis.Object;
+    // USED → r3 = Object;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 7, string_id: 118>  # String: 'keys' (Identifier)
-    // USED → r2 = globalThis.Object.keys;
+    // USED → r2 = Object.keys;
     // CODE → <Call2>: <Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 5>
-    // USED → r5 = globalThis.Object.keys(r5);
+    // USED → r5 = Object.keys(r5);
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
-    r2 = globalThis.Object.keys(r5)
+    r2 = Object.keys(r5)
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
     // USED → r3 = GetIterator(r2);
     // LOOP → START (for_of)
@@ -65,9 +65,9 @@ function propertyAccessTest() {
         if (r5 !== undefined) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r7 = globalThis.console;
+            // USED → r7 = console;
             // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r6 = globalThis.console.log;
+            // USED → r6 = console.log;
             // CODE → <Mov>: <Reg8: 5, Reg8: 4>
             // USED → r5 = r5;
             // CODE → <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 8>
@@ -81,9 +81,9 @@ function propertyAccessTest() {
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4838>  # String: '__BC:Objects/PropertyTests/propertyAccessTest/end' (String)
     // USED → r1 = "__BC:Objects/PropertyTests/propertyAccessTest/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>

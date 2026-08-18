@@ -17,9 +17,9 @@ async function* anon_15177() {
         // CODE → <GetGlobalObject>: <Reg8: 2>
         // USED → r2 = globalThis;
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = globalThis.console;
+        // USED → r4 = console;
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r3 = globalThis.console.log;
+        // USED → r3 = console.log;
         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4765>  # String: '__BC:Functions/AsyncTests/simpleAsyncTest/start' (String)
         // USED → r1 = "__BC:Functions/AsyncTests/simpleAsyncTest/start";
         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
@@ -53,15 +53,15 @@ async function* anon_15177() {
         } else {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r4 = globalThis.console;
+            // USED → r4 = console;
             // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r3 = globalThis.console.log;
+            // USED → r3 = console.log;
             // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 1>
             console.log(r1)
             // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r4 = globalThis.console;
+            // USED → r4 = console;
             // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r3 = globalThis.console.log;
+            // USED → r3 = console.log;
             // CODE → <LoadConstString>: <Reg8: 2, string_id: 4764>  # String: '__BC:Functions/AsyncTests/simpleAsyncTest/end' (String)
             // USED → r2 = "__BC:Functions/AsyncTests/simpleAsyncTest/end";
             // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>

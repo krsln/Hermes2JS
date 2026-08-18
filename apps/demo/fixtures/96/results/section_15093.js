@@ -3,9 +3,9 @@ function forInTest() {
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4802>  # String: '__BC:Iterators/IteratorTests/forInTest/start' (String)
     // USED → r1 = "__BC:Iterators/IteratorTests/forInTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
@@ -26,9 +26,9 @@ function forInTest() {
                 // CODE → <Mov>: <Reg8: 10, Reg8: 1>
                 // USED → r10 = r5.next();
                 // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r9 = globalThis.console;
+                // USED → r9 = console;
                 // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r8 = globalThis.console.log;
+                // USED → r8 = console.log;
                 // CODE → <GetByVal>: <Reg8: 7, Reg8: 6, Reg8: 10>
                 // USED → r7 = r6[r10];
                 // CODE → <Call3>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 7>
@@ -41,9 +41,9 @@ function forInTest() {
     }
     // ──────────────── Block 3 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r2 = globalThis.console;
+    // USED → r2 = console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r1 = globalThis.console.log;
+    // USED → r1 = console.log;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4800>  # String: '__BC:Iterators/IteratorTests/forInTest/end' (String)
     // USED → r0 = "__BC:Iterators/IteratorTests/forInTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>

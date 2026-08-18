@@ -3,9 +3,9 @@ function set(param1) {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4543>  # String: '__BC:Classes/PrivateStaticTests/Counter/set-value' (String)
     // USED → r0 = "__BC:Classes/PrivateStaticTests/Counter/set-value";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
@@ -27,9 +27,9 @@ function set(param1) {
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 5>
     // USED → r2 = getEnvironment(1)[5];
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 4, string_id: 21>  # String: 'Math' (Identifier)
-    // USED → r6 = globalThis.Math;
+    // USED → r6 = Math;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 5, string_id: 113>  # String: 'min' (Identifier)
-    // USED → r5 = globalThis.Math.min;
+    // USED → r5 = Math.min;
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     // USED → r1 = getEnvironment(0);
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
@@ -39,9 +39,9 @@ function set(param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 1, Reg8: 4>
-    // USED → r1 = globalThis.Math.min(param1, r4);
+    // USED → r1 = Math.min(param1, r4);
     // CODE → <PutByVal>: <Reg8: 3, Reg8: 2, Reg8: 1>
-    getEnvironment(1)[4].default.call(undefined, this, r4)[getEnvironment(1)[5]] = globalThis.Math.min(param1, r4)
+    getEnvironment(1)[4].default.call(undefined, this, r4)[getEnvironment(1)[5]] = Math.min(param1, r4)
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

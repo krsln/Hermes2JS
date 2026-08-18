@@ -9,17 +9,17 @@ function function_15054(param1, param2) {
         // CODE → <GetGlobalObject>: <Reg8: 0>
         // USED → r0 = globalThis;
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = globalThis.console;
+        // USED → r4 = console;
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r2 = globalThis.console.log;
+        // USED → r2 = console.log;
         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4581>  # String: '__BC:ControlFlow/ForEachTests/forEachTest/if-middle' (String)
         // USED → r1 = "__BC:ControlFlow/ForEachTests/forEachTest/if-middle";
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
         console.log("__BC:ControlFlow/ForEachTests/forEachTest/if-middle")
         // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r2 = globalThis.console;
+        // USED → r2 = console;
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r1 = globalThis.console.log;
+        // USED → r1 = console.log;
         // CODE → <LoadConstString>: <Reg8: 0, string_id: 8469>  # String: 'middle' (Identifier)
         // USED → r0 = "middle";
         // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
@@ -29,9 +29,9 @@ function function_15054(param1, param2) {
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r2 = globalThis.console;
+    // USED → r2 = console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r1 = globalThis.console.log;
+    // USED → r1 = console.log;
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 1>
     // USED → r0 = param1;
     // CODE → <Call3>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 0>

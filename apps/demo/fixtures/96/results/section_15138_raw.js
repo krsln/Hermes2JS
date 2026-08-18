@@ -3,9 +3,9 @@ function callRegExpTests() {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4844>  # String: '__BC:Strings/RegExpTests/callRegExpTests/start' (String)
     // USED → r0 = "__BC:Strings/RegExpTests/callRegExpTests/start";
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
@@ -39,9 +39,9 @@ function callRegExpTests() {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 2>
     r2 = getEnvironment(0)[3].call(undefined, "2024-01-15")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4841>  # String: '__BC:Strings/RegExpTests/callRegExpTests/end' (String)
     // USED → r1 = "__BC:Strings/RegExpTests/callRegExpTests/end";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>

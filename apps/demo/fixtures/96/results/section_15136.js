@@ -5,17 +5,17 @@ function regExpSingleQuotePatternTest(param1) {
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4853>  # String: '__BC:Strings/RegExpTests/regExpSingleQuotePatternTest/start' (String)
     // USED → r1 = "__BC:Strings/RegExpTests/regExpSingleQuotePatternTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Strings/RegExpTests/regExpSingleQuotePatternTest/start")
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 3, string_id: 213>  # String: 'replace' (Identifier)
     // USED → r5 = param1.replace;
     // CODE → <CreateRegExp>: <Reg8: 4, string_id: 819, string_id: 35, UInt32: 1>  # String: "'" (String)  # String: 'g' (Identifier)
@@ -27,9 +27,9 @@ function regExpSingleQuotePatternTest(param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 3, string_id: 213>  # String: 'replace' (Identifier)
     // USED → r5 = param1.replace;
     // CODE → <CreateRegExp>: <Reg8: 4, string_id: 2429, string_id: 35, UInt32: 194>  # String: "['-]" (String)  # String: 'g' (Identifier)
@@ -41,9 +41,9 @@ function regExpSingleQuotePatternTest(param1) {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r2 = globalThis.console;
+    // USED → r2 = console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r1 = globalThis.console.log;
+    // USED → r1 = console.log;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4852>  # String: '__BC:Strings/RegExpTests/regExpSingleQuotePatternTest/end' (String)
     // USED → r0 = "__BC:Strings/RegExpTests/regExpSingleQuotePatternTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>

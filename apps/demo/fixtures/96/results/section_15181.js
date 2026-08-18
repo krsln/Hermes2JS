@@ -17,9 +17,9 @@ async function* anon_15181() {
         // CODE → <GetGlobalObject>: <Reg8: 2>
         // USED → r2 = globalThis;
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = globalThis.console;
+        // USED → r4 = console;
         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r3 = globalThis.console.log;
+        // USED → r3 = console.log;
         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4758>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/start' (String)
         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/start";
         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
@@ -47,9 +47,9 @@ async function* anon_15181() {
         if (__resumeIsReturn) {
             // ──────────────── Block 7 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r5 = globalThis.console;
+            // USED → r5 = console;
             // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r4 = globalThis.console.log;
+            // USED → r4 = console.log;
             // CODE → <LoadConstString>: <Reg8: 3, string_id: 4757>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/finally' (String)
             // USED → r3 = "__BC:Functions/AsyncTests/asyncTryCatchTest/finally";
             // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
@@ -61,9 +61,9 @@ async function* anon_15181() {
         } else {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r6 = globalThis.console;
+            // USED → r6 = console;
             // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r5 = globalThis.console.log;
+            // USED → r5 = console.log;
             // CODE → <LoadConstString>: <Reg8: 4, string_id: 401>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/awaited' (String)
             // USED → r4 = "__BC:Functions/AsyncTests/asyncTryCatchTest/awaited";
             // CODE → <Call3>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
@@ -71,9 +71,9 @@ async function* anon_15181() {
             if (r1 === 1) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
-                // USED → r5 = globalThis.Error;
+                // USED → r5 = Error;
                 // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-                r3 = globalThis.Error.prototype
+                r3 = Error.prototype
                 // CODE → <CreateThis>: <Reg8: 4, Reg8: 3, Reg8: 5>
                 // USED → r4 = CreateThis(r3);
                 // CODE → <LoadConstString>: <Reg8: 8, string_id: 6849>  # String: 'post-await failure' (String)
@@ -81,11 +81,11 @@ async function* anon_15181() {
                 // CODE → <Mov>: <Reg8: 9, Reg8: 4>
                 // USED → r9 = CreateThis(r3);
                 // CODE → <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
-                // USED → r3 = new globalThis.Error("post-await failure");
+                // USED → r3 = new Error("post-await failure");
                 // CODE → <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
-                // USED → r3 = new globalThis.Error("post-await failure");
+                // USED → r3 = new Error("post-await failure");
                 // CODE → <Throw>: <Reg8: 3>
-                throw new globalThis.Error("post-await failure");
+                throw new Error("post-await failure");
             } else {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <Jmp>: <Addr8: 79>  # Address: 000000a3
@@ -95,9 +95,9 @@ async function* anon_15181() {
                     while (true) {
                         // ──────────────── Block 9 ──────────────── 
                         // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                        // USED → r4 = globalThis.console;
+                        // USED → r4 = console;
                         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                        // USED → r3 = globalThis.console.log;
+                        // USED → r3 = console.log;
                         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4756>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/end' (String)
                         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/end";
                         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
@@ -112,9 +112,9 @@ async function* anon_15181() {
                         // CODE → <Catch>: <Reg8: 1>
                         r1 = caughtException
                         // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                        // USED → r4 = globalThis.console;
+                        // USED → r4 = console;
                         // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                        // USED → r3 = globalThis.console.log;
+                        // USED → r3 = console.log;
                         // CODE → <LoadConstString>: <Reg8: 1, string_id: 2140>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/caught' (String)
                         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/caught";
                         // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
@@ -124,9 +124,9 @@ async function* anon_15181() {
                 } finally {
                     // ──────────────── Block 10 ──────────────── 
                     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r4 = globalThis.console;
+                    // USED → r4 = console;
                     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r3 = globalThis.console.log;
+                    // USED → r3 = console.log;
                     // CODE → <LoadConstString>: <Reg8: 2, string_id: 4757>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/finally' (String)
                     // USED → r2 = "__BC:Functions/AsyncTests/asyncTryCatchTest/finally";
                     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>

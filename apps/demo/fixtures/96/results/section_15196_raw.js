@@ -3,9 +3,9 @@ function classTest() {
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4539>  # String: '__BC:Classes/ClassTests/classTest/start' (String)
     // USED → r1 = "__BC:Classes/ClassTests/classTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
@@ -33,9 +33,9 @@ function classTest() {
     // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 2>
     r3 = new getEnvironment(0)[5]("...", "Generic").makeSound()
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 5, string_id: 10805>  # String: 'description' (Identifier)
     // USED → r2 = new getEnvironment(0)[5]("...", "Generic").description;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
@@ -77,9 +77,9 @@ function classTest() {
     // CODE → <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
     r1 = getEnvironment(0)[6].create("Buddy").makeSound()
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r2 = globalThis.console;
+    // USED → r2 = console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r1 = globalThis.console.log;
+    // USED → r1 = console.log;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4537>  # String: '__BC:Classes/ClassTests/classTest/end' (String)
     // USED → r0 = "__BC:Classes/ClassTests/classTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>

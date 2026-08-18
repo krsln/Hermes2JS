@@ -137,12 +137,12 @@ class RegionPrinter:
             rendered = self.expressions.print(instruction.value)
 
             if instruction.dest_reg is not None:
-                replaceable = (
-                    rendered.startswith("globalThis.console.log")
+                passable = (
+                    rendered.startswith("console.log")
                 )
 
-                if not instruction.definition_used and replaceable:
-                    rendered = rendered.replace("globalThis.", "")
+                if not instruction.definition_used and passable:
+                   pass
                 else:
                     rendered = f"r{instruction.dest_reg} = {rendered}"
 

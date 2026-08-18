@@ -17,17 +17,17 @@ async function* anon_15189() {
         // CODE → <GetGlobalObject>: <Reg8: 3>
         // USED → r3 = globalThis;
         // CODE → <TryGetById>: <Reg8: 4, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = globalThis.console;
+        // USED → r4 = console;
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r2 = globalThis.console.log;
+        // USED → r2 = console.log;
         // CODE → <LoadConstString>: <Reg8: 1, string_id: 4761>  # String: '__BC:Functions/AsyncTests/parallelAwaitTest/start' (String)
         // USED → r1 = "__BC:Functions/AsyncTests/parallelAwaitTest/start";
         // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
         console.log("__BC:Functions/AsyncTests/parallelAwaitTest/start")
         // CODE → <TryGetById>: <Reg8: 8, Reg8: 3, UInt8: 3, string_id: 27>  # String: 'Promise' (Identifier)
-        // USED → r8 = globalThis.Promise;
+        // USED → r8 = Promise;
         // CODE → <GetById>: <Reg8: 7, Reg8: 8, UInt8: 4, string_id: 7443>  # String: 'all' (Identifier)
-        // USED → r7 = globalThis.Promise.all;
+        // USED → r7 = Promise.all;
         // CODE → <GetEnvironment>: <Reg8: 4, UInt8: 2>
         // USED → r4 = getEnvironment(2);
         // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 4, UInt8: 2>
@@ -49,12 +49,12 @@ async function* anon_15189() {
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
         // USED → r1 = (r1[0] = getEnvironment(2)[2].call(undefined, r5))[1] = getEnvironment(2)[2].call(undefined, r6);
         // CODE → <Call2>: <Reg8: 1, Reg8: 7, Reg8: 8, Reg8: 1>
-        // USED → r1 = await globalThis.Promise.all(r1);
+        // USED → r1 = await Promise.all(r1);
         // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000005a
         goto label_90;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
-        return await globalThis.Promise.all(r1);
+        return await Promise.all(r1);
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 7>
         // USED → r1 = await yield;
@@ -81,15 +81,15 @@ async function* anon_15189() {
             // CODE → <GetByVal>: <Reg8: 6, Reg8: 4, Reg8: 5>
             // USED → r6 = getEnvironment(2)[0].default.call(undefined, r1, r6)[r5];
             // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r5 = globalThis.console;
+            // USED → r5 = console;
             // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r4 = globalThis.console.log;
+            // USED → r4 = console.log;
             // CODE → <Call3>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 7, Reg8: 6>
             console.log(r7, r6)
             // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r5 = globalThis.console;
+            // USED → r5 = console;
             // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r4 = globalThis.console.log;
+            // USED → r4 = console.log;
             // CODE → <LoadConstString>: <Reg8: 3, string_id: 4760>  # String: '__BC:Functions/AsyncTests/parallelAwaitTest/end' (String)
             // USED → r3 = "__BC:Functions/AsyncTests/parallelAwaitTest/end";
             // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>

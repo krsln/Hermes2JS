@@ -3,9 +3,9 @@ function objectLiteralTest() {
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 4827>  # String: '__BC:Objects/ObjectLiteralTests/objectLiteralTest/start' (String)
     // USED → r1 = "__BC:Objects/ObjectLiteralTests/objectLiteralTest/start";
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
@@ -19,9 +19,9 @@ function objectLiteralTest() {
     // CODE → <PutNewOwnById>: <Reg8: 1, Reg8: 2, string_id: 17737>  # String: 'greet' (Identifier)
     r1.greet = greet()
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
+    // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r4 = globalThis.console.log;
+    // USED → r4 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 176>  # String: 'name' (Identifier)
     // USED → r3 = r1.name;
     // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 4, string_id: 7743>  # String: 'age' (Identifier)
@@ -37,9 +37,9 @@ function objectLiteralTest() {
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 7743>  # String: 'age' (Identifier)
     // USED → r3 = r1.age;
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r2 = globalThis.console;
+    // USED → r2 = console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r1 = globalThis.console.log;
+    // USED → r1 = console.log;
     // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3>
     console.log(r4, r3)
     // CODE → <NewObject>: <Reg8: 1>
@@ -65,9 +65,9 @@ function objectLiteralTest() {
     // CODE → <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 2, string_id: 38>  # String: 'b' (Identifier)
     r1.b = r2
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
+    // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
+    // USED → r2 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 38>  # String: 'b' (Identifier)
     // USED → r1 = r1.b;
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 7, string_id: 7181>  # String: 'd' (Identifier)
@@ -77,9 +77,9 @@ function objectLiteralTest() {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r2 = globalThis.console;
+    // USED → r2 = console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r1 = globalThis.console.log;
+    // USED → r1 = console.log;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 4826>  # String: '__BC:Objects/ObjectLiteralTests/objectLiteralTest/end' (String)
     // USED → r0 = "__BC:Objects/ObjectLiteralTests/objectLiteralTest/end";
     // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>

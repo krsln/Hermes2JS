@@ -5,17 +5,17 @@ function makeSound() {
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 3933>  # String: '__BC:Classes/ClassTests/Animal/makeSound' (String)
     // USED → r2 = "__BC:Classes/ClassTests/Animal/makeSound";
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Classes/ClassTests/Animal/makeSound")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r4 = globalThis.console;
+    // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
+    // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 176>  # String: 'name' (Identifier)
     // USED → r2 = this.name;
     // CODE → <GetById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 11864>  # String: 'sound' (Identifier)

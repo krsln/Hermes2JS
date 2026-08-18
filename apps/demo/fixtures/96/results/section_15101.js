@@ -33,9 +33,9 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <GetGlobalObject>: <Reg8: 10>
     // USED → r10 = globalThis;
     // CODE → <TryGetById>: <Reg8: 13, Reg8: 10, UInt8: 1, string_id: 24>  # String: 'Object' (Identifier)
-    // USED → r13 = globalThis.Object;
+    // USED → r13 = Object;
     // CODE → <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
-    // USED → r12 = globalThis.Object.defineProperty;
+    // USED → r12 = Object.defineProperty;
     // CODE → <NewObject>: <Reg8: 11>
     // USED → r11 = {  };
     // CODE → <LoadConstTrue>: <Reg8: 10>
@@ -45,7 +45,7 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r10 = "__esModule";
     // CODE → <Call4>: <Reg8: 10, Reg8: 12, Reg8: 13, Reg8: 1, Reg8: 10, Reg8: 11>
-    r10 = globalThis.Object.defineProperty(param6, "__esModule", r11)
+    r10 = Object.defineProperty(param6, "__esModule", r11)
     // CODE → <PutById>: <Reg8: 1, Reg8: 9, UInt8: 1, string_id: 11263>  # String: 'nestedObjectDestructureTest' (Identifier)
     param6.nestedObjectDestructureTest = nestedObjectDestructureTest()
     // CODE → <PutById>: <Reg8: 1, Reg8: 8, UInt8: 2, string_id: 11276>  # String: 'renamedDefaultDestructureTest' (Identifier)
