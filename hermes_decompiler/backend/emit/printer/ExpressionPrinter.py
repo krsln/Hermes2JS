@@ -208,6 +208,8 @@ class ExpressionPrinter(PrinterVisitor):
 
     def visit_CallExpression(self, node: CallExpression) -> str:
         callee = self._wrap_operand(node.callee, node)
+        # if callee.startswith("globalThis."):
+        #     callee = callee.removeprefix("globalThis.")
         args = ", ".join(
             self.visit(argument)
             for argument in node.arguments
