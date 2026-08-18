@@ -24,8 +24,9 @@ logger = get_logger(__name__)
 _IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
 
 _CALL_ARGUMENT_INLINE_OPCODES = frozenset({
-    "LoadConstString",
     "CreateClosure",
+    "LoadConstString",
+    "LoadParam",
 })
 
 _CONDITION_ARGUMENT_INLINE_OPCODES = frozenset({

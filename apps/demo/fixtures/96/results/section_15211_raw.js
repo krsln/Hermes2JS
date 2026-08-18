@@ -23,11 +23,11 @@ function get() {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → <Call3>: <Reg8: 1, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 3>
-    // USED → r1 = getEnvironment(1)[4].default.call(undefined, r1, r3);
+    // USED → r1 = getEnvironment(1)[4].default.call(undefined, this, r3);
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 5>
     r0 = getEnvironment(1)[5]
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = getEnvironment(1)[4].default.call(undefined, r1, r3)[r0];
+    // USED → r0 = getEnvironment(1)[4].default.call(undefined, this, r3)[r0];
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(1)[4].default.call(undefined, r1, r3)[r0];
+    return getEnvironment(1)[4].default.call(undefined, this, r3)[r0];
 }

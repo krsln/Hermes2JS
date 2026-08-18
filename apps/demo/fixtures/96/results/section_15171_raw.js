@@ -65,7 +65,7 @@ function function_15171(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r9 = "__esModule";
     // CODE → <Call4>: <Reg8: 9, Reg8: 11, Reg8: 12, Reg8: 1, Reg8: 9, Reg8: 10>
-    r9 = globalThis.Object.defineProperty(r1, "__esModule", r10)
+    r9 = globalThis.Object.defineProperty(param6, "__esModule", r10)
     // CODE → <PutById>: <Reg8: 1, Reg8: 8, UInt8: 1, string_id: 11171>  # String: 'simpleAsyncTest' (Identifier)
     param6.simpleAsyncTest = simpleAsyncTest()
     // CODE → <PutById>: <Reg8: 1, Reg8: 7, UInt8: 2, string_id: 7300>  # String: 'asyncTryCatchTest' (Identifier)

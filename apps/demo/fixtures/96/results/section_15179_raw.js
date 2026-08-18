@@ -27,7 +27,7 @@ function _asyncTryCatchTest() {
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this;
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
-    // USED → r0 = getEnvironment(0)[1].default.call(undefined, r2).apply(r0, r1);
+    // USED → r0 = getEnvironment(0)[1].default.call(undefined, r2).apply(this, r1);
     // CODE → <Ret>: <Reg8: 0>
-    return getEnvironment(0)[1].default.call(undefined, r2).apply(r0, r1);
+    return getEnvironment(0)[1].default.call(undefined, r2).apply(this, r1);
 }

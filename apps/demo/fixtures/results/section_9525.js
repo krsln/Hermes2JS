@@ -17,7 +17,7 @@ function asyncLoopTest(param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → <Call4>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1, Reg8: 4>
-    // USED → r1 = spawnAsync.call(undefined, ?anon_0_asyncLoopTest(param1), r1, r4);
+    // USED → r1 = spawnAsync.call(undefined, ?anon_0_asyncLoopTest(param1), this, r4);
     // CODE → <Ret>: <Reg8: 1>
-    return spawnAsync.call(undefined, ?anon_0_asyncLoopTest(param1), r1, r4);
+    return spawnAsync.call(undefined, ?anon_0_asyncLoopTest(param1), this, r4);
 }

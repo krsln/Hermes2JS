@@ -11,7 +11,7 @@ function sideEffect(param1, param2) {
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 1>
     // USED → r0 = param1;
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
-    console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", r0)
+    console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", param1)
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 2>
     // USED → r0 = param2;
     // CODE → <Ret>: <Reg8: 0>

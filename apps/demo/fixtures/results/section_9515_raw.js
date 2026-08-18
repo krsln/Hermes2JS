@@ -23,7 +23,7 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 1>
     // USED → r3 = param1;
     // CODE → <Call4>: <Reg8: 3, Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 4, Reg8: 7>
-    console.log(r3, r4, r7)
+    console.log(param1, param2, r7)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = globalThis.console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

@@ -23,7 +23,7 @@ function regExpFlagsTest(param1) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
     // USED → r1 = /hello/i.test;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 6, Reg8: 5>
-    // USED → r1 = /hello/i.test(r5);
+    // USED → r1 = /hello/i.test(param1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -33,7 +33,7 @@ function regExpFlagsTest(param1) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
     // USED → r1 = /^line/m.test;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 4, Reg8: 5>
-    // USED → r1 = /^line/m.test(r5);
+    // USED → r1 = /^line/m.test(param1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

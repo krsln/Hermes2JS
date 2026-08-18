@@ -19,7 +19,7 @@ function function_15064(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r2 = "__esModule";
     // CODE → <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
-    r2 = globalThis.Object.defineProperty(r1, "__esModule", r3)
+    r2 = globalThis.Object.defineProperty(param6, "__esModule", r3)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15065>  # Function: [#15065 labeledBreakTest of 123 bytes]: 1 params @ offset 0x00268359
     // USED → r2 = labeledBreakTest();
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 10933>  # String: 'labeledBreakTest' (Identifier)

@@ -21,7 +21,7 @@ function basicRegExpTest(param1) {
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
     // USED → r1 = /^\\d+$/.test;
     // CODE → <Call2>: <Reg8: 1, Reg8: 1, Reg8: 4, Reg8: 5>
-    // USED → r1 = /^\\d+$/.test(r5);
+    // USED → r1 = /^\\d+$/.test(param1);
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

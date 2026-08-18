@@ -17,7 +17,7 @@ function function_15139(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>
-    r0 = globalThis.Object.defineProperty(r1, "__esModule", r2)
+    r0 = globalThis.Object.defineProperty(param6, "__esModule", r2)
     // CODE → <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15140>  # Function: [#15140 arrowFunctionTest of 159 bytes]: 1 params @ offset 0x0026a804

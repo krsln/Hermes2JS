@@ -23,14 +23,14 @@ function logicalShortCircuitTest(param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 5116>  # String: 'and-left' (String)
     // USED → r4 = "and-left";
     // CODE → <Call3>: <Reg8: 4, Reg8: 7, Reg8: 0, Reg8: 4, Reg8: 3>
-    r4 = sideEffect(param1, param2).call(undefined, "and-left", r3)
+    r4 = sideEffect(param1, param2).call(undefined, "and-left", param1)
     // CODE → <Mov>: <Reg8: 6, Reg8: 3>
     r6 = param1 && param2
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 1184>  # String: 'or-left' (String)
     // USED → r4 = "or-left";
     // CODE → <Call3>: <Reg8: 4, Reg8: 7, Reg8: 0, Reg8: 4, Reg8: 3>
-    r4 = sideEffect(param1, param2).call(undefined, "or-left", r3)
+    r4 = sideEffect(param1, param2).call(undefined, "or-left", param1)
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
     // USED → r5 = param1 || param2;
     // ──────────────── Block 4 ──────────────── 
@@ -44,7 +44,7 @@ function logicalShortCircuitTest(param1, param2) {
         // CODE → <LoadConstString>: <Reg8: 3, string_id: 3574>  # String: 'nullish-right' (String)
         // USED → r3 = "nullish-right";
         // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 0, Reg8: 3, Reg8: 2>
-        r3 = sideEffect(param1, param2).call(undefined, "nullish-right", r2)
+        r3 = sideEffect(param1, param2).call(undefined, "nullish-right", param2)
         // CODE → <Mov>: <Reg8: 4, Reg8: 2>
         // USED → r4 = param2;
     }

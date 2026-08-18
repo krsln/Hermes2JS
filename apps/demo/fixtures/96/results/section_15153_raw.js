@@ -27,7 +27,7 @@ function function_15153(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r4 = "__esModule";
     // CODE → <Call4>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 1, Reg8: 4, Reg8: 5>
-    r4 = globalThis.Object.defineProperty(r1, "__esModule", r5)
+    r4 = globalThis.Object.defineProperty(param6, "__esModule", r5)
     // CODE → <PutById>: <Reg8: 1, Reg8: 3, UInt8: 1, string_id: 11191>  # String: 'defaultParameterTest' (Identifier)
     param6.defaultParameterTest = defaultParameterTest(param1)
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 11193>  # String: 'defaultWithRestTest' (Identifier)
