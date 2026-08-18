@@ -25,6 +25,7 @@ _IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
 
 _CALL_ARGUMENT_INLINE_OPCODES = frozenset({
     "CreateClosure",
+    "LoadConstUInt8",
     "LoadConstString",
     "LoadParam",
 })

@@ -39,13 +39,13 @@ function nestedArrayDestructureTest() {
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
     // USED → r4 = 2;
     // CODE → <Call3>: <Reg8: 5, Reg8: 7, Reg8: 0, Reg8: 5, Reg8: 4>
-    // USED → r5 = getEnvironment(0)[1].default.call(undefined, r5, r4);
+    // USED → r5 = getEnvironment(0)[1].default.call(undefined, r5, 2);
     // CODE → <GetByVal>: <Reg8: 10, Reg8: 5, Reg8: 6>
-    // USED → r10 = getEnvironment(0)[1].default.call(undefined, r5, r4)[r6];
+    // USED → r10 = getEnvironment(0)[1].default.call(undefined, r5, 2)[r6];
     // CODE → <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
     r7 = 1
     // CODE → <GetByVal>: <Reg8: 9, Reg8: 5, Reg8: 7>
-    // USED → r9 = getEnvironment(0)[1].default.call(undefined, r5, r4)[r7];
+    // USED → r9 = getEnvironment(0)[1].default.call(undefined, r5, 2)[r7];
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 1>
     // USED → r5 = getEnvironment(0)[1];
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
@@ -53,9 +53,9 @@ function nestedArrayDestructureTest() {
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 4>
     // USED → r3 = (((r3[0] = r0)[1] = r0)[2] = r0)[r4];
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
-    // USED → r3 = getEnvironment(0)[1].default.call(undefined, r3, r4);
+    // USED → r3 = getEnvironment(0)[1].default.call(undefined, r3, 2);
     // CODE → <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 7>
-    // USED → r8 = getEnvironment(0)[1].default.call(undefined, r3, r4)[r7];
+    // USED → r8 = getEnvironment(0)[1].default.call(undefined, r3, 2)[r7];
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -95,7 +95,7 @@ function nestedArrayDestructureTest() {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)
     // USED → r2 = getEnvironment(0)[0].default.call(undefined, r3).slice;
     // CODE → <Call2>: <Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 4>
-    // USED → r4 = getEnvironment(0)[0].default.call(undefined, r3).slice(r4);
+    // USED → r4 = getEnvironment(0)[0].default.call(undefined, r3).slice(2);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

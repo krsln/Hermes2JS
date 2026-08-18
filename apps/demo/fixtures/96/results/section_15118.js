@@ -75,7 +75,7 @@ function spreadArrayTest() {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)
     // USED → r2 = getEnvironment(0)[2].default.call(undefined, r3).slice;
     // CODE → <Call2>: <Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 4>
-    // USED → r4 = getEnvironment(0)[2].default.call(undefined, r3).slice(r4);
+    // USED → r4 = getEnvironment(0)[2].default.call(undefined, r3).slice(1);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

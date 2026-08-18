@@ -52,9 +52,9 @@ function callGeneratorTests() {
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 5>
     // USED → r3 = 5;
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 0, Reg8: 3>
-    // USED → r5 = getEnvironment(0)[1].call(undefined, r3);
+    // USED → r5 = getEnvironment(0)[1].call(undefined, 5);
     // CODE → <Mov>: <Reg8: 3, Reg8: 5>
-    getEnvironment(0)[1].call(undefined, r3)
+    getEnvironment(0)[1].call(undefined, 5)
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
     // USED → r4 = GetIterator(r3);
     // ──────────────── Block 5 ──────────────── 
