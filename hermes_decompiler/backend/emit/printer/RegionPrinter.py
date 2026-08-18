@@ -147,12 +147,9 @@ class RegionPrinter:
                 #
                 # if not is_discarded_call:
                 #     rendered = f"r{instruction.dest_reg} = {rendered}"
-                passable = (
-                    rendered.startswith("console.log")
-                )
 
-                if not instruction.definition_used and passable:
-                   pass
+                if not instruction.definition_used and rendered.startswith("console.log"):
+                    pass
                 else:
                     rendered = f"r{instruction.dest_reg} = {rendered}"
 
