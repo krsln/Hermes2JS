@@ -53,6 +53,8 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 # IteratorTests 15092, 15093
 
 ## whole sections
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/
+
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 999 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 999 --end 1999 
 
