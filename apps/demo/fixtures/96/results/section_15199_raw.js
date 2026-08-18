@@ -1,7 +1,7 @@
 function makeSound() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 0, UInt8: 0>
-    // USED → r0 = this;
+    r0 = this
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -17,9 +17,9 @@ function makeSound() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 176>  # String: 'name' (Identifier)
-    // USED → r2 = this.name;
+    // USED → r2 = r0.name;
     // CODE → <GetById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 11864>  # String: 'sound' (Identifier)
-    // USED → r1 = this.sound;
+    // USED → r1 = r0.sound;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 2375>  # String: 'says' (String)
     // USED → r0 = "says";
     // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 0, Reg8: 1>

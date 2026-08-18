@@ -11,9 +11,9 @@ function description() {
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Classes/ClassTests/Animal/get-description")
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
-    // USED → r1 = this;
+    r1 = this
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 187>  # String: 'name' (Identifier)
-    // USED → r3 = this.name;
+    // USED → r3 = r1.name;
     // CODE → <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 3, string_id: 10>  # String: 'HermesInternal' (Identifier)
     // USED → r0 = HermesInternal;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 105>  # String: 'concat' (Identifier)

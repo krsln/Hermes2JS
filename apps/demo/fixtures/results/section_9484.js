@@ -32,7 +32,7 @@ function optionalChainingTest() {
         // CODE → <Eq>: <Reg8: 3, Reg8: 5, Reg8: 1>
         // USED → r3 = r5.b == null;
         // CODE → <LoadConstUndefined>: <Reg8: 7>
-        r7 = (r5.b == null) ? undefined : r5.b.c
+        r7 = (r5.b == null) ? undefined : r5.c
     }
     if (r7 == null) {
         // ──────────────── Block 4 ──────────────── 

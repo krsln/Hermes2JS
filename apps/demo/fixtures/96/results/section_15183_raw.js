@@ -1,21 +1,21 @@
 function _asyncLoopTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadConstUndefined>: <Reg8: 4>
-    // USED → r4 = undefined;
+    r4 = undefined
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 1>
-    // USED → r2 = r1[1];
+    r2 = r1[1]
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r3 = r1[1].default;
+    // USED → r3 = r2.default;
     // CODE → <CreateEnvironment>: <Reg8: 2>
     r2 = createEnvironment()
     // CODE → <CreateGeneratorClosure>: <Reg8: 2, Reg8: 2, function_id: 15184>  # Function: [#15184  of 9 bytes]: 2 params @ offset 0x0026b444
     // USED → r2 = function_15184;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
-    r3 = r1[1].default.call(undefined, r2)
+    r3 = r2.default.call(r4, r2)
     // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 8, Reg8: 3>
     r1[8] = r3
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 65>  # String: 'apply' (Identifier)

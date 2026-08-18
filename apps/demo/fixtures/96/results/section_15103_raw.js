@@ -35,17 +35,17 @@ function nestedObjectDestructureTest() {
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 0, UInt8: 3, string_id: 235>  # String: 'status' (Identifier)
     // USED → r5 = r0.status;
     // CODE → <GetById>: <Reg8: 0, Reg8: 0, UInt8: 4, string_id: 7222>  # String: 'body' (Identifier)
-    // USED → r0 = r0.body;
+    r0 = r0.body
     // CODE → <GetById>: <Reg8: 2, Reg8: 0, UInt8: 5, string_id: 7459>  # String: 'user' (Identifier)
-    // USED → r2 = r0.body.user;
+    r2 = r0.user
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 6, string_id: 176>  # String: 'name' (Identifier)
-    // USED → r4 = r0.body.user.name;
+    // USED → r4 = r2.name;
     // CODE → <GetById>: <Reg8: 2, Reg8: 0, UInt8: 7, string_id: 10786>  # String: 'meta' (Identifier)
-    // USED → r2 = r0.body.meta;
+    // USED → r2 = r0.meta;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <JStrictNotEqual>: <Addr8: 6, Reg8: 2, Reg8: 0>  # Address: 00000068
-    // → r2 = r0.body.meta
+    // → r2 = r0.meta
     if (r2 !== undefined) goto label_104;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <NewObject>: <Reg8: 2>

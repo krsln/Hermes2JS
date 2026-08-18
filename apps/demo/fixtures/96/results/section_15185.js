@@ -52,7 +52,7 @@ async function* anon_15185(param1) {
                     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
                     // USED → r3 = r5[2];
                     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
-                    // USED → r3 = await r5[2].call(undefined, r9);
+                    // USED → r3 = await r5[2].call(r7, r9);
                     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
                     goto label_74;
                     // ──────────────── Block 5 ──────────────── 
@@ -72,7 +72,7 @@ async function* anon_15185(param1) {
             // LOOP → END
             // ──────────────── Block 4 ──────────────── 
             // CODE → <Ret>: <Reg8: 3>
-            return await r5[2].call(undefined, r9);
+            return await r5[2].call(r7, r9);
             // ──────────────── Block 7 ──────────────── 
             // CODE → <CompleteGenerator>: <>
             // CompleteGenerator

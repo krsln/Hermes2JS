@@ -1,11 +1,11 @@
 function parameterDestructureTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 1>
-    // USED → r3 = param1;
+    r3 = param1
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 3, UInt8: 0, string_id: 28>  # String: 'id' (Identifier)
-    // USED → r9 = param1.id;
+    // USED → r9 = r3.id;
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 3, UInt8: 1, string_id: 187>  # String: 'name' (Identifier)
-    // USED → r8 = (r8 !== undefined) ? param1.name : "anon";
+    // USED → r8 = (r8 !== undefined) ? r3.name : "anon";
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // ──────────────── Block 2 ──────────────── 
@@ -62,9 +62,9 @@ function parameterDestructureTest(param1, param2) {
     // CODE → <Mov>: <Reg8: 15, Reg8: 5>
     r15 = console
     // CODE → <Mov>: <Reg8: 14, Reg8: 9>
-    r14 = param1.id
+    r14 = r3.id
     // CODE → <Mov>: <Reg8: 13, Reg8: 8>
-    r13 = (r8 !== undefined) ? param1.name : "anon"
+    r13 = (r8 !== undefined) ? r3.name : "anon"
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>
     r12 = (r3 === undefined) ? undefined : r5
     // CODE → <Mov>: <Reg8: 11, Reg8: 6>

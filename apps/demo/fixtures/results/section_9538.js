@@ -19,9 +19,9 @@ function value(param1) {
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 3, string_id: 184>  # String: 'min' (Identifier)
     // USED → r4 = Math.min;
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 2>
-    // USED → r1 = r1[2];
+    r1 = r1[2]
     // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 4, string_id: 10140>  # String: 'MAX' (Identifier)
-    // USED → r2 = r1[2].MAX;
+    // USED → r2 = r1.MAX;
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2>

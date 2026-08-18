@@ -13,9 +13,9 @@ function get() {
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 1>
     r0 = getEnvironment(1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 4>
-    // USED → r1 = r0[4];
+    r1 = r0[4]
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r3 = r0[4].default;
+    // USED → r3 = r1.default;
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 0>
@@ -23,9 +23,9 @@ function get() {
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 6>
     // USED → r1 = r0[6];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → <Call3>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
-    r0 = r0[4].default.call(undefined, r2, r1)
+    r0 = r1.default.call(r0, r2, r1)
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 0, Reg8: 1>
     // USED → r0 = r0[r1];
     // CODE → <Ret>: <Reg8: 0>

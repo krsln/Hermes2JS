@@ -84,13 +84,13 @@ function defaultWithRestTest() {
     if (r2 < r3) goto label_114;
     // ──────────────── Block 7 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)
-    // USED → r3 = new Array(arguments.length - 1).reduce;
+    // USED → r3 = r4.reduce;
     // CODE → <CreateEnvironment>: <Reg8: 2>
     r2 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 15156>  # Function: [#15156  of 12 bytes]: 3 params @ offset 0x00269c66
     // USED → r2 = function_15156(param1, param2);
     // CODE → <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
-    // USED → r3 = new Array(arguments.length - 1).reduce(function_15156(param1, param2), r5);
+    // USED → r3 = r4.reduce(function_15156(param1, param2), r5);
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -63,7 +63,7 @@ function callDefaultParameterTests() {
     // CODE → <LoadConstUndefined>: <Reg8: 3>
     // USED → r3 = undefined;
     // CODE → <Call1>: <Reg8: 4, Reg8: 6, Reg8: 3>
-    r4 = r6[0].call(undefined)
+    r4 = r6[0].call(r3)
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 4>
     // USED → r1 = 4;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
@@ -71,7 +71,7 @@ function callDefaultParameterTests() {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → <Call4>: <Reg8: 4, Reg8: 6, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
-    r4 = r6[0].call(undefined, 2, 3, 4)
+    r4 = r6[0].call(r3, 2, 3, 4)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

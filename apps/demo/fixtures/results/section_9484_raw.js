@@ -39,7 +39,7 @@ function optionalChainingTest() {
     if (r5.b == null) goto label_67;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 6562>  # String: 'c' (Identifier)
-    // USED → r7 = r5.b.c;
+    // USED → r7 = r5.c;
     // ──────────────── Block 3 ──────────────── 
     // CODE → <JNotEqual>: <Addr8: 10, Reg8: 7, Reg8: 1>  # Address: 0000004d
     if (r7 != null) goto label_77;

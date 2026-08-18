@@ -1,7 +1,7 @@
 function regExpSingleQuotePatternTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 7, UInt8: 1>
-    // USED → r7 = param1;
+    r7 = param1
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -17,13 +17,13 @@ function regExpSingleQuotePatternTest(param1) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 217>  # String: 'replace' (Identifier)
-    // USED → r6 = param1.replace;
+    // USED → r6 = r7.replace;
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 6445>  # String: '’' (String)
     // USED → r5 = "\u2019";
     // CODE → <CreateRegExp>: <Reg8: 2, string_id: 833, string_id: 6578, UInt32: 160>  # String: "'" (String)  # String: 'g' (Identifier)
     // USED → r2 = /'/g;
     // CODE → <Call3>: <Reg8: 2, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
-    // USED → r2 = param1.replace(r2, "\u2019");
+    // USED → r2 = r7.replace(r2, "\u2019");
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -31,13 +31,13 @@ function regExpSingleQuotePatternTest(param1) {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 217>  # String: 'replace' (Identifier)
-    // USED → r6 = param1.replace;
+    // USED → r6 = r7.replace;
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 362>  # String: '_' (String)
     // USED → r5 = "_";
     // CODE → <CreateRegExp>: <Reg8: 2, string_id: 2515, string_id: 6578, UInt32: 161>  # String: "['-]" (String)  # String: 'g' (Identifier)
     // USED → r2 = /['-]/g;
     // CODE → <Call3>: <Reg8: 2, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
-    // USED → r2 = param1.replace(r2, "_");
+    // USED → r2 = r7.replace(r2, "_");
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

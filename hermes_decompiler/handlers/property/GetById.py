@@ -1,6 +1,14 @@
+import dataclasses
+
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, STRING_ID, UINT8
+from hermes_decompiler.ir import Expression
 from hermes_decompiler.ir.expressions import Identifier, MemberExpression, CallExpression, StringLiteral
+
+_GET_BY_ARGUMENT_INLINE_OPCODES = (
+    "GetGlobalObject",
+    "TryGetById",
+)
 
 
 # Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
@@ -22,7 +30,7 @@ class GetById(OpcodeHandler):
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
         prop_name = ctx.entry.identifier_name or f"string_{string_id}"
-        obj = self.get_register_expression(ctx.analysis, obj_reg)
+        obj = self.resolve_get_by_argument(ctx.analysis, obj_reg)
 
         expression = MemberExpression(obj=obj, prop=Identifier(name=prop_name))
 
@@ -30,6 +38,36 @@ class GetById(OpcodeHandler):
         ctx.analysis.add_result(result)
 
         return result
+
+    @classmethod
+    def resolve_get_by_argument(cls, analysis, reg: int) -> Expression:
+        state = analysis.registers.get(f"r{reg}")
+
+        if state is None or state.definition is None:
+            return Identifier(name=f"r{reg}_undefined")
+
+        definition = state.definition
+        value = definition.value
+
+        if definition.handler in _GET_BY_ARGUMENT_INLINE_OPCODES:
+            if isinstance(value, MemberExpression):
+                state.reads += 1
+                definition.definition_used = True
+
+                if state.reads > 1:
+                    return dataclasses.replace(value)
+
+                return value
+            elif isinstance(value, Identifier):
+                state.reads += 1
+                definition.definition_used = True
+
+                return value
+            else:
+                print("Unexpected value type in Call argument: %s", type(value))
+
+        state.reads += 1
+        return Identifier(name=f"r{reg}")
 
 
 # Reg8, Reg8, UInt8, UInt8 (string_id) (total size 4)

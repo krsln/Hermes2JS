@@ -3,16 +3,16 @@ function Counter() {
     // CODE → <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
     r3 = getParentEnvironment(0)
     // CODE → <GetNewTarget>: <Reg8: 2>
-    // USED → r2 = new.target;
+    r2 = new.target
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 0, string_id: 212>  # String: 'prototype' (Identifier)
-    // USED → r2 = new.target.prototype;
+    // USED → r2 = r2.prototype;
     // CODE → <NewObjectWithParent>: <Reg8: 2, Reg8: 2>
-    r2 = Object.create(new.target.prototype)
+    r2 = Object.create(r2.prototype)
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 5>
     // USED → r4 = r3[5];
     // CODE → <PrivateIsIn>: <Reg8: 1, Reg8: 4, Reg8: 2, Reg8: 0>
     // USED → r1 = r3[5] in r2;
-    // → r2 = Object.create(new.target.prototype); r3 = getParentEnvironment(0)
+    // → r2 = Object.create(r2.prototype); r3 = getParentEnvironment(0)
     if (r3[5] in r2) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 7, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)

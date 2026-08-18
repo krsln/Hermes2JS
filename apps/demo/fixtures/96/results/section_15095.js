@@ -69,11 +69,11 @@ function objectLiteralTest() {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 6, string_id: 38>  # String: 'b' (Identifier)
-    // USED → r1 = r1.b;
+    r1 = r1.b
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 7, string_id: 7181>  # String: 'd' (Identifier)
-    // USED → r1 = r1.b.d;
+    r1 = r1.d
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 8, string_id: 7180>  # String: 'e' (Identifier)
-    // USED → r1 = r1.b.d.e;
+    // USED → r1 = r1.e;
     // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

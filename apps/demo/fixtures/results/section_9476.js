@@ -17,9 +17,9 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
     // USED → r2 = r0[0];
     // CODE → <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
+    r0 = 0
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 0, Reg8: 3>
-    // USED → r0 = r0[0].call(0, param1);
+    // USED → r0 = r0[0](param1);
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

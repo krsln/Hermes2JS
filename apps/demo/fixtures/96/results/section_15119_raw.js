@@ -35,15 +35,15 @@ function spreadObjectTest() {
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 1>
-    // USED → r2 = r0[1];
+    r2 = r0[1]
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 4, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r3 = r0[1].default;
+    // USED → r3 = r2.default;
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
     // USED → r2 = r0[0];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call3>: <Reg8: 4, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2>
-    // USED → r4 = r0[1].default.call(undefined, r4, r2);
+    // USED → r4 = r2.default.call(r0, r4, r2);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

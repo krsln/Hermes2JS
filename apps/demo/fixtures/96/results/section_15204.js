@@ -15,7 +15,7 @@ function create(param1) {
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 0>
     // USED → r3 = r0[0];
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
-    r0 = r0[0].prototype
+    r0 = r3.prototype
     // CODE → <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 3>
     // USED → r1 = CreateThis(r0);
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 1>

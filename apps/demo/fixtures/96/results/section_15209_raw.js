@@ -9,9 +9,9 @@ function function_15209() {
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 3>
-    // USED → r0 = r0[3];
+    r0 = r0[3]
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r3 = r0[3].default;
+    // USED → r3 = r0.default;
     // CODE → <NewObject>: <Reg8: 0>
     r0 = {  }
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 205>  # String: 'value' (Identifier)
@@ -81,9 +81,9 @@ function function_15209() {
     // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 0, UInt8: 1>
     // USED → r1 = (r1[0] = r0)[1] = r0;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2, Reg8: 1>
-    r0 = r0[3].default.call(undefined, Counter(), r2, r1)
+    r0 = r0.default(Counter(), r2, r1)
     // CODE → <Ret>: <Reg8: 0>
     return r0;
 }

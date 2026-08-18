@@ -5,9 +5,9 @@ function Counter() {
     // CODE → <GetEnvironment>: <Reg8: 3, UInt8: 1>
     r3 = getEnvironment(1)
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = r3[2];
+    r0 = r3[2]
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r1 = r3[2].default;
+    // USED → r1 = r0.default;
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
@@ -15,7 +15,7 @@ function Counter() {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 8, Reg8: 2>
-    r1 = r3[2].default.call(undefined, this, r2)
+    r1 = r0.default(this, r2)
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 2, string_id: 24>  # String: 'Object' (Identifier)
@@ -51,13 +51,13 @@ function Counter() {
     // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
     console.log("__BC:Classes/PrivateStaticTests/Counter/constructor")
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 3, UInt8: 4>
-    // USED → r1 = r3[4];
+    r1 = r3[4]
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r1 = r3[4].default;
+    // USED → r1 = r1.default;
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 6>
     // USED → r3 = r3[6];
     // CODE → <Call3>: <Reg8: 2, Reg8: 1, Reg8: 0, Reg8: 2, Reg8: 3>
-    r2 = r3[4].default.call(undefined, r2, r3)
+    r2 = r1.default.call(r0, r2, r3)
     // CODE → <GetByVal>: <Reg8: 1, Reg8: 2, Reg8: 3>
     r1 = r2[r3]
     // CODE → <Inc>: <Reg8: 1, Reg8: 1>

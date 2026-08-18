@@ -29,16 +29,16 @@ async function* anon_15181() {
         // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
         // USED → r4 = r1[2];
         // CODE → <LoadConstUndefined>: <Reg8: 1>
-        // USED → r1 = undefined;
+        r1 = undefined
         // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
         // USED → r3 = 1;
         // CODE → <Call2>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 3>
-        // USED → r1 = await r1[2].call(undefined, 1);
+        // USED → r1 = await r1[2](1);
         // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000035
         goto label_53;
         // ──────────────── Block 2 ──────────────── 
         // CODE → <Ret>: <Reg8: 1>
-        return await r1[2].call(undefined, 1);
+        return await r1[2](1);
         // ──────────────── Block 3 ──────────────── 
         // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 4>
         // USED → r1 = await yield;

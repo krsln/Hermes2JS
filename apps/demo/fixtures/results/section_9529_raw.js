@@ -1,11 +1,11 @@
 function Animal(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <GetNewTarget>: <Reg8: 0>
-    // USED → r0 = new.target;
+    r0 = new.target
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 0, UInt8: 0, string_id: 212>  # String: 'prototype' (Identifier)
-    // USED → r0 = new.target.prototype;
+    // USED → r0 = r0.prototype;
     // CODE → <NewObjectWithParent>: <Reg8: 0, Reg8: 0>
-    r0 = Object.create(new.target.prototype)
+    r0 = Object.create(r0.prototype)
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 108>  # String: 'console' (Identifier)

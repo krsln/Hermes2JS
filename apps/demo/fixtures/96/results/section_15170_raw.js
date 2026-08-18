@@ -17,7 +17,7 @@ function callGeneratorTests() {
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Call1>: <Reg8: 5, Reg8: 3, Reg8: 0>
-    r5 = r2[0].call(undefined)
+    r5 = r2[0].call(r0)
     // CODE → <Mov>: <Reg8: 3, Reg8: 5>
     r3 = r5
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
@@ -52,7 +52,7 @@ function callGeneratorTests() {
     // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 5>
     // USED → r3 = 5;
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 0, Reg8: 3>
-    r5 = r2[1].call(undefined, 5)
+    r5 = r2[1].call(r0, 5)
     // CODE → <Mov>: <Reg8: 3, Reg8: 5>
     r3 = r5
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
@@ -85,7 +85,7 @@ function callGeneratorTests() {
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 2>
     // USED → r2 = r2[2];
     // CODE → <Call1>: <Reg8: 5, Reg8: 2, Reg8: 0>
-    r5 = r2[2].call(undefined)
+    r5 = r2[2].call(r0)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

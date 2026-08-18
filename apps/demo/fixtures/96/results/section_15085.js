@@ -23,12 +23,12 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → <LoadConstZero>: <Reg8: 8>
     // USED → r8 = 0;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    // USED → r2 = param1.length;
+    // USED → r2 = r2.length;
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 2131>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught' (String)
     // USED → r5 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught";
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 4701>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok";
-    // → r2 = param1.length
+    // → r2 = r2.length
     if (!(0 < r2)) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -44,7 +44,7 @@ function tryCatchInsideLoopTest(param1) {
     } else {
         // LOOP → START (for)
         // → r2 = param1[r2]; r3 = param1
-        for (r3 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start"; r3 < r2; r2 = param1.length) {
+        for (r3 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start"; r3 < r2; r2 = r2.length) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <Mov>: <Reg8: 3, Reg8: 7>
             // USED → r3 = param1;
@@ -79,7 +79,7 @@ function tryCatchInsideLoopTest(param1) {
                     // CODE → <Mov>: <Reg8: 8, Reg8: 3>
                     r8 = r2 + 1
                     // CODE → <Mov>: <Reg8: 2, Reg8: 7>
-                    // USED → r2 = param1;
+                    r2 = param1
                     // ──────────────── Block 4 ──────────────── 
                     // CODE → <Catch>: <Reg8: 9>
                     // USED → r9 = caughtException;

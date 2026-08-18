@@ -26,9 +26,9 @@ function classTest() {
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
-    // USED → r3 = r2[0].prototype;
+    // USED → r3 = r3.prototype;
     // CODE → <NewObjectWithParent>: <Reg8: 3, Reg8: 3>
-    r3 = Object.create(r2[0].prototype)
+    r3 = Object.create(r3.prototype)
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -102,19 +102,19 @@ function classTest() {
     // CODE → <PutByIdStrict>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 16255>  # String: 'breed' (Identifier)
     CreateThisForSuper(r6)[r2].breed = "Labrador"
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 10532>  # String: 'makeSound' (Identifier)
-    // USED → r2 = CreateThisForSuper(r6)[r2].makeSound;
+    // USED → r2 = r3.makeSound;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    r2 = CreateThisForSuper(r6)[r2].makeSound()
+    r2 = r3.makeSound()
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 10532>  # String: 'makeSound' (Identifier)
-    // USED → r2 = CreateThisForSuper(r6)[r2].makeSound;
+    // USED → r2 = r3.makeSound;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    r2 = CreateThisForSuper(r6)[r2].makeSound()
+    r2 = r3.makeSound()
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 44>  # String: 'create' (Identifier)
-    // USED → r3 = r2[1].create;
+    // USED → r3 = r4.create;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 2777>  # String: 'Buddy' (String)
     // USED → r2 = "Buddy";
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
-    r3 = r2[1].create("Buddy")
+    r3 = r4.create("Buddy")
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 10532>  # String: 'makeSound' (Identifier)
     // USED → r2 = r3.makeSound;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>

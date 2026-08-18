@@ -41,11 +41,11 @@ function optionalChainingTest() {
         if (r3.a != null) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 38>  # String: 'b' (Identifier)
-            // USED → r3 = r3.a.b;
+            // USED → r3 = r3.b;
             // CODE → <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
-            // USED → r5 = r3.a.b == null;
+            // USED → r5 = r3.b == null;
             // CODE → <LoadConstUndefined>: <Reg8: 4>
-            r4 = (r3.a.b == null) ? undefined : r3.a.b.c
+            r4 = (r3.b == null) ? undefined : r3.c
         }
     }
     if (r4 == null) {

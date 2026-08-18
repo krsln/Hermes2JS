@@ -98,7 +98,7 @@ function callDestructuringTests() {
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
     // USED → r5 = r5[0];
     // CODE → <Call1>: <Reg8: 1, Reg8: 5, Reg8: 2>
-    r1 = r5[0].call(undefined)
+    r1 = r5[0].call(r2)
     // CODE → <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1920, UInt16: 48495>  # Object: {'id': 7}
     r5 = { "id": 7 }
     // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 5, UInt8: 6, string_id: 28>  # String: 'id' (Identifier)

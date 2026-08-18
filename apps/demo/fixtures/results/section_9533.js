@@ -27,9 +27,9 @@ function makeSound() {
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r4 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 187>  # String: 'name' (Identifier)
-    // USED → r3 = this.name;
+    // USED → r3 = r1.name;
     // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 4, string_id: 16255>  # String: 'breed' (Identifier)
-    // USED → r2 = this.breed;
+    // USED → r2 = r1.breed;
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 1820>  # String: 'is a' (String)
     // USED → r1 = "is a";
     // CODE → <Call4>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>

@@ -19,17 +19,17 @@ function callRegExpTests() {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Strings/RegExpTests/basicRegExpTest/start")
     // CODE → <CreateRegExp>: <Reg8: 5, string_id: 4696, string_id: 6457, UInt32: 155>  # String: '^\\d+$' (String)  # String: '' (Identifier)
-    // USED → r5 = /^\\d+$/;
+    r5 = /^\\d+$/
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 47>  # String: 'test' (Identifier)
-    // USED → r2 = /^\\d+$/.test;
+    // USED → r2 = r5.test;
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 4772>  # String: 'abc123' (String)
     // USED → r6 = "abc123";
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 6>
-    // USED → r2 = /^\\d+$/.test("abc123");
+    // USED → r2 = r5.test("abc123");
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -37,11 +37,11 @@ function callRegExpTests() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 3, string_id: 180>  # String: 'match' (Identifier)
-    // USED → r5 = "abc123".match;
+    // USED → r5 = r6.match;
     // CODE → <CreateRegExp>: <Reg8: 2, string_id: 6471, string_id: 6578, UInt32: 156>  # String: 'a' (Identifier)  # String: 'g' (Identifier)
     // USED → r2 = /a/g;
     // CODE → <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
-    // USED → r2 = "abc123".match(r2);
+    // USED → r2 = r6.match(r2);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -61,19 +61,19 @@ function callRegExpTests() {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Strings/RegExpTests/regExpFlagsTest/start")
     // CODE → <CreateRegExp>: <Reg8: 7, string_id: 6140, string_id: 280, UInt32: 157>  # String: 'hello' (String)  # String: 'i' (String)
-    // USED → r7 = /hello/i;
+    r7 = /hello/i
     // CODE → <CreateRegExp>: <Reg8: 5, string_id: 4706, string_id: 6516, UInt32: 158>  # String: '^line' (String)  # String: 'm' (Identifier)
-    // USED → r5 = /^line/m;
+    r5 = /^line/m
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 7, UInt8: 2, string_id: 47>  # String: 'test' (Identifier)
-    // USED → r2 = /hello/i.test;
+    // USED → r2 = r7.test;
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 3377>  # String: 'Hello\nline two' (String)
     // USED → r6 = "Hello\\nline two";
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 7, Reg8: 6>
-    // USED → r2 = /hello/i.test("Hello\\nline two");
+    // USED → r2 = r7.test("Hello\\nline two");
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -81,9 +81,9 @@ function callRegExpTests() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 47>  # String: 'test' (Identifier)
-    // USED → r2 = /^line/m.test;
+    // USED → r2 = r5.test;
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 6>
-    // USED → r2 = /^line/m.test("Hello\\nline two");
+    // USED → r2 = r5.test("Hello\\nline two");
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -91,11 +91,11 @@ function callRegExpTests() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 3, string_id: 180>  # String: 'match' (Identifier)
-    // USED → r5 = "Hello\\nline two".match;
+    // USED → r5 = r6.match;
     // CODE → <CreateRegExp>: <Reg8: 2, string_id: 1961, string_id: 2193, UInt32: 159>  # String: '\\w+' (String)  # String: 'gu' (String)
     // USED → r2 = /\\w+/gu;
     // CODE → <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
-    // USED → r2 = "Hello\\nline two".match(r2);
+    // USED → r2 = r6.match(r2);
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -119,15 +119,15 @@ function callRegExpTests() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 3872>  # String: "it's a test - really" (String)
-    // USED → r7 = "it's a test - really";
+    r7 = "it's a test - really"
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 4, string_id: 217>  # String: 'replace' (Identifier)
-    // USED → r6 = "it's a test - really".replace;
+    // USED → r6 = r7.replace;
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 6445>  # String: '’' (String)
     // USED → r5 = "\u2019";
     // CODE → <CreateRegExp>: <Reg8: 2, string_id: 833, string_id: 6578, UInt32: 160>  # String: "'" (String)  # String: 'g' (Identifier)
     // USED → r2 = /'/g;
     // CODE → <Call3>: <Reg8: 2, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
-    // USED → r2 = "it's a test - really".replace(r2, "\u2019");
+    // USED → r2 = r7.replace(r2, "\u2019");
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -135,13 +135,13 @@ function callRegExpTests() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 4, string_id: 217>  # String: 'replace' (Identifier)
-    // USED → r6 = "it's a test - really".replace;
+    // USED → r6 = r7.replace;
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 362>  # String: '_' (String)
     // USED → r5 = "_";
     // CODE → <CreateRegExp>: <Reg8: 2, string_id: 2515, string_id: 6578, UInt32: 161>  # String: "['-]" (String)  # String: 'g' (Identifier)
     // USED → r2 = /['-]/g;
     // CODE → <Call3>: <Reg8: 2, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
-    // USED → r2 = "it's a test - really".replace(r2, "_");
+    // USED → r2 = r7.replace(r2, "_");
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -163,11 +163,11 @@ function callRegExpTests() {
     // CODE → <CreateRegExp>: <Reg8: 5, string_id: 1955, string_id: 6457, UInt32: 162>  # String: '(\\d{4})-(\\d{2})-(\\d{2})' (String)  # String: '' (Identifier)
     // USED → r5 = /(\\d{4})-(\\d{2})-(\\d{2})/;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 2233>  # String: '2024-01-15' (String)
-    // USED → r4 = "2024-01-15";
+    r4 = "2024-01-15"
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 3, string_id: 180>  # String: 'match' (Identifier)
-    // USED → r2 = "2024-01-15".match;
+    // USED → r2 = r4.match;
     // CODE → <Call2>: <Reg8: 6, Reg8: 2, Reg8: 4, Reg8: 5>
-    // USED → r6 = "2024-01-15".match(r5);
+    // USED → r6 = r4.match(r5);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -175,11 +175,11 @@ function callRegExpTests() {
     // CODE → <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 6>
     console.log(r6)
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 4, string_id: 217>  # String: 'replace' (Identifier)
-    // USED → r3 = "2024-01-15".replace;
+    // USED → r3 = r4.replace;
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 1684>  # String: '$3/$2/$1' (String)
     // USED → r2 = "$3/$2/$1";
     // CODE → <Call3>: <Reg8: 4, Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 2>
-    // USED → r4 = "2024-01-15".replace(r5, "$3/$2/$1");
+    // USED → r4 = r4.replace(r5, "$3/$2/$1");
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

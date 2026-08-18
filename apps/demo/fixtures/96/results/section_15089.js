@@ -23,7 +23,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → <LoadConstZero>: <Reg8: 9>
     // USED → r9 = 0;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    // USED → r2 = param1.length;
+    // USED → r2 = r2.length;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 4653>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally' (String)
     // USED → r3 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally";
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 4650>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue' (String)
@@ -34,7 +34,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
         if (0 < r2) {
             // LOOP → START (for)
             // → r2 = param1[r2]; r4 = param1
-            for (; r4 < r2; r2 = param1.length) {
+            for (; r4 < r2; r2 = r2.length) {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → <Mov>: <Reg8: 4, Reg8: 8>
                 // USED → r4 = param1;
@@ -83,7 +83,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                     // CODE → <Mov>: <Reg8: 9, Reg8: 4>
                     r9 = r2 + 1
                     // CODE → <Mov>: <Reg8: 2, Reg8: 8>
-                    // USED → r2 = param1;
+                    r2 = param1
                 }
             }
             // LOOP → END

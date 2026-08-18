@@ -19,9 +19,9 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → <Mov>: <Reg8: 2, Reg8: 0>
     // USED → r2 = param1;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2>
-    // USED → r0 = r2[0].call(undefined, r2);
+    // USED → r0 = r2[0].call(r0, r2);
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

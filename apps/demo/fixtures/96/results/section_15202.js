@@ -5,21 +5,21 @@ function Dog(param1, param2) {
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 1>
     r0 = getEnvironment(1)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 3>
-    // USED → r1 = r0[3];
+    r1 = r0[3]
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r1 = r0[3].default;
+    // USED → r1 = r1.default;
     // CODE → <GetEnvironment>: <Reg8: 2, UInt8: 0>
     r2 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
     // USED → r3 = r2[0];
     // CODE → <LoadConstUndefined>: <Reg8: 2>
-    // USED → r2 = undefined;
+    r2 = undefined
     // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3>
-    r1 = r0[3].default.call(undefined, this, r3)
+    r1 = r1.default.call(r2, this, r3)
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 0>
-    // USED → r0 = r0[0];
+    r0 = r0[0]
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r1 = r0[0].default;
+    // USED → r1 = r0.default;
     // CODE → <NewArray>: <Reg8: 0, UInt16: 2>
     r0 = []
     // CODE → <LoadParam>: <Reg8: 5, UInt8: 1>
@@ -31,7 +31,7 @@ function Dog(param1, param2) {
     // CODE → <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 1>
     // USED → r0 = (r0[0] = param1)[1] = "Woof";
     // CODE → <Call4>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 0>
-    r0 = r0[0].default.call(undefined, this, r3, r0)
+    r0 = r0.default.call(r2, this, r3, r0)
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 99>  # String: 'console' (Identifier)

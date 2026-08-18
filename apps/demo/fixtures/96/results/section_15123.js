@@ -23,37 +23,37 @@ function mapTest() {
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 2, Reg8: 0>
     // USED → r2 = new Map();
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 185>  # String: 'set' (Identifier)
-    // USED → r4 = new Map().set;
+    // USED → r4 = r2.set;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5105>  # String: 'alice' (String)
     // USED → r3 = "alice";
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 90>
     // USED → r0 = 90;
     // CODE → <Call3>: <Reg8: 0, Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = new Map().set("alice", 90)
+    r0 = r2.set("alice", 90)
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 5, string_id: 185>  # String: 'set' (Identifier)
-    // USED → r3 = new Map().set;
+    // USED → r3 = r2.set;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 2540>  # String: 'bob' (String)
     // USED → r4 = "bob";
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 75>
     // USED → r0 = 75;
     // CODE → <Call3>: <Reg8: 0, Reg8: 3, Reg8: 2, Reg8: 4, Reg8: 0>
-    r0 = new Map().set("bob", 75)
+    r0 = r2.set("bob", 75)
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 5, string_id: 185>  # String: 'set' (Identifier)
-    // USED → r5 = new Map().set;
+    // USED → r5 = r2.set;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 677>  # String: 'carol' (String)
     // USED → r3 = "carol";
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 88>
     // USED → r0 = 88;
     // CODE → <Call3>: <Reg8: 0, Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = new Map().set("carol", 88)
+    r0 = r2.set("carol", 88)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 6, string_id: 50>  # String: 'get' (Identifier)
-    // USED → r0 = new Map().get;
+    // USED → r0 = r2.get;
     // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 4>
-    // USED → r0 = new Map().get("bob");
+    // USED → r0 = r2.get("bob");
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 5, Reg8: 0>
     console.log(r0)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -61,11 +61,11 @@ function mapTest() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 2, UInt8: 7, string_id: 153>  # String: 'has' (Identifier)
-    // USED → r6 = new Map().has;
+    // USED → r6 = r2.has;
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 903>  # String: 'dave' (String)
     // USED → r0 = "dave";
     // CODE → <Call2>: <Reg8: 0, Reg8: 6, Reg8: 2, Reg8: 0>
-    // USED → r0 = new Map().has("dave");
+    // USED → r0 = r2.has("dave");
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 5, Reg8: 0>
     console.log(r0)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -73,7 +73,7 @@ function mapTest() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 8, string_id: 226>  # String: 'size' (Identifier)
-    // USED → r0 = new Map().size;
+    // USED → r0 = r2.size;
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 5, Reg8: 0>
     console.log(r0)
     // CODE → <Mov>: <Reg8: 9, Reg8: 2>
@@ -102,11 +102,11 @@ function mapTest() {
             if (r10 !== undefined) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>
-                // USED → r10 = r8[0];
+                r10 = r8[0]
                 // CODE → <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 9, string_id: 107>  # String: 'default' (Identifier)
-                // USED → r10 = r8[0].default;
+                // USED → r10 = r10.default;
                 // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 0, Reg8: 11, Reg8: 7>
-                r10 = r8[0].default.call(undefined, r11, 2)
+                r10 = r10.default.call(r0, r11, 2)
                 // CODE → <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 6>
                 // USED → r13 = r10[r6];
                 // CODE → <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 3>
@@ -129,15 +129,15 @@ function mapTest() {
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 10, string_id: 114>  # String: 'delete' (Identifier)
-    // USED → r3 = new Map().delete;
+    // USED → r3 = r2.delete;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 2, Reg8: 4>
-    r3 = new Map().delete("bob")
+    r3 = r2.delete("bob")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 226>  # String: 'size' (Identifier)
-    // USED → r2 = new Map().size;
+    // USED → r2 = r2.size;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

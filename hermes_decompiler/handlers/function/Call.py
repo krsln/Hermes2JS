@@ -108,7 +108,11 @@ class Call1(OpcodeHandler):
         dest_reg, func_reg, this_reg, *rest_arg_regs = map(int, match.groups())
 
         callee = self.get_register_expression(ctx.analysis, func_reg)
-        this_value = self.get_register_expression(ctx.analysis, this_reg)
+
+        if isinstance(callee, MemberExpression) and isinstance(callee.obj, Identifier):
+            this_value = self.get_register_reference(ctx.analysis, this_reg)
+        else:
+            this_value = self.get_register_expression(ctx.analysis, this_reg)
 
         real_arguments = tuple(
             self.resolve_call_argument(ctx.analysis, reg)

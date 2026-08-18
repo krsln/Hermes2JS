@@ -13,7 +13,7 @@ function _interopDefault(param1) {
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 48>  # String: '__esModule' (Identifier)
-        // USED → r1 = param1.__esModule;
+        // USED → r1 = r2.__esModule;
         // CODE → <Mov>: <Reg8: 0, Reg8: 2>
         r0 = param1
     }

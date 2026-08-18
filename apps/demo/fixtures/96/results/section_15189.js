@@ -37,7 +37,7 @@ async function* anon_15189() {
         // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
         // USED → r5 = 1;
         // CODE → <Call2>: <Reg8: 6, Reg8: 9, Reg8: 2, Reg8: 5>
-        r6 = r4[2].call(undefined, 1)
+        r6 = r4[2].call(r2, 1)
         // CODE → <NewArray>: <Reg8: 1, UInt16: 2>
         r1 = []
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 6, UInt8: 0>
@@ -45,7 +45,7 @@ async function* anon_15189() {
         // CODE → <LoadConstUInt8>: <Reg8: 6, UInt8: 2>
         // USED → r6 = 2;
         // CODE → <Call2>: <Reg8: 9, Reg8: 9, Reg8: 2, Reg8: 6>
-        r9 = r4[2].call(undefined, 2)
+        r9 = r4[2].call(r2, 2)
         // CODE → <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
         // USED → r1 = (r1[0] = r6)[1] = r9;
         // CODE → <Call2>: <Reg8: 1, Reg8: 7, Reg8: 8, Reg8: 1>
@@ -69,11 +69,11 @@ async function* anon_15189() {
         } else {
             // ──────────────── Block 4 ──────────────── 
             // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 0>
-            // USED → r4 = r4[0];
+            r4 = r4[0]
             // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 107>  # String: 'default' (Identifier)
-            // USED → r4 = r4[0].default;
+            // USED → r4 = r4.default;
             // CODE → <Call3>: <Reg8: 4, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 6>
-            r4 = r4[0].default.call(undefined, r1, 2)
+            r4 = r4.default.call(r2, r1, 2)
             // CODE → <LoadConstZero>: <Reg8: 6>
             r6 = 0
             // CODE → <GetByVal>: <Reg8: 7, Reg8: 4, Reg8: 6>

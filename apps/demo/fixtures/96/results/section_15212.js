@@ -13,9 +13,9 @@ function set(param1) {
     // CODE → <GetEnvironment>: <Reg8: 2, UInt8: 1>
     r2 = getEnvironment(1)
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 4>
-    // USED → r0 = r2[4];
+    r0 = r2[4]
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r5 = r2[4].default;
+    // USED → r5 = r0.default;
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 5>
     // USED → r4 = r2[5];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
@@ -23,7 +23,7 @@ function set(param1) {
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 0>
     // USED → r3 = this;
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
-    r3 = r2[4].default.call(undefined, this, r4)
+    r3 = r0.default(this, r4)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 5>
     // USED → r2 = r2[5];
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 4, string_id: 21>  # String: 'Math' (Identifier)
@@ -33,9 +33,9 @@ function set(param1) {
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
-    // USED → r1 = r1[0];
+    r1 = r1[0]
     // CODE → <GetById>: <Reg8: 4, Reg8: 1, UInt8: 6, string_id: 11547>  # String: 'MAX' (Identifier)
-    // USED → r4 = r1[0].MAX;
+    // USED → r4 = r1.MAX;
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 1, Reg8: 4>

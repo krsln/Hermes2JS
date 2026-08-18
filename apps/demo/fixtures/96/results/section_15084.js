@@ -22,16 +22,16 @@ function tryFinallyLoopBreakTest(param1) {
         // CODE → <LoadConstZero>: <Reg8: 7>
         // USED → r7 = 0;
         // CODE → <Mov>: <Reg8: 2, Reg8: 6>
-        // USED → r2 = param1;
+        r2 = param1
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-        // USED → r2 = param1.length;
+        // USED → r2 = r2.length;
         // CODE → <LoadConstString>: <Reg8: 4, string_id: 4735>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
         // USED → r4 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item";
-        // → r2 = param1.length
+        // → r2 = r2.length
         if (0 < r2) {
             // LOOP → START (for)
             // → r2 = param1[r2]; r3 = param1
-            for (; r3 < r2; r2 = param1.length) {
+            for (; r3 < r2; r2 = r2.length) {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → <Mov>: <Reg8: 3, Reg8: 6>
                 // USED → r3 = param1;

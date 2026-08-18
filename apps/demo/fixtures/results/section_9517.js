@@ -17,7 +17,7 @@ function callRestParameterTests() {
     // CODE → <LoadConstUndefined>: <Reg8: 3>
     // USED → r3 = undefined;
     // CODE → <Call1>: <Reg8: 4, Reg8: 7, Reg8: 3>
-    r4 = r6[0].call(undefined)
+    r4 = r6[0].call(r3)
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
     // USED → r0 = 3;
     // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
@@ -25,7 +25,7 @@ function callRestParameterTests() {
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → <Call4>: <Reg8: 4, Reg8: 7, Reg8: 3, Reg8: 2, Reg8: 1, Reg8: 0>
-    r4 = r6[0].call(undefined, 1, 2, 3)
+    r4 = r6[0].call(r3, 1, 2, 3)
     // CODE → <LoadFromEnvironment>: <Reg8: 11, Reg8: 6, UInt8: 1>
     // USED → r11 = r6[1];
     // CODE → <LoadConstString>: <Reg8: 10, string_id: 36>  # String: 'b' (Identifier)
@@ -33,7 +33,7 @@ function callRestParameterTests() {
     // CODE → <LoadConstString>: <Reg8: 9, string_id: 6471>  # String: 'a' (Identifier)
     // USED → r9 = "a";
     // CODE → <Call3>: <Reg8: 4, Reg8: 11, Reg8: 3, Reg8: 9, Reg8: 10>
-    r4 = r6[1].call(undefined, "a", "b")
+    r4 = r6[1].call(r3, "a", "b")
     // CODE → <LoadConstString>: <Reg8: 12, string_id: 6518>  # String: 'd' (Identifier)
     r12 = "d"
     // CODE → <LoadConstString>: <Reg8: 13, string_id: 6562>  # String: 'c' (Identifier)
@@ -49,7 +49,7 @@ function callRestParameterTests() {
     // CODE → <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 2>
     // USED → r6 = r6[2];
     // CODE → <Call1>: <Reg8: 4, Reg8: 6, Reg8: 3>
-    r4 = r6[2].call(undefined)
+    r4 = r6[2].call(r3)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

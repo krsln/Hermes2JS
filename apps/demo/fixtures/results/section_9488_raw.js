@@ -1,15 +1,15 @@
 function parameterDestructureTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 1>
-    // USED → r3 = param1;
+    r3 = param1
     // CODE → <GetByIdShort>: <Reg8: 9, Reg8: 3, UInt8: 0, string_id: 28>  # String: 'id' (Identifier)
-    // USED → r9 = param1.id;
+    // USED → r9 = r3.id;
     // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 3, UInt8: 1, string_id: 187>  # String: 'name' (Identifier)
-    // USED → r8 = param1.name;
+    // USED → r8 = r3.name;
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <JStrictNotEqual>: <Addr8: 8, Reg8: 8, Reg8: 1>  # Address: 00000017
-    // → r8 = param1.name
+    // → r8 = r3.name
     if (r8 !== undefined) goto label_23;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <LoadConstString>: <Reg8: 8, string_id: 514>  # String: 'anon' (String)
@@ -82,7 +82,7 @@ function parameterDestructureTest(param1, param2) {
     // CODE → <Mov>: <Reg8: 15, Reg8: 5>
     r15 = console
     // CODE → <Mov>: <Reg8: 14, Reg8: 9>
-    r14 = param1.id
+    r14 = r3.id
     // CODE → <Mov>: <Reg8: 13, Reg8: 8>
     r13 = "anon"
     // CODE → <Mov>: <Reg8: 12, Reg8: 7>

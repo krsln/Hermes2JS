@@ -26,14 +26,14 @@ function privateStaticTest() {
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
-    // USED → r6 = r5[0].prototype;
+    // USED → r6 = r4.prototype;
     // CODE → <NewObjectWithParent>: <Reg8: 9, Reg8: 6>
-    r9 = Object.create(r5[0].prototype)
+    r9 = Object.create(r4.prototype)
     // CODE → <LoadFromEnvironment>: <Reg8: 12, Reg8: 5, UInt8: 5>
     // USED → r12 = r5[5];
     // CODE → <PrivateIsIn>: <Reg8: 1, Reg8: 12, Reg8: 9, Reg8: 0>
     // USED → r1 = r5[5] in r9;
-    // → r9 = Object.create(r5[0].prototype)
+    // → r9 = Object.create(r4.prototype)
     if (r5[5] in r9) {
         // ──────────────── Block 8 ──────────────── 
         // CODE → <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
@@ -81,12 +81,12 @@ function privateStaticTest() {
         }
         // ──────────────── Block 5 ──────────────── 
         // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
-        // USED → r6 = r5[0].prototype;
+        // USED → r6 = r4.prototype;
         // CODE → <NewObjectWithParent>: <Reg8: 6, Reg8: 6>
-        r6 = Object.create(r5[0].prototype)
+        r6 = Object.create(r4.prototype)
         // CODE → <PrivateIsIn>: <Reg8: 2, Reg8: 12, Reg8: 6, Reg8: 2>
         // USED → r2 = r5[5] in r6;
-        // → r6 = Object.create(r5[0].prototype)
+        // → r6 = Object.create(r4.prototype)
         if (r5[5] in r6) {
             // ──────────────── Block 7 ──────────────── 
             // CODE → <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
@@ -146,7 +146,7 @@ function privateStaticTest() {
             // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r7 = console.log;
             // CODE → <GetById>: <Reg8: 6, Reg8: 4, UInt8: 6, string_id: 9807>  # String: 'instanceCount' (Identifier)
-            // USED → r6 = r5[0].instanceCount;
+            // USED → r6 = r4.instanceCount;
             // CODE → <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
             console.log(r6)
             // CODE → <TryGetById>: <Reg8: 7, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -154,23 +154,23 @@ function privateStaticTest() {
             // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r6 = console.log;
             // CODE → <LoadFromEnvironment>: <Reg8: 8, Reg8: 5, UInt8: 1>
-            // USED → r8 = r5[1];
+            r8 = r5[1]
             // CODE → <GetById>: <Reg8: 5, Reg8: 8, UInt8: 7, string_id: 11346>  # String: 'describeLabel' (Identifier)
-            // USED → r5 = r5[1].describeLabel;
+            // USED → r5 = r8.describeLabel;
             // CODE → <Call1>: <Reg8: 5, Reg8: 5, Reg8: 8>
-            // USED → r5 = r5[1].describeLabel();
+            // USED → r5 = r8.describeLabel();
             // CODE → <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
             console.log(r5)
             // CODE → <GetById>: <Reg8: 5, Reg8: 4, UInt8: 8, string_id: 7259>  # String: 'reset' (Identifier)
-            // USED → r5 = r5[0].reset;
+            // USED → r5 = r4.reset;
             // CODE → <Call1>: <Reg8: 5, Reg8: 5, Reg8: 4>
-            r5 = r5[0].reset()
+            r5 = r4.reset()
             // CODE → <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r6 = console;
             // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r5 = console.log;
             // CODE → <GetById>: <Reg8: 4, Reg8: 4, UInt8: 6, string_id: 9807>  # String: 'instanceCount' (Identifier)
-            // USED → r4 = r5[0].instanceCount;
+            // USED → r4 = r4.instanceCount;
             // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
             console.log(r4)
             // CODE → <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

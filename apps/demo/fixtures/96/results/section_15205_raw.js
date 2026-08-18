@@ -99,7 +99,7 @@ function function_15205(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 7735>  # String: 'count' (Identifier)
     // USED → r4 = "count";
     // CODE → <Call2>: <Reg8: 4, Reg8: 6, Reg8: 0, Reg8: 4>
-    r4 = r3.default.call(undefined, "count")
+    r4 = r3.default.call(r0, "count")
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 5, Reg8: 4>
     r5[5] = r4
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
@@ -107,7 +107,7 @@ function function_15205(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 1521>  # String: 'instances' (String)
     // USED → r4 = "instances";
     // CODE → <Call2>: <Reg8: 9, Reg8: 6, Reg8: 0, Reg8: 4>
-    // USED → r9 = r3.default.call(undefined, "instances");
+    // USED → r9 = r3.default.call(r0, "instances");
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 6, Reg8: 9>
     r5[6] = r9
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
@@ -115,7 +115,7 @@ function function_15205(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 5021>  # String: 'privateHelper' (String)
     // USED → r4 = "privateHelper";
     // CODE → <Call2>: <Reg8: 4, Reg8: 6, Reg8: 0, Reg8: 4>
-    r4 = r3.default.call(undefined, "privateHelper")
+    r4 = r3.default.call(r0, "privateHelper")
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 7, Reg8: 4>
     r5[7] = r4
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 5, function_id: 15209>  # Function: [#15209  of 166 bytes]: 1 params @ offset 0x0026bd80
@@ -141,7 +141,7 @@ function function_15205(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 7671>  # String: 'label' (Identifier)
     // USED → r3 = "label";
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
-    // USED → r3 = r3.default.call(undefined, "label");
+    // USED → r3 = r3.default.call(r0, "label");
     // CODE → <StoreToEnvironment>: <Reg8: 5, UInt8: 9, Reg8: 3>
     r5[9] = r3
     // CODE → <CreateClosure>: <Reg8: 4, Reg8: 5, function_id: 15217>  # Function: [#15217  of 81 bytes]: 2 params @ offset 0x0026c046
@@ -169,17 +169,17 @@ function function_15205(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
     // USED → r2 = r1.default;
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 4, Reg8: 3>
-    r2 = r1.default.call(undefined, r4, r3)
+    r2 = r1.default.call(r0, r4, r3)
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
     // USED → r1 = r1.default;
     // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 4, Reg8: 3>
-    r1 = r1.default.call(undefined, r4, r3)
+    r1 = r1.default.call(r0, r4, r3)
     // CODE → <GetByVal>: <Reg8: 4, Reg8: 1, Reg8: 3>
-    // USED → r4 = r1[r3];
+    r4 = r1[r3]
     // CODE → <GetById>: <Reg8: 1, Reg8: 4, UInt8: 6, string_id: 10961>  # String: 'toUpperCase' (Identifier)
-    // USED → r1 = r1[r3].toUpperCase;
+    // USED → r1 = r4.toUpperCase;
     // CODE → <Call1>: <Reg8: 1, Reg8: 1, Reg8: 4>
-    r1 = r1[r3].toUpperCase()
+    r1 = r4.toUpperCase()
     // CODE → <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>
     r2[r3] = r1
     // CODE → <Ret>: <Reg8: 0>
