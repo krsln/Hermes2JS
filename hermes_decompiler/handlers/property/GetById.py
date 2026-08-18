@@ -9,7 +9,10 @@ from hermes_decompiler.ir.expressions import Identifier, MemberExpression, CallE
 class GetById(OpcodeHandler):
     """Get property by string ID: obj[propName]"""
 
-    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, STRING_ID), "Reg8, Reg8, UInt8, UInt16 (string_id)")
+    ARGUMENTS = ArgsPattern(
+        sequence(REG, REG, UINT8, STRING_ID),
+        "Reg8, Reg8, UInt8, UInt16 (string_id)",
+    )
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = self.match_arguments(ctx)
@@ -40,6 +43,22 @@ class GetByIdShort(GetById):
 # DEFINE_OPCODE_4(GetByIdLong, Reg8, Reg8, UInt8, UInt32)
 # Example:
 class GetByIdLong(GetById):
+    pass
+
+
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
+# DEFINE_OPCODE_4(TryGetById, Reg8, Reg8, UInt8, UInt16)
+# Example: <TryGetById>: <Reg8: 14, Reg8: 13, UInt8: 8, string_id: 23> # String: 'Math' (Identifier)
+class TryGetById(GetById):
+    """TryGetById - similar to GetById, often used with global-object."""
+
+    pass
+
+
+# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
+# DEFINE_OPCODE_4(TryGetByIdLong, Reg8, Reg8, UInt8, UInt32)
+# Example:
+class TryGetByIdLong(TryGetById):
     pass
 
 
@@ -77,19 +96,3 @@ class GetByIdWithReceiverLong(OpcodeHandler):
         ctx.analysis.add_result(result)
 
         return result
-
-
-# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
-# DEFINE_OPCODE_4(TryGetById, Reg8, Reg8, UInt8, UInt16)
-# Example: <TryGetById>: <Reg8: 14, Reg8: 13, UInt8: 8, string_id: 23> # String: 'Math' (Identifier)
-class TryGetById(GetById):
-    """TryGetById - similar to GetById, often used with global-object."""
-
-    pass
-
-
-# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
-# DEFINE_OPCODE_4(TryGetByIdLong, Reg8, Reg8, UInt8, UInt32)
-# Example:
-class TryGetByIdLong(TryGetById):
-    pass
