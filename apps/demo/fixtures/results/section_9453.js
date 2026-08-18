@@ -41,7 +41,7 @@ function complexTest() {
         for (r0 = 0; r0 < r7; r7 = r14.length) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
-            // USED → r7 = r14[r0];
+            r7 = r14[r0]
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
             r1 = 0
             // Switch → START
@@ -98,7 +98,7 @@ function complexTest() {
             // Switch → END
             // ──────────────── Block 8 ──────────────── 
             // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
-            // USED → r0 = r1 + 1;
+            r0 = r1 + 1
         }
         // LOOP → END
     }

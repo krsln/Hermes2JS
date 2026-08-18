@@ -26,7 +26,7 @@ function doWhileTest() {
         // CODE → <Call2>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 0>
         console.log(r0)
         // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
-        // USED → r0 = r0 + 1;
+        r0 = r0 + 1
     // → r0 = r0 + 1
     } while (r0 < 5);
     // LOOP → END

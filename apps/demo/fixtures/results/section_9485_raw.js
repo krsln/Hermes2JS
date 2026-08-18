@@ -17,7 +17,7 @@ function nestedObjectDestructureTest() {
     // CODE → <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1918, UInt16: 93>  # Object: {'page': 1}
     r3 = { "page": 1 }
     // CODE → <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 12200>  # String: 'page' (Identifier)
-    // USED → r5 = r3.page;
+    r5 = r3.page
     // CODE → <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → <JStrictNotEqual>: <Addr8: 7, Reg8: 5, Reg8: 1>  # Address: 00000036

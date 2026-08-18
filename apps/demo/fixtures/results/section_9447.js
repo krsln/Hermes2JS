@@ -30,7 +30,7 @@ function whileTest() {
         // CODE → <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 8, Reg8: 1>
         console.log("while", r1)
         // CODE → <Mov>: <Reg8: 2, Reg8: 1>
-        // USED → r2 = 0;
+        r2 = 0
         // → r2 = 0
         if (r2 === 2) {
             // ──────────────── Block 3 ──────────────── 

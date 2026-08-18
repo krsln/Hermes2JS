@@ -41,7 +41,7 @@ function nestedObjectDestructureTest() {
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 6, string_id: 176>  # String: 'name' (Identifier)
     // USED → r4 = r2.name;
     // CODE → <GetById>: <Reg8: 2, Reg8: 0, UInt8: 7, string_id: 10786>  # String: 'meta' (Identifier)
-    // USED → r2 = r0.meta;
+    r2 = r0.meta
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // → r2 = r0.meta

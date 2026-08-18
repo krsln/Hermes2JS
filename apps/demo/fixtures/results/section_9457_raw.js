@@ -39,7 +39,7 @@ function labeledContinueTest() {
     // CODE → <Call3>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 2, Reg8: 1>
     console.log(r2, r1)
     // CODE → <AddN>: <Reg8: 0, Reg8: 1, Reg8: 3>
-    // USED → r0 = r1 + 1;
+    r0 = r1 + 1
     // CODE → <JLessN>: <Addr8: -28, Reg8: 0, Reg8: 6>  # Address: 0000002b
     // → r0 = r1 + 1
     if (r0 < 3) goto label_43;
@@ -61,7 +61,7 @@ function labeledContinueTest() {
     console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
     // ──────────────── Block 6 ──────────────── 
     // CODE → <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
-    // USED → r4 = r2 + 1;
+    r4 = r2 + 1
     // CODE → <JLessN>: <Addr8: -75, Reg8: 4, Reg8: 6>  # Address: 00000026
     // → r4 = r2 + 1
     if (r4 < 3) goto label_38;

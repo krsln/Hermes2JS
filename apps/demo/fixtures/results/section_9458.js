@@ -23,7 +23,7 @@ function labeledBlockBreakTest() {
     // CODE → <GetById>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 7174>  # String: 'random' (Identifier)
     // USED → r3 = Math.random;
     // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 4>
-    // USED → r3 = Math.random();
+    r3 = Math.random()
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // → r3 = Math.random()

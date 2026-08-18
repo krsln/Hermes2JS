@@ -35,12 +35,12 @@ function loopBreakCrossesTryBoundaryTest(param1) {
             // CODE → <Mov>: <Reg8: 0, Reg8: 2>
             r0 = 0
             // CODE → <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
-            // USED → r9 = param1[r0];
+            r9 = param1[r0]
             // → r9 = param1[r0]
             if (r9 >= 0) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
-                // USED → r9 = param1[r0];
+                r9 = param1[r0]
                 // → r9 = param1[r0]
                 if (r9 === 0) {
                     // ──────────────── Block 4 ──────────────── 
@@ -75,7 +75,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                 }
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → <AddN>: <Reg8: 2, Reg8: 0, Reg8: 6>
-                // USED → r2 = r0 + 1;
+                r2 = r0 + 1
             }
         }
         // LOOP → END

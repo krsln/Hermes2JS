@@ -60,7 +60,7 @@ function setTest() {
     // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
     // USED → r7 = r4.next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-    // USED → r5 = r4;
+    r5 = r4
     // CODE → <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 000000a1
     // → r5 = r4
     if (r5 === undefined) goto label_161;

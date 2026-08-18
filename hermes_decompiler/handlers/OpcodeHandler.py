@@ -138,18 +138,6 @@ class OpcodeHandler(ABC):
         return result
 
     @classmethod
-    def get_register_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier:
-        """Always symbolic - never inlines the defining expression."""
-
-        state = analysis.registers.get(f"r{reg}")
-
-        if state is None:
-            return Identifier(name=f"r{reg}_undefined")
-
-        state.reads += 1
-        return Identifier(name=f"r{reg}")
-
-    @classmethod
     def resolve_operand(cls, analysis: HermesAnalysis, reg: int, mode: "OperandMode") -> Expression:
         """
         Resolve a register operand according to `mode`. Single dispatch
@@ -162,6 +150,44 @@ class OpcodeHandler(ABC):
             return cls.get_register_reference(analysis, reg)
 
         return cls.get_register_expression(analysis, reg)
+
+    @classmethod
+    def get_register_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier:
+        """Always symbolic - never inlines the defining expression."""
+
+        state = analysis.registers.get(f"r{reg}")
+
+        if state is None or state.definition is None:
+            return Identifier(name=f"r{reg}_undefined")
+
+        state.reads += 1
+        return Identifier(name=f"r{reg}")
+
+    # @classmethod
+    # def get_raw_state(cls, analysis: HermesAnalysis, reg: int) -> RegisterState | None:
+    #     state = analysis.registers.get(f"r{reg}")
+    #     return state
+
+    # @classmethod
+    # def get_raw_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier | None:
+    #     state = cls.get_raw_state(analysis, reg)
+    #
+    #     if state is None or state.definition is None:
+    #         return Identifier(name=f"r{reg}_undefined")
+    #
+    #     state.reads += 1
+    #     return Identifier(name=f"r{reg}")
+    #
+    # @classmethod
+    # def get_raw_definition(cls, analysis: HermesAnalysis, reg: int) -> OpcodeResult | None:
+    #     state = cls.get_raw_state(analysis, reg)
+    #
+    #     if state is None or state.definition is None:
+    #         return None
+    #
+    #     state.reads += 1
+    #     return state.definition
+
 
     @classmethod
     def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
@@ -195,9 +221,7 @@ class OpcodeHandler(ABC):
             state.definition.definition_used = True
             return state_value
 
-        logger.warning("Unexpected value type in argument: %s", type(state.value))
-
-        state.reads += 1
+        logger.error("Unexpected value type in argument: %s", type(state.value))
         return Identifier(name=f"r{reg}")
 
     @classmethod
@@ -272,7 +296,7 @@ class OpcodeHandler(ABC):
                 logger.warning("Unexpected value type in Jump condition argument: %s", type(value))
 
         state.reads += 1
-        definition.definition_used = True
+        # definition.definition_used = True
 
         return Identifier(name=f"r{reg}")
 

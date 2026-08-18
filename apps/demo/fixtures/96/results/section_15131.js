@@ -13,7 +13,7 @@ function function_15131(param1, param2, param3) {
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 0>
     // USED → r0 = r2[0];
     // CODE → <GetByVal>: <Reg8: 3, Reg8: 0, Reg8: 5>
-    // USED → r3 = r2[0][r5];
+    r3 = r2[0][r5]
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 7163>  # String: '' (Identifier)
     r0 = ""
     // CODE → <LoadConstUndefined>: <Reg8: 4>

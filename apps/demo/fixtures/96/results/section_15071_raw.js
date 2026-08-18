@@ -37,7 +37,7 @@ function shortCircuitAssignTest() {
     // CODE → <NewObject>: <Reg8: 1>
     r1 = {  }
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 7735>  # String: 'count' (Identifier)
-    // USED → r3 = r1.count;
+    r3 = r1.count
     // CODE → <LoadConstNull>: <Reg8: 2>
     // USED → r2 = null;
     // CODE → <JNotEqual>: <Addr8: 12, Reg8: 3, Reg8: 2>  # Address: 00000065

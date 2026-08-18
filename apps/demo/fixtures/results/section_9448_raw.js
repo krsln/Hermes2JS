@@ -24,7 +24,7 @@ function doWhileTest() {
     // CODE → <Call2>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 0>
     console.log(r0)
     // CODE → <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
-    // USED → r0 = r0 + 1;
+    r0 = r0 + 1
     // CODE → <JLessN>: <Addr8: -20, Reg8: 0, Reg8: 2>  # Address: 0000001e
     // → r0 = r0 + 1
     if (r0 < 5) goto label_30;

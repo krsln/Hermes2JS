@@ -63,7 +63,7 @@ function propertyAccessTest() {
             // CODE → <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 2>
             // USED → r8 = r3.next();
             // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-            // USED → r5 = r3;
+            r5 = r3
             // → r5 = r3
             if (r5 !== undefined) {
                 // ──────────────── Block 2 ──────────────── 

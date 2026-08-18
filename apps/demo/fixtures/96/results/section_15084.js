@@ -24,7 +24,7 @@ function tryFinallyLoopBreakTest(param1) {
         // CODE → <Mov>: <Reg8: 2, Reg8: 6>
         r2 = param1
         // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-        // USED → r2 = r2.length;
+        r2 = r2.length
         // CODE → <LoadConstString>: <Reg8: 4, string_id: 4735>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
         // USED → r4 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item";
         // → r2 = r2.length
@@ -38,7 +38,7 @@ function tryFinallyLoopBreakTest(param1) {
                 // CODE → <Mov>: <Reg8: 2, Reg8: 7>
                 r2 = 0
                 // CODE → <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
-                // USED → r2 = param1[r2];
+                r2 = param1[r2]
                 // → r2 = param1[r2]
                 if (r2 !== 0) {
                     // ──────────────── Block 2 ──────────────── 

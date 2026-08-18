@@ -30,7 +30,7 @@ function callGeneratorTests() {
         // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
         // USED → r7 = r4.next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        // USED → r5 = r4;
+        r5 = r4
         // → r5 = r4
         if (r5 !== undefined) {
             // ──────────────── Block 2 ──────────────── 
@@ -71,7 +71,7 @@ function callGeneratorTests() {
         // CODE → <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
         // USED → r7 = r4.next();
         // CODE → <Mov>: <Reg8: 5, Reg8: 4>
-        // USED → r5 = r4;
+        r5 = r4
         // → r5 = r4
         if (r5 !== undefined) {
             // ──────────────── Block 6 ──────────────── 

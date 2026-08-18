@@ -18,7 +18,7 @@ function defaultWithRestTest() {
     if (!(arguments.length > 0)) goto label_37;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <GetArgumentsPropByVal>: <Reg8: 1, Reg8: 8, Reg8: 7>
-    // USED → r1 = arguments[0];
+    r1 = arguments[0]
     // CODE → <Mov>: <Reg8: 5, Reg8: 6>
     r5 = 1
     // CODE → <JStrictEqual>: <Addr8: 8, Reg8: 1, Reg8: 0>  # Address: 00000025
@@ -78,7 +78,7 @@ function defaultWithRestTest() {
     // CODE → <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
     new Array(arguments.length - 1)[1 - 1] = arguments[1]
     // CODE → <Inc>: <Reg8: 2, Reg8: 2>
-    // USED → r2 = r2 + 1;
+    r2 = r2 + 1
     // CODE → <JLess>: <Addr8: -15, Reg8: 2, Reg8: 3>  # Address: 00000072
     // → r2 = r2 + 1
     if (r2 < r3) goto label_114;

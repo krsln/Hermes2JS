@@ -13,7 +13,7 @@ function switchInsideTryTest(param1) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start")
     // CODE → <Mov>: <Reg8: 2, Reg8: 0>
-    // USED → r2 = param1;
+    r2 = param1
     // CODE → <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // CODE → <JStrictEqual>: <Addr8: 65, Reg8: 0, Reg8: 2>  # Address: 0000005f

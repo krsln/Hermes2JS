@@ -24,7 +24,7 @@ function forOfTest() {
         // CODE → <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 4>
         // USED → r6 = r3.next();
         // CODE → <Mov>: <Reg8: 4, Reg8: 3>
-        // USED → r4 = r3;
+        r4 = r3
         // → r4 = r3
         if (r4 !== undefined) {
             // ──────────────── Block 2 ──────────────── 

@@ -26,12 +26,12 @@ function nestedLoopTest() {
     for (r3 = 0; r3 < 3; r3 = r4 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → <Mov>: <Reg8: 4, Reg8: 3>
-        // USED → r4 = 0;
+        r4 = 0
         // LOOP → START (for)
         for (r0 = 0; r0 < 4; r0 = r1 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → <Mov>: <Reg8: 1, Reg8: 0>
-            // USED → r1 = 0;
+            r1 = 0
             // → r1 = 0
             if (r4 === 1 && r1 === 2) {
                 // ──────────────── Block 4 ──────────────── 

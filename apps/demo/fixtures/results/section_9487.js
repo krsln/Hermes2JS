@@ -157,7 +157,7 @@ function nestedArrayDestructureTest() {
     // CODE → <Mov>: <Reg8: 0, Reg8: 17>
     r0 = r17
     // CODE → <IteratorNext>: <Reg8: 0, Reg8: 7, Reg8: 0>
-    // USED → r0 = r7.next();
+    r0 = r7.next()
     // CODE → <Mov>: <Reg8: 8, Reg8: 7>
     // USED → r8 = r7;
     // CODE → <StrictEq>: <Reg8: 9, Reg8: 8, Reg8: 3>
@@ -182,7 +182,7 @@ function nestedArrayDestructureTest() {
     if (r7 === undefined) {
         // ──────────────── Block 27 ──────────────── 
         // CODE → <Mov>: <Reg8: 0, Reg8: 12>
-        // USED → r0 = r13;
+        r0 = r13
         // CODE → <Mov>: <Reg8: 8, Reg8: 11>
         // USED → r8 = r7 === undefined;
         // CODE → <Mov>: <Reg8: 11, Reg8: 8>

@@ -58,7 +58,7 @@ function propertyAccessTest() {
     // CODE → <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 5>
     // USED → r8 = r3.next();
     // CODE → <Mov>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = r3;
+    r5 = r3
     // CODE → <JStrictEqual>: <Addr8: 34, Reg8: 5, Reg8: 0>  # Address: 000000a8
     // → r5 = r3
     if (r5 === undefined) goto label_168;
