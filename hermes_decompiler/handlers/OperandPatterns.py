@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import Optional, Union
+from typing import Union
 
 
 @dataclass(frozen=True, slots=True)
@@ -10,10 +10,11 @@ class Operand:
     """
     A single typed operand fragment (Reg8, UInt16, string_id, ...).
 
-    Kept as a small typed wrapper instead of a bare regex string so that
-    `sequence(...)` can reject anything that isn't a recognized operand
-    constant at call time (see `sequence()` below) - a stray hand-rolled
-    regex string dropped into a `_PATTERN` no longer passes silently.
+    Kept as a small typed wrapper instead of a bare regex string so
+    that `sequence(...)` can reject anything that isn't a recognized
+    operand constant at call time (see `sequence()` below). Without
+    this, a stray hand-rolled regex string dropped into a `_PATTERN`
+    would no longer pass silently.
     """
 
     kind: str
@@ -47,7 +48,7 @@ STRING_ID = Operand("string_id", r"string_id:\s*(\d+)")
 FUNCTION_ID = Operand("function_id", r"function_id:\s*(\d+)")
 BIGINT_ID = Operand("bigint_id", r"bigint_id:\s*(\d+)")
 
-# Operand types that only ever change bit width across bytecode versions
+# Operand types that only ever change width a bit across bytecode versions
 # (e.g. `string_id: UInt16` in one version, `UInt32` in another) commonly
 # need to be accepted interchangeably by a single handler; this alias set
 # is intentionally NOT exhaustive/type-checked, it's just for callers that
@@ -92,7 +93,7 @@ def named(kind: str, group: int = 1) -> str:
     `match.group(2)`, ... at the call site.
 
     This intentionally isn't wired into REG/UINT8/etc. by default (that
-    would force every handler to migrate at once); use it opt-in for new
+    would force every handler to migrate at once); use it opt in for new
     or refactored handlers that benefit from it, e.g.:
 
         _PATTERN = sequence(rf"Reg\\d+:\\s*(?P<obj>\\d+)")
