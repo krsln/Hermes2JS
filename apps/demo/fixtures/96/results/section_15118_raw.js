@@ -23,13 +23,13 @@ function spreadArrayTest() {
     // CODE → <LoadConstZero>: <Reg8: 7>
     r7 = 0
     // CODE → <CallBuiltin>: <Reg8: 7, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    arraySpread(r3, r4, r5, r6)
+    r7 = arraySpread(r3, r4, r5, r6)
     // CODE → <NewArrayWithBuffer>: <Reg8: 8, UInt16: 3, UInt16: 3, UInt16: 23671>  # Array: [4, 5, 6]
     r8 = [4, 5, 6]
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     r9 = r3
     // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    arraySpread(r0, r1, r2, r3)
+    r4 = arraySpread(r0, r1, r2, r3)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

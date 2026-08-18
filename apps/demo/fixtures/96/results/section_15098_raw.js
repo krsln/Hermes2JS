@@ -53,7 +53,7 @@ function propertyAccessTest() {
     // CODE → <Call2>: <Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 5>
     // USED → r5 = Object.keys(r5);
     // CODE → <Mov>: <Reg8: 2, Reg8: 5>
-    Object.keys(r5)
+    r2 = Object.keys(r5)
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
     // USED → r3 = GetIterator(r2);
     // ──────────────── Block 1 ──────────────── 

@@ -11,7 +11,7 @@ function closureTest() {
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Functions/ClosureTests/closureTest/start")
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    createEnvironment()
+    r0 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15146>  # Function: [#15146 makeCounter of 41 bytes]: 1 params @ offset 0x0026a962
     // USED → r2 = makeCounter();
     // CODE → <LoadConstUndefined>: <Reg8: 0>
@@ -21,15 +21,15 @@ function closureTest() {
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 10830>  # String: 'increment' (Identifier)
     // USED → r2 = makeCounter().call(undefined).increment;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    makeCounter().call(undefined).increment()
+    r2 = makeCounter().call(undefined).increment()
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 10830>  # String: 'increment' (Identifier)
     // USED → r2 = makeCounter().call(undefined).increment;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    makeCounter().call(undefined).increment()
+    r2 = makeCounter().call(undefined).increment()
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 10333>  # String: 'decrement' (Identifier)
     // USED → r2 = makeCounter().call(undefined).decrement;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    makeCounter().call(undefined).decrement()
+    r2 = makeCounter().call(undefined).decrement()
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

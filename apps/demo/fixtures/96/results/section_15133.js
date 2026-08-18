@@ -35,7 +35,7 @@ function function_15133(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r6 = "__esModule";
     // CODE → <Call4>: <Reg8: 6, Reg8: 8, Reg8: 9, Reg8: 1, Reg8: 6, Reg8: 7>
-    Object.defineProperty(param6, "__esModule", r7)
+    r6 = Object.defineProperty(param6, "__esModule", r7)
     // CODE → <PutById>: <Reg8: 1, Reg8: 5, UInt8: 1, string_id: 7656>  # String: 'basicRegExpTest' (Identifier)
     param6.basicRegExpTest = basicRegExpTest(param1)
     // CODE → <PutById>: <Reg8: 1, Reg8: 4, UInt8: 2, string_id: 11315>  # String: 'regExpFlagsTest' (Identifier)

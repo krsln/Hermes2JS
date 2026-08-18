@@ -31,7 +31,7 @@ function classTest() {
     // CODE → <GetById>: <Reg8: 3, Reg8: 2, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
     // USED → r3 = new getEnvironment(0)[5]("...", "Generic").makeSound;
     // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    new getEnvironment(0)[5]("...", "Generic").makeSound()
+    r3 = new getEnvironment(0)[5]("...", "Generic").makeSound()
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -59,11 +59,11 @@ function classTest() {
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
     // USED → r2 = new getEnvironment(0)[6]("Labrador", "Rex").makeSound;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    new getEnvironment(0)[6]("Labrador", "Rex").makeSound()
+    r2 = new getEnvironment(0)[6]("Labrador", "Rex").makeSound()
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
     // USED → r2 = new getEnvironment(0)[6]("Labrador", "Rex").makeSound;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    new getEnvironment(0)[6]("Labrador", "Rex").makeSound()
+    r2 = new getEnvironment(0)[6]("Labrador", "Rex").makeSound()
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 6>
     // USED → r3 = getEnvironment(0)[6];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 6, string_id: 103>  # String: 'create' (Identifier)
@@ -75,7 +75,7 @@ function classTest() {
     // CODE → <GetById>: <Reg8: 1, Reg8: 2, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
     // USED → r1 = getEnvironment(0)[6].create("Buddy").makeSound;
     // CODE → <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
-    getEnvironment(0)[6].create("Buddy").makeSound()
+    r1 = getEnvironment(0)[6].create("Buddy").makeSound()
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

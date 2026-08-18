@@ -29,7 +29,7 @@ function function_15116(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 0, Reg8: 6>
-    Object.defineProperty(param6, "__esModule", r6)
+    r0 = Object.defineProperty(param6, "__esModule", r6)
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15118>  # Function: [#15118 spreadArrayTest of 203 bytes]: 1 params @ offset 0x00269d08
     // USED → r0 = spreadArrayTest();
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10787>  # String: 'spreadArrayTest' (Identifier)

@@ -1,7 +1,7 @@
 function arrowFunctionTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    createEnvironment()
+    r0 = createEnvironment()
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

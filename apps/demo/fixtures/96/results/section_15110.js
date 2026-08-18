@@ -1,7 +1,7 @@
 function arrayTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <CreateEnvironment>: <Reg8: 1>
-    createEnvironment()
+    r1 = createEnvironment()
     // CODE → <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -27,11 +27,11 @@ function arrayTest() {
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 100>
     // USED → r2 = 100;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r4.push(100)
+    r2 = r4.push(100)
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 5, string_id: 199>  # String: 'pop' (Identifier)
     // USED → r2 = r4.pop;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 4>
-    r4.pop()
+    r2 = r4.pop()
     // CODE → <NewArray>: <Reg8: 6, UInt16: 0>
     r6 = []
     // CODE → <LoadConstZero>: <Reg8: 5>
@@ -43,7 +43,7 @@ function arrayTest() {
     // CODE → <LoadConstZero>: <Reg8: 7>
     r7 = 0
     // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    arraySpread(r-2, r-1, r0, r1)
+    r2 = arraySpread(r-2, r-1, r0, r1)
     // CODE → <GetById>: <Reg8: 3, Reg8: 6, UInt8: 6, string_id: 7576>  # String: 'sort' (Identifier)
     // USED → r3 = r6.sort;
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15111>  # Function: [#15111  of 12 bytes]: 3 params @ offset 0x001f6a9c

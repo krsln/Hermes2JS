@@ -13,7 +13,7 @@ function objectLiteralTest() {
     // CODE → <NewObjectWithBuffer>: <Reg8: 1, UInt16: 3, UInt16: 2, UInt16: 12803, UInt16: 23466>  # Object: {'name': 'Ada', 'age': 30}
     r1 = { "name": "Ada", "age": 30 }
     // CODE → <CreateEnvironment>: <Reg8: 2>
-    createEnvironment()
+    r2 = createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 15096>  # Function: [#15096 greet of 35 bytes]: 1 params @ offset 0x002694da
     // USED → r2 = greet();
     // CODE → <PutNewOwnById>: <Reg8: 1, Reg8: 2, string_id: 17737>  # String: 'greet' (Identifier)
@@ -31,7 +31,7 @@ function objectLiteralTest() {
     // CODE → <GetById>: <Reg8: 2, Reg8: 1, UInt8: 5, string_id: 17737>  # String: 'greet' (Identifier)
     // USED → r2 = r1.greet;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 1>
-    r1.greet()
+    r2 = r1.greet()
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 176>  # String: 'name' (Identifier)
     // USED → r4 = r1.name;
     // CODE → <GetById>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 7743>  # String: 'age' (Identifier)

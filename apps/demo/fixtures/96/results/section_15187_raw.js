@@ -11,7 +11,7 @@ function _parallelAwaitTest() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
     // USED → r3 = getEnvironment(0)[1].default;
     // CODE → <CreateEnvironment>: <Reg8: 2>
-    createEnvironment()
+    r2 = createEnvironment()
     // CODE → <CreateGeneratorClosure>: <Reg8: 2, Reg8: 2, function_id: 15188>  # Function: [#15188  of 9 bytes]: 1 params @ offset 0x0026b50f
     // USED → r2 = function_15188;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>

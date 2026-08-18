@@ -29,7 +29,7 @@ function mapTest() {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 90>
     // USED → r0 = 90;
     // CODE → <Call3>: <Reg8: 0, Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 0>
-    new Map().set("alice", 90)
+    r0 = new Map().set("alice", 90)
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 5, string_id: 185>  # String: 'set' (Identifier)
     // USED → r3 = new Map().set;
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 2540>  # String: 'bob' (String)
@@ -37,7 +37,7 @@ function mapTest() {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 75>
     // USED → r0 = 75;
     // CODE → <Call3>: <Reg8: 0, Reg8: 3, Reg8: 2, Reg8: 4, Reg8: 0>
-    new Map().set("bob", 75)
+    r0 = new Map().set("bob", 75)
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 5, string_id: 185>  # String: 'set' (Identifier)
     // USED → r5 = new Map().set;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 677>  # String: 'carol' (String)
@@ -45,7 +45,7 @@ function mapTest() {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 88>
     // USED → r0 = 88;
     // CODE → <Call3>: <Reg8: 0, Reg8: 5, Reg8: 2, Reg8: 3, Reg8: 0>
-    new Map().set("carol", 88)
+    r0 = new Map().set("carol", 88)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -123,7 +123,7 @@ function mapTest() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 10, string_id: 114>  # String: 'delete' (Identifier)
     // USED → r3 = new Map().delete;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 2, Reg8: 4>
-    new Map().delete("bob")
+    r3 = new Map().delete("bob")
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

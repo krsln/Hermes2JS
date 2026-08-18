@@ -33,7 +33,7 @@ function nestedTemplateTest(param1, param2) {
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 876>  # String: ')' (String)
     // USED → r3 = ")";
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 4, Reg8: 6, Reg8: 3>
-    HermesInternal.concat.call("small (", r6, ")")
+    r3 = HermesInternal.concat.call("small (", r6, ")")
     // CODE → <Jmp>: <Addr8: 31>  # Address: 00000063
     goto label_99;
     // ──────────────── Block 2 ──────────────── 

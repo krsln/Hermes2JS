@@ -23,7 +23,7 @@ function function_15127(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 2, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r2 = "__esModule";
     // CODE → <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
-    Object.defineProperty(param6, "__esModule", r3)
+    r2 = Object.defineProperty(param6, "__esModule", r3)
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15128>  # Function: [#15128 basicTemplateTest of 115 bytes]: 3 params @ offset 0x0026a298
     // USED → r2 = basicTemplateTest(param1, param2);
     // CODE → <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 11328>  # String: 'basicTemplateTest' (Identifier)

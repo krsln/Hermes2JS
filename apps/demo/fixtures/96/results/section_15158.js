@@ -31,7 +31,7 @@ function function_15158(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r5 = "__esModule";
     // CODE → <Call4>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 5, Reg8: 6>
-    Object.defineProperty(param6, "__esModule", r6)
+    r5 = Object.defineProperty(param6, "__esModule", r6)
     // CODE → <PutById>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 11235>  # String: 'restOnlyTest' (Identifier)
     param6.restOnlyTest = restOnlyTest()
     // CODE → <PutById>: <Reg8: 1, Reg8: 3, UInt8: 2, string_id: 11230>  # String: 'restAfterRequiredTest' (Identifier)

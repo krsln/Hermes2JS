@@ -35,11 +35,11 @@ function privateStaticTest() {
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 10830>  # String: 'increment' (Identifier)
     // USED → r2 = new getEnvironment(0)[8]().increment;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    new getEnvironment(0)[8]().increment()
+    r2 = new getEnvironment(0)[8]().increment()
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 10830>  # String: 'increment' (Identifier)
     // USED → r2 = new getEnvironment(0)[8]().increment;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    new getEnvironment(0)[8]().increment()
+    r2 = new getEnvironment(0)[8]().increment()
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 200>
     // USED → r2 = 200;
     // CODE → <PutById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 205>  # String: 'value' (Identifier)
@@ -89,7 +89,7 @@ function privateStaticTest() {
     // CODE → <GetById>: <Reg8: 2, Reg8: 3, UInt8: 9, string_id: 7840>  # String: 'reset' (Identifier)
     // USED → r2 = getEnvironment(0)[8].reset;
     // CODE → <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    getEnvironment(0)[8].reset()
+    r2 = getEnvironment(0)[8].reset()
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
