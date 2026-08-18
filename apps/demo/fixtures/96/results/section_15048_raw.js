@@ -17,9 +17,9 @@ function function_15048(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>
-    r0 = Object.defineProperty(param6, "__esModule", r2)
+    Object.defineProperty(param6, "__esModule", r2)
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    r0 = createEnvironment()
+    createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15049>  # Function: [#15049 doWhileTest of 74 bytes]: 1 params @ offset 0x00267c51
     // USED → r0 = doWhileTest();
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10882>  # String: 'doWhileTest' (Identifier)

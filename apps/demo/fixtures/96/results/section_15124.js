@@ -37,7 +37,7 @@ function setTest() {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 4>
     // USED → r0 = 4;
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-    r0 = new Set([1, 2, 2, 3, 3, 3]).add(r0)
+    new Set([1, 2, 2, 3, 3, 3]).add(r0)
     // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -85,7 +85,7 @@ function setTest() {
     // CODE → <Mov>: <Reg8: 9, Reg8: 3>
     r9 = new Set([1, 2, 2, 3, 3, 3])
     // CODE → <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    r2 = arraySpread(r-2, r-1, r0, r1)
+    arraySpread(r-2, r-1, r0, r1)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

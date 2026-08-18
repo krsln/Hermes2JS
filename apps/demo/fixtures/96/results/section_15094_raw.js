@@ -17,9 +17,9 @@ function function_15094(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>
-    r0 = Object.defineProperty(param6, "__esModule", r2)
+    Object.defineProperty(param6, "__esModule", r2)
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    r0 = createEnvironment()
+    createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15095>  # Function: [#15095 objectLiteralTest of 206 bytes]: 1 params @ offset 0x0026940c
     // USED → r0 = objectLiteralTest();
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 11286>  # String: 'objectLiteralTest' (Identifier)

@@ -11,7 +11,7 @@ function _callAsyncTests() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
     // USED → r3 = getEnvironment(0)[1].default;
     // CODE → <CreateEnvironment>: <Reg8: 2>
-    r2 = createEnvironment()
+    createEnvironment()
     // CODE → <CreateGeneratorClosure>: <Reg8: 2, Reg8: 2, function_id: 15192>  # Function: [#15192  of 9 bytes]: 1 params @ offset 0x0026b5f4
     // USED → r2 = function_15192;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>

@@ -23,9 +23,9 @@ function spreadFunctionArgsTest() {
     // CODE → <Mov>: <Reg8: 8, Reg8: 5>
     r8 = r5
     // CODE → <CallBuiltin>: <Reg8: 0, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    r0 = arraySpread(r-4, r-3, r-2, r-1)
+    arraySpread(r-4, r-3, r-2, r-1)
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    r0 = createEnvironment()
+    createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 8, Reg8: 0, function_id: 15121>  # Function: [#15121 sum of 19 bytes]: 4 params @ offset 0x00269ebf
     r8 = sum(param1, param2, param3)
     // CODE → <LoadConstUndefined>: <Reg8: 0>

@@ -26,7 +26,7 @@ function closureLoopTest() {
     // USED → r3 = 0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → <Call2>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 3>
-    r6 = _loop(param1).call(undefined, r3)
+    _loop(param1).call(undefined, r3)
     // CODE → <Inc>: <Reg8: 3, Reg8: 3>
     // USED → r3 = r3 + 1;
     // CODE → <JLess>: <Addr8: -8, Reg8: 3, Reg8: 2>  # Address: 0000002c

@@ -77,7 +77,7 @@ function defaultWithRestTest() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)
     // USED → r3 = new Array((arguments.length <= 1) ? 0 : arguments.length - 1).reduce;
     // CODE → <CreateEnvironment>: <Reg8: 2>
-    r2 = createEnvironment()
+    createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 15156>  # Function: [#15156  of 12 bytes]: 3 params @ offset 0x00269c66
     // USED → r2 = function_15156(param1, param2);
     // CODE → <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>

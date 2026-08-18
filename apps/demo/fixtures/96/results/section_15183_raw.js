@@ -11,7 +11,7 @@ function _asyncLoopTest() {
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
     // USED → r3 = getEnvironment(0)[1].default;
     // CODE → <CreateEnvironment>: <Reg8: 2>
-    r2 = createEnvironment()
+    createEnvironment()
     // CODE → <CreateGeneratorClosure>: <Reg8: 2, Reg8: 2, function_id: 15184>  # Function: [#15184  of 9 bytes]: 2 params @ offset 0x0026b444
     // USED → r2 = function_15184;
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>

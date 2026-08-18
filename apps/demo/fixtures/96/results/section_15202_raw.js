@@ -15,7 +15,7 @@ function Dog(param1, param2) {
     // CODE → <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3>
-    r1 = getEnvironment(1)[3].default.call(undefined, this, r3)
+    getEnvironment(1)[3].default.call(undefined, this, r3)
     // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 0>
     // USED → r0 = getEnvironment(1)[0];
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)

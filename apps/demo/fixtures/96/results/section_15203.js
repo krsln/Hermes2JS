@@ -37,7 +37,7 @@ function makeSound() {
     // CODE → <NewArray>: <Reg8: 3, UInt16: 0>
     // USED → r3 = [];
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
-    r3 = getEnvironment(1)[1].default(r11, r10, r9, r8, r7).call(undefined, r3)
+    getEnvironment(1)[1].default(r11, r10, r9, r8, r7).call(undefined, r3)
     // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -137,13 +137,15 @@ class RegionPrinter:
             rendered = self.expressions.print(instruction.value)
 
             if instruction.dest_reg is not None:
-                passable = (
-                    rendered.startswith("console.log")
+                # A CallExpression whose result is never read is a discarded
+                # call. Keep it as a standalone statement so side effects are
+                # preserved without emitting a dead register assignment.
+                is_discarded_call = (
+                        not instruction.definition_used
+                        and isinstance(instruction.value, CallExpression)
                 )
 
-                if not instruction.definition_used and passable:
-                   pass
-                else:
+                if not is_discarded_call:
                     rendered = f"r{instruction.dest_reg} = {rendered}"
 
             if instruction.definition_used:

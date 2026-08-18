@@ -17,9 +17,9 @@ function function_15055(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>
-    r0 = Object.defineProperty(param6, "__esModule", r2)
+    Object.defineProperty(param6, "__esModule", r2)
     // CODE → <CreateEnvironment>: <Reg8: 0>
-    r0 = createEnvironment()
+    createEnvironment()
     // CODE → <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15056>  # Function: [#15056 switchTest of 192 bytes]: 2 params @ offset 0x00267e53
     // USED → r0 = switchTest(param1);
     // CODE → <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 8729>  # String: 'switchTest' (Identifier)
