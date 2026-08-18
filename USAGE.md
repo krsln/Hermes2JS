@@ -38,7 +38,7 @@ file apps/testy/98/index.android.bundle
 ./scripts/run-hermes-dec.sh apps/testy/98/index.android.bundle
 
 ```
- 
+
 **Output**
 
 ```
@@ -65,6 +65,16 @@ python scripts/split_output_file.py -i apps/testy/output/output.hbc -o sections 
 
 # Dry run first, to check section count/naming before writing anything
 python scripts/split_output_file.py -i apps/testy/output/output.hbc -o sections --dry-run -v
+
+#--------------------------
+## copy files to fixtures
+ 
+# section_15042-15216
+cp apps/testy/96/output/sections/section_{15042..15216}.hbc  apps/demo/fixtures/96/sections/
+
+# section_9446-9542
+cp apps/testy/98/output/sections/section_{9446..9542}.hbc apps/demo/fixtures/sections/
+
 ```
 
 ## Step—3 Decompile
