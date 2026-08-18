@@ -18,6 +18,7 @@ class CreateThis(OpcodeHandler):
 
         dest_reg, func, new_target = (int(x) for x in match.groups())
 
+        # self.get_register_expression(ctx.analysis, func) # consume it ?
         this_expr = ThisPlaceholder(origin="CreateThis", source_reg=func)
 
         result = OpcodeResult(ctx.entry, value=this_expr, dest_reg=dest_reg)
