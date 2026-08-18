@@ -19,3 +19,6 @@ dist/
 /apps/testy/96/output
 /apps/testy/98/output
 /apps/coachy/output
+
+# ai
+.codex
