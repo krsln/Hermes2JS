@@ -10,8 +10,7 @@ from typing import Dict, Optional
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.ir.expressions import (
-    Expression, Identifier, RawExpression, ObjectExpression,
-    ArrayExpression, Literal,
+    Expression, Identifier, RawExpression, ObjectExpression, ArrayExpression, Literal,
 )
 from hermes_decompiler.runtime import HermesAnalysis
 
