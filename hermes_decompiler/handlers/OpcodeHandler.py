@@ -17,36 +17,6 @@ from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)
 
-# Types whose IDENTITY matters (mutation-sensitive) - inlining a second
-# reference to the same literal object/array expression would make two
-# independent-looking `{}`/`[]` in the output secretly alias the same
-# runtime object. Always kept symbolic (`rN`), regardless of which
-# resolver is used.
-_IDENTITY_SENSITIVE_TYPES = (
-    ObjectExpression, ArrayExpression, CallExpression
-)
-
-_CALL_ARGUMENT_INLINE_OPCODES = frozenset({
-    "CreateClosure",
-    "LoadConstUInt8",
-    "LoadConstString",
-    "LoadParam",
-})
-
-_CONDITION_ARGUMENT_INLINE_OPCODES = frozenset({
-    "LoadParam",
-    "LoadConstZero",
-    "LoadConstUInt8",
-    "LoadConstInt",
-    "LoadConstDouble",
-    "LoadConstString",
-    "LoadConstNull",
-    "LoadConstUndefined",
-    "LoadConstTrue",
-    "LoadConstFalse",
-    "LoadConstBigInt",
-})
-
 
 class OpcodeHandler(ABC):
     """
@@ -183,20 +153,22 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}_undefined")
 
         state_value = state.value
-        if isinstance(state_value, Expression):
-            state.mark_read()
+        if state_value is not None:
 
-            if isinstance(state.value, _IDENTITY_SENSITIVE_TYPES):
+            # Types whose IDENTITY matters (mutation-sensitive) - inlining a second
+            # reference to the same literal object/array expression would make two
+            # independent-looking `{}`/`[]` in the output secretly alias the same
+            # runtime object. Always kept symbolic (`rN`), regardless of which
+            # resolver is used.
+            if isinstance(state.value, (ObjectExpression, ArrayExpression, CallExpression)):
+                state.mark_read()
                 return Identifier(name=f"r{reg}")
-
-            if state.reads > 1:
-                state_value = dataclasses.replace(state_value)
 
             state.mark_used()
             return state_value
-
-        logger.error("Unexpected value type in argument: %s", type(state.value))
-        return Identifier(name=f"r{reg}")
+        else:
+            logger.error("Unexpected value type in argument: %s", type(state.value))
+            return Identifier(name=f"r{reg}")
 
     @classmethod
     def resolve_get_by_argument(cls, analysis, reg: int) -> Expression:
@@ -231,14 +203,15 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}_undefined")
 
         value = state.value
-
-        if state.handler in _CALL_ARGUMENT_INLINE_OPCODES:
+        if state.handler in frozenset({
+            "CreateClosure",
+            "LoadConstUInt8",
+            "LoadConstString",
+            "LoadParam",
+        }):
             if isinstance(value, Literal):
                 state.mark_read()
                 state.mark_used()
-
-                if state.reads > 1:
-                    return dataclasses.replace(value)
 
                 return value
             elif isinstance(value, Identifier):
@@ -246,42 +219,40 @@ class OpcodeHandler(ABC):
                 state.mark_used()
 
                 return value
-            else:
-                logger.warning("Unexpected value type in Call argument: %s", type(value))
 
         state.mark_read()
         state.mark_used()
-
         return Identifier(name=f"r{reg}")
 
     @classmethod
     def resolve_condition_argument(cls, analysis: HermesAnalysis, reg: int) -> Expression:
-        """
-        Jump/branch condition operands.
-
-        Inline ONLY when this register was defined by a const-load opcode.
-        That preserves switch case labels (r1 = 0; if (r1 === disc)) while
-        keeping Mov/Inc/phi-carried values symbolic for loops.
-        """
         state = analysis.get_register_state(reg)
 
         if state is None:
             return Identifier(name=f"r{reg}_undefined")
-
-        value = state.value
 
         # Const-load literals: always safe to inline, regardless of
         # mode - a genuine LoadConstX opcode produces one immutable
         # value that can never be redefined by a loop iteration between
         # its own occurrences (each const-load is itself the
         # definition being read).
-        if state.handler in _CONDITION_ARGUMENT_INLINE_OPCODES:
+        value = state.value
+        if state.handler in frozenset({
+            "LoadParam",
+            "LoadConstZero",
+            "LoadConstUInt8",
+            "LoadConstInt",
+            "LoadConstDouble",
+            "LoadConstString",
+            "LoadConstNull",
+            "LoadConstUndefined",
+            "LoadConstTrue",
+            "LoadConstFalse",
+            "LoadConstBigInt",
+        }):
             if isinstance(value, Literal):
                 state.mark_read()
                 state.mark_used()
-
-                if state.reads > 1:
-                    return dataclasses.replace(value)
 
                 return value
             elif isinstance(value, Identifier):
@@ -289,12 +260,8 @@ class OpcodeHandler(ABC):
                 state.mark_used()
 
                 return value
-            else:
-                logger.warning("Unexpected value type in Jump condition argument: %s", type(value))
 
         state.mark_read()
-        # state.mark_used()
-
         return Identifier(name=f"r{reg}")
 
 
