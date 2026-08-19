@@ -12,6 +12,7 @@ from hermes_decompiler.analysis.transforms.region_passes import (
     ForEachRegionPass,
     LoopConditionRegionPass,
     LoopContinueRegionPass,
+    LoopInductionAliasPass,
     NullishAssignmentRegionPass,
 )
 from hermes_decompiler.analysis.transforms.structurers import (
@@ -99,6 +100,18 @@ class StructuralAnalyzer:
         ConditionalExpressionRegionPass(graph, self.cfg).run()  # ternary
         NullishAssignmentRegionPass(graph, self.cfg).run()
         LoopConditionRegionPass(graph, self.cfg).run()
+
+        # Must run right after LoopConditionRegionPass (needs
+        # loop.update already populated to know the induction
+        # register's identity) and before ForEachRegionPass (fewer,
+        # unaliased registers make its own register-resolution walk
+        # less likely to land on the wrong candidate). See its own
+        # docstring's "Pipeline placement" section for the full
+        # ordering rationale, including why it must NOT run any
+        # earlier than IfStructurer/SwitchStructurer have already
+        # folded the loop body's inner conditions into IfRegion/
+        # SwitchRegion.
+        LoopInductionAliasPass(graph, self.cfg).run()
 
         # Converts residual unconditional jumps to the loop latch into
         # a `continue` statement. This requires the final If/Loop nesting.

@@ -50,12 +50,9 @@ async function* anon_15167(param1) {
             return undefined;
         } else {
             // LOOP → START (for)
-            for (r4 = 0; r4 < param1; r4 = r6 + 1) {
+            for (r4 = 0; r4 < param1; r4 = r4 + 1) {
                 // ──────────────── Block 2 ──────────────── 
-                // CODE → addr: 48 | <Mov>: <Reg8: 6, Reg8: 4>
-                r6 = 0
-                // → r6 = 0
-                if (r6 === 2) {
+                if (r4 === 2) {
                     // ──────────────── Block 7 ──────────────── 
                     // CODE → addr: 72 | <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                     // USED → r8 = console;
