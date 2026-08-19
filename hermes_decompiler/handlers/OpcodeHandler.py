@@ -169,10 +169,11 @@ class OpcodeHandler(ABC):
         if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        if state.handler in (
-                "GetGlobalObject",
-                "TryGetById",
-        ):
+        # _GET_BY_ARGUMENT_INLINE_OPCODES
+        if state.handler in frozenset({
+            "GetGlobalObject",
+            "TryGetById",
+        }):
             if isinstance(state.value, MemberExpression):
                 state.mark_read()
                 state.mark_used()
@@ -195,7 +196,7 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}_undefined")
 
         value = state.value
-        # CALL_ARGUMENT_LITERAL_HANDLERS
+        # _CALL_ARGUMENT_INLINE_OPCODES
         if state.handler in frozenset({
             "CreateClosure",
             "LoadConstUInt8",
@@ -230,6 +231,7 @@ class OpcodeHandler(ABC):
         # its own occurrences (each const-load is itself the
         # definition being read).
         value = state.value
+        # _CONDITION_ARGUMENT_INLINE_OPCODES
         if state.handler in frozenset({
             "LoadParam",
             "LoadConstZero",
