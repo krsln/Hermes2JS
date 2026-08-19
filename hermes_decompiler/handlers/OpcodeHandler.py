@@ -162,7 +162,7 @@ class OpcodeHandler(ABC):
 
         state.reads += 1
         return Identifier(name=f"r{reg}")
- 
+
     @classmethod
     def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """
