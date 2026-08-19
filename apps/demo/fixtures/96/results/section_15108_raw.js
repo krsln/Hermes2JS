@@ -15,7 +15,7 @@ function callDestructuringTests() {
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 2>
     // USED → r3 = r2[2];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
     r3 = r2[2].call(r0)
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 3>

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import dataclasses
 import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -148,10 +149,13 @@ class OpcodeHandler(ABC):
             logger.error("Unexpected value type in argument: %s", type(value))
             return Identifier(name=f"r{reg}")
 
-        state.mark_read()
         if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression)):
             return Identifier(name=f"r{reg}")
 
+        if state.reads > 1:
+            return dataclasses.replace(value)
+
+        state.mark_read()
         state.mark_used()
         return value
 

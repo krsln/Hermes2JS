@@ -23,7 +23,7 @@ function privateStaticTest() {
     // CODE → <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
     // USED → r2 = new r1[8]();
     // CODE → <SelectObject>: <Reg8: 5, Reg8: 3, Reg8: 2>
-    // USED → r5 = new r1[8]();
+    r5 = new r1[8]()
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 8>
     // USED → r3 = r1[8];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)

@@ -21,7 +21,7 @@ function mapTest() {
     // CODE → <Construct>: <Reg8: 0, Reg8: 0, UInt8: 1>
     // USED → r0 = new Map();
     // CODE → <SelectObject>: <Reg8: 2, Reg8: 2, Reg8: 0>
-    // USED → r2 = new Map();
+    r2 = new Map()
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 5, string_id: 185>  # String: 'set' (Identifier)
     // USED → r4 = r2.set;
     // CODE → <LoadConstString>: <Reg8: 3, string_id: 5105>  # String: 'alice' (String)

@@ -54,7 +54,7 @@ function logicalShortCircuitTest(param1, param2) {
         // CODE → <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 3>
         console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "nullish-right")
         // CODE → <Mov>: <Reg8: 4, Reg8: 2>
-        // USED → r4 = param1 || param1 && param2;
+        // USED → r4 = param2;
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

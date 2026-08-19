@@ -26,7 +26,7 @@ async function* anon_15045() {
     // CODE → <GetById>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 10971>  # String: 'whileTest' (Identifier)
     // USED → r1 = r1.whileTest;
     // CODE → <LoadConstUndefined>: <Reg8: 2>
-    // USED → r2 = undefined;
+    r2 = undefined
     // CODE → <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
     r1 = r1.whileTest.call(r2)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 2>

@@ -33,7 +33,7 @@ async function* anon_15189() {
         // CODE → <LoadFromEnvironment>: <Reg8: 9, Reg8: 4, UInt8: 2>
         // USED → r9 = r4[2];
         // CODE → <LoadConstUndefined>: <Reg8: 2>
-        // USED → r2 = undefined;
+        r2 = undefined
         // CODE → <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
         // USED → r5 = 1;
         // CODE → <Call2>: <Reg8: 6, Reg8: 9, Reg8: 2, Reg8: 5>

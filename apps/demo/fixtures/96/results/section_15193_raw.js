@@ -24,7 +24,7 @@ async function* anon_15193() {
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 3>
     // USED → r1 = r4[3];
     // CODE → <LoadConstUndefined>: <Reg8: 5>
-    // USED → r5 = undefined;
+    r5 = undefined
     // CODE → <Call1>: <Reg8: 1, Reg8: 1, Reg8: 5>
     // USED → r1 = await r4[3].call(r5);
     // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000031
