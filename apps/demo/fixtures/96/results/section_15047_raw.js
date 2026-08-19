@@ -1,68 +1,68 @@
 function whileTest() {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <GetGlobalObject>: <Reg8: 0>
+    // CODE → addr:  0 | <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr:  2 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr:  8 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4647>  # String: '__BC:ControlFlow/WhileTests/whileTest/start' (String)
+    // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 4647>  # String: '__BC:ControlFlow/WhileTests/whileTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/WhileTests/whileTest/start";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/WhileTests/whileTest/start")
-    // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 5>
+    // CODE → addr: 22 | <LoadConstUInt8>: <Reg8: 4, UInt8: 5>
     // USED → r4 = 5;
-    // CODE → <LoadConstString>: <Reg8: 3, string_id: 4131>  # String: '__BC:ControlFlow/WhileTests/whileTest/if-continue' (String)
+    // CODE → addr: 25 | <LoadConstString>: <Reg8: 3, string_id: 4131>  # String: '__BC:ControlFlow/WhileTests/whileTest/if-continue' (String)
     // USED → r3 = "__BC:ControlFlow/WhileTests/whileTest/if-continue";
-    // CODE → <LoadConstString>: <Reg8: 2, string_id: 2406>  # String: 'while' (String)
+    // CODE → addr: 29 | <LoadConstString>: <Reg8: 2, string_id: 2406>  # String: 'while' (String)
     // USED → r2 = "while";
-    // CODE → <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
+    // CODE → addr: 33 | <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     // USED → r1 = 2;
-    // CODE → <LoadConstZero>: <Reg8: 5>
+    // CODE → addr: 36 | <LoadConstZero>: <Reg8: 5>
     // USED → r5 = 0;
     // ──────────────── Block 1 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr: 38 | <TryGetById>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r7 = console;
-    // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr: 44 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r6 = console.log;
-    // CODE → <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
+    // CODE → addr: 49 | <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
     console.log("while", r5)
-    // CODE → <Mov>: <Reg8: 7, Reg8: 5>
+    // CODE → addr: 55 | <Mov>: <Reg8: 7, Reg8: 5>
     r7 = 0
-    // CODE → <JStrictEqual>: <Addr8: 9, Reg8: 7, Reg8: 1>  # Address: 00000043
+    // CODE → addr: 58 | <JStrictEqual>: <Addr8: 9, Reg8: 7, Reg8: 1>  # Address: 00000043
     // → r7 = 0
     if (r7 === 2) goto label_67;
     // ──────────────── Block 2 ──────────────── 
-    // CODE → <Inc>: <Reg8: 6, Reg8: 7>
+    // CODE → addr: 62 | <Inc>: <Reg8: 6, Reg8: 7>
     r6 = r7 + 1
-    // CODE → <Jmp>: <Addr8: 21>  # Address: 00000056
+    // CODE → addr: 65 | <Jmp>: <Addr8: 21>  # Address: 00000056
     goto label_86;
     // ──────────────── Block 3 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr: 67 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r9 = console;
-    // CODE → <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr: 73 | <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r8 = console.log;
-    // CODE → <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
+    // CODE → addr: 78 | <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
     console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
-    // CODE → <Inc>: <Reg8: 6, Reg8: 7>
+    // CODE → addr: 83 | <Inc>: <Reg8: 6, Reg8: 7>
     // USED → r6 = r7 + 1;
     // ──────────────── Block 4 ──────────────── 
-    // CODE → <Mov>: <Reg8: 5, Reg8: 6>
+    // CODE → addr: 86 | <Mov>: <Reg8: 5, Reg8: 6>
     r5 = r7 + 1
-    // CODE → <JLess>: <Addr8: -51, Reg8: 5, Reg8: 4>  # Address: 00000026
+    // CODE → addr: 89 | <JLess>: <Addr8: -51, Reg8: 5, Reg8: 4>  # Address: 00000026
     // → r5 = r7 + 1
     if (r5 < 5) goto label_38;
     // ──────────────── Block 5 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr: 93 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
-    // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr: 99 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4644>  # String: '__BC:ControlFlow/WhileTests/whileTest/end' (String)
+    // CODE → addr:104 | <LoadConstString>: <Reg8: 0, string_id: 4644>  # String: '__BC:ControlFlow/WhileTests/whileTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/WhileTests/whileTest/end";
-    // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+    // CODE → addr:108 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:ControlFlow/WhileTests/whileTest/end")
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
+    // CODE → addr:113 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → <Ret>: <Reg8: 0>
+    // CODE → addr:115 | <Ret>: <Reg8: 0>
     return undefined;
 }

@@ -1,33 +1,33 @@
 function _callAsyncTests() {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <LoadConstUndefined>: <Reg8: 4>
+    // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 4>
     r4 = undefined
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
+    // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
-    // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
+    // CODE → addr:  4 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
-    // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 1>
+    // CODE → addr:  7 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 1>
     r2 = r1[1]
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
+    // CODE → addr: 11 | <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
     // USED → r3 = r2.default;
-    // CODE → <CreateEnvironment>: <Reg8: 2>
+    // CODE → addr: 16 | <CreateEnvironment>: <Reg8: 2>
     r2 = createEnvironment()
-    // CODE → <CreateGeneratorClosure>: <Reg8: 2, Reg8: 2, function_id: 15192>  # Function: [#15192  of 9 bytes]: 1 params @ offset 0x0026b5f4
+    // CODE → addr: 18 | <CreateGeneratorClosure>: <Reg8: 2, Reg8: 2, function_id: 15192>  # Function: [#15192  of 9 bytes]: 1 params @ offset 0x0026b5f4
     // USED → r2 = function_15192;
-    // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
+    // CODE → addr: 23 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
     r3 = r2.default.call(r4, r2)
-    // CODE → <StoreToEnvironment>: <Reg8: 1, UInt8: 11, Reg8: 3>
+    // CODE → addr: 28 | <StoreToEnvironment>: <Reg8: 1, UInt8: 11, Reg8: 3>
     r1[11] = r3
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 65>  # String: 'apply' (Identifier)
+    // CODE → addr: 32 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 65>  # String: 'apply' (Identifier)
     // USED → r2 = r3.apply;
-    // CODE → <ReifyArguments>: <Reg8: 0>
+    // CODE → addr: 37 | <ReifyArguments>: <Reg8: 0>
     // USED → r0 = arguments;
-    // CODE → <Mov>: <Reg8: 1, Reg8: 0>
+    // CODE → addr: 39 | <Mov>: <Reg8: 1, Reg8: 0>
     // USED → r1 = arguments;
-    // CODE → <LoadParam>: <Reg8: 0, UInt8: 0>
+    // CODE → addr: 42 | <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this;
-    // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
+    // CODE → addr: 45 | <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
     r0 = r3.apply(this, r1)
-    // CODE → <Ret>: <Reg8: 0>
+    // CODE → addr: 51 | <Ret>: <Reg8: 0>
     return r0;
 }

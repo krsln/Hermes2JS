@@ -1,83 +1,83 @@
 function closureLoopTest() {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <CreateFunctionEnvironment>: <Reg8: 2, UInt8: 1>
+    // CODE → addr:  0 | <CreateFunctionEnvironment>: <Reg8: 2, UInt8: 1>
     // USED → r2 = __environment__;
-    // CODE → <GetGlobalObject>: <Reg8: 1>
+    // CODE → addr:  3 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:  5 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr: 11 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4927>  # String: '__BC:Functions/ClosureTests/closureLoopTest/start' (String)
+    // CODE → addr: 16 | <LoadConstString>: <Reg8: 0, string_id: 4927>  # String: '__BC:Functions/ClosureTests/closureLoopTest/start' (String)
     // USED → r0 = "__BC:Functions/ClosureTests/closureLoopTest/start";
-    // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
+    // CODE → addr: 20 | <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
     console.log("__BC:Functions/ClosureTests/closureLoopTest/start")
-    // CODE → <NewArray>: <Reg8: 0, UInt16: 0>
+    // CODE → addr: 25 | <NewArray>: <Reg8: 0, UInt16: 0>
     r0 = []
-    // CODE → <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
+    // CODE → addr: 29 | <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
     __environment__[0] = r0
-    // CODE → <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 12480>  # Function: [#12480 _loop of 39 bytes]: 2 params @ offset 0x00243e88
+    // CODE → addr: 33 | <CreateClosure>: <Reg8: 6, Reg8: 2, function_id: 12480>  # Function: [#12480 _loop of 39 bytes]: 2 params @ offset 0x00243e88
     // USED → r6 = _loop(param1);
-    // CODE → <LoadConstZero>: <Reg8: 5>
+    // CODE → addr: 38 | <LoadConstZero>: <Reg8: 5>
     // USED → r5 = 0;
-    // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 1>
+    // CODE → addr: 40 | <LoadConstUInt8>: <Reg8: 4, UInt8: 1>
     // USED → r4 = 1;
-    // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
+    // CODE → addr: 43 | <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
     // USED → r3 = 3;
-    // CODE → <LoadConstZero>: <Reg8: 2>
+    // CODE → addr: 46 | <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // ──────────────── Block 1 ──────────────── 
-    // CODE → <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 2>
+    // CODE → addr: 48 | <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 2>
     r7 = _loop(param1).call(0, r2)
-    // CODE → <AddN>: <Reg8: 2, Reg8: 2, Reg8: 4>
+    // CODE → addr: 53 | <AddN>: <Reg8: 2, Reg8: 2, Reg8: 4>
     r2 = r2 + 1
-    // CODE → <JLessN>: <Addr8: -9, Reg8: 2, Reg8: 3>  # Address: 00000030
+    // CODE → addr: 57 | <JLessN>: <Addr8: -9, Reg8: 2, Reg8: 3>  # Address: 00000030
     // → r2 = r2 + 1
     if (r2 < 3) goto label_48;
     // ──────────────── Block 2 ──────────────── 
-    // CODE → <Mov>: <Reg8: 2, Reg8: 0>
+    // CODE → addr: 61 | <Mov>: <Reg8: 2, Reg8: 0>
     r2 = r0
-    // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
+    // CODE → addr: 64 | <IteratorBegin>: <Reg8: 3, Reg8: 2>
     r3 = GetIterator(r2)
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
+    // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // ──────────────── Block 3 ──────────────── 
-    // CODE → <Mov>: <Reg8: 4, Reg8: 2>
+    // CODE → addr: 69 | <Mov>: <Reg8: 4, Reg8: 2>
     r4 = r0
-    // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
+    // CODE → addr: 72 | <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
     r4 = r3.next()
-    // CODE → <Mov>: <Reg8: 5, Reg8: 3>
+    // CODE → addr: 76 | <Mov>: <Reg8: 5, Reg8: 3>
     r5 = r3
-    // CODE → <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000070
+    // CODE → addr: 79 | <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000070
     // → r5 = r3
     if (r5 === undefined) goto label_112;
     // ──────────────── Block 4 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr: 83 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
-    // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr: 89 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = console.log;
-    // CODE → <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
+    // CODE → addr: 94 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
     // USED → r4 = r4.call(undefined);
-    // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+    // CODE → addr: 98 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
     console.log(r4)
-    // CODE → <Jmp>: <Addr8: -34>  # Address: 00000045
+    // CODE → addr:103 | <Jmp>: <Addr8: -34>  # Address: 00000045
     goto label_69;
     // ──────────────── Block 5 ──────────────── 
-    // CODE → <Catch>: <Reg8: 2>
+    // CODE → addr:105 | <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
-    // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
+    // CODE → addr:107 | <IteratorClose>: <Reg8: 3, UInt8: 1>
     r3.return()
-    // CODE → <Throw>: <Reg8: 2>
+    // CODE → addr:110 | <Throw>: <Reg8: 2>
     throw caughtException;
     // ──────────────── Block 6 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:112 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:118 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4924>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
+    // CODE → addr:123 | <LoadConstString>: <Reg8: 1, string_id: 4924>  # String: '__BC:Functions/ClosureTests/closureLoopTest/end' (String)
     // USED → r1 = "__BC:Functions/ClosureTests/closureLoopTest/end";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    // CODE → addr:127 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
-    // CODE → <Ret>: <Reg8: 0>
+    // CODE → addr:132 | <Ret>: <Reg8: 0>
     return undefined;
 }

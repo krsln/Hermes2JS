@@ -67,6 +67,13 @@ class BaseJCompare(OpcodeHandler):
 
         condition = self.build_condition(lhs, rhs)
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
+        # print(
+        #     f"{ctx.entry.opcode}: "
+        #     f"address={ctx.entry.address}, "
+        #     f"offset={offset}, "
+        #     f"target={target}, "
+        #     f"calculated={ctx.entry.address + offset}"
+        # )
 
         # pure control flow: no operand value of its own
         result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)

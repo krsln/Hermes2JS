@@ -1,116 +1,116 @@
 function ifElseChainTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <LoadParam>: <Reg8: 2, UInt8: 1>
+    // CODE → addr:  0 | <LoadParam>: <Reg8: 2, UInt8: 1>
     // USED → r2 = param1;
-    // CODE → <LoadParam>: <Reg8: 3, UInt8: 2>
+    // CODE → addr:  3 | <LoadParam>: <Reg8: 3, UInt8: 2>
     // USED → r3 = param2;
-    // CODE → <GetGlobalObject>: <Reg8: 1>
+    // CODE → addr:  6 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:  8 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
-    // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr: 14 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 4, string_id: 4773>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/start' (String)
+    // CODE → addr: 19 | <LoadConstString>: <Reg8: 4, string_id: 4773>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/start' (String)
     // USED → r4 = "__BC:ControlFlow/IfTests/ifElseChainTest/start";
-    // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+    // CODE → addr: 23 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
     console.log("__BC:ControlFlow/IfTests/ifElseChainTest/start")
-    // CODE → <JmpFalse>: <Addr8: 6, Reg8: 2>  # Address: 00000022
+    // CODE → addr: 28 | <JmpFalse>: <Addr8: 6, Reg8: 2>  # Address: 00000022
     if (!param1) goto label_34;
     // ──────────────── Block 1 ──────────────── 
-    // CODE → <JmpTrue>: <Addr8: 93, Reg8: 3>  # Address: 0000007c
+    // CODE → addr: 31 | <JmpTrue>: <Addr8: 93, Reg8: 3>  # Address: 0000007c
     if (param2) goto label_124;
     // ──────────────── Block 2 ──────────────── 
-    // CODE → <JmpTrue>: <Addr8: 48, Reg8: 2>  # Address: 00000052
+    // CODE → addr: 34 | <JmpTrue>: <Addr8: 48, Reg8: 2>  # Address: 00000052
     if (param1) goto label_82;
     // ──────────────── Block 3 ──────────────── 
-    // CODE → <JmpTrue>: <Addr8: 45, Reg8: 3>  # Address: 00000052
+    // CODE → addr: 37 | <JmpTrue>: <Addr8: 45, Reg8: 3>  # Address: 00000052
     if (param2) goto label_82;
     // ──────────────── Block 4 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr: 40 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = console;
-    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr: 46 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r4 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 3, string_id: 4770>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither' (String)
+    // CODE → addr: 51 | <LoadConstString>: <Reg8: 3, string_id: 4770>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither' (String)
     // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither";
-    // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+    // CODE → addr: 55 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-neither")
-    // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr: 60 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = console;
-    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr: 66 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r4 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 3, string_id: 1889>  # String: 'neither' (String)
+    // CODE → addr: 71 | <LoadConstString>: <Reg8: 3, string_id: 1889>  # String: 'neither' (String)
     // USED → r3 = "neither";
-    // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+    // CODE → addr: 75 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("neither")
-    // CODE → <Jmp>: <Addr8: 84>  # Address: 000000a4
+    // CODE → addr: 80 | <Jmp>: <Addr8: 84>  # Address: 000000a4
     goto label_164;
     // ──────────────── Block 5 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr: 82 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = console;
-    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr: 88 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r4 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 3, string_id: 4769>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-either' (String)
+    // CODE → addr: 93 | <LoadConstString>: <Reg8: 3, string_id: 4769>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-either' (String)
     // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-either";
-    // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+    // CODE → addr: 97 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-either")
-    // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:102 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = console;
-    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:108 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r4 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 3, string_id: 1890>  # String: 'either' (String)
+    // CODE → addr:113 | <LoadConstString>: <Reg8: 3, string_id: 1890>  # String: 'either' (String)
     // USED → r3 = "either";
-    // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+    // CODE → addr:117 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("either")
-    // CODE → <Jmp>: <Addr8: 42>  # Address: 000000a4
+    // CODE → addr:122 | <Jmp>: <Addr8: 42>  # Address: 000000a4
     goto label_164;
     // ──────────────── Block 6 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:124 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = console;
-    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:130 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r4 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 3, string_id: 4768>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-both' (String)
+    // CODE → addr:135 | <LoadConstString>: <Reg8: 3, string_id: 4768>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-both' (String)
     // USED → r3 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-both";
-    // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+    // CODE → addr:139 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-both")
-    // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:144 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = console;
-    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:150 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r4 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 3, string_id: 381>  # String: 'both' (String)
+    // CODE → addr:155 | <LoadConstString>: <Reg8: 3, string_id: 381>  # String: 'both' (String)
     // USED → r3 = "both";
-    // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
+    // CODE → addr:159 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("both")
     // ──────────────── Block 7 ──────────────── 
-    // CODE → <JmpTrue>: <Addr8: 43, Reg8: 2>  # Address: 000000cf
+    // CODE → addr:164 | <JmpTrue>: <Addr8: 43, Reg8: 2>  # Address: 000000cf
     if (param1) goto label_207;
     // ──────────────── Block 8 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:167 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:173 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 2, string_id: 4771>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-not-a' (String)
+    // CODE → addr:178 | <LoadConstString>: <Reg8: 2, string_id: 4771>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/branch-not-a' (String)
     // USED → r2 = "__BC:ControlFlow/IfTests/ifElseChainTest/branch-not-a";
-    // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+    // CODE → addr:182 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:ControlFlow/IfTests/ifElseChainTest/branch-not-a")
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:187 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:193 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 2, string_id: 669>  # String: 'not a' (String)
+    // CODE → addr:198 | <LoadConstString>: <Reg8: 2, string_id: 669>  # String: 'not a' (String)
     // USED → r2 = "not a";
-    // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+    // CODE → addr:202 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("not a")
     // ──────────────── Block 9 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:207 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:213 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 2026>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/end' (String)
+    // CODE → addr:218 | <LoadConstString>: <Reg8: 1, string_id: 2026>  # String: '__BC:ControlFlow/IfTests/ifElseChainTest/end' (String)
     // USED → r1 = "__BC:ControlFlow/IfTests/ifElseChainTest/end";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    // CODE → addr:222 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/IfTests/ifElseChainTest/end")
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
+    // CODE → addr:227 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → <Ret>: <Reg8: 0>
+    // CODE → addr:229 | <Ret>: <Reg8: 0>
     return undefined;
 }

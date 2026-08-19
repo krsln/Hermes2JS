@@ -1,15 +1,15 @@
 function delay(param1) {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <GetGlobalObject>: <Reg8: 0>
+    // CODE → addr:  0 | <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 0, string_id: 26>  # String: 'Promise' (Identifier)
+    // CODE → addr:  2 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 0, string_id: 26>  # String: 'Promise' (Identifier)
     // USED → r2 = Promise;
-    // CODE → <GetById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 7302>  # String: 'resolve' (Identifier)
+    // CODE → addr:  8 | <GetById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 7302>  # String: 'resolve' (Identifier)
     // USED → r1 = Promise.resolve;
-    // CODE → <LoadParam>: <Reg8: 0, UInt8: 1>
+    // CODE → addr: 14 | <LoadParam>: <Reg8: 0, UInt8: 1>
     // USED → r0 = param1;
-    // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+    // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     r0 = Promise.resolve(param1)
-    // CODE → <Ret>: <Reg8: 0>
+    // CODE → addr: 22 | <Ret>: <Reg8: 0>
     return r0;
 }

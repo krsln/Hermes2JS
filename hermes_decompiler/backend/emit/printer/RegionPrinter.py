@@ -114,7 +114,7 @@ class RegionPrinter:
                     else bytecode.strip()
                 )
 
-                self.ctx.write(lines, f"// CODE → {bytecode}")
+                self.ctx.write(lines, f"// CODE → addr:{instruction.entry.address:>3} | {bytecode}")
 
             if instruction.statement is not None:
                 self.ctx.write(lines, self.statements.print(instruction.statement))

@@ -1,123 +1,123 @@
 function complexTest() {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <GetGlobalObject>: <Reg8: 0>
+    // CODE → addr:  0 | <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr:  2 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr:  8 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4573>  # String: '__BC:ControlFlow/ComplexTests/complexTest/start' (String)
+    // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 4573>  # String: '__BC:ControlFlow/ComplexTests/complexTest/start' (String)
     // USED → r1 = "__BC:ControlFlow/ComplexTests/complexTest/start";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/ComplexTests/complexTest/start")
-    // CODE → <NewArrayWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 5, UInt16: 23616>  # Array: [1, 2, 3, 4, 5]
+    // CODE → addr: 22 | <NewArrayWithBuffer>: <Reg8: 12, UInt16: 5, UInt16: 5, UInt16: 23616>  # Array: [1, 2, 3, 4, 5]
     r12 = [1, 2, 3, 4, 5]
-    // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+    // CODE → addr: 30 | <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     // USED → r1 = r12.length;
-    // CODE → <LoadConstZero>: <Reg8: 11>
+    // CODE → addr: 35 | <LoadConstZero>: <Reg8: 11>
     // USED → r11 = 0;
-    // CODE → <Less>: <Reg8: 1, Reg8: 11, Reg8: 1>
+    // CODE → addr: 37 | <Less>: <Reg8: 1, Reg8: 11, Reg8: 1>
     // USED → r1 = 0 < r12.length;
-    // CODE → <LoadConstString>: <Reg8: 10, string_id: 855>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-1' (String)
+    // CODE → addr: 41 | <LoadConstString>: <Reg8: 10, string_id: 855>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-1' (String)
     // USED → r10 = "__BC:ControlFlow/ComplexTests/complexTest/case-1";
-    // CODE → <LoadConstString>: <Reg8: 9, string_id: 4563>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-2-continue' (String)
+    // CODE → addr: 45 | <LoadConstString>: <Reg8: 9, string_id: 4563>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-2-continue' (String)
     // USED → r9 = "__BC:ControlFlow/ComplexTests/complexTest/case-2-continue";
-    // CODE → <LoadConstString>: <Reg8: 8, string_id: 4566>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-3' (String)
+    // CODE → addr: 49 | <LoadConstString>: <Reg8: 8, string_id: 4566>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-3' (String)
     // USED → r8 = "__BC:ControlFlow/ComplexTests/complexTest/case-3";
-    // CODE → <LoadConstString>: <Reg8: 7, string_id: 11999>  # String: 'three' (Identifier)
+    // CODE → addr: 53 | <LoadConstString>: <Reg8: 7, string_id: 11999>  # String: 'three' (Identifier)
     // USED → r7 = "three";
-    // CODE → <LoadConstString>: <Reg8: 6, string_id: 4567>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-default' (String)
+    // CODE → addr: 57 | <LoadConstString>: <Reg8: 6, string_id: 4567>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-default' (String)
     // USED → r6 = "__BC:ControlFlow/ComplexTests/complexTest/case-default";
-    // CODE → <LoadConstString>: <Reg8: 5, string_id: 1881>  # String: 'other' (String)
+    // CODE → addr: 61 | <LoadConstString>: <Reg8: 5, string_id: 1881>  # String: 'other' (String)
     // USED → r5 = "other";
-    // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
+    // CODE → addr: 65 | <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
     // USED → r4 = 3;
-    // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 2>
+    // CODE → addr: 68 | <LoadConstUInt8>: <Reg8: 3, UInt8: 2>
     // USED → r3 = 2;
-    // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
+    // CODE → addr: 71 | <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
-    // CODE → <JmpFalseLong>: <Addr32: 142, Reg8: 1>  # Address: 000000d8
+    // CODE → addr: 74 | <JmpFalseLong>: <Addr32: 142, Reg8: 1>  # Address: 000000d8
     // → r12 = [1, 2, 3, 4, 5]
     if (!(0 < r12.length)) goto label_216;
     // ──────────────── Block 1 ──────────────── 
-    // CODE → <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 11>
+    // CODE → addr: 80 | <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 11>
     r13 = r12[r11]
-    // CODE → <Mov>: <Reg8: 1, Reg8: 11>
+    // CODE → addr: 84 | <Mov>: <Reg8: 1, Reg8: 11>
     r1 = 0
-    // CODE → <JStrictEqual>: <Addr8: 98, Reg8: 2, Reg8: 13>  # Address: 000000b9
+    // CODE → addr: 87 | <JStrictEqual>: <Addr8: 98, Reg8: 2, Reg8: 13>  # Address: 000000b9
     // → r13 = r12[r11]
     if (1 === r13) goto label_185;
     // ──────────────── Block 2 ──────────────── 
-    // CODE → <JStrictEqual>: <Addr8: 76, Reg8: 3, Reg8: 13>  # Address: 000000a7
+    // CODE → addr: 91 | <JStrictEqual>: <Addr8: 76, Reg8: 3, Reg8: 13>  # Address: 000000a7
     if (2 === r13) goto label_167;
     // ──────────────── Block 3 ──────────────── 
-    // CODE → <JStrictEqual>: <Addr8: 38, Reg8: 4, Reg8: 13>  # Address: 00000085
+    // CODE → addr: 95 | <JStrictEqual>: <Addr8: 38, Reg8: 4, Reg8: 13>  # Address: 00000085
     if (3 === r13) goto label_133;
     // ──────────────── Block 4 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr: 99 | <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r14 = console;
-    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr:105 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r13 = console.log;
-    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 6>
+    // CODE → addr:110 | <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 6>
     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-default")
-    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr:115 | <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r14 = console;
-    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr:121 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r13 = console.log;
-    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 5>
+    // CODE → addr:126 | <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 5>
     console.log("other")
-    // CODE → <Jmp>: <Addr8: 70>  # Address: 000000c9
+    // CODE → addr:131 | <Jmp>: <Addr8: 70>  # Address: 000000c9
     goto label_201;
     // ──────────────── Block 5 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr:133 | <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r14 = console;
-    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr:139 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r13 = console.log;
-    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 8>
+    // CODE → addr:144 | <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 8>
     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-3")
-    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr:149 | <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r14 = console;
-    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr:155 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r13 = console.log;
-    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7>
+    // CODE → addr:160 | <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7>
     console.log("three")
-    // CODE → <Jmp>: <Addr8: 36>  # Address: 000000c9
+    // CODE → addr:165 | <Jmp>: <Addr8: 36>  # Address: 000000c9
     goto label_201;
     // ──────────────── Block 6 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr:167 | <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r14 = console;
-    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr:173 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r13 = console.log;
-    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 9>
+    // CODE → addr:178 | <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 9>
     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-2-continue")
-    // CODE → <Jmp>: <Addr8: 18>  # Address: 000000c9
+    // CODE → addr:183 | <Jmp>: <Addr8: 18>  # Address: 000000c9
     goto label_201;
     // ──────────────── Block 7 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr:185 | <TryGetById>: <Reg8: 14, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r14 = console;
-    // CODE → <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr:191 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r13 = console.log;
-    // CODE → <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 10>
+    // CODE → addr:196 | <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 10>
     console.log("__BC:ControlFlow/ComplexTests/complexTest/case-1")
     // ──────────────── Block 8 ──────────────── 
-    // CODE → <Inc>: <Reg8: 11, Reg8: 1>
+    // CODE → addr:201 | <Inc>: <Reg8: 11, Reg8: 1>
     r11 = r1 + 1
-    // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+    // CODE → addr:204 | <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     r1 = r12.length
-    // CODE → <JLessLong>: <Addr32: -129, Reg8: 11, Reg8: 1>  # Address: 00000050
+    // CODE → addr:209 | <JLessLong>: <Addr32: -129, Reg8: 11, Reg8: 1>  # Address: 00000050
     // → r1 = r12.length; r11 = r1 + 1
     if (r11 < r1) goto label_80;
     // ──────────────── Block 9 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // CODE → addr:216 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
-    // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // CODE → addr:222 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4570>  # String: '__BC:ControlFlow/ComplexTests/complexTest/end' (String)
+    // CODE → addr:227 | <LoadConstString>: <Reg8: 0, string_id: 4570>  # String: '__BC:ControlFlow/ComplexTests/complexTest/end' (String)
     // USED → r0 = "__BC:ControlFlow/ComplexTests/complexTest/end";
-    // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+    // CODE → addr:231 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:ControlFlow/ComplexTests/complexTest/end")
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
+    // CODE → addr:236 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → <Ret>: <Reg8: 0>
+    // CODE → addr:238 | <Ret>: <Reg8: 0>
     return undefined;
 }

@@ -1,136 +1,136 @@
 function spreadArrayTest() {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <GetGlobalObject>: <Reg8: 1>
+    // CODE → addr:  0 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:  2 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:  8 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4718>  # String: '__BC:Arrays/SpreadTests/spreadArrayTest/start' (String)
+    // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 4718>  # String: '__BC:Arrays/SpreadTests/spreadArrayTest/start' (String)
     // USED → r0 = "__BC:Arrays/SpreadTests/spreadArrayTest/start";
-    // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+    // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Arrays/SpreadTests/spreadArrayTest/start")
-    // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 19164>  # Array: [1, 2, 3]
+    // CODE → addr: 22 | <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 19164>  # Array: [1, 2, 3]
     r3 = [1, 2, 3]
-    // CODE → <NewArray>: <Reg8: 0, UInt16: 0>
+    // CODE → addr: 30 | <NewArray>: <Reg8: 0, UInt16: 0>
     // USED → r0 = [];
-    // CODE → <Mov>: <Reg8: 13, Reg8: 0>
+    // CODE → addr: 34 | <Mov>: <Reg8: 13, Reg8: 0>
     r13 = r0
-    // CODE → <Mov>: <Reg8: 12, Reg8: 3>
+    // CODE → addr: 37 | <Mov>: <Reg8: 12, Reg8: 3>
     r12 = r3
-    // CODE → <LoadConstZero>: <Reg8: 11>
+    // CODE → addr: 40 | <LoadConstZero>: <Reg8: 11>
     r11 = 0
-    // CODE → <CallBuiltin>: <Reg8: 11, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+    // CODE → addr: 42 | <CallBuiltin>: <Reg8: 11, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
     r11 = arraySpread(r7, r8, r9, r10)
-    // CODE → <NewArrayWithBuffer>: <Reg8: 12, UInt16: 3, UInt16: 3, UInt16: 11325>  # Array: [4, 5, 6]
+    // CODE → addr: 46 | <NewArrayWithBuffer>: <Reg8: 12, UInt16: 3, UInt16: 3, UInt16: 11325>  # Array: [4, 5, 6]
     r12 = [4, 5, 6]
-    // CODE → <Mov>: <Reg8: 13, Reg8: 0>
+    // CODE → addr: 54 | <Mov>: <Reg8: 13, Reg8: 0>
     r13 = r0
-    // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+    // CODE → addr: 57 | <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
     r4 = arraySpread(r0, r1, r2, r3)
-    // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr: 61 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = console;
-    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr: 67 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r4 = console.log;
-    // CODE → <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 0>
+    // CODE → addr: 72 | <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 0>
     console.log(r0)
-    // CODE → <NewArrayWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 1, UInt16: 17298>  # Array: [0]
+    // CODE → addr: 77 | <NewArrayWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 1, UInt16: 17298>  # Array: [0]
     // USED → r5 = [0];
-    // CODE → <LoadConstUInt8>: <Reg8: 8, UInt8: 1>
+    // CODE → addr: 85 | <LoadConstUInt8>: <Reg8: 8, UInt8: 1>
     // USED → r8 = 1;
-    // CODE → <Mov>: <Reg8: 13, Reg8: 5>
+    // CODE → addr: 88 | <Mov>: <Reg8: 13, Reg8: 5>
     r13 = r5
-    // CODE → <Mov>: <Reg8: 12, Reg8: 3>
+    // CODE → addr: 91 | <Mov>: <Reg8: 12, Reg8: 3>
     r12 = r3
-    // CODE → <Mov>: <Reg8: 11, Reg8: 8>
+    // CODE → addr: 94 | <Mov>: <Reg8: 11, Reg8: 8>
     r11 = 1
-    // CODE → <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+    // CODE → addr: 97 | <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
     r4 = arraySpread(r0, r1, r2, r3)
-    // CODE → <LoadConstUInt8>: <Reg8: 3, UInt8: 99>
+    // CODE → addr:101 | <LoadConstUInt8>: <Reg8: 3, UInt8: 99>
     // USED → r3 = 99;
-    // CODE → <DefineOwnByVal>: <Reg8: 5, Reg8: 3, Reg8: 4, UInt8: 1>
+    // CODE → addr:104 | <DefineOwnByVal>: <Reg8: 5, Reg8: 3, Reg8: 4, UInt8: 1>
     r5[r4] = 99
-    // CODE → <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:109 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:115 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
-    // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
+    // CODE → addr:120 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
     console.log(r5)
-    // CODE → <Mov>: <Reg8: 7, Reg8: 0>
+    // CODE → addr:125 | <Mov>: <Reg8: 7, Reg8: 0>
     r7 = r0
-    // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 7>
+    // CODE → addr:128 | <IteratorBegin>: <Reg8: 3, Reg8: 7>
     r3 = GetIterator(r7)
-    // CODE → <Mov>: <Reg8: 0, Reg8: 7>
+    // CODE → addr:131 | <Mov>: <Reg8: 0, Reg8: 7>
     r0 = r0
-    // CODE → <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 0>
+    // CODE → addr:134 | <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 0>
     r4 = r3.next()
-    // CODE → <Mov>: <Reg8: 5, Reg8: 3>
+    // CODE → addr:138 | <Mov>: <Reg8: 5, Reg8: 3>
     // USED → r5 = r3;
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
+    // CODE → addr:141 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → <StrictEq>: <Reg8: 6, Reg8: 5, Reg8: 0>
+    // CODE → addr:143 | <StrictEq>: <Reg8: 6, Reg8: 5, Reg8: 0>
     // USED → r6 = r3 === undefined;
-    // CODE → <LoadConstUndefined>: <Reg8: 5>
+    // CODE → addr:147 | <LoadConstUndefined>: <Reg8: 5>
     r5 = undefined
-    // CODE → <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 0000009b
+    // CODE → addr:149 | <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 0000009b
     // → r3 = GetIterator(r7)
     if (r3 === undefined) goto label_155;
     // ──────────────── Block 1 ──────────────── 
-    // CODE → <Mov>: <Reg8: 5, Reg8: 4>
+    // CODE → addr:152 | <Mov>: <Reg8: 5, Reg8: 4>
     // USED → r5 = r4;
     // ──────────────── Block 2 ──────────────── 
-    // CODE → <NewArray>: <Reg8: 4, UInt16: 0>
+    // CODE → addr:155 | <NewArray>: <Reg8: 4, UInt16: 0>
     // USED → r4 = [];
-    // CODE → <LoadConstZero>: <Reg8: 2>
+    // CODE → addr:159 | <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
-    // CODE → <JmpTrue>: <Addr8: 43, Reg8: 6>  # Address: 000000cc
+    // CODE → addr:161 | <JmpTrue>: <Addr8: 43, Reg8: 6>  # Address: 000000cc
     if (r3 === undefined) goto label_204;
     // ──────────────── Block 3 ──────────────── 
-    // CODE → <Mov>: <Reg8: 6, Reg8: 7>
+    // CODE → addr:164 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r0
-    // CODE → <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>
+    // CODE → addr:167 | <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>
     r10 = r3.next()
-    // CODE → <Mov>: <Reg8: 6, Reg8: 3>
+    // CODE → addr:171 | <Mov>: <Reg8: 6, Reg8: 3>
     // USED → r6 = r3;
-    // CODE → <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 0>
+    // CODE → addr:174 | <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 0>
     // USED → r6 = r3 === undefined;
-    // CODE → <Mov>: <Reg8: 9, Reg8: 2>
+    // CODE → addr:178 | <Mov>: <Reg8: 9, Reg8: 2>
     // USED → r9 = 0;
-    // CODE → <JmpTrue>: <Addr8: 23, Reg8: 6>  # Address: 000000cc
+    // CODE → addr:181 | <JmpTrue>: <Addr8: 23, Reg8: 6>  # Address: 000000cc
     if (r3 === undefined) goto label_204;
     // ──────────────── Block 4 ──────────────── 
-    // CODE → <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
+    // CODE → addr:184 | <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
     r4[0] = r10
-    // CODE → <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
+    // CODE → addr:188 | <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
     r2 = r9 + 1
-    // CODE → <Jmp>: <Addr8: -28>  # Address: 000000a4
+    // CODE → addr:192 | <Jmp>: <Addr8: -28>  # Address: 000000a4
     goto label_164;
     // ──────────────── Block 5 ──────────────── 
-    // CODE → <Catch>: <Reg8: 2>
+    // CODE → addr:194 | <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
-    // CODE → <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 000000ca
+    // CODE → addr:196 | <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 000000ca
     if (r3 === undefined) goto label_202;
     // ──────────────── Block 6 ──────────────── 
-    // CODE → <IteratorClose>: <Reg8: 3, UInt8: 1>
+    // CODE → addr:199 | <IteratorClose>: <Reg8: 3, UInt8: 1>
     r3.return()
     // ──────────────── Block 7 ──────────────── 
-    // CODE → <Throw>: <Reg8: 2>
+    // CODE → addr:202 | <Throw>: <Reg8: 2>
     throw caughtException;
     // ──────────────── Block 8 ──────────────── 
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:204 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:210 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
-    // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
+    // CODE → addr:215 | <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4>
     console.log(r5, r4)
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // CODE → addr:221 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // CODE → addr:227 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4717>  # String: '__BC:Arrays/SpreadTests/spreadArrayTest/end' (String)
+    // CODE → addr:232 | <LoadConstString>: <Reg8: 1, string_id: 4717>  # String: '__BC:Arrays/SpreadTests/spreadArrayTest/end' (String)
     // USED → r1 = "__BC:Arrays/SpreadTests/spreadArrayTest/end";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    // CODE → addr:236 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Arrays/SpreadTests/spreadArrayTest/end")
-    // CODE → <Ret>: <Reg8: 0>
+    // CODE → addr:241 | <Ret>: <Reg8: 0>
     return undefined;
 }
