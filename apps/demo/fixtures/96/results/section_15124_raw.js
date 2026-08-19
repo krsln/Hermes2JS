@@ -31,7 +31,7 @@ function setTest() {
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 5, string_id: 226>  # String: 'size' (Identifier)
     // USED → r0 = r3.size;
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
-    console.log(r0)
+    console.log(r3.size)
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 6, string_id: 59>  # String: 'add' (Identifier)
     // USED → r2 = r3.add;
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 4>

@@ -75,7 +75,7 @@ function mapTest() {
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 8, string_id: 226>  # String: 'size' (Identifier)
     // USED → r0 = r2.size;
     // CODE → <Call2>: <Reg8: 0, Reg8: 3, Reg8: 5, Reg8: 0>
-    console.log(r0)
+    console.log(r2.size)
     // CODE → <Mov>: <Reg8: 9, Reg8: 2>
     r9 = new Map()
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 9>
@@ -136,7 +136,7 @@ function mapTest() {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 226>  # String: 'size' (Identifier)
     // USED → r2 = r2.size;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log(r2)
+    console.log(r2.size)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

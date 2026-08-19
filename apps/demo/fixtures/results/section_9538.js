@@ -25,7 +25,7 @@ function value(param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2>
-    r2 = Math.min(param1, r2)
+    r2 = Math.min(param1, r1.MAX)
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → <PutOwnPrivateBySym>: <Reg8: 1, Reg8: 2, UInt8: 0, Reg8: 3>

@@ -49,7 +49,7 @@ function makeSound() {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 1894>  # String: 'is a' (String)
     // USED → r1 = "is a";
     // CODE → <Call4>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>
-    console.log(r3, "is a", r2)
+    console.log(r1.name, "is a", r1.breed)
     // CODE → <Ret>: <Reg8: 0>
     return undefined;
 }

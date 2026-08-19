@@ -21,7 +21,7 @@ function arrayTest() {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     // USED → r2 = r4.length;
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
-    console.log(r2)
+    console.log(r4.length)
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 4, string_id: 207>  # String: 'push' (Identifier)
     // USED → r3 = r4.push;
     // CODE → <LoadConstUInt8>: <Reg8: 2, UInt8: 100>

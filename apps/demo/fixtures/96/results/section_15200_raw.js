@@ -23,7 +23,7 @@ function get() {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 1072>  # String: ' the animal' (String)
     // USED → r0 = " the animal";
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 1, Reg8: 3, Reg8: 0>
-    r0 = HermesInternal.concat.call("", r3, " the animal")
+    r0 = HermesInternal.concat.call("", r1.name, " the animal")
     // CODE → <Ret>: <Reg8: 0>
     return r0;
 }

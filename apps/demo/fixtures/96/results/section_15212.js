@@ -39,7 +39,7 @@ function set(param1) {
     // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 1, Reg8: 4>
-    r1 = Math.min(param1, r4)
+    r1 = Math.min(param1, r1.MAX)
     // CODE → <PutByVal>: <Reg8: 3, Reg8: 2, Reg8: 1>
     r3[r2[5]] = r1
     // CODE → <Ret>: <Reg8: 0>

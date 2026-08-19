@@ -56,7 +56,7 @@ function classTest() {
     // CODE → <GetById>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 11115>  # String: 'description' (Identifier)
     // USED → r3 = r3.description;
     // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-    console.log(r3)
+    console.log(r3.description)
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
     // USED → r4 = r2[1];
     // CODE → <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 2>

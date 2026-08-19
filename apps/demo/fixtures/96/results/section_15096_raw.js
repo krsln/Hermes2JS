@@ -13,7 +13,7 @@ function greet() {
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 6584>  # String: 'hello' (String)
     // USED → r0 = "hello";
     // CODE → <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
-    console.log("hello", r1)
+    console.log("hello", r0.name)
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → <Ret>: <Reg8: 0>

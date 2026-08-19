@@ -36,7 +36,7 @@ function callDestructuringTests() {
     // CODE → <LoadConstUInt8>: <Reg8: 0, UInt8: 200>
     // USED → r0 = 200;
     // CODE → <Call4>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 0, Reg8: 8, Reg8: 7>
-    console.log(200, r8, (r7 !== undefined) ? r5.page : 1)
+    console.log(200, r5.name, (r7 !== undefined) ? r5.page : 1)
     // CODE → <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = console;
     // CODE → <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

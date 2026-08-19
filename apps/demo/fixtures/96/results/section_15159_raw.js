@@ -54,7 +54,7 @@ function restOnlyTest() {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 169>  # String: 'length' (Identifier)
     // USED → r2 = r5.length;
     // CODE → <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
-    console.log(r2, r5)
+    console.log(r5.length, r5)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

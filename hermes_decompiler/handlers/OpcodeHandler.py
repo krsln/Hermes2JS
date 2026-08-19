@@ -204,6 +204,8 @@ class OpcodeHandler(ABC):
         # _CALL_ARGUMENT_INLINE_OPCODES
         if state.handler in frozenset({
             "CreateClosure",
+            "GetById",
+            "GetByIdShort",
             "LoadConstUInt8",
             "LoadConstString",
             "LoadParam",
@@ -214,6 +216,11 @@ class OpcodeHandler(ABC):
 
                 return value
             elif isinstance(value, Identifier):
+                state.mark_read()
+                state.mark_used()
+
+                return value
+            elif isinstance(value, MemberExpression):
                 state.mark_read()
                 state.mark_used()
 

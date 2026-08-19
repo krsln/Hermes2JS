@@ -33,7 +33,7 @@ function propertyAccessTest() {
     // CODE → <GetById>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 7612>  # String: 'z' (Identifier)
     // USED → r2 = r5.z;
     // CODE → <Call4>: <Reg8: 2, Reg8: 7, Reg8: 8, Reg8: 6, Reg8: 3, Reg8: 2>
-    console.log(r6, r3, r2)
+    console.log(r5.x, r5.y, r5.z)
     // CODE → <DelById>: <Reg8: 2, Reg8: 5, string_id: 41>  # String: 'x' (Identifier)
     r2 = delete r5.x
     // CODE → <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

@@ -65,7 +65,7 @@ function nestedObjectDestructureTest() {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
     // CODE → <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 4, Reg8: 6>
-    console.log(r5, r4, r6)
+    console.log(r0.status, r2.name, r6)
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -27,7 +27,7 @@ function propertyAccessTest() {
     // CODE → <GetById>: <Reg8: 0, Reg8: 4, UInt8: 4, string_id: 6711>  # String: 'z' (Identifier)
     // USED → r0 = r4.z;
     // CODE → <Call4>: <Reg8: 0, Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 2, Reg8: 0>
-    console.log(r3, r2, r0)
+    console.log(r4.x, r4.y, r4.z)
     // CODE → <LoadConstString>: <Reg8: 0, string_id: 30>  # String: 'x' (Identifier)
     // USED → r0 = "x";
     // CODE → <DelByVal>: <Reg8: 2, Reg8: 4, Reg8: 0, UInt8: 1>
