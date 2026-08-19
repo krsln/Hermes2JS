@@ -81,7 +81,7 @@ function mapTest() {
     // CODE → <Call2>: <Reg8: 3, Reg8: 5, Reg8: 8, Reg8: 3>
     console.log(r3)
     // CODE → <Mov>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = new Map();
+    r3 = new Map()
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 3>
     r5 = GetIterator(r3)
     // ──────────────── Block 1 ──────────────── 
@@ -96,7 +96,7 @@ function mapTest() {
     if (r8 === undefined) goto label_302;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 11, Reg8: 9>
-    // USED → r11 = r9;
+    r11 = r9
     // CODE → <IteratorBegin>: <Reg8: 8, Reg8: 11>
     r8 = GetIterator(r11)
     // CODE → <Mov>: <Reg8: 9, Reg8: 11>

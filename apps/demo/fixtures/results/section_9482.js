@@ -47,7 +47,7 @@ function propertyAccessTest() {
     // CODE → <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 4>
     r0 = Object.keys(r4)
     // CODE → <Mov>: <Reg8: 2, Reg8: 0>
-    // USED → r2 = r0;
+    r2 = r0
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 2>
     r3 = GetIterator(r2)
     // CODE → <LoadConstUndefined>: <Reg8: 0>

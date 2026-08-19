@@ -19,7 +19,7 @@ function callGeneratorTests() {
     // CODE → <Call1>: <Reg8: 5, Reg8: 3, Reg8: 0>
     r5 = r2[0].call(r0)
     // CODE → <Mov>: <Reg8: 3, Reg8: 5>
-    // USED → r3 = r5;
+    r3 = r5
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
     r4 = GetIterator(r3)
     // ──────────────── Block 1 ──────────────── 
@@ -56,7 +56,7 @@ function callGeneratorTests() {
     // CODE → <Call2>: <Reg8: 5, Reg8: 4, Reg8: 0, Reg8: 3>
     r5 = r2[1].call(r0, 5)
     // CODE → <Mov>: <Reg8: 3, Reg8: 5>
-    // USED → r3 = r5;
+    r3 = r5
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 3>
     r4 = GetIterator(r3)
     // ──────────────── Block 5 ──────────────── 

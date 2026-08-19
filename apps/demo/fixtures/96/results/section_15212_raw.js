@@ -19,7 +19,7 @@ function set(param1) {
     // CODE → <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 5>
     // USED → r4 = r2[5];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 0>
     // USED → r3 = this;
     // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>

@@ -41,7 +41,7 @@ function spreadObjectTest() {
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
     // USED → r2 = r0[0];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → <Call3>: <Reg8: 4, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2>
     // USED → r4 = r2.default.call(r0, r4, r2);
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

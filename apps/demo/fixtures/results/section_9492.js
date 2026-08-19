@@ -57,7 +57,7 @@ function spreadArrayTest() {
     // CODE → <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
     console.log(r5)
     // CODE → <Mov>: <Reg8: 7, Reg8: 0>
-    // USED → r7 = r0;
+    r7 = r0
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 7>
     r3 = GetIterator(r7)
     // CODE → <Mov>: <Reg8: 0, Reg8: 7>

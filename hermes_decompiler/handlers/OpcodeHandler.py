@@ -150,9 +150,12 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}")
 
         if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression)):
+            state.mark_read()
             return Identifier(name=f"r{reg}")
 
-        if state.reads > 1:
+        # if it has been read at least once before
+        if state.reads > 0:
+            state.mark_read()
             return dataclasses.replace(value)
 
         state.mark_read()

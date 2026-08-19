@@ -17,14 +17,14 @@ function renamedDefaultDestructureTest() {
     // CODE → <PutNewOwnById>: <Reg8: 2, Reg8: 0, string_id: 13118>  # String: 'timeout' (Identifier)
     r2.timeout = 500
     // CODE → <GetById>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 13118>  # String: 'timeout' (Identifier)
-    // USED → r3 = r2.timeout;
+    r3 = r2.timeout
     // CODE → <LoadConstInt>: <Reg8: 5, Imm32: 1000>
     r5 = (r3 === undefined) ? 1000 : r2.timeout
     // CODE → <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 4, string_id: 17670>  # String: 'retries' (Identifier)
-    // USED → r2 = r2.retries;
+    r2 = r2.retries
     // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
     r4 = (r2 === undefined) ? 3 : r2.retries
     // ──────────────── Block 4 ──────────────── 

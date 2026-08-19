@@ -13,7 +13,7 @@ function classTest() {
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 5>
-    // USED → r5 = r1[5];
+    r5 = r1[5]
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = r5.prototype;
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
@@ -41,7 +41,7 @@ function classTest() {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 6>
-    // USED → r5 = r1[6];
+    r5 = r1[6]
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = r5.prototype;
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>

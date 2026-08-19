@@ -23,7 +23,7 @@ function reset() {
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 6>
     // USED → r3 = r0[6];
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → <Call3>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 1, Reg8: 3>
     r2 = r1.default.call(r0, r1, r3)
     // CODE → <LoadConstZero>: <Reg8: 1>

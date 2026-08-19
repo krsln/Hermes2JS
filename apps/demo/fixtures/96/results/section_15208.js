@@ -13,7 +13,7 @@ function privateStaticTest() {
     // CODE → <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 8>
-    // USED → r2 = r1[8];
+    r2 = r1[8]
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r3 = r2.prototype;
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
@@ -25,7 +25,7 @@ function privateStaticTest() {
     // CODE → <SelectObject>: <Reg8: 5, Reg8: 3, Reg8: 2>
     r5 = new r1[8]()
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 8>
-    // USED → r3 = r1[8];
+    r3 = r1[8]
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = r3.prototype;
     // CODE → <CreateThis>: <Reg8: 7, Reg8: 2, Reg8: 3>

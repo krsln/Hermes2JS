@@ -15,7 +15,7 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start")
     // CODE → <LoadParam>: <Reg8: 6, UInt8: 1>
-    // USED → r6 = param1;
+    r6 = param1
     // CODE → <LoadConstZero>: <Reg8: 5>
     // USED → r5 = 0;
     // CODE → <LoadConstZero>: <Reg8: 7>

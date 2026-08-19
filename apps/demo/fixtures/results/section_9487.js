@@ -33,7 +33,7 @@ function nestedArrayDestructureTest() {
     // CODE → <DefineOwnInDenseArray>: <Reg8: 2, Reg8: 1, UInt8: 2>
     r2[2] = r1
     // CODE → <Mov>: <Reg8: 6, Reg8: 2>
-    // USED → r6 = r2;
+    r6 = r2
     // CODE → <IteratorBegin>: <Reg8: 1, Reg8: 6>
     r1 = GetIterator(r6)
     // CODE → <Mov>: <Reg8: 2, Reg8: 6>
@@ -48,11 +48,11 @@ function nestedArrayDestructureTest() {
     r5 = (r1 === undefined) ? undefined : r2
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 11, Reg8: 5>
-    // USED → r11 = (r1 === undefined) ? undefined : r2;
+    r11 = (r1 === undefined) ? undefined : r2
     // CODE → <IteratorBegin>: <Reg8: 2, Reg8: 11>
     r2 = GetIterator(r11)
     // CODE → <Mov>: <Reg8: 5, Reg8: 11>
-    r5 = (r1 === undefined) ? undefined : r2
+    r5 = r2
     // CODE → <IteratorNext>: <Reg8: 12, Reg8: 2, Reg8: 5>
     r12 = r2.next()
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>
@@ -97,7 +97,7 @@ function nestedArrayDestructureTest() {
     r2 = r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined))
     // ──────────────── Block 14 ──────────────── 
     // CODE → <Mov>: <Reg8: 12, Reg8: 9>
-    // USED → r12 = r11;
+    r12 = r11
     // CODE → <IteratorBegin>: <Reg8: 6, Reg8: 12>
     r6 = GetIterator(r12)
     // CODE → <Mov>: <Reg8: 9, Reg8: 12>

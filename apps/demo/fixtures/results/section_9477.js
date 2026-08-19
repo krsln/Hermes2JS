@@ -1,7 +1,7 @@
 function loopBreakCrossesTryBoundaryTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 8, UInt8: 1>
-    // USED → r8 = param1;
+    r8 = param1
     // CODE → <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

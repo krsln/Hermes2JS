@@ -1,7 +1,7 @@
 function tryLoopMultiReturnTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 3, UInt8: 1>
-    // USED → r3 = param1;
+    r3 = param1
     // CODE → <LoadConstUndefined>: <Reg8: 4>
     r4 = undefined
     // CODE → <GetGlobalObject>: <Reg8: 0>

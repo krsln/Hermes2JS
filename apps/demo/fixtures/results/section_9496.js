@@ -49,7 +49,7 @@ function setTest() {
     // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
     console.log(r0)
     // CODE → <Mov>: <Reg8: 2, Reg8: 3>
-    // USED → r2 = new Set([1, 2, 2, 3, 3, 3]);
+    r2 = new Set([1, 2, 2, 3, 3, 3])
     // CODE → <IteratorBegin>: <Reg8: 4, Reg8: 2>
     r4 = GetIterator(r2)
     // CODE → <LoadConstUndefined>: <Reg8: 0>

@@ -25,7 +25,7 @@ function increment() {
     // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 3>
     r2 = r1.default.call(r2, this, r3)
     // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 5>
-    // USED → r1 = r0[5];
+    r1 = r0[5]
     // CODE → <GetByVal>: <Reg8: 0, Reg8: 2, Reg8: 1>
     r0 = r2[r1]
     // CODE → <Inc>: <Reg8: 0, Reg8: 0>

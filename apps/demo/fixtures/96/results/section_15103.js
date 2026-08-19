@@ -52,7 +52,7 @@ function nestedObjectDestructureTest() {
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 12920>  # String: 'page' (Identifier)
-    // USED → r2 = r2.page;
+    r2 = r2.page
     // → r2 = r2.page
     if (r2 !== undefined) {
         // ──────────────── Block 3 ──────────────── 

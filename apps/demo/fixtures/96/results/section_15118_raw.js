@@ -69,7 +69,7 @@ function spreadArrayTest() {
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
     // USED → r2 = r0.default;
     // CODE → <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → <Call2>: <Reg8: 3, Reg8: 2, Reg8: 0, Reg8: 3>
     r3 = r0.default(r3)
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)

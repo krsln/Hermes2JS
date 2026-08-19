@@ -33,7 +33,7 @@ async function* anon_15167(param1) {
     if (!(0 < param1)) goto label_95;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Mov>: <Reg8: 6, Reg8: 4>
-    // USED → r6 = 0;
+    r6 = 0
     // CODE → <JStrictEqual>: <Addr8: 21, Reg8: 6, Reg8: 2>  # Address: 00000048
     // → r6 = 0
     if (r6 === 2) goto label_72;

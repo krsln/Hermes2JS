@@ -16,7 +16,7 @@ function parameterDestructureTest(param1, param2) {
     // USED → r8 = "anon";
     // ──────────────── Block 2 ──────────────── 
     // CODE → <LoadParam>: <Reg8: 4, UInt8: 2>
-    // USED → r4 = param2;
+    r4 = param2
     // CODE → <IteratorBegin>: <Reg8: 3, Reg8: 4>
     r3 = GetIterator(r4)
     // CODE → <Mov>: <Reg8: 5, Reg8: 4>

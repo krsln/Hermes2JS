@@ -53,7 +53,7 @@ async function* anon_15167(param1) {
             for (r4 = 0; r4 < param1; r4 = r6 + 1) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → <Mov>: <Reg8: 6, Reg8: 4>
-                // USED → r6 = 0;
+                r6 = 0
                 // → r6 = 0
                 if (r6 === 2) {
                     // ──────────────── Block 7 ──────────────── 

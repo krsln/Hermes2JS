@@ -91,7 +91,7 @@ function callDestructuringTests() {
     // CODE → <NewArrayWithBuffer>: <Reg8: 7, UInt16: 2, UInt16: 2, UInt16: 48486>  # Array: [9, 10]
     r7 = [9, 10]
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
-    // USED → r6 = r7;
+    r6 = r7
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 6>
     r5 = GetIterator(r6)
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>
@@ -177,7 +177,7 @@ function callDestructuringTests() {
     // CODE → <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 1>
     r7[1] = 1
     // CODE → <Mov>: <Reg8: 6, Reg8: 7>
-    // USED → r6 = r7;
+    r6 = r7
     // CODE → <IteratorBegin>: <Reg8: 5, Reg8: 6>
     r5 = GetIterator(r6)
     // CODE → <Mov>: <Reg8: 7, Reg8: 6>

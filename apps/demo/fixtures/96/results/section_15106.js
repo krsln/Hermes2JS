@@ -5,7 +5,7 @@ function parameterDestructureTest(param1, param2) {
     // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 29>  # String: 'id' (Identifier)
     // USED → r7 = r0.id;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 176>  # String: 'name' (Identifier)
-    // USED → r1 = r0.name;
+    r1 = r0.name
     // CODE → <LoadConstString>: <Reg8: 6, string_id: 518>  # String: 'anon' (String)
     r6 = (r1 === undefined) ? "anon" : r0.name
     // CODE → <LoadConstUndefined>: <Reg8: 0>

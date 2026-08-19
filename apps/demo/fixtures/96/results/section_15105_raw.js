@@ -65,7 +65,7 @@ function nestedArrayDestructureTest() {
     // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 1, UInt16: 1, UInt16: 23655>  # Array: [10]
     // USED → r3 = [10];
     // CODE → <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 6>
-    // USED → r8 = r3[r6];
+    r8 = r3[r6]
     // CODE → <LoadConstZero>: <Reg8: 5>
     r5 = 0
     // CODE → <JStrictEqual>: <Addr8: 7, Reg8: 8, Reg8: 0>  # Address: 000000a4
@@ -76,7 +76,7 @@ function nestedArrayDestructureTest() {
     // USED → r5 = r3[r6];
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByVal>: <Reg8: 7, Reg8: 3, Reg8: 7>
-    // USED → r7 = r3[r7];
+    r7 = r3[r7]
     // CODE → <LoadConstZero>: <Reg8: 6>
     r6 = 0
     // CODE → <JStrictEqual>: <Addr8: 7, Reg8: 7, Reg8: 0>  # Address: 000000b1

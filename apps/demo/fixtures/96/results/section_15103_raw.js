@@ -52,7 +52,7 @@ function nestedObjectDestructureTest() {
     r2 = {  }
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetById>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 12920>  # String: 'page' (Identifier)
-    // USED → r2 = r2.page;
+    r2 = r2.page
     // CODE → <JStrictEqual>: <Addr8: 7, Reg8: 2, Reg8: 0>  # Address: 00000075
     // → r2 = r2.page
     if (r2 === undefined) goto label_117;

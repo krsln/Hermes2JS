@@ -13,7 +13,7 @@ function create(param1) {
     // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0)
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 0>
-    // USED → r3 = r0[0];
+    r3 = r0[0]
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r0 = r3.prototype;
     // CODE → <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 3>
