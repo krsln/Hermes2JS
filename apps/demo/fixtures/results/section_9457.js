@@ -20,17 +20,12 @@ function labeledContinueTest() {
     // USED → r9 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1";
     loop_1:
     // LOOP → START (for)
-    for (r4 = 0; r4 < 3; r4 = r2 + 1) {
+    for (r4 = 0; r4 < 3; r4 = r4 + 1) {
         // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 38 | <Mov>: <Reg8: 2, Reg8: 4>
-        // USED → r2 = 0;
         // LOOP → START (for)
-        for (r0 = 0; r0 < 3; r0 = r1 + 1) {
+        for (r0 = 0; r0 < 3; r0 = r0 + 1) {
             // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 43 | <Mov>: <Reg8: 1, Reg8: 0>
-            // USED → r1 = 0;
-            // → r1 = 0
-            if (r1 === 1) {
+            if (r0 === 1) {
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → addr:  0 | ContinueStatement
                 continue loop_1;
@@ -41,7 +36,7 @@ function labeledContinueTest() {
             // CODE → addr: 56 | <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r11 = console.log;
             // CODE → addr: 61 | <Call3>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 2, Reg8: 1>
-            console.log(r2, r1)
+            console.log(r4, r0)
         }
         // LOOP → END
         // ──────────────── Block 4 ──────────────── 

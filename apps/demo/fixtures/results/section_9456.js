@@ -15,27 +15,23 @@ function labeledBreakTest() {
     // CODE → addr: 25 | <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
     // USED → r6 = 3;
     // LOOP → START (for)
-    for (r4 = 0; r4 < 3; r4 = r2 + 1) {
+    for (r4 = 0; r4 < 3; r4 = r4 + 1) {
         // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 30 | <Mov>: <Reg8: 2, Reg8: 4>
-        // USED → r2 = 0;
         // LOOP → START (for)
-        for (r0 = 0; r0 < 3; r0 = r1 + 1) {
+        for (r0 = 0; r0 < 3; r0 = r0 + 1) {
             // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 35 | <Mov>: <Reg8: 1, Reg8: 0>
-            // USED → r1 = 0;
-            if (r2 !== 1) {
+            if (r4 !== 1) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 46 | <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                 // USED → r10 = console;
                 // CODE → addr: 52 | <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                 // USED → r9 = console.log;
                 // CODE → addr: 57 | <Call3>: <Reg8: 9, Reg8: 9, Reg8: 10, Reg8: 2, Reg8: 1>
-                console.log(r2, r1)
+                console.log(r4, r0)
             } else {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr: 42 | <JStrictEqual>: <Addr8: 39, Reg8: 1, Reg8: 3>  # Address: 00000051
-                if (r1 === 1) goto label_81;
+                if (r0 === 1) goto label_81;
             }
         }
         // LOOP → END
