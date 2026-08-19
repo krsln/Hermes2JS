@@ -23,18 +23,23 @@ class SelectObject(OpcodeHandler):
 
         dest_reg, obj_reg, selector_reg = map(int, match.groups())
 
-        raw_obj = self._peek_raw(ctx.analysis, obj_reg)
-        raw_selector = self._peek_raw(ctx.analysis, selector_reg)
+        state_obj = ctx.analysis.get_register_state(obj_reg)
+        state_selector = ctx.analysis.get_register_state(selector_reg)
+
+        obj_value = state_obj.value if state_obj else None
+        selector_value = state_selector.value if state_selector else None
 
         # If either operand is a NewExpression, unwrap the SelectObject layer
         # and preserve the NewExpression directly, matching JavaScript's `new`
         # constructor semantics.
-        if isinstance(raw_selector, NewExpression):
-            expression = raw_selector
-            self._mark_used(ctx.analysis, selector_reg)
-        elif isinstance(raw_obj, NewExpression):
-            expression = raw_obj
-            self._mark_used(ctx.analysis, obj_reg)
+        if state_selector and isinstance(selector_value, NewExpression):
+            expression = selector_value
+            state_selector.reads += 1
+            state_selector.definition.definition_used = True
+        elif state_obj and isinstance(obj_value, NewExpression):
+            expression = obj_value
+            state_obj.reads += 1
+            state_obj.definition.definition_used = True
         else:
             # Standard computed member access (fallback)
             obj = self.get_register_expression(ctx.analysis, obj_reg)
@@ -45,15 +50,3 @@ class SelectObject(OpcodeHandler):
         ctx.analysis.add_result(result)
 
         return result
-
-    @staticmethod
-    def _peek_raw(analysis, reg):
-        state = analysis.registers.get(f"r{reg}")
-        return state.value if state and state.definition else None
-
-    @staticmethod
-    def _mark_used(analysis, reg):
-        state = analysis.registers.get(f"r{reg}")
-        if state and state.definition:
-            state.reads += 1
-            state.definition.definition_used = True

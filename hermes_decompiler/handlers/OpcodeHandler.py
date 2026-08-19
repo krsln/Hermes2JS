@@ -155,40 +155,14 @@ class OpcodeHandler(ABC):
     def get_register_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier:
         """Always symbolic - never inlines the defining expression."""
 
-        state = analysis.registers.get(f"r{reg}")
+        state = analysis.get_register_state(reg)
 
-        if state is None or state.definition is None:
+        if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
         state.reads += 1
         return Identifier(name=f"r{reg}")
-
-    # @classmethod
-    # def get_raw_state(cls, analysis: HermesAnalysis, reg: int) -> RegisterState | None:
-    #     state = analysis.registers.get(f"r{reg}")
-    #     return state
-
-    # @classmethod
-    # def get_raw_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier | None:
-    #     state = cls.get_raw_state(analysis, reg)
-    #
-    #     if state is None or state.definition is None:
-    #         return Identifier(name=f"r{reg}_undefined")
-    #
-    #     state.reads += 1
-    #     return Identifier(name=f"r{reg}")
-    #
-    # @classmethod
-    # def get_raw_definition(cls, analysis: HermesAnalysis, reg: int) -> OpcodeResult | None:
-    #     state = cls.get_raw_state(analysis, reg)
-    #
-    #     if state is None or state.definition is None:
-    #         return None
-    #
-    #     state.reads += 1
-    #     return state.definition
-
-
+ 
     @classmethod
     def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """
@@ -203,9 +177,9 @@ class OpcodeHandler(ABC):
         identifier.
         """
 
-        state = analysis.registers.get(f"r{reg}")
+        state = analysis.get_register_state(reg)
 
-        if state is None or state.definition is None:
+        if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
         state_value = state.value
@@ -226,9 +200,9 @@ class OpcodeHandler(ABC):
 
     @classmethod
     def resolve_call_argument(cls, analysis: HermesAnalysis, reg: int) -> Expression:
-        state = analysis.registers.get(f"r{reg}")
+        state = analysis.get_register_state(reg)
 
-        if state is None or state.definition is None:
+        if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
         definition = state.definition
@@ -265,9 +239,9 @@ class OpcodeHandler(ABC):
         That preserves switch case labels (r1 = 0; if (r1 === disc)) while
         keeping Mov/Inc/phi-carried values symbolic for loops.
         """
-        state = analysis.registers.get(f"r{reg}")
+        state = analysis.get_register_state(reg)
 
-        if state is None or state.definition is None:
+        if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
         definition = state.definition

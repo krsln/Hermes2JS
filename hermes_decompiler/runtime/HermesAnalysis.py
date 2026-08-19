@@ -6,15 +6,15 @@ from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir import Expression
 
 
-@dataclass
+@dataclass(slots=True)
 class RegisterState:
-    definition: Optional[OpcodeResult]
+    definition: OpcodeResult
     version: int = 0
     reads: int = 0
 
     @property
     def value(self) -> Optional[Expression]:
-        return self.definition.value if self.definition else None
+        return self.definition.value
 
 
 class HermesAnalysis:
@@ -53,6 +53,9 @@ class HermesAnalysis:
         version = prev.version + 1 if prev else 0
 
         self.registers[result.name] = RegisterState(definition=result, version=version)
+
+    def get_register_state(self, reg: int) -> Optional[RegisterState]:
+        return self.registers.get(f"r{reg}")
 
     def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
         return self.generate_js_v1(verbose, raw)

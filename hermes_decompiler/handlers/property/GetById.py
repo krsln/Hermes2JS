@@ -41,9 +41,9 @@ class GetById(OpcodeHandler):
 
     @classmethod
     def resolve_get_by_argument(cls, analysis, reg: int) -> Expression:
-        state = analysis.registers.get(f"r{reg}")
+        state = analysis.get_register_state(reg)
 
-        if state is None or state.definition is None:
+        if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
         definition = state.definition
