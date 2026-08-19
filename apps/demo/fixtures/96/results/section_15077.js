@@ -22,7 +22,7 @@ function tryFinallyNoCatchTest() {
         // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
         // USED → r3 = Error;
         // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-        r0 = Error.prototype
+        // USED → r0 = Error.prototype;
         // CODE → <CreateThis>: <Reg8: 2, Reg8: 0, Reg8: 3>
         // USED → r2 = CreateThis(r0);
         // CODE → <LoadConstString>: <Reg8: 4, string_id: 6760>  # String: 'no catch here' (String)

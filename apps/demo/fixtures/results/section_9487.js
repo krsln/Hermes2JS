@@ -52,7 +52,7 @@ function nestedArrayDestructureTest() {
     // CODE → <IteratorBegin>: <Reg8: 2, Reg8: 11>
     r2 = GetIterator(r11)
     // CODE → <Mov>: <Reg8: 5, Reg8: 11>
-    r5 = r2
+    r5 = (r1 === undefined) ? undefined : r2
     // CODE → <IteratorNext>: <Reg8: 12, Reg8: 2, Reg8: 5>
     r12 = r2.next()
     // CODE → <Mov>: <Reg8: 5, Reg8: 2>

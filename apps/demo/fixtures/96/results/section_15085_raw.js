@@ -62,7 +62,7 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)
     // USED → r9 = Error;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 9, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
-    r2 = Error.prototype
+    // USED → r2 = Error.prototype;
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 9>
     // USED → r3 = CreateThis(r2);
     // CODE → <LoadConstString>: <Reg8: 12, string_id: 839>  # String: 'negative value' (String)

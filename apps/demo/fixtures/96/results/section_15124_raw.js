@@ -13,7 +13,7 @@ function setTest() {
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 3, string_id: 32>  # String: 'Set' (Identifier)
     // USED → r3 = Set;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    r0 = Set.prototype
+    // USED → r0 = Set.prototype;
     // CODE → <CreateThis>: <Reg8: 2, Reg8: 0, Reg8: 3>
     // USED → r2 = CreateThis(r0);
     // CODE → <NewArrayWithBuffer>: <Reg8: 10, UInt16: 6, UInt16: 6, UInt16: 23684>  # Array: [1, 2, 2, 3, 3, 3]

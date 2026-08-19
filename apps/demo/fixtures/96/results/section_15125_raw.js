@@ -13,7 +13,7 @@ function weakMapTest() {
     // CODE → <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 7238>  # String: 'WeakMap' (Identifier)
     // USED → r1 = WeakMap;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    r2 = WeakMap.prototype
+    // USED → r2 = WeakMap.prototype;
     // CODE → <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 1>
     // USED → r2 = CreateThis(r2);
     // CODE → <Mov>: <Reg8: 8, Reg8: 2>

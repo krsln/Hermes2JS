@@ -15,7 +15,7 @@ function classTest() {
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 5>
     // USED → r5 = r1[5];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
-    r2 = r5.prototype
+    // USED → r2 = r5.prototype;
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
     // USED → r3 = CreateThis(r2);
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 3213>  # String: 'Generic' (String)
@@ -43,7 +43,7 @@ function classTest() {
     // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 6>
     // USED → r5 = r1[6];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
-    r2 = r5.prototype
+    // USED → r2 = r5.prototype;
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
     // USED → r3 = CreateThis(r2);
     // CODE → <LoadConstString>: <Reg8: 7, string_id: 3886>  # String: 'Rex' (String)

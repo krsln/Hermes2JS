@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import dataclasses
 import re
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -71,13 +70,10 @@ class OpcodeHandler(ABC):
             if match:
                 return match
 
-        return self.build_invalid_args_result(ctx.analysis, ctx.entry, self.expected_arguments_message())
+        return self.build_invalid_args_result(ctx.analysis, ctx.entry, self.expected_arguments_message(patterns))
 
-    def expected_arguments_message(self) -> str:
-        patterns = self.ARGUMENTS
-        if isinstance(patterns, ArgsPattern):
-            patterns = (patterns,)
-
+    @classmethod
+    def expected_arguments_message(cls, patterns: tuple) -> str:
         descriptions = [p.desc for p in patterns]
         if len(descriptions) == 1:
             return f"Expected arguments: {descriptions[0]}"
@@ -138,13 +134,8 @@ class OpcodeHandler(ABC):
         """
         Return the current expression assigned to a register.
 
-        This exposes the actual IR node currently stored in the register
-        (ObjectExpression, Literal, BinaryExpression, CallExpression, etc.)
-        and should only be used by optimization or analysis passes that need
-        the defining expression.
-
-        If the register has never been defined, fall back to its symbolic
-        identifier.
+        Identity-sensitive expressions are kept symbolic to preserve
+        aliasing semantics.
         """
 
         state = analysis.get_register_state(reg)
@@ -152,22 +143,21 @@ class OpcodeHandler(ABC):
         if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
+        state.mark_read()
         state_value = state.value
         if state_value is not None:
-
             # Types whose IDENTITY matters (mutation-sensitive) - inlining a second
             # reference to the same literal object/array expression would make two
             # independent-looking `{}`/`[]` in the output secretly alias the same
             # runtime object. Always kept symbolic (`rN`), regardless of which
             # resolver is used.
-            if isinstance(state.value, (ObjectExpression, ArrayExpression, CallExpression)):
-                state.mark_read()
+            if isinstance(state_value, (ObjectExpression, ArrayExpression, CallExpression)):
                 return Identifier(name=f"r{reg}")
 
             state.mark_used()
             return state_value
         else:
-            logger.error("Unexpected value type in argument: %s", type(state.value))
+            logger.error("Unexpected value type in argument: %s", type(state_value))
             return Identifier(name=f"r{reg}")
 
     @classmethod

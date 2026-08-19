@@ -13,7 +13,7 @@ function tryCatchFinallyEarlyReturnTest() {
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
     // USED → r2 = Error;
     // CODE → <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    r0 = Error.prototype
+    // USED → r0 = Error.prototype;
     // CODE → <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
     // USED → r1 = CreateThis(r0);
     // CODE → <LoadConstString>: <Reg8: 4, string_id: 238>  # String: 'test' (Identifier)

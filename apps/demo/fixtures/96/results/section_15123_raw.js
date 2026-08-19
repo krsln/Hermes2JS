@@ -13,7 +13,7 @@ function mapTest() {
     // CODE → <TryGetById>: <Reg8: 0, Reg8: 1, UInt8: 3, string_id: 20>  # String: 'Map' (Identifier)
     // USED → r0 = Map;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    r2 = Map.prototype
+    // USED → r2 = Map.prototype;
     // CODE → <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 0>
     // USED → r2 = CreateThis(r2);
     // CODE → <Mov>: <Reg8: 16, Reg8: 2>

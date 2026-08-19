@@ -19,7 +19,7 @@ function restOnlyTest() {
     // CODE → <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 6>  # String: 'Array' (Identifier)
     // USED → r2 = Array;
     // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    r5 = Array.prototype
+    // USED → r5 = Array.prototype;
     // CODE → <CreateThis>: <Reg8: 5, Reg8: 5, Reg8: 2>
     // USED → r5 = CreateThis(r5);
     // CODE → <Mov>: <Reg8: 9, Reg8: 5>

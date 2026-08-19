@@ -15,7 +15,7 @@ function privateStaticTest() {
     // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 8>
     // USED → r2 = r1[8];
     // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
-    r3 = r2.prototype
+    // USED → r3 = r2.prototype;
     // CODE → <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
     // USED → r3 = CreateThis(r3);
     // CODE → <Mov>: <Reg8: 7, Reg8: 3>
@@ -27,7 +27,7 @@ function privateStaticTest() {
     // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 8>
     // USED → r3 = r1[8];
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
-    r2 = r3.prototype
+    // USED → r2 = r3.prototype;
     // CODE → <CreateThis>: <Reg8: 7, Reg8: 2, Reg8: 3>
     // USED → r7 = CreateThis(r2);
     // CODE → <Construct>: <Reg8: 2, Reg8: 3, UInt8: 1>

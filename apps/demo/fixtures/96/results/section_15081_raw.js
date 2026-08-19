@@ -29,7 +29,7 @@ function nestedTryCatchTest() {
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
     // USED → r3 = Error;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    r1 = Error.prototype
+    // USED → r1 = Error.prototype;
     // CODE → <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
     // USED → r2 = CreateThis(r1);
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 7723>  # String: 'inner' (Identifier)
@@ -58,7 +58,7 @@ function nestedTryCatchTest() {
     // CODE → <LoadConstString>: <Reg8: 1, string_id: 6991>  # String: 'rethrown from inner: ' (String)
     // USED → r1 = "rethrown from inner: ";
     // CODE → <Add>: <Reg8: 5, Reg8: 1, Reg8: 2>
-    r5 = "rethrown from inner: " + caughtException
+    // USED → r5 = "rethrown from inner: " + caughtException;
     // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = Error.prototype;
     // CODE → <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 3>
@@ -66,11 +66,11 @@ function nestedTryCatchTest() {
     // CODE → <Mov>: <Reg8: 6, Reg8: 2>
     // USED → r6 = CreateThis(r2);
     // CODE → <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
-    // USED → r1 = new Error(Error.prototype);
+    // USED → r1 = new Error("rethrown from inner: " + caughtException);
     // CODE → <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    // USED → r1 = new Error(Error.prototype);
+    // USED → r1 = new Error("rethrown from inner: " + caughtException);
     // CODE → <Throw>: <Reg8: 1>
-    throw new Error(Error.prototype);
+    throw new Error("rethrown from inner: " + caughtException);
     // ──────────────── Block 2 ──────────────── 
     // CODE → <Catch>: <Reg8: 3>
     // USED → r3 = caughtException;

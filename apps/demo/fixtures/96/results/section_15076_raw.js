@@ -21,7 +21,7 @@ function tryCatchNoFinallyTest() {
     // CODE → <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
     // USED → r3 = Error;
     // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-    r1 = Error.prototype
+    // USED → r1 = Error.prototype;
     // CODE → <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
     // USED → r2 = CreateThis(r1);
     // CODE → <LoadConstString>: <Reg8: 5, string_id: 6728>  # String: 'no finally here' (String)

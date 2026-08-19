@@ -25,7 +25,7 @@ function tag(param1) {
     // USED → r2 = arguments.length - 1;
     // ──────────────── Block 2 ──────────────── 
     // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 8, UInt8: 2, string_id: 206>  # String: 'prototype' (Identifier)
-    r4 = Array.prototype
+    // USED → r4 = Array.prototype;
     // CODE → <CreateThis>: <Reg8: 4, Reg8: 4, Reg8: 8>
     // USED → r4 = CreateThis(r4);
     // CODE → <Mov>: <Reg8: 12, Reg8: 4>
