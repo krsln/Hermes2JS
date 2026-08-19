@@ -160,7 +160,7 @@ class OpcodeHandler(ABC):
         if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        state.reads += 1
+        state.mark_read()
         return Identifier(name=f"r{reg}")
 
     @classmethod
@@ -184,7 +184,7 @@ class OpcodeHandler(ABC):
 
         state_value = state.value
         if isinstance(state_value, Expression):
-            state.reads += 1
+            state.mark_read()
 
             if isinstance(state.value, _IDENTITY_SENSITIVE_TYPES):
                 return Identifier(name=f"r{reg}")
@@ -192,7 +192,7 @@ class OpcodeHandler(ABC):
             if state.reads > 1:
                 state_value = dataclasses.replace(state_value)
 
-            state.definition.definition_used = True
+            state.mark_used()
             return state_value
 
         logger.error("Unexpected value type in argument: %s", type(state.value))
@@ -205,28 +205,27 @@ class OpcodeHandler(ABC):
         if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        definition = state.definition
-        value = definition.value
+        value = state.value
 
-        if definition.handler in _CALL_ARGUMENT_INLINE_OPCODES:
+        if state.handler in _CALL_ARGUMENT_INLINE_OPCODES:
             if isinstance(value, Literal):
-                state.reads += 1
-                definition.definition_used = True
+                state.mark_read()
+                state.mark_used()
 
                 if state.reads > 1:
                     return dataclasses.replace(value)
 
                 return value
             elif isinstance(value, Identifier):
-                state.reads += 1
-                definition.definition_used = True
+                state.mark_read()
+                state.mark_used()
 
                 return value
             else:
                 logger.warning("Unexpected value type in Call argument: %s", type(value))
 
-        state.reads += 1
-        definition.definition_used = True
+        state.mark_read()
+        state.mark_used()
 
         return Identifier(name=f"r{reg}")
 
@@ -244,33 +243,32 @@ class OpcodeHandler(ABC):
         if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        definition = state.definition
-        value = definition.value
+        value = state.value
 
         # Const-load literals: always safe to inline, regardless of
         # mode - a genuine LoadConstX opcode produces one immutable
         # value that can never be redefined by a loop iteration between
         # its own occurrences (each const-load is itself the
         # definition being read).
-        if definition.handler in _CONDITION_ARGUMENT_INLINE_OPCODES:
+        if state.handler in _CONDITION_ARGUMENT_INLINE_OPCODES:
             if isinstance(value, Literal):
-                state.reads += 1
-                definition.definition_used = True
+                state.mark_read()
+                state.mark_used()
 
                 if state.reads > 1:
                     return dataclasses.replace(value)
 
                 return value
             elif isinstance(value, Identifier):
-                state.reads += 1
-                definition.definition_used = True
+                state.mark_read()
+                state.mark_used()
 
                 return value
             else:
                 logger.warning("Unexpected value type in Jump condition argument: %s", type(value))
 
-        state.reads += 1
-        # definition.definition_used = True
+        state.mark_read()
+        # state.mark_used()
 
         return Identifier(name=f"r{reg}")
 

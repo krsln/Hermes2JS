@@ -16,6 +16,16 @@ class RegisterState:
     def value(self) -> Optional[Expression]:
         return self.definition.value
 
+    @property
+    def handler(self) -> str:
+        return self.definition.handler
+
+    def mark_read(self) -> None:
+        self.reads += 1
+
+    def mark_used(self) -> None:
+        self.definition.definition_used = True
+
 
 class HermesAnalysis:
     metadataList: List[Dict[str, Any]]

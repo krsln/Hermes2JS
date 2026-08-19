@@ -34,12 +34,12 @@ class SelectObject(OpcodeHandler):
         # constructor semantics.
         if state_selector and isinstance(selector_value, NewExpression):
             expression = selector_value
-            state_selector.reads += 1
-            state_selector.definition.definition_used = True
+            state_selector.mark_read()
+            state_selector.mark_used()
         elif state_obj and isinstance(obj_value, NewExpression):
             expression = obj_value
-            state_obj.reads += 1
-            state_obj.definition.definition_used = True
+            state_obj.mark_read()
+            state_obj.mark_used()
         else:
             # Standard computed member access (fallback)
             obj = self.get_register_expression(ctx.analysis, obj_reg)

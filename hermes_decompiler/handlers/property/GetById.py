@@ -46,27 +46,26 @@ class GetById(OpcodeHandler):
         if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        definition = state.definition
-        value = definition.value
+        value = state.value
 
-        if definition.handler in _GET_BY_ARGUMENT_INLINE_OPCODES:
+        if state.handler in _GET_BY_ARGUMENT_INLINE_OPCODES:
             if isinstance(value, MemberExpression):
-                state.reads += 1
-                definition.definition_used = True
+                state.mark_read()
+                state.mark_used()
 
                 if state.reads > 1:
                     return dataclasses.replace(value)
 
                 return value
             elif isinstance(value, Identifier):
-                state.reads += 1
-                definition.definition_used = True
+                state.mark_read()
+                state.mark_used()
 
                 return value
             else:
                 print("Unexpected value type in Call argument: %s", type(value))
 
-        state.reads += 1
+        state.mark_read()
         return Identifier(name=f"r{reg}")
 
 
