@@ -73,7 +73,7 @@ class OpcodeHandler(ABC):
         return self.build_invalid_args_result(ctx.analysis, ctx.entry, self.expected_arguments_message(patterns))
 
     @classmethod
-    def expected_arguments_message(cls, patterns: tuple) -> str:
+    def expected_arguments_message(cls, patterns: tuple[ArgsPattern, ...]) -> str:
         descriptions = [p.desc for p in patterns]
         if len(descriptions) == 1:
             return f"Expected arguments: {descriptions[0]}"
@@ -143,22 +143,17 @@ class OpcodeHandler(ABC):
         if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        state.mark_read()
-        state_value = state.value
-        if state_value is not None:
-            # Types whose IDENTITY matters (mutation-sensitive) - inlining a second
-            # reference to the same literal object/array expression would make two
-            # independent-looking `{}`/`[]` in the output secretly alias the same
-            # runtime object. Always kept symbolic (`rN`), regardless of which
-            # resolver is used.
-            if isinstance(state_value, (ObjectExpression, ArrayExpression, CallExpression)):
-                return Identifier(name=f"r{reg}")
-
-            state.mark_used()
-            return state_value
-        else:
-            logger.error("Unexpected value type in argument: %s", type(state_value))
+        value = state.value
+        if value is None:
+            logger.error("Unexpected value type in argument: %s", type(value))
             return Identifier(name=f"r{reg}")
+
+        state.mark_read()
+        if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression)):
+            return Identifier(name=f"r{reg}")
+
+        state.mark_used()
+        return value
 
     @classmethod
     def resolve_get_by_argument(cls, analysis, reg: int) -> Expression:
@@ -193,6 +188,7 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}_undefined")
 
         value = state.value
+        # CALL_ARGUMENT_LITERAL_HANDLERS
         if state.handler in frozenset({
             "CreateClosure",
             "LoadConstUInt8",
