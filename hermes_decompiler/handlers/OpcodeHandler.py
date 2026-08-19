@@ -146,7 +146,7 @@ class OpcodeHandler(ABC):
 
         value = state.value
         if value is None:
-            logger.error("Unexpected value type in argument: %s", type(value))
+            logger.error("Register r%d has no value (handler=%s)", reg, state.handler)
             return Identifier(name=f"r{reg}")
 
         if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression)):
@@ -185,6 +185,11 @@ class OpcodeHandler(ABC):
 
                 return state.value
 
+            logger.warning(
+                "resolve_get_by_argument | Cannot inline get-by-argument value: handler=%s value=%r",
+                state.handler, state.value
+            )
+
         state.mark_read()
         return Identifier(name=f"r{reg}")
 
@@ -213,6 +218,11 @@ class OpcodeHandler(ABC):
                 state.mark_used()
 
                 return value
+
+            logger.warning(
+                "resolve_call_argument | Cannot inline get-by-argument value: handler=%s value=%r",
+                state.handler, state.value
+            )
 
         state.mark_read()
         state.mark_used()
@@ -255,6 +265,11 @@ class OpcodeHandler(ABC):
                 state.mark_used()
 
                 return value
+
+            logger.warning(
+                "resolve_condition_argument | Cannot inline get-by-argument value: handler=%s value=%r",
+                state.handler, state.value
+            )
 
         state.mark_read()
         return Identifier(name=f"r{reg}")
