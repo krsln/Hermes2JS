@@ -1,14 +1,6 @@
-import dataclasses
-
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, STRING_ID, UINT8
-from hermes_decompiler.ir import Expression
 from hermes_decompiler.ir.expressions import Identifier, MemberExpression, CallExpression, StringLiteral
-
-_GET_BY_ARGUMENT_INLINE_OPCODES = (
-    "GetGlobalObject",
-    "TryGetById",
-)
 
 
 # Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
@@ -38,35 +30,6 @@ class GetById(OpcodeHandler):
         ctx.analysis.add_result(result)
 
         return result
-
-    @classmethod
-    def resolve_get_by_argument(cls, analysis, reg: int) -> Expression:
-        state = analysis.get_register_state(reg)
-
-        if state is None:
-            return Identifier(name=f"r{reg}_undefined")
-
-        value = state.value
-
-        if state.handler in _GET_BY_ARGUMENT_INLINE_OPCODES:
-            if isinstance(value, MemberExpression):
-                state.mark_read()
-                state.mark_used()
-
-                if state.reads > 1:
-                    return dataclasses.replace(value)
-
-                return value
-            elif isinstance(value, Identifier):
-                state.mark_read()
-                state.mark_used()
-
-                return value
-            else:
-                print("Unexpected value type in Call argument: %s", type(value))
-
-        state.mark_read()
-        return Identifier(name=f"r{reg}")
 
 
 # Reg8, Reg8, UInt8, UInt8 (string_id) (total size 4)

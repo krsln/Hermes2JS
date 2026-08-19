@@ -11,7 +11,7 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
-    ArrayExpression, Literal, CallExpression,
+    ArrayExpression, Literal, CallExpression, MemberExpression,
 )
 from hermes_decompiler.runtime import HermesAnalysis
 
@@ -196,6 +196,31 @@ class OpcodeHandler(ABC):
             return state_value
 
         logger.error("Unexpected value type in argument: %s", type(state.value))
+        return Identifier(name=f"r{reg}")
+
+    @classmethod
+    def resolve_get_by_argument(cls, analysis, reg: int) -> Expression:
+        state = analysis.get_register_state(reg)
+
+        if state is None:
+            return Identifier(name=f"r{reg}_undefined")
+
+        if state.handler in (
+                "GetGlobalObject",
+                "TryGetById",
+        ):
+            if isinstance(state.value, MemberExpression):
+                state.mark_read()
+                state.mark_used()
+
+                return state.value
+            elif isinstance(state.value, Identifier):
+                state.mark_read()
+                state.mark_used()
+
+                return state.value
+
+        state.mark_read()
         return Identifier(name=f"r{reg}")
 
     @classmethod
