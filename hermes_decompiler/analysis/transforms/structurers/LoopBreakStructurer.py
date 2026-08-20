@@ -3,7 +3,7 @@ from __future__ import annotations
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models.regions import SequenceRegion, LoopRegion, IfRegion
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorJump
-from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
+from hermes_decompiler.analysis.transforms._shared import _negate_condition
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.statements import BreakStatement
@@ -178,7 +178,7 @@ class LoopBreakStructurer(RegionStructurer):
 
         if natural_merge is None or exit_terminator.target != natural_merge:
             # Doesn't land where the loop itself exits to normally -
-            # could be a genuine different control-flow shape (e.g. a
+            # could be a genuine different control-flow shape (e.g., a
             # jump to an unrelated label). Don't guess.
             return False
 
@@ -242,10 +242,10 @@ class LoopBreakStructurer(RegionStructurer):
         covered = loop.body.covered_blocks
 
         merge_addresses = {
-            succ.address
+            successor.address
             for latch in loop.latches
-            for succ in latch.successors
-            if succ not in covered
+            for successor in latch.successors
+            if successor not in covered
         }
 
         if len(merge_addresses) != 1:

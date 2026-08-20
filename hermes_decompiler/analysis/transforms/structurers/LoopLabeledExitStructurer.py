@@ -3,7 +3,7 @@ from __future__ import annotations
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models.regions import SequenceRegion, LoopRegion, IfRegion
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
-from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
+from hermes_decompiler.analysis.transforms._shared import _negate_condition
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
@@ -36,7 +36,7 @@ class LoopLabeledExitStructurer(RegionStructurer):
     every ENCLOSING loop, outward, for whether its exit edge's
     address matches that ancestor's latch (-> `continue <label>`) or
     natural merge (-> `break <label>`). The first matching ancestor
-    is labeled (`loop_<header_block_id>`, reused if already labeled)
+    is labeled (`loop_<header_block_id>`, reused if already labeled),
     and the exit block is spliced in as the branch's missing arm.
 
     Unlike LoopBreakStructurer, the synthesized statement is never
@@ -98,7 +98,7 @@ class LoopLabeledExitStructurer(RegionStructurer):
         """
         Unlike LoopBreakStructurer, the loop's own header is not
         excluded: for a labeled exit, the header can itself be the
-        source of the escaping edge (e.g. an inner loop's header
+        source of the escaping edge (e.g., an inner loop's header
         testing a condition that continues an outer loop directly).
         Safety against misclassifying an ordinary guard as an escape
         comes from `_find_target_loop_for_address` only ever matching
@@ -241,6 +241,8 @@ class LoopLabeledExitStructurer(RegionStructurer):
         if self._synth_block_id is None:
             self._synth_block_id = max((b.id for b in self.cfg.blocks), default=0) + 1
 
+        assert self._synth_block_id is not None
+
         block_id = self._synth_block_id
         self._synth_block_id += 1
         return block_id
@@ -260,9 +262,9 @@ class LoopLabeledExitStructurer(RegionStructurer):
 
             if isinstance(node, LoopRegion):
 
-                latch_addrs = {latch.address for latch in node.latches}
+                latch_address = {latch.address for latch in node.latches}
 
-                if target_address in latch_addrs:
+                if target_address in latch_address:
                     return node, "continue"
 
                 if node.header_block is not None and target_address == node.header_block.address:
@@ -283,16 +285,16 @@ class LoopLabeledExitStructurer(RegionStructurer):
     def _natural_loop_merge(loop: LoopRegion) -> int | None:
         """
         Address the loop's own back-edge test leaves to on normal
-        completion, i.e. where a `break` also lands. None unless
+        completion, i.e., where a `break` also lands. None unless
         every latch agrees on the same address.
         """
         covered = loop.body.covered_blocks
 
         merge_addresses = {
-            succ.address
+            successor.address
             for latch in loop.latches
-            for succ in latch.successors
-            if succ not in covered
+            for successor in latch.successors
+            if successor not in covered
         }
 
         if len(merge_addresses) != 1:
@@ -307,7 +309,7 @@ class LoopLabeledExitStructurer(RegionStructurer):
         """
         Appends a minimal synthetic instruction carrying only
         `statement`. Unlike LoopBreakStructurer/LoopContinueRegionPass,
-        which commandeer an existing terminator-bearing instruction,
+        which commandeers an existing terminator-bearing instruction,
         this pass cannot assume one exists - the escape edge is
         frequently a bare fallthrough. `hex_address=""` is safe:
         `OpcodeEntry` maps an invalid address to 0, and nothing

@@ -5,7 +5,7 @@ from hermes_decompiler.analysis.models.regions import SequenceRegion
 
 class SequenceStructurer:
     """
-    Bootstraps the root SequenceRegion from the CFG's flat block list.
+    Bootstraps the root SequenceRegion from the CFG's flat blocklist.
 
     Runs before RegionGraph exists, so it operates directly on the CFG
     rather than extending RegionStructurer.

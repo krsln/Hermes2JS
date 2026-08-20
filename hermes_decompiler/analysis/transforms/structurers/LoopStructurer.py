@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 from hermes_decompiler.analysis.models.regions import SequenceRegion, LoopRegion
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
@@ -13,10 +15,10 @@ class LoopStructurer(RegionStructurer):
     innermost-first.
 
     All structural edits go through RegionGraph's mutation primitives
-    (append/move/replace_block) so covered_blocks caching stays
+    (append/move/replace_block), so covered_blocks caching stays
     correct for later passes (IfStructurer, TryStructurer).
 
-    Within a loop's own body, loose blocks (e.g. its latch/increment
+    Within a loop's own body, loose blocks (e.g., its latch/increment
     block) and nested child loops are placed in one merged,
     id-ordered sequence rather than "loose blocks first, children
     last": a loop's latch almost always sits textually after any
@@ -58,7 +60,7 @@ class LoopStructurer(RegionStructurer):
 
         self.dump_region_tree_if_debug(type(self).__name__)
 
-    def _build_loop(self, loop, parent_sequence: SequenceRegion) -> None:
+    def _build_loop(self, loop: Any, parent_sequence: SequenceRegion) -> None:
 
         region = LoopRegion(loop)
 

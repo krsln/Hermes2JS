@@ -52,7 +52,7 @@ class RegionStructurer(ABC):
 class _RegionTreeDumper(RegionVisitor):
     """
     Logs each region-tree node at DEBUG level. One instance per dump
-    call, since indentation is tracked as instance state.
+    call, since indentation is tracked as an instance state.
     """
 
     def __init__(self):
