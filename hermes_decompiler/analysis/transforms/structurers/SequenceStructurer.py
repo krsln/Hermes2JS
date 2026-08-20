@@ -5,10 +5,10 @@ from hermes_decompiler.analysis.models.regions import SequenceRegion
 
 class SequenceStructurer:
     """
-    Creates the root SequenceRegion from the CFG blocks.
+    Bootstraps the root SequenceRegion from the CFG's flat block list.
 
-    This bootstrapping step runs before RegionGraph exists, so it operates
-    directly on the CFG rather than through a RegionStructurer.
+    Runs before RegionGraph exists, so it operates directly on the CFG
+    rather than extending RegionStructurer.
     """
 
     def __init__(self, cfg):

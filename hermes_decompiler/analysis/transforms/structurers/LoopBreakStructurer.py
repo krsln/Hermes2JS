@@ -13,47 +13,36 @@ logger = get_logger(__name__)
 
 class LoopBreakStructurer(RegionStructurer):
     """
-    Recognizes the CFG shape Hermes emits for a mid-loop `break`:
+    Converts a mid-loop conditional exit into a structured `break`.
+
+    Recognized shape:
 
         <loop body block>:
-            if (cond) goto EXIT;   # EXIT is NOT part of loop.members
-            ... rest of iteration ...
+            if (cond) goto EXIT;   # EXIT is outside loop.members
+            ...
 
         EXIT:
             <exit body>
-            goto MERGE;            # MERGE == where the loop's own
-                                    # back-edge test falls through to
-                                    # on normal completion
+            goto MERGE;            # loop's own back-edge exit target
 
-    and rewrites it in place to:
+    Rewritten to:
 
         <loop body block>:
             if (cond) {
                 <exit body>
                 break;
             }
-            ... rest of iteration ...
+            ...
 
-    moving `EXIT`'s content bodily from wherever it currently sits
-    (a sibling of the LoopRegion, per LoopStructurer/SequenceStructurer)
-    into the loop body, and deleting it from its old location.
+    Must run after LoopStructurer (needs loop.body.covered_blocks) and
+    before IfStructurer, which would otherwise consume the branch as
+    an ordinary conditional and strand it - see StructuralAnalyzer's
+    unstructured-block audit.
 
-    Must run AFTER `LoopStructurer` (needs `LoopRegion.body.covered_blocks`
-    / `loop.header_block`'s natural CFG successors to know what's inside
-    vs. outside the loop) and BEFORE `IfStructurer` (which would otherwise
-    permanently strand this block's terminator - see StructuralAnalyzer's
-    audit warning for exactly this shape - since a target outside the
-    current region is something IfStructurer correctly refuses to guess
-    about, by design).
-
-    Deliberately narrow, same philosophy as ForEachRecognizer: only
-    matches the single-BasicBlock exit-body case with an unconditional
-    trailing jump landing exactly on the loop's natural post-loop
-    address. Anything less exact is left as a plain unstructured
-    conditional branch rather than guessed at - a missed `break` still
-    prints as a raw `if (...) goto label_N;` (readability regression),
-    while a wrongly-claimed one would silently relocate and gate code
-    that should have stayed unconditional (correctness regression).
+    Deliberately narrow: only a single-block exit body with an
+    unconditional trailing jump to the loop's natural post-loop
+    address is matched. Anything else is left as an unstructured
+    conditional branch rather than guessed at.
     """
 
     def run(self) -> None:
@@ -74,6 +63,12 @@ class LoopBreakStructurer(RegionStructurer):
             self._visit(region.body)
             return
 
+        # IfRegion (created by this pass itself, on an earlier
+        # candidate) is the only other region kind reachable at this
+        # point in the pipeline. then_body/else_body/body/try_body
+        # covers it; the catch/finally checks below are defensive -
+        # TryStructurer has not run yet, so TryRegion cannot exist
+        # here in the current pipeline order.
         for attr in ("then_body", "else_body", "body", "try_body"):
             child = getattr(region, attr, None)
             if child is not None:
@@ -91,10 +86,9 @@ class LoopBreakStructurer(RegionStructurer):
 
     def _try_recognize_breaks(self, loop: LoopRegion) -> None:
         """
-        Repeatedly scan `loop.body.children` for a directly-owned
-        BasicBlock matching the break shape, converting one at a time
-        (mutation invalidates iteration, so restart the scan after
-        each success - same pattern as IfStructurer._structure_sequence).
+        Converts one break candidate at a time in loop.body.children,
+        restarting the scan after each conversion since mutation
+        invalidates iteration.
         """
 
         failed: set = set()
@@ -119,10 +113,9 @@ class LoopBreakStructurer(RegionStructurer):
                 continue
 
             if item is loop.header_block:
-                # Header's own branch is either the loop guard
-                # (consumed later by LoopConditionExtractor) or a
-                # genuine in-loop if - never itself a break edge in
-                # the shapes this pass targets.
+                # The header's own branch is either the loop guard
+                # (consumed later by LoopConditionRegionPass) or a
+                # genuine in-loop if - never a break edge here.
                 continue
 
             if isinstance(item.terminator, TerminatorConditionalBranch):
@@ -163,6 +156,10 @@ class LoopBreakStructurer(RegionStructurer):
         if list(exit_block.predecessors) != [block]:
             # Reached some other way too - not a clean single-purpose
             # exit body, don't risk duplicating/misplacing it.
+            logger.debug(
+                "LoopBreakStructurer: block %d's exit target %d has other "
+                "predecessors; skipping.", block.id, exit_block.id,
+            )
             return False
 
         exit_owner = self.graph.owner(exit_block)
@@ -189,7 +186,18 @@ class LoopBreakStructurer(RegionStructurer):
 
         if block.instructions and block.instructions[-1].terminator is branch:
             block.instructions.pop()
-        block.terminator = None
+            block.terminator = None
+        else:
+            # Invariant violated: the branch we're converting isn't
+            # owned by block's last instruction. Bail rather than
+            # clear block.terminator while leaving a stale
+            # branch-owning instruction behind.
+            logger.warning(
+                "LoopBreakStructurer: block %d's terminator instruction "
+                "was not found where expected; aborting conversion.",
+                block.id,
+            )
+            return False
 
         # ---- strip exit_block's trailing jump, append synthetic break ----
 
@@ -225,18 +233,22 @@ class LoopBreakStructurer(RegionStructurer):
     @staticmethod
     def _natural_loop_merge(loop: LoopRegion) -> int | None:
         """
-        The address a `break` (or the loop's own normal completion)
-        lands on: the target of the loop's back-edge test's
-        loop-leaving edge. Found by walking `loop.latches` - each
-        latch's out-of-loop successor address is that merge point;
-        for the well-formed single-latch loops this pass targets they
-        must all agree, so any one is authoritative.
+        Address a `break` (or the loop's own normal completion) lands
+        on: the loop-leaving successor of the loop's back-edge
+        test(s). Returns None unless every latch agrees on the same
+        address - disagreement signals an irregular loop shape this
+        pass should not guess about.
         """
         covered = loop.body.covered_blocks
 
-        for latch in loop.latches:
-            for succ in latch.successors:
-                if succ not in covered:
-                    return succ.address
+        merge_addresses = {
+            succ.address
+            for latch in loop.latches
+            for succ in latch.successors
+            if succ not in covered
+        }
 
-        return None
+        if len(merge_addresses) != 1:
+            return None
+
+        return merge_addresses.pop()
