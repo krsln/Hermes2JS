@@ -101,10 +101,12 @@ class _CompoundConditionFolder:
 
         if isinstance(region, TryRegion):
             self._fold_all(region.try_body)
-            if region.catch:
-                self._fold_all(region.catch.body)
-            if region.finally_:
-                self._fold_all(region.finally_.body)
+            region_catch = region.catch
+            if region_catch:
+                self._fold_all(region_catch.body)
+            region_finally_ = region.finally_
+            if region_finally_:
+                self._fold_all(region_finally_.body)
             return
 
         if hasattr(region, "body"):
@@ -430,10 +432,12 @@ class _CompoundConditionFolder:
             return
         if isinstance(region, TryRegion):
             self._prune_empty_blocks(region.try_body)
-            if region.catch:
-                self._prune_empty_blocks(region.catch.body)
-            if region.finally_:
-                self._prune_empty_blocks(region.finally_.body)
+            region_catch = region.catch
+            if region_catch:
+                self._prune_empty_blocks(region_catch.body)
+            region_finally_ = region.finally_
+            if region_finally_:
+                self._prune_empty_blocks(region_finally_.body)
             return
         if hasattr(region, "body"):
             self._prune_empty_blocks(region.body)
