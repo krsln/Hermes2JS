@@ -12,9 +12,13 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 
 ## Done Stuff | feature/from-2025-08-15
 
-- /handlers/ GetByVal
+- /handlers/ GetByVal, CreateThis, GetById, SelectObject, Call
 - /ir/expressions/ Acess.MemberExpression
 - Printer.py to composition/facade architechture printer/
+- RegionPrinter.py // CODE → addr:...
+- OpcodeHandler.py HermesAnalysis.py|RegisterState
+- LoopInductionAliasPass.py fix -> for (r1 = 0; r1 < 3; r1 = r1 + 1) {...
+- 
 
 ## Testy
 
