@@ -21,7 +21,7 @@ function whileTest() {
     // CODE → addr: 36 | <LoadConstUInt8>: <Reg8: 5, UInt8: 2>
     // USED → r5 = 2;
     // LOOP → START (for)
-    for (r1 = 0; r1 < 5; r1 = r2 + 1) {
+    for (r1 = 0; r1 < 5; r1 = r1 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 41 | <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r11 = console;
@@ -29,10 +29,7 @@ function whileTest() {
         // USED → r10 = console.log;
         // CODE → addr: 52 | <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 8, Reg8: 1>
         console.log("while", r1)
-        // CODE → addr: 58 | <Mov>: <Reg8: 2, Reg8: 1>
-        r2 = 0
-        // → r2 = 0
-        if (r2 === 2) {
+        if (r1 === 2) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 71 | <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r11 = console;
@@ -41,11 +38,11 @@ function whileTest() {
             // CODE → addr: 82 | <Call2>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 9>
             console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
             // CODE → addr: 87 | <AddN>: <Reg8: 0, Reg8: 2, Reg8: 3>
-            // USED → r0 = r2 + 1;
+            // USED → r0 = r1 + 1;
         } else {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 65 | <AddN>: <Reg8: 0, Reg8: 2, Reg8: 3>
-            r0 = r2 + 1
+            r0 = r1 + 1
         }
         // ──────────────── Block 4 ──────────────── 
     }

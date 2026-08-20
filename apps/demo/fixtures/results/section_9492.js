@@ -108,11 +108,13 @@ function spreadArrayTest() {
             // CODE → addr:202 | <Throw>: <Reg8: 2>
             throw caughtException;
             // LOOP → START (for)
-            for (; !(r3 === undefined); r2 = caughtException) {
+            for (; !(r3 === undefined); ) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → addr:199 | <IteratorClose>: <Reg8: 3, UInt8: 1>
                 r3.return()
                 // ──────────────── Block 5 ──────────────── 
+                // CODE → addr:194 | <Catch>: <Reg8: 2>
+                // USED → r2 = caughtException;
             }
             // LOOP → END
         }

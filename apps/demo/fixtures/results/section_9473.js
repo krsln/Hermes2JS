@@ -46,7 +46,7 @@ function tryCatchInsideLoopTest(param1) {
     } else {
         // LOOP → START (for)
         // → r2 = 0
-        for (r4 = 0; r4 < r2; r0 = r11 + 1) {
+        for (r4 = 0; r4 < r2; r4 = r2 + 1) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 60 | <Mov>: <Reg8: 2, Reg8: 4>
             r2 = 0
@@ -70,12 +70,12 @@ function tryCatchInsideLoopTest(param1) {
                 // CODE → addr: 98 | <Jmp>: <Addr8: 51>  # Address: 00000095
                 continue;
                 // ──────────────── Block 4 ──────────────── 
-                // CODE → addr:149 | <AddN>: <Reg8: 4, Reg8: 2, Reg8: 8>
-                r4 = r2 + 1
                 // CODE → addr:153 | <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
                 r2 = r10.length
                 // CODE → addr:158 | <Mov>: <Reg8: 3, Reg8: 12>
                 // USED → r3 = r11 + 1;
+                // CODE → addr:161 | <Mov>: <Reg8: 0, Reg8: 3>
+                // USED → r0 = r11 + 1;
             }
         }
         // LOOP → END

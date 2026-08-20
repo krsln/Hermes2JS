@@ -8,7 +8,7 @@ from hermes_decompiler.analysis.models.regions import IfRegion, LoopRegion, Swit
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
-from hermes_decompiler.ir.expressions import Identifier
+from hermes_decompiler.ir.expressions import BinaryExpression, Identifier
 
 from ._base import RegionPass
 
@@ -93,27 +93,35 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
          header Mov's resolved value gets checked against - see
          point 2 below and `_is_induction_alias_copy`'s own
          docstring for why).
-      2. The loop header block's FIRST instruction is an unconditional
-         write whose RESOLVED value equals `loop.initializer.right`
-         (`_is_induction_alias_copy`) - deliberately NOT a check for
-         `value == Identifier(f"r{induction_reg}")`. IR generation
-         resolves every register read against its textually most
-         recent definition in raw bytecode ADDRESS order, with no
-         awareness of the CFG's back-edges (see
-         `OpcodeHandler.get_register_expression`) - so by the time
-         this header Mov's value was computed, "the induction
-         register's current value" was frozen as whatever the
-         initializer produced (e.g. the bare literal `0`), not a
-         live `Identifier("r{induction_reg}")` reference. Matching on
-         the identifier name, as an earlier revision of this pass
-         did, silently never fires - see `_is_induction_alias_copy`'s
-         docstring for the full explanation, including the exact
-         disassembly comment (`USED -> r6 = 0;`) that exposes this.
-         Must additionally be the FIRST instruction in the header -
-         not "some instruction somewhere in the header" - since that
-         is the only position Hermes' `let`-per-iteration lowering
-         ever places it at.
-      3. `body_reg` is not itself the induction register (nothing to
+      2. `loop.update.right` contains a register operand OTHER than
+         the induction register itself (`_body_register`) - that
+         register is `body_reg`, the per-iteration alias. This is
+         read directly off metadata `LoopConditionRegionPass` already
+         recovered, NOT assumed from position. An earlier revision
+         required the alias Mov to be the header's literal FIRST
+         instruction - true for a single loop or two levels of
+         nesting, but false at a THIRD level: Hermes may place ANOTHER
+         per-iteration alias Mov - for some unrelated outer-scoped
+         `let` variable captured across the loop, not the induction
+         variable at all - textually BEFORE this loop's own induction
+         alias in the same header block. See
+         `tripleNestedLabeledTest`: the middle loop's header carries
+         `Mov r13, r10` (an accumulator/"hits"-counter carry-forward,
+         completely unrelated to the loop) ahead of `Mov r11, r9` (the
+         actual r9-induction alias this pass needs). Requiring "first
+         instruction" made the pass silently skip r11/r9 entirely.
+         Deriving `body_reg` from `loop.update.right` instead
+         sidesteps position altogether: whichever register the
+         increment reads its previous value from IS, by construction,
+         the alias register - regardless of where in the header its
+         own alias-copy Mov happens to sit.
+      3. The header contains SOME instruction (anywhere in it, not
+         necessarily first) with `dest_reg == body_reg` whose resolved
+         value structurally matches `loop.initializer.right`
+         (`_is_induction_alias_copy` - see its own docstring for why
+         value, not name, is the reliable signature) -
+         `_find_alias_instruction`.
+      4. `body_reg` is not itself the induction register (nothing to
          do) and is never the destination of any OTHER instruction
          anywhere in the loop body (`_body_reg_only_defined_here`) -
          if it were, this alias Mov would only be establishing the
@@ -122,20 +130,24 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
          `induction_reg` for every read would silently discard
          whatever that later write meant.
 
-    Residual false-positive risk (accepted, documented): because
-    point 2 matches by VALUE rather than by a positively-identified
-    `Mov` opcode (this pass only has access to already-resolved
-    `OpcodeResult`s, not the original bytecode entry/opcode name), a
-    header whose first instruction is something else entirely that
-    *happens* to resolve to the same value as the initializer (e.g.
-    coincidentally also literal `0`) would be misidentified as the
-    alias copy. This is bounded and non-corrupting even if it
-    happens: the substitution only ever touches reads of that one
-    specific `body_reg` number, so at worst it mislabels one register
-    as `i` cosmetically - it can never rewrite an unrelated
-    computation's actual value, because `_body_reg_only_defined_here`
-    still requires `body_reg` to have exactly one definition (this
-    instruction) in the whole loop body before anything is touched.
+    Residual false-positive risk (accepted, documented): `body_reg`
+    itself is no longer a guess (point 2 derives it directly from
+    `loop.update.right`), but WHICH instruction in the header counts
+    as that register's alias copy (point 3) still matches by VALUE
+    rather than by a positively-identified `Mov` opcode (this pass
+    only has access to already-resolved `OpcodeResult`s, not the
+    original bytecode entry/opcode name). If the header happens to
+    contain more than one instruction writing `body_reg` and an
+    earlier, unrelated one *happens* to resolve to the same value as
+    the initializer (e.g. coincidentally also literal `0`),
+    `_find_alias_instruction` would pick that one instead of the real
+    alias. This is bounded and non-corrupting even if it happens: the
+    substitution only ever touches reads of that one specific
+    `body_reg` number, so at worst it mislabels one register as `i`
+    cosmetically - it can never rewrite an unrelated computation's
+    actual value, because `_body_reg_only_defined_here` still requires
+    `body_reg` to have exactly one definition (the matched instruction)
+    in the whole loop body before anything is touched.
 
     A loop that fails any of these keeps its two distinct registers
     and therefore may still print an extra alias line / a mismatched
@@ -164,7 +176,7 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
             # for LoopKind.FOR by
             # LoopConditionRegionPass._extract_for_components - this
             # pass only ever targets that shape, and needs BOTH (see
-            # point 2 in the class docstring for why the initializer
+            # point 2/3 in the class docstring for why the initializer
             # in particular is required now).
             return
 
@@ -173,27 +185,24 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
         if induction_reg is None:
             return
 
-        first = header.first_instruction
+        body_reg = self._body_register(loop, induction_reg)
 
-        if first is None or first.terminator is not None:
+        if body_reg is None:
             return
 
-        body_reg = first.dest_reg
+        alias_instr = self._find_alias_instruction(header, body_reg, loop.initializer)
 
-        if body_reg is None or body_reg == induction_reg:
-            return
-
-        if not self._is_induction_alias_copy(first.value, loop.initializer):
+        if alias_instr is None:
             return
 
         covered = loop.body.covered_blocks
 
-        if not self._body_reg_only_defined_here(covered, first, body_reg):
+        if not self._body_reg_only_defined_here(covered, alias_instr, body_reg):
             return
 
         # ---- convert: drop the alias Mov, repoint every read ----
 
-        header.instructions.remove(first)
+        header.instructions.remove(alias_instr)
 
         old_ref = Identifier(name=f"r{body_reg}")
         new_ref = Identifier(name=f"r{induction_reg}")
@@ -235,6 +244,78 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
             return None
 
         return int(suffix)
+
+    @staticmethod
+    def _body_register(loop: LoopRegion, induction_reg: int) -> int | None:
+        """
+        Recovers the per-iteration alias register directly from
+        `loop.update.right` (e.g. for `r1 = r8 + 1`, that's `r8`)
+        instead of assuming the header's FIRST instruction is the
+        alias Mov - see class docstring point 2 for why position
+        can't be trusted at three levels of nesting.
+
+        `loop.update.right` is either a bare `Identifier` (a `Mov`-
+        style update) or, far more commonly, a `BinaryExpression`
+        whose two operands are the alias register and a step literal
+        (an `Inc`/`Dec`-style update, e.g. `r8 + 1`) - both shapes are
+        handled. Returns `None` if neither shape yields a register
+        operand distinct from `induction_reg` (e.g. a non-canonical
+        update this pass shouldn't guess about).
+        """
+
+        right = loop.update.right
+
+        if isinstance(right, Identifier):
+            operands = [right]
+        elif isinstance(right, BinaryExpression):
+            operands = [right.left, right.right]
+        else:
+            return None
+
+        for operand in operands:
+            if not isinstance(operand, Identifier) or not operand.name.startswith("r"):
+                continue
+
+            suffix = operand.name[1:]
+
+            if not suffix.isdigit():
+                continue
+
+            reg = int(suffix)
+
+            if reg != induction_reg:
+                return reg
+
+        return None
+
+    def _find_alias_instruction(self, header: BasicBlock, body_reg: int, initializer):
+        """
+        Searches the WHOLE header block (not just its first
+        instruction - see class docstring point 2) for the alias Mov:
+        an unconditional instruction writing `body_reg` whose resolved
+        value matches `loop.initializer.right`
+        (`_is_induction_alias_copy`).
+
+        Scans in order and returns the FIRST match. If `body_reg` is
+        written more than once in the header, further occurrences are
+        `body_reg`'s problem to have (`_body_reg_only_defined_here`,
+        called afterward by `_try_unify`, rejects that case entirely)
+        - this method only needs to identify a candidate, not validate
+        uniqueness itself.
+        """
+
+        for instr in header.instructions:
+
+            if instr.terminator is not None:
+                continue
+
+            if instr.dest_reg != body_reg:
+                continue
+
+            if self._is_induction_alias_copy(instr.value, initializer):
+                return instr
+
+        return None
 
     @staticmethod
     def _is_induction_alias_copy(mov_value, initializer) -> bool:

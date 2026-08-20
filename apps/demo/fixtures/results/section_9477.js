@@ -30,7 +30,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     if (0 < r8.length) {
         // LOOP → START (for)
         // → r0 = 0
-        for (r2 = 0; r2 < r0; r0 = r8.length) {
+        for (r2 = 0; r2 < r0; r2 = r0 + 1) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 59 | <Mov>: <Reg8: 0, Reg8: 2>
             r0 = 0
@@ -74,8 +74,8 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                     console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
                 }
                 // ──────────────── Block 5 ──────────────── 
-                // CODE → addr:149 | <AddN>: <Reg8: 2, Reg8: 0, Reg8: 6>
-                r2 = r0 + 1
+                // CODE → addr:153 | <GetByIdShort>: <Reg8: 0, Reg8: 8, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+                r0 = r8.length
             }
         }
         // LOOP → END

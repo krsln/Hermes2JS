@@ -32,7 +32,7 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
             // CODE → addr:120 | <Ret>: <Reg8: 0>
             return undefined;
             // LOOP → START (for)
-            for (; !param1; r2 = console.log) {
+            for (; !param1; ) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → addr: 98 | <LoadConstString>: <Reg8: 0, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
@@ -58,6 +58,8 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
                 // USED → r0 = param1;
                 // CODE → addr: 84 | <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r3 = console;
+                // CODE → addr: 90 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r2 = console.log;
             }
             // LOOP → END
         }
@@ -68,7 +70,7 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
             // CODE → addr:160 | <Throw>: <Reg8: 0>
             throw caughtException;
             // LOOP → START (for)
-            for (; !param1; r2 = console.log) {
+            for (; !param1; ) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → addr:140 | <LoadConstString>: <Reg8: 1, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
                 // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
@@ -95,5 +97,7 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
         // USED → r2 = globalThis;
         // CODE → addr:126 | <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r3 = console;
+        // CODE → addr:132 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r2 = console.log;
     }
 }

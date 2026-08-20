@@ -20,49 +20,46 @@ function tripleNestedLabeledTest() {
     // USED → r10 = 0;
     loop_1:
     // LOOP → START (for)
-    for (r9 = 0; r9 < 3; r10 = r0 + 1) {
+    for (r9 = 0; r9 < 3; r9 = r9 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 38 | <Mov>: <Reg8: 5, Reg8: 10>
         // USED → r5 = 0;
         loop_2:
         // LOOP → START (for)
-        for (r6 = 0; r6 < 3; r5 = r0 + 1) {
+        for (r6 = 0; r6 < 3; r6 = r6 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 46 | <Mov>: <Reg8: 0, Reg8: 5>
             r0 = 0
             // LOOP → START (for)
-            for (r1 = 0; r1 < 3; r0 = r0 + 1) {
+            for (r1 = 0; r1 < 3; r1 = r1 + 1) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr: 51 | <AddN>: <Reg8: 3, Reg8: 0, Reg8: 2>
                 // USED → r3 = r0 + 1;
-                // CODE → addr: 55 | <Mov>: <Reg8: 4, Reg8: 1>
-                r4 = 0
-                // → r4 = 0
-                if (r4 === 1) {
+                if (r1 === 1) {
                     // ──────────────── Block 10 ──────────────── 
                     // CODE → addr:  0 | ContinueStatement
                     continue loop_2;
                 }
-                if (r10 === 2) {
-                    if (r5 === 2) {
+                if (r9 === 2) {
+                    if (r6 === 2) {
                         // ──────────────── Block 11 ──────────────── 
                         // CODE → addr:  0 | BreakStatement
                         break loop_1;
                     }
                     // ──────────────── Block 6 ──────────────── 
-                    // CODE → addr: 70 | <AddN>: <Reg8: 1, Reg8: 4, Reg8: 2>
-                    r1 = r4 + 1
+                    // CODE → addr: 74 | <Mov>: <Reg8: 0, Reg8: 3>
+                    r0 = r0 + 1
                 }
             }
             // LOOP → END
             // ──────────────── Block 7 ──────────────── 
-            // CODE → addr: 81 | <AddN>: <Reg8: 6, Reg8: 7, Reg8: 2>
-            r6 = r5 + 1
+            // CODE → addr: 85 | <Mov>: <Reg8: 5, Reg8: 3>
+            r5 = r0 + 1
         }
         // LOOP → END
         // ──────────────── Block 8 ──────────────── 
-        // CODE → addr: 92 | <AddN>: <Reg8: 9, Reg8: 11, Reg8: 2>
-        r9 = r10 + 1
+        // CODE → addr: 96 | <Mov>: <Reg8: 10, Reg8: 3>
+        r10 = r0 + 1
     }
     // LOOP → END
     // ──────────────── Block 9 ──────────────── 

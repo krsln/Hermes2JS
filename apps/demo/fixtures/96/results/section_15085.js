@@ -44,7 +44,7 @@ function tryCatchInsideLoopTest(param1) {
     } else {
         // LOOP → START (for)
         // → r2 = param1[r2]; r3 = param1
-        for (r3 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start"; r3 < r2; r2 = r2.length) {
+        for (r3 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start"; r3 < r2; r3 = r2 + 1) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 58 | <Mov>: <Reg8: 3, Reg8: 7>
             // USED → r3 = param1;
@@ -74,12 +74,12 @@ function tryCatchInsideLoopTest(param1) {
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → addr:158 | <Mov>: <Reg8: 2, Reg8: 8>
                     r2 = 0
-                    // CODE → addr:161 | <Inc>: <Reg8: 3, Reg8: 2>
-                    // USED → r3 = r2 + 1;
                     // CODE → addr:164 | <Mov>: <Reg8: 8, Reg8: 3>
                     r8 = r2 + 1
                     // CODE → addr:167 | <Mov>: <Reg8: 2, Reg8: 7>
                     r2 = param1
+                    // CODE → addr:170 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+                    r2 = r2.length
                     // ──────────────── Block 4 ──────────────── 
                     // CODE → addr:133 | <Catch>: <Reg8: 9>
                     // USED → r9 = caughtException;

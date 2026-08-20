@@ -206,7 +206,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 # header instead of leaving those slots blank. This is
                 # purely cosmetic metadata extraction - it never changes
                 # the loop's classification or its condition.
-                self._extract_for_components(loop) # NOTE: latest change
+                self._extract_for_components(loop)  # NOTE: latest change
                 return
 
         # Otherwise it is a normal bottom-tested loop.
@@ -419,21 +419,51 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         self._extract_update(loop)
         self._extract_initializer(loop)
 
-    @staticmethod
-    def _extract_update(loop: LoopRegion) -> None:
+    def _extract_update(self, loop: LoopRegion) -> None:
         """
-        Pull the trailing register-defining instruction out of
+        Pull the induction register's OWN update instruction out of
         `loop.update_block` and turn it into `loop.update`.
 
-        Only the LAST such instruction is taken, since Hermes' canonical
-        lowering places exactly one update instruction (`Inc`/`Mov`/...)
-        immediately before the guard in that block. Any earlier
-        instructions in the same block belong to the loop body proper
-        and are left untouched.
+        Register-aware by design, mirroring `_extract_initializer`
+        below (`_infer_induction_register` first, then search for
+        THAT register's definition) rather than blindly taking
+        whichever dest_reg-bearing instruction happens to sit last in
+        the block.
+
+        An earlier revision took the plain last-instruction-in-block
+        without checking which register it wrote to. That's
+        indistinguishable from the correct behavior as long as
+        `update_block` contains exactly one candidate instruction -
+        true for a single loop, or even two levels of nesting - but
+        breaks for a THIRD level: `_find_for_update_block`'s generic
+        "unique in-loop predecessor of the guard" fallback can, at
+        that depth, resolve to a block that also holds some deeper
+        nested loop's own unrelated top-of-body instruction (e.g. an
+        alias `Mov`, or an unrelated counter `Inc` sitting at that
+        address purely by CFG shape - see `tripleNestedLabeledTest`'s
+        `Inc r4, r13` hit-counter, which shares a block with the
+        innermost loop's real machinery). The old code would silently
+        grab that unrelated instruction as if it were the induction
+        register's own update whenever it happened to sit textually
+        last, producing a `for` header with a self-referential-looking
+        update (`r13 = r13 + 1`) that doesn't match the induction
+        register at all.
+
+        Filtering by `instruction.dest_reg == induction_reg` makes
+        this fail SAFE instead: if the real update instruction isn't
+        in this block, nothing here matches, and `loop.update` simply
+        stays `None` (Printer already renders an empty update slot -
+        see `_extract_for_components`'s own docstring) rather than a
+        wrong one.
         """
         update_block = loop.update_block
 
         if update_block is None:
+            return
+
+        induction_reg = self._infer_induction_register(loop.condition, update_block)
+
+        if induction_reg is None:
             return
 
         for instruction in reversed(update_block.instructions):
@@ -441,6 +471,13 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 continue
 
             if instruction.value is None or instruction.dest_reg is None:
+                continue
+
+            if instruction.dest_reg != induction_reg:
+                # Some other register's instruction sharing this block
+                # (see docstring above) - not the induction register's
+                # own update. Keep scanning backward rather than
+                # accepting the first/last thing found.
                 continue
 
             loop.update = AssignmentExpression(
