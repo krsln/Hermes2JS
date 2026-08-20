@@ -503,8 +503,36 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
           initializer could live, so this bails out.
         - The induction register can be inferred from `loop.condition`
           (see `_infer_induction_register`).
-        - That predecessor actually contains an assignment to the
-          induction register.
+        - That predecessor's MOST RECENT write to the induction
+          register (scanning backward from the end of the block, i.e.
+          the actual value the register holds at loop entry) has a
+          safely capturable type.
+
+        That last point matters: an earlier revision kept scanning
+        PAST a most-recent write that didn't qualify
+        (`not isinstance(..., _SAFE_INIT_VALUE_TYPES)`), looking
+        further back for an EARLIER write to the same register that
+        did. That's wrong regardless of how "safe" the earlier value
+        looks in isolation: if the register was written again after
+        it (by anything - a call's return value, an unrelated
+        reassignment, ...) before the loop was ever entered, that
+        earlier value is stale and was never actually the register's
+        value at loop entry. This produced a real bug in
+        `tryCatchInsideLoopTest`: the predecessor block wrote the
+        induction register with a string literal (unrelated log
+        message) and THEN overwrote it with a `console.log(...)`
+        call's return value (a `CallExpression`, not in
+        `_SAFE_INIT_VALUE_TYPES`) right before falling into the loop.
+        The old code skipped past that unsafe, most-recent write and
+        happily reported the STALE string literal as the loop's
+        initializer, rendering `for (r3 = "...start"; ...)` for what
+        is actually a numeric loop.
+
+        The fix: find the most recent write to the induction register
+        and decide right there - use it if its type is safe, otherwise
+        leave `loop.initializer` as `None` (empty header slot, still
+        correct - see `_extract_for_components`'s docstring) - but
+        never keep looking further back past it.
         """
         header = loop.header_block
 
@@ -533,19 +561,22 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             if instruction.terminator is not None:
                 continue
 
-            if instruction.dest_reg != induction_reg or instruction.value is None:
+            if instruction.dest_reg != induction_reg:
                 continue
 
-            if not isinstance(instruction.value, _SAFE_INIT_VALUE_TYPES):
-                continue
+            # This is the register's MOST RECENT write in this
+            # predecessor, i.e. its actual value at loop entry.
+            # Decide here and now - do not keep scanning further back
+            # past it (see docstring above).
+            if instruction.value is not None and isinstance(instruction.value, _SAFE_INIT_VALUE_TYPES):
+                loop.initializer = AssignmentExpression(
+                    left=Identifier(name=f"r{induction_reg}"),
+                    operator=AssignmentOperator.ASSIGN,
+                    right=instruction.value,
+                )
 
-            loop.initializer = AssignmentExpression(
-                left=Identifier(name=f"r{induction_reg}"),
-                operator=AssignmentOperator.ASSIGN,
-                right=instruction.value,
-            )
+                predecessor.instructions.remove(instruction)
 
-            predecessor.instructions.remove(instruction)
             return
 
     def _infer_induction_register(
