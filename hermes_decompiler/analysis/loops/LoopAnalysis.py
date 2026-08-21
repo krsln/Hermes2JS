@@ -1,20 +1,16 @@
+from analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.loops.NaturalLoop import NaturalLoop
 
 
 class LoopAnalysis:
 
     def __init__(self, cfg):
-
         self.cfg = cfg
-
         self.back_edges = []
-
         self.loops: dict[int, NaturalLoop] = {}
 
     def compute(self):
-
         tree = self.cfg.dominator_tree
-
         self.loops.clear()
 
         for tail in self.cfg.blocks:
@@ -29,24 +25,7 @@ class LoopAnalysis:
         self._compute_exits()
         self._compute_nesting()
 
-        # print("\n=== Natural Loops ===")
-        # for loop in sorted(
-        #         self.loops.values(),
-        #         key=lambda l: l.header.id
-        # ):
-        #     print(
-        #         f"header={loop.header.id} "
-        #         f"parent={loop.parent.header.id if loop.parent else None} "
-        #         f"children={[c.header.id for c in loop.children]} "
-        #         f"members={[b.id for b in loop.blocks]}"
-        #     )
-
-    def _merge_back_edge(
-            self,
-            header,
-            tail,
-    ):
-
+    def _merge_back_edge(self, header: BasicBlock, tail: BasicBlock):
         loop = self.loops.get(header.id)
 
         if loop is None:
@@ -55,16 +34,10 @@ class LoopAnalysis:
             self.loops[header.id] = loop
 
         loop.latches.add(tail)
-
         members = self._discover_members(header, tail)
-
         loop.members.update(members)
 
-    def _discover_members(
-            self,
-            header,
-            tail,
-    ):
+    def _discover_members(self, header: BasicBlock, tail: BasicBlock):
 
         if header is tail:
             # Single-block self-loop (the block's own back edge targets
@@ -84,22 +57,19 @@ class LoopAnalysis:
             return {header}
 
         members = {header, tail}
-
         stack = [tail]
 
         while stack:
-
             block = stack.pop()
+            for predecessor in block.predecessors:
 
-            for pred in block.predecessors:
-
-                if pred in members:
+                if predecessor in members:
                     continue
 
-                members.add(pred)
+                members.add(predecessor)
 
-                if pred != header:
-                    stack.append(pred)
+                if predecessor != header:
+                    stack.append(predecessor)
 
         return members
 
@@ -109,10 +79,10 @@ class LoopAnalysis:
 
             for block in loop.members:
 
-                for succ in block.successors:
+                for successor in block.successors:
 
-                    if succ not in loop.members:
-                        loop.exits.add(succ)
+                    if successor not in loop.members:
+                        loop.exits.add(successor)
 
     def _compute_nesting(self):
 

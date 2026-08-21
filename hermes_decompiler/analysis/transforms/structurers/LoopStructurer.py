@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from analysis.loops import NaturalLoop
 from hermes_decompiler.analysis.models.regions import SequenceRegion, LoopRegion
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
@@ -35,7 +36,7 @@ class LoopStructurer(RegionStructurer):
                 "run first - loop analysis is a caller precondition."
             )
 
-        roots = [
+        roots: list[NaturalLoop] = [
             loop
             for loop in self.cfg.loop_analysis.loops.values()
             if loop.parent is None
