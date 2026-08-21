@@ -35,16 +35,18 @@ class _CompoundConditionFolder:
 
         if (C1) {
             if (C2) { BODY }
-        }                       ->  if (C1 && C2) { BODY }
+        }
+                               -> if (C1 && C2) { BODY }
 
         if (C1) {
         } else {
             if (C2) { BODY }
-        }                       ->  if (C1 || C2) { BODY }
+        }
+                               -> if (C1 || C2) { BODY }
 
     Empty then/else bodies holding only a single conditional jump to
     the merge point are also absorbed, eliminating the residual
-    `if (x) goto label_N;` that would otherwise survive into the
+    `if (x) goto label_N` that would otherwise survive into the
     printed source.
 
     Purely a rewrite pass - it never turns a raw BasicBlock into a new
@@ -196,6 +198,7 @@ class _CompoundConditionFolder:
             # --- then empty, else non-empty: invert & swap ---
             # (helps later AND/OR folding and produces cleaner source)
             if (is_empty_body(child.then_body)
+                    and child.condition is not None
                     and child.else_body is not None
                     and not is_empty_body(child.else_body)):
                 child.condition = _negate_condition(child.condition)
@@ -262,23 +265,29 @@ class _CompoundConditionFolder:
     def _try_fold_and_or_cascade(self, outer: IfRegion) -> bool:
         """Recover the `a && b` / `a || b` / `else` cascade in place.
 
-        Recognizes the classic Hermes lowering of::
+        Recognizes the classic Hermes lowering of:
 
-            if (a && b) { BOTH }
-            else if (a || b) { EITHER }
-            else { NEITHER }
+        ```text
+        if (a && b) { BOTH }
+        else if (a || b) { EITHER }
+        else { NEITHER }
+        ```
 
-        which appears after structuring and residual absorption as::
+        The classic lowering appears after structuring and residual
+        absorption as:
 
-            if (!a) {
-                if (a || b) { EITHER } else { NEITHER }
-            } else {
-                if (!b) { BOTH }          # residual was absorbed
-            }
+        ```text
+        if (!a) {
+            if (a || b) { EITHER } else { NEITHER }
+        } else {
+            if (!b) { BOTH } # residual was absorbed
+        }
+        ```
 
-        or still with a raw residual jump. Rewrites in place to the
+        Or still with a raw residual jump. Rewrites in place to the
         source-level cascade with positive polarity.
         """
+
         if not is_negation(outer.condition):
             return False
         if outer.else_body is None:
