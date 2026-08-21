@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from typing import Any
-
 from analysis.loops import NaturalLoop
+from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models.regions import SequenceRegion, LoopRegion
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
@@ -61,7 +60,7 @@ class LoopStructurer(RegionStructurer):
 
         self.dump_region_tree_if_debug(type(self).__name__)
 
-    def _build_loop(self, loop: Any, parent_sequence: SequenceRegion) -> None:
+    def _build_loop(self, loop: NaturalLoop, parent_sequence: SequenceRegion) -> None:
 
         region = LoopRegion(loop)
 
@@ -80,14 +79,14 @@ class LoopStructurer(RegionStructurer):
         self.graph.replace_block(loop.header, region)
         self.graph.append(region.body, loop.header)
 
-        children_by_header_id = {}
+        children_by_header_id: dict[int, NaturalLoop] = {}
         child_members = set()
 
         for child in loop.children:
             children_by_header_id[child.header.id] = child
             child_members.update(child.members)
 
-        loose_blocks_by_id = {
+        loose_blocks_by_id: dict[int, BasicBlock] = {
             block.id: block
             for block in loop.members
             if block is not loop.header and block not in child_members
