@@ -5,11 +5,12 @@ import dataclasses
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models import RegionVisitor
 from hermes_decompiler.analysis.models.regions import IfRegion, SequenceRegion
+# noinspection PyProtectedMember
 from hermes_decompiler.analysis.transforms._shared import (
     _negate_condition,
     _is_pure,
     _TRIVIAL_NODE_TYPES
-)
+)  # noqa: SLF001
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator

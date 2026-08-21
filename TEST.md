@@ -18,7 +18,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 - RegionPrinter.py // CODE → addr:...
 - OpcodeHandler.py HermesAnalysis.py|RegisterState
 - LoopInductionAliasPass.py fix -> for (r1 = 0; r1 < 3; r1 = r1 + 1) {...
-- analysis/transforms/structurers */if_structurer/ docstrings re-newed
+- analysis/transforms/structurers */if_structurer/switch_structurer/try_structurer docstrings re-newed
 
 ## Testy
 

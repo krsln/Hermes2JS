@@ -10,24 +10,23 @@ from ._handler_builder import _HandlerBuilder
 
 class TryStructurer(RegionStructurer):
     """
-    Builds `TryRegion`s (with `catch`/`finally`) from the CFG's
-    exception-handler table.
+    Builds TryRegions (with catch/finally) from the exception table.
 
-    Hermes has no bytecode-level `finally` construct: a
-    try/catch/finally is lowered as TWO overlapping exception handlers
-    sharing the same `start` - a narrow one covering just the try
-    (real `catch`), and a wider one covering try+catch together, whose
-    target is a block that re-runs the cleanup code and rethrows. This
-    class recognizes the wider handler as a `finally` wrapper for the
-    region the narrower handler already built, rather than structuring
-    it as a second, nested try/catch (see `_finally_matcher`).
+    Hermes has no bytecode-level finally construct: a
+    try/catch/finally is lowered as two overlapping exception handlers
+    sharing the same start - a narrow one covering just the try (real
+    catch), and a wider one covering try+catch together, whose target
+    is a block that re-runs the cleanup code and rethrows. This class
+    recognizes the wider handler as a finally-wrapper for the region
+    the narrower handler already built, rather than structuring it as
+    a second, nested try/catch (see `_finally_matcher`).
 
-    A plain `try { } finally { }` (no `catch` at all) compiles to a
-    SINGLE handler, since there's no separate narrower handler to pair
+    A plain `try { } finally { }` (no catch at all) compiles to a
+    single handler, since there's no separate narrower handler to pair
     it with. That case is only distinguishable from an ordinary catch
-    by its *content* (cleanup code followed by an unconditional
-    rethrow of the exception it just caught) and is reinterpreted
-    after every handler has been resolved (see `_finally_attacher`).
+    by its content (cleanup code followed by an unconditional rethrow
+    of the exception it just caught) and is reinterpreted after every
+    handler has been resolved (see `_finally_attacher`).
 
     This class only owns handler dedup/ordering and the dispatch
     between "attach as finally" vs. "build a fresh try/catch"; all the
@@ -43,18 +42,18 @@ class TryStructurer(RegionStructurer):
 
     def run(self):
 
-        # Some functions list two handlers with the *identical*
-        # [start, end) range but different targets (seen e.g. in
-        # tryCatchFinallyImplicitThrowTest's `[start=0x19,end=0x3f,
-        # target=0x55]` / `[start=0x19,end=0x3f,target=0x87]` pair).
+        # Some functions list two handlers with the identical
+        # [start, end] range but different targets (seen e.g., in
+        # tryCatchFinallyImplicitThrowTest's [start=0x19,end=0x3f,
+        # target=0x55] / [start=0x19, end=0x3f, target=0x87] pair).
         # Exception tables are matched in listed order, so for any
-        # exception raised inside that identical range the *first*
-        # entry always wins - the second is permanently shadowed and
-        # never actually fires at runtime. Structuring it anyway
-        # produces a phantom empty wrapper once its target block gets
-        # legitimately claimed elsewhere (see the finally-wrapper for
-        # the real, first handler). Drop shadowed duplicates before
-        # doing anything else.
+        # exception raised inside that identical range, the first entry
+        # always wins - the second is permanently shadowed and never
+        # actually fires at runtime. Structuring it anyway produces a
+        # phantom empty wrapper once its target block gets legitimately
+        # claimed elsewhere (see the finally-wrapper for the real,
+        # first handler). Drop shadowed duplicates before doing
+        # anything else.
         seen_ranges = set()
         handlers = []
 
@@ -70,13 +69,13 @@ class TryStructurer(RegionStructurer):
         # Process narrower-scoped handlers before the wider ones that
         # wrap them, so `_HandlerBuilder.build`'s splicing always finds
         # its inner region already built. Sorting by raw range size
-        # (end - start) breaks down when a wrapper's `start` sits later
-        # than the handler it wraps (its `end` alone can then make it
-        # look "smaller"). Sorting by `end` ascending is safe
-        # regardless: a finally-wrapper protects through the end of
-        # the catch it wraps, so its `end` is always >= the wrapped
-        # handler's `end` - that ordering constraint holds no matter
-        # where either handler's `start` falls.
+        # (end - start) breaks down when a wrapper's start sits later
+        # than the handler it wraps (its end alone can then make it
+        # look "smaller"). Sorting by end ascending is safe regardless:
+        # a finally-wrapper protects through the end of the catch it
+        # wraps, so its end is always >= the wrapped handler's end -
+        # that ordering constraint holds no matter where either
+        # handler's start falls.
         handlers = sorted(
             handlers,
             key=lambda h: h["end"],
@@ -98,9 +97,9 @@ class TryStructurer(RegionStructurer):
             if try_region is not None:
                 processed.append((handler, try_region))
 
-        # A plain `try { } finally { }` (no `catch` at all) never goes
+        # A plain `try { } finally { }` (no catch at all) never goes
         # through `_attacher.attach` above (see class docstring).
-        # Reinterpret those as `finally` after the fact, once every
+        # Reinterpret those as finally after the fact, once every
         # handler has been resolved.
         for _, try_region in processed:
             if try_region.finally_ is None:

@@ -9,18 +9,17 @@ TERMINATING_TERMINATORS = (TerminatorReturn, TerminatorThrow)
 
 
 class _HandlerBuilder:
-    """
-    Builds the base `TryRegion`/`CatchRegion` shape from a single raw
-    exception-table handler entry, splitting the covering sequence
-    into a try body and a catch body via the try/handler blocks'
-    lowest common sequence ancestor.
+    """Builds the base TryRegion/CatchRegion shape from a raw handler.
 
-    Purely structural: this class only decides where the try/catch
-    boundaries fall and splices the tree accordingly. It has no
-    concept of `finally` - a handler this builder structures may
-    later be recognized as a finally-wrapper (`_finally_matcher`) or
-    reinterpreted as one after the fact (`_finally_attacher`), both of
-    which run afterwards, in `TryStructurer.run`.
+    Splits the covering sequence into a try body and a catch body via
+    the try/handler blocks' lowest common sequence ancestor.
+
+    Purely structural: only decides where the try/catch boundaries
+    fall and splices the tree accordingly. Has no concept of finally -
+    a handler this builder structures may later be recognized as a
+    finally-wrapper (`_finally_matcher`) or reinterpreted as one after
+    the fact (`_finally_attacher`), both of which run afterward, in
+    `TryStructurer.run`.
     """
 
     def __init__(self, graph, cfg):
@@ -80,7 +79,7 @@ class _HandlerBuilder:
                 .immediate_post_dominator(handler_block)
             )
 
-        stop_at = {merge_block} if merge_block else set()
+        stop_at = {merge_block} if merge_block is not None else set()
 
         catch_end = self._find_catch_boundary(
             lca_seq,
@@ -169,7 +168,10 @@ class _HandlerBuilder:
             if item in stop_at:
                 return index
 
-            if isinstance(item, BasicBlock) and isinstance(item.terminator, TERMINATING_TERMINATORS):
+            if (
+                    isinstance(item, BasicBlock)
+                    and isinstance(item.terminator, TERMINATING_TERMINATORS)
+            ):
                 return index + 1
 
             index += 1

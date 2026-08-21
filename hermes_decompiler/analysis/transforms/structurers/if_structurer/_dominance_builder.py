@@ -8,7 +8,8 @@ from hermes_decompiler.analysis.models.regions import (
     TryRegion,
 )
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorJump
-from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
+# noinspection PyProtectedMember
+from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
 

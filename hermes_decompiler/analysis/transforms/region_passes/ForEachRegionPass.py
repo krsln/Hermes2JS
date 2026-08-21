@@ -8,7 +8,8 @@ from hermes_decompiler.analysis.models.regions import (
     SequenceRegion,
     TryRegion,
 )
-from hermes_decompiler.analysis.transforms._shared import _structural_key
+# noinspection PyProtectedMember
+from hermes_decompiler.analysis.transforms._shared import _structural_key  # noqa: SLF001
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
 
 from ._base import RegionPass

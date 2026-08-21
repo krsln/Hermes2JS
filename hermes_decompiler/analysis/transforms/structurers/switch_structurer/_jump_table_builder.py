@@ -7,16 +7,17 @@ from hermes_decompiler.ir.expressions import NumericLiteral
 
 
 class _JumpTableSwitchBuilder:
-    """
-    Builds a `SwitchRegion` directly from a `BasicBlock`'s
-    `TerminatorSwitch` (a real `SwitchImm` / `UIntSwitchImm` jump
-    table) - the dense-switch shape Hermes compiles to, untouched by
-    `IfStructurer` (which only consumes `TerminatorConditionalBranch`).
+    """Builds a SwitchRegion from a raw jump-table terminator.
+
+    Reads a BasicBlock's TerminatorSwitch (a SwitchImm / UIntSwitchImm
+    jump table) directly - the dense-switch shape Hermes compiles to,
+    untouched by IfStructurer (which only consumes
+    TerminatorConditionalBranch).
 
     Sibling to `_ComparisonChainSwitchBuilder`, not a fallback for it:
-    for any given switch Hermes emits exactly one of the two shapes,
-    never both, so `SwitchStructurer`'s dispatch tries both builders
-    per candidate item but only one can ever actually match.
+    Hermes emits exactly one of the two shapes per switch, never both,
+    so `SwitchStructurer` tries both builders per candidate item but
+    only one can ever match.
     """
 
     def __init__(self, graph, cfg):
@@ -24,18 +25,19 @@ class _JumpTableSwitchBuilder:
         self.cfg = cfg
 
     def try_build(self, region: SequenceRegion, header: BasicBlock) -> bool:
-        """
-        Case labels that share a target address are grouped into one
-        `SwitchCase`. A case value whose target equals `default_target`
-        is omitted from the explicit case list - it already falls under
-        `default:`.
+        """Try to fold `header`'s jump table into a SwitchRegion in place.
 
-        Each case / default body's extent is the contiguous run of
-        `region.children` from that target's item up to the next
+        Case labels sharing a target address are grouped into one
+        SwitchCase. A value whose target equals default_target is
+        omitted from the explicit case list, since it already falls
+        under `default:`.
+
+        Each case/default body spans the contiguous run of
+        region.children from that target's item up to the next
         case/default item, the header's immediate post-dominator, or
-        the end of the region. Returns `False` on any layout that
-        cannot be resolved cleanly; the raw `TerminatorSwitch` block
-        remains a valid unstructured fallback.
+        the end of the region. Returns False on any layout that can't
+        be resolved cleanly; the raw TerminatorSwitch block remains a
+        valid unstructured fallback.
         """
 
         switch_term = header.terminator
@@ -75,7 +77,9 @@ class _JumpTableSwitchBuilder:
 
         default_item = None
 
-        if switch_term.default_target:
+        # `is not None`, not truthiness: a default target at address 0
+        # is a legitimate address, not "no default".
+        if switch_term.default_target is not None:
 
             default_block = address_to_block.get(switch_term.default_target)
 

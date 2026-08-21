@@ -9,11 +9,11 @@ from hermes_decompiler.analysis.models.regions import (
     TryRegion,
 )
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
-from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
+# noinspection PyProtectedMember
+from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
-
 from ._predicates import (
     is_backward_branch,
     is_empty_body,
