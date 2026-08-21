@@ -6,15 +6,24 @@ from typing import Optional
 from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, eq=False)
 class NaturalLoop:
     """
-    One natural loop in the CFG.
+    Represents a natural loop discovered in a control-flow graph.
 
-    A loop is uniquely identified by its header.
+    A natural loop is identified by its unique loop header. Multiple
+    back edges may target the same header, so a single loop can have
+    multiple latch blocks.
 
-    Multiple back edges may enter the same header, therefore a loop
-    may have multiple latches.
+    Attributes:
+        header: The unique entry block of the loop.
+        members: All basic blocks belonging to the loop, including the
+            header and all latch blocks.
+        latches: Blocks containing back edges that target ``header``.
+        exits: Successor blocks outside the loop that are reachable
+            directly from a loop member.
+        parent: The immediately enclosing natural loop, if any.
+        children: Natural loops directly nested inside this loop.
     """
 
     # unique loop entry
@@ -30,27 +39,42 @@ class NaturalLoop:
     exits: set[BasicBlock] = field(default_factory=set)
 
     # nesting
-    parent: Optional["NaturalLoop"] = None
-    children: list["NaturalLoop"] = field(default_factory=list)
+    parent: Optional[NaturalLoop] = None
+    children: list[NaturalLoop] = field(default_factory=list)
 
     @property
     def blocks(self) -> list[BasicBlock]:
-        return sorted(self.members, key=lambda b: b.id)
+        """Return loop members sorted by basic-block ID."""
+
+        return sorted(self.members, key=lambda block: block.id)
 
     @property
     def latch_blocks(self) -> list[BasicBlock]:
-        return sorted(self.latches, key=lambda b: b.id)
+        """Return loop latch blocks sorted by basic-block ID."""
+
+        return sorted(self.latches, key=lambda block: block.id)
 
     @property
     def exit_blocks(self) -> list[BasicBlock]:
-        return sorted(self.exits, key=lambda b: b.id)
+        """Return loop exit target blocks sorted by basic-block ID."""
+
+        return sorted(self.exits, key=lambda block: block.id)
 
     @property
     def is_top_level(self) -> bool:
+        """Return whether this loop is not nested inside another loop."""
+
         return self.parent is None
 
     @property
     def depth(self) -> int:
+        """
+        Return this loop's nesting depth.
+
+        Top-level loops have depth ``0``. Each enclosing parent loop
+        increases the depth by one.
+        """
+
         depth = 0
         current = self.parent
 
@@ -60,12 +84,12 @@ class NaturalLoop:
 
         return depth
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (
-            f"NaturalLoop("
+            "NaturalLoop("
             f"header={self.header.id}, "
-            f"members={[b.id for b in self.blocks]}, "
-            f"latches={[b.id for b in self.latch_blocks]}, "
-            f"exits={[b.id for b in self.exit_blocks]}"
-            f")"
+            f"members={[block.id for block in self.blocks]}, "
+            f"latches={[block.id for block in self.latch_blocks]}, "
+            f"exits={[block.id for block in self.exit_blocks]}"
+            ")"
         )
