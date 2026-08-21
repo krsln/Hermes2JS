@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Literal
+
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models.regions import Region, TryRegion, CatchRegion, FinallyRegion
 from hermes_decompiler.analysis.models.regions import SequenceRegion, LoopRegion, IfRegion
@@ -13,6 +15,8 @@ from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.ir.statements import BreakStatement, ContinueStatement
 
 logger = get_logger(__name__)
+
+TargetLoopKind = Literal["continue", "break"]
 
 
 class LoopLabeledExitStructurer(RegionStructurer):
@@ -187,16 +191,28 @@ class LoopLabeledExitStructurer(RegionStructurer):
 
         if target_loop is None:
             successors = list(exit_block.successors)
-            if len(successors) == 1:
-                target_loop, kind = self._find_target_loop_for_address(loop, successors[0].address)
 
-        if target_loop is None or target_loop is loop:
+            if len(successors) == 1:
+                target_loop, kind = self._find_target_loop_for_address(
+                    loop,
+                    successors[0].address,
+                )
+
+        if target_loop is None:
             logger.debug(
                 "LoopLabeledExitStructurer: no ancestor match for block %d "
                 "(exit block %d, address 0x%x).",
-                block.id, exit_block.id, exit_block.address,
+                block.id,
+                exit_block.id,
+                exit_block.address,
             )
             return False
+
+        if target_loop is loop:
+            return False
+
+        assert kind is not None
+        assert target_loop is not None
 
         # ---- convert `block`'s branch into a structured IfRegion ----
         #
@@ -216,10 +232,12 @@ class LoopLabeledExitStructurer(RegionStructurer):
             )
             return False
 
-        if target_loop.label is None:
-            target_loop.label = f"loop_{target_loop.header_block.id}"
+        target_loop_label = target_loop.label
+        if target_loop_label is None:
+            target_loop_label = f"loop_{target_loop.header_block.id}"
+            target_loop.label = target_loop_label
 
-        label_node = Identifier(name=target_loop.label)
+        label_node = Identifier(name=target_loop_label)
         statement = (
             ContinueStatement(label=label_node)
             if kind == "continue"
@@ -262,7 +280,10 @@ class LoopLabeledExitStructurer(RegionStructurer):
         return block_id
 
     @staticmethod
-    def _find_target_loop_for_address(inner_loop: LoopRegion, target_address: int):
+    def _find_target_loop_for_address(
+            inner_loop: LoopRegion,
+            target_address: int,
+    ) -> tuple[LoopRegion | None, TargetLoopKind | None]:
         """
         Walks `inner_loop`'s ancestors outward, returning the first
         one whose latch, header, or natural merge address matches
