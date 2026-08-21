@@ -19,13 +19,13 @@ class LoopRegion(Region):
     inferred by the Printer. Structuring / region passes are responsible
     for determining:
 
-        - loop kind
-        - condition
-        - update
-        - continue target
-        - break target
-        - for-of / for-in information
-        - labels
+        - Loop kind
+        - Condition
+        - Update
+        - Continue target
+        - Break target
+        - For-of / for-in information
+        - Labels
 
     The Printer only renders this already-recovered information.
     """

@@ -1,4 +1,4 @@
-from enum import Enum, auto
+from enum import Enum
 
 
 class LoopKind(Enum):
@@ -9,13 +9,3 @@ class LoopKind(Enum):
     FOR_OF = "for_of"
     FOR_IN = "for_in"
     ENDLESS = "endless"
-
-
-# class LoopKind(Enum):
-#     UNKNOWN = auto()
-#     WHILE = auto()
-#     DO_WHILE = auto()
-#     FOR = auto()
-#     FOR_OF = auto()
-#     FOR_IN = auto()
-#     ENDLESS = auto()
