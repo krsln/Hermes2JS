@@ -103,7 +103,8 @@ class LoopBreakStructurer(RegionStructurer):
             if not self._convert(loop, block):
                 failed.add(block)
 
-    def _find_candidate(self, loop: LoopRegion, exclude: set) -> BasicBlock | None:
+    @staticmethod
+    def _find_candidate(loop: LoopRegion, exclude: set) -> BasicBlock | None:
 
         for item in loop.body.children:
 
@@ -119,7 +120,7 @@ class LoopBreakStructurer(RegionStructurer):
                 # genuine in-loop if - never a break edge here.
                 continue
 
-            if isinstance(item.terminator, TerminatorConditionalBranch):
+            if isinstance(item, BasicBlock) and isinstance(item.terminator, TerminatorConditionalBranch):
                 return item
 
         return None
