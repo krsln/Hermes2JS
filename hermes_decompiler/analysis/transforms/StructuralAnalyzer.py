@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import RegionGraph
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorSwitch
+from hermes_decompiler.analysis.models import RegionGraph, TerminatorConditionalBranch, TerminatorSwitch
 from hermes_decompiler.analysis.transforms.cfg_passes import (
     ShortCircuitConditionCfgPass,
 )

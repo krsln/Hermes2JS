@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.models import TerminatorSwitch
 from hermes_decompiler.analysis.models.regions import (
     IfRegion,
     LoopRegion,
@@ -8,9 +9,7 @@ from hermes_decompiler.analysis.models.regions import (
     SwitchRegion,
     TryRegion,
 )
-from hermes_decompiler.analysis.terminators import TerminatorSwitch
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
-
 from ._comparison_chain_builder import _ComparisonChainSwitchBuilder
 from ._jump_table_builder import _JumpTableSwitchBuilder
 

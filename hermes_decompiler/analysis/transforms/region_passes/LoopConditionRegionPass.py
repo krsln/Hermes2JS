@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import RegionVisitor
+from hermes_decompiler.analysis.models import RegionVisitor, TerminatorConditionalBranch
 from hermes_decompiler.analysis.models.regions import LoopKind, LoopRegion
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import AssignmentOperator
 from hermes_decompiler.ir.Operators import UnaryOperator

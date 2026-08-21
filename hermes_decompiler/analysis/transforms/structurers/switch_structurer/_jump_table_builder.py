@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.models import TerminatorSwitch
 from hermes_decompiler.analysis.models.regions import SequenceRegion, SwitchCase, SwitchRegion
-from hermes_decompiler.analysis.terminators import TerminatorSwitch
 from hermes_decompiler.ir.expressions import NumericLiteral
 
 

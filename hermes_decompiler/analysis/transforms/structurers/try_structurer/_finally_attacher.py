@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.models import TerminatorThrow
 from hermes_decompiler.analysis.models.regions import FinallyRegion, SequenceRegion, TryRegion
-from hermes_decompiler.analysis.terminators import TerminatorThrow
 from hermes_decompiler.ir.expressions import Identifier
-
 from ._predicates import strip_duplicate_run
 
 

@@ -1,4 +1,4 @@
-from hermes_decompiler.analysis.terminators import TerminatorJump
+from hermes_decompiler.analysis.models import TerminatorJump
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, ADDR
 

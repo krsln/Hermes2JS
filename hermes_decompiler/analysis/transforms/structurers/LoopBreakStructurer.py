@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.models import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.analysis.models.regions import (
     Region, TryRegion, CatchRegion, FinallyRegion,
-    SequenceRegion, LoopRegion, IfRegion
+    SequenceRegion, LoopRegion, IfRegion,
+
 )
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorJump
 # noinspection PyProtectedMember
 from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer

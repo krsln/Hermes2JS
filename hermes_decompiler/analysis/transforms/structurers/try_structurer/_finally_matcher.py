@@ -11,10 +11,9 @@ handler as `finally` lives in `_finally_attacher`.
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.models import TerminatorThrow
 from hermes_decompiler.analysis.models.regions import TryRegion
-from hermes_decompiler.analysis.terminators import TerminatorThrow
 from hermes_decompiler.ir.expressions import Identifier
-
 from ._predicates import structural_key
 
 

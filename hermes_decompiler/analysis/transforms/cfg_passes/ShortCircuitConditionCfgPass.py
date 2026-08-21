@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock, CFG
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
+from hermes_decompiler.analysis.models import TerminatorConditionalBranch
 from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.models import TerminatorConditionalBranch
 from hermes_decompiler.analysis.models.regions import (
     IfRegion,
     LoopRegion,
@@ -8,7 +9,6 @@ from hermes_decompiler.analysis.models.regions import (
     SequenceRegion,
     TryRegion,
 )
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 # noinspection PyProtectedMember
 from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001
 from hermes_decompiler.core.logging import get_logger

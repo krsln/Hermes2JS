@@ -1,4 +1,4 @@
-from hermes_decompiler.analysis.terminators import TerminatorReturn
+from hermes_decompiler.analysis.models import TerminatorReturn
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.ir.statements import ReturnStatement

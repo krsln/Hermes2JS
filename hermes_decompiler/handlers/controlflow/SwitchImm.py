@@ -1,4 +1,4 @@
-from hermes_decompiler.analysis.terminators import TerminatorSwitch
+from hermes_decompiler.analysis.models import TerminatorSwitch
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, ADDR, UINT32
