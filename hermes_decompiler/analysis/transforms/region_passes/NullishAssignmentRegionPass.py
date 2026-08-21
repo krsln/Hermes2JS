@@ -8,6 +8,8 @@ from hermes_decompiler.analysis.models.regions import (
     IfRegion,
     SequenceRegion,
 )
+# noinspection PyProtectedMember
+from hermes_decompiler.analysis.transforms._shared import _is_pure  # noqa: SLF001
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import (
     AssignmentOperator,
@@ -48,7 +50,7 @@ class NullishAssignmentRegionPass(RegionPass, RegionVisitor):
             r1.prop = value
         }
 
-    Therefore this pass resolves register definitions locally instead
+    Therefore, this pass resolves register definitions locally instead
     of requiring the condition itself to contain a MemberExpression.
 
     The pass deliberately remains narrow:
@@ -224,22 +226,21 @@ class NullishAssignmentRegionPass(RegionPass, RegionVisitor):
     def _has_only_consumable_setup(
             block: BasicBlock,
     ) -> bool:
+        """Return True if everything before the final assignment is
+        inlineable compiler setup, with no observable side effects.
+
+        Checking `.statement is not None` alone is not sufficient: an
+        instruction can be independently observable (a call's side
+        effect, a mutation) without yet having been promoted to its
+        own `.statement` node at this point in the pipeline - see
+        `ConditionalExpressionRegionPass._single_result`'s docstring
+        for the same problem. `_is_pure` (shared with
+        `BooleanChainRegionPass`) already applies both checks, so a
+        call such as `foo();` sitting before the assignment is never
+        silently absorbed into the fold.
         """
-        Everything before the final assignment must be compiler
-        bookkeeping / inlineable setup.
 
-        We must not remove observable statements such as:
-
-            foo();
-
-        from the original branch.
-        """
-
-        for instruction in block.instructions[:-1]:
-            if instruction.statement is not None:
-                return False
-
-        return True
+        return all(_is_pure(instruction) for instruction in block.instructions[:-1])
 
     # ------------------------------------------------------------------
     # Condition analysis
@@ -473,7 +474,7 @@ class NullishAssignmentRegionPass(RegionPass, RegionVisitor):
 
             obj.count ??= 0
 
-        therefore r3/r2 should not be emitted as standalone definitions.
+        therefore, r3/r2 should not be emitted as standalone definitions.
         """
 
         if not isinstance(condition, BinaryExpression):

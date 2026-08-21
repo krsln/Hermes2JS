@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models import RegionVisitor
-from hermes_decompiler.analysis.models.regions import LoopKind, LoopRegion
+from hermes_decompiler.analysis.models.regions import LoopRegion
 from hermes_decompiler.analysis.terminators import TerminatorJump
 from hermes_decompiler.ir.statements import ContinueStatement
 
@@ -10,14 +10,13 @@ from ._base import RegionPass
 
 
 class LoopContinueRegionPass(RegionPass, RegionVisitor):
-    """
-    Converts residual unconditional jumps into `continue`.
+    """Converts residual unconditional jumps into `continue`.
 
-    A jump is considered a genuine unlabelled continue only when:
+    A jump is considered a genuine unlabelled `continue` only when:
 
         1. It is inside the current loop.
         2. It is an unconditional TerminatorJump.
-        3. Its target is the semantic continue target selected by
+        3. Its target is the semantic `continue` target selected by
            LoopConditionRegionPass.
         4. It is not the loop's ordinary sequential completion edge.
 
@@ -42,8 +41,8 @@ class LoopContinueRegionPass(RegionPass, RegionVisitor):
                                     |
                                   guard
 
-    Therefore `target == update` alone is NOT enough to identify a
-    continue.
+    Therefore, `target == update` alone is NOT enough to identify a
+    `continue`.
 
     The pass intentionally remains conservative. A jump whose structural
     role cannot be established is left untouched rather than being
@@ -96,18 +95,12 @@ class LoopContinueRegionPass(RegionPass, RegionVisitor):
             block: BasicBlock,
             target: BasicBlock,
     ) -> bool:
-        """
-        Determine whether `block -> target` is a semantic continue edge.
+        """Determine whether `block` -> `target` is a semantic `continue` edge.
 
-        We deliberately distinguish:
+        Deliberately distinguishes::
 
-            branch-arm -> update
-                = continue
-
-        from:
-
-            final-body-block -> update
-                = ordinary loop completion
+            branch-arm -> update           = continue
+            final-body-block -> update     = ordinary loop completion
 
         The distinction is made from the region tree rather than from
         the target address alone.
@@ -157,11 +150,10 @@ class LoopContinueRegionPass(RegionPass, RegionVisitor):
             block: BasicBlock,
             loop: LoopRegion,
     ) -> bool:
-        """
-        True when the block belongs to an IfRegion contained by this loop.
+        """Return True if `block` belongs to an IfRegion contained by this loop.
 
-        We intentionally stop at the current LoopRegion so an enclosing
-        loop's IfRegion cannot accidentally cause a local continue.
+        Intentionally stops at the current LoopRegion so an enclosing
+        loop's IfRegion cannot accidentally cause a local `continue`.
         """
 
         region = self.graph.owner(block)
@@ -179,10 +171,7 @@ class LoopContinueRegionPass(RegionPass, RegionVisitor):
             block: BasicBlock,
             loop: LoopRegion,
     ) -> bool:
-        """
-        Walk the region ancestry and detect whether this block is nested
-        below an IfRegion before reaching the current loop.
-        """
+        """Return True if block is nested below an IfRegion before reaching loop."""
 
         region = self.graph.owner(block)
 

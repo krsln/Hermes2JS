@@ -27,14 +27,13 @@ _SAFE_INIT_VALUE_TYPES = (
 
 
 class LoopConditionRegionPass(RegionPass, RegionVisitor):
-    """
-    Extracts the loop condition and classifies the physical loop shape.
+    """Extracts the loop condition and classifies the physical loop shape.
 
     Supported shapes:
 
-        while:
+        `while`:
 
-            header
+            `header`
               |
               +-- condition false --> exit
               |
@@ -44,9 +43,9 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
               +--------------------> header
 
 
-        do-while:
+        `do-while`:
 
-            header
+            `header`
               |
              body
               |
@@ -99,9 +98,6 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
 
     def _extract(self, loop: LoopRegion) -> None:
         header = loop.header_block
-
-        if header is None:
-            return
 
         # Defensive reset. This matters if the pass is ever run twice
         # against the same region tree.
@@ -206,7 +202,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 # header instead of leaving those slots blank. This is
                 # purely cosmetic metadata extraction - it never changes
                 # the loop's classification or its condition.
-                self._extract_for_components(loop)  # NOTE: latest change
+                self._extract_for_components(loop)
                 return
 
         # Otherwise it is a normal bottom-tested loop.
@@ -229,22 +225,13 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
     # Guard extraction
     # ------------------------------------------------------------------
 
-    def _consume_guard(
-            self,
-            block: BasicBlock,
-            loop: LoopRegion,
-            kind: LoopKind,
-            update_block: BasicBlock | None,
-    ) -> bool:
-        """
-        Consume a conditional branch that has exactly one edge leaving
-        the current loop.
+    @staticmethod
+    def _consume_guard(block: BasicBlock, loop: LoopRegion, kind: LoopKind, update_block: BasicBlock | None) -> bool:
+        """Consume a conditional branch with exactly one edge leaving the loop.
 
-        The branch is removed from the BasicBlock because its condition
-        becomes `loop.condition`.
-
-        `update_block` is metadata only; it is not used to determine
-        the condition itself.
+        The branch is removed from the BasicBlock, since its condition
+        becomes loop.condition. update_block is metadata only - it is
+        not used to determine the condition itself.
         """
 
         branch = block.terminator
@@ -331,15 +318,15 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             loop: LoopRegion,
             condition_block: BasicBlock,
     ) -> BasicBlock | None:
-        """
-        For Hermes' canonical numeric-for lowering, the update operation
-        and the loop guard can live in the same BasicBlock:
+        """Locate the block holding the for loop's update instruction.
+
+        For Hermes' canonical numeric-for lowering, the update
+        operation and the loop guard can live in the same BasicBlock::
 
             Inc ...
             JLess ... -> header
 
         In that shape the condition block itself is the update block.
-
         For a separated update block, use the unique in-loop predecessor.
         """
 
@@ -387,73 +374,59 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
     # ------------------------------------------------------------------
 
     def _extract_for_components(self, loop: LoopRegion) -> None:
-        """
-        Best-effort recovery of the classic `for (initializer; condition;
-        update)` slots for a loop already classified as `LoopKind.FOR`.
+        """Best-effort recovery of the `for(initializer; condition; update)` slots.
 
-        This is purely cosmetic: it only affects what the Printer shows
-        in the `for (...)` header. It never touches `loop.condition` or
-        `loop.loop_kind`, which are already final by the time this runs.
+        Purely cosmetic: only affects what the Printer shows in the
+        for(...) header. Never touches loop.condition or
+        loop.loop_kind, which are already final by the time this runs.
 
         Two independent lookups happen here:
 
-        1. `update`: the trailing register-defining instruction still
-           sitting in `loop.update_block` (e.g. `Inc r5, r6` /
-           `Mov r5, r6`). That instruction is removed from the block so
-           it isn't ALSO rendered as an ordinary statement inside the
-           loop body - it now lives exclusively in the `for` header.
-
-        2. `initializer`: the last assignment to the loop's induction
+        1. update - the trailing register-defining instruction still
+           sitting in loop.update_block (e.g. `Inc r5, r6` /
+           `Mov r5, r6`). Removed from the block so it isn't also
+           rendered as an ordinary statement inside the loop body - it
+           now lives exclusively in the for header.
+        2. `initializer` - the last assignment to the loop's induction
            register found in the loop header's single out-of-loop
            predecessor (e.g. `LoadConstZero r5` -> `let r5 = 0`).
-           Likewise removed from that block once captured.
+           Likewise, removed from that block once captured.
 
-        Both lookups are deliberately conservative and bail out (leaving
-        `loop.initializer` / `loop.update` as `None`) whenever the shape
-        isn't the simple, unambiguous case described above. A missing
-        initializer or update is not an error - the Printer already
-        renders an empty slot for either (`for (; cond; update)` etc.),
-        which is a strictly worse but still correct fallback.
+        Both lookups are deliberately conservative and bail out
+        (leaving loop.initializer / loop.update as None) whenever the
+        shape isn't the simple, unambiguous case described above. A
+        missing initializer or update is not an error - the Printer
+        already renders an empty slot for either
+        (`for (; cond; update)` etc.), a strictly worse but still
+        correct fallback.
         """
 
         self._extract_update(loop)
         self._extract_initializer(loop)
 
     def _extract_update(self, loop: LoopRegion) -> None:
-        """
-        Pull the induction register's OWN update instruction out of
-        `loop.update_block` and turn it into `loop.update`.
+        """Pull the induction register's own update instruction into loop.update.
 
         Register-aware by design, mirroring `_extract_initializer`
         below (`_infer_induction_register` first, then search for
-        THAT register's definition) rather than blindly taking
-        whichever dest_reg-bearing instruction happens to sit last in
-        the block.
+        that register's definition specifically) rather than blindly
+        taking whichever dest_reg-bearing instruction sits last in the
+        block.
 
-        An earlier revision took the plain last-instruction-in-block
-        without checking which register it wrote to. That's
-        indistinguishable from the correct behavior as long as
-        `update_block` contains exactly one candidate instruction -
-        true for a single loop, or even two levels of nesting - but
-        breaks for a THIRD level: `_find_for_update_block`'s generic
-        "unique in-loop predecessor of the guard" fallback can, at
-        that depth, resolve to a block that also holds some deeper
-        nested loop's own unrelated top-of-body instruction (e.g. an
-        alias `Mov`, or an unrelated counter `Inc` sitting at that
-        address purely by CFG shape - see `tripleNestedLabeledTest`'s
-        `Inc r4, r13` hit-counter, which shares a block with the
-        innermost loop's real machinery). The old code would silently
-        grab that unrelated instruction as if it were the induction
-        register's own update whenever it happened to sit textually
-        last, producing a `for` header with a self-referential-looking
-        update (`r13 = r13 + 1`) that doesn't match the induction
-        register at all.
-
-        Filtering by `instruction.dest_reg == induction_reg` makes
-        this fail SAFE instead: if the real update instruction isn't
-        in this block, nothing here matches, and `loop.update` simply
-        stays `None` (Printer already renders an empty update slot -
-        see `_extract_for_components`'s own docstring) rather than a
+        Filtering by `instruction.dest_reg == induction_reg` matters
+        at three levels of loop nesting: `_find_for_update_block`'s
+        generic fallback can then resolve to a block that also holds
+        some deeper nested loop's own unrelated instruction (e.g., an
+        alias Mov, or an unrelated counter Inc sitting at that address
+        purely by CFG shape - see `tripleNestedLabeledTest`'s
+        `Inc r4, r13` hit-counter, sharing a block with the innermost
+        loop's real machinery). Taking the plain last instruction
+        without this filter would grab that unrelated write instead,
+        producing a for header with a self-referential-looking update
+        (`r13 = r13 + 1`) that doesn't match the induction register at
+        all. Filtering fails safe instead: if the real update
+        instruction isn't in this block, loop.update simply stays None
+        (Printer already renders an empty update slot) rather than a
         wrong one.
         """
         update_block = loop.update_block
@@ -482,7 +455,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
 
             loop.update = AssignmentExpression(
                 left=Identifier(name=f"r{instruction.dest_reg}"),
-                operator="=",
+                operator=AssignmentOperator.ASSIGN,
                 right=instruction.value,
             )
 
@@ -490,10 +463,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             return
 
     def _extract_initializer(self, loop: LoopRegion) -> None:
-        """
-        Pull the induction register's initial assignment out of the loop
-        header's single out-of-loop predecessor and turn it into
-        `loop.initializer`.
+        """Pull the induction register's initial value into loop.initializer.
 
         Requires:
 
@@ -501,43 +471,34 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
           body (the natural fall-in edge). Multiple out-of-loop
           predecessors mean there's no single unambiguous place the
           initializer could live, so this bails out.
-        - The induction register can be inferred from `loop.condition`
+        - The induction register can be inferred from loop.condition
           (see `_infer_induction_register`).
-        - That predecessor's MOST RECENT write to the induction
-          register (scanning backward from the end of the block, i.e.
+        - That predecessor's most recent write to the induction
+          register (scanning backward from the end of the block, i.e.,
           the actual value the register holds at loop entry) has a
           safely capturable type.
 
-        That last point matters: an earlier revision kept scanning
-        PAST a most-recent write that didn't qualify
-        (`not isinstance(..., _SAFE_INIT_VALUE_TYPES)`), looking
-        further back for an EARLIER write to the same register that
-        did. That's wrong regardless of how "safe" the earlier value
-        looks in isolation: if the register was written again after
-        it (by anything - a call's return value, an unrelated
-        reassignment, ...) before the loop was ever entered, that
-        earlier value is stale and was never actually the register's
-        value at loop entry. This produced a real bug in
-        `tryCatchInsideLoopTest`: the predecessor block wrote the
-        induction register with a string literal (unrelated log
-        message) and THEN overwrote it with a `console.log(...)`
-        call's return value (a `CallExpression`, not in
-        `_SAFE_INIT_VALUE_TYPES`) right before falling into the loop.
-        The old code skipped past that unsafe, most-recent write and
-        happily reported the STALE string literal as the loop's
-        initializer, rendering `for (r3 = "...start"; ...)` for what
-        is actually a numeric loop.
+        The most-recent-write requirement matters: scanning further
+        back past a disqualified write, looking for an earlier one
+        that does qualify, is wrong regardless of how "safe" that
+        earlier value looks in isolation - if the register was written
+        again afterward (by anything: a call's return value, an
+        unrelated reassignment) before the loop was entered, that
+        earlier value is stale and was never the register's value at
+        loop entry. This produced a real bug in
+        `tryCatchInsideLoopTest`: the predecessor wrote the induction
+        register with an unrelated string literal and then overwrote
+        it with a console.log(...) call's return value right before
+        falling into the loop; scanning past the unsafe most-recent
+        write surfaced the stale string as the initializer, rendering
+        `for (r3 = "...start"; ...)` for what is actually a numeric
+        loop.
 
-        The fix: find the most recent write to the induction register
-        and decide right there - use it if its type is safe, otherwise
-        leave `loop.initializer` as `None` (empty header slot, still
-        correct - see `_extract_for_components`'s docstring) - but
-        never keep looking further back past it.
+        The fix: decide at the most recent write - use it if its type
+        is safe, otherwise leave loop.initializer as None (empty
+        header slot, still correct) - and never look further back.
         """
         header = loop.header_block
-
-        if header is None:
-            return
 
         covered = loop.body.covered_blocks
 
@@ -565,10 +526,13 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 continue
 
             # This is the register's MOST RECENT write in this
-            # predecessor, i.e. its actual value at loop entry.
+            # predecessor, i.e., its actual value at loop entry.
             # Decide here and now - do not keep scanning further back
             # past it (see docstring above).
-            if instruction.value is not None and isinstance(instruction.value, _SAFE_INIT_VALUE_TYPES):
+            if (
+                    instruction.value is not None
+                    and isinstance(instruction.value, _SAFE_INIT_VALUE_TYPES)
+            ):
                 loop.initializer = AssignmentExpression(
                     left=Identifier(name=f"r{induction_reg}"),
                     operator=AssignmentOperator.ASSIGN,
@@ -584,12 +548,13 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             condition: Expression | None,
             update_block: BasicBlock,
     ) -> int | None:
-        """
-        Reaching-definition tabanlı tespit: koşulun sol VE sağ operandı
-        register ise, hangisi update_block içinde yeniden tanımlanıyorsa
-        (adres-sıralı reg_definitions üzerinden) o, induction register'dır.
-        Operand sırasına (sol/sağ) bağımlı değildir - eski davranışın
-        aksine.
+        """Identify the induction register via reaching definitions.
+
+        When both the condition's left and right operands are
+        registers, whichever one is redefined inside update_block
+        (per address-ordered reg_definitions) is the induction
+        register. Unlike the previous behavior, this does not depend
+        on operand order (left vs. right).
         """
 
         node = condition
@@ -601,16 +566,20 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
 
         candidates = []
         for operand in (node.left, node.right):
-            if isinstance(operand, Identifier) and operand.name.startswith("r") and operand.name[1:].isdigit():
+            if (
+                    isinstance(operand, Identifier)
+                    and operand.name.startswith("r")
+                    and operand.name[1:].isdigit()
+            ):
                 candidates.append(int(operand.name[1:]))
 
         for reg in candidates:
-            defs = self.cfg.reg_definitions.get(reg, [])
-            if any(block is update_block for _, block, _ in defs):
+            definitions = self.cfg.reg_definitions.get(reg, [])
+            if any(block is update_block for _, block, _ in definitions):
                 return reg
 
-        # Hiçbiri update_block'ta tanımlanmıyorsa eski davranışa (sol
-        # operand varsayımı) düş - update ayrı bir blokta olabilir
-        # (separated-update formu), bu durumda reaching-def bu basit
-        # kontrolle bulunamaz.
+        # If neither candidate is defined in update_block, fall back to
+        # the old left-operand assumption - the update may live in a
+        # separate block (separated-update form), which this simple
+        # reaching-def check can't resolve.
         return candidates[0] if candidates else None

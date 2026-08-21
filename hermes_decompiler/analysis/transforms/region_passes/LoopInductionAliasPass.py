@@ -16,14 +16,14 @@ logger = get_logger(__name__)
 
 
 class LoopInductionAliasPass(RegionPass, RegionVisitor):
-    """
-    Eliminates Hermes' per-iteration `let`-scoping copy for a numeric
-    `for` loop's induction variable, so the body reads the SAME
-    register the `for (init; cond; update)` header itself uses -
-    letting the Printer render a single `i` instead of two distinct
-    registers that happen to alias each other every iteration.
+    """Eliminates the per-iteration let-scoping alias for a for loop's induction variable.
 
-    The shape this targets (see `forTest` in section_15051_raw.js):
+    Rewrites the body to read the SAME register the
+    `for (init; cond; update)` header itself uses - letting the
+    Printer render a single `i` instead of two distinct registers that
+    happen to alias each other every iteration.
+
+    The shape this targets (see forTest in section_15051_raw.js)::
 
         r5 = 0                          # initializer (already
                                          # extracted into
@@ -37,47 +37,46 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
             r5 = r6 + 1                 # already extracted into
                                          # loop.update by
                                          # LoopConditionRegionPass,
-                                         # but its RIGHT-hand side
+                                         # but its right-hand side
                                          # still references r6 (the
                                          # alias), not r5
 
     Without this pass the alias Mov either prints as a redundant
     `let i_alias = i;` first statement, or - worse - silently
-    vanishes (because `OpcodeHandler.get_register_expression` inlines
-    it into whichever instruction first reads it) while every OTHER
-    read of the alias register in the body still renders as its own
-    register name, never as `i`. Neither outcome is what the
-    surrounding `for (let i = ...)` header implies.
+    vanishes (inlined by `OpcodeHandler.get_register_expression` into
+    whichever instruction first reads it) while every OTHER read of
+    the alias register in the body still renders as its own register
+    name, never as `i`. Neither outcome matches what the surrounding
+    `for (let i = ...)` header implies.
 
     Pipeline placement
     ------------------
-    Must run strictly after `LoopConditionRegionPass`, in
-    `StructuralAnalyzer.build()`'s stage-3 block, immediately after
+    Must run strictly after LoopConditionRegionPass, in
+    StructuralAnalyzer.build()'s stage-3 block, immediately after
     `LoopConditionRegionPass(graph, self.cfg).run()`:
 
-      - It needs `loop.update` to already be populated (that's where
-        the induction register's IDENTITY is read from - see
-        `_induction_register` - this pass never re-derives it via its
+      - It needs loop.update already populated (that's where the
+        induction register's identity is read from - see
+        `_induction_register`; this pass never re-derives it via its
         own reaching-def heuristic, to avoid a second, possibly
-        divergent, copy of that logic).
-      - Because `LoopConditionRegionPass` runs after `IfStructurer` /
-        `TryStructurer` / `SwitchStructurer`, any `if (r6 === 3)` test
-        inside the loop body has ALREADY been folded into an
-        `IfRegion.condition` (or a `SwitchRegion` case test) by the
-        time this pass sees it - it is no longer a raw
-        `BasicBlock.terminator`. The repoint walk below is therefore a
-        full `RegionVisitor` traversal of `loop.body`, not a flat scan
-        over `loop.body.covered_blocks` the way e.g.
-        `LoopBreakStructurer` (which runs BEFORE structuring) can get
-        away with.
-      - Should run before `ForEachRegionPass`: that pass's own
-        register resolution (`_resolve_identifier`) walks every block
-        in the whole graph looking for a register's defining
-        instruction and takes whichever one it finds first: fewer,
-        cleaner (unaliased) registers in the loop body reduce the risk
-        of it resolving against the wrong candidate.
-      - Ordering relative to `LoopContinueRegionPass` does not matter:
-        that pass only touches `TerminatorJump`/`ContinueStatement`
+        divergent copy of that logic).
+      - Because LoopConditionRegionPass runs after IfStructurer /
+        TryStructurer / SwitchStructurer, any `if (r6 === 3)` test
+        inside the loop body has already been folded into an
+        IfRegion.condition (or a SwitchRegion case test) by the time
+        this pass sees it - no longer a raw BasicBlock.terminator. The
+        repoint walk below is therefore a full RegionVisitor traversal
+        of loop.body, not a flat scan over
+        loop.body.covered_blocks the way e.g., LoopBreakStructurer
+        (which runs before structuring) can get away with.
+      - Should run before ForEachRegionPass: that pass's own register
+        resolution (`_resolve_identifier`) walks every block in the
+        whole graph looking for a register's defining instruction and
+        takes whichever one it finds first - fewer, cleaner
+        (unaliased) registers in the loop body reduce the risk of it
+        resolving against the wrong candidate.
+      - Ordering relative to LoopContinueRegionPass doesn't matter:
+        that pass only touches TerminatorJump/ContinueStatement
         shapes, never register identities.
 
     Deliberately narrow / conservative
@@ -85,75 +84,66 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
     Every one of the following must hold, or the pass leaves that
     loop's registers untouched rather than guessing:
 
-      1. The loop was classified `LoopKind.FOR` and
-         `LoopConditionRegionPass` already recovered BOTH
-         `loop.initializer` and `loop.update` (`loop.update.left` is
-         where the induction register's name comes from - see
-         `_induction_register`; `loop.initializer.right` is what the
-         header Mov's resolved value gets checked against - see
-         point 2 below and `_is_induction_alias_copy`'s own
-         docstring for why).
-      2. `loop.update.right` contains a register operand OTHER than
-         the induction register itself (`_body_register`) - that
-         register is `body_reg`, the per-iteration alias. This is
-         read directly off metadata `LoopConditionRegionPass` already
-         recovered, NOT assumed from position. An earlier revision
-         required the alias Mov to be the header's literal FIRST
-         instruction - true for a single loop or two levels of
-         nesting, but false at a THIRD level: Hermes may place ANOTHER
-         per-iteration alias Mov - for some unrelated outer-scoped
-         `let` variable captured across the loop, not the induction
-         variable at all - textually BEFORE this loop's own induction
-         alias in the same header block. See
+      1. The loop was classified LoopKind.FOR and
+         LoopConditionRegionPass already recovered both
+         loop.initializer and loop.update (loop.update.left is where
+         the induction register's name comes from - see
+         `_induction_register`; loop.initializer.right is what the
+         header Mov's resolved value gets checked against - see point
+         2 below and `_is_induction_alias_copy`'s own docstring).
+      2. loop.update.right contains a register operand other than the
+         induction register itself (`_body_register`) - that register
+         is body_reg, the per-iteration alias. Read directly off
+         metadata LoopConditionRegionPass already recovered, not
+         assumed from position: at three levels of loop nesting,
+         Hermes may place another per-iteration alias Mov - for some
+         unrelated outer-scoped `let` variable captured across the
+         loop, not the induction variable at all - textually before
+         this loop's own induction alias in the same header block (see
          `tripleNestedLabeledTest`: the middle loop's header carries
-         `Mov r13, r10` (an accumulator/"hits"-counter carry-forward,
-         completely unrelated to the loop) ahead of `Mov r11, r9` (the
-         actual r9-induction alias this pass needs). Requiring "first
-         instruction" made the pass silently skip r11/r9 entirely.
-         Deriving `body_reg` from `loop.update.right` instead
-         sidesteps position altogether: whichever register the
-         increment reads its previous value from IS, by construction,
-         the alias register - regardless of where in the header its
-         own alias-copy Mov happens to sit.
-      3. The header contains SOME instruction (anywhere in it, not
-         necessarily first) with `dest_reg == body_reg` whose resolved
-         value structurally matches `loop.initializer.right`
+         `Mov r13, r10`, an unrelated accumulator carry-forward, ahead
+         of `Mov r11, r9`, the actual induction alias this pass needs).
+         Requiring "first instruction" would silently skip the real
+         alias in that case; deriving body_reg from loop.update.right
+         instead sidesteps position altogether.
+      3. The header contains some instruction (anywhere in it, not
+         necessarily first) with dest_reg == body_reg whose resolved
+         value structurally matches loop.initializer.right
          (`_is_induction_alias_copy` - see its own docstring for why
          value, not name, is the reliable signature) -
          `_find_alias_instruction`.
-      4. `body_reg` is not itself the induction register (nothing to
-         do) and is never the destination of any OTHER instruction
-         anywhere in the loop body (`_body_reg_only_defined_here`) -
-         if it were, this alias Mov would only be establishing the
-         FIRST of several distinct values that register takes on
-         during one iteration, and blindly substituting
-         `induction_reg` for every read would silently discard
-         whatever that later write meant.
+      4. `body_reg` is not itself the induction register (nothing to do)
+         and is never the destination of any other instruction
+         anywhere in the loop body (`_body_reg_only_defined_here`). -
+         If it were, this alias Mov would only be establishing the
+         first of several distinct values that register takes on
+         during one iteration, and blindly substituting induction_reg
+         for every read would silently discard whatever that later
+         write meant.
 
-    Residual false-positive risk (accepted, documented): `body_reg`
+    Residual false-positive risk (accepted, documented): body_reg
     itself is no longer a guess (point 2 derives it directly from
-    `loop.update.right`), but WHICH instruction in the header counts
-    as that register's alias copy (point 3) still matches by VALUE
-    rather than by a positively-identified `Mov` opcode (this pass
-    only has access to already-resolved `OpcodeResult`s, not the
-    original bytecode entry/opcode name). If the header happens to
-    contain more than one instruction writing `body_reg` and an
-    earlier, unrelated one *happens* to resolve to the same value as
-    the initializer (e.g. coincidentally also literal `0`),
-    `_find_alias_instruction` would pick that one instead of the real
-    alias. This is bounded and non-corrupting even if it happens: the
-    substitution only ever touches reads of that one specific
-    `body_reg` number, so at worst it mislabels one register as `i`
-    cosmetically - it can never rewrite an unrelated computation's
-    actual value, because `_body_reg_only_defined_here` still requires
-    `body_reg` to have exactly one definition (the matched instruction)
+    loop.update.right), but which instruction in the header counts as
+    that register's alias copy (point 3) still matches by value rather
+    than a positively-identified Mov opcode (this pass only has access
+    to already-resolved OpcodeResults, not the original bytecode
+    entry/opcode name). If the header contains more than one
+    instruction writing body_reg and an earlier, unrelated one happens
+    to resolve to the same value as the initializer (e.g., coincidentally
+    also literal `0`), `_find_alias_instruction` would pick that one
+    instead of the real alias. This is bounded and non-corrupting even
+    if it happens: the substitution only ever touches reads of that one
+    specific body_reg number, so at worst it mislabels one register as
+    `i` cosmetically - it can never rewrite an unrelated computation's
+    actual value, since `_body_reg_only_defined_here` still requires
+    body_reg to have exactly one definition (the matched instruction)
     in the whole loop body before anything is touched.
 
-    A loop that fails any of these keeps its two distinct registers
-    and therefore may still print an extra alias line / a mismatched
-    body register - a readability regression, never a correctness one
-    (nothing about the loop's actual control flow or values changes;
-    only which register name backs a given read is ever rewritten).
+    A loop that fails any of these keeps its two distinct registers and
+    may still print an extra alias line / a mismatched body register -
+    a readability regression, never a correctness one (nothing about
+    the loop's actual control flow or values changes; only which
+    register name backs a given read is ever rewritten).
     """
 
     def run(self) -> None:
@@ -223,14 +213,14 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
 
     @staticmethod
     def _induction_register(loop: LoopRegion) -> int | None:
-        """
-        Reads the induction register's identity straight out of
-        `loop.update.left` (`Identifier(f"r{dest_reg}")`, set verbatim
-        by `LoopConditionRegionPass._extract_update`) rather than
-        re-deriving it independently - a second, separately-maintained
-        copy of that heuristic could silently drift from the one
-        `LoopConditionRegionPass` actually used to pick `loop.update`
-        in the first place.
+        """Read the induction register's identity straight out of loop.update.left.
+
+        `loop.update.left` is `Identifier(f"r{dest_reg}")`, set
+        verbatim by `LoopConditionRegionPass._extract_update` - reused
+        directly here rather than re-derived, since a second,
+        separately-maintained copy of that heuristic could silently
+        drift from the one LoopConditionRegionPass actually used to
+        pick loop.update in the first place.
         """
 
         left = loop.update.left
@@ -247,20 +237,20 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
 
     @staticmethod
     def _body_register(loop: LoopRegion, induction_reg: int) -> int | None:
-        """
-        Recovers the per-iteration alias register directly from
-        `loop.update.right` (e.g. for `r1 = r8 + 1`, that's `r8`)
-        instead of assuming the header's FIRST instruction is the
-        alias Mov - see class docstring point 2 for why position
-        can't be trusted at three levels of nesting.
+        """Recover the per-iteration alias register from loop.update.right.
 
-        `loop.update.right` is either a bare `Identifier` (a `Mov`-
-        style update) or, far more commonly, a `BinaryExpression`
-        whose two operands are the alias register and a step literal
-        (an `Inc`/`Dec`-style update, e.g. `r8 + 1`) - both shapes are
-        handled. Returns `None` if neither shape yields a register
-        operand distinct from `induction_reg` (e.g. a non-canonical
-        update this pass shouldn't guess about).
+        For `r1 = r8 + 1`, that's `r8` - read directly off
+        loop.update.right rather than assuming the header's first
+        instruction is the alias Mov (see class docstring point 2 for
+        why position can't be trusted at three levels of nesting).
+
+        loop.update.right is either a bare Identifier (a Mov-style
+        update) or, far more commonly, a BinaryExpression whose two
+        operands are the alias register and a step literal (an
+        Inc/Dec-style update, e.g. `r8 + 1`) - both shapes are
+        handled. Returns None if neither shape yields a register
+        operand distinct from induction_reg (a non-canonical update
+        this pass shouldn't guess about).
         """
 
         right = loop.update.right
@@ -289,16 +279,16 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
         return None
 
     def _find_alias_instruction(self, header: BasicBlock, body_reg: int, initializer):
-        """
-        Searches the WHOLE header block (not just its first
-        instruction - see class docstring point 2) for the alias Mov:
-        an unconditional instruction writing `body_reg` whose resolved
-        value matches `loop.initializer.right`
+        """Search the whole header block for the induction alias Mov.
+
+        Not just the first instruction (see class docstring point 2):
+        looks for an unconditional instruction writing body_reg whose
+        resolved value matches loop.initializer.right
         (`_is_induction_alias_copy`).
 
-        Scans in order and returns the FIRST match. If `body_reg` is
+        Scans in order and returns the first match. If body_reg is
         written more than once in the header, further occurrences are
-        `body_reg`'s problem to have (`_body_reg_only_defined_here`,
+        body_reg's problem to have (`_body_reg_only_defined_here`,
         called afterward by `_try_unify`, rejects that case entirely)
         - this method only needs to identify a candidate, not validate
         uniqueness itself.
@@ -319,39 +309,33 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
 
     @staticmethod
     def _is_induction_alias_copy(mov_value, initializer) -> bool:
-        """
-        Recognizes the header's alias Mov by what its RESOLVED value
-        equals, not by whether that value is still a bare
-        `Identifier(f"r{induction_reg}")`.
+        """Recognize the header's alias Mov by its resolved value, not its name.
 
-        Why the identifier-name check doesn't work: IR generation
-        (`OpcodeHandler.get_register_expression`) resolves every
-        register READ against whatever that register's textually most
+        The identifier-name check doesn't work: IR generation
+        (OpcodeHandler.get_register_expression) resolves every
+        register read against whatever that register's textually most
         recent defining expression is, walking the raw bytecode in
-        ADDRESS order exactly once, with no notion of the CFG's
+        address order exactly once, with no notion of the CFG's
         back-edges. For the header's alias Mov, the textually
         preceding write to the induction register is always the
-        loop's own initializer - `LoadConstZero`/etc. sits immediately
-        before the header block in program order - so the Mov's
-        resolved value comes out as a COPY of whatever the initializer
-        itself resolved to (e.g. the bare literal `0`), never as a
-        live register reference. `section_15051_raw.js`'s own
-        disassembly comment confirms this exactly for the motivating
-        example:
+        loop's own initializer, so the Mov's resolved value comes out
+        as a copy of whatever the initializer itself resolved to (e.g.,
+        the bare literal `0`), never as a live register reference.
+        section_15051_raw.js's own disassembly confirms this for the
+        motivating example::
 
             <Mov>: <Reg8: 6, Reg8: 5>
             USED -> r6 = 0;
 
-        - the Mov's "USED" value is the literal `0`, not `r5`. So the
+        The Mov's "USED" value is the literal `0`, not `r5`. So the
         reliable signature is: does this instruction's resolved value
-        match `loop.initializer.right` (already recovered by
-        `LoopConditionRegionPass`), not "is it named r{induction_reg}".
+        match loop.initializer.right (already recovered by
+        LoopConditionRegionPass), not "is it named r{induction_reg}".
 
-        Uses `structurally_equal` (not `is`/`==`) since nothing here
+        Uses structurally_equal (not `is`/`==`) since nothing here
         guarantees the two sides are the literal same object -
-        `get_register_expression` clones on any read past the first
-        (`dataclasses.replace(value)`), and either side could
-        independently have been through that.
+        get_register_expression clones on any read past the first,
+        and either side could independently have been through that.
         """
 
         if mov_value is None or initializer.right is None:
@@ -364,13 +348,14 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
 
     @staticmethod
     def _body_reg_only_defined_here(covered, alias_instr, body_reg: int) -> bool:
-        """
-        `body_reg` must be a pure, single-definition alias for the
-        induction register across the WHOLE loop body - see class
-        docstring point 3. Any other instruction (anywhere in the
-        loop, not just the header) writing `body_reg` means the alias
-        Mov isn't the register's only source of truth, and folding it
-        away would misrepresent that second write's meaning.
+        """Return True if body_reg has exactly one definition in the loop body.
+
+        body_reg must be a pure, single-definition alias for the
+        induction register across the whole loop body (see class
+        docstring point 3) - any other instruction anywhere in the
+        loop writing body_reg means the alias Mov isn't the register's
+        only source of truth, and folding it away would misrepresent
+        that second write's meaning.
         """
 
         for block in covered:
@@ -389,16 +374,16 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
     # ------------------------------------------------------------------
 
     def _repoint_blocks(self, covered, old_ref: Identifier, new_ref: Identifier) -> None:
-        """
-        Rewrites every remaining instruction's `.value` / `.statement`
-        in every block this loop owns, plus - defensively - any block
-        that (unusually) still carries a raw `TerminatorConditionalBranch`
-        at this point in the pipeline (normally none should, since
-        `IfStructurer`/`SwitchStructurer` already ran, but per
-        `StructuralAnalyzer._audit_unstructured_blocks` a shape can
+        """Rewrite every remaining instruction's .value/.statement in covered blocks.
+
+        Also - defensively - repoints any block that (unusually) still
+        carries a raw TerminatorConditionalBranch at this point in the
+        pipeline. Normally none should, since IfStructurer/
+        SwitchStructurer already ran, but per
+        StructuralAnalyzer._audit_unstructured_blocks a shape can
         legitimately be left unstructured - if so, its condition still
         needs the same repoint or it would keep referencing the
-        now-deleted alias register).
+        now-deleted alias register.
         """
 
         for block in covered:
@@ -433,28 +418,25 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
     # ------------------------------------------------------------------
 
     def _repoint_region(self, region, old_ref: Identifier, new_ref: Identifier) -> None:
-        """
-        Covers the condition-bearing attributes that live on the
-        REGION objects themselves rather than inside any
-        `BasicBlock`'s instructions - by the time this pass runs,
-        `IfStructurer`/`SwitchStructurer` have already promoted the
-        loop body's inner `if (r6 === 3)` tests out of raw block
-        terminators and into exactly these slots (see class docstring
-        "Pipeline placement"). `_repoint_blocks` above does NOT see
-        these; walking the region tree is the only way to reach them.
+        """Repoint condition-bearing attributes that live on region objects.
 
-        Field access on `IfRegion`/`SwitchRegion` uses `getattr` with
-        a default rather than a hard attribute reference: this pass
-        was written against the shapes visible in the supplied
-        sources (`IfRegion.condition`, `SwitchRegion.cases` / `.tests`
-        / `.body`, matching `_RegionTreeDumper`'s own traversal in
-        structurers/_base.py) but the exact `regions` module wasn't
-        available to confirm field names against. If a name here
-        doesn't match the real model, this degrades to a silent no-op
-        for that one region rather than raising - consistent with
-        this pass's overall "leave it as-is rather than guess wrong"
-        posture. Worth double-checking against
-        `hermes_decompiler/analysis/models/regions.py` directly rather
+        By the time this pass runs, IfStructurer/SwitchStructurer have
+        already promoted the loop body's inner `if (r6 === 3)` tests
+        out of raw block terminators and into exactly these slots (see
+        class docstring "Pipeline placement"). `_repoint_blocks` above
+        does not see these; walking the region tree is the only way to
+        reach them.
+
+        Field access on IfRegion/SwitchRegion uses getattr with a
+        default rather than a hard attribute reference: this pass was
+        written against the shapes visible in the supplied sources
+        (IfRegion.condition, SwitchRegion.cases/.tests/.body) without
+        the exact regions module available to confirm field names
+        against. If a name here doesn't match the real model, this
+        degrades to a silent no-op for that one region rather than
+        raising - consistent with this pass's "leave it as-is rather
+        than guess wrong" posture, but worth double-checking against
+        hermes_decompiler/analysis/models/regions.py directly rather
         than trusting this guess long-term.
         """
 
@@ -541,29 +523,26 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
     # ------------------------------------------------------------------
 
     def _repoint_node(self, node, old_ref: Identifier, new_ref: Identifier):
-        """
-        Same generic dataclass-tree walker as
-        `BooleanChainRegionPass._repoint_node` /
-        `ConditionalExpressionRegionPass._repoint_node`, duplicated
-        here rather than factored out - matching those two files' own
-        stated precedent of not guessing at a shared-extraction target
-        - with one deliberate difference: NO structural-equality
-        fallback.
+        """Same generic dataclass-tree walker as
+        BooleanChainRegionPass._repoint_node /
+        ConditionalExpressionRegionPass._repoint_node, duplicated here
+        rather than factored out (matching those files' own precedent
+        of not guessing at a shared-extraction target), with one
+        deliberate difference: no structural-equality fallback.
 
         Those two passes add a structural-equality branch to catch a
-        specific Mov-copy whose object IDENTITY changed mid-fold. Here
+        specific Mov-copy whose object identity changed mid-fold. Here
         there is no such salvaged object to chase by identity in the
-        first place - `old_ref`/`new_ref` are freshly built
-        `Identifier`s keyed purely on register NAME - so matching is
-        done directly by name (`node.name == old_ref.name`) instead.
-        Adding the other passes' structural-equality fallback on top
-        would be actively wrong here: `Identifier(name="r6")` is
-        trivially structurally equal to every OTHER unrelated read of
-        r6 anywhere in the entire function, and this walk is only ever
-        called with sub-trees already known to be scoped to this one
-        loop (`loop.body` / `loop.update`), not the whole CFG - so a
-        name match within that scope is exactly what's wanted, nothing
-        more needs to be excluded.
+        first place - old_ref/new_ref are freshly built Identifiers
+        keyed purely on register name, so matching is done directly by
+        name (`node.name == old_ref.name`) instead. Adding the other
+        passes' structural-equality fallback here would be actively
+        wrong: `Identifier(name="r6")` is trivially structurally equal
+        to every other unrelated read of r6 anywhere in the entire
+        function, and this walk is only ever called with sub-trees
+        already scoped to this one loop (loop.body / loop.update), not
+        the whole CFG - so a name match within that scope is exactly
+        what's wanted, nothing more needs to be excluded.
         """
 
         if isinstance(node, Identifier) and node.name == old_ref.name:

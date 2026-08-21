@@ -14,63 +14,59 @@ from hermes_decompiler.analysis.transforms._shared import (
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
-from hermes_decompiler.ir.expressions import (
-    BinaryExpression,
-    Expression)
+from hermes_decompiler.ir.expressions import BinaryExpression, Expression
 from ._base import RegionPass
 
 logger = get_logger(__name__)
 
 
 class BooleanChainRegionPass(RegionPass, RegionVisitor):
-    """
-    Folds the common short-circuit `||`/`&&` compiled idiom back into a
-    single expression, once `IfStructurer` has already turned the raw
-    conditional jump into an `IfRegion`. See prior revisions for the
-    full fold-mechanics docstring; this revision additionally fixes a
-    stale-reference bug:
+    """Folds the short-circuit ||/&& compiled idiom into a single expression.
 
-    NOT responsible for pure control-flow `&&`/`||` (e.g. a bare
-    `if (a || b) { ... }` with no intermediate assignment): that's
+    Runs once IfStructurer has already turned the raw conditional jump
+    into an IfRegion.
+
+    Not responsible for pure control-flow &&/|| (e.g., a bare
+    `if (a || b) { ... }` with no intermediate assignment) - that's
     `cfg_passes.BranchChainMerger`'s job, which runs much earlier, on
     the raw CFG, before any region exists. This pass specifically
     requires the folded block to end in an assignment (`dest_reg is
     not None`, see `_try_fold`) - the value-producing case
-    (`const x = a || b;`). See `BranchChainMerger`'s docstring for the
+    (`const x = a || b;`). See BranchChainMerger's docstring for the
     full disjointness argument from the other side.
 
-    IR generation (see e.g. `Ret`'s opcode handler) resolves a
-    register's value *once*, at the point in the original bytecode
-    order where it's read, and freezes that resolved `Expression`
-    object directly into e.g. `ReturnStatement.argument`. That
-    resolution happens long before this pass runs, and it grabs
-    whatever the *last* writer to that register was in raw bytecode
-    order - which, for our chain idiom, is the `then_block`'s bare
-    `E3` (not the header's `E1`, and definitely not the folded
-    `E1 || E2 || E3`).
+    Stale-reference fix
+    --------------------
+    IR generation (see e.g., `Ret`'s opcode handler) resolves a
+    register's value once, at the point in the original bytecode order
+    where it's read, and freezes that resolved Expression object
+    directly into e.g., ReturnStatement.argument. That resolution
+    happens long before this pass runs, and grabs whatever the last
+    writer to that register was in raw bytecode order - which, for our
+    chain idiom, is the then_block's bare E3 (not the header's E1, and
+    definitely not the folded E1 || E2 || E3).
 
-    When we fold, `then_result.value` (`E3`) is reused unchanged as
-    the new `BinaryExpression`'s `.right` - its *object identity*
-    never changes, so anything holding a bare reference to that same
-    object (like `Ret`'s frozen `argument`) doesn't "see" the fold at
-    all; it just keeps rendering the old standalone `E3`.
+    When we fold, then_result.value (E3) is reused unchanged as the
+    new BinaryExpression's .right - its object identity never changes,
+    so anything holding a bare reference to that same object (like
+    Ret's frozen argument) doesn't "see" the fold at all; it just keeps
+    rendering the old standalone E3.
 
-    `_repoint_references` fixes this by walking every block in the
-    CFG after a successful fold and replacing any other reference to
-    the pre-fold `E3` object (by identity, not equality - two
-    structurally-equal-but-distinct `E3`s elsewhere must NOT be
-    touched) with the newly folded expression. `OpcodeResult.value` is
-    a plain mutable attribute and can be reassigned directly;
-    `ReturnStatement` is a frozen dataclass, so its `argument` field
-    is swapped via `dataclasses.replace` instead of direct mutation.
+    `_repoint_references` fixes this by walking every block in the CFG
+    after a successful fold and replacing any other reference to the
+    pre-fold E3 object (by identity, not equality - two
+    structurally-equal-but-distinct E3s elsewhere must not be touched)
+    with the newly folded expression. OpcodeResult.value is a plain
+    mutable attribute and can be reassigned directly; ReturnStatement
+    is a frozen dataclass, so its argument field is swapped via
+    dataclasses.replace instead of direct mutation.
 
-    Traversal is inherited from `RegionVisitor` rather than
-    hand-rolled here: the previous hand-rolled `_visit` had no case
-    for `SwitchRegion` (and its `hasattr(region, "body")` fallback
-    doesn't match it either, since a `SwitchRegion`'s children live
-    under `.cases`/`.default_body`, not `.body`) - a chain idiom
-    sitting inside a `switch` case or `default` body was silently
-    never folded. `RegionVisitor` already knows how to reach those.
+    Traversal is inherited from RegionVisitor rather than hand-rolled:
+    a hand-rolled `_visit` with a `hasattr(region, "body")` fallback
+    would miss SwitchRegion, whose children live under
+    `.cases`/`.default_body`, not `.body` - silently skipping a chain
+    idiom inside a switch case or default body. RegionVisitor already
+    knows how to reach those.
     """
 
     _LOGICAL_OPERATORS = (LogicalOperator.OR, LogicalOperator.AND)
@@ -174,7 +170,12 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
         old_tail_expr = then_result.value
         last.value = BinaryExpression(left=last.value, operator=operator, right=old_tail_expr)
 
-        self._repoint_references(old_tail_expr, last.value, min_block_id=then_block.id, exclude={then_result, last})
+        self._repoint_references(
+            old_tail_expr,
+            last.value,
+            min_block_id=then_block.id,
+            exclude={then_result, last},
+        )
 
         return True
 
@@ -210,23 +211,20 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
                         instr.statement = new_stmt
 
     def _repoint_node(self, node, old_expr, new_expr):
-        """
-        Generic, type-agnostic deep replace of `old_expr` (by identity)
-        with `new_expr` inside any frozen-dataclass IR `Node` tree.
+        """Generic, type-agnostic deep replace of old_expr (by identity) with new_expr.
 
-        Every IR node (Expression *and* Statement, e.g. ReturnStatement)
-        is a `frozen=True, slots=True` dataclass whose fields are either
-        a `Node`/`Node | None`, or a `tuple[Node, ...]` (see `.children`
-        across expressions.py/ControlFlow.py). Rather than hand-listing
-        every wrapper shape (`AssignmentExpression.right`,
-        `MemberExpression.receiver`, `ReturnStatement.argument`, ...) -
+        Every IR node (Expression and Statement, e.g., ReturnStatement)
+        is a frozen, slotted dataclass whose fields are either a Node
+        (or Node | None), or a tuple[Node, ...]. Rather than
+        hand-listing every wrapper shape (AssignmentExpression.right,
+        MemberExpression.receiver, ReturnStatement.argument, ...) -
         which is exactly what broke last time, silently, for
-        `StoreNPToEnvironment` - we walk `dataclasses.fields(node)`
-        generically and rebuild via `dataclasses.replace` wherever a
-        field (or a tuple element) is `old_expr` by identity, or
+        StoreNPToEnvironment - this walks dataclasses.fields(node)
+        generically and rebuilds via dataclasses.replace wherever a
+        field (or a tuple element) is old_expr by identity, or
         recursively contains it.
 
-        Returns (possibly-rebuilt node, changed?). Non-dataclass /
+        Returns (possibly rebuilt node, changed?). Non-dataclass /
         non-Node leaves (str, bool, enums, int, None) are returned
         unchanged - only Node identity/recursion is inspected.
         """
@@ -235,7 +233,7 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             return new_expr, True
 
         # Structural-equality fallback only for non-trivial expressions
-        # (BinaryExpression, ConditionalExpression, CallExpression, etc) -
+        # (BinaryExpression, ConditionalExpression, CallExpression, etc.) -
         # a bare Identifier or Literal is structurally equal to every OTHER
         # unrelated read of the same name/value throughout the function, so
         # matching those by structural equality corrupts every downstream

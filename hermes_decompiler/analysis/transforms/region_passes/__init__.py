@@ -1,3 +1,5 @@
+"""Public entry points for the region-pass pipeline stage."""
+
 from ._base import RegionPass
 from .BooleanChainRegionPass import BooleanChainRegionPass
 from .ConditionalExpressionRegionPass import ConditionalExpressionRegionPass

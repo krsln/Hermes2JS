@@ -13,8 +13,7 @@ from hermes_decompiler.analysis.transforms._shared import (
 )  # noqa: SLF001
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
-from hermes_decompiler.ir.expressions import (
-    ConditionalExpression, Expression, )
+from hermes_decompiler.ir.expressions import ConditionalExpression, Expression
 
 from ._base import RegionPass
 
@@ -22,26 +21,25 @@ logger = get_logger(__name__)
 
 
 class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
-    """
-    Folds Hermes' bytecode encoding of a *value-producing* ternary
-    (`c ? a : b`) back into a single ConditionalExpression, once
-    IfStructurer has already built an IfRegion WITH an else_body.
+    """Folds a value-producing ternary (c ? a : b) into a ConditionalExpression.
+
+    Runs once IfStructurer has already built an IfRegion with an
+    else_body.
 
     Sibling to BooleanChainRegionPass, not a replacement: that pass
     explicitly declines whenever `if_region.else_body is not None`
     (see its `_try_fold`) - this pass exists specifically to cover
-    that declined case. The two are disjoint on that one condition,
-    so both can run in the same stage without overlap.
+    that declined case. The two are disjointed on that one condition, so
+    both can run in the same stage without overlap.
 
     Must run after BooleanChainRegionPass in the pass ordering: a
-    then/else arm's own condition may itself be an `&&`/`||` chain
-    that needs folding first, so this pass reads clean conditions
-    rather than needing to fold sub-chains itself.
+    then/else arm's own condition may itself be an &&/|| chain that
+    needs folding first, so this pass reads clean conditions rather
+    than needing to fold sub-chains itself.
 
-    Traversal is inherited from `RegionVisitor` - see
-    `BooleanChainRegionPass`'s docstring for why the previous
-    hand-rolled `_visit` (identical shape to this one) silently
-    skipped `SwitchRegion` bodies.
+    Traversal is inherited from RegionVisitor - see
+    BooleanChainRegionPass's docstring for why a hand-rolled `_visit`
+    of this shape would silently skip SwitchRegion bodies.
     """
 
     def run(self) -> None:
@@ -78,30 +76,25 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             return False
 
         if if_region.else_body is not None:
-            # Two-armed if/else (both `then` and `else` present) is a
-            # genuinely different shape from the no-else case below and
-            # is NOT handled by it: the no-else logic treats
-            # `if_region.then_body` as a single value-producing arm to
-            # merge against a "default" expression sitting in `block`
-            # - which is meaningless once there's a real `else_body`
-            # too (there's no single "default", there are two full
-            # arms, each of which may hold real, order-sensitive
-            # statements - e.g. a `console.log` call - that must stay
-            # as statements, not get silently absorbed into a
-            # ConditionalExpression's operand). Falling through to that
-            # logic here would misapply it to an unrelated shape and
-            # can silently drop real side-effecting statements from
-            # one arm. Explicitly bail; two-armed folding is not yet
-            # implemented.
+            # A two-armed if/else is a genuinely different shape from
+            # the no-else case below, and isn't handled by it: the
+            # no-else logic treats then_body as a single value-
+            # producing arm to merge against a "default" expression in
+            # block - meaningless once there's a real else_body too
+            # (two full arms, each possibly holding real, order-
+            # sensitive statements like a console.log call, which must
+            # stay as statements rather than be absorbed into a
+            # ConditionalExpression operand). Bail explicitly;
+            # two-armed folding isn't implemented here.
             return False
 
-        # no-else case: don't assume block.instructions[-1] is the default
-        # value - it may instead be the branch-condition-computing
-        # instruction itself (e.g. `r4 = param1 > 100` immediately
-        # preceding the terminator), with the real default sitting
-        # earlier in the same block (e.g. `r3 = 100`). Try each
+        # No-else case: don't assume block.instructions[-1] is the
+        # default value - it may instead be the branch-condition-
+        # computing instruction itself (e.g. `r4 = param1 > 100`
+        # immediately preceding the terminator), with the real default
+        # sitting earlier in the block (e.g. `r3 = 100`). Try each
         # dest_reg-bearing instruction from last to first, using the
-        # FIRST one whose register also has a matching arm - not
+        # first one whose register also has a matching arm - not
         # positional order.
         for last in reversed(block.instructions):
             if last.dest_reg is None or not isinstance(last.value, Expression):
@@ -109,7 +102,6 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             then_arm = self._single_result(if_region.then_body, last.dest_reg)
             if then_arm is None:
                 continue
-            # found a genuine match
             arm_block, arm_result = then_arm
             default_expr = last.value
             arm_expr = arm_result.value
@@ -119,13 +111,21 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 alternate=arm_expr,
             )
             last.value = new_expr
-            self._repoint_references(arm_expr, new_expr, min_block_id=arm_block.id, exclude={arm_result, last})
+            self._repoint_references(
+                arm_expr,
+                new_expr,
+                min_block_id=arm_block.id,
+                exclude={arm_result, last},
+            )
             return True
 
         return False
 
     def _single_result(self, body: SequenceRegion, dest_reg: int):
-        children = [c for c in body.children if not (isinstance(c, BasicBlock) and not c.instructions)]
+        children = [
+            c for c in body.children
+            if not (isinstance(c, BasicBlock) and not c.instructions)
+        ]
         if not children or not all(isinstance(c, BasicBlock) for c in children):
             return None  # only handle flat all-BasicBlock arms for now
 
@@ -139,20 +139,18 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
         if not result.definition_used:
             return None
 
-        # Every instruction across the WHOLE arm except this final merge
-        # write must be non-observable-as-its-own-statement - same bar as
-        # before, just checked over every block in the arm, not just one.
-        #
+        # Every instruction across the whole arm except this final
+        # merge write must be non-observable as its own statement.
         # `.statement is not None` alone isn't sufficient: an
         # instruction can be independently observable (a call's side
-        # effect, an assignment's mutation) WITHOUT yet having been
-        # promoted to its own `.statement` node at this point in the
-        # pipeline - Printer falls back to printing such instructions
-        # as bare expression statements from `.value` directly (see
-        # `Printer._emit_block`). Also reject by expression TYPE, same
-        # as `BooleanChainRegionPass._is_pure` already does, so a call
-        # (etc.) sitting earlier in the arm can't be silently absorbed
-        # into the folded ConditionalExpression's operand tree.
+        # effect, an assignment's mutation) without yet having been
+        # promoted to its own .statement node at this point in the
+        # pipeline - the Printer falls back to printing such
+        # instructions as bare expression statements from .value
+        # directly. Also reject by expression type, same as
+        # BooleanChainRegionPass._is_pure, so a call sitting earlier
+        # in the arm can't be silently absorbed into the folded
+        # ConditionalExpression's operand tree.
         for blk in children:
             for instr in blk.instructions:
                 if instr is result:
@@ -179,13 +177,14 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                     instr.value = new_value
 
                 if instr.statement is not None:
-                    new_stmt, stmt_changed = self._repoint_node(instr.statement, old_expr, new_expr)
+                    new_stmt, stmt_changed = self._repoint_node(
+                        instr.statement, old_expr, new_expr
+                    )
                     if stmt_changed:
                         instr.statement = new_stmt
 
     def _repoint_node(self, node, old_expr, new_expr):
-        """
-        Same generic identity/structural-equality deep-replace as
+        """Same generic identity/structural-equality deep-replace as
         BooleanChainRegionPass._repoint_node - see that class for the
         full rationale, including why the structural-equality branch
         is needed for Mov-introduced copies. Kept duplicated here
