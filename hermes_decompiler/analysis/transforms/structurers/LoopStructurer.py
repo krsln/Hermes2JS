@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from analysis.loops import NaturalLoop
+from hermes_decompiler.analysis.loops import NaturalLoop
 from hermes_decompiler.analysis.models.regions import LoopRegion, SequenceRegion
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
