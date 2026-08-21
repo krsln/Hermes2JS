@@ -63,11 +63,12 @@ class RegionGraph:
     # _build_paths/_find_lca/_representative_in trio.
     # ---------------------------------------------------------
 
-    def find_covering_item(self, sequence: SequenceRegion, block: BasicBlock):
+    @staticmethod
+    def find_covering_item(sequence: SequenceRegion, block: BasicBlock):
         """
         Returns the direct child of `sequence` (a raw `BasicBlock`, or
         whatever `Region` now contains it - a `LoopRegion`, `IfRegion`,
-        `TryRegion`, etc) whose subtree covers `block`, or `None` if
+        `TryRegion`, etc.) whose subtree covers `block`, or `None` if
         `block` isn't reachable from `sequence` at all.
 
         O(children) via `covered_blocks`, no tree walking.
@@ -108,7 +109,8 @@ class RegionGraph:
 
         return None
 
-    def _enclosing_sequence(self, region: Region) -> SequenceRegion | None:
+    @staticmethod
+    def _enclosing_sequence(region: Region) -> SequenceRegion | None:
         """Walks .parent up until hitting a SequenceRegion (region.parent
         may be a LoopRegion/IfRegion/etc, not directly a sequence)."""
 
@@ -137,7 +139,6 @@ class RegionGraph:
 
     def append(self, sequence: SequenceRegion, block: BasicBlock):
         sequence.children.append(block)
-        block.parent = sequence
         self.block_owner[block] = sequence
         sequence.invalidate_coverage()
 
@@ -152,7 +153,8 @@ class RegionGraph:
         region.parent = owner
         owner.invalidate_coverage()
 
-    def replace(self, old, new):
+    @staticmethod
+    def replace(old, new):
         owner = old.parent
         idx = owner.children.index(old)
         owner.children[idx] = new
@@ -192,9 +194,10 @@ class RegionGraph:
 
         target.invalidate_coverage()
 
-    def splice_out(self, sequence: SequenceRegion, start_idx: int, end_idx: int) -> list:
+    @staticmethod
+    def splice_out(sequence: SequenceRegion, start_idx: int, end_idx: int) -> list:
         """
-        Removes and returns sequence.children[start_idx:end_idx],
+        Removes and returns `sequence.children[start_idx:end_idx]`,
         invalidating coverage exactly once. Prefer this over raw
         `del sequence.children[a:b]` so mutation always goes through
         one audited path.

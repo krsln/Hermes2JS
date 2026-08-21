@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+from typing import Any
+
+from hermes_decompiler.analysis.models.regions import SequenceRegion, SwitchRegion, TryRegion, IfRegion, LoopRegion
+
 """
 Read-only, dispatch-by-type traversal of the region tree
 (`SequenceRegion`, `LoopRegion`, `IfRegion`, `TryRegion`,
@@ -42,11 +46,16 @@ dump specifically.
 
 class RegionVisitor:
 
-    def visit(self, node) -> None:
-        method = getattr(self, f"visit_{type(node).__name__}", self.generic_visit)
+    def visit(self, node: Any) -> None:
+        method = getattr(
+            self,
+            f"visit_{type(node).__name__}",
+            self.generic_visit,
+        )
+        method: Any
         method(node)
 
-    def generic_visit(self, node) -> None:
+    def generic_visit(self, node: Any) -> None:
         """
         Leaf default for any node type this visitor hasn't been taught
         a `visit_<ClassName>` for (chiefly `BasicBlock`). Override
@@ -54,26 +63,30 @@ class RegionVisitor:
         """
         return
 
-    def visit_SequenceRegion(self, node) -> None:
+    def visit_SequenceRegion(self, node: SequenceRegion) -> None:
         for child in node.children:
             self.visit(child)
 
-    def visit_LoopRegion(self, node) -> None:
+    def visit_LoopRegion(self, node: LoopRegion) -> None:
         self.visit(node.body)
 
-    def visit_IfRegion(self, node) -> None:
+    def visit_IfRegion(self, node: IfRegion) -> None:
         self.visit(node.then_body)
         if node.else_body is not None:
             self.visit(node.else_body)
 
-    def visit_TryRegion(self, node) -> None:
+    def visit_TryRegion(self, node: TryRegion) -> None:
         self.visit(node.try_body)
-        if node.catch is not None:
-            self.visit(node.catch.body)
-        if node.finally_ is not None:
-            self.visit(node.finally_.body)
 
-    def visit_SwitchRegion(self, node) -> None:
+        node_catch = node.catch
+        if node_catch is not None:
+            self.visit(node_catch.body)
+
+        node_finally = node.finally_
+        if node_finally is not None:
+            self.visit(node_finally.body)
+
+    def visit_SwitchRegion(self, node: SwitchRegion) -> None:
         for case in node.cases:
             self.visit(case.body)
         if node.default_body is not None:
