@@ -3,8 +3,10 @@ from __future__ import annotations
 from typing import Literal
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models.regions import Region, TryRegion, CatchRegion, FinallyRegion
-from hermes_decompiler.analysis.models.regions import SequenceRegion, LoopRegion, IfRegion
+from hermes_decompiler.analysis.models.regions import (
+    Region, TryRegion, CatchRegion, FinallyRegion,
+    SequenceRegion, LoopRegion, IfRegion
+)
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 # noinspection PyProtectedMember
 from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001

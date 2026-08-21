@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models.regions import SequenceRegion, LoopRegion, IfRegion
+from hermes_decompiler.analysis.models.regions import (
+    Region, TryRegion, CatchRegion, FinallyRegion,
+    SequenceRegion, LoopRegion, IfRegion
+)
 from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorJump
 # noinspection PyProtectedMember
 from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001
@@ -19,12 +22,12 @@ class LoopBreakStructurer(RegionStructurer):
     Recognized shape:
 
         <loop body block>:
-            if (cond) goto EXIT;   # EXIT is outside loop.members
+            if (cond) goto EXIT; # EXIT is outside loop.members
             ...
 
         EXIT:
             <exit body>
-            goto MERGE;            # loop's own back-edge exit target
+            goto MERGE; # loop's own back-edge exit target
 
     Rewritten to:
 
@@ -52,7 +55,9 @@ class LoopBreakStructurer(RegionStructurer):
 
     # -------------------------------------------------------------
 
-    def _visit(self, region) -> None:
+    def _visit(self, region: BasicBlock | Region) -> None:
+        if isinstance(region, BasicBlock):
+            return
 
         if isinstance(region, SequenceRegion):
             for child in list(region.children):
@@ -64,24 +69,32 @@ class LoopBreakStructurer(RegionStructurer):
             self._visit(region.body)
             return
 
-        # IfRegion (created by this pass itself, on an earlier
-        # candidate) is the only other region kind reachable at this
-        # point in the pipeline. then_body/else_body/body/try_body
-        # covers it; the catch/finally checks below are defensive -
-        # TryStructurer has not run yet, so TryRegion cannot exist
-        # here in the current pipeline order.
-        for attr in ("then_body", "else_body", "body", "try_body"):
-            child = getattr(region, attr, None)
-            if child is not None:
-                self._visit(child)
+        # condition, _then_body, _else_body
+        if isinstance(region, IfRegion):
+            self._visit(region.then_body)
 
-        catch = getattr(region, "catch", None)
-        if catch is not None:
-            self._visit(catch.body)
+            region_else_body = region.else_body
+            if region_else_body:
+                self._visit(region_else_body)
+            return
 
-        finally_ = getattr(region, "finally_", None)
-        if finally_ is not None:
-            self._visit(finally_.body)
+        # _try_body, _catch, _finally
+        if isinstance(region, TryRegion):
+            self._visit(region.try_body)
+
+            region_catch = region.catch
+            if region_catch is not None:
+                self._visit(region_catch.body)
+
+            region_finally = region.finally_
+            if region_finally is not None:
+                self._visit(region_finally.body)
+            return
+
+        # CatchRegion / FinallyRegion
+        if isinstance(region, (CatchRegion, FinallyRegion)):
+            self._visit(region.body)
+            return
 
     # -------------------------------------------------------------
 
