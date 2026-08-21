@@ -95,7 +95,8 @@ class LoopLabeledExitStructurer(RegionStructurer):
 
     # -------------------------------------------------------------
 
-    def _find_candidate(self, loop: LoopRegion, exclude: set) -> BasicBlock | None:
+    @staticmethod
+    def _find_candidate(loop: LoopRegion, exclude: set) -> BasicBlock | None:
         """
         Unlike LoopBreakStructurer, the loop's own header is not
         excluded: for a labeled exit, the header can itself be the
