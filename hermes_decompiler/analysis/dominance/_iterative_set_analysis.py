@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from collections.abc import Iterable
 from typing import Dict, Set
+
 from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
 
 
@@ -50,24 +52,25 @@ class _IterativeSetAnalysis(ABC):
                     changed = True
 
     @abstractmethod
-    def roots(self):
+    def roots(self) -> Iterable[BasicBlock]:
         ...
 
     @abstractmethod
-    def neighbors(self, block):
+    def neighbors(self, block: BasicBlock) -> Iterable[BasicBlock]:
         ...
 
-    def compute_immediate(self) -> Dict[BasicBlock, "BasicBlock | None"]:
+    def compute_immediate(self) -> Dict[BasicBlock, BasicBlock | None]:
         """
-        Generic 'immediate' relation derived from `self.result` (the set
-        of dominators/post-dominators per block, already computed by
-        `compute()`): for each non-root block, the strict
-        dominator/post-dominator that isn't itself dominated/post-
-        dominated by any other strict one - i.e. the closest one.
+        Computes the immediate dominator or post-dominator for each block.
 
-        Shared by `DominatorTree` (immediate dominator) and
-        `PostDominatorTree` (immediate post-dominator); the math is
-        identical, only `self.result`/`roots()` differ.
+        The relation is derived from `self.result`, which contains the
+        dominator or post-dominator set for each block.
+
+        For each non-root block, the immediate relation is the strict
+        dominator or post-dominator that is closest to the block.
+
+        This implementation is shared by `DominatorTree` and
+        `PostDominatorTree`; only `self.result` and `roots()` differ.
         """
 
         roots = set(self.roots())

@@ -20,13 +20,18 @@ class CFG:
         self.exception_handlers: list[dict] = []
 
         # dest_reg -> [(address, BasicBlock, OpcodeResult), ...]
-        # program-order sırasında. HermesAnalysis.registers'ın aksine
-        # yalnızca SON tanımı değil, register'ın tüm tanımlarını,
-        # hangi BasicBlock'ta olduklarıyla birlikte tutar. reaching-
-        # definition tarzı sorgular (loop induction register tespiti,
-        # initializer/update ayrıştırma) için CFGBuilder tarafından
-        # tek geçişte doldurulur.
-        self.reg_definitions: Dict[int, List[Tuple[int, BasicBlock, OpcodeResult]]] = {}
+        # Entries are stored in program order. Unlike
+        # HermesAnalysis.registers, this preserves every register
+        # definition along with the BasicBlock where it occurs, rather
+        # than only the latest definition.
+        #
+        # CFGBuilder populates this mapping in a single pass for
+        # reaching-definition-style queries, such as detecting loop
+        # induction registers and distinguishing initializers from
+        # updates.
+        self.reg_definitions: Dict[
+            int, List[Tuple[int, BasicBlock, OpcodeResult]]
+        ] = {}
 
     @classmethod
     def from_results(cls, results: List[OpcodeResult], exception_handlers: list[dict] | None = None) -> "CFG":
@@ -34,14 +39,10 @@ class CFG:
 
         return CFGBuilder().build(results, exception_handlers or [])
 
-    # ---------------------------------------------------------
-
     def verify(self):
         from hermes_decompiler.analysis.cfg.CFGVerifier import CFGVerifier
 
         CFGVerifier(self).verify()
-
-    # ---------------------------------------------------------
 
     def compute_dominators(self):
         from hermes_decompiler.analysis.dominance.DominatorTree import DominatorTree
@@ -49,8 +50,6 @@ class CFG:
         self.dominator_tree = DominatorTree(self)
 
         self.dominator_tree.compute()
-
-    # ---------------------------------------------------------
 
     def compute_post_dominators(self):
         from hermes_decompiler.analysis.dominance.PostDominatorTree import PostDominatorTree

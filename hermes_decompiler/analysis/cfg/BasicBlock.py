@@ -16,7 +16,7 @@ class BasicBlock:
 
     This matters beyond just "two BasicBlock objects with the same id
     should compare equal": several passes put BasicBlocks into a `set`
-    (`NaturalLoop.members`/`.exits`, `Region.covered_blocks`, ...) and at
+    (`NaturalLoop.members`/`.exits`, `Region.covered_blocks`, ...), and at
     least one (`IfStructurer._representative_block`) pulls an element
     back out via `next(iter(some_set))`, relying on the assumption that
     "any member is an equally valid representative". That assumption is
@@ -25,7 +25,7 @@ class BasicBlock:
     which differs between process runs (ASLR, allocation history) even
     for byte-identical input `.hbc` data. The result was exactly the
     symptom reported: the same bytecode structuring differently (a
-    proper `while (...) { ... }` vs. a raw `if (...) goto label_N;`
+    proper `while (...) { ... }` vs. a raw `if (...) goto label_N`
     fallback block) across separate runs of the same program.
 
     Hashing by `self.id` instead makes iteration order of any
