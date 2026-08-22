@@ -22,7 +22,8 @@ function tryLoopMultiReturnTest(param1) {
         // CODE → addr: 31 | <LoadConstString>: <Reg8: 1, string_id: 4747>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive";
         // LOOP → START (while)
-        while (true) {
+        // → r5 = r5.length; r6 = 0
+        while (!(r6 >= r5)) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 35 | <Mov>: <Reg8: 6, Reg8: 4>
             r6 = 0
@@ -30,18 +31,15 @@ function tryLoopMultiReturnTest(param1) {
             r5 = param1
             // CODE → addr: 41 | <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
             r5 = r5.length
-            // → r5 = r5.length; r6 = 0
-            if (r6 < r5) {
-                // ──────────────── Block 2 ──────────────── 
-                // CODE → addr: 50 | <Mov>: <Reg8: 6, Reg8: 3>
-                // USED → r6 = param1;
-                // CODE → addr: 53 | <Mov>: <Reg8: 5, Reg8: 4>
-                r5 = 0
-                // CODE → addr: 56 | <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
-                r5 = param1[r5]
-                // CODE → addr: 60 | <JLess>: <Addr8: 58, Reg8: 5, Reg8: 2>  # Address: 00000076
-                // → r5 = param1[r5]
-                if (r5 < 0) goto label_118;
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → addr: 50 | <Mov>: <Reg8: 6, Reg8: 3>
+            // USED → r6 = param1;
+            // CODE → addr: 53 | <Mov>: <Reg8: 5, Reg8: 4>
+            r5 = 0
+            // CODE → addr: 56 | <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
+            r5 = param1[r5]
+            // → r5 = param1[r5]
+            if (r5 >= 0) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr: 64 | <Mov>: <Reg8: 6, Reg8: 3>
                 // USED → r6 = param1;
