@@ -38,39 +38,39 @@ function tryLoopMultiReturnTest(param1) {
             r5 = 0
             // CODE → addr: 56 | <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
             r5 = param1[r5]
+            // CODE → addr: 60 | <JLess>: <Addr8: 58, Reg8: 5, Reg8: 2>  # Address: 00000076
             // → r5 = param1[r5]
-            if (r5 >= 0) {
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → addr: 64 | <Mov>: <Reg8: 6, Reg8: 3>
+            if (r5 < 0) goto label_118;
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → addr: 64 | <Mov>: <Reg8: 6, Reg8: 3>
+            // USED → r6 = param1;
+            // CODE → addr: 67 | <Mov>: <Reg8: 5, Reg8: 4>
+            r5 = 0
+            // CODE → addr: 70 | <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
+            r5 = param1[r5]
+            // → r5 = param1[r5]
+            if (r5 === 0) {
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → addr:110 | <Mov>: <Reg8: 5, Reg8: 4>
+                r5 = r5 + 1
+                // CODE → addr:113 | <Inc>: <Reg8: 4, Reg8: 5>
+                r4 = r5 + 1
+            } else {
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → addr: 78 | <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r8 = console;
+                // CODE → addr: 84 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r7 = console.log;
+                // CODE → addr: 89 | <Mov>: <Reg8: 6, Reg8: 3>
                 // USED → r6 = param1;
-                // CODE → addr: 67 | <Mov>: <Reg8: 5, Reg8: 4>
+                // CODE → addr: 92 | <Mov>: <Reg8: 5, Reg8: 4>
                 r5 = 0
-                // CODE → addr: 70 | <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
-                r5 = param1[r5]
-                // → r5 = param1[r5]
-                if (r5 === 0) {
-                    // ──────────────── Block 5 ──────────────── 
-                    // CODE → addr:110 | <Mov>: <Reg8: 5, Reg8: 4>
-                    r5 = r5 + 1
-                    // CODE → addr:113 | <Inc>: <Reg8: 4, Reg8: 5>
-                    r4 = r5 + 1
-                } else {
-                    // ──────────────── Block 4 ──────────────── 
-                    // CODE → addr: 78 | <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r8 = console;
-                    // CODE → addr: 84 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r7 = console.log;
-                    // CODE → addr: 89 | <Mov>: <Reg8: 6, Reg8: 3>
-                    // USED → r6 = param1;
-                    // CODE → addr: 92 | <Mov>: <Reg8: 5, Reg8: 4>
-                    r5 = 0
-                    // CODE → addr: 95 | <GetByVal>: <Reg8: 6, Reg8: 6, Reg8: 5>
-                    // USED → r6 = param1[r5];
-                    // CODE → addr: 99 | <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
-                    console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", r6)
-                    // CODE → addr:105 | <Inc>: <Reg8: 4, Reg8: 5>
-                    // USED → r4 = r5 + 1;
-                }
+                // CODE → addr: 95 | <GetByVal>: <Reg8: 6, Reg8: 6, Reg8: 5>
+                // USED → r6 = param1[r5];
+                // CODE → addr: 99 | <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
+                console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", r6)
+                // CODE → addr:105 | <Inc>: <Reg8: 4, Reg8: 5>
+                // USED → r4 = r5 + 1;
             }
         }
         // LOOP → END
