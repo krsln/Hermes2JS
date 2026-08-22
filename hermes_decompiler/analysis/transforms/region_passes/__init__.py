@@ -8,6 +8,7 @@ from .LoopConditionRegionPass import LoopConditionRegionPass
 from .LoopInductionAliasPass import LoopInductionAliasPass
 from .LoopContinueRegionPass import LoopContinueRegionPass
 from .NullishAssignmentRegionPass import NullishAssignmentRegionPass
+from .RedundantJumpRegionPass import RedundantJumpRegionPass
 
 __all__ = [
     "RegionPass",
@@ -18,4 +19,5 @@ __all__ = [
     "LoopInductionAliasPass",
     "LoopContinueRegionPass",
     "NullishAssignmentRegionPass",
+    "RedundantJumpRegionPass",
 ]

@@ -13,6 +13,7 @@ from hermes_decompiler.analysis.transforms.region_passes import (
     LoopContinueRegionPass,
     LoopInductionAliasPass,
     NullishAssignmentRegionPass,
+    RedundantJumpRegionPass,
 )
 from hermes_decompiler.analysis.transforms.structurers import (
     SequenceStructurer,
@@ -154,6 +155,16 @@ class StructuralAnalyzer:
         # Converts residual unconditional jumps to the loop latch into
         # a `continue` statement. This requires the final If/Loop nesting.
         LoopContinueRegionPass(graph, self.cfg).run()
+
+        # Drops a bare unconditional-Jmp block whose target is simply
+        # the very next sibling block that already executes right
+        # after it - the trampoline blocks LoopLabeledExitStructurer's
+        # address-chasing walks through but doesn't itself remove
+        # (see that structurer's `_chase_trampoline_address` and this
+        # pass's own docstring). No ordering dependency on
+        # LoopContinueRegionPass - grouped here only because both
+        # clean up leftover TerminatorJump-only blocks.
+        RedundantJumpRegionPass(graph, self.cfg).run()
 
         # Reclassifies a plain `while` LoopRegion as `for-of`/`for-in`
         # by matching a fixed IteratorNext/GetNextPName instruction

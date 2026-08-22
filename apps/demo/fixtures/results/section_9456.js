@@ -48,9 +48,6 @@ function labeledBreakTest() {
         // ──────────────── Block 5 ──────────────── 
     }
     // LOOP → END
-    // ──────────────── Block 6 ──────────────── 
-    // CODE → addr: 79 | <Jmp>: <Addr8: 22>  # Address: 00000065
-    goto label_101;
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:101 | <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r10 = console;
