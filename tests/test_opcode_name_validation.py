@@ -57,7 +57,7 @@ MIN_EXPECTED_HANDLER_COUNT = 200
 
 @pytest.fixture(scope="module", autouse=True)
 def initialize_handler_registry():
-    """Populate OpcodeHandler.registry before any validation runs."""
+    """Populate ``OpcodeHandler.registry`` before any validation runs."""
 
     HandlerLoader.load()
 
@@ -121,7 +121,7 @@ def test_legacy_opcodes_are_visible_and_documented(registered_handler_names):
         v_min, v_max = info.versions[0], info.versions[-1]
         print(f"  - {info.name}: hbc{v_min}..hbc{v_max}")
 
-    # assert True
+    assert True
 
 
 def test_known_unverified_list_is_empty():
