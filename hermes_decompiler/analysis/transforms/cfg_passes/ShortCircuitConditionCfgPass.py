@@ -12,11 +12,9 @@ class ShortCircuitConditionCfgPass:
     This pass runs before RegionGraph and IfStructurer and recognizes
     control-flow-only `&&` / `||` expressions lowered into multiple
     conditional test blocks that share a branch target::
-
-        if (a) goto T;      if (!a) goto ELSE;
-        if (b) goto T;      if (!b) goto ELSE;
-        ...                 ...
-
+        if (a) goto T; if (!a) goto ELSE;
+        if (b) goto T; if (!b) goto ELSE;
+        ... ...
     The exact source operator is already reflected in the polarity of
     the individual conditions. For example, JmpTrue and JmpFalse may
     negate operands as required by the original short-circuit expression.
@@ -33,10 +31,7 @@ class ShortCircuitConditionCfgPass:
     normally.
 
     This pass handles only control-flow conditions. Value-producing
-    short-circuit expressions, such as::
-
-        const x = a || b;
-
+    short-circuit expressions, such as ``const x = a || b;``
     are handled later by `region_passes.BooleanChainRegionPass`. The two
     passes operate on intentionally disjoint inputs: this pass only merges
     pure test blocks, while BooleanChainRegionPass handles blocks that
@@ -48,7 +43,7 @@ class ShortCircuitConditionCfgPass:
     condition into separate guard and continue-test blocks that resemble
     a short-circuit chain but must remain structurally distinct.
 
-    It must also run before RegionGraph is constructed.
+    It must also run before ``RegionGraph`` is constructed.
     """
 
     def __init__(self, cfg: CFG):
