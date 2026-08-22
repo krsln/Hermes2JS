@@ -7,109 +7,77 @@ from hermes_decompiler.ir.expressions import BinaryExpression
 
 
 class ShortCircuitConditionCfgPass:
-    """Collapses a pure control-flow &&/|| chain into a single branch.
+    """Collapses pure control-flow short-circuit condition chains.
 
-    Runs before RegionGraph/IfStructurer ever see the CFG::
+    This pass runs before RegionGraph and IfStructurer and recognizes
+    control-flow-only `&&` / `||` expressions lowered into multiple
+    conditional test blocks that share a branch target::
 
         if (a) goto T;      if (!a) goto ELSE;
         if (b) goto T;      if (!b) goto ELSE;
         ...                 ...
 
-    Both patterns compile the same way at the CFG level: two (or more)
-    blocks, each ending in a TerminatorConditionalBranch, all jumping
-    to the same target, with nothing else in between (see
-    `_is_pure_test_block`). The branch is taken if either condition is
-    true, regardless of whether the source used `&&` or `||` - De
-    Morgan's laws are already baked into which operand got negated by
-    JmpTrue/JmpFalse (see Jmp.py). So structurally there is exactly
-    one thing to detect: a chain of single-purpose test blocks that
-    all share a branch target, merged by OR-ing their conditions.
+    The exact source operator is already reflected in the polarity of
+    the individual conditions. For example, JmpTrue and JmpFalse may
+    negate operands as required by the original short-circuit expression.
+    At the CFG level, this pass therefore only needs to recognize a chain
+    of single-purpose test blocks whose conditional branches share the
+    same target, then combine their conditions into one logical expression.
 
-    This is what lets ifElseChainTest's `a || b` ("either") test
-    compile to two separate blocks (Block1: `if (b) goto label_124`,
-    and later Block2/Block3: `if (a) goto label_82` /
-    `if (b) goto label_82`) that IfStructurer could never
-    single-entry-validate into one IfRegion - label_82 legitimately
-    has two predecessors in the original program, but only because
-    it's one condition, not two. After this pass runs, label_82's
-    predecessors collapse to one merged block, and IfStructurer's
-    single-entry check succeeds normally.
+    This allows source constructs such as `a || b` to be represented as
+    one structured condition rather than multiple independent branches.
+    Without this normalization, the shared target may have multiple
+    predecessors, causing IfStructurer's single-entry validation to reject
+    what was originally a single source-level condition. After the chain
+    is merged, the shared target has one predecessor and can be structured
+    normally.
 
-    Not responsible for value-producing &&/|| (e.g. `const x = a ||
-    b;`, where the bytecode assigns an intermediate register instead
-    of just branching): that's `region_passes.BooleanChainRegionPass`'s
-    job, which runs much later, on the already-built region tree, and
-    specifically requires the block it folds to end in an assignment
-    (`dest_reg is not None`). This pass requires the exact opposite -
-    `_is_pure_test_block` rejects any successor that assigns anything
-    at all - so the two passes' inputs are structurally disjoint and
-    can never both claim the same block. Re-check that disjointness
-    before loosening `_is_pure_test_block`'s instruction-count check.
+    This pass handles only control-flow conditions. Value-producing
+    short-circuit expressions, such as::
 
-    Must run after cfg.compute_loops() (needs loop membership to avoid
-    touching loop rotation's duplicated guard/continue tests - see
-    `_collect_loop_blocks`) and before RegionGraph is built.
+        const x = a || b;
+
+    are handled later by `region_passes.BooleanChainRegionPass`. The two
+    passes operate on intentionally disjoint inputs: this pass only merges
+    pure test blocks, while BooleanChainRegionPass handles blocks that
+    participate in value-producing assignments. Re-check this separation
+    before loosening `_is_pure_test_block`.
+
+    The pass must run after `cfg.compute_loops()` so loop blocks can be
+    excluded from merging. Loop rotation may duplicate the same source
+    condition into separate guard and continue-test blocks that resemble
+    a short-circuit chain but must remain structurally distinct.
+
+    It must also run before RegionGraph is constructed.
     """
 
     def __init__(self, cfg: CFG):
         self.cfg = cfg
         self._loop_blocks = self._collect_loop_blocks(cfg)
 
-    # -------------------------------------------------------------
-
     @staticmethod
-    def _collect_loop_blocks(cfg: CFG) -> frozenset:
-        """Return every block that's part of any loop, at any nesting level.
+    def _collect_loop_blocks(cfg: CFG) -> frozenset[BasicBlock]:
+        """Return every block that belongs to a discovered loop."""
 
-        Headers and members alike. cfg.loop_analysis.loops holds one
-        entry per loop, nested loops included (not just top-level -
-        see LoopStructurer, which filters `loop.parent is None` for
-        roots specifically, implying the dict already contains every
-        loop object).
-
-        Blocks in this set must never participate in a merge, in
-        either role (as block or as successor): loop rotation
-        routinely duplicates the same source condition into two
-        physically different test blocks (a pre-header guard and an
-        in-loop continue check) that both jump forward to the same
-        exit target - which looks identical, from a purely local
-        two-forward-branches-same-target view, to a genuine `a || b`
-        chain, but folding them together destroys the loop (see the
-        nestedLoopTest regression this guard fixes).
-
-        Returns an empty set if loop analysis hasn't run yet (or found
-        no loops) - callers get no loop protection in that case, so
-        this must only be used once cfg.compute_loops() has already
-        run.
-        """
-
-        loop_analysis = getattr(cfg, "loop_analysis", None)
+        loop_analysis = cfg.loop_analysis
 
         if loop_analysis is None:
-            return frozenset()
+            raise RuntimeError(
+                "Loop analysis must be computed before "
+                "ShortCircuitConditionCfgPass."
+            )
 
-        loops = getattr(loop_analysis, "loops", None)
+        blocks: set[BasicBlock] = set()
 
-        if not loops:
-            return frozenset()
-
-        blocks = set()
-
-        for loop in loops.values():
-            header = getattr(loop, "header", None)
-            if header is not None:
-                blocks.add(header)
-            blocks.update(getattr(loop, "members", ()) or ())
+        for loop in loop_analysis.loops.values():
+            blocks.add(loop.header)
+            blocks.update(loop.members)
 
         return frozenset(blocks)
-
-    # -------------------------------------------------------------
 
     def run(self) -> None:
         while self._merge_one_pass():
             pass
-
-    # -------------------------------------------------------------
 
     def _merge_one_pass(self) -> bool:
         """Find and merge the first eligible (block, fallthrough) pair.
@@ -126,8 +94,6 @@ class ShortCircuitConditionCfgPass:
                 return True
 
         return False
-
-    # -------------------------------------------------------------
 
     def _try_merge(self, block: BasicBlock) -> bool:
 
@@ -186,15 +152,17 @@ class ShortCircuitConditionCfgPass:
         self._merge(block, successor, next_branch)
         return True
 
-    # -------------------------------------------------------------
-
-    def _fallthrough(self, block: BasicBlock) -> BasicBlock | None:
-        """Return the successor reached when block's condition is false.
+    @staticmethod
+    def _fallthrough(block: BasicBlock) -> BasicBlock | None:
+        """Return the successor reached when `block`'s condition is false.
 
         I.e., the one that isn't the branch target.
         """
 
         branch = block.terminator
+
+        if not isinstance(branch, TerminatorConditionalBranch):
+            return None
 
         candidates = [s for s in block.successors if s.address != branch.target]
 
@@ -203,11 +171,9 @@ class ShortCircuitConditionCfgPass:
 
         return candidates[0]
 
-    # -------------------------------------------------------------
-
     @staticmethod
     def _is_pure_test_block(block: BasicBlock) -> bool:
-        """Return True if block contains nothing but its own terminator.
+        """Return True if `block` contains nothing but its own terminator.
 
         I.e., it exists solely to evaluate one more condition and
         branch, with no other observable side effects that would be
@@ -222,8 +188,6 @@ class ShortCircuitConditionCfgPass:
         """
 
         return len(block.instructions) <= 1
-
-    # -------------------------------------------------------------
 
     def _merge(
             self,
@@ -254,7 +218,7 @@ class ShortCircuitConditionCfgPass:
         # when the block is first built, but they're independent
         # references from here on: updating only block.terminator
         # (above) fixes CFG/IfStructurer analysis but leaves the
-        # printed text showing the stale, un-merged condition. Find
+        # printed text showing the stale, unmerged condition. Find
         # that instruction and update it too.
         for instr in block.instructions:
             if instr.terminator is branch:
@@ -293,8 +257,6 @@ class ShortCircuitConditionCfgPass:
 
         if successor in self.cfg.blocks:
             self.cfg.blocks.remove(successor)
-
-    # -------------------------------------------------------------
 
     @staticmethod
     def _connect(source: BasicBlock, target: BasicBlock) -> None:
