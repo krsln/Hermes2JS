@@ -12,7 +12,7 @@ from hermes_decompiler.analysis.models.regions import (
 from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
-from ._predicates import is_backward_branch, representative_block
+from ._predicates import is_backward_branch, is_loop_guard_shaped, representative_block
 
 logger = get_logger(__name__)
 
@@ -103,7 +103,7 @@ class _DominanceIfBuilder(RegionStructurer):
         if isinstance(region, LoopRegion):
             exclude = (
                 frozenset({region.header_block})
-                if self._is_loop_guard_shaped(region.header_block, region)
+                if is_loop_guard_shaped(region.header_block, region)
                 else frozenset()
             )
             self._visit(region.body, exclude)
@@ -130,32 +130,6 @@ class _DominanceIfBuilder(RegionStructurer):
 
         if hasattr(region, "body"):
             self._visit(region.body, frozenset())
-
-    # -------------------------------------------------------------
-
-    @staticmethod
-    def _is_loop_guard_shaped(header: BasicBlock, loop_region) -> bool:
-        """Return True if header's own branch can be the loop's guard.
-
-        True for a top-tested `while`, where at least one of header's
-        edges leaves the loop (`loop_region.exits`). False for a
-        bottom-tested `do-while` (or any loop whose real guard lives
-        at the latch): the header can hold an ordinary in-body `if`
-        with both edges staying inside the loop, and structuring it
-        unconditionally would force it through
-        `_absorb_residual_conditional`'s crude fallback - risking
-        silently dropped code (e.g., the increment) on one arm.
-
-        Must agree with `LoopConditionExtractor`, which performs the
-        equivalent header-vs-latch check when building the
-        while/do-while shape.
-        """
-        if not isinstance(header.terminator, TerminatorConditionalBranch):
-            return False
-
-        exits = set(loop_region.exits)
-
-        return any(successor in exits for successor in header.successors)
 
     # -------------------------------------------------------------
     # Sequence conversion

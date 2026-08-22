@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models import TerminatorConditionalBranch
-from hermes_decompiler.analysis.models.regions import IfRegion, SequenceRegion
+from hermes_decompiler.analysis.models.regions import IfRegion, SequenceRegion, LoopRegion
 from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, UnaryExpression
 
@@ -115,3 +115,28 @@ def representative_block(item) -> BasicBlock | None:
         return None
 
     return min(covered, key=lambda b: b.id)
+
+
+def is_loop_guard_shaped(header: BasicBlock, loop_region: LoopRegion) -> bool:
+    """Return True if `header`'s own branch can be the loop's guard.
+
+    True for a top-tested `while`, where at least one of `header`'s
+    edges leaves the loop (`loop_region.exits`). False for a
+    bottom-tested `do-while` (or any loop whose real guard lives
+    at the latch): the header can hold an ordinary in-body `if`
+    with both edges staying inside the loop, and structuring it
+    unconditionally would force it through
+    `_absorb_residual_conditional`'s crude fallback - risking
+    silently dropped code (e.g., the increment) on one arm.
+
+    Must agree with `LoopConditionExtractor`, which performs the
+    equivalent `header-vs-latch` check when building the
+    while/do-while shape.
+    """
+
+    if not isinstance(header.terminator, TerminatorConditionalBranch):
+        return False
+
+    exits = set(loop_region.exits)
+
+    return any(successor in exits for successor in header.successors)
