@@ -38,9 +38,14 @@ function tryLoopMultiReturnTest(param1) {
             r5 = 0
             // CODE → addr: 56 | <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
             r5 = param1[r5]
-            // CODE → addr: 60 | <JLess>: <Addr8: 58, Reg8: 5, Reg8: 2>  # Address: 00000076
             // → r5 = param1[r5]
-            if (r5 < 0) goto label_118;
+            if (r5 < 0) {
+                // ──────────────── Block 6 ──────────────── 
+                // CODE → addr:118 | <LoadConstTrue>: <Reg8: 1>
+                // USED → r1 = true;
+                // CODE → addr:120 | <Ret>: <Reg8: 1>
+                return true;
+            }
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 64 | <Mov>: <Reg8: 6, Reg8: 3>
             // USED → r6 = param1;
@@ -74,11 +79,6 @@ function tryLoopMultiReturnTest(param1) {
             }
         }
         // LOOP → END
-        // ──────────────── Block 6 ──────────────── 
-        // CODE → addr:118 | <LoadConstTrue>: <Reg8: 1>
-        // USED → r1 = true;
-        // CODE → addr:120 | <Ret>: <Reg8: 1>
-        return true;
         // ──────────────── Block 7 ──────────────── 
         // CODE → addr:122 | <LoadConstFalse>: <Reg8: 1>
         // USED → r1 = false;
