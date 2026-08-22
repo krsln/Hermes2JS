@@ -249,8 +249,48 @@ class LoopLabeledExitStructurer(RegionStructurer):
         synth_block = BasicBlock(self._allocate_block_id(), address=-1)
         self._append_labeled_statement(synth_block, statement)
 
+        # `exit_block` may carry real side-effecting content (e.g., a
+        # console.log immediately preceding the escape) that must
+        # still execute before the break/continue on the way out.
+        # Only splice exit_block's own content into then_body -
+        # extracting it from wherever it currently lives - when doing
+        # so is safe: `block` must be its sole predecessor (mirrors
+        # LoopBreakStructurer's identical guard - a block reached some
+        # other way too isn't a clean single-purpose exit body), and it
+        # must not be structural machinery of the loop being escaped to
+        # (its header or one of its own latches). A shared merge point
+        # (e.g., the code right after a loop, reached by both a normal
+        # completion and this escape) or a loop's own back-edge test
+        # must stay exactly where it is - every other path that reaches
+        # it depends on it still being there; moving it either strands
+        # that other path or - for a latch - dismantles the very
+        # machinery a later pass needs to rebuild the loop's condition.
+        #
+        # `extract_block` (not a manual owner.children.remove) is used
+        # here for the same reason LoopBreakStructurer uses it: plain
+        # list surgery skips whatever bookkeeping the graph does on
+        # relocation, which later region passes (e.g., induction-variable
+        # aliasing) rely on being current.
+        exit_is_structural_to_target = (
+                exit_block in target_loop.latches
+                or exit_block is target_loop.header_block
+        )
+
+        blocks_for_then_body: list = []
+
+        if (
+                exit_block.instructions
+                and not exit_is_structural_to_target
+                and list(exit_block.predecessors) == [block]
+        ):
+            self.graph.extract_block(exit_block)
+            exit_block.terminator = None
+            blocks_for_then_body.append(exit_block)
+
+        blocks_for_then_body.append(synth_block)
+
         then_body = SequenceRegion()
-        self.graph.transfer([synth_block], then_body)
+        self.graph.transfer(blocks_for_then_body, then_body)
 
         if_region = IfRegion()
         if_region.condition = condition
@@ -281,8 +321,8 @@ class LoopLabeledExitStructurer(RegionStructurer):
         self._synth_block_id += 1
         return block_id
 
-    @staticmethod
     def _find_target_loop_for_address(
+            self,
             inner_loop: LoopRegion,
             target_address: int,
     ) -> tuple[LoopRegion | None, TargetLoopKind | None]:
@@ -309,7 +349,7 @@ class LoopLabeledExitStructurer(RegionStructurer):
                     # than a latch for `continue`.
                     return node, "continue"
 
-                merge = LoopLabeledExitStructurer._natural_loop_merge(node)
+                merge = self._natural_loop_merge(node)
 
                 if merge is not None and target_address == merge:
                     return node, "break"
@@ -318,17 +358,24 @@ class LoopLabeledExitStructurer(RegionStructurer):
 
         return None, None
 
-    @staticmethod
-    def _natural_loop_merge(loop: LoopRegion) -> int | None:
+    def _natural_loop_merge(self, loop: LoopRegion) -> int | None:
         """
         Address the loop's own back-edge test leaves to on normal
         completion, i.e., where a `break` also lands. None unless
         every latch agrees on the same address.
+
+        Hermes sometimes routes this edge through one or more bare
+        single-instruction trampoline blocks (an unconditional Jmp
+        with no other content) before reaching the block whose
+        address a labeled `break`'s target actually needs to match.
+        Chasing through them here keeps `_find_target_loop_for_address`
+        a plain address comparison, rather than needing trampoline
+        awareness of its own.
         """
         covered = loop.body.covered_blocks
 
         merge_addresses = {
-            successor.address
+            self._chase_trampoline_address(successor.address, covered)
             for latch in loop.latches
             for successor in latch.successors
             if successor not in covered
@@ -338,6 +385,32 @@ class LoopLabeledExitStructurer(RegionStructurer):
             return None
 
         return merge_addresses.pop()
+
+    def _chase_trampoline_address(self, address: int, covered: set) -> int:
+        """
+        Follows a chain of bare single-successor, instruction-less
+        blocks starting at `address`, returning the address the
+        chain ultimately lands on. Stops as soon as a block has real
+        content, more than one successor, or isn't found at all.
+        Bounded by `seen` against a malformed/cyclic CFG.
+        """
+        address_to_block: dict[int, BasicBlock] = {b.address: b for b in self.cfg.blocks}
+        seen: set[int] = set()
+
+        while address not in seen:
+            seen.add(address)
+            candidate = address_to_block.get(address)
+
+            if candidate is None or candidate in covered or candidate.instructions:
+                return address
+
+            successors = list(candidate.successors)
+            if len(successors) != 1:
+                return address
+
+            address = successors[0].address
+
+        return address
 
     # -------------------------------------------------------------
 

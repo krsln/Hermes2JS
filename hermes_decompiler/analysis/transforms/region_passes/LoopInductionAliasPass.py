@@ -23,7 +23,6 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
     happen to alias each other every iteration.
 
     The shape this targets (see forTest in section_15051_raw.js)::
-
         r5 = 0                          # initializer (already
                                          # extracted into
                                          # loop.initializer by
@@ -39,7 +38,6 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
                                          # but its right-hand side
                                          # still references r6 (the
                                          # alias), not r5
-
     Without this pass the alias Mov either prints as a redundant
     `let i_alias = i;` first statement, or - worse - silently
     vanishes (inlined by `OpcodeHandler.get_register_expression` into

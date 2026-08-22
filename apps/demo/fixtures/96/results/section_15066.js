@@ -23,9 +23,19 @@ function labeledContinueTest() {
     for (r1 = 0; r1 < 3; r1 = r1 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // LOOP → START (for)
-        for (r8 = 0; r8 < 3; r8 = r8 + 1) {
+        for (r8 = 0; r8 < 3; r8 = r9 + 1) {
             // ──────────────── Block 2 ──────────────── 
-            if (r8 === 1) {
+            // CODE → addr: 43 | <Mov>: <Reg8: 9, Reg8: 8>
+            // USED → r9 = 0;
+            // → r9 = 0
+            if (r9 === 1) {
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → addr: 92 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r9 = console;
+                // CODE → addr: 98 | <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r8 = console.log;
+                // CODE → addr:103 | <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 4>
+                console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → addr:  0 | ContinueStatement
                 continue loop_1;
@@ -36,7 +46,7 @@ function labeledContinueTest() {
             // CODE → addr: 56 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r10 = console.log;
             // CODE → addr: 61 | <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 7, Reg8: 9>
-            console.log(r1, r8)
+            console.log(r1, r9)
         }
         // LOOP → END
         // ──────────────── Block 4 ──────────────── 
@@ -48,13 +58,6 @@ function labeledContinueTest() {
         console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
         // CODE → addr: 90 | <Jmp>: <Addr8: 18>  # Address: 0000006c
         goto label_108;
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → addr: 92 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r9 = console;
-        // CODE → addr: 98 | <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r8 = console.log;
-        // CODE → addr:103 | <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 4>
-        console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
         // ──────────────── Block 6 ──────────────── 
     }
     // LOOP → END
