@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Literal
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import TerminatorConditionalBranch
+from hermes_decompiler.analysis.models import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.analysis.models.regions import (
     Region, TryRegion, CatchRegion, FinallyRegion,
     SequenceRegion, LoopRegion, IfRegion
@@ -388,11 +388,19 @@ class LoopLabeledExitStructurer(RegionStructurer):
 
     def _chase_trampoline_address(self, address: int, covered: set) -> int:
         """
-        Follows a chain of bare single-successor, instruction-less
-        blocks starting at `address`, returning the address the
-        chain ultimately lands on. Stops as soon as a block has real
-        content, more than one successor, or isn't found at all.
-        Bounded by `seen` against a malformed/cyclic CFG.
+        Follows a chain of bare-Jmp trampoline blocks starting at
+        `address` - a block whose only purpose is an unconditional
+        jump, carrying no other computation - returning the address
+        the chain ultimately lands on.
+
+        A block counts as "bare" only if the instruction carrying its
+        Jmp terminator is its SOLE instruction - not merely "has no
+        instructions". Hermes attaches the Jmp itself as a real
+        instruction (the same terminator-owning-instruction shape
+        `_convert` itself pops via `block.instructions[-1].terminator
+        is branch`), so an empty-instructions test alone would never
+        chase through anything. - It would report every trampoline as
+        already being its own destination.
         """
         address_to_block: dict[int, BasicBlock] = {b.address: b for b in self.cfg.blocks}
         seen: set[int] = set()
@@ -401,14 +409,25 @@ class LoopLabeledExitStructurer(RegionStructurer):
             seen.add(address)
             candidate = address_to_block.get(address)
 
-            if candidate is None or candidate in covered or candidate.instructions:
+            if candidate is None or candidate in covered:
                 return address
 
-            successors = list(candidate.successors)
-            if len(successors) != 1:
+            if not isinstance(candidate.terminator, TerminatorJump):
                 return address
 
-            address = successors[0].address
+            if len(candidate.instructions) > 1:
+                return address
+
+            if (
+                    candidate.instructions
+                    and candidate.instructions[0].terminator is not candidate.terminator
+            ):
+                # The one instruction here does more than just carry
+                # the jump (e.g., also computes a value) - not a pure
+                # trampoline.
+                return address
+
+            address = candidate.terminator.target
 
         return address
 

@@ -26,6 +26,13 @@ function labeledContinueTest() {
         for (r0 = 0; r0 < 3; r0 = r0 + 1) {
             // ──────────────── Block 2 ──────────────── 
             if (r0 === 1) {
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → addr: 93 | <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+                // USED → r12 = console;
+                // CODE → addr: 99 | <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+                // USED → r11 = console.log;
+                // CODE → addr:104 | <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 10>
+                console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
                 // ──────────────── Block 8 ──────────────── 
                 // CODE → addr:  0 | ContinueStatement
                 continue loop_1;
@@ -48,13 +55,6 @@ function labeledContinueTest() {
         console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
         // CODE → addr: 91 | <Jmp>: <Addr8: 18>  # Address: 0000006d
         goto label_109;
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → addr: 93 | <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r12 = console;
-        // CODE → addr: 99 | <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r11 = console.log;
-        // CODE → addr:104 | <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 10>
-        console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/continue-outer")
         // ──────────────── Block 6 ──────────────── 
     }
     // LOOP → END
