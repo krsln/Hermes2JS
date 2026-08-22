@@ -58,7 +58,14 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 # Iterators
 # IteratorTests 15092, 15093
 
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/  --log-level WARNING
+# WARNING 725 
+```
+
 ## whole sections
+
+```shell
+
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/
 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 999 
@@ -69,16 +76,4 @@ python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./ap
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 10000 --end 14999 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 15000 --end 19999
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 20000 --end 24999 
-```
-
-#### legacy
-
-```shell
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/focused -o ./apps/coachy/fixtures/results
-
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results
-
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --no-verbose
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict --no-verbose
 ```
