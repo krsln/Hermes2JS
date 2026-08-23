@@ -24,24 +24,22 @@ function callGeneratorTests() {
     r4 = GetIterator(r3)
     try {
         // LOOP → START (while)
-        while (true) {
+        // → r5 = r4
+        while (!(r5 === undefined)) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 41 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 3>
             // USED → r7 = r4.next();
             // CODE → addr: 45 | <Mov>: <Reg8: 5, Reg8: 4>
             r5 = r4
-            // → r5 = r4
-            if (r5 !== undefined) {
-                // ──────────────── Block 2 ──────────────── 
-                // CODE → addr: 52 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r6 = console;
-                // CODE → addr: 58 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r5 = console.log;
-                // CODE → addr: 63 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-                console.log(r7)
-                // CODE → addr: 68 | <Jmp>: <Addr8: -27>  # Address: 00000029
-                goto label_41;
-            }
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → addr: 52 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r6 = console;
+            // CODE → addr: 58 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r5 = console.log;
+            // CODE → addr: 63 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+            console.log(r7)
+            // CODE → addr: 68 | <Jmp>: <Addr8: -27>  # Address: 00000029
+            goto label_41;
         }
         // LOOP → END
     } finally {
@@ -62,24 +60,22 @@ function callGeneratorTests() {
     r4 = GetIterator(r3)
     try {
         // LOOP → START (while)
-        while (true) {
+        // → r5 = r4
+        while (!(r5 === undefined)) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr: 95 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 3>
             // USED → r7 = r4.next();
             // CODE → addr: 99 | <Mov>: <Reg8: 5, Reg8: 4>
             r5 = r4
-            // → r5 = r4
-            if (r5 !== undefined) {
-                // ──────────────── Block 6 ──────────────── 
-                // CODE → addr:106 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r6 = console;
-                // CODE → addr:112 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r5 = console.log;
-                // CODE → addr:117 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-                console.log(r7)
-                // CODE → addr:122 | <Jmp>: <Addr8: -27>  # Address: 0000005f
-                goto label_95;
-            }
+            // ──────────────── Block 6 ──────────────── 
+            // CODE → addr:106 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r6 = console;
+            // CODE → addr:112 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r5 = console.log;
+            // CODE → addr:117 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+            console.log(r7)
+            // CODE → addr:122 | <Jmp>: <Addr8: -27>  # Address: 0000005f
+            goto label_95;
         }
         // LOOP → END
     } finally {

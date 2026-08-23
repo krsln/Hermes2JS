@@ -1,14 +1,21 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import TerminatorConditionalBranch, TerminatorJump
+from hermes_decompiler.analysis.models import (
+    TerminatorConditionalBranch,
+    TerminatorJump,
+    TerminatorReturn,
+    TerminatorThrow,
+)
 from hermes_decompiler.analysis.models.regions import (
     Region, TryRegion, CatchRegion, FinallyRegion,
     SequenceRegion, LoopRegion, IfRegion,
 
 )
 # noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001
+from hermes_decompiler.analysis.transforms._shared import (
+    _negate_condition, is_loop_guard_shaped, has_bottom_tested_guard
+)  # noqa: SLF001
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.statements import BreakStatement
@@ -18,9 +25,13 @@ logger = get_logger(__name__)
 
 class LoopBreakStructurer(RegionStructurer):
     """
-    Converts a mid-loop conditional exit into a structured `break`.
+    Converts a mid-loop conditional exit into a structured control flow.
 
-    Recognized shape:
+    Two exit-body shapes are recognized, both requiring a single-block
+    exit body reached only from the candidate block (see `_convert`'s
+    shared predecessor/ownership checks):
+
+    Shape A - the exit body rejoins the loop's own post-loop code:
 
         <loop body block>:
             if (cond) goto EXIT; # EXIT is outside loop.members
@@ -39,14 +50,44 @@ class LoopBreakStructurer(RegionStructurer):
             }
             ...
 
+    Shape B - the exit body terminates the function outright (a direct
+    `return`/`throw`) rather than rejoining the loop's merge point at
+    all:
+
+        <loop body block>:
+            if (cond) goto EXIT;
+            ...
+
+        EXIT:
+            <exit body>
+            return X; # or: throw X;
+
+    Rewritten to:
+
+        <loop body block>:
+            if (cond) {
+                <exit body>
+                return X; # exit_block's own terminator, untouched
+            }
+            ...
+
+    No synthetic `break` is needed for Shape B: a `return`/`throw`
+    already exits every enclosing scope (including the loop) on its
+    own, so there's nothing for a `break` to add - and, unlike Shape
+    A, there is no "loop's own natural merge address" to compare
+    against, since the exit body never rejoins the loop's normal
+    completion path at all.
+
     Must run after LoopStructurer (needs loop.body.covered_blocks) and
     before IfStructurer, which would otherwise consume the branch as
     an ordinary conditional and strand it - see StructuralAnalyzer's
     unstructured-block audit.
 
-    Deliberately narrow: only a single-block exit body with an
-    unconditional trailing jump to the loop's natural post-loop
-    address is matched. Anything else is left as an unstructured
+    Deliberately narrow: only a single-block exit body is matched, and
+    only when its own terminator is one of the two recognized shapes
+    above (trailing unconditional jump to the loop's natural merge, or
+    a direct Return/Throw). Anything else (a Switch, another
+    ConditionalBranch, a jump elsewhere) is left as an unstructured
     conditional branch rather than guessed at.
     """
 
@@ -120,6 +161,8 @@ class LoopBreakStructurer(RegionStructurer):
     @staticmethod
     def _find_candidate(loop: LoopRegion, exclude: set) -> BasicBlock | None:
 
+        header_is_guard = is_loop_guard_shaped(loop.header_block, loop)
+
         for item in loop.body.children:
 
             if not isinstance(item, BasicBlock):
@@ -128,10 +171,26 @@ class LoopBreakStructurer(RegionStructurer):
             if item in exclude:
                 continue
 
-            if item is loop.header_block:
-                # The header's own branch is either the loop guard
-                # (consumed later by LoopConditionRegionPass) or a
-                # genuine in-loop if - never a break edge here.
+            if item is loop.header_block and header_is_guard:
+                # Only exclude the header when it's genuinely the loop's
+                # top-tested guard (LoopConditionRegionPass will consume
+                # it). When the loop is actually bottom-tested (guard
+                # lives at the latch - see is_loop_guard_shaped), the
+                # header's own branch is just an ordinary in-body
+                # conditional and IS a legitimate break candidate.
+                continue
+
+            if item in loop.latches and header_is_guard:
+                # Mirror: only exclude the latch when the header holds the
+                # real guard (top-tested) - a latch's own back-edge test
+                # is then unconditional and never itself a break shape.
+                # When the loop is bottom-tested instead, the latch DOES
+                # carry the loop's real conditional guard and must stay
+                # untouched here (LoopConditionRegionPass's job) -
+                # `has_bottom_tested_guard` covers that case directly.
+                continue
+
+            if item in loop.latches and has_bottom_tested_guard(loop):
                 continue
 
             if isinstance(item, BasicBlock) and isinstance(item.terminator, TerminatorConditionalBranch):
@@ -185,34 +244,89 @@ class LoopBreakStructurer(RegionStructurer):
 
         exit_terminator = exit_block.terminator
 
-        if not isinstance(exit_terminator, TerminatorJump):
-            # Only the single-block, unconditional-trailing-jump shape
-            # is handled - see class docstring.
-            return False
-
-        natural_merge = self._natural_loop_merge(loop)
-
-        if natural_merge is None or exit_terminator.target != natural_merge:
-            # Doesn't land where the loop itself exits to normally -
-            # could be a genuine different control-flow shape (e.g., a
-            # jump to an unrelated label). Don't guess.
-            return False
-
-        # ---- convert `block`'s branch into a structured IfRegion ----
-
-        if block.instructions and block.instructions[-1].terminator is branch:
-            block.instructions.pop()
-            block.terminator = None
-        else:
-            # Invariant violated: the branch we're converting isn't
-            # owned by block's last instruction. Bail rather than
-            # clear block.terminator while leaving a stale
-            # branch-owning instruction behind.
-            logger.warning(
-                "LoopBreakStructurer: block %d's terminator instruction "
-                "was not found where expected; aborting conversion.",
-                block.id,
+        # ---- Shape A: exit body rejoins the loop's own natural merge via an explicit jump ----
+        if isinstance(exit_terminator, TerminatorJump):
+            natural_merge = self._natural_loop_merge(loop)
+            if natural_merge is None or exit_terminator.target != natural_merge:
+                return False
+            return self._convert_break_shape(
+                loop, block, branch, exit_block, exit_terminator, condition,
             )
+
+        # ---- Shape C: exit body rejoins the loop's natural merge via implicit fallthrough ----
+        #
+        # Hermes sometimes lays the exit body out as the LAST block before
+        # the loop's own post-loop code, with no explicit trailing Jmp -
+        # the "fallthrough" itself already lands on the merge address (see
+        # CFGBuilder._connect_edges' `case None:`, which wires such a
+        # block straight to the next block in program order). Structurally
+        # identical to Shape A - same natural-merge check - just without
+        # an instruction to strip, since there was never a jump to begin
+        # with.
+        if exit_terminator is None:
+            natural_merge = self._natural_loop_merge(loop)
+            successors = list(exit_block.successors)
+            if (
+                    natural_merge is None
+                    or len(successors) != 1
+                    or successors[0].address != natural_merge
+            ):
+                return False
+            return self._convert_break_shape_fallthrough(loop, block, branch, exit_block, condition)
+
+        # ---- Shape B: exit body terminates the function directly ----
+        if isinstance(exit_terminator, (TerminatorReturn, TerminatorThrow)):
+            return self._convert_terminal_shape(loop, block, branch, exit_block, condition)
+
+        return False
+
+    def _convert_break_shape_fallthrough(
+            self,
+            loop: LoopRegion,
+            block: BasicBlock,
+            branch: TerminatorConditionalBranch,
+            exit_block: BasicBlock,
+            condition,
+    ) -> bool:
+        """Shape C: like `_convert_break_shape`, but exit_block never had
+        an explicit trailing Jmp to strip - it merged into the loop's
+        natural post-loop code purely by falling off the end of the block
+        list. Only the synthetic `break` needs appending; there's no
+        terminator instruction to clear first.
+        """
+        if not self._strip_block_branch(block, branch):
+            return False
+
+        break_instr_source = exit_block.instructions[-1] if exit_block.instructions else None
+
+        # Append a synthetic break as a NEW instruction, since - unlike
+        # Shape A - there is no existing trailing jump instruction here to
+        # commandeer. Mirrors LoopLabeledExitStructurer's
+        # `_append_labeled_statement` approach for the same reason: the
+        # escape edge is a bare fallthrough with nothing to repurpose.
+        from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+
+        entry = OpcodeEntry(bytecode="<synthetic>: BreakStatement", hex_address="")
+        exit_block.instructions.append(OpcodeResult(entry, statement=BreakStatement(label=None)))
+
+        self._splice_exit_block_as_then(loop, block, exit_block, condition)
+        return True
+
+    # -------------------------------------------------------------
+    # Shape A: synthetic `break`
+    # -------------------------------------------------------------
+
+    def _convert_break_shape(
+            self,
+            loop: LoopRegion,
+            block: BasicBlock,
+            branch: TerminatorConditionalBranch,
+            exit_block: BasicBlock,
+            exit_terminator: TerminatorJump,
+            condition,
+    ) -> bool:
+
+        if not self._strip_block_branch(block, branch):
             return False
 
         # ---- strip exit_block's trailing jump, append synthetic break ----
@@ -227,7 +341,76 @@ class LoopBreakStructurer(RegionStructurer):
 
         exit_block.terminator = None
 
-        # ---- move exit_block out of its old home, into a fresh then_body ----
+        self._splice_exit_block_as_then(loop, block, exit_block, condition)
+        return True
+
+    # -------------------------------------------------------------
+    # Shape B: exit body's own Return/Throw is left untouched
+    # -------------------------------------------------------------
+
+    def _convert_terminal_shape(
+            self,
+            loop: LoopRegion,
+            block: BasicBlock,
+            branch: TerminatorConditionalBranch,
+            exit_block: BasicBlock,
+            condition,
+    ) -> bool:
+        """
+        Splice a Return/Throw-terminated exit block in as a structured
+        `if`, with no synthetic `break`.
+
+        Unlike Shape A, exit_block's own terminator (Return/Throw)
+        already exits every enclosing scope on its own - there's no
+        loop-merge address to strip a jump down to, and nothing needs
+        appending. `exit_block.terminator` is deliberately left as-is;
+        only `block`'s own conditional branch is consumed here.
+        """
+
+        if not self._strip_block_branch(block, branch):
+            return False
+
+        self._splice_exit_block_as_then(loop, block, exit_block, condition)
+        return True
+
+    # -------------------------------------------------------------
+    # Shared helpers
+    # -------------------------------------------------------------
+
+    @staticmethod
+    def _strip_block_branch(block: BasicBlock, branch: TerminatorConditionalBranch) -> bool:
+        """Remove `branch` from `block`, clearing both the terminator
+        and its owning instruction. Shared by both shapes since the
+        candidate block's own branch is consumed identically either
+        way - only what happens to `exit_block` differs.
+        """
+
+        if block.instructions and block.instructions[-1].terminator is branch:
+            block.instructions.pop()
+            block.terminator = None
+            return True
+
+        # Invariant violated: the branch we're converting isn't
+        # owned by block's last instruction. Bail rather than
+        # clear block.terminator while leaving a stale
+        # branch-owning instruction behind.
+        logger.warning(
+            "LoopBreakStructurer: block %d's terminator instruction "
+            "was not found where expected; aborting conversion.",
+            block.id,
+        )
+        return False
+
+    def _splice_exit_block_as_then(
+            self,
+            loop: LoopRegion,
+            block: BasicBlock,
+            exit_block: BasicBlock,
+            condition,
+    ) -> None:
+        """Move exit_block out of its old home, into a fresh then_body
+        spliced in right after `block` in the loop body.
+        """
 
         self.graph.extract_block(exit_block)
 
@@ -242,23 +425,31 @@ class LoopBreakStructurer(RegionStructurer):
         insert_at = loop.body.children.index(block) + 1
         self.graph.insert_at(loop.body, insert_at, if_region)
 
-        return True
-
     # -------------------------------------------------------------
 
     @staticmethod
     def _natural_loop_merge(loop: LoopRegion) -> int | None:
         """
         Address a `break` (or the loop's own normal completion) lands
-        on: the loop-leaving successor of the loop's back-edge
-        test(s). Returns None unless every latch agrees on the same
-        address - disagreement signals an irregular loop shape this
-        pass should not guess about.
+        on, after chasing through any bare-Jmp trampoline blocks Hermes
+        routes this edge through (see `_chase_trampoline_address` -
+        mirrors LoopLabeledExitStructurer's identical need for the same
+        reason: a latch's immediate exit successor is sometimes just a
+        single-instruction unconditional-Jmp block, not the true
+        post-loop merge point itself).
+
+        Returns None unless every latch agrees on the same FINAL
+        (post-trampoline) address - disagreement signals an irregular
+        loop shape this pass should not guess about.
         """
         covered = loop.body.covered_blocks
 
+        address_to_block = LoopBreakStructurer._address_to_block_map(loop)
+
         merge_addresses = {
-            successor.address
+            LoopBreakStructurer._chase_trampoline_address(
+                successor.address, covered, address_to_block
+            )
             for latch in loop.latches
             for successor in latch.successors
             if successor not in covered
@@ -268,3 +459,72 @@ class LoopBreakStructurer(RegionStructurer):
             return None
 
         return merge_addresses.pop()
+
+    @staticmethod
+    def _address_to_block_map(loop: LoopRegion) -> dict[int, BasicBlock]:
+        """Build an address->block map covering every block reachable from
+        the loop's own latches - enough to resolve a short trampoline
+        chain without needing the full cfg.blocks list threaded through
+        this (currently cfg-less) static helper.
+
+        Walking from covered/latch successors rather than requiring a
+        `cfg` reference keeps `_natural_loop_merge` a plain staticmethod,
+        matching its existing signature; the chain here is always at most
+        a couple of hops.
+        """
+        seen: dict[int, BasicBlock] = {}
+        stack = [
+            successor
+            for latch in loop.latches
+            for successor in latch.successors
+            if successor not in loop.body.covered_blocks
+        ]
+        while stack:
+            block = stack.pop()
+            if block.address in seen:
+                continue
+            seen[block.address] = block
+            stack.extend(block.successors)
+        return seen
+
+    @staticmethod
+    def _chase_trampoline_address(
+            address: int,
+            covered: set,
+            address_to_block: dict,
+    ) -> int:
+        """Follow a chain of bare-Jmp trampoline blocks starting at
+        `address`, returning the address the chain ultimately lands on.
+
+        Same logic and same rationale as
+        LoopLabeledExitStructurer._chase_trampoline_address - duplicated
+        rather than shared/imported across structurer packages per this
+        codebase's existing convention (see e.g. `_negate_condition`
+        imports vs. inlined near-duplicates elsewhere), since the two
+        passes' block/cfg access shapes differ slightly (this one walks
+        from `loop.latches` instead of a `self.cfg.blocks` address map).
+        """
+        seen: set[int] = set()
+
+        while address not in seen:
+            seen.add(address)
+            candidate = address_to_block.get(address)
+
+            if candidate is None or candidate in covered:
+                return address
+
+            if not isinstance(candidate.terminator, TerminatorJump):
+                return address
+
+            if len(candidate.instructions) > 1:
+                return address
+
+            if (
+                    candidate.instructions
+                    and candidate.instructions[0].terminator is not candidate.terminator
+            ):
+                return address
+
+            address = candidate.terminator.target
+
+        return address

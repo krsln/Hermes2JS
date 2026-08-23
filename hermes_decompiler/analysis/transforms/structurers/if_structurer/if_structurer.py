@@ -28,7 +28,7 @@ class IfStructurer(RegionStructurer):
     def __init__(self, graph, cfg):
         super().__init__(graph, cfg)
         self._builder = _DominanceIfBuilder(graph, cfg)
-        self._folder = _CompoundConditionFolder(graph)
+        self._folder = _CompoundConditionFolder(graph, cfg)
 
     def run(self) -> None:
         self._builder.run()

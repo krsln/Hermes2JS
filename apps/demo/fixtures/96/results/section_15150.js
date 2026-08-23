@@ -41,26 +41,24 @@ function closureLoopTest() {
     r3 = GetIterator(r2)
     try {
         // LOOP → START (while)
-        while (true) {
+        // → r5 = r3
+        while (!(r5 === undefined)) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 62 | <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 2>
             r4 = r3.next()
             // CODE → addr: 66 | <Mov>: <Reg8: 5, Reg8: 3>
             r5 = r3
-            // → r5 = r3
-            if (r5 !== undefined) {
-                // ──────────────── Block 4 ──────────────── 
-                // CODE → addr: 73 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r6 = console;
-                // CODE → addr: 79 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r5 = console.log;
-                // CODE → addr: 84 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-                // USED → r4 = r4.call(undefined);
-                // CODE → addr: 88 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-                console.log(r4)
-                // CODE → addr: 93 | <Jmp>: <Addr8: -31>  # Address: 0000003e
-                goto label_62;
-            }
+            // ──────────────── Block 4 ──────────────── 
+            // CODE → addr: 73 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r6 = console;
+            // CODE → addr: 79 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r5 = console.log;
+            // CODE → addr: 84 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
+            // USED → r4 = r4.call(undefined);
+            // CODE → addr: 88 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+            console.log(r4)
+            // CODE → addr: 93 | <Jmp>: <Addr8: -31>  # Address: 0000003e
+            goto label_62;
         }
         // LOOP → END
     } finally {

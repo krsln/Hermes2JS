@@ -47,15 +47,34 @@ function tryCatchInsideLoopTest(param1) {
         // LOOP → START (for)
         // → r2 = param1[r2]; r3 = param1
         for (; r3 < r2; r3 = r2 + 1) {
-            // ──────────────── Block 1 ──────────────── 
-            // CODE → addr: 58 | <Mov>: <Reg8: 3, Reg8: 7>
-            // USED → r3 = param1;
-            // CODE → addr: 61 | <Mov>: <Reg8: 2, Reg8: 8>
-            r2 = 0
-            // CODE → addr: 64 | <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
-            r2 = param1[r2]
-            // → r2 = param1[r2]
-            if (r2 >= 0) {
+            try {
+                // ──────────────── Block 1 ──────────────── 
+                // CODE → addr: 58 | <Mov>: <Reg8: 3, Reg8: 7>
+                // USED → r3 = param1;
+                // CODE → addr: 61 | <Mov>: <Reg8: 2, Reg8: 8>
+                r2 = 0
+                // CODE → addr: 64 | <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
+                r2 = param1[r2]
+                // → r2 = param1[r2]
+                if (r2 < 0) {
+                    // ──────────────── Block 3 ──────────────── 
+                    // CODE → addr:101 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)
+                    // USED → r9 = Error;
+                    // CODE → addr:107 | <GetByIdShort>: <Reg8: 2, Reg8: 9, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
+                    // USED → r2 = Error.prototype;
+                    // CODE → addr:112 | <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 9>
+                    // USED → r3 = CreateThis(r2);
+                    // CODE → addr:116 | <LoadConstString>: <Reg8: 12, string_id: 839>  # String: 'negative value' (String)
+                    // USED → r12 = "negative value";
+                    // CODE → addr:120 | <Mov>: <Reg8: 13, Reg8: 3>
+                    // USED → r13 = CreateThis(r2);
+                    // CODE → addr:123 | <Construct>: <Reg8: 2, Reg8: 9, UInt8: 2>
+                    // USED → r2 = new Error("negative value");
+                    // CODE → addr:127 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
+                    // USED → r2 = new Error("negative value");
+                    // CODE → addr:131 | <Throw>: <Reg8: 2>
+                    throw new Error("negative value");
+                }
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → addr: 72 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r9 = console;
@@ -70,7 +89,8 @@ function tryCatchInsideLoopTest(param1) {
                 // CODE → addr: 93 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 9, Reg8: 4, Reg8: 2>
                 console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r2)
                 // CODE → addr: 99 | <Jmp>: <Addr8: 59>  # Address: 0000009e
-                continue;
+                goto label_158;
+            } catch (caughtException) {
                 // LOOP → START (while)
                 while (true) {
                     // ──────────────── Block 5 ──────────────── 
@@ -83,8 +103,6 @@ function tryCatchInsideLoopTest(param1) {
                     // CODE → addr:170 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
                     r2 = r2.length
                     // ──────────────── Block 4 ──────────────── 
-                    // CODE → addr:133 | <Catch>: <Reg8: 9>
-                    // USED → r9 = caughtException;
                     // CODE → addr:135 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                     // USED → r3 = console;
                     // CODE → addr:141 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -100,22 +118,5 @@ function tryCatchInsideLoopTest(param1) {
             }
         }
         // LOOP → END
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → addr:101 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)
-        // USED → r9 = Error;
-        // CODE → addr:107 | <GetByIdShort>: <Reg8: 2, Reg8: 9, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
-        // USED → r2 = Error.prototype;
-        // CODE → addr:112 | <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 9>
-        // USED → r3 = CreateThis(r2);
-        // CODE → addr:116 | <LoadConstString>: <Reg8: 12, string_id: 839>  # String: 'negative value' (String)
-        // USED → r12 = "negative value";
-        // CODE → addr:120 | <Mov>: <Reg8: 13, Reg8: 3>
-        // USED → r13 = CreateThis(r2);
-        // CODE → addr:123 | <Construct>: <Reg8: 2, Reg8: 9, UInt8: 2>
-        // USED → r2 = new Error("negative value");
-        // CODE → addr:127 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-        // USED → r2 = new Error("negative value");
-        // CODE → addr:131 | <Throw>: <Reg8: 2>
-        throw new Error("negative value");
     }
 }

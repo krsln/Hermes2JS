@@ -38,46 +38,44 @@ async function* anon_15185(param1) {
         r5 = getEnvironment(2)
         try {
             // LOOP → START (while)
-            while (true) {
+            // → r3 = r4
+            while (!(r3 === undefined)) {
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → addr: 47 | <IteratorNext>: <Reg8: 9, Reg8: 4, Reg8: 6>
                 // USED → r9 = r4.next();
                 // CODE → addr: 51 | <Mov>: <Reg8: 3, Reg8: 4>
                 r3 = r4
-                // → r3 = r4
-                if (r3 !== undefined) {
-                    // ──────────────── Block 3 ──────────────── 
-                    // CODE → addr: 58 | <Mov>: <Reg8: 8, Reg8: 1>
-                    // USED → r8 = 0;
-                    // CODE → addr: 61 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
-                    // USED → r3 = r5[2];
-                    // CODE → addr: 65 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
-                    // USED → r3 = await r5[2].call(r7, r9);
-                    // CODE → addr: 70 | <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
-                    goto label_74;
-                    // ──────────────── Block 5 ──────────────── 
-                    // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-                    // USED → r3 = await yield;
-                    // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-                    // USED → r9 = __resumeIsReturn;
-                    // CODE → addr: 77 | <JmpTrue>: <Addr8: 9, Reg8: 9>  # Address: 00000056
-                    if (__resumeIsReturn) goto label_86;
-                    // ──────────────── Block 6 ──────────────── 
-                    // CODE → addr: 80 | <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
-                    // USED → r1 = 0 + await yield;
-                    // CODE → addr: 84 | <Jmp>: <Addr8: -37>  # Address: 0000002f
-                    goto label_47;
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → addr: 58 | <Mov>: <Reg8: 8, Reg8: 1>
+                // USED → r8 = 0;
+                // CODE → addr: 61 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
+                // USED → r3 = r5[2];
+                // CODE → addr: 65 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
+                // USED → r3 = await r5[2].call(r7, r9);
+                // CODE → addr: 70 | <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
+                goto label_74;
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
+                // USED → r3 = await yield;
+                // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
+                // USED → r9 = __resumeIsReturn;
+                if (__resumeIsReturn) {
+                    // ──────────────── Block 7 ──────────────── 
+                    // CODE → addr: 89 | <CompleteGenerator>: <>
+                    // CompleteGenerator
+                    // CODE → addr: 90 | <Ret>: <Reg8: 3>
+                    return await yield;
                 }
+                // ──────────────── Block 6 ──────────────── 
+                // CODE → addr: 80 | <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
+                // USED → r1 = 0 + await yield;
+                // CODE → addr: 84 | <Jmp>: <Addr8: -37>  # Address: 0000002f
+                goto label_47;
             }
             // LOOP → END
             // ──────────────── Block 4 ──────────────── 
             // CODE → addr: 72 | <Ret>: <Reg8: 3>
             return await r5[2].call(r7, r9);
-            // ──────────────── Block 7 ──────────────── 
-            // CODE → addr: 89 | <CompleteGenerator>: <>
-            // CompleteGenerator
-            // CODE → addr: 90 | <Ret>: <Reg8: 3>
-            return await yield;
         } finally {
             // ──────────────── Block 8 ──────────────── 
             // CODE → addr: 94 | <IteratorClose>: <Reg8: 4, UInt8: 1>

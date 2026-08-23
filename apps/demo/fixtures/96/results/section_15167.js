@@ -71,8 +71,13 @@ async function* anon_15167(param1) {
                     // USED → r7 = await yield;
                     // CODE → addr: 63 | <ResumeGenerator>: <Reg8: 7, Reg8: 8>
                     // USED → r8 = __resumeIsReturn;
-                    // CODE → addr: 66 | <JmpFalse>: <Addr8: 22, Reg8: 8>  # Address: 00000058
-                    if (!__resumeIsReturn) goto label_88;
+                    if (__resumeIsReturn) {
+                        // ──────────────── Block 6 ──────────────── 
+                        // CODE → addr: 69 | <CompleteGenerator>: <>
+                        // CompleteGenerator
+                        // CODE → addr: 70 | <Ret>: <Reg8: 7>
+                        return await yield;
+                    }
                 }
                 // ──────────────── Block 8 ──────────────── 
             }
@@ -80,11 +85,6 @@ async function* anon_15167(param1) {
             // ──────────────── Block 4 ──────────────── 
             // CODE → addr: 61 | <Ret>: <Reg8: 7>
             return 0 * 0;
-            // ──────────────── Block 6 ──────────────── 
-            // CODE → addr: 69 | <CompleteGenerator>: <>
-            // CompleteGenerator
-            // CODE → addr: 70 | <Ret>: <Reg8: 7>
-            return await yield;
         }
     }
 }

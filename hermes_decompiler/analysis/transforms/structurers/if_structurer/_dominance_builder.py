@@ -9,10 +9,10 @@ from hermes_decompiler.analysis.models.regions import (
     TryRegion,
 )
 # noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001
+from hermes_decompiler.analysis.transforms._shared import _negate_condition, is_loop_guard_shaped  # noqa: SLF001
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
-from ._predicates import is_backward_branch, is_loop_guard_shaped, representative_block
+from ._predicates import is_backward_branch, representative_block
 
 logger = get_logger(__name__)
 
@@ -63,7 +63,7 @@ class _DominanceIfBuilder(RegionStructurer):
     def __init__(self, graph, cfg):
         super().__init__(graph, cfg)
 
-        self._address_to_block = {
+        self._address_to_block: dict[int, BasicBlock] = {
             block.address: block
             for block in cfg.blocks
         }
@@ -120,11 +120,13 @@ class _DominanceIfBuilder(RegionStructurer):
         if isinstance(region, TryRegion):
             self._visit(region.try_body, frozenset())
 
-            if region.catch:
-                self._visit(region.catch.body, frozenset())
+            region_catch = region.catch
+            if region_catch is not None:
+                self._visit(region_catch.body, frozenset())
 
-            if region.finally_:
-                self._visit(region.finally_.body, frozenset())
+            region_finally = region.finally_
+            if region_finally is not None:
+                self._visit(region_finally.body, frozenset())
 
             return
 
@@ -159,7 +161,8 @@ class _DominanceIfBuilder(RegionStructurer):
 
     # -------------------------------------------------------------
 
-    def _find_candidate(self, region: SequenceRegion, exclude: frozenset) -> BasicBlock | None:
+    @staticmethod
+    def _find_candidate(region: SequenceRegion, exclude: frozenset) -> BasicBlock | None:
         """Return the first convertible conditional block, or None."""
 
         for item in region.children:
@@ -217,22 +220,19 @@ class _DominanceIfBuilder(RegionStructurer):
         then_root = region.children[then_start]
         then_entry = representative_block(then_root)
 
-        merge_block = None
+        merge_block: BasicBlock | None = None
 
         if self.cfg.post_dominator_tree is not None:
             merge_block = self.cfg.post_dominator_tree.immediate_post_dominator(block)
 
         goto_block = self._address_to_block.get(branch.target)
 
-        has_else = (
-                goto_block is not None
-                and goto_block is not merge_block
-        )
+        has_else = goto_block is not merge_block and goto_block is not None
 
-        else_root = None
+        # else_root = None
         else_entry = None
 
-        if has_else:
+        if has_else and goto_block is not None:
 
             else_root = self.graph.find_covering_item(region, goto_block)
 
@@ -309,7 +309,7 @@ class _DominanceIfBuilder(RegionStructurer):
         then_body = SequenceRegion()
         else_body = SequenceRegion() if has_else else None
 
-        if has_else:
+        if has_else and else_body is not None:
 
             self.graph.transfer(then_items, else_body)
             self.graph.transfer(else_items, then_body)

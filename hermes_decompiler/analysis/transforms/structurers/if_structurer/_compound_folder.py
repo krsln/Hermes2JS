@@ -10,7 +10,7 @@ from hermes_decompiler.analysis.models.regions import (
     TryRegion,
 )
 # noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001
+from hermes_decompiler.analysis.transforms._shared import _negate_condition, is_loop_guard_shaped  # noqa: SLF001
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
@@ -56,35 +56,50 @@ class _CompoundConditionFolder:
     only reshapes IfRegions that already exist.
     """
 
-    def __init__(self, graph):
+    def __init__(self, graph, cfg):
         self.graph = graph
+        self._address_to_block = {block.address: block for block in cfg.blocks}
+        # _post_dominator_tree no longer needed here - see
+        # _absorb_residual_conditional's updated safety check.
+
+    def _resolve_target_block(self, address: int) -> BasicBlock | None:
+        return self._address_to_block.get(address)
 
     def run(self, root) -> None:
-        self._fold_all(root)
+        self._fold_all(root, exclude=frozenset())
         self._prune_empty_blocks(root)
 
-    # -------------------------------------------------------------
-    # Fold: post-order walk
-    # -------------------------------------------------------------
+        # -------------------------------------------------------------
+        # Fold: post-order walk
+        # -------------------------------------------------------------
 
-    def _fold_all(self, region) -> None:
+    def _fold_all(self, region, exclude: frozenset) -> None:
         """Post-order walk: fold children first so nested `||`/`&&` are
         already collapsed before a parent cascade tries to match against
-        them."""
+        them.
+
+        `exclude` carries loop-guard header blocks that must not be
+        touched here - LoopConditionRegionPass still needs their
+        ConditionalBranch intact. Mirrors _DominanceIfBuilder's own
+        exclude threading; a block only ever needs to stay excluded
+        within the SequenceRegion it directly sits in, so exclude is
+        reset to empty for every region we recurse into except the
+        one immediately below a LoopRegion.
+        """
         if isinstance(region, SequenceRegion):
             # Children first.
             for child in list(region.children):
-                self._fold_all(child)
+                self._fold_all(child, frozenset())
             # Then fold this sequence to a fixed point.
             changed = True
             while changed:
-                changed = self._fold_compound_conditions(region)
+                changed = self._fold_compound_conditions(region, exclude)
             return
 
         if isinstance(region, IfRegion):
-            self._fold_all(region.then_body)
+            self._fold_all(region.then_body, frozenset())
             if region.else_body:
-                self._fold_all(region.else_body)
+                self._fold_all(region.else_body, frozenset())
             # Try the cascade directly on this IfRegion after its
             # bodies are folded (covers inverted a&&b even when not a
             # root child).
@@ -92,23 +107,38 @@ class _CompoundConditionFolder:
             return
 
         if isinstance(region, LoopRegion):
-            self._fold_all(region.body)
+            # Same guard-shape check _DominanceIfBuilder uses to decide
+            # whether the header's own branch is the loop's condition
+            # test (and must therefore be left alone for
+            # LoopConditionRegionPass) rather than ordinary in-body
+            # control flow. Reusing the exact same predicate - instead
+            # of a second, potentially diverging copy - is required:
+            # the two passes must agree on which shape a header has,
+            # or one can strip what the other was relying on staying
+            # intact.
+
+            new_exclude = (
+                frozenset({region.header_block})
+                if is_loop_guard_shaped(region.header_block, region)
+                else frozenset()
+            )
+            self._fold_all(region.body, new_exclude)
             return
 
         if isinstance(region, TryRegion):
-            self._fold_all(region.try_body)
+            self._fold_all(region.try_body, frozenset())
             region_catch = region.catch
             if region_catch:
-                self._fold_all(region_catch.body)
+                self._fold_all(region_catch.body, frozenset())
             region_finally_ = region.finally_
             if region_finally_:
-                self._fold_all(region_finally_.body)
+                self._fold_all(region_finally_.body, frozenset())
             return
 
         if hasattr(region, "body"):
-            self._fold_all(region.body)
+            self._fold_all(region.body, frozenset())
 
-    def _fold_compound_conditions(self, region: SequenceRegion) -> bool:
+    def _fold_compound_conditions(self, region: SequenceRegion, exclude: frozenset) -> bool:
         """Run one sweep over region.children; return True if changed.
 
         Caller re-runs until a fixed point is reached. Patterns
@@ -125,7 +155,14 @@ class _CompoundConditionFolder:
         5. High-level `a && b` recovery from the inverted form Hermes
            emits for `if (a && b) ... else if (a || b) ... else ...`
            (see `_try_fold_and_or_cascade`).
+
+        `exclude` holds blocks (currently: a guard-shaped loop header)
+        that pattern 4 (residual conditional absorption) must never
+        touch, since their ConditionalBranch is reserved for
+        LoopConditionRegionPass to consume as the loop's own
+        condition - not a leftover `&&`/`||` residual.
         """
+
         changed = False
         i = 0
         while i < len(region.children):
@@ -134,6 +171,7 @@ class _CompoundConditionFolder:
                 # --- pattern 4: residual conditional block ---
                 if (
                         isinstance(child, BasicBlock)
+                        and child not in exclude
                         and isinstance(child.terminator, TerminatorConditionalBranch)
                         and not is_backward_branch(child)
                 ):
@@ -220,10 +258,31 @@ class _CompoundConditionFolder:
     def _absorb_residual_conditional(self, region: SequenceRegion, index: int) -> bool:
         """Fold a leftover `if (C) goto T; FALLTHROUGH...` block.
 
-        Converts it into `if (!C) { FALLTHROUGH... }` when the jump
-        target isn't among the following siblings (i.e., it jumps out,
-        to the merge). This is exactly the residual Hermes leaves in
-        the else-arm of `a && b`.
+        Converts it into `if (!C) { FALLTHROUGH... }`. This is exactly the
+        residual Hermes leaves in the else-arm of `a && b`, and also the
+        shape a sparse switch's shared-case-body test compiles to (see
+        `_ComparisonChainSwitchBuilder`'s "Shared-body and inverted-
+        residual recovery" - that pass specifically expects this fold to
+        have already happened, then re-attaches T's constant to whichever
+        case shares T's body).
+
+        Safety check: only fold when T (`target_block`) remains reachable
+        through some edge OTHER than this one - i.e., it has at least one
+        other predecessor. If `block` is T's ONLY way in, folding away
+        this edge would silently strand T as unreachable dead code. And
+        any real content it holds (a `return`, a distinct case body with
+        no other path to it, ...) would simply vanish from the printed
+        source - exactly what happened before this check existed, for a
+        genuine early-return inside a loop whose only entry was the
+        residual branch being absorbed.
+
+        This is a reachability check, not a "is T the merge point"
+        check: T naturally has multiple predecessors either when it's the
+        region's own fall-through merge (reached both by this branch and
+        by FALLTHROUGH's own completion) or when it's a sibling case body
+        also reached by its own, separate test elsewhere - both are safe
+        to fold away here, since T stays reachable via the other edge
+        either way.
         """
         block = region.children[index]
         assert isinstance(block, BasicBlock)
@@ -232,6 +291,19 @@ class _CompoundConditionFolder:
 
         if index + 1 >= len(region.children):
             return False
+
+        # ---- validate the goto target remains reachable some other way ----
+        target_block = self._resolve_target_block(branch.target)
+
+        if target_block is not None:
+            other_predecessors = [
+                p for p in target_block.predecessors if p is not block
+            ]
+            if not other_predecessors:
+                # `block` is target_block's ONLY way in - folding would
+                # silently strand it as unreachable. Leave the branch
+                # unconverted rather than guess.
+                return False
 
         rest = self.graph.splice_out(region, index + 1, len(region.children))
         if not rest:
@@ -253,8 +325,6 @@ class _CompoundConditionFolder:
         if_region.else_body = None
         then_body.parent = if_region
 
-        # Keep any non-terminator instructions still on the block
-        # (rare) by inserting the now terminator-free block first.
         insert_at = index
         if block.instructions:
             self.graph.insert_at(region, insert_at, block)
