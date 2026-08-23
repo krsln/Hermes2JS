@@ -30,11 +30,12 @@ class _IterativeSetAnalysis(ABC):
 
         while changed:
             changed = False
+
             for block in blocks:
                 if block in roots:
                     continue
 
-                neighbors = self.neighbors(block)
+                neighbors = list(self.neighbors(block))
 
                 if not neighbors:
                     continue
