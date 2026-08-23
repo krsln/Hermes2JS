@@ -53,7 +53,8 @@ function propertyAccessTest() {
     // CODE → addr:122 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    while (true) {
+    // → r5 = r3
+    while (!(r5 === undefined)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr:124 | <Mov>: <Reg8: 5, Reg8: 2>
         r5 = r0
@@ -61,20 +62,17 @@ function propertyAccessTest() {
         // USED → r8 = r3.next();
         // CODE → addr:131 | <Mov>: <Reg8: 5, Reg8: 3>
         r5 = r3
-        // → r5 = r3
-        if (r5 !== undefined) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr:138 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r7 = console;
-            // CODE → addr:144 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r6 = console.log;
-            // CODE → addr:149 | <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 8>
-            // USED → r5 = r4[r8];
-            // CODE → addr:153 | <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
-            console.log(r8, r5)
-            // CODE → addr:159 | <Jmp>: <Addr8: -35>  # Address: 0000007c
-            goto label_124;
-        }
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → addr:138 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r7 = console;
+        // CODE → addr:144 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r6 = console.log;
+        // CODE → addr:149 | <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 8>
+        // USED → r5 = r4[r8];
+        // CODE → addr:153 | <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
+        console.log(r8, r5)
+        // CODE → addr:159 | <Jmp>: <Addr8: -35>  # Address: 0000007c
+        goto label_124;
     }
     // LOOP → END
     // ──────────────── Block 3 ──────────────── 

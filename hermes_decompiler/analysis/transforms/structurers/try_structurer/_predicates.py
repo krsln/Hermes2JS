@@ -16,8 +16,7 @@ consolidated.
 from __future__ import annotations
 
 from hermes_decompiler.analysis.models.regions import SequenceRegion
-# noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import _structural_key as structural_key  # noqa: SLF001
+from hermes_decompiler.analysis.transforms.shared import structural_key as structural_key
 
 __all__ = ["structural_key", "strip_duplicate_run"]
 

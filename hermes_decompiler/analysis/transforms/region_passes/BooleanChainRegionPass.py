@@ -5,12 +5,7 @@ import dataclasses
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models import RegionVisitor
 from hermes_decompiler.analysis.models.regions import IfRegion, SequenceRegion
-# noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import (
-    _negate_condition,
-    _is_pure,
-    _TRIVIAL_NODE_TYPES
-)  # noqa: SLF001
+from hermes_decompiler.analysis.transforms.shared import negate_condition, is_pure, TRIVIAL_NODE_TYPES
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
@@ -148,7 +143,7 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             return False
 
         for earlier in then_block.instructions[:-1]:
-            if not _is_pure(earlier):
+            if not is_pure(earlier):
                 return False
 
         condition = if_region.condition
@@ -158,7 +153,7 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
 
         tail = self._chain_tail(last.value)
 
-        if _negate_condition(tail).structurally_equal(condition):
+        if negate_condition(tail).structurally_equal(condition):
             operator = LogicalOperator.OR
 
         elif tail.structurally_equal(condition):
@@ -240,7 +235,7 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
         # occurrence, not just the intended Mov-copy target. Only apply this
         # fallback when old_expr's shape is specific enough that a match is
         # actually likely to BE the same logical value, not a coincidence.
-        if (not isinstance(old_expr, _TRIVIAL_NODE_TYPES)
+        if (not isinstance(old_expr, TRIVIAL_NODE_TYPES)
                 and isinstance(node, type(old_expr))
                 and node.structurally_equal(old_expr)):
             return new_expr, True

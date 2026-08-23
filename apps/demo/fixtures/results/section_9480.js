@@ -19,26 +19,24 @@ function forInTest() {
     // → r6 = HermesPropertyIterator(r5)
     if (r6 !== undefined) {
         // LOOP → START (while)
-        while (true) {
+        // → r4 = r6.next()
+        while (!(r4 === undefined)) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 39 | <GetNextPName>: <Reg8: 4, Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
             r4 = r6.next()
-            // → r4 = r6.next()
-            if (r4 !== undefined) {
-                // ──────────────── Block 2 ──────────────── 
-                // CODE → addr: 48 | <Mov>: <Reg8: 11, Reg8: 4>
-                // USED → r11 = r4;
-                // CODE → addr: 51 | <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                // USED → r10 = console;
-                // CODE → addr: 57 | <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                // USED → r9 = console.log;
-                // CODE → addr: 62 | <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
-                // USED → r8 = r7[r11];
-                // CODE → addr: 66 | <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
-                console.log(r11, r8)
-                // CODE → addr: 72 | <Jmp>: <Addr8: -33>  # Address: 00000027
-                goto label_39;
-            }
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → addr: 48 | <Mov>: <Reg8: 11, Reg8: 4>
+            // USED → r11 = r4;
+            // CODE → addr: 51 | <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+            // USED → r10 = console;
+            // CODE → addr: 57 | <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+            // USED → r9 = console.log;
+            // CODE → addr: 62 | <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
+            // USED → r8 = r7[r11];
+            // CODE → addr: 66 | <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
+            console.log(r11, r8)
+            // CODE → addr: 72 | <Jmp>: <Addr8: -33>  # Address: 00000027
+            goto label_39;
         }
         // LOOP → END
     }

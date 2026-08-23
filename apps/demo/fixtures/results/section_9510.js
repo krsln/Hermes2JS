@@ -44,7 +44,8 @@ function closureLoopTest() {
     // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    while (true) {
+    // → r5 = r3
+    while (!(r5 === undefined)) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 69 | <Mov>: <Reg8: 4, Reg8: 2>
         r4 = r0
@@ -52,20 +53,17 @@ function closureLoopTest() {
         r4 = r3.next()
         // CODE → addr: 76 | <Mov>: <Reg8: 5, Reg8: 3>
         r5 = r3
-        // → r5 = r3
-        if (r5 !== undefined) {
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → addr: 83 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r6 = console;
-            // CODE → addr: 89 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r5 = console.log;
-            // CODE → addr: 94 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-            // USED → r4 = r4.call(undefined);
-            // CODE → addr: 98 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-            console.log(r4)
-            // CODE → addr:103 | <Jmp>: <Addr8: -34>  # Address: 00000045
-            goto label_69;
-        }
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → addr: 83 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r6 = console;
+        // CODE → addr: 89 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r5 = console.log;
+        // CODE → addr: 94 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
+        // USED → r4 = r4.call(undefined);
+        // CODE → addr: 98 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+        console.log(r4)
+        // CODE → addr:103 | <Jmp>: <Addr8: -34>  # Address: 00000045
+        goto label_69;
     }
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 

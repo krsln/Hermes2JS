@@ -8,8 +8,7 @@ from hermes_decompiler.analysis.models.regions import (
     Region, TryRegion, CatchRegion, FinallyRegion,
     SequenceRegion, LoopRegion, IfRegion
 )
-# noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import _negate_condition  # noqa: SLF001
+from hermes_decompiler.analysis.transforms.shared import negate_condition
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
@@ -185,7 +184,7 @@ class LoopLabeledExitStructurer(RegionStructurer):
             return False
 
         if target_inside:
-            exit_block, condition = fallthrough_block, _negate_condition(branch.condition)
+            exit_block, condition = fallthrough_block, negate_condition(branch.condition)
         else:
             exit_block, condition = target_block, branch.condition
 

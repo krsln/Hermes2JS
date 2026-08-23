@@ -21,57 +21,55 @@ function tryLoopMultiReturnTest(param1) {
     // CODE → addr: 31 | <LoadConstString>: <Reg8: 1, string_id: 4272>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive";
     // LOOP → START (while)
-    while (true) {
+    // → r5 = r3.length; r6 = 0
+    while (!(r6 >= r5)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 35 | <Mov>: <Reg8: 6, Reg8: 4>
         r6 = 0
         // CODE → addr: 38 | <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
         r5 = r3.length
-        // → r5 = r3.length; r6 = 0
-        if (r6 < r5) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 47 | <Mov>: <Reg8: 5, Reg8: 4>
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → addr: 47 | <Mov>: <Reg8: 5, Reg8: 4>
+        r5 = 0
+        // CODE → addr: 50 | <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
+        r5 = param1[r5]
+        // → r5 = param1[r5]
+        if (r5 < 0) {
+            // ──────────────── Block 6 ──────────────── 
+            // CODE → addr:106 | <LoadConstTrue>: <Reg8: 1>
+            // USED → r1 = true;
+            // CODE → addr:108 | <Ret>: <Reg8: 1>
+            return true;
+        }
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → addr: 58 | <Mov>: <Reg8: 5, Reg8: 4>
+        r5 = 0
+        // CODE → addr: 61 | <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
+        r5 = param1[r5]
+        // → r5 = param1[r5]
+        if (r5 === 0) {
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → addr: 98 | <Mov>: <Reg8: 5, Reg8: 4>
+            r5 = r5 + 1
+            // CODE → addr:101 | <Inc>: <Reg8: 4, Reg8: 5>
+            r4 = r5 + 1
+        } else {
+            // ──────────────── Block 4 ──────────────── 
+            // CODE → addr: 69 | <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+            // USED → r8 = console;
+            // CODE → addr: 75 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+            // USED → r7 = console.log;
+            // CODE → addr: 80 | <Mov>: <Reg8: 5, Reg8: 4>
             r5 = 0
-            // CODE → addr: 50 | <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
-            r5 = param1[r5]
-            // CODE → addr: 54 | <JLess>: <Addr8: 52, Reg8: 5, Reg8: 2>  # Address: 0000006a
-            // → r5 = param1[r5]
-            if (r5 < 0) goto label_106;
-            // ──────────────── Block 3 ──────────────── 
-            // CODE → addr: 58 | <Mov>: <Reg8: 5, Reg8: 4>
-            r5 = 0
-            // CODE → addr: 61 | <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
-            r5 = param1[r5]
-            // → r5 = param1[r5]
-            if (r5 === 0) {
-                // ──────────────── Block 5 ──────────────── 
-                // CODE → addr: 98 | <Mov>: <Reg8: 5, Reg8: 4>
-                r5 = r5 + 1
-                // CODE → addr:101 | <Inc>: <Reg8: 4, Reg8: 5>
-                r4 = r5 + 1
-            } else {
-                // ──────────────── Block 4 ──────────────── 
-                // CODE → addr: 69 | <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-                // USED → r8 = console;
-                // CODE → addr: 75 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-                // USED → r7 = console.log;
-                // CODE → addr: 80 | <Mov>: <Reg8: 5, Reg8: 4>
-                r5 = 0
-                // CODE → addr: 83 | <GetByVal>: <Reg8: 6, Reg8: 3, Reg8: 5>
-                // USED → r6 = param1[r5];
-                // CODE → addr: 87 | <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
-                console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", r6)
-                // CODE → addr: 93 | <Inc>: <Reg8: 4, Reg8: 5>
-                // USED → r4 = r5 + 1;
-            }
+            // CODE → addr: 83 | <GetByVal>: <Reg8: 6, Reg8: 3, Reg8: 5>
+            // USED → r6 = param1[r5];
+            // CODE → addr: 87 | <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
+            console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", r6)
+            // CODE → addr: 93 | <Inc>: <Reg8: 4, Reg8: 5>
+            // USED → r4 = r5 + 1;
         }
     }
     // LOOP → END
-    // ──────────────── Block 6 ──────────────── 
-    // CODE → addr:106 | <LoadConstTrue>: <Reg8: 1>
-    // USED → r1 = true;
-    // CODE → addr:108 | <Ret>: <Reg8: 1>
-    return true;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:110 | <LoadConstFalse>: <Reg8: 1>
     // USED → r1 = false;

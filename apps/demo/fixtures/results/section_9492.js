@@ -79,7 +79,7 @@ function spreadArrayTest() {
     // USED → r2 = 0;
     if (r3 !== undefined) {
         // LOOP → START (while)
-        while (true) {
+        while (!(r3 === undefined)) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr:164 | <Mov>: <Reg8: 6, Reg8: 7>
             r6 = r0
@@ -91,15 +91,13 @@ function spreadArrayTest() {
             // USED → r6 = r3 === undefined;
             // CODE → addr:178 | <Mov>: <Reg8: 9, Reg8: 2>
             // USED → r9 = 0;
-            if (r3 !== undefined) {
-                // ──────────────── Block 4 ──────────────── 
-                // CODE → addr:184 | <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
-                r4[0] = r10
-                // CODE → addr:188 | <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
-                r2 = r9 + 1
-                // CODE → addr:192 | <Jmp>: <Addr8: -28>  # Address: 000000a4
-                goto label_164;
-            }
+            // ──────────────── Block 4 ──────────────── 
+            // CODE → addr:184 | <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
+            r4[0] = r10
+            // CODE → addr:188 | <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
+            r2 = r9 + 1
+            // CODE → addr:192 | <Jmp>: <Addr8: -28>  # Address: 000000a4
+            goto label_164;
         }
         // LOOP → END
         // LOOP → START (while)

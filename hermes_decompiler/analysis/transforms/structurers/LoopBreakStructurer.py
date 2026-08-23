@@ -12,10 +12,9 @@ from hermes_decompiler.analysis.models.regions import (
     SequenceRegion, LoopRegion, IfRegion,
 
 )
-# noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import (
-    _negate_condition, is_loop_guard_shaped, has_bottom_tested_guard
-)  # noqa: SLF001
+from hermes_decompiler.analysis.transforms.shared import (
+    negate_condition, is_loop_guard_shaped, has_bottom_tested_guard
+)
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.statements import BreakStatement
@@ -224,7 +223,7 @@ class LoopBreakStructurer(RegionStructurer):
             return False
 
         if target_inside:
-            exit_block, stay_block, condition = fallthrough_block, target_block, _negate_condition(branch.condition)
+            exit_block, stay_block, condition = fallthrough_block, target_block, negate_condition(branch.condition)
         else:
             exit_block, stay_block, condition = target_block, fallthrough_block, branch.condition
 

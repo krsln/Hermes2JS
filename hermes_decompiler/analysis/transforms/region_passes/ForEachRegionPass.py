@@ -8,8 +8,7 @@ from hermes_decompiler.analysis.models.regions import (
     SequenceRegion,
     TryRegion,
 )
-# noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import _structural_key  # noqa: SLF001
+from hermes_decompiler.analysis.transforms.shared import structural_key
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
 
 from ._base import RegionPass
@@ -273,7 +272,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         if not isinstance(prop, Identifier) or prop.name != "return":
             return False
 
-        return _structural_key(value.callee.obj) == _structural_key(iterator_expr)
+        return structural_key(value.callee.obj) == structural_key(iterator_expr)
 
     # -----------------------------------------------------------------
     # Mutation

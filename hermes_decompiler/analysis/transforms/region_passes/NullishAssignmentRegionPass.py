@@ -8,8 +8,7 @@ from hermes_decompiler.analysis.models.regions import (
     IfRegion,
     SequenceRegion,
 )
-# noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import _is_pure  # noqa: SLF001
+from hermes_decompiler.analysis.transforms.shared import is_pure
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import (
     AssignmentOperator,
@@ -240,7 +239,7 @@ class NullishAssignmentRegionPass(RegionPass, RegionVisitor):
         silently absorbed into the fold.
         """
 
-        return all(_is_pure(instruction) for instruction in block.instructions[:-1])
+        return all(is_pure(instruction) for instruction in block.instructions[:-1])
 
     # ------------------------------------------------------------------
     # Condition analysis

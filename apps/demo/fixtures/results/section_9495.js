@@ -85,7 +85,8 @@ function mapTest() {
     // CODE → addr:183 | <IteratorBegin>: <Reg8: 5, Reg8: 3>
     r5 = GetIterator(r3)
     // LOOP → START (while)
-    while (true) {
+    // → r8 = r5
+    while (!(r8 === undefined)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr:186 | <Mov>: <Reg8: 8, Reg8: 3>
         r8 = new Map()
@@ -93,63 +94,60 @@ function mapTest() {
         r9 = r5.next()
         // CODE → addr:193 | <Mov>: <Reg8: 8, Reg8: 5>
         r8 = r5
-        // → r8 = r5
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → addr:200 | <Mov>: <Reg8: 11, Reg8: 9>
+        r11 = r9
+        // CODE → addr:203 | <IteratorBegin>: <Reg8: 8, Reg8: 11>
+        r8 = GetIterator(r11)
+        // CODE → addr:206 | <Mov>: <Reg8: 9, Reg8: 11>
+        r9 = r9
+        // CODE → addr:209 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 9>
+        r12 = r8.next()
+        // CODE → addr:213 | <Mov>: <Reg8: 9, Reg8: 8>
+        // USED → r9 = r8;
+        // CODE → addr:216 | <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 0>
+        // USED → r9 = r8 === undefined;
+        // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 10>
+        r10 = (r8 === undefined) ? undefined : r12
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → addr:228 | <Mov>: <Reg8: 7, Reg8: 10>
+        // USED → r7 = (r8 === undefined) ? undefined : r12;
+        // CODE → addr:231 | <LoadConstUndefined>: <Reg8: 10>
+        r10 = undefined
         if (r8 !== undefined) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr:200 | <Mov>: <Reg8: 11, Reg8: 9>
-            r11 = r9
-            // CODE → addr:203 | <IteratorBegin>: <Reg8: 8, Reg8: 11>
-            r8 = GetIterator(r11)
-            // CODE → addr:206 | <Mov>: <Reg8: 9, Reg8: 11>
-            r9 = r9
-            // CODE → addr:209 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 9>
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → addr:236 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 11>
             r12 = r8.next()
-            // CODE → addr:213 | <Mov>: <Reg8: 9, Reg8: 8>
-            // USED → r9 = r8;
-            // CODE → addr:216 | <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 0>
-            // USED → r9 = r8 === undefined;
-            // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 10>
-            r10 = (r8 === undefined) ? undefined : r12
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → addr:228 | <Mov>: <Reg8: 7, Reg8: 10>
-            // USED → r7 = (r8 === undefined) ? undefined : r12;
-            // CODE → addr:231 | <LoadConstUndefined>: <Reg8: 10>
+            // CODE → addr:240 | <Mov>: <Reg8: 11, Reg8: 8>
+            // USED → r11 = r8;
+            // CODE → addr:243 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 0>
+            // USED → r11 = r8 === undefined;
+            // CODE → addr:247 | <LoadConstUndefined>: <Reg8: 10>
             r10 = undefined
-            if (r8 !== undefined) {
-                // ──────────────── Block 5 ──────────────── 
-                // CODE → addr:236 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 11>
-                r12 = r8.next()
-                // CODE → addr:240 | <Mov>: <Reg8: 11, Reg8: 8>
-                // USED → r11 = r8;
-                // CODE → addr:243 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 0>
-                // USED → r11 = r8 === undefined;
-                // CODE → addr:247 | <LoadConstUndefined>: <Reg8: 10>
-                r10 = undefined
-                // CODE → addr:249 | <Mov>: <Reg8: 9, Reg8: 11>
-                r9 = r8 === undefined || r8 === undefined
-            }
-            // ──────────────── Block 7 ──────────────── 
-            // CODE → addr:261 | <Mov>: <Reg8: 6, Reg8: 10>
-            // USED → r6 = r12;
-            if (r8 !== undefined) {
-                // ──────────────── Block 8 ──────────────── 
-                // CODE → addr:267 | <IteratorClose>: <Reg8: 8, UInt8: 0>
-                r8.return()
-            }
-            // ──────────────── Block 9 ──────────────── 
-            // CODE → addr:270 | <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r11 = console;
-            // CODE → addr:276 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r10 = console.log;
-            // CODE → addr:281 | <Mov>: <Reg8: 9, Reg8: 7>
-            // USED → r9 = (r8 === undefined) ? undefined : r12;
-            // CODE → addr:284 | <Mov>: <Reg8: 8, Reg8: 6>
-            // USED → r8 = r12;
-            // CODE → addr:287 | <Call3>: <Reg8: 8, Reg8: 10, Reg8: 11, Reg8: 9, Reg8: 8>
-            console.log(r9, r8)
-            // CODE → addr:293 | <Jmp>: <Addr8: -107>  # Address: 000000ba
-            goto label_186;
+            // CODE → addr:249 | <Mov>: <Reg8: 9, Reg8: 11>
+            r9 = r8 === undefined || r8 === undefined
         }
+        // ──────────────── Block 7 ──────────────── 
+        // CODE → addr:261 | <Mov>: <Reg8: 6, Reg8: 10>
+        // USED → r6 = r12;
+        if (r8 !== undefined) {
+            // ──────────────── Block 8 ──────────────── 
+            // CODE → addr:267 | <IteratorClose>: <Reg8: 8, UInt8: 0>
+            r8.return()
+        }
+        // ──────────────── Block 9 ──────────────── 
+        // CODE → addr:270 | <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r11 = console;
+        // CODE → addr:276 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r10 = console.log;
+        // CODE → addr:281 | <Mov>: <Reg8: 9, Reg8: 7>
+        // USED → r9 = (r8 === undefined) ? undefined : r12;
+        // CODE → addr:284 | <Mov>: <Reg8: 8, Reg8: 6>
+        // USED → r8 = r12;
+        // CODE → addr:287 | <Call3>: <Reg8: 8, Reg8: 10, Reg8: 11, Reg8: 9, Reg8: 8>
+        console.log(r9, r8)
+        // CODE → addr:293 | <Jmp>: <Addr8: -107>  # Address: 000000ba
+        goto label_186;
     }
     // LOOP → END
     // ──────────────── Block 10 ──────────────── 

@@ -5,12 +5,9 @@ import dataclasses
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models import RegionVisitor
 from hermes_decompiler.analysis.models.regions import IfRegion, SequenceRegion
-# noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import (
-    _negate_condition,
-    _TRIVIAL_NODE_TYPES,
-    _IMPURE_EXPRESSION_TYPES
-)  # noqa: SLF001
+from hermes_decompiler.analysis.transforms.shared import (
+    negate_condition, TRIVIAL_NODE_TYPES, IMPURE_EXPRESSION_TYPES
+)
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import ConditionalExpression, Expression
@@ -106,7 +103,7 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             default_expr = last.value
             arm_expr = arm_result.value
             new_expr = ConditionalExpression(
-                test=_negate_condition(condition),
+                test=negate_condition(condition),
                 consequent=default_expr,
                 alternate=arm_expr,
             )
@@ -157,7 +154,7 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                     continue
                 if instr.statement is not None:
                     return None
-                if isinstance(instr.value, _IMPURE_EXPRESSION_TYPES):
+                if isinstance(instr.value, IMPURE_EXPRESSION_TYPES):
                     return None
 
         return last_block, result
@@ -195,7 +192,7 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
         if node is old_expr:
             return new_expr, True
 
-        if (not isinstance(old_expr, _TRIVIAL_NODE_TYPES)
+        if (not isinstance(old_expr, TRIVIAL_NODE_TYPES)
                 and isinstance(node, type(old_expr))
                 and node.structurally_equal(old_expr)):
             return new_expr, True

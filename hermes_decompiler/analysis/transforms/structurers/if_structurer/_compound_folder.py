@@ -9,8 +9,7 @@ from hermes_decompiler.analysis.models.regions import (
     SequenceRegion,
     TryRegion,
 )
-# noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import _negate_condition, is_loop_guard_shaped  # noqa: SLF001
+from hermes_decompiler.analysis.transforms.shared import negate_condition, is_loop_guard_shaped
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
@@ -239,7 +238,7 @@ class _CompoundConditionFolder:
                     and child.condition is not None
                     and child.else_body is not None
                     and not is_empty_body(child.else_body)):
-                child.condition = _negate_condition(child.condition)
+                child.condition = negate_condition(child.condition)
                 child.then_body, child.else_body = child.else_body, child.then_body
                 # then_body may still be empty after the swap; leave it.
                 if is_empty_body(child.else_body):
@@ -320,7 +319,7 @@ class _CompoundConditionFolder:
         self.graph.transfer(list(rest), then_body)
 
         if_region = IfRegion()
-        if_region.condition = _negate_condition(branch.condition)
+        if_region.condition = negate_condition(branch.condition)
         if_region.then_body = then_body
         if_region.else_body = None
         then_body.parent = if_region

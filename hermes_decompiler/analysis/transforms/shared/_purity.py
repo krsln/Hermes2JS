@@ -19,7 +19,7 @@ from hermes_decompiler.ir.expressions import (
 # hasn't yet been promoted to its own `.statement` node. Absorbing one
 # of these into a ConditionalExpression's operand silently drops or
 # reorders that side effect.
-_IMPURE_EXPRESSION_TYPES = (
+IMPURE_EXPRESSION_TYPES = (
     CallExpression,
     NewExpression,
     AssignmentExpression,
@@ -29,7 +29,7 @@ _IMPURE_EXPRESSION_TYPES = (
 )
 
 # adjust to actual literal type names
-_TRIVIAL_NODE_TYPES = (
+TRIVIAL_NODE_TYPES = (
     Identifier,
     StringLiteral,
     NumericLiteral,
@@ -37,19 +37,19 @@ _TRIVIAL_NODE_TYPES = (
 )
 
 
-def _is_pure(instruction) -> bool:
+def is_pure(instruction) -> bool:
     """
     True if `instruction`'s value can be safely absorbed into the
     fold without needing its own printed statement.
 
     "Pure" here means "not independently observable as a separate
-    statement" (instruction.statement is None) - NOT "side-effect
+    statement" (instruction.statement is None) - NOT "side effect
     free". A CallExpression with no .statement of its own is still
     fully consumed by the chain tail's expression tree (e.g.
     `a && sideEffect(...)`), so folding it away from block.instructions
-    doesn't drop the call - it relocates it into `then_result.value`,
+    doesn't drop the call. - It relocates it into `then_result.value`,
     which is exactly what happens for any other value in this fold.
-    A block whose call genuinely needs independent evaluation order
+    A block whose call genuinely needs an independent evaluation order
     would already have `.statement` set by whatever pass decides
     that (unrelated to this pass), and is correctly rejected above.
     """

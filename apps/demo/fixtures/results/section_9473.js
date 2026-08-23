@@ -55,54 +55,54 @@ function tryCatchInsideLoopTest(param1) {
             // CODE → addr: 66 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
             r12 = param1[r2]
             // → r12 = param1[r2]
-            if (r12 >= 0) {
-                // ──────────────── Block 2 ──────────────── 
-                // CODE → addr: 74 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+            if (r12 < 0) {
+                // ──────────────── Block 3 ──────────────── 
+                // CODE → addr:100 | <TryGetById>: <Reg8: 13, Reg8: 1, UInt8: 3, string_id: 9>  # String: 'Error' (Identifier)
+                // USED → r13 = Error;
+                // CODE → addr:106 | <CreateThisForNew>: <Reg8: 14, Reg8: 13, UInt8: 4>
+                // USED → r14 = CreateThisForNew(r13);
+                // CODE → addr:110 | <Mov>: <Reg8: 18, Reg8: 14>
+                // USED → r18 = CreateThisForNew(r13);
+                // CODE → addr:113 | <Mov>: <Reg8: 17, Reg8: 6>
+                // USED → r17 = "negative value";
+                // CODE → addr:116 | <Construct>: <Reg8: 13, Reg8: 13, UInt8: 2>
+                // USED → r13 = new Error("negative value");
+                // CODE → addr:120 | <SelectObject>: <Reg8: 13, Reg8: 14, Reg8: 13>
+                // USED → r13 = new Error("negative value");
+                // CODE → addr:124 | <Throw>: <Reg8: 13>
+                throw new Error("negative value");
+                // CODE → addr:126 | <Catch>: <Reg8: 15>
+                // USED → r15 = caughtException;
+                // CODE → addr:128 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                 // USED → r14 = console;
-                // CODE → addr: 80 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+                // CODE → addr:134 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
                 // USED → r13 = console.log;
-                // CODE → addr: 85 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
-                // USED → r12 = param1[r2];
-                // CODE → addr: 89 | <Call3>: <Reg8: 12, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 12>
-                console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r12)
-                // CODE → addr: 95 | <Mov>: <Reg8: 12, Reg8: 11>
-                r12 = 0
-                // CODE → addr: 98 | <Jmp>: <Addr8: 51>  # Address: 00000095
-                continue;
-                // ──────────────── Block 4 ──────────────── 
-                // CODE → addr:153 | <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-                r2 = r10.length
-                // CODE → addr:158 | <Mov>: <Reg8: 3, Reg8: 12>
-                // USED → r3 = r11 + 1;
-                // CODE → addr:161 | <Mov>: <Reg8: 0, Reg8: 3>
-                // USED → r0 = r11 + 1;
+                // CODE → addr:139 | <Call3>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7, Reg8: 15>
+                console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", r15)
+                // CODE → addr:145 | <AddN>: <Reg8: 12, Reg8: 11, Reg8: 8>
+                // USED → r12 = r11 + 1;
             }
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → addr: 74 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+            // USED → r14 = console;
+            // CODE → addr: 80 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+            // USED → r13 = console.log;
+            // CODE → addr: 85 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
+            // USED → r12 = param1[r2];
+            // CODE → addr: 89 | <Call3>: <Reg8: 12, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 12>
+            console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r12)
+            // CODE → addr: 95 | <Mov>: <Reg8: 12, Reg8: 11>
+            r12 = 0
+            // CODE → addr: 98 | <Jmp>: <Addr8: 51>  # Address: 00000095
+            goto label_149;
+            // ──────────────── Block 4 ──────────────── 
+            // CODE → addr:153 | <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
+            r2 = r10.length
+            // CODE → addr:158 | <Mov>: <Reg8: 3, Reg8: 12>
+            // USED → r3 = r11 + 1;
+            // CODE → addr:161 | <Mov>: <Reg8: 0, Reg8: 3>
+            // USED → r0 = r11 + 1;
         }
         // LOOP → END
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → addr:100 | <TryGetById>: <Reg8: 13, Reg8: 1, UInt8: 3, string_id: 9>  # String: 'Error' (Identifier)
-        // USED → r13 = Error;
-        // CODE → addr:106 | <CreateThisForNew>: <Reg8: 14, Reg8: 13, UInt8: 4>
-        // USED → r14 = CreateThisForNew(r13);
-        // CODE → addr:110 | <Mov>: <Reg8: 18, Reg8: 14>
-        // USED → r18 = CreateThisForNew(r13);
-        // CODE → addr:113 | <Mov>: <Reg8: 17, Reg8: 6>
-        // USED → r17 = "negative value";
-        // CODE → addr:116 | <Construct>: <Reg8: 13, Reg8: 13, UInt8: 2>
-        // USED → r13 = new Error("negative value");
-        // CODE → addr:120 | <SelectObject>: <Reg8: 13, Reg8: 14, Reg8: 13>
-        // USED → r13 = new Error("negative value");
-        // CODE → addr:124 | <Throw>: <Reg8: 13>
-        throw new Error("negative value");
-        // CODE → addr:126 | <Catch>: <Reg8: 15>
-        // USED → r15 = caughtException;
-        // CODE → addr:128 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r14 = console;
-        // CODE → addr:134 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r13 = console.log;
-        // CODE → addr:139 | <Call3>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7, Reg8: 15>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", r15)
-        // CODE → addr:145 | <AddN>: <Reg8: 12, Reg8: 11, Reg8: 8>
-        // USED → r12 = r11 + 1;
     }
 }

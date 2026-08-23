@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 
 
-def _structural_key(value):
+def structural_key(value):
     """
     Value-based key for an expression node, independent of whether its
     class defines `__eq__` (many of the IR expression classes don't,
@@ -24,12 +24,12 @@ def _structural_key(value):
 
     if dataclasses.is_dataclass(value) and not isinstance(value, type):
         return tuple(
-            _structural_key(getattr(value, f.name))
+            structural_key(getattr(value, f.name))
             for f in dataclasses.fields(value)
         )
 
     if isinstance(value, (list, tuple)):
-        return tuple(_structural_key(v) for v in value)
+        return tuple(structural_key(v) for v in value)
 
     try:
         hash(value)

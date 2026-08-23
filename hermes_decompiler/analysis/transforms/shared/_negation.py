@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import cast
+
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression, UnaryExpression
 
@@ -7,7 +9,7 @@ from hermes_decompiler.ir.expressions import BinaryExpression, Expression, Unary
 # Condition negation - shared by IfStructurer and BooleanChainFolder
 # ============================================================================
 
-_INVERSE_COMPARISON = {
+_INVERSE_COMPARISON: dict[BinaryOperator, BinaryOperator] = {
     BinaryOperator.EQUAL: BinaryOperator.NOT_EQUAL,
     BinaryOperator.NOT_EQUAL: BinaryOperator.EQUAL,
     BinaryOperator.STRICT_EQUAL: BinaryOperator.STRICT_NOT_EQUAL,
@@ -19,10 +21,10 @@ _INVERSE_COMPARISON = {
 }
 
 
-def _negate_condition(expr: Expression) -> Expression:
+def negate_condition(expr: Expression) -> Expression:
     """
     Produce the logical negation of `expr`, preferring a flipped
-    comparison operator (`!==` instead of `!(=== )`) or unwrapping an
+    comparison operator (`!==` instead of `!(===)`) or unwrapping an
     existing `!` over a generic `UnaryExpression(NOT, expr)` wrap, to
     match how a human would actually write the condition.
 
@@ -35,10 +37,8 @@ def _negate_condition(expr: Expression) -> Expression:
         return expr.operand
 
     if isinstance(expr, BinaryExpression) and expr.operator in _INVERSE_COMPARISON:
-        return BinaryExpression(
-            left=expr.left,
-            operator=_INVERSE_COMPARISON[expr.operator],
-            right=expr.right,
-        )
+        operator = cast(BinaryOperator, expr.operator)
+
+        return BinaryExpression(left=expr.left, operator=_INVERSE_COMPARISON[operator], right=expr.right)
 
     return UnaryExpression(UnaryOperator.LOGICAL_NOT, expr)

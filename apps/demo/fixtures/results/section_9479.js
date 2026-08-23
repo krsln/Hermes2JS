@@ -17,7 +17,8 @@ function forOfTest() {
     // CODE → addr: 33 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    while (true) {
+    // → r4 = r3
+    while (!(r4 === undefined)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 35 | <Mov>: <Reg8: 4, Reg8: 2>
         r4 = r2
@@ -25,18 +26,15 @@ function forOfTest() {
         // USED → r6 = r3.next();
         // CODE → addr: 42 | <Mov>: <Reg8: 4, Reg8: 3>
         r4 = r3
-        // → r4 = r3
-        if (r4 !== undefined) {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 49 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r5 = console;
-            // CODE → addr: 55 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r4 = console.log;
-            // CODE → addr: 60 | <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
-            console.log(r6)
-            // CODE → addr: 65 | <Jmp>: <Addr8: -30>  # Address: 00000023
-            goto label_35;
-        }
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → addr: 49 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r5 = console;
+        // CODE → addr: 55 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r4 = console.log;
+        // CODE → addr: 60 | <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
+        console.log(r6)
+        // CODE → addr: 65 | <Jmp>: <Addr8: -30>  # Address: 00000023
+        goto label_35;
     }
     // LOOP → END
     // ──────────────── Block 3 ──────────────── 

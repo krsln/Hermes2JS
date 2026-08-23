@@ -8,8 +8,7 @@ from hermes_decompiler.analysis.models.regions import (
     SequenceRegion,
     TryRegion,
 )
-# noinspection PyProtectedMember
-from hermes_decompiler.analysis.transforms._shared import _negate_condition, is_loop_guard_shaped  # noqa: SLF001
+from hermes_decompiler.analysis.transforms.shared import negate_condition, is_loop_guard_shaped
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
 from ._predicates import is_backward_branch, representative_block
@@ -320,7 +319,7 @@ class _DominanceIfBuilder(RegionStructurer):
 
             self.graph.transfer(then_items, then_body)
 
-            condition = _negate_condition(branch.condition)
+            condition = negate_condition(branch.condition)
 
         if_region = IfRegion()
         if_region.condition = condition
