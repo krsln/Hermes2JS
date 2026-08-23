@@ -184,7 +184,21 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
 
         covered = loop.body.covered_blocks
 
-        if not self._body_reg_only_defined_here(covered, alias_instr, body_reg):
+        # Position of the alias Mov within the header. Only writes to
+        # body_reg from this point forward can invalidate treating
+        # alias_instr as body_reg's source of truth for the rest of
+        # the iteration - an earlier write in the same header (e.g. a
+        # throwaway temporary that reused this register number before
+        # it was ever repurposed as the induction alias) is already
+        # dead by the time alias_instr executes and is irrelevant.
+        alias_index = next(
+            i for i, instr in enumerate(header.instructions)
+            if instr is alias_instr
+        )
+
+        if not self._body_reg_only_defined_here(
+                covered, header, alias_index, alias_instr, body_reg
+        ):
             return
 
         # ---- convert: drop the alias Mov, repoint every read ----
@@ -194,7 +208,13 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
         old_ref = Identifier(name=f"r{body_reg}")
         new_ref = Identifier(name=f"r{induction_reg}")
 
-        self._repoint_blocks(covered, old_ref, new_ref)
+        # Mirror the same before/after split when repointing: reads of
+        # body_reg in the header that occur BEFORE alias_instr refer
+        # to whatever that earlier, unrelated definition held (e.g. a
+        # temporary object reference), never to the induction value -
+        # rewriting them would silently corrupt that earlier value's
+        # use, not just rename it.
+        self._repoint_blocks(covered, old_ref, new_ref, header=header, from_index=alias_index)
         self._repoint_region(loop.body, old_ref, new_ref)
 
         if loop.update is not None:
@@ -344,19 +364,45 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
         return mov_value == initializer.right
 
     @staticmethod
-    def _body_reg_only_defined_here(covered, alias_instr, body_reg: int) -> bool:
-        """Return True if body_reg has exactly one definition in the loop body.
+    def _body_reg_only_defined_here(
+            covered, header, alias_index: int, alias_instr, body_reg: int
+    ) -> bool:
+        """Return True if alias_instr is body_reg's only definition from
+        that point in the iteration onward.
 
         body_reg must be a pure, single-definition alias for the
-        induction register across the whole loop body (see class
-        docstring point 3) - any other instruction anywhere in the
-        loop writing body_reg means the alias Mov isn't the register's
-        only source of truth, and folding it away would misrepresent
-        that second write's meaning.
+        induction register for the rest of the loop iteration (see
+        class docstring point 3) - any instruction writing body_reg
+        AFTER the alias Mov means the alias isn't the register's only
+        source of truth from there on, and folding it away would
+        misrepresent that later write's meaning.
+
+        A write to body_reg BEFORE the alias Mov, in the header
+        itself, is a different story: it's already dead by the time
+        alias_instr executes (nothing between it and alias_instr reads
+        it - if something did, alias_instr wouldn't be a definitionally
+        clean copy in the first place, but that's a separate liveness
+        concern this pass doesn't need to re-derive; register
+        allocators reusing a just-freed slot for the next temporary,
+        e.g., a throwaway property lookup right before the induction
+        alias copy, is routine). Rejecting the whole loop over that
+        reuse - as an earlier version of this check did - meant the
+        alias Mov's value was left to fall back to whatever
+        OpcodeHandler.get_register_expression resolved it to
+        (see `_is_induction_alias_copy`'s docstring): the initializer's
+        literal, baked in as if it never changed - silently wrong for
+        every iteration past the first, not just a missed cosmetic
+        rename.
         """
 
         for block in covered:
-            for instr in block.instructions:
+
+            if block is header:
+                instructions = header.instructions[alias_index + 1:]
+            else:
+                instructions = block.instructions
+
+            for instr in instructions:
 
                 if instr is alias_instr:
                     continue
@@ -370,8 +416,20 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
     # Repointing - BasicBlock level
     # ------------------------------------------------------------------
 
-    def _repoint_blocks(self, covered, old_ref: Identifier, new_ref: Identifier) -> None:
+    def _repoint_blocks(
+            self, covered, old_ref: Identifier, new_ref: Identifier,
+            header=None, from_index: int = 0,
+    ) -> None:
         """Rewrite every remaining instruction's .value/.statement in covered blocks.
+
+        `header`/`from_index` restrict which of the header's own
+        instructions get repointed: anything before the alias Mov's
+        former position reads body_reg's EARLIER, unrelated definition
+        (see `_body_reg_only_defined_here`), not the induction value -
+        repointing those too would rename an unrelated read out from
+        under its real meaning. Every other covered block runs after
+        the header completes for that iteration, so no such split is
+        needed there.
 
         Also - defensively - repoints any block that (unusually) still
         carries a raw TerminatorConditionalBranch at this point in the
@@ -385,7 +443,13 @@ class LoopInductionAliasPass(RegionPass, RegionVisitor):
 
         for block in covered:
 
-            for instr in block.instructions:
+            instructions = (
+                block.instructions[from_index:]
+                if block is header
+                else block.instructions
+            )
+
+            for instr in instructions:
 
                 new_value, changed = self._repoint_node(instr.value, old_ref, new_ref)
                 if changed:
