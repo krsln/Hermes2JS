@@ -114,47 +114,80 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         # ------------------------------------------------------------------
 
         if header in loop.latches:
-            if self._consume_guard(
-                    header,
-                    loop,
-                    LoopKind.DO_WHILE,
-                    update_block=None,
-            ):
+            if self._consume_guard(header, loop, LoopKind.DO_WHILE, update_block=None):
                 loop.continue_target = header
                 return
 
             logger.warning(
                 "Loop header block %d (0x%x): self-loop with no valid "
                 "guard; leaving loop unclassified.",
-                header.id,
-                header.address,
+                header.id, header.address,
             )
             return
 
         # ------------------------------------------------------------------
-        # 2. Top-tested loop: while (...)
+        # 2. Bottom-tested loop, tried FIRST when the latch itself carries
+        #    a conditional guard.
+        # ------------------------------------------------------------------
+        #
+        # A single latch with its own TerminatorConditionalBranch is a
+        # strong, unambiguous signal that the loop's real condition lives
+        # there, not at the header - even when the header's own branch
+        # ALSO happens to satisfy the top-tested edge-exits shape (e.g. an
+        # ordinary early-`break`-style `if` sitting at the very start of
+        # the loop body). Must stay in lockstep with
+        # `_predicates.is_loop_guard_shaped`, which the structuring passes
+        # (_DominanceIfBuilder / _CompoundConditionFolder /
+        # LoopBreakStructurer) use to decide whether to leave the header's
+        # branch untouched for this pass - if the two disagree about which
+        # block holds the "real" guard, one pass ends up consuming what
+        # the other was relying on staying intact.
+
+        if (
+                len(loop.latches) == 1
+                and isinstance(next(iter(loop.latches)).terminator, TerminatorConditionalBranch)
+        ):
+            latch = next(iter(loop.latches))
+
+            update_block = self._find_for_update_block(loop, latch)
+
+            if update_block is not None:
+                if self._consume_guard(latch, loop, LoopKind.FOR, update_block=update_block):
+                    loop.update_block = update_block
+                    loop.continue_target = update_block
+                    self._extract_for_components(loop)
+                    return
+
+            if self._consume_guard(latch, loop, LoopKind.DO_WHILE, update_block=None):
+                loop.continue_target = latch
+                return
+
+            # Latch had a conditional branch but didn't parse as a valid
+            # guard (both edges leave / both stay) - fall through to the
+            # top-tested attempt below rather than giving up immediately;
+            # a malformed bottom-tested guess shouldn't block a genuinely
+            # valid top-tested reading of the header.
+
+        # ------------------------------------------------------------------
+        # 3. Top-tested loop: while (...)
         # ------------------------------------------------------------------
 
-        if self._consume_guard(
-                header,
-                loop,
-                LoopKind.WHILE,
-                update_block=None,
-        ):
+        if self._consume_guard(header, loop, LoopKind.WHILE, update_block=None):
             loop.continue_target = header
             return
 
         # ------------------------------------------------------------------
-        # 3. Bottom-tested loop
+        # 4. Bottom-tested loop, generic fallback (multi-latch or a latch
+        #    without its own conditional - already excluded by step 2's
+        #    guard clause above, so this only runs for shapes step 2
+        #    didn't even attempt).
         # ------------------------------------------------------------------
 
         if len(loop.latches) != 1:
             logger.warning(
                 "Loop header block %d (0x%x): expected exactly one latch "
                 "for bottom-tested loop classification, got %d.",
-                header.id,
-                header.address,
-                len(loop.latches),
+                header.id, header.address, len(loop.latches),
             )
             return
 
@@ -168,10 +201,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             logger.debug(
                 "Loop header block %d (0x%x): latch block %d (0x%x) "
                 "does not contain a conditional guard.",
-                header.id,
-                header.address,
-                latch.id,
-                latch.address,
+                header.id, header.address, latch.id, latch.address,
             )
             return
 
@@ -187,12 +217,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         update_block = self._find_for_update_block(loop, latch)
 
         if update_block is not None:
-            if self._consume_guard(
-                    latch,
-                    loop,
-                    LoopKind.FOR,
-                    update_block=update_block,
-            ):
+            if self._consume_guard(latch, loop, LoopKind.FOR, update_block=update_block):
                 loop.update_block = update_block
                 loop.continue_target = update_block
 
@@ -204,20 +229,13 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 self._extract_for_components(loop)
                 return
 
-        # Otherwise it is a normal bottom-tested loop.
-        if self._consume_guard(
-                latch,
-                loop,
-                LoopKind.DO_WHILE,
-                update_block=None,
-        ):
+        if self._consume_guard(latch, loop, LoopKind.DO_WHILE, update_block=None):
             loop.continue_target = latch
             return
 
         logger.warning(
             "Loop header block %d (0x%x): no valid loop guard found.",
-            header.id,
-            header.address,
+            header.id, header.address,
         )
 
     # ------------------------------------------------------------------
