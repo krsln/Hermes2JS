@@ -22,31 +22,22 @@ function callGeneratorTests() {
     r3 = r5
     // CODE → addr: 38 | <IteratorBegin>: <Reg8: 4, Reg8: 3>
     r4 = GetIterator(r3)
-    try {
-        // LOOP → START (while)
-        // → r5 = r4
-        while (!(r5 === undefined)) {
-            // ──────────────── Block 1 ──────────────── 
-            // CODE → addr: 41 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 3>
-            // USED → r7 = r4.next();
-            // CODE → addr: 45 | <Mov>: <Reg8: 5, Reg8: 4>
-            r5 = r4
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 52 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r6 = console;
-            // CODE → addr: 58 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r5 = console.log;
-            // CODE → addr: 63 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-            console.log(r7)
-            // CODE → addr: 68 | <Jmp>: <Addr8: -27>  # Address: 00000029
-            goto label_41;
-        }
-        // LOOP → END
-    } finally {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → addr: 72 | <IteratorClose>: <Reg8: 4, UInt8: 1>
-        r4.return()
+    // LOOP → START (for_of)
+    for (const r7 of r3) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr: 45 | <Mov>: <Reg8: 5, Reg8: 4>
+        r5 = r4
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → addr: 52 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r6 = console;
+        // CODE → addr: 58 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r5 = console.log;
+        // CODE → addr: 63 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+        console.log(r7)
+        // CODE → addr: 68 | <Jmp>: <Addr8: -27>  # Address: 00000029
+        goto label_41;
     }
+    // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 77 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
     // USED → r4 = r2[1];
@@ -58,31 +49,22 @@ function callGeneratorTests() {
     r3 = r5
     // CODE → addr: 92 | <IteratorBegin>: <Reg8: 4, Reg8: 3>
     r4 = GetIterator(r3)
-    try {
-        // LOOP → START (while)
-        // → r5 = r4
-        while (!(r5 === undefined)) {
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → addr: 95 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 3>
-            // USED → r7 = r4.next();
-            // CODE → addr: 99 | <Mov>: <Reg8: 5, Reg8: 4>
-            r5 = r4
-            // ──────────────── Block 6 ──────────────── 
-            // CODE → addr:106 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r6 = console;
-            // CODE → addr:112 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r5 = console.log;
-            // CODE → addr:117 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
-            console.log(r7)
-            // CODE → addr:122 | <Jmp>: <Addr8: -27>  # Address: 0000005f
-            goto label_95;
-        }
-        // LOOP → END
-    } finally {
-        // ──────────────── Block 7 ──────────────── 
-        // CODE → addr:126 | <IteratorClose>: <Reg8: 4, UInt8: 1>
-        r4.return()
+    // LOOP → START (for_of)
+    for (const r7 of r3) {
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → addr: 99 | <Mov>: <Reg8: 5, Reg8: 4>
+        r5 = r4
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → addr:106 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r6 = console;
+        // CODE → addr:112 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r5 = console.log;
+        // CODE → addr:117 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
+        console.log(r7)
+        // CODE → addr:122 | <Jmp>: <Addr8: -27>  # Address: 0000005f
+        goto label_95;
     }
+    // LOOP → END
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:131 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 2>
     // USED → r2 = r2[2];

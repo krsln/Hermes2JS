@@ -20,7 +20,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 - LoopInductionAliasPass.py fix -> for (r1 = 0; r1 < 3; r1 = r1 + 1) {...
 - analysis/transforms/structurers */if_structurer/switch_structurer/try_structurer docstrings re-newed
 - analysis/terminators/ moved to analysis/models/Terminators.py
-- transforms.region_passes.RedundantJumpRegionPass.py added
+- transforms.region_passes| +RedundantJumpRegionPass.py ~ForEachRegionPass
 
 ## Testy
 
