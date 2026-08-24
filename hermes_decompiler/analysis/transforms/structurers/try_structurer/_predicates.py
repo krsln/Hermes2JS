@@ -22,13 +22,14 @@ __all__ = ["structural_key", "strip_duplicate_run"]
 
 
 def strip_duplicate_run(region: SequenceRegion, finally_values: list) -> None:
-    """Remove the first run in `region` matching finally_values, if any.
+    """Remove the first run in each block matching finally_values, if any.
 
     Matches the first contiguous run of instructions whose `.value`s
-    exactly equal finally_values. The duplicate isn't necessarily at
-    the end of a block - e.g., a catch body normally continues with
-    more statements (and a return) after its inlined finally-copy -
-    so this scans for the run anywhere, not just as a trailing slice.
+    exactly equal finally_values. Hermes may duplicate the same
+    finally sequence independently across MULTIPLE blocks (e.g. both
+    branches of a resume-check, each with their own inlined cleanup
+    copy) - so this scans and strips per-block across the whole
+    region, not just the first occurrence found anywhere.
     """
 
     if not finally_values:
@@ -40,7 +41,6 @@ def strip_duplicate_run(region: SequenceRegion, finally_values: list) -> None:
     for block in list(region.covered_blocks):
 
         candidates = [i for i in block.instructions if i.value is not None]
-
         candidate_keys = [structural_key(c.value) for c in candidates]
 
         for start in range(len(candidates) - n + 1):
