@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from hermes_decompiler.ir import Expression
+
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models import RegionVisitor
 from hermes_decompiler.analysis.models.regions import (
@@ -65,10 +67,14 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         # for-of; `_try_recognize_for_of` only acts on a LoopRegion
         # that is a *direct* child of try_body.
         self._try_recognize_for_of(node)
-        if node.catch:
-            self.visit(node.catch.body)
-        if node.finally_:
-            self.visit(node.finally_.body)
+
+        node_catch = node.catch
+        if node_catch:
+            self.visit(node_catch.body)
+
+        node_finally = node.finally_
+        if node_finally:
+            self.visit(node_finally.body)
 
     def visit_LoopRegion(self, node: LoopRegion) -> None:
         self._try_recognize_for_in(node)
@@ -140,7 +146,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         self._strip_instruction(header_block, next_instr)
 
-    def _resolve_identifier(self, expr):
+    def _resolve_identifier(self, expr: Expression):
         """Resolve a possibly-still-bare register reference to its defining expression.
 
         Some handlers inline a register's defining expression directly
@@ -157,7 +163,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         currently in the region tree. Region passes only receive
         graph/cfg, not HermesAnalysis.registers, so this walks
         RegionGraph.blocks() instead - a reasonable substitute given
-        Hermes registers are effectively single-assignment for the
+        Hermes registers, is effectively single-assignment for the
         pre-loop setup values matched here (GetPNameList/IteratorBegin
         each run exactly once, right before the loop). Returns expr
         unchanged if nothing resolves (already inlined, or no defining
@@ -200,8 +206,6 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         (None, None, None) if it doesn't match.
         """
         header = loop.header_block
-        if header is None:
-            return None, None, None
 
         first = header.first_instruction
         if first is None:
@@ -224,7 +228,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         return value, first, header
 
     @staticmethod
-    def _match_call(expr, callee_name: str):
+    def _match_call(expr: Expression, callee_name: str):
         """Return the single argument of `callee_name(arg)`, or None.
 
         Matches the exact pseudo-call shape produced by IteratorBegin
@@ -239,15 +243,19 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
             return expr.arguments[0]
         return None
 
-    @staticmethod
-    def _finally_matches_iterator_close(try_region: TryRegion, iterator_expr) -> bool:
+    def _finally_matches_iterator_close(self, try_region: TryRegion, iterator_expr) -> bool:
         """Return True if the `finally` body is a single matching .return() call.
 
         Expression trees don't reliably define __eq__ (see
         `_structural_key`'s own docstring for the same problem), so
         identity is compared structurally, not with `==`.
         """
-        finally_body = try_region.finally_.body
+        node_finally = try_region.finally_
+
+        if node_finally is None:
+            return False
+
+        finally_body = node_finally.body
 
         values = [
             instr.value
@@ -272,7 +280,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         if not isinstance(prop, Identifier) or prop.name != "return":
             return False
 
-        return structural_key(value.callee.obj) == structural_key(iterator_expr)
+        return structural_key(self._resolve_identifier(value.callee.obj)) == structural_key(iterator_expr)
 
     # -----------------------------------------------------------------
     # Mutation
