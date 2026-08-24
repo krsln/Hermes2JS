@@ -85,11 +85,11 @@ class TryStructurer(RegionStructurer):
 
         for handler in handlers:
 
-            wrapped = find_finally_wrapper_target(handler, processed)
+            wrapped = find_finally_wrapper_target(handler, processed, self.cfg)
 
             if wrapped is not None:
-                _, try_region = wrapped
-                self._attacher.attach(handler, try_region)
+                inner_handler, try_region = wrapped
+                self._attacher.attach(handler, try_region, inner_handler, self.cfg)
                 continue
 
             try_region = self._handler_builder.build(handler)

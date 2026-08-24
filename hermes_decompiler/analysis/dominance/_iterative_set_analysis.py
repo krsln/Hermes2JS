@@ -20,11 +20,13 @@ class _IterativeSetAnalysis(ABC):
         blocks = self.cfg.blocks
         roots = self.roots()
 
+        handler_by_target: dict[BasicBlock, dict] = {
+            h["handler_block"]: h
+            for h in getattr(self.cfg, "exception_handlers", [])
+        }
+
         for block in blocks:
-            if block in roots:
-                self.result[block] = {block}
-            else:
-                self.result[block] = set(blocks)
+            self.result[block] = {block} if block in roots else set(blocks)
 
         changed = True
 
@@ -36,6 +38,18 @@ class _IterativeSetAnalysis(ABC):
                     continue
 
                 neighbors = list(self.neighbors(block))
+
+                if not neighbors:
+                    # Bu bloğa ulaşan gerçek bir kenar yok - genellikle
+                    # sadece exception dispatch ile girilen bir handler
+                    # (CFGBuilder bunu gerçek kenar olarak modellemiyor,
+                    # bkz. o dosyanın docstring'i: "Not yet supported:
+                    # Exception edges"). Eksik kenarı exception tablosundan
+                    # yaklaşıksalla: bir handler, koruduğu her bloktan
+                    # "sanal" bir predecessor kenarına sahipmiş gibi kabul
+                    # edilir - çünkü exception gerçekten oradan fırlayabilir.
+                    handler = handler_by_target.get(block)
+                    neighbors = handler["try_blocks"] if handler else []
 
                 if not neighbors:
                     continue

@@ -69,58 +69,34 @@ async function* anon_15181() {
             // CODE → addr: 74 | <Call3>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
             console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/awaited", r1)
             if (r1 === 1) {
-                // ──────────────── Block 6 ──────────────── 
-                // CODE → addr: 86 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
-                // USED → r5 = Error;
-                // CODE → addr: 92 | <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
-                // USED → r3 = Error.prototype;
-                // CODE → addr: 97 | <CreateThis>: <Reg8: 4, Reg8: 3, Reg8: 5>
-                // USED → r4 = CreateThis(r3);
-                // CODE → addr:101 | <LoadConstString>: <Reg8: 8, string_id: 6849>  # String: 'post-await failure' (String)
-                // USED → r8 = "post-await failure";
-                // CODE → addr:105 | <Mov>: <Reg8: 9, Reg8: 4>
-                // USED → r9 = CreateThis(r3);
-                // CODE → addr:108 | <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
-                // USED → r3 = new Error("post-await failure");
-                // CODE → addr:112 | <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
-                // USED → r3 = new Error("post-await failure");
-                // CODE → addr:116 | <Throw>: <Reg8: 3>
-                throw new Error("post-await failure");
-            } else {
-                // ──────────────── Block 5 ──────────────── 
-                // CODE → addr: 84 | <Jmp>: <Addr8: 79>  # Address: 000000a3
-                goto label_163;
                 try {
-                    // LOOP → START (while)
-                    while (true) {
-                        // ──────────────── Block 9 ──────────────── 
-                        // CODE → addr:183 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                        // USED → r4 = console;
-                        // CODE → addr:189 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                        // USED → r3 = console.log;
-                        // CODE → addr:194 | <LoadConstString>: <Reg8: 1, string_id: 4756>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/end' (String)
-                        // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/end";
-                        // CODE → addr:198 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-                        console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/end")
-                        // CODE → addr:203 | <LoadConstUndefined>: <Reg8: 1>
-                        // USED → r1 = undefined;
-                        // CODE → addr:205 | <CompleteGenerator>: <>
-                        // CompleteGenerator
-                        // CODE → addr:206 | <Ret>: <Reg8: 1>
-                        return undefined;
-                        // ──────────────── Block 8 ──────────────── 
-                        // CODE → addr:141 | <Catch>: <Reg8: 1>
-                        r1 = caughtException
-                        // CODE → addr:143 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                        // USED → r4 = console;
-                        // CODE → addr:149 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                        // USED → r3 = console.log;
-                        // CODE → addr:154 | <LoadConstString>: <Reg8: 1, string_id: 2140>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/caught' (String)
-                        // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/caught";
-                        // CODE → addr:158 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-                        console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/caught")
-                    }
-                    // LOOP → END
+                    // ──────────────── Block 6 ──────────────── 
+                    // CODE → addr: 86 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 3, string_id: 12>  # String: 'Error' (Identifier)
+                    // USED → r5 = Error;
+                    // CODE → addr: 92 | <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
+                    // USED → r3 = Error.prototype;
+                    // CODE → addr: 97 | <CreateThis>: <Reg8: 4, Reg8: 3, Reg8: 5>
+                    // USED → r4 = CreateThis(r3);
+                    // CODE → addr:101 | <LoadConstString>: <Reg8: 8, string_id: 6849>  # String: 'post-await failure' (String)
+                    // USED → r8 = "post-await failure";
+                    // CODE → addr:105 | <Mov>: <Reg8: 9, Reg8: 4>
+                    // USED → r9 = CreateThis(r3);
+                    // CODE → addr:108 | <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
+                    // USED → r3 = new Error("post-await failure");
+                    // CODE → addr:112 | <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
+                    // USED → r3 = new Error("post-await failure");
+                    // CODE → addr:116 | <Throw>: <Reg8: 3>
+                    throw new Error("post-await failure");
+                } catch (caughtException) {
+                    // ──────────────── Block 8 ──────────────── 
+                    // CODE → addr:143 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                    // USED → r4 = console;
+                    // CODE → addr:149 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                    // USED → r3 = console.log;
+                    // CODE → addr:154 | <LoadConstString>: <Reg8: 1, string_id: 2140>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/caught' (String)
+                    // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/caught";
+                    // CODE → addr:158 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+                    console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/caught")
                 } finally {
                     // ──────────────── Block 10 ──────────────── 
                     // CODE → addr:210 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -132,7 +108,26 @@ async function* anon_15181() {
                     // CODE → addr:225 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
                     console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
                 }
+            } else {
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → addr: 84 | <Jmp>: <Addr8: 79>  # Address: 000000a3
+                goto label_163;
             }
+            // ──────────────── Block 9 ──────────────── 
+            // CODE → addr:183 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r4 = console;
+            // CODE → addr:189 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r3 = console.log;
+            // CODE → addr:194 | <LoadConstString>: <Reg8: 1, string_id: 4756>  # String: '__BC:Functions/AsyncTests/asyncTryCatchTest/end' (String)
+            // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/end";
+            // CODE → addr:198 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+            console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/end")
+            // CODE → addr:203 | <LoadConstUndefined>: <Reg8: 1>
+            // USED → r1 = undefined;
+            // CODE → addr:205 | <CompleteGenerator>: <>
+            // CompleteGenerator
+            // CODE → addr:206 | <Ret>: <Reg8: 1>
+            return undefined;
         }
     }
 }

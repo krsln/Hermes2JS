@@ -67,32 +67,15 @@ function switchInsideTryTest(param1) {
         // CODE → addr:115 | <Jmp>: <Addr8: 24>  # Address: 0000008b
         goto label_139;
     } catch (caughtException) {
-        // LOOP → START (while)
-        while (true) {
-            // ──────────────── Block 7 ──────────────── 
-            // CODE → addr:159 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r3 = console;
-            // CODE → addr:165 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r2 = console.log;
-            // CODE → addr:170 | <LoadConstString>: <Reg8: 0, string_id: 4682>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/end' (String)
-            // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/end";
-            // CODE → addr:174 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-            console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end")
-            // CODE → addr:179 | <LoadConstUndefined>: <Reg8: 0>
-            // USED → r0 = undefined;
-            // CODE → addr:181 | <Ret>: <Reg8: 0>
-            return undefined;
-            // ──────────────── Block 6 ──────────────── 
-            // CODE → addr:119 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r3 = console;
-            // CODE → addr:125 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r2 = console.log;
-            // CODE → addr:130 | <LoadConstString>: <Reg8: 0, string_id: 4680>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block' (String)
-            // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block";
-            // CODE → addr:134 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-            console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block")
-        }
-        // LOOP → END
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → addr:119 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r3 = console;
+        // CODE → addr:125 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r2 = console.log;
+        // CODE → addr:130 | <LoadConstString>: <Reg8: 0, string_id: 4680>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block' (String)
+        // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block";
+        // CODE → addr:134 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/catch-block")
     } finally {
         // ──────────────── Block 8 ──────────────── 
         // CODE → addr:185 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -104,4 +87,17 @@ function switchInsideTryTest(param1) {
         // CODE → addr:200 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block")
     }
+    // ──────────────── Block 7 ──────────────── 
+    // CODE → addr:159 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = console;
+    // CODE → addr:165 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = console.log;
+    // CODE → addr:170 | <LoadConstString>: <Reg8: 0, string_id: 4682>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/end' (String)
+    // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/end";
+    // CODE → addr:174 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end")
+    // CODE → addr:179 | <LoadConstUndefined>: <Reg8: 0>
+    // USED → r0 = undefined;
+    // CODE → addr:181 | <Ret>: <Reg8: 0>
+    return undefined;
 }

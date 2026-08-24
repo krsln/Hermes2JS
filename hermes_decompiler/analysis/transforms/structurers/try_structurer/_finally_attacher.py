@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.analysis.models import TerminatorThrow
 from hermes_decompiler.analysis.models.regions import FinallyRegion, SequenceRegion, TryRegion
 from hermes_decompiler.ir.expressions import Identifier
@@ -27,9 +27,9 @@ class _FinallyAttacher:
     def __init__(self, graph):
         self.graph = graph
 
-    def attach(self, handler: dict, try_region: TryRegion) -> None:
+    def attach(self, handler: dict, try_region: TryRegion, inner_handler: dict, cfg: CFG) -> None:
 
-        finally_block = handler["handler_block"]
+        finally_block: BasicBlock = handler["handler_block"]
 
         # Pull the block out of wherever it currently sits in the
         # region tree (it hasn't been touched yet - still a bare
@@ -41,10 +41,7 @@ class _FinallyAttacher:
         if finally_block.instructions:
             first = finally_block.instructions[0]
 
-            if (
-                    first.dest_reg is not None
-                    and isinstance(first.value, Identifier)
-            ):
+            if first.dest_reg is not None and isinstance(first.value, Identifier):
                 finally_block.instructions.pop(0)
 
         # Drop the trailing rethrow - real JS finally semantics already
@@ -87,6 +84,25 @@ class _FinallyAttacher:
         if catch_region is not None:
             strip_duplicate_run(catch_region.body, finally_values)
 
+        # Hermes may also place the duplicated finally sequence in the shared
+        # continuation point following the normal completion of the inner
+        # try/catch (its immediate post-dominator). This is the same copy that
+        # allows `find_finally_wrapper_target` to identify the enclosing
+        # finally wrapper.
+        #
+        # The continuation block is not part of `try_body` or `catch.body`;
+        # it remains a sibling of the TryRegion in the region tree. It must
+        # therefore be cleaned up separately to prevent the ``finally`` body from
+        # being emitted twice.
+        if cfg is not None and cfg.post_dominator_tree is not None:
+            merge_block = cfg.post_dominator_tree.immediate_post_dominator(
+                inner_handler["handler_block"]
+            )
+            if merge_block is not None:
+                owner = self.graph.owner(merge_block)
+                if owner is not None:
+                    strip_duplicate_run(owner, finally_values)
+
         finally_body = SequenceRegion()
         self.graph.transfer([finally_block], finally_body)
 
@@ -96,7 +112,8 @@ class _FinallyAttacher:
 
         try_region.finally_ = finally_region
 
-    def maybe_reinterpret_as_finally(self, try_region: TryRegion) -> None:
+    @staticmethod
+    def maybe_reinterpret_as_finally(try_region: TryRegion) -> None:
         """Reinterpret a lone catch as finally when it's really one.
 
         Handles the single-handler `try { } finally { }` case (no

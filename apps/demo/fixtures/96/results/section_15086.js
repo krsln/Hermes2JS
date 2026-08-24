@@ -24,73 +24,30 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
         // CODE → addr: 55 | <Throw>: <Reg8: 0>
         throw new Error("test");
     } catch (caughtException) {
-        // LOOP → START (while)
-        while (true) {
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → addr:118 | <LoadConstUndefined>: <Reg8: 0>
-            // USED → r0 = undefined;
-            // CODE → addr:120 | <Ret>: <Reg8: 0>
-            return undefined;
-            // LOOP → START (for)
-            for (; !param1; ) {
-                // ──────────────── Block 2 ──────────────── 
-                // CODE → addr: 98 | <LoadConstString>: <Reg8: 0, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
-                // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
-                // CODE → addr:102 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-                console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
-                // CODE → addr:107 | <Jmp>: <Addr8: 11>  # Address: 00000076
-                goto label_118;
-            }
-            // LOOP → END
-            // LOOP → START (while)
-            while (true) {
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → addr:109 | <LoadConstString>: <Reg8: 0, string_id: 4687>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true' (String)
-                // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true";
-                // CODE → addr:113 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-                console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true")
-                // ──────────────── Block 1 ──────────────── 
-                // CODE → addr: 72 | <LoadConstString>: <Reg8: 0, string_id: 2167>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block' (String)
-                // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block";
-                // CODE → addr: 76 | <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
-                console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block")
-                // CODE → addr: 81 | <Mov>: <Reg8: 0, Reg8: 1>
-                // USED → r0 = param1;
-                // CODE → addr: 84 | <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r3 = console;
-                // CODE → addr: 90 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r2 = console.log;
-            }
-            // LOOP → END
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr: 72 | <LoadConstString>: <Reg8: 0, string_id: 2167>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block' (String)
+        // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block";
+        // CODE → addr: 76 | <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block")
+        // CODE → addr: 81 | <Mov>: <Reg8: 0, Reg8: 1>
+        // USED → r0 = param1;
+        // CODE → addr: 84 | <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r3 = console;
+        // CODE → addr: 90 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r2 = console.log;
+        if (param1) {
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → addr:109 | <LoadConstString>: <Reg8: 0, string_id: 4687>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true' (String)
+            // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true";
+            // CODE → addr:113 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+            console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true")
+        } else {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → addr: 98 | <LoadConstString>: <Reg8: 0, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
+            // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
+            // CODE → addr:102 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+            console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
         }
-        // LOOP → END
-        // LOOP → START (while)
-        while (true) {
-            // ──────────────── Block 8 ──────────────── 
-            // CODE → addr:160 | <Throw>: <Reg8: 0>
-            throw caughtException;
-            // LOOP → START (for)
-            for (; !param1; ) {
-                // ──────────────── Block 6 ──────────────── 
-                // CODE → addr:140 | <LoadConstString>: <Reg8: 1, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
-                // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
-                // CODE → addr:144 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-                console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
-                // CODE → addr:149 | <Jmp>: <Addr8: 11>  # Address: 000000a0
-                goto label_160;
-            }
-            // LOOP → END
-            // LOOP → START (while)
-            while (true) {
-                // ──────────────── Block 7 ──────────────── 
-                // CODE → addr:151 | <LoadConstString>: <Reg8: 1, string_id: 4687>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true' (String)
-                // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true";
-                // CODE → addr:155 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-                console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true")
-            }
-            // LOOP → END
-        }
-        // LOOP → END
     } finally {
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr:124 | <GetGlobalObject>: <Reg8: 2>
@@ -100,4 +57,25 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
         // CODE → addr:132 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r2 = console.log;
     }
+    // ──────────────── Block 4 ──────────────── 
+    // CODE → addr:118 | <LoadConstUndefined>: <Reg8: 0>
+    // USED → r0 = undefined;
+    // CODE → addr:120 | <Ret>: <Reg8: 0>
+    return undefined;
+    if (param1) {
+        // ──────────────── Block 7 ──────────────── 
+        // CODE → addr:151 | <LoadConstString>: <Reg8: 1, string_id: 4687>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true' (String)
+        // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true";
+        // CODE → addr:155 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true")
+    } else {
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → addr:140 | <LoadConstString>: <Reg8: 1, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
+        // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
+        // CODE → addr:144 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+        console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
+    }
+    // ──────────────── Block 8 ──────────────── 
+    // CODE → addr:160 | <Throw>: <Reg8: 0>
+    throw caughtException;
 }
