@@ -42,8 +42,23 @@ def find_finally_wrapper_target(handler: dict, processed: list, cfg: CFG):
     for inner_handler, inner_region in processed:
         if inner_handler["target"] == handler["target"]:
             continue
+
+        # This region already has its own ``finally`` clause, most likely from
+        # a narrower wrapper match processed earlier.
+        #
+        # Content alone is not enough to reconsider the region. Two
+        # unrelated ``finally`` blocks may coincidentally contain the same
+        # string or expression (see section_15181, where the inner and
+        # outer finally blocks use the same log message).
+        #
+        # Once a region is associated with a ``finally`` handler, it cannot be
+        # claimed by another handler.
+        if inner_region.finally_ is not None:
+            continue
+
         if not (handler["start"] <= inner_handler["target"] < handler["end"]):
             continue
+
         if _finally_content_matches(handler, inner_region, inner_handler, cfg):
             # Multiple candidates may satisfy the content-matching criteria.
             # Hermes tail duplication can cause a shared merge block to
