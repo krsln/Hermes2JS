@@ -23,11 +23,11 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
 
     Not responsible for pure control-flow &&/|| (e.g., a bare
     `if (a || b) { ... }` with no intermediate assignment) - that's
-    `cfg_passes.BranchChainMerger`'s job, which runs much earlier, on
+    `cfg_passes.ShortCircuitConditionCfgPass`'s job, which runs much earlier, on
     the raw CFG, before any region exists. This pass specifically
     requires the folded block to end in an assignment (`dest_reg is
     not None`, see `_try_fold`) - the value-producing case
-    (`const x = a || b;`). See BranchChainMerger's docstring for the
+    (`const x = a || b;`). See ShortCircuitConditionCfgPass's docstring for the
     full disjointness argument from the other side.
 
     Stale-reference fix
