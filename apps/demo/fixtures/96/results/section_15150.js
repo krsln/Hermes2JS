@@ -39,33 +39,24 @@ function closureLoopTest() {
     r2 = r4
     // CODE → addr: 59 | <IteratorBegin>: <Reg8: 3, Reg8: 2>
     r3 = GetIterator(r2)
-    try {
-        // LOOP → START (while)
-        // → r5 = r3
-        while (!(r5 === undefined)) {
-            // ──────────────── Block 3 ──────────────── 
-            // CODE → addr: 62 | <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 2>
-            r4 = r3.next()
-            // CODE → addr: 66 | <Mov>: <Reg8: 5, Reg8: 3>
-            r5 = r3
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → addr: 73 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r6 = console;
-            // CODE → addr: 79 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r5 = console.log;
-            // CODE → addr: 84 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-            // USED → r4 = r4.call(undefined);
-            // CODE → addr: 88 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-            console.log(r4)
-            // CODE → addr: 93 | <Jmp>: <Addr8: -31>  # Address: 0000003e
-            goto label_62;
-        }
-        // LOOP → END
-    } finally {
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → addr: 97 | <IteratorClose>: <Reg8: 3, UInt8: 1>
-        r3.return()
+    // LOOP → START (for_of)
+    for (const r4 of r2) {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → addr: 66 | <Mov>: <Reg8: 5, Reg8: 3>
+        r5 = r3
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → addr: 73 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r6 = console;
+        // CODE → addr: 79 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r5 = console.log;
+        // CODE → addr: 84 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
+        // USED → r4 = r4.call(undefined);
+        // CODE → addr: 88 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+        console.log(r4)
+        // CODE → addr: 93 | <Jmp>: <Addr8: -31>  # Address: 0000003e
+        goto label_62;
     }
+    // LOOP → END
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:102 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;

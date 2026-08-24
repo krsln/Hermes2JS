@@ -20,7 +20,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 - LoopInductionAliasPass.py fix -> for (r1 = 0; r1 < 3; r1 = r1 + 1) {...
 - analysis/transforms/structurers */if_structurer/switch_structurer/try_structurer docstrings re-newed
 - analysis/terminators/ moved to analysis/models/Terminators.py
-- transforms.region_passes| +RedundantJumpRegionPass.py ~ForEachRegionPass
+- transforms.region_passes/*
 
 ## Testy
 
@@ -37,6 +37,7 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./app
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results --log-level DEBUG
 
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level DEBUG
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level WARNING
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
 

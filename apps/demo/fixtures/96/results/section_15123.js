@@ -90,41 +90,32 @@ function mapTest() {
     r6 = 0
     // CODE → addr:195 | <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
     r3 = 1
-    try {
-        // LOOP → START (while)
-        // → r10 = r5
-        while (!(r10 === undefined)) {
-            // ──────────────── Block 1 ──────────────── 
-            // CODE → addr:198 | <IteratorNext>: <Reg8: 11, Reg8: 5, Reg8: 9>
-            // USED → r11 = r5.next();
-            // CODE → addr:202 | <Mov>: <Reg8: 10, Reg8: 5>
-            r10 = r5
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr:209 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>
-            r10 = r8[0]
-            // CODE → addr:213 | <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 9, string_id: 107>  # String: 'default' (Identifier)
-            // USED → r10 = r10.default;
-            // CODE → addr:218 | <Call3>: <Reg8: 10, Reg8: 10, Reg8: 0, Reg8: 11, Reg8: 7>
-            r10 = r10.default.call(r0, r11, 2)
-            // CODE → addr:224 | <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 6>
-            // USED → r13 = r10[r6];
-            // CODE → addr:228 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 3>
-            // USED → r12 = r10[r3];
-            // CODE → addr:232 | <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r11 = console;
-            // CODE → addr:238 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r10 = console.log;
-            // CODE → addr:243 | <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 13, Reg8: 12>
-            console.log(r13, r12)
-            // CODE → addr:249 | <Jmp>: <Addr8: -51>  # Address: 000000c6
-            goto label_198;
-        }
-        // LOOP → END
-    } finally {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → addr:253 | <IteratorClose>: <Reg8: 5, UInt8: 1>
-        r5.return()
+    // LOOP → START (for_of)
+    for (const r11 of r9) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr:202 | <Mov>: <Reg8: 10, Reg8: 5>
+        r10 = r5
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → addr:209 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>
+        r10 = r8[0]
+        // CODE → addr:213 | <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 9, string_id: 107>  # String: 'default' (Identifier)
+        // USED → r10 = r10.default;
+        // CODE → addr:218 | <Call3>: <Reg8: 10, Reg8: 10, Reg8: 0, Reg8: 11, Reg8: 7>
+        r10 = r10.default.call(r0, r11, 2)
+        // CODE → addr:224 | <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 6>
+        // USED → r13 = r10[r6];
+        // CODE → addr:228 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 3>
+        // USED → r12 = r10[r3];
+        // CODE → addr:232 | <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r11 = console;
+        // CODE → addr:238 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r10 = console.log;
+        // CODE → addr:243 | <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 13, Reg8: 12>
+        console.log(r13, r12)
+        // CODE → addr:249 | <Jmp>: <Addr8: -51>  # Address: 000000c6
+        goto label_198;
     }
+    // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:258 | <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 10, string_id: 114>  # String: 'delete' (Identifier)
     // USED → r3 = r2.delete;
