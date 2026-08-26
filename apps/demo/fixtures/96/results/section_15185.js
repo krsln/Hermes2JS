@@ -69,6 +69,9 @@ async function* anon_15185(param1) {
             goto label_47;
         }
         // LOOP → END
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → addr: 72 | <Ret>: <Reg8: 3>
+        return await r5[2].call(r7, r9);
         // ──────────────── Block 9 ──────────────── 
         // CODE → addr: 99 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r4 = console;

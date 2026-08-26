@@ -13,7 +13,7 @@ async function* anon_15181() {
         // CODE → addr:233 | <Ret>: <Reg8: 0>
         return await yield;
     } else {
-        // ──────────────── Block 1 ──────────────── 
+        // ──────────────── Block 12 ──────────────── 
         // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 2>
         // USED → r2 = globalThis;
         // CODE → addr: 12 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -24,6 +24,7 @@ async function* anon_15181() {
         // USED → r1 = "__BC:Functions/AsyncTests/asyncTryCatchTest/start";
         // CODE → addr: 27 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
         console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/start")
+        // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 32 | <GetEnvironment>: <Reg8: 1, UInt8: 2>
         r1 = getEnvironment(2)
         // CODE → addr: 35 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>

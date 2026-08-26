@@ -99,17 +99,6 @@ function loopBreakCrossesTryBoundaryTest(param1) {
             }
             // LOOP → END
         }
-        // ──────────────── Block 8 ──────────────── 
-        // CODE → addr:224 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r5 = console;
-        // CODE → addr:230 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r4 = console.log;
-        // CODE → addr:235 | <LoadConstString>: <Reg8: 2, string_id: 4652>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end' (String)
-        // USED → r2 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end";
-        // CODE → addr:239 | <Call2>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 2>
-        console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end")
-        // CODE → addr:244 | <Ret>: <Reg8: 0>
-        return undefined;
     } finally {
         // ──────────────── Block 9 ──────────────── 
         // CODE → addr:248 | <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -119,4 +108,15 @@ function loopBreakCrossesTryBoundaryTest(param1) {
         // CODE → addr:259 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
         console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
     }
+    // ──────────────── Block 8 ──────────────── 
+    // CODE → addr:224 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r5 = console;
+    // CODE → addr:230 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r4 = console.log;
+    // CODE → addr:235 | <LoadConstString>: <Reg8: 2, string_id: 4652>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end' (String)
+    // USED → r2 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end";
+    // CODE → addr:239 | <Call2>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 2>
+    console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end")
+    // CODE → addr:244 | <Ret>: <Reg8: 0>
+    return undefined;
 }

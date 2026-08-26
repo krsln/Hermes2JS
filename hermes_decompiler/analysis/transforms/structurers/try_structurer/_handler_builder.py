@@ -49,6 +49,39 @@ class _HandlerBuilder:
         ):
             return None
 
+        # `try_blocks` (and so `start_block`) is computed by
+        # `CFGBuilder._resolve_exception_handlers` via ADDRESS-RANGE
+        # OVERLAP against whole blocks, not exact instruction
+        # boundaries - see that method's own docstring: "Hermes
+        # records protected ranges at instruction granularity, so a
+        # handler range may start or end inside a basic block."
+        # `CFGBuilder` only ever splits blocks at exception HANDLER
+        # TARGET addresses (`leaders.add(handler["target"])`), never
+        # at a handler's own START address - so straight-line code
+        # with no branch that happens to run immediately before this
+        # handler's real protected range begins can end up sharing the
+        # SAME physical block as the try's own first protected
+        # instruction (see nestedTryCatchFinallyTest: an unconditional
+        # `console.log` right before an inner `try` is literally one
+        # block with the try's own first line, split only at the
+        # handler's start address, which was never added as a CFG
+        # leader). If `start_block` is DIRECTLY a child of `lca_seq`
+        # (not already nested inside a Region some earlier-processed
+        # handler built), split off any such leading unprotected
+        # content BEFORE computing indices below, so they're all
+        # computed against the corrected tree. A `start_repr` that
+        # ISN'T `start_block` itself means it's already nested inside
+        # a prior TryRegion - nothing to split; that content was
+        # already resolved correctly when that earlier, narrower
+        # handler was processed.
+        if start_repr is start_block:
+            self._split_leading_unprotected_content(
+                lca_seq,
+                lca_seq.children.index(start_block),
+                start_block,
+                handler["start"],
+            )
+
         start_idx = lca_seq.children.index(start_repr)
         handler_idx = lca_seq.children.index(handler_repr)
 
@@ -87,16 +120,52 @@ class _HandlerBuilder:
             stop_at,
         )
 
-        items = self.graph.splice_out(
+        # Splice out the catch content FIRST (it sits at a position
+        # AFTER the try content, per `start_idx <= end_idx < handler_idx`
+        # above) - removing it before touching the try span keeps
+        # `start_idx`/`end_idx` valid, since nothing before `handler_idx`
+        # shifts as a result.
+        catch_items = self.graph.splice_out(
             lca_seq,
-            start_idx,
+            handler_idx,
             catch_end,
         )
 
-        split = handler_idx - start_idx
-
-        try_items = items[:split]
-        catch_items = items[split:]
+        # Splice out ONLY the try content genuinely covered by the
+        # handler's protected range: `[start_idx, end_idx]`, NOT
+        # `[start_idx, handler_idx)`.
+        #
+        # These two are NOT interchangeable: `end_idx` (from
+        # `find_covering_item` against the handler's own real
+        # `try_blocks[-1]`) marks where the ACTUAL protected content
+        # ends, but `handler_idx` is merely wherever the handler block
+        # happens to sit positionally in `lca_seq` - which can be much
+        # later. This gap is real, not just a rare edge case: Hermes
+        # excludes a `finally`'s own inlined duplicate from the SAME
+        # exception's protected range (so it can't recursively
+        # re-trigger the handler it's part of), and a `try` wrapping
+        # only part of a loop's body (see e.g.
+        # loopBreakCrossesTryBoundaryTest, which protects 3 disjoint
+        # per-iteration sub-ranges under one shared handler) leaves
+        # the loop's own later iterations, its post-loop code, and
+        # every one of those per-exit finally duplicates sitting
+        # address-wise between the try's real end and the handler
+        # block. Using `handler_idx` as the try boundary would sweep
+        # all of that genuinely-unprotected code into `try_body`
+        # too - it isn't try content, and code that runs unconditionally
+        # after the whole loop (like that test's own "end" print and
+        # return) would end up nested inside the try/finally it should
+        # sit entirely outside of.
+        #
+        # Whatever sits between `end_idx` and `handler_idx` is
+        # deliberately left untouched in `lca_seq` here - once the
+        # `TryRegion` is inserted at `start_idx` below, it naturally
+        # ends up as an ordinary sibling immediately after it.
+        try_items = self.graph.splice_out(
+            lca_seq,
+            start_idx,
+            end_idx + 1,
+        )
 
         try_body = SequenceRegion()
         self.graph.transfer(
@@ -129,6 +198,54 @@ class _HandlerBuilder:
         )
 
         return try_region
+
+    # -------------------------------------------------------------
+
+    def _split_leading_unprotected_content(
+            self,
+            lca_seq: SequenceRegion,
+            start_idx: int,
+            start_block: BasicBlock,
+            handler_start: int,
+    ) -> None:
+        """If `start_block` contains instructions BEFORE `handler_start`,
+        split them off into a new preceding sibling, so `start_block`
+        itself only ever holds the genuinely protected portion from
+        here on.
+
+        See the call site's own comment for why this gap exists at
+        all (`CFGBuilder` range-overlap block selection, never
+        splitting at a handler's own start address).
+
+        A no-op if every instruction in `start_block` already has an
+        address `>= handler_start` (the common case - most try blocks
+        start cleanly).
+        """
+        instructions = start_block.instructions
+
+        split_pos = None
+
+        for i, instr in enumerate(instructions):
+            if instr.address >= handler_start:
+                split_pos = i
+                break
+
+        if not split_pos:
+            # split_pos is None (no instruction reaches handler_start -
+            # shouldn't happen given `try_blocks` selection, but don't
+            # guess) or 0 (nothing precedes it) - already correct.
+            return
+
+        leading_instructions = instructions[:split_pos]
+
+        new_id = max((b.id for b in self.cfg.blocks), default=0) + 1
+
+        leading_block = BasicBlock(new_id, address=start_block.address)
+        leading_block.instructions = leading_instructions
+
+        start_block.instructions = instructions[split_pos:]
+
+        self.graph.insert_at(lca_seq, start_idx, leading_block)
 
     # -------------------------------------------------------------
 

@@ -1,18 +1,19 @@
 function switchInsideTryTest(param1) {
+    // ──────────────── Block 9 ──────────────── 
+    // CODE → addr:  0 | <LoadParam>: <Reg8: 0, UInt8: 1>
+    // USED → r0 = param1;
+    // CODE → addr:  3 | <GetGlobalObject>: <Reg8: 1>
+    // USED → r1 = globalThis;
+    // CODE → addr:  5 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r4 = console;
+    // CODE → addr: 11 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r3 = console.log;
+    // CODE → addr: 16 | <LoadConstString>: <Reg8: 2, string_id: 4684>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/start' (String)
+    // USED → r2 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/start";
+    // CODE → addr: 20 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+    console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start")
     try {
         // ──────────────── Block 0 ──────────────── 
-        // CODE → addr:  0 | <LoadParam>: <Reg8: 0, UInt8: 1>
-        // USED → r0 = param1;
-        // CODE → addr:  3 | <GetGlobalObject>: <Reg8: 1>
-        // USED → r1 = globalThis;
-        // CODE → addr:  5 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = console;
-        // CODE → addr: 11 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r3 = console.log;
-        // CODE → addr: 16 | <LoadConstString>: <Reg8: 2, string_id: 4684>  # String: '__BC:Exceptions/ExceptionTests/switchInsideTryTest/start' (String)
-        // USED → r2 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/start";
-        // CODE → addr: 20 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-        console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/start")
         // CODE → addr: 25 | <Mov>: <Reg8: 2, Reg8: 0>
         r2 = param1
         // CODE → addr: 28 | <LoadConstZero>: <Reg8: 0>
@@ -63,9 +64,6 @@ function switchInsideTryTest(param1) {
                 break;
         }
         // Switch → END
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → addr:115 | <Jmp>: <Addr8: 24>  # Address: 0000008b
-        goto label_139;
     } catch (caughtException) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → addr:119 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

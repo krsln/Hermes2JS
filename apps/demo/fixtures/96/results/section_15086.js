@@ -1,8 +1,9 @@
 function tryCatchFinallyBranchInFinallyTest(param1) {
+    // ──────────────── Block 9 ──────────────── 
+    // CODE → addr:  0 | <LoadParam>: <Reg8: 1, UInt8: 1>
+    // USED → r1 = param1;
     try {
         // ──────────────── Block 0 ──────────────── 
-        // CODE → addr:  0 | <LoadParam>: <Reg8: 1, UInt8: 1>
-        // USED → r1 = param1;
         // CODE → addr:  3 | <GetGlobalObject>: <Reg8: 0>
         // USED → r0 = globalThis;
         // CODE → addr:  5 | <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

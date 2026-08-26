@@ -1,25 +1,26 @@
 function nestedTryCatchTest() {
+    // ──────────────── Block 3 ──────────────── 
+    // CODE → addr:  0 | <GetGlobalObject>: <Reg8: 0>
+    // USED → r0 = globalThis;
+    // CODE → addr:  2 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = console;
+    // CODE → addr:  8 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = console.log;
+    // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 1851>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/start' (String)
+    // USED → r1 = "__BC:Exceptions/ExceptionTests/nestedTryCatchTest/start";
+    // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchTest/start")
+    // CODE → addr: 22 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = console;
+    // CODE → addr: 28 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = console.log;
+    // CODE → addr: 33 | <LoadConstString>: <Reg8: 1, string_id: 4677>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/outer-try' (String)
+    // USED → r1 = "__BC:Exceptions/ExceptionTests/nestedTryCatchTest/outer-try";
+    // CODE → addr: 37 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchTest/outer-try")
     try {
         try {
             // ──────────────── Block 0 ──────────────── 
-            // CODE → addr:  0 | <GetGlobalObject>: <Reg8: 0>
-            // USED → r0 = globalThis;
-            // CODE → addr:  2 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r3 = console;
-            // CODE → addr:  8 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r2 = console.log;
-            // CODE → addr: 13 | <LoadConstString>: <Reg8: 1, string_id: 1851>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/start' (String)
-            // USED → r1 = "__BC:Exceptions/ExceptionTests/nestedTryCatchTest/start";
-            // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-            console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchTest/start")
-            // CODE → addr: 22 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r3 = console;
-            // CODE → addr: 28 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r2 = console.log;
-            // CODE → addr: 33 | <LoadConstString>: <Reg8: 1, string_id: 4677>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchTest/outer-try' (String)
-            // USED → r1 = "__BC:Exceptions/ExceptionTests/nestedTryCatchTest/outer-try";
-            // CODE → addr: 37 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-            console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchTest/outer-try")
             // CODE → addr: 42 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r3 = console;
             // CODE → addr: 48 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

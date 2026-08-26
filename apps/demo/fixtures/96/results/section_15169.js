@@ -13,18 +13,19 @@ async function* anon_15169() {
         // CODE → addr:156 | <Ret>: <Reg8: 0>
         return await yield;
     } else {
+        // ──────────────── Block 12 ──────────────── 
+        // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 2>
+        // USED → r2 = globalThis;
+        // CODE → addr: 12 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r4 = console;
+        // CODE → addr: 18 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r3 = console.log;
+        // CODE → addr: 23 | <LoadConstString>: <Reg8: 1, string_id: 4779>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/start' (String)
+        // USED → r1 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/start";
+        // CODE → addr: 27 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+        console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/start")
         try {
             // ──────────────── Block 1 ──────────────── 
-            // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 2>
-            // USED → r2 = globalThis;
-            // CODE → addr: 12 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r4 = console;
-            // CODE → addr: 18 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r3 = console.log;
-            // CODE → addr: 23 | <LoadConstString>: <Reg8: 1, string_id: 4779>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/start' (String)
-            // USED → r1 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/start";
-            // CODE → addr: 27 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
-            console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/start")
             // CODE → addr: 32 | <LoadConstString>: <Reg8: 1, string_id: 7189>  # String: 'a' (Identifier)
             // USED → r1 = "a";
             // CODE → addr: 36 | <SaveGenerator>: <Addr8: 4>  # Address: 00000028

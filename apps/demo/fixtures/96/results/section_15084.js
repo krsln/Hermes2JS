@@ -1,22 +1,23 @@
 function tryFinallyLoopBreakTest(param1) {
+    // ──────────────── Block 5 ──────────────── 
+    // CODE → addr:  0 | <LoadParam>: <Reg8: 6, UInt8: 1>
+    // USED → r6 = param1;
+    // CODE → addr:  3 | <LoadConstUndefined>: <Reg8: 0>
+    // USED → r0 = undefined;
+    // CODE → addr:  5 | <LoadConstUndefined>: <Reg8: 7>
+    r7 = undefined
+    // CODE → addr:  7 | <GetGlobalObject>: <Reg8: 1>
+    // USED → r1 = globalThis;
+    // CODE → addr:  9 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r4 = console;
+    // CODE → addr: 15 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r3 = console.log;
+    // CODE → addr: 20 | <LoadConstString>: <Reg8: 2, string_id: 4736>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start' (String)
+    // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start";
+    // CODE → addr: 24 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start")
     try {
         // ──────────────── Block 0 ──────────────── 
-        // CODE → addr:  0 | <LoadParam>: <Reg8: 6, UInt8: 1>
-        // USED → r6 = param1;
-        // CODE → addr:  3 | <LoadConstUndefined>: <Reg8: 0>
-        // USED → r0 = undefined;
-        // CODE → addr:  5 | <LoadConstUndefined>: <Reg8: 7>
-        r7 = undefined
-        // CODE → addr:  7 | <GetGlobalObject>: <Reg8: 1>
-        // USED → r1 = globalThis;
-        // CODE → addr:  9 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = console;
-        // CODE → addr: 15 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r3 = console.log;
-        // CODE → addr: 20 | <LoadConstString>: <Reg8: 2, string_id: 4736>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start' (String)
-        // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start";
-        // CODE → addr: 24 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-        console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/start")
         // CODE → addr: 29 | <LoadConstZero>: <Reg8: 5>
         // USED → r5 = 0;
         // CODE → addr: 31 | <LoadConstZero>: <Reg8: 7>
@@ -73,7 +74,15 @@ function tryFinallyLoopBreakTest(param1) {
         // CODE → addr:164 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
     }
-    // ──────────────── Block 5 ──────────────── 
+    // ──────────────── Block 3 ──────────────── 
+    // CODE → addr:105 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r4 = console;
+    // CODE → addr:111 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r3 = console.log;
+    // CODE → addr:116 | <LoadConstString>: <Reg8: 2, string_id: 4734>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block' (String)
+    // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block";
+    // CODE → addr:120 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
     // CODE → addr:125 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:131 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
