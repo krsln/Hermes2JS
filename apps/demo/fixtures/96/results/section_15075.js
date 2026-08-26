@@ -51,18 +51,6 @@ function tryCatchTest() {
         // USED → r0 = console.log;
         // CODE → addr:107 | <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 3>
         console.log(r3)
-        // CODE → addr:152 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r3 = console;
-        // CODE → addr:158 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r2 = console.log;
-        // CODE → addr:163 | <LoadConstString>: <Reg8: 0, string_id: 4728>  # String: '__BC:Exceptions/ExceptionTests/tryCatchTest/end' (String)
-        // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchTest/end";
-        // CODE → addr:167 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/end")
-        // CODE → addr:172 | <LoadConstUndefined>: <Reg8: 0>
-        // USED → r0 = undefined;
-        // CODE → addr:174 | <Ret>: <Reg8: 0>
-        return undefined;
     } finally {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:178 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -82,4 +70,17 @@ function tryCatchTest() {
         // CODE → addr:213 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("finally")
     }
+    // ──────────────── Block 3 ──────────────── 
+    // CODE → addr:152 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = console;
+    // CODE → addr:158 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = console.log;
+    // CODE → addr:163 | <LoadConstString>: <Reg8: 0, string_id: 4728>  # String: '__BC:Exceptions/ExceptionTests/tryCatchTest/end' (String)
+    // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchTest/end";
+    // CODE → addr:167 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchTest/end")
+    // CODE → addr:172 | <LoadConstUndefined>: <Reg8: 0>
+    // USED → r0 = undefined;
+    // CODE → addr:174 | <Ret>: <Reg8: 0>
+    return undefined;
 }

@@ -62,17 +62,6 @@ function tryFinallyLoopBreakTest(param1) {
             }
             // LOOP → END
         }
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → addr:125 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = console;
-        // CODE → addr:131 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r3 = console.log;
-        // CODE → addr:136 | <LoadConstString>: <Reg8: 2, string_id: 4733>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end' (String)
-        // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end";
-        // CODE → addr:140 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-        console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end")
-        // CODE → addr:145 | <Ret>: <Reg8: 0>
-        return undefined;
     } finally {
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr:149 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -84,4 +73,15 @@ function tryFinallyLoopBreakTest(param1) {
         // CODE → addr:164 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
     }
+    // ──────────────── Block 5 ──────────────── 
+    // CODE → addr:125 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r4 = console;
+    // CODE → addr:131 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r3 = console.log;
+    // CODE → addr:136 | <LoadConstString>: <Reg8: 2, string_id: 4733>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end' (String)
+    // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end";
+    // CODE → addr:140 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end")
+    // CODE → addr:145 | <Ret>: <Reg8: 0>
+    return undefined;
 }

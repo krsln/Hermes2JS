@@ -103,6 +103,6 @@ class TryStructurer(RegionStructurer):
         # handler has been resolved.
         for _, try_region in processed:
             if try_region.finally_ is None:
-                self._attacher.maybe_reinterpret_as_finally(try_region)
+                self._attacher.maybe_reinterpret_as_finally(try_region, self.cfg)
 
         self.dump_region_tree_if_debug(type(self).__name__)

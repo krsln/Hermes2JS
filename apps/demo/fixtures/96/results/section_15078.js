@@ -19,18 +19,6 @@ function tryFinallyNormalCompletionTest() {
         // USED → r0 = "__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/try-block";
         // CODE → addr: 37 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
         console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/try-block")
-        // CODE → addr: 62 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r3 = console;
-        // CODE → addr: 68 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r2 = console.log;
-        // CODE → addr: 73 | <LoadConstString>: <Reg8: 0, string_id: 4740>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end' (String)
-        // USED → r0 = "__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end";
-        // CODE → addr: 77 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-        console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end")
-        // CODE → addr: 82 | <LoadConstUndefined>: <Reg8: 0>
-        // USED → r0 = undefined;
-        // CODE → addr: 84 | <Ret>: <Reg8: 0>
-        return undefined;
     } finally {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 88 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -42,4 +30,17 @@ function tryFinallyNormalCompletionTest() {
         // CODE → addr:103 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/finally-block")
     }
+    // ──────────────── Block 2 ──────────────── 
+    // CODE → addr: 62 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = console;
+    // CODE → addr: 68 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = console.log;
+    // CODE → addr: 73 | <LoadConstString>: <Reg8: 0, string_id: 4740>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end' (String)
+    // USED → r0 = "__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end";
+    // CODE → addr: 77 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+    console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end")
+    // CODE → addr: 82 | <LoadConstUndefined>: <Reg8: 0>
+    // USED → r0 = undefined;
+    // CODE → addr: 84 | <Ret>: <Reg8: 0>
+    return undefined;
 }

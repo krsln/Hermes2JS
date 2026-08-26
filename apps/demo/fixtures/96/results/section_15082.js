@@ -46,16 +46,6 @@ function nestedTryCatchFinallyTest() {
             // USED → r0 = "__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/inner-catch";
             // CODE → addr: 91 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
             console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/inner-catch")
-            // CODE → addr:116 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r3 = console;
-            // CODE → addr:122 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r2 = console.log;
-            // CODE → addr:127 | <LoadConstString>: <Reg8: 0, string_id: 4657>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/after-inner' (String)
-            // USED → r0 = "__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/after-inner";
-            // CODE → addr:131 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-            console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/after-inner")
-            // CODE → addr:136 | <Jmp>: <Addr8: 48>  # Address: 000000b8
-            goto label_184;
         } finally {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr:140 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -67,6 +57,17 @@ function nestedTryCatchFinallyTest() {
             // CODE → addr:155 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
             console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/inner-finally")
         }
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → addr:116 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r3 = console;
+        // CODE → addr:122 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r2 = console.log;
+        // CODE → addr:127 | <LoadConstString>: <Reg8: 0, string_id: 4657>  # String: '__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/after-inner' (String)
+        // USED → r0 = "__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/after-inner";
+        // CODE → addr:131 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+        console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/after-inner")
+        // CODE → addr:136 | <Jmp>: <Addr8: 48>  # Address: 000000b8
+        goto label_184;
     } catch (caughtException) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:164 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

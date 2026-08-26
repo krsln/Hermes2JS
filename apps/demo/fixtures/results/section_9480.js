@@ -18,12 +18,9 @@ function forInTest() {
     r6 = HermesPropertyIterator(r5)
     // → r6 = HermesPropertyIterator(r5)
     if (r6 !== undefined) {
-        // LOOP → START (while)
-        // → r4 = r6.next()
-        while (!(r4 === undefined)) {
+        // LOOP → START (for_in)
+        for (const r4 in r5) {
             // ──────────────── Block 1 ──────────────── 
-            // CODE → addr: 39 | <GetNextPName>: <Reg8: 4, Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
-            r4 = r6.next()
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 48 | <Mov>: <Reg8: 11, Reg8: 4>
             // USED → r11 = r4;

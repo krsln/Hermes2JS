@@ -28,11 +28,6 @@ function tryCatchFinallyEarlyReturnTest() {
         // CODE → addr: 52 | <Throw>: <Reg8: 0>
         throw new Error("test");
     } catch (caughtException) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 78 | <LoadConstFalse>: <Reg8: 0>
-        // USED → r0 = false;
-        // CODE → addr: 80 | <Ret>: <Reg8: 0>
-        return false;
     } finally {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 84 | <GetGlobalObject>: <Reg8: 1>
@@ -46,4 +41,9 @@ function tryCatchFinallyEarlyReturnTest() {
         // CODE → addr:101 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block")
     }
+    // ──────────────── Block 3 ──────────────── 
+    // CODE → addr: 78 | <LoadConstFalse>: <Reg8: 0>
+    // USED → r0 = false;
+    // CODE → addr: 80 | <Ret>: <Reg8: 0>
+    return false;
 }
