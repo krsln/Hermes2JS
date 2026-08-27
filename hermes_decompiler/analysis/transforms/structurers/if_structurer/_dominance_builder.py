@@ -226,6 +226,48 @@ class _DominanceIfBuilder(RegionStructurer):
 
         goto_block = self._address_to_block.get(branch.target)
 
+        if merge_block is None and goto_block is not None and not isinstance(then_root, BasicBlock):
+            # Post-dominance can legitimately come back empty when the
+            # fallthrough side contains its own internal dead-end with
+            # no CFG successor - most commonly a raw, not-yet-structured
+            # `throw` inside a loop (IfStructurer runs before
+            # TryStructurer, so a try/catch nested in the loop hasn't
+            # been recognized yet - see
+            # tryCatchInsideLoopTest/section_15085's own zero-trip loop
+            # guard: "if (!(0 < items.length)) { skip } else { for
+            # (...) { try { ...; if (x<0) throw ...; } catch {...} } }").
+            # That dead-end being unreachable from the exit doesn't
+            # mean goto_block ISN'T still the genuine shared
+            # continuation for every path that DOESN'T hit it - check
+            # plain forward reachability instead, which only needs ONE
+            # path to confirm the connection, unlike post-dominance
+            # (which correctly, for its own stricter purpose, requires
+            # EVERY path to agree).
+            #
+            # Deliberately restricted to `then_root` already being a
+            # structured Region (a LoopRegion here, but any Region
+            # qualifies), NOT a bare BasicBlock: a raw block's own
+            # pending conditional branch can ALSO directly reach
+            # `goto_block` via its OWN alternate arm - reachable, but
+            # not because it's a shared merge point, only because it's
+            # one option among several a still-unstructured comparison
+            # chain could take (see switchTest/section_15056's `case 3:
+            # case 4:` fallthrough chain, whose own cascading
+            # `if (3!==x) { if (4!==x) {...} }` shape relies on
+            # `has_else=True` at EVERY link for SwitchStructurer to
+            # recognize it afterward - this fallback firing there
+            # collapses that chain into a differently-shaped, still
+            # correct but no-longer-recognizable nested if/else).
+            # `representative_block`'s own single-block value is what
+            # would get reached via `then_root.terminator`, not some
+            # separate, already-resolved "the region eventually exits
+            # here" edge the way a Region's own back-edge/break
+            # machinery provides - so the same reachability check
+            # means something entirely different (and unreliable) for
+            # it.
+            if self._is_reachable(then_entry, goto_block):
+                merge_block = goto_block
+
         has_else = goto_block is not merge_block and goto_block is not None
 
         # else_root = None
@@ -335,6 +377,38 @@ class _DominanceIfBuilder(RegionStructurer):
         self.graph.insert_at(region, insert_at, if_region)
 
         return True
+
+    # -------------------------------------------------------------
+    # Reachability fallback (see `_convert`'s own comment)
+    # -------------------------------------------------------------
+
+    @staticmethod
+    def _is_reachable(start: BasicBlock, target: BasicBlock) -> bool:
+        """Plain forward reachability via `.successors`, ignoring
+        anything structural (Regions) - a raw graph-edges BFS.
+
+        Used only as a fallback signal when post-dominance itself came
+        back `None` (see `_convert`) - deliberately weaker than
+        post-dominance (only needs ONE path to connect, not every
+        path), which is exactly the property needed there: a dead-end
+        on some OTHER path (e.g. an unstructured `throw`) doesn't
+        invalidate the genuine connection this path provides.
+        """
+        seen = {start}
+        stack = [start]
+
+        while stack:
+            current = stack.pop()
+
+            if current is target:
+                return True
+
+            for successor in current.successors:
+                if successor not in seen:
+                    seen.add(successor)
+                    stack.append(successor)
+
+        return False
 
     # -------------------------------------------------------------
     # Trailing-jump cleanup

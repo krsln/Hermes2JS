@@ -31,19 +31,7 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr: 55 | <LoadConstZero>: <Reg8: 0>
     r0 = 0
     // → r10 = param1
-    if (!(0 < r10.length)) {
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → addr:168 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r3 = console;
-        // CODE → addr:174 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r2 = console.log;
-        // CODE → addr:179 | <LoadConstString>: <Reg8: 1, string_id: 4876>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end' (String)
-        // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end";
-        // CODE → addr:183 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
-        // CODE → addr:188 | <Ret>: <Reg8: 0>
-        return r11 + 1;
-    } else {
+    if (0 < r10.length) {
         // LOOP → START (for)
         // → r2 = 0
         for (r4 = 0; r4 < r2; r4 = r2 + 1) {
@@ -105,4 +93,15 @@ function tryCatchInsideLoopTest(param1) {
         }
         // LOOP → END
     }
+    // ──────────────── Block 5 ──────────────── 
+    // CODE → addr:168 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // USED → r3 = console;
+    // CODE → addr:174 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // USED → r2 = console.log;
+    // CODE → addr:179 | <LoadConstString>: <Reg8: 1, string_id: 4876>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end' (String)
+    // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end";
+    // CODE → addr:183 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
+    // CODE → addr:188 | <Ret>: <Reg8: 0>
+    return r11 + 1;
 }

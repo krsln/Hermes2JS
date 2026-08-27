@@ -32,23 +32,7 @@ async function* anon_15167(param1) {
         // USED → r3 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/skip";
         // CODE → addr: 42 | <LoadConstUInt8>: <Reg8: 2, UInt8: 2>
         // USED → r2 = 2;
-        if (!(0 < param1)) {
-            // ──────────────── Block 9 ──────────────── 
-            // CODE → addr: 95 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r3 = console;
-            // CODE → addr:101 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r2 = console.log;
-            // CODE → addr:106 | <LoadConstString>: <Reg8: 1, string_id: 4782>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/end' (String)
-            // USED → r1 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/end";
-            // CODE → addr:110 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-            console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/end")
-            // CODE → addr:115 | <LoadConstUndefined>: <Reg8: 1>
-            // USED → r1 = undefined;
-            // CODE → addr:117 | <CompleteGenerator>: <>
-            // CompleteGenerator
-            // CODE → addr:118 | <Ret>: <Reg8: 1>
-            return undefined;
-        } else {
+        if (0 < param1) {
             // LOOP → START (for)
             for (r4 = 0; r4 < param1; r4 = r4 + 1) {
                 // ──────────────── Block 2 ──────────────── 
@@ -86,5 +70,20 @@ async function* anon_15167(param1) {
             // CODE → addr: 61 | <Ret>: <Reg8: 7>
             return 0 * 0;
         }
+        // ──────────────── Block 9 ──────────────── 
+        // CODE → addr: 95 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r3 = console;
+        // CODE → addr:101 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r2 = console.log;
+        // CODE → addr:106 | <LoadConstString>: <Reg8: 1, string_id: 4782>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/end' (String)
+        // USED → r1 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/end";
+        // CODE → addr:110 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+        console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/end")
+        // CODE → addr:115 | <LoadConstUndefined>: <Reg8: 1>
+        // USED → r1 = undefined;
+        // CODE → addr:117 | <CompleteGenerator>: <>
+        // CompleteGenerator
+        // CODE → addr:118 | <Ret>: <Reg8: 1>
+        return undefined;
     }
 }

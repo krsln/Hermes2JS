@@ -31,19 +31,7 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr: 47 | <LoadConstString>: <Reg8: 4, string_id: 4701>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok";
     // → r2 = r2.length
-    if (!(0 < r2)) {
-        // ──────────────── Block 6 ──────────────── 
-        // CODE → addr:179 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r3 = console;
-        // CODE → addr:185 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r2 = console.log;
-        // CODE → addr:190 | <LoadConstString>: <Reg8: 1, string_id: 4699>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end' (String)
-        // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end";
-        // CODE → addr:194 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-        console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
-        // CODE → addr:199 | <Ret>: <Reg8: 0>
-        return r2 + 1;
-    } else {
+    if (0 < r2) {
         // LOOP → START (for)
         // → r2 = param1[r2]; r3 = param1
         for (; r3 < r2; r3 = r2 + 1) {
@@ -114,4 +102,15 @@ function tryCatchInsideLoopTest(param1) {
         }
         // LOOP → END
     }
+    // ──────────────── Block 6 ──────────────── 
+    // CODE → addr:179 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = console;
+    // CODE → addr:185 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = console.log;
+    // CODE → addr:190 | <LoadConstString>: <Reg8: 1, string_id: 4699>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end' (String)
+    // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end";
+    // CODE → addr:194 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
+    // CODE → addr:199 | <Ret>: <Reg8: 0>
+    return r2 + 1;
 }
