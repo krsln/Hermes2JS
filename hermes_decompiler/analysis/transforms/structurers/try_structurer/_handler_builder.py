@@ -88,20 +88,36 @@ class _HandlerBuilder:
         if handler_idx <= start_idx:
             return None
 
-        end_repr = self.graph.find_covering_item(
+        # Determine how far the protected content actually extends by
+        # scanning FORWARD from `start_idx` over the CURRENT tree,
+        # rather than locating `try_blocks[-1]` (a reference fixed once,
+        # up front, by `CFGBuilder`, before any structuring runs).
+        #
+        # That static reference goes stale the moment EARLIER handler
+        # processing has already relocated content that used to sit
+        # alongside it - see nestedTryCatchFinallyTest: the inner
+        # try/catch/finally's own processing (`_FinallyAttacher`'s tail
+        # relocation) splits "after-inner" off of what was originally
+        # part of `try_blocks[-1]`'s own block and moves it to a NEW
+        # sibling block positioned right after the inner TryRegion.
+        # `find_covering_item(lca_seq, try_blocks[-1])` still faithfully
+        # locates wherever the ORIGINAL block object ended up (correct
+        # in isolation), but has no way to know that a DIFFERENT,
+        # newly-created sibling right next to it is ALSO still
+        # genuinely protected content that used to travel with it.
+        #
+        # Scanning current addresses instead is immune to this: it
+        # doesn't care how many times content has been split or
+        # relocated since `CFGBuilder` ran, only where it, right now,
+        # actually falls relative to `handler["end"]`.
+        end_idx = self._scan_protected_extent(
             lca_seq,
-            try_blocks[-1],
+            start_idx,
+            handler_idx,
+            handler["end"],
         )
 
-        if end_repr is None:
-            return None
-
-        if end_repr not in lca_seq.children:
-            return None
-
-        end_idx = lca_seq.children.index(end_repr)
-
-        if not (start_idx <= end_idx < handler_idx):
+        if end_idx is None:
             return None
 
         merge_block = None
@@ -201,6 +217,49 @@ class _HandlerBuilder:
 
     # -------------------------------------------------------------
 
+    @staticmethod
+    def _scan_protected_extent(
+            lca_seq: SequenceRegion,
+            start_idx: int,
+            handler_idx: int,
+            handler_end: int,
+    ) -> int | None:
+        """Return the index of the LAST sibling in `lca_seq.children`,
+        starting from `start_idx` and stopping before `handler_idx`,
+        that still contains at least one block address `< handler_end`.
+
+        See the call site's own comment for why this can't just reuse
+        `try_blocks[-1]`'s original block reference. Extends `end_idx`
+        sibling-by-sibling for as long as each one still has SOME
+        address inside the protected range - covering both an ordinary
+        single block and a Region (whose `covered_blocks` may include
+        addresses spanning well past `handler_end` for a large nested
+        loop/if, but only needs ONE qualifying address to mean "this
+        sibling is still, at least partly, protected content").
+
+        Returns None if `start_idx` itself doesn't qualify (nothing
+        protected here at all - matches the old code's `None` return
+        for an unrecognized shape).
+        """
+        end_idx = None
+
+        for index in range(start_idx, handler_idx):
+            item = lca_seq.children[index]
+
+            if isinstance(item, BasicBlock):
+                addresses = [item.address]
+            else:
+                addresses = [block.address for block in item.covered_blocks]
+
+            if any(address < handler_end for address in addresses):
+                end_idx = index
+            else:
+                break
+
+        return end_idx
+
+    # -------------------------------------------------------------
+
     def _split_leading_unprotected_content(
             self,
             lca_seq: SequenceRegion,
@@ -244,6 +303,13 @@ class _HandlerBuilder:
         leading_block.instructions = leading_instructions
 
         start_block.instructions = instructions[split_pos:]
+
+        # Register the new block on `cfg.blocks` too - later handlers
+        # in the same pass (e.g. `_FinallyAttacher._split_off_tail`)
+        # allocate their own new block ids the same way
+        # (`max(cfg.blocks) + 1`); leaving this one off that list
+        # would let a later allocation collide with it.
+        self.cfg.blocks.append(leading_block)
 
         self.graph.insert_at(lca_seq, start_idx, leading_block)
 

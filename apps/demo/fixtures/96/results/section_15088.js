@@ -53,7 +53,7 @@ function tryCatchFinallyImplicitThrowTest(param1) {
         // CODE → addr:152 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block")
     }
-    // ──────────────── Block 3 ──────────────── 
+    // ──────────────── Block 4 ──────────────── 
     // CODE → addr:127 | <LoadConstInt>: <Reg8: 0, Imm32: -1>
     // USED → r0 = -1;
     // CODE → addr:133 | <Ret>: <Reg8: 0>

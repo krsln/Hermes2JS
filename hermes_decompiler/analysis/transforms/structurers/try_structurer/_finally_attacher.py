@@ -390,6 +390,13 @@ class _FinallyAttacher:
             block.terminator = None
             block.successors = []
 
+            if cfg is not None:
+                # See `_HandlerBuilder._split_leading_unprotected_content`'s
+                # matching comment: any code allocating a new block id
+                # this way must register it on `cfg.blocks` too, or a
+                # later allocation (in either file) can collide with it.
+                cfg.blocks.append(tail_block)
+
             tail_items.append(tail_block)
 
         idx = region.children.index(block)
