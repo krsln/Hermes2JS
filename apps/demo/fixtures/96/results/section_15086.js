@@ -32,12 +32,6 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
         throw new Error("test");
     } catch (caughtException) {
         // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 59 | <GetGlobalObject>: <Reg8: 2>
-        // USED → r2 = globalThis;
-        // CODE → addr: 61 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = console;
-        // CODE → addr: 67 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r3 = console.log;
         // CODE → addr: 72 | <LoadConstString>: <Reg8: 0, string_id: 2167>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/catch-block";
         // CODE → addr: 76 | <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 0>
@@ -48,19 +42,6 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
         // USED → r3 = console;
         // CODE → addr: 90 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r2 = console.log;
-        if (param1) {
-            // ──────────────── Block 3 ──────────────── 
-            // CODE → addr:109 | <LoadConstString>: <Reg8: 0, string_id: 4687>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true' (String)
-            // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true";
-            // CODE → addr:113 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-            console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true")
-        } else {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 98 | <LoadConstString>: <Reg8: 0, string_id: 4685>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
-            // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
-            // CODE → addr:102 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
-            console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
-        }
     } finally {
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr:124 | <GetGlobalObject>: <Reg8: 2>

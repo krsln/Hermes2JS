@@ -138,7 +138,8 @@ def _sequence_structurally_equal(a: SequenceRegion, b: SequenceRegion) -> bool:
 
 def strip_duplicate_span(region: SequenceRegion, span: list) -> bool:
     """Remove the first contiguous run of `region`'s DIRECT children
-    that structurally matches `span` (see `_items_structurally_equal`).
+    that structurally matches `span` (see `_items_structurally_equal`
+    for non-edge items).
 
     Generalizes `strip_duplicate_run` to the region-tree level: needed
     once a `finally` body's own content spans multiple siblings (a
@@ -147,13 +148,29 @@ def strip_duplicate_span(region: SequenceRegion, span: list) -> bool:
     none of that can be expressed as a flat run of instruction values
     within one block.
 
-    Unlike `strip_duplicate_run`, this requires each matched
-    BasicBlock to equal the corresponding span item *entirely* (not
-    just contain it as a subrun) - `span` here is the *already
-    fully-extracted* finally body, so a whole-item match is the
-    correct comparison; a partial/subrun match at this level would
-    risk matching an unrelated block that merely happens to start the
-    same way.
+    The FIRST and LAST items of `span`, when they are BasicBlocks, are
+    matched as a partial SUBRUN of the corresponding candidate block's
+    own instruction values, not a whole-block match - mirroring
+    `strip_duplicate_run`'s own per-block partial matching. This
+    matters whenever unrelated genuine content shares a physical block
+    with the duplicated span's own leading/trailing setup instructions
+    purely because nothing in the ORIGINAL bytecode ever branched
+    between them - see tryCatchFinallyBranchInFinallyTest: the
+    finally-wrapper's own span is `[<console/console.log-fetch block>,
+    IfRegion]` (the fetch is hoisted once, shared by both the `if` and
+    `else` arms' own `console.log` calls), but the catch clause's
+    matching copy has that SAME fetch sharing a block with an
+    unrelated, genuine "catch-block" print that must NOT be swept away
+    with it - a whole-block match would never find this duplicate at
+    all, since the two blocks' FULL instruction lists differ (extra
+    "catch-block" content on one side), even though the meaningful,
+    duplicated PART of each is identical.
+
+    Any MIDDLE item (when `span` has more than 2 items) still requires
+    a full, whole-item match - only a span's own edges can plausibly
+    share a block with adjacent, unrelated content; the codebase's
+    finally-duplication has never been observed splicing unrelated
+    statements into the MIDDLE of a duplicated span.
 
     Returns True if a match was found and removed.
     """
@@ -164,12 +181,117 @@ def strip_duplicate_span(region: SequenceRegion, span: list) -> bool:
     children = region.children
 
     for start in range(len(children) - n + 1):
-        if all(
-                _items_structurally_equal(children[start + i], span[i])
-                for i in range(n)
-        ):
-            del children[start:start + n]
-            region.invalidate_coverage()
-            return True
+        window = children[start:start + n]
+
+        plan = _match_span_window(window, span)
+
+        if plan is None:
+            continue
+
+        _apply_span_removal(children, start, window, plan)
+        region.invalidate_coverage()
+        return True
 
     return False
+
+
+def _block_value_instr_pairs(block: BasicBlock) -> list:
+    return [(instr.value, instr) for instr in block.instructions if instr.value is not None]
+
+
+def _find_subrun(candidate_keys: list, target_keys: list):
+    """Return the (start, end) exclusive-end index range within
+    `candidate_keys` where `target_keys` appears as a contiguous
+    subrun, or None if it doesn't appear at all. An empty
+    `target_keys` trivially matches at position (0, 0).
+    """
+    n = len(target_keys)
+
+    if n == 0:
+        return 0, 0
+
+    for start in range(len(candidate_keys) - n + 1):
+        if candidate_keys[start:start + n] == target_keys:
+            return start, start + n
+
+    return None
+
+
+def _match_span_window(window: list, span: list):
+    """Try to match `window` (a same-length slice of some region's
+    children) against `span`. Returns a per-item removal plan (a list
+    the same length as `span`) on success, or None on failure.
+
+    Each plan entry is either:
+      - `None`         - the window item is a full, whole-item match
+                          for the span item; remove it entirely.
+      - `(start, end)`  - the window item is a BasicBlock whose
+                          VALUE-bearing instructions[start:end] match
+                          the span item's own values as a subrun;
+                          remove only that subrun (see
+                          `_apply_span_removal`), keeping the rest of
+                          the block's content in place.
+
+    Only the first (index 0) and last (index `len(span)-1`) positions
+    are ever considered for subrun matching - see `strip_duplicate_span`'s
+    own docstring for why.
+    """
+    n = len(span)
+    plan = []
+
+    for i in range(n):
+        candidate = window[i]
+        target = span[i]
+        is_edge = i == 0 or i == n - 1
+
+        if is_edge and isinstance(candidate, BasicBlock) and isinstance(target, BasicBlock):
+            target_keys = [
+                structural_key(value)
+                for value, _ in _block_value_instr_pairs(target)
+            ]
+            candidate_keys = [
+                structural_key(value)
+                for value, _ in _block_value_instr_pairs(candidate)
+            ]
+
+            match_range = _find_subrun(candidate_keys, target_keys)
+
+            if match_range is None:
+                return None
+
+            plan.append(match_range)
+            continue
+
+        if not _items_structurally_equal(candidate, target):
+            return None
+
+        plan.append(None)
+
+    return plan
+
+
+def _apply_span_removal(children: list, start: int, window: list, plan: list) -> None:
+    """Perform the removal described by `plan` (see
+    `_match_span_window`) against `children[start:start + len(window)]`.
+
+    Whole-item matches (`plan[i] is None`) are deleted from `children`
+    outright. Subrun matches (`plan[i] = (lo, hi)`) instead remove
+    just that instruction subrun from the matched BasicBlock's own
+    `.instructions`, leaving the block itself in place with whatever
+    unrelated content surrounded the duplicate.
+    """
+    whole_item_indices = []
+
+    for offset, (item, entry) in enumerate(zip(window, plan)):
+        if entry is None:
+            whole_item_indices.append(start + offset)
+            continue
+
+        lo, hi = entry
+        pairs = _block_value_instr_pairs(item)
+
+        for _, instr in pairs[lo:hi]:
+            item.instructions.remove(instr)
+
+    for index in sorted(whole_item_indices, reverse=True):
+        del children[index]
