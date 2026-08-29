@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections import deque
+
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models import RegionVisitor, TerminatorConditionalBranch
 from hermes_decompiler.analysis.models.regions import LoopKind, LoopRegion
@@ -451,7 +453,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         if update_block is None:
             return
 
-        induction_reg = self._infer_induction_register(loop.condition, update_block)
+        induction_reg = self._infer_induction_register(loop.condition, update_block, loop.condition_block)
 
         if induction_reg is None:
             return
@@ -530,7 +532,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
 
         predecessor = outside_predecessors[0]
 
-        induction_reg = self._infer_induction_register(loop.condition, loop.update_block)
+        induction_reg = self._infer_induction_register(loop.condition, loop.update_block, loop.condition_block)
 
         if induction_reg is None:
             return
@@ -564,6 +566,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             self,
             condition: Expression | None,
             update_block: BasicBlock,
+            condition_block: BasicBlock | None = None,
     ) -> int | None:
         """Identify the induction register via reaching definitions.
 
@@ -572,6 +575,38 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         (per address-ordered reg_definitions) is the induction
         register. Unlike the previous behavior, this does not depend
         on operand order (left vs. right).
+
+        `condition_block`, when given, tightens this from "does
+        SOME definition of this register number exist anywhere in
+        update_block" (a register-NUMBER-level check) to "does the
+        SPECIFIC value read at condition_block's own use site actually
+        REACH here from a definition inside update_block" (a proper,
+        block-position-aware reaching-definition check).
+
+        The distinction matters whenever a candidate register number
+        gets reused for multiple, unrelated logical values across the
+        loop - `cfg.reg_definitions[reg]` lists every block that ever
+        writes `reg` ANYWHERE in the function, with no notion of which
+        one a given read actually observes. A register can then
+        appear to be "defined in update_block" by pure coincidence -
+        some entirely unrelated temporary reusing the same register
+        number there - while the value the condition ACTUALLY reads
+        comes from somewhere else entirely (often the real induction
+        register's own per-iteration alias - see
+        `LoopInductionAliasPass`'s own docstring on why that alias
+        exists in the first place). This produced a real, confirmed
+        bug in tryCatchInsideLoopTest/section_15085: `r3 < r2`'s `r3`
+        happened to ALSO be redefined (for an unrelated purpose) in
+        update_block, so the old register-number-only check picked it
+        as "the" induction register - when the condition's `r3` is
+        actually just that iteration's alias of the REAL induction
+        register (`r8`), which never appears in the condition
+        expression at all. `r3`'s own reaching value at loop entry
+        then resolved to unrelated, unsafe content (a `console.log(...)`
+        call's return value), so `_extract_initializer` correctly
+        refused to guess - but only because it got the wrong register
+        in the first place; `items[i]` also then had no way to ever
+        read anything but the loop's very first iteration's value.
         """
 
         node = condition
@@ -590,6 +625,29 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             ):
                 candidates.append(int(operand.name[1:]))
 
+        if condition_block is not None:
+            for reg in candidates:
+                reaching_block = self._reaching_definition_block(reg, condition_block)
+                if reaching_block is update_block:
+                    return reg
+
+            # Every candidate's OWN reaching definition was positively
+            # resolved but NONE of them point to update_block - the
+            # register-number-only check below would very likely
+            # produce a wrong answer here too (the same coincidental-
+            # reuse risk it's always exposed to), so this is exactly
+            # the case worth refusing rather than falling through to
+            # it. Still allow the fallback below for the case this
+            # tighter check couldn't resolve at all (ambiguous/
+            # multi-predecessor reaching definition - ordinary
+            # separated-update forms most commonly hit this, and the
+            # old heuristic remains the best available signal there).
+            if any(
+                    self._reaching_definition_block(reg, condition_block) is not None
+                    for reg in candidates
+            ):
+                return candidates[0] if candidates else None
+
         for reg in candidates:
             definitions = self.cfg.reg_definitions.get(reg, [])
             if any(block is update_block for _, block, _ in definitions):
@@ -600,3 +658,49 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         # separate block (separated-update form), which this simple
         # reaching-def check can't resolve.
         return candidates[0] if candidates else None
+
+    def _reaching_definition_block(self, reg: int, before_block: BasicBlock) -> BasicBlock | None:
+        """Find which BasicBlock holds the reaching definition of `reg`
+        for a read occurring in `before_block` - mirrors
+        `ForEachRegionPass._resolve_identifier`'s own backward-BFS
+        technique (see that method for the fuller rationale of each
+        step), but returns the DEFINING BLOCK's identity rather than
+        the defined VALUE, since that's all `_infer_induction_register`
+        needs to compare against `update_block`.
+
+        Requires every explored path that finds a definition to agree
+        on the SAME block - a genuine disagreement (the register is
+        defined differently depending on how control reached
+        `before_block`) means there's no single answer to give, so
+        this returns None rather than picking one arbitrarily.
+        """
+        for instr in reversed(before_block.instructions):
+            if instr.dest_reg == reg and instr.value is not None:
+                return before_block
+
+        visited = {before_block}
+        queue = deque(before_block.predecessors)
+        found_blocks = set()
+
+        while queue:
+            block = queue.popleft()
+
+            if block in visited:
+                continue
+            visited.add(block)
+
+            defines_here = any(
+                instr.dest_reg == reg and instr.value is not None
+                for instr in block.instructions
+            )
+
+            if defines_here:
+                found_blocks.add(block)
+                continue
+
+            queue.extend(block.predecessors)
+
+        if len(found_blocks) == 1:
+            return next(iter(found_blocks))
+
+        return None

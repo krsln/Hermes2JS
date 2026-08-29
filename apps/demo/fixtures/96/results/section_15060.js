@@ -14,6 +14,8 @@ function complexTest() {
     r12 = [1, 2, 3, 4, 5]
     // CODE → addr: 30 | <GetByIdShort>: <Reg8: 1, Reg8: 12, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     // USED → r1 = r12.length;
+    // CODE → addr: 35 | <LoadConstZero>: <Reg8: 11>
+    // USED → r11 = 0;
     // CODE → addr: 37 | <Less>: <Reg8: 1, Reg8: 11, Reg8: 1>
     // USED → r1 = 0 < r12.length;
     // CODE → addr: 41 | <LoadConstString>: <Reg8: 10, string_id: 855>  # String: '__BC:ControlFlow/ComplexTests/complexTest/case-1' (String)
@@ -38,7 +40,7 @@ function complexTest() {
     if (0 < r12.length) {
         // LOOP → START (for)
         // → r1 = 0
-        for (r11 = 0; r11 < r1; r11 = r1 + 1) {
+        for (; r11 < r1; r11 = r1 + 1) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 80 | <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 11>
             r13 = r12[r11]
