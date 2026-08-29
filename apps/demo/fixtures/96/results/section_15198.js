@@ -13,7 +13,7 @@ function Animal(param1, param2) {
     // CODE → addr: 18 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 0>
     // USED → r1 = r0[0];
     // CODE → addr: 22 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    // USED → r0 = undefined;
     // CODE → addr: 24 | <Call3>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
     r1 = r0.default(this, r1)
     // CODE → addr: 30 | <GetGlobalObject>: <Reg8: 1>

@@ -25,7 +25,7 @@ function spreadFunctionArgsTest() {
     // CODE → addr: 50 | <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
     r0 = arraySpread(r-4, r-3, r-2, r-1)
     // CODE → addr: 54 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr: 56 | <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 12477>  # Function: [#12477 sum of 19 bytes]: 4 params @ offset 0x00243e3c
     r9 = sum(param1, param2, param3)
     // CODE → addr: 61 | <Mov>: <Reg8: 8, Reg8: 6>
@@ -45,5 +45,5 @@ function spreadFunctionArgsTest() {
     // CODE → addr: 90 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end")
     // CODE → addr: 95 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

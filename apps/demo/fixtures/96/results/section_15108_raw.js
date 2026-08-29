@@ -51,5 +51,5 @@ function callDestructuringTests() {
     // CODE → addr:101 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/DestructuringTests/callDestructuringTests/end")
     // CODE → addr:106 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

@@ -9,6 +9,7 @@ from .LoopInductionAliasPass import LoopInductionAliasPass
 from .LoopContinueRegionPass import LoopContinueRegionPass
 from .NullishAssignmentRegionPass import NullishAssignmentRegionPass
 from .RedundantJumpRegionPass import RedundantJumpRegionPass
+from .ReturnValueResolutionPass import ReturnValueResolutionPass
 
 __all__ = [
     "RegionPass",
@@ -20,4 +21,5 @@ __all__ = [
     "LoopContinueRegionPass",
     "NullishAssignmentRegionPass",
     "RedundantJumpRegionPass",
+    "ReturnValueResolutionPass",
 ]

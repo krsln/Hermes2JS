@@ -3,7 +3,7 @@ async function* anon_15177() {
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield;
+    r0 = await yield
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     // CODE → addr:  4 | <JmpTrue>: <Addr8: 94, Reg8: 1>  # Address: 00000062
@@ -28,12 +28,12 @@ async function* anon_15177() {
     // CODE → addr: 38 | <LoadConstUInt8>: <Reg8: 1, UInt8: 42>
     // USED → r1 = 42;
     // CODE → addr: 41 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 3, Reg8: 1>
-    // USED → r1 = await r1[2].call(r3, 42);
+    r1 = await r1[2].call(r3, 42)
     // CODE → addr: 46 | <SaveGenerator>: <Addr8: 4>  # Address: 00000032
     goto label_50;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 48 | <Ret>: <Reg8: 1>
-    return await r1[2].call(r3, 42);
+    return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 50 | <ResumeGenerator>: <Reg8: 1, Reg8: 3>
     // USED → r1 = await yield;
@@ -59,15 +59,15 @@ async function* anon_15177() {
     // CODE → addr: 92 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr: 93 | <Ret>: <Reg8: 1>
-    return await yield;
+    return r1;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 95 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr: 96 | <Ret>: <Reg8: 1>
-    return await yield;
+    return r1;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 98 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr: 99 | <Ret>: <Reg8: 0>
-    return await yield;
+    return r0;
 }

@@ -15,7 +15,7 @@ function callMapSetTests() {
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 1>
     // USED → r3 = r2[1];
     // CODE → addr: 29 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    // USED → r0 = undefined;
     // CODE → addr: 31 | <Call1>: <Reg8: 3, Reg8: 3, Reg8: 0>
     r3 = r2[1].call(r0)
     // CODE → addr: 35 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 2>

@@ -65,5 +65,5 @@ function Counter() {
     // CODE → addr:142 | <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>
     r2[r3[6]] = r1 + 1
     // CODE → addr:146 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

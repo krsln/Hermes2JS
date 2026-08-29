@@ -47,7 +47,7 @@ async function* anon_15167(param1) {
                 } else {
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → addr: 55 | <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>
-                    // USED → r7 = 0 * 0;
+                    r7 = 0 * 0
                     // CODE → addr: 59 | <SaveGenerator>: <Addr8: 4>  # Address: 0000003f
                     goto label_63;
                     // ──────────────── Block 5 ──────────────── 
@@ -68,7 +68,7 @@ async function* anon_15167(param1) {
             // LOOP → END
             // ──────────────── Block 4 ──────────────── 
             // CODE → addr: 61 | <Ret>: <Reg8: 7>
-            return 0 * 0;
+            return r7;
         }
         // ──────────────── Block 9 ──────────────── 
         // CODE → addr: 95 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

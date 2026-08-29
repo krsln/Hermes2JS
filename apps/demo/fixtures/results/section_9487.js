@@ -265,7 +265,7 @@ function nestedArrayDestructureTest() {
     // CODE → addr:500 | <Ret>: <Reg8: 3>
     return undefined;
     // CODE → addr:502 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:504 | <Mov>: <Reg8: 8, Reg8: 9>
     // USED → r8 = r7 === undefined;
     // LOOP → START (while)
@@ -293,7 +293,7 @@ function nestedArrayDestructureTest() {
                 // ──────────────── Block 35 ──────────────── 
                 // ──────────────── Block 29 ──────────────── 
                 // CODE → addr:406 | <Catch>: <Reg8: 0>
-                r0 = caughtException
+                // USED → r0 = caughtException;
                 // CODE → addr:408 | <Jmp>: <Addr8: 99>  # Address: 000001fb
                 goto label_507;
                 // ──────────────── Block 33 ──────────────── 
@@ -324,7 +324,7 @@ function nestedArrayDestructureTest() {
                 // ──────────────── Block 41 ──────────────── 
                 // ──────────────── Block 38 ──────────────── 
                 // CODE → addr:526 | <Catch>: <Reg8: 0>
-                r0 = caughtException
+                // USED → r0 = caughtException;
                 // CODE → addr:528 | <Mov>: <Reg8: 2, Reg8: 5>
                 r2 = r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined))
                 // CODE → addr:531 | <Jmp>: <Addr8: 13>  # Address: 00000220
@@ -338,7 +338,7 @@ function nestedArrayDestructureTest() {
                 goto label_544;
                 // ──────────────── Block 40 ──────────────── 
                 // CODE → addr:540 | <Catch>: <Reg8: 0>
-                // USED → r0 = caughtException;
+                r0 = caughtException
                 // CODE → addr:542 | <LoadConstUndefined>: <Reg8: 2>
                 // USED → r2 = undefined;
             }

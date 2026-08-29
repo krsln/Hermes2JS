@@ -49,7 +49,7 @@ function function_15133(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:102 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 5, string_id: 11311>  # String: 'callRegExpTests' (Identifier)
     param6.callRegExpTests = callRegExpTests()
     // CODE → addr:108 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:110 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

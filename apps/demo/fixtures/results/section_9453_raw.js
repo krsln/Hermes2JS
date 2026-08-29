@@ -117,7 +117,7 @@ function complexTest() {
     // CODE → addr:232 | <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
     console.log("__BC:ControlFlow/ComplexTests/complexTest/end")
     // CODE → addr:237 | <LoadConstUndefined>: <Reg8: 5>
-    // USED → r5 = undefined;
+    r5 = undefined
     // CODE → addr:239 | <Ret>: <Reg8: 5>
-    return undefined;
+    return r5;
 }

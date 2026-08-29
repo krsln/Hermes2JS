@@ -57,11 +57,11 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → addr:119 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block")
     // CODE → addr:124 | <LoadConstInt>: <Reg8: 0, Imm32: -1>
-    // USED → r0 = -1;
+    r0 = -1
     // CODE → addr:130 | <Ret>: <Reg8: 0>
-    return -1;
+    return r0;
     // CODE → addr:132 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:134 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:140 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -71,5 +71,5 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → addr:149 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyImplicitThrowTest/finally-block")
     // CODE → addr:154 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

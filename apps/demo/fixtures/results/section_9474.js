@@ -52,7 +52,7 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
         // CODE → addr:112 | <Ret>: <Reg8: 0>
         return undefined;
         // CODE → addr:114 | <Catch>: <Reg8: 0>
-        // USED → r0 = caughtException;
+        r0 = caughtException
         // CODE → addr:116 | <GetGlobalObject>: <Reg8: 2>
         // USED → r2 = globalThis;
         // CODE → addr:118 | <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -79,7 +79,7 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
     while (true) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → addr:152 | <Throw>: <Reg8: 0>
-        throw caughtException;
+        throw r0;
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr:132 | <LoadConstString>: <Reg8: 1, string_id: 4858>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";

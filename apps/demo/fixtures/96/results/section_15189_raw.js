@@ -3,7 +3,7 @@ async function* anon_15189() {
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield;
+    r0 = await yield
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     // CODE → addr:  4 | <JmpTrueLong>: <Addr32: 160, Reg8: 1>  # Address: 000000a4
@@ -44,12 +44,12 @@ async function* anon_15189() {
     // CODE → addr: 77 | <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
     // USED → r1 = (r1[0] = r6)[1] = r9;
     // CODE → addr: 81 | <Call2>: <Reg8: 1, Reg8: 7, Reg8: 8, Reg8: 1>
-    // USED → r1 = await Promise.all(r1);
+    r1 = await Promise.all(r1)
     // CODE → addr: 86 | <SaveGenerator>: <Addr8: 4>  # Address: 0000005a
     goto label_90;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 88 | <Ret>: <Reg8: 1>
-    return await Promise.all(r1);
+    return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 90 | <ResumeGenerator>: <Reg8: 1, Reg8: 7>
     // USED → r1 = await yield;
@@ -87,15 +87,15 @@ async function* anon_15189() {
     // CODE → addr:158 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:159 | <Ret>: <Reg8: 2>
-    return undefined;
+    return r2;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr:161 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:162 | <Ret>: <Reg8: 1>
-    return await yield;
+    return r1;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:164 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:165 | <Ret>: <Reg8: 0>
-    return await yield;
+    return r0;
 }

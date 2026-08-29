@@ -55,7 +55,7 @@ function spreadObjectTest() {
     // CODE → addr:121 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Arrays/SpreadTests/spreadObjectTest/end")
     // CODE → addr:126 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr:128 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

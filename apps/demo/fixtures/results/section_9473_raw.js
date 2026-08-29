@@ -70,9 +70,9 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:116 | <Construct>: <Reg8: 13, Reg8: 13, UInt8: 2>
     // USED → r13 = new Error("negative value");
     // CODE → addr:120 | <SelectObject>: <Reg8: 13, Reg8: 14, Reg8: 13>
-    // USED → r13 = new Error("negative value");
+    r13 = new Error("negative value")
     // CODE → addr:124 | <Throw>: <Reg8: 13>
-    throw new Error("negative value");
+    throw r13;
     // CODE → addr:126 | <Catch>: <Reg8: 15>
     // USED → r15 = caughtException;
     // CODE → addr:128 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -91,7 +91,7 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:158 | <Mov>: <Reg8: 3, Reg8: 12>
     // USED → r3 = r11 + 1;
     // CODE → addr:161 | <Mov>: <Reg8: 0, Reg8: 3>
-    // USED → r0 = r11 + 1;
+    r0 = r11 + 1
     // CODE → addr:164 | <JLess>: <Addr8: -104, Reg8: 4, Reg8: 2>  # Address: 0000003c
     // → r2 = r10.length; r4 = r2 + 1
     if (r4 < r2) goto label_60;
@@ -105,5 +105,5 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:183 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
     // CODE → addr:188 | <Ret>: <Reg8: 0>
-    return r11 + 1;
+    return r0;
 }

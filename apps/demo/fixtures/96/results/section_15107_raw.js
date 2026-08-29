@@ -41,7 +41,7 @@ function swapViaDestructureTest() {
     // CODE → addr: 82 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/end")
     // CODE → addr: 87 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 89 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

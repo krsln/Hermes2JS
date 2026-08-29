@@ -72,9 +72,9 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:123 | <Construct>: <Reg8: 2, Reg8: 9, UInt8: 2>
     // USED → r2 = new Error("negative value");
     // CODE → addr:127 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    // USED → r2 = new Error("negative value");
+    r2 = new Error("negative value")
     // CODE → addr:131 | <Throw>: <Reg8: 2>
-    throw new Error("negative value");
+    throw r2;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:133 | <Catch>: <Reg8: 9>
     // USED → r9 = caughtException;
@@ -87,7 +87,7 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:152 | <Mov>: <Reg8: 2, Reg8: 0>
     r2 = 0
     // CODE → addr:155 | <Inc>: <Reg8: 0, Reg8: 2>
-    // USED → r0 = r2 + 1;
+    r0 = r2 + 1
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr:158 | <Mov>: <Reg8: 2, Reg8: 8>
     r2 = 0
@@ -112,5 +112,5 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:194 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
     // CODE → addr:199 | <Ret>: <Reg8: 0>
-    return r2 + 1;
+    return r0;
 }

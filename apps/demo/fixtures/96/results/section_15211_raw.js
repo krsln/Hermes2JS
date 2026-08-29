@@ -27,7 +27,7 @@ function get() {
     // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 5>
     r0 = r0[5]
     // CODE → addr: 53 | <GetByVal>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = r1[r0];
+    r0 = r1[r0]
     // CODE → addr: 57 | <Ret>: <Reg8: 0>
-    return r1[r0];
+    return r0;
 }

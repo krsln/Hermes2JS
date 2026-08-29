@@ -34,7 +34,7 @@ function function_15131(param1, param2, param3) {
     r0 = String.call(r4, r2)
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 55 | <Add>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = param1 + param2 + r0;
+    r0 = param1 + param2 + r0
     // CODE → addr: 59 | <Ret>: <Reg8: 0>
-    return param1 + param2 + r0;
+    return r0;
 }

@@ -39,5 +39,5 @@ function Dog(param1, param2) {
     // CODE → addr: 65 | <PutByIdStrict>: <Reg8: 0, Reg8: 1, UInt8: 0, string_id: 16255>  # String: 'breed' (Identifier)
     CreateThisForSuper(r3)[r0].breed = param2
     // CODE → addr: 71 | <Ret>: <Reg8: 0>
-    return CreateThisForSuper(r3)[r0];
+    return r0;
 }

@@ -3,7 +3,7 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr:  0 | <LoadParam>: <Reg8: 6, UInt8: 1>
     // USED → r6 = param1;
     // CODE → addr:  3 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:  5 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → addr:  7 | <GetGlobalObject>: <Reg8: 1>
@@ -92,5 +92,5 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr:140 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end")
     // CODE → addr:145 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

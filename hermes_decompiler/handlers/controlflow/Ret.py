@@ -29,7 +29,27 @@ class Ret(OpcodeHandler):
 
         value_reg = int(match.group(1))
 
-        expression = self.get_register_expression(ctx.analysis, value_reg)
+        # NOTE (fix): previously `get_register_expression`, which
+        # inlines whatever value was MOST RECENTLY seen for this
+        # register during this single, linear, ADDRESS-ORDER scan of
+        # the bytecode - with no notion of control flow at all. For a
+        # register written conditionally (e.g. inside a `catch` block,
+        # or on only some loop iterations) and never rewritten
+        # afterward in ADDRESS order, that conditional write gets
+        # inlined as if it always executes - producing a WRONG return
+        # value whenever the actual runtime path never took that
+        # write (see tryCatchInsideLoopTest/section_15085's own
+        # `failures` counter: `Ret r0` was rendering as `return r2 +
+        # 1;`, a copy of the counter's `catch`-only increment,
+        # regardless of whether any exception was ever actually
+        # caught). Kept symbolic here (`r{N}`, never inlined) - a NEW,
+        # later region pass
+        # (`region_passes.ReturnValueResolutionPass`) runs AFTER
+        # structuring, when real CFG/dominance information is
+        # available, and only then folds this back into an inlined
+        # expression when it can positively confirm every reaching
+        # definition agrees.
+        expression = self.get_register_reference(ctx.analysis, value_reg)
         terminator = TerminatorReturn(value=expression)
 
         # NOTE (fix): a `Return` terminator is never "consumed" by any

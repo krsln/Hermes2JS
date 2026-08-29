@@ -75,7 +75,7 @@ function ternaryTest(param1) {
     // CODE → addr:128 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:ControlFlow/TernaryTests/ternaryTest/end")
     // CODE → addr:133 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:135 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

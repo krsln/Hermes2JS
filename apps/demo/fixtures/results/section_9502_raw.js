@@ -47,5 +47,5 @@ function taggedTemplateTest(param1) {
     // CODE → addr: 92 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Strings/TemplateLiteralTests/taggedTemplateTest/end")
     // CODE → addr: 97 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

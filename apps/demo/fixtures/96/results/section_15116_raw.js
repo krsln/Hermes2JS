@@ -65,5 +65,5 @@ function function_15116(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:132 | <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 1>
     r2[2] = r1
     // CODE → addr:136 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

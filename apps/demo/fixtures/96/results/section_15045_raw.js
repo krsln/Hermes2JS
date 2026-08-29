@@ -3,7 +3,7 @@ async function* anon_15045() {
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield;
+    r0 = await yield
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     // CODE → addr:  4 | <JmpTrueLong>: <Addr32: 997, Reg8: 1>  # Address: 000003e9
@@ -402,15 +402,15 @@ async function* anon_15045() {
     // CODE → addr:927 | <GetById>: <Reg8: 1, Reg8: 1, UInt8: 56, string_id: 9338>  # String: 'callAsyncTests' (Identifier)
     // USED → r1 = r1.callAsyncTests;
     // CODE → addr:933 | <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
-    // USED → r1 = await r1.callAsyncTests.call(r2);
+    r1 = await r1.callAsyncTests.call(r2)
     // CODE → addr:937 | <SaveGenerator>: <Addr8: 4>  # Address: 000003ad
     goto label_941;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:939 | <Ret>: <Reg8: 1>
-    return await r1.callAsyncTests.call(r2);
+    return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:941 | <ResumeGenerator>: <Reg8: 1, Reg8: 5>
-    // USED → r1 = await yield;
+    r1 = await yield
     // CODE → addr:941 | <ResumeGenerator>: <Reg8: 1, Reg8: 5>
     // USED → r5 = __resumeIsReturn;
     // CODE → addr:944 | <JmpTrue>: <Addr8: 54, Reg8: 5>  # Address: 000003e6
@@ -439,15 +439,15 @@ async function* anon_15045() {
     // CODE → addr:995 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:996 | <Ret>: <Reg8: 2>
-    return undefined;
+    return r2;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr:998 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:999 | <Ret>: <Reg8: 1>
-    return await yield;
+    return r1;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:1001 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:1002 | <Ret>: <Reg8: 0>
-    return await yield;
+    return r0;
 }

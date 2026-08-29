@@ -81,5 +81,5 @@ function callDefaultParameterTests() {
     // CODE → addr:183 | <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     console.log("__BC:Functions/DefaultParameterTests/callDefaultParameterTests/end")
     // CODE → addr:188 | <Ret>: <Reg8: 3>
-    return undefined;
+    return r3;
 }

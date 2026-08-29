@@ -33,5 +33,5 @@ function increment() {
     // CODE → addr: 60 | <PutByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
     r2[r0[5]] = r0 + 1
     // CODE → addr: 64 | <Ret>: <Reg8: 0>
-    return r0 + 1;
+    return r0;
 }

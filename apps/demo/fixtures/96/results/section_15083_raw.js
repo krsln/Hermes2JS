@@ -23,9 +23,9 @@ function tryCatchFinallyEarlyReturnTest() {
     // CODE → addr: 44 | <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
     // USED → r0 = new Error("test");
     // CODE → addr: 48 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = new Error("test");
+    r0 = new Error("test")
     // CODE → addr: 52 | <Throw>: <Reg8: 0>
-    throw new Error("test");
+    throw r0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 54 | <Catch>: <Reg8: 0>
     r0 = caughtException
@@ -40,12 +40,12 @@ function tryCatchFinallyEarlyReturnTest() {
     // CODE → addr: 73 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block")
     // CODE → addr: 78 | <LoadConstFalse>: <Reg8: 0>
-    // USED → r0 = false;
+    r0 = false
     // CODE → addr: 80 | <Ret>: <Reg8: 0>
-    return false;
+    return r0;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 82 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr: 84 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr: 86 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -57,5 +57,5 @@ function tryCatchFinallyEarlyReturnTest() {
     // CODE → addr:101 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyEarlyReturnTest/finally-block")
     // CODE → addr:106 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

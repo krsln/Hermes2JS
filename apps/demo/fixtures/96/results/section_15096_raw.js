@@ -15,7 +15,7 @@ function greet() {
     // CODE → addr: 25 | <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>
     console.log("hello", r0.name)
     // CODE → addr: 31 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 33 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

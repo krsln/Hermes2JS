@@ -31,7 +31,7 @@ function arrowFunctionTest() {
     // CODE → addr: 68 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 126>  # String: 'map' (Identifier)
     // USED → r4 = r5.map;
     // CODE → addr: 73 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr: 75 | <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 12479>  # Function: [#12479  of 12 bytes]: 2 params @ offset 0x00243e0c
     // USED → r3 = function_12479(param1);
     // CODE → addr: 80 | <Call2>: <Reg8: 5, Reg8: 4, Reg8: 5, Reg8: 3>
@@ -59,5 +59,5 @@ function arrowFunctionTest() {
     // CODE → addr:135 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Functions/ArrowTests/arrowFunctionTest/end")
     // CODE → addr:140 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

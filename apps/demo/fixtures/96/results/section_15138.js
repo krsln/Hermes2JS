@@ -15,7 +15,7 @@ function callRegExpTests() {
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 0>
     // USED → r4 = r2[0];
     // CODE → addr: 29 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    // USED → r0 = undefined;
     // CODE → addr: 31 | <LoadConstString>: <Reg8: 3, string_id: 4591>  # String: 'abc123' (String)
     // USED → r3 = "abc123";
     // CODE → addr: 35 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>

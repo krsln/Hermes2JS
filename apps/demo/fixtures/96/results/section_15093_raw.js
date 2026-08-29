@@ -48,7 +48,7 @@ function forInTest() {
     // CODE → addr: 93 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Iterators/IteratorTests/forInTest/end")
     // CODE → addr: 98 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:100 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

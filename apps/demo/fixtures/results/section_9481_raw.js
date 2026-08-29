@@ -13,7 +13,7 @@ function objectLiteralTest() {
     // CODE → addr: 22 | <NewObjectWithBuffer>: <Reg8: 2, UInt16: 1913, UInt16: 48468>  # Object: {'name': 'Ada', 'age': 30, 'greet': null}
     r2 = { "name": "Ada", "age": 30, "greet": null }
     // CODE → addr: 28 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 30 | <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 12471>  # Function: [#12471 greet of 35 bytes]: 1 params @ offset 0x00243de9
     // USED → r3 = greet();
     // CODE → addr: 35 | <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 3, UInt8: 2>
@@ -61,5 +61,5 @@ function objectLiteralTest() {
     // CODE → addr:148 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/ObjectLiteralTests/objectLiteralTest/end")
     // CODE → addr:153 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

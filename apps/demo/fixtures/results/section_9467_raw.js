@@ -29,9 +29,9 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr: 59 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Error("original");
     // CODE → addr: 63 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = new Error("original");
+    r0 = new Error("original")
     // CODE → addr: 67 | <Throw>: <Reg8: 0>
-    throw new Error("original");
+    throw r0;
     // CODE → addr: 69 | <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
     // CODE → addr: 71 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -55,11 +55,11 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr:112 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Error("wrapped: " + caughtException);
     // CODE → addr:116 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = new Error("wrapped: " + caughtException);
+    r0 = new Error("wrapped: " + caughtException)
     // CODE → addr:120 | <Throw>: <Reg8: 0>
-    throw new Error("wrapped: " + caughtException);
+    throw r0;
     // CODE → addr:122 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:124 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:130 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -69,5 +69,5 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr:139 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchRethrowDifferentTest/finally-block")
     // CODE → addr:144 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

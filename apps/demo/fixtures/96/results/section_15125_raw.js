@@ -59,7 +59,7 @@ function weakMapTest() {
     // CODE → addr:132 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Collections/MapSetTests/weakMapTest/end")
     // CODE → addr:137 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:139 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

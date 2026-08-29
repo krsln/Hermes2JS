@@ -75,11 +75,11 @@ function setTest() {
     goto label_127;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:156 | <Catch>: <Reg8: 2>
-    // USED → r2 = caughtException;
+    r2 = caughtException
     // CODE → addr:158 | <IteratorClose>: <Reg8: 4, UInt8: 1>
     r4.return()
     // CODE → addr:161 | <Throw>: <Reg8: 2>
-    throw caughtException;
+    throw r2;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:163 | <NewArray>: <Reg8: 4, UInt16: 0>
     // USED → r4 = [];
@@ -106,5 +106,5 @@ function setTest() {
     // CODE → addr:210 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Collections/MapSetTests/setTest/end")
     // CODE → addr:215 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

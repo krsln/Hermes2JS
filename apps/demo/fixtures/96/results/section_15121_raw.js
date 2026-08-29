@@ -9,7 +9,7 @@ function sum(param1, param2, param3) {
     // CODE → addr: 10 | <LoadParam>: <Reg8: 0, UInt8: 3>
     // USED → r0 = param3;
     // CODE → addr: 13 | <Add>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = param1 + param2 + param3;
+    r0 = param1 + param2 + param3
     // CODE → addr: 17 | <Ret>: <Reg8: 0>
-    return param1 + param2 + param3;
+    return r0;
 }

@@ -17,7 +17,7 @@ function _loop(param1) {
     // CODE → addr: 26 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     r0 = r2.push(function_15152())
     // CODE → addr: 31 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 33 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

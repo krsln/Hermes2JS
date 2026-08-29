@@ -61,7 +61,7 @@ function callDefaultParameterTests() {
     // CODE → addr:142 | <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 0>
     // USED → r6 = r6[0];
     // CODE → addr:146 | <LoadConstUndefined>: <Reg8: 3>
-    r3 = undefined
+    // USED → r3 = undefined;
     // CODE → addr:148 | <Call1>: <Reg8: 4, Reg8: 6, Reg8: 3>
     r4 = r6[0].call(r3)
     // CODE → addr:152 | <LoadConstUInt8>: <Reg8: 1, UInt8: 4>

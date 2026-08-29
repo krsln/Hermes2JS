@@ -20,7 +20,14 @@ class Throw(OpcodeHandler):
 
         value_reg = int(match.group(1))
 
-        expression = self.get_register_expression(ctx.analysis, value_reg)
+        # NOTE (fix): same reasoning as Ret.py - kept symbolic here
+        # rather than inlined via `get_register_expression`, which has
+        # no control-flow awareness during this single linear,
+        # address-order scan and can silently substitute a
+        # conditionally-written value as if it always executes. A
+        # later region pass (`ReturnValueResolutionPass`) folds it
+        # back in only once real dominance information is available.
+        expression = self.get_register_reference(ctx.analysis, value_reg)
         terminator = TerminatorThrow(value=expression)
 
         # NOTE (fix): same reasoning as Ret.py - `Throw` terminators are

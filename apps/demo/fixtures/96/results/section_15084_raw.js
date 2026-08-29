@@ -3,7 +3,7 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr:  0 | <LoadParam>: <Reg8: 6, UInt8: 1>
     // USED → r6 = param1;
     // CODE → addr:  3 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:  5 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → addr:  7 | <GetGlobalObject>: <Reg8: 1>
@@ -79,10 +79,10 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr:140 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/end")
     // CODE → addr:145 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:147 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:149 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:155 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -92,5 +92,5 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr:164 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
     // CODE → addr:169 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

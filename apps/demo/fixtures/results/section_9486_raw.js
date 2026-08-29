@@ -47,5 +47,5 @@ function renamedDefaultDestructureTest() {
     // CODE → addr: 91 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/end")
     // CODE → addr: 96 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

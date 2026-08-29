@@ -3,7 +3,7 @@ async function* anon_15169() {
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield;
+    r0 = await yield
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     // CODE → addr:  4 | <JmpTrueLong>: <Addr32: 151, Reg8: 1>  # Address: 0000009b
@@ -20,30 +20,30 @@ async function* anon_15169() {
     // CODE → addr: 27 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
     console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/start")
     // CODE → addr: 32 | <LoadConstString>: <Reg8: 1, string_id: 7189>  # String: 'a' (Identifier)
-    // USED → r1 = "a";
+    r1 = "a"
     // CODE → addr: 36 | <SaveGenerator>: <Addr8: 4>  # Address: 00000028
     goto label_40;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 38 | <Ret>: <Reg8: 1>
-    return "a";
+    return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 40 | <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-    // USED → r1 = await yield;
+    r1 = await yield
     // CODE → addr: 40 | <ResumeGenerator>: <Reg8: 1, Reg8: 3>
     // USED → r3 = __resumeIsReturn;
     // CODE → addr: 43 | <JmpTrue>: <Addr8: 65, Reg8: 3>  # Address: 0000006c
     if (__resumeIsReturn) goto label_108;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 46 | <LoadConstString>: <Reg8: 3, string_id: 38>  # String: 'b' (Identifier)
-    // USED → r3 = "b";
+    r3 = "b"
     // CODE → addr: 50 | <SaveGenerator>: <Addr8: 4>  # Address: 00000036
     goto label_54;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 52 | <Ret>: <Reg8: 3>
-    return "b";
+    return r3;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 54 | <ResumeGenerator>: <Reg8: 3, Reg8: 4>
-    // USED → r3 = await yield;
+    r3 = await yield
     // CODE → addr: 54 | <ResumeGenerator>: <Reg8: 3, Reg8: 4>
     // USED → r4 = __resumeIsReturn;
     // CODE → addr: 57 | <JmpTrue>: <Addr8: 28, Reg8: 4>  # Address: 00000055
@@ -58,11 +58,11 @@ async function* anon_15169() {
     // CODE → addr: 75 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
     console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
     // CODE → addr: 80 | <LoadConstUndefined>: <Reg8: 4>
-    // USED → r4 = undefined;
+    r4 = undefined
     // CODE → addr: 82 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr: 83 | <Ret>: <Reg8: 4>
-    return undefined;
+    return r4;
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr: 85 | <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r6 = console;
@@ -75,7 +75,7 @@ async function* anon_15169() {
     // CODE → addr:105 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:106 | <Ret>: <Reg8: 3>
-    return await yield;
+    return r3;
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr:108 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
@@ -88,10 +88,10 @@ async function* anon_15169() {
     // CODE → addr:128 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:129 | <Ret>: <Reg8: 1>
-    return await yield;
+    return r1;
     // ──────────────── Block 10 ──────────────── 
     // CODE → addr:131 | <Catch>: <Reg8: 1>
-    // USED → r1 = caughtException;
+    r1 = caughtException
     // CODE → addr:133 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:139 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -101,10 +101,10 @@ async function* anon_15169() {
     // CODE → addr:148 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
     // CODE → addr:153 | <Throw>: <Reg8: 1>
-    throw caughtException;
+    throw r1;
     // ──────────────── Block 11 ──────────────── 
     // CODE → addr:155 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:156 | <Ret>: <Reg8: 0>
-    return await yield;
+    return r0;
 }

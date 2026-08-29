@@ -61,7 +61,7 @@ function closureTest() {
     // CODE → addr:134 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Functions/ClosureTests/closureTest/end")
     // CODE → addr:139 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr:141 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

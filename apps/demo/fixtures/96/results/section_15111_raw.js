@@ -5,7 +5,7 @@ function function_15111(param1, param2) {
     // CODE → addr:  3 | <LoadParam>: <Reg8: 0, UInt8: 2>
     // USED → r0 = param2;
     // CODE → addr:  6 | <Sub>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = param1 - param2;
+    r0 = param1 - param2
     // CODE → addr: 10 | <Ret>: <Reg8: 0>
-    return param1 - param2;
+    return r0;
 }

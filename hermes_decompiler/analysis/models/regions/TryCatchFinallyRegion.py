@@ -65,6 +65,17 @@ class CatchRegion(Region):
 
         self.exception: str | None = None
 
+        # Raw register number the handler's own `Catch` instruction
+        # bound the exception to - kept alongside `exception` (the
+        # friendly display name) because later passes (see
+        # `_FinallyAttacher.maybe_reinterpret_as_finally`) need to
+        # recognize a rethrow of THIS SAME exception by register
+        # identity, not by name: `Throw`'s own value is deliberately
+        # kept as a bare `r{N}` reference (never inlined - see
+        # Throw.py's own docstring), so it can never be expected to
+        # already read as the friendly name.
+        self.exception_reg: int | None = None
+
         self._body = SequenceRegion()
         self._body.parent = self
 

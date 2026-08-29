@@ -110,7 +110,7 @@ function ifElseChainTest(param1, param2) {
     // CODE → addr:222 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/IfTests/ifElseChainTest/end")
     // CODE → addr:227 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:229 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

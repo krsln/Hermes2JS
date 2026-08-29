@@ -43,5 +43,5 @@ function set(param1) {
     // CODE → addr: 86 | <PutByVal>: <Reg8: 3, Reg8: 2, Reg8: 1>
     r3[r2[5]] = r1
     // CODE → addr: 90 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

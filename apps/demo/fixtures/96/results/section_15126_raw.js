@@ -35,5 +35,5 @@ function callMapSetTests() {
     // CODE → addr: 66 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Collections/MapSetTests/callMapSetTests/end")
     // CODE → addr: 71 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

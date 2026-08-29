@@ -76,14 +76,14 @@ function tryLoopMultiReturnTest(param1) {
     goto label_35;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:118 | <LoadConstTrue>: <Reg8: 1>
-    // USED → r1 = true;
+    r1 = true
     // CODE → addr:120 | <Ret>: <Reg8: 1>
-    return true;
+    return r1;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:122 | <LoadConstFalse>: <Reg8: 1>
-    // USED → r1 = false;
+    r1 = false
     // CODE → addr:124 | <Ret>: <Reg8: 1>
-    return false;
+    return r1;
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:126 | <Catch>: <Reg8: 1>
     r1 = caughtException
@@ -96,7 +96,7 @@ function tryLoopMultiReturnTest(param1) {
     // CODE → addr:143 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block")
     // CODE → addr:148 | <LoadConstFalse>: <Reg8: 0>
-    // USED → r0 = false;
+    r0 = false
     // CODE → addr:150 | <Ret>: <Reg8: 0>
-    return false;
+    return r0;
 }

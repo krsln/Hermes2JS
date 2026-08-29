@@ -44,9 +44,9 @@ function switchInsideTryTest(param1) {
     // CODE → addr: 77 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Error("case 1 throws");
     // CODE → addr: 81 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = new Error("case 1 throws");
+    r0 = new Error("case 1 throws")
     // CODE → addr: 85 | <Throw>: <Reg8: 0>
-    throw new Error("case 1 throws");
+    throw r0;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 87 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
@@ -88,11 +88,11 @@ function switchInsideTryTest(param1) {
     // CODE → addr:166 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/end")
     // CODE → addr:171 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:173 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
     // CODE → addr:175 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:177 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:183 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -102,5 +102,5 @@ function switchInsideTryTest(param1) {
     // CODE → addr:192 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/finally-block")
     // CODE → addr:197 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

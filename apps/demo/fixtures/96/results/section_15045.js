@@ -31,7 +31,7 @@ async function* anon_15045() {
         // CODE → addr: 39 | <GetById>: <Reg8: 1, Reg8: 1, UInt8: 3, string_id: 10971>  # String: 'whileTest' (Identifier)
         // USED → r1 = r1.whileTest;
         // CODE → addr: 45 | <LoadConstUndefined>: <Reg8: 2>
-        r2 = undefined
+        // USED → r2 = undefined;
         // CODE → addr: 47 | <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
         r1 = r1.whileTest.call(r2)
         // CODE → addr: 51 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 2>
@@ -407,12 +407,12 @@ async function* anon_15045() {
         // CODE → addr:927 | <GetById>: <Reg8: 1, Reg8: 1, UInt8: 56, string_id: 9338>  # String: 'callAsyncTests' (Identifier)
         // USED → r1 = r1.callAsyncTests;
         // CODE → addr:933 | <Call1>: <Reg8: 1, Reg8: 1, Reg8: 2>
-        // USED → r1 = await r1.callAsyncTests.call(r2);
+        r1 = await r1.callAsyncTests.call(r2)
         // CODE → addr:937 | <SaveGenerator>: <Addr8: 4>  # Address: 000003ad
         goto label_941;
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:939 | <Ret>: <Reg8: 1>
-        return await r1.callAsyncTests.call(r2);
+        return r1;
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:941 | <ResumeGenerator>: <Reg8: 1, Reg8: 5>
         // USED → r1 = await yield;

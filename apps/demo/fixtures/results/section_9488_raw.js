@@ -100,5 +100,5 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr:154 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:Objects/DestructuringTests/parameterDestructureTest/end")
     // CODE → addr:159 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

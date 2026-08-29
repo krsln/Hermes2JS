@@ -29,7 +29,7 @@ function function_15061(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 53 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 10899>  # String: 'ifElseChainTest' (Identifier)
     param6.ifElseChainTest = ifElseChainTest(param1, param2)
     // CODE → addr: 59 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 61 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

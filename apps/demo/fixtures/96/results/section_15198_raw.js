@@ -35,5 +35,5 @@ function Animal(param1, param2) {
     // CODE → addr: 64 | <PutById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 11864>  # String: 'sound' (Identifier)
     this.sound = param2
     // CODE → addr: 70 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

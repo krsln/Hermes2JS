@@ -119,11 +119,11 @@ function mapTest() {
     goto label_198;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:251 | <Catch>: <Reg8: 3>
-    // USED → r3 = caughtException;
+    r3 = caughtException
     // CODE → addr:253 | <IteratorClose>: <Reg8: 5, UInt8: 1>
     r5.return()
     // CODE → addr:256 | <Throw>: <Reg8: 3>
-    throw caughtException;
+    throw r3;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:258 | <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 10, string_id: 114>  # String: 'delete' (Identifier)
     // USED → r3 = r2.delete;
@@ -146,5 +146,5 @@ function mapTest() {
     // CODE → addr:304 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Collections/MapSetTests/mapTest/end")
     // CODE → addr:309 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

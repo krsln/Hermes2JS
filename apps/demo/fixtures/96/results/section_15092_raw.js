@@ -35,11 +35,11 @@ function forOfTest() {
     goto label_35;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 64 | <Catch>: <Reg8: 2>
-    // USED → r2 = caughtException;
+    r2 = caughtException
     // CODE → addr: 66 | <IteratorClose>: <Reg8: 3, UInt8: 1>
     r3.return()
     // CODE → addr: 69 | <Throw>: <Reg8: 2>
-    throw caughtException;
+    throw r2;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 71 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
@@ -50,5 +50,5 @@ function forOfTest() {
     // CODE → addr: 86 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Iterators/IteratorTests/forOfTest/end")
     // CODE → addr: 91 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

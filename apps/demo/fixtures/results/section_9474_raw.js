@@ -23,9 +23,9 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
     // CODE → addr: 42 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Error("test");
     // CODE → addr: 46 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = new Error("test");
+    r0 = new Error("test")
     // CODE → addr: 50 | <Throw>: <Reg8: 0>
-    throw new Error("test");
+    throw r0;
     // CODE → addr: 52 | <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → addr: 54 | <GetGlobalObject>: <Reg8: 0>
@@ -58,11 +58,11 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
     console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true")
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:110 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:112 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
     // CODE → addr:114 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:116 | <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
     // CODE → addr:118 | <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -85,5 +85,5 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
     console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true")
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:152 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

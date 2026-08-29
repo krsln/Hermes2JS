@@ -14,6 +14,7 @@ from hermes_decompiler.analysis.transforms.region_passes import (
     LoopInductionAliasPass,
     NullishAssignmentRegionPass,
     RedundantJumpRegionPass,
+    ReturnValueResolutionPass,
 )
 from hermes_decompiler.analysis.transforms.structurers import (
     SequenceStructurer,
@@ -177,6 +178,19 @@ class StructuralAnalyzer:
         # LoopContinueRegionPass doesn't matter; neither touches the
         # header's leading instruction the way this pass needs to.
         ForEachRegionPass(graph, self.cfg).run()
+
+        # Folds a bare `return rN;`/`throw rN;` (see Ret.py/Throw.py's
+        # own opcode-handler docstrings) back into its defining
+        # expression, now that real CFG predecessor edges are
+        # available to verify every reaching definition agrees. No
+        # ordering dependency on any other region pass here - it only
+        # reads `block.predecessors`/`.instructions`, which none of
+        # the passes above rewrite in a way this one's own
+        # reaching-definition walk would be misled by; placed last so
+        # it sees the fully-settled block contents (e.g. induction
+        # aliasing already resolved by LoopInductionAliasPass) rather
+        # than a still-aliased register name.
+        ReturnValueResolutionPass(graph, self.cfg).run()
 
         # ---- Diagnostics ------------------------------------------------
 

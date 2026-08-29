@@ -29,7 +29,7 @@ function taggedTemplateTest(param1) {
     // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 0>
     // USED → r3 = r3[0];
     // CODE → addr: 53 | <LoadConstUndefined>: <Reg8: 1>
-    r1 = undefined
+    // USED → r1 = undefined;
     // CODE → addr: 55 | <Call3>: <Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 5, Reg8: 4>
     // USED → r5 = r3[0].call(r1, r5, r4);
     // CODE → addr: 61 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

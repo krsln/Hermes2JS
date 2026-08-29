@@ -287,5 +287,5 @@ function callDestructuringTests() {
     // CODE → addr:538 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
     console.log("__BC:Objects/DestructuringTests/callDestructuringTests/end")
     // CODE → addr:543 | <Ret>: <Reg8: 2>
-    return undefined;
+    return r2;
 }

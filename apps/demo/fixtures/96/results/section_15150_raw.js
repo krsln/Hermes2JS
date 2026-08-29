@@ -58,11 +58,11 @@ function closureLoopTest() {
     goto label_62;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 95 | <Catch>: <Reg8: 2>
-    // USED → r2 = caughtException;
+    r2 = caughtException
     // CODE → addr: 97 | <IteratorClose>: <Reg8: 3, UInt8: 1>
     r3.return()
     // CODE → addr:100 | <Throw>: <Reg8: 2>
-    throw caughtException;
+    throw r2;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:102 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
@@ -73,5 +73,5 @@ function closureLoopTest() {
     // CODE → addr:117 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
     // CODE → addr:122 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

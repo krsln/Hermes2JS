@@ -1,7 +1,7 @@
 function legacyArgumentsTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 4>
-    // USED → r4 = undefined;
+    r4 = undefined
     // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 7>
     // USED → r7 = undefined;
     // CODE → addr:  4 | <GetGlobalObject>: <Reg8: 5>
@@ -64,5 +64,5 @@ function legacyArgumentsTest() {
     // CODE → addr:115 | <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     console.log("__BC:Functions/RestParameterTests/legacyArgumentsTest/end")
     // CODE → addr:120 | <Ret>: <Reg8: 4>
-    return undefined;
+    return r4;
 }

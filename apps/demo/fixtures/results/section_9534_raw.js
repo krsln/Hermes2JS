@@ -58,5 +58,5 @@ function create(param1) {
     // CODE → addr:108 | <PutByIdStrict>: <Reg8: 0, Reg8: 1, UInt8: 0, string_id: 16255>  # String: 'breed' (Identifier)
     CreateThisForSuper(r3)[r0].breed = "Mixed"
     // CODE → addr:114 | <Ret>: <Reg8: 0>
-    return CreateThisForSuper(r3)[r0];
+    return r0;
 }

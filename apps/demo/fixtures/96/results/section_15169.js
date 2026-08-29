@@ -27,12 +27,12 @@ async function* anon_15169() {
         try {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 32 | <LoadConstString>: <Reg8: 1, string_id: 7189>  # String: 'a' (Identifier)
-            // USED → r1 = "a";
+            r1 = "a"
             // CODE → addr: 36 | <SaveGenerator>: <Addr8: 4>  # Address: 00000028
             goto label_40;
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 38 | <Ret>: <Reg8: 1>
-            return "a";
+            return r1;
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 40 | <ResumeGenerator>: <Reg8: 1, Reg8: 3>
             // USED → r1 = await yield;
@@ -47,12 +47,12 @@ async function* anon_15169() {
             } else {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 46 | <LoadConstString>: <Reg8: 3, string_id: 38>  # String: 'b' (Identifier)
-                // USED → r3 = "b";
+                r3 = "b"
                 // CODE → addr: 50 | <SaveGenerator>: <Addr8: 4>  # Address: 00000036
                 goto label_54;
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → addr: 52 | <Ret>: <Reg8: 3>
-                return "b";
+                return r3;
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → addr: 54 | <ResumeGenerator>: <Reg8: 3, Reg8: 4>
                 // USED → r3 = await yield;

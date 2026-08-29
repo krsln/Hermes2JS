@@ -74,7 +74,7 @@ function shortCircuitAssignTest() {
     // CODE → addr:157 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:ControlFlow/TernaryTests/shortCircuitAssignTest/end")
     // CODE → addr:162 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr:164 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

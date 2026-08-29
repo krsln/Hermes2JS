@@ -35,12 +35,12 @@ async function* anon_15181() {
             // CODE → addr: 41 | <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
             // USED → r3 = 1;
             // CODE → addr: 44 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 3>
-            // USED → r1 = await r1[2](1);
+            r1 = await r1[2](1)
             // CODE → addr: 49 | <SaveGenerator>: <Addr8: 4>  # Address: 00000035
             goto label_53;
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 51 | <Ret>: <Reg8: 1>
-            return await r1[2](1);
+            return r1;
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 53 | <ResumeGenerator>: <Reg8: 1, Reg8: 4>
             // USED → r1 = await yield;

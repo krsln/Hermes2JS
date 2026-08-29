@@ -27,7 +27,7 @@ function computedPropertyTest() {
     // CODE → addr: 59 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/PropertyTests/computedPropertyTest/end")
     // CODE → addr: 64 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 66 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

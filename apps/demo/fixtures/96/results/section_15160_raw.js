@@ -1,7 +1,7 @@
 function restAfterRequiredTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 5>
     r5 = undefined
     // CODE → addr:  4 | <GetGlobalObject>: <Reg8: 1>
@@ -80,5 +80,5 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr:142 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/RestParameterTests/restAfterRequiredTest/end")
     // CODE → addr:147 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

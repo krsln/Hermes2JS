@@ -27,7 +27,7 @@ function create(param1) {
     // CODE → addr: 48 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 3>
     // USED → r0 = new r0[0]("Mixed", param1);
     // CODE → addr: 52 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = new r0[0]("Mixed", param1);
+    r0 = new r0[0]("Mixed", param1)
     // CODE → addr: 56 | <Ret>: <Reg8: 0>
-    return new r0[0]("Mixed", param1);
+    return r0;
 }

@@ -51,5 +51,5 @@ function makeSound() {
     // CODE → addr: 97 | <Call4>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>
     console.log(r1.name, "is a", r1.breed)
     // CODE → addr:104 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

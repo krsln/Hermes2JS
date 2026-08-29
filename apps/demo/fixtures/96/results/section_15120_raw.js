@@ -29,7 +29,7 @@ function spreadFunctionArgsTest() {
     // CODE → addr: 56 | <CreateClosure>: <Reg8: 8, Reg8: 0, function_id: 15121>  # Function: [#15121 sum of 19 bytes]: 4 params @ offset 0x00269ebf
     r8 = sum(param1, param2, param3)
     // CODE → addr: 61 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 63 | <Mov>: <Reg8: 7, Reg8: 5>
     r7 = r5
     // CODE → addr: 66 | <LoadConstUndefined>: <Reg8: 6>
@@ -47,5 +47,5 @@ function spreadFunctionArgsTest() {
     // CODE → addr: 92 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end")
     // CODE → addr: 97 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

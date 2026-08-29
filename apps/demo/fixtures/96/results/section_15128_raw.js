@@ -49,7 +49,7 @@ function basicTemplateTest(param1, param2) {
     // CODE → addr:106 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Strings/TemplateLiteralTests/basicTemplateTest/end")
     // CODE → addr:111 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:113 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

@@ -85,7 +85,7 @@ function function_15074(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:205 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 15, string_id: 8763>  # String: 'switchInsideTryTest' (Identifier)
     param6.switchInsideTryTest = switchInsideTryTest(param1)
     // CODE → addr:211 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:213 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

@@ -37,7 +37,7 @@ function function_15127(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 73 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 11337>  # String: 'taggedTemplateTest' (Identifier)
     param6.taggedTemplateTest = taggedTemplateTest(param1)
     // CODE → addr: 79 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 81 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

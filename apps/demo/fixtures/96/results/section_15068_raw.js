@@ -90,7 +90,7 @@ function tripleNestedLabeledTest() {
     // CODE → addr:135 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:ControlFlow/LabeledTests/tripleNestedLabeledTest/end")
     // CODE → addr:140 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:142 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

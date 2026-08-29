@@ -21,7 +21,7 @@ function reset() {
     // CODE → addr: 35 | <PutOwnPrivateBySym>: <Reg8: 3, Reg8: 0, UInt8: 0, Reg8: 2>
     r2[2].#__private_2__ = 0
     // CODE → addr: 40 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr: 42 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

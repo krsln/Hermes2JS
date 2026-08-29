@@ -35,11 +35,11 @@ function tryFinallyNormalCompletionTest() {
     // CODE → addr: 77 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/end")
     // CODE → addr: 82 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 84 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
     // CODE → addr: 86 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr: 88 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 94 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -49,5 +49,5 @@ function tryFinallyNormalCompletionTest() {
     // CODE → addr:103 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyNormalCompletionTest/finally-block")
     // CODE → addr:108 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

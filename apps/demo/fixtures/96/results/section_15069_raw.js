@@ -33,7 +33,7 @@ function function_15069(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 64 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 10952>  # String: 'logicalShortCircuitTest' (Identifier)
     param6.logicalShortCircuitTest = logicalShortCircuitTest(param1, param2)
     // CODE → addr: 70 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 72 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

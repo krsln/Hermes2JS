@@ -44,5 +44,5 @@ function nestedObjectDestructureTest() {
     // CODE → addr: 90 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Objects/DestructuringTests/nestedObjectDestructureTest/end")
     // CODE → addr: 95 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

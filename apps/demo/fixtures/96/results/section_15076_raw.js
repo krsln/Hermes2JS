@@ -31,9 +31,9 @@ function tryCatchNoFinallyTest() {
     // CODE → addr: 64 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
     // USED → r1 = new Error("no finally here");
     // CODE → addr: 68 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    // USED → r1 = new Error("no finally here");
+    r1 = new Error("no finally here")
     // CODE → addr: 72 | <Throw>: <Reg8: 1>
-    throw new Error("no finally here");
+    throw r1;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 74 | <Catch>: <Reg8: 3>
     // USED → r3 = caughtException;
@@ -60,7 +60,7 @@ function tryCatchNoFinallyTest() {
     // CODE → addr:127 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchNoFinallyTest/end")
     // CODE → addr:132 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:134 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

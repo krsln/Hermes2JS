@@ -31,12 +31,12 @@ function tryFinallyNoCatchTest() {
     // CODE → addr: 64 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Error("no catch here");
     // CODE → addr: 68 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = new Error("no catch here");
+    r0 = new Error("no catch here")
     // CODE → addr: 72 | <Throw>: <Reg8: 0>
-    throw new Error("no catch here");
+    throw r0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 74 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr: 76 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 82 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -46,5 +46,5 @@ function tryFinallyNoCatchTest() {
     // CODE → addr: 91 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyNoCatchTest/finally-block")
     // CODE → addr: 96 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

@@ -45,7 +45,7 @@ function regExpGroupsAndReplaceTest(param1) {
     // CODE → addr:111 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Strings/RegExpTests/regExpGroupsAndReplaceTest/end")
     // CODE → addr:116 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:118 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

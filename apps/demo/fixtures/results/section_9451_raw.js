@@ -46,9 +46,9 @@ function switchTest(param1) {
     // CODE → addr: 77 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:ControlFlow/SwitchTests/switchTest/case-default")
     // CODE → addr: 82 | <LoadConstString>: <Reg8: 2, string_id: 1861>  # String: 'other' (String)
-    // USED → r2 = "other";
+    r2 = "other"
     // CODE → addr: 86 | <Ret>: <Reg8: 2>
-    return "other";
+    return r2;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 88 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
@@ -59,9 +59,9 @@ function switchTest(param1) {
     // CODE → addr:103 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:ControlFlow/SwitchTests/switchTest/case-3-4")
     // CODE → addr:108 | <LoadConstString>: <Reg8: 2, string_id: 3949>  # String: 'three-four' (String)
-    // USED → r2 = "three-four";
+    r2 = "three-four"
     // CODE → addr:112 | <Ret>: <Reg8: 2>
-    return "three-four";
+    return r2;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:114 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
@@ -72,9 +72,9 @@ function switchTest(param1) {
     // CODE → addr:129 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:ControlFlow/SwitchTests/switchTest/case-2")
     // CODE → addr:134 | <LoadConstString>: <Reg8: 2, string_id: 9241>  # String: 'two' (Identifier)
-    // USED → r2 = "two";
+    r2 = "two"
     // CODE → addr:138 | <Ret>: <Reg8: 2>
-    return "two";
+    return r2;
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:140 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
@@ -85,9 +85,9 @@ function switchTest(param1) {
     // CODE → addr:155 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:ControlFlow/SwitchTests/switchTest/case-1")
     // CODE → addr:160 | <LoadConstString>: <Reg8: 2, string_id: 6956>  # String: 'one' (Identifier)
-    // USED → r2 = "one";
+    r2 = "one"
     // CODE → addr:164 | <Ret>: <Reg8: 2>
-    return "one";
+    return r2;
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr:166 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
@@ -98,7 +98,7 @@ function switchTest(param1) {
     // CODE → addr:181 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/SwitchTests/switchTest/case-0")
     // CODE → addr:186 | <LoadConstString>: <Reg8: 1, string_id: 597>  # String: 'zero' (String)
-    // USED → r1 = "zero";
+    r1 = "zero"
     // CODE → addr:190 | <Ret>: <Reg8: 1>
-    return "zero";
+    return r1;
 }

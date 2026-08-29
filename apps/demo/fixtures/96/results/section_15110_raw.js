@@ -127,7 +127,7 @@ function arrayTest() {
     // CODE → addr:299 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Arrays/ArrayTests/arrayTest/end")
     // CODE → addr:304 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:306 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

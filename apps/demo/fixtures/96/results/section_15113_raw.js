@@ -5,7 +5,7 @@ function function_15113(param1) {
     // CODE → addr:  3 | <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
     // USED → r0 = 3;
     // CODE → addr:  6 | <Greater>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = param1 > 3;
+    r0 = param1 > 3
     // CODE → addr: 10 | <Ret>: <Reg8: 0>
-    return param1 > 3;
+    return r0;
 }

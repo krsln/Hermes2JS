@@ -74,7 +74,7 @@ function forTest() {
     // CODE → addr:130 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
     console.log("__BC:ControlFlow/ForTests/forTest/end")
     // CODE → addr:135 | <LoadConstUndefined>: <Reg8: 6>
-    // USED → r6 = undefined;
+    r6 = undefined
     // CODE → addr:137 | <Ret>: <Reg8: 6>
-    return undefined;
+    return r6;
 }

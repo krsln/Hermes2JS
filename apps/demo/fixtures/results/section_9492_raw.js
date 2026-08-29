@@ -107,7 +107,7 @@ function spreadArrayTest() {
     goto label_164;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr:194 | <Catch>: <Reg8: 2>
-    // USED → r2 = caughtException;
+    r2 = caughtException
     // CODE → addr:196 | <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 000000ca
     if (r3 === undefined) goto label_202;
     // ──────────────── Block 6 ──────────────── 
@@ -115,7 +115,7 @@ function spreadArrayTest() {
     r3.return()
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:202 | <Throw>: <Reg8: 2>
-    throw caughtException;
+    throw r2;
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:204 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
@@ -132,5 +132,5 @@ function spreadArrayTest() {
     // CODE → addr:236 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Arrays/SpreadTests/spreadArrayTest/end")
     // CODE → addr:241 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

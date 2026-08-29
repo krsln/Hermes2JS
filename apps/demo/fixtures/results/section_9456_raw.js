@@ -69,7 +69,7 @@ function labeledBreakTest() {
     // CODE → addr:116 | <Call2>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 8>
     console.log("__BC:ControlFlow/LabeledTests/labeledBreakTest/end")
     // CODE → addr:121 | <LoadConstUndefined>: <Reg8: 7>
-    // USED → r7 = undefined;
+    r7 = undefined
     // CODE → addr:123 | <Ret>: <Reg8: 7>
-    return undefined;
+    return r7;
 }

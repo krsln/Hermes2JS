@@ -17,7 +17,7 @@ function instanceCount() {
     // CODE → addr: 29 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 4>
     r0 = r0[4]
     // CODE → addr: 33 | <GetOwnPrivateBySym>: <Reg8: 0, Reg8: 1, UInt8: 0, Reg8: 0>
-    // USED → r0 = r0[2].#__private_0__;
+    r0 = r0[2].#__private_0__
     // CODE → addr: 38 | <Ret>: <Reg8: 0>
-    return r0[2].#__private_0__;
+    return r0;
 }

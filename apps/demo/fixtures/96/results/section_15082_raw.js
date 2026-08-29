@@ -31,9 +31,9 @@ function nestedTryCatchFinallyTest() {
     // CODE → addr: 64 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Error("inner");
     // CODE → addr: 68 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    // USED → r0 = new Error("inner");
+    r0 = new Error("inner")
     // CODE → addr: 72 | <Throw>: <Reg8: 0>
-    throw new Error("inner");
+    throw r0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 74 | <Catch>: <Reg8: 0>
     r0 = caughtException
@@ -65,7 +65,7 @@ function nestedTryCatchFinallyTest() {
     goto label_184;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:138 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:140 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:146 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -75,7 +75,7 @@ function nestedTryCatchFinallyTest() {
     // CODE → addr:155 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/inner-finally")
     // CODE → addr:160 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:162 | <Catch>: <Reg8: 0>
     r0 = caughtException
@@ -105,12 +105,12 @@ function nestedTryCatchFinallyTest() {
     // CODE → addr:219 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/end")
     // CODE → addr:224 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:226 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr:228 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:230 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:236 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -120,5 +120,5 @@ function nestedTryCatchFinallyTest() {
     // CODE → addr:245 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/outer-finally")
     // CODE → addr:250 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

@@ -23,5 +23,5 @@ function increment() {
     // CODE → addr: 40 | <PutOwnPrivateBySym>: <Reg8: 2, Reg8: 0, UInt8: 0, Reg8: 1>
     this.#__private_1__ = r0 + 1
     // CODE → addr: 45 | <Ret>: <Reg8: 0>
-    return r0 + 1;
+    return r0;
 }

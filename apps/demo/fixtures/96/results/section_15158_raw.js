@@ -43,7 +43,7 @@ function function_15158(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 87 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 11222>  # String: 'callRestParameterTests' (Identifier)
     param6.callRestParameterTests = callRestParameterTests()
     // CODE → addr: 93 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 95 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

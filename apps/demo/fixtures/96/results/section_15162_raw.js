@@ -59,5 +59,5 @@ function callRestParameterTests() {
     // CODE → addr:112 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/RestParameterTests/callRestParameterTests/end")
     // CODE → addr:117 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

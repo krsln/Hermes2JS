@@ -9,5 +9,5 @@ function increment() {
     // CODE → addr: 10 | <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
     r1[0] = r0 + 1
     // CODE → addr: 14 | <Ret>: <Reg8: 0>
-    return r0 + 1;
+    return r0;
 }

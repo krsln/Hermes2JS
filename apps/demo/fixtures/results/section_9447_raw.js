@@ -64,7 +64,7 @@ function whileTest() {
     // CODE → addr:113 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
     console.log("__BC:ControlFlow/WhileTests/whileTest/end")
     // CODE → addr:118 | <LoadConstUndefined>: <Reg8: 6>
-    // USED → r6 = undefined;
+    r6 = undefined
     // CODE → addr:120 | <Ret>: <Reg8: 6>
-    return undefined;
+    return r6;
 }

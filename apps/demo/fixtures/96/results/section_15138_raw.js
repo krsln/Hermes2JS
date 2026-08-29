@@ -47,5 +47,5 @@ function callRegExpTests() {
     // CODE → addr: 94 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Strings/RegExpTests/callRegExpTests/end")
     // CODE → addr: 99 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

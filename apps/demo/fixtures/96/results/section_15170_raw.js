@@ -41,11 +41,11 @@ function callGeneratorTests() {
     goto label_41;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 70 | <Catch>: <Reg8: 3>
-    // USED → r3 = caughtException;
+    r3 = caughtException
     // CODE → addr: 72 | <IteratorClose>: <Reg8: 4, UInt8: 1>
     r4.return()
     // CODE → addr: 75 | <Throw>: <Reg8: 3>
-    throw caughtException;
+    throw r3;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 77 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
     // USED → r4 = r2[1];
@@ -76,11 +76,11 @@ function callGeneratorTests() {
     goto label_95;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:124 | <Catch>: <Reg8: 3>
-    // USED → r3 = caughtException;
+    r3 = caughtException
     // CODE → addr:126 | <IteratorClose>: <Reg8: 4, UInt8: 1>
     r4.return()
     // CODE → addr:129 | <Throw>: <Reg8: 3>
-    throw caughtException;
+    throw r3;
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:131 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 2>
     // USED → r2 = r2[2];
@@ -115,5 +115,5 @@ function callGeneratorTests() {
     // CODE → addr:205 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/GeneratorTests/callGeneratorTests/end")
     // CODE → addr:210 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

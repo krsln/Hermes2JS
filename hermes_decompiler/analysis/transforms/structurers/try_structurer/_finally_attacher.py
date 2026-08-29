@@ -463,7 +463,21 @@ class _FinallyAttacher:
         if not isinstance(block.terminator.value, Identifier):
             return
 
-        if block.terminator.value.name != catch_region.exception:
+        # `Throw`'s own value is deliberately kept as a bare `r{N}`
+        # reference now (never inlined - see Throw.py's own
+        # docstring), so it can no longer be expected to already read
+        # as the catch parameter's friendly display name
+        # (`catch_region.exception`). Compare by raw register number
+        # instead, when available; only fall back to the friendly-name
+        # comparison for a `handler_block` whose leading instruction
+        # didn't yield one (see `_extract_catch_param`'s own `None`
+        # case), keeping this working for that narrower shape too.
+        thrown_name = block.terminator.value.name
+
+        if catch_region.exception_reg is not None:
+            if thrown_name != f"r{catch_region.exception_reg}":
+                return
+        elif thrown_name != catch_region.exception:
             return
 
         if len(block.instructions) < 2:

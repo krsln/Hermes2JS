@@ -37,7 +37,7 @@ function function_15054(param1, param2) {
     // CODE → addr: 68 | <Call3>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log(param2, param1)
     // CODE → addr: 74 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 76 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

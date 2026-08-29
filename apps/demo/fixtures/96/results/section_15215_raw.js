@@ -27,7 +27,7 @@ function get() {
     // CODE → addr: 47 | <Call3>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
     r0 = r1.default.call(r0, r2, r1)
     // CODE → addr: 53 | <GetByVal>: <Reg8: 0, Reg8: 0, Reg8: 1>
-    // USED → r0 = r0[r1];
+    r0 = r0[r1]
     // CODE → addr: 57 | <Ret>: <Reg8: 0>
-    return r0[r1];
+    return r0;
 }

@@ -45,7 +45,7 @@ function arrayTest() {
     // CODE → addr: 91 | <GetById>: <Reg8: 6, Reg8: 7, UInt8: 5, string_id: 7762>  # String: 'sort' (Identifier)
     // USED → r6 = r7.sort;
     // CODE → addr: 97 | <LoadConstUndefined>: <Reg8: 2>
-    // USED → r2 = undefined;
+    r2 = undefined
     // CODE → addr: 99 | <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 12472>  # Function: [#12472  of 12 bytes]: 3 params @ offset 0x00239ae7
     // USED → r4 = function_12472(param1, param2);
     // CODE → addr:104 | <Call2>: <Reg8: 7, Reg8: 6, Reg8: 7, Reg8: 4>
@@ -127,5 +127,5 @@ function arrayTest() {
     // CODE → addr:299 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:Arrays/ArrayTests/arrayTest/end")
     // CODE → addr:304 | <Ret>: <Reg8: 2>
-    return undefined;
+    return r2;
 }

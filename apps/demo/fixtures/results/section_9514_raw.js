@@ -31,7 +31,7 @@ function restOnlyTest() {
     // CODE → addr: 65 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Functions/RestParameterTests/restOnlyTest/end")
     // CODE → addr: 70 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr: 72 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

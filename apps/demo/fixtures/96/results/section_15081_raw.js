@@ -39,9 +39,9 @@ function nestedTryCatchTest() {
     // CODE → addr: 84 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
     // USED → r1 = new Error("inner");
     // CODE → addr: 88 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    // USED → r1 = new Error("inner");
+    r1 = new Error("inner")
     // CODE → addr: 92 | <Throw>: <Reg8: 1>
-    throw new Error("inner");
+    throw r1;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 94 | <Catch>: <Reg8: 2>
     // USED → r2 = caughtException;
@@ -68,9 +68,9 @@ function nestedTryCatchTest() {
     // CODE → addr:142 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
     // USED → r1 = new Error("rethrown from inner: " + caughtException);
     // CODE → addr:146 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    // USED → r1 = new Error("rethrown from inner: " + caughtException);
+    r1 = new Error("rethrown from inner: " + caughtException)
     // CODE → addr:150 | <Throw>: <Reg8: 1>
-    throw new Error("rethrown from inner: " + caughtException);
+    throw r1;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:152 | <Catch>: <Reg8: 3>
     // USED → r3 = caughtException;
@@ -97,7 +97,7 @@ function nestedTryCatchTest() {
     // CODE → addr:205 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchTest/end")
     // CODE → addr:210 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:212 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

@@ -31,5 +31,5 @@ function reset() {
     // CODE → addr: 55 | <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>
     r2[r0[6]] = 0
     // CODE → addr: 59 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

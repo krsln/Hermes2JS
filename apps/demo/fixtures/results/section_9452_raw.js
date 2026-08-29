@@ -72,7 +72,7 @@ function nestedLoopTest() {
     // CODE → addr:123 | <Call2>: <Reg8: 10, Reg8: 11, Reg8: 12, Reg8: 10>
     console.log("__BC:ControlFlow/NestedTests/nestedLoopTest/end")
     // CODE → addr:128 | <LoadConstUndefined>: <Reg8: 9>
-    // USED → r9 = undefined;
+    r9 = undefined
     // CODE → addr:130 | <Ret>: <Reg8: 9>
-    return undefined;
+    return r9;
 }

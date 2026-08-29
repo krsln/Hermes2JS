@@ -110,7 +110,7 @@ function ifTest(param1) {
     // CODE → addr:232 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:ControlFlow/IfTests/ifTest/end")
     // CODE → addr:237 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr:239 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

@@ -111,11 +111,11 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr:215 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end")
     // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:222 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
     // CODE → addr:224 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:226 | <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr:232 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -123,5 +123,5 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr:237 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
     console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
     // CODE → addr:242 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

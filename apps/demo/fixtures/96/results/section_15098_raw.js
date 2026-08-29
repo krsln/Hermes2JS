@@ -79,11 +79,11 @@ function propertyAccessTest() {
     goto label_133;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:170 | <Catch>: <Reg8: 2>
-    // USED → r2 = caughtException;
+    r2 = caughtException
     // CODE → addr:172 | <IteratorClose>: <Reg8: 3, UInt8: 1>
     r3.return()
     // CODE → addr:175 | <Throw>: <Reg8: 2>
-    throw caughtException;
+    throw r2;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:177 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
@@ -94,5 +94,5 @@ function propertyAccessTest() {
     // CODE → addr:192 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/PropertyTests/propertyAccessTest/end")
     // CODE → addr:197 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

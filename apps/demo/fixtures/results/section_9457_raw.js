@@ -75,7 +75,7 @@ function labeledContinueTest() {
     // CODE → addr:132 | <Call2>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 8>
     console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/end")
     // CODE → addr:137 | <LoadConstUndefined>: <Reg8: 7>
-    // USED → r7 = undefined;
+    r7 = undefined
     // CODE → addr:139 | <Ret>: <Reg8: 7>
-    return undefined;
+    return r7;
 }

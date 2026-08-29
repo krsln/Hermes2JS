@@ -25,7 +25,7 @@ function makeSound() {
     // CODE → addr: 51 | <Call4>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>
     console.log(r1.name, "says", r1.sound)
     // CODE → addr: 58 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 60 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

@@ -25,7 +25,7 @@ function optionalChainingTest() {
     // CODE → addr: 39 | <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
     // USED → r5 = r3 == null;
     // CODE → addr: 43 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 45 | <LoadConstUndefined>: <Reg8: 4>
     r4 = undefined
     // CODE → addr: 47 | <JmpTrue>: <Addr8: 38, Reg8: 5>  # Address: 00000055
@@ -76,5 +76,5 @@ function optionalChainingTest() {
     // CODE → addr:126 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/PropertyTests/optionalChainingTest/end")
     // CODE → addr:131 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

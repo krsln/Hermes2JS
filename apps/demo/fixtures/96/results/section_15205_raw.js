@@ -183,5 +183,5 @@ function function_15205(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:411 | <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>
     r2[r3] = r1
     // CODE → addr:415 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

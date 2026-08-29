@@ -98,5 +98,5 @@ function defaultWithRestTest() {
     // CODE → addr:162 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
     console.log(r3)
     // CODE → addr:167 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

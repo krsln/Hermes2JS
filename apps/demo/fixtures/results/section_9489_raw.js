@@ -87,5 +87,5 @@ function swapViaDestructureTest() {
     // CODE → addr:138 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
     console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/end")
     // CODE → addr:143 | <Ret>: <Reg8: 2>
-    return undefined;
+    return r2;
 }

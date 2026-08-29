@@ -17,7 +17,7 @@ function value() {
     // CODE → addr: 29 | <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this;
     // CODE → addr: 32 | <GetOwnPrivateBySym>: <Reg8: 0, Reg8: 0, UInt8: 0, Reg8: 1>
-    // USED → r0 = this.#__private_1__;
+    r0 = this.#__private_1__
     // CODE → addr: 37 | <Ret>: <Reg8: 0>
-    return this.#__private_1__;
+    return r0;
 }

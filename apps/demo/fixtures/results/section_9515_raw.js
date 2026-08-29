@@ -33,7 +33,7 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr: 68 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Functions/RestParameterTests/restAfterRequiredTest/end")
     // CODE → addr: 73 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr: 75 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
 }

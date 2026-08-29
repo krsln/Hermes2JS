@@ -54,7 +54,7 @@ function tryCatchInsideLoopTest(param1) {
                 // CODE → addr:152 | <Mov>: <Reg8: 2, Reg8: 0>
                 r2 = 0
                 // CODE → addr:155 | <Inc>: <Reg8: 0, Reg8: 2>
-                // USED → r0 = r2 + 1;
+                r0 = r2 + 1
             }
             if (r2 < 0) {
                 // ──────────────── Block 3 ──────────────── 
@@ -112,5 +112,5 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:194 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/end")
     // CODE → addr:199 | <Ret>: <Reg8: 0>
-    return r2 + 1;
+    return r0;
 }

@@ -29,7 +29,7 @@ function forEachTest() {
     // CODE → addr: 62 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:ControlFlow/ForEachTests/forEachTest/end")
     // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 69 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

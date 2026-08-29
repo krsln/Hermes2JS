@@ -25,7 +25,7 @@ function function_15057(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 42 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10944>  # String: 'nestedLoopTest' (Identifier)
     param6.nestedLoopTest = nestedLoopTest()
     // CODE → addr: 48 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 50 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

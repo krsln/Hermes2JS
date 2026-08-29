@@ -38,7 +38,7 @@ function privateStaticTest() {
     if (r5[5] in r9) goto label_395;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 72 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr: 74 | <AddOwnPrivateBySym>: <Reg8: 9, Reg8: 1, Reg8: 12>
     r9.#__private_1__ = r5[5]
     // CODE → addr: 78 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 5, UInt8: 6>
@@ -172,7 +172,7 @@ function privateStaticTest() {
     // CODE → addr:380 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:Classes/PrivateStaticTests/privateStaticTest/end")
     // CODE → addr:385 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:387 | <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
     r13 = "Cannot initialize private field twice."

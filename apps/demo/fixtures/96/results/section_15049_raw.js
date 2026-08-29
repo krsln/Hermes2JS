@@ -36,7 +36,7 @@ function doWhileTest() {
     // CODE → addr: 65 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:ControlFlow/DoWhileTests/doWhileTest/end")
     // CODE → addr: 70 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 72 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

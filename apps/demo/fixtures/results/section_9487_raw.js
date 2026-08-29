@@ -334,9 +334,9 @@ function nestedArrayDestructureTest() {
     // CODE → addr:495 | <Call2>: <Reg8: 10, Reg8: 11, Reg8: 12, Reg8: 10>
     console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end")
     // CODE → addr:500 | <Ret>: <Reg8: 3>
-    return undefined;
+    return r3;
     // CODE → addr:502 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:504 | <Mov>: <Reg8: 8, Reg8: 9>
     // USED → r8 = r7 === undefined;
     // ──────────────── Block 35 ──────────────── 
@@ -347,13 +347,13 @@ function nestedArrayDestructureTest() {
     r7.return()
     // ──────────────── Block 37 ──────────────── 
     // CODE → addr:513 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
     // CODE → addr:515 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:517 | <IteratorClose>: <Reg8: 6, UInt8: 1>
     r6.return()
     // CODE → addr:520 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
     // CODE → addr:522 | <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → addr:524 | <Jmp>: <Addr8: 20>  # Address: 00000220
@@ -374,7 +374,7 @@ function nestedArrayDestructureTest() {
     goto label_544;
     // ──────────────── Block 40 ──────────────── 
     // CODE → addr:540 | <Catch>: <Reg8: 0>
-    // USED → r0 = caughtException;
+    r0 = caughtException
     // CODE → addr:542 | <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // ──────────────── Block 41 ──────────────── 
@@ -385,5 +385,5 @@ function nestedArrayDestructureTest() {
     r1.return()
     // ──────────────── Block 43 ──────────────── 
     // CODE → addr:550 | <Throw>: <Reg8: 0>
-    throw caughtException;
+    throw r0;
 }

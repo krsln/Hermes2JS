@@ -33,7 +33,7 @@ async function* anon_15189() {
         // CODE → addr: 47 | <LoadFromEnvironment>: <Reg8: 9, Reg8: 4, UInt8: 2>
         // USED → r9 = r4[2];
         // CODE → addr: 51 | <LoadConstUndefined>: <Reg8: 2>
-        r2 = undefined
+        // USED → r2 = undefined;
         // CODE → addr: 53 | <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
         // USED → r5 = 1;
         // CODE → addr: 56 | <Call2>: <Reg8: 6, Reg8: 9, Reg8: 2, Reg8: 5>
@@ -49,12 +49,12 @@ async function* anon_15189() {
         // CODE → addr: 77 | <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
         // USED → r1 = (r1[0] = r6)[1] = r9;
         // CODE → addr: 81 | <Call2>: <Reg8: 1, Reg8: 7, Reg8: 8, Reg8: 1>
-        // USED → r1 = await Promise.all(r1);
+        r1 = await Promise.all(r1)
         // CODE → addr: 86 | <SaveGenerator>: <Addr8: 4>  # Address: 0000005a
         goto label_90;
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 88 | <Ret>: <Reg8: 1>
-        return await Promise.all(r1);
+        return r1;
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 90 | <ResumeGenerator>: <Reg8: 1, Reg8: 7>
         // USED → r1 = await yield;

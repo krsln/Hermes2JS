@@ -196,7 +196,7 @@ class _HandlerBuilder:
         )
 
         catch_region = CatchRegion()
-        catch_region.exception = self._extract_catch_param(handler_block)
+        catch_region.exception, catch_region.exception_reg = self._extract_catch_param(handler_block)
         catch_region.body = catch_body
         catch_body.parent = catch_region
 
@@ -316,10 +316,10 @@ class _HandlerBuilder:
     # -------------------------------------------------------------
 
     @staticmethod
-    def _extract_catch_param(handler_block: BasicBlock) -> str:
+    def _extract_catch_param(handler_block: BasicBlock) -> tuple[str, int | None]:
 
         if not handler_block.instructions:
-            return "e"
+            return "e", None
 
         first = handler_block.instructions[0]
 
@@ -329,13 +329,15 @@ class _HandlerBuilder:
             else "e"
         )
 
+        reg = first.dest_reg
+
         if (
                 first.dest_reg is not None
                 and isinstance(first.value, Expression)
         ):
             handler_block.instructions.pop(0)
 
-        return name
+        return name, reg
 
     # -------------------------------------------------------------
 

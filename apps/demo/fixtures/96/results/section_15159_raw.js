@@ -1,7 +1,7 @@
 function restOnlyTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr:  2 | <LoadConstUndefined>: <Reg8: 4>
     r4 = undefined
     // CODE → addr:  4 | <GetGlobalObject>: <Reg8: 1>
@@ -64,5 +64,5 @@ function restOnlyTest() {
     // CODE → addr:119 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/RestParameterTests/restOnlyTest/end")
     // CODE → addr:124 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

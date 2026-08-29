@@ -15,7 +15,7 @@ function forEachTest() {
     // CODE → addr: 30 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 148>  # String: 'forEach' (Identifier)
     // USED → r3 = r4.forEach;
     // CODE → addr: 35 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 37 | <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 12470>  # Function: [#12470  of 78 bytes]: 3 params @ offset 0x00243d9b
     // USED → r2 = function_12470(param1, param2);
     // CODE → addr: 42 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
@@ -29,5 +29,5 @@ function forEachTest() {
     // CODE → addr: 62 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/ForEachTests/forEachTest/end")
     // CODE → addr: 67 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

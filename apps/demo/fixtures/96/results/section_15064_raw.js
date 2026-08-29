@@ -37,7 +37,7 @@ function function_15064(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 75 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 4, string_id: 10646>  # String: 'tripleNestedLabeledTest' (Identifier)
     param6.tripleNestedLabeledTest = tripleNestedLabeledTest()
     // CODE → addr: 81 | <LoadConstUndefined>: <Reg8: 0>
-    // USED → r0 = undefined;
+    r0 = undefined
     // CODE → addr: 83 | <Ret>: <Reg8: 0>
-    return undefined;
+    return r0;
 }

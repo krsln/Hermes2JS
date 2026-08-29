@@ -3,7 +3,7 @@ async function* anon_15181() {
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield;
+    r0 = await yield
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     // CODE → addr:  4 | <JmpTrueLong>: <Addr32: 228, Reg8: 1>  # Address: 000000e8
@@ -28,12 +28,12 @@ async function* anon_15181() {
     // CODE → addr: 41 | <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
     // USED → r3 = 1;
     // CODE → addr: 44 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 3>
-    // USED → r1 = await r1[2](1);
+    r1 = await r1[2](1)
     // CODE → addr: 49 | <SaveGenerator>: <Addr8: 4>  # Address: 00000035
     goto label_53;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 51 | <Ret>: <Reg8: 1>
-    return await r1[2](1);
+    return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 53 | <ResumeGenerator>: <Reg8: 1, Reg8: 4>
     // USED → r1 = await yield;
@@ -69,9 +69,9 @@ async function* anon_15181() {
     // CODE → addr:108 | <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
     // USED → r3 = new Error("post-await failure");
     // CODE → addr:112 | <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
-    // USED → r3 = new Error("post-await failure");
+    r3 = new Error("post-await failure")
     // CODE → addr:116 | <Throw>: <Reg8: 3>
-    throw new Error("post-await failure");
+    throw r3;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:118 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
@@ -84,7 +84,7 @@ async function* anon_15181() {
     // CODE → addr:138 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:139 | <Ret>: <Reg8: 1>
-    return await yield;
+    return r1;
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:141 | <Catch>: <Reg8: 1>
     r1 = caughtException
@@ -114,14 +114,14 @@ async function* anon_15181() {
     // CODE → addr:198 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
     console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/end")
     // CODE → addr:203 | <LoadConstUndefined>: <Reg8: 1>
-    // USED → r1 = undefined;
+    r1 = undefined
     // CODE → addr:205 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:206 | <Ret>: <Reg8: 1>
-    return undefined;
+    return r1;
     // ──────────────── Block 10 ──────────────── 
     // CODE → addr:208 | <Catch>: <Reg8: 1>
-    // USED → r1 = caughtException;
+    r1 = caughtException
     // CODE → addr:210 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:216 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -131,10 +131,10 @@ async function* anon_15181() {
     // CODE → addr:225 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Functions/AsyncTests/asyncTryCatchTest/finally")
     // CODE → addr:230 | <Throw>: <Reg8: 1>
-    throw caughtException;
+    throw r1;
     // ──────────────── Block 11 ──────────────── 
     // CODE → addr:232 | <CompleteGenerator>: <>
     // CompleteGenerator
     // CODE → addr:233 | <Ret>: <Reg8: 0>
-    return await yield;
+    return r0;
 }

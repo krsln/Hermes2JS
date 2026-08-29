@@ -13,7 +13,7 @@ function Counter() {
     // CODE → addr: 18 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
     // USED → r2 = r0[0];
     // CODE → addr: 22 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    // USED → r0 = undefined;
     // CODE → addr: 24 | <Call3>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 8, Reg8: 2>
     r1 = r0.default(this, r2)
     // CODE → addr: 30 | <GetGlobalObject>: <Reg8: 1>
