@@ -96,8 +96,6 @@ function spreadArrayTest() {
             r4[0] = r10
             // CODE → addr:188 | <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
             r2 = r9 + 1
-            // CODE → addr:192 | <Jmp>: <Addr8: -28>  # Address: 000000a4
-            goto label_164;
         }
         // LOOP → END
         // LOOP → START (while)

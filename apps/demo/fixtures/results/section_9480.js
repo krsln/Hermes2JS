@@ -32,8 +32,6 @@ function forInTest() {
             // USED → r8 = r7[r11];
             // CODE → addr: 66 | <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
             console.log(r11, r8)
-            // CODE → addr: 72 | <Jmp>: <Addr8: -33>  # Address: 00000027
-            goto label_39;
         }
         // LOOP → END
     }

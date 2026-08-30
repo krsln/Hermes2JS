@@ -112,8 +112,6 @@ function mapTest() {
         // USED → r10 = console.log;
         // CODE → addr:243 | <Call3>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 13, Reg8: 12>
         console.log(r13, r12)
-        // CODE → addr:249 | <Jmp>: <Addr8: -51>  # Address: 000000c6
-        goto label_198;
     }
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 

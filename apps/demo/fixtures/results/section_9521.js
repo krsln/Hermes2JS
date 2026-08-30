@@ -39,8 +39,6 @@ function callGeneratorTests() {
         // USED → r5 = console.log;
         // CODE → addr: 66 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
         console.log(r7)
-        // CODE → addr: 71 | <Jmp>: <Addr8: -30>  # Address: 00000029
-        goto label_41;
     }
     // LOOP → END
     // ──────────────── Block 3 ──────────────── 
@@ -78,8 +76,6 @@ function callGeneratorTests() {
         // USED → r5 = console.log;
         // CODE → addr:123 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
         console.log(r7)
-        // CODE → addr:128 | <Jmp>: <Addr8: -30>  # Address: 00000062
-        goto label_98;
     }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

@@ -66,8 +66,6 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
         // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
         // CODE → addr: 94 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
         console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
-        // CODE → addr: 99 | <Jmp>: <Addr8: 11>  # Address: 0000006e
-        goto label_110;
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:101 | <LoadConstString>: <Reg8: 0, string_id: 4861>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true' (String)
         // USED → r0 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true";
@@ -85,8 +83,6 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false";
         // CODE → addr:136 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
         console.log("__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-false")
-        // CODE → addr:141 | <Jmp>: <Addr8: 11>  # Address: 00000098
-        goto label_152;
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr:143 | <LoadConstString>: <Reg8: 1, string_id: 4861>  # String: '__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryCatchFinallyBranchInFinallyTest/finally-true";

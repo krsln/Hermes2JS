@@ -242,8 +242,6 @@ function nestedArrayDestructureTest() {
             r13[0] = r19
             // CODE → addr:449 | <AddN>: <Reg8: 16, Reg8: 18, Reg8: 12>
             r16 = r18 + 1
-            // CODE → addr:453 | <Jmp>: <Addr8: -28>  # Address: 000001a9
-            goto label_425;
         }
         // LOOP → END
     }
@@ -294,15 +292,11 @@ function nestedArrayDestructureTest() {
                 // ──────────────── Block 29 ──────────────── 
                 // CODE → addr:406 | <Catch>: <Reg8: 0>
                 // USED → r0 = caughtException;
-                // CODE → addr:408 | <Jmp>: <Addr8: 99>  # Address: 000001fb
-                goto label_507;
                 // ──────────────── Block 33 ──────────────── 
                 // CODE → addr:455 | <Catch>: <Reg8: 0>
                 r0 = caughtException
                 // CODE → addr:457 | <Mov>: <Reg8: 8, Reg8: 11>
                 r8 = r7 === undefined
-                // CODE → addr:460 | <Jmp>: <Addr8: 47>  # Address: 000001fb
-                goto label_507;
             }
             // LOOP → END
         } while (!(r7 === undefined));
@@ -327,15 +321,11 @@ function nestedArrayDestructureTest() {
                 // USED → r0 = caughtException;
                 // CODE → addr:528 | <Mov>: <Reg8: 2, Reg8: 5>
                 r2 = r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined))
-                // CODE → addr:531 | <Jmp>: <Addr8: 13>  # Address: 00000220
-                goto label_544;
                 // ──────────────── Block 39 ──────────────── 
                 // CODE → addr:533 | <Catch>: <Reg8: 0>
                 r0 = caughtException
                 // CODE → addr:535 | <Mov>: <Reg8: 2, Reg8: 4>
                 r2 = r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined))
-                // CODE → addr:538 | <Jmp>: <Addr8: 6>  # Address: 00000220
-                goto label_544;
                 // ──────────────── Block 40 ──────────────── 
                 // CODE → addr:540 | <Catch>: <Reg8: 0>
                 r0 = caughtException

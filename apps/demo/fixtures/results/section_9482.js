@@ -71,8 +71,6 @@ function propertyAccessTest() {
         // USED → r5 = r4[r8];
         // CODE → addr:153 | <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
         console.log(r8, r5)
-        // CODE → addr:159 | <Jmp>: <Addr8: -35>  # Address: 0000007c
-        goto label_124;
     }
     // LOOP → END
     // ──────────────── Block 3 ──────────────── 

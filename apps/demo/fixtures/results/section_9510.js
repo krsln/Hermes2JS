@@ -62,8 +62,6 @@ function closureLoopTest() {
         // USED → r4 = r4.call(undefined);
         // CODE → addr: 98 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
         console.log(r4)
-        // CODE → addr:103 | <Jmp>: <Addr8: -34>  # Address: 00000045
-        goto label_69;
     }
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 

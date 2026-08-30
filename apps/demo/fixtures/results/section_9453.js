@@ -14,6 +14,8 @@ function complexTest() {
     r14 = [1, 2, 3, 4, 5]
     // CODE → addr: 30 | <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     // USED → r7 = r14.length;
+    // CODE → addr: 35 | <LoadConstZero>: <Reg8: 0>
+    // USED → r0 = 0;
     // CODE → addr: 37 | <Less>: <Reg8: 5, Reg8: 0, Reg8: 7>
     // USED → r5 = 0 < r14.length;
     // CODE → addr: 41 | <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
@@ -38,10 +40,12 @@ function complexTest() {
     if (0 < r14.length) {
         // LOOP → START (for)
         // → r7 = r14[r0]
-        for (r0 = 0; r0 < r7; r0 = r0 + 1) {
+        for (; r0 < r7; r0 = r1 + 1) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 80 | <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
             r7 = r14[r0]
+            // CODE → addr: 84 | <Mov>: <Reg8: 1, Reg8: 0>
+            r1 = 0
             // Switch → START
             switch (r7) {
                 case 1:

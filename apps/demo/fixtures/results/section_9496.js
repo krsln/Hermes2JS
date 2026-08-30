@@ -71,8 +71,6 @@ function setTest() {
         // USED → r5 = console.log;
         // CODE → addr:147 | <Call2>: <Reg8: 5, Reg8: 5, Reg8: 6, Reg8: 7>
         console.log(r7)
-        // CODE → addr:152 | <Jmp>: <Addr8: -30>  # Address: 0000007a
-        goto label_122;
     }
     // LOOP → END
     // ──────────────── Block 3 ──────────────── 

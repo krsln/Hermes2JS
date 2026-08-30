@@ -28,8 +28,6 @@ function forOfTest() {
         // USED → r4 = console.log;
         // CODE → addr: 57 | <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
         console.log(r6)
-        // CODE → addr: 62 | <Jmp>: <Addr8: -27>  # Address: 00000023
-        goto label_35;
     }
     // LOOP → END
     // ──────────────── Block 4 ──────────────── 
