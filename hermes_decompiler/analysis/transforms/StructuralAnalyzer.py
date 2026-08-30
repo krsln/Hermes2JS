@@ -8,6 +8,7 @@ from hermes_decompiler.analysis.transforms.cfg_passes import (
 from hermes_decompiler.analysis.transforms.region_passes import (
     BooleanChainRegionPass,
     ConditionalExpressionRegionPass,
+    DeadMovEliminationPass,
     ForEachRegionPass,
     LoopConditionRegionPass,
     LoopContinueRegionPass,
@@ -191,6 +192,18 @@ class StructuralAnalyzer:
         # aliasing already resolved by LoopInductionAliasPass) rather
         # than a still-aliased register name.
         ReturnValueResolutionPass(graph, self.cfg).run()
+
+        # Removes a dead `rN = rM;` register-copy instruction (see its
+        # own docstring for the concrete motivating case -
+        # forOfTest/section_15092's leftover `r4 = r3`). No ordering
+        # dependency on anything above: it only ever deletes an
+        # instruction outright, never rewrites one, so it can't affect
+        # any earlier pass's own analysis - placed last so it sees
+        # every register copy any earlier pass may have left behind
+        # (e.g. ForEachRegionPass's own for-of/for-in binding setup)
+        # rather than risking a copy some earlier pass still expected
+        # to find in place.
+        DeadMovEliminationPass(graph, self.cfg).run()
 
         # ---- Diagnostics ------------------------------------------------
 

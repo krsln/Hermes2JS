@@ -36,12 +36,8 @@ function nestedArrayDestructureTest() {
     r6 = r2
     // CODE → addr: 73 | <IteratorBegin>: <Reg8: 1, Reg8: 6>
     r1 = GetIterator(r6)
-    // CODE → addr: 76 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = r2
     // CODE → addr: 79 | <IteratorNext>: <Reg8: 2, Reg8: 1, Reg8: 2>
     r2 = r1.next()
-    // CODE → addr: 83 | <Mov>: <Reg8: 4, Reg8: 1>
-    // USED → r4 = r1;
     // CODE → addr: 86 | <StrictEq>: <Reg8: 4, Reg8: 4, Reg8: 3>
     // USED → r4 = r1 === undefined;
     // CODE → addr: 90 | <LoadConstUndefined>: <Reg8: 5>
@@ -51,12 +47,8 @@ function nestedArrayDestructureTest() {
     r11 = (r1 === undefined) ? undefined : r2
     // CODE → addr:101 | <IteratorBegin>: <Reg8: 2, Reg8: 11>
     r2 = GetIterator(r11)
-    // CODE → addr:104 | <Mov>: <Reg8: 5, Reg8: 11>
-    r5 = r2
     // CODE → addr:107 | <IteratorNext>: <Reg8: 12, Reg8: 2, Reg8: 5>
     r12 = r2.next()
-    // CODE → addr:111 | <Mov>: <Reg8: 5, Reg8: 2>
-    // USED → r5 = r2;
     // CODE → addr:114 | <StrictEq>: <Reg8: 5, Reg8: 5, Reg8: 3>
     // USED → r5 = r2 === undefined;
     // CODE → addr:118 | <LoadConstUndefined>: <Reg8: 9>
@@ -70,8 +62,6 @@ function nestedArrayDestructureTest() {
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr:134 | <IteratorNext>: <Reg8: 12, Reg8: 2, Reg8: 11>
         r12 = r2.next()
-        // CODE → addr:138 | <Mov>: <Reg8: 11, Reg8: 2>
-        // USED → r11 = r2;
         // CODE → addr:141 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
         // USED → r11 = r2 === undefined;
         // CODE → addr:145 | <LoadConstUndefined>: <Reg8: 9>
@@ -100,12 +90,8 @@ function nestedArrayDestructureTest() {
     r12 = r11
     // CODE → addr:224 | <IteratorBegin>: <Reg8: 6, Reg8: 12>
     r6 = GetIterator(r12)
-    // CODE → addr:227 | <Mov>: <Reg8: 9, Reg8: 12>
-    r9 = r11
     // CODE → addr:230 | <IteratorNext>: <Reg8: 9, Reg8: 6, Reg8: 9>
     r9 = r6.next()
-    // CODE → addr:234 | <Mov>: <Reg8: 9, Reg8: 6>
-    // USED → r9 = r6;
     // CODE → addr:237 | <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 3>
     // USED → r9 = r6 === undefined;
     // CODE → addr:241 | <LoadConstUndefined>: <Reg8: 11>
@@ -115,8 +101,6 @@ function nestedArrayDestructureTest() {
         // ──────────────── Block 15 ──────────────── 
         // CODE → addr:246 | <IteratorNext>: <Reg8: 13, Reg8: 6, Reg8: 12>
         r13 = r6.next()
-        // CODE → addr:250 | <Mov>: <Reg8: 12, Reg8: 6>
-        // USED → r12 = r6;
         // CODE → addr:253 | <StrictEq>: <Reg8: 12, Reg8: 12, Reg8: 3>
         // USED → r12 = r6 === undefined;
         // CODE → addr:257 | <LoadConstUndefined>: <Reg8: 11>
@@ -154,8 +138,6 @@ function nestedArrayDestructureTest() {
     r7 = GetIterator(r17)
     // CODE → addr:321 | <LoadConstUndefined>: <Reg8: 12>
     r12 = undefined
-    // CODE → addr:323 | <Mov>: <Reg8: 0, Reg8: 17>
-    r0 = r17
     // CODE → addr:326 | <IteratorNext>: <Reg8: 0, Reg8: 7, Reg8: 0>
     r0 = r7.next()
     // CODE → addr:330 | <Mov>: <Reg8: 8, Reg8: 7>
@@ -189,12 +171,8 @@ function nestedArrayDestructureTest() {
         r11 = r7 === undefined
     } else {
         // ──────────────── Block 25 ──────────────── 
-        // CODE → addr:360 | <Mov>: <Reg8: 0, Reg8: 17>
-        r0 = r17
         // CODE → addr:363 | <IteratorNext>: <Reg8: 13, Reg8: 7, Reg8: 0>
         r13 = r7.next()
-        // CODE → addr:367 | <Mov>: <Reg8: 0, Reg8: 7>
-        // USED → r0 = r7;
         // CODE → addr:370 | <StrictEq>: <Reg8: 0, Reg8: 0, Reg8: 3>
         // USED → r0 = r7 === undefined;
         // CODE → addr:374 | <Mov>: <Reg8: 8, Reg8: 0>
@@ -227,12 +205,8 @@ function nestedArrayDestructureTest() {
         // LOOP → START (while)
         while (!(r7 === undefined)) {
             // ──────────────── Block 31 ──────────────── 
-            // CODE → addr:425 | <Mov>: <Reg8: 11, Reg8: 17>
-            r11 = r17
             // CODE → addr:428 | <IteratorNext>: <Reg8: 19, Reg8: 7, Reg8: 11>
             r19 = r7.next()
-            // CODE → addr:432 | <Mov>: <Reg8: 11, Reg8: 7>
-            // USED → r11 = r7;
             // CODE → addr:435 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
             // USED → r11 = r7 === undefined;
             // CODE → addr:439 | <Mov>: <Reg8: 18, Reg8: 16>

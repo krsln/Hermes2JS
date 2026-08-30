@@ -20,8 +20,6 @@ function spreadFunctionArgsTest() {
     r7 = 0
     // CODE → addr: 39 | <NewArrayWithBuffer>: <Reg8: 8, UInt16: 3, UInt16: 3, UInt16: 19164>  # Array: [1, 2, 3]
     r8 = [1, 2, 3]
-    // CODE → addr: 47 | <Mov>: <Reg8: 9, Reg8: 6>
-    r9 = r6
     // CODE → addr: 50 | <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
     r0 = arraySpread(r-4, r-3, r-2, r-1)
     // CODE → addr: 54 | <LoadConstUndefined>: <Reg8: 1>

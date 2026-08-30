@@ -42,8 +42,6 @@ function closureLoopTest() {
     // LOOP → START (for_of)
     for (const r4 of r2) {
         // ──────────────── Block 3 ──────────────── 
-        // CODE → addr: 66 | <Mov>: <Reg8: 5, Reg8: 3>
-        r5 = r3
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr: 73 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r6 = console;

@@ -94,12 +94,8 @@ function callDestructuringTests() {
     r6 = r7
     // CODE → addr:253 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
     r5 = GetIterator(r6)
-    // CODE → addr:256 | <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = r7
     // CODE → addr:259 | <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
     r7 = r5.next()
-    // CODE → addr:263 | <Mov>: <Reg8: 8, Reg8: 5>
-    // USED → r8 = r5;
     // CODE → addr:266 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
     // USED → r1 = r5 === undefined;
     // CODE → addr:270 | <LoadConstUndefined>: <Reg8: 8>
@@ -180,12 +176,8 @@ function callDestructuringTests() {
     r6 = r7
     // CODE → addr:425 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
     r5 = GetIterator(r6)
-    // CODE → addr:428 | <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = r7
     // CODE → addr:431 | <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
     r7 = r5.next()
-    // CODE → addr:435 | <Mov>: <Reg8: 8, Reg8: 5>
-    // USED → r8 = r5;
     // CODE → addr:438 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
     // USED → r1 = r5 === undefined || r5 === undefined;
     // CODE → addr:442 | <LoadConstUndefined>: <Reg8: 8>

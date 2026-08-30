@@ -53,15 +53,10 @@ function propertyAccessTest() {
     // CODE → addr:122 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    // → r5 = r3
     while (!(r5 === undefined)) {
         // ──────────────── Block 1 ──────────────── 
-        // CODE → addr:124 | <Mov>: <Reg8: 5, Reg8: 2>
-        r5 = r0
         // CODE → addr:127 | <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 5>
         // USED → r8 = r3.next();
-        // CODE → addr:131 | <Mov>: <Reg8: 5, Reg8: 3>
-        r5 = r3
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:138 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r7 = console;

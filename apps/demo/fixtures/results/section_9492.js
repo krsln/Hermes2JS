@@ -14,18 +14,12 @@ function spreadArrayTest() {
     r3 = [1, 2, 3]
     // CODE → addr: 30 | <NewArray>: <Reg8: 0, UInt16: 0>
     // USED → r0 = [];
-    // CODE → addr: 34 | <Mov>: <Reg8: 13, Reg8: 0>
-    r13 = r0
-    // CODE → addr: 37 | <Mov>: <Reg8: 12, Reg8: 3>
-    r12 = r3
     // CODE → addr: 40 | <LoadConstZero>: <Reg8: 11>
     r11 = 0
     // CODE → addr: 42 | <CallBuiltin>: <Reg8: 11, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
     r11 = arraySpread(r7, r8, r9, r10)
     // CODE → addr: 46 | <NewArrayWithBuffer>: <Reg8: 12, UInt16: 3, UInt16: 3, UInt16: 11325>  # Array: [4, 5, 6]
     r12 = [4, 5, 6]
-    // CODE → addr: 54 | <Mov>: <Reg8: 13, Reg8: 0>
-    r13 = r0
     // CODE → addr: 57 | <CallBuiltin>: <Reg8: 4, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
     r4 = arraySpread(r0, r1, r2, r3)
     // CODE → addr: 61 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -60,12 +54,8 @@ function spreadArrayTest() {
     r7 = r0
     // CODE → addr:128 | <IteratorBegin>: <Reg8: 3, Reg8: 7>
     r3 = GetIterator(r7)
-    // CODE → addr:131 | <Mov>: <Reg8: 0, Reg8: 7>
-    r0 = r0
     // CODE → addr:134 | <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 0>
     r4 = r3.next()
-    // CODE → addr:138 | <Mov>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = r3;
     // CODE → addr:141 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:143 | <StrictEq>: <Reg8: 6, Reg8: 5, Reg8: 0>
@@ -81,12 +71,8 @@ function spreadArrayTest() {
         // LOOP → START (while)
         while (!(r3 === undefined)) {
             // ──────────────── Block 3 ──────────────── 
-            // CODE → addr:164 | <Mov>: <Reg8: 6, Reg8: 7>
-            r6 = r0
             // CODE → addr:167 | <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>
             r10 = r3.next()
-            // CODE → addr:171 | <Mov>: <Reg8: 6, Reg8: 3>
-            // USED → r6 = r3;
             // CODE → addr:174 | <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 0>
             // USED → r6 = r3 === undefined;
             // CODE → addr:178 | <Mov>: <Reg8: 9, Reg8: 2>

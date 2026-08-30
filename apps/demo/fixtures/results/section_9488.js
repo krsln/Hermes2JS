@@ -17,8 +17,6 @@ function parameterDestructureTest(param1, param2) {
     r5 = param2
     // CODE → addr: 32 | <IteratorNext>: <Reg8: 5, Reg8: 3, Reg8: 5>
     r5 = r3.next()
-    // CODE → addr: 36 | <Mov>: <Reg8: 6, Reg8: 3>
-    // USED → r6 = r3;
     // CODE → addr: 39 | <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 1>
     // USED → r0 = r3 === undefined;
     // CODE → addr: 43 | <LoadConstUndefined>: <Reg8: 7>

@@ -85,26 +85,20 @@ function mapTest() {
     // CODE → addr:183 | <IteratorBegin>: <Reg8: 5, Reg8: 3>
     r5 = GetIterator(r3)
     // LOOP → START (while)
-    // → r8 = r5
+    // → r8 = new Map()
     while (!(r8 === undefined)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr:186 | <Mov>: <Reg8: 8, Reg8: 3>
         r8 = new Map()
         // CODE → addr:189 | <IteratorNext>: <Reg8: 9, Reg8: 5, Reg8: 8>
         r9 = r5.next()
-        // CODE → addr:193 | <Mov>: <Reg8: 8, Reg8: 5>
-        r8 = r5
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:200 | <Mov>: <Reg8: 11, Reg8: 9>
         r11 = r9
         // CODE → addr:203 | <IteratorBegin>: <Reg8: 8, Reg8: 11>
         r8 = GetIterator(r11)
-        // CODE → addr:206 | <Mov>: <Reg8: 9, Reg8: 11>
-        r9 = r9
         // CODE → addr:209 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 9>
         r12 = r8.next()
-        // CODE → addr:213 | <Mov>: <Reg8: 9, Reg8: 8>
-        // USED → r9 = r8;
         // CODE → addr:216 | <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 0>
         // USED → r9 = r8 === undefined;
         // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 10>
@@ -118,8 +112,6 @@ function mapTest() {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr:236 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 11>
             r12 = r8.next()
-            // CODE → addr:240 | <Mov>: <Reg8: 11, Reg8: 8>
-            // USED → r11 = r8;
             // CODE → addr:243 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 0>
             // USED → r11 = r8 === undefined;
             // CODE → addr:247 | <LoadConstUndefined>: <Reg8: 10>

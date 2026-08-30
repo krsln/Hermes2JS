@@ -93,8 +93,6 @@ function mapTest() {
     // LOOP → START (for_of)
     for (const r11 of r9) {
         // ──────────────── Block 1 ──────────────── 
-        // CODE → addr:202 | <Mov>: <Reg8: 10, Reg8: 5>
-        r10 = r5
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:209 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>
         r10 = r8[0]

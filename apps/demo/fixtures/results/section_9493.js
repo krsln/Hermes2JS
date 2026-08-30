@@ -14,8 +14,6 @@ function spreadObjectTest() {
     // USED → r5 = {  };
     // CODE → addr: 24 | <NewObjectWithBuffer>: <Reg8: 8, UInt16: 61, UInt16: 42665>  # Object: {'x': 1, 'y': 2}
     r8 = { "x": 1, "y": 2 }
-    // CODE → addr: 30 | <Mov>: <Reg8: 9, Reg8: 5>
-    r9 = r5
     // CODE → addr: 33 | <CallBuiltin>: <Reg8: 3, UInt8: 46, UInt8: 3>  # Built-in function: [#46 copyDataProperties]
     r3 = copyDataProperties(r0, r1, r2)
     // CODE → addr: 37 | <LoadConstUInt8>: <Reg8: 0, UInt8: 3>

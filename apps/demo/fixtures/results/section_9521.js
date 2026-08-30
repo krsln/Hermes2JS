@@ -23,15 +23,10 @@ function callGeneratorTests() {
     // CODE → addr: 38 | <IteratorBegin>: <Reg8: 4, Reg8: 3>
     r4 = GetIterator(r3)
     // LOOP → START (while)
-    // → r5 = r4
     while (!(r5 === undefined)) {
         // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 41 | <Mov>: <Reg8: 5, Reg8: 3>
-        r5 = r5
         // CODE → addr: 44 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
         // USED → r7 = r4.next();
-        // CODE → addr: 48 | <Mov>: <Reg8: 5, Reg8: 4>
-        r5 = r4
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 55 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = console;
@@ -60,15 +55,10 @@ function callGeneratorTests() {
     // CODE → addr: 95 | <IteratorBegin>: <Reg8: 4, Reg8: 3>
     r4 = GetIterator(r3)
     // LOOP → START (while)
-    // → r5 = r4
     while (!(r5 === undefined)) {
         // ──────────────── Block 5 ──────────────── 
-        // CODE → addr: 98 | <Mov>: <Reg8: 5, Reg8: 3>
-        r5 = r5
         // CODE → addr:101 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
         // USED → r7 = r4.next();
-        // CODE → addr:105 | <Mov>: <Reg8: 5, Reg8: 4>
-        r5 = r4
         // ──────────────── Block 6 ──────────────── 
         // CODE → addr:112 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = console;

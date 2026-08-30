@@ -59,8 +59,6 @@ function setTest() {
     // LOOP → START (for_of)
     for (const r7 of r2) {
         // ──────────────── Block 1 ──────────────── 
-        // CODE → addr:131 | <Mov>: <Reg8: 5, Reg8: 4>
-        r5 = r4
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:138 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r6 = console;

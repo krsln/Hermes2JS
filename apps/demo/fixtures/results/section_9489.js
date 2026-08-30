@@ -24,12 +24,8 @@ function swapViaDestructureTest() {
     r6 = r7
     // CODE → addr: 43 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
     r5 = GetIterator(r6)
-    // CODE → addr: 46 | <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = r7
     // CODE → addr: 49 | <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
     r7 = r5.next()
-    // CODE → addr: 53 | <Mov>: <Reg8: 8, Reg8: 5>
-    // USED → r8 = r5;
     // CODE → addr: 56 | <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → addr: 58 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>

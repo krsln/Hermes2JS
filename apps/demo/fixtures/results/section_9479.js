@@ -17,15 +17,10 @@ function forOfTest() {
     // CODE → addr: 33 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    // → r4 = r3
     while (!(r4 === undefined)) {
         // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 35 | <Mov>: <Reg8: 4, Reg8: 2>
-        r4 = r2
         // CODE → addr: 38 | <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 4>
         // USED → r6 = r3.next();
-        // CODE → addr: 42 | <Mov>: <Reg8: 4, Reg8: 3>
-        r4 = r3
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 49 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r5 = console;

@@ -39,8 +39,6 @@ async function* anon_15185(param1) {
         // LOOP → START (for_of)
         for (const r9 of r6) {
             // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 51 | <Mov>: <Reg8: 3, Reg8: 4>
-            r3 = r4
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 58 | <Mov>: <Reg8: 8, Reg8: 1>
             // USED → r8 = 0;

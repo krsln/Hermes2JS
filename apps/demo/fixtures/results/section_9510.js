@@ -44,15 +44,10 @@ function closureLoopTest() {
     // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (while)
-    // → r5 = r3
     while (!(r5 === undefined)) {
         // ──────────────── Block 3 ──────────────── 
-        // CODE → addr: 69 | <Mov>: <Reg8: 4, Reg8: 2>
-        r4 = r0
         // CODE → addr: 72 | <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
         r4 = r3.next()
-        // CODE → addr: 76 | <Mov>: <Reg8: 5, Reg8: 3>
-        r5 = r3
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr: 83 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = console;
