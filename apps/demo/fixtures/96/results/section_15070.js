@@ -17,7 +17,17 @@ function ternaryTest(param1) {
     // CODE → addr: 27 | <Greater>: <Reg8: 3, Reg8: 2, Reg8: 1>
     // USED → r3 = param1 > 0;
     // CODE → addr: 31 | <LoadConstString>: <Reg8: 5, string_id: 866>  # String: 'positive' (String)
-    r5 = (param1 > 0) ? "positive" : (param1 >= 0) ? "zero" : "negative"
+    r5 = "positive"
+    if (param1 <= 0) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr: 38 | <Less>: <Reg8: 4, Reg8: 2, Reg8: 1>
+        // USED → r4 = param1 < 0;
+        // CODE → addr: 42 | <LoadConstString>: <Reg8: 3, string_id: 615>  # String: 'zero' (String)
+        r3 = (param1 >= 0) ? "zero" : "negative"
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → addr: 53 | <Mov>: <Reg8: 5, Reg8: 3>
+        r5 = (param1 >= 0) ? "zero" : "negative"
+    }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 56 | <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
@@ -26,9 +36,19 @@ function ternaryTest(param1) {
     // CODE → addr: 67 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 5>
     console.log(r5)
     // CODE → addr: 72 | <LoadConstUInt8>: <Reg8: 3, UInt8: 100>
-    // USED → r3 = (param1 > 100) ? 100 : (param1 < 0) ? 0 : param1;
+    // USED → r3 = 100;
     // CODE → addr: 75 | <Greater>: <Reg8: 4, Reg8: 2, Reg8: 3>
     // USED → r4 = param1 > 100;
+    if (param1 <= 100) {
+        // ──────────────── Block 5 ──────────────── 
+        // CODE → addr: 82 | <Less>: <Reg8: 4, Reg8: 2, Reg8: 1>
+        // USED → r4 = param1 < 0;
+        // CODE → addr: 86 | <LoadConstZero>: <Reg8: 1>
+        r1 = (param1 < 0) ? 0 : param1
+        // ──────────────── Block 7 ──────────────── 
+        // CODE → addr: 94 | <Mov>: <Reg8: 3, Reg8: 1>
+        r3 = (param1 < 0) ? 0 : param1
+    }
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr: 97 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;

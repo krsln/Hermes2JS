@@ -37,7 +37,7 @@ function closureTest() {
     // CODE → addr: 76 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 5, string_id: 205>  # String: 'value' (Identifier)
     // USED → r2 = r5.value;
     // CODE → addr: 81 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = r5.value();
+    r2 = r5.value()
     // CODE → addr: 85 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr: 90 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

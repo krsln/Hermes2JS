@@ -35,7 +35,7 @@ function function_15201(param1) {
     // CODE → addr: 62 | <NewArray>: <Reg8: 1, UInt16: 1>
     r1 = []
     // CODE → addr: 66 | <PutOwnByIndex>: <Reg8: 1, Reg8: 5, UInt8: 0>
-    // USED → r1 = r1[0] = r5;
+    r1 = r1[0] = r5
     // CODE → addr: 70 | <NewObject>: <Reg8: 5>
     r5 = {  }
     // CODE → addr: 72 | <LoadConstString>: <Reg8: 6, string_id: 103>  # String: 'create' (Identifier)
@@ -49,7 +49,7 @@ function function_15201(param1) {
     // CODE → addr: 89 | <NewArray>: <Reg8: 0, UInt16: 1>
     r0 = []
     // CODE → addr: 93 | <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 0>
-    // USED → r0 = r0[0] = r5;
+    r0 = r0[0] = r5
     // CODE → addr: 97 | <Call4>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0>
     r0 = r1.default.call(r3, Dog(param1, param2), r1, r0)
     // CODE → addr:104 | <Ret>: <Reg8: 0>

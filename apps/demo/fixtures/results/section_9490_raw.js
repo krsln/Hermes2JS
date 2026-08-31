@@ -68,7 +68,7 @@ function callDestructuringTests() {
     if (r9 !== undefined) goto label_157;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:151 | <LoadConstInt>: <Reg8: 9, Imm32: 1000>
-    // USED → r9 = 1000;
+    r9 = 1000
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:157 | <GetById>: <Reg8: 8, Reg8: 5, UInt8: 5, string_id: 9071>  # String: 'retries' (Identifier)
     r8 = r5.retries
@@ -233,7 +233,7 @@ function callDestructuringTests() {
     if (r5 === undefined) goto label_450;
     // ──────────────── Block 16 ──────────────── 
     // CODE → addr:447 | <Mov>: <Reg8: 8, Reg8: 7>
-    // USED → r8 = r7;
+    r8 = r7
     // ──────────────── Block 17 ──────────────── 
     // CODE → addr:450 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
@@ -254,7 +254,7 @@ function callDestructuringTests() {
     if (r5 === undefined) goto label_480;
     // ──────────────── Block 19 ──────────────── 
     // CODE → addr:474 | <Mov>: <Reg8: 7, Reg8: 6>
-    // USED → r7 = r6;
+    r7 = r6
     // CODE → addr:477 | <Mov>: <Reg8: 1, Reg8: 3>
     // USED → r1 = r5 === undefined;
     // ──────────────── Block 20 ──────────────── 

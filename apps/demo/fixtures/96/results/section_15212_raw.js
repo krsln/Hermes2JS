@@ -17,7 +17,7 @@ function set(param1) {
     // CODE → addr: 29 | <GetByIdShort>: <Reg8: 5, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
     // USED → r5 = r0.default;
     // CODE → addr: 34 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 5>
-    // USED → r4 = r2[5];
+    r4 = r2[5]
     // CODE → addr: 38 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → addr: 40 | <LoadParam>: <Reg8: 3, UInt8: 0>

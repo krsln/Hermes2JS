@@ -38,7 +38,7 @@ function logicalShortCircuitTest(param1, param2) {
     // CODE → addr: 74 | <Call3>: <Reg8: 4, Reg8: 5, Reg8: 7, Reg8: 9, Reg8: 4>
     console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "and-right")
     // CODE → addr: 80 | <Mov>: <Reg8: 6, Reg8: 2>
-    // USED → r6 = param2;
+    r6 = param2
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 83 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = console;
@@ -62,7 +62,7 @@ function logicalShortCircuitTest(param1, param2) {
     // CODE → addr:125 | <Call3>: <Reg8: 4, Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 4>
     console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "or-right")
     // CODE → addr:131 | <Mov>: <Reg8: 5, Reg8: 2>
-    // USED → r5 = param2;
+    r5 = param2
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:134 | <LoadConstString>: <Reg8: 4, string_id: 76>  # String: 'left' (Identifier)
     r4 = "left"
@@ -86,7 +86,7 @@ function logicalShortCircuitTest(param1, param2) {
     // CODE → addr:164 | <Call3>: <Reg8: 3, Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 3>
     console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "nullish-right")
     // CODE → addr:170 | <Mov>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = param2;
+    r4 = param2
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:173 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;

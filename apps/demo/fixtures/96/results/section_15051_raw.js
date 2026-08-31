@@ -22,7 +22,7 @@ function forTest() {
     // USED → r5 = 0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 37 | <Mov>: <Reg8: 6, Reg8: 5>
-    // USED → r6 = 0;
+    r6 = 0
     // CODE → addr: 40 | <JStrictEqual>: <Addr8: 48, Reg8: 6, Reg8: 1>  # Address: 00000058
     // → r6 = 0
     if (r6 === 3) goto label_88;

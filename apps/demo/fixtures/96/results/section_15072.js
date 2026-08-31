@@ -46,7 +46,7 @@ function logicalShortCircuitTest(param1, param2) {
         // CODE → addr:114 | <Call3>: <Reg8: 3, Reg8: 7, Reg8: 0, Reg8: 3, Reg8: 2>
         r3 = sideEffect(param1, param2).call(undefined, "nullish-right", param2)
         // CODE → addr:120 | <Mov>: <Reg8: 4, Reg8: 2>
-        // USED → r4 = param2;
+        r4 = param2
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:123 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

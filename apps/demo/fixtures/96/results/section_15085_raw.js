@@ -53,7 +53,7 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr: 86 | <Mov>: <Reg8: 2, Reg8: 8>
     r2 = 0
     // CODE → addr: 89 | <GetByVal>: <Reg8: 2, Reg8: 10, Reg8: 2>
-    // USED → r2 = param1[r2];
+    r2 = param1[r2]
     // CODE → addr: 93 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 9, Reg8: 4, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r2)
     // CODE → addr: 99 | <Jmp>: <Addr8: 59>  # Address: 0000009e
@@ -77,7 +77,7 @@ function tryCatchInsideLoopTest(param1) {
     throw r2;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:133 | <Catch>: <Reg8: 9>
-    // USED → r9 = caughtException;
+    r9 = caughtException
     // CODE → addr:135 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:141 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

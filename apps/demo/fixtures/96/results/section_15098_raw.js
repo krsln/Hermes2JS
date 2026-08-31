@@ -15,7 +15,7 @@ function propertyAccessTest() {
     // CODE → addr: 21 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
     console.log("__BC:Objects/PropertyTests/propertyAccessTest/start")
     // CODE → addr: 26 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 2, UInt16: 317, UInt16: 19852>  # Object: {'x': 1, 'y': 2}
-    // USED → r5 = { "x": 1, "y": 2 };
+    r5 = { "x": 1, "y": 2 }
     // CODE → addr: 36 | <Mov>: <Reg8: 4, Reg8: 5>
     // USED → r4 = r5;
     // CODE → addr: 39 | <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
@@ -43,7 +43,7 @@ function propertyAccessTest() {
     // CODE → addr: 98 | <LoadConstString>: <Reg8: 2, string_id: 41>  # String: 'x' (Identifier)
     // USED → r2 = "x";
     // CODE → addr:102 | <IsIn>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = "x" in r5;
+    r2 = "x" in r5
     // CODE → addr:106 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 6, Reg8: 2>
     console.log(r2)
     // CODE → addr:111 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 6, string_id: 24>  # String: 'Object' (Identifier)
@@ -58,7 +58,7 @@ function propertyAccessTest() {
     r3 = GetIterator(r2)
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr:133 | <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 2>
-    // USED → r8 = r3.next();
+    r8 = r3.next()
     // CODE → addr:137 | <Mov>: <Reg8: 5, Reg8: 3>
     r5 = r3
     // CODE → addr:140 | <JStrictEqual>: <Addr8: 37, Reg8: 5, Reg8: 0>  # Address: 000000b1
@@ -72,7 +72,7 @@ function propertyAccessTest() {
     // CODE → addr:155 | <Mov>: <Reg8: 5, Reg8: 4>
     // USED → r5 = r5;
     // CODE → addr:158 | <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 8>
-    // USED → r5 = r5[r8];
+    r5 = r5[r8]
     // CODE → addr:162 | <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
     console.log(r8, r5)
     // CODE → addr:168 | <Jmp>: <Addr8: -35>  # Address: 00000085

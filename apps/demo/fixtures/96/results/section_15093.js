@@ -23,13 +23,13 @@ function forInTest() {
             // ──────────────── Block 1 ──────────────── 
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 52 | <Mov>: <Reg8: 10, Reg8: 1>
-            // USED → r10 = r1;
+            r10 = r1
             // CODE → addr: 55 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
             // USED → r9 = console;
             // CODE → addr: 61 | <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r8 = console.log;
             // CODE → addr: 66 | <GetByVal>: <Reg8: 7, Reg8: 6, Reg8: 10>
-            // USED → r7 = r6[r10];
+            r7 = r6[r10]
             // CODE → addr: 70 | <Call3>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 7>
             console.log(r10, r7)
         }

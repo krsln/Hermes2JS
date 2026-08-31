@@ -67,7 +67,7 @@ function nestedTryCatchTest() {
     // CODE → addr:140 | <Throw>: <Reg8: 1>
     throw new Error("rethrown from inner: " + caughtException);
     // CODE → addr:142 | <Catch>: <Reg8: 3>
-    // USED → r3 = caughtException;
+    r3 = caughtException
     // CODE → addr:144 | <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:150 | <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

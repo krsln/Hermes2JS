@@ -27,13 +27,13 @@ function forInTest() {
     if (r4 === undefined) goto label_74;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 48 | <Mov>: <Reg8: 11, Reg8: 4>
-    // USED → r11 = r4;
+    r11 = r4
     // CODE → addr: 51 | <TryGetById>: <Reg8: 10, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r10 = console;
     // CODE → addr: 57 | <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r9 = console.log;
     // CODE → addr: 62 | <GetByVal>: <Reg8: 8, Reg8: 7, Reg8: 11>
-    // USED → r8 = r7[r11];
+    r8 = r7[r11]
     // CODE → addr: 66 | <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 8>
     console.log(r11, r8)
     // CODE → addr: 72 | <Jmp>: <Addr8: -33>  # Address: 00000027

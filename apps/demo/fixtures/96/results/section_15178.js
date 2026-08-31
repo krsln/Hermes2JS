@@ -11,7 +11,7 @@ function asyncTryCatchTest() {
     // CODE → addr: 14 | <ReifyArguments>: <Reg8: 0>
     // USED → r0 = arguments;
     // CODE → addr: 16 | <Mov>: <Reg8: 1, Reg8: 0>
-    // USED → r1 = arguments;
+    r1 = arguments
     // CODE → addr: 19 | <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this;
     // CODE → addr: 22 | <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>

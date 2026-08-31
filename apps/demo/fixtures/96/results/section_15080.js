@@ -72,7 +72,7 @@ function tryLoopMultiReturnTest(param1) {
                 // CODE → addr: 92 | <Mov>: <Reg8: 5, Reg8: 4>
                 r5 = 0
                 // CODE → addr: 95 | <GetByVal>: <Reg8: 6, Reg8: 6, Reg8: 5>
-                // USED → r6 = param1[r5];
+                r6 = param1[r5]
                 // CODE → addr: 99 | <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
                 console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", r6)
                 // CODE → addr:105 | <Inc>: <Reg8: 4, Reg8: 5>

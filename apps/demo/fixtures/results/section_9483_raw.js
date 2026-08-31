@@ -15,7 +15,7 @@ function computedPropertyTest() {
     // CODE → addr: 28 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → addr: 33 | <NewObjectWithBuffer>: <Reg8: 2, UInt16: 1915, UInt16: 46772>  # Object: {'dynamic': 42, 'staticKey': 'value'}
-    // USED → r2 = { "dynamic": 42, "staticKey": "value" };
+    r2 = { "dynamic": 42, "staticKey": "value" }
     // CODE → addr: 39 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr: 44 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

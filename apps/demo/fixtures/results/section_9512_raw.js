@@ -29,7 +29,7 @@ function defaultWithRestTest() {
     // CODE → addr: 46 | <CreateClosure>: <Reg8: 3, Reg8: 1, function_id: 12481>  # Function: [#12481  of 12 bytes]: 3 params @ offset 0x00243e24
     // USED → r3 = function_12481(param1, param2);
     // CODE → addr: 51 | <Call3>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 6>
-    // USED → r4 = r5.reduce(function_12481(param1, param2), 1);
+    r4 = r5.reduce(function_12481(param1, param2), 1)
     // CODE → addr: 57 | <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 63 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

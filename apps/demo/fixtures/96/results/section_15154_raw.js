@@ -50,7 +50,7 @@ function defaultParameterTest(param1) {
     if (r3 === undefined) goto label_73;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 69 | <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 1, Reg8: 2>
-    // USED → r4 = arguments[2];
+    r4 = arguments[2]
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 73 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
@@ -69,7 +69,7 @@ function defaultParameterTest(param1) {
     // CODE → addr:106 | <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → addr:109 | <Add>: <Reg8: 1, Reg8: 1, Reg8: 5>
-    // USED → r1 = param1 + arguments[1];
+    r1 = param1 + arguments[1]
     // CODE → addr:113 | <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1>
     console.log(r4, r1)
     // CODE → addr:119 | <Ret>: <Reg8: 0>

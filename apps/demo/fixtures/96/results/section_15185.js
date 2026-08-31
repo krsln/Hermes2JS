@@ -62,7 +62,7 @@ async function* anon_15185(param1) {
             }
             // ──────────────── Block 6 ──────────────── 
             // CODE → addr: 80 | <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
-            // USED → r1 = 0 + await yield;
+            r1 = 0 + await yield
         }
         // LOOP → END
         // ──────────────── Block 9 ──────────────── 

@@ -231,8 +231,24 @@ class OpcodeHandler(ABC):
                 state.handler, state.value
             )
 
+        # Not one of the safely-inlineable shapes above (e.g. the
+        # value came from a Call/CallBuiltin/Construct result, a
+        # binary op, etc.) - this is returned as a bare symbolic
+        # register reference, NOT an inlined substitution of the
+        # actual expression. Marking it "used" here (as the
+        # inlineable branches above correctly do) would tell the
+        # printer the defining statement was folded into this call
+        # site and can be skipped - but it wasn't folded in, so that
+        # previously suppressed the defining assignment entirely,
+        # leaving this bare reference dangling with no definition
+        # printed at all (see e.g. `console.log(scores.get("bob"))`,
+        # which silently dropped the `.get()` call and printed a
+        # stale/undefined `r0` instead). Only mark_read() here, so
+        # the defining statement still gets printed - matching how
+        # get_register_expression() already treats CallExpression/
+        # ObjectExpression/ArrayExpression values (kept symbolic,
+        # never marked used).
         state.mark_read()
-        state.mark_used()
         return Identifier(name=f"r{reg}")
 
     @classmethod

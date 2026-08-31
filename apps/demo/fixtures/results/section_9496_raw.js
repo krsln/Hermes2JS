@@ -45,7 +45,7 @@ function setTest() {
     // CODE → addr:101 | <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → addr:104 | <Call2>: <Reg8: 0, Reg8: 5, Reg8: 3, Reg8: 0>
-    // USED → r0 = r3.has(2);
+    r0 = r3.has(2)
     // CODE → addr:109 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
     console.log(r0)
     // CODE → addr:114 | <Mov>: <Reg8: 2, Reg8: 3>
@@ -58,7 +58,7 @@ function setTest() {
     // CODE → addr:122 | <Mov>: <Reg8: 5, Reg8: 2>
     r5 = new Set([1, 2, 2, 3, 3, 3])
     // CODE → addr:125 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
-    // USED → r7 = r4.next();
+    r7 = r4.next()
     // CODE → addr:129 | <Mov>: <Reg8: 5, Reg8: 4>
     r5 = r4
     // CODE → addr:132 | <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 000000a1
@@ -82,7 +82,7 @@ function setTest() {
     throw r2;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:161 | <NewArray>: <Reg8: 4, UInt16: 0>
-    // USED → r4 = [];
+    r4 = []
     // CODE → addr:165 | <LoadConstZero>: <Reg8: 8>
     r8 = 0
     // CODE → addr:167 | <Mov>: <Reg8: 10, Reg8: 4>

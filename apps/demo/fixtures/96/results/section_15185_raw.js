@@ -33,7 +33,7 @@ async function* anon_15185(param1) {
     r5 = getEnvironment(2)
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 47 | <IteratorNext>: <Reg8: 9, Reg8: 4, Reg8: 6>
-    // USED → r9 = r4.next();
+    r9 = r4.next()
     // CODE → addr: 51 | <Mov>: <Reg8: 3, Reg8: 4>
     r3 = r4
     // CODE → addr: 54 | <JStrictEqual>: <Addr8: 45, Reg8: 3, Reg8: 7>  # Address: 00000063
@@ -60,7 +60,7 @@ async function* anon_15185(param1) {
     if (__resumeIsReturn) goto label_86;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 80 | <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
-    // USED → r1 = 0 + await yield;
+    r1 = 0 + await yield
     // CODE → addr: 84 | <Jmp>: <Addr8: -37>  # Address: 0000002f
     goto label_47;
     // ──────────────── Block 7 ──────────────── 

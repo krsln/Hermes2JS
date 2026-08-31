@@ -85,7 +85,7 @@ function tryCatchInsideLoopTest(param1) {
             // CODE → addr: 86 | <Mov>: <Reg8: 2, Reg8: 8>
             r2 = 0
             // CODE → addr: 89 | <GetByVal>: <Reg8: 2, Reg8: 10, Reg8: 2>
-            // USED → r2 = param1[r2];
+            r2 = param1[r2]
             // CODE → addr: 93 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 9, Reg8: 4, Reg8: 2>
             console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r2)
             // CODE → addr: 99 | <Jmp>: <Addr8: 59>  # Address: 0000009e

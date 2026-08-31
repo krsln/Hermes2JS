@@ -22,7 +22,7 @@ function nestedTemplateTest(param1, param2) {
     if (r4 > 10) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 70 | <Add>: <Reg8: 5, Reg8: 2, Reg8: 1>
-        // USED → r5 = param1 + param2;
+        r5 = param1 + param2
         // CODE → addr: 74 | <TryGetById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
         // USED → r1 = HermesInternal;
         // CODE → addr: 80 | <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 4, string_id: 96>  # String: 'concat' (Identifier)
@@ -32,11 +32,11 @@ function nestedTemplateTest(param1, param2) {
         // CODE → addr: 89 | <LoadConstString>: <Reg8: 1, string_id: 876>  # String: ')' (String)
         // USED → r1 = ")";
         // CODE → addr: 93 | <Call3>: <Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5, Reg8: 1>
-        // USED → r3 = HermesInternal.concat.call("big (", r5, ")");
+        r3 = HermesInternal.concat.call("big (", r5, ")")
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 39 | <Add>: <Reg8: 6, Reg8: 2, Reg8: 1>
-        // USED → r6 = param1 + param2;
+        r6 = param1 + param2
         // CODE → addr: 43 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 3, string_id: 14>  # String: 'HermesInternal' (Identifier)
         // USED → r3 = HermesInternal;
         // CODE → addr: 49 | <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 4, string_id: 96>  # String: 'concat' (Identifier)
@@ -56,7 +56,7 @@ function nestedTemplateTest(param1, param2) {
     // CODE → addr:110 | <LoadConstString>: <Reg8: 1, string_id: 1321>  # String: 'sum is ' (String)
     // USED → r1 = "sum is ";
     // CODE → addr:114 | <Call2>: <Reg8: 3, Reg8: 2, Reg8: 1, Reg8: 3>
-    // USED → r3 = HermesInternal.concat.call("sum is ", r3);
+    r3 = HermesInternal.concat.call("sum is ", r3)
     // CODE → addr:119 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr:125 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

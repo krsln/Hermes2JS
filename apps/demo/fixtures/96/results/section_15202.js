@@ -11,7 +11,7 @@ function Dog(param1, param2) {
     // CODE → addr: 15 | <GetEnvironment>: <Reg8: 2, UInt8: 0>
     r2 = getEnvironment(0)
     // CODE → addr: 18 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
-    // USED → r3 = r2[0];
+    r3 = r2[0]
     // CODE → addr: 22 | <LoadConstUndefined>: <Reg8: 2>
     r2 = undefined
     // CODE → addr: 24 | <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3>
@@ -29,7 +29,7 @@ function Dog(param1, param2) {
     // CODE → addr: 50 | <LoadConstString>: <Reg8: 5, string_id: 4300>  # String: 'Woof' (String)
     // USED → r5 = "Woof";
     // CODE → addr: 54 | <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 1>
-    // USED → r0 = (r0[0] = param1)[1] = "Woof";
+    r0 = (r0[0] = param1)[1] = "Woof"
     // CODE → addr: 58 | <Call4>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 0>
     r0 = r0.default.call(r2, this, r3, r0)
     // CODE → addr: 65 | <GetGlobalObject>: <Reg8: 1>

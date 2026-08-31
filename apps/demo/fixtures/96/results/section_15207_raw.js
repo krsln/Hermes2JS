@@ -7,7 +7,7 @@ function _privateHelper2() {
     // CODE → addr:  7 | <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
     // USED → r4 = r1.default;
     // CODE → addr: 12 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 5>
-    // USED → r3 = r0[5];
+    r3 = r0[5]
     // CODE → addr: 16 | <LoadConstUndefined>: <Reg8: 2>
     r2 = undefined
     // CODE → addr: 18 | <LoadParam>: <Reg8: 1, UInt8: 0>
@@ -17,7 +17,7 @@ function _privateHelper2() {
     // CODE → addr: 27 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 5>
     r0 = r0[5]
     // CODE → addr: 31 | <GetByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
-    // USED → r2 = r1[r0];
+    r2 = r1[r0]
     // CODE → addr: 35 | <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
     // CODE → addr: 37 | <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 2, string_id: 14>  # String: 'HermesInternal' (Identifier)

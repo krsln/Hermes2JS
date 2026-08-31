@@ -33,7 +33,7 @@ function tryCatchTest() {
     // CODE → addr: 67 | <Throw>: <Reg8: 0>
     throw new Error("test");
     // CODE → addr: 69 | <Catch>: <Reg8: 3>
-    // USED → r3 = caughtException;
+    r3 = caughtException
     // CODE → addr: 71 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 77 | <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

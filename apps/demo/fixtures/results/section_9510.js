@@ -25,7 +25,7 @@ function closureLoopTest() {
     // CODE → addr: 43 | <LoadConstUInt8>: <Reg8: 3, UInt8: 3>
     // USED → r3 = 3;
     // CODE → addr: 46 | <LoadConstZero>: <Reg8: 2>
-    // USED → r2 = 0;
+    r2 = 0
     // LOOP → START (do_while)
     do {
         // ──────────────── Block 1 ──────────────── 
@@ -54,7 +54,7 @@ function closureLoopTest() {
         // CODE → addr: 89 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r5 = console.log;
         // CODE → addr: 94 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-        // USED → r4 = r4.call(undefined);
+        r4 = r4.call(undefined)
         // CODE → addr: 98 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
         console.log(r4)
     }

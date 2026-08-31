@@ -13,7 +13,7 @@ function spreadArrayTest() {
     // CODE → addr: 22 | <NewArrayWithBuffer>: <Reg8: 2, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
     r2 = [1, 2, 3]
     // CODE → addr: 30 | <NewArray>: <Reg8: 3, UInt16: 0>
-    // USED → r3 = [];
+    r3 = []
     // CODE → addr: 34 | <LoadConstZero>: <Reg8: 0>
     r0 = 0
     // CODE → addr: 36 | <Mov>: <Reg8: 9, Reg8: 3>
@@ -37,7 +37,7 @@ function spreadArrayTest() {
     // CODE → addr: 74 | <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log(r3)
     // CODE → addr: 79 | <NewArrayWithBuffer>: <Reg8: 6, UInt16: 2, UInt16: 1, UInt16: 18648>  # Array: [0]
-    // USED → r6 = [0];
+    r6 = [0]
     // CODE → addr: 87 | <LoadConstUInt8>: <Reg8: 4, UInt8: 1>
     // USED → r4 = 1;
     // CODE → addr: 90 | <Mov>: <Reg8: 9, Reg8: 6>
@@ -61,7 +61,7 @@ function spreadArrayTest() {
     // CODE → addr:126 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 6>
     console.log(r6)
     // CODE → addr:131 | <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 0>
-    // USED → r5 = r3[r0];
+    r5 = r3[r0]
     // CODE → addr:135 | <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0)
     // CODE → addr:138 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 2>
@@ -75,7 +75,7 @@ function spreadArrayTest() {
     // CODE → addr:154 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)
     // USED → r2 = r3.slice;
     // CODE → addr:159 | <Call2>: <Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 4>
-    // USED → r4 = r3.slice(1);
+    r4 = r3.slice(1)
     // CODE → addr:164 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:170 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

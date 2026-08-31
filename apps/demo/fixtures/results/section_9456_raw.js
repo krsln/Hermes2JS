@@ -18,12 +18,12 @@ function labeledBreakTest() {
     // USED → r4 = 0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 30 | <Mov>: <Reg8: 2, Reg8: 4>
-    // USED → r2 = 0;
+    r2 = 0
     // CODE → addr: 33 | <LoadConstZero>: <Reg8: 0>
     // USED → r0 = 0;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 35 | <Mov>: <Reg8: 1, Reg8: 0>
-    // USED → r1 = 0;
+    r1 = 0
     // CODE → addr: 38 | <JStrictNotEqual>: <Addr8: 8, Reg8: 2, Reg8: 3>  # Address: 0000002e
     if (r2 !== 1) goto label_46;
     // ──────────────── Block 3 ──────────────── 

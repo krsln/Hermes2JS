@@ -57,7 +57,7 @@ function mapTest() {
     // CODE → addr:114 | <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 5, string_id: 49>  # String: 'get' (Identifier)
     // USED → r3 = r2.get;
     // CODE → addr:119 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 2, Reg8: 4>
-    // USED → r3 = r2.get("bob");
+    r3 = r2.get("bob")
     // CODE → addr:124 | <Call2>: <Reg8: 3, Reg8: 5, Reg8: 8, Reg8: 3>
     console.log(r3)
     // CODE → addr:129 | <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -69,7 +69,7 @@ function mapTest() {
     // CODE → addr:145 | <LoadConstString>: <Reg8: 3, string_id: 5331>  # String: 'dave' (String)
     // USED → r3 = "dave";
     // CODE → addr:149 | <Call2>: <Reg8: 3, Reg8: 9, Reg8: 2, Reg8: 3>
-    // USED → r3 = r2.has("dave");
+    r3 = r2.has("dave")
     // CODE → addr:154 | <Call2>: <Reg8: 3, Reg8: 5, Reg8: 8, Reg8: 3>
     console.log(r3)
     // CODE → addr:159 | <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -154,9 +154,9 @@ function mapTest() {
     // CODE → addr:276 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r10 = console.log;
     // CODE → addr:281 | <Mov>: <Reg8: 9, Reg8: 7>
-    // USED → r9 = r12;
+    r9 = r12
     // CODE → addr:284 | <Mov>: <Reg8: 8, Reg8: 6>
-    // USED → r8 = r12;
+    r8 = r12
     // CODE → addr:287 | <Call3>: <Reg8: 8, Reg8: 10, Reg8: 11, Reg8: 9, Reg8: 8>
     console.log(r9, r8)
     // CODE → addr:293 | <Jmp>: <Addr8: -107>  # Address: 000000ba

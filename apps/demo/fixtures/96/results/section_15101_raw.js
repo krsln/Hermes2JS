@@ -37,7 +37,7 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 69 | <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r12 = Object.defineProperty;
     // CODE → addr: 74 | <NewObject>: <Reg8: 11>
-    // USED → r11 = {  };
+    r11 = {  }
     // CODE → addr: 76 | <LoadConstTrue>: <Reg8: 10>
     // USED → r10 = true;
     // CODE → addr: 78 | <PutNewOwnByIdShort>: <Reg8: 11, Reg8: 10, string_id: 205>  # String: 'value' (Identifier)
@@ -63,11 +63,11 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:134 | <LoadConstZero>: <Reg8: 0>
     r0 = 0
     // CODE → addr:136 | <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
-    // USED → r1 = param7[r0];
+    r1 = param7[r0]
     // CODE → addr:140 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:142 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, r1);
+    r1 = param2.call(undefined, r1)
     // CODE → addr:147 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
     r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → addr:152 | <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
@@ -75,9 +75,9 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:156 | <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     r1 = 1
     // CODE → addr:159 | <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-    // USED → r1 = param7[r1];
+    r1 = param7[r1]
     // CODE → addr:163 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, r1);
+    r1 = param2.call(undefined, r1)
     // CODE → addr:168 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
     r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → addr:173 | <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>

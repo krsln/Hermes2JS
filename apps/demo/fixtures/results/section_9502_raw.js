@@ -21,9 +21,9 @@ function taggedTemplateTest(param1) {
     // CODE → addr: 35 | <LoadConstUInt8>: <Reg8: 10, UInt8: 1>
     r10 = 1
     // CODE → addr: 38 | <CallBuiltin>: <Reg8: 5, UInt8: 41, UInt8: 5>  # Built-in function: [#41 getTemplateObject]
-    // USED → r5 = getTemplateObject(r10, r9, r8, r7, r6);
+    r5 = getTemplateObject(r10, r9, r8, r7, r6)
     // CODE → addr: 42 | <Mul>: <Reg8: 4, Reg8: 3, Reg8: 3>
-    // USED → r4 = param1 * param1;
+    r4 = param1 * param1
     // CODE → addr: 46 | <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
     r3 = getParentEnvironment(0)
     // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 0>
@@ -31,7 +31,7 @@ function taggedTemplateTest(param1) {
     // CODE → addr: 53 | <LoadConstUndefined>: <Reg8: 1>
     r1 = undefined
     // CODE → addr: 55 | <Call3>: <Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 5, Reg8: 4>
-    // USED → r5 = r3[0].call(r1, r5, r4);
+    r5 = r3[0].call(r1, r5, r4)
     // CODE → addr: 61 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 67 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

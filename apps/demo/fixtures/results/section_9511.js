@@ -25,7 +25,7 @@ function defaultParameterTest(param1) {
     // CODE → addr: 54 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → addr: 59 | <Add>: <Reg8: 2, Reg8: 2, Reg8: 6>
-    // USED → r2 = param1 + ((param2 !== undefined) ? param2 : 10);
+    r2 = param1 + ((param2 !== undefined) ? param2 : 10)
     // CODE → addr: 63 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 2>
     console.log((param3 !== undefined) ? param3 : "result", r2)
     // CODE → addr: 69 | <Ret>: <Reg8: 1>

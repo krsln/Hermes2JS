@@ -44,7 +44,7 @@ function tryFinallyLoopBreakTest(param1) {
                 // CODE → addr: 68 | <Mov>: <Reg8: 2, Reg8: 7>
                 r2 = 0
                 // CODE → addr: 71 | <GetByVal>: <Reg8: 3, Reg8: 6, Reg8: 2>
-                // USED → r3 = param1[r2];
+                r3 = param1[r2]
                 // CODE → addr: 75 | <Call3>: <Reg8: 3, Reg8: 8, Reg8: 9, Reg8: 4, Reg8: 3>
                 console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", r3)
                 // CODE → addr: 84 | <Mov>: <Reg8: 7, Reg8: 3>

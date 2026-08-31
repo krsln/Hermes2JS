@@ -3,7 +3,7 @@ function restOnlyTest() {
     // CODE → addr:  0 | <LoadConstZero>: <Reg8: 8>
     r8 = 0
     // CODE → addr:  2 | <CallBuiltin>: <Reg8: 6, UInt8: 47, UInt8: 2>  # Built-in function: [#47 copyRestArgs]
-    // USED → r6 = copyRestArgs(r8, r7);
+    r6 = copyRestArgs(r8, r7)
     // CODE → addr:  6 | <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
     // CODE → addr:  8 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

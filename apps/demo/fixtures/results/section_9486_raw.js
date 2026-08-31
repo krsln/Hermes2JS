@@ -21,7 +21,7 @@ function renamedDefaultDestructureTest() {
     if (r6 !== undefined) goto label_46;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 40 | <LoadConstInt>: <Reg8: 6, Imm32: 1000>
-    // USED → r6 = 1000;
+    r6 = 1000
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 46 | <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 9071>  # String: 'retries' (Identifier)
     r5 = r3.retries

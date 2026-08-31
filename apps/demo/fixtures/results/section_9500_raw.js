@@ -23,7 +23,7 @@ function nestedTemplateTest(param1, param2) {
     if (r5 > 10) goto label_70;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 39 | <Add>: <Reg8: 8, Reg8: 4, Reg8: 3>
-    // USED → r8 = param1 + param2;
+    r8 = param1 + param2
     // CODE → addr: 43 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)
     // USED → r5 = HermesInternal;
     // CODE → addr: 49 | <GetByIdShort>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 105>  # String: 'concat' (Identifier)
@@ -38,7 +38,7 @@ function nestedTemplateTest(param1, param2) {
     goto label_99;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 70 | <Add>: <Reg8: 7, Reg8: 4, Reg8: 3>
-    // USED → r7 = param1 + param2;
+    r7 = param1 + param2
     // CODE → addr: 74 | <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)
     // USED → r3 = HermesInternal;
     // CODE → addr: 80 | <GetByIdShort>: <Reg8: 6, Reg8: 3, UInt8: 3, string_id: 105>  # String: 'concat' (Identifier)
@@ -48,7 +48,7 @@ function nestedTemplateTest(param1, param2) {
     // CODE → addr: 89 | <LoadConstString>: <Reg8: 3, string_id: 1926>  # String: 'big (' (String)
     // USED → r3 = "big (";
     // CODE → addr: 93 | <Call3>: <Reg8: 5, Reg8: 6, Reg8: 3, Reg8: 7, Reg8: 4>
-    // USED → r5 = HermesInternal.concat.call("big (", r7, ")");
+    r5 = HermesInternal.concat.call("big (", r7, ")")
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 99 | <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)
     // USED → r3 = HermesInternal;
@@ -57,7 +57,7 @@ function nestedTemplateTest(param1, param2) {
     // CODE → addr:110 | <LoadConstString>: <Reg8: 3, string_id: 1298>  # String: 'sum is ' (String)
     // USED → r3 = "sum is ";
     // CODE → addr:114 | <Call2>: <Reg8: 5, Reg8: 4, Reg8: 3, Reg8: 5>
-    // USED → r5 = HermesInternal.concat.call("sum is ", r5);
+    r5 = HermesInternal.concat.call("sum is ", r5)
     // CODE → addr:119 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:125 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

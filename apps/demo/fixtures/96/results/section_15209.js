@@ -53,7 +53,7 @@ function function_15209() {
     // CODE → addr: 97 | <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 1, string_id: 205>  # String: 'value' (Identifier)
     r0.value = describe()
     // CODE → addr:101 | <PutOwnByIndex>: <Reg8: 2, Reg8: 0, UInt8: 2>
-    // USED → r2 = ((r2[0] = r0)[1] = r0)[2] = r0;
+    r2 = ((r2[0] = r0)[1] = r0)[2] = r0
     // CODE → addr:105 | <NewObject>: <Reg8: 0>
     r0 = {  }
     // CODE → addr:107 | <LoadConstString>: <Reg8: 1, string_id: 10838>  # String: 'instanceCount' (Identifier)
@@ -79,7 +79,7 @@ function function_15209() {
     // CODE → addr:147 | <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 5, string_id: 205>  # String: 'value' (Identifier)
     r0.value = reset()
     // CODE → addr:151 | <PutOwnByIndex>: <Reg8: 1, Reg8: 0, UInt8: 1>
-    // USED → r1 = (r1[0] = r0)[1] = r0;
+    r1 = (r1[0] = r0)[1] = r0
     // CODE → addr:155 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → addr:157 | <Call4>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2, Reg8: 1>

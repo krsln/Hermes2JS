@@ -21,7 +21,7 @@ function weakMapTest() {
     // CODE → addr: 39 | <SelectObject>: <Reg8: 6, Reg8: 3, Reg8: 2>
     r6 = new WeakMap()
     // CODE → addr: 43 | <NewObject>: <Reg8: 5>
-    // USED → r5 = {  };
+    r5 = {  }
     // CODE → addr: 45 | <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 4, string_id: 55>  # String: 'set' (Identifier)
     // USED → r3 = r6.set;
     // CODE → addr: 50 | <LoadConstString>: <Reg8: 2, string_id: 211>  # String: 'value' (Identifier)
@@ -35,7 +35,7 @@ function weakMapTest() {
     // CODE → addr: 71 | <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 5, string_id: 11>  # String: 'has' (Identifier)
     // USED → r2 = r6.has;
     // CODE → addr: 76 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 6, Reg8: 5>
-    // USED → r2 = r6.has(r5);
+    r2 = r6.has(r5)
     // CODE → addr: 81 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr: 86 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -45,7 +45,7 @@ function weakMapTest() {
     // CODE → addr: 97 | <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 6, string_id: 49>  # String: 'get' (Identifier)
     // USED → r2 = r6.get;
     // CODE → addr:102 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 6, Reg8: 5>
-    // USED → r2 = r6.get(r5);
+    r2 = r6.get(r5)
     // CODE → addr:107 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:112 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

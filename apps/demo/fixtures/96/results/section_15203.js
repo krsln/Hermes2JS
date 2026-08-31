@@ -35,7 +35,7 @@ function makeSound() {
     // CODE → addr: 58 | <Call>: <Reg8: 4, Reg8: 6, UInt8: 5>
     r4 = r0.default(r11, r10, r9, r8, r7)
     // CODE → addr: 62 | <NewArray>: <Reg8: 3, UInt16: 0>
-    // USED → r3 = [];
+    r3 = []
     // CODE → addr: 66 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
     r3 = r4.call(undefined, r3)
     // CODE → addr: 71 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

@@ -75,7 +75,7 @@ async function* anon_15193() {
                 // CODE → addr: 73 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 7>
                 // USED → r7 = r4[7];
                 // CODE → addr: 77 | <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
-                // USED → r3 = [1, 2, 3];
+                r3 = [1, 2, 3]
                 // CODE → addr: 85 | <Call2>: <Reg8: 3, Reg8: 7, Reg8: 5, Reg8: 3>
                 r3 = await r4[7].call(r5, r3)
                 // CODE → addr: 90 | <SaveGenerator>: <Addr8: 4>  # Address: 0000005e

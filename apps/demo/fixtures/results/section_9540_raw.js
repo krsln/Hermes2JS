@@ -30,7 +30,7 @@ function describe() {
     // CODE → addr: 48 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 6>
     r2 = r2[6]
     // CODE → addr: 52 | <GetOwnPrivateBySym>: <Reg8: 3, Reg8: 3, UInt8: 1, Reg8: 2>
-    // USED → r3 = this.#__private_2__;
+    r3 = this.#__private_2__
     // CODE → addr: 57 | <TryGetById>: <Reg8: 1, Reg8: 1, UInt8: 2, string_id: 10>  # String: 'HermesInternal' (Identifier)
     // USED → r1 = HermesInternal;
     // CODE → addr: 63 | <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 105>  # String: 'concat' (Identifier)

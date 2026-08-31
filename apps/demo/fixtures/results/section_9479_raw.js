@@ -20,7 +20,7 @@ function forOfTest() {
     // CODE → addr: 35 | <Mov>: <Reg8: 4, Reg8: 2>
     r4 = r2
     // CODE → addr: 38 | <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 4>
-    // USED → r6 = r3.next();
+    r6 = r3.next()
     // CODE → addr: 42 | <Mov>: <Reg8: 4, Reg8: 3>
     r4 = r3
     // CODE → addr: 45 | <JStrictEqual>: <Addr8: 29, Reg8: 4, Reg8: 0>  # Address: 0000004a

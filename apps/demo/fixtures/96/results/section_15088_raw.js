@@ -17,11 +17,11 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → addr: 28 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
     // USED → r3 = r2[0];
     // CODE → addr: 32 | <Mov>: <Reg8: 2, Reg8: 0>
-    // USED → r2 = param1;
+    r2 = param1
     // CODE → addr: 35 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → addr: 37 | <Call2>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2>
-    // USED → r0 = r2[0].call(r0, r2);
+    r0 = r2[0].call(r0, r2)
     // CODE → addr: 42 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 48 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -42,7 +42,7 @@ async function* anon_15189() {
     // CODE → addr: 72 | <Call2>: <Reg8: 9, Reg8: 9, Reg8: 2, Reg8: 6>
     r9 = r4[2].call(r2, 2)
     // CODE → addr: 77 | <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
-    // USED → r1 = (r1[0] = r6)[1] = r9;
+    r1 = (r1[0] = r6)[1] = r9
     // CODE → addr: 81 | <Call2>: <Reg8: 1, Reg8: 7, Reg8: 8, Reg8: 1>
     r1 = await Promise.all(r1)
     // CODE → addr: 86 | <SaveGenerator>: <Addr8: 4>  # Address: 0000005a
@@ -52,7 +52,7 @@ async function* anon_15189() {
     return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 90 | <ResumeGenerator>: <Reg8: 1, Reg8: 7>
-    // USED → r1 = await yield;
+    r1 = await yield
     // CODE → addr: 90 | <ResumeGenerator>: <Reg8: 1, Reg8: 7>
     // USED → r7 = __resumeIsReturn;
     // CODE → addr: 93 | <JmpTrue>: <Addr8: 68, Reg8: 7>  # Address: 000000a1
@@ -67,9 +67,9 @@ async function* anon_15189() {
     // CODE → addr:111 | <LoadConstZero>: <Reg8: 6>
     r6 = 0
     // CODE → addr:113 | <GetByVal>: <Reg8: 7, Reg8: 4, Reg8: 6>
-    // USED → r7 = r4[r6];
+    r7 = r4[r6]
     // CODE → addr:117 | <GetByVal>: <Reg8: 6, Reg8: 4, Reg8: 5>
-    // USED → r6 = r4[r5];
+    r6 = r4[r5]
     // CODE → addr:121 | <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → addr:127 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -51,7 +51,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 84 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r10 = console.log;
     // CODE → addr: 89 | <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
-    // USED → r9 = param1[r0];
+    r9 = param1[r0]
     // CODE → addr: 93 | <Call3>: <Reg8: 9, Reg8: 10, Reg8: 11, Reg8: 4, Reg8: 9>
     console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", r9)
     // CODE → addr: 99 | <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

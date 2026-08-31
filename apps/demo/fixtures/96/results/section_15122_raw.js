@@ -23,7 +23,7 @@ function function_15122(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 40 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r7 = Object.defineProperty;
     // CODE → addr: 45 | <NewObject>: <Reg8: 6>
-    // USED → r6 = {  };
+    r6 = {  }
     // CODE → addr: 47 | <LoadConstTrue>: <Reg8: 5>
     // USED → r5 = true;
     // CODE → addr: 49 | <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 5, string_id: 205>  # String: 'value' (Identifier)
@@ -47,7 +47,7 @@ function function_15122(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 96 | <LoadConstZero>: <Reg8: 0>
     r0 = 0
     // CODE → addr: 98 | <GetByVal>: <Reg8: 3, Reg8: 1, Reg8: 0>
-    // USED → r3 = param7[r0];
+    r3 = param7[r0]
     // CODE → addr:102 | <LoadParam>: <Reg8: 1, UInt8: 2>
     // USED → r1 = param2;
     // CODE → addr:105 | <LoadConstUndefined>: <Reg8: 0>

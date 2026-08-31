@@ -31,7 +31,13 @@ function swapViaDestructureTest() {
     // CODE → addr: 58 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
     // USED → r1 = r5 === undefined;
     // CODE → addr: 62 | <LoadConstUndefined>: <Reg8: 8>
-    r8 = (r5 === undefined) ? undefined : r7
+    r8 = undefined
+    // → r5 = GetIterator(r6)
+    if (r5 !== undefined) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr: 67 | <Mov>: <Reg8: 8, Reg8: 7>
+        r8 = r7
+    }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 70 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined

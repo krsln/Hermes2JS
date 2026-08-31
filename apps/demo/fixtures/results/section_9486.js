@@ -13,9 +13,15 @@ function renamedDefaultDestructureTest() {
     // CODE → addr: 22 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1919, UInt16: 19946>  # Object: {'timeout': 500}
     r3 = { "timeout": 500 }
     // CODE → addr: 28 | <GetById>: <Reg8: 6, Reg8: 3, UInt8: 2, string_id: 8581>  # String: 'timeout' (Identifier)
-    r6 = (r6 !== undefined) ? r3.timeout : 1000
+    r6 = r3.timeout
     // CODE → addr: 34 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
+    // → r6 = r3.timeout
+    if (r6 === undefined) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr: 40 | <LoadConstInt>: <Reg8: 6, Imm32: 1000>
+        r6 = 1000
+    }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 46 | <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 9071>  # String: 'retries' (Identifier)
     r5 = (r5 !== undefined) ? r3.retries : 3

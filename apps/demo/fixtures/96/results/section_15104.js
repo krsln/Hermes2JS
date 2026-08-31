@@ -19,14 +19,26 @@ function renamedDefaultDestructureTest() {
     // CODE → addr: 35 | <GetById>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 13118>  # String: 'timeout' (Identifier)
     r3 = r2.timeout
     // CODE → addr: 41 | <LoadConstInt>: <Reg8: 5, Imm32: 1000>
-    r5 = (r3 === undefined) ? 1000 : r2.timeout
+    r5 = 1000
     // CODE → addr: 47 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
+    // → r3 = r2.timeout
+    if (r3 !== undefined) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr: 53 | <Mov>: <Reg8: 5, Reg8: 3>
+        r5 = r2.timeout
+    }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 56 | <GetById>: <Reg8: 2, Reg8: 2, UInt8: 4, string_id: 17670>  # String: 'retries' (Identifier)
     r2 = r2.retries
     // CODE → addr: 62 | <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
-    r4 = (r2 === undefined) ? 3 : r2.retries
+    r4 = 3
+    // → r2 = r2.retries
+    if (r2 !== undefined) {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → addr: 69 | <Mov>: <Reg8: 4, Reg8: 2>
+        r4 = r2.retries
+    }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 72 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;

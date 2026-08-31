@@ -57,7 +57,7 @@ function optionalChainingTest() {
     if (r4 == null) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr: 89 | <LoadConstInt>: <Reg8: 4, Imm32: -1>
-        // USED → r4 = -1;
+        r4 = -1
     }
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 95 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

@@ -7,7 +7,7 @@ function simpleAsyncTest() {
     // CODE → addr:  4 | <ReifyArgumentsStrict>: <Reg8: 1>
     // USED → r1 = arguments;
     // CODE → addr:  6 | <Mov>: <Reg8: 4, Reg8: 1>
-    // USED → r4 = arguments;
+    r4 = arguments
     // CODE → addr:  9 | <GetBuiltinClosure>: <Reg8: 3, UInt8: 57>  # Built-in function: [#57 spawnAsync]
     // USED → r3 = spawnAsync;
     // CODE → addr: 12 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>

@@ -13,7 +13,7 @@ function _parallelAwaitTest() {
     // CODE → addr: 16 | <CreateEnvironment>: <Reg8: 2>
     r2 = createEnvironment()
     // CODE → addr: 18 | <CreateGeneratorClosure>: <Reg8: 2, Reg8: 2, function_id: 15188>  # Function: [#15188  of 9 bytes]: 1 params @ offset 0x0026b50f
-    // USED → r2 = function_15188;
+    r2 = function_15188
     // CODE → addr: 23 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
     r3 = r2.default.call(r4, r2)
     // CODE → addr: 28 | <StoreToEnvironment>: <Reg8: 1, UInt8: 10, Reg8: 3>
@@ -23,7 +23,7 @@ function _parallelAwaitTest() {
     // CODE → addr: 37 | <ReifyArguments>: <Reg8: 0>
     // USED → r0 = arguments;
     // CODE → addr: 39 | <Mov>: <Reg8: 1, Reg8: 0>
-    // USED → r1 = arguments;
+    r1 = arguments
     // CODE → addr: 42 | <LoadParam>: <Reg8: 0, UInt8: 0>
     // USED → r0 = this;
     // CODE → addr: 45 | <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 1>

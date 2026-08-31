@@ -21,7 +21,7 @@ function whileTest() {
     // CODE → addr: 36 | <LoadConstUInt8>: <Reg8: 5, UInt8: 2>
     // USED → r5 = 2;
     // CODE → addr: 39 | <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0;
+    r1 = 0
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 41 | <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r11 = console;

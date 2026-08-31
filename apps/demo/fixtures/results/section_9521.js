@@ -26,7 +26,7 @@ function callGeneratorTests() {
     while (!(r5 === undefined)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 44 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
-        // USED → r7 = r4.next();
+        r7 = r4.next()
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 55 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = console;
@@ -58,7 +58,7 @@ function callGeneratorTests() {
     while (!(r5 === undefined)) {
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr:101 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
-        // USED → r7 = r4.next();
+        r7 = r4.next()
         // ──────────────── Block 6 ──────────────── 
         // CODE → addr:112 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r6 = console;
@@ -87,7 +87,7 @@ function callGeneratorTests() {
     // CODE → addr:156 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 62>  # String: 'next' (Identifier)
     // USED → r2 = r5.next;
     // CODE → addr:161 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = r5.next();
+    r2 = r5.next()
     // CODE → addr:165 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:170 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -97,7 +97,7 @@ function callGeneratorTests() {
     // CODE → addr:181 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 136>  # String: 'return' (Identifier)
     // USED → r2 = r5.return;
     // CODE → addr:186 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 0>
-    // USED → r2 = r5.return(r0);
+    r2 = r5.return(r0)
     // CODE → addr:191 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:196 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

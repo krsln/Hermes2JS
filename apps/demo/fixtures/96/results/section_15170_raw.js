@@ -24,7 +24,7 @@ function callGeneratorTests() {
     r4 = GetIterator(r3)
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 41 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 3>
-    // USED → r7 = r4.next();
+    r7 = r4.next()
     // CODE → addr: 45 | <Mov>: <Reg8: 5, Reg8: 4>
     r5 = r4
     // CODE → addr: 48 | <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 0000004d
@@ -59,7 +59,7 @@ function callGeneratorTests() {
     r4 = GetIterator(r3)
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 95 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 3>
-    // USED → r7 = r4.next();
+    r7 = r4.next()
     // CODE → addr: 99 | <Mov>: <Reg8: 5, Reg8: 4>
     r5 = r4
     // CODE → addr:102 | <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000083
@@ -93,7 +93,7 @@ function callGeneratorTests() {
     // CODE → addr:150 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 182>  # String: 'next' (Identifier)
     // USED → r2 = r5.next;
     // CODE → addr:155 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = r5.next();
+    r2 = r5.next()
     // CODE → addr:159 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:164 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -103,7 +103,7 @@ function callGeneratorTests() {
     // CODE → addr:175 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 214>  # String: 'return' (Identifier)
     // USED → r2 = r5.return;
     // CODE → addr:180 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 0>
-    // USED → r2 = r5.return(r0);
+    r2 = r5.return(r0)
     // CODE → addr:185 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:190 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

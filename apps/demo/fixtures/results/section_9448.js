@@ -15,7 +15,7 @@ function doWhileTest() {
     // CODE → addr: 25 | <LoadConstUInt8>: <Reg8: 2, UInt8: 5>
     // USED → r2 = 5;
     // CODE → addr: 28 | <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
+    r0 = 0
     // LOOP → START (do_while)
     do {
         // ──────────────── Block 1 ──────────────── 

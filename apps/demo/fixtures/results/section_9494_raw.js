@@ -33,7 +33,7 @@ function spreadFunctionArgsTest() {
     // CODE → addr: 64 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → addr: 66 | <CallBuiltin>: <Reg8: 3, UInt8: 49, UInt8: 4>  # Built-in function: [#49 apply]
-    // USED → r3 = apply(r9, r8, r7, r6);
+    r3 = apply(r9, r8, r7, r6)
     // CODE → addr: 70 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log(r3)
     // CODE → addr: 75 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

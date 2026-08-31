@@ -25,7 +25,7 @@ function basicTemplateTest(param1, param2) {
     // CODE → addr: 48 | <LoadParam>: <Reg8: 11, UInt8: 1>
     r11 = param1
     // CODE → addr: 51 | <Call>: <Reg8: 4, Reg8: 7, UInt8: 5>
-    // USED → r4 = HermesInternal.concat(r12, r11, r10, r9, r8);
+    r4 = HermesInternal.concat(r12, r11, r10, r9, r8)
     // CODE → addr: 55 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 61 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

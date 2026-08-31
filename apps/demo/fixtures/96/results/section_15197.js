@@ -37,7 +37,7 @@ function function_15197() {
     // CODE → addr: 65 | <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 4, string_id: 50>  # String: 'get' (Identifier)
     r0.get = get()
     // CODE → addr: 69 | <PutOwnByIndex>: <Reg8: 1, Reg8: 0, UInt8: 1>
-    // USED → r1 = (r1[0] = r0)[1] = r0;
+    r1 = (r1[0] = r0)[1] = r0
     // CODE → addr: 73 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → addr: 75 | <Call3>: <Reg8: 0, Reg8: 2, Reg8: 0, Reg8: 3, Reg8: 1>

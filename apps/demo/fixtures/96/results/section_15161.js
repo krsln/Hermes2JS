@@ -19,7 +19,7 @@ function legacyArgumentsTest() {
     // CODE → addr: 32 | <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → addr: 37 | <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
-    // USED → r2 = arguments.length;
+    r2 = arguments.length
     // CODE → addr: 40 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 2>
     console.log(r2)
     // CODE → addr: 45 | <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
@@ -37,7 +37,7 @@ function legacyArgumentsTest() {
             // CODE → addr: 63 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
             // USED → r5 = console.log;
             // CODE → addr: 68 | <GetArgumentsPropByVal>: <Reg8: 2, Reg8: 3, Reg8: 4>
-            // USED → r2 = arguments[0];
+            r2 = arguments[0]
             // CODE → addr: 72 | <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
             console.log(r2)
             // CODE → addr: 77 | <Inc>: <Reg8: 3, Reg8: 3>

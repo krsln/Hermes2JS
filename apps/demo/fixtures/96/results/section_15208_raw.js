@@ -59,7 +59,7 @@ function privateStaticTest() {
     // CODE → addr:127 | <GetById>: <Reg8: 2, Reg8: 5, UInt8: 6, string_id: 10172>  # String: 'describe' (Identifier)
     // USED → r2 = r5.describe;
     // CODE → addr:133 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = r5.describe();
+    r2 = r5.describe()
     // CODE → addr:137 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:142 | <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -81,7 +81,7 @@ function privateStaticTest() {
     // CODE → addr:183 | <GetById>: <Reg8: 2, Reg8: 5, UInt8: 8, string_id: 8574>  # String: 'describeLabel' (Identifier)
     // USED → r2 = r5.describeLabel;
     // CODE → addr:189 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = r5.describeLabel();
+    r2 = r5.describeLabel()
     // CODE → addr:193 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:198 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 8>

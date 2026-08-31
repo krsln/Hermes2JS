@@ -29,7 +29,7 @@ function function_15131(param1, param2, param3) {
     // CODE → addr: 42 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
     // USED → r2 = r2[0];
     // CODE → addr: 46 | <GetByVal>: <Reg8: 2, Reg8: 2, Reg8: 5>
-    // USED → r2 = r2[0][r5];
+    r2 = r2[0][r5]
     // CODE → addr: 50 | <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 2>
     r0 = String.call(r4, r2)
     // ──────────────── Block 2 ──────────────── 

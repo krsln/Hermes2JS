@@ -22,12 +22,12 @@ function labeledContinueTest() {
     // USED → r1 = 0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 38 | <Mov>: <Reg8: 7, Reg8: 1>
-    // USED → r7 = 0;
+    r7 = 0
     // CODE → addr: 41 | <LoadConstZero>: <Reg8: 8>
     // USED → r8 = 0;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 43 | <Mov>: <Reg8: 9, Reg8: 8>
-    // USED → r9 = 0;
+    r9 = 0
     // CODE → addr: 46 | <JStrictEqual>: <Addr8: 46, Reg8: 9, Reg8: 2>  # Address: 0000005c
     // → r9 = 0
     if (r9 === 1) goto label_92;

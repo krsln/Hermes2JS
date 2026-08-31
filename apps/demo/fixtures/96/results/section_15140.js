@@ -35,7 +35,7 @@ function arrowFunctionTest() {
     // CODE → addr: 75 | <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15141>  # Function: [#15141  of 12 bytes]: 2 params @ offset 0x00269c4e
     // USED → r2 = function_15141(param1);
     // CODE → addr: 80 | <Call2>: <Reg8: 4, Reg8: 3, Reg8: 4, Reg8: 2>
-    // USED → r4 = r4.map(function_15141(param1));
+    r4 = r4.map(function_15141(param1))
     // CODE → addr: 85 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 91 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -55,7 +55,7 @@ function arrowFunctionTest() {
     // CODE → addr:122 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → addr:127 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 5>
-    // USED → r2 = r2.call(undefined, 5);
+    r2 = r2.call(undefined, 5)
     // CODE → addr:132 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:137 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

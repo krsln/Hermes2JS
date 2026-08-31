@@ -19,7 +19,7 @@ function tryCatchFinallyImplicitThrowTest(param1) {
     // CODE → addr: 32 | <LoadConstZero>: <Reg8: 0>
     r0 = 0
     // CODE → addr: 34 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 0, Reg8: 3>
-    // USED → r0 = r0[0](param1);
+    r0 = r0[0](param1)
     // CODE → addr: 39 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 45 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

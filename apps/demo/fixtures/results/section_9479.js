@@ -20,7 +20,7 @@ function forOfTest() {
     while (!(r4 === undefined)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 38 | <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 4>
-        // USED → r6 = r3.next();
+        r6 = r3.next()
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 49 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r5 = console;

@@ -13,7 +13,7 @@ function doWhileTest() {
     // CODE → addr: 22 | <LoadConstUInt8>: <Reg8: 1, UInt8: 5>
     // USED → r1 = 5;
     // CODE → addr: 25 | <LoadConstZero>: <Reg8: 2>
-    // USED → r2 = 0;
+    r2 = 0
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 27 | <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;

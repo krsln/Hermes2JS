@@ -17,7 +17,7 @@ function increment() {
     // CODE → addr: 29 | <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
     // USED → r4 = r1.default;
     // CODE → addr: 34 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 5>
-    // USED → r3 = r0[5];
+    r3 = r0[5]
     // CODE → addr: 38 | <LoadConstUndefined>: <Reg8: 2>
     r2 = undefined
     // CODE → addr: 40 | <LoadParam>: <Reg8: 1, UInt8: 0>

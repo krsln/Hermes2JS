@@ -23,7 +23,7 @@ function closureLoopTest() {
     // CODE → addr: 39 | <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
     // USED → r2 = 3;
     // CODE → addr: 42 | <LoadConstZero>: <Reg8: 3>
-    // USED → r3 = 0;
+    r3 = 0
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 44 | <Call2>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 3>
     r6 = _loop(param1).call(undefined, r3)
@@ -51,7 +51,7 @@ function closureLoopTest() {
     // CODE → addr: 79 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r5 = console.log;
     // CODE → addr: 84 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-    // USED → r4 = r4.call(undefined);
+    r4 = r4.call(undefined)
     // CODE → addr: 88 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
     console.log(r4)
     // CODE → addr: 93 | <Jmp>: <Addr8: -31>  # Address: 0000003e

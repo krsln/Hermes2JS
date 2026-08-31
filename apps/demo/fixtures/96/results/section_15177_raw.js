@@ -36,7 +36,7 @@ async function* anon_15177() {
     return r1;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 50 | <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-    // USED → r1 = await yield;
+    r1 = await yield
     // CODE → addr: 50 | <ResumeGenerator>: <Reg8: 1, Reg8: 3>
     // USED → r3 = __resumeIsReturn;
     // CODE → addr: 53 | <JmpTrue>: <Addr8: 42, Reg8: 3>  # Address: 0000005f

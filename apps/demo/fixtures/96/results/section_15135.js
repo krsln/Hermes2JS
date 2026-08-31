@@ -23,7 +23,7 @@ function regExpFlagsTest(param1) {
     // CODE → addr: 64 | <GetByIdShort>: <Reg8: 1, Reg8: 6, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
     // USED → r1 = r6.test;
     // CODE → addr: 69 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 6, Reg8: 5>
-    // USED → r1 = r6.test(param1);
+    r1 = r6.test(param1)
     // CODE → addr: 74 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → addr: 79 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -33,7 +33,7 @@ function regExpFlagsTest(param1) {
     // CODE → addr: 90 | <GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 3, string_id: 238>  # String: 'test' (Identifier)
     // USED → r1 = r4.test;
     // CODE → addr: 95 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 4, Reg8: 5>
-    // USED → r1 = r4.test(param1);
+    r1 = r4.test(param1)
     // CODE → addr:100 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → addr:105 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -43,9 +43,9 @@ function regExpFlagsTest(param1) {
     // CODE → addr:116 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 171>  # String: 'match' (Identifier)
     // USED → r4 = r5.match;
     // CODE → addr:121 | <CreateRegExp>: <Reg8: 1, string_id: 4336, string_id: 35, UInt32: 193>  # String: '[0-9A-Z_a-z]+' (String)  # String: 'g' (Identifier)
-    // USED → r1 = /[0-9A-Z_a-z]+/g;
+    r1 = /[0-9A-Z_a-z]+/g
     // CODE → addr:135 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
-    // USED → r1 = r5.match(r1);
+    r1 = r5.match(r1)
     // CODE → addr:140 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → addr:145 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

@@ -41,7 +41,7 @@ function swapViaDestructureTest() {
     if (r5 === undefined) goto label_70;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 67 | <Mov>: <Reg8: 8, Reg8: 7>
-    // USED → r8 = r7;
+    r8 = r7
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 70 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
@@ -62,7 +62,7 @@ function swapViaDestructureTest() {
     if (r5 === undefined) goto label_100;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 94 | <Mov>: <Reg8: 7, Reg8: 6>
-    // USED → r7 = r6;
+    r7 = r6
     // CODE → addr: 97 | <Mov>: <Reg8: 1, Reg8: 3>
     // USED → r1 = r5 === undefined;
     // ──────────────── Block 5 ──────────────── 

@@ -41,7 +41,7 @@ function callMapSetTests() {
     // CODE → addr: 80 | <SelectObject>: <Reg8: 7, Reg8: 4, Reg8: 3>
     r7 = new WeakMap()
     // CODE → addr: 84 | <NewObject>: <Reg8: 6>
-    // USED → r6 = {  };
+    r6 = {  }
     // CODE → addr: 86 | <GetByIdShort>: <Reg8: 4, Reg8: 7, UInt8: 4, string_id: 55>  # String: 'set' (Identifier)
     // USED → r4 = r7.set;
     // CODE → addr: 91 | <LoadConstString>: <Reg8: 3, string_id: 211>  # String: 'value' (Identifier)
@@ -55,7 +55,7 @@ function callMapSetTests() {
     // CODE → addr:112 | <GetByIdShort>: <Reg8: 3, Reg8: 7, UInt8: 5, string_id: 11>  # String: 'has' (Identifier)
     // USED → r3 = r7.has;
     // CODE → addr:117 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 6>
-    // USED → r3 = r7.has(r6);
+    r3 = r7.has(r6)
     // CODE → addr:122 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log(r3)
     // CODE → addr:127 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -65,7 +65,7 @@ function callMapSetTests() {
     // CODE → addr:138 | <GetByIdShort>: <Reg8: 3, Reg8: 7, UInt8: 6, string_id: 49>  # String: 'get' (Identifier)
     // USED → r3 = r7.get;
     // CODE → addr:143 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 6>
-    // USED → r3 = r7.get(r6);
+    r3 = r7.get(r6)
     // CODE → addr:148 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log(r3)
     // CODE → addr:153 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

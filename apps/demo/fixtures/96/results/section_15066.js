@@ -26,7 +26,7 @@ function labeledContinueTest() {
         for (r8 = 0; r8 < 3; r8 = r9 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 43 | <Mov>: <Reg8: 9, Reg8: 8>
-            // USED → r9 = 0;
+            r9 = 0
             // → r9 = 0
             if (r9 === 1) {
                 // ──────────────── Block 5 ──────────────── 

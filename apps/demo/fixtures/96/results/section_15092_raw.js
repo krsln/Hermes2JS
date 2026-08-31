@@ -18,7 +18,7 @@ function forOfTest() {
     // USED → r0 = undefined;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 35 | <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 2>
-    // USED → r6 = r3.next();
+    r6 = r3.next()
     // CODE → addr: 39 | <Mov>: <Reg8: 4, Reg8: 3>
     r4 = r3
     // CODE → addr: 42 | <JStrictEqual>: <Addr8: 29, Reg8: 4, Reg8: 0>  # Address: 00000047

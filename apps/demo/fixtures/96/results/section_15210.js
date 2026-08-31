@@ -11,7 +11,7 @@ function Counter() {
     // CODE → addr: 15 | <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0)
     // CODE → addr: 18 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
-    // USED → r2 = r0[0];
+    r2 = r0[0]
     // CODE → addr: 22 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 24 | <Call3>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 8, Reg8: 2>
@@ -23,9 +23,9 @@ function Counter() {
     // CODE → addr: 38 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 3, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r6 = Object.defineProperty;
     // CODE → addr: 43 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 7>
-    // USED → r5 = r3[7];
+    r5 = r3[7]
     // CODE → addr: 47 | <NewObject>: <Reg8: 4>
-    // USED → r4 = {  };
+    r4 = {  }
     // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 9, Reg8: 3, UInt8: 11>
     // USED → r9 = r3[11];
     // CODE → addr: 53 | <PutNewOwnByIdShort>: <Reg8: 4, Reg8: 9, string_id: 205>  # String: 'value' (Identifier)
@@ -37,9 +37,9 @@ function Counter() {
     // CODE → addr: 70 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 3, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r6 = Object.defineProperty;
     // CODE → addr: 75 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 5>
-    // USED → r5 = r3[5];
+    r5 = r3[5]
     // CODE → addr: 79 | <NewObjectWithBuffer>: <Reg8: 4, UInt16: 2, UInt16: 2, UInt16: 43, UInt16: 45>  # Object: {'writable': true, 'value': 0}
-    // USED → r4 = { "writable": true, "value": 0 };
+    r4 = { "writable": true, "value": 0 }
     // CODE → addr: 89 | <Call4>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5, Reg8: 4>
     r4 = Object.defineProperty(this, r5, r4)
     // CODE → addr: 96 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 4, string_id: 99>  # String: 'console' (Identifier)
@@ -55,7 +55,7 @@ function Counter() {
     // CODE → addr:120 | <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
     // USED → r1 = r1.default;
     // CODE → addr:125 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 6>
-    // USED → r3 = r3[6];
+    r3 = r3[6]
     // CODE → addr:129 | <Call3>: <Reg8: 2, Reg8: 1, Reg8: 0, Reg8: 2, Reg8: 3>
     r2 = r1.default.call(r0, r2, r3)
     // CODE → addr:135 | <GetByVal>: <Reg8: 1, Reg8: 2, Reg8: 3>

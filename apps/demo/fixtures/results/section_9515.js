@@ -3,7 +3,7 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr:  0 | <LoadConstUInt8>: <Reg8: 10, UInt8: 2>
     r10 = 2
     // CODE → addr:  3 | <CallBuiltin>: <Reg8: 7, UInt8: 47, UInt8: 2>  # Built-in function: [#47 copyRestArgs]
-    // USED → r7 = copyRestArgs(r10, r9);
+    r7 = copyRestArgs(r10, r9)
     // CODE → addr:  7 | <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
     // CODE → addr:  9 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

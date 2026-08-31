@@ -35,7 +35,7 @@ function arrayTest() {
     // CODE → addr: 75 | <NewArray>: <Reg8: 6, UInt16: 0>
     r6 = []
     // CODE → addr: 79 | <LoadConstZero>: <Reg8: 5>
-    // USED → r5 = 0;
+    r5 = 0
     // CODE → addr: 81 | <Mov>: <Reg8: 9, Reg8: 6>
     r9 = r6
     // CODE → addr: 84 | <Mov>: <Reg8: 8, Reg8: 4>
@@ -49,7 +49,7 @@ function arrayTest() {
     // CODE → addr: 99 | <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15111>  # Function: [#15111  of 12 bytes]: 3 params @ offset 0x001f6a9c
     // USED → r2 = function_15111(param1, param2);
     // CODE → addr:104 | <Call2>: <Reg8: 6, Reg8: 3, Reg8: 6, Reg8: 2>
-    // USED → r6 = r6.sort(function_15111(param1, param2));
+    r6 = r6.sort(function_15111(param1, param2))
     // CODE → addr:109 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:115 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -61,7 +61,7 @@ function arrayTest() {
     // CODE → addr:130 | <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15112>  # Function: [#15112  of 12 bytes]: 2 params @ offset 0x00269c4e
     // USED → r2 = function_15112(param1);
     // CODE → addr:135 | <Call2>: <Reg8: 6, Reg8: 3, Reg8: 4, Reg8: 2>
-    // USED → r6 = r4.map(function_15112(param1));
+    r6 = r4.map(function_15112(param1))
     // CODE → addr:140 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:146 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -73,7 +73,7 @@ function arrayTest() {
     // CODE → addr:161 | <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15113>  # Function: [#15113  of 12 bytes]: 2 params @ offset 0x00269c5a
     // USED → r2 = function_15113(param1);
     // CODE → addr:166 | <Call2>: <Reg8: 6, Reg8: 3, Reg8: 4, Reg8: 2>
-    // USED → r6 = r4.filter(function_15113(param1));
+    r6 = r4.filter(function_15113(param1))
     // CODE → addr:171 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:177 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -85,7 +85,7 @@ function arrayTest() {
     // CODE → addr:192 | <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15114>  # Function: [#15114  of 12 bytes]: 3 params @ offset 0x00269c66
     // USED → r2 = function_15114(param1, param2);
     // CODE → addr:197 | <Call3>: <Reg8: 5, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
-    // USED → r5 = r4.reduce(function_15114(param1, param2), r5);
+    r5 = r4.reduce(function_15114(param1, param2), r5)
     // CODE → addr:203 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:209 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -97,7 +97,7 @@ function arrayTest() {
     // CODE → addr:225 | <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 15115>  # Function: [#15115  of 12 bytes]: 2 params @ offset 0x00269c72
     // USED → r1 = function_15115(param1);
     // CODE → addr:230 | <Call2>: <Reg8: 3, Reg8: 2, Reg8: 4, Reg8: 1>
-    // USED → r3 = r4.find(function_15115(param1));
+    r3 = r4.find(function_15115(param1))
     // CODE → addr:235 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr:241 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -111,7 +111,7 @@ function arrayTest() {
     // CODE → addr:259 | <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
     // USED → r1 = 3;
     // CODE → addr:262 | <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 1>
-    // USED → r3 = r4.slice(1, 3);
+    r3 = r4.slice(1, 3)
     // CODE → addr:268 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr:274 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -75,7 +75,7 @@ function nestedArrayDestructureTest() {
     // USED → r9 = r12;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:126 | <Mov>: <Reg8: 8, Reg8: 9>
-    // USED → r8 = r12;
+    r8 = r12
     // CODE → addr:129 | <LoadConstUndefined>: <Reg8: 9>
     r9 = undefined
     // CODE → addr:131 | <JmpTrue>: <Addr8: 28, Reg8: 5>  # Address: 0000009f
@@ -100,7 +100,7 @@ function nestedArrayDestructureTest() {
     // USED → r5 = r2 === undefined;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:159 | <Mov>: <Reg8: 7, Reg8: 9>
-    // USED → r7 = r12;
+    r7 = r12
     // CODE → addr:162 | <JmpTrue>: <Addr8: 6, Reg8: 5>  # Address: 000000a8
     if (r2 === undefined) goto label_168;
     // ──────────────── Block 8 ──────────────── 
@@ -183,7 +183,7 @@ function nestedArrayDestructureTest() {
     // USED → r9 = r6 === undefined;
     // ──────────────── Block 17 ──────────────── 
     // CODE → addr:271 | <Mov>: <Reg8: 0, Reg8: 11>
-    // USED → r0 = r13;
+    r0 = r13
     // CODE → addr:274 | <JmpTrue>: <Addr8: 9, Reg8: 9>  # Address: 0000011b
     if (r6 === undefined) goto label_283;
     // ──────────────── Block 18 ──────────────── 
@@ -233,7 +233,7 @@ function nestedArrayDestructureTest() {
     // USED → r12 = 0;
     // ──────────────── Block 24 ──────────────── 
     // CODE → addr:349 | <Mov>: <Reg8: 15, Reg8: 12>
-    // USED → r15 = 0;
+    r15 = 0
     // CODE → addr:352 | <LoadConstUndefined>: <Reg8: 12>
     r12 = undefined
     // CODE → addr:354 | <Mov>: <Reg8: 11, Reg8: 9>
@@ -282,9 +282,9 @@ function nestedArrayDestructureTest() {
     goto label_507;
     // ──────────────── Block 30 ──────────────── 
     // CODE → addr:410 | <Mov>: <Reg8: 14, Reg8: 12>
-    // USED → r14 = 0;
+    r14 = 0
     // CODE → addr:413 | <NewArray>: <Reg8: 13, UInt16: 0>
-    // USED → r13 = [];
+    r13 = []
     // CODE → addr:417 | <LoadConstUInt8>: <Reg8: 12, UInt8: 1>
     // USED → r12 = 1;
     // CODE → addr:420 | <LoadConstZero>: <Reg8: 16>

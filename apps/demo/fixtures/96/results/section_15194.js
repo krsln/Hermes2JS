@@ -17,7 +17,7 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 24 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r7 = Object.defineProperty;
     // CODE → addr: 29 | <NewObject>: <Reg8: 6>
-    // USED → r6 = {  };
+    r6 = {  }
     // CODE → addr: 31 | <LoadConstTrue>: <Reg8: 0>
     // USED → r0 = true;
     // CODE → addr: 33 | <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
@@ -33,11 +33,11 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 59 | <LoadConstZero>: <Reg8: 0>
     r0 = 0
     // CODE → addr: 61 | <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
-    // USED → r1 = param7[r0];
+    r1 = param7[r0]
     // CODE → addr: 65 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 67 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, r1);
+    r1 = param2.call(undefined, r1)
     // CODE → addr: 72 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
     r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → addr: 77 | <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 1>
@@ -45,9 +45,9 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 81 | <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     r1 = 1
     // CODE → addr: 84 | <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-    // USED → r1 = param7[r1];
+    r1 = param7[r1]
     // CODE → addr: 88 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, r1);
+    r1 = param2.call(undefined, r1)
     // CODE → addr: 93 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
     r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → addr: 98 | <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
@@ -55,9 +55,9 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:102 | <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     r1 = 2
     // CODE → addr:105 | <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-    // USED → r1 = param7[r1];
+    r1 = param7[r1]
     // CODE → addr:109 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, r1);
+    r1 = param2.call(undefined, r1)
     // CODE → addr:114 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
     r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → addr:119 | <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 1>
@@ -65,9 +65,9 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:123 | <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
     r1 = 3
     // CODE → addr:126 | <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-    // USED → r1 = param7[r1];
+    r1 = param7[r1]
     // CODE → addr:130 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, r1);
+    r1 = param2.call(undefined, r1)
     // CODE → addr:135 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
     r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → addr:140 | <StoreToEnvironment>: <Reg8: 2, UInt8: 3, Reg8: 1>
@@ -75,9 +75,9 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:144 | <LoadConstUInt8>: <Reg8: 1, UInt8: 4>
     r1 = 4
     // CODE → addr:147 | <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
-    // USED → r1 = param7[r1];
+    r1 = param7[r1]
     // CODE → addr:151 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    // USED → r1 = param2.call(undefined, r1);
+    r1 = param2.call(undefined, r1)
     // CODE → addr:156 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
     r1 = _interopDefault(param1).call(undefined, r1)
     // CODE → addr:161 | <StoreToEnvironment>: <Reg8: 2, UInt8: 4, Reg8: 1>
@@ -85,7 +85,7 @@ function function_15194(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:165 | <CreateClosure>: <Reg8: 1, Reg8: 2, function_id: 15197>  # Function: [#15197  of 83 bytes]: 1 params @ offset 0x0026b81c
     // USED → r1 = function_15197();
     // CODE → addr:170 | <Call1>: <Reg8: 3, Reg8: 1, Reg8: 0>
-    // USED → r3 = function_15197().call(undefined);
+    r3 = function_15197().call(undefined)
     // CODE → addr:174 | <StoreToEnvironment>: <Reg8: 2, UInt8: 5, Reg8: 3>
     r2[5] = r3
     // CODE → addr:178 | <CreateClosure>: <Reg8: 1, Reg8: 2, function_id: 15201>  # Function: [#15201  of 106 bytes]: 2 params @ offset 0x0026b92e

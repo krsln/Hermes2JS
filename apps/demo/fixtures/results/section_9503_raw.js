@@ -21,7 +21,7 @@ function basicRegExpTest(param1) {
     // CODE → addr: 50 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 47>  # String: 'test' (Identifier)
     // USED → r2 = r5.test;
     // CODE → addr: 55 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 6>
-    // USED → r2 = r5.test(param1);
+    r2 = r5.test(param1)
     // CODE → addr: 60 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr: 65 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -31,9 +31,9 @@ function basicRegExpTest(param1) {
     // CODE → addr: 76 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 3, string_id: 180>  # String: 'match' (Identifier)
     // USED → r5 = r6.match;
     // CODE → addr: 81 | <CreateRegExp>: <Reg8: 2, string_id: 6471, string_id: 6578, UInt32: 156>  # String: 'a' (Identifier)  # String: 'g' (Identifier)
-    // USED → r2 = /a/g;
+    r2 = /a/g
     // CODE → addr: 95 | <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
-    // USED → r2 = r6.match(r2);
+    r2 = r6.match(r2)
     // CODE → addr:100 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:105 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

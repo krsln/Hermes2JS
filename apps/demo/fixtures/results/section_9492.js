@@ -13,7 +13,7 @@ function spreadArrayTest() {
     // CODE → addr: 22 | <NewArrayWithBuffer>: <Reg8: 3, UInt16: 3, UInt16: 3, UInt16: 19164>  # Array: [1, 2, 3]
     r3 = [1, 2, 3]
     // CODE → addr: 30 | <NewArray>: <Reg8: 0, UInt16: 0>
-    // USED → r0 = [];
+    r0 = []
     // CODE → addr: 34 | <Mov>: <Reg8: 13, Reg8: 0>
     r13 = r0
     // CODE → addr: 37 | <Mov>: <Reg8: 12, Reg8: 3>
@@ -35,7 +35,7 @@ function spreadArrayTest() {
     // CODE → addr: 72 | <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 0>
     console.log(r0)
     // CODE → addr: 77 | <NewArrayWithBuffer>: <Reg8: 5, UInt16: 2, UInt16: 1, UInt16: 17298>  # Array: [0]
-    // USED → r5 = [0];
+    r5 = [0]
     // CODE → addr: 85 | <LoadConstUInt8>: <Reg8: 8, UInt8: 1>
     // USED → r8 = 1;
     // CODE → addr: 88 | <Mov>: <Reg8: 13, Reg8: 5>
@@ -67,10 +67,16 @@ function spreadArrayTest() {
     // CODE → addr:143 | <StrictEq>: <Reg8: 6, Reg8: 5, Reg8: 0>
     // USED → r6 = r3 === undefined;
     // CODE → addr:147 | <LoadConstUndefined>: <Reg8: 5>
-    r5 = (r3 === undefined) ? undefined : r4
+    r5 = undefined
+    // → r3 = GetIterator(r7)
+    if (r3 !== undefined) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr:152 | <Mov>: <Reg8: 5, Reg8: 4>
+        r5 = r4
+    }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:155 | <NewArray>: <Reg8: 4, UInt16: 0>
-    // USED → r4 = [];
+    r4 = []
     // CODE → addr:159 | <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     if (r3 !== undefined) {

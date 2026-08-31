@@ -49,7 +49,7 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr: 77 | <Mov>: <Reg8: 3, Reg8: 7>
     r3 = 0
     // CODE → addr: 80 | <GetByVal>: <Reg8: 8, Reg8: 2, Reg8: 3>
-    // USED → r8 = param1[r3];
+    r8 = param1[r3]
     // CODE → addr: 84 | <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 4, Reg8: 8>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", r8)
     // CODE → addr: 90 | <Inc>: <Reg8: 3, Reg8: 3>

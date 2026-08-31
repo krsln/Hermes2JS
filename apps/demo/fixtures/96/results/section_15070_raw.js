@@ -32,7 +32,7 @@ function ternaryTest(param1) {
     // USED → r3 = "negative";
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 53 | <Mov>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = "negative";
+    r5 = "negative"
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 56 | <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
@@ -58,7 +58,7 @@ function ternaryTest(param1) {
     // USED → r1 = param1;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr: 94 | <Mov>: <Reg8: 3, Reg8: 1>
-    // USED → r3 = param1;
+    r3 = param1
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr: 97 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;

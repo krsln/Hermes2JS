@@ -19,11 +19,11 @@ function regExpSingleQuotePatternTest(param1) {
     // CODE → addr: 36 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 3, string_id: 213>  # String: 'replace' (Identifier)
     // USED → r5 = r6.replace;
     // CODE → addr: 41 | <CreateRegExp>: <Reg8: 4, string_id: 819, string_id: 35, UInt32: 1>  # String: "'" (String)  # String: 'g' (Identifier)
-    // USED → r4 = /'/g;
+    r4 = /'/g
     // CODE → addr: 55 | <LoadConstString>: <Reg8: 1, string_id: 7151>  # String: '’' (String)
     // USED → r1 = "\u2019";
     // CODE → addr: 59 | <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
-    // USED → r1 = r6.replace(r4, "\u2019");
+    r1 = r6.replace(r4, "\u2019")
     // CODE → addr: 65 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → addr: 70 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -33,11 +33,11 @@ function regExpSingleQuotePatternTest(param1) {
     // CODE → addr: 81 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 3, string_id: 213>  # String: 'replace' (Identifier)
     // USED → r5 = r6.replace;
     // CODE → addr: 86 | <CreateRegExp>: <Reg8: 4, string_id: 2429, string_id: 35, UInt32: 194>  # String: "['-]" (String)  # String: 'g' (Identifier)
-    // USED → r4 = /['-]/g;
+    r4 = /['-]/g
     // CODE → addr:100 | <LoadConstString>: <Reg8: 1, string_id: 389>  # String: '_' (String)
     // USED → r1 = "_";
     // CODE → addr:104 | <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 4, Reg8: 1>
-    // USED → r1 = r6.replace(r4, "_");
+    r1 = r6.replace(r4, "_")
     // CODE → addr:110 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → addr:115 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

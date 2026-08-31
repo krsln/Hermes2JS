@@ -49,7 +49,7 @@ function closureTest() {
     // CODE → addr:105 | <GetByIdShort>: <Reg8: 3, Reg8: 6, UInt8: 4, string_id: 211>  # String: 'value' (Identifier)
     // USED → r3 = r6.value;
     // CODE → addr:110 | <Call1>: <Reg8: 3, Reg8: 3, Reg8: 6>
-    // USED → r3 = r6.value();
+    r3 = r6.value()
     // CODE → addr:114 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log(r3)
     // CODE → addr:119 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

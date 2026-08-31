@@ -62,7 +62,7 @@ function tryCatchInsideLoopTest(param1) {
                 // CODE → addr:124 | <Throw>: <Reg8: 13>
                 throw new Error("negative value");
                 // CODE → addr:126 | <Catch>: <Reg8: 15>
-                // USED → r15 = caughtException;
+                r15 = caughtException
                 // CODE → addr:128 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
                 // USED → r14 = console;
                 // CODE → addr:134 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -78,7 +78,7 @@ function tryCatchInsideLoopTest(param1) {
             // CODE → addr: 80 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r13 = console.log;
             // CODE → addr: 85 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
-            // USED → r12 = param1[r2];
+            r12 = param1[r2]
             // CODE → addr: 89 | <Call3>: <Reg8: 12, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 12>
             console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r12)
             // CODE → addr: 95 | <Mov>: <Reg8: 12, Reg8: 11>
