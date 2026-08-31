@@ -3,7 +3,7 @@ function tag(param1) {
     // CODE → addr:  0 | <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → addr:  2 | <LoadParam>: <Reg8: 3, UInt8: 1>
-    r3 = param1
+    // USED → r3 = param1;
     // CODE → addr:  5 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → addr:  7 | <GetArgumentsLength>: <Reg8: 6, Reg8: 7>
@@ -66,13 +66,13 @@ function tag(param1) {
     // CODE → addr:105 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 1>
     console.log("__BC:Strings/TemplateLiteralTests/tag/invoked")
     // CODE → addr:110 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)
-    // USED → r2 = r3.reduce;
+    // USED → r2 = param1.reduce;
     // CODE → addr:115 | <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 15131>  # Function: [#15131  of 61 bytes]: 4 params @ offset 0x0026a42e
     // USED → r1 = function_15131(param1, param2, param3);
     // CODE → addr:120 | <LoadConstString>: <Reg8: 0, string_id: 7163>  # String: '' (Identifier)
     // USED → r0 = "";
     // CODE → addr:124 | <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
-    r0 = r3.reduce(function_15131(param1, param2, param3), "")
+    r0 = param1.reduce(function_15131(param1, param2, param3), "")
     // CODE → addr:130 | <Ret>: <Reg8: 0>
     return r0;
 }

@@ -15,5 +15,5 @@ function sideEffect(param1, param2) {
     // CODE → addr: 26 | <LoadParam>: <Reg8: 0, UInt8: 2>
     r0 = param2
     // CODE → addr: 29 | <Ret>: <Reg8: 0>
-    return r0;
+    return param2;
 }

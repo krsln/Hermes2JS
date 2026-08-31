@@ -23,7 +23,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 34 | <LoadConstZero>: <Reg8: 9>
     // USED → r9 = 0;
     // CODE → addr: 36 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    r2 = r2.length
+    r2 = param1.length
     // CODE → addr: 41 | <LoadConstString>: <Reg8: 3, string_id: 4653>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally' (String)
     // USED → r3 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally";
     // CODE → addr: 45 | <LoadConstString>: <Reg8: 6, string_id: 4650>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue' (String)
@@ -31,7 +31,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 49 | <LoadConstString>: <Reg8: 5, string_id: 4655>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item' (String)
     // USED → r5 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item";
     // CODE → addr: 53 | <JNotLessLong>: <Addr32: 171, Reg8: 7, Reg8: 2>  # Address: 000000e0
-    // → r2 = r2.length
+    // → r2 = param1.length
     if (!(0 < r2)) goto label_224;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 60 | <Mov>: <Reg8: 4, Reg8: 8>

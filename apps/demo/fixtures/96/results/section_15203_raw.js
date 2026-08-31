@@ -43,13 +43,13 @@ function makeSound() {
     // CODE → addr: 77 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r4 = console.log;
     // CODE → addr: 82 | <GetByIdShort>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 176>  # String: 'name' (Identifier)
-    // USED → r3 = r1.name;
+    // USED → r3 = this.name;
     // CODE → addr: 87 | <GetById>: <Reg8: 2, Reg8: 1, UInt8: 5, string_id: 16784>  # String: 'breed' (Identifier)
-    // USED → r2 = r1.breed;
+    // USED → r2 = this.breed;
     // CODE → addr: 93 | <LoadConstString>: <Reg8: 1, string_id: 1894>  # String: 'is a' (String)
     // USED → r1 = "is a";
     // CODE → addr: 97 | <Call4>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>
-    console.log(r1.name, "is a", r1.breed)
+    console.log(this.name, "is a", this.breed)
     // CODE → addr:104 | <Ret>: <Reg8: 0>
     return r0;
 }

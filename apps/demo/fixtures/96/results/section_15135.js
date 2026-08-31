@@ -41,11 +41,11 @@ function regExpFlagsTest(param1) {
     // CODE → addr:111 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
     // CODE → addr:116 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 4, string_id: 171>  # String: 'match' (Identifier)
-    // USED → r4 = r5.match;
+    // USED → r4 = param1.match;
     // CODE → addr:121 | <CreateRegExp>: <Reg8: 1, string_id: 4336, string_id: 35, UInt32: 193>  # String: '[0-9A-Z_a-z]+' (String)  # String: 'g' (Identifier)
     r1 = /[0-9A-Z_a-z]+/g
     // CODE → addr:135 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 1>
-    r1 = r5.match(r1)
+    r1 = param1.match(r1)
     // CODE → addr:140 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log(r1)
     // CODE → addr:145 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

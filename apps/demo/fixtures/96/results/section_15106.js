@@ -1,13 +1,13 @@
 function parameterDestructureTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadParam>: <Reg8: 0, UInt8: 1>
-    r0 = param1
+    // USED → r0 = param1;
     // CODE → addr:  3 | <GetByIdShort>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 29>  # String: 'id' (Identifier)
-    // USED → r7 = r0.id;
+    // USED → r7 = param1.id;
     // CODE → addr:  8 | <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 176>  # String: 'name' (Identifier)
-    r1 = r0.name
+    r1 = param1.name
     // CODE → addr: 13 | <LoadConstString>: <Reg8: 6, string_id: 518>  # String: 'anon' (String)
-    r6 = (r1 === undefined) ? "anon" : r0.name
+    r6 = (r1 === undefined) ? "anon" : param1.name
     // CODE → addr: 17 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // ──────────────── Block 2 ──────────────── 
@@ -48,9 +48,9 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr: 96 | <Mov>: <Reg8: 13, Reg8: 3>
     r13 = console
     // CODE → addr: 99 | <Mov>: <Reg8: 12, Reg8: 7>
-    r12 = r0.id
+    r12 = param1.id
     // CODE → addr:102 | <Mov>: <Reg8: 11, Reg8: 6>
-    r11 = (r1 === undefined) ? "anon" : r0.name
+    r11 = (r1 === undefined) ? "anon" : param1.name
     // CODE → addr:105 | <Call>: <Reg8: 2, Reg8: 2, UInt8: 5>
     console.log(r13, r12, r11, r10, r9)
     // CODE → addr:109 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 99>  # String: 'console' (Identifier)

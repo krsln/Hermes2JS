@@ -120,7 +120,19 @@ class OpcodeHandler(ABC):
 
     @classmethod
     def get_register_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier:
-        """Always symbolic - never inlines the defining expression."""
+        """Always symbolic - never inlines the defining expression.
+
+        Exception: a register whose only definition so far is a
+        function parameter (LoadParam/LoadParamLong) keeps that
+        parameter's name instead of a synthetic r{reg}. A parameter
+        name is the register's stable identity for the entire
+        function - not a computed expression being substituted in -
+        so returning it here doesn't inline anything; it just avoids
+        two different call sites (e.g. a MemberExpression's receiver
+        built via resolve_get_by_argument, and this `this`-register
+        reference used to structurally compare against it) disagreeing
+        about what to call the exact same untouched parameter register.
+        """
 
         state = analysis.get_register_state(reg)
 
@@ -128,6 +140,10 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}_undefined")
 
         state.mark_read()
+
+        if state.handler in ("LoadParam", "LoadParamLong") and isinstance(state.value, Identifier):
+            return state.value
+
         return Identifier(name=f"r{reg}")
 
     @classmethod
@@ -173,6 +189,8 @@ class OpcodeHandler(ABC):
         if state.handler in frozenset({
             "GetGlobalObject",
             "TryGetById",
+            "LoadParam",
+            "LoadParamLong",
         }):
             if isinstance(state.value, MemberExpression):
                 state.mark_read()

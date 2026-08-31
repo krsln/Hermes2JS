@@ -1,7 +1,7 @@
 function tryLoopMultiReturnTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadParam>: <Reg8: 3, UInt8: 1>
-    r3 = param1
+    // USED → r3 = param1;
     // CODE → addr:  3 | <LoadConstUndefined>: <Reg8: 4>
     r4 = undefined
     // CODE → addr:  5 | <GetGlobalObject>: <Reg8: 0>
@@ -21,13 +21,13 @@ function tryLoopMultiReturnTest(param1) {
     // CODE → addr: 31 | <LoadConstString>: <Reg8: 1, string_id: 4272>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive";
     // LOOP → START (while)
-    // → r5 = r3.length; r6 = 0
+    // → r5 = param1.length; r6 = 0
     while (!(r6 >= r5)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 35 | <Mov>: <Reg8: 6, Reg8: 4>
         r6 = 0
         // CODE → addr: 38 | <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-        r5 = r3.length
+        r5 = param1.length
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 47 | <Mov>: <Reg8: 5, Reg8: 4>
         r5 = 0

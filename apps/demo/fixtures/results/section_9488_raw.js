@@ -1,15 +1,15 @@
 function parameterDestructureTest(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadParam>: <Reg8: 3, UInt8: 1>
-    r3 = param1
+    // USED → r3 = param1;
     // CODE → addr:  3 | <GetByIdShort>: <Reg8: 9, Reg8: 3, UInt8: 0, string_id: 28>  # String: 'id' (Identifier)
-    // USED → r9 = r3.id;
+    // USED → r9 = param1.id;
     // CODE → addr:  8 | <GetByIdShort>: <Reg8: 8, Reg8: 3, UInt8: 1, string_id: 187>  # String: 'name' (Identifier)
-    r8 = r3.name
+    r8 = param1.name
     // CODE → addr: 13 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr: 15 | <JStrictNotEqual>: <Addr8: 8, Reg8: 8, Reg8: 1>  # Address: 00000017
-    // → r8 = r3.name
+    // → r8 = param1.name
     if (r8 !== undefined) goto label_23;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 19 | <LoadConstString>: <Reg8: 8, string_id: 514>  # String: 'anon' (String)
@@ -18,7 +18,7 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr: 23 | <LoadParam>: <Reg8: 4, UInt8: 2>
     r4 = param2
     // CODE → addr: 26 | <IteratorBegin>: <Reg8: 3, Reg8: 4>
-    r3 = GetIterator(r4)
+    r3 = GetIterator(param2)
     // CODE → addr: 29 | <Mov>: <Reg8: 5, Reg8: 4>
     r5 = param2
     // CODE → addr: 32 | <IteratorNext>: <Reg8: 5, Reg8: 3, Reg8: 5>
@@ -30,7 +30,7 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr: 43 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → addr: 45 | <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000033
-    // → r3 = GetIterator(r4)
+    // → r3 = GetIterator(param2)
     if (r3 === undefined) goto label_51;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 48 | <Mov>: <Reg8: 7, Reg8: 5>
@@ -82,7 +82,7 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr:120 | <Mov>: <Reg8: 15, Reg8: 5>
     r15 = console
     // CODE → addr:123 | <Mov>: <Reg8: 14, Reg8: 9>
-    r14 = r3.id
+    r14 = param1.id
     // CODE → addr:126 | <Mov>: <Reg8: 13, Reg8: 8>
     r13 = "anon"
     // CODE → addr:129 | <Mov>: <Reg8: 12, Reg8: 7>

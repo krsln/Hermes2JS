@@ -19,7 +19,7 @@ function callRegExpTests() {
     // CODE → addr: 37 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Strings/RegExpTests/basicRegExpTest/start")
     // CODE → addr: 42 | <CreateRegExp>: <Reg8: 5, string_id: 4696, string_id: 6457, UInt32: 155>  # String: '^\\d+$' (String)  # String: '' (Identifier)
-    r5 = /^\\d+$/
+    r5 = /^\d+$/
     // CODE → addr: 56 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 62 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -93,7 +93,7 @@ function callRegExpTests() {
     // CODE → addr:261 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 3, string_id: 180>  # String: 'match' (Identifier)
     // USED → r5 = r6.match;
     // CODE → addr:266 | <CreateRegExp>: <Reg8: 2, string_id: 1961, string_id: 2193, UInt32: 159>  # String: '\\w+' (String)  # String: 'gu' (String)
-    r2 = /\\w+/gu
+    r2 = /\w+/gu
     // CODE → addr:280 | <Call2>: <Reg8: 2, Reg8: 5, Reg8: 6, Reg8: 2>
     r2 = r6.match(r2)
     // CODE → addr:285 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
@@ -161,7 +161,7 @@ function callRegExpTests() {
     // CODE → addr:459 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Strings/RegExpTests/regExpGroupsAndReplaceTest/start")
     // CODE → addr:464 | <CreateRegExp>: <Reg8: 5, string_id: 1955, string_id: 6457, UInt32: 162>  # String: '(\\d{4})-(\\d{2})-(\\d{2})' (String)  # String: '' (Identifier)
-    r5 = /(\\d{4})-(\\d{2})-(\\d{2})/
+    r5 = /(\d{4})-(\d{2})-(\d{2})/
     // CODE → addr:478 | <LoadConstString>: <Reg8: 4, string_id: 2233>  # String: '2024-01-15' (String)
     r4 = "2024-01-15"
     // CODE → addr:482 | <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 3, string_id: 180>  # String: 'match' (Identifier)

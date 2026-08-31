@@ -6,11 +6,11 @@ function _interopDefault(param1) {
     if (!param1) goto label_17;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr:  6 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 48>  # String: '__esModule' (Identifier)
-    // USED → r1 = r2.__esModule;
+    // USED → r1 = param1.__esModule;
     // CODE → addr: 11 | <Mov>: <Reg8: 0, Reg8: 2>
     r0 = param1
     // CODE → addr: 14 | <JmpTrue>: <Addr8: 12, Reg8: 1>  # Address: 0000001a
-    if (r2.__esModule) goto label_26;
+    if (param1.__esModule) goto label_26;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 17 | <NewObject>: <Reg8: 1>
     r1 = {  }

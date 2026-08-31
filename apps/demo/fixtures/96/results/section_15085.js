@@ -25,12 +25,12 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr: 36 | <LoadConstZero>: <Reg8: 8>
     // USED → r8 = 0;
     // CODE → addr: 38 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-    r2 = r2.length
+    r2 = param1.length
     // CODE → addr: 43 | <LoadConstString>: <Reg8: 5, string_id: 2131>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught' (String)
     // USED → r5 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught";
     // CODE → addr: 47 | <LoadConstString>: <Reg8: 4, string_id: 4701>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok";
-    // → r2 = r2.length
+    // → r2 = param1.length
     if (0 < r2) {
         // LOOP → START (for)
         // → r2 = param1[r2]; r3 = param1

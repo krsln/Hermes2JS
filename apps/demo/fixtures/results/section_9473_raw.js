@@ -1,7 +1,7 @@
 function tryCatchInsideLoopTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadParam>: <Reg8: 10, UInt8: 1>
-    r10 = param1
+    // USED → r10 = param1;
     // CODE → addr:  3 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr:  5 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -13,11 +13,11 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr: 20 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/start")
     // CODE → addr: 25 | <GetByIdShort>: <Reg8: 0, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-    // USED → r0 = r10.length;
+    // USED → r0 = param1.length;
     // CODE → addr: 30 | <LoadConstZero>: <Reg8: 9>
     // USED → r9 = 0;
     // CODE → addr: 32 | <Less>: <Reg8: 2, Reg8: 9, Reg8: 0>
-    // USED → r2 = 0 < r10.length;
+    // USED → r2 = 0 < param1.length;
     // CODE → addr: 36 | <LoadConstUInt8>: <Reg8: 8, UInt8: 1>
     // USED → r8 = 1;
     // CODE → addr: 39 | <LoadConstString>: <Reg8: 7, string_id: 4874>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught' (String)
@@ -33,8 +33,7 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr: 55 | <LoadConstZero>: <Reg8: 0>
     r0 = 0
     // CODE → addr: 57 | <JmpFalse>: <Addr8: 111, Reg8: 2>  # Address: 000000a8
-    // → r10 = param1
-    if (!(0 < r10.length)) goto label_168;
+    if (!(0 < param1.length)) goto label_168;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 60 | <Mov>: <Reg8: 2, Reg8: 4>
     r2 = 0
@@ -87,13 +86,13 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:149 | <AddN>: <Reg8: 4, Reg8: 2, Reg8: 8>
     r4 = r2 + 1
     // CODE → addr:153 | <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-    r2 = r10.length
+    r2 = param1.length
     // CODE → addr:158 | <Mov>: <Reg8: 3, Reg8: 12>
     // USED → r3 = r11 + 1;
     // CODE → addr:161 | <Mov>: <Reg8: 0, Reg8: 3>
     r0 = r11 + 1
     // CODE → addr:164 | <JLess>: <Addr8: -104, Reg8: 4, Reg8: 2>  # Address: 0000003c
-    // → r2 = r10.length; r4 = r2 + 1
+    // → r2 = param1.length; r4 = r2 + 1
     if (r4 < r2) goto label_60;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr:168 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

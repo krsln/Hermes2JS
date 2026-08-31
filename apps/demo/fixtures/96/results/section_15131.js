@@ -13,12 +13,12 @@ function function_15131(param1, param2, param3) {
     // CODE → addr: 16 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 0>
     // USED → r0 = r2[0];
     // CODE → addr: 20 | <GetByVal>: <Reg8: 3, Reg8: 0, Reg8: 5>
-    r3 = r2[0][r5]
+    r3 = r2[0][param3]
     // CODE → addr: 24 | <LoadConstString>: <Reg8: 0, string_id: 7163>  # String: '' (Identifier)
     r0 = ""
     // CODE → addr: 28 | <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;
-    // → r3 = r2[0][r5]
+    // → r3 = r2[0][param3]
     if (r3 !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 34 | <GetGlobalObject>: <Reg8: 3>
@@ -28,7 +28,7 @@ function function_15131(param1, param2, param3) {
         // CODE → addr: 42 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
         // USED → r2 = r2[0];
         // CODE → addr: 46 | <GetByVal>: <Reg8: 2, Reg8: 2, Reg8: 5>
-        r2 = r2[0][r5]
+        r2 = r2[0][param3]
         // CODE → addr: 50 | <Call2>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 2>
         r0 = String.call(r4, r2)
     }

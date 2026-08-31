@@ -33,11 +33,11 @@ async function* anon_15185(param1) {
         // CODE → addr: 38 | <LoadParam>: <Reg8: 6, UInt8: 1>
         r6 = param1
         // CODE → addr: 41 | <IteratorBegin>: <Reg8: 4, Reg8: 6>
-        r4 = GetIterator(r6)
+        r4 = GetIterator(param1)
         // CODE → addr: 44 | <GetEnvironment>: <Reg8: 5, UInt8: 2>
         r5 = getEnvironment(2)
         // LOOP → START (for_of)
-        for (const r9 of r6) {
+        for (const r9 of param1) {
             // ──────────────── Block 2 ──────────────── 
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 58 | <Mov>: <Reg8: 8, Reg8: 1>
