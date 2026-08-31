@@ -43,6 +43,41 @@ function tryCatchInsideLoopTest(param1) {
                 r2 = 0
                 // CODE → addr: 64 | <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
                 r2 = param1[r2]
+                // → r2 = param1[r2]
+                if (r2 < 0) {
+                    // ──────────────── Block 3 ──────────────── 
+                    // CODE → addr:101 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)
+                    // USED → r9 = Error;
+                    // CODE → addr:107 | <GetByIdShort>: <Reg8: 2, Reg8: 9, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
+                    // USED → r2 = Error.prototype;
+                    // CODE → addr:112 | <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 9>
+                    // USED → r3 = CreateThis(r2);
+                    // CODE → addr:116 | <LoadConstString>: <Reg8: 12, string_id: 839>  # String: 'negative value' (String)
+                    // USED → r12 = "negative value";
+                    // CODE → addr:120 | <Mov>: <Reg8: 13, Reg8: 3>
+                    // USED → r13 = CreateThis(r2);
+                    // CODE → addr:123 | <Construct>: <Reg8: 2, Reg8: 9, UInt8: 2>
+                    // USED → r2 = new Error("negative value");
+                    // CODE → addr:127 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
+                    // USED → r2 = new Error("negative value");
+                    // CODE → addr:131 | <Throw>: <Reg8: 2>
+                    throw new Error("negative value");
+                }
+                // ──────────────── Block 2 ──────────────── 
+                // CODE → addr: 72 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r9 = console;
+                // CODE → addr: 78 | <GetByIdShort>: <Reg8: 3, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r3 = console.log;
+                // CODE → addr: 83 | <Mov>: <Reg8: 10, Reg8: 7>
+                // USED → r10 = param1;
+                // CODE → addr: 86 | <Mov>: <Reg8: 2, Reg8: 8>
+                r2 = 0
+                // CODE → addr: 89 | <GetByVal>: <Reg8: 2, Reg8: 10, Reg8: 2>
+                r2 = param1[r2]
+                // CODE → addr: 93 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 9, Reg8: 4, Reg8: 2>
+                console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r2)
+                // CODE → addr: 99 | <Jmp>: <Addr8: 59>  # Address: 0000009e
+                goto label_158;
             } catch (caughtException) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr:135 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -56,40 +91,6 @@ function tryCatchInsideLoopTest(param1) {
                 // CODE → addr:155 | <Inc>: <Reg8: 0, Reg8: 2>
                 r0 = r2 + 1
             }
-            if (r2 < 0) {
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → addr:101 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)
-                // USED → r9 = Error;
-                // CODE → addr:107 | <GetByIdShort>: <Reg8: 2, Reg8: 9, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
-                // USED → r2 = Error.prototype;
-                // CODE → addr:112 | <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 9>
-                // USED → r3 = CreateThis(r2);
-                // CODE → addr:116 | <LoadConstString>: <Reg8: 12, string_id: 839>  # String: 'negative value' (String)
-                // USED → r12 = "negative value";
-                // CODE → addr:120 | <Mov>: <Reg8: 13, Reg8: 3>
-                // USED → r13 = CreateThis(r2);
-                // CODE → addr:123 | <Construct>: <Reg8: 2, Reg8: 9, UInt8: 2>
-                // USED → r2 = new Error("negative value");
-                // CODE → addr:127 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-                // USED → r2 = new Error("negative value");
-                // CODE → addr:131 | <Throw>: <Reg8: 2>
-                throw new Error("negative value");
-            }
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 72 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r9 = console;
-            // CODE → addr: 78 | <GetByIdShort>: <Reg8: 3, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r3 = console.log;
-            // CODE → addr: 83 | <Mov>: <Reg8: 10, Reg8: 7>
-            // USED → r10 = param1;
-            // CODE → addr: 86 | <Mov>: <Reg8: 2, Reg8: 8>
-            r2 = 0
-            // CODE → addr: 89 | <GetByVal>: <Reg8: 2, Reg8: 10, Reg8: 2>
-            r2 = param1[r2]
-            // CODE → addr: 93 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 9, Reg8: 4, Reg8: 2>
-            console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r2)
-            // CODE → addr: 99 | <Jmp>: <Addr8: 59>  # Address: 0000009e
-            goto label_158;
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr:158 | <Mov>: <Reg8: 2, Reg8: 8>
             r2 = 0

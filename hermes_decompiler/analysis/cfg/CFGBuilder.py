@@ -81,6 +81,8 @@ class CFGBuilder:
 
     def _resolve_exception_handlers(self, raw_handlers: list[dict]) -> list[dict]:
 
+        raw_handlers = self._merge_fragmented_handlers(raw_handlers)
+
         resolved = []
 
         sorted_blocks = sorted(self.cfg.blocks, key=lambda b: b.address)
@@ -123,6 +125,69 @@ class CFGBuilder:
             })
 
         return resolved
+
+    @staticmethod
+    def _merge_fragmented_handlers(raw_handlers: list[dict]) -> list[dict]:
+        """Merge exception-handler ranges that are really one try body
+        split into contiguous fragments, rather than one [start, end)
+        entry covering the whole protected region.
+
+        This happens whenever the try body's own linear instruction
+        stream is interrupted by a jump - most commonly the success
+        path's unconditional `Jmp` skipping over a conditional `throw`
+        (see e.g. tryCatchInsideLoopTest: `if (items[i] < 0) throw ...`
+        followed by `console.log(...)`, where the success path jumps
+        past the throw-construction code straight to the loop
+        increment). Hermes records this as two separate table entries -
+        [start1, end1) for the code before the Jmp, [start2, end2) for
+        the code after it - both targeting the same catch/finally
+        block, with a small gap between end1 and start2 covering only
+        the (unprotected, can't-itself-throw) Jmp instruction.
+
+        Left unmerged, `TryStructurer` processes each fragment as an
+        independent handler. By the time the second one is built, its
+        `handler_block` has already been spliced into the TryRegion the
+        first one built, and structuring it as a second, separate
+        try/catch against an already-relocated target block produces
+        scrambled output (catch content ordered before the try body,
+        orphaned/dead tail code, stray gotos).
+
+        Two entries are merged when they target the same handler block,
+        are adjacent or overlapping in address order, and nothing else
+        in the exception table has a start or end address strictly
+        inside the gap between them - i.e. nothing else considers that
+        gap a boundary of its own. That last condition is what keeps
+        this from merging two genuinely distinct protected regions that
+        simply happen to share a handler.
+        """
+        if not raw_handlers:
+            return raw_handlers
+
+        ordered = sorted(raw_handlers, key=lambda h: (h["start"], h["end"]))
+
+        boundaries = {h["start"] for h in ordered} | {h["end"] for h in ordered}
+
+        merged: list[dict] = [dict(ordered[0])]
+
+        for handler in ordered[1:]:
+            last = merged[-1]
+
+            gap_is_clear = not any(
+                last["end"] < addr < handler["start"]
+                for addr in boundaries
+            )
+
+            if (
+                    handler["target"] == last["target"]
+                    and handler["start"] >= last["end"]
+                    and gap_is_clear
+            ):
+                last["end"] = max(last["end"], handler["end"])
+                continue
+
+            merged.append(dict(handler))
+
+        return merged
 
     def _find_leaders(self) -> set[int]:
 
