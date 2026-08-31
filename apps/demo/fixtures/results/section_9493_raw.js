@@ -17,7 +17,7 @@ function spreadObjectTest() {
     // CODE → addr: 30 | <Mov>: <Reg8: 9, Reg8: 5>
     r9 = r5
     // CODE → addr: 33 | <CallBuiltin>: <Reg8: 3, UInt8: 46, UInt8: 3>  # Built-in function: [#46 copyDataProperties]
-    r3 = copyDataProperties(r0, r1, r2)
+    r3 = copyDataProperties(r9, r8, r7)
     // CODE → addr: 37 | <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
     // USED → r0 = 3;
     // CODE → addr: 40 | <DefineOwnById>: <Reg8: 5, Reg8: 0, UInt8: 0, UInt16: 6711>
@@ -39,7 +39,7 @@ function spreadObjectTest() {
     // CODE → addr: 82 | <Mov>: <Reg8: 8, Reg8: 5>
     r8 = r5
     // CODE → addr: 85 | <CallBuiltin>: <Reg8: 5, UInt8: 46, UInt8: 4>  # Built-in function: [#46 copyDataProperties]
-    // USED → r5 = copyDataProperties(r1, r2, r3, r4);
+    // USED → r5 = copyDataProperties(r9, r8, r7, r6);
     // CODE → addr: 89 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 95 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

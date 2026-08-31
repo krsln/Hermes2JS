@@ -23,7 +23,7 @@ function create(param1) {
     // CODE → addr: 41 | <LoadConstString>: <Reg8: 7, string_id: 4299>  # String: 'Trying to call a non-function' (String)
     r7 = "Trying to call a non-function"
     // CODE → addr: 45 | <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-    r2 = throwTypeError(r0, r1)
+    r2 = throwTypeError(r7, r6)
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 49 | <LoadParam>: <Reg8: 7, UInt8: 1>
     r7 = param1

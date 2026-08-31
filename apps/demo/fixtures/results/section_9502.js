@@ -21,7 +21,7 @@ function taggedTemplateTest(param1) {
     // CODE → addr: 35 | <LoadConstUInt8>: <Reg8: 10, UInt8: 1>
     r10 = 1
     // CODE → addr: 38 | <CallBuiltin>: <Reg8: 5, UInt8: 41, UInt8: 5>  # Built-in function: [#41 getTemplateObject]
-    // USED → r5 = getTemplateObject(r0, r1, r2, r3, r4);
+    // USED → r5 = getTemplateObject(r10, r9, r8, r7, r6);
     // CODE → addr: 42 | <Mul>: <Reg8: 4, Reg8: 3, Reg8: 3>
     // USED → r4 = param1 * param1;
     // CODE → addr: 46 | <GetParentEnvironment>: <Reg8: 3, UInt8: 0>

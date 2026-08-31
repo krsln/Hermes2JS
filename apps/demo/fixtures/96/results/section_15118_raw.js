@@ -23,13 +23,13 @@ function spreadArrayTest() {
     // CODE → addr: 42 | <LoadConstZero>: <Reg8: 7>
     r7 = 0
     // CODE → addr: 44 | <CallBuiltin>: <Reg8: 7, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    r7 = arraySpread(r3, r4, r5, r6)
+    r7 = arraySpread(r9, r8, r7, r6)
     // CODE → addr: 48 | <NewArrayWithBuffer>: <Reg8: 8, UInt16: 3, UInt16: 3, UInt16: 23671>  # Array: [4, 5, 6]
     r8 = [4, 5, 6]
     // CODE → addr: 56 | <Mov>: <Reg8: 9, Reg8: 3>
     r9 = r3
     // CODE → addr: 59 | <CallBuiltin>: <Reg8: 4, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    r4 = arraySpread(r0, r1, r2, r3)
+    r4 = arraySpread(r9, r8, r7, r6)
     // CODE → addr: 63 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → addr: 69 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -47,7 +47,7 @@ function spreadArrayTest() {
     // CODE → addr: 96 | <Mov>: <Reg8: 7, Reg8: 4>
     r7 = 1
     // CODE → addr: 99 | <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    r2 = arraySpread(r-2, r-1, r0, r1)
+    r2 = arraySpread(r9, r8, r7, r6)
     // CODE → addr:103 | <LoadConstUInt8>: <Reg8: 5, UInt8: 99>
     // USED → r5 = 99;
     // CODE → addr:106 | <PutOwnByVal>: <Reg8: 6, Reg8: 5, Reg8: 2, UInt8: 1>

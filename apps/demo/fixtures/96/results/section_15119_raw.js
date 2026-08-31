@@ -17,7 +17,7 @@ function spreadObjectTest() {
     // CODE → addr: 34 | <Mov>: <Reg8: 7, Reg8: 4>
     r7 = r4
     // CODE → addr: 37 | <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 3>  # Built-in function: [#44 copyDataProperties]
-    r0 = copyDataProperties(r-3, r-2, r-1)
+    r0 = copyDataProperties(r7, r6, r5)
     // CODE → addr: 41 | <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
     // USED → r2 = 3;
     // CODE → addr: 44 | <LoadConstString>: <Reg8: 0, string_id: 7612>  # String: 'z' (Identifier)

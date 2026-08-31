@@ -22,7 +22,7 @@ function privateStaticTest() {
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
         r13 = "Trying to call a non-function"
         // CODE → addr: 45 | <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r6 = throwTypeError(r4, r5)
+        r6 = throwTypeError(r13, r12)
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 49 | <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
@@ -39,7 +39,7 @@ function privateStaticTest() {
         // CODE → addr:395 | <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
         r13 = "Cannot initialize private field twice."
         // CODE → addr:399 | <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r3 = throwTypeError(r1, r2)
+        r3 = throwTypeError(r13, r12)
     } else {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 72 | <LoadConstUndefined>: <Reg8: 1>
@@ -77,7 +77,7 @@ function privateStaticTest() {
             // CODE → addr:141 | <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
             r13 = "Trying to call a non-function"
             // CODE → addr:145 | <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-            r6 = throwTypeError(r4, r5)
+            r6 = throwTypeError(r13, r12)
         }
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr:149 | <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
@@ -92,7 +92,7 @@ function privateStaticTest() {
             // CODE → addr:387 | <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
             r13 = "Cannot initialize private field twice."
             // CODE → addr:391 | <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-            r3 = throwTypeError(r1, r2)
+            r3 = throwTypeError(r13, r12)
         } else {
             // ──────────────── Block 6 ──────────────── 
             // CODE → addr:168 | <AddOwnPrivateBySym>: <Reg8: 6, Reg8: 1, Reg8: 12>

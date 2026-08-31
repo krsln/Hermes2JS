@@ -8,7 +8,7 @@ function defaultWithRestTest() {
     // CODE → addr: 12 | <LoadConstUInt8>: <Reg8: 9, UInt8: 1>
     r9 = 1
     // CODE → addr: 15 | <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 copyRestArgs]
-    r5 = copyRestArgs(r3, r4)
+    r5 = copyRestArgs(r9, r8)
     // CODE → addr: 19 | <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
     // CODE → addr: 21 | <TryGetById>: <Reg8: 7, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

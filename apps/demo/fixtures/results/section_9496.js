@@ -88,7 +88,7 @@ function setTest() {
     // CODE → addr:170 | <Mov>: <Reg8: 9, Reg8: 3>
     r9 = new Set([1, 2, 2, 3, 3, 3])
     // CODE → addr:173 | <CallBuiltin>: <Reg8: 2, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
-    r2 = arraySpread(r-2, r-1, r0, r1)
+    r2 = arraySpread(r11, r10, r9, r8)
     // CODE → addr:177 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:183 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

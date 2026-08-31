@@ -29,9 +29,28 @@ class CallBuiltin(OpcodeHandler):
             else f"builtin_{builtin_id}/* unresolved arg */"
         )
 
+        # CallBuiltin's arguments are NOT relative to dest_reg. Per the
+        # Hermes bytecode spec, they are "found in reverse order from the
+        # end of the current frame" - i.e. they occupy the arg_count
+        # registers ending at the highest register index written so far
+        # in this function, with the first logical argument at the
+        # highest register and later arguments at lower ones (confirmed
+        # against the native builtin signatures, e.g.
+        # copyDataProperties(target, source, excludedItems) - target ends
+        # up at the topmost register). dest_reg can be small/unrelated
+        # (it's just where the return value lands), so anchoring on it -
+        # as CallDirect correctly does for its own, different, calling
+        # convention - produces wrong or even negative register indices
+        # here. `Call` (handlers/function/Call.py) already resolves the
+        # analogous case correctly; this mirrors that approach.
+        highest = max(
+            (int(r[1:]) for r in ctx.analysis.registers),
+            default=dest_reg,
+        )
+
         arguments = tuple(
             Identifier(name=f"r{reg}")
-            for reg in range(dest_reg - arg_count, dest_reg)
+            for reg in range(highest, highest - arg_count, -1)
         )
 
         expression = CallExpression(callee=callee, arguments=arguments, )

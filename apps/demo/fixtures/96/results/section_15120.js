@@ -20,8 +20,10 @@ function spreadFunctionArgsTest() {
     r7 = [1, 2, 3]
     // CODE → addr: 45 | <LoadConstZero>: <Reg8: 6>
     r6 = 0
+    // CODE → addr: 47 | <Mov>: <Reg8: 8, Reg8: 5>
+    r8 = r5
     // CODE → addr: 50 | <CallBuiltin>: <Reg8: 0, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
-    r0 = arraySpread(r-4, r-3, r-2, r-1)
+    r0 = arraySpread(r8, r7, r6, r5)
     // CODE → addr: 54 | <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → addr: 56 | <CreateClosure>: <Reg8: 8, Reg8: 0, function_id: 15121>  # Function: [#15121 sum of 19 bytes]: 4 params @ offset 0x00269ebf
@@ -33,7 +35,7 @@ function spreadFunctionArgsTest() {
     // CODE → addr: 66 | <LoadConstUndefined>: <Reg8: 6>
     r6 = undefined
     // CODE → addr: 68 | <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 4>  # Built-in function: [#47 apply]
-    // USED → r2 = apply(r-2, r-1, r0, r1);
+    // USED → r2 = apply(r8, r7, r6, r5);
     // CODE → addr: 72 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr: 77 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
