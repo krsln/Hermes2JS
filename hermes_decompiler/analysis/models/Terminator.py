@@ -5,6 +5,15 @@ from dataclasses import dataclass
 
 from hermes_decompiler.ir.expressions import Expression
 
+__all__ = [
+    "Terminator",
+    "TerminatorConditionalBranch",
+    "TerminatorJump",
+    "TerminatorReturn",
+    "TerminatorSwitch",
+    "TerminatorThrow",
+]
+
 
 class Terminator(ABC):
     """Ends a basic block."""

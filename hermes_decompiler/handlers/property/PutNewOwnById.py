@@ -49,7 +49,7 @@ class PutNewOwnById(PutById):
             return result
 
         # Normal Case
-        left = MemberExpression(receiver=obj_value, member=Identifier(name=property_name), computed=False)
+        left = MemberExpression(obj=obj_value, prop=Identifier(name=property_name), computed=False)
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)

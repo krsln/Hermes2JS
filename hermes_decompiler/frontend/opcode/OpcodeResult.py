@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from hermes_decompiler.analysis.terminators import Terminator
+from hermes_decompiler.analysis.models import Terminator
 from hermes_decompiler.ir.expressions import Expression
 from hermes_decompiler.ir.statements import Statement
 from hermes_decompiler.frontend.opcode.OpcodeEntry import OpcodeEntry

@@ -25,16 +25,11 @@ class Node(ABC):
           `eq=False` does not inherit automatically; omitting it
           silently restores structural `__eq__`/`__hash__`.
         - Implement `children` explicitly, listing only the fields
-          that are semantically child nodes (e.g. excluding raw
+          that are semantically child nodes (e.g., excluding raw
           operands or register indices).
     """
 
-    loc: SourceLocation | None = field(
-        default=None,
-        kw_only=True,
-        compare=False,
-        repr=False,
-    )
+    loc: SourceLocation | None = field(default=None, kw_only=True, compare=False, repr=False)
 
     @property
     @abstractmethod
@@ -86,24 +81,3 @@ class Node(ABC):
 
         for child in self.children:
             yield from child.walk()
-
-    def render(self) -> str:
-        """
-        TEMPORARY compatibility bridge for the legacy node hierarchy in
-        `ir/Expressions.py`, `ir/Values.py`, `ir/Statements.py`, and
-        `ir/old.py`. Those classes call `.render()` on their operands,
-        and during the handler-by-handler migration a legacy node can
-        end up holding a new-style node as an operand (e.g. a not-yet-
-        migrated handler wrapping a value produced by
-        `OpcodeHandler.get_register_value`, which now always returns
-        new-style nodes). Without this method, that mix raises
-        `AttributeError: '<NewNode>' object has no attribute 'render'`.
-
-        Delete this method once `ir/Expressions.py`, `ir/Values.py`,
-        `ir/Statements.py`, and `ir/old.py` are removed and every
-        handler produces new-style nodes exclusively.
-        """
-
-        from hermes_decompiler.backend.emit import Printer
-
-        return Printer().visit(self)

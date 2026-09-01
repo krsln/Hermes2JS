@@ -1,161 +1,166 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.analysis.loops.NaturalLoop import NaturalLoop
+
+if TYPE_CHECKING:
+    from hermes_decompiler.analysis.cfg import CFG
 
 
 class LoopAnalysis:
+    """
+    Discover and organize natural loops in a control-flow graph.
 
-    def __init__(self, cfg):
+    The analysis identifies back edges using dominator information.
+    Back edges targeting the same header are merged into a single
+    ``NaturalLoop`` instance. After all loops are discovered, the
+    analysis computes their exit blocks and nesting relationships.
+    """
+
+    def __init__(self, cfg: CFG) -> None:
+        """
+        Initialize the loop analysis.
+
+        Args:
+            cfg: The control-flow graph to analyze.
+        """
 
         self.cfg = cfg
-
-        self.back_edges = []
-
         self.loops: dict[int, NaturalLoop] = {}
 
-    def compute(self):
+    def compute(self) -> None:
+        """
+        Compute all natural loops in the control-flow graph.
 
-        tree = self.cfg.dominator_tree
+        The analysis proceeds in three phases:
 
+        1. Identify back edges using dominator relationships.
+        2. Merge back edges with the same header into natural loops.
+        3. Compute loop exits and loop nesting relationships.
+        """
+
+        dominator_tree = self.cfg.dominator_tree
         self.loops.clear()
 
         for tail in self.cfg.blocks:
-
             for header in tail.successors:
-
-                if not tree.dominates(header, tail):
-                    continue
-
-                self._merge_back_edge(header, tail)
+                if dominator_tree.dominates(header, tail):
+                    self._merge_back_edge(header, tail)
 
         self._compute_exits()
         self._compute_nesting()
 
-        # print("\n=== Natural Loops ===")
-        # for loop in sorted(
-        #         self.loops.values(),
-        #         key=lambda l: l.header.id
-        # ):
-        #     print(
-        #         f"header={loop.header.id} "
-        #         f"parent={loop.parent.header.id if loop.parent else None} "
-        #         f"children={[c.header.id for c in loop.children]} "
-        #         f"members={[b.id for b in loop.blocks]}"
-        #     )
+    def _merge_back_edge(self, header: BasicBlock, tail: BasicBlock) -> None:
+        """
+        Merge a back edge into the natural loop for its header.
 
-    def _merge_back_edge(
-            self,
-            header,
-            tail,
-    ):
+        Multiple back edges may target the same loop header. Their
+        discovered members are merged into one ``NaturalLoop``.
+        """
 
         loop = self.loops.get(header.id)
 
         if loop is None:
             loop = NaturalLoop(header=header)
-
             self.loops[header.id] = loop
 
         loop.latches.add(tail)
+        loop.members.update(self._discover_members(header, tail))
 
-        members = self._discover_members(header, tail)
+    @staticmethod
+    def _discover_members(header: BasicBlock, tail: BasicBlock) -> set[BasicBlock]:
+        """
+        Discover the natural-loop members induced by a back edge.
 
-        loop.members.update(members)
+        Starting from the back-edge tail, the algorithm walks
+        predecessor edges backwards until reaching the loop header.
+        The header itself is included in the result but is not expanded
+        through, preventing predecessors outside the loop from being
+        included.
 
-    def _discover_members(
-            self,
-            header,
-            tail,
-    ):
+        A self-loop is handled as a special case because its header and
+        tail are the same block. Expanding predecessors from that block
+        could incorrectly pull external predecessor blocks into the
+        loop.
+
+        Args:
+            header: The target of the back edge and loop entry block.
+            tail: The source of the back edge.
+
+        Returns:
+            The set of basic blocks belonging to the natural loop
+            induced by this back edge.
+        """
 
         if header is tail:
-            # Single-block self-loop (the block's own back edge targets
-            # itself - e.g. a single-statement `do { ... } while (cond)`
-            # entirely contained in one BasicBlock). The general walk
-            # below assumes header != tail and relies on stopping the
-            # backward traversal exactly AT header (never pushing
-            # header's own external predecessors onto the stack) to
-            # keep the walk from escaping the loop. When header IS
-            # tail, that stop condition (`pred != header`) never
-            # actually triggers for header's real external
-            # predecessors (e.g. the block that falls into the loop
-            # from before it) - they'd get pulled in as false loop
-            # members and the walk would keep expanding backward
-            # through them. A self-loop's body is exactly the one
-            # block; no walk is needed at all.
             return {header}
 
-        members = {header, tail}
-
-        stack = [tail]
+        members: set[BasicBlock] = {header, tail}
+        stack: list[BasicBlock] = [tail]
 
         while stack:
-
             block = stack.pop()
 
-            for pred in block.predecessors:
-
-                if pred in members:
+            for predecessor in block.predecessors:
+                if predecessor in members:
                     continue
 
-                members.add(pred)
+                members.add(predecessor)
 
-                if pred != header:
-                    stack.append(pred)
+                if predecessor is not header:
+                    stack.append(predecessor)
 
         return members
 
-    def _compute_exits(self):
+    def _compute_exits(self) -> None:
+        """
+        Compute all direct exit targets for each discovered loop.
+
+        A block is an exit target when it is the successor of a loop
+        member but does not itself belong to the same loop.
+        """
 
         for loop in self.loops.values():
+            loop.exits.clear()
 
             for block in loop.members:
+                for successor in block.successors:
+                    if successor not in loop.members:
+                        loop.exits.add(successor)
 
-                for succ in block.successors:
+    def _compute_nesting(self) -> None:
+        """
+        Compute immediate parent-child relationships between loops.
 
-                    if succ not in loop.members:
-                        loop.exits.add(succ)
-
-    def _compute_nesting(self):
+        A loop is nested inside another loop when all of its members are
+        contained in the other loop, and the two loops do not have the
+        same member set. The smallest enclosing loop becomes the direct
+        parent.
+        """
 
         loops = list(self.loops.values())
 
-        #
-        # önce temizle
-        #
         for loop in loops:
             loop.parent = None
             loop.children.clear()
 
-        #
-        # her loop için en küçük kapsayan parent'ı bul
-        #
         for child in loops:
+            best_parent: NaturalLoop | None = None
 
-            best_parent = None
-            best_size = None
-
-            for parent in loops:
-
-                if parent is child:
+            for candidate in loops:
+                if candidate is child:
                     continue
 
-                #
-                # child tamamen parent'ın içinde mi?
-                #
-                if not child.members.issubset(parent.members):
+                if not child.members < candidate.members:
                     continue
 
-                #
-                # kendisiyle aynı loop değil
-                #
-                if len(child.members) == len(parent.members):
-                    continue
-
-                #
-                # en küçük kapsayan parent
-                #
-                if best_parent is None or len(parent.members) < best_size:
-                    best_parent = parent
-                    best_size = len(parent.members)
+                if (
+                        best_parent is None
+                        or len(candidate.members) < len(best_parent.members)
+                ):
+                    best_parent = candidate
 
             if best_parent is not None:
                 child.parent = best_parent

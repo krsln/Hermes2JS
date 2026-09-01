@@ -58,7 +58,7 @@ class FastArrayLength(OpcodeHandler):
         dest_reg, array_reg = map(int, match.groups())
 
         array_value = self.get_register_expression(ctx.analysis, array_reg)
-        expression = MemberExpression(receiver=array_value, member=Identifier(name="length"), computed=False)
+        expression = MemberExpression(obj=array_value, prop=Identifier(name="length"), computed=False)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
@@ -83,7 +83,7 @@ class FastArrayLoad(OpcodeHandler):
 
         array_value = self.get_register_expression(ctx.analysis, array_reg)
         index_value = self.get_register_expression(ctx.analysis, index_reg)
-        expression = MemberExpression(receiver=array_value, member=index_value, computed=True)
+        expression = MemberExpression(obj=array_value, prop=index_value, computed=True)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
@@ -110,7 +110,7 @@ class FastArrayStore(OpcodeHandler):
         index_value = self.get_register_expression(ctx.analysis, index_reg)
         right = self.get_register_expression(ctx.analysis, value_reg)
 
-        left = MemberExpression(receiver=array_value, member=index_value, computed=True)
+        left = MemberExpression(obj=array_value, prop=index_value, computed=True)
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
         # No destination register: statement-only, same pattern as PutById.
@@ -138,7 +138,7 @@ class FastArrayPush(OpcodeHandler):
         array_value = self.get_register_expression(ctx.analysis, array_reg)
         value = self.get_register_expression(ctx.analysis, value_reg)
 
-        callee = MemberExpression(receiver=array_value, member=Identifier(name="push"), computed=False)
+        callee = MemberExpression(obj=array_value, prop=Identifier(name="push"), computed=False)
         expression = CallExpression(callee=callee, arguments=(value,))
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
@@ -165,7 +165,7 @@ class FastArrayAppend(OpcodeHandler):
         dest_array = self.get_register_expression(ctx.analysis, dest_array_reg)
         src_array = self.get_register_expression(ctx.analysis, src_array_reg)
 
-        callee = MemberExpression(receiver=dest_array, member=Identifier(name="push"), computed=False)
+        callee = MemberExpression(obj=dest_array, prop=Identifier(name="push"), computed=False)
         expression = CallExpression(callee=callee, arguments=(SpreadElement(argument=src_array),))
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)

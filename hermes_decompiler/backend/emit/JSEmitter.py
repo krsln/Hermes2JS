@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.models.RegionGraph import SequenceRegion
-from .Printer import Printer
+from .printer import Printer
 
 
 class JSEmitter:

@@ -50,25 +50,27 @@ class HandlerLoader:
     @classmethod
     def load(cls, *, strict: bool = True) -> HandlerLoadReport:
         """
-        Import every opcode handler module found under the handlers
+        Import every opcode handler module found under the `handlers`
         package, including modules in nested subpackages, so their
         `OpcodeHandler` subclasses register themselves.
 
-        strict:
-            - True (default): a module that fails to import is a bug,
-              not something to route around silently - a broken handler
-              module means that opcode quietly falls back to
-              `NoHandlerError` at dispatch time, with no clue why. Raises
-              `HandlerLoadError` (which carries the full report) after
-              attempting every module, so a single broken file doesn't
-              hide failures in modules that would have imported fine.
-            - False: best-effort - collects failures into the returned
-              report instead of raising. Use this for tooling that wants
-              to inspect *which* handlers are broken (e.g. a `--check`
-              CLI command) without crashing on the first one.
+        Args:
+            strict: If True (default), a module that fails to import is
+                treated as a bug, not something to route around silently -
+                a broken handler module means that opcode quietly falls
+                back to `NoHandlerError` at dispatch time, with no clue
+                why. Raises `HandlerLoadError` (which carries the full
+                report) after attempting every module, so a single broken
+                file doesn't hide failures in modules that would have
+                imported fine. If False, loading is best-effort: failures
+                are collected into the returned report instead of raising.
+                Use this for tooling that wants to inspect *which*
+                handlers are broken (e.g., a `--check` CLI command)
+                without crashing on the first one.
 
-        Returns a `HandlerLoadReport` either way (when strict=True and
-        nothing failed, or after inspecting the report when strict=False).
+        Returns:
+            A `HandlerLoadReport` either way (when strict=True and nothing
+            failed, or after inspecting the report when strict=False).
         """
         package = importlib.import_module(__package__)
         report = HandlerLoadReport()

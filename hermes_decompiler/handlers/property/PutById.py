@@ -32,8 +32,8 @@ class PutById(OpcodeHandler):
         property_name = (ctx.entry.identifier_name or f"string_{string_id}")
 
         left = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=Identifier(name=property_name),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=Identifier(name=property_name),
             computed=False,
         )
 

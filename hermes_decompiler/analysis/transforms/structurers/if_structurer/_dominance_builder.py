@@ -1,84 +1,68 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.models import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.analysis.models.regions import (
     IfRegion,
     LoopRegion,
     SequenceRegion,
     TryRegion,
 )
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorJump
-from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
+from hermes_decompiler.analysis.transforms.shared import negate_condition, is_loop_guard_shaped
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
-
 from ._predicates import is_backward_branch, representative_block
 
 logger = get_logger(__name__)
 
 
 class _DominanceIfBuilder(RegionStructurer):
-    """
-    Converts BasicBlocks terminated by a ConditionalBranch into
-    structured IfRegions.
+    """Converts BasicBlocks ending in a ConditionalBranch into IfRegions.
 
-    Two CFG patterns are recognized:
+    Two CFG shapes are recognized:
 
-        1. No else
+    1. No else::
 
-               if (C) goto MERGE;
-               THEN
-               MERGE:
+           if (C) goto MERGE;
+           THEN
+           MERGE:
 
-           becomes
+       becomes::
 
-               if (!C) {
-                   THEN
-               }
+           if (!C) { THEN }
 
-        2. If / Else
+    2. If/else::
 
-               if (C) goto ELSE;
-               THEN
-               goto MERGE;
-
-               ELSE:
+           if (C) goto ELSE;
+           THEN
+           goto MERGE;
+           ELSE:
                ELSE_BODY
+           MERGE:
 
-               MERGE:
+       becomes::
 
-           becomes
+           if (C) { ELSE_BODY } else { THEN }
 
-               if (C) {
-                   ELSE_BODY
-               } else {
-                   THEN
-               }
+    Loop header blocks are excluded - their ConditionalBranch is
+    consumed later by LoopConditionExtractor when building
+    while/do-while regions.
 
-    Loop header blocks are excluded because their ConditionalBranch is
-    consumed later by LoopConditionExtractor when building while/do-while
-    regions.
+    then/else membership is decided by dominance (see `_convert`), not
+    by position in `region.children`, so else-if chains and any block
+    layout the compiler chose are handled without special-casing.
 
-    Both patterns generalize automatically to `else if` chains and to
-    any physical block layout the compiler chose: `then`/`else`
-    membership is decided by dominance (see `_convert`), not by
-    position in `region.children`, so nested tests, interleaved
-    sibling statements, or an else-target placed far from its "then"
-    counterpart are all handled without special-casing - each level of
-    the chain just becomes its own nested IfRegion once this pass
-    revisits `region.children` after the outer one converts.
-
-    Purely structural: this class only decides *which* blocks become
-    `then`/`else` of a new `IfRegion` and splices the tree accordingly.
-    It never rewrites a condition's shape (`&&`/`||` folding, cascade
-    recovery) - that is `_CompoundConditionFolder`'s job, and it always
-    runs after this builder has finished (see `IfStructurer.run`).
+    Purely structural: only decides which blocks become then/else of a
+    new IfRegion and splices the tree accordingly. Condition-shape
+    rewrites (`&&`/`||` folding, cascade recovery) are
+    `_CompoundConditionFolder`'s job and always run after this builder
+    (see `IfStructurer.run`).
     """
 
     def __init__(self, graph, cfg):
         super().__init__(graph, cfg)
 
-        self._address_to_block = {
+        self._address_to_block: dict[int, BasicBlock] = {
             block.address: block
             for block in cfg.blocks
         }
@@ -86,17 +70,17 @@ class _DominanceIfBuilder(RegionStructurer):
     # -------------------------------------------------------------
 
     def run(self) -> None:
+        """Structure the tree, then re-sweep for residual branches.
+
+        A second sweep (not a fixed-point loop) is required: the first
+        pass can leave a freshly created else-arm's own residual
+        branch unconverted, since that branch didn't exist yet when
+        the sweep reached it. One extra sweep always catches it, since
+        at most one new residual is introduced per level of `&&`/`||`
+        nesting; deeper nesting is folded afterward by
+        `_CompoundConditionFolder`, not built fresh here.
+        """
         self._visit(self.graph.root, exclude=frozenset())
-        # Re-structure any residual ConditionalBranches that live
-        # inside already-built IfRegion bodies (common after the first
-        # pass leaves a short-circuit test in the else arm of `a && b`).
-        # Run twice, not to a fixed point: a single sweep can leave a
-        # freshly-created else-arm's own residual branch unconverted
-        # since that branch didn't exist yet when the sweep reached
-        # it; a second sweep always catches it because at most one new
-        # residual can be introduced per level of `&&`/`||` nesting,
-        # and nesting depth beyond two is folded by
-        # `_CompoundConditionFolder` afterwards, not built fresh here.
         self._visit(self.graph.root, exclude=frozenset())
         self.dump_region_tree_if_debug(type(self).__name__)
 
@@ -105,6 +89,7 @@ class _DominanceIfBuilder(RegionStructurer):
     # -------------------------------------------------------------
 
     def _visit(self, region, exclude: frozenset):
+        """Recursively structure conditional blocks throughout region."""
 
         if isinstance(region, SequenceRegion):
             self._structure_sequence(region, exclude)
@@ -117,7 +102,7 @@ class _DominanceIfBuilder(RegionStructurer):
         if isinstance(region, LoopRegion):
             exclude = (
                 frozenset({region.header_block})
-                if self._is_loop_guard_shaped(region.header_block, region)
+                if is_loop_guard_shaped(region.header_block, region)
                 else frozenset()
             )
             self._visit(region.body, exclude)
@@ -134,11 +119,13 @@ class _DominanceIfBuilder(RegionStructurer):
         if isinstance(region, TryRegion):
             self._visit(region.try_body, frozenset())
 
-            if region.catch:
-                self._visit(region.catch.body, frozenset())
+            region_catch = region.catch
+            if region_catch is not None:
+                self._visit(region_catch.body, frozenset())
 
-            if region.finally_:
-                self._visit(region.finally_.body, frozenset())
+            region_finally = region.finally_
+            if region_finally is not None:
+                self._visit(region_finally.body, frozenset())
 
             return
 
@@ -146,58 +133,17 @@ class _DominanceIfBuilder(RegionStructurer):
             self._visit(region.body, frozenset())
 
     # -------------------------------------------------------------
-
-    @staticmethod
-    def _is_loop_guard_shaped(header: BasicBlock, loop_region) -> bool:
-        """
-        True iff `header`'s own terminator is plausibly the loop's
-        continuation test - i.e. it's a conditional branch where at
-        least one outgoing edge actually LEAVES the loop
-        (`loop_region.exits`, populated by `LoopAnalysis`).
-
-        `LoopStructurer` picks a loop's header purely by CFG dominance
-        (the natural loop's unique entry block) - that says nothing
-        about whether the header's OWN branch is the loop's
-        continuation test. It only is for a top-tested `while`; for a
-        bottom-tested `do-while` (or any loop whose real guard lives at
-        the latch), the header can hold an entirely ordinary in-body
-        `if` whose both edges stay inside the loop. Excluding such a
-        header from `_structure_sequence` unconditionally (the old
-        behavior) forces that ordinary if through
-        `_absorb_residual_conditional`'s crude "wrap everything
-        remaining, unconditionally" fallback instead of a proper
-        dominance-based then/else split - which, for a header whose
-        two arms don't include the loop's own increment/latch code,
-        can silently skip code (e.g. the increment) on one arm. See
-        `LoopConditionExtractor`, which performs the equivalent
-        header-vs-latch guard check for *building* the while/do-while
-        shape; this must agree with it, since a header this function
-        says isn't guard-shaped is exactly a header
-        `LoopConditionExtractor` will also skip when looking for the
-        loop's condition.
-        """
-        if not isinstance(header.terminator, TerminatorConditionalBranch):
-            return False
-
-        exits = set(loop_region.exits)
-
-        return any(successor in exits for successor in header.successors)
-
-    # -------------------------------------------------------------
     # Sequence conversion
     # -------------------------------------------------------------
 
     def _structure_sequence(self, region: SequenceRegion, exclude: frozenset):
-        """
-        Repeatedly find and convert the first (leftmost) eligible
-        conditional block directly in `region.children`, restarting
-        after each conversion since the list is mutated in place.
+        """Convert eligible conditional blocks in region.children.
 
-        Blocks where `_convert` bails out (returns `False` - e.g. no
-        fallthrough successor, or an unexpected block ordering) are
-        added to `failed` and never retried: without this, `_convert`
-        leaves such a block completely unchanged, so the next search
-        would find the exact same candidate again and loop forever.
+        Repeatedly converts the leftmost eligible block, restarting
+        after each conversion since the list is mutated in place.
+        Blocks where `_convert` bails out are tracked in `failed` and
+        never retried, since `_convert` leaves them unchanged and the
+        next search would otherwise find the same candidate forever.
         """
 
         failed: set = set()
@@ -214,7 +160,9 @@ class _DominanceIfBuilder(RegionStructurer):
 
     # -------------------------------------------------------------
 
-    def _find_candidate(self, region: SequenceRegion, exclude: frozenset) -> BasicBlock | None:
+    @staticmethod
+    def _find_candidate(region: SequenceRegion, exclude: frozenset) -> BasicBlock | None:
+        """Return the first convertible conditional block, or None."""
 
         for item in region.children:
 
@@ -228,19 +176,10 @@ class _DominanceIfBuilder(RegionStructurer):
                 continue
 
             if is_backward_branch(item):
-                # A conditional branch whose target address is <= its
-                # own block's address is always loop machinery (a
-                # guard or continue-test), never a genuine forward
-                # if/goto-merge residual - the same criterion
-                # ShortCircuitConditionMerger already relies on for
-                # the identical reason. `_convert`'s dominance-based
-                # classification has no concept of "this is really a
-                # back-edge"; it would try to treat the loop's own
-                # prior iteration content as an "else" arm reachable
-                # through this "goto", corrupting the loop. Must be
-                # left completely untouched for LoopConditionExtractor
-                # (which runs much later, in region_passes) to
-                # recognize as the loop's actual guard.
+                # Loop machinery (guard/continue test), never a
+                # genuine forward if/goto-merge residual. Must stay
+                # untouched here so LoopConditionExtractor (runs later,
+                # in region_passes) can recognize it as the loop guard.
                 continue
 
             return item
@@ -250,70 +189,97 @@ class _DominanceIfBuilder(RegionStructurer):
     # -------------------------------------------------------------
 
     def _convert(self, region: SequenceRegion, block: BasicBlock) -> bool:
-        """
-        Returns True if `block` was converted into an IfRegion, False
-        if it was left untouched (see `_structure_sequence` for why the
-        return value matters).
+        """Try to convert `block` into an IfRegion; return success.
 
-        Classifies every item after `block` by DOMINANCE rather than
-        physical list position: an item belongs to the "then" side iff
-        it's dominated by the fallthrough block (`then_root`), and to
-        the "else" side iff dominated by the branch target
-        (`else_root`) - regardless of how the compiler physically
-        interleaved the two branches' blocks in the flat sequence, and
-        regardless of whether `merge_block` happens to sit before or
-        after `else_root` in that sequence. The old adjacency-based
-        version required `goto_block` to be the literal next item after
-        "then" ended, which broke for else-if chains and any layout
-        where intervening not-yet-structured blocks (or even an
-        unrelated sibling statement) sat between "then" and "else".
-
-        Dominance also subsumes the single-entry check this class used
-        to run separately: an item with a predecessor outside its
-        claimed side's dominated subtree simply fails the `dominates()`
-        test below and this candidate correctly bails.
+        Classifies every item after `block` by dominance rather than
+        list position: an item is "then" iff dominated by the
+        fallthrough block, and "else" iff dominated by the branch
+        target - regardless of how the compiler interleaved the two
+        arms in the flat sequence, or where `merge_block` sits. This
+        also subsumes the single-entry check: an item with a
+        predecessor outside its claimed side simply fails the
+        `dominates()` test below and the candidate correctly bails.
         """
 
         branch = block.terminator
         assert isinstance(branch, TerminatorConditionalBranch)
 
         if self.cfg.dominator_tree is None:
-            # Can't safely classify anything without it - every caller
-            # in this codebase computes it before structuring runs.
+            # Dominator tree must be precomputed by the caller before
+            # structuring runs; nothing can be safely classified without it.
             return False
 
         block_index = region.children.index(block)
         then_start = block_index + 1
 
         if then_start >= len(region.children):
-            # No fallthrough successor at all - can't structure safely.
+            # No fallthrough successor - can't structure safely.
             return False
 
         then_root = region.children[then_start]
         then_entry = representative_block(then_root)
 
-        merge_block = None
+        merge_block: BasicBlock | None = None
 
         if self.cfg.post_dominator_tree is not None:
             merge_block = self.cfg.post_dominator_tree.immediate_post_dominator(block)
 
         goto_block = self._address_to_block.get(branch.target)
 
-        has_else = (
-                goto_block is not None
-                and goto_block is not merge_block
-        )
+        if merge_block is None and goto_block is not None and not isinstance(then_root, BasicBlock):
+            # Post-dominance can legitimately come back empty when the
+            # fallthrough side contains its own internal dead-end with
+            # no CFG successor - most commonly a raw, not-yet-structured
+            # `throw` inside a loop (IfStructurer runs before
+            # TryStructurer, so a try/catch nested in the loop hasn't
+            # been recognized yet - see
+            # tryCatchInsideLoopTest/section_15085's own zero-trip loop
+            # guard: "if (!(0 < items.length)) { skip } else { for
+            # (...) { try { ...; if (x<0) throw ...; } catch {...} } }").
+            # That dead-end being unreachable from the exit doesn't
+            # mean goto_block ISN'T still the genuine shared
+            # continuation for every path that DOESN'T hit it - check
+            # plain forward reachability instead, which only needs ONE
+            # path to confirm the connection, unlike post-dominance
+            # (which correctly, for its own stricter purpose, requires
+            # EVERY path to agree).
+            #
+            # Deliberately restricted to `then_root` already being a
+            # structured Region (a LoopRegion here, but any Region
+            # qualifies), NOT a bare BasicBlock: a raw block's own
+            # pending conditional branch can ALSO directly reach
+            # `goto_block` via its OWN alternate arm - reachable, but
+            # not because it's a shared merge point, only because it's
+            # one option among several a still-unstructured comparison
+            # chain could take (see switchTest/section_15056's `case 3:
+            # case 4:` fallthrough chain, whose own cascading
+            # `if (3!==x) { if (4!==x) {...} }` shape relies on
+            # `has_else=True` at EVERY link for SwitchStructurer to
+            # recognize it afterward - this fallback firing there
+            # collapses that chain into a differently-shaped, still
+            # correct but no-longer-recognizable nested if/else).
+            # `representative_block`'s own single-block value is what
+            # would get reached via `then_root.terminator`, not some
+            # separate, already-resolved "the region eventually exits
+            # here" edge the way a Region's own back-edge/break
+            # machinery provides - so the same reachability check
+            # means something entirely different (and unreliable) for
+            # it.
+            if self._is_reachable(then_entry, goto_block):
+                merge_block = goto_block
 
-        else_root = None
+        has_else = goto_block is not merge_block and goto_block is not None
+
+        # else_root = None
         else_entry = None
 
-        if has_else:
+        if has_else and goto_block is not None:
 
             else_root = self.graph.find_covering_item(region, goto_block)
 
             if else_root is None or else_root is then_root:
-                # goto target isn't reachable as a distinct sibling in
-                # this region - bail rather than guess.
+                # goto target isn't a distinct sibling in this region -
+                # bail rather than guess.
                 return False
 
             else_entry = representative_block(else_root)
@@ -348,58 +314,31 @@ class _DominanceIfBuilder(RegionStructurer):
                 else_items.append(item)
 
             else:
-                # Neither side dominates this item. This is NOT
-                # necessarily an unexpected join we can't account for -
-                # it's the exact defining property of a true merge
-                # point: something reachable from BOTH arms cannot
-                # belong to only one of them. `merge_block` (the raw
-                # CFG's post-dominator of `block`) is only a heuristic
-                # shortcut for finding this boundary in advance; it can
-                # legitimately fail to equal this item when some OTHER
-                # edge leaving one arm bypasses the merge entirely on
-                # the raw CFG - most commonly a `break` (or any other
-                # loop-exit edge) that a prior pass has already carved
-                # out into its own region. That bypass edge is real for
-                # raw post-dominance purposes but no longer relevant to
-                # how this if/else should be shaped: the arm containing
-                # the break still legitimately ends there, and
-                # everything from here on is unambiguously "after the
-                # if/else", exactly like hitting `merge_block` would
-                # have signaled.
-                #
-                # Only safe once at least one item is already
-                # classified on the required side(s) below - guaranteed
-                # here since `then_root` itself (the loop's very first
-                # iteration) always self-dominates and is always
-                # appended to `then_items` before this branch can ever
-                # be reached.
+                # Neither side dominates - this is the true merge
+                # point. `merge_block` is only a heuristic shortcut for
+                # finding it in advance and can legitimately differ,
+                # e.g., when a break (or other loop-exit edge) already
+                # carved out into its own region bypasses the merge on
+                # the raw CFG. Safe to stop here regardless, since
+                # `then_root` always self-dominates and is guaranteed
+                # to already be in `then_items` by this point.
                 boundary = index
                 break
 
             index += 1
 
         if has_else and not else_items:
-            # else_root dominates itself, so it must have been
-            # classified above - empty means something upstream is
+            # else_root dominates itself and must have been classified
+            # above; empty here means something upstream is
             # inconsistent. Bail rather than build a broken else.
             return False
 
-        # Falling out of a `{ }` block already continues at whatever
-        # comes next - which, by construction, IS `merge_block` (that's
-        # what bounded this classification loop above). So if the last
-        # block on either side ends in a plain unconditional jump
-        # *specifically to merge_block*, that jump is exactly the
-        # redundant "goto past the if/else" the source compiled away
-        # into block-scoping; it must be consumed here, or it prints as
-        # a literal, confusing `goto label_N;` as the last line of an
-        # otherwise clean branch body.
-        #
-        # Deliberately narrow: only strips a jump whose target is
-        # *this* merge_block, on the branch's *last* block. A jump to
-        # anywhere else (e.g. genuine cross-branch shared/tail-merged
-        # code) is left completely alone - that's a different, harder
-        # problem (labeled break/continue - see the roadmap's Faz 4),
-        # not something to paper over here.
+        # A trailing unconditional jump to merge_block is the
+        # compiled-away "goto past the if/else" and would otherwise
+        # print as a confusing literal `goto label_N;`. Only a jump to
+        # *this* merge_block, on the branch's last block, is stripped;
+        # jumps elsewhere (genuine tail-merged code) are left alone -
+        # that's labeled break/continue support, not handled here.
         if merge_block is not None:
             self._strip_trailing_jump_to(then_items, merge_block)
             if has_else:
@@ -411,7 +350,7 @@ class _DominanceIfBuilder(RegionStructurer):
         then_body = SequenceRegion()
         else_body = SequenceRegion() if has_else else None
 
-        if has_else:
+        if has_else and else_body is not None:
 
             self.graph.transfer(then_items, else_body)
             self.graph.transfer(else_items, then_body)
@@ -422,16 +361,14 @@ class _DominanceIfBuilder(RegionStructurer):
 
             self.graph.transfer(then_items, then_body)
 
-            condition = _negate_condition(branch.condition)
+            condition = negate_condition(branch.condition)
 
         if_region = IfRegion()
         if_region.condition = condition
         if_region.then_body = then_body
         if_region.else_body = else_body
 
-        #
         # The ConditionalBranch is now represented by the IfRegion.
-        #
         assert block.instructions[-1].terminator is not None
         block.instructions.pop()
         block.terminator = None
@@ -442,22 +379,49 @@ class _DominanceIfBuilder(RegionStructurer):
         return True
 
     # -------------------------------------------------------------
+    # Reachability fallback (see `_convert`'s own comment)
+    # -------------------------------------------------------------
+
+    @staticmethod
+    def _is_reachable(start: BasicBlock, target: BasicBlock) -> bool:
+        """Plain forward reachability via `.successors`, ignoring
+        anything structural (Regions) - a raw graph-edges BFS.
+
+        Used only as a fallback signal when post-dominance itself came
+        back `None` (see `_convert`) - deliberately weaker than
+        post-dominance (only needs ONE path to connect, not every
+        path), which is exactly the property needed there: a dead-end
+        on some OTHER path (e.g. an unstructured `throw`) doesn't
+        invalidate the genuine connection this path provides.
+        """
+        seen = {start}
+        stack = [start]
+
+        while stack:
+            current = stack.pop()
+
+            if current is target:
+                return True
+
+            for successor in current.successors:
+                if successor not in seen:
+                    seen.add(successor)
+                    stack.append(successor)
+
+        return False
+
+    # -------------------------------------------------------------
     # Trailing-jump cleanup
     # -------------------------------------------------------------
 
     @staticmethod
     def _strip_trailing_jump_to(items: list, merge_block: BasicBlock) -> None:
-        """
-        If `items[-1]` is a `BasicBlock` whose terminator is an
-        unconditional jump straight to `merge_block`, remove that jump
-        (instruction + terminator) - see call site for why this is safe
-        and why it's scoped this narrowly.
+        """Remove a trailing jump/branch to merge_block from items.
 
-        Also handles the common Hermes pattern where the *last*
-        instruction is still a ConditionalBranch whose *true* target is
-        the merge (empty then-body).  In that case we simply drop the
-        terminator so the later compound-condition pass can absorb the
-        surrounding IfRegion cleanly.
+        Handles both an unconditional jump straight to `merge_block`,
+        and a ConditionalBranch whose true edge targets merge_block
+        (empty then-body) - dropping the terminator lets the later
+        compound-condition pass fold the surrounding IfRegion cleanly.
         """
         if not items:
             return
@@ -468,7 +432,7 @@ class _DominanceIfBuilder(RegionStructurer):
 
         terminator = last.terminator
 
-        # Unconditional jump to merge
+        # Unconditional jump to merge.
         if isinstance(terminator, TerminatorJump):
             if terminator.target != merge_block.address:
                 return
@@ -477,7 +441,7 @@ class _DominanceIfBuilder(RegionStructurer):
             last.terminator = None
             return
 
-        # Conditional whose *true* edge is the merge (empty then)
+        # Conditional whose true edge is the merge (empty then).
         if isinstance(terminator, TerminatorConditionalBranch):
             if terminator.target != merge_block.address:
                 return

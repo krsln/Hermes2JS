@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import ClassVar, Optional
 
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
+from hermes_decompiler.analysis.models import TerminatorConditionalBranch
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import ADDR
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
@@ -67,6 +67,13 @@ class BaseJCompare(OpcodeHandler):
 
         condition = self.build_condition(lhs, rhs)
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
+        # print(
+        #     f"{ctx.entry.opcode}: "
+        #     f"address={ctx.entry.address}, "
+        #     f"offset={offset}, "
+        #     f"target={target}, "
+        #     f"calculated={ctx.entry.address + offset}"
+        # )
 
         # pure control flow: no operand value of its own
         result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)

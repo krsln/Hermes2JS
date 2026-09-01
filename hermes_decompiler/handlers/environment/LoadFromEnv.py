@@ -21,9 +21,10 @@ class LoadFromEnvironment(OpcodeHandler):
             return match
 
         dest_reg, env_reg, slot = map(int, match.groups())
+
         env = self.get_register_expression(ctx.analysis, env_reg)
 
-        expression = MemberExpression(receiver=env, member=NumericLiteral(slot), computed=True)
+        expression = MemberExpression(obj=env, prop=NumericLiteral(slot), computed=True)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)

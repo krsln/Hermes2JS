@@ -1,0 +1,52 @@
+
+=> [Function #15080 "tryLoopMultiReturnTest" of 152 bytes]: 2 params, frame size=18, strict=1, exc handler=1, debug info=0  @ offset 0x00268b3e
+  [Exception handlers: [start=0x1b, end=0x76, target=0x7e] ]
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 3, UInt8: 1>
+==> 00000003: <LoadConstUndefined>: <Reg8: 4>
+==> 00000005: <GetGlobalObject>: <Reg8: 0>
+==> 00000007: <TryGetById>: <Reg8: 5, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 0000000d: <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000012: <LoadConstString>: <Reg8: 1, string_id: 4748>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/start' (String)
+==> 00000016: <Call2>: <Reg8: 1, Reg8: 2, Reg8: 5, Reg8: 1>
+==> 0000001b: <LoadConstZero>: <Reg8: 2>
+==> 0000001d: <LoadConstZero>: <Reg8: 4>
+==> 0000001f: <LoadConstString>: <Reg8: 1, string_id: 4747>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
+==> 00000023: <Mov>: <Reg8: 6, Reg8: 4>
+==> 00000026: <Mov>: <Reg8: 5, Reg8: 3>
+==> 00000029: <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+==> 0000002e: <JGreaterEqual>: <Addr8: 76, Reg8: 6, Reg8: 5>  # Address: 0000007a
+==> 00000032: <Mov>: <Reg8: 6, Reg8: 3>
+==> 00000035: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000038: <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
+==> 0000003c: <JLess>: <Addr8: 58, Reg8: 5, Reg8: 2>  # Address: 00000076
+==> 00000040: <Mov>: <Reg8: 6, Reg8: 3>
+==> 00000043: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000046: <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
+==> 0000004a: <JStrictEqual>: <Addr8: 36, Reg8: 5, Reg8: 2>  # Address: 0000006e
+==> 0000004e: <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000054: <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 00000059: <Mov>: <Reg8: 6, Reg8: 3>
+==> 0000005c: <Mov>: <Reg8: 5, Reg8: 4>
+==> 0000005f: <GetByVal>: <Reg8: 6, Reg8: 6, Reg8: 5>
+==> 00000063: <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
+==> 00000069: <Inc>: <Reg8: 4, Reg8: 5>
+==> 0000006c: <Jmp>: <Addr8: -73>  # Address: 00000023
+==> 0000006e: <Mov>: <Reg8: 5, Reg8: 4>
+==> 00000071: <Inc>: <Reg8: 4, Reg8: 5>
+==> 00000074: <Jmp>: <Addr8: -81>  # Address: 00000023
+==> 00000076: <LoadConstTrue>: <Reg8: 1>
+==> 00000078: <Ret>: <Reg8: 1>
+==> 0000007a: <LoadConstFalse>: <Reg8: 1>
+==> 0000007c: <Ret>: <Reg8: 1>
+==> 0000007e: <Catch>: <Reg8: 1>
+==> 00000080: <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+==> 00000086: <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+==> 0000008b: <LoadConstString>: <Reg8: 0, string_id: 3905>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/catch-block' (String)
+==> 0000008f: <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+==> 00000094: <LoadConstFalse>: <Reg8: 0>
+==> 00000096: <Ret>: <Reg8: 0>
+
+

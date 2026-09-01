@@ -1,23 +1,23 @@
+"""Shared, side-effect-free helpers for the IfStructurer pass.
+
+Used by both `_DominanceIfBuilder` and `_CompoundConditionFolder`.
+Each function inspects a region/expression and returns a bool, or
+builds and returns a new expression node. - Nothing here mutates a
+region tree or touches `RegionGraph` directly, so this module stays
+safely importable from both without coupling them to each other.
+"""
+
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.models import TerminatorConditionalBranch
 from hermes_decompiler.analysis.models.regions import IfRegion, SequenceRegion
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
 from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, UnaryExpression
 
-"""
-Pure, stateless helpers shared by `_DominanceIfBuilder` and
-`_CompoundConditionFolder`. Nothing here touches `RegionGraph` or
-mutates a tree in place - every function either inspects a region/
-expression and returns a bool, or builds and returns a brand new
-expression node. Keeping this module side-effect-free is what makes
-it safely importable from both buckets without coupling them to each
-other.
-"""
-
 
 def is_empty_body(body) -> bool:
+    """Return True if the body is None or an empty SequenceRegion."""
     if body is None:
         return True
     if isinstance(body, SequenceRegion):
@@ -26,7 +26,7 @@ def is_empty_body(body) -> bool:
 
 
 def is_inert_block(item) -> bool:
-    """Empty or terminator-free BasicBlock with no statements."""
+    """Return True if the item is a BasicBlock with no real statements."""
     if not isinstance(item, BasicBlock):
         return False
     if item.terminator is not None:
@@ -42,9 +42,9 @@ def is_inert_block(item) -> bool:
 def single_if_child(body) -> IfRegion | None:
     """Return the sole meaningful IfRegion inside body, or None.
 
-    Accepts either a bare IfRegion or a SequenceRegion whose only
-    non-inert child is an IfRegion (Hermes often leaves empty /
-    const-load blocks as siblings).
+    Accepts a bare IfRegion, or a SequenceRegion whose only non-inert
+    child is an IfRegion (Hermes often leaves empty/const-load blocks
+    as siblings).
     """
     if isinstance(body, IfRegion):
         return body
@@ -57,7 +57,7 @@ def single_if_child(body) -> IfRegion | None:
 
 
 def is_negation(expr) -> bool:
-    """True when expr is a logical-not (UnaryOperator.LOGICAL_NOT)."""
+    """Return True if expr is a logical-not (UnaryOperator.LOGICAL_NOT)."""
     if expr is None:
         return False
     if isinstance(expr, UnaryExpression):
@@ -66,29 +66,31 @@ def is_negation(expr) -> bool:
 
 
 def unwrap_negation(expr):
+    """Return the operand of a negation expression, or expr unchanged."""
     if isinstance(expr, UnaryExpression):
         return expr.operand
     return getattr(expr, "operand", expr)
 
 
 def make_logical_and(left, right) -> BinaryExpression:
+    """Build a `left && right` expression node."""
     return BinaryExpression(left=left, operator=LogicalOperator.AND, right=right)
 
 
 def make_logical_or(left, right) -> BinaryExpression:
+    """Build a `left || right` expression node."""
     return BinaryExpression(left=left, operator=LogicalOperator.OR, right=right)
 
 
 def is_backward_branch(block: BasicBlock) -> bool:
-    """
-    True iff `block`'s conditional-branch target address is <= its own
-    address - always loop machinery (a guard or continue-test), never
-    a genuine forward if/goto-merge residual. Shared by
-    `_DominanceIfBuilder` (to skip such blocks when picking an if/else
-    candidate) and `_CompoundConditionFolder` (to skip them when
-    absorbing residual conditionals) - both need to leave these
-    completely untouched so `LoopConditionExtractor` (region_passes,
-    runs later) can still recognize them as the loop's actual guard.
+    """Return True if the block's conditional branch targets itself or earlier.
+
+    Such a branch is always loop machinery (a guard or continue test),
+    never a genuine forward if/goto-merge residual. Shared by
+    `_DominanceIfBuilder` and `_CompoundConditionFolder`, which both
+    must leave these blocks untouched so `LoopConditionExtractor`
+    (runs later, in region_passes) can still recognize them as the
+    loop's actual guard.
     """
     branch = block.terminator
     if not isinstance(branch, TerminatorConditionalBranch):
@@ -97,14 +99,13 @@ def is_backward_branch(block: BasicBlock) -> bool:
 
 
 def representative_block(item) -> BasicBlock | None:
-    """
-    Any single `BasicBlock` that dominance checks against `item` can
-    be run on. For a raw `BasicBlock`, that's `item` itself. For an
-    already-built region (`IfRegion`/`LoopRegion`/`TryRegion`), every
-    block it covers shares the same dominance relationship to blocks
-    *outside* it - single-entry regions are dominated as a unit, by
-    construction - so any element of `covered_blocks` is an equally
-    valid representative.
+    """Return a single BasicBlock usable for a dominance check on an item.
+
+    For a raw BasicBlock, that's the block itself. For an already-built
+    region (IfRegion/LoopRegion/TryRegion), any covered block works -
+    a single-entry region is dominated as a unit, so every member
+    shares the same dominance relationship to blocks outside it. The
+    lowest-id block is picked for a deterministic result.
     """
     if isinstance(item, BasicBlock):
         return item
@@ -113,10 +114,4 @@ def representative_block(item) -> BasicBlock | None:
     if not covered:
         return None
 
-    # `min(..., key=...)` rather than `next(iter(...))`: both are
-    # deterministic now that `BasicBlock.__hash__` is id-based (see
-    # that class), but picking explicitly by `.id` documents *why*
-    # any element works (dominance is invariant across a single-entry
-    # region's covered blocks) instead of leaving it to look like an
-    # arbitrary/unspecified choice.
     return min(covered, key=lambda b: b.id)

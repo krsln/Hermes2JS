@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.models import TerminatorConditionalBranch
 from hermes_decompiler.analysis.models.regions import (
     IfRegion,
     LoopRegion,
@@ -8,12 +9,10 @@ from hermes_decompiler.analysis.models.regions import (
     SequenceRegion,
     TryRegion,
 )
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch
-from hermes_decompiler.analysis.transforms._shared._negation import _negate_condition
+from hermes_decompiler.analysis.transforms.shared import negate_condition, is_loop_guard_shaped
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
-
 from ._predicates import (
     is_backward_branch,
     is_empty_body,
@@ -28,131 +27,141 @@ logger = get_logger(__name__)
 
 
 class _CompoundConditionFolder:
-    """
-    Second pass of `IfStructurer`: walks every `SequenceRegion` built
-    by `_DominanceIfBuilder` and collapses the common short-circuit
-    patterns Hermes emits for `&&` / `||`:
+    """Second pass of `IfStructurer`: folds Hermes short-circuit idioms.
+
+    Walks every SequenceRegion built by `_DominanceIfBuilder` and
+    collapses the common `&&`/`||` patterns Hermes emits::
 
         if (C1) {
             if (C2) { BODY }
-        }                       →  if (C1 && C2) { BODY }
+        }
+                               -> if (C1 && C2) { BODY }
 
         if (C1) {
         } else {
             if (C2) { BODY }
-        }                       →  if (C1 || C2) { BODY }
+        }
+                               -> if (C1 || C2) { BODY }
 
-        if (C1) { BODY }
-        else if (C2) { … }      (already produced by nested conversion;
-                                 the Printer later pretty-prints it)
-
-    Empty then/else bodies that only contain a single conditional jump
-    to the merge point are also absorbed, eliminating the residual
-    `if (x) goto label_N;` that would otherwise survive into the
+    Empty then/else bodies holding only a single conditional jump to
+    the merge point are also absorbed, eliminating the residual
+    `if (x) goto label_N` that would otherwise survive into the
     printed source.
 
-    Purely a *rewrite* pass - it never turns a raw `BasicBlock` into a
-    brand new `IfRegion` from scratch (that's `_DominanceIfBuilder`'s
-    job, and it always runs first - see `IfStructurer.run`). This is
-    why the class does not extend `RegionStructurer`: it doesn't
-    introduce a new region kind, it only reshapes `IfRegion`s that
-    already exist (see `RegionStructurer`'s own docstring for that
-    distinction, and `transforms/region_passes/` for the analogous
-    passes that run in the pipeline's next stage).
+    Purely a rewrite pass - it never turns a raw BasicBlock into a new
+    IfRegion from scratch (that's `_DominanceIfBuilder`'s job, which
+    always runs first - see `IfStructurer.run`). It does not extend
+    `RegionStructurer` because it doesn't introduce a new region kind,
+    only reshapes IfRegions that already exist.
     """
 
-    def __init__(self, graph):
+    def __init__(self, graph, cfg):
         self.graph = graph
+        self._address_to_block = {block.address: block for block in cfg.blocks}
+        # _post_dominator_tree no longer needed here - see
+        # _absorb_residual_conditional's updated safety check.
+
+    def _resolve_target_block(self, address: int) -> BasicBlock | None:
+        return self._address_to_block.get(address)
 
     def run(self, root) -> None:
-        self._fold_all(root)
+        self._fold_all(root, exclude=frozenset())
         self._prune_empty_blocks(root)
 
-    # -------------------------------------------------------------
-    # Fold: post-order walk
-    # -------------------------------------------------------------
+        # -------------------------------------------------------------
+        # Fold: post-order walk
+        # -------------------------------------------------------------
 
-    def _fold_all(self, region) -> None:
-        """Post-order walk: fold children first so nested || / && are
-        already collapsed before a parent cascade (a && b / a || b)
-        tries to match against them."""
+    def _fold_all(self, region, exclude: frozenset) -> None:
+        """Post-order walk: fold children first so nested `||`/`&&` are
+        already collapsed before a parent cascade tries to match against
+        them.
+
+        `exclude` carries loop-guard header blocks that must not be
+        touched here - LoopConditionRegionPass still needs their
+        ConditionalBranch intact. Mirrors _DominanceIfBuilder's own
+        exclude threading; a block only ever needs to stay excluded
+        within the SequenceRegion it directly sits in, so exclude is
+        reset to empty for every region we recurse into except the
+        one immediately below a LoopRegion.
+        """
         if isinstance(region, SequenceRegion):
-            # Children first
+            # Children first.
             for child in list(region.children):
-                self._fold_all(child)
-            # Then fold this sequence to fixed point
+                self._fold_all(child, frozenset())
+            # Then fold this sequence to a fixed point.
             changed = True
             while changed:
-                changed = self._fold_compound_conditions(region)
+                changed = self._fold_compound_conditions(region, exclude)
             return
 
         if isinstance(region, IfRegion):
-            self._fold_all(region.then_body)
+            self._fold_all(region.then_body, frozenset())
             if region.else_body:
-                self._fold_all(region.else_body)
-            # Try cascade on this IfRegion directly after its bodies are
-            # folded (covers inverted a&&b even when not a root child).
+                self._fold_all(region.else_body, frozenset())
+            # Try the cascade directly on this IfRegion after its
+            # bodies are folded (covers inverted a&&b even when not a
+            # root child).
             self._try_fold_and_or_cascade(region)
             return
 
         if isinstance(region, LoopRegion):
-            self._fold_all(region.body)
+            # Same guard-shape check _DominanceIfBuilder uses to decide
+            # whether the header's own branch is the loop's condition
+            # test (and must therefore be left alone for
+            # LoopConditionRegionPass) rather than ordinary in-body
+            # control flow. Reusing the exact same predicate - instead
+            # of a second, potentially diverging copy - is required:
+            # the two passes must agree on which shape a header has,
+            # or one can strip what the other was relying on staying
+            # intact.
+
+            new_exclude = (
+                frozenset({region.header_block})
+                if is_loop_guard_shaped(region.header_block, region)
+                else frozenset()
+            )
+            self._fold_all(region.body, new_exclude)
             return
 
         if isinstance(region, TryRegion):
-            self._fold_all(region.try_body)
-            if region.catch:
-                self._fold_all(region.catch.body)
-            if region.finally_:
-                self._fold_all(region.finally_.body)
+            self._fold_all(region.try_body, frozenset())
+            region_catch = region.catch
+            if region_catch:
+                self._fold_all(region_catch.body, frozenset())
+            region_finally_ = region.finally_
+            if region_finally_:
+                self._fold_all(region_finally_.body, frozenset())
             return
 
         if hasattr(region, "body"):
-            self._fold_all(region.body)
+            self._fold_all(region.body, frozenset())
 
-    def _fold_compound_conditions(self, region: SequenceRegion) -> bool:
-        """
-        One sweep over `region.children`.  Returns True if any
-        transformation was performed (caller should re-run until
-        fixed-point).
+    def _fold_compound_conditions(self, region: SequenceRegion, exclude: frozenset) -> bool:
+        """Run one sweep over region.children; return True if changed.
 
-        Patterns recognised (Hermes short-circuit lowering):
+        Caller re-runs until a fixed point is reached. Patterns
+        recognized (Hermes short-circuit lowering):
 
-        1. Nested AND
-               if (C1) {
-                   if (C2) { BODY }          # no else
-               }                             # no else
-           →   if (C1 && C2) { BODY }
-
-        2. Nested OR  (empty then + nested if in else)
-               if (C1) {
-               } else {
-                   if (C2) { BODY }
-               }
-           →   if (C1 || C2) { BODY }
-
-        3. OR with inverted outer test (very common for `a || b`)
-               if (!C1) {
-                   if (C2) { BODY }
-               }
-           →   if (C1 || C2) { BODY }   (after double-negation cleanup)
-
-        4. Residual short-circuit jump inside a body
-               if (C) goto MERGE; BODY
-           →   if (!C) { BODY }
-
+        1. Nested AND - `if (C1) { if (C2) { BODY } }` (no else on
+           either) -> `if (C1 && C2) { BODY }`.
+        2. Nested OR - `if (C1) {} else { if (C2) { BODY } }` ->
+           `if (C1 || C2) { BODY }`.
+        3. OR with an inverted outer test - `if (!C1) { if (C2) { BODY } }`
+           -> `if (C1 || C2) { BODY }` (after negation cleanup).
+        4. Residual short-circuit jump - `if (C) goto MERGE; BODY` ->
+           `if (!C) { BODY }`.
         5. High-level `a && b` recovery from the inverted form Hermes
-           emits for `if (a && b) … else if (a || b) … else …`:
-               if (!a) {
-                   if (a || b) { EITHER } else { NEITHER }
-               } else {
-                   [optional residual if(b) goto]
-                   BOTH
-               }
-           →   if (a && b) { BOTH }
-               else if (a || b) { EITHER }
-               else { NEITHER }
+           emits for `if (a && b) ... else if (a || b) ... else ...`
+           (see `_try_fold_and_or_cascade`).
+
+        `exclude` holds blocks (currently: a guard-shaped loop header)
+        that pattern 4 (residual conditional absorption) must never
+        touch, since their ConditionalBranch is reserved for
+        LoopConditionRegionPass to consume as the loop's own
+        condition - not a leftover `&&`/`||` residual.
         """
+
         changed = False
         i = 0
         while i < len(region.children):
@@ -161,6 +170,7 @@ class _CompoundConditionFolder:
                 # --- pattern 4: residual conditional block ---
                 if (
                         isinstance(child, BasicBlock)
+                        and child not in exclude
                         and isinstance(child.terminator, TerminatorConditionalBranch)
                         and not is_backward_branch(child)
                 ):
@@ -179,14 +189,14 @@ class _CompoundConditionFolder:
             inner = single_if_child(child.then_body)
             if inner is not None and child.else_body is None and inner.else_body is None:
                 child.condition = make_logical_and(child.condition, inner.condition)
-                # Splice inner's then_body in at inner's OWN position, preserving
-                # any sibling (e.g. Block1's real `r3 = "zero"`) that
-                # `single_if_child` deemed "inert" for classification purposes
-                # only - that check exists to look PAST no-op clutter when
-                # deciding whether an IfRegion is the sole meaningful content,
-                # not to license discarding real statements that happen to sit
-                # alongside it. Outright reassigning then_body (the prior
-                # behavior) silently dropped those statements instead.
+                # Splice inner's then_body in at inner's OWN position,
+                # preserving any sibling that `single_if_child` treated
+                # as "inert" for classification purposes only. - That
+                # check exists to look past no-op clutter when deciding
+                # whether an IfRegion is the sole meaningful content,
+                # not to license discarding real statements alongside
+                # it. A plain reassignment of then_body would silently
+                # drop those statements instead.
                 seq = child.then_body
                 idx = seq.children.index(inner)
                 replacement = inner.then_body.children
@@ -203,17 +213,16 @@ class _CompoundConditionFolder:
                     and child.else_body is not None):
                 inner = single_if_child(child.else_body)
                 if inner is not None and inner.else_body is None:
-                    # (!C1) || C2   or   C1 || C2   depending on polarity
-                    # Hermes often emits `if (!a) { if (b) … }` for `a || b`
+                    # Hermes often emits `if (!a) { if (b) ... }` for
+                    # `a || b`; prefer the positive form when the outer
+                    # condition is already a negation.
                     outer_cond = child.condition
-                    # Prefer the positive form when the outer condition is
-                    # already a negation.
                     if is_negation(outer_cond):
-                        # if (!C1) { if (C2) BODY }  →  if (C1 || C2)
+                        # if (!C1) { if (C2) BODY } -> if (C1 || C2)
                         positive = unwrap_negation(outer_cond)
                         child.condition = make_logical_or(positive, inner.condition)
                     else:
-                        # if (C1) {} else { if (C2) BODY }  →  if (C1 || C2)
+                        # if (C1) {} else { if (C2) BODY } -> if (C1 || C2)
                         child.condition = make_logical_or(
                             outer_cond, inner.condition
                         )
@@ -223,14 +232,15 @@ class _CompoundConditionFolder:
                     changed = True
                     continue
 
-            # --- pattern: then empty, else non-empty → invert & swap ---
+            # --- then empty, else non-empty: invert & swap ---
             # (helps later AND/OR folding and produces cleaner source)
             if (is_empty_body(child.then_body)
+                    and child.condition is not None
                     and child.else_body is not None
                     and not is_empty_body(child.else_body)):
-                child.condition = _negate_condition(child.condition)
+                child.condition = negate_condition(child.condition)
                 child.then_body, child.else_body = child.else_body, child.then_body
-                # then_body may still be empty after swap; leave it
+                # then_body may still be empty after the swap; leave it.
                 if is_empty_body(child.else_body):
                     child.else_body = None
                 changed = True
@@ -245,14 +255,33 @@ class _CompoundConditionFolder:
     # -------------------------------------------------------------
 
     def _absorb_residual_conditional(self, region: SequenceRegion, index: int) -> bool:
-        """
-        Convert a leftover
-            BasicBlock: if (C) goto T;   FALLTHROUGH…
-        into
-            if (!C) { FALLTHROUGH… }
-        when the jump target is not among the following siblings
-        (i.e. it jumps *out* / to the merge).  This is exactly the
-        residual that Hermes leaves in the else-arm of `a && b`.
+        """Fold a leftover `if (C) goto T; FALLTHROUGH...` block.
+
+        Converts it into `if (!C) { FALLTHROUGH... }`. This is exactly the
+        residual Hermes leaves in the else-arm of `a && b`, and also the
+        shape a sparse switch's shared-case-body test compiles to (see
+        `_ComparisonChainSwitchBuilder`'s "Shared-body and inverted-
+        residual recovery" - that pass specifically expects this fold to
+        have already happened, then re-attaches T's constant to whichever
+        case shares T's body).
+
+        Safety check: only fold when T (`target_block`) remains reachable
+        through some edge OTHER than this one - i.e., it has at least one
+        other predecessor. If `block` is T's ONLY way in, folding away
+        this edge would silently strand T as unreachable dead code. And
+        any real content it holds (a `return`, a distinct case body with
+        no other path to it, ...) would simply vanish from the printed
+        source - exactly what happened before this check existed, for a
+        genuine early-return inside a loop whose only entry was the
+        residual branch being absorbed.
+
+        This is a reachability check, not a "is T the merge point"
+        check: T naturally has multiple predecessors either when it's the
+        region's own fall-through merge (reached both by this branch and
+        by FALLTHROUGH's own completion) or when it's a sibling case body
+        also reached by its own, separate test elsewhere - both are safe
+        to fold away here, since T stays reachable via the other edge
+        either way.
         """
         block = region.children[index]
         assert isinstance(block, BasicBlock)
@@ -262,11 +291,24 @@ class _CompoundConditionFolder:
         if index + 1 >= len(region.children):
             return False
 
+        # ---- validate the goto target remains reachable some other way ----
+        target_block = self._resolve_target_block(branch.target)
+
+        if target_block is not None:
+            other_predecessors = [
+                p for p in target_block.predecessors if p is not block
+            ]
+            if not other_predecessors:
+                # `block` is target_block's ONLY way in - folding would
+                # silently strand it as unreachable. Leave the branch
+                # unconverted rather than guess.
+                return False
+
         rest = self.graph.splice_out(region, index + 1, len(region.children))
         if not rest:
             return False
 
-        # Remove the residual block itself
+        # Remove the residual block itself.
         self.graph.splice_out(region, index, index + 1)
 
         if block.instructions and block.instructions[-1].terminator is branch:
@@ -277,13 +319,11 @@ class _CompoundConditionFolder:
         self.graph.transfer(list(rest), then_body)
 
         if_region = IfRegion()
-        if_region.condition = _negate_condition(branch.condition)
+        if_region.condition = negate_condition(branch.condition)
         if_region.then_body = then_body
         if_region.else_body = None
         then_body.parent = if_region
 
-        # Keep any non-terminator instructions that were on the block
-        # (rare) by inserting the (now terminator-free) block first.
         insert_at = index
         if block.instructions:
             self.graph.insert_at(region, insert_at, block)
@@ -292,59 +332,64 @@ class _CompoundConditionFolder:
         return True
 
     def _try_fold_and_or_cascade(self, outer: IfRegion) -> bool:
-        """
-        Recognise the classic Hermes lowering of
+        """Recover the `a && b` / `a || b` / `else` cascade in place.
 
-            if (a && b) { BOTH }
-            else if (a || b) { EITHER }
-            else { NEITHER }
+        Recognizes the classic Hermes lowering of:
 
-        which appears after structuring + residual absorption as either:
+        ```text
+        if (a && b) { BOTH }
+        else if (a || b) { EITHER }
+        else { NEITHER }
+        ```
 
-            if (!a) {
-                if (a || b) { EITHER } else { NEITHER }
-            } else {
-                if (!b) { BOTH }          # residual was absorbed
-            }
+        The classic lowering appears after structuring and residual
+        absorption as:
 
-        or still with a raw residual jump.  Rewrite in-place to the
+        ```text
+        if (!a) {
+            if (a || b) { EITHER } else { NEITHER }
+        } else {
+            if (!b) { BOTH } # residual was absorbed
+        }
+        ```
+
+        Or still with a raw residual jump. Rewrites in place to the
         source-level cascade with positive polarity.
         """
+
         if not is_negation(outer.condition):
             return False
         if outer.else_body is None:
             return False
 
-        # then side must be a single if that looks like (a || b) / either-neither
+        # The then side must be a single if shaped like (a || b) / either-neither.
         inner = single_if_child(outer.then_body)
         if inner is None:
             return False
 
         a = unwrap_negation(outer.condition)
 
-        # ---- extract BOTH body + the second conjunct b from else side ----
+        # ---- extract BOTH body + the second conjunct b from the else side ----
         both_body = None
         b = None
 
         else_body = outer.else_body
 
-        # Case A: else is a single IfRegion  if (!b) { BOTH }  or  if (b) { BOTH }
-        else_if = single_if_child(else_body) if not isinstance(else_body, IfRegion) else else_body
-        if else_if is None and isinstance(else_body, IfRegion):
-            else_if = else_body
+        # Case A: else is a single IfRegion - if (!b) { BOTH } or if (b) { BOTH }.
+        else_if = else_body if isinstance(else_body, IfRegion) else single_if_child(else_body)
 
         if isinstance(else_if, IfRegion) and else_if.else_body is None:
             both_body = else_if.then_body
             cond = else_if.condition
             # Residual absorption produced if (!b) { BOTH } because the
-            # original jump was "if (b) goto merge".  Unwrap so we recover
+            # original jump was "if (b) goto merge" - unwrap to recover
             # the positive conjunct b.
             if is_negation(cond):
                 b = unwrap_negation(cond)
             else:
                 b = cond
 
-        # Case B: else is a SequenceRegion starting with residual BasicBlock
+        # Case B: else is a SequenceRegion starting with a residual BasicBlock.
         elif isinstance(else_body, SequenceRegion) and else_body.children:
             first = else_body.children[0]
             if (isinstance(first, BasicBlock)
@@ -354,7 +399,7 @@ class _CompoundConditionFolder:
                 if rest:
                     new_seq = SequenceRegion()
                     self.graph.transfer(list(rest), new_seq)
-                    # Original: if (b) goto merge; BOTH  →  b is the condition
+                    # Original: if (b) goto merge; BOTH -> b is the condition.
                     b = branch.condition
                     both_body = new_seq
                     if first.instructions and first.instructions[-1].terminator is branch:
@@ -371,7 +416,7 @@ class _CompoundConditionFolder:
         if both_body is None or b is None:
             return False
 
-        # ---- rewrite outer into: if (a && b) { BOTH } else if (a || b) … ----
+        # ---- rewrite outer into: if (a && b) { BOTH } else if (a || b) ... ----
         and_cond = make_logical_and(a, b)
 
         either_body = inner.then_body
@@ -381,7 +426,7 @@ class _CompoundConditionFolder:
         outer.then_body = both_body
         both_body.parent = outer
 
-        # Keep a sensible || condition for the else-if arm
+        # Keep a sensible || condition for the else-if arm.
         or_cond = inner.condition
         is_or = isinstance(or_cond, BinaryExpression) and or_cond.operator == LogicalOperator.OR
         if not is_or:
@@ -408,8 +453,10 @@ class _CompoundConditionFolder:
     # -------------------------------------------------------------
 
     def _prune_empty_blocks(self, region) -> None:
-        """Remove BasicBlocks that no longer hold any instructions or
-        terminators - they only clutter else-if detection."""
+        """Remove BasicBlocks with no instructions or terminator.
+
+        Leftover empty blocks only clutter else-if detection.
+        """
         if isinstance(region, SequenceRegion):
             region.children = [
                 c for c in region.children
@@ -430,10 +477,12 @@ class _CompoundConditionFolder:
             return
         if isinstance(region, TryRegion):
             self._prune_empty_blocks(region.try_body)
-            if region.catch:
-                self._prune_empty_blocks(region.catch.body)
-            if region.finally_:
-                self._prune_empty_blocks(region.finally_.body)
+            region_catch = region.catch
+            if region_catch:
+                self._prune_empty_blocks(region_catch.body)
+            region_finally_ = region.finally_
+            if region_finally_:
+                self._prune_empty_blocks(region_finally_.body)
             return
         if hasattr(region, "body"):
             self._prune_empty_blocks(region.body)

@@ -18,7 +18,7 @@ class GetArgumentsLength(OpcodeHandler):
 
         dest_reg, _lazy_reg = map(int, match.groups())
 
-        expression = MemberExpression(receiver=Identifier(name="arguments"), member=Identifier(name="length"))
+        expression = MemberExpression(obj=Identifier(name="arguments"), prop=Identifier(name="length"))
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
@@ -45,7 +45,7 @@ class GetArgumentsPropByVal(OpcodeHandler):
         # `ComputedMemberExpression` was a separate legacy class for
         # `obj[x]`; the new IR unifies dot/bracket access into one
         # `MemberExpression` via `computed=`.
-        expression = MemberExpression(receiver=Identifier(name="arguments"), member=index_value, computed=True)
+        expression = MemberExpression(obj=Identifier(name="arguments"), prop=index_value, computed=True)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)

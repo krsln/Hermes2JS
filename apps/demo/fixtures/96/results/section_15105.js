@@ -1,103 +1,115 @@
 function nestedArrayDestructureTest() {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <GetGlobalObject>: <Reg8: 1>
+    // CODE → addr:  0 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4811>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start' (String)
+    // CODE → addr:  2 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = console;
+    // CODE → addr:  8 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = console.log;
+    // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 4811>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start' (String)
     // USED → r0 = "__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start";
-    // CODE → <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
+    // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/start")
-    // CODE → <NewArray>: <Reg8: 3, UInt16: 3>
+    // CODE → addr: 22 | <NewArray>: <Reg8: 3, UInt16: 3>
     r3 = []
-    // CODE → <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23637>  # Array: [1, 2]
+    // CODE → addr: 26 | <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23637>  # Array: [1, 2]
     r0 = [1, 2]
-    // CODE → <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 0>
+    // CODE → addr: 34 | <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 0>
     // USED → r3 = r3[0] = r0;
-    // CODE → <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 12324>  # Array: [3, 4]
+    // CODE → addr: 38 | <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 12324>  # Array: [3, 4]
     r0 = [3, 4]
-    // CODE → <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 1>
+    // CODE → addr: 46 | <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 1>
     // USED → r3 = (r3[0] = r0)[1] = r0;
-    // CODE → <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23646>  # Array: [5, 6]
+    // CODE → addr: 50 | <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23646>  # Array: [5, 6]
     r0 = [5, 6]
-    // CODE → <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 2>
+    // CODE → addr: 58 | <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 2>
     // USED → r3 = ((r3[0] = r0)[1] = r0)[2] = r0;
-    // CODE → <GetEnvironment>: <Reg8: 2, UInt8: 0>
-    // USED → r2 = getEnvironment(0);
-    // CODE → <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 1>
-    // USED → r0 = getEnvironment(0)[1];
-    // CODE → <GetByIdShort>: <Reg8: 7, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r7 = getEnvironment(0)[1].default;
-    // CODE → <LoadConstZero>: <Reg8: 6>
-    // USED → r6 = 0;
-    // CODE → <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 6>
-    // USED → r5 = (((r3[0] = r0)[1] = r0)[2] = r0)[0];
-    // CODE → <LoadConstUndefined>: <Reg8: 0>
+    // CODE → addr: 62 | <GetEnvironment>: <Reg8: 2, UInt8: 0>
+    r2 = getEnvironment(0)
+    // CODE → addr: 65 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 1>
+    r0 = r2[1]
+    // CODE → addr: 69 | <GetByIdShort>: <Reg8: 7, Reg8: 0, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+    // USED → r7 = r0.default;
+    // CODE → addr: 74 | <LoadConstZero>: <Reg8: 6>
+    r6 = 0
+    // CODE → addr: 76 | <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 6>
+    r5 = (((r3[0] = r0)[1] = r0)[2] = r0)[r6]
+    // CODE → addr: 80 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
+    // CODE → addr: 82 | <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
     // USED → r4 = 2;
-    // CODE → <Call3>: <Reg8: 5, Reg8: 7, Reg8: 0, Reg8: 5, Reg8: 4>
-    // USED → r5 = getEnvironment(0)[1].default.call(undefined, r5, r4);
-    // CODE → <GetByVal>: <Reg8: 10, Reg8: 5, Reg8: 6>
-    // USED → r10 = getEnvironment(0)[1].default.call(undefined, r5, r4)[0];
-    // CODE → <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
-    // USED → r7 = 1;
-    // CODE → <GetByVal>: <Reg8: 9, Reg8: 5, Reg8: 7>
-    // USED → r9 = getEnvironment(0)[1].default.call(undefined, r5, r4)[1];
-    // CODE → <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 1>
-    // USED → r5 = getEnvironment(0)[1];
-    // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r5 = getEnvironment(0)[1].default;
-    // CODE → <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 4>
-    // USED → r3 = (((r3[0] = r0)[1] = r0)[2] = r0)[2];
-    // CODE → <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
-    // USED → r3 = getEnvironment(0)[1].default.call(undefined, r3, r4);
-    // CODE → <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 7>
-    // USED → r8 = getEnvironment(0)[1].default.call(undefined, r3, r4)[1];
-    // CODE → <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r5 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r3 = globalThis.console.log;
-    // CODE → <Call4>: <Reg8: 3, Reg8: 3, Reg8: 5, Reg8: 10, Reg8: 9, Reg8: 8>
+    // CODE → addr: 85 | <Call3>: <Reg8: 5, Reg8: 7, Reg8: 0, Reg8: 5, Reg8: 4>
+    r5 = r0.default(r5, 2)
+    // CODE → addr: 91 | <GetByVal>: <Reg8: 10, Reg8: 5, Reg8: 6>
+    r10 = r5[r6]
+    // CODE → addr: 95 | <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
+    r7 = 1
+    // CODE → addr: 98 | <GetByVal>: <Reg8: 9, Reg8: 5, Reg8: 7>
+    r9 = r5[r7]
+    // CODE → addr:102 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 1>
+    r5 = r2[1]
+    // CODE → addr:106 | <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+    // USED → r5 = r5.default;
+    // CODE → addr:111 | <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 4>
+    r3 = (((r3[0] = r0)[1] = r0)[2] = r0)[r4]
+    // CODE → addr:115 | <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
+    r3 = r5.default.call(r0, r3, 2)
+    // CODE → addr:121 | <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 7>
+    r8 = r3[r7]
+    // CODE → addr:125 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r5 = console;
+    // CODE → addr:131 | <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r3 = console.log;
+    // CODE → addr:136 | <Call4>: <Reg8: 3, Reg8: 3, Reg8: 5, Reg8: 10, Reg8: 9, Reg8: 8>
     console.log(r10, r9, r8)
-    // CODE → <NewArrayWithBuffer>: <Reg8: 3, UInt16: 1, UInt16: 1, UInt16: 23655>  # Array: [10]
-    // USED → r3 = [10];
-    // CODE → <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 6>
-    // USED → r8 = r3[0];
-    // CODE → <LoadConstZero>: <Reg8: 5>
-    r5 = (r8 === undefined) ? 0 : r3[0]
+    // CODE → addr:143 | <NewArrayWithBuffer>: <Reg8: 3, UInt16: 1, UInt16: 1, UInt16: 23655>  # Array: [10]
+    r3 = [10]
+    // CODE → addr:151 | <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 6>
+    r8 = r3[r6]
+    // CODE → addr:155 | <LoadConstZero>: <Reg8: 5>
+    r5 = 0
+    // → r8 = r3[r6]
+    if (r8 !== undefined) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr:161 | <Mov>: <Reg8: 5, Reg8: 8>
+        r5 = r3[r6]
+    }
     // ──────────────── Block 2 ──────────────── 
-    // CODE → <GetByVal>: <Reg8: 7, Reg8: 3, Reg8: 7>
-    // USED → r7 = r3[1];
-    // CODE → <LoadConstZero>: <Reg8: 6>
-    r6 = (r7 === undefined) ? 0 : r3[1]
+    // CODE → addr:164 | <GetByVal>: <Reg8: 7, Reg8: 3, Reg8: 7>
+    r7 = r3[r7]
+    // CODE → addr:168 | <LoadConstZero>: <Reg8: 6>
+    r6 = 0
+    // → r7 = r3[r7]
+    if (r7 !== undefined) {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → addr:174 | <Mov>: <Reg8: 6, Reg8: 7>
+        r6 = r3[r7]
+    }
     // ──────────────── Block 4 ──────────────── 
-    // CODE → <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
-    // USED → r2 = getEnvironment(0)[0];
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r2 = getEnvironment(0)[0].default;
-    // CODE → <Call2>: <Reg8: 3, Reg8: 2, Reg8: 0, Reg8: 3>
-    // USED → r3 = getEnvironment(0)[0].default.call(undefined, r3);
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)
-    // USED → r2 = getEnvironment(0)[0].default.call(undefined, r3).slice;
-    // CODE → <Call2>: <Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 4>
-    // USED → r4 = getEnvironment(0)[0].default.call(undefined, r3).slice(r4);
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 6, Reg8: 4>
+    // CODE → addr:177 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
+    r2 = r2[0]
+    // CODE → addr:181 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+    // USED → r2 = r2.default;
+    // CODE → addr:186 | <Call2>: <Reg8: 3, Reg8: 2, Reg8: 0, Reg8: 3>
+    r3 = r2.default.call(r0, r3)
+    // CODE → addr:191 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)
+    // USED → r2 = r3.slice;
+    // CODE → addr:196 | <Call2>: <Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 4>
+    r4 = r3.slice(2)
+    // CODE → addr:201 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = console;
+    // CODE → addr:207 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = console.log;
+    // CODE → addr:212 | <Call4>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 6, Reg8: 4>
     console.log(r5, r6, r4)
-    // CODE → <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r3 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r2 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 1, string_id: 4808>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end' (String)
+    // CODE → addr:219 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r3 = console;
+    // CODE → addr:225 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r2 = console.log;
+    // CODE → addr:230 | <LoadConstString>: <Reg8: 1, string_id: 4808>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end' (String)
     // USED → r1 = "__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end";
-    // CODE → <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
+    // CODE → addr:234 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end")
-    // CODE → <Ret>: <Reg8: 0>
+    // CODE → addr:239 | <Ret>: <Reg8: 0>
     return undefined;
 }

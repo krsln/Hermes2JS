@@ -22,8 +22,8 @@ class PutOwnBySlotIdx(OpcodeHandler):
         property_name = ctx.entry.identifier_name or f"slot_{slot_idx}"
 
         left = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=Identifier(name=property_name),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=Identifier(name=property_name),
             computed=False,
         )
         right = self.get_register_expression(ctx.analysis, value_reg)

@@ -11,79 +11,11 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
-    ArrayExpression, Literal,
+    ArrayExpression, Literal, CallExpression, MemberExpression,
 )
 from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)
-
-
-@dataclass(slots=True)
-class OpcodeContext:
-    analysis: HermesAnalysis
-    entry: OpcodeEntry
-    entries: list[OpcodeEntry]
-    index: int
-
-
-@dataclass(frozen=True, slots=True)
-class ArgsPattern:
-    regex: re.Pattern[str]
-    desc: str
-
-
-# Types whose IDENTITY matters (mutation-sensitive) - inlining a second
-# reference to the same literal object/array expression would make two
-# independent-looking `{}`/`[]` in the output secretly alias the same
-# runtime object. Always kept symbolic (`rN`), regardless of which
-# resolver is used.
-_IDENTITY_SENSITIVE_TYPES = (ObjectExpression, ArrayExpression)
-
-_CALL_ARGUMENT_INLINE_OPCODES = frozenset({
-    "LoadConstString",
-    "CreateClosure",
-})
-
-_CONDITION_ARGUMENT_INLINE_OPCODES = frozenset({
-    "LoadParam",
-    "LoadConstZero",
-    "LoadConstUInt8",
-    "LoadConstInt",
-    "LoadConstDouble",
-    "LoadConstString",
-    "LoadConstNull",
-    "LoadConstUndefined",
-    "LoadConstTrue",
-    "LoadConstFalse",
-    "LoadConstBigInt",
-})
-
-
-class OperandMode(Enum):
-    """
-    Controls how a register operand is resolved into an IR expression.
-    Opcode subclasses declare *which* mode each of their operands needs
-    (class attribute), instead of each one hand-rolling its own
-    resolution override the way `Inc`/`Dec` previously did.
-
-    EXPRESSION - substitute the register's current defining expression
-        (constant folding / inlining, via `get_register_expression`).
-        This is the default and matches all pre-existing behavior for
-        opcodes that don't opt into REFERENCE.
-
-    REFERENCE - always resolve to a bare symbolic identifier `rN` (via
-        `get_register_reference`), never inlining the defining
-        expression. Required whenever an operand is a loop/accumulator
-        register that gets redefined on a back-edge (e.g. the `x` in
-        `Inc`/`Dec`, or the counter operand of `AddN`/`SubN` when they
-        desugar `i++`/`i--`): substituting a traced snapshot value there
-        silently bakes a single iteration's value into every iteration
-        (e.g. `r0 = 0 + 1` instead of `r0 = r1 + 1`), which can produce
-        a non-advancing loop counter.
-    """
-
-    EXPRESSION = auto()
-    REFERENCE = auto()
 
 
 class OpcodeHandler(ABC):
@@ -139,13 +71,10 @@ class OpcodeHandler(ABC):
             if match:
                 return match
 
-        return self.build_invalid_args_result(ctx.analysis, ctx.entry, self.expected_arguments_message())
+        return self.build_invalid_args_result(ctx.analysis, ctx.entry, self.expected_arguments_message(patterns))
 
-    def expected_arguments_message(self) -> str:
-        patterns = self.ARGUMENTS
-        if isinstance(patterns, ArgsPattern):
-            patterns = (patterns,)
-
+    @classmethod
+    def expected_arguments_message(cls, patterns: tuple[ArgsPattern, ...]) -> str:
         descriptions = [p.desc for p in patterns]
         if len(descriptions) == 1:
             return f"Expected arguments: {descriptions[0]}"
@@ -176,23 +105,11 @@ class OpcodeHandler(ABC):
         return result
 
     @classmethod
-    def get_register_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier:
-        """Always symbolic - never inlines the defining expression."""
-
-        state = analysis.registers.get(f"r{reg}")
-
-        if state is None:
-            return Identifier(name=f"r{reg}_undefined")
-
-        state.reads += 1
-        return Identifier(name=f"r{reg}")
-
-    @classmethod
     def resolve_operand(cls, analysis: HermesAnalysis, reg: int, mode: "OperandMode") -> Expression:
         """
         Resolve a register operand according to `mode`. Single dispatch
         point shared by `BaseUnaryOperator` and `BaseBinaryOperator` (and
-        any future handler) so the EXPRESSION-vs-REFERENCE choice lives
+        any future handler), so the EXPRESSION-vs.-REFERENCE choice lives
         in one place instead of being reimplemented per subclass.
         """
 
@@ -202,114 +119,239 @@ class OpcodeHandler(ABC):
         return cls.get_register_expression(analysis, reg)
 
     @classmethod
+    def get_register_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier:
+        """Always symbolic - never inlines the defining expression.
+
+        Exception: a register whose only definition so far is a
+        function parameter (LoadParam/LoadParamLong) keeps that
+        parameter's name instead of a synthetic r{reg}. A parameter
+        name is the register's stable identity for the entire
+        function - not a computed expression being substituted in -
+        so returning it here doesn't inline anything; it just avoids
+        two different call sites (e.g. a MemberExpression's receiver
+        built via resolve_get_by_argument, and this `this`-register
+        reference used to structurally compare against it) disagreeing
+        about what to call the exact same untouched parameter register.
+        """
+
+        state = analysis.get_register_state(reg)
+
+        if state is None:
+            return Identifier(name=f"r{reg}_undefined")
+
+        state.mark_read()
+
+        if state.handler in ("LoadParam", "LoadParamLong") and isinstance(state.value, Identifier):
+            return state.value
+
+        return Identifier(name=f"r{reg}")
+
+    @classmethod
     def get_register_expression(cls, analysis: HermesAnalysis, reg: int) -> Expression:
         """
         Return the current expression assigned to a register.
 
-        This exposes the actual IR node currently stored in the register
-        (ObjectExpression, Literal, BinaryExpression, CallExpression, etc.)
-        and should only be used by optimization or analysis passes that need
-        the defining expression.
-
-        If the register has never been defined, fall back to its symbolic
-        identifier.
+        Identity-sensitive expressions are kept symbolic to preserve
+        aliasing semantics.
         """
 
-        state = analysis.registers.get(f"r{reg}")
+        state = analysis.get_register_state(reg)
 
-        if state is None or state.definition is None:
+        if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        state_value = state.value
-        if isinstance(state_value, Expression):
-            state.reads += 1
+        value = state.value
+        if value is None:
+            logger.error("Register r%d has no value (handler=%s)", reg, state.handler)
+            return Identifier(name=f"r{reg}")
 
-            if isinstance(state.value, _IDENTITY_SENSITIVE_TYPES):
-                return Identifier(name=f"r{reg}")
+        if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression)):
+            state.mark_read()
+            return Identifier(name=f"r{reg}")
 
-            if state.reads > 1:
-                state_value = dataclasses.replace(state_value)
+        # if it has been read at least once before
+        if state.reads > 0:
+            state.mark_read()
+            return dataclasses.replace(value)
 
-            state.definition.definition_used = True
-            return state_value
+        state.mark_read()
+        state.mark_used()
+        return value
 
-        logger.warning("Unexpected value type in argument: %s", type(state.value))
+    @classmethod
+    def resolve_get_by_argument(cls, analysis, reg: int) -> Expression:
+        state = analysis.get_register_state(reg)
 
-        state.reads += 1
+        if state is None:
+            return Identifier(name=f"r{reg}_undefined")
+
+        # _GET_BY_ARGUMENT_INLINE_OPCODES
+        if state.handler in frozenset({
+            "GetGlobalObject",
+            "TryGetById",
+            "LoadParam",
+            "LoadParamLong",
+        }):
+            if isinstance(state.value, MemberExpression):
+                state.mark_read()
+                state.mark_used()
+
+                return state.value
+            elif isinstance(state.value, Identifier):
+                state.mark_read()
+                state.mark_used()
+
+                return state.value
+
+            logger.warning(
+                "resolve_get_by_argument | Cannot inline get-by-argument value: handler=%s value=%r",
+                state.handler, state.value
+            )
+
+        state.mark_read()
         return Identifier(name=f"r{reg}")
 
     @classmethod
     def resolve_call_argument(cls, analysis: HermesAnalysis, reg: int) -> Expression:
-        state = analysis.registers.get(f"r{reg}")
+        state = analysis.get_register_state(reg)
 
-        if state is None or state.definition is None:
+        if state is None:
             return Identifier(name=f"r{reg}_undefined")
 
-        definition = state.definition
-        value = definition.value
-
-        if definition.handler in _CALL_ARGUMENT_INLINE_OPCODES:
+        value = state.value
+        # _CALL_ARGUMENT_INLINE_OPCODES
+        if state.handler in frozenset({
+            "CreateClosure",
+            "GetById",
+            "GetByIdShort",
+            "LoadConstUInt8",
+            "LoadConstString",
+            "LoadParam",
+        }):
             if isinstance(value, Literal):
-                state.reads += 1
-                definition.definition_used = True
-
-                if state.reads > 1:
-                    return dataclasses.replace(value)
+                state.mark_read()
+                state.mark_used()
 
                 return value
             elif isinstance(value, Identifier):
-                state.reads += 1
-                definition.definition_used = True
+                state.mark_read()
+                state.mark_used()
 
                 return value
-            else:
-                logger.warning("Unexpected value type in Call argument: %s", type(value))
+            elif isinstance(value, MemberExpression):
+                state.mark_read()
+                state.mark_used()
 
-        state.reads += 1
-        definition.definition_used = True
+                return value
 
+            logger.warning(
+                "resolve_call_argument | Cannot inline get-by-argument value: handler=%s value=%r",
+                state.handler, state.value
+            )
+
+        # Not one of the safely-inlineable shapes above (e.g. the
+        # value came from a Call/CallBuiltin/Construct result, a
+        # binary op, etc.) - this is returned as a bare symbolic
+        # register reference, NOT an inlined substitution of the
+        # actual expression. Marking it "used" here (as the
+        # inlineable branches above correctly do) would tell the
+        # printer the defining statement was folded into this call
+        # site and can be skipped - but it wasn't folded in, so that
+        # previously suppressed the defining assignment entirely,
+        # leaving this bare reference dangling with no definition
+        # printed at all (see e.g. `console.log(scores.get("bob"))`,
+        # which silently dropped the `.get()` call and printed a
+        # stale/undefined `r0` instead). Only mark_read() here, so
+        # the defining statement still gets printed - matching how
+        # get_register_expression() already treats CallExpression/
+        # ObjectExpression/ArrayExpression values (kept symbolic,
+        # never marked used).
+        state.mark_read()
         return Identifier(name=f"r{reg}")
 
     @classmethod
     def resolve_condition_argument(cls, analysis: HermesAnalysis, reg: int) -> Expression:
-        """
-        Jump/branch condition operands.
+        state = analysis.get_register_state(reg)
 
-        Inline ONLY when this register was defined by a const-load opcode.
-        That preserves switch case labels (r1 = 0; if (r1 === disc)) while
-        keeping Mov/Inc/phi-carried values symbolic for loops.
-        """
-        state = analysis.registers.get(f"r{reg}")
-
-        if state is None or state.definition is None:
+        if state is None:
             return Identifier(name=f"r{reg}_undefined")
-
-        definition = state.definition
-        value = definition.value
 
         # Const-load literals: always safe to inline, regardless of
         # mode - a genuine LoadConstX opcode produces one immutable
         # value that can never be redefined by a loop iteration between
         # its own occurrences (each const-load is itself the
         # definition being read).
-        if definition.handler in _CONDITION_ARGUMENT_INLINE_OPCODES:
+        value = state.value
+        # _CONDITION_ARGUMENT_INLINE_OPCODES
+        if state.handler in frozenset({
+            "LoadParam",
+            "LoadConstZero",
+            "LoadConstUInt8",
+            "LoadConstInt",
+            "LoadConstDouble",
+            "LoadConstString",
+            "LoadConstNull",
+            "LoadConstUndefined",
+            "LoadConstTrue",
+            "LoadConstFalse",
+            "LoadConstBigInt",
+        }):
             if isinstance(value, Literal):
-                state.reads += 1
-                definition.definition_used = True
-
-                if state.reads > 1:
-                    return dataclasses.replace(value)
+                state.mark_read()
+                state.mark_used()
 
                 return value
             elif isinstance(value, Identifier):
-                state.reads += 1
-                definition.definition_used = True
+                state.mark_read()
+                state.mark_used()
 
                 return value
-            else:
-                logger.warning("Unexpected value type in Jump condition argument: %s", type(value))
 
-        state.reads += 1
-        definition.definition_used = True
+            logger.warning(
+                "resolve_condition_argument | Cannot inline get-by-argument value: handler=%s value=%r",
+                state.handler, state.value
+            )
 
+        state.mark_read()
         return Identifier(name=f"r{reg}")
+
+
+@dataclass(slots=True)
+class OpcodeContext:
+    analysis: HermesAnalysis
+    entry: OpcodeEntry
+    entries: list[OpcodeEntry]
+    index: int
+
+
+@dataclass(frozen=True, slots=True)
+class ArgsPattern:
+    regex: re.Pattern[str]
+    desc: str
+
+
+class OperandMode(Enum):
+    """
+    Controls how a register operand is resolved into an IR expression.
+    Opcode subclasses declare *which* mode each of their operands needs
+    (class attribute), instead of each one hand-rolling its own
+    resolution override the way `Inc`/`Dec` previously did.
+
+    EXPRESSION - substitute the register's current defining expression
+        (constant folding / inlining, via `get_register_expression`).
+        This is the default and matches all pre-existing behavior for
+        opcodes that don't opt into REFERENCE.
+
+    REFERENCE - always resolve to a bare symbolic identifier `rN` (via
+        `get_register_reference`), never inlining the defining
+        expression. Required whenever an operand is a loop/accumulator
+        register that gets redefined on a back-edge (e.g., the `x` in
+        `Inc`/`Dec`, or the counter operand of `AddN`/`SubN` when they
+        desugar `i++`/`i--`): substituting a traced snapshot value there
+        silently bakes a single iteration's value into every iteration
+        (e.g. `r0 = 0 + 1` instead of `r0 = r1 + 1`), which can produce
+        a non-advancing loop counter.
+    """
+
+    EXPRESSION = auto()
+    REFERENCE = auto()

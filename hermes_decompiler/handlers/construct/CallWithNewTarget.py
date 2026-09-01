@@ -30,8 +30,8 @@ class CallWithNewTarget(OpcodeHandler):
         arguments = ArrayExpression(elements=tuple(Identifier(name=f"r{r}") for r in arg_regs))
 
         call_callee = MemberExpression(
-            receiver=Identifier(name="Reflect"),
-            member=Identifier(name="construct"),
+            obj=Identifier(name="Reflect"),
+            prop=Identifier(name="construct"),
             computed=False,
         )
 

@@ -30,6 +30,16 @@ class CreateRegExp(OpcodeHandler):
             error = f'/* Error: could not resolve RegExp pattern (id {pattern_id}) */'
             return self.build_exception_result(ctx.analysis, ctx.entry, error)
 
+        # The disassembler's comment text backslash-escapes the pattern
+        # for its own display (a real `\d` in the regex source shows up
+        # as `\\d` in the comment, e.g. `# String: '^\\d+$' (String)`
+        # for the true pattern `^\d+$`). resolve_pattern_and_flags()
+        # returns that comment text verbatim, so undo that one level of
+        # escaping here - otherwise every backslash in the pattern is
+        # doubled in the emitted regex literal, silently changing its
+        # meaning (`\d` becomes a literal backslash followed by `d`).
+        pattern = pattern.replace("\\\\", "\\")
+
         # expression = f"/{pattern}/{flags or ''}"
         expression = RegExpLiteral(pattern=pattern, flags=flags or "")
 

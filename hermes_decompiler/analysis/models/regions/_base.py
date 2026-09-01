@@ -20,10 +20,13 @@ class Region(ABC):
 
     @property
     def covered_blocks(self) -> set[BasicBlock]:
-        if self._covered_blocks is None:
-            self._covered_blocks = self._compute_covered_blocks()
+        covered_blocks = self._covered_blocks
 
-        return self._covered_blocks
+        if covered_blocks is None:
+            covered_blocks = self._compute_covered_blocks()
+            self._covered_blocks = covered_blocks
+
+        return covered_blocks
 
     def invalidate_coverage(self) -> None:
         if self._covered_blocks is None and self.parent is None:

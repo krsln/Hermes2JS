@@ -6,15 +6,25 @@ from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir import Expression
 
 
-@dataclass
+@dataclass(slots=True)
 class RegisterState:
-    definition: Optional[OpcodeResult]
+    definition: OpcodeResult
     version: int = 0
     reads: int = 0
 
     @property
     def value(self) -> Optional[Expression]:
-        return self.definition.value if self.definition else None
+        return self.definition.value
+
+    @property
+    def handler(self) -> str:
+        return self.definition.handler
+
+    def mark_read(self) -> None:
+        self.reads += 1
+
+    def mark_used(self) -> None:
+        self.definition.definition_used = True
 
 
 class HermesAnalysis:
@@ -54,6 +64,9 @@ class HermesAnalysis:
 
         self.registers[result.name] = RegisterState(definition=result, version=version)
 
+    def get_register_state(self, reg: int) -> Optional[RegisterState]:
+        return self.registers.get(f"r{reg}")
+
     def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
         return self.generate_js_v1(verbose, raw)
 
@@ -62,22 +75,21 @@ class HermesAnalysis:
         from hermes_decompiler.analysis.transforms import StructuralAnalyzer
         from hermes_decompiler.backend.emit import JSEmitter
 
-        cfg = CFG.from_results(
-            self.results,
-            self.metadata.get("exception_handlers", []),
-        )
+        cfg = CFG.from_results(self.results, self.metadata.get("exception_handlers", []))
 
         cfg.verify()
         cfg.compute_dominators()
         cfg.compute_post_dominators()
 
-        # BranchChainMerger (stage 1 inside
-        # StructuralAnalyzer.build()) needs cfg.loop_analysis to avoid
-        # folding a loop's rotation-duplicated guard/continue test
-        # (same condition checked at two different points in the
-        # loop, both jumping forward to the same exit) into a single
-        # bogus `a || b` - so loop analysis must already be computed
-        # by the time build() runs.
+        # ShortCircuitConditionCfgPass (stage 1 of StructuralAnalyzer.build())
+        # requires cfg.loop_analysis to distinguish ordinary short-circuit
+        # conditions from loop rotation artifacts.
+        #
+        # A rotated loop may duplicate the same guard or continue condition at
+        # different points in the loop. Both tests can jump forward to the same
+        # exit, which could otherwise be incorrectly folded into `a || b`.
+        #
+        # Therefore, loop analysis must be computed before build() runs.
         cfg.compute_loops()
 
         if raw:

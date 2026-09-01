@@ -43,7 +43,7 @@ class SourceLocation:
     Start/end span of an IR node within its source.
 
     `source` identifies which source a node belongs to when multiple
-    sources are involved in a single pipeline (e.g. multiple Hermes
+    sources are involved in a single pipeline (e.g., multiple Hermes
     bytecode sections).
     """
 

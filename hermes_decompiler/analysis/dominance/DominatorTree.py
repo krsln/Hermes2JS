@@ -74,7 +74,7 @@ class DominatorTree(_IterativeSetAnalysis):
             if block is entry:
                 continue
 
-            strict_doms = self.dominators[block] - {block}
+            strict_dominators = self.dominators[block] - {block}
 
             immediate = None
 
@@ -84,11 +84,11 @@ class DominatorTree(_IterativeSetAnalysis):
             # by any other strict dominator.
             #
 
-            for candidate in strict_doms:
+            for candidate in strict_dominators:
 
                 if all(
                         candidate not in self.dominators[other]
-                        for other in strict_doms
+                        for other in strict_dominators
                         if other is not candidate
                 ):
                     immediate = candidate

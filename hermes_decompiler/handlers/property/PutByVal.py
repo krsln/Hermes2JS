@@ -20,8 +20,8 @@ class PutByVal(OpcodeHandler):
         obj_reg, key_reg, value_reg = map(int, match.groups())
 
         left = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=self.get_register_expression(ctx.analysis, key_reg),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=self.get_register_expression(ctx.analysis, key_reg),
             computed=True,
         )
         right = self.get_register_expression(ctx.analysis, value_reg)
@@ -75,8 +75,8 @@ class PutByValWithReceiver(OpcodeHandler):
         )
 
         left = MemberExpression(
-            receiver=self.get_register_expression(ctx.analysis, obj_reg),
-            member=self.get_register_expression(ctx.analysis, key_reg),
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=self.get_register_expression(ctx.analysis, key_reg),
             computed=True,
         )
 
@@ -119,8 +119,8 @@ class PutOwnByVal(OpcodeHandler):
         obj_reg, value_reg, key_reg, _flags = map(int, match.groups())
 
         left = MemberExpression(
-            receiver=self.get_register_reference(ctx.analysis, obj_reg),
-            member=self.get_register_expression(ctx.analysis, key_reg),
+            obj=self.get_register_reference(ctx.analysis, obj_reg),
+            prop=self.get_register_expression(ctx.analysis, key_reg),
             computed=True,
         )
 

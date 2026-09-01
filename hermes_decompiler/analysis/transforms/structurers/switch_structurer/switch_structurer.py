@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.analysis.models import TerminatorSwitch
 from hermes_decompiler.analysis.models.regions import (
     IfRegion,
     LoopRegion,
@@ -8,37 +9,33 @@ from hermes_decompiler.analysis.models.regions import (
     SwitchRegion,
     TryRegion,
 )
-from hermes_decompiler.analysis.terminators import TerminatorSwitch
 from hermes_decompiler.analysis.transforms.structurers._base import RegionStructurer
-
 from ._comparison_chain_builder import _ComparisonChainSwitchBuilder
 from ._jump_table_builder import _JumpTableSwitchBuilder
 
-# Below this many cases, folding into a `switch` adds no value over the
-# `if`/`else if` chain IfStructurer already built - not wrong, just not
+# Below this many cases, folding into a switch adds no value over the
+# if/else-if chain IfStructurer already built - not wrong, just not
 # worth the structural churn for a 1-2-way branch.
 _MIN_CASES = 2
 
 
 class SwitchStructurer(RegionStructurer):
-    """
-    Builds `SwitchRegion`s from whichever form Hermes compiled a
-    `switch` statement into. For any given switch Hermes emits exactly
-    one of the two shapes, never both:
+    """Builds SwitchRegions from whichever form Hermes compiled to.
 
-    1. **Comparison chain** (small / sparse switches) - a chain of
-       `IfRegion`s already produced by `IfStructurer`. Recovered by
+    Hermes emits exactly one of two shapes per switch, never both:
+
+    1. Comparison chain (small/sparse switches) - a chain of IfRegions
+       already produced by IfStructurer. Recovered by
        `_ComparisonChainSwitchBuilder`.
-
-    2. **Jump table** (`SwitchImm` / `UIntSwitchImm`, dense switches) -
-       a single raw `BasicBlock` whose terminator is `TerminatorSwitch`,
-       untouched by `IfStructurer` (which only consumes
-       `TerminatorConditionalBranch`). Recovered by
+    2. Jump table (SwitchImm/UIntSwitchImm, dense switches) - a single
+       raw BasicBlock whose terminator is TerminatorSwitch, untouched
+       by IfStructurer (which only consumes
+       TerminatorConditionalBranch). Recovered by
        `_JumpTableSwitchBuilder`.
 
     This class only dispatches between the two builders and owns the
     tree walk; all matching/recovery logic lives in the builders
-    themselves (see each for its own mechanics).
+    themselves.
     """
 
     def __init__(self, graph, cfg):
@@ -97,21 +94,20 @@ class SwitchStructurer(RegionStructurer):
     # -------------------------------------------------------------
 
     def _fold_sequence(self, region: SequenceRegion) -> None:
-        """
-        Repeatedly scans `region.children` for a switch-shaped item
-        and converts it, restarting after each conversion since the
-        list is mutated in place - the same "find one, convert,
-        restart" shape `_DominanceIfBuilder._structure_sequence` uses
-        for `IfRegion` construction.
+        """Repeatedly convert switch-shaped items in region.children.
 
-        Bug fix vs. the pre-split version: that version returned
-        after the FIRST successful conversion in this method, on the
-        stated assumption that `_visit` would "re-scan on the next
-        pass" - but `_visit` never actually re-invoked `_fold_sequence`
-        on the same region. Two independent switch statements sitting
-        as siblings in the same `SequenceRegion` (not nested inside
-        one another) would silently leave the second one unconverted.
-        The `while` loop below is the missing retry.
+        Restarts after each conversion since the list is mutated in
+        place - the same "find one, convert, restart" shape
+        `_DominanceIfBuilder._structure_sequence` uses for IfRegion
+        construction.
+
+        Fixes a bug in the pre-split version, which returned after the
+        first successful conversion on the assumption that `_visit`
+        would re-scan on a later pass - it never did. Two independent
+        switch statements sitting as siblings in the same
+        SequenceRegion (not nested inside one another) would silently
+        leave the second one unconverted. The while loop below is the
+        missing retry.
         """
         while self._try_fold_one(region):
             pass

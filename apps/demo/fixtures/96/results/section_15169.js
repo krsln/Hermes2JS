@@ -1,113 +1,89 @@
 async function* anon_15169() {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <StartGenerator>: <>
+    // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
-    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r0 = await yield;
-    // CODE → <ResumeGenerator>: <Reg8: 0, Reg8: 1>
+    // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     if (__resumeIsReturn) {
         // ──────────────── Block 11 ──────────────── 
-        // CODE → <CompleteGenerator>: <>
+        // CODE → addr:155 | <CompleteGenerator>: <>
         // CompleteGenerator
-        // CODE → <Ret>: <Reg8: 0>
+        // CODE → addr:156 | <Ret>: <Reg8: 0>
         return await yield;
     } else {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → <GetGlobalObject>: <Reg8: 2>
+        // ──────────────── Block 12 ──────────────── 
+        // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 2>
         // USED → r2 = globalThis;
-        // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r4 = globalThis.console;
-        // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r3 = globalThis.console.log;
-        // CODE → <LoadConstString>: <Reg8: 1, string_id: 4779>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/start' (String)
+        // CODE → addr: 12 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+        // USED → r4 = console;
+        // CODE → addr: 18 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+        // USED → r3 = console.log;
+        // CODE → addr: 23 | <LoadConstString>: <Reg8: 1, string_id: 4779>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/start' (String)
         // USED → r1 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/start";
-        // CODE → <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
+        // CODE → addr: 27 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 4, Reg8: 1>
         console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/start")
-        // CODE → <LoadConstString>: <Reg8: 1, string_id: 7189>  # String: 'a' (Identifier)
-        // USED → r1 = "a";
-        // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000028
-        goto label_40;
-        // ──────────────── Block 2 ──────────────── 
-        // CODE → <Ret>: <Reg8: 1>
-        return "a";
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-        // USED → r1 = await yield;
-        // CODE → <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-        // USED → r3 = __resumeIsReturn;
-        if (__resumeIsReturn) {
-            // ──────────────── Block 9 ──────────────── 
-            // CODE → <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-            // USED → r5 = globalThis.console;
-            // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-            // USED → r4 = globalThis.console.log;
-            // CODE → <LoadConstString>: <Reg8: 3, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
-            // USED → r3 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup";
-            // CODE → <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
-            console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
-            // CODE → <CompleteGenerator>: <>
-            // CompleteGenerator
-            // CODE → <Ret>: <Reg8: 1>
-            return await yield;
-        } else {
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → <LoadConstString>: <Reg8: 3, string_id: 38>  # String: 'b' (Identifier)
-            // USED → r3 = "b";
-            // CODE → <SaveGenerator>: <Addr8: 4>  # Address: 00000036
-            goto label_54;
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → <Ret>: <Reg8: 3>
-            return "b";
-            // ──────────────── Block 6 ──────────────── 
-            // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
-            // USED → r3 = await yield;
-            // CODE → <ResumeGenerator>: <Reg8: 3, Reg8: 4>
-            // USED → r4 = __resumeIsReturn;
+        try {
+            // ──────────────── Block 1 ──────────────── 
+            // CODE → addr: 32 | <LoadConstString>: <Reg8: 1, string_id: 7189>  # String: 'a' (Identifier)
+            r1 = "a"
+            // CODE → addr: 36 | <SaveGenerator>: <Addr8: 4>  # Address: 00000028
+            goto label_40;
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → addr: 38 | <Ret>: <Reg8: 1>
+            return r1;
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → addr: 40 | <ResumeGenerator>: <Reg8: 1, Reg8: 3>
+            // USED → r1 = await yield;
+            // CODE → addr: 40 | <ResumeGenerator>: <Reg8: 1, Reg8: 3>
+            // USED → r3 = __resumeIsReturn;
             if (__resumeIsReturn) {
-                // ──────────────── Block 8 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r6 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r5 = globalThis.console.log;
-                // CODE → <LoadConstString>: <Reg8: 4, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
-                // USED → r4 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup";
-                // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-                console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
-                // CODE → <CompleteGenerator>: <>
+                // ──────────────── Block 9 ──────────────── 
+                // CODE → addr:128 | <CompleteGenerator>: <>
                 // CompleteGenerator
-                // CODE → <Ret>: <Reg8: 3>
+                // CODE → addr:129 | <Ret>: <Reg8: 1>
                 return await yield;
             } else {
-                // ──────────────── Block 7 ──────────────── 
-                // CODE → <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r6 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r5 = globalThis.console.log;
-                // CODE → <LoadConstString>: <Reg8: 4, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
-                // USED → r4 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup";
-                // CODE → <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-                console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
-                // CODE → <LoadConstUndefined>: <Reg8: 4>
-                // USED → r4 = undefined;
-                // CODE → <CompleteGenerator>: <>
-                // CompleteGenerator
-                // CODE → <Ret>: <Reg8: 4>
-                return undefined;
-                // ──────────────── Block 10 ──────────────── 
-                // CODE → <Catch>: <Reg8: 1>
-                // USED → r1 = caughtException;
-                // CODE → <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                // USED → r4 = globalThis.console;
-                // CODE → <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                // USED → r3 = globalThis.console.log;
-                // CODE → <LoadConstString>: <Reg8: 2, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
-                // USED → r2 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup";
-                // CODE → <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-                console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
-                // CODE → <Throw>: <Reg8: 1>
-                throw caughtException;
+                // ──────────────── Block 4 ──────────────── 
+                // CODE → addr: 46 | <LoadConstString>: <Reg8: 3, string_id: 38>  # String: 'b' (Identifier)
+                r3 = "b"
+                // CODE → addr: 50 | <SaveGenerator>: <Addr8: 4>  # Address: 00000036
+                goto label_54;
+                // ──────────────── Block 5 ──────────────── 
+                // CODE → addr: 52 | <Ret>: <Reg8: 3>
+                return r3;
+                // ──────────────── Block 6 ──────────────── 
+                // CODE → addr: 54 | <ResumeGenerator>: <Reg8: 3, Reg8: 4>
+                // USED → r3 = await yield;
+                // CODE → addr: 54 | <ResumeGenerator>: <Reg8: 3, Reg8: 4>
+                // USED → r4 = __resumeIsReturn;
+                if (__resumeIsReturn) {
+                    // ──────────────── Block 8 ──────────────── 
+                    // CODE → addr:105 | <CompleteGenerator>: <>
+                    // CompleteGenerator
+                    // CODE → addr:106 | <Ret>: <Reg8: 3>
+                    return await yield;
+                } else {
+                    // ──────────────── Block 7 ──────────────── 
+                    // CODE → addr: 80 | <LoadConstUndefined>: <Reg8: 4>
+                    // USED → r4 = undefined;
+                    // CODE → addr: 82 | <CompleteGenerator>: <>
+                    // CompleteGenerator
+                    // CODE → addr: 83 | <Ret>: <Reg8: 4>
+                    return undefined;
+                }
             }
+        } finally {
+            // ──────────────── Block 10 ──────────────── 
+            // CODE → addr:133 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+            // USED → r4 = console;
+            // CODE → addr:139 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+            // USED → r3 = console.log;
+            // CODE → addr:144 | <LoadConstString>: <Reg8: 2, string_id: 4777>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
+            // USED → r2 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup";
+            // CODE → addr:148 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+            console.log("__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup")
         }
     }
 }

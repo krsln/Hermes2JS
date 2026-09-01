@@ -1,27 +1,17 @@
-# CFG - Control Flow Graph
+# CFG – Control Flow Graph
 
 https://raw.githubusercontent.com/facebook/hermes/hermes-v260318099.0.1/include/hermes/BCGen/HBC/BytecodeList.def
 
-# IR - Intermediate Representation
+# IR – Intermediate Representation
 
 https://p1sec.github.io/hermes-dec/opcodes_table.html
 
 ```shell
 tree -I '__pycache__|__init__.py' hermes_decompiler
+
+## Done Stuff | feature/from-2025-09-01
+git diff main...feature/from-2025-08-15 > hermes2js.diff
 ```
-
-## Done Stuff | from 2025-08-01
-
-- LoopKind +-> FOR_OF, FOR_IN | ForEachRecognizer
-- handler fix: Jmp, JCompare, Call, ResumeGenerator, CreateClosure
-- dispatch/, opcode/, parsing/ moved into frontend/ folder
-- OpcodeCatalog, opcode verification tests
-- io/ moved into core/IO.py
-- IfStructurer fix
-- _raw.js
-- HermesAnalysis self.registers: dict[str, RegisterState] = {}
-- Printer.py
-- hermes_decompiler/analysis/transforms renames
 
 ## Testy
 
@@ -38,7 +28,10 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./app
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results --log-level DEBUG
 
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
+
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level WARNING
+
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
 
 # ControlFlow
@@ -59,7 +52,16 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 # Iterators
 # IteratorTests 15092, 15093
 
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/  --log-level WARNING
+# WARNING 725 
+```
+
 ## whole sections
+
+```shell
+
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/
+
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 999 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 999 --end 1999 
 
@@ -68,16 +70,4 @@ python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./ap
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 10000 --end 14999 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 15000 --end 19999
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 20000 --end 24999 
-```
-
-#### legacy
-
-```shell
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/focused -o ./apps/coachy/fixtures/results
-
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results
-
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --no-verbose
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict
-python scripts/decompile_sections.py -i ./apps/coachy/fixtures/sections -o ./apps/coachy/fixtures/results --strict --no-verbose
 ```

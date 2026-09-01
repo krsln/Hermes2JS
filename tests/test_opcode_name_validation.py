@@ -57,7 +57,7 @@ MIN_EXPECTED_HANDLER_COUNT = 200
 
 @pytest.fixture(scope="module", autouse=True)
 def initialize_handler_registry():
-    """Populate OpcodeHandler.registry before any validation runs."""
+    """Populate ``OpcodeHandler.registry`` before any validation runs."""
 
     HandlerLoader.load()
 
@@ -98,8 +98,8 @@ def test_every_handler_name_is_a_known_opcode(registered_handler_names):
             f"{details}"
         )
 
-
-def test_legacy_opcodes_are_visible_and_documented(registered_handler_names):
+# this one!!
+def test_legacy_opcodes_are_visible_and_documented(registered_handler_names, capsys):
     """
     Informational test.
 
@@ -111,17 +111,15 @@ def test_legacy_opcodes_are_visible_and_documented(registered_handler_names):
     """
 
     buckets = classify_all(registered_handler_names)
-    legacy = sorted(
-        buckets[OpcodeStatus.LEGACY],
-        key=lambda item: item.name,
-    )
+    legacy = sorted(buckets[OpcodeStatus.LEGACY], key=lambda item: item.name)
 
-    print(f"\n{len(legacy)} legacy handler(s) detected (not present in hbc99):")
-    for info in legacy:
-        v_min, v_max = info.versions[0], info.versions[-1]
-        print(f"  - {info.name}: hbc{v_min}..hbc{v_max}")
+    with capsys.disabled():
+        print(f"\n{len(legacy)} legacy handler(s) detected (not present in hbc99):")
+        for info in legacy:
+            v_min, v_max = info.versions[0], info.versions[-1]
+            print(f"  - {info.name}: hbc{v_min}..hbc{v_max}")
 
-    # assert True
+    assert True
 
 
 def test_known_unverified_list_is_empty():

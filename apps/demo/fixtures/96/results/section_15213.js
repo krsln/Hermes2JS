@@ -1,37 +1,37 @@
 function increment() {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <GetGlobalObject>: <Reg8: 0>
+    // CODE → addr:  0 | <GetGlobalObject>: <Reg8: 0>
     // USED → r0 = globalThis;
-    // CODE → <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-    // USED → r2 = globalThis.console;
-    // CODE → <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-    // USED → r1 = globalThis.console.log;
-    // CODE → <LoadConstString>: <Reg8: 0, string_id: 4542>  # String: '__BC:Classes/PrivateStaticTests/Counter/increment' (String)
+    // CODE → addr:  2 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+    // USED → r2 = console;
+    // CODE → addr:  8 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+    // USED → r1 = console.log;
+    // CODE → addr: 13 | <LoadConstString>: <Reg8: 0, string_id: 4542>  # String: '__BC:Classes/PrivateStaticTests/Counter/increment' (String)
     // USED → r0 = "__BC:Classes/PrivateStaticTests/Counter/increment";
-    // CODE → <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
+    // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 0>
     console.log("__BC:Classes/PrivateStaticTests/Counter/increment")
-    // CODE → <GetEnvironment>: <Reg8: 0, UInt8: 1>
-    // USED → r0 = getEnvironment(1);
-    // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 4>
-    // USED → r1 = getEnvironment(1)[4];
-    // CODE → <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r4 = getEnvironment(1)[4].default;
-    // CODE → <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 5>
-    // USED → r3 = getEnvironment(1)[5];
-    // CODE → <LoadConstUndefined>: <Reg8: 2>
-    // USED → r2 = undefined;
-    // CODE → <LoadParam>: <Reg8: 1, UInt8: 0>
+    // CODE → addr: 22 | <GetEnvironment>: <Reg8: 0, UInt8: 1>
+    r0 = getEnvironment(1)
+    // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 4>
+    r1 = r0[4]
+    // CODE → addr: 29 | <GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
+    // USED → r4 = r1.default;
+    // CODE → addr: 34 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 5>
+    r3 = r0[5]
+    // CODE → addr: 38 | <LoadConstUndefined>: <Reg8: 2>
+    r2 = undefined
+    // CODE → addr: 40 | <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
-    // CODE → <Call3>: <Reg8: 2, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 3>
-    // USED → r2 = getEnvironment(1)[4].default.call(undefined, r1, r3);
-    // CODE → <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 5>
-    // USED → r1 = getEnvironment(1)[5];
-    // CODE → <GetByVal>: <Reg8: 0, Reg8: 2, Reg8: 1>
-    r0 = getEnvironment(1)[4].default.call(undefined, r1, r3)[getEnvironment(1)[5]]
-    // CODE → <Inc>: <Reg8: 0, Reg8: 0>
+    // CODE → addr: 43 | <Call3>: <Reg8: 2, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 3>
+    r2 = r1.default.call(r2, this, r3)
+    // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 5>
+    r1 = r0[5]
+    // CODE → addr: 53 | <GetByVal>: <Reg8: 0, Reg8: 2, Reg8: 1>
+    r0 = r2[r1]
+    // CODE → addr: 57 | <Inc>: <Reg8: 0, Reg8: 0>
     // USED → r0 = r0 + 1;
-    // CODE → <PutByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
-    getEnvironment(1)[4].default.call(undefined, r1, r3)[getEnvironment(1)[5]] = r0 + 1
-    // CODE → <Ret>: <Reg8: 0>
+    // CODE → addr: 60 | <PutByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
+    r2[r0[5]] = r0 + 1
+    // CODE → addr: 64 | <Ret>: <Reg8: 0>
     return r0 + 1;
 }

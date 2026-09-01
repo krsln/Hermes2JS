@@ -1,18 +1,21 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import RegionGraph
-from hermes_decompiler.analysis.terminators import TerminatorConditionalBranch, TerminatorSwitch
+from hermes_decompiler.analysis.models import RegionGraph, TerminatorConditionalBranch, TerminatorSwitch
 from hermes_decompiler.analysis.transforms.cfg_passes import (
     ShortCircuitConditionCfgPass,
 )
 from hermes_decompiler.analysis.transforms.region_passes import (
     BooleanChainRegionPass,
     ConditionalExpressionRegionPass,
+    DeadMovEliminationPass,
     ForEachRegionPass,
     LoopConditionRegionPass,
     LoopContinueRegionPass,
+    LoopInductionAliasPass,
     NullishAssignmentRegionPass,
+    RedundantJumpRegionPass,
+    ReturnValueResolutionPass,
 )
 from hermes_decompiler.analysis.transforms.structurers import (
     SequenceStructurer,
@@ -27,58 +30,38 @@ from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)
 
-# Terminators that a structurer is always expected to consume. A
-# `BasicBlock` left holding one of these after `build()` means some CFG
-# shape wasn't recognized by any structurer - not a crash, but a real
-# gap: `Printer._emit_block` will render it as a raw
-# `if (...) goto label_N;` (or a switch dump) instead of proper
-# `if`/`while`/`switch` JS syntax. `TerminatorJump`/`Return`/`Throw` are
-# intentionally excluded: those render correctly as plain leaf
-# statements even inside a fully-structured tree, so their presence
-# isn't a sign of anything unresolved.
+# Terminators that should always be consumed by a structurer.
+# If one remains after build(), the CFG shape was not recognized and
+# will be emitted as a raw goto/switch instead of structured JS.
+#
+# Jump, Return, and Throw are intentionally excluded because they are
+# valid leaf terminators and do not indicate an incomplete structure.
 _UNSTRUCTURED_TERMINATOR_KINDS = (TerminatorConditionalBranch, TerminatorSwitch)
 
 
 class StructuralAnalyzer:
     """
-    Owns the full CFG -> region-tree -> statement-list pipeline, and is
-    the ONLY place any transform pass is ever invoked. Callers (e.g.
-    `HermesAnalysis.generate_js_v1`) run CFG-level analyses that
-    passes here depend on (`cfg.verify()` /
-    `cfg.compute_dominators()` / `cfg.compute_post_dominators()` /
-    `cfg.compute_loops()`) beforehand, then call
-    `StructuralAnalyzer(cfg).build()` and take the resulting root -
-    no pass is ever wired up or called from anywhere else.
+    Builds the structured representation from a CFG.
 
-    Passes run in three stages, each living in its own subpackage under
-    `transforms/`:
+    The pipeline has three stages:
 
-        1. `cfg_passes/`     - rewrite the raw CFG (blocks, edges,
-                                terminators) before any region exists.
-                                e.g. `ShortCircuitConditionCfgPass`.
+        1. CFG passes
+           Rewrite the CFG before region construction.
 
-        2. `structurers/`    - build the region tree (Sequence, Loop,
-                                If, Try, Switch regions) out of the
-                                CFG. Every structurer but the
-                                bootstrapping `SequenceStructurer`
-                                extends the common `RegionStructurer`
-                                base (`__init__(graph, cfg)` /
-                                `run() -> None`).
+        2. Structurers
+           Convert CFG blocks into the region tree.
 
-        3. `region_passes/`  - post-process the already-built region
-                                tree (fold/extract) without
-                                introducing a new region *kind*.
-                                e.g. `BooleanChainRegionPass`,
-                                `LoopConditionRegionPass`. Every pass
-                                extends the common `RegionPass` base -
-                                the same `__init__(graph, cfg)` /
-                                `run() -> None` contract as
-                                `RegionStructurer`.
+        3. Region passes
+           Fold or extract expressions from the completed region tree.
 
-    A pass never reaches into a later stage's concerns and never runs
-    outside this method - if a new pass is added, it's wired in here,
-    in the stage that matches what it actually does, not bolted onto
-    whichever caller happens to need it that day.
+    This class is the single entry point for all structural passes.
+    Passes are invoked here in dependency order so that each stage only
+    operates on the representation produced by the previous stage - and,
+    within a stage, several passes have real correctness dependencies on
+    each other's output, not just a conventional ordering. Each call
+    below documents its own "must run after X" reasoning inline; when
+    adding a new pass, place it where its actual data dependency lives
+    rather than at the end of its stage by default.
     """
 
     def __init__(self, cfg):
@@ -86,6 +69,15 @@ class StructuralAnalyzer:
 
     def build(self):
         # ---- 1. cfg_passes --------------------------------------------
+
+        # Collapses a chain of single-purpose test blocks that share a
+        # branch target (the CFG-level encoding of a pure control-flow
+        # `&&`/`||`, e.g. `if (a||b) { ... }`) into one block with a
+        # combined condition. Must run FIRST before any region exists:
+        # it operates on raw block/edge shape, and once IfStructurer
+        # has built an IfRegion around one of these blocks, the merge
+        # this pass performs can no longer be expressed as a simple
+        # CFG edit.
         ShortCircuitConditionCfgPass(self.cfg).run()
 
         # ---- 2. structurers -------------------------------------------
@@ -94,61 +86,124 @@ class StructuralAnalyzer:
 
         LoopStructurer(graph, self.cfg).run()
 
-        # Must run after LoopStructurer (needs LoopRegion.body.covered_blocks
-        # to tell loop-internal blocks from break targets) and before
-        # IfStructurer (which would otherwise permanently strand the
-        # break-test block's terminator - see StructuralAnalyzer's
-        # unstructured-block audit for exactly this shape).
+        # LoopBreakStructurer must run after LoopStructurer so it can
+        # distinguish loop-internal blocks from loop exit targets.
+        # It must also run before IfStructurer, which could otherwise
+        # consume the break-test block as an ordinary conditional.
         LoopBreakStructurer(graph, self.cfg).run()
 
-        # Handles the shapes LoopBreakStructurer declines: an exit edge
-        # escaping not just its own loop but one or more ENCLOSING
-        # loops too (labeled `break`/`continue` targeting an ancestor
-        # loop by name). Must run in this same slot, still before
-        # IfStructurer - see its own docstring for why running any
-        # later would let IfStructurer silently build a broken,
-        # infinite-loop-risking shape out of the same edge instead.
+        # Handles exits that cross one or more enclosing loops and
+        # therefore require a labeled break/continue.
+        #
+        # This must remain before IfStructurer for the same reason as
+        # LoopBreakStructurer: once the block is consumed by an IfRegion,
+        # the loop-level exit can no longer be recognized reliably.
         LoopLabeledExitStructurer(graph, self.cfg).run()
 
+        # Builds IfRegions out of whatever conditional branches the
+        # loop-exit structurers above didn't already claim. Must run
+        # after both of them for the shared reason noted on each:
+        # once a block is folded into an IfRegion here, its original
+        # branch is gone, so a loop-exit shape that IfStructurer
+        # reaches first can never be recovered as a `break`/`continue`
+        # afterward - only ever as a plain (and, for a labeled exit,
+        # WRONG) nested `if`.
         IfStructurer(graph, self.cfg).run()
 
-        # Runs after Loop/If: try/catch bodies routinely wrap only a
-        # *sub-slice* of a loop iteration (e.g. everything except the
-        # loop header/back-edge - see TryStructurer's docstring), so
-        # the try range's blocks need to already be resolved into
-        # their final loop/if nesting before we can find them as flat
-        # siblings within whatever SequenceRegion they now live in.
+        # Try regions may cover only part of a loop iteration, so loop
+        # and if nesting must already be established before try/catch
+        # ranges are identified.
         TryStructurer(graph, self.cfg).run()
 
-        # SwitchStructurer runs after the other structurers because it
-        # recognizes two different switch representations:
-        #
-        #   * raw TerminatorSwitch jump tables left untouched by
-        #     IfStructurer
-        #
-        #   * comparison chains that IfStructurer has already converted into
-        #     nested IfRegions
-        #
-        # Running here allows it to fold both forms into a single
-        # SwitchRegion representation before lowering.
+        # SwitchStructurer handles both raw switch terminators and
+        # comparison chains already converted into IfRegions.
         SwitchStructurer(graph, self.cfg).run()
 
         # ---- 3. region_passes -------------------------------------------
         BooleanChainRegionPass(graph, self.cfg).run()  # `&&`/`||` (e.g. a bare-if (a || b) { ... }
+
+        # Must run after BooleanChainRegionPass: a then/else arm's own
+        # condition may itself be an unfolded `&&`/`||` chain that
+        # needs collapsing first, so this pass can read clean,
+        # already-folded conditions instead of having to fold
+        # sub-chains itself.
         ConditionalExpressionRegionPass(graph, self.cfg).run()  # ternary
+
+        # No ordering dependency on the other region_passes - matches
+        # a narrow, self-contained `if (x == null) { x = v; }` shape
+        # and only ever touches the one IfRegion it folds.
         NullishAssignmentRegionPass(graph, self.cfg).run()
+
+        # Must run after IfStructurer/SwitchStructurer, not just after
+        # the loop structurers above: for a `for` loop, the body's own
+        # inner conditions (e.g. `if (i === 3) continue;`) are only
+        # available as clean IfRegion/SwitchRegion conditions once
+        # those two have already run - beforehand they're still raw
+        # BasicBlock terminators. LoopInductionAliasPass (right below)
+        # depends on that same ordering to repoint those conditions,
+        # not just this pass's own condition/initializer/update
+        # extraction.
         LoopConditionRegionPass(graph, self.cfg).run()
 
-        # Must run after IfStructurer: recognizes a residual,
-        # already-unconditional jump - wherever IfStructurer's own
-        # nesting left it - whose target is the loop's own latch
-        # block, and rewrites it in place as `continue;`. See its own
-        # docstring for why no structurer ever strips this jump
-        # itself. Order relative to the other region passes doesn't
-        # matter - see its docstring for the disjointness argument.
+        # Must run right after LoopConditionRegionPass (needs
+        # loop.update/loop.initializer already populated to know the
+        # induction register's identity. See its own docstring for
+        # why it derives that from metadata rather than position) and
+        # before ForEachRegionPass (fewer, unaliased registers make
+        # that pass's own register-resolution walk less likely to
+        # land on the wrong candidate).
+        LoopInductionAliasPass(graph, self.cfg).run()
+
+        # Converts residual unconditional jumps to the loop latch into
+        # a `continue` statement. This requires the final If/Loop nesting.
         LoopContinueRegionPass(graph, self.cfg).run()
 
+        # Drops a bare unconditional-Jmp block whose target is simply
+        # the very next sibling block that already executes right
+        # after it - the trampoline blocks LoopLabeledExitStructurer's
+        # address-chasing walks through but doesn't itself remove
+        # (see that structurer's `_chase_trampoline_address` and this
+        # pass's own docstring). No ordering dependency on
+        # LoopContinueRegionPass - grouped here only because both
+        # clean up leftover TerminatorJump-only blocks.
+        RedundantJumpRegionPass(graph, self.cfg).run()
+
+        # Reclassifies a plain `while` LoopRegion as `for-of`/`for-in`
+        # by matching a fixed IteratorNext/GetNextPName instruction
+        # sequence at the loop header. Must run after LoopStructurer,
+        # TryStructurer, AND LoopConditionRegionPass - the last
+        # because it relies on the header's terminator already having
+        # been consumed into `loop.condition`, so the header's first
+        # remaining instruction is reliably the iterator call and
+        # nothing else. Ordering relative to LoopInductionAliasPass/
+        # LoopContinueRegionPass doesn't matter; neither touches the
+        # header's leading instruction the way this pass needs to.
         ForEachRegionPass(graph, self.cfg).run()
+
+        # Folds a bare `return rN;`/`throw rN;` (see Ret.py/Throw.py's
+        # own opcode-handler docstrings) back into its defining
+        # expression, now that real CFG predecessor edges are
+        # available to verify every reaching definition agrees. No
+        # ordering dependency on any other region pass here - it only
+        # reads `block.predecessors`/`.instructions`, which none of
+        # the passes above rewrite in a way this one's own
+        # reaching-definition walk would be misled by; placed last so
+        # it sees the fully-settled block contents (e.g. induction
+        # aliasing already resolved by LoopInductionAliasPass) rather
+        # than a still-aliased register name.
+        ReturnValueResolutionPass(graph, self.cfg).run()
+
+        # Removes a dead `rN = rM;` register-copy instruction (see its
+        # own docstring for the concrete motivating case -
+        # forOfTest/section_15092's leftover `r4 = r3`). No ordering
+        # dependency on anything above: it only ever deletes an
+        # instruction outright, never rewrites one, so it can't affect
+        # any earlier pass's own analysis - placed last so it sees
+        # every register copy any earlier pass may have left behind
+        # (e.g. ForEachRegionPass's own for-of/for-in binding setup)
+        # rather than risking a copy some earlier pass still expected
+        # to find in place.
+        DeadMovEliminationPass(graph, self.cfg).run()
 
         # ---- Diagnostics ------------------------------------------------
 
@@ -159,29 +214,26 @@ class StructuralAnalyzer:
     @staticmethod
     def _audit_unstructured_blocks(root, graph: RegionGraph, cfg) -> None:
         """
-        Log (once, as a single warning listing every offender) any block
-        still holding a conditional-branch or switch terminator after
-        every structurer has run. This is diagnostic only - it never
-        changes output - but makes an otherwise-silent structuring gap
-        visible in normal logs instead of only showing up as an odd
-        `if (...) goto label_N;` line buried in `--verbose` JS output.
+        Report blocks that still contain a conditional or switch
+        terminator after all structurers have run.
 
-        For a conditional branch, also resolves and reports where its
-        target actually lives (which `SequenceRegion`, and whether that
-        region is the same one the source block itself belongs to).
-        Concretely distinguishes the two known failure shapes instead of
-        leaving both looking identical in the log:
+        Such blocks indicate a CFG shape that was not recognized by the
+        structuring pipeline and will be emitted as a raw goto/switch.
 
-        - target's owner differs from the source block's own owner:
-          the target is reachable another way this pass doesn't handle
-          - most commonly compiler-side tail-merging/code-sharing across
-            branches (see `IfStructurer` module docstring) - and finding
-            the shared block by address by hand is exactly the kind of
-            lookup this log line exists to save.
-        - target has no owner / isn't a known block address at all:
-          something upstream produced an inconsistent CFG - worth
-          escalating rather than assuming it's the tail-merge case.
+        Conditional branches additionally report the relationship between
+        the source block and its target:
+
+        - Same region:
+          Unexpected; the branch should normally have been consumed.
+
+        - Different region:
+          Likely a cross-branch or tail-merged block that is not handled
+          by the current structurers.
+
+        - No owner or unknown target:
+          Indicates an inconsistent or incomplete CFG.
         """
+
         unresolved: list[BasicBlock] = sorted(
             (
                 block for block in root.covered_blocks
@@ -200,9 +252,7 @@ class StructuralAnalyzer:
             own_owner = graph.owner(block)
 
             if not isinstance(terminator, TerminatorConditionalBranch):
-                # TerminatorSwitch (or any future addition to
-                # _UNSTRUCTURED_TERMINATOR_KINDS): no single "target" to
-                # resolve, just report the block itself.
+                # TerminatorSwitch has no single target to resolve.
                 return f"block {block.id} (0x{block.address:x})"
 
             target_block = address_to_block.get(terminator.target)

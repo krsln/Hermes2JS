@@ -1,11 +1,11 @@
 function function_15114(param1, param2) {
     // ──────────────── Block 0 ──────────────── 
-    // CODE → <LoadParam>: <Reg8: 1, UInt8: 1>
+    // CODE → addr:  0 | <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
-    // CODE → <LoadParam>: <Reg8: 0, UInt8: 2>
+    // CODE → addr:  3 | <LoadParam>: <Reg8: 0, UInt8: 2>
     // USED → r0 = param2;
-    // CODE → <Add>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    // USED → r0 = param1 + param2;
-    // CODE → <Ret>: <Reg8: 0>
-    return param1 + param2;
+    // CODE → addr:  6 | <Add>: <Reg8: 0, Reg8: 1, Reg8: 0>
+    r0 = param1 + param2
+    // CODE → addr: 10 | <Ret>: <Reg8: 0>
+    return r0;
 }

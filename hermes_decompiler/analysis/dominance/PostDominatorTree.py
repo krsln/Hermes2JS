@@ -11,7 +11,7 @@ class PostDominatorTree(_IterativeSetAnalysis):
     def __init__(self, cfg):
         super().__init__(cfg)
 
-        self.ipdom: Dict[BasicBlock, Optional[BasicBlock]] = {}
+        self.immediate_post_dominators: Dict[BasicBlock, Optional[BasicBlock]] = {}
 
     def roots(self):
         #
@@ -36,7 +36,7 @@ class PostDominatorTree(_IterativeSetAnalysis):
     def compute(self):
         super().compute()
 
-        self.ipdom = self.compute_immediate()
+        self.immediate_post_dominators = self.compute_immediate()
 
     # ---------------------------------------------------------
 
@@ -51,4 +51,4 @@ class PostDominatorTree(_IterativeSetAnalysis):
             self,
             block: BasicBlock,
     ) -> Optional[BasicBlock]:
-        return self.ipdom.get(block)
+        return self.immediate_post_dominators.get(block)

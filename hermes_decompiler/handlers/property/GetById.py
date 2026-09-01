@@ -9,7 +9,10 @@ from hermes_decompiler.ir.expressions import Identifier, MemberExpression, CallE
 class GetById(OpcodeHandler):
     """Get property by string ID: obj[propName]"""
 
-    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, STRING_ID), "Reg8, Reg8, UInt8, UInt16 (string_id)")
+    ARGUMENTS = ArgsPattern(
+        sequence(REG, REG, UINT8, STRING_ID),
+        "Reg8, Reg8, UInt8, UInt16 (string_id)",
+    )
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = self.match_arguments(ctx)
@@ -19,9 +22,9 @@ class GetById(OpcodeHandler):
         dest_reg, obj_reg, _cache, string_id = map(int, match.groups())
 
         prop_name = ctx.entry.identifier_name or f"string_{string_id}"
-        receiver = self.get_register_expression(ctx.analysis, obj_reg)
+        obj = self.resolve_get_by_argument(ctx.analysis, obj_reg)
 
-        expression = MemberExpression(receiver=receiver, member=Identifier(name=prop_name))
+        expression = MemberExpression(obj=obj, prop=Identifier(name=prop_name))
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
@@ -40,6 +43,22 @@ class GetByIdShort(GetById):
 # DEFINE_OPCODE_4(GetByIdLong, Reg8, Reg8, UInt8, UInt32)
 # Example:
 class GetByIdLong(GetById):
+    pass
+
+
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
+# DEFINE_OPCODE_4(TryGetById, Reg8, Reg8, UInt8, UInt16)
+# Example: <TryGetById>: <Reg8: 14, Reg8: 13, UInt8: 8, string_id: 23> # String: 'Math' (Identifier)
+class TryGetById(GetById):
+    """TryGetById - similar to GetById, often used with global-object."""
+
+    pass
+
+
+# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
+# DEFINE_OPCODE_4(TryGetByIdLong, Reg8, Reg8, UInt8, UInt32)
+# Example:
+class TryGetByIdLong(TryGetById):
     pass
 
 
@@ -63,8 +82,8 @@ class GetByIdWithReceiverLong(OpcodeHandler):
         receiver = self.get_register_expression(ctx.analysis, receiver_reg)
 
         callee = MemberExpression(
-            receiver=Identifier(name="Reflect"),
-            member=Identifier(name="get"),
+            obj=Identifier(name="Reflect"),
+            prop=Identifier(name="get"),
             computed=False,
         )
 
@@ -77,19 +96,3 @@ class GetByIdWithReceiverLong(OpcodeHandler):
         ctx.analysis.add_result(result)
 
         return result
-
-
-# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
-# DEFINE_OPCODE_4(TryGetById, Reg8, Reg8, UInt8, UInt16)
-# Example: <TryGetById>: <Reg8: 14, Reg8: 13, UInt8: 8, string_id: 23> # String: 'Math' (Identifier)
-class TryGetById(GetById):
-    """TryGetById - similar to GetById, often used with global-object."""
-
-    pass
-
-
-# Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
-# DEFINE_OPCODE_4(TryGetByIdLong, Reg8, Reg8, UInt8, UInt32)
-# Example:
-class TryGetByIdLong(TryGetById):
-    pass

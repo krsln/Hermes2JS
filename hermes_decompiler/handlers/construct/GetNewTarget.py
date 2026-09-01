@@ -18,7 +18,7 @@ class GetNewTarget(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        expression = MemberExpression(receiver=Identifier(name="new"), member=Identifier(name="target"), computed=False)
+        expression = MemberExpression(obj=Identifier(name="new"), prop=Identifier(name="target"), computed=False)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)

@@ -1,4 +1,4 @@
 from .JSEmitter import JSEmitter
-from .Printer import Printer
+from .printer import Printer
 
 __all__ = ['JSEmitter', 'Printer']

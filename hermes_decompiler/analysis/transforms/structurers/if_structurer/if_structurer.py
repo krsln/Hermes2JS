@@ -7,37 +7,28 @@ from ._dominance_builder import _DominanceIfBuilder
 
 
 class IfStructurer(RegionStructurer):
-    """
-    Converts BasicBlocks terminated by a ConditionalBranch into
-    structured IfRegions, then folds the common Hermes short-circuit
-    (`&&`/`||`) idioms back into compound conditions.
+    """Builds structured IfRegions and folds short-circuit conditions.
 
-    This class is a thin orchestrator over two independently testable
-    passes (see each for the full mechanics):
+    Thin orchestrator over two independently testable passes:
 
-      - `_DominanceIfBuilder`   - builds new `IfRegion`s from raw CFG
-                                   blocks, purely by dominance.
-      - `_CompoundConditionFolder` - rewrites the `IfRegion`s that
-                                   `_DominanceIfBuilder` just built,
-                                   collapsing `&&`/`||` cascades and
-                                   absorbing residual jumps. Never
-                                   introduces a region from scratch.
+    - `_DominanceIfBuilder` - builds new IfRegions from raw CFG blocks,
+      purely by dominance.
+    - `_CompoundConditionFolder` - rewrites those IfRegions, collapsing
+      `&&`/`||` cascades and absorbing residual jumps. Never introduces
+      a region from scratch.
 
-    They must run in this order: the folder pattern-matches against
-    already-built `IfRegion`s, so it is meaningless before the builder
-    has run at least once.
+    Order matters: the folder pattern matches against IfRegions the
+    builder produces, so the builder must run first.
 
     Not yet handled by either pass: labeled break/continue and other
-    cross-branch/tail-merged jumps (blocks whose target lives in a
-    different region entirely). Those still surface as raw
-    goto/switch statements downstream - see the transforms roadmap's
-    labeled-break-support phase.
+    cross-branch/tail-merged jumps. Those still surface as raw
+    goto/switch statements downstream.
     """
 
     def __init__(self, graph, cfg):
         super().__init__(graph, cfg)
         self._builder = _DominanceIfBuilder(graph, cfg)
-        self._folder = _CompoundConditionFolder(graph)
+        self._folder = _CompoundConditionFolder(graph, cfg)
 
     def run(self) -> None:
         self._builder.run()
