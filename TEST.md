@@ -8,20 +8,10 @@ https://p1sec.github.io/hermes-dec/opcodes_table.html
 
 ```shell
 tree -I '__pycache__|__init__.py' hermes_decompiler
+
+## Done Stuff | feature/from-2025-09-01
+git diff main...feature/from-2025-08-15 > hermes2js.diff
 ```
-
-## Done Stuff | feature/from-2025-08-15
-
-- /handlers/ GetByVal, CreateThis, GetById, SelectObject, Call
-- /ir/expressions/ Acess.MemberExpression
-- Printer.py to composition/facade architechture printer/
-- RegionPrinter.py // CODE → addr:...
-- OpcodeHandler.py HermesAnalysis.py|RegisterState
-- LoopInductionAliasPass.py fix -> for (r1 = 0; r1 < 3; r1 = r1 + 1) {...
-- analysis/transforms/structurers */if_structurer/switch_structurer/try_structurer docstrings re-newed
-- analysis/transforms/structurers /try_structurer fixes
-- analysis/terminators/ moved to analysis/models/Terminators.py
-- transforms.region_passes/*
 
 ## Testy
 
