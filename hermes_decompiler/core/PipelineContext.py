@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 from typing import List
 
 from hermes_decompiler.frontend.opcode import OpcodeEntry
-from hermes_decompiler.runtime import HermesAnalysis
+from hermes_decompiler.core.runtime import HermesAnalysis # order matters
 
 
 @dataclass

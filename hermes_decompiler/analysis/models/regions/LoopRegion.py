@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.models.regions.LoopKind import LoopKind
-from hermes_decompiler.analysis.models.regions._base import Region, SequenceRegion
+from hermes_decompiler.analysis.models.regions.BaseRegion import Region, SequenceRegion
 
 
 class LoopRegion(Region):

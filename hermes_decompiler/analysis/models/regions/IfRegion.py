@@ -1,5 +1,5 @@
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models.regions import Region, SequenceRegion
+from hermes_decompiler.analysis.models.regions.BaseRegion import Region, SequenceRegion
 from hermes_decompiler.ir import Expression
 
 

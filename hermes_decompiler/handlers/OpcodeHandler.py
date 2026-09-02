@@ -8,12 +8,12 @@ from enum import Enum, auto
 from typing import Dict, Optional
 
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.core.runtime import HermesAnalysis
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
     ArrayExpression, Literal, CallExpression, MemberExpression,
 )
-from hermes_decompiler.runtime import HermesAnalysis
 
 logger = get_logger(__name__)
 

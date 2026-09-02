@@ -1,10 +1,8 @@
-import dataclasses
+
 
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
-from hermes_decompiler.ir import Expression
-from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression, Literal
-from hermes_decompiler.runtime import HermesAnalysis
+from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
 
 
 # Reg8, Reg8, UInt8 (total size 3)
