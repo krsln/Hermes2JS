@@ -21,10 +21,11 @@ class GetEnvironment(OpcodeHandler):
     """
     Resolve an environment from the lexical scope chain.
 
-    level = 0  -> current environment
-    level = 1  -> parent environment
-    level = 2  -> grandparent
-    ...
+    2-operand form:
+        GetEnvironment dest, level
+
+    3-operand form:
+        GetEnvironment dest, parent, level
     """
 
     ARGUMENTS = (
