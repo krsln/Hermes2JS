@@ -10,6 +10,7 @@ from hermes_decompiler.analysis.transforms.region_passes import (
     ConditionalExpressionRegionPass,
     DeadMovEliminationPass,
     ForEachRegionPass,
+    GeneratorStateMachineRegionPass,
     LoopConditionRegionPass,
     LoopContinueRegionPass,
     LoopInductionAliasPass,
@@ -120,6 +121,7 @@ class StructuralAnalyzer:
         SwitchStructurer(graph, self.cfg).run()
 
         # ---- 3. region_passes -------------------------------------------
+
         BooleanChainRegionPass(graph, self.cfg).run()  # `&&`/`||` (e.g. a bare-if (a || b) { ... }
 
         # Must run after BooleanChainRegionPass: a then/else arm's own
@@ -179,6 +181,27 @@ class StructuralAnalyzer:
         # LoopContinueRegionPass doesn't matter; neither touches the
         # header's leading instruction the way this pass needs to.
         ForEachRegionPass(graph, self.cfg).run()
+
+        # Collapses the raw StartGenerator/ResumeGenerator/SaveGenerator/
+        # CompleteGenerator state machine (see the opcode handlers' own
+        # docstrings, and this pass's own docstring for the exact
+        # shape) into plain `yield value;` statements. Must run after
+        # every loop-shape pass above (LoopConditionRegionPass/
+        # LoopInductionAliasPass/ForEachRegionPass in particular):
+        # folding a yield sitting inside a loop body first can disturb
+        # block adjacency those passes still depend on to recognize the
+        # loop's real shape - confirmed by tracing asyncLoopTest/
+        # section_15185 (an `await` inside a `for...of` body), where
+        # running this pass BEFORE ForEachRegionPass corrupted the
+        # loop's for-of recognition and its synthesized iterator-
+        # cleanup try/finally entirely. No ordering dependency on
+        # ReturnValueResolutionPass below (in either direction): that
+        # pass now explicitly refuses to inline a YieldExpression/
+        # AwaitExpression across a Return/Throw statement boundary
+        # regardless of which pass ran first - see its own docstring
+        # and the identity-sensitive-expression check in
+        # `_resolve_register`.
+        GeneratorStateMachineRegionPass(graph, self.cfg).run()
 
         # Folds a bare `return rN;`/`throw rN;` (see Ret.py/Throw.py's
         # own opcode-handler docstrings) back into its defining

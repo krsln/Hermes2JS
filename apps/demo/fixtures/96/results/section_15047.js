@@ -42,7 +42,6 @@ function whileTest() {
             // CODE → addr: 62 | <Inc>: <Reg8: 6, Reg8: 7>
             r6 = r5 + 1
         }
-        // ──────────────── Block 4 ──────────────── 
     }
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 

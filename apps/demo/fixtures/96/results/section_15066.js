@@ -21,7 +21,6 @@ function labeledContinueTest() {
     loop_1:
     // LOOP → START (for)
     for (r1 = 0; r1 < 3; r1 = r1 + 1) {
-        // ──────────────── Block 1 ──────────────── 
         // LOOP → START (for)
         for (r8 = 0; r8 < 3; r8 = r9 + 1) {
             // ──────────────── Block 2 ──────────────── 
@@ -58,7 +57,6 @@ function labeledContinueTest() {
         console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
         // CODE → addr: 90 | <Jmp>: <Addr8: 18>  # Address: 0000006c
         goto label_108;
-        // ──────────────── Block 6 ──────────────── 
     }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

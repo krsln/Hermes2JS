@@ -5,6 +5,7 @@ from .BooleanChainRegionPass import BooleanChainRegionPass
 from .ConditionalExpressionRegionPass import ConditionalExpressionRegionPass
 from .DeadMovEliminationPass import DeadMovEliminationPass
 from .ForEachRegionPass import ForEachRegionPass
+from .GeneratorStateMachineRegionPass import GeneratorStateMachineRegionPass
 from .LoopConditionRegionPass import LoopConditionRegionPass
 from .LoopInductionAliasPass import LoopInductionAliasPass
 from .LoopContinueRegionPass import LoopContinueRegionPass
@@ -18,6 +19,7 @@ __all__ = [
     "ConditionalExpressionRegionPass",
     "DeadMovEliminationPass",
     "ForEachRegionPass",
+    "GeneratorStateMachineRegionPass",
     "LoopConditionRegionPass",
     "LoopInductionAliasPass",
     "LoopContinueRegionPass",

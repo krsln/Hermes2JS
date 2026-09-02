@@ -20,7 +20,6 @@ function forTest() {
     // USED → r1 = 3;
     // LOOP → START (for)
     for (r5 = 0; r5 < 10; r5 = r5 + 1) {
-        // ──────────────── Block 1 ──────────────── 
         if (r5 === 3) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr: 88 | <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -53,7 +52,6 @@ function forTest() {
             // CODE → addr: 64 | <Jmp>: <Addr8: 40>  # Address: 00000068
             continue;
         }
-        // ──────────────── Block 6 ──────────────── 
     }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
