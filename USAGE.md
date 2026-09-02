@@ -83,7 +83,6 @@ Converts each discovered `section_<n>.hbc` into a corresponding `section_<n>.js`
 
 ```shell
 python scripts/decompile_sections.py -i <sections_dir> -o <results_dir> [options]
-python scripts/decompile_sections.py -i <sections_dir> -o <results_dir> [options]
 
 
 python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results
