@@ -46,7 +46,7 @@ class BaseJCompare(OpcodeHandler):
     operator: ClassVar[Optional[BinaryOperator]] = None
     negated_operator: ClassVar[Optional[BinaryOperator]] = None
 
-    ARGUMENTS = ArgsPattern(sequence(ADDR, REG, REG), "ADDR, Reg8, Reg8")
+    ARGUMENTS = ArgsPattern(sequence(ADDR, REG, REG), "Addr8, Reg8, Reg8")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = self.match_arguments(ctx)
