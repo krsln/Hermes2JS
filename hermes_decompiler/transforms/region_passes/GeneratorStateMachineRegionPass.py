@@ -256,7 +256,7 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
 
         new_children = list(region.children[:index])
 
-        if yield_block is not None:
+        if yield_block is not None and len(yield_block.instructions) >= 2:
             value_instruction = yield_block.instructions[-2]
             save_instruction = yield_block.instructions[-1]
 
