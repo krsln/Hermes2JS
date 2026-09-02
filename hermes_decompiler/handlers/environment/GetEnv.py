@@ -3,6 +3,16 @@ from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, NumericLiteral
 
 
+# /// Get an environment (scope) from N levels up the stack.
+# /// 0 is the current environment, 1 is the caller's environment, etc.
+# DEFINE_OPCODE_2(GetEnvironment, Reg8, UInt8)
+
+# /// Get an environment by traversing the scope chain.
+# /// Arg1 is the destination.
+# /// Arg2 is the environment from which to start traversing.
+# /// Arg3 is the number of levels up the scope chain to go.
+# DEFINE_OPCODE_3(GetEnvironment, Reg8, Reg8, UInt8)
+
 # Reg8, Reg8, UInt8 (total size 3)
 # DEFINE_OPCODE_3(GetEnvironment, Reg8, Reg8, UInt8)
 # DEFINE_OPCODE_2(GetEnvironment, Reg8, UInt8)
