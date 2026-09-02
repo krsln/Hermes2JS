@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from hermes_decompiler.ir.Node import Node
 from hermes_decompiler.ir.expressions import Identifier
-from ._Base import Statement
+from ._base import Statement
 
 __all__ = [
     "LabeledStatement",
