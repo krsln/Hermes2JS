@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT16, UINT32
+from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16, UINT32
 from hermes_decompiler.ir.expressions import Identifier
 
 
@@ -9,7 +9,7 @@ from hermes_decompiler.ir.expressions import Identifier
 class CreateBaseClass(OpcodeHandler):
     """Create a base (non-derived) ES6 class closure."""
 
-    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, UINT8), "Reg8, Reg8, Reg8, UInt16")
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG, UINT16), "Reg8, Reg8, Reg8, UInt16")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = self.match_arguments(ctx)
