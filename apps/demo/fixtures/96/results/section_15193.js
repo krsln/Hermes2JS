@@ -3,7 +3,7 @@ async function* anon_15193() {
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield;
+    r0 = await yield
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     if (__resumeIsReturn) {
@@ -11,7 +11,7 @@ async function* anon_15193() {
         // CODE → addr:153 | <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → addr:154 | <Ret>: <Reg8: 0>
-        return await yield;
+        return r0;
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 6>
@@ -39,7 +39,7 @@ async function* anon_15193() {
         return r1;
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 49 | <ResumeGenerator>: <Reg8: 1, Reg8: 2>
-        // USED → r1 = await yield;
+        r1 = await yield
         // CODE → addr: 49 | <ResumeGenerator>: <Reg8: 1, Reg8: 2>
         // USED → r2 = __resumeIsReturn;
         if (__resumeIsReturn) {
@@ -47,7 +47,7 @@ async function* anon_15193() {
             // CODE → addr:150 | <CompleteGenerator>: <>
             // CompleteGenerator
             // CODE → addr:151 | <Ret>: <Reg8: 1>
-            return await yield;
+            return r1;
         } else {
             // ──────────────── Block 4 ──────────────── 
             // CODE → addr: 55 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 4, UInt8: 5>
@@ -61,7 +61,7 @@ async function* anon_15193() {
             return r2;
             // ──────────────── Block 6 ──────────────── 
             // CODE → addr: 67 | <ResumeGenerator>: <Reg8: 2, Reg8: 3>
-            // USED → r2 = await yield;
+            r2 = await yield
             // CODE → addr: 67 | <ResumeGenerator>: <Reg8: 2, Reg8: 3>
             // USED → r3 = __resumeIsReturn;
             if (__resumeIsReturn) {
@@ -69,7 +69,7 @@ async function* anon_15193() {
                 // CODE → addr:147 | <CompleteGenerator>: <>
                 // CompleteGenerator
                 // CODE → addr:148 | <Ret>: <Reg8: 2>
-                return await yield;
+                return r2;
             } else {
                 // ──────────────── Block 7 ──────────────── 
                 // CODE → addr: 73 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 4, UInt8: 7>
@@ -85,7 +85,7 @@ async function* anon_15193() {
                 return r3;
                 // ──────────────── Block 9 ──────────────── 
                 // CODE → addr: 94 | <ResumeGenerator>: <Reg8: 3, Reg8: 7>
-                // USED → r3 = await yield;
+                r3 = await yield
                 // CODE → addr: 94 | <ResumeGenerator>: <Reg8: 3, Reg8: 7>
                 // USED → r7 = __resumeIsReturn;
                 if (__resumeIsReturn) {
@@ -93,7 +93,7 @@ async function* anon_15193() {
                     // CODE → addr:144 | <CompleteGenerator>: <>
                     // CompleteGenerator
                     // CODE → addr:145 | <Ret>: <Reg8: 3>
-                    return await yield;
+                    return r3;
                 } else {
                     // ──────────────── Block 10 ──────────────── 
                     // CODE → addr:100 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 9>
@@ -107,7 +107,7 @@ async function* anon_15193() {
                     return r4;
                     // ──────────────── Block 12 ──────────────── 
                     // CODE → addr:112 | <ResumeGenerator>: <Reg8: 4, Reg8: 7>
-                    // USED → r4 = await yield;
+                    r4 = await yield
                     // CODE → addr:112 | <ResumeGenerator>: <Reg8: 4, Reg8: 7>
                     // USED → r7 = __resumeIsReturn;
                     if (__resumeIsReturn) {
@@ -115,7 +115,7 @@ async function* anon_15193() {
                         // CODE → addr:141 | <CompleteGenerator>: <>
                         // CompleteGenerator
                         // CODE → addr:142 | <Ret>: <Reg8: 4>
-                        return await yield;
+                        return r4;
                     } else {
                         // ──────────────── Block 13 ──────────────── 
                         // CODE → addr:118 | <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

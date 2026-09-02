@@ -6,7 +6,7 @@ from collections import deque
 from hermes_decompiler.analysis.cfg import BasicBlock
 from hermes_decompiler.analysis.transforms.shared import structural_key
 from hermes_decompiler.ir.expressions import (
-    ArrayExpression, CallExpression, Identifier, ObjectExpression,
+    ArrayExpression, AwaitExpression, CallExpression, Identifier, ObjectExpression, YieldExpression,
 )
 from hermes_decompiler.ir.statements import ReturnStatement, ThrowStatement
 
@@ -182,7 +182,7 @@ class ReturnValueResolutionPass(RegionPass):
 
             found, found_instr = first, first_instr
 
-        if isinstance(found, (ObjectExpression, ArrayExpression, CallExpression)):
+        if isinstance(found, (ObjectExpression, ArrayExpression, CallExpression, YieldExpression, AwaitExpression)):
             return None, None
 
         return found, found_instr

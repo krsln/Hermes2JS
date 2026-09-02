@@ -3,7 +3,7 @@ async function* anon_15045() {
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield;
+    r0 = await yield
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     if (__resumeIsReturn) {
@@ -11,7 +11,7 @@ async function* anon_15045() {
         // CODE → addr:1001 | <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → addr:1002 | <Ret>: <Reg8: 0>
-        return await yield;
+        return r0;
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 3>
@@ -415,7 +415,7 @@ async function* anon_15045() {
         return r1;
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:941 | <ResumeGenerator>: <Reg8: 1, Reg8: 5>
-        // USED → r1 = await yield;
+        r1 = await yield
         // CODE → addr:941 | <ResumeGenerator>: <Reg8: 1, Reg8: 5>
         // USED → r5 = __resumeIsReturn;
         if (__resumeIsReturn) {
@@ -423,7 +423,7 @@ async function* anon_15045() {
             // CODE → addr:998 | <CompleteGenerator>: <>
             // CompleteGenerator
             // CODE → addr:999 | <Ret>: <Reg8: 1>
-            return await yield;
+            return r1;
         } else {
             // ──────────────── Block 4 ──────────────── 
             // CODE → addr:947 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 27>

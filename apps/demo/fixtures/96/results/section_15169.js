@@ -3,7 +3,7 @@ async function* anon_15169() {
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield;
+    r0 = await yield
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     if (__resumeIsReturn) {
@@ -11,7 +11,7 @@ async function* anon_15169() {
         // CODE → addr:155 | <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → addr:156 | <Ret>: <Reg8: 0>
-        return await yield;
+        return r0;
     } else {
         // ──────────────── Block 12 ──────────────── 
         // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 2>
@@ -35,7 +35,7 @@ async function* anon_15169() {
             return r1;
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 40 | <ResumeGenerator>: <Reg8: 1, Reg8: 3>
-            // USED → r1 = await yield;
+            r1 = await yield
             // CODE → addr: 40 | <ResumeGenerator>: <Reg8: 1, Reg8: 3>
             // USED → r3 = __resumeIsReturn;
             if (__resumeIsReturn) {
@@ -43,7 +43,7 @@ async function* anon_15169() {
                 // CODE → addr:128 | <CompleteGenerator>: <>
                 // CompleteGenerator
                 // CODE → addr:129 | <Ret>: <Reg8: 1>
-                return await yield;
+                return r1;
             } else {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 46 | <LoadConstString>: <Reg8: 3, string_id: 38>  # String: 'b' (Identifier)
@@ -55,7 +55,7 @@ async function* anon_15169() {
                 return r3;
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → addr: 54 | <ResumeGenerator>: <Reg8: 3, Reg8: 4>
-                // USED → r3 = await yield;
+                r3 = await yield
                 // CODE → addr: 54 | <ResumeGenerator>: <Reg8: 3, Reg8: 4>
                 // USED → r4 = __resumeIsReturn;
                 if (__resumeIsReturn) {
@@ -63,7 +63,7 @@ async function* anon_15169() {
                     // CODE → addr:105 | <CompleteGenerator>: <>
                     // CompleteGenerator
                     // CODE → addr:106 | <Ret>: <Reg8: 3>
-                    return await yield;
+                    return r3;
                 } else {
                     // ──────────────── Block 7 ──────────────── 
                     // CODE → addr: 80 | <LoadConstUndefined>: <Reg8: 4>

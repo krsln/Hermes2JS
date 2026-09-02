@@ -3,7 +3,7 @@ async function* anon_15185(param1) {
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 2>
-    // USED → r0 = await yield;
+    r0 = await yield
     // CODE → addr:  1 | <ResumeGenerator>: <Reg8: 0, Reg8: 2>
     // USED → r2 = __resumeIsReturn;
     if (__resumeIsReturn) {
@@ -11,7 +11,7 @@ async function* anon_15185(param1) {
         // CODE → addr:138 | <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → addr:139 | <Ret>: <Reg8: 0>
-        return await yield;
+        return r0;
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 10 | <LoadConstUndefined>: <Reg8: 7>
@@ -58,7 +58,7 @@ async function* anon_15185(param1) {
                 // CODE → addr: 89 | <CompleteGenerator>: <>
                 // CompleteGenerator
                 // CODE → addr: 90 | <Ret>: <Reg8: 3>
-                return await yield;
+                return r3;
             }
             // ──────────────── Block 6 ──────────────── 
             // CODE → addr: 80 | <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>

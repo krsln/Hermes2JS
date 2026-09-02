@@ -5,7 +5,7 @@ async function* anon_15167(param1) {
     // CODE → addr:  1 | <LoadParam>: <Reg8: 5, UInt8: 1>
     // USED → r5 = param1;
     // CODE → addr:  4 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
-    // USED → r0 = await yield;
+    r0 = await yield
     // CODE → addr:  4 | <ResumeGenerator>: <Reg8: 0, Reg8: 1>
     // USED → r1 = __resumeIsReturn;
     if (__resumeIsReturn) {
@@ -13,7 +13,7 @@ async function* anon_15167(param1) {
         // CODE → addr:120 | <CompleteGenerator>: <>
         // CompleteGenerator
         // CODE → addr:121 | <Ret>: <Reg8: 0>
-        return await yield;
+        return r0;
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 1>
@@ -52,7 +52,7 @@ async function* anon_15167(param1) {
                     goto label_63;
                     // ──────────────── Block 5 ──────────────── 
                     // CODE → addr: 63 | <ResumeGenerator>: <Reg8: 7, Reg8: 8>
-                    // USED → r7 = await yield;
+                    r7 = await yield
                     // CODE → addr: 63 | <ResumeGenerator>: <Reg8: 7, Reg8: 8>
                     // USED → r8 = __resumeIsReturn;
                     if (__resumeIsReturn) {
@@ -60,7 +60,7 @@ async function* anon_15167(param1) {
                         // CODE → addr: 69 | <CompleteGenerator>: <>
                         // CompleteGenerator
                         // CODE → addr: 70 | <Ret>: <Reg8: 7>
-                        return await yield;
+                        return r7;
                     }
                 }
                 // ──────────────── Block 8 ──────────────── 
