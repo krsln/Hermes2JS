@@ -27,21 +27,28 @@ class GetEnvironment(OpcodeHandler):
         if isinstance(match, OpcodeResult):
             return match
 
-        groups = match.groups()
+        groups = tuple(map(int, match.groups()))
 
         if len(groups) == 2:
-            dest_reg, level = map(int, groups)
+            dest_reg, level = groups
+            environment_reg = None
 
         elif len(groups) == 3:
-            _, dest_reg, level = map(int, groups)
+            dest_reg, environment_reg, level = groups
 
         else:
             return self.build_exception_result(ctx.analysis, ctx.entry, f"Unexpected GetEnvironment operands: {groups}")
 
-        expression = CallExpression(
-            callee=Identifier(name="getEnvironment"),
-            arguments=(NumericLiteral(level),),
-        )
+        if environment_reg is None:
+            expression = CallExpression(
+                callee=Identifier(name="getEnvironment"),
+                arguments=(NumericLiteral(level),)
+            )
+        else:
+            expression = CallExpression(
+                callee=Identifier(name="getEnvironment"),
+                arguments=(Identifier(name=f"r{environment_reg}"), NumericLiteral(level))
+            )
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
