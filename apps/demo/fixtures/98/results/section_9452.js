@@ -24,10 +24,8 @@ function nestedLoopTest() {
     // USED → r8 = 2;
     // LOOP → START (for)
     for (r3 = 0; r3 < 3; r3 = r3 + 1) {
-        // ──────────────── Block 1 ──────────────── 
         // LOOP → START (for)
         for (r0 = 0; r0 < 4; r0 = r0 + 1) {
-            // ──────────────── Block 2 ──────────────── 
             if (r3 === 1 && r0 === 2) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 60 | <TryGetById>: <Reg8: 14, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -43,10 +41,8 @@ function nestedLoopTest() {
                 // CODE → addr: 87 | <Call2>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 11>
                 console.log("nested")
             }
-            // ──────────────── Block 5 ──────────────── 
         }
         // LOOP → END
-        // ──────────────── Block 6 ──────────────── 
     }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

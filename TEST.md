@@ -17,11 +17,11 @@ git diff main...feature/from-2025-08-15 > hermes2js.diff
 
 ```shell
 # 98
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/focused -o ./apps/demo/fixtures/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/focused -o ./apps/demo/fixtures/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./apps/demo/fixtures/98/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./apps/demo/fixtures/98/results --log-level DEBUG
 
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/sections -o ./apps/demo/fixtures/results --no-verbose
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results --no-verbose
 
 # 96
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results

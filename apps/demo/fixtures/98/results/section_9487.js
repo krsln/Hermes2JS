@@ -262,7 +262,6 @@ function nestedArrayDestructureTest() {
             r7.return()
             // LOOP → START (while)
             while (true) {
-                // ──────────────── Block 35 ──────────────── 
                 // ──────────────── Block 29 ──────────────── 
                 // CODE → addr:406 | <Catch>: <Reg8: 0>
                 // USED → r0 = caughtException;
@@ -289,7 +288,6 @@ function nestedArrayDestructureTest() {
             r1.return()
             // LOOP → START (while)
             while (true) {
-                // ──────────────── Block 41 ──────────────── 
                 // ──────────────── Block 38 ──────────────── 
                 // CODE → addr:526 | <Catch>: <Reg8: 0>
                 // USED → r0 = caughtException;

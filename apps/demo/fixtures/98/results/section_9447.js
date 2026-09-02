@@ -44,7 +44,6 @@ function whileTest() {
             // CODE → addr: 65 | <AddN>: <Reg8: 0, Reg8: 2, Reg8: 3>
             r0 = r1 + 1
         }
-        // ──────────────── Block 4 ──────────────── 
     }
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 

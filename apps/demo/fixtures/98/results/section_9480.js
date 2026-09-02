@@ -20,7 +20,6 @@ function forInTest() {
     if (r6 !== undefined) {
         // LOOP → START (for_in)
         for (const r4 in r5) {
-            // ──────────────── Block 1 ──────────────── 
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 48 | <Mov>: <Reg8: 11, Reg8: 4>
             r11 = r4

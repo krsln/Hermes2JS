@@ -17,10 +17,8 @@ function labeledBreakTest() {
     loop_1:
     // LOOP → START (for)
     for (r4 = 0; r4 < 3; r4 = r4 + 1) {
-        // ──────────────── Block 1 ──────────────── 
         // LOOP → START (for)
         for (r0 = 0; r0 < 3; r0 = r0 + 1) {
-            // ──────────────── Block 2 ──────────────── 
             if (r4 !== 1) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 46 | <TryGetById>: <Reg8: 10, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -45,7 +43,6 @@ function labeledBreakTest() {
             }
         }
         // LOOP → END
-        // ──────────────── Block 5 ──────────────── 
     }
     // LOOP → END
     // ──────────────── Block 8 ──────────────── 
