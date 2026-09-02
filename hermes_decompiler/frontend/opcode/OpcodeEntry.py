@@ -43,6 +43,13 @@ _JUMP_TABLE_RE = re.compile(r"Jump table:\s*\[([^]]*)]")
 # ==> 0000000f: <CallBuiltin>: <Reg8: 5, UInt8: 47, UInt8: 2>  # Built-in function: [#47 apply]
 _BUILTIN_RE = re.compile(r"Built-in function:\s*\[#(\d+)\s+([^]]+)]")
 
+# ==> 00000016: <NewObjectWithBuffer>: <Reg8: 1, UInt16: 3, UInt16: 2, UInt16: 12803, UInt16: 23466>  # Object: {'name': 'Ada', 'age': 30}
+# Only the marker + opening brace are matched here; the closing brace is
+# found via `_extract_balanced_braces` (below) since a naive `{.*}` regex
+# would break on nested objects/arrays or on `{`/`}` appearing inside a
+# string value (e.g. Reanimated/worklet 'code' fields).
+_OBJECT_RE = re.compile(r"Object:\s*(\{)")
+
 
 @dataclass(slots=True)
 class FunctionReference:
@@ -76,6 +83,7 @@ class OpcodeEntry:
     identifier_name: str | None = None
     string_literal: str | None = None
     array_literal: list | None = None
+    object_literal: dict | None = None
     function: FunctionReference | None = None
     builtin_function: BuiltinFunctionReference | None = None
 
@@ -138,6 +146,16 @@ class OpcodeEntry:
             except (SyntaxError, ValueError):
                 logger.warning("Invalid array literal: %r", self.comment)
 
+        if match := _OBJECT_RE.search(self.comment):
+            obj_str = self._extract_balanced_braces(self.comment, match.start(1))
+            if obj_str is None:
+                logger.warning("Unbalanced object literal braces: %r", self.comment)
+            else:
+                try:
+                    self.object_literal = self._parse_object_literal(obj_str)
+                except (SyntaxError, ValueError, TypeError):
+                    logger.warning("Invalid object literal: %r", self.comment)
+
         if match := _FUNCTION_RE.search(self.comment):
             self.function = FunctionReference(
                 id=int(match.group(1)),
@@ -178,6 +196,73 @@ class OpcodeEntry:
         text = _UNDEFINED_RE.sub("None", text)
 
         return ast.literal_eval(text)
+
+    @classmethod
+    def _parse_object_literal(cls, text: str) -> dict:
+        """
+        Parse the balanced `{...}` substring captured for an `Object:`
+        comment into a plain dict, normalizing JS-style `true`/`false`/
+        `null` to their Python equivalents first (same convention as
+        `_parse_array_literal`).
+        """
+        _NULL_RE = re.compile(r"\bnull\b")
+        _TRUE_RE = re.compile(r"\btrue\b")
+        _FALSE_RE = re.compile(r"\bfalse\b")
+        _UNDEFINED_RE = re.compile(r"\bundefined\b")
+
+        text = _NULL_RE.sub("None", text)
+        text = _TRUE_RE.sub("True", text)
+        text = _FALSE_RE.sub("False", text)
+        text = _UNDEFINED_RE.sub("None", text)
+
+        parsed = ast.literal_eval(text)
+        if not isinstance(parsed, dict):
+            raise ValueError(f"Expected a dict literal, got {type(parsed).__name__}: {text!r}")
+
+        return parsed
+
+    @staticmethod
+    def _extract_balanced_braces(text: str, start: int) -> str | None:
+        """
+        `text[start]` is assumed to be '{'. Returns the substring up to
+        the matching closing '}', ignoring braces that appear inside
+        string literals (so `{`/`}` in a string value, e.g. a worklet's
+        stringified 'code' field, doesn't throw off the brace count).
+        """
+        if start >= len(text) or text[start] != "{":
+            return None
+
+        depth = 0
+        i = start
+        in_string = False
+        string_char = None
+        escape = False
+
+        while i < len(text):
+            ch = text[i]
+
+            if in_string:
+                if escape:
+                    escape = False
+                elif ch == "\\":
+                    escape = True
+                elif ch == string_char:
+                    in_string = False
+                    string_char = None
+            else:
+                if ch in ("'", '"'):
+                    in_string = True
+                    string_char = ch
+                elif ch == "{":
+                    depth += 1
+                elif ch == "}":
+                    depth -= 1
+                    if depth == 0:
+                        return text[start: i + 1]
+
+            i += 1
+
+        return None
 
     def resolve_pattern_and_flags(self) -> tuple[str | None, str | None]:
         # `finditer` (unlike `findall`) leaves a non-participating

@@ -1,6 +1,3 @@
-import ast
-import re
-
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16, UINT32
 from hermes_decompiler.ir.expressions import (
@@ -52,7 +49,7 @@ class NewObjectWithBuffer(OpcodeHandler):
 
         dest_reg = int(match.group(1))
 
-        expression = self._parse_object_from_comment(ctx.entry.comment)
+        expression = self._object_expression_from_entry(ctx.entry)
 
         if expression is None:
             error = f"// Warning: No valid object parsed from comment: {ctx.entry.comment}"
@@ -64,91 +61,26 @@ class NewObjectWithBuffer(OpcodeHandler):
         return result
 
     @staticmethod
-    def _parse_object_from_comment(comment: str) -> ObjectExpression | None:
+    def _object_expression_from_entry(entry) -> ObjectExpression | None:
         """
-        Extract and parse `Object: {...}` from an opcode comment.
-
-        Handles nested braces and braces that appear inside string values
-        (common with Reanimated / worklet 'code' fields).
+        Build an `ObjectExpression` from the entry's pre-parsed
+        `object_literal` (populated by `OpcodeEntry` from the `Object:
+        {...}` comment marker). An empty/missing comment still yields an
+        empty object literal, matching a `NewObjectWithBuffer` with no
+        properties; a present-but-unparseable `Object:` comment is a
+        genuine failure (`object_literal` stays `None`).
         """
-        if not comment:
+        if not entry.comment:
             return ObjectExpression(properties=())
 
-        marker = "Object:"
-        idx = comment.find(marker)
-        if idx == -1:
-            return None
-
-        # İlk '{' karakterini bul
-        start = comment.find("{", idx + len(marker))
-        if start == -1:
-            return None
-
-        # Balanced brace extraction (string-aware)
-        obj_str = NewObjectWithBuffer._extract_balanced_braces(comment, start)
-        if obj_str is None:
-            return None
-
-        try:
-            clean = obj_str
-            clean = re.sub(r"\btrue\b", "True", clean)
-            clean = re.sub(r"\bfalse\b", "False", clean)
-            clean = re.sub(r"\bnull\b", "None", clean)
-
-            parsed = ast.literal_eval(clean)
-        except (SyntaxError, ValueError, TypeError):
-            return None
-
-        if not isinstance(parsed, dict):
+        if entry.object_literal is None:
             return None
 
         properties = tuple(
             ObjectProperty(key=StringLiteral(k), value=_json_to_expression(v))
-            for k, v in parsed.items()
+            for k, v in entry.object_literal.items()
         )
         return ObjectExpression(properties=properties)
-
-    @staticmethod
-    def _extract_balanced_braces(text: str, start: int) -> str | None:
-        """
-        text[start] == '{' varsayılır.
-        String literal içindeki { } karakterlerini yok sayarak
-        eşleşen kapanış '}' pozisyonuna kadar olan substring'i döner.
-        """
-        if start >= len(text) or text[start] != "{":
-            return None
-
-        depth = 0
-        i = start
-        in_string = False
-        string_char = None  # "'" veya '"'
-        escape = False
-
-        while i < len(text):
-            ch = text[i]
-
-            if in_string:
-                if escape:
-                    escape = False
-                elif ch == "\\":
-                    escape = True
-                elif ch == string_char:
-                    in_string = False
-                    string_char = None
-            else:
-                if ch in ("'", '"'):
-                    in_string = True
-                    string_char = ch
-                elif ch == "{":
-                    depth += 1
-                elif ch == "}":
-                    depth -= 1
-                    if depth == 0:
-                        return text[start: i + 1]
-
-            i += 1
-
-        return None
 
 
 # Reg8, UInt32, UInt32 (total size 9)
@@ -178,7 +110,7 @@ class NewObjectWithBufferAndParent(NewObjectWithBuffer):
 
         dest_reg, _parent_reg, *_buffer_operands = map(int, match.groups())
 
-        object_expr = self._parse_object_from_comment(ctx.entry.comment)
+        object_expr = self._object_expression_from_entry(ctx.entry)
 
         if object_expr is None:
             error = f"// Warning: No valid object parsed from comment: {ctx.entry.comment}"
