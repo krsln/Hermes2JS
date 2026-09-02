@@ -27,7 +27,16 @@ class GetEnvironment(OpcodeHandler):
         if isinstance(match, OpcodeResult):
             return match
 
-        dest_reg, level = map(int, match.groups())
+        groups = match.groups()
+
+        if len(groups) == 2:
+            dest_reg, level = map(int, groups)
+
+        elif len(groups) == 3:
+            _, dest_reg, level = map(int, groups)
+
+        else:
+            return self.build_exception_result(ctx.analysis, ctx.entry, f"Unexpected GetEnvironment operands: {groups}")
 
         expression = CallExpression(
             callee=Identifier(name="getEnvironment"),

@@ -219,6 +219,9 @@ class _DominanceIfBuilder(RegionStructurer):
         then_root = region.children[then_start]
         then_entry = representative_block(then_root)
 
+        if then_entry is None:
+            return False
+
         merge_block: BasicBlock | None = None
 
         if self.cfg.post_dominator_tree is not None:
