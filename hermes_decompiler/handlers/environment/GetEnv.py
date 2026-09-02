@@ -21,11 +21,10 @@ class GetEnvironment(OpcodeHandler):
     """
     Resolve an environment from the lexical scope chain.
 
-    2-operand form:
-        GetEnvironment dest, level
-
-    3-operand form:
-        GetEnvironment dest, parent, level
+    level = 0  -> current environment
+    level = 1  -> parent environment
+    level = 2  -> grandparent
+    ...
     """
 
     ARGUMENTS = (
@@ -38,28 +37,25 @@ class GetEnvironment(OpcodeHandler):
         if isinstance(match, OpcodeResult):
             return match
 
-        groups = tuple(map(int, match.groups()))
+        groups = match.groups()
 
         if len(groups) == 2:
-            dest_reg, level = groups
-            environment_reg = None
+            dest_reg, level = map(int, groups)
 
         elif len(groups) == 3:
-            dest_reg, environment_reg, level = groups
+            # Reg8, Reg8, UInt8: op1=dest, op2=unused, op3=level.
+            # Matches hermes-dec's own semantics for hbc>=97
+            # (pass2_transform_code.py: `GET(op1, op3)` — op2 is never
+            # read).
+            dest_reg, _, level = map(int, groups)
 
         else:
             return self.build_exception_result(ctx.analysis, ctx.entry, f"Unexpected GetEnvironment operands: {groups}")
 
-        if environment_reg is None:
-            expression = CallExpression(
-                callee=Identifier(name="getEnvironment"),
-                arguments=(NumericLiteral(level),)
-            )
-        else:
-            expression = CallExpression(
-                callee=Identifier(name="getEnvironment"),
-                arguments=(Identifier(name=f"r{environment_reg}"), NumericLiteral(level))
-            )
+        expression = CallExpression(
+            callee=Identifier(name="getEnvironment"),
+            arguments=(NumericLiteral(level),),
+        )
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
