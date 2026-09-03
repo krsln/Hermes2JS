@@ -28,29 +28,11 @@ class HermesAnalysis:
 
         self.results: List[OpcodeResult] = []
 
-        # TODO: shorter desc
-        # Populated once by `OpcodeDispatcher.dispatch_all()` before the
-        # main opcode walk starts; `current_address` is advanced by the
-        # dispatcher before each `handler.handle(ctx)` call. Both default
-        # to "no loop info yet" / "unknown position" so any code that
-        # reads them before the dispatcher runs (e.g. tests constructing
-        # a bare HermesAnalysis by hand) degrades to "never unsafe",
-        # matching prior behavior exactly.
+        # Loop intervals containing instruction addresses.
         self.loop_ranges: List[Tuple[int, int]] = []
+        # Address of the instruction currently being handled.
         self.current_address: Optional[int] = None
-
-        # TODO: shorter desc
-        # Populated by `OpcodeDispatcher.dispatch_all()`'s first (scratch)
-        # pass: for every register, every address (inside some loop
-        # range) where it gets WRITTEN - not just the single "most
-        # recent definition" `defined_and_used_in_same_loop` alone can
-        # see. This is what catches the self-referencing-accumulator
-        # shape (a register read early in a loop body, but ALSO
-        # rewritten later in that same body via a back-edge-carried
-        # `Inc`/`AddN`/etc. - e.g. a rest-parameter copy loop's index
-        # register) - the same shape `Binary.AddN`/`Binary.SubN`
-        # originally special-cased by hand, generalized here to any
-        # opcode/register.
+        # Addresses where each register is written inside a loop.
         self.loop_carried_writes: Dict[str, List[int]] = {}
 
     def add_result(self, result: OpcodeResult) -> None:
@@ -67,8 +49,7 @@ class HermesAnalysis:
     def get_register_state(self, reg: int) -> Optional[RegisterState]:
         return self.registers.get(f"r{reg}")
 
-    # TODO: rename?
-    def defined_and_used_in_same_loop(self, reg: int, definition_address: int) -> bool:
+    def is_unsafe_loop_register(self, reg: int, definition_address: int) -> bool:
         """
         True if a read of `reg` at the instruction currently being
         handled (`self.current_address`) is unsafe to inline, because
@@ -76,13 +57,13 @@ class HermesAnalysis:
         also contains this read. Two ways that can happen:
 
         1. `reg`'s CURRENT definition (`definition_address`) is itself
-           inside the same loop range as the read (e.g. a `Mov` aliasing
+           inside the same loop range as the read (e.g., a `Mov` aliasing
            a loop-body value, read again later in that same body).
 
-        2. `reg` has ANY OTHER write (from `self.loop_carried_writes`,
+        2. `reg` has ANY OTHER `write` (from `self.loop_carried_writes`,
            harvested in a first dispatch pass - see
            `OpcodeDispatcher.dispatch_all`) inside a loop range that also
-           contains the read - even if that write comes LATER in address
+           contains the read - even if that `write` comes LATER in address
            order than this read. This catches the self-referencing
            accumulator shape: a loop-carried register read near the top
            of the body but rewritten near the bottom (via the back-edge),

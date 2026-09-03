@@ -205,7 +205,7 @@ class OpcodeHandler(ABC):
         # shapes while leaving the known-safe patterns alone.
         if not isinstance(value, MemberExpression) and \
                 not (isinstance(value, Identifier) and not cls._is_register_alias(value)) and \
-                analysis.defined_and_used_in_same_loop(reg, state.definition.address):
+                analysis.is_unsafe_loop_register(reg, state.definition.address):
             state.mark_read()
             return Identifier(name=f"r{reg}")
 
