@@ -21,7 +21,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 32 | <LoadConstZero>: <Reg8: 7>
     // USED → r7 = 0;
     // CODE → addr: 34 | <LoadConstZero>: <Reg8: 9>
-    // USED → r9 = 0;
+    r9 = 0
     // CODE → addr: 36 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     r2 = param1.length
     // CODE → addr: 41 | <LoadConstString>: <Reg8: 3, string_id: 4653>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally' (String)
@@ -37,7 +37,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 60 | <Mov>: <Reg8: 4, Reg8: 8>
     // USED → r4 = param1;
     // CODE → addr: 63 | <Mov>: <Reg8: 2, Reg8: 9>
-    r2 = 0
+    r2 = r9
     // CODE → addr: 66 | <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
     r2 = param1[r2]
     // CODE → addr: 70 | <JLess>: <Addr8: 118, Reg8: 2, Reg8: 7>  # Address: 000000bc
@@ -47,7 +47,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 74 | <Mov>: <Reg8: 4, Reg8: 8>
     // USED → r4 = param1;
     // CODE → addr: 77 | <Mov>: <Reg8: 2, Reg8: 9>
-    r2 = 0
+    r2 = r9
     // CODE → addr: 80 | <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
     r2 = param1[r2]
     // CODE → addr: 84 | <JStrictEqual>: <Addr8: 49, Reg8: 2, Reg8: 7>  # Address: 00000085
@@ -61,7 +61,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 99 | <Mov>: <Reg8: 11, Reg8: 8>
     // USED → r11 = param1;
     // CODE → addr:102 | <Mov>: <Reg8: 2, Reg8: 9>
-    r2 = 0
+    r2 = r9
     // CODE → addr:105 | <GetByVal>: <Reg8: 2, Reg8: 11, Reg8: 2>
     r2 = param1[r2]
     // CODE → addr:109 | <Call3>: <Reg8: 2, Reg8: 4, Reg8: 10, Reg8: 5, Reg8: 2>
@@ -89,11 +89,11 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr:165 | <Mov>: <Reg8: 2, Reg8: 9>
-    r2 = 0
+    r2 = r9
     // CODE → addr:168 | <Inc>: <Reg8: 4, Reg8: 2>
-    // USED → r4 = r2 + 1;
+    r4 = r2 + 1
     // CODE → addr:171 | <Mov>: <Reg8: 9, Reg8: 4>
-    r9 = r2 + 1
+    r9 = r4
     // CODE → addr:174 | <Mov>: <Reg8: 2, Reg8: 8>
     r2 = param1
     // CODE → addr:177 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)

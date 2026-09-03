@@ -45,7 +45,7 @@ function complexTest() {
             // CODE → addr: 80 | <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
             r7 = r14[r0]
             // CODE → addr: 84 | <Mov>: <Reg8: 1, Reg8: 0>
-            r1 = 0
+            r1 = r0
             // Switch → START
             switch (r7) {
                 case 1:

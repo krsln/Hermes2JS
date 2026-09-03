@@ -200,20 +200,23 @@ function nestedArrayDestructureTest() {
     // CODE → addr:417 | <LoadConstUInt8>: <Reg8: 12, UInt8: 1>
     // USED → r12 = 1;
     // CODE → addr:420 | <LoadConstZero>: <Reg8: 16>
-    // USED → r16 = 0;
+    r16 = 0
     if (r7 !== undefined) {
         // LOOP → START (while)
-        while (!(r7 === undefined)) {
+        // → r11 = r11 === undefined
+        while (!r11) {
             // ──────────────── Block 31 ──────────────── 
             // CODE → addr:428 | <IteratorNext>: <Reg8: 19, Reg8: 7, Reg8: 11>
             r19 = r7.next()
+            // CODE → addr:432 | <Mov>: <Reg8: 11, Reg8: 7>
+            r11 = r7
             // CODE → addr:435 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
-            // USED → r11 = r7 === undefined;
+            r11 = r11 === undefined
             // CODE → addr:439 | <Mov>: <Reg8: 18, Reg8: 16>
-            // USED → r18 = 0;
+            r18 = r16
             // ──────────────── Block 32 ──────────────── 
             // CODE → addr:445 | <PutByValStrict>: <Reg8: 13, Reg8: 18, Reg8: 19>
-            r13[0] = r19
+            r13[r18] = r19
             // CODE → addr:449 | <AddN>: <Reg8: 16, Reg8: 18, Reg8: 12>
             r16 = r18 + 1
         }
@@ -269,7 +272,7 @@ function nestedArrayDestructureTest() {
                 // CODE → addr:455 | <Catch>: <Reg8: 0>
                 r0 = caughtException
                 // CODE → addr:457 | <Mov>: <Reg8: 8, Reg8: 11>
-                r8 = r7 === undefined
+                r8 = r11 === undefined
             }
             // LOOP → END
         } while (!(r7 === undefined));

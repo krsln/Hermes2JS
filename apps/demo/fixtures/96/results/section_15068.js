@@ -17,49 +17,56 @@ function tripleNestedLabeledTest() {
     // CODE → addr: 28 | <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
     // USED → r3 = 1;
     // CODE → addr: 31 | <LoadConstZero>: <Reg8: 2>
-    // USED → r2 = 0;
+    r2 = 0
     loop_1:
     // LOOP → START (for)
-    for (r1 = 0; r1 < 3; r1 = r1 + 1) {
+    for (r1 = 0; r1 < 3; r1 = r8 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 35 | <Mov>: <Reg8: 10, Reg8: 2>
-        // USED → r10 = 0;
+        r10 = r2
+        // CODE → addr: 38 | <Mov>: <Reg8: 8, Reg8: 1>
+        r8 = r1
         loop_2:
         // LOOP → START (for)
-        for (r9 = 0; r9 < 3; r9 = r9 + 1) {
+        for (r9 = 0; r9 < 3; r9 = r11 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 43 | <Mov>: <Reg8: 13, Reg8: 10>
-            r13 = 0
+            r13 = r10
+            // CODE → addr: 46 | <Mov>: <Reg8: 11, Reg8: 9>
+            r11 = r9
             // LOOP → START (for)
-            for (r12 = 0; r12 < 3; r12 = r12 + 1) {
+            for (r12 = 0; r12 < 3; r12 = r14 + 1) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr: 51 | <Inc>: <Reg8: 4, Reg8: 13>
-                // USED → r4 = r13 + 1;
-                if (r12 === 1) {
+                r4 = r13 + 1
+                // CODE → addr: 54 | <Mov>: <Reg8: 14, Reg8: 12>
+                r14 = r12
+                // → r14 = r12
+                if (r14 === 1) {
                     // ──────────────── Block 10 ──────────────── 
                     // CODE → addr:  0 | ContinueStatement
                     continue loop_2;
                 }
-                if (r1 === 2) {
-                    if (r9 === 2) {
+                if (r8 === 2) {
+                    if (r11 === 2) {
                         // ──────────────── Block 11 ──────────────── 
                         // CODE → addr:  0 | BreakStatement
                         break loop_1;
                     }
                     // ──────────────── Block 6 ──────────────── 
                     // CODE → addr: 72 | <Mov>: <Reg8: 13, Reg8: 4>
-                    r13 = r13 + 1
+                    r13 = r4
                 }
             }
             // LOOP → END
             // ──────────────── Block 7 ──────────────── 
             // CODE → addr: 82 | <Mov>: <Reg8: 10, Reg8: 4>
-            r10 = r13 + 1
+            r10 = r4
         }
         // LOOP → END
         // ──────────────── Block 8 ──────────────── 
         // CODE → addr: 92 | <Mov>: <Reg8: 2, Reg8: 4>
-        r2 = r13 + 1
+        r2 = r4
     }
     // LOOP → END
     // ──────────────── Block 9 ──────────────── 

@@ -23,15 +23,15 @@ function nestedLoopTest() {
     // CODE → addr: 39 | <LoadConstUInt8>: <Reg8: 8, UInt8: 2>
     // USED → r8 = 2;
     // CODE → addr: 42 | <LoadConstZero>: <Reg8: 3>
-    // USED → r3 = 0;
+    r3 = 0
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 44 | <Mov>: <Reg8: 4, Reg8: 3>
-    r4 = 0
+    r4 = r3
     // CODE → addr: 47 | <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
+    r0 = 0
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 49 | <Mov>: <Reg8: 1, Reg8: 0>
-    r1 = 0
+    r1 = r0
     // CODE → addr: 52 | <JStrictNotEqual>: <Addr8: 40, Reg8: 4, Reg8: 2>  # Address: 0000005c
     if (r4 !== 1) goto label_92;
     // ──────────────── Block 3 ──────────────── 

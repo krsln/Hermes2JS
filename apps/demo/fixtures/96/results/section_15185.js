@@ -15,7 +15,7 @@ async function* anon_15185(param1) {
     // CODE → addr: 31 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:Functions/AsyncTests/asyncLoopTest/start")
     // CODE → addr: 36 | <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0;
+    r1 = 0
     // CODE → addr: 38 | <LoadParam>: <Reg8: 6, UInt8: 1>
     r6 = param1
     // CODE → addr: 41 | <IteratorBegin>: <Reg8: 4, Reg8: 6>
@@ -27,7 +27,7 @@ async function* anon_15185(param1) {
         // ──────────────── Block 2 ──────────────── 
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 58 | <Mov>: <Reg8: 8, Reg8: 1>
-        // USED → r8 = 0;
+        r8 = r1
         // CODE → addr: 61 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
         // USED → r3 = r5[2];
         // CODE → addr: 65 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
@@ -36,7 +36,7 @@ async function* anon_15185(param1) {
         goto label_74;
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-        // USED → r3 = await yield;
+        r3 = await yield
         // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
         // USED → r9 = __resumeIsReturn;
         if (__resumeIsReturn) {
@@ -46,7 +46,7 @@ async function* anon_15185(param1) {
         }
         // ──────────────── Block 6 ──────────────── 
         // CODE → addr: 80 | <Add>: <Reg8: 1, Reg8: 8, Reg8: 3>
-        r1 = 0 + await yield
+        r1 = r8 + r3
     }
     // LOOP → END
     // ──────────────── Block 9 ──────────────── 

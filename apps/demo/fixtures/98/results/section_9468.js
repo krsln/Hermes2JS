@@ -17,20 +17,20 @@ function tryLoopMultiReturnTest(param1) {
     // CODE → addr: 27 | <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // CODE → addr: 29 | <LoadConstZero>: <Reg8: 4>
-    // USED → r4 = 0;
+    r4 = 0
     // CODE → addr: 31 | <LoadConstString>: <Reg8: 1, string_id: 4272>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
     // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive";
     // LOOP → START (while)
-    // → r5 = param1.length; r6 = 0
+    // → r5 = param1.length; r6 = r4
     while (!(r6 >= r5)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 35 | <Mov>: <Reg8: 6, Reg8: 4>
-        r6 = 0
+        r6 = r4
         // CODE → addr: 38 | <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
         r5 = param1.length
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 47 | <Mov>: <Reg8: 5, Reg8: 4>
-        r5 = 0
+        r5 = r4
         // CODE → addr: 50 | <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
         r5 = param1[r5]
         // → r5 = param1[r5]
@@ -43,14 +43,14 @@ function tryLoopMultiReturnTest(param1) {
         }
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 58 | <Mov>: <Reg8: 5, Reg8: 4>
-        r5 = 0
+        r5 = r4
         // CODE → addr: 61 | <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 5>
         r5 = param1[r5]
         // → r5 = param1[r5]
         if (r5 === 0) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr: 98 | <Mov>: <Reg8: 5, Reg8: 4>
-            r5 = r5 + 1
+            r5 = r4
             // CODE → addr:101 | <Inc>: <Reg8: 4, Reg8: 5>
             r4 = r5 + 1
         } else {
@@ -60,13 +60,13 @@ function tryLoopMultiReturnTest(param1) {
             // CODE → addr: 75 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
             // USED → r7 = console.log;
             // CODE → addr: 80 | <Mov>: <Reg8: 5, Reg8: 4>
-            r5 = 0
+            r5 = r4
             // CODE → addr: 83 | <GetByVal>: <Reg8: 6, Reg8: 3, Reg8: 5>
             r6 = param1[r5]
             // CODE → addr: 87 | <Call3>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 6>
             console.log("__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive", r6)
             // CODE → addr: 93 | <Inc>: <Reg8: 4, Reg8: 5>
-            // USED → r4 = r5 + 1;
+            r4 = r5 + 1
         }
     }
     // LOOP → END

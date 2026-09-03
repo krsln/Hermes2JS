@@ -27,14 +27,14 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 47 | <LoadConstString>: <Reg8: 4, string_id: 4830>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item";
     // CODE → addr: 51 | <LoadConstZero>: <Reg8: 2>
-    // USED → r2 = 0;
+    r2 = 0
     if (0 < param1.length) {
         // LOOP → START (for)
-        // → r0 = 0
+        // → r0 = r2
         for (; r2 < r0; r2 = r0 + 1) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 59 | <Mov>: <Reg8: 0, Reg8: 2>
-            r0 = 0
+            r0 = r2
             // CODE → addr: 62 | <GetByVal>: <Reg8: 9, Reg8: 8, Reg8: 0>
             r9 = param1[r0]
             // → r9 = param1[r0]

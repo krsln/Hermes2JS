@@ -33,13 +33,13 @@ async function* anon_15167(param1) {
     if (!(0 < param1)) goto label_95;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 48 | <Mov>: <Reg8: 6, Reg8: 4>
-    r6 = 0
+    r6 = r4
     // CODE → addr: 51 | <JStrictEqual>: <Addr8: 21, Reg8: 6, Reg8: 2>  # Address: 00000048
-    // → r6 = 0
+    // → r6 = r4
     if (r6 === 2) goto label_72;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 55 | <Mul>: <Reg8: 7, Reg8: 6, Reg8: 6>
-    r7 = 0 * 0
+    r7 = r6 * r6
     // CODE → addr: 59 | <SaveGenerator>: <Addr8: 4>  # Address: 0000003f
     goto label_63;
     // ──────────────── Block 4 ──────────────── 

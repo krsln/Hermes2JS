@@ -19,17 +19,17 @@ function labeledContinueTest() {
     // CODE → addr: 32 | <LoadConstString>: <Reg8: 9, string_id: 4796>  # String: '__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1' (String)
     // USED → r9 = "__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1";
     // CODE → addr: 36 | <LoadConstZero>: <Reg8: 4>
-    // USED → r4 = 0;
+    r4 = 0
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 38 | <Mov>: <Reg8: 2, Reg8: 4>
-    r2 = 0
+    r2 = r4
     // CODE → addr: 41 | <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
+    r0 = 0
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 43 | <Mov>: <Reg8: 1, Reg8: 0>
-    r1 = 0
+    r1 = r0
     // CODE → addr: 46 | <JStrictEqual>: <Addr8: 47, Reg8: 1, Reg8: 3>  # Address: 0000005d
-    // → r1 = 0
+    // → r1 = r0
     if (r1 === 1) goto label_93;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 50 | <TryGetById>: <Reg8: 12, Reg8: 8, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

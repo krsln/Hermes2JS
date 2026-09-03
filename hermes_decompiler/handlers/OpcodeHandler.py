@@ -3,13 +3,12 @@ from __future__ import annotations
 import dataclasses
 import re
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from enum import Enum, auto
 from typing import Dict, Optional
 
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.core.runtime import HermesAnalysis
-from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.handlers.OpcodeTypes import OpcodeContext, ArgsPattern, OperandMode
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
     ArrayExpression, Literal, CallExpression, MemberExpression,
@@ -153,6 +152,18 @@ class OpcodeHandler(ABC):
 
         Identity-sensitive expressions are kept symbolic to preserve
         aliasing semantics.
+
+        Loop-safety: if the register's definition and this read both fall
+        inside the same detected loop body (`analysis.loop_ranges`), the
+        stored expression is NOT inlined - it's returned as a bare `rN`
+        reference instead, same as `get_register_reference()`. Without
+        this, a register redefined every iteration (directly, or via a
+        `Mov` aliasing one that is) would have a single iteration's
+        snapshot baked into every use inside the loop body - see
+        `Binary.AddN`/`Binary.SubN`'s `LHS_MODE = REFERENCE` for the
+        original, manually-special-cased instance of this same hazard.
+        This check generalizes that fix to every opcode automatically,
+        instead of requiring each new affected opcode to opt in by hand.
         """
 
         state = analysis.get_register_state(reg)
@@ -166,6 +177,35 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}")
 
         if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression)):
+            state.mark_read()
+            return Identifier(name=f"r{reg}")
+
+        # Loop-safety guard excludes MemberExpression (property-lookup
+        # chains, e.g. `console.log`): re-fetched fresh every iteration
+        # in typical Hermes output, but landing on the exact same value
+        # each time - not itself an accumulator. Guarding it caused real
+        # regressions (`console.log(...)` rendering as a nonsensical
+        # `r6.call(r7, ...)`) without preventing any known bug.
+        #
+        # It also excludes non-register-alias Identifiers (fixed
+        # protocol/magic symbols, e.g. `__resumeIsReturn` -
+        # see `_is_register_alias`): guarding those broke
+        # `GeneratorStateMachineRegionPass`'s exact-name pattern match,
+        # regressing a clean `yield expr;` back into raw suspend/resume
+        # boilerplate.
+        #
+        # Every other value shape stays guarded: Literal (e.g. a loop
+        # counter's pre-loop `r5 = 0`), a register-alias Identifier
+        # (e.g. `r6 = Mov(r4)`), and BinaryExpression (e.g. `r8 =
+        # r2-2`) are exactly the shapes a loop-carried accumulator's
+        # value can take depending on which iteration of the single
+        # linear scan last defined it. This is still an approximation
+        # (a MemberExpression with a loop-dependent computed key could
+        # in principle be unsafe too), but matches the confirmed bug
+        # shapes while leaving the known-safe patterns alone.
+        if not isinstance(value, MemberExpression) and \
+                not (isinstance(value, Identifier) and not cls._is_register_alias(value)) and \
+                analysis.defined_and_used_in_same_loop(reg, state.definition.address):
             state.mark_read()
             return Identifier(name=f"r{reg}")
 
@@ -315,43 +355,27 @@ class OpcodeHandler(ABC):
         state.mark_read()
         return Identifier(name=f"r{reg}")
 
+    @classmethod
+    def _is_register_alias(cls, value: Expression) -> bool:
+        """
+        True only for an Identifier that names a *register* (`r0`, `r12`,
+        ...) - i.e. a value produced by aliasing/copying another register
+        (typically a `Mov`), which is exactly the shape the loop-safety
+        guard in `get_register_expression` needs to catch.
 
-@dataclass(slots=True)
-class OpcodeContext:
-    analysis: HermesAnalysis
-    entry: OpcodeEntry
-    entries: list[OpcodeEntry]
-    index: int
+        Deliberately excludes Identifiers that name a fixed protocol/magic
+        symbol instead of a register - e.g. ResumeGenerator's
+        `Identifier(name="__resumeIsReturn")`. Such a symbol never varies
+        across loop iterations (it isn't loop-carried state at all - it's
+        a constant marker), and later passes (e.g.
+        `GeneratorStateMachineRegionPass._is_resume_guard`) pattern-match
+        on the EXACT string `"__resumeIsReturn"` to recognize the
+        suspend/resume machinery. Guarding it here would replace that name
+        with a symbolic `rN` and silently break that later fold - it did,
+        in practice (see the regression this comment is guarding against:
+        a loop-body yield rendering as raw goto/ResumeGenerator boilerplate
+        instead of a clean `yield expr;`).
+        """
+        _REGISTER_ALIAS_RE = re.compile(r"r\d+$")
 
-
-@dataclass(frozen=True, slots=True)
-class ArgsPattern:
-    regex: re.Pattern[str]
-    desc: str
-
-
-class OperandMode(Enum):
-    """
-    Controls how a register operand is resolved into an IR expression.
-    Opcode subclasses declare *which* mode each of their operands needs
-    (class attribute), instead of each one hand-rolling its own
-    resolution override the way `Inc`/`Dec` previously did.
-
-    EXPRESSION - substitute the register's current defining expression
-        (constant folding / inlining, via `get_register_expression`).
-        This is the default and matches all pre-existing behavior for
-        opcodes that don't opt into REFERENCE.
-
-    REFERENCE - always resolve to a bare symbolic identifier `rN` (via
-        `get_register_reference`), never inlining the defining
-        expression. Required whenever an operand is a loop/accumulator
-        register that gets redefined on a back-edge (e.g., the `x` in
-        `Inc`/`Dec`, or the counter operand of `AddN`/`SubN` when they
-        desugar `i++`/`i--`): substituting a traced snapshot value there
-        silently bakes a single iteration's value into every iteration
-        (e.g. `r0 = 0 + 1` instead of `r0 = r1 + 1`), which can produce
-        a non-advancing loop counter.
-    """
-
-    EXPRESSION = auto()
-    REFERENCE = auto()
+        return isinstance(value, Identifier) and bool(_REGISTER_ALIAS_RE.fullmatch(value.name))

@@ -99,30 +99,43 @@ function mapTest() {
         r8 = GetIterator(r11)
         // CODE → addr:209 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 9>
         r12 = r8.next()
+        // CODE → addr:213 | <Mov>: <Reg8: 9, Reg8: 8>
+        r9 = r8
         // CODE → addr:216 | <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 0>
-        // USED → r9 = r8 === undefined;
+        r9 = r9 === undefined
         // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 10>
-        r10 = (r8 === undefined) ? undefined : r12
+        r10 = undefined
+        // → r9 = r9 === undefined
+        if (!r9) {
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → addr:225 | <Mov>: <Reg8: 10, Reg8: 12>
+            r10 = r12
+        }
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr:228 | <Mov>: <Reg8: 7, Reg8: 10>
-        // USED → r7 = (r8 === undefined) ? undefined : r12;
+        r7 = r10
         // CODE → addr:231 | <LoadConstUndefined>: <Reg8: 10>
         r10 = undefined
-        if (r8 !== undefined) {
+        if (!r9 && !r11) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr:236 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 11>
             r12 = r8.next()
+            // CODE → addr:240 | <Mov>: <Reg8: 11, Reg8: 8>
+            r11 = r8
             // CODE → addr:243 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 0>
-            // USED → r11 = r8 === undefined;
+            r11 = r11 === undefined
             // CODE → addr:247 | <LoadConstUndefined>: <Reg8: 10>
             r10 = undefined
-            // CODE → addr:249 | <Mov>: <Reg8: 9, Reg8: 11>
-            r9 = r8 === undefined || r8 === undefined
+            // ──────────────── Block 6 ──────────────── 
+            // CODE → addr:255 | <Mov>: <Reg8: 10, Reg8: 12>
+            r10 = r12
+            // CODE → addr:258 | <Mov>: <Reg8: 9, Reg8: 11>
+            r9 = r11
         }
         // ──────────────── Block 7 ──────────────── 
         // CODE → addr:261 | <Mov>: <Reg8: 6, Reg8: 10>
-        // USED → r6 = r12;
-        if (r8 !== undefined) {
+        r6 = r10
+        if (!r9) {
             // ──────────────── Block 8 ──────────────── 
             // CODE → addr:267 | <IteratorClose>: <Reg8: 8, UInt8: 0>
             r8.return()
@@ -133,9 +146,9 @@ function mapTest() {
         // CODE → addr:276 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r10 = console.log;
         // CODE → addr:281 | <Mov>: <Reg8: 9, Reg8: 7>
-        r9 = (r8 === undefined) ? undefined : r12
+        r9 = r7
         // CODE → addr:284 | <Mov>: <Reg8: 8, Reg8: 6>
-        r8 = r12
+        r8 = r6
         // CODE → addr:287 | <Call3>: <Reg8: 8, Reg8: 10, Reg8: 11, Reg8: 9, Reg8: 8>
         console.log(r9, r8)
     }

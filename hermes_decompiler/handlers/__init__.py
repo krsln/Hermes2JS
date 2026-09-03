@@ -1,5 +1,6 @@
 from .HandlerLoader import HandlerLoader
-from .OpcodeHandler import OpcodeHandler, OpcodeContext, ArgsPattern, OperandMode
+from .OpcodeHandler import OpcodeHandler
+from .OpcodeTypes import OpcodeContext, ArgsPattern, OperandMode
 from .OperandPatterns import *
 
 __all__ = [

@@ -19,7 +19,7 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr: 29 | <LoadConstZero>: <Reg8: 5>
     // USED → r5 = 0;
     // CODE → addr: 31 | <LoadConstZero>: <Reg8: 7>
-    // USED → r7 = 0;
+    r7 = 0
     // CODE → addr: 33 | <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     r2 = param1.length
     // CODE → addr: 38 | <LoadConstString>: <Reg8: 4, string_id: 4894>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
@@ -29,7 +29,7 @@ function tryFinallyLoopBreakTest(param1) {
     if (!(0 < r2)) goto label_96;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 46 | <Mov>: <Reg8: 2, Reg8: 7>
-    r2 = 0
+    r2 = r7
     // CODE → addr: 49 | <GetByVal>: <Reg8: 2, Reg8: 6, Reg8: 2>
     r2 = param1[r2]
     // CODE → addr: 53 | <JStrictEqual>: <Addr8: 43, Reg8: 2, Reg8: 5>  # Address: 00000060
@@ -41,15 +41,15 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr: 63 | <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r8 = console.log;
     // CODE → addr: 68 | <Mov>: <Reg8: 2, Reg8: 7>
-    r2 = 0
+    r2 = r7
     // CODE → addr: 71 | <GetByVal>: <Reg8: 3, Reg8: 6, Reg8: 2>
     r3 = param1[r2]
     // CODE → addr: 75 | <Call3>: <Reg8: 3, Reg8: 8, Reg8: 9, Reg8: 4, Reg8: 3>
     console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", r3)
     // CODE → addr: 81 | <Inc>: <Reg8: 3, Reg8: 2>
-    // USED → r3 = r2 + 1;
+    r3 = r2 + 1
     // CODE → addr: 84 | <Mov>: <Reg8: 7, Reg8: 3>
-    r7 = r2 + 1
+    r7 = r3
     // CODE → addr: 87 | <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     r2 = param1.length
     // CODE → addr: 92 | <JLess>: <Addr8: -46, Reg8: 3, Reg8: 2>  # Address: 0000002e

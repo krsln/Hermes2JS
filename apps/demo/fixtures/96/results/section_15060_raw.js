@@ -43,7 +43,7 @@ function complexTest() {
     // CODE → addr: 80 | <GetByVal>: <Reg8: 13, Reg8: 12, Reg8: 11>
     r13 = r12[r11]
     // CODE → addr: 84 | <Mov>: <Reg8: 1, Reg8: 11>
-    r1 = 0
+    r1 = r11
     // CODE → addr: 87 | <JStrictEqual>: <Addr8: 98, Reg8: 2, Reg8: 13>  # Address: 000000b9
     // → r13 = r12[r11]
     if (1 === r13) goto label_185;

@@ -82,7 +82,7 @@ function spreadArrayTest() {
     // CODE → addr:155 | <NewArray>: <Reg8: 4, UInt16: 0>
     r4 = []
     // CODE → addr:159 | <LoadConstZero>: <Reg8: 2>
-    // USED → r2 = 0;
+    r2 = 0
     // CODE → addr:161 | <JmpTrue>: <Addr8: 43, Reg8: 6>  # Address: 000000cc
     if (r3 === undefined) goto label_204;
     // ──────────────── Block 3 ──────────────── 
@@ -91,16 +91,17 @@ function spreadArrayTest() {
     // CODE → addr:167 | <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>
     r10 = r3.next()
     // CODE → addr:171 | <Mov>: <Reg8: 6, Reg8: 3>
-    // USED → r6 = r3;
+    r6 = r3
     // CODE → addr:174 | <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 0>
-    // USED → r6 = r3 === undefined;
+    r6 = r6 === undefined
     // CODE → addr:178 | <Mov>: <Reg8: 9, Reg8: 2>
-    // USED → r9 = 0;
+    r9 = r2
     // CODE → addr:181 | <JmpTrue>: <Addr8: 23, Reg8: 6>  # Address: 000000cc
-    if (r3 === undefined) goto label_204;
+    // → r6 = r6 === undefined
+    if (r6) goto label_204;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:184 | <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
-    r4[0] = r10
+    r4[r9] = r10
     // CODE → addr:188 | <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
     r2 = r9 + 1
     // CODE → addr:192 | <Jmp>: <Addr8: -28>  # Address: 000000a4
@@ -109,7 +110,7 @@ function spreadArrayTest() {
     // CODE → addr:194 | <Catch>: <Reg8: 2>
     r2 = caughtException
     // CODE → addr:196 | <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 000000ca
-    if (r3 === undefined) goto label_202;
+    if (r6 === undefined) goto label_202;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:199 | <IteratorClose>: <Reg8: 3, UInt8: 1>
     r3.return()

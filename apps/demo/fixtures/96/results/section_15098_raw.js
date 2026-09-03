@@ -70,7 +70,7 @@ function propertyAccessTest() {
     // CODE → addr:150 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r6 = console.log;
     // CODE → addr:155 | <Mov>: <Reg8: 5, Reg8: 4>
-    // USED → r5 = r5;
+    r5 = r5
     // CODE → addr:158 | <GetByVal>: <Reg8: 5, Reg8: 5, Reg8: 8>
     r5 = r5[r8]
     // CODE → addr:162 | <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>

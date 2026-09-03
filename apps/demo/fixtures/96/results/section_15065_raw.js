@@ -15,15 +15,15 @@ function labeledBreakTest() {
     // CODE → addr: 25 | <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → addr: 28 | <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0;
+    r1 = 0
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 30 | <Mov>: <Reg8: 5, Reg8: 1>
-    r5 = 0
+    r5 = r1
     // CODE → addr: 33 | <LoadConstZero>: <Reg8: 6>
-    // USED → r6 = 0;
+    r6 = 0
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 35 | <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = 0
+    r7 = r6
     // CODE → addr: 38 | <JStrictNotEqual>: <Addr8: 8, Reg8: 5, Reg8: 2>  # Address: 0000002e
     if (r5 !== 1) goto label_46;
     // ──────────────── Block 3 ──────────────── 

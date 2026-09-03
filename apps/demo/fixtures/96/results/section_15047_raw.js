@@ -28,9 +28,9 @@ function whileTest() {
     // CODE → addr: 49 | <Call3>: <Reg8: 6, Reg8: 6, Reg8: 7, Reg8: 2, Reg8: 5>
     console.log("while", r5)
     // CODE → addr: 55 | <Mov>: <Reg8: 7, Reg8: 5>
-    r7 = 0
+    r7 = r5
     // CODE → addr: 58 | <JStrictEqual>: <Addr8: 9, Reg8: 7, Reg8: 1>  # Address: 00000043
-    // → r7 = 0
+    // → r7 = r5
     if (r7 === 2) goto label_67;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 62 | <Inc>: <Reg8: 6, Reg8: 7>
@@ -45,12 +45,12 @@ function whileTest() {
     // CODE → addr: 78 | <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
     console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
     // CODE → addr: 83 | <Inc>: <Reg8: 6, Reg8: 7>
-    // USED → r6 = r7 + 1;
+    r6 = r7 + 1
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 86 | <Mov>: <Reg8: 5, Reg8: 6>
-    r5 = r7 + 1
+    r5 = r6
     // CODE → addr: 89 | <JLess>: <Addr8: -51, Reg8: 5, Reg8: 4>  # Address: 00000026
-    // → r5 = r7 + 1
+    // → r5 = r6
     if (r5 < 5) goto label_38;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 93 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

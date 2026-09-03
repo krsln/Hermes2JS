@@ -27,20 +27,20 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr: 47 | <LoadConstString>: <Reg8: 5, string_id: 4877>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok' (String)
     // USED → r5 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok";
     // CODE → addr: 51 | <LoadConstZero>: <Reg8: 4>
-    // USED → r4 = 0;
+    r4 = 0
     // CODE → addr: 53 | <LoadConstZero>: <Reg8: 3>
-    // USED → r3 = 0;
+    r3 = 0
     // CODE → addr: 55 | <LoadConstZero>: <Reg8: 0>
     r0 = 0
     if (0 < param1.length) {
         // LOOP → START (for)
-        // → r2 = 0
+        // → r2 = r4
         for (; r4 < r2; r4 = r2 + 1) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 60 | <Mov>: <Reg8: 2, Reg8: 4>
-            r2 = 0
+            r2 = r4
             // CODE → addr: 63 | <Mov>: <Reg8: 11, Reg8: 3>
-            // USED → r11 = 0;
+            r11 = r3
             // CODE → addr: 66 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
             r12 = param1[r2]
             // → r12 = param1[r2]
@@ -49,17 +49,17 @@ function tryCatchInsideLoopTest(param1) {
                 // CODE → addr:100 | <TryGetById>: <Reg8: 13, Reg8: 1, UInt8: 3, string_id: 9>  # String: 'Error' (Identifier)
                 // USED → r13 = Error;
                 // CODE → addr:106 | <CreateThisForNew>: <Reg8: 14, Reg8: 13, UInt8: 4>
-                // USED → r14 = CreateThisForNew(r13);
+                r14 = CreateThisForNew(r13)
                 // CODE → addr:110 | <Mov>: <Reg8: 18, Reg8: 14>
-                // USED → r18 = CreateThisForNew(r13);
+                // USED → r18 = r14;
                 // CODE → addr:113 | <Mov>: <Reg8: 17, Reg8: 6>
                 // USED → r17 = "negative value";
                 // CODE → addr:116 | <Construct>: <Reg8: 13, Reg8: 13, UInt8: 2>
-                // USED → r13 = new Error("negative value");
+                // USED → r13 = new Error("negative value", r14);
                 // CODE → addr:120 | <SelectObject>: <Reg8: 13, Reg8: 14, Reg8: 13>
-                // USED → r13 = new Error("negative value");
+                // USED → r13 = new Error("negative value", r14);
                 // CODE → addr:124 | <Throw>: <Reg8: 13>
-                throw new Error("negative value");
+                throw new Error("negative value", r14);
                 // CODE → addr:126 | <Catch>: <Reg8: 15>
                 r15 = caughtException
                 // CODE → addr:128 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -69,7 +69,7 @@ function tryCatchInsideLoopTest(param1) {
                 // CODE → addr:139 | <Call3>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7, Reg8: 15>
                 console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", r15)
                 // CODE → addr:145 | <AddN>: <Reg8: 12, Reg8: 11, Reg8: 8>
-                // USED → r12 = r11 + 1;
+                r12 = r11 + 1
             }
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 74 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -81,16 +81,16 @@ function tryCatchInsideLoopTest(param1) {
             // CODE → addr: 89 | <Call3>: <Reg8: 12, Reg8: 13, Reg8: 14, Reg8: 5, Reg8: 12>
             console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r12)
             // CODE → addr: 95 | <Mov>: <Reg8: 12, Reg8: 11>
-            r12 = 0
+            r12 = r11
             // CODE → addr: 98 | <Jmp>: <Addr8: 51>  # Address: 00000095
             goto label_149;
             // ──────────────── Block 4 ──────────────── 
             // CODE → addr:153 | <GetByIdShort>: <Reg8: 2, Reg8: 10, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
             r2 = param1.length
             // CODE → addr:158 | <Mov>: <Reg8: 3, Reg8: 12>
-            // USED → r3 = r11 + 1;
+            r3 = r12
             // CODE → addr:161 | <Mov>: <Reg8: 0, Reg8: 3>
-            r0 = r11 + 1
+            r0 = r3
         }
         // LOOP → END
     }

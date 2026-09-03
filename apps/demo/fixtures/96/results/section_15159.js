@@ -39,9 +39,9 @@ function restOnlyTest() {
         do {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 67 | <GetArgumentsPropByVal>: <Reg8: 6, Reg8: 2, Reg8: 4>
-            // USED → r6 = arguments[0];
+            // USED → r6 = arguments[r2];
             // CODE → addr: 71 | <PutByVal>: <Reg8: 5, Reg8: 2, Reg8: 6>
-            new Array(arguments.length)[0] = arguments[0]
+            new Array(arguments.length)[r2] = arguments[r2]
             // CODE → addr: 75 | <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
         // → r2 = r2 + 1

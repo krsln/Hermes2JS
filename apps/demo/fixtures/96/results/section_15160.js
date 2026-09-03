@@ -40,17 +40,17 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr: 74 | <Less>: <Reg8: 7, Reg8: 3, Reg8: 4>
     // USED → r7 = 2 < arguments.length;
     // CODE → addr: 78 | <Mov>: <Reg8: 2, Reg8: 3>
-    // USED → r2 = 2;
+    r2 = 2
     if (2 < arguments.length) {
         // LOOP → START (do_while)
         do {
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 84 | <Sub>: <Reg8: 8, Reg8: 2, Reg8: 3>
-            // USED → r8 = 2 - 2;
+            r8 = r2 - 2
             // CODE → addr: 88 | <GetArgumentsPropByVal>: <Reg8: 7, Reg8: 2, Reg8: 5>
-            // USED → r7 = arguments[2];
+            // USED → r7 = arguments[r2];
             // CODE → addr: 92 | <PutByVal>: <Reg8: 6, Reg8: 8, Reg8: 7>
-            new Array((arguments.length <= 2) ? 0 : arguments.length - 2)[2 - 2] = arguments[2]
+            new Array((arguments.length <= 2) ? 0 : arguments.length - 2)[r8] = arguments[r2]
             // CODE → addr: 96 | <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
         // → r2 = r2 + 1

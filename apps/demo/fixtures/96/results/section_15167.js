@@ -18,8 +18,12 @@ async function* anon_15167(param1) {
     // USED → r2 = 2;
     if (0 < param1) {
         // LOOP → START (for)
-        for (r4 = 0; r4 < param1; r4 = r4 + 1) {
-            if (r4 === 2) {
+        for (r4 = 0; r4 < param1; r4 = r6 + 1) {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → addr: 48 | <Mov>: <Reg8: 6, Reg8: 4>
+            r6 = r4
+            // → r6 = r4
+            if (r6 === 2) {
                 // ──────────────── Block 7 ──────────────── 
                 // CODE → addr: 72 | <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r8 = console;
@@ -30,7 +34,7 @@ async function* anon_15167(param1) {
             } else {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr: 59 | <SaveGenerator>: <Addr8: 4>  # Address: 0000003f
-                yield 0 * 0
+                yield r6 * r6
             }
         }
         // LOOP → END

@@ -17,30 +17,30 @@ function tripleNestedLabeledTest() {
     // CODE → addr: 28 | <LoadConstUInt8>: <Reg8: 13, UInt8: 2>
     // USED → r13 = 2;
     // CODE → addr: 31 | <LoadConstZero>: <Reg8: 9>
-    // USED → r9 = 0;
+    r9 = 0
     // CODE → addr: 33 | <LoadConstZero>: <Reg8: 10>
-    // USED → r10 = 0;
+    r10 = 0
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 35 | <Mov>: <Reg8: 11, Reg8: 9>
-    r11 = 0
+    r11 = r9
     // CODE → addr: 38 | <Mov>: <Reg8: 5, Reg8: 10>
-    // USED → r5 = 0;
+    r5 = r10
     // CODE → addr: 41 | <LoadConstZero>: <Reg8: 6>
-    // USED → r6 = 0;
+    r6 = 0
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 43 | <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = 0
+    r7 = r6
     // CODE → addr: 46 | <Mov>: <Reg8: 0, Reg8: 5>
-    r0 = 0
+    r0 = r5
     // CODE → addr: 49 | <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0;
+    r1 = 0
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 51 | <AddN>: <Reg8: 3, Reg8: 0, Reg8: 2>
-    // USED → r3 = r0 + 1;
+    r3 = r0 + 1
     // CODE → addr: 55 | <Mov>: <Reg8: 4, Reg8: 1>
-    r4 = 0
+    r4 = r1
     // CODE → addr: 58 | <JStrictEqual>: <Addr8: 23, Reg8: 4, Reg8: 2>  # Address: 00000051
-    // → r4 = 0
+    // → r4 = r1
     if (r4 === 1) goto label_81;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 62 | <JStrictNotEqual>: <Addr8: 8, Reg8: 11, Reg8: 13>  # Address: 00000046
@@ -52,7 +52,7 @@ function tripleNestedLabeledTest() {
     // CODE → addr: 70 | <AddN>: <Reg8: 1, Reg8: 4, Reg8: 2>
     r1 = r4 + 1
     // CODE → addr: 74 | <Mov>: <Reg8: 0, Reg8: 3>
-    r0 = r0 + 1
+    r0 = r3
     // CODE → addr: 77 | <JLessN>: <Addr8: -26, Reg8: 1, Reg8: 12>  # Address: 00000033
     // → r1 = r4 + 1
     if (r1 < 3) goto label_51;
@@ -60,7 +60,7 @@ function tripleNestedLabeledTest() {
     // CODE → addr: 81 | <AddN>: <Reg8: 6, Reg8: 7, Reg8: 2>
     r6 = r7 + 1
     // CODE → addr: 85 | <Mov>: <Reg8: 5, Reg8: 3>
-    r5 = r0 + 1
+    r5 = r3
     // CODE → addr: 88 | <JLessN>: <Addr8: -45, Reg8: 6, Reg8: 12>  # Address: 0000002b
     // → r6 = r7 + 1
     if (r6 < 3) goto label_43;
@@ -68,7 +68,7 @@ function tripleNestedLabeledTest() {
     // CODE → addr: 92 | <AddN>: <Reg8: 9, Reg8: 11, Reg8: 2>
     r9 = r11 + 1
     // CODE → addr: 96 | <Mov>: <Reg8: 10, Reg8: 3>
-    r10 = r0 + 1
+    r10 = r3
     // CODE → addr: 99 | <JLessN>: <Addr8: -64, Reg8: 9, Reg8: 12>  # Address: 00000023
     // → r9 = r11 + 1
     if (r9 < 3) goto label_35;

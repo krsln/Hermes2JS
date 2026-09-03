@@ -21,9 +21,9 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr: 32 | <LoadConstZero>: <Reg8: 6>
     // USED → r6 = 0;
     // CODE → addr: 34 | <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
+    r0 = 0
     // CODE → addr: 36 | <LoadConstZero>: <Reg8: 8>
-    // USED → r8 = 0;
+    r8 = 0
     // CODE → addr: 38 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
     r2 = param1.length
     // CODE → addr: 43 | <LoadConstString>: <Reg8: 5, string_id: 2131>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught' (String)
@@ -40,7 +40,7 @@ function tryCatchInsideLoopTest(param1) {
                 // CODE → addr: 58 | <Mov>: <Reg8: 3, Reg8: 7>
                 // USED → r3 = param1;
                 // CODE → addr: 61 | <Mov>: <Reg8: 2, Reg8: 8>
-                r2 = 0
+                r2 = r8
                 // CODE → addr: 64 | <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
                 r2 = param1[r2]
                 // → r2 = param1[r2]
@@ -51,17 +51,17 @@ function tryCatchInsideLoopTest(param1) {
                     // CODE → addr:107 | <GetByIdShort>: <Reg8: 2, Reg8: 9, UInt8: 5, string_id: 206>  # String: 'prototype' (Identifier)
                     // USED → r2 = Error.prototype;
                     // CODE → addr:112 | <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 9>
-                    // USED → r3 = CreateThis(r2);
+                    r3 = CreateThis(r2)
                     // CODE → addr:116 | <LoadConstString>: <Reg8: 12, string_id: 839>  # String: 'negative value' (String)
                     // USED → r12 = "negative value";
                     // CODE → addr:120 | <Mov>: <Reg8: 13, Reg8: 3>
-                    // USED → r13 = CreateThis(r2);
+                    // USED → r13 = r3;
                     // CODE → addr:123 | <Construct>: <Reg8: 2, Reg8: 9, UInt8: 2>
-                    // USED → r2 = new Error("negative value");
+                    // USED → r2 = new Error("negative value", r3);
                     // CODE → addr:127 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-                    // USED → r2 = new Error("negative value");
+                    // USED → r2 = new Error("negative value", r3);
                     // CODE → addr:131 | <Throw>: <Reg8: 2>
-                    throw new Error("negative value");
+                    throw new Error("negative value", r3);
                 }
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → addr: 72 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -71,7 +71,7 @@ function tryCatchInsideLoopTest(param1) {
                 // CODE → addr: 83 | <Mov>: <Reg8: 10, Reg8: 7>
                 // USED → r10 = param1;
                 // CODE → addr: 86 | <Mov>: <Reg8: 2, Reg8: 8>
-                r2 = 0
+                r2 = r8
                 // CODE → addr: 89 | <GetByVal>: <Reg8: 2, Reg8: 10, Reg8: 2>
                 r2 = param1[r2]
                 // CODE → addr: 93 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 9, Reg8: 4, Reg8: 2>
@@ -87,15 +87,13 @@ function tryCatchInsideLoopTest(param1) {
                 // CODE → addr:146 | <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 9>
                 console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", r9)
                 // CODE → addr:152 | <Mov>: <Reg8: 2, Reg8: 0>
-                r2 = 0
+                r2 = r0
                 // CODE → addr:155 | <Inc>: <Reg8: 0, Reg8: 2>
                 r0 = r2 + 1
             }
             // ──────────────── Block 5 ──────────────── 
-            // CODE → addr:158 | <Mov>: <Reg8: 2, Reg8: 8>
-            r2 = 0
             // CODE → addr:164 | <Mov>: <Reg8: 8, Reg8: 3>
-            r8 = r2 + 1
+            r8 = r3
             // CODE → addr:167 | <Mov>: <Reg8: 2, Reg8: 7>
             r2 = param1
             // CODE → addr:170 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)

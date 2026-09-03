@@ -1,40 +1,15 @@
-from dataclasses import dataclass
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional, List, Tuple
 
-from hermes_decompiler.transforms.structurers import SequenceStructurer
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir import Expression
-
-
-@dataclass(slots=True)
-class RegisterState:
-    definition: OpcodeResult
-    version: int = 0
-    reads: int = 0
-
-    @property
-    def value(self) -> Optional[Expression]:
-        return self.definition.value
-
-    @property
-    def handler(self) -> str:
-        return self.definition.handler
-
-    def mark_read(self) -> None:
-        self.reads += 1
-
-    def mark_used(self) -> None:
-        self.definition.definition_used = True
+from hermes_decompiler.transforms.structurers import SequenceStructurer
+from .RegisterState import RegisterState
 
 
 class HermesAnalysis:
     metadataList: List[Dict[str, Any]]
     metadata: Dict[str, Any]
 
-    def __init__(
-            self,
-            metadata: Optional[dict[str, Any]] = None,
-    ) -> None:
+    def __init__(self, metadata: Optional[dict[str, Any]] = None) -> None:
         """
         Initialize the Hermes analysis context.
 
@@ -53,6 +28,31 @@ class HermesAnalysis:
 
         self.results: List[OpcodeResult] = []
 
+        # TODO: shorter desc
+        # Populated once by `OpcodeDispatcher.dispatch_all()` before the
+        # main opcode walk starts; `current_address` is advanced by the
+        # dispatcher before each `handler.handle(ctx)` call. Both default
+        # to "no loop info yet" / "unknown position" so any code that
+        # reads them before the dispatcher runs (e.g. tests constructing
+        # a bare HermesAnalysis by hand) degrades to "never unsafe",
+        # matching prior behavior exactly.
+        self.loop_ranges: List[Tuple[int, int]] = []
+        self.current_address: Optional[int] = None
+
+        # TODO: shorter desc
+        # Populated by `OpcodeDispatcher.dispatch_all()`'s first (scratch)
+        # pass: for every register, every address (inside some loop
+        # range) where it gets WRITTEN - not just the single "most
+        # recent definition" `defined_and_used_in_same_loop` alone can
+        # see. This is what catches the self-referencing-accumulator
+        # shape (a register read early in a loop body, but ALSO
+        # rewritten later in that same body via a back-edge-carried
+        # `Inc`/`AddN`/etc. - e.g. a rest-parameter copy loop's index
+        # register) - the same shape `Binary.AddN`/`Binary.SubN`
+        # originally special-cased by hand, generalized here to any
+        # opcode/register.
+        self.loop_carried_writes: Dict[str, List[int]] = {}
+
     def add_result(self, result: OpcodeResult) -> None:
         self.results.append(result)
 
@@ -67,10 +67,45 @@ class HermesAnalysis:
     def get_register_state(self, reg: int) -> Optional[RegisterState]:
         return self.registers.get(f"r{reg}")
 
-    def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
-        return self.generate_js_v1(verbose, raw)
+    # TODO: rename?
+    def defined_and_used_in_same_loop(self, reg: int, definition_address: int) -> bool:
+        """
+        True if a read of `reg` at the instruction currently being
+        handled (`self.current_address`) is unsafe to inline, because
+        `reg` is redefined per-iteration within some loop range that
+        also contains this read. Two ways that can happen:
 
-    def generate_js_v1(self, verbose: bool = False, raw: bool = False) -> list[str]:
+        1. `reg`'s CURRENT definition (`definition_address`) is itself
+           inside the same loop range as the read (e.g. a `Mov` aliasing
+           a loop-body value, read again later in that same body).
+
+        2. `reg` has ANY OTHER write (from `self.loop_carried_writes`,
+           harvested in a first dispatch pass - see
+           `OpcodeDispatcher.dispatch_all`) inside a loop range that also
+           contains the read - even if that write comes LATER in address
+           order than this read. This catches the self-referencing
+           accumulator shape: a loop-carried register read near the top
+           of the body but rewritten near the bottom (via the back-edge),
+           where the "current definition" at read-time is still the
+           pre-loop initial value.
+        """
+        if self.current_address is None:
+            return False
+
+        for start, end in self.loop_ranges:
+            if not (start <= self.current_address <= end):
+                continue
+
+            if start <= definition_address <= end:
+                return True
+
+            for write_address in self.loop_carried_writes.get(f"r{reg}", ()):
+                if start <= write_address <= end:
+                    return True
+
+        return False
+
+    def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
         from hermes_decompiler.analysis.cfg import CFG
         from hermes_decompiler.transforms import StructuralAnalyzer
         from hermes_decompiler.backend.emit import JSEmitter

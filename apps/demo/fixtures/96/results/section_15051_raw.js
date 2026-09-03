@@ -19,12 +19,12 @@ function forTest() {
     // CODE → addr: 32 | <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
     // USED → r1 = 3;
     // CODE → addr: 35 | <LoadConstZero>: <Reg8: 5>
-    // USED → r5 = 0;
+    r5 = 0
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 37 | <Mov>: <Reg8: 6, Reg8: 5>
-    r6 = 0
+    r6 = r5
     // CODE → addr: 40 | <JStrictEqual>: <Addr8: 48, Reg8: 6, Reg8: 1>  # Address: 00000058
-    // → r6 = 0
+    // → r6 = r5
     if (r6 === 3) goto label_88;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 44 | <JStrictEqual>: <Addr8: 22, Reg8: 6, Reg8: 2>  # Address: 00000042

@@ -41,16 +41,16 @@ function tag(param1) {
     // CODE → addr: 61 | <Less>: <Reg8: 8, Reg8: 5, Reg8: 6>
     // USED → r8 = 1 < arguments.length;
     // CODE → addr: 65 | <Mov>: <Reg8: 2, Reg8: 5>
-    // USED → r2 = 1;
+    r2 = 1
     // CODE → addr: 68 | <JmpFalse>: <Addr8: 22, Reg8: 8>  # Address: 0000005a
     if (!(1 < arguments.length)) goto label_90;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 71 | <Sub>: <Reg8: 9, Reg8: 2, Reg8: 5>
-    // USED → r9 = 1 - 1;
+    r9 = r2 - 1
     // CODE → addr: 75 | <GetArgumentsPropByVal>: <Reg8: 8, Reg8: 2, Reg8: 7>
-    // USED → r8 = arguments[1];
+    // USED → r8 = arguments[r2];
     // CODE → addr: 79 | <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
-    new Array(arguments.length - 1)[1 - 1] = arguments[1]
+    new Array(arguments.length - 1)[r9] = arguments[r2]
     // CODE → addr: 83 | <Inc>: <Reg8: 2, Reg8: 2>
     r2 = r2 + 1
     // CODE → addr: 86 | <JLess>: <Addr8: -15, Reg8: 2, Reg8: 6>  # Address: 00000047

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from hermes_decompiler.core.Exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
 from hermes_decompiler.core.logging import get_logger
@@ -9,7 +9,7 @@ from hermes_decompiler.ir.expressions import AwaitExpression, Expression, RawExp
 
 logger = get_logger(__name__)
 
-# HandlerLoader.load() populates OpcodeHandler.registry via __init_subclass__
+# HandlerLoader.load() populates ``OpcodeHandler.registry`` via __init_subclass__
 # side effects. It's idempotent (re-importing already-imported modules is a
 # no-op), so doing it once at module load time - rather than once per
 # JSOpcodeDispatcher() instance - is both correct and avoids repeated
@@ -51,6 +51,42 @@ class OpcodeDispatcher:
 
     @staticmethod
     def dispatch_all(entries: List[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool = False):
+        # Static, one-time backward-jump scan - see `compute_loop_ranges`.
+        # Shared by both passes below.
+        loop_ranges = OpcodeDispatcher.compute_loop_ranges(entries)
+
+        # --- Pass 1 (scratch, discarded) ---------------------------------
+        # Runs the exact same dispatch as the real pass, on a throwaway
+        # HermesAnalysis, purely to harvest which register gets WRITTEN
+        # at which address. `dest_reg`/`entry.address` are recorded on
+        # every OpcodeResult unconditionally (regardless of any inlining
+        # decision), so this pass doesn't need loop-range awareness
+        # itself to produce correct data - it only needs to finish a
+        # normal walk. Errors are always swallowed here (never `strict`):
+        # a bad opcode shouldn't stop harvesting, and any real error is
+        # still reported/raised by pass 2 below.
+        scratch = HermesAnalysis(metadata=analysis.metadata)
+        scratch.loop_ranges = loop_ranges
+        OpcodeDispatcher._run_pass(entries, scratch, strict=False)
+
+        loop_carried_writes: dict[str, list[int]] = {}
+        for result in scratch.results:
+            if result.dest_reg is None:
+                continue
+            address = result.address
+            if any(start <= address <= end for start, end in loop_ranges):
+                loop_carried_writes.setdefault(result.name, []).append(address)
+
+        # --- Pass 2 (real) ------------------------------------------------
+        # Same walk again, on the caller's actual `analysis`, now armed
+        # with both the loop ranges and the loop-carried write addresses
+        # harvested above - see `HermesAnalysis.defined_and_used_in_same_loop`.
+        analysis.loop_ranges = loop_ranges
+        analysis.loop_carried_writes = loop_carried_writes
+        OpcodeDispatcher._run_pass(entries, analysis, strict=strict)
+
+    @staticmethod
+    def _run_pass(entries: List[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool) -> None:
         dispatcher = OpcodeDispatcher(analysis)
 
         for i, entry in enumerate(entries):
@@ -59,6 +95,8 @@ class OpcodeDispatcher:
                 result = OpcodeResult(entry, value=RawExpression(source=f"// Unparsed: {entry.bytecode}"))
                 analysis.add_result(result)
                 continue
+
+            analysis.current_address = entry.address
 
             try:
                 result = dispatcher.dispatch(entry, entries, i)
@@ -102,3 +140,34 @@ class OpcodeDispatcher:
 
         if prev.handler.startswith("Call") and isinstance(prev.value, Expression):
             prev.value = AwaitExpression(argument=prev.value)
+
+
+    @staticmethod
+    def compute_loop_ranges(entries: List[OpcodeEntry]) -> List[Tuple[int, int]]:
+        """
+        Cheaply derive loop-body address ranges from raw disassembly, ahead
+        of (and independent from) full CFG/loop construction.
+
+        Every jump-family opcode already has `target_address` populated by
+        `OpcodeEntry._parse_comment()` from the `# Address: ...` marker. Any
+        jump whose target is BEHIND its own address is - by definition - a
+        backward branch, i.e. a loop back-edge: the bytecode between the
+        target and the jump instruction is the loop body (this holds for
+        `while`/`for`/`do-while`/`for-of`/`for-in` lowering alike, since
+        they all compile down to a conditional or unconditional backward
+        jump at the bottom of the loop).
+
+        This is intentionally a static, single-pass, list-of-ranges result
+        - not a general CFG. It only needs to answer one question later
+        (`HermesAnalysis.defined_and_used_in_same_loop`): "are these two
+        addresses inside the same loop body?".
+        """
+        ranges: List[Tuple[int, int]] = []
+
+        for entry in entries:
+            if entry.target_address is None:
+                continue
+            if entry.target_address < entry.address:
+                ranges.append((entry.target_address, entry.address))
+
+        return ranges

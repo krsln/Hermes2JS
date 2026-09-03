@@ -67,16 +67,16 @@ function defaultWithRestTest() {
     // CODE → addr:104 | <Less>: <Reg8: 8, Reg8: 6, Reg8: 3>
     // USED → r8 = 1 < arguments.length;
     // CODE → addr:108 | <Mov>: <Reg8: 2, Reg8: 6>
-    // USED → r2 = 1;
+    r2 = 1
     // CODE → addr:111 | <JmpFalse>: <Addr8: 22, Reg8: 8>  # Address: 00000085
     if (!(1 < arguments.length)) goto label_133;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:114 | <Sub>: <Reg8: 9, Reg8: 2, Reg8: 6>
-    // USED → r9 = 1 - 1;
+    r9 = r2 - 1
     // CODE → addr:118 | <GetArgumentsPropByVal>: <Reg8: 8, Reg8: 2, Reg8: 7>
-    // USED → r8 = arguments[1];
+    // USED → r8 = arguments[r2];
     // CODE → addr:122 | <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
-    new Array(arguments.length - 1)[1 - 1] = arguments[1]
+    new Array(arguments.length - 1)[r9] = arguments[r2]
     // CODE → addr:126 | <Inc>: <Reg8: 2, Reg8: 2>
     r2 = r2 + 1
     // CODE → addr:129 | <JLess>: <Addr8: -15, Reg8: 2, Reg8: 3>  # Address: 00000072

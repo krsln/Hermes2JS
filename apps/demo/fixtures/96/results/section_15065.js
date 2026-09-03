@@ -16,18 +16,24 @@ function labeledBreakTest() {
     // USED → r2 = 1;
     loop_1:
     // LOOP → START (for)
-    for (r1 = 0; r1 < 3; r1 = r1 + 1) {
+    for (r1 = 0; r1 < 3; r1 = r5 + 1) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr: 30 | <Mov>: <Reg8: 5, Reg8: 1>
+        r5 = r1
         // LOOP → START (for)
-        for (r6 = 0; r6 < 3; r6 = r6 + 1) {
-            if (r1 !== 1) {
+        for (r6 = 0; r6 < 3; r6 = r7 + 1) {
+            // ──────────────── Block 2 ──────────────── 
+            // CODE → addr: 35 | <Mov>: <Reg8: 7, Reg8: 6>
+            r7 = r6
+            if (r5 !== 1) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 46 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r9 = console;
                 // CODE → addr: 52 | <GetByIdShort>: <Reg8: 8, Reg8: 9, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
                 // USED → r8 = console.log;
                 // CODE → addr: 57 | <Call3>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 5, Reg8: 7>
-                console.log(r1, r6)
-            } else if (r6 === 1) {
+                console.log(r5, r7)
+            } else if (r7 === 1) {
                 // ──────────────── Block 7 ──────────────── 
                 // CODE → addr: 79 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
                 // USED → r3 = console;

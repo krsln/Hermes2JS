@@ -19,17 +19,17 @@ function labeledContinueTest() {
     // CODE → addr: 33 | <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → addr: 36 | <LoadConstZero>: <Reg8: 1>
-    // USED → r1 = 0;
+    r1 = 0
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 38 | <Mov>: <Reg8: 7, Reg8: 1>
-    r7 = 0
+    r7 = r1
     // CODE → addr: 41 | <LoadConstZero>: <Reg8: 8>
-    // USED → r8 = 0;
+    r8 = 0
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 43 | <Mov>: <Reg8: 9, Reg8: 8>
-    r9 = 0
+    r9 = r8
     // CODE → addr: 46 | <JStrictEqual>: <Addr8: 46, Reg8: 9, Reg8: 2>  # Address: 0000005c
-    // → r9 = 0
+    // → r9 = r8
     if (r9 === 1) goto label_92;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 50 | <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

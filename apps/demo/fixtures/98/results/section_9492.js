@@ -78,20 +78,23 @@ function spreadArrayTest() {
     // CODE → addr:155 | <NewArray>: <Reg8: 4, UInt16: 0>
     r4 = []
     // CODE → addr:159 | <LoadConstZero>: <Reg8: 2>
-    // USED → r2 = 0;
+    r2 = 0
     if (r3 !== undefined) {
         // LOOP → START (while)
-        while (!(r3 === undefined)) {
+        // → r6 = r6 === undefined
+        while (!r6) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr:167 | <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>
             r10 = r3.next()
+            // CODE → addr:171 | <Mov>: <Reg8: 6, Reg8: 3>
+            r6 = r3
             // CODE → addr:174 | <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 0>
-            // USED → r6 = r3 === undefined;
+            r6 = r6 === undefined
             // CODE → addr:178 | <Mov>: <Reg8: 9, Reg8: 2>
-            // USED → r9 = 0;
+            r9 = r2
             // ──────────────── Block 4 ──────────────── 
             // CODE → addr:184 | <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
-            r4[0] = r10
+            r4[r9] = r10
             // CODE → addr:188 | <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
             r2 = r9 + 1
         }
@@ -102,7 +105,7 @@ function spreadArrayTest() {
             // CODE → addr:202 | <Throw>: <Reg8: 2>
             throw caughtException;
             // LOOP → START (for)
-            for (; !(r3 === undefined); ) {
+            for (; !(r6 === undefined); ) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → addr:199 | <IteratorClose>: <Reg8: 3, UInt8: 1>
                 r3.return()
