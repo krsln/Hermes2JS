@@ -3,6 +3,7 @@ import argparse
 import logging
 from pathlib import Path
 
+from hermes_decompiler.core.Exceptions import OpcodeDispatchError, NoHandlerError
 from hermes_decompiler.core.io import FileOperations
 from hermes_decompiler.core.logging import configure_logging, get_logger
 
@@ -75,14 +76,31 @@ def main() -> None:
     logger.info("input \t%s", input_dir)
     logger.info("output \t%s", output_dir)
 
+    successful = 0
+    failed = 0
+
     for filename, section_index in files:
         file_path = input_dir / filename
-        FileOperations.process_section(
-            section_index, str(file_path), str(output_dir),
-            args.verbose, args.raw, args.strict
-        )
 
-    logger.info("Conversion completed successfully")
+        try:
+            result = FileOperations.process_section(
+                section_index, str(file_path), str(output_dir),
+                args.verbose, args.raw, args.strict,
+            )
+        except (OpcodeDispatchError, NoHandlerError) as e:
+            logger.error("Batch stopped in strict mode at section #%s: %s", section_index, e)
+            raise SystemExit(1)
+
+        if result:
+            successful += 1
+        else:
+            failed += 1
+
+    logger.info("Conversion finished: %d succeeded, %d failed, %d total", successful, failed, len(files))
+
+    if failed:
+        logger.error("%d/%d sections failed - see errors above.", failed, len(files))
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

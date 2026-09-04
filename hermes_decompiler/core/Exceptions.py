@@ -17,15 +17,6 @@ class MetadataParseError(HbcDecompilerError):
     """The .hbc metadata header line could not be parsed."""
 
 
-# class LineParseError(HbcDecompilerError):
-#     """A single bytecode listing line did not match the expected grammar."""
-#
-#     def __init__(self, line: str, reason: str = ""):
-#         self.line = line
-#         self.reason = reason
-#         super().__init__(f"Could not parse line: {line!r} ({reason})" if reason else f"Could not parse line: {line!r}")
-
-
 class OpcodeDispatchError(HbcDecompilerError):
     """A registered handler raised while processing an opcode."""
 
@@ -47,5 +38,11 @@ class NoHandlerError(HbcDecompilerError):
 class AnalysisContextError(HbcDecompilerError):
     """Dispatch was attempted without a valid HermesAnalysis context."""
 
-# class CodeGenerationError(HbcDecompilerError):
-#     """JS code generation (HermesAnalysis.GenerateJS) failed unexpectedly."""
+
+class CodeGenerationError(HbcDecompilerError):
+    """The code-generation stage (CodeGenerationStage) failed for this section."""
+
+    def __init__(self, section_index: int, cause: BaseException):
+        self.section_index = section_index
+        self.cause = cause
+        super().__init__(f"Code generation failed for section {section_index}: {cause}")

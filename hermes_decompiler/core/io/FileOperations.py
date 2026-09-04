@@ -5,6 +5,7 @@ import re
 from typing import List, Optional, Tuple
 
 from hermes_decompiler.Decompiler import Decompiler
+from hermes_decompiler.core.Exceptions import CodeGenerationError
 from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -80,6 +81,17 @@ class FileOperations:
 
         Returns:
             bool: True if the file was processed and written successfully, False otherwise.
+                False covers every recoverable failure for THIS section (missing/empty
+                file, unparseable metadata, code-generation failure, write error) - the
+                caller can safely loop over many sections without wrapping this call in
+                its own try/except.
+
+        Note on `strict`:
+            `strict` only affects opcode-dispatch behavior inside `Decompiler.build_context`.
+            When True, a dispatch failure raises `OpcodeDispatchError`/`NoHandlerError`
+            (subclasses of `HbcDecompilerError`), which this method intentionally does
+            NOT catch - that is the whole point of `--strict`, and it is the caller's
+            responsibility to decide whether that should abort the batch.
         """
         if not os.path.exists(file_path):
             logger.error("File does not exist: %s", file_path)
@@ -106,11 +118,16 @@ class FileOperations:
 
             # Render the standard JavaScript output.
             js_code = Decompiler.render(context, verbose=verbose, raw=False)
-        except ValueError:
-            # Bad/unparseable input for this specific section - log and let the
-            # caller decide whether to continue with the rest of the batch.
+        except (ValueError, CodeGenerationError):
+            # Bad/unparseable input, or a code-generation bug, for THIS section
+            # only - not a `strict`-related failure. Log and return False so
+            # one broken section never aborts the rest of a batch; matches the
+            # documented bool contract above.
             logger.error("Failed to convert %s", file_path, exc_info=True)
-            raise
+            return False
+        # Note: HbcDecompilerError subclasses (OpcodeDispatchError, NoHandlerError, ...)
+        # raised here when `strict=True` are deliberately left uncaught - see the
+        # `strict` note in the docstring above.
 
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(output_dir, f"section_{section_index}.js")

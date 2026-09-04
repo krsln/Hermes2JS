@@ -1,3 +1,4 @@
+from hermes_decompiler.core.Exceptions import CodeGenerationError
 from hermes_decompiler.core.Pipeline import Pipeline
 from hermes_decompiler.core.PipelineContext import PipelineContext
 from hermes_decompiler.core.stages import (
@@ -106,9 +107,16 @@ class Decompiler:
 
         Returns:
             Generated JavaScript source code.
+
+        Raises:
+            CodeGenerationError: The code-generation stage failed for this
+                section (wraps the underlying cause).
         """
 
-        result = CodeGenerationStage(verbose=verbose, raw=raw).run(context)
+        try:
+            result = CodeGenerationStage(verbose=verbose, raw=raw).run(context)
+        except Exception as e:
+            raise CodeGenerationError(context.section_index, e) from e
 
         return '\n'.join(result.js_lines)
 
