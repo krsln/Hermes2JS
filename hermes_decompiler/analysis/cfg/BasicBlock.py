@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from typing import List
 
-from hermes_decompiler.analysis.models.Terminator import Terminator
 from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.ir.terminators import Terminator
 
 
 class BasicBlock:

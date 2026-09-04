@@ -1,7 +1,7 @@
 from hermes_decompiler.analysis.models.regions import LoopRegion
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import TerminatorConditionalBranch
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
 
 
 def has_bottom_tested_guard(loop_region: LoopRegion) -> bool:

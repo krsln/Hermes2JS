@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock, CFG
-from hermes_decompiler.analysis.models import TerminatorThrow
 from hermes_decompiler.analysis.models.regions import FinallyRegion, SequenceRegion, TryRegion
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import Identifier
-from hermes_decompiler.transforms.structurers.try_structurer._predicates import strip_duplicate_run, strip_duplicate_span
+from hermes_decompiler.ir.terminators import TerminatorThrow
+from hermes_decompiler.transforms.structurers.try_structurer._predicates import strip_duplicate_run, \
+    strip_duplicate_span
 
 logger = get_logger(__name__)
 

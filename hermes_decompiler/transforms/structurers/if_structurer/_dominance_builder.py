@@ -1,16 +1,16 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.analysis.models.regions import (
     IfRegion,
     LoopRegion,
     SequenceRegion,
     TryRegion,
 )
+from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.transforms.shared import negate_condition, is_loop_guard_shaped
 from hermes_decompiler.transforms.structurers import RegionStructurer
-from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.transforms.structurers.if_structurer._predicates import is_backward_branch, representative_block
 
 logger = get_logger(__name__)

@@ -3,12 +3,12 @@ from __future__ import annotations
 import dataclasses
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import RegionVisitor, TerminatorConditionalBranch
+from hermes_decompiler.analysis.models import RegionVisitor
 from hermes_decompiler.analysis.models.regions import IfRegion, LoopRegion, SwitchRegion
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import BinaryExpression, Identifier
-
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
 from hermes_decompiler.transforms.region_passes.BaseRegionPass import RegionPass
 
 logger = get_logger(__name__)

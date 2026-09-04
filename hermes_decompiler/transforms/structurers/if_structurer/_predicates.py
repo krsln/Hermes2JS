@@ -10,10 +10,10 @@ safely importable from both without coupling them to each other.
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import TerminatorConditionalBranch
 from hermes_decompiler.analysis.models.regions import IfRegion, SequenceRegion
 from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, UnaryExpression
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
 
 
 def is_empty_body(body) -> bool:

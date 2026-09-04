@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import RegionVisitor, TerminatorJump
+from hermes_decompiler.analysis.models import RegionVisitor
 from hermes_decompiler.analysis.models.regions import LoopRegion, SequenceRegion
 from hermes_decompiler.core.logging import get_logger
-
+from hermes_decompiler.ir.terminators import TerminatorJump
 from hermes_decompiler.transforms.region_passes.BaseRegionPass import RegionPass
 
 logger = get_logger(__name__)

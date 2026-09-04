@@ -12,9 +12,9 @@ mutation that commits to treating a handler as `finally` lives in
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock, CFG
-from hermes_decompiler.analysis.models import TerminatorThrow
 from hermes_decompiler.analysis.models.regions import TryRegion
 from hermes_decompiler.ir.expressions import Identifier
+from hermes_decompiler.ir.terminators import TerminatorThrow
 from hermes_decompiler.transforms.structurers.try_structurer._predicates import structural_key
 
 

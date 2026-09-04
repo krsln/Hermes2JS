@@ -3,17 +3,17 @@ from __future__ import annotations
 from typing import Literal
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import TerminatorConditionalBranch, TerminatorJump
 from hermes_decompiler.analysis.models.regions import (
     Region, TryRegion, CatchRegion, FinallyRegion,
     SequenceRegion, LoopRegion, IfRegion
 )
-from hermes_decompiler.transforms.shared import negate_condition
-from hermes_decompiler.transforms.structurers import RegionStructurer
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.ir.statements import BreakStatement, ContinueStatement
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
+from hermes_decompiler.transforms.shared import negate_condition
+from hermes_decompiler.transforms.structurers import RegionStructurer
 
 logger = get_logger(__name__)
 

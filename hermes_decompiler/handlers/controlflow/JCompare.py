@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from typing import ClassVar, Optional
 
-from hermes_decompiler.analysis.models import TerminatorConditionalBranch
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import ADDR
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression, UnaryExpression
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
 
 
 class BaseJCompare(OpcodeHandler):

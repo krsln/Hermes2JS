@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import RegionGraph, TerminatorConditionalBranch, TerminatorSwitch
+from hermes_decompiler.analysis.models import RegionGraph
+from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorSwitch
 from hermes_decompiler.transforms.cfg_passes import (
     ShortCircuitConditionCfgPass,
 )
@@ -27,7 +29,6 @@ from hermes_decompiler.transforms.structurers import (
     TryStructurer,
     SwitchStructurer,
 )
-from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)
 

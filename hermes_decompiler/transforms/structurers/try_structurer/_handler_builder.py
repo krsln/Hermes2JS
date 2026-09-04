@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models import TerminatorReturn, TerminatorThrow
 from hermes_decompiler.analysis.models.regions import CatchRegion, SequenceRegion, TryRegion
 from hermes_decompiler.ir.expressions import Expression, Identifier
+from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
 
 TERMINATING_TERMINATORS = (TerminatorReturn, TerminatorThrow)
 

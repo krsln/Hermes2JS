@@ -1,6 +1,6 @@
-from hermes_decompiler.analysis.models import TerminatorJump
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, ADDR
+from hermes_decompiler.ir.terminators import TerminatorJump
 
 
 # Addr8 (total size 1)
