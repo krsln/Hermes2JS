@@ -5,14 +5,14 @@ import re
 from abc import ABC, abstractmethod
 from typing import Dict, Optional
 
+from hermes_decompiler.backend.runtime import HermesAnalysis
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.core.runtime import HermesAnalysis
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.handlers.OpcodeTypes import OpcodeContext, ArgsPattern, OperandMode
 from hermes_decompiler.ir.expressions import (
     Expression, Identifier, RawExpression, ObjectExpression,
     ArrayExpression, Literal, CallExpression, MemberExpression,
 )
+from .OpcodeTypes import OpcodeContext, ArgsPattern, OperandMode
 
 logger = get_logger(__name__)
 

@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 
 from hermes_decompiler.core.Exceptions import OpcodeDispatchError, NoHandlerError
-from hermes_decompiler.core.io import FileOperations
+from hermes_decompiler.io import FileOperations
 from hermes_decompiler.core.logging import configure_logging, get_logger
 
 logger = get_logger(__name__)

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 
-from hermes_decompiler.analysis.cfg import BasicBlock
+from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import Identifier
 

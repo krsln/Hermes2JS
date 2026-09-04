@@ -23,7 +23,7 @@ from __future__ import annotations
 
 import pytest
 
-from hermes_decompiler.analysis.cfg.BasicBlock import BasicBlock
+from hermes_decompiler.backend.analysis.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.handlers.HandlerLoader import HandlerLoader
 from hermes_decompiler.handlers.OpcodeHandler import OpcodeHandler
 from tests.models.OpcodeCatalog import OpcodeStatus, classify_all

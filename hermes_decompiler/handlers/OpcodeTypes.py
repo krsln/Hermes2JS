@@ -2,7 +2,7 @@ import re
 from dataclasses import dataclass
 from enum import Enum, auto
 
-from hermes_decompiler.core.runtime import HermesAnalysis
+from hermes_decompiler.backend.runtime import HermesAnalysis
 from hermes_decompiler.frontend.opcode import OpcodeEntry
 
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from hermes_decompiler.analysis.cfg import BasicBlock
-from hermes_decompiler.analysis.models.regions import (
+from hermes_decompiler.backend.analysis.cfg import BasicBlock
+from hermes_decompiler.backend.regions import (
     SequenceRegion,
     LoopKind,
     LoopRegion,
