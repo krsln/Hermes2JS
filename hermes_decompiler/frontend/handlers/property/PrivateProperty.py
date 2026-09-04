@@ -1,0 +1,97 @@
+from hermes_decompiler.frontend.opcode import OpcodeResult
+from frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
+from hermes_decompiler.ir.Operators import AssignmentOperator
+from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpression, Identifier
+
+
+# Reg8, Reg8, Reg8 (total size 3)
+# DEFINE_OPCODE_3(AddOwnPrivateBySym, Reg8, Reg8, Reg8)
+# Example: <AddOwnPrivateBySym>: <Reg8: 4, Reg8: 3, Reg8: 7>
+class AddOwnPrivateBySym(OpcodeHandler):
+    """Initialize a private class field on a fresh instance: obj.#field = value."""
+
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, REG), "Reg8, Reg8, Reg8 (total size 3)")
+
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
+
+        obj_reg, private_name_reg, value_reg = map(int, match.groups())
+
+        field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
+
+        left = MemberExpression(
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=Identifier(name=f"#{field_name}"),
+            computed=False,
+        )
+        right = self.get_register_expression(ctx.analysis, value_reg)
+
+        expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
+
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
+
+        return result
+
+
+# Reg8, Reg8, UInt8, Reg8 (total size 4)
+# DEFINE_OPCODE_4(GetOwnPrivateBySym, Reg8, Reg8, UInt8, Reg8)
+# <GetOwnPrivateBySym>: <Reg8: 7, Reg8: 5, UInt8: 0, Reg8: 4>
+class GetOwnPrivateBySym(OpcodeHandler):
+    """Read a private class field: obj.#field"""
+
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, REG), "Reg8, Reg8, UInt8, Reg8 (total size 4)")
+
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
+
+        dest_reg, obj_reg, _cache, private_name_reg = map(int, match.groups())
+
+        field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
+
+        expression = MemberExpression(
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=Identifier(name=f"#{field_name}"),
+            computed=False,
+        )
+
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
+
+        return result
+
+
+# Reg8, Reg8, UInt8, Reg8 (total size 4)
+# DEFINE_OPCODE_4(PutOwnPrivateBySym, Reg8, Reg8, UInt8, Reg8)
+# <PutOwnPrivateBySym>: <Reg8: 4, Reg8: 5, UInt8: 1, Reg8: 6>
+class PutOwnPrivateBySym(OpcodeHandler):
+    """Write a private class field on an already-initialized instance: obj.#field = value"""
+
+    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, REG), "Reg8, Reg8, UInt8, Reg8 (total size 4)")
+
+    def handle(self, ctx: OpcodeContext) -> OpcodeResult:
+        match = self.match_arguments(ctx)
+        if isinstance(match, OpcodeResult):
+            return match
+
+        obj_reg, value_reg, _cache, private_name_reg = map(int, match.groups())
+
+        field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
+
+        left = MemberExpression(
+            obj=self.get_register_expression(ctx.analysis, obj_reg),
+            prop=Identifier(name=f"#{field_name}"),
+            computed=False,
+        )
+        right = self.get_register_expression(ctx.analysis, value_reg)
+
+        expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
+
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
+        ctx.analysis.add_result(result)
+
+        return result

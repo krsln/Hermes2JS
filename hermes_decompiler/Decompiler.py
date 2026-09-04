@@ -1,5 +1,7 @@
 from hermes_decompiler.core.Exceptions import CodeGenerationError
-from hermes_decompiler.frontend.stages import (
+from hermes_decompiler.pipeline.Pipeline import Pipeline
+from hermes_decompiler.pipeline.PipelineContext import PipelineContext
+from hermes_decompiler.pipeline.stages import (
     MetadataStage,
     SignatureStage,
     BytecodeExtractionStage,
@@ -7,8 +9,6 @@ from hermes_decompiler.frontend.stages import (
     CodeGenerationStage,
     ParsingStage,
 )
-from hermes_decompiler.pipeline.Pipeline import Pipeline
-from hermes_decompiler.pipeline.PipelineContext import PipelineContext
 
 
 class Decompiler:
