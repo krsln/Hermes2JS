@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.ir.expressions import Identifier
-from .BaseRegionPass import RegionPass
+from ._base import RegionPass
 
 
 class DeadMovEliminationPass(RegionPass):

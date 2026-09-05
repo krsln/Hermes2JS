@@ -5,7 +5,7 @@ from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceR
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import Identifier, YieldExpression
-from .BaseRegionPass import RegionPass
+from ._base import RegionPass
 
 logger = get_logger(__name__)
 

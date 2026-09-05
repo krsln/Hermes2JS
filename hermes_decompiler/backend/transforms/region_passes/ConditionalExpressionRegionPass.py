@@ -10,7 +10,7 @@ from hermes_decompiler.backend.transforms.shared import (
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import ConditionalExpression, Expression
-from .BaseRegionPass import RegionPass
+from ._base import RegionPass
 
 logger = get_logger(__name__)
 

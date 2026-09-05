@@ -14,7 +14,7 @@ from hermes_decompiler.backend.transforms.shared import structural_key
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Expression
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
-from .BaseRegionPass import RegionPass
+from ._base import RegionPass
 
 logger = get_logger(__name__)
 

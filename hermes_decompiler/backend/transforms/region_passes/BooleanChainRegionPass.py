@@ -4,7 +4,7 @@ import dataclasses
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
-from hermes_decompiler.backend.transforms.region_passes.BaseRegionPass import RegionPass
+from hermes_decompiler.backend.transforms.region_passes._base import RegionPass
 from hermes_decompiler.backend.transforms.shared import negate_condition, is_pure, TRIVIAL_NODE_TYPES
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node

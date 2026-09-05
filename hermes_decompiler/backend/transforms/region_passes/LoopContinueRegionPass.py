@@ -4,7 +4,7 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion
 from hermes_decompiler.ir.statements import ContinueStatement
 from hermes_decompiler.ir.terminators import TerminatorJump
-from .BaseRegionPass import RegionPass
+from ._base import RegionPass
 
 
 class LoopContinueRegionPass(RegionPass, RegionVisitor):

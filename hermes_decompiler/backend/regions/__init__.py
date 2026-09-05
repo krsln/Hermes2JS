@@ -1,7 +1,7 @@
 from .RegionGraph import RegionGraph
 from .RegionVisitor import RegionVisitor
 
-from .BaseRegion import Region, SequenceRegion
+from ._base import Region, SequenceRegion
 from .LoopKind import LoopKind
 from .LoopRegion import LoopRegion
 from .SwitchRegion import SwitchCase, SwitchRegion

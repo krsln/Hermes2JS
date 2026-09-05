@@ -8,7 +8,7 @@ from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import BinaryExpression, Identifier
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
-from .BaseRegionPass import RegionPass
+from ._base import RegionPass
 
 logger = get_logger(__name__)
 

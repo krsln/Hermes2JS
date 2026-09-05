@@ -17,7 +17,7 @@ from hermes_decompiler.ir.expressions import (
     UndefinedLiteral, StringLiteral, BooleanLiteral,
 )
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
-from .BaseRegionPass import RegionPass
+from ._base import RegionPass
 
 logger = get_logger(__name__)
 

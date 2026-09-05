@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
-from hermes_decompiler.backend.regions.BaseRegion import Region, SequenceRegion
+from hermes_decompiler.backend.regions._base import Region, SequenceRegion
 from hermes_decompiler.backend.regions.SwitchRegion import SwitchRegion
 from hermes_decompiler.core.logging import get_logger
 

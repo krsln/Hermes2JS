@@ -9,7 +9,7 @@ from hermes_decompiler.ir.expressions import (
     ArrayExpression, AwaitExpression, CallExpression, Identifier, ObjectExpression, YieldExpression,
 )
 from hermes_decompiler.ir.statements import ReturnStatement, ThrowStatement
-from .BaseRegionPass import RegionPass
+from ._base import RegionPass
 
 
 class ReturnValueResolutionPass(RegionPass):

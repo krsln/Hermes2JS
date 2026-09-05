@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .BaseRegion import SequenceRegion
+from ._base import SequenceRegion
 from .IfRegion import IfRegion
 from .LoopRegion import LoopRegion
 from .SwitchRegion import SwitchRegion
