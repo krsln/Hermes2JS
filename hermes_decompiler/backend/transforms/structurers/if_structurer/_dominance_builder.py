@@ -9,6 +9,7 @@ from hermes_decompiler.backend.regions import (
 )
 from hermes_decompiler.backend.transforms.shared import negate_condition, is_loop_guard_shaped
 from hermes_decompiler.backend.transforms.structurers import RegionStructurer
+from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch, TerminatorJump
 from ._predicates import is_backward_branch, representative_block
@@ -202,7 +203,11 @@ class _DominanceIfBuilder(RegionStructurer):
         """
 
         branch = block.terminator
-        assert isinstance(branch, TerminatorConditionalBranch)
+        if not isinstance(branch, TerminatorConditionalBranch):
+            raise StructurerInvariantError(
+                f"expected block {block.id} to end in TerminatorConditionalBranch, "
+                f"got {type(branch).__name__}"
+            )
 
         if self.cfg.dominator_tree is None:
             # Dominator tree must be precomputed by the caller before
@@ -372,7 +377,11 @@ class _DominanceIfBuilder(RegionStructurer):
         if_region.else_body = else_body
 
         # The ConditionalBranch is now represented by the IfRegion.
-        assert block.instructions[-1].terminator is not None
+        if block.instructions[-1].terminator is None:
+            raise StructurerInvariantError(
+                f"block {block.id}'s last instruction lost its terminator "
+                "before the IfRegion could replace it"
+            )
         block.instructions.pop()
         block.terminator = None
 

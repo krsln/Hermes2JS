@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import SequenceRegion, SwitchCase, SwitchRegion
+from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir.expressions import NumericLiteral
 from hermes_decompiler.ir.terminators import TerminatorSwitch
 
@@ -41,7 +42,10 @@ class _JumpTableSwitchBuilder:
         """
 
         switch_term = header.terminator
-        assert isinstance(switch_term, TerminatorSwitch)
+        if not isinstance(switch_term, TerminatorSwitch):
+            raise StructurerInvariantError(
+                f"expected header block to end in TerminatorSwitch, got {type(switch_term).__name__}"
+            )
 
         try:
             header_index = region.children.index(header)

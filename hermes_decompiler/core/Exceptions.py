@@ -39,6 +39,22 @@ class AnalysisContextError(HbcDecompilerError):
     """Dispatch was attempted without a valid HermesAnalysis context."""
 
 
+class StructurerInvariantError(HbcDecompilerError):
+    """
+    A structurer pass found the IR/CFG in a state its own logic assumes
+    can never happen (e.g., a block it just confirmed carries a
+    conditional branch no longer does).
+
+    Distinct from the other errors in this module: those cover *expected*
+    failure modes of external input (an unfamiliar hermes-dis line, an
+    unregistered opcode); this one means a structurer's own precondition
+    was violated - a bug in the decompiler itself, not the input. Using a
+    real exception here (rather than a bare `assert`) means the check
+    still runs under `python -O`, where `assert` is stripped entirely and
+    the violation would otherwise pass through silently.
+    """
+
+
 class CodeGenerationError(HbcDecompilerError):
     """The code-generation stage (CodeGenerationStage) failed for this section."""
 

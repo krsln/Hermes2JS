@@ -9,6 +9,7 @@ from hermes_decompiler.backend.regions import (
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, is_loop_guard_shaped, has_bottom_tested_guard
 )
+from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.statements import BreakStatement
 from hermes_decompiler.ir.terminators import (
@@ -200,7 +201,11 @@ class LoopBreakStructurer(RegionStructurer):
     def _convert(self, loop: LoopRegion, block: BasicBlock) -> bool:
 
         branch = block.terminator
-        assert isinstance(branch, TerminatorConditionalBranch)
+        if not isinstance(branch, TerminatorConditionalBranch):
+            raise StructurerInvariantError(
+                f"expected block {block.id} to end in TerminatorConditionalBranch, "
+                f"got {type(branch).__name__}"
+            )
 
         covered = loop.body.covered_blocks
 

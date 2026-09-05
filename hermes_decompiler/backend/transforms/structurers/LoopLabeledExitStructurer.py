@@ -8,6 +8,7 @@ from hermes_decompiler.backend.regions import (
     SequenceRegion, LoopRegion, IfRegion
 )
 from hermes_decompiler.backend.transforms.shared import negate_condition
+from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.ir.expressions import Identifier
@@ -159,7 +160,11 @@ class LoopLabeledExitStructurer(RegionStructurer):
     def _convert(self, loop: LoopRegion, block: BasicBlock) -> bool:
 
         branch = block.terminator
-        assert isinstance(branch, TerminatorConditionalBranch)
+        if not isinstance(branch, TerminatorConditionalBranch):
+            raise StructurerInvariantError(
+                f"expected block {block.id} to end in TerminatorConditionalBranch, "
+                f"got {type(branch).__name__}"
+            )
 
         if block in loop.latches:
             # The loop's own back-edge test - not an escape edge.
@@ -212,8 +217,10 @@ class LoopLabeledExitStructurer(RegionStructurer):
         if target_loop is loop:
             return False
 
-        assert kind is not None
-        assert target_loop is not None
+        if kind is None:
+            raise StructurerInvariantError(
+                "_find_target_loop_for_address returned a target_loop without a kind"
+            )
 
         # ---- convert `block`'s branch into a structured IfRegion ----
         #
@@ -313,8 +320,6 @@ class LoopLabeledExitStructurer(RegionStructurer):
 
         if self._synth_block_id is None:
             self._synth_block_id = max((b.id for b in self.cfg.blocks), default=0) + 1
-
-        assert self._synth_block_id is not None
 
         block_id = self._synth_block_id
         self._synth_block_id += 1

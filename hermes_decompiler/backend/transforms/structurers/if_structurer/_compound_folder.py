@@ -9,6 +9,7 @@ from hermes_decompiler.backend.regions import (
     TryRegion,
 )
 from hermes_decompiler.backend.transforms.shared import negate_condition, is_loop_guard_shaped
+from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
@@ -284,9 +285,17 @@ class _CompoundConditionFolder:
         either way.
         """
         block = region.children[index]
-        assert isinstance(block, BasicBlock)
+        if not isinstance(block, BasicBlock):
+            raise StructurerInvariantError(
+                f"expected region.children[{index}] to be a BasicBlock, "
+                f"got {type(block).__name__}"
+            )
         branch = block.terminator
-        assert isinstance(branch, TerminatorConditionalBranch)
+        if not isinstance(branch, TerminatorConditionalBranch):
+            raise StructurerInvariantError(
+                f"expected block {block.id} to end in TerminatorConditionalBranch, "
+                f"got {type(branch).__name__}"
+            )
 
         if index + 1 >= len(region.children):
             return False
