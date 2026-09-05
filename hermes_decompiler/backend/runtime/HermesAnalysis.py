@@ -13,7 +13,7 @@ class HermesAnalysis:
         """
         Initialize the Hermes analysis context.
 
-        This object is created fresh per `JSConverter.convert()` call and is
+        This object is created fresh per `Decompiler.build_context()` call and is
         the sole owner of state for one conversion pass (registers, results,
         string/function tables). It should never be reused or shared across
         conversions - see core/registry.py for how cross-section data

@@ -39,13 +39,6 @@ class Jmp(OpcodeHandler):
         ctx.analysis.gotoList.append(target)
 
         terminator = TerminatorJump(target=target)
-        # print(
-        #     f"{ctx.entry.opcode}: "
-        #     f"address={ctx.entry.address}, "
-        #     f"offset={offset}, "
-        #     f"target={target}, "
-        #     f"calculated={ctx.entry.address + offset}"
-        # )
 
         result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
         ctx.analysis.add_result(result)
@@ -90,13 +83,6 @@ class JmpTrue(OpcodeHandler):
         condition = self.build_condition(self.get_register_expression(ctx.analysis, reg))
 
         terminator = TerminatorConditionalBranch(condition=condition, target=target)
-        # print(
-        #     f"{ctx.entry.opcode}: "
-        #     f"address={ctx.entry.address}, "
-        #     f"offset={offset}, "
-        #     f"target={target}, "
-        #     f"calculated={ctx.entry.address + offset}"
-        # )
 
         # pure control flow: no operand value of its own
         result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)

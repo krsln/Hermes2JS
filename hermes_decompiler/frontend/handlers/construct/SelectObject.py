@@ -29,28 +29,18 @@ class SelectObject(OpcodeHandler):
         obj_value = state_obj.value if state_obj else None
         selector_value = state_selector.value if state_selector else None
 
-        # print(
-        #     f"SelectObject: "
-        #     f"dest=r{dest_reg}, "
-        #     f"obj=r{obj_reg} value={type(obj_value).__name__}, "
-        #     f"selector=r{selector_reg} value={type(selector_value).__name__}"
-        # )
-
         # If either operand is a NewExpression, unwrap the SelectObject layer
         # and preserve the NewExpression directly, matching JavaScript's `new`
         # constructor semantics.
         if state_selector and isinstance(selector_value, NewExpression):
-            # print("SelectObject → if")
             expression = selector_value
             state_selector.mark_read()
             state_selector.mark_used()
         elif state_obj and isinstance(obj_value, NewExpression):
-            # print("SelectObject → elif")
             expression = obj_value
             state_obj.mark_read()
             state_obj.mark_used()
         else:
-            # print("SelectObject → else")
             # Standard computed member access (fallback) | Hermes 98 -> CallExpression
             obj = self.get_register_expression(ctx.analysis, obj_reg)
             selector = self.get_register_expression(ctx.analysis, selector_reg)

@@ -25,12 +25,6 @@ class SwitchImm(OpcodeHandler):
         selector_reg = int(match.group(1))
         selector = self.get_register_expression(ctx.analysis, selector_reg)
 
-        # if entry.jump_table:
-        #     targets = list(entry.jump_table)
-        # else:
-        #     targets = []
-        # # print("targets",targets)
-
         case_map = {}
 
         if ctx.entry.jump_table:
@@ -48,7 +42,6 @@ class SwitchImm(OpcodeHandler):
                     ctx.entry.jump_table,
             ):
                 case_map[value] = target
-        # print("case_map",case_map)
 
         default_target = ctx.entry.target_address
         terminator = TerminatorSwitch(selector=selector, case_map=case_map, default_target=default_target)

@@ -115,7 +115,7 @@ class _IterativeSetAnalysis(ABC):
     ) -> Dict[BasicBlock, List[BasicBlock]]:
         """
         Turns an immediate-dominator/post-dominator map (as produced by
-        `compute_immediate()`) into a children adjacency map, i.e. the
+        `compute_immediate()`) into a children adjacency map, i.e., the
         actual dominator/post-dominator *tree*.
 
         Shared by `DominatorTree` and `PostDominatorTree` for the same

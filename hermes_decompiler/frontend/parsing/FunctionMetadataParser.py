@@ -25,7 +25,7 @@ class FunctionMetadataParser:
         Returns:
             Dictionary containing parsed metadata. Missing/unrecognized fields
             are logged as warnings rather than raising, matching prior
-            behavior where the caller (JSConverter) applies sensible defaults
+            behavior where the caller (`Decompiler`) applies sensible defaults
             via `.get(key, default)`.
         """
         metadata = {}
