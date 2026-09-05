@@ -1,5 +1,5 @@
+from hermes_decompiler.frontend.handlers import OpcodeContext, ArgsPattern, sequence, REG, STRING_ID
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from frontend.handlers import OpcodeContext, ArgsPattern, sequence, REG, STRING_ID
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
     AssignmentExpression, Identifier, MemberExpression, ObjectExpression, ObjectProperty, PropertyKind,

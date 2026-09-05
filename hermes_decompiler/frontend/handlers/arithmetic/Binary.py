@@ -1,7 +1,7 @@
-from hermes_decompiler.frontend.opcode import OpcodeResult
-from frontend.handlers import (
+from hermes_decompiler.frontend.handlers import (
     OpcodeHandler, OpcodeContext, ArgsPattern, OperandMode, sequence, REG,
 )
+from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import BinaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
 

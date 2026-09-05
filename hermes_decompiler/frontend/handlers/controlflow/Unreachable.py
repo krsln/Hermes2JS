@@ -1,5 +1,5 @@
+from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, sequence
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from frontend.handlers import OpcodeHandler, OpcodeContext, sequence
 
 
 # (total size 0)

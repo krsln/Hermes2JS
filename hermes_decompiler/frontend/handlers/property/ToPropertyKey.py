@@ -1,5 +1,5 @@
+from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 
 
 # Reg8, Reg8 (total size 2)

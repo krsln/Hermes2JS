@@ -2,9 +2,8 @@ from __future__ import annotations
 
 from typing import ClassVar, Optional
 
+from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, ADDR
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from frontend.handlers import ADDR
-from frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, Expression, UnaryExpression
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch

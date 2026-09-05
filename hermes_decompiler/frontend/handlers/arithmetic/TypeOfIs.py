@@ -1,5 +1,5 @@
+from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, StringLiteral, UnaryExpression
 

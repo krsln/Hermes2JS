@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+from hermes_decompiler.frontend.handlers import (
+    OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, ADDR, UINT8, UINT16
+)
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, ADDR, UINT8, UINT16
 from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.Operators import BinaryOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import (

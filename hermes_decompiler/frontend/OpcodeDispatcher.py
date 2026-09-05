@@ -1,9 +1,9 @@
 from typing import List, Tuple
 
-from frontend.handlers import HandlerLoader, OpcodeHandler, OpcodeContext
 from hermes_decompiler.backend.runtime import HermesAnalysis
 from hermes_decompiler.core.Exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.frontend.handlers import HandlerLoader, OpcodeHandler, OpcodeContext
 from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 from hermes_decompiler.ir.expressions import AwaitExpression, Expression, RawExpression
 

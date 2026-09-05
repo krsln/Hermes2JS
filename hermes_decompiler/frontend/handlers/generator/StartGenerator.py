@@ -1,7 +1,7 @@
 import re
 
+from hermes_decompiler.frontend.handlers.OpcodeHandler import OpcodeHandler, OpcodeContext, ArgsPattern
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from frontend.handlers.OpcodeHandler import OpcodeHandler, OpcodeContext, ArgsPattern
 from hermes_decompiler.ir.expressions import RawExpression
 
 
