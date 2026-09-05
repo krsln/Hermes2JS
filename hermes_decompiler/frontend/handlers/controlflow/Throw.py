@@ -1,7 +1,7 @@
-from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT32
+from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, STRING_ID
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import CallExpression, Identifier
-from hermes_decompiler.ir.statements import ThrowStatement
+from hermes_decompiler.ir.expressions import CallExpression, Identifier, StringLiteral
+from hermes_decompiler.ir.statements import ExpressionStatement, ThrowStatement
 from hermes_decompiler.ir.terminators import TerminatorThrow
 
 
@@ -50,12 +50,14 @@ class Throw(OpcodeHandler):
 # Example:
 class ThrowIfEmpty(OpcodeHandler):
     """
-    Throw if the first register contains Hermes' internal Empty value.
+    If Arg2 is Empty, throw ReferenceError, otherwise move it into Arg1.
 
-    TODO:
-        Requires runtime semantics. This opcode is conditional and
-        should eventually emit a conditional terminator rather than a
-        plain ThrowStatement.
+    Confirmed via the hermes-dec version catalog (hbc81-99): `Arg1, Arg2 =
+    Reg8, Reg8`, same dest-first convention as `Mov` - used for `let`/
+    `const` TDZ reads. The check itself needs no surface syntax: real JS
+    already throws a ReferenceError on TDZ access on its own, so this is
+    decompiled as the plain pass-through it is at the JS level (`Arg1 =
+    Arg2`), same as `Mov`.
     """
 
     ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
@@ -65,10 +67,14 @@ class ThrowIfEmpty(OpcodeHandler):
         if isinstance(match, OpcodeResult):
             return match
 
-        # value_reg = int(match.group(1))
-        # error_reg = int(match.group(2))
+        dest_reg, src_reg = map(int, match.groups())
 
-        return self.build_exception_result(ctx.analysis, ctx.entry, "// TODO: ThrowIfEmpty is not implemented")
+        expression = self.get_register_expression(ctx.analysis, src_reg)
+
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
+
+        return result
 
 
 # UInt32 (string_id) (total size 4)
@@ -76,25 +82,39 @@ class ThrowIfEmpty(OpcodeHandler):
 # Example:
 class ThrowIfHasRestrictedGlobalProperty(OpcodeHandler):
     """
-    Throw if a restricted global property exists.
+    Throw a SyntaxError if globalThis already has a restricted global
+    property with the given name (e.g., a top-level `let`/`const`/`class`
+    colliding with an existing non-configurable global).
 
-    TODO:
-        Exact runtime semantics need verification.
+    No destination register - this is a pure compile-time-style guard
+    with no JS-visible value of its own, same shape as its neighbor in
+    Hermes's own opcode list, `DeclareGlobalVar` (also a bare
+    `UInt32 string_id`, also no destination). Like
+    `ThrowIfThisInitialized` below, it has no direct surface-syntax
+    equivalent, so it's kept traceable as an inert pseudo-call statement
+    rather than silently dropped.
     """
 
-    ARGUMENTS = ArgsPattern(sequence(UINT32), "UInt32 (string_id)")
+    ARGUMENTS = ArgsPattern(sequence(STRING_ID), "UInt32 (string_id)")
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = self.match_arguments(ctx)
         if isinstance(match, OpcodeResult):
             return match
 
-        # string_id = int(match.group(1))
+        string_id = int(match.group(1))
+        prop_name = ctx.entry.identifier_name or f"string_{string_id}"
 
-        return self.build_exception_result(
-            ctx.analysis, ctx.entry,
-            "// TODO: ThrowIfHasRestrictedGlobalProperty is not implemented",
+        expression = CallExpression(
+            callee=Identifier(name="__throwIfHasRestrictedGlobalProperty__"),
+            arguments=(StringLiteral(value=prop_name),),
         )
+        statement = ExpressionStatement(expression=expression)
+
+        result = OpcodeResult(ctx.entry, value=expression, statement=statement, dest_reg=None)
+        ctx.analysis.add_result(result)
+
+        return result
 
 
 # Reg8, Reg8 (total size 2)
@@ -102,10 +122,13 @@ class ThrowIfHasRestrictedGlobalProperty(OpcodeHandler):
 # Example:
 class ThrowIfUndefined(OpcodeHandler):
     """
-    Throw if the first register contains undefined.
+    If Arg2 is `undefined`, throw ReferenceError, otherwise move it into
+    Arg1.
 
-    TODO:
-        Conditional runtime check.
+    Same `Reg8, Reg8` dest-first shape as `ThrowIfEmpty` (confirmed via
+    the hermes-dec version catalog, hbc98-99) and the same reasoning
+    applies: the check is implicit in real JS semantics, so this
+    decompiles as the plain pass-through `Arg1 = Arg2`.
     """
 
     ARGUMENTS = ArgsPattern(sequence(REG, REG), "Reg8, Reg8")
@@ -115,14 +138,14 @@ class ThrowIfUndefined(OpcodeHandler):
         if isinstance(match, OpcodeResult):
             return match
 
-        # value_reg = int(match.group(1))
-        # error_reg = int(match.group(2))
+        dest_reg, src_reg = map(int, match.groups())
 
-        return self.build_exception_result(
-            ctx.analysis,
-            ctx.entry,
-            "// TODO: ThrowIfUndefined is not implemented",
-        )
+        expression = self.get_register_expression(ctx.analysis, src_reg)
+
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        ctx.analysis.add_result(result)
+
+        return result
 
 
 # Reg8 (total size 1)
@@ -132,8 +155,13 @@ class ThrowIfUndefinedInst(OpcodeHandler):
     """
     Throw if the given register contains an undefined instance.
 
-    TODO:
-        Exact runtime semantics need verification.
+    Single in-place register (hbc59-81, per the hermes-dec version
+    catalog) - the historical predecessor of the two-register
+    `ThrowIfEmpty`/`ThrowIfUndefined`, checking and passing through the
+    same register rather than a separate dest/src pair. Re-affirms the
+    register's own current value (rather than leaving it undefined here)
+    so a version bump is recorded and downstream reads still resolve
+    correctly.
     """
 
     ARGUMENTS = ArgsPattern(sequence(REG), "Reg8")
@@ -143,13 +171,14 @@ class ThrowIfUndefinedInst(OpcodeHandler):
         if isinstance(match, OpcodeResult):
             return match
 
-        # value_reg = int(match.group(1))
+        reg = int(match.group(1))
 
-        return self.build_exception_result(
-            ctx.analysis,
-            ctx.entry,
-            "// TODO: ThrowIfUndefinedInst is not implemented",
-        )
+        expression = self.get_register_expression(ctx.analysis, reg)
+
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=reg)
+        ctx.analysis.add_result(result)
+
+        return result
 
 
 # Reg8 (total size 1)
@@ -159,10 +188,9 @@ class ThrowIfThisInitialized(OpcodeHandler):
     """
     Throw if 'this' has already been initialized.
 
-    Used by class constructor initialization checks.
-
-    TODO:
-        Conditional runtime check.
+    Used by derived-class constructor initialization checks (introduced
+    alongside class-field support, hbc98-99 per the hermes-dec version
+    catalog) to guard against `super()` being invoked more than once.
     """
 
     ARGUMENTS = ArgsPattern(sequence(REG), "Reg8")
@@ -184,7 +212,6 @@ class ThrowIfThisInitialized(OpcodeHandler):
             callee=Identifier(name="__throwIfThisInitialized__"),
             arguments=(this_value,),
         )
-        # // TODO: ThrowIfThisInitialized is not implemented
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
         ctx.analysis.add_result(result)
