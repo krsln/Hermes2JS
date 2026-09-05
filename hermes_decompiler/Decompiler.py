@@ -1,4 +1,4 @@
-from hermes_decompiler.core.Exceptions import CodeGenerationError
+from hermes_decompiler.core.Exceptions import CodeGenerationError, MetadataParseError
 from hermes_decompiler.pipeline.Pipeline import Pipeline
 from hermes_decompiler.pipeline.PipelineContext import PipelineContext
 from hermes_decompiler.pipeline.stages import (
@@ -81,7 +81,6 @@ class Decompiler:
         except Exception as e:
             # Preserve the original public contract: callers of convert()
             # historically only needed to catch ValueError for bad input.
-            from hermes_decompiler.core.Exceptions import MetadataParseError
             if isinstance(e, MetadataParseError):
                 raise ValueError(str(e)) from e
             raise

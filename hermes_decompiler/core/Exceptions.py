@@ -18,6 +18,15 @@ class MetadataParseError(HbcDecompilerError):
     """The .hbc metadata header line could not be parsed."""
 
 
+class OpcodeConstructionError(HbcDecompilerError):
+    """The opcode grammar matched but building the OpcodeEntry from it failed."""
+
+    def __init__(self, line: str, cause: BaseException):
+        self.line = line
+        self.cause = cause
+        super().__init__(f"Failed to construct OpcodeEntry from line {line!r}: {cause}")
+
+
 class OpcodeDispatchError(HbcDecompilerError):
     """A registered handler raised while processing an opcode."""
 
@@ -40,6 +49,15 @@ class AnalysisContextError(HbcDecompilerError):
     """Dispatch was attempted without a valid HermesAnalysis context."""
 
 
+class CodeGenerationError(HbcDecompilerError):
+    """The code-generation stage (CodeGenerationStage) failed for this section."""
+
+    def __init__(self, section_index: int, cause: BaseException):
+        self.section_index = section_index
+        self.cause = cause
+        super().__init__(f"Code generation failed for section {section_index}: {cause}")
+
+
 class StructurerInvariantError(HbcDecompilerError):
     """
     A structurer pass found the IR/CFG in a state its own logic assumes
@@ -54,15 +72,6 @@ class StructurerInvariantError(HbcDecompilerError):
     still runs under `python -O`, where `assert` is stripped entirely and
     the violation would otherwise pass through silently.
     """
-
-
-class CodeGenerationError(HbcDecompilerError):
-    """The code-generation stage (CodeGenerationStage) failed for this section."""
-
-    def __init__(self, section_index: int, cause: BaseException):
-        self.section_index = section_index
-        self.cause = cause
-        super().__init__(f"Code generation failed for section {section_index}: {cause}")
 
 
 class HandlerLoadError(HbcDecompilerError):

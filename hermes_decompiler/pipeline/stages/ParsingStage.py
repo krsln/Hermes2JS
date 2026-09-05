@@ -1,3 +1,4 @@
+from hermes_decompiler.core.Exceptions import OpcodeConstructionError
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeEntry
 from hermes_decompiler.frontend.parsing import OpcodeParser
@@ -17,7 +18,15 @@ class ParsingStage(PipelineStage):
             if not line:
                 continue
 
-            parsed = OpcodeParser.parse(line)
+            try:
+                parsed = OpcodeParser.parse(line)
+            except OpcodeConstructionError as e:
+                # Grammar matched but construction failed: a parser bug, not
+                # a plain non-opcode line. Log it distinctly and fall back to
+                # the same placeholder used for non-matching lines, matching
+                # prior runtime behavior.
+                logger.warning(str(e))
+                parsed = None
 
             if parsed is None:
                 parsed = OpcodeEntry(bytecode=line, hex_address="", opcode="", args="", comment="")

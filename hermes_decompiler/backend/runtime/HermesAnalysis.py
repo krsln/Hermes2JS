@@ -16,8 +16,10 @@ class HermesAnalysis:
         This object is created fresh per `Decompiler.build_context()` call and is
         the sole owner of state for one conversion pass (registers, results,
         string/function tables). It should never be reused or shared across
-        conversions - see core/registry.py for how cross-section data
-        (function names) is shared explicitly instead.
+        conversions. There is no cross-section state here: each section's
+        function name is resolved independently from that section's own
+        metadata (see `SignatureStage`), not shared or looked up across
+        sections.
         """
         self.registers: dict[str, RegisterState] = {}
         self.metadataList = []

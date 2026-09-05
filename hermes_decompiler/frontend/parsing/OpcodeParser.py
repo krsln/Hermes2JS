@@ -1,6 +1,7 @@
 import re
 
 from hermes_decompiler.frontend.opcode import OpcodeEntry
+from hermes_decompiler.core.Exceptions import OpcodeConstructionError
 from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -21,10 +22,13 @@ class OpcodeParser:
 
         Returns None (not an exception) when the line simply doesn't match the
         opcode grammar - that's an expected, common case (blank lines, section
-        headers, etc.), not an error. Genuine parsing failures (regex matched
-        but downstream construction blew up) are logged and also return None,
-        matching prior behavior, but now via logger instead of print so callers
-        can control verbosity/output destination.
+        headers, etc.), not an error.
+
+        Raises OpcodeConstructionError if the grammar matched but building the
+        OpcodeEntry from the matched groups failed - that's not an expected
+        input variation, it's a bug in this parser, and swallowing it would
+        make it indistinguishable from a plain non-opcode line. Callers decide
+        whether to log-and-continue or let it propagate.
         """
         stripped = line.strip()
         match = cls._LINE_RE.match(stripped)
@@ -38,5 +42,4 @@ class OpcodeParser:
             hex_address, opcode, args = match.groups()
             return OpcodeEntry(bytecode=line, hex_address=hex_address, opcode=opcode, args=args, comment=comment)
         except Exception as e:
-            logger.warning("Failed to construct OpcodeEntry from line %r: %s", line, e)
-            return None
+            raise OpcodeConstructionError(line, e) from e
