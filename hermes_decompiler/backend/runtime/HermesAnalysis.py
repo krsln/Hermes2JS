@@ -1,5 +1,8 @@
 from typing import Dict, Any, Optional, List, Tuple
 
+from hermes_decompiler.backend.analysis.cfg import CFG
+from hermes_decompiler.backend.emit import JSEmitter
+from hermes_decompiler.backend.transforms import StructuralAnalyzer
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from .RegisterState import RegisterState
@@ -89,10 +92,6 @@ class HermesAnalysis:
         return False
 
     def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
-        from hermes_decompiler.backend.analysis.cfg import CFG
-        from hermes_decompiler.backend.transforms import StructuralAnalyzer
-        from hermes_decompiler.backend.emit import JSEmitter
-
         cfg = CFG.from_results(self.results, self.metadata.get("exception_handlers", []))
 
         cfg.verify()

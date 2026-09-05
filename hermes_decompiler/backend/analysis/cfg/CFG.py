@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import List, Optional, Dict, Tuple, TYPE_CHECKING
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
+from hermes_decompiler.backend.analysis.cfg.CFGVerifier import CFGVerifier
 from hermes_decompiler.frontend.opcode import OpcodeResult
 
 if TYPE_CHECKING:
@@ -44,8 +45,6 @@ class CFG:
         return CFGBuilder().build(results, exception_handlers or [])
 
     def verify(self):
-        from hermes_decompiler.backend.analysis.cfg.CFGVerifier import CFGVerifier
-
         CFGVerifier(self).verify()
 
     def compute_dominators(self) -> None:

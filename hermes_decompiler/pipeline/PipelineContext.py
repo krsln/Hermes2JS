@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List
 
+from hermes_decompiler.backend.runtime import HermesAnalysis
 from hermes_decompiler.frontend.opcode import OpcodeEntry
-from hermes_decompiler.backend.runtime import HermesAnalysis # order matters
 
 
 @dataclass
