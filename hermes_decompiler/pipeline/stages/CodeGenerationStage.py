@@ -9,7 +9,7 @@ logger = get_logger(__name__)
 class CodeGenerationStage(PipelineStage):
     """Assembles the final JS function source from analysis.results."""
 
-    def __init__(self, verbose: bool = True, raw: bool = True):
+    def __init__(self, verbose: bool = True, raw: bool = False):
         self._verbose = verbose
         self._raw = raw
 

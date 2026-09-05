@@ -87,7 +87,7 @@ class Decompiler:
             raise
 
     @staticmethod
-    def render(context: PipelineContext, *, verbose: bool = True, raw: bool = True) -> str:
+    def render(context: PipelineContext, *, verbose: bool = True, raw: bool = False) -> str:
         """
         Render JavaScript from an existing PipelineContext.
 
@@ -121,7 +121,7 @@ class Decompiler:
         return '\n'.join(result.js_lines)
 
     @staticmethod
-    def convert(assembly_content, section_index, *, strict=False, verbose=True, raw=True) -> str:
+    def convert(assembly_content, section_index, *, strict=False, verbose=True, raw=False) -> str:
         """
         Convenience wrapper combining build_context() and render().
 
