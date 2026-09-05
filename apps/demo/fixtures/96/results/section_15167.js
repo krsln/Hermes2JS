@@ -1,4 +1,4 @@
-async function* anon_15167(param1) {
+function* anon_15167(param1) {
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;

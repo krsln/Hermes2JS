@@ -79,12 +79,17 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
     - This pass only removes the *generic* suspend/resume machinery.
       It has no opinion on whether the enclosing function is really a
       sync generator (`function*`) or an `async function` compiled
-      through the exact same machinery (see SignatureStage.py's own
-      note on why that distinction can't be made from this function's
-      bytecode alone) - either way, the fold is the same; only the
-      keyword a *later* pass ultimately prints ("yield" vs "await")
-      would differ, and this pass always leaves a `YieldExpression`
-      for that later step to relabel if needed.
+      through the exact same machinery (see SignatureStage.is_generator's
+      own note on why that distinction can't be made from this
+      function's bytecode alone) - either way, the fold is the same;
+      only the keyword a *later* pass ultimately prints ("yield" vs
+      "await") would differ, and this pass always leaves a
+      `YieldExpression` for that later step to relabel if needed.
+      CodeGenerationStage._function_prefix is that later step: it
+      resolves the ambiguity per-function using the same "Call directly
+      before a suspend point" signal this file's own sibling,
+      `OpcodeDispatcher._handle_generator_await`, already uses to decide
+      "yield" vs "await" at each individual suspend point.
     """
 
     def run(self) -> None:
