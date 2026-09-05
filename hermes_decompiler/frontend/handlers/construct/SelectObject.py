@@ -45,7 +45,7 @@ class SelectObject(OpcodeHandler):
             state_selector.mark_read()
             state_selector.mark_used()
         elif state_obj and isinstance(obj_value, NewExpression):
-            print("SelectObject → elif")
+            # print("SelectObject → elif")
             expression = obj_value
             state_obj.mark_read()
             state_obj.mark_used()
