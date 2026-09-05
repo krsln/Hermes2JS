@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from collections.abc import Iterable
-from typing import Dict, Set
+from typing import Dict, List, Optional, Set
 
 from hermes_decompiler.backend.analysis.cfg.BasicBlock import BasicBlock
 
@@ -40,14 +40,14 @@ class _IterativeSetAnalysis(ABC):
                 neighbors = list(self.neighbors(block))
 
                 if not neighbors:
-                    # Bu bloğa ulaşan gerçek bir kenar yok - genellikle
-                    # sadece exception dispatch ile girilen bir handler
-                    # (CFGBuilder bunu gerçek kenar olarak modellemiyor,
-                    # bkz. o dosyanın docstring'i: "Not yet supported:
-                    # Exception edges"). Eksik kenarı exception tablosundan
-                    # yaklaşıksalla: bir handler, koruduğu her bloktan
-                    # "sanal" bir predecessor kenarına sahipmiş gibi kabul
-                    # edilir - çünkü exception gerçekten oradan fırlayabilir.
+                    # No real edge reaches this block - typically a handler
+                    # entered only via exception dispatch (CFGBuilder doesn't
+                    # model that as a real edge, see that file's own
+                    # docstring: "Not yet supported: Exception edges").
+                    # Approximate the missing edge from the exception table:
+                    # a handler is treated as if it had a "virtual"
+                    # predecessor edge from every block it guards - because
+                    # an exception can genuinely be thrown from there.
                     handler = handler_by_target.get(block)
                     neighbors = handler["try_blocks"] if handler else []
 
@@ -108,3 +108,32 @@ class _IterativeSetAnalysis(ABC):
             immediate[block] = candidate
 
         return immediate
+
+    def build_tree(
+            self,
+            immediate: Dict[BasicBlock, Optional[BasicBlock]],
+    ) -> Dict[BasicBlock, List[BasicBlock]]:
+        """
+        Turns an immediate-dominator/post-dominator map (as produced by
+        `compute_immediate()`) into a children adjacency map, i.e. the
+        actual dominator/post-dominator *tree*.
+
+        Shared by `DominatorTree` and `PostDominatorTree` for the same
+        reason `compute_immediate()` is: the two analyses only differ in
+        `roots()`/`neighbors()`, never in how the resulting immediate-map
+        is turned into a tree.
+        """
+
+        children: Dict[BasicBlock, List[BasicBlock]] = {
+            block: []
+            for block in self.cfg.blocks
+        }
+
+        for block, parent in immediate.items():
+
+            if parent is None:
+                continue
+
+            children[parent].append(block)
+
+        return children

@@ -19,7 +19,6 @@ class DominatorTree(_IterativeSetAnalysis):
     """
 
     def __init__(self, cfg: CFG):
-
         super().__init__(cfg)
 
         self.dominators: Dict[BasicBlock, Set[BasicBlock]] = {}
@@ -31,19 +30,16 @@ class DominatorTree(_IterativeSetAnalysis):
     # ---------------------------------------------------------
 
     def roots(self):
-
         return [self.cfg.entry]
 
     # ---------------------------------------------------------
 
     def neighbors(self, block):
-
         return block.predecessors
 
     # ---------------------------------------------------------
 
     def compute(self):
-
         super().compute()
 
         #
@@ -52,65 +48,9 @@ class DominatorTree(_IterativeSetAnalysis):
 
         self.dominators = self.result
 
-        self._compute_immediate_dominators()
+        self.idom = self.compute_immediate()
 
-        self._build_tree()
-
-    # ---------------------------------------------------------
-
-    def _compute_immediate_dominators(self):
-
-        self.idom.clear()
-
-        entry = self.cfg.entry
-
-        if entry is None:
-            return
-
-        self.idom[entry] = None
-
-        for block in self.cfg.blocks:
-
-            if block is entry:
-                continue
-
-            strict_dominators = self.dominators[block] - {block}
-
-            immediate = None
-
-            #
-            # Immediate dominator =
-            # strict dominator that is not dominated
-            # by any other strict dominator.
-            #
-
-            for candidate in strict_dominators:
-
-                if all(
-                        candidate not in self.dominators[other]
-                        for other in strict_dominators
-                        if other is not candidate
-                ):
-                    immediate = candidate
-                    break
-
-            self.idom[block] = immediate
-
-    # ---------------------------------------------------------
-
-    def _build_tree(self):
-
-        self.children = {
-            block: []
-            for block in self.cfg.blocks
-        }
-
-        for block, parent in self.idom.items():
-
-            if parent is None:
-                continue
-
-            self.children[parent].append(block)
+        self.children = self.build_tree(self.idom)
 
     # ---------------------------------------------------------
 
@@ -119,7 +59,6 @@ class DominatorTree(_IterativeSetAnalysis):
             dominator: BasicBlock,
             block: BasicBlock,
     ) -> bool:
-
         return dominator in self.dominators.get(block, set())
 
     # ---------------------------------------------------------
@@ -128,7 +67,6 @@ class DominatorTree(_IterativeSetAnalysis):
             self,
             block: BasicBlock,
     ) -> Optional[BasicBlock]:
-
         return self.idom.get(block)
 
     # ---------------------------------------------------------
@@ -137,5 +75,4 @@ class DominatorTree(_IterativeSetAnalysis):
             self,
             block: BasicBlock,
     ) -> List[BasicBlock]:
-
         return self.children.get(block, [])

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 from hermes_decompiler.backend.analysis.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.backend.analysis.dominance._iterative_set_analysis import _IterativeSetAnalysis
@@ -12,6 +12,7 @@ class PostDominatorTree(_IterativeSetAnalysis):
         super().__init__(cfg)
 
         self.immediate_post_dominators: Dict[BasicBlock, Optional[BasicBlock]] = {}
+        self.children: Dict[BasicBlock, List[BasicBlock]] = {}
 
     def roots(self):
         #
@@ -37,6 +38,7 @@ class PostDominatorTree(_IterativeSetAnalysis):
         super().compute()
 
         self.immediate_post_dominators = self.compute_immediate()
+        self.children = self.build_tree(self.immediate_post_dominators)
 
     # ---------------------------------------------------------
 
@@ -52,3 +54,17 @@ class PostDominatorTree(_IterativeSetAnalysis):
             block: BasicBlock,
     ) -> Optional[BasicBlock]:
         return self.immediate_post_dominators.get(block)
+
+    def dominated_children(
+            self,
+            block: BasicBlock,
+    ) -> List[BasicBlock]:
+        """
+        Children of `block` in the post-dominator tree - the post-dominator
+        analogue of `DominatorTree.dominated_children`. Named the same
+        (rather than e.g. `post_dominated_children`) so both trees expose
+        an identical, interchangeable API for any pass that walks either
+        one generically.
+        """
+
+        return self.children.get(block, [])
