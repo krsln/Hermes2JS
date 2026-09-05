@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.loops import NaturalLoop
 from hermes_decompiler.backend.regions import LoopRegion, SequenceRegion
+from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 from ._base import RegionStructurer
 
@@ -38,7 +39,7 @@ class LoopStructurer(RegionStructurer):
         loop_analysis = self.cfg.loop_analysis
 
         if loop_analysis is None:
-            raise RuntimeError(
+            raise StructurerInvariantError(
                 "LoopStructurer requires loop analysis to be computed "
                 "before the structuring pass runs."
             )

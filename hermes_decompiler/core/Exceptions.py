@@ -7,6 +7,7 @@ from an expected parsing failure (e.g., hermes-dis emitted an unfamiliar
 line format). These types let callers decide, per-exception-type, whether
 to log-and-continue or fail fast.
 """
+from typing import Any
 
 
 class HbcDecompilerError(Exception):
@@ -62,3 +63,11 @@ class CodeGenerationError(HbcDecompilerError):
         self.section_index = section_index
         self.cause = cause
         super().__init__(f"Code generation failed for section {section_index}: {cause}")
+
+
+class HandlerLoadError(HbcDecompilerError):
+    """Raised when one or more opcode handler modules fail to import."""
+
+    def __init__(self, message: str, report: Any):
+        self.report = report
+        super().__init__(message)

@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import importlib
-import logging
 import pkgutil
 from dataclasses import dataclass, field
 from typing import List, Tuple
 
-logger = logging.getLogger(__name__)
+from hermes_decompiler.core.Exceptions import HandlerLoadError
+from hermes_decompiler.core.logging import get_logger
+
+logger = get_logger(__name__)
 
 
 @dataclass(slots=True)
@@ -31,18 +33,7 @@ class HandlerLoadReport:
             return
 
         names = ", ".join(name for name, _ in self.failed)
-        raise HandlerLoadError(
-            f"{len(self.failed)} handler module(s) failed to import: {names}",
-            self,
-        )
-
-
-class HandlerLoadError(RuntimeError):
-    """Raised when one or more handler modules fail to import."""
-
-    def __init__(self, message: str, report: HandlerLoadReport):
-        super().__init__(message)
-        self.report = report
+        raise HandlerLoadError(f"{len(self.failed)} handler module(s) failed to import: {names}", self)
 
 
 class HandlerLoader:

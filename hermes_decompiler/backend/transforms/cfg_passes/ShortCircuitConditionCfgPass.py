@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
+from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.ir import LogicalOperator
 from hermes_decompiler.ir.expressions import BinaryExpression
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
@@ -57,7 +58,7 @@ class ShortCircuitConditionCfgPass:
         loop_analysis = cfg.loop_analysis
 
         if loop_analysis is None:
-            raise RuntimeError(
+            raise StructurerInvariantError(
                 "Loop analysis must be computed before "
                 "ShortCircuitConditionCfgPass."
             )

@@ -3,6 +3,7 @@ from __future__ import annotations
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions._base import Region, SequenceRegion
 from hermes_decompiler.backend.regions.SwitchRegion import SwitchRegion
+from hermes_decompiler.core.Exceptions import StructurerInvariantError
 from hermes_decompiler.core.logging import get_logger
 
 logger = get_logger(__name__)
@@ -161,7 +162,7 @@ class RegionGraph:
     def replace_block(self, old: BasicBlock, new: Region) -> None:
         owner = self.owner(old)
         if owner is None:
-            raise RuntimeError("Block has no owner")
+            raise StructurerInvariantError("Block has no owner")
         idx = owner.children.index(old)
         owner.children[idx] = new
         new.parent = owner
