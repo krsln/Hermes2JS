@@ -205,7 +205,7 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
         trailing_siblings = region.children[index + offset + 2:]
 
         if if_region.else_body is None and trailing_siblings:
-            logger.warning(
+            logger.debug(
                 "Resume-guard at index %d has no else_body but %d "
                 "trailing sibling(s) remain in the enclosing region - "
                 "the 'nothing follows' invariant this pass relies on "
