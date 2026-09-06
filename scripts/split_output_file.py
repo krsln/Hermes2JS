@@ -13,7 +13,6 @@ import json
 import logging
 import re
 from dataclasses import dataclass, field
-from typing import Optional
 from hermes_decompiler.core.logging import configure_logging, get_logger
 
 log = get_logger(__name__)
@@ -34,8 +33,8 @@ class Section:
     index: int
     start_line: int
     end_line: int
-    function_number: Optional[str] = None
-    function_name: Optional[str] = None
+    function_number: str | None = None
+    function_name: str | None = None
     lines: list[str] = field(default_factory=list)
 
     @property
@@ -79,8 +78,8 @@ def iter_sections(input_path: Path, separator: str):
     """
     index = 0
     start_line = 1
-    current_number: Optional[str] = None
-    current_name: Optional[str] = None
+    current_number: str | None = None
+    current_name: str | None = None
     buffer: list[str] = []
     line_no = 0
 
@@ -129,7 +128,7 @@ def split_file(
         output_dir: str,
         separator: str = DEFAULT_SEPARATOR,
         extension: str = ".hbc",
-        manifest_path: Optional[str] = None,
+        manifest_path: str | None = None,
         dry_run: bool = False,
 ) -> int:
     """
@@ -250,7 +249,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: Optional[list[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = build_arg_parser()
     args = parser.parse_args(argv)
 

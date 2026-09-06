@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from enum import Enum
 from functools import lru_cache
 from importlib import resources
-from typing import Dict, FrozenSet, Tuple
 
 # Highest bytecode version this catalog currently tracks. Update together
 # with `data/opcode_version_map.json` (see `tools/update_opcode_catalog.py`
@@ -34,11 +33,11 @@ class OpcodeStatus(str, Enum):
 class OpcodeInfo:
     name: str
     status: OpcodeStatus
-    versions: Tuple[int, ...]  # empty for UNKNOWN
+    versions: tuple[int, ...]  # empty for UNKNOWN
 
 
 @lru_cache(maxsize=1)
-def _load_version_map() -> Dict[str, FrozenSet[int]]:
+def _load_version_map() -> dict[str, frozenset[int]]:
     """
     Load `data/opcode_version_map.json`: opcode name -> set of bytecode
     versions (from the hbc51..hbc99 definitions) it appears in.
@@ -68,7 +67,7 @@ def classify(opcode_name: str) -> OpcodeInfo:
     return OpcodeInfo(name=opcode_name, status=status, versions=tuple(sorted(versions)))
 
 
-def classify_all(opcode_names) -> Dict[OpcodeStatus, list]:
+def classify_all(opcode_names) -> dict[OpcodeStatus, list]:
     """
     Classify many opcode names at once, e.g. every key currently
     registered in `OpcodeHandler.registry`.
@@ -76,7 +75,7 @@ def classify_all(opcode_names) -> Dict[OpcodeStatus, list]:
     Returns a dict keyed by OpcodeStatus, each value a list of OpcodeInfo,
     sorted by name, so callers/tests get stable, readable output.
     """
-    buckets: Dict[OpcodeStatus, list] = {status: [] for status in OpcodeStatus}
+    buckets: dict[OpcodeStatus, list] = {status: [] for status in OpcodeStatus}
 
     for name in opcode_names:
         info = classify(name)
