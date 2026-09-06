@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import ClassVar, Optional
+from typing import ClassVar
 
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, ADDR
 from hermes_decompiler.frontend.opcode import OpcodeResult
@@ -42,8 +42,8 @@ class BaseJCompare(OpcodeHandler):
     """
 
     _abstract = True
-    operator: ClassVar[Optional[BinaryOperator]] = None
-    negated_operator: ClassVar[Optional[BinaryOperator]] = None
+    operator: ClassVar[BinaryOperator | None] = None
+    negated_operator: ClassVar[BinaryOperator | None] = None
 
     ARGUMENTS = ArgsPattern(sequence(ADDR, REG, REG), "Addr8, Reg8, Reg8")
 

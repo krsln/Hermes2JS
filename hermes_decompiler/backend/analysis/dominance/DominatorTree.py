@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Set
-
 from hermes_decompiler.backend.analysis.cfg.CFG import CFG
 from hermes_decompiler.backend.analysis.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.backend.analysis.dominance._iterative_set_analysis import _IterativeSetAnalysis
@@ -21,11 +19,11 @@ class DominatorTree(_IterativeSetAnalysis):
     def __init__(self, cfg: CFG):
         super().__init__(cfg)
 
-        self.dominators: Dict[BasicBlock, Set[BasicBlock]] = {}
+        self.dominators: dict[BasicBlock, set[BasicBlock]] = {}
 
-        self.idom: Dict[BasicBlock, Optional[BasicBlock]] = {}
+        self.idom: dict[BasicBlock, BasicBlock | None] = {}
 
-        self.children: Dict[BasicBlock, List[BasicBlock]] = {}
+        self.children: dict[BasicBlock, list[BasicBlock]] = {}
 
     # ---------------------------------------------------------
 
@@ -66,7 +64,7 @@ class DominatorTree(_IterativeSetAnalysis):
     def immediate_dominator(
             self,
             block: BasicBlock,
-    ) -> Optional[BasicBlock]:
+    ) -> BasicBlock | None:
         return self.idom.get(block)
 
     # ---------------------------------------------------------
@@ -74,5 +72,5 @@ class DominatorTree(_IterativeSetAnalysis):
     def dominated_children(
             self,
             block: BasicBlock,
-    ) -> List[BasicBlock]:
+    ) -> list[BasicBlock]:
         return self.children.get(block, [])

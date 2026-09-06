@@ -1,5 +1,3 @@
-from typing import List, Tuple
-
 from hermes_decompiler.backend.runtime import HermesAnalysis
 from hermes_decompiler.core.Exceptions import AnalysisContextError, NoHandlerError, OpcodeDispatchError
 from hermes_decompiler.core.logging import get_logger
@@ -44,7 +42,7 @@ class OpcodeDispatcher:
             raise AnalysisContextError("Analysis context cannot be None")
         self.analysis = analysis
 
-    def dispatch(self, entry: OpcodeEntry, entries: List[OpcodeEntry], index: int) -> OpcodeResult:
+    def dispatch(self, entry: OpcodeEntry, entries: list[OpcodeEntry], index: int) -> OpcodeResult:
         """
             Dispatch a single opcode to its handler.
 
@@ -68,7 +66,7 @@ class OpcodeDispatcher:
             raise OpcodeDispatchError(entry.opcode, entry.bytecode, e) from e
 
     @staticmethod
-    def dispatch_all(entries: List[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool = False):
+    def dispatch_all(entries: list[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool = False):
         # Static, one-time backward-jump scan - see `compute_loop_ranges`.
         # Shared by both passes below.
         loop_ranges = OpcodeDispatcher.compute_loop_ranges(entries)
@@ -104,7 +102,7 @@ class OpcodeDispatcher:
         OpcodeDispatcher._run_pass(entries, analysis, strict=strict)
 
     @staticmethod
-    def _run_pass(entries: List[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool) -> None:
+    def _run_pass(entries: list[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool) -> None:
         dispatcher = OpcodeDispatcher(analysis)
 
         for i, entry in enumerate(entries):
@@ -160,7 +158,7 @@ class OpcodeDispatcher:
             prev.value = AwaitExpression(argument=prev.value)
 
     @staticmethod
-    def compute_loop_ranges(entries: List[OpcodeEntry]) -> List[Tuple[int, int]]:
+    def compute_loop_ranges(entries: list[OpcodeEntry]) -> list[tuple[int, int]]:
         """
         Cheaply derive loop-body address ranges from raw disassembly, ahead
         of (and independent from) full CFG/loop construction.
@@ -179,7 +177,7 @@ class OpcodeDispatcher:
         (`HermesAnalysis.defined_and_used_in_same_loop`): "are these two
         addresses inside the same loop body?".
         """
-        ranges: List[Tuple[int, int]] = []
+        ranges: list[tuple[int, int]] = []
 
         for entry in entries:
             if entry.target_address is None:

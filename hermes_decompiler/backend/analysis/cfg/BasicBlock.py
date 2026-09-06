@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import List
-
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.terminators import Terminator
 
@@ -38,11 +36,11 @@ class BasicBlock:
         self.id = block_id
         self.address = address
 
-        self.instructions: List[OpcodeResult] = []
+        self.instructions: list[OpcodeResult] = []
         self.terminator: Terminator | None = None
 
-        self.predecessors: List["BasicBlock"] = []
-        self.successors: List["BasicBlock"] = []
+        self.predecessors: list["BasicBlock"] = []
+        self.successors: list["BasicBlock"] = []
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, BasicBlock):

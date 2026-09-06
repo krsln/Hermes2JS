@@ -3,7 +3,6 @@ from __future__ import annotations
 import dataclasses
 import re
 from abc import ABC, abstractmethod
-from typing import Dict, Optional
 
 from hermes_decompiler.backend.runtime import HermesAnalysis
 from hermes_decompiler.core.logging import get_logger
@@ -25,7 +24,7 @@ class OpcodeHandler(ABC):
 
     ARGUMENTS: ArgsPattern | tuple[ArgsPattern, ...] = ()
 
-    registry: Dict[str, "OpcodeHandler"] = {}
+    registry: dict[str, "OpcodeHandler"] = {}
 
     # Set to True on a class (not inherited implicitly - see
     # `__init_subclass__` below) to opt it out of registration. Only
@@ -55,7 +54,7 @@ class OpcodeHandler(ABC):
         ...
 
     @classmethod
-    def get_handler(cls, opcode: str) -> Optional["OpcodeHandler"]:
+    def get_handler(cls, opcode: str) -> "OpcodeHandler | None":
         return cls.registry.get(opcode)
 
     def match_arguments(self, ctx: OpcodeContext) -> re.Match[str] | OpcodeResult:

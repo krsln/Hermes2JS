@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Dict, List, Set
-
 from hermes_decompiler.backend.analysis.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.backend.analysis.cfg.CFG import CFG
 from hermes_decompiler.core.logging import get_logger
@@ -35,17 +33,17 @@ class CFGBuilder:
     """
 
     def __init__(self):
-        self.results: List[OpcodeResult] = []
+        self.results: list[OpcodeResult] = []
 
         self.cfg = CFG()
 
-        self.address_to_index: Dict[int, int] = {}
+        self.address_to_index: dict[int, int] = {}
 
-        self.address_to_block: Dict[int, BasicBlock] = {}
+        self.address_to_block: dict[int, BasicBlock] = {}
 
     def build(
             self,
-            results: List[OpcodeResult],
+            results: list[OpcodeResult],
             exception_handlers: list[dict] | None = None,
     ) -> CFG:
 
@@ -90,7 +88,7 @@ class CFGBuilder:
         # A block ends at the start of the next block in program order.
         # The last block extends to infinity. This allows protected ranges
         # to overlap blocks whose start address lies outside the range.
-        block_end: Dict[int, float] = {}
+        block_end: dict[int, float] = {}
 
         for i, block in enumerate(sorted_blocks):
             block_end[block.address] = (
@@ -211,7 +209,7 @@ class CFGBuilder:
 
         return leaders
 
-    def _create_basic_blocks(self, leaders: Set[int]) -> None:
+    def _create_basic_blocks(self, leaders: set[int]) -> None:
 
         current_block = None
         block_id = 0

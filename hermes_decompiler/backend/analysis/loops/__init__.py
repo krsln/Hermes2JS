@@ -1,7 +1,7 @@
 from .LoopAnalysis import LoopAnalysis
 from .NaturalLoop import NaturalLoop
 
-__ALL__ = [
+__all__ = [
     "LoopAnalysis",
     "NaturalLoop",
 ]

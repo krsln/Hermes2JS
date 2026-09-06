@@ -1,4 +1,4 @@
-from typing import Dict, Any, Optional, List, Tuple
+from typing import Any
 
 from hermes_decompiler.backend.analysis.cfg import CFG
 from hermes_decompiler.backend.emit import JSEmitter
@@ -9,10 +9,10 @@ from .RegisterState import RegisterState
 
 
 class HermesAnalysis:
-    metadata_list: List[Dict[str, Any]]
-    metadata: Dict[str, Any]
+    metadata_list: list[dict[str, Any]]
+    metadata: dict[str, Any]
 
-    def __init__(self, metadata: Optional[dict[str, Any]] = None) -> None:
+    def __init__(self, metadata: dict[str, Any] | None = None) -> None:
         """
         Initialize the Hermes analysis context.
 
@@ -28,17 +28,17 @@ class HermesAnalysis:
         self.metadata_list = []
         self.metadata = metadata if metadata is not None else {}
 
-        self.global_objects: Optional[int] = None
-        self.goto_list: List[int] = []
+        self.global_objects: int | None = None
+        self.goto_list: list[int] = []
 
-        self.results: List[OpcodeResult] = []
+        self.results: list[OpcodeResult] = []
 
         # Loop intervals containing instruction addresses.
-        self.loop_ranges: List[Tuple[int, int]] = []
+        self.loop_ranges: list[tuple[int, int]] = []
         # Address of the instruction currently being handled.
-        self.current_address: Optional[int] = None
+        self.current_address: int | None = None
         # Addresses where each register is written inside a loop.
-        self.loop_carried_writes: Dict[str, List[int]] = {}
+        self.loop_carried_writes: dict[str, list[int]] = {}
 
     def add_result(self, result: OpcodeResult) -> None:
         self.results.append(result)
@@ -51,7 +51,7 @@ class HermesAnalysis:
 
         self.registers[result.name] = RegisterState(definition=result, version=version)
 
-    def get_register_state(self, reg: int) -> Optional[RegisterState]:
+    def get_register_state(self, reg: int) -> RegisterState | None:
         return self.registers.get(f"r{reg}")
 
     def is_unsafe_loop_register(self, reg: int, definition_address: int) -> bool:

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional, Dict, Tuple, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.analysis.cfg.CFGVerifier import CFGVerifier
@@ -14,13 +14,13 @@ if TYPE_CHECKING:
 class CFG:
 
     def __init__(self):
-        self.loop_analysis: Optional["LoopAnalysis"] = None
-        self.blocks: List[BasicBlock] = []
+        self.loop_analysis: "LoopAnalysis | None" = None
+        self.blocks: list[BasicBlock] = []
 
-        self.entry: Optional[BasicBlock] = None
+        self.entry: BasicBlock | None = None
 
-        self.dominator_tree: Optional["DominatorTree"] = None
-        self.post_dominator_tree: Optional["PostDominatorTree"] = None
+        self.dominator_tree: "DominatorTree | None" = None
+        self.post_dominator_tree: "PostDominatorTree | None" = None
 
         self.exception_handlers: list[dict] = []
 
@@ -34,12 +34,12 @@ class CFG:
         # reaching-definition-style queries, such as detecting loop
         # induction registers and distinguishing initializers from
         # updates.
-        self.reg_definitions: Dict[
-            int, List[Tuple[int, BasicBlock, OpcodeResult]]
+        self.reg_definitions: dict[
+            int, list[tuple[int, BasicBlock, OpcodeResult]]
         ] = {}
 
     @classmethod
-    def from_results(cls, results: List[OpcodeResult], exception_handlers: list[dict] | None = None) -> "CFG":
+    def from_results(cls, results: list[OpcodeResult], exception_handlers: list[dict] | None = None) -> "CFG":
         from hermes_decompiler.backend.analysis.cfg.CFGBuilder import CFGBuilder
 
         return CFGBuilder().build(results, exception_handlers or [])

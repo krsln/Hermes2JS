@@ -3,7 +3,6 @@ from __future__ import annotations
 import importlib
 import pkgutil
 from dataclasses import dataclass, field
-from typing import List, Tuple
 
 from hermes_decompiler.core.Exceptions import HandlerLoadError
 from hermes_decompiler.core.logging import get_logger
@@ -21,8 +20,8 @@ class HandlerLoadReport:
     directly instead of scraping log output.
     """
 
-    loaded: List[str] = field(default_factory=list)
-    failed: List[Tuple[str, BaseException]] = field(default_factory=list)
+    loaded: list[str] = field(default_factory=list)
+    failed: list[tuple[str, BaseException]] = field(default_factory=list)
 
     @property
     def ok(self) -> bool:

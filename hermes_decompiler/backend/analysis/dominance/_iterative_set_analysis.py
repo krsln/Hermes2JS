@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from collections.abc import Iterable
-from typing import Dict, List, Optional, Set
 
 from hermes_decompiler.backend.analysis.cfg.BasicBlock import BasicBlock
 
@@ -13,7 +12,7 @@ class _IterativeSetAnalysis(ABC):
 
         self.cfg = cfg
 
-        self.result: Dict[BasicBlock, Set[BasicBlock]] = {}
+        self.result: dict[BasicBlock, set[BasicBlock]] = {}
 
     def compute(self):
 
@@ -74,7 +73,7 @@ class _IterativeSetAnalysis(ABC):
     def neighbors(self, block: BasicBlock) -> Iterable[BasicBlock]:
         ...
 
-    def compute_immediate(self) -> Dict[BasicBlock, BasicBlock | None]:
+    def compute_immediate(self) -> dict[BasicBlock, BasicBlock | None]:
         """
         Computes the immediate dominator or post-dominator for each block.
 
@@ -89,7 +88,7 @@ class _IterativeSetAnalysis(ABC):
         """
 
         roots = set(self.roots())
-        immediate: Dict[BasicBlock, "BasicBlock | None"] = {}
+        immediate: dict[BasicBlock, "BasicBlock | None"] = {}
 
         for block in self.cfg.blocks:
 
@@ -111,8 +110,8 @@ class _IterativeSetAnalysis(ABC):
 
     def build_tree(
             self,
-            immediate: Dict[BasicBlock, Optional[BasicBlock]],
-    ) -> Dict[BasicBlock, List[BasicBlock]]:
+            immediate: dict[BasicBlock, BasicBlock | None],
+    ) -> dict[BasicBlock, list[BasicBlock]]:
         """
         Turns an immediate-dominator/post-dominator map (as produced by
         `compute_immediate()`) into a children adjacency map, i.e., the
@@ -124,7 +123,7 @@ class _IterativeSetAnalysis(ABC):
         is turned into a tree.
         """
 
-        children: Dict[BasicBlock, List[BasicBlock]] = {
+        children: dict[BasicBlock, list[BasicBlock]] = {
             block: []
             for block in self.cfg.blocks
         }

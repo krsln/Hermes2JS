@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional
 
 from hermes_decompiler.backend.analysis.cfg.BasicBlock import BasicBlock
 
@@ -39,7 +38,7 @@ class NaturalLoop:
     exits: set[BasicBlock] = field(default_factory=set)
 
     # nesting
-    parent: Optional[NaturalLoop] = None
+    parent: NaturalLoop | None = None
     children: list[NaturalLoop] = field(default_factory=list)
 
     @property

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import os
 import re
-from typing import List, Optional, Tuple
 
 from hermes_decompiler.Decompiler import Decompiler
 from hermes_decompiler.core.Exceptions import CodeGenerationError
@@ -28,9 +27,9 @@ class FileOperations:
             cls,
             input_dir: str,
             output_dir: str,
-            start: Optional[int] = None,
-            end: Optional[int] = None,
-    ) -> List[Tuple[str, int]]:
+            start: int | None = None,
+            end: int | None = None,
+    ) -> list[tuple[str, int]]:
         """
         Retrieve and sort .hbc files from input_dir that match the
         section_<number>.hbc pattern and fall within the specified range

@@ -1,10 +1,9 @@
 from dataclasses import dataclass
-from typing import Optional
 
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir import Expression
 
-___ALL__ = ["RegisterState"]
+__all__ = ["RegisterState"]
 
 
 @dataclass(slots=True)
@@ -14,7 +13,7 @@ class RegisterState:
     reads: int = 0
 
     @property
-    def value(self) -> Optional[Expression]:
+    def value(self) -> Expression | None:
         return self.definition.value
 
     @property
