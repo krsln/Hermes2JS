@@ -54,9 +54,6 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 
 # Iterators
 # IteratorTests 15092, 15093
-
-python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/  --log-level WARNING
-# WARNING 725 
 ```
 
 ## whole sections
@@ -65,6 +62,7 @@ python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./ap
 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --log-level WARNING
+# WARNING 1079
 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 1 --end 999 
 python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --start 999 --end 1999 
