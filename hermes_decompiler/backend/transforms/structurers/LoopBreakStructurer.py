@@ -228,9 +228,12 @@ class LoopBreakStructurer(RegionStructurer):
             return False
 
         if target_inside:
-            exit_block, stay_block, condition = fallthrough_block, target_block, negate_condition(branch.condition)
+            # `_stay_block` (the branch target that remains inside the loop)
+            # is only kept for symmetry with the `else` arm below - it's not
+            # otherwise consumed by this method.
+            exit_block, _stay_block, condition = fallthrough_block, target_block, negate_condition(branch.condition)
         else:
-            exit_block, stay_block, condition = target_block, fallthrough_block, branch.condition
+            exit_block, _stay_block, condition = target_block, fallthrough_block, branch.condition
 
         if list(exit_block.predecessors) != [block]:
             # Reached some other way too - not a clean single-purpose

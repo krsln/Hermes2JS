@@ -565,7 +565,7 @@ class RegionPrinter:
         self.ctx.write(lines, "}")
 
         if self.ctx.verbose:
-            self.ctx.write(lines, f"// Switch → END")
+            self.ctx.write(lines, "// Switch → END")
 
     def _ensure_case_terminated(self, lines: list[str]) -> None:
         """
