@@ -56,7 +56,9 @@ class OpcodeDispatcher:
         handler_cls = OpcodeHandler.get_handler(entry.opcode)
 
         if not handler_cls:
-            logger.warning("TODO: NO HANDLER '%s' (line=%r)", entry.opcode, entry)
+            # Not logged here - `_run_pass()` below is the single place that
+            # logs a `NoHandlerError` (it also decides strict vs. recover),
+            # so logging here too would double-log every occurrence.
             raise NoHandlerError(entry.opcode)
 
         try:
