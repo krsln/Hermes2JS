@@ -25,9 +25,14 @@ class Catch(OpcodeHandler):
         expression = Identifier(name="caughtException")
 
         logger.debug("Catch block starts at %d -> r%d", ctx.entry.address, dest_reg)
-        # TODO: if/when `analysis` grows structured exception-handler-range
-        # tracking (e.g. an `analysis.MarkCatchBlock(...)` API), record it
-        # here instead of only logging — replaces the earlier print()/stub.
+        # Note: structured exception-handler-range tracking already exists
+        # and doesn't need to be added here. It comes from the bytecode's
+        # own exception-handler table (FunctionMetadataParser.parse_exception_handlers
+        # -> MetadataStage -> CFG.from_results), which CFGBuilder resolves
+        # into `cfg.exception_handlers` and try_structurer consumes directly.
+        # This per-instruction debug log is just IR-emission-time diagnostics
+        # for this one Catch opcode (which register got the caught value) -
+        # unrelated to that range-based analysis.
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
