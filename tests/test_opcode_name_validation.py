@@ -98,7 +98,7 @@ def test_every_handler_name_is_a_known_opcode(registered_handler_names):
             f"{details}"
         )
 
-# this one!!
+# NOTE: 38 legacy handler(s) detected (not present in hbc99)
 def test_legacy_opcodes_are_visible_and_documented(registered_handler_names, capsys):
     """
     Informational test.
