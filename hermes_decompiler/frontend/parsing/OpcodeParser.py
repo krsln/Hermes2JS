@@ -4,6 +4,8 @@ from hermes_decompiler.frontend.opcode import OpcodeEntry
 from hermes_decompiler.core.Exceptions import OpcodeConstructionError
 from hermes_decompiler.core.logging import get_logger
 
+__all__ = ["OpcodeParser"]
+
 logger = get_logger(__name__)
 
 

@@ -4,6 +4,18 @@ import re
 from dataclasses import dataclass
 from typing import Union
 
+# `Operand` and `named()` are intentionally excluded: they're internal
+# building blocks (see their own docstrings) that nothing outside this
+# module currently uses. Keeping them out of `__all__` matches the
+# package's existing `handlers/__init__.py::__all__`, which already
+# doesn't re-export them - this just makes that the same at the source
+# instead of relying on the aggregator to hide them after the fact.
+__all__ = [
+    "sequence", "REG", "ADDR",
+    "UINT8", "UINT16", "UINT32", "IMM8", "IMM32", "DOUBLE",
+    "STRING_ID", "FUNCTION_ID", "BIGINT_ID",
+]
+
 
 @dataclass(frozen=True, slots=True)
 class Operand:

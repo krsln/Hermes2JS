@@ -2,6 +2,8 @@ import re
 
 from hermes_decompiler.core.logging import get_logger
 
+__all__ = ["FunctionMetadataParser"]
+
 logger = get_logger(__name__)
 
 
