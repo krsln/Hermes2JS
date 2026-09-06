@@ -9,12 +9,12 @@ from hermes_decompiler.ir.expressions import AwaitExpression, Expression, RawExp
 
 logger = get_logger(__name__)
 
-# HandlerLoader.load() populates ``OpcodeHandler.registry`` via __init_subclass__
-# side effects. It's idempotent (re-importing already-imported modules is a
-# no-op), so doing it once at module load time - rather than once per
-# JSOpcodeDispatcher() instance - is both correct and avoids repeated
-# import-machinery overhead when many sections are converted in one process.
-HandlerLoader.load()
+# Whether `HandlerLoader.load()` has already run in this process. Guards
+# the lazy call in `OpcodeDispatcher.__init__` below so the (idempotent)
+# module walk only happens once per process, same as the old module-load
+# side effect did - see that method for why it's no longer done here at
+# import time.
+_handlers_loaded = False
 
 
 class OpcodeDispatcher:
@@ -24,6 +24,22 @@ class OpcodeDispatcher:
     """
 
     def __init__(self, analysis: HermesAnalysis):
+        # Loading handlers here - on first actual use - rather than as a
+        # module-level call is deliberate: `HandlerLoader.load()` defaults
+        # to `strict=True`, so a single broken handler module raises
+        # `HandlerLoadError`. Raising that as a side effect of merely
+        # `import`-ing this module would take down every caller of
+        # anything in this package, including ones that never dispatch a
+        # single opcode (e.g. tooling that just wants `OpcodeEntry`).
+        # Deferring it to here means the failure surfaces at the same
+        # point dispatch would otherwise start, through the ordinary
+        # call/exception path already exercised by `Decompiler.build_context`,
+        # instead of before any of that code can even run.
+        global _handlers_loaded
+        if not _handlers_loaded:
+            HandlerLoader.load()
+            _handlers_loaded = True
+
         if not analysis:
             raise AnalysisContextError("Analysis context cannot be None")
         self.analysis = analysis
@@ -140,7 +156,6 @@ class OpcodeDispatcher:
 
         if prev.handler.startswith("Call") and isinstance(prev.value, Expression):
             prev.value = AwaitExpression(argument=prev.value)
-
 
     @staticmethod
     def compute_loop_ranges(entries: List[OpcodeEntry]) -> List[Tuple[int, int]]:
