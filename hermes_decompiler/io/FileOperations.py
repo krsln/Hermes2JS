@@ -119,15 +119,22 @@ class FileOperations:
             # Render the standard JavaScript output.
             js_code = Decompiler.render(context, verbose=verbose, raw=False)
         except (ValueError, CodeGenerationError):
-            # Bad/unparseable input, or a code-generation bug, for THIS section
-            # only - not a `strict`-related failure. Log and return False so
-            # one broken section never aborts the rest of a batch; matches the
-            # documented bool contract above.
+            # Bad/unparseable input, or an ordinary code-generation failure,
+            # for THIS section only - not a `strict`-related failure and not
+            # a decompiler-internal bug (see below). Log and return False so
+            # one broken section never aborts the rest of a batch; matches
+            # the documented bool contract above.
             logger.error("Failed to convert %s", file_path, exc_info=True)
             return False
-        # Note: HbcDecompilerError subclasses (OpcodeDispatchError, NoHandlerError, ...)
-        # raised here when `strict=True` are deliberately left uncaught - see the
-        # `strict` note in the docstring above.
+        # Note: HbcDecompilerError subclasses raised here are deliberately
+        # left uncaught in two distinct cases, both intentional:
+        #   - OpcodeDispatchError/NoHandlerError, when `strict=True` - that
+        #     is the whole point of `--strict`; see the note above.
+        #   - StructurerInvariantError, regardless of `strict` - it signals
+        #     a bug in the decompiler itself rather than a per-section input
+        #     failure, so it must never be logged-and-continued past like an
+        #     ordinary CodeGenerationError; see that exception's docstring
+        #     and `Decompiler.render()`.
 
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(output_dir, f"section_{section_index}.js")

@@ -1,4 +1,4 @@
-from hermes_decompiler.core.Exceptions import CodeGenerationError, MetadataParseError
+from hermes_decompiler.core.Exceptions import CodeGenerationError, MetadataParseError, StructurerInvariantError
 from hermes_decompiler.pipeline.Pipeline import Pipeline
 from hermes_decompiler.pipeline.PipelineContext import PipelineContext
 from hermes_decompiler.pipeline.stages import (
@@ -117,12 +117,25 @@ class Decompiler:
             Generated JavaScript source code.
 
         Raises:
+            StructurerInvariantError: A structurer pass hit a state its own
+                logic assumes can never happen - i.e. a bug in the decompiler
+                itself, not a failure caused by this section's input. Left
+                unwrapped and unrecovered (regardless of any `strict` setting
+                upstream) so it can never be mistaken for, or silently
+                absorbed as, an ordinary per-section CodeGenerationError -
+                see that exception's own docstring in `core.Exceptions`.
             CodeGenerationError: The code-generation stage failed for this
-                section (wraps the underlying cause).
+                section for any other reason (wraps the underlying cause).
         """
 
         try:
             result = CodeGenerationStage(verbose=verbose, raw=raw).run(context)
+        except StructurerInvariantError:
+            # A decompiler bug, not an expected input-driven failure - never
+            # wrap this into CodeGenerationError, or callers like
+            # FileOperations.process_section would log-and-continue past it
+            # exactly like any other recoverable per-section error.
+            raise
         except Exception as e:
             raise CodeGenerationError(context.section_index, e) from e
 
