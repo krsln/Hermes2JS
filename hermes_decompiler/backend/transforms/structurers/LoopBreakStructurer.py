@@ -304,13 +304,13 @@ class LoopBreakStructurer(RegionStructurer):
         if not self._strip_block_branch(block, branch):
             return False
 
-        break_instr_source = exit_block.instructions[-1] if exit_block.instructions else None
-
         # Append a synthetic break as a NEW instruction, since - unlike
         # Shape A - there is no existing trailing jump instruction here to
         # commandeer. Mirrors LoopLabeledExitStructurer's
         # `_append_labeled_statement` approach for the same reason: the
         # escape edge is a bare fallthrough with nothing to repurpose.
+        # `hex_address=""` is safe here too: OpcodeEntry maps an invalid
+        # address to 0, and nothing downstream keys off this entry's address.
         from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
 
         entry = OpcodeEntry(bytecode="<synthetic>: BreakStatement", hex_address="")
