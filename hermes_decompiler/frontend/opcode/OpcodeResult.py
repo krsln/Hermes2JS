@@ -119,3 +119,42 @@ class OpcodeResult:
             # "terminator": repr(self.terminator) if self.terminator is not None else None,
             "used": self.definition_used,
         }
+
+    def clone(self) -> "OpcodeResult":
+        """
+        Return a new OpcodeResult wrapping the same underlying data.
+
+        Backend structuring/region passes routinely do things like
+        `instr.value = dataclasses.replace(...)`, `instr.terminator = X`,
+        or `instr.definition_used = True` directly on the OpcodeResult
+        instances they're handed - see e.g. NullishAssignmentRegionPass,
+        ReturnValueResolutionPass, LoopInductionAliasPass. That's safe
+        for `value`/`statement` (frozen Expression/Statement dataclasses
+        - a pass can only ever point `.value` at a *different* object,
+        never mutate the one it had) and, in practice, for `terminator`
+        too (mutable, but every pass replaces it wholesale rather than
+        setting a field on it in place - see the `assert`/grep audit
+        behind this method).
+
+        What is NOT safe is calling `HermesAnalysis.generate_js()` more
+        than once against the *same* `OpcodeResult` instances: each such
+        reassignment permanently changes what `self.results[i]` points
+        to, so a second render (e.g. `Decompiler.render(ctx, raw=True)`
+        called after an earlier `raw=False` render on the same context)
+        would silently see already-transformed state instead of the
+        original dispatched IR - exactly the "render multiple times"
+        contract `Decompiler`'s class docstring promises.
+
+        `generate_js()` calls this on every result before building a CFG
+        from them, so each render gets its own independently-mutable set
+        of wrappers and `self.results` itself is never touched.
+        """
+        clone = OpcodeResult(
+            entry=self.entry,
+            value=self.value,
+            statement=self.statement,
+            terminator=self.terminator,
+            dest_reg=self.dest_reg,
+        )
+        clone.definition_used = self.definition_used
+        return clone

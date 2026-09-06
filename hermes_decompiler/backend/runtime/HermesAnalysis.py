@@ -92,7 +92,18 @@ class HermesAnalysis:
         return False
 
     def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
-        cfg = CFG.from_results(self.results, self.metadata.get("exception_handlers", []))
+        # Clone every result before handing it to the CFG/structuring
+        # passes below: those passes routinely reassign an OpcodeResult's
+        # `.value`/`.statement`/`.terminator`/`.definition_used` in place
+        # (see `OpcodeResult.clone`'s docstring for why that's otherwise
+        # unsafe). Building the CFG from clones means those reassignments
+        # land on throwaway wrappers instead of `self.results`, so this
+        # method stays safe to call more than once against the same
+        # `HermesAnalysis` - e.g. `Decompiler.render()` called for both
+        # `raw=True` and `raw=False` output from one `build_context()`.
+        results = [result.clone() for result in self.results]
+
+        cfg = CFG.from_results(results, self.metadata.get("exception_handlers", []))
 
         cfg.verify()
         cfg.compute_dominators()
