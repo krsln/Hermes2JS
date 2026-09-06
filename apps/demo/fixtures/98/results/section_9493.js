@@ -35,7 +35,7 @@ function spreadObjectTest() {
     // CODE → addr: 69 | <LoadConstNull>: <Reg8: 1>
     // USED → r1 = null;
     // CODE → addr: 71 | <NewObjectWithBufferAndParent>: <Reg8: 7, Reg8: 1, UInt32: 1118, UInt32: 17298>
-    r7 = {  }
+    r7 = Object.setPrototypeOf({  }, null)
     // CODE → addr: 82 | <Mov>: <Reg8: 8, Reg8: 5>
     r8 = r5
     // CODE → addr: 85 | <CallBuiltin>: <Reg8: 5, UInt8: 46, UInt8: 4>  # Built-in function: [#46 copyDataProperties]

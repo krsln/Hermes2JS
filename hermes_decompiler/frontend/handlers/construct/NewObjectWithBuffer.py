@@ -2,7 +2,10 @@ from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, Ar
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
+    CallExpression,
     Expression,
+    Identifier,
+    MemberExpression,
     ObjectExpression,
     ObjectProperty,
     StringLiteral,
@@ -108,7 +111,7 @@ class NewObjectWithBufferAndParent(NewObjectWithBuffer):
         if isinstance(match, OpcodeResult):
             return match
 
-        dest_reg, _parent_reg, *_buffer_operands = map(int, match.groups())
+        dest_reg, parent_reg, *_buffer_operands = map(int, match.groups())
 
         object_expr = self._object_expression_from_entry(ctx.entry)
 
@@ -116,14 +119,22 @@ class NewObjectWithBufferAndParent(NewObjectWithBuffer):
             error = f"// Warning: No valid object parsed from comment: {ctx.entry.comment}"
             return self.build_exception_result(ctx.analysis, ctx.entry, error)
 
-        # Parent register is resolved but not woven into `object_expr`
-        # itself -- see module-level caveat above. Left available here
-        # so a future fix can incorporate it (e.g. Object.create/
-        # Object.setPrototypeOf) once the real IR shape for this is
-        # decided.
-        _parent = self.get_register_expression(ctx.analysis, _parent_reg)
+        # Mirrors NewObjectWithParent's `Object.create(parent)`: the buffer
+        # gives the object's own properties, and Object.setPrototypeOf wires
+        # in the explicit prototype without a separate Object.create/assign
+        # step (setPrototypeOf returns its first argument, so this evaluates
+        # to the fully-formed object).
+        parent = self.get_register_expression(ctx.analysis, parent_reg)
 
-        result = OpcodeResult(ctx.entry, value=object_expr, dest_reg=dest_reg)
+        expression = CallExpression(
+            callee=MemberExpression(
+                Identifier(name="Object"),
+                Identifier(name="setPrototypeOf"),
+            ),
+            arguments=(object_expr, parent),
+        )
+
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
 
         return result
