@@ -30,7 +30,7 @@ class SaveGenerator(OpcodeHandler):
         if target is None:
             target = ctx.entry.address + offset
 
-        ctx.analysis.gotoList.append(target)
+        ctx.analysis.goto_list.append(target)
 
         terminator = TerminatorJump(target=target)
 

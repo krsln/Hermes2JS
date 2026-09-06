@@ -58,7 +58,7 @@ class BaseJCompare(OpcodeHandler):
         if target is None:
             target = ctx.entry.address + offset
 
-        ctx.analysis.gotoList.append(target)
+        ctx.analysis.goto_list.append(target)
 
         # Jump conditions must stay symbolic — do not inline definitions.
         lhs = self.resolve_condition_argument(ctx.analysis, lhs_reg)

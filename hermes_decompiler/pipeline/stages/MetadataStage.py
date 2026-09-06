@@ -23,7 +23,7 @@ class MetadataStage(PipelineStage):
                 metadata["exception_handlers"] = FunctionMetadataParser.parse_exception_handlers(context.lines[1])
 
             context.analysis.metadata = metadata
-            context.analysis.metadataList.append(metadata)
+            context.analysis.metadata_list.append(metadata)
         except Exception as e:
             raise MetadataParseError(f"Failed to parse metadata: {e}") from e
 

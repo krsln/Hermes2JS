@@ -93,7 +93,7 @@ class StringSwitchImm(OpcodeHandler):
         targets = []
         for offset in sequence(ADDR).findall(ctx.entry.args):
             target = ctx.entry.address + int(offset)
-            ctx.analysis.gotoList.append(target)
+            ctx.analysis.goto_list.append(target)
             targets.append(target)
 
         case_map = {}

@@ -9,7 +9,7 @@ from .RegisterState import RegisterState
 
 
 class HermesAnalysis:
-    metadataList: List[Dict[str, Any]]
+    metadata_list: List[Dict[str, Any]]
     metadata: Dict[str, Any]
 
     def __init__(self, metadata: Optional[dict[str, Any]] = None) -> None:
@@ -25,11 +25,11 @@ class HermesAnalysis:
         sections.
         """
         self.registers: dict[str, RegisterState] = {}
-        self.metadataList = []
+        self.metadata_list = []
         self.metadata = metadata if metadata is not None else {}
 
-        self.globalObjects: Optional[int] = None
-        self.gotoList: List[int] = []
+        self.global_objects: Optional[int] = None
+        self.goto_list: List[int] = []
 
         self.results: List[OpcodeResult] = []
 

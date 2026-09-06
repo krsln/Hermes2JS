@@ -19,7 +19,7 @@ class GetGlobalObject(OpcodeHandler):
         dest_reg = int(match.group(1))
 
         # Track global object register in analysis
-        ctx.analysis.globalObjects = dest_reg
+        ctx.analysis.global_objects = dest_reg
 
         expression = Identifier(name="globalThis")
 

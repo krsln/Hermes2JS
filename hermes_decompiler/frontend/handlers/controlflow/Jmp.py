@@ -36,7 +36,7 @@ class Jmp(OpcodeHandler):
         offset = int(match.group(1))
 
         target = ctx.entry.target_address or (ctx.entry.address + offset)
-        ctx.analysis.gotoList.append(target)
+        ctx.analysis.goto_list.append(target)
 
         terminator = TerminatorJump(target=target)
 
@@ -78,7 +78,7 @@ class JmpTrue(OpcodeHandler):
         offset, reg = map(int, match.groups())
 
         target = ctx.entry.target_address or (ctx.entry.address + offset)
-        ctx.analysis.gotoList.append(target)
+        ctx.analysis.goto_list.append(target)
 
         condition = self.build_condition(self.get_register_expression(ctx.analysis, reg))
 
@@ -150,7 +150,7 @@ class JmpBuiltinIs(OpcodeHandler):
         offset, builtin, reg = map(int, match.groups())
 
         target = ctx.entry.target_address or (ctx.entry.address + offset)
-        ctx.analysis.gotoList.append(target)
+        ctx.analysis.goto_list.append(target)
 
         builtin_name = f"builtin_{builtin}"
         if ctx.entry.builtin_function is not None:
@@ -233,7 +233,7 @@ class JmpTypeOfIs(OpcodeHandler):
         offset, reg, type_id = map(int, match.groups())
 
         target = ctx.entry.target_address if ctx.entry.target_address is not None else (ctx.entry.address + offset)
-        ctx.analysis.gotoList.append(target)
+        ctx.analysis.goto_list.append(target)
 
         condition = self.build_typeof_condition(
             self.get_register_expression(ctx.analysis, reg), type_id
