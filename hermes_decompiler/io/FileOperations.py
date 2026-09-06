@@ -75,7 +75,7 @@ class FileOperations:
             output_dir: Directory to store the output .js file.
             verbose: If True, annotate generated JS with `// CODE ->`source comments.
             raw: If True, generates section_{section_index}_raw.js.
-            strict: If True, rise immediately on the first opcode
+            strict: If True, raise immediately on the first opcode
                     dispatch failure
 
         Returns:

@@ -7,7 +7,21 @@ from hermes_decompiler.ir.expressions import Expression
 
 
 class Terminator(ABC):
-    """Ends a basic block."""
+    """
+    Ends a basic block.
+
+    Immutable, like every other IR node (see `ir.Node`'s contract) -
+    subclasses use `@dataclass(frozen=True, slots=True, eq=False)`.
+    Nothing in the codebase mutates a Terminator's fields in place;
+    every pass that changes a block's terminator does so by replacing
+    the reference (`block.terminator = dataclasses.replace(old, ...)`
+    or `block.terminator = new_terminator`), exactly like the
+    replace-and-reassign pattern used elsewhere on frozen Nodes.
+    `eq=False` avoids relying on Python's auto-generated `__hash__`/
+    `__eq__` over dataclass fields, which would break the moment
+    something (e.g. `hash()`) touched `TerminatorSwitch.case_map` - a
+    plain `dict`, and therefore unhashable.
+    """
 
     @property
     @abstractmethod
@@ -15,7 +29,7 @@ class Terminator(ABC):
         """CFG successor targets."""
 
 
-@dataclass(slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class TerminatorConditionalBranch(Terminator):
     condition: Expression
     target: int
@@ -25,7 +39,7 @@ class TerminatorConditionalBranch(Terminator):
         return (self.target,)
 
 
-@dataclass(slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class TerminatorJump(Terminator):
     target: int
 
@@ -34,7 +48,7 @@ class TerminatorJump(Terminator):
         return (self.target,)
 
 
-@dataclass(slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class TerminatorReturn(Terminator):
     value: Expression | None
 
@@ -43,7 +57,7 @@ class TerminatorReturn(Terminator):
         return ()
 
 
-@dataclass(slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class TerminatorThrow(Terminator):
     value: Expression | None
 
@@ -52,7 +66,7 @@ class TerminatorThrow(Terminator):
         return ()
 
 
-@dataclass(slots=True)
+@dataclass(frozen=True, slots=True, eq=False)
 class TerminatorSwitch(Terminator):
     selector: Expression
     case_map: dict[int, int]
