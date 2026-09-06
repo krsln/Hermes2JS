@@ -58,7 +58,16 @@ class Decompiler:
 
         Raises:
             ValueError:
-                If the input is empty or metadata cannot be parsed.
+                If the input is empty, or the .hbc metadata header line
+                could not be parsed.
+            NoHandlerError, OpcodeDispatchError:
+                Only when `strict=True`: no opcode handler is registered
+                for an opcode encountered during dispatch, or a
+                registered handler raised while processing one. Both are
+                `HbcDecompilerError` subclasses (see `core.Exceptions`).
+                When `strict=False` (the default), these are instead
+                logged and recovered from inline and never reach the
+                caller - see `OpcodeDispatcher._run_pass`.
         """
 
         if not assembly_content.strip():
