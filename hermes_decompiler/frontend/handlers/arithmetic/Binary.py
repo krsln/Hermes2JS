@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from hermes_decompiler.frontend.handlers import (
     OpcodeHandler, OpcodeContext, ArgsPattern, OperandMode, sequence, REG,
 )

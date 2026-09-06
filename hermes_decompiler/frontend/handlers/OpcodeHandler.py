@@ -19,7 +19,23 @@ logger = get_logger(__name__)
 class OpcodeHandler(ABC):
     """
     Abstract base class for handling Hermes bytecode opcodes.
-    (class docstring unchanged - see original)
+
+    Subclasses implement `handle()` to turn one disassembled opcode
+    (`OpcodeContext`) into an `OpcodeResult`. Every concrete subclass is
+    auto-registered under its own class name via `__init_subclass__`
+    (opt out with `_abstract = True`), so `OpcodeDispatcher` can look
+    handlers up by opcode name through `get_handler()` without a
+    separate manual registry.
+
+    Subclasses declare their expected operand syntax via the
+    `ARGUMENTS` class attribute (one `ArgsPattern`, or a tuple of
+    alternatives) and use `match_arguments()` to parse `ctx.entry.args`
+    against it, falling back to `build_invalid_args_result()` on a
+    mismatch. The `resolve_*` `classmethods` below are the shared,
+    single-source-of-truth logic for turning a register operand into
+    an IR `Expression` (inlining vs. symbolic reference, loop-safety
+    guards, etc.) - handlers should use these rather than reading
+    register state directly.
     """
 
     ARGUMENTS: ArgsPattern | tuple[ArgsPattern, ...] = ()
@@ -126,7 +142,7 @@ class OpcodeHandler(ABC):
         name is the register's stable identity for the entire
         function - not a computed expression being substituted in -
         so returning it here doesn't inline anything; it just avoids
-        two different call sites (e.g. a MemberExpression's receiver
+        two different call sites (e.g., a MemberExpression's receiver
         built via resolve_get_by_argument, and this `this`-register
         reference used to structurally compare against it) disagreeing
         about what to call the exact same untouched parameter register.
@@ -139,8 +155,9 @@ class OpcodeHandler(ABC):
 
         state.mark_read()
 
-        if state.handler in ("LoadParam", "LoadParamLong") and isinstance(state.value, Identifier):
-            return state.value
+        value = state.value
+        if state.handler in ("LoadParam", "LoadParamLong") and isinstance(value, Identifier):
+            return value
 
         return Identifier(name=f"r{reg}")
 
@@ -193,7 +210,7 @@ class OpcodeHandler(ABC):
         # regressing a clean `yield expr;` back into raw suspend/resume
         # boilerplate.
         #
-        # Every other value shape stays guarded: Literal (e.g. a loop
+        # Every other value shape stays guarded: Literal (e.g., a loop
         # counter's pre-loop `r5 = 0`), a register-alias Identifier
         # (e.g. `r6 = Mov(r4)`), and BinaryExpression (e.g. `r8 =
         # r2-2`) are exactly the shapes a loop-carried accumulator's
@@ -288,7 +305,7 @@ class OpcodeHandler(ABC):
                 state.handler, state.value
             )
 
-        # Not one of the safely-inlineable shapes above (e.g. the
+        # Not one of the safely-inlineable shapes above (e.g., the
         # value came from a Call/CallBuiltin/Construct result, a
         # binary op, etc.) - this is returned as a bare symbolic
         # register reference, NOT an inlined substitution of the
@@ -358,12 +375,12 @@ class OpcodeHandler(ABC):
     def _is_register_alias(cls, value: Expression) -> bool:
         """
         True only for an Identifier that names a *register* (`r0`, `r12`,
-        ...) - i.e. a value produced by aliasing/copying another register
+        ...) - i.e., a value produced by aliasing/copying another register
         (typically a `Mov`), which is exactly the shape the loop-safety
         guard in `get_register_expression` needs to catch.
 
         Deliberately excludes Identifiers that name a fixed protocol/magic
-        symbol instead of a register - e.g. ResumeGenerator's
+        symbol instead of a register - e.g., ResumeGenerator's
         `Identifier(name="__resumeIsReturn")`. Such a symbol never varies
         across loop iterations (it isn't loop-carried state at all - it's
         a constant marker), and later passes (e.g.
