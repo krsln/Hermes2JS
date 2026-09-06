@@ -193,7 +193,11 @@ class ShortCircuitConditionCfgPass:
     ) -> None:
 
         branch = block.terminator
-        assert isinstance(branch, TerminatorConditionalBranch)
+        if not isinstance(branch, TerminatorConditionalBranch):
+            raise StructurerInvariantError(
+                f"ShortCircuitConditionCfgPass expected block {block.id!r} to "
+                f"end in a TerminatorConditionalBranch, got {type(branch).__name__}"
+            )
 
         combined_condition = BinaryExpression(
             left=branch.condition,
