@@ -1,5 +1,5 @@
 from .HermesAnalysis import HermesAnalysis
 
-__ALL__ = [
+__all__ = [
     "HermesAnalysis",
 ]
