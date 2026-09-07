@@ -25,19 +25,19 @@ chmod +x tools/hermes/dump.sh
 ./tools/hermes/dump.sh \
     96 \
     apps/testy/96/index.android.bundle \
-    apps/testy/96/output/hermesc-output.hasm
+    apps/testy/96/output/hermesc-output.hdump
 
 ./tools/hermes/dump.sh \
     96 \
     apps/testy/96/index.android.bundle \
-    apps/testy/96/output/hermesc-output.hasm \
+    apps/testy/96/output/hermesc-output.hdump \
     --pretty
 
 ## 98
 ./tools/hermes/dump.sh \
     98 \
     apps/testy/98/index.android.bundle \
-    apps/testy/98/output/hermesc-output.hasm \
+    apps/testy/98/output/hermesc-output.hdump \
     --pretty
 
 ```

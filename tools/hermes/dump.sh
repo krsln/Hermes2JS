@@ -74,7 +74,7 @@ if [[ ! -f "$INPUT" ]]; then
 fi
 
 if [[ -z "$OUTPUT" ]]; then
-    OUTPUT="${INPUT%.*}.hasm"
+    OUTPUT="${INPUT%.*}.hdump"
 fi
 
 ARGS=(
