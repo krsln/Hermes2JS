@@ -39,3 +39,21 @@ chmod +x tools/hermes/dump.sh
     --pretty
 
 ```
+
+### direct usage ``hermesc``
+
+```shell
+find . -name "hermesc" -type f
+./tools/hermes/compilers/96/node_modules/hermes-compiler/hermesc/osx-bin/hermesc hermesc -version
+./tools/hermes/compilers/96/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
+    -b \
+    -dump-bytecode \
+    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hasm"
+
+./tools/hermes/compilers/96/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
+    -b \
+    -dump-bytecode \
+    -pretty \
+    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hasm"
+
+```
