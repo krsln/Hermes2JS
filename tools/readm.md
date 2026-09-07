@@ -2,6 +2,8 @@
 
 ## Install Hermes
 
+https://www.npmjs.com/package/hermes-compiler
+
 ```shell
 npm --prefix tools/hermes/compilers/96 install
 npm --prefix tools/hermes/compilers/98 install
