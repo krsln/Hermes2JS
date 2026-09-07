@@ -12,15 +12,15 @@ logger = get_logger(__name__)
 
 class FileOperations:
     """
-    Filesystem I/O for the `.hbc` -> `.js` pipeline: discovering input
+    Filesystem I/O for the `.hasm` -> `.js` pipeline: discovering input
     section files and writing converted output. Grouped under `core/`
     since - like `Pipeline`/`PipelineStage` - this is orchestration
     plumbing around the frontend/handlers/backend phases, not one of the
     phases itself.
     """
 
-    #: `section_<number>.hbc`
-    _SECTION_FILENAME_RE = re.compile(r'section_(\d+)\.hbc')
+    #: `section_<number>.hasm`
+    _SECTION_FILENAME_RE = re.compile(r'section_(\d+)\.hasm')
 
     @classmethod
     def get_section_files(
@@ -31,19 +31,19 @@ class FileOperations:
             end: int | None = None,
     ) -> list[tuple[str, int]]:
         """
-        Retrieve and sort .hbc files from input_dir that match the
-        section_<number>.hbc pattern and fall within the specified range
+        Retrieve and sort .hasm files from input_dir that match the
+        section_<number>.hasm pattern and fall within the specified range
         [start, end].
         """
         os.makedirs(output_dir, exist_ok=True)
 
         files = []
         for f in os.listdir(input_dir):
-            if not f.endswith('.hbc'):
+            if not f.endswith('.hasm'):
                 continue
             match = cls._SECTION_FILENAME_RE.match(f)
             if not match:
-                logger.debug("Filename does not match section_<number>.hbc pattern: %s", f)
+                logger.debug("Filename does not match section_<number>.hasm pattern: %s", f)
                 continue
             section_index = int(match.group(1))
             if (start is not None and section_index < start) or (end is not None and section_index > end):
@@ -52,7 +52,7 @@ class FileOperations:
 
         files.sort(key=lambda x: x[1])
         if not files:
-            logger.warning("No section_<number>.hbc files found in %s within range %s-%s", input_dir, start, end)
+            logger.warning("No section_<number>.hasm files found in %s within range %s-%s", input_dir, start, end)
         return files
 
     @classmethod
@@ -66,12 +66,12 @@ class FileOperations:
             strict: bool,
     ) -> bool:
         """
-        Process a *.hbc file by reading its content, converting it to
+        Process a *.hasm file by reading its content, converting it to
         JavaScript, and writing to output_dir.
 
         Args:
-            section_index: Section index of the file (e.g., 9594 for section_9594.hbc).
-            file_path: Path to the .hbc file.
+            section_index: Section index of the file (e.g., 9594 for section_9594.hasm).
+            file_path: Path to the .hasm file.
             output_dir: Directory to store the output .js file.
             verbose: If True, annotate generated JS with `// CODE ->`source comments.
             raw: If True, generates section_{section_index}_raw.js.
@@ -88,7 +88,7 @@ class FileOperations:
         Note on `strict`:
             `strict` only affects opcode-dispatch behavior inside `Decompiler.build_context`.
             When True, a dispatch failure raises `OpcodeDispatchError`/`NoHandlerError`
-            (subclasses of `HbcDecompilerError`), which this method intentionally does
+            (subclasses of `HasmDecompilerError`), which this method intentionally does
             NOT catch - that is the whole point of `--strict`, and it is the caller's
             responsibility to decide whether that should abort the batch.
         """
@@ -96,12 +96,12 @@ class FileOperations:
             logger.error("File does not exist: %s", file_path)
             return False
 
-        logger.info("Processing section #%s: %s", section_index, f"\t~/section_{section_index}.hbc")
+        logger.info("Processing section #%s: %s", section_index, f"\t~/section_{section_index}.hasm")
 
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
-                hbc_content = f.read()
-            if not hbc_content.strip():
+                hasm_content = f.read()
+            if not hasm_content.strip():
                 logger.error("File is empty: %s", file_path)
                 return False
         except OSError as e:
@@ -109,7 +109,7 @@ class FileOperations:
             return False
 
         try:
-            context = Decompiler.build_context(hbc_content, section_index, strict=strict)
+            context = Decompiler.build_context(hasm_content, section_index, strict=strict)
 
             # Render the raw representation first, as it preserves the complete
             # low-level output before any presentation-oriented formatting.
@@ -125,7 +125,7 @@ class FileOperations:
             # the documented bool contract above.
             logger.error("Failed to convert %s", file_path, exc_info=True)
             return False
-        # Note: HbcDecompilerError subclasses raised here are deliberately
+        # Note: HasmDecompilerError subclasses raised here are deliberately
         # left uncaught in two distinct cases, both intentional:
         #   - OpcodeDispatchError/NoHandlerError, when `strict=True` - that
         #     is the whole point of `--strict`; see the note above.

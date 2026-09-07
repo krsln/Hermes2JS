@@ -43,43 +43,43 @@ file apps/testy/98/index.android.bundle
 
 ```
 apps/<app_name>/output/
-├── output.hbc
+├── output.hasm
 ├── output.js
 └── outputParser.js
 ```
 
 ## Step—2 Split
 
-Splits `output.hbc` into one file per function, using the
+Splits `output.hasm` into one file per function, using the
 `===============` separator lines the disassembler emits between functions.
 
 ```shell
-python scripts/split_output_file.py -i <input.hbc> -o <output_dir> [options]
+python scripts/split_output_file.py -i <input.hasm> -o <output_dir> [options]
 
 # Basic split
-python scripts/split_output_file.py -i apps/testy/96/output/output.hbc -o apps/testy/96/output/sections
-python scripts/split_output_file.py -i apps/testy/98/output/output.hbc -o apps/testy/98/output/sections
+python scripts/split_output_file.py -i apps/testy/96/output/output.hasm -o apps/testy/96/output/sections
+python scripts/split_output_file.py -i apps/testy/98/output/output.hasm -o apps/testy/98/output/sections
 
 # With manifest + INFO logging
-python scripts/split_output_file.py -i apps/testy/output/output.hbc -o sections --manifest sections/manifest.json -v
+python scripts/split_output_file.py -i apps/testy/output/output.hasm -o sections --manifest sections/manifest.json -v
 
 # Dry run first, to check section count/naming before writing anything
-python scripts/split_output_file.py -i apps/testy/output/output.hbc -o sections --dry-run -v
+python scripts/split_output_file.py -i apps/testy/output/output.hasm -o sections --dry-run -v
 
 #--------------------------
 ## copy files to fixtures
  
 # section_15042-15216
-cp apps/testy/96/output/sections/section_{15042..15216}.hbc  apps/demo/fixtures/96/sections/
+cp apps/testy/96/output/sections/section_{15042..15216}.hasm  apps/demo/fixtures/96/sections/
 
 # section_9446-9542
-cp apps/testy/98/output/sections/section_{9446..9542}.hbc apps/demo/fixtures/sections/
+cp apps/testy/98/output/sections/section_{9446..9542}.hasm apps/demo/fixtures/98/sections/
 
 ```
 
 ## Step—3 Decompile
 
-Converts each discovered `section_<n>.hbc` into a corresponding `section_<n>.js`.
+Converts each discovered `section_<n>.hasm` into a corresponding `section_<n>.js`.
 
 ```shell
 python scripts/decompile_sections.py -i <sections_dir> -o <results_dir> [options]

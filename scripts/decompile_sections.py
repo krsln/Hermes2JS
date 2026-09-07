@@ -12,7 +12,7 @@ logger = get_logger(__name__)
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Convert Hermes .hbc sections to JavaScript."
+        description="Convert Hermes .hasm sections to JavaScript."
     )
 
     LOG_LEVELS = {
@@ -23,7 +23,7 @@ def main() -> None:
         "CRITICAL": logging.CRITICAL,
     }
 
-    DESC_INPUT = "Directory containing .hbc section files."
+    DESC_INPUT = "Directory containing .hasm section files."
     DESC_OUTPUT = "Directory where JavaScript files will be written."
     DESC_START = "First section number to process."
     DESC_END = "Last section number to process."
@@ -53,7 +53,7 @@ def main() -> None:
     configure_logging(level=LOG_LEVELS[args.log_level], use_color=True)
     # logging_test()
 
-    logger.info("Starting .hbc to JavaScript conversion. Verbose: %s | Strict: %s", args.verbose, args.strict)
+    logger.info("Starting .hasm to JavaScript conversion. Verbose: %s | Strict: %s", args.verbose, args.strict)
 
     if not input_dir.exists():
         logger.error("Input directory does not exist: %s", input_dir)
@@ -69,10 +69,10 @@ def main() -> None:
     )
 
     if not files:
-        logger.info("No .hbc files found.")
+        logger.info("No .hasm files found.")
         return
 
-    logger.info("Found %d .hbc files", len(files))
+    logger.info("Found %d .hasm files", len(files))
     logger.info("input \t%s", input_dir)
     logger.info("output \t%s", output_dir)
 

@@ -8,7 +8,7 @@ logger = get_logger(__name__)
 
 
 class MetadataStage(PipelineStage):
-    """Parses the .hbc header line (line 0) into analysis.metadata."""
+    """Parses the .hasm header line (line 0) into analysis.metadata."""
 
     def run(self, context: PipelineContext) -> PipelineContext:
         if not context.lines:

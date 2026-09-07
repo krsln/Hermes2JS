@@ -19,7 +19,7 @@ class FunctionMetadataParser:
     @classmethod
     def parse(cls, line: str) -> dict:
         """
-        Parse the metadata line of a .hbc file.
+        Parse the metadata line of a .hasm file.
 
         Args:
             line: e.g. '[Function #9594 "?anon_0_" of 105 bytes] ...'

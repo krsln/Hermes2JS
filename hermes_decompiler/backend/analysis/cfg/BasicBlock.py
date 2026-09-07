@@ -21,7 +21,7 @@ class BasicBlock:
     fine in principle, but with the default identity hash, a Python
     `set`'s iteration order depends on each object's memory address -
     which differs between process runs (ASLR, allocation history) even
-    for byte-identical input `.hbc` data. The result was exactly the
+    for byte-identical input `.hasm` data. The result was exactly the
     symptom reported: the same bytecode structuring differently (a
     proper `while (...) { ... }` vs. a raw `if (...) goto label_N`
     fallback block) across separate runs of the same program.

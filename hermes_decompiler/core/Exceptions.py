@@ -10,15 +10,15 @@ to log-and-continue or fail fast.
 from typing import Any
 
 
-class HbcDecompilerError(Exception):
+class HasmDecompilerError(Exception):
     """Base class for all recoverable decompiler errors."""
 
 
-class MetadataParseError(HbcDecompilerError):
-    """The .hbc metadata header line could not be parsed."""
+class MetadataParseError(HasmDecompilerError):
+    """The .hasm metadata header line could not be parsed."""
 
 
-class OpcodeConstructionError(HbcDecompilerError):
+class OpcodeConstructionError(HasmDecompilerError):
     """The opcode grammar matched but building the OpcodeEntry from it failed."""
 
     def __init__(self, line: str, cause: BaseException):
@@ -27,7 +27,7 @@ class OpcodeConstructionError(HbcDecompilerError):
         super().__init__(f"Failed to construct OpcodeEntry from line {line!r}: {cause}")
 
 
-class OpcodeDispatchError(HbcDecompilerError):
+class OpcodeDispatchError(HasmDecompilerError):
     """A registered handler raised while processing an opcode."""
 
     def __init__(self, opcode: str, entry_bytecode: str, cause: BaseException):
@@ -37,7 +37,7 @@ class OpcodeDispatchError(HbcDecompilerError):
         super().__init__(f"Opcode '{opcode}' handler failed on {entry_bytecode!r}: {cause}")
 
 
-class NoHandlerError(HbcDecompilerError):
+class NoHandlerError(HasmDecompilerError):
     """No OpcodeHandler is registered for the given opcode."""
 
     def __init__(self, opcode: str):
@@ -45,11 +45,11 @@ class NoHandlerError(HbcDecompilerError):
         super().__init__(f"No handler registered for opcode '{opcode}'")
 
 
-class AnalysisContextError(HbcDecompilerError):
+class AnalysisContextError(HasmDecompilerError):
     """Dispatch was attempted without a valid HermesAnalysis context."""
 
 
-class CodeGenerationError(HbcDecompilerError):
+class CodeGenerationError(HasmDecompilerError):
     """The code-generation stage (CodeGenerationStage) failed for this section."""
 
     def __init__(self, section_index: int, cause: BaseException):
@@ -58,7 +58,7 @@ class CodeGenerationError(HbcDecompilerError):
         super().__init__(f"Code generation failed for section {section_index}: {cause}")
 
 
-class StructurerInvariantError(HbcDecompilerError):
+class StructurerInvariantError(HasmDecompilerError):
     """
     A structurer pass found the IR/CFG in a state its own logic assumes
     can never happen (e.g., a block it just confirmed carries a
@@ -74,7 +74,7 @@ class StructurerInvariantError(HbcDecompilerError):
     """
 
 
-class HandlerLoadError(HbcDecompilerError):
+class HandlerLoadError(HasmDecompilerError):
     """Raised when one or more opcode handler modules fail to import."""
 
     def __init__(self, message: str, report: Any):

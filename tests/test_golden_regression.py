@@ -1,5 +1,5 @@
 """
-Golden-output regression tests for the full `.hbc` -> JavaScript pipeline.
+Golden-output regression tests for the full `.hasm` -> JavaScript pipeline.
 
 Motivation: prior to this file, the only automated test coverage
 (`test_opcode_name_validation.py`) checked that registered opcode handler
@@ -8,7 +8,7 @@ decompilation logic - CFG construction, dominance, loop/if/switch
 structuring, region passes, or JS emission - so a regression in any of
 that could land silently.
 
-`apps/demo/fixtures/<set>/sections/section_<n>.hbc` and the matching
+`apps/demo/fixtures/<set>/sections/section_<n>.hasm` and the matching
 `apps/demo/fixtures/<set>/results/section_<n>[_raw].js` already exist in
 the repo (captured via `scripts/decompile_sections.py`, see TESTING.md).
 This file turns that existing, already-reviewed data into an automated
@@ -35,7 +35,7 @@ from hermes_decompiler.Decompiler import Decompiler
 
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 _FIXTURES_ROOT = _REPO_ROOT / "apps" / "demo" / "fixtures"
-_SECTION_RE = re.compile(r"^section_(\d+)\.hbc$")
+_SECTION_RE = re.compile(r"^section_(\d+)\.hasm$")
 
 
 class _GoldenCase(NamedTuple):
@@ -47,7 +47,7 @@ class _GoldenCase(NamedTuple):
 
 def _discover_golden_cases() -> list[_GoldenCase]:
     """
-    Find every fixture section that has both a `section_<n>.hbc` input
+    Find every fixture section that has both a `section_<n>.hasm` input
     and a committed `section_<n>.js` golden output.
 
     Returns an empty list (rather than raising at collection time) when
@@ -66,8 +66,8 @@ def _discover_golden_cases() -> list[_GoldenCase]:
         if not (sections_dir.is_dir() and results_dir.is_dir()):
             continue
 
-        for hbc_path in sorted(sections_dir.glob("section_*.hbc")):
-            match = _SECTION_RE.match(hbc_path.name)
+        for hasm_path in sorted(sections_dir.glob("section_*.hasm")):
+            match = _SECTION_RE.match(hasm_path.name)
             if not match:
                 continue
 
@@ -98,9 +98,9 @@ def test_matches_golden_output(case: _GoldenCase) -> None:
     `Decompiler` documents - a bug that leaks state between two renders
     of the same context would show up here.
     """
-    hbc_content = (case.sections_dir / f"section_{case.section_index}.hbc").read_text(encoding="utf-8")
+    hasm_content = (case.sections_dir / f"section_{case.section_index}.hasm").read_text(encoding="utf-8")
 
-    context = Decompiler.build_context(hbc_content, case.section_index, strict=False)
+    context = Decompiler.build_context(hasm_content, case.section_index, strict=False)
 
     actual_js = Decompiler.render(context, verbose=True, raw=False)
     expected_js = (case.results_dir / f"section_{case.section_index}.js").read_text(encoding="utf-8")
@@ -138,17 +138,17 @@ def test_render_is_order_independent(case: _GoldenCase) -> None:
     This test renders both orders from two otherwise-identical fresh
     contexts and requires them to agree, independent of any golden file.
     """
-    hbc_content = (case.sections_dir / f"section_{case.section_index}.hbc").read_text(encoding="utf-8")
+    hasm_content = (case.sections_dir / f"section_{case.section_index}.hasm").read_text(encoding="utf-8")
 
     golden_raw_path = case.results_dir / f"section_{case.section_index}_raw.js"
     if not golden_raw_path.exists():
         pytest.skip("No raw output recorded for this section - nothing to compare orders against.")
 
-    ctx_a = Decompiler.build_context(hbc_content, case.section_index, strict=False)
+    ctx_a = Decompiler.build_context(hasm_content, case.section_index, strict=False)
     js_first = Decompiler.render(ctx_a, verbose=True, raw=False)
     raw_second = Decompiler.render(ctx_a, verbose=True, raw=True)
 
-    ctx_b = Decompiler.build_context(hbc_content, case.section_index, strict=False)
+    ctx_b = Decompiler.build_context(hasm_content, case.section_index, strict=False)
     raw_first = Decompiler.render(ctx_b, verbose=True, raw=True)
     js_second = Decompiler.render(ctx_b, verbose=True, raw=False)
 

@@ -45,7 +45,7 @@ TOOLS_DIR="$SCRIPT_DIR/../vendor/hermes-dec"
 mkdir -p "$OUTPUT"
 
 echo "🔍 Disassembling..."
-python "$TOOLS_DIR/src/hermes_dec/disassembly/hbc_disassembler.py" "$BUNDLE" > "$OUTPUT/output.hbc"
+python "$TOOLS_DIR/src/hermes_dec/disassembly/hbc_disassembler.py" "$BUNDLE" > "$OUTPUT/output.hasm"
 
 #echo "🧩 Decompiling..."
 #python "$TOOLS_DIR/src/hermes_dec/decompilation/hbc_decompiler.py" "$BUNDLE" > "$OUTPUT/output.js"

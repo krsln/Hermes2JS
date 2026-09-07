@@ -90,11 +90,11 @@ find . -name "hermesc" -type f
 ./projects/hermes-test-sdk-55/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
     -b \
     -dump-bytecode \
-    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hbc"
+    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hasm"
 
 ./projects/hermes-test-sdk-55/node_modules/hermes-compiler/hermesc/osx-bin/hermesc \
     -b \
     -dump-bytecode \
     -pretty \
-    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hbc"
+    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hasm"
 ```

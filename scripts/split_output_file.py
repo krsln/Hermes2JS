@@ -127,7 +127,7 @@ def split_file(
         input_file: str,
         output_dir: str,
         separator: str = DEFAULT_SEPARATOR,
-        extension: str = ".hbc",
+        extension: str = ".hasm",
         manifest_path: str | None = None,
         dry_run: bool = False,
 ) -> int:
@@ -211,9 +211,9 @@ def split_file(
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="split_output_file.py",
-        description="Split a Hermes bytecode disassembly (.hbc) into one file per function.",
+        description="Split a Hermes bytecode disassembly (.hasm) into one file per function.",
     )
-    parser.add_argument("-i", "--input", required=True, help="Path to the input .hbc file")
+    parser.add_argument("-i", "--input", required=True, help="Path to the input .hasm file")
     parser.add_argument("-o", "--output", required=True, help="Output directory for split sections")
     parser.add_argument(
         "--separator",
@@ -222,8 +222,8 @@ def build_arg_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--extension",
-        default=".hbc",
-        help="File extension for output sections (default: .hbc)",
+        default=".hasm",
+        help="File extension for output sections (default: .hasm)",
     )
     parser.add_argument(
         "--manifest",

@@ -43,7 +43,7 @@ class Decompiler:
 
         Args:
             assembly_content:
-                Hermes assembly (.hbc) text.
+                Hermes assembly (.hasm) text.
 
             section_index:
                 Section identifier used for naming generated artifacts and
@@ -58,13 +58,13 @@ class Decompiler:
 
         Raises:
             ValueError:
-                If the input is empty, or the .hbc metadata header line
+                If the input is empty, or the .hasm metadata header line
                 could not be parsed.
             NoHandlerError, OpcodeDispatchError:
                 Only when `strict=True`: no opcode handler is registered
                 for an opcode encountered during dispatch, or a
                 registered handler raised while processing one. Both are
-                `HbcDecompilerError` subclasses (see `core.Exceptions`).
+                `HasmDecompilerError` subclasses (see `core.Exceptions`).
                 When `strict=False` (the default), these are instead
                 logged and recovered from inline and never reach the
                 caller - see `OpcodeDispatcher._run_pass`.
