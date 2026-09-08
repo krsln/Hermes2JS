@@ -1,7 +1,0 @@
-{
-  "name": "@hermes2js/hermes-compiler-96",
-  "private": true,
-  "dependencies": {
-    "hermes-compiler": "0.14.1"
-  }
-}

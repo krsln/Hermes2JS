@@ -5,8 +5,10 @@
 https://www.npmjs.com/package/hermes-compiler
 
 ```shell
-npm --prefix tools/hermes/compilers/96 install
-npm --prefix tools/hermes/compilers/98 install
+chmod +x tools/hermes/fetch_compiler.sh
+
+./tools/hermes/fetch_compiler.sh 96
+./tools/hermes/fetch_compiler.sh 98
 ```
 
 ## prep

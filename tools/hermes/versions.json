@@ -12,7 +12,7 @@
       "notes": "No standalone hermes-compiler npm release covers bytecode 97 (short-lived 'Hermes static' build, per vendor/hermes-dec/src/hermes_dec/utils/git_tags.sh commit 16b5ada). Build hermesc from source at that commit, or extract it from a react-native version known to bundle it, if this version is ever needed."
     },
     "98": {
-      "npm_version": "250829098.0.10",
+      "npm_version": "250829098.0.14",
       "hermes_release": "1.0.0",
       "notes": "Matches the commit vendor/hermes-dec pins for bytecode 98 (becc964 / hermes-v250829098.0.10) for traceability. Any 250829098.0.x patch (.0.0 through at least .0.19 seen on npm) reports the same bytecode version."
     },
