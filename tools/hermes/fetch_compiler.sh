@@ -21,6 +21,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VERSIONS_FILE="$SCRIPT_DIR/versions.json"
 BYTECODE_VERSION="${1:?usage: $0 <bytecode-version>, e.g. $0 98}"
 
+# shellcheck source=./lib/platform.sh
+source "$SCRIPT_DIR/lib/platform.sh"
+
 NPM_VERSION=$(python3 -c "
 import json, sys
 data = json.load(open('$VERSIONS_FILE'))
@@ -53,13 +56,15 @@ npm install --no-audit --no-fund
 
 # Sanity check: confirm the installed binary actually reports the
 # bytecode version we asked for, rather than trusting the pin blindly.
-BIN=$(find node_modules/hermes-compiler/hermesc -maxdepth 1 -type d ! -name hermesc | head -1)
-case "$(uname -s)" in
-    Linux*)  PLATFORM_BIN="linux64-bin" ;;
-    Darwin*) PLATFORM_BIN="osx-bin" ;;
-    *)       PLATFORM_BIN="win64-bin" ;;
-esac
-HERMESC_BIN="node_modules/hermes-compiler/hermesc/$PLATFORM_BIN/hermesc"
+HERMESC_BIN="$(hermes_compiler_bin_path "$TARGET_DIR")"
+
+if [[ ! -x "$HERMESC_BIN" ]]; then
+    echo "❌ Expected hermesc binary not found after install:" >&2
+    echo "  $HERMESC_BIN" >&2
+    echo "  (platform detected: $(hermes_platform_bin) — hermes-compiler@$NPM_VERSION may not ship a build for this OS/arch)" >&2
+    exit 1
+fi
+
 ACTUAL_VERSION=$("$HERMESC_BIN" -version 2>&1 | grep "HBC bytecode version" | grep -oE '[0-9]+')
 
 if [[ "$ACTUAL_VERSION" != "$BYTECODE_VERSION" ]]; then
