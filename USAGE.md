@@ -9,24 +9,16 @@
 - get bundle file → / resources / assets / index.android.bundle
 - download the file :p
 
-### clone vendor/hermes-dec
-
-```shell
-chmod +x scripts/fetch-hermes-dec.sh
-chmod +x scripts/run-hermes-dec.sh
-
-# clones https://github.com/P1sec/hermes-dec to vendor/hermes-dec
-./scripts/fetch-hermes-dec.sh
-```
-
 ## Step—1 Disassemble
 
+| hermes-dec
+
 ```bash
-#./scripts/run-hermes-dec.sh <bundle_path>
+#./vendor/run-hermes-dec.sh <bundle_path>
 
 file apps/coachy/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 96
-./scripts/run-hermes-dec.sh coachy
+./vendor/run-hermes-dec.sh coachy
 
 # Test Projects' bundles
 file apps/testy/96/index.android.bundle
@@ -34,18 +26,9 @@ file apps/testy/96/index.android.bundle
 file apps/testy/98/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 98
 
-./scripts/run-hermes-dec.sh apps/testy/96/index.android.bundle
-./scripts/run-hermes-dec.sh apps/testy/98/index.android.bundle
+./vendor/run-hermes-dec.sh apps/testy/96/index.android.bundle
+./vendor/run-hermes-dec.sh apps/testy/98/index.android.bundle
 
-```
-
-**Output**
-
-```
-apps/<app_name>/output/
-├── output.hasm
-├── output.js
-└── outputParser.js
 ```
 
 ## Step—2 Split
