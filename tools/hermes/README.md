@@ -12,6 +12,7 @@ hardcoding version lists.
 ## Install a compiler
 
 ```shell
+chmod +x tools/hermes/lib/platform.sh
 chmod +x tools/hermes/fetch_compiler.sh
 
 ./tools/hermes/fetch_compiler.sh 96
@@ -34,6 +35,7 @@ find tools/hermes/compilers -name hermesc -type f
 ## Usage — dump.sh
 
 ```shell
+chmod +x tools/hermes/lib/platform.sh
 chmod +x tools/hermes/dump.sh
 
 ./tools/hermes/compilers/96/node_modules/hermes-compiler/hermesc/osx-bin/hermesc hermesc -version
