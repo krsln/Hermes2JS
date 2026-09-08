@@ -69,13 +69,13 @@ HERMESC=tools/hermes/compilers/96/node_modules/hermes-compiler/hermesc/$(uname -
 "$HERMESC" \
     -b \
     -dump-bytecode \
-    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hasm"
+    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hdump"
 
 "$HERMESC" \
     -b \
     -dump-bytecode \
     -pretty \
-    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hasm"
+    "apps/testy/96/index.android.bundle" > "apps/testy/96/output/hermesc-output.hdump"
 ```
 
 ## Layout
