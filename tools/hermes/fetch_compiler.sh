@@ -1,20 +1,10 @@
 #!/usr/bin/env bash
 # Fetch a hermesc binary for a specific Hermes bytecode version, pinned
-# via tools/hermes/versions.json (the npm equivalent of vendor/hermes-dec's
-# git_tags.sh).
-#
-# Unlike installing a full react-native/Expo sandbox app just to get at
-# its bundled hermesc, this installs ONLY the `hermes-compiler` npm
-# package directly - zero transitive dependencies, ~1s instead of
-# 30-280s+.
+# via tools/hermes/versions.json
 #
 # Usage:
 #   ./tools/hermes/fetch_compiler.sh 96
 #   ./tools/hermes/fetch_compiler.sh 98
-#
-# Installs into tools/hermes/compilers/<version>/node_modules/, which is
-# exactly where hermes_disassembler.oracle already looks
-# (compilers_root=tools/hermes/compilers).
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

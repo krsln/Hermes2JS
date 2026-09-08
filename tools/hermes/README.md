@@ -17,51 +17,44 @@ chmod +x tools/hermes/fetch_compiler.sh
 
 ./tools/hermes/fetch_compiler.sh 96
 ./tools/hermes/fetch_compiler.sh 98
-```
-
-This installs into `tools/hermes/compilers/<version>/node_modules/`
-(gitignored) and verifies the installed binary actually reports the expected bytecode version before exiting
-successfully.
 
 ## Verify install
-
-```shell
 find tools/hermes/compilers -name hermesc -type f
 ```
 
 (the binary's path is platform-dependent — `osx-bin` / `linux64-bin` /
 `win64-bin` — see `lib/platform.sh`, which both scripts below use so the platform logic lives in one place.)
 
-## Usage — dump.sh
+## Usage — dump_bytecode.sh
 
 ```shell
 chmod +x tools/hermes/lib/platform.sh
-chmod +x tools/hermes/dump.sh
+chmod +x tools/hermes/dump_bytecode.sh
 
 ./tools/hermes/compilers/96/node_modules/hermes-compiler/hermesc/osx-bin/hermesc hermesc -version
 ./tools/hermes/compilers/98/node_modules/hermes-compiler/hermesc/osx-bin/hermesc hermesc -version
 
 ## 96
-./tools/hermes/dump.sh \
+./tools/hermes/dump_bytecode.sh \
     96 \
     apps/testy/96/index.android.bundle \
     apps/testy/96/output/hermesc-output.hdump
 
-./tools/hermes/dump.sh \
+./tools/hermes/dump_bytecode.sh \
     96 \
     apps/testy/96/index.android.bundle \
     apps/testy/96/output/hermesc-output.hdump \
     --pretty
 
 ## 98
-./tools/hermes/dump.sh \
+./tools/hermes/dump_bytecode.sh \
     98 \
     apps/testy/98/index.android.bundle \
     apps/testy/98/output/hermesc-output.hdump \
     --pretty
 ```
 
-`dump.sh` validates the requested version against `versions.json` and checks the compiler is installed before running —
+`dump_bytecode.sh` validates the requested version against `versions.json` and checks the compiler is installed before running —
 if not, it tells you to run `fetch_compiler.sh <version>` first.
 
 ### direct usage of `hermesc`
@@ -92,7 +85,7 @@ tools/hermes/
 ├── README.md          — this file
 ├── versions.json       — bytecode-version → npm-version pins (source of truth)
 ├── fetch_compiler.sh   — installs a pinned hermesc for one bytecode version
-├── dump.sh              — runs hermesc -dump-bytecode against a bundle
+├── dump_bytecode.sh    — runs hermesc -dump-bytecode against a bundle
 ├── lib/
 │   └── platform.sh      — shared OS → hermesc-subdir detection, sourced by both scripts above
 └── compilers/            — gitignored; populated by fetch_compiler.sh
