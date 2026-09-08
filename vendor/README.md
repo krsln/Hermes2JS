@@ -22,12 +22,11 @@ file apps/coachy/index.android.bundle
 # Test Projects' bundles
 file apps/testy/96/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 96
+./vendor/run-hermes-dec.sh apps/testy/96/index.android.bundle
+
 file apps/testy/98/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 98
-
-./vendor/run-hermes-dec.sh apps/testy/96/index.android.bundle
 ./vendor/run-hermes-dec.sh apps/testy/98/index.android.bundle
-
 ```
 
 **Output**

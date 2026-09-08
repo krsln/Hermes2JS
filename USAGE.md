@@ -14,21 +14,13 @@
 | hermes-dec
 
 ```bash
-#./vendor/run-hermes-dec.sh <bundle_path>
-
-file apps/coachy/index.android.bundle
-# index.android.bundle: Hermes JavaScript bytecode, version 96
-./vendor/run-hermes-dec.sh coachy
-
-# Test Projects' bundles
 file apps/testy/96/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 96
+./vendor/run-hermes-dec.sh apps/testy/96/index.android.bundle
+
 file apps/testy/98/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 98
-
-./vendor/run-hermes-dec.sh apps/testy/96/index.android.bundle
 ./vendor/run-hermes-dec.sh apps/testy/98/index.android.bundle
-
 ```
 
 ## Step—2 Split
@@ -57,7 +49,6 @@ cp apps/testy/96/output/sections/section_{15042..15216}.hasm  apps/demo/fixtures
 
 # section_9446-9542
 cp apps/testy/98/output/sections/section_{9446..9542}.hasm apps/demo/fixtures/98/sections/
-
 ```
 
 ## Step—3 Decompile
