@@ -86,6 +86,8 @@ if [[ -z "$OUTPUT" ]]; then
     OUTPUT="${INPUT%.*}.hdump"
 fi
 
+mkdir -p "$(dirname "$OUTPUT")"
+
 ARGS=(
     -b
     -dump-bytecode
