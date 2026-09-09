@@ -120,3 +120,27 @@ def test_last_instruction_is_ret(version: str, expected_frame_size: int):
     )
     instructions = decode_function(data, clear_fn.offset, clear_fn.bytecode_size_in_bytes, int(version))
     assert instructions[-1].name == "Ret"
+
+
+@pytest.mark.parametrize("version,expected_count", [("96", 15247), ("98", 14267)])
+def test_every_function_in_bundle_decodes_cleanly(version: str, expected_count: int):
+    """
+    Every function header in each bundle - including the ~2.6-3.3% with
+    has_exception_handler=True, which earlier (mistaken) investigation
+    suspected might need special handling - decodes with decode_function()
+    landing exactly on offset + bytecode_size_in_bytes, with no
+    HermesBytecodeError. has_exception_handler turned out to need no
+    special casing at all: the earlier failure that looked like a
+    missing preamble was entirely the v0.12.0-tag opcode table bug (see
+    Opcode.py's module docstring) - this test is the regression check
+    for that conclusion, across every function, not just the two spot
+    checks above.
+    """
+    data, header, table, resolved = _load(version)
+    assert len(resolved) == expected_count
+
+    ok = 0
+    for e in resolved:
+        decode_function(data, e.offset, e.bytecode_size_in_bytes, int(version))  # raises on failure
+        ok += 1
+    assert ok == expected_count

@@ -132,12 +132,21 @@ def decode_instruction(data: bytes, offset: int, version: int) -> Instruction:
 
 def decode_function(data: bytes, offset: int, bytecode_size: int, version: int) -> tuple[Instruction, ...]:
     """
-    Decode every instruction in `[offset, offset + bytecode_size)` -
-    the span `FunctionHeaderEntry.offset`/`.bytecode_size_in_bytes`
-    describe for a function with no exception handler and no debug
-    info prefix (see `hermes_disassembler`'s package docstring for
-    functions where that assumption doesn't hold yet - not handled
-    here).
+    Decode every instruction in `[offset, offset + bytecode_size)`.
+
+    `offset`/`bytecode_size` (from `FunctionHeaderEntry`) point directly
+    at the instruction stream with no preamble to skip - this was
+    initially suspected NOT to hold for functions with
+    `has_exception_handler=True` (an early investigation misread a
+    stale-opcode-table bug as a missing exception-handler-table prefix),
+    but decoding every function in both apps/testy/96 and
+    apps/testy/98 - has_exception_handler=True functions included
+    (2.6% and 3.3% of each bundle respectively) - lands exactly on
+    `offset + bytecode_size` with zero errors; see
+    `tests/test_hermes_disassembler_opcode.py`'s
+    `test_every_function_in_bundle_decodes_cleanly`. Wherever Hermes
+    stores the exception handler table itself, it isn't inline before
+    the bytecode.
 
     Raises `HermesBytecodeError` if decoding doesn't land exactly on
     `offset + bytecode_size` after the last instruction (a strong
