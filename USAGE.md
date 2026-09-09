@@ -21,6 +21,9 @@ file apps/testy/96/index.android.bundle
 file apps/testy/98/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 98
 ./vendor/run-hermes-dec.sh apps/testy/98/index.android.bundle
+
+python scripts/run-hermes-disassembler.py apps/testy/96/index.android.bundle apps/testy/96/output/custom.hasm
+python scripts/run-hermes-disassembler.py apps/testy/98/index.android.bundle apps/testy/98/output/custom.hasm
 ```
 
 ## Step—2 Split
@@ -48,9 +51,11 @@ python scripts/split_output_file.py -i apps/testy/output/output.hasm -o sections
  
 # section_15042-15216
 cp apps/testy/96/output/sections/section_{15042..15216}.hasm  apps/demo/fixtures/96/sections/
+cp apps/testy/96/output/sections/function_{15042..15216}_*.hasm apps/demo/fixtures/96/sections/
 
 # section_9446-9542
 cp apps/testy/98/output/sections/section_{9446..9542}.hasm apps/demo/fixtures/98/sections/
+cp apps/testy/98/output/sections/function_{9446..9542}_*.hasm apps/demo/fixtures/98/sections/
 ```
 
 ## Step—3 Decompile
