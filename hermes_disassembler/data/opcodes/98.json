@@ -1,0 +1,1713 @@
+{
+  "bytecode_version": 98,
+  "npm_version": "250829098.0.14",
+  "commit": "cb5bb3342f43d378cc2653e2ac9077a282b97637",
+  "opcodes": [
+    {
+      "name": "Unreachable",
+      "operands": []
+    },
+    {
+      "name": "NewObjectWithBuffer",
+      "operands": [
+        "Reg8",
+        "UInt16",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "NewObjectWithBufferLong",
+      "operands": [
+        "Reg8",
+        "UInt32",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "NewObjectWithBufferAndParent",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt32",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "NewObject",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "NewObjectWithParent",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "NewArrayWithBuffer",
+      "operands": [
+        "Reg8",
+        "UInt16",
+        "UInt16",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "NewArrayWithBufferLong",
+      "operands": [
+        "Reg8",
+        "UInt16",
+        "UInt16",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "NewArray",
+      "operands": [
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "NewFastArray",
+      "operands": [
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "FastArrayLength",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "FastArrayLoad",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "FastArrayStore",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "FastArrayPush",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "FastArrayAppend",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "CacheNewObject",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt32",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "Mov",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "MovLong",
+      "operands": [
+        "Reg32",
+        "Reg32"
+      ]
+    },
+    {
+      "name": "Negate",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Not",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "BitNot",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "TypeOf",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Eq",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "StrictEq",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Neq",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "StrictNeq",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Less",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LessEq",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Greater",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "GreaterEq",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Add",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "AddN",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "AddS",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Mul",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "MulN",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Div",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "DivN",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Mod",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Sub",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "SubN",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LShift",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "RShift",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "URshift",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "BitAnd",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "BitXor",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "BitOr",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Inc",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Dec",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "InstanceOf",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "IsIn",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "PrivateIsIn",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "TypeOfIs",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "GetParentEnvironment",
+      "operands": [
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "GetEnvironment",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "GetClosureEnvironment",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "StoreToEnvironment",
+      "operands": [
+        "Reg8",
+        "UInt8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "StoreToEnvironmentL",
+      "operands": [
+        "Reg8",
+        "UInt16",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "StoreNPToEnvironment",
+      "operands": [
+        "Reg8",
+        "UInt8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "StoreNPToEnvironmentL",
+      "operands": [
+        "Reg8",
+        "UInt16",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LoadFromEnvironment",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "LoadFromEnvironmentL",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "GetGlobalObject",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "GetNewTarget",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LoadParentNoTraps",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "CreateFunctionEnvironment",
+      "operands": [
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "CreateTopLevelEnvironment",
+      "operands": [
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "CreateEnvironment",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "DeclareGlobalVar",
+      "operands": [
+        "UInt32"
+      ]
+    },
+    {
+      "name": "GetByIdShort",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "GetById",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "GetByIdLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "GetByIdWithReceiverLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "TryGetById",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "TryGetByIdLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "PutByIdLoose",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "PutByIdStrict",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "PutByIdLooseLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "PutByIdStrictLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "TryPutByIdLoose",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "TryPutByIdStrict",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "TryPutByIdLooseLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "TryPutByIdStrictLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "PutOwnBySlotIdx",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "PutOwnBySlotIdxLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "GetOwnBySlotIdx",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "GetOwnBySlotIdxLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "DefineOwnById",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "DefineOwnByIdLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "DefineOwnByIndex",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "DefineOwnByIndexL",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "DefineOwnInDenseArray",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "DefineOwnInDenseArrayL",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "DefineOwnByVal",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "GetByVal",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "GetByIndex",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "GetByValWithReceiver",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "PutByValLoose",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "PutByValStrict",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "PutByValWithReceiver",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "DelByVal",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "AddOwnPrivateBySym",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "GetOwnPrivateBySym",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "PutOwnPrivateBySym",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "DefineOwnGetterSetterByVal",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "GetPNameList",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "GetNextPName",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Call",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "Construct",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "Call1",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "CallWithNewTarget",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "Call2",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Call3",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Call4",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "CallWithNewTargetLong",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "CallRequire",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "CallBuiltin",
+      "operands": [
+        "Reg8",
+        "UInt8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "CallBuiltinLong",
+      "operands": [
+        "Reg8",
+        "UInt8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "GetBuiltinClosure",
+      "operands": [
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "Ret",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Catch",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "DirectEval",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "Throw",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "ThrowIfEmpty",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "ThrowIfUndefined",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "ThrowIfThisInitialized",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Debugger",
+      "operands": []
+    },
+    {
+      "name": "AsyncBreakCheck",
+      "operands": []
+    },
+    {
+      "name": "ProfilePoint",
+      "operands": [
+        "UInt16"
+      ]
+    },
+    {
+      "name": "CreateBaseClass",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "CreateBaseClassLongIndex",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "CreateDerivedClass",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "CreateDerivedClassLongIndex",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "CreateClosure",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "CreateClosureLongIndex",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "CreateThisForNew",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "CreateThisForSuper",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "SelectObject",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LoadParam",
+      "operands": [
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "LoadParamLong",
+      "operands": [
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "LoadConstUInt8",
+      "operands": [
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "LoadConstInt",
+      "operands": [
+        "Reg8",
+        "Imm32"
+      ]
+    },
+    {
+      "name": "LoadConstDouble",
+      "operands": [
+        "Reg8",
+        "Double"
+      ]
+    },
+    {
+      "name": "LoadConstBigInt",
+      "operands": [
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "LoadConstBigIntLongIndex",
+      "operands": [
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "LoadConstString",
+      "operands": [
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "LoadConstStringLongIndex",
+      "operands": [
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "LoadConstEmpty",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LoadConstUndefined",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LoadConstNull",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LoadConstTrue",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LoadConstFalse",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LoadConstZero",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "CoerceThisNS",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "LoadThisNS",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "ToNumber",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "ToNumeric",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "ToInt32",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "AddEmptyString",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "CreatePrivateName",
+      "operands": [
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "GetArgumentsPropByValLoose",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "GetArgumentsPropByValStrict",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "GetArgumentsLength",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "ReifyArgumentsStrict",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "ReifyArgumentsLoose",
+      "operands": [
+        "Reg8"
+      ]
+    },
+    {
+      "name": "ToPropertyKey",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "CreateRegExp",
+      "operands": [
+        "Reg8",
+        "UInt32",
+        "UInt32",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "UIntSwitchImm",
+      "operands": [
+        "Reg8",
+        "UInt32",
+        "Addr32",
+        "UInt32",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "StringSwitchImm",
+      "operands": [
+        "Reg8",
+        "UInt32",
+        "UInt32",
+        "Addr32",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "CreateGenerator",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "CreateGeneratorLongIndex",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+      ]
+    },
+    {
+      "name": "IteratorBegin",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "IteratorNext",
+      "operands": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "IteratorClose",
+      "operands": [
+        "Reg8",
+        "UInt8"
+      ]
+    },
+    {
+      "name": "TypedLoadParent",
+      "operands": [
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "Jmp",
+      "operands": [
+        "Addr8"
+      ]
+    },
+    {
+      "name": "JmpLong",
+      "operands": [
+        "Addr32"
+      ]
+    },
+    {
+      "name": "JmpTrue",
+      "operands": [
+        "Addr8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JmpTrueLong",
+      "operands": [
+        "Addr32",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JmpFalse",
+      "operands": [
+        "Addr8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JmpFalseLong",
+      "operands": [
+        "Addr32",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JmpUndefined",
+      "operands": [
+        "Addr8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JmpUndefinedLong",
+      "operands": [
+        "Addr32",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JmpTypeOfIs",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "UInt16"
+      ]
+    },
+    {
+      "name": "JLess",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JLessLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotLess",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotLessLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JLessN",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JLessNLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotLessN",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotLessNLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JLessEqual",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JLessEqualLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotLessEqual",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotLessEqualLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JLessEqualN",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JLessEqualNLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotLessEqualN",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotLessEqualNLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JGreater",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JGreaterLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotGreater",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotGreaterLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JGreaterEqual",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JGreaterEqualLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotGreaterEqual",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotGreaterEqualLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JEqual",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JEqualLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotEqual",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JNotEqualLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JStrictEqual",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JStrictEqualLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JStrictNotEqual",
+      "operands": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JStrictNotEqualLong",
+      "operands": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JmpBuiltinIs",
+      "operands": [
+        "Addr8",
+        "UInt8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JmpBuiltinIsLong",
+      "operands": [
+        "Addr32",
+        "UInt8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JmpBuiltinIsNot",
+      "operands": [
+        "Addr8",
+        "UInt8",
+        "Reg8"
+      ]
+    },
+    {
+      "name": "JmpBuiltinIsNotLong",
+      "operands": [
+        "Addr32",
+        "UInt8",
+        "Reg8"
+      ]
+    }
+  ]
+}

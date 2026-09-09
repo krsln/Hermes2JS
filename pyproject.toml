@@ -28,6 +28,9 @@ dependencies = []
 [tool.setuptools.packages.find]
 include = ["hermes_decompiler*", "hermes_disassembler*"]
 
+[tool.setuptools.package-data]
+hermes_disassembler = ["data/opcodes/*.json"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]

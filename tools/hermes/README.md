@@ -92,3 +92,12 @@ tools/hermes/
     ├── 96/node_modules/hermes-compiler/...
     └── 98/node_modules/hermes-compiler/...
 ```
+
+```shell
+open "/Applications/Python 3.13/Install Certificates.command"
+
+python tools/hermes/generate_opcode_tables.py 96 0.14.1
+python tools/hermes/generate_opcode_tables.py 98 250829098.0.14
+
+
+```
