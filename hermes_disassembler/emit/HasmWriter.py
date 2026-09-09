@@ -52,15 +52,42 @@ Known gaps, not yet implemented:
   untested; this module joins multiple comments with "; " as a
   reasonable guess, not a confirmed hermes-dec convention.
 - Exact `Double` operand text formatting (no fixture example with one).
+
+Pre-existing, separate gap worth knowing about here:
+`scripts/split_output_file.py`'s `FUNCTION_HEADER_RE` requires a
+function-header line to start with `[Function` - it does not match
+the `=> [Function...` prefix this module (and real hermes-dec output)
+actually produces, so splitting `format_bundle()`'s output with that
+script falls back to plain `section_N` filenames instead of
+`function_N_name` ones (see `apps/demo/fixtures/96/sections/`'s own
+naming, which already shows this - `section_15042.hasm`, not
+`function_15042_runAllTests.hasm`). This doesn't affect section
+*boundaries* or content - `iter_sections()` only matches the separator
+line - so `format_bundle()`'s output still splits into the right
+number of correct sections; see
+`tests/test_hermes_disassembler_hasm_writer.py`'s
+`test_bundle_splits_with_real_split_output_file` for that confirmed
+via the real script, not a reimplementation. Fixing the regex itself
+is out of scope here since it's a different, already-existing
+component.
 """
 from __future__ import annotations
 
+from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
 from hermes_disassembler.format.FunctionHeader import FunctionHeaderEntry
+from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
 from hermes_disassembler.format.JumpTarget import is_jump_instruction, resolve_jump_target
-from hermes_disassembler.format.Opcode import Instruction, load_opcode_table
+from hermes_disassembler.format.Opcode import Instruction, decode_function, load_opcode_table
 from hermes_disassembler.format.StringTable import StringTable
 
-__all__ = ["format_instruction", "format_function"]
+#: scripts/split_output_file.py's own separator constant, duplicated
+#: here rather than imported (that script isn't part of this package
+#: and sits outside hermes_disassembler/hermes_decompiler's own
+#: dependency graph) - keep in sync if that script's DEFAULT_SEPARATOR
+#: ever changes.
+SECTION_SEPARATOR = "==============="
+
+__all__ = ["format_instruction", "format_function", "format_bundle", "SECTION_SEPARATOR"]
 
 
 def _format_operand(operand_type: str, value: int | float, semantic: str | None) -> str:
@@ -134,3 +161,29 @@ def format_function(
     lines.extend(format_instruction(i, header.offset, table, version) for i in instructions)
 
     return "\n".join(lines)
+
+
+def format_bundle(data: bytes, bc_header: BytecodeFileHeader, table: StringTable, version: int) -> str:
+    """
+    Decode and format every function in `data` into one hermes-dec-style
+    multi-function `.hasm` text: each function's `format_function()`
+    block, separated by `SECTION_SEPARATOR` on its own line - the exact
+    boundary `scripts/split_output_file.py`'s `iter_sections()` scans
+    for (see module docstring's "Pre-existing, separate gap" note re:
+    function-name extraction specifically, which is unaffected here).
+
+    This resolves overflowed function headers itself (via
+    `FunctionHeaderOverflow.resolve_overflowed_headers`) - callers don't
+    need to do that step separately first.
+    """
+    from hermes_disassembler.format.FunctionHeader import parse_function_headers
+
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+
+    blocks = []
+    for entry in resolved:
+        instructions = decode_function(data, entry.offset, entry.bytecode_size_in_bytes, version)
+        blocks.append(format_function(entry, instructions, table, version))
+
+    return f"\n{SECTION_SEPARATOR}\n".join(blocks)

@@ -24,7 +24,8 @@ from hermes_disassembler.format.FunctionHeader import parse_function_headers
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
 from hermes_disassembler.format.Opcode import decode_function
 from hermes_disassembler.format.StringTable import StringTable
-from hermes_disassembler.emit.HasmWriter import format_function, format_instruction
+from hermes_disassembler.emit import HasmWriter
+from hermes_disassembler.emit.HasmWriter import format_bundle, format_function, format_instruction
 
 APPS_TESTY = Path(__file__).resolve().parent.parent / "apps" / "testy"
 
@@ -102,3 +103,45 @@ def test_string_comment_content_matches_resolved_string():
     entry = OpcodeParser.parse(line)
     assert "'prototype'" in entry.comment
     assert table.resolve(206) == "prototype"
+
+
+def _split_output_file_module():
+    """Import the real scripts/split_output_file.py (not part of any package - script directory added to sys.path)."""
+    import sys as _sys
+
+    scripts_dir = str(Path(__file__).resolve().parent.parent / "scripts")
+    if scripts_dir not in _sys.path:
+        _sys.path.insert(0, scripts_dir)
+    import split_output_file  # noqa: PLC0415
+    return split_output_file
+
+
+@pytest.mark.parametrize("version", ["96", "98"])
+def test_bundle_splits_with_real_split_output_file(version: str, tmp_path):
+    """
+    format_bundle()'s output, written to disk and split with the REAL
+    scripts/split_output_file.py (not a reimplementation), produces
+    exactly one section per function - the closed-loop check that
+    SECTION_SEPARATOR matches that script's DEFAULT_SEPARATOR and that
+    every format_function() block is self-contained (no stray
+    separator-looking lines inside a function's own instructions).
+    """
+    split_output_file = _split_output_file_module()
+
+    path = APPS_TESTY / version / "index.android.bundle"
+    if not path.is_file():
+        pytest.skip(f"fixture not found: {path}")
+    data = path.read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+
+    assert HasmWriter.SECTION_SEPARATOR == split_output_file.DEFAULT_SEPARATOR
+
+    text = format_bundle(data, bc_header, table, int(version))
+    hasm_path = tmp_path / "output.hasm"
+    hasm_path.write_text(text)
+
+    sections = list(split_output_file.iter_sections(hasm_path, split_output_file.DEFAULT_SEPARATOR))
+    assert len(sections) == bc_header.function_count
+    assert sections[0].lines[0].startswith('=> [Function #0 ')
+    assert sections[-1].lines[-1].rstrip("\n") != ""  # no trailing empty section
