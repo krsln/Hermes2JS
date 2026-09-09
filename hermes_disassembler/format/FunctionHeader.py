@@ -106,10 +106,17 @@ class FunctionHeaderEntry:
     """
     One decoded `SmallFuncHeader`. If `is_overflowed` is True, every
     other field is `None` - see module docstring's "Known gap" section.
+    `was_large_header` marks an entry that started overflowed and was
+    then resolved to a full-size `FunctionHeader` (by
+    `hermes_disassembler.format.FunctionHeaderOverflow`) - such an
+    entry has `is_overflowed=False` and every field populated, exactly
+    like a routine non-overflowed entry, so callers that don't care
+    about provenance can ignore this flag entirely.
     """
 
     index: int
     is_overflowed: bool
+    was_large_header: bool = False
     offset: Optional[int] = None  # byte offset of this function's bytecode
     bytecode_size_in_bytes: Optional[int] = None
     param_count: Optional[int] = None
