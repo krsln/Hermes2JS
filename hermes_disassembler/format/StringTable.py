@@ -144,6 +144,21 @@ class StringTable:
     storage: bytes
     string_kinds: tuple[StringKindRun, ...]
 
+    def is_identifier(self, index: int) -> bool:
+        """
+        True if string table entry `index` is tagged `StringKind::Identifier`
+        rather than plain `StringKind::String` (see `string_kinds`' module
+        docstring). Walks the run-length-encoded `string_kinds` list, which
+        covers indices `[0, string_count)` in order with no gaps - an
+        `index` beyond that range raises `IndexError`, same as `resolve()`.
+        """
+        remaining = index
+        for run in self.string_kinds:
+            if remaining < run.count:
+                return run.is_identifier
+            remaining -= run.count
+        raise IndexError(f"string index {index} not covered by string_kinds runs")
+
     def resolve(self, index: int) -> str:
         """
         Decode string table entry `index` to a `str`.

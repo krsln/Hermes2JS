@@ -48,7 +48,7 @@ def is_jump_instruction(instruction: Instruction, version: int) -> bool:
     first operand (see module docstring). `SwitchImm` is deliberately
     NOT considered a jump instruction here - see "Known gap" above.
     """
-    _name, operand_types = load_opcode_table(version)[instruction.opcode]
+    _name, operand_types, _semantics = load_opcode_table(version)[instruction.opcode]
     return bool(operand_types) and operand_types[0] in _JUMP_OPERAND_TYPES
 
 

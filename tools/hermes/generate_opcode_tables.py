@@ -45,6 +45,8 @@ OUTPUT_DIR = REPO_ROOT / "hermes_disassembler" / "data" / "opcodes"
 
 _OPCODE_RE = re.compile(r"^DEFINE_OPCODE_(\d)\((\w+)(?:,\s*(.*))?\)$")
 _JUMP_RE = re.compile(r"^DEFINE_JUMP_(\d)\((\w+)\)$")
+_SEMANTIC_RE = re.compile(r"^OPERAND_(STRING|FUNCTION|BIGINT)_ID\((\w+),\s*(\d+)\)$")
+_SEMANTIC_TAG = {"STRING": "string_id", "FUNCTION": "function_id", "BIGINT": "bigint_id"}
 
 # DEFINE_JUMP_N(name) macro-expands (see BytecodeList.def itself) to a
 # short Addr8 form plus a "...Long" Addr32 form - the .def file's raw
@@ -77,7 +79,7 @@ def fetch_bytecode_list_def(commit: str) -> str:
         return resp.read().decode("utf-8")
 
 
-def parse_opcodes(def_text: str) -> list[tuple[str, list[str]]]:
+def parse_opcodes(def_text: str) -> list[tuple[str, list[str], dict[int, str]]]:
     opcodes: list[tuple[str, list[str]]] = []
     for raw_line in def_text.splitlines():
         line = raw_line.strip()
@@ -92,7 +94,28 @@ def parse_opcodes(def_text: str) -> list[tuple[str, list[str]]]:
             n, name = m2.groups()
             for operand_list, suffix in _JUMP_TEMPLATES[n]:
                 opcodes.append((name + suffix, list(operand_list)))
-    return opcodes
+
+    # Second pass: OPERAND_STRING_ID(name, argnum) / _FUNCTION_ID / _BIGINT_ID
+    # lines reference an opcode by name with a 1-based argument index -
+    # e.g. `OPERAND_STRING_ID(GetByIdShort, 4)` means GetByIdShort's 4th
+    # operand (a plain UInt8 by raw type) is a string-table index, and
+    # hermes-dec's text format shows it as `string_id: N` instead of
+    # `UInt8: N`. Collect these by name, then attach to every matching
+    # opcode entry (a name can appear more than once only for the
+    # Jmp/JmpLong pairs generated above, none of which take these
+    # annotations, so a name->tags dict is unambiguous here).
+    semantics_by_name: dict[str, dict[int, str]] = {}
+    for raw_line in def_text.splitlines():
+        line = raw_line.strip()
+        m = _SEMANTIC_RE.match(line)
+        if m:
+            kind, name, argnum = m.groups()
+            semantics_by_name.setdefault(name, {})[int(argnum) - 1] = _SEMANTIC_TAG[kind]
+
+    return [
+        (name, operands, semantics_by_name.get(name, {}))
+        for name, operands in opcodes
+    ]
 
 
 def main() -> None:
@@ -111,7 +134,17 @@ def main() -> None:
         "bytecode_version": int(bytecode_version),
         "npm_version": npm_version,
         "commit": commit,
-        "opcodes": [{"name": name, "operands": operands} for name, operands in opcodes],
+        "opcodes": [
+            {
+                "name": name,
+                "operands": operands,
+                # keys are stringified 0-based operand indices (JSON has no int keys);
+                # value is "string_id" | "function_id" | "bigint_id". Absent entirely
+                # for opcodes with no such operand - most opcodes.
+                **({"semantics": {str(i): tag for i, tag in semantics.items()}} if semantics else {}),
+            }
+            for name, operands, semantics in opcodes
+        ],
     }, indent=2) + "\n")
 
     print(f"bytecode {bytecode_version}: commit={commit} opcode_count={len(opcodes)}")

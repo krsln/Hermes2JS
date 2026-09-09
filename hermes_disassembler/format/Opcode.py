@@ -74,11 +74,18 @@ class Instruction:
 
 
 @lru_cache(maxsize=None)
-def load_opcode_table(version: int) -> tuple[tuple[str, tuple[str, ...]], ...]:
+def load_opcode_table(version: int) -> tuple[tuple[str, tuple[str, ...], dict[int, str]], ...]:
     """
-    Load the (name, operand_types) table for `version`, in opcode-number
-    order (index == opcode byte value), from
+    Load the (name, operand_types, semantics) table for `version`, in
+    opcode-number order (index == opcode byte value), from
     `hermes_disassembler/data/opcodes/<version>.json`.
+
+    `semantics` maps a 0-based operand index to `"string_id"` /
+    `"function_id"` / `"bigint_id"` for operands BytecodeList.def tags
+    with `OPERAND_STRING_ID`/`_FUNCTION_ID`/`_BIGINT_ID` - e.g.
+    `GetByIdShort`'s 4th operand is a plain `UInt8` by raw encoding but
+    semantically a string-table index (`{3: "string_id"}`). Empty dict
+    for opcodes with no such operand (most of them).
 
     Raises `HermesBytecodeError` if no table has been generated for
     this version (see module docstring re: bytecode 99).
@@ -92,7 +99,14 @@ def load_opcode_table(version: int) -> tuple[tuple[str, tuple[str, ...]], ...]:
             f"against a real bundle before trusting it (see module docstring)"
         )
     data = json.loads(path.read_text())
-    return tuple((entry["name"], tuple(entry["operands"])) for entry in data["opcodes"])
+    return tuple(
+        (
+            entry["name"],
+            tuple(entry["operands"]),
+            {int(i): tag for i, tag in entry.get("semantics", {}).items()},
+        )
+        for entry in data["opcodes"]
+    )
 
 
 def decode_instruction(data: bytes, offset: int, version: int) -> Instruction:
@@ -115,7 +129,7 @@ def decode_instruction(data: bytes, offset: int, version: int) -> Instruction:
             f"the bytecode {version} table (only {len(table)} opcodes known) - "
             f"corrupt data, or this table needs regenerating"
         )
-    name, operand_types = table[opcode]
+    name, operand_types, _semantics = table[opcode]
 
     pos = offset + 1
     operands: list[int | float] = []

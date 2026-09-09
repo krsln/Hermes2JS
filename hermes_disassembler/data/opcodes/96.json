@@ -406,13 +406,19 @@
       "name": "DeclareGlobalVar",
       "operands": [
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "0": "string_id"
+      }
     },
     {
       "name": "ThrowIfHasRestrictedGlobalProperty",
       "operands": [
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "0": "string_id"
+      }
     },
     {
       "name": "GetByIdShort",
@@ -421,7 +427,10 @@
         "Reg8",
         "UInt8",
         "UInt8"
-      ]
+      ],
+      "semantics": {
+        "3": "string_id"
+      }
     },
     {
       "name": "GetById",
@@ -430,7 +439,10 @@
         "Reg8",
         "UInt8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "3": "string_id"
+      }
     },
     {
       "name": "GetByIdLong",
@@ -439,7 +451,10 @@
         "Reg8",
         "UInt8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "3": "string_id"
+      }
     },
     {
       "name": "TryGetById",
@@ -448,7 +463,10 @@
         "Reg8",
         "UInt8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "3": "string_id"
+      }
     },
     {
       "name": "TryGetByIdLong",
@@ -457,7 +475,10 @@
         "Reg8",
         "UInt8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "3": "string_id"
+      }
     },
     {
       "name": "PutById",
@@ -466,7 +487,10 @@
         "Reg8",
         "UInt8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "3": "string_id"
+      }
     },
     {
       "name": "PutByIdLong",
@@ -475,7 +499,10 @@
         "Reg8",
         "UInt8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "3": "string_id"
+      }
     },
     {
       "name": "TryPutById",
@@ -484,7 +511,10 @@
         "Reg8",
         "UInt8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "3": "string_id"
+      }
     },
     {
       "name": "TryPutByIdLong",
@@ -493,7 +523,10 @@
         "Reg8",
         "UInt8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "3": "string_id"
+      }
     },
     {
       "name": "PutNewOwnByIdShort",
@@ -501,7 +534,10 @@
         "Reg8",
         "Reg8",
         "UInt8"
-      ]
+      ],
+      "semantics": {
+        "2": "string_id"
+      }
     },
     {
       "name": "PutNewOwnById",
@@ -509,7 +545,10 @@
         "Reg8",
         "Reg8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "2": "string_id"
+      }
     },
     {
       "name": "PutNewOwnByIdLong",
@@ -517,7 +556,10 @@
         "Reg8",
         "Reg8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "2": "string_id"
+      }
     },
     {
       "name": "PutNewOwnNEById",
@@ -525,7 +567,10 @@
         "Reg8",
         "Reg8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "2": "string_id"
+      }
     },
     {
       "name": "PutNewOwnNEByIdLong",
@@ -533,7 +578,10 @@
         "Reg8",
         "Reg8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "2": "string_id"
+      }
     },
     {
       "name": "PutOwnByIndex",
@@ -566,7 +614,10 @@
         "Reg8",
         "Reg8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "2": "string_id"
+      }
     },
     {
       "name": "DelByIdLong",
@@ -574,7 +625,10 @@
         "Reg8",
         "Reg8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "2": "string_id"
+      }
     },
     {
       "name": "GetByVal",
@@ -659,7 +713,10 @@
         "Reg8",
         "UInt8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "2": "function_id"
+      }
     },
     {
       "name": "Call2",
@@ -791,7 +848,10 @@
         "Reg8",
         "Reg8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "2": "function_id"
+      }
     },
     {
       "name": "CreateClosureLongIndex",
@@ -799,7 +859,10 @@
         "Reg8",
         "Reg8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "2": "function_id"
+      }
     },
     {
       "name": "CreateGeneratorClosure",
@@ -807,7 +870,10 @@
         "Reg8",
         "Reg8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "2": "function_id"
+      }
     },
     {
       "name": "CreateGeneratorClosureLongIndex",
@@ -815,7 +881,10 @@
         "Reg8",
         "Reg8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "2": "function_id"
+      }
     },
     {
       "name": "CreateAsyncClosure",
@@ -823,7 +892,10 @@
         "Reg8",
         "Reg8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "2": "function_id"
+      }
     },
     {
       "name": "CreateAsyncClosureLongIndex",
@@ -831,7 +903,10 @@
         "Reg8",
         "Reg8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "2": "function_id"
+      }
     },
     {
       "name": "CreateThis",
@@ -889,28 +964,40 @@
       "operands": [
         "Reg8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "1": "bigint_id"
+      }
     },
     {
       "name": "LoadConstBigIntLongIndex",
       "operands": [
         "Reg8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "1": "bigint_id"
+      }
     },
     {
       "name": "LoadConstString",
       "operands": [
         "Reg8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "1": "string_id"
+      }
     },
     {
       "name": "LoadConstStringLongIndex",
       "operands": [
         "Reg8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "1": "string_id"
+      }
     },
     {
       "name": "LoadConstEmpty",
@@ -1017,7 +1104,11 @@
         "UInt32",
         "UInt32",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "1": "string_id",
+        "2": "string_id"
+      }
     },
     {
       "name": "SwitchImm",
@@ -1050,7 +1141,10 @@
         "Reg8",
         "Reg8",
         "UInt16"
-      ]
+      ],
+      "semantics": {
+        "2": "function_id"
+      }
     },
     {
       "name": "CreateGeneratorLongIndex",
@@ -1058,7 +1152,10 @@
         "Reg8",
         "Reg8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "2": "function_id"
+      }
     },
     {
       "name": "IteratorBegin",
