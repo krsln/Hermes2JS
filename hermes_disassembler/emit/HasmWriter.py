@@ -186,4 +186,4 @@ def format_bundle(data: bytes, bc_header: BytecodeFileHeader, table: StringTable
         instructions = decode_function(data, entry.offset, entry.bytecode_size_in_bytes, version)
         blocks.append(format_function(entry, instructions, table, version))
 
-    return f"\n{SECTION_SEPARATOR}\n".join(blocks)
+    return f"\n\n\n{SECTION_SEPARATOR}\n\n".join(blocks)
