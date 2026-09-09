@@ -13,14 +13,14 @@ logger = get_logger(__name__)
 class FileOperations:
     """
     Filesystem I/O for the `.hasm` -> `.js` pipeline: discovering input
-    section files and writing converted output. Grouped under `core/`
+    function files and writing converted output. Grouped under `core/`
     since - like `Pipeline`/`PipelineStage` - this is orchestration
     plumbing around the frontend/handlers/backend phases, not one of the
     phases itself.
     """
 
-    #: `section_<number>.hasm`
-    _SECTION_FILENAME_RE = re.compile(r'section_(\d+)\.hasm')
+    #: `function_<number>_<name>.hasm`  (e.g. function_15042_runAllTests.hasm)
+    _FUNCTION_FILENAME_RE = re.compile(r'function_(\d+)_.+\.hasm')
 
     @classmethod
     def get_section_files(
@@ -32,8 +32,10 @@ class FileOperations:
     ) -> list[tuple[str, int]]:
         """
         Retrieve and sort .hasm files from input_dir that match the
-        section_<number>.hasm pattern and fall within the specified range
-        [start, end].
+        function_<number>_<name>.hasm pattern and fall within the
+        specified range [start, end].
+
+        Returns list of (filename, function_index) tuples, sorted by index.
         """
         os.makedirs(output_dir, exist_ok=True)
 
@@ -41,18 +43,25 @@ class FileOperations:
         for f in os.listdir(input_dir):
             if not f.endswith('.hasm'):
                 continue
-            match = cls._SECTION_FILENAME_RE.match(f)
+            match = cls._FUNCTION_FILENAME_RE.match(f)
             if not match:
-                logger.debug("Filename does not match section_<number>.hasm pattern: %s", f)
+                logger.debug(
+                    "Filename does not match function_<number>_<name>.hasm pattern: %s", f
+                )
                 continue
-            section_index = int(match.group(1))
-            if (start is not None and section_index < start) or (end is not None and section_index > end):
+            function_index = int(match.group(1))
+            if (start is not None and function_index < start) or (
+                    end is not None and function_index > end
+            ):
                 continue
-            files.append((f, section_index))
+            files.append((f, function_index))
 
         files.sort(key=lambda x: x[1])
         if not files:
-            logger.warning("No section_<number>.hasm files found in %s within range %s-%s", input_dir, start, end)
+            logger.warning(
+                "No function_<number>_<name>.hasm files found in %s within range %s-%s",
+                input_dir, start, end,
+            )
         return files
 
     @classmethod
@@ -61,6 +70,7 @@ class FileOperations:
             section_index: int,
             file_path: str,
             output_dir: str,
+            filename: str,
             verbose: bool,
             raw: bool,
             strict: bool,
@@ -70,33 +80,38 @@ class FileOperations:
         JavaScript, and writing to output_dir.
 
         Args:
-            section_index: Section index of the file (e.g., 9594 for section_9594.hasm).
+            section_index: Function index of the file (e.g. 15042 for
+                function_15042_runAllTests.hasm).
             file_path: Path to the .hasm file.
             output_dir: Directory to store the output .js file.
-            verbose: If True, annotate generated JS with `// CODE ->`source comments.
-            raw: If True, generates section_{section_index}_raw.js.
+            filename: filename of the .js file (without extension).
+            verbose: If True, annotate generated JS with `// CODE ->` source comments.
+            raw: If True, also generates function_{section_index}_raw.js.
             strict: If True, raise immediately on the first opcode
-                    dispatch failure
+                    dispatch failure.
 
         Returns:
-            bool: True if the file was processed and written successfully, False otherwise.
-                False covers every recoverable failure for THIS section (missing/empty
-                file, unparseable metadata, code-generation failure, write error) - the
-                caller can safely loop over many sections without wrapping this call in
-                its own try/except.
+            bool: True if the file was processed and written successfully,
+                False otherwise. False covers every recoverable failure for
+                THIS function (missing/empty file, unparseable metadata,
+                code-generation failure, write error) - the caller can
+                safely loop over many functions without wrapping this call
+                in its own try/except.
 
         Note on `strict`:
-            `strict` only affects opcode-dispatch behavior inside `Decompiler.build_context`.
-            When True, a dispatch failure raises `OpcodeDispatchError`/`NoHandlerError`
-            (subclasses of `HasmDecompilerError`), which this method intentionally does
-            NOT catch - that is the whole point of `--strict`, and it is the caller's
-            responsibility to decide whether that should abort the batch.
+            `strict` only affects opcode-dispatch behavior inside
+            `Decompiler.build_context`. When True, a dispatch failure raises
+            `OpcodeDispatchError`/`NoHandlerError` (subclasses of
+            `HasmDecompilerError`), which this method intentionally does NOT
+            catch - that is the whole point of `--strict`, and it is the
+            caller's responsibility to decide whether that should abort the batch.
         """
         if not os.path.exists(file_path):
             logger.error("File does not exist: %s", file_path)
             return False
 
-        logger.info("Processing section #%s: %s", section_index, f"\t~/section_{section_index}.hasm")
+        basename = os.path.basename(file_path)
+        logger.info("Processing function #%s: %s", section_index, basename)
 
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -119,9 +134,9 @@ class FileOperations:
             js_code = Decompiler.render(context, verbose=verbose, raw=False)
         except (ValueError, CodeGenerationError):
             # Bad/unparseable input, or an ordinary code-generation failure,
-            # for THIS section only - not a `strict`-related failure and not
+            # for THIS function only - not a `strict`-related failure and not
             # a decompiler-internal bug (see below). Log and return False so
-            # one broken section never aborts the rest of a batch; matches
+            # one broken function never aborts the rest of a batch; matches
             # the documented bool contract above.
             logger.error("Failed to convert %s", file_path, exc_info=True)
             return False
@@ -130,21 +145,21 @@ class FileOperations:
         #   - OpcodeDispatchError/NoHandlerError, when `strict=True` - that
         #     is the whole point of `--strict`; see the note above.
         #   - StructurerInvariantError, regardless of `strict` - it signals
-        #     a bug in the decompiler itself rather than a per-section input
+        #     a bug in the decompiler itself rather than a per-function input
         #     failure, so it must never be logged-and-continued past like an
         #     ordinary CodeGenerationError; see that exception's docstring
         #     and `Decompiler.render()`.
 
         os.makedirs(output_dir, exist_ok=True)
-        output_path = os.path.join(output_dir, f"section_{section_index}.js")
-        output_path_raw = os.path.join(output_dir, f"section_{section_index}_raw.js")
+        output_path = os.path.join(output_dir, f"{filename}.js")
+        output_path_raw = os.path.join(output_dir, f"{filename}_raw.js")
         try:
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(js_code)
             if raw and js_code_raw is not None:
                 with open(output_path_raw, 'w', encoding='utf-8') as f:
                     f.write(js_code_raw)
-            logger.debug("Successfully wrote output %s", f"\t~/section_{section_index}.js")
+            logger.debug("Successfully wrote output %s", f"{filename}.js")
             return True
         except OSError as e:
             logger.error("Error writing to %s: %s", output_path, e)

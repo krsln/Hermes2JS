@@ -84,7 +84,7 @@ def main() -> None:
 
         try:
             result = FileOperations.process_section(
-                section_index, str(file_path), str(output_dir),
+                section_index, str(file_path), str(output_dir), filename,
                 args.verbose, args.raw, args.strict,
             )
         except (OpcodeDispatchError, NoHandlerError) as e:
