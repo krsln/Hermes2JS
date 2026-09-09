@@ -18,8 +18,14 @@ from hermes_decompiler.core.logging import configure_logging, get_logger
 log = get_logger(__name__)
 
 DEFAULT_SEPARATOR = "==============="
+# hermes-dec's actual output prefixes this line with "=> " (confirmed
+# against apps/demo/fixtures/96/sections/section_15042.hasm, a real
+# hermes-dec fixture already committed in this repo) - the prefix is
+# optional here so a bare "[Function ..." line (e.g. hand-written test
+# fixtures, or a future disassembler backend that omits the arrow)
+# still matches too.
 FUNCTION_HEADER_RE = re.compile(
-    r'^\[Function #(?P<number>\d+)\s+"(?P<name>[^"]*)"\s+of\s+\d+\s+bytes]'
+    r'^(?:=>\s+)?\[Function #(?P<number>\d+)\s+"(?P<name>[^"]*)"\s+of\s+\d+\s+bytes]'
 )
 # Anything outside this set is replaced with '_' when building filenames.
 SAFE_CHARS_RE = re.compile(r"[^A-Za-z0-9_\-.]")

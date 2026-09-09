@@ -33,7 +33,9 @@ python scripts/split_output_file.py -i <input.hasm> -o <output_dir> [options]
 
 # Basic split
 python scripts/split_output_file.py -i apps/testy/96/output/output.hasm -o apps/testy/96/output/sections
+# Total sections: 15248
 python scripts/split_output_file.py -i apps/testy/98/output/output.hasm -o apps/testy/98/output/sections
+# Total sections: 14268
 
 # With manifest + INFO logging
 python scripts/split_output_file.py -i apps/testy/output/output.hasm -o sections --manifest sections/manifest.json -v
