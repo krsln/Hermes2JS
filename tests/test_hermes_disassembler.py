@@ -26,9 +26,12 @@ def test_data(version, capsys):
     resolved = resolve_overflowed_headers(data, header, entries)
 
     with capsys.disabled():
+        print()
         print(f"\nHermes {version}")
         print(f"  resolved:   {len(resolved)}")
         print(f"  overflowed: {len(resolved) - len(entries)}")
 
         print(f"  table.entries:    {len(table.entries)}")
         print(f"  table.storage:    {len(table.storage)}")
+
+        print()
