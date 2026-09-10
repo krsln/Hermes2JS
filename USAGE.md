@@ -1,27 +1,27 @@
 # Usage
 
-## Prep
+## Prep | get index.android.bundle
 
-### get index.android.bundle
-
-- get apk
-- decompile → use https://www.decompiler.com/
-- get bundle file → / resources / assets / index.android.bundle
-- download the file :p
+- get apk & decompile → use https://www.decompiler.com/
+- get bundle file → / resources / assets / index.android.bundle & download the file :p
 
 ## Step—1 Disassemble
 
-| hermes-dec
-
-```bash
+```shell
 file apps/testy/96/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 96
-./vendor/run-hermes-dec.sh apps/testy/96/index.android.bundle
-
 file apps/testy/98/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 98
-./vendor/run-hermes-dec.sh apps/testy/98/index.android.bundle
+ 
+# hermes-dec
+# 96 & 98
+#python vendor/hermes-dec/src/hermes_dec/parsers/hbc_file_parser.py apps/testy/96/index.android.bundle 
+#python vendor/hermes-dec/src/hermes_dec/decompilation/hbc_decompiler.py apps/testy/96/index.android.bundle apps/testy/96/output/output.js
+python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py apps/testy/96/index.android.bundle apps/testy/96/output/output.hasm
+python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py apps/testy/98/index.android.bundle apps/testy/98/output/output.hasm
 
+# hermes-disassembler
+# 96 & 98
 python scripts/run-hermes-disassembler.py apps/testy/96/index.android.bundle apps/testy/96/output/disassembler-output.hasm
 python scripts/run-hermes-disassembler.py apps/testy/98/index.android.bundle apps/testy/98/output/disassembler-output.hasm
 ```
@@ -52,11 +52,9 @@ python scripts/split_output_file.py -i apps/testy/output/output.hasm -o sections
 ## copy files to fixtures
  
 # section_15042-15216
-# cp apps/testy/96/output/sections/section_{15042..15216}.hasm  apps/demo/fixtures/96/sections/
 cp apps/testy/96/output/sections/function_{15042..15216}_*.hasm apps/demo/fixtures/96/sections/
 
 # section_9446-9542
-# cp apps/testy/98/output/sections/section_{9446..9542}.hasm apps/demo/fixtures/98/sections/
 cp apps/testy/98/output/sections/function_{9446..9542}_*.hasm apps/demo/fixtures/98/sections/
 ```
 
