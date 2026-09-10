@@ -172,7 +172,8 @@ def _decode_v96(index: int, raw: bytes) -> FunctionHeaderEntry:
         param_count=(w1 >> 25) & 0x7F,  # 7 bits
         bytecode_size_in_bytes=w2 & 0x7FFF,  # 15 bits
         function_name=(w2 >> 15) & 0x1_FFFF,  # 17 bits
-        frame_size=(w3 >> 25) & 0x7F,  # 7 bits (infoOffset, bits 0-24, unused here)
+        frame_size=(w3 >> 25) & 0x7F,  # 7 bits
+        info_offset=w3 & 0x1FF_FFFF,  # 25 bits - see ExceptionHandlerTable.py
         prohibit_invoke=ProhibitInvoke(flags & 0b11),
         strict_mode=bool((flags >> 2) & 1),
         has_exception_handler=bool((flags >> 3) & 1),

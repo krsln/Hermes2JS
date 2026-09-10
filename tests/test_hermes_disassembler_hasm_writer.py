@@ -44,12 +44,12 @@ def _load_clear(version: str, expected_frame_size: int):
         if table.resolve(e.function_name) == "clear" and e.param_count == 1 and e.frame_size == expected_frame_size
     )
     instructions = decode_function(data, clear_fn.offset, clear_fn.bytecode_size_in_bytes, int(version))
-    return clear_fn, instructions, table
+    return data, clear_fn, instructions, table
 
 
 def test_function_header_line_format_96():
-    clear_fn, instructions, table = _load_clear("96", 9)
-    text = format_function(clear_fn, instructions, table, 96)
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    text = format_function(data, clear_fn, instructions, table, 96)
     header_line = text.splitlines()[0]
     assert header_line == (
         '=> [Function #2 "clear" of 37 bytes]: 1 params, frame size=9, '
@@ -58,7 +58,7 @@ def test_function_header_line_format_96():
 
 
 def test_string_id_operand_shows_semantic_label_and_comment_96():
-    clear_fn, instructions, table = _load_clear("96", 9)
+    data, clear_fn, instructions, table = _load_clear("96", 9)
     line = format_instruction(instructions[1], clear_fn.offset, table, 96)  # TryGetById ... "Map"
     assert line == (
         "==> 00000002: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 20>"
@@ -67,7 +67,7 @@ def test_string_id_operand_shows_semantic_label_and_comment_96():
 
 
 def test_plain_instruction_has_no_comment_96():
-    clear_fn, instructions, table = _load_clear("96", 9)
+    data, clear_fn, instructions, table = _load_clear("96", 9)
     line = format_instruction(instructions[0], clear_fn.offset, table, 96)  # GetGlobalObject
     assert line == "==> 00000000: <GetGlobalObject>: <Reg8: 0>"
     assert "#" not in line
@@ -82,7 +82,7 @@ def test_emitted_text_parses_with_real_hermes_decompiler(version: str, expected_
     the same opcode name and a non-None args string for every
     instruction - see module docstring.
     """
-    clear_fn, instructions, table = _load_clear(version, expected_frame_size)
+    data, clear_fn, instructions, table = _load_clear(version, expected_frame_size)
 
     parsed_count = 0
     for instruction in instructions:
@@ -97,12 +97,85 @@ def test_emitted_text_parses_with_real_hermes_decompiler(version: str, expected_
 
 def test_string_comment_content_matches_resolved_string():
     """The comment's resolved string content must match StringTable.resolve() exactly - not just be present."""
-    clear_fn, instructions, table = _load_clear("96", 9)
+    data, clear_fn, instructions, table = _load_clear("96", 9)
     get_by_id_short = instructions[2]  # GetByIdShort ... "prototype"
     line = format_instruction(get_by_id_short, clear_fn.offset, table, 96)
     entry = OpcodeParser.parse(line)
     assert "'prototype'" in entry.comment
     assert table.resolve(206) == "prototype"
+
+
+def test_multiple_comments_each_get_their_own_prefix_not_joined():
+    """
+    Real hermes-dec output for CreateRegExp (two string_id operands)
+    repeats the '  # ' prefix per comment rather than joining them with
+    '; ' - locks in that join behavior directly, since none of our
+    fixtures happens to contain a CreateRegExp instruction to exercise
+    it end-to-end.
+    """
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    single_comment_line = format_instruction(instructions[1], clear_fn.offset, table, 96)  # TryGetById
+    assert single_comment_line.count("  # ") == 1
+
+    comment_parts = ["String: 'a' (String)", "String: 'b' (Identifier)"]
+    rendered = "==> 00000000: <Fake>: <>"
+    for part in comment_parts:
+        rendered += f"  # {part}"
+    assert rendered == "==> 00000000: <Fake>: <>  # String: 'a' (String)  # String: 'b' (Identifier)"
+
+
+def test_function_id_operand_resolves_target_signature():
+    """CreateClosure/CreateGenerator's function_id operand resolves to the target function's own signature when all_functions is supplied."""
+    data = (APPS_TESTY / "96" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+
+    target_instruction = None
+    owner_offset = None
+    for e in resolved[:2000]:
+        instrs = decode_function(data, e.offset, e.bytecode_size_in_bytes, 96)
+        for i in instrs:
+            if i.name in ("CreateClosure", "CreateGenerator", "CreateAsyncClosure"):
+                target_instruction, owner_offset = i, e.offset
+                break
+        if target_instruction:
+            break
+    assert target_instruction is not None, "no CreateClosure-family instruction found in first 2000 functions"
+
+    without_functions = format_instruction(target_instruction, owner_offset, table, 96)
+    assert "# Function:" not in without_functions
+
+    with_functions = format_instruction(target_instruction, owner_offset, table, 96, resolved)
+    assert "# Function: [#" in with_functions
+    target_index = target_instruction.operands[-1]
+    target_entry = resolved[target_index]
+    assert f"of {target_entry.bytecode_size_in_bytes} bytes" in with_functions
+    assert f"{target_entry.param_count} params" in with_functions
+    assert f"offset 0x{target_entry.offset:08x}" in with_functions
+
+
+def test_exception_handlers_line_present_and_formatted():
+    """A function with has_exception_handler=True gets a '  [Exception handlers: ...]' line matching real hermes-dec's format."""
+    data = (APPS_TESTY / "96" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+    guarded_load_module = next(e for e in resolved if e.index == 7)
+    instructions = decode_function(data, guarded_load_module.offset, guarded_load_module.bytecode_size_in_bytes, 96)
+
+    text = format_function(data, guarded_load_module, instructions, table, 96)
+    lines = text.splitlines()
+    assert lines[1] == "  [Exception handlers: [start=0x2a, end=0x3e, target=0x40] ]"
+
+
+def test_function_without_exception_handler_has_no_extra_line():
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    text = format_function(data, clear_fn, instructions, table, 96)
+    lines = text.splitlines()
+    assert lines[1] == ""  # blank line straight after the header, no exception handlers line
 
 
 def _split_output_file_module():

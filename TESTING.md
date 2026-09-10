@@ -37,24 +37,6 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level WARNING
 
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
-
-# ControlFlow
-################ 
-# whileTest 15047
-# forTest 15051
-# forEachTest 15053, 15054
-# Switch 15056
-# nestedLoopTest 15058
-# complexTest 15060
-# IfTests 15062, 15063
-# Labeled Tests 15065, 15066, 15067, 15068
-# ternaryTest 15070, 15071, 15072, 15073
-
-# Exceptions
-# Exception Tests 15075-15090
-
-# Iterators
-# IteratorTests 15092, 15093
 ```
 
 ## whole sections
@@ -82,6 +64,7 @@ python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py apps/tes
 
 ```
 
+open cases
 ==> 00000009: <GetBuiltinClosure>: <Reg8: 3, UInt8: 57>  # Built-in function: [#57 spawnAsync]
 ==> 00000009: <GetBuiltinClosure>: <Reg8: 3, UInt8: 57>
 

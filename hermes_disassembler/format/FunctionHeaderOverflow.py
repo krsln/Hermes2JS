@@ -68,12 +68,19 @@ from hermes_disassembler.format.FunctionHeader import (
     ProhibitInvoke,
 )
 
-__all__ = ["resolve_overflowed_headers", "VERSION_TO_LARGE_HEADER_LAYOUT"]
+__all__ = ["resolve_overflowed_headers", "VERSION_TO_LARGE_HEADER_LAYOUT", "LARGE_HEADER_SIZE"]
 
 # Small-header limits each version's large-header path exists to work
 # around - the field width in SmallFuncHeader that most commonly
 # overflows in practice. Exposed for tests/diagnostics, not load-bearing.
 _SMALL_BYTECODE_SIZE_LIMIT = {96: (1 << 15) - 1, 98: (1 << 14) - 1, 99: (1 << 14) - 1}
+
+#: Size in bytes of the "large" FunctionHeader struct (both v96 and v98/99
+#: layouts happen to be 37 bytes, though their field composition differs -
+#: see the per-layout _decode_large_* functions). Exported for
+#: ExceptionHandlerTable.py, which reads the exception handler table
+#: immediately after this struct for an overflowed function.
+LARGE_HEADER_SIZE = 37
 
 
 def _large_offset_v96(small: bytes) -> int:
@@ -91,7 +98,7 @@ def _large_offset_v98(small: bytes) -> int:
 
 
 def _decode_large_v96(data: bytes, large_offset: int, index: int) -> FunctionHeaderEntry:
-    size = 37
+    size = LARGE_HEADER_SIZE
     if large_offset + size > len(data):
         raise TruncatedFileError(f"large FunctionHeader for function {index}", large_offset + size, len(data))
     (offset, param_count, bytecode_size, function_name, _info_offset, frame_size,
@@ -99,7 +106,8 @@ def _decode_large_v96(data: bytes, large_offset: int, index: int) -> FunctionHea
     flags = data[large_offset + 36]
     return FunctionHeaderEntry(
         index=index, is_overflowed=False, was_large_header=True,
-        offset=offset, param_count=param_count, bytecode_size_in_bytes=bytecode_size,
+        offset=offset, info_offset=large_offset, param_count=param_count,
+        bytecode_size_in_bytes=bytecode_size,
         function_name=function_name, frame_size=frame_size,
         prohibit_invoke=ProhibitInvoke(flags & 0b11),
         strict_mode=bool((flags >> 2) & 1),
@@ -110,7 +118,7 @@ def _decode_large_v96(data: bytes, large_offset: int, index: int) -> FunctionHea
 
 
 def _decode_large_v98(data: bytes, large_offset: int, index: int) -> FunctionHeaderEntry:
-    size = 37
+    size = LARGE_HEADER_SIZE
     if large_offset + size > len(data):
         raise TruncatedFileError(f"large FunctionHeader for function {index}", large_offset + size, len(data))
     (offset, param_count, _loop_depth, bytecode_size, function_name,
@@ -118,7 +126,8 @@ def _decode_large_v98(data: bytes, large_offset: int, index: int) -> FunctionHea
     flags = data[large_offset + 36]
     return FunctionHeaderEntry(
         index=index, is_overflowed=False, was_large_header=True,
-        offset=offset, param_count=param_count, bytecode_size_in_bytes=bytecode_size,
+        offset=offset, info_offset=large_offset, param_count=param_count,
+        bytecode_size_in_bytes=bytecode_size,
         function_name=function_name, frame_size=frame_size,
         prohibit_invoke=ProhibitInvoke(flags & 0b11),
         strict_mode=bool((flags >> 2) & 1),

@@ -43,37 +43,44 @@ addressing as `==>` lines, per `JumpTarget.py`'s absolute-offset
 convention converted back to relative here.
 
 Known gaps, not yet implemented:
-- `function_id`/`bigint_id` operand comments (only `string_id` is
-  handled - the fixture only demonstrates that one, and there's no
-  BigInt table in this package yet to resolve a bigint_id against
-  anyway).
+- `bigint_id` operand comments (no BigInt table parser in this package yet).
 - Multiple string_id operands on one instruction (e.g. `CreateRegExp`
-  has two, per `tools/hermes/generate_opcode_tables.py`'s survey) -
-  untested; this module joins multiple comments with "; " as a
-  reasonable guess, not a confirmed hermes-dec convention.
+  has two) - each gets its own `  # ` segment, per hermes-dec's real
+  output for that exact case (confirmed, not guessed).
 - Exact `Double` operand text formatting (no fixture example with one).
+- `NewArrayWithBuffer`/`NewObjectWithBuffer`/`NewArrayWithBufferLong`/etc.
+  literal-content comments (e.g. `# Array: [1, 0, 2]`, `# Object: {'a': 1}`) -
+  real hermes-dec output includes these; this module doesn't yet parse
+  the literal value buffer / object key-value buffers needed to
+  reconstruct them. Confirmed missing by direct comparison against real
+  hermes-dec output, not just inferred.
+- Exception handler resolution (`format_function`'s
+  `  [Exception handlers: ...]` line) has one known-bad case: a
+  function that is BOTH overflowed (`was_large_header=True`) AND has
+  `has_exception_handler=True` in bytecode 96 specifically. Validated
+  at scale otherwise - 1082/1082 in bytecode 98 (where every
+  exception-handler function overflows) and 660/660 non-overflowed
+  bytecode-96 cases - but apps/testy/96's own "global" function (the
+  huge bundle-init function, index 0) is exactly this combination and
+  its handler offsets don't land on real instruction boundaries with
+  the same formula that works everywhere else. See
+  `hermes_disassembler.format.ExceptionHandlerTable`'s module docstring
+  for the full validation story and this gap's details. Functions with
+  `has_debug_info=True` are also unvalidated (see that same module).
 
 Pre-existing, separate gap worth knowing about here:
-`scripts/split_output_file.py`'s `FUNCTION_HEADER_RE` requires a
-function-header line to start with `[Function` - it does not match
-the `=> [Function...` prefix this module (and real hermes-dec output)
-actually produces, so splitting `format_bundle()`'s output with that
-script falls back to plain `section_N` filenames instead of
-`function_N_name` ones (see `apps/demo/fixtures/96/sections/`'s own
-naming, which already shows this - `section_15042.hasm`, not
-`function_15042_runAllTests.hasm`). This doesn't affect section
-*boundaries* or content - `iter_sections()` only matches the separator
-line - so `format_bundle()`'s output still splits into the right
-number of correct sections; see
-`tests/test_hermes_disassembler_hasm_writer.py`'s
-`test_bundle_splits_with_real_split_output_file` for that confirmed
-via the real script, not a reimplementation. Fixing the regex itself
-is out of scope here since it's a different, already-existing
-component.
+`scripts/split_output_file.py`'s `FUNCTION_HEADER_RE` required a
+function-header line to start with `[Function` and didn't match the
+`=> [Function...` prefix this module (and real hermes-dec output)
+actually produces - already fixed (see that script's own history), so
+`format_bundle()`'s output now splits into descriptive `function_N_name`
+filenames, not anonymous `section_N` ones.
 """
 from __future__ import annotations
 
+from hermes_disassembler.core.Exceptions import HermesBytecodeError
 from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
+from hermes_disassembler.format.ExceptionHandlerTable import resolve_exception_handlers
 from hermes_disassembler.format.FunctionHeader import FunctionHeaderEntry
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
 from hermes_disassembler.format.JumpTarget import is_jump_instruction, resolve_jump_target
@@ -174,6 +181,7 @@ def _format_function_reference(target: FunctionHeaderEntry, table: StringTable) 
 
 
 def format_function(
+        data: bytes,
         header: FunctionHeaderEntry,
         instructions: tuple[Instruction, ...],
         table: StringTable,
@@ -182,13 +190,14 @@ def format_function(
 ) -> str:
     """
     Format a complete function block matching hermes-dec's shape:
-    the `=> [Function #N "name" of B bytes]: ...` header line (plus an
+    the `=> [Function #N "name" of B bytes]: ...` header line (plus a
     `  [Exception handlers: ...]` line when `header.has_exception_handler`
-    - see module docstring's "Known gap" note on this, not yet
-    implemented), a `Bytecode listing:` label, then one
-    `format_instruction()` line per instruction - see module docstring
-    for the exact fixture this reproduces. `all_functions` is passed
-    through to `format_instruction` for `function_id` resolution.
+    - see `ExceptionHandlerTable`'s module docstring for the one known-bad
+    case), a `Bytecode listing:` label, then one `format_instruction()`
+    line per instruction - see module docstring for the exact fixture
+    this reproduces. `data` is the full bundle bytes (needed to resolve
+    the exception handler table). `all_functions` is passed through to
+    `format_instruction` for `function_id` resolution.
     """
     name = table.resolve(header.function_name)
     header_line = (
@@ -198,12 +207,41 @@ def format_function(
         f"debug info={int(header.has_debug_info)}  @ offset 0x{header.offset:08x}"
     )
 
-    lines = [header_line, "", "Bytecode listing:", ""]
+    lines = [header_line]
+    if header.has_exception_handler:
+        lines.append(_format_exception_handlers_line(data, header))
+    lines += ["", "Bytecode listing:", ""]
     lines.extend(
         format_instruction(i, header.offset, table, version, all_functions) for i in instructions
     )
 
     return "\n".join(lines)
+
+
+def _format_exception_handlers_line(data: bytes, header: FunctionHeaderEntry) -> str:
+    """
+    `  [Exception handlers: [start=0xHEX, end=0xHEX, target=0xHEX] ...]`
+    - confirmed format for a single handler against real hermes-dec
+    output; the separator between multiple handlers is NOT confirmed
+    (no multi-handler real example seen) - space-separated here as a
+    reasonable guess.
+
+    Falls back to a clearly-marked `<unresolved: ...>` placeholder
+    instead of raising when resolution fails - see module docstring's
+    "Known gaps" for the specific cases this covers (bytecode 96,
+    overflowed AND has_exception_handler; any has_debug_info=True
+    function) - so that one function's unresolved edge case doesn't
+    abort `format_bundle()` for an entire otherwise-healthy bundle.
+    """
+    try:
+        handlers = resolve_exception_handlers(data, header)
+    except HermesBytecodeError as exc:
+        return f"  [Exception handlers: <unresolved: {exc}>]"
+
+    entries = " ".join(
+        f"[start=0x{h.start:x}, end=0x{h.end:x}, target=0x{h.target:x}]" for h in handlers
+    )
+    return f"  [Exception handlers: {entries} ]"
 
 
 def format_bundle(data: bytes, bc_header: BytecodeFileHeader, table: StringTable, version: int) -> str:
@@ -227,6 +265,6 @@ def format_bundle(data: bytes, bc_header: BytecodeFileHeader, table: StringTable
     blocks = []
     for entry in resolved:
         instructions = decode_function(data, entry.offset, entry.bytecode_size_in_bytes, version)
-        blocks.append(format_function(entry, instructions, table, version, resolved))
+        blocks.append(format_function(data, entry, instructions, table, version, resolved))
 
     return f"\n\n\n{SECTION_SEPARATOR}\n\n".join(blocks)
