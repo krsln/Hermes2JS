@@ -18,6 +18,16 @@ shifted every later opcode's number by 2 and corrupted decoding for
 any function using them. Re-derive the exact commit from npm's gitHead
 every time - a version label is not a source revision.
 
+Semantics: operands tagged `string_id`/`function_id`/`bigint_id` come
+from BytecodeList.def's own `OPERAND_STRING_ID`/`_FUNCTION_ID`/
+`_BIGINT_ID` macros. `builtin_id` (GetBuiltinClosure/CallBuiltin/
+CallBuiltinLong's builtin-number operand) has no such macro - confirmed
+by reading each opcode's own doc comment ("Arg2 is the builtin
+number") rather than a machine-checkable annotation - so it's a small,
+hand-maintained override list (`_MANUAL_SEMANTICS` below) instead.
+Verify against a real bundle before trusting a newly added entry there,
+same discipline as everything else in this file.
+
 Usage:
     python3 tools/hermes/generate_opcode_tables.py <bytecode_version> <npm_version>
 
@@ -47,6 +57,16 @@ _OPCODE_RE = re.compile(r"^DEFINE_OPCODE_(\d)\((\w+)(?:,\s*(.*))?\)$")
 _JUMP_RE = re.compile(r"^DEFINE_JUMP_(\d)\((\w+)\)$")
 _SEMANTIC_RE = re.compile(r"^OPERAND_(STRING|FUNCTION|BIGINT)_ID\((\w+),\s*(\d+)\)$")
 _SEMANTIC_TAG = {"STRING": "string_id", "FUNCTION": "function_id", "BIGINT": "bigint_id"}
+
+# BytecodeList.def has no OPERAND_*_ID-style macro for builtin-number
+# operands - confirmed by reading each opcode's own doc comment ("Arg2
+# is the builtin number") rather than a machine-checkable annotation,
+# so this list is hand-maintained. 0-based operand index.
+_MANUAL_SEMANTICS: dict[str, dict[int, str]] = {
+    "GetBuiltinClosure": {1: "builtin_id"},
+    "CallBuiltin": {1: "builtin_id"},
+    "CallBuiltinLong": {1: "builtin_id"},
+}
 
 # DEFINE_JUMP_N(name) macro-expands (see BytecodeList.def itself) to a
 # short Addr8 form plus a "...Long" Addr32 form - the .def file's raw
@@ -104,7 +124,9 @@ def parse_opcodes(def_text: str) -> list[tuple[str, list[str], dict[int, str]]]:
     # opcode entry (a name can appear more than once only for the
     # Jmp/JmpLong pairs generated above, none of which take these
     # annotations, so a name->tags dict is unambiguous here).
-    semantics_by_name: dict[str, dict[int, str]] = {}
+    semantics_by_name: dict[str, dict[int, str]] = {
+        name: dict(tags) for name, tags in _MANUAL_SEMANTICS.items()
+    }
     for raw_line in def_text.splitlines():
         line = raw_line.strip()
         m = _SEMANTIC_RE.match(line)

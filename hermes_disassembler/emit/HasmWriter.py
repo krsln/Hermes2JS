@@ -80,6 +80,7 @@ from __future__ import annotations
 
 from hermes_disassembler.core.Exceptions import HermesBytecodeError
 from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
+from hermes_disassembler.format.Builtins import resolve_builtin
 from hermes_disassembler.format.ExceptionHandlerTable import resolve_exception_handlers
 from hermes_disassembler.format.FunctionHeader import FunctionHeaderEntry
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
@@ -96,9 +97,21 @@ SECTION_SEPARATOR = "==============="
 
 __all__ = ["format_instruction", "format_function", "format_bundle", "SECTION_SEPARATOR"]
 
+#: Semantics that replace the operand's raw type in the LABEL position
+#: (e.g. "string_id: 20" instead of "UInt32: 20") - these come from
+#: BytecodeList.def's own OPERAND_STRING_ID/_FUNCTION_ID/_BIGINT_ID
+#: macros, which hermes-dec's own disassembler recognizes the same way.
+#: "builtin_id" is NOT in this set: it's this package's own inferred
+#: tag (see tools/hermes/generate_opcode_tables.py's _MANUAL_SEMANTICS -
+#: BytecodeList.def has no macro for it), and real hermes-dec output
+#: keeps the raw type there ("UInt8: 57", not "builtin_id: 57") and
+#: only adds a comment - confirmed against real output for
+#: GetBuiltinClosure.
+_LABEL_SWAPPING_SEMANTICS = frozenset({"string_id", "function_id", "bigint_id"})
+
 
 def _format_operand(operand_type: str, value: int | float, semantic: str | None) -> str:
-    label = semantic if semantic is not None else operand_type
+    label = semantic if semantic in _LABEL_SWAPPING_SEMANTICS else operand_type
     return f"{label}: {value}"
 
 
@@ -144,6 +157,8 @@ def format_instruction(
             comment_parts.append(f"String: {string_value!r} ({kind})")
         elif tag == "function_id" and all_functions is not None:
             comment_parts.append(_format_function_reference(all_functions[value], table))
+        elif tag == "builtin_id":
+            comment_parts.append(f"Built-in function: [#{value} {resolve_builtin(version, value)}]")
         # function_id with all_functions=None, and bigint_id always: no comment yet, see module docstring
 
     if is_jump_instruction(instruction, version):

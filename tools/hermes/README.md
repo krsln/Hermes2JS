@@ -96,8 +96,13 @@ tools/hermes/
 ```shell
 open "/Applications/Python 3.13/Install Certificates.command"
 
+# hermes_disassembler/data/opcodes/<bytecode_version>.json
 python tools/hermes/generate_opcode_tables.py 96 0.14.1
 python tools/hermes/generate_opcode_tables.py 98 250829098.0.14
+
+# hermes_disassembler/data/builtins/<bytecode_version>.json
+python tools/hermes/generate_builtins_table.py 96 0.14.1
+python tools/hermes/generate_builtins_table.py 98 250829098.0.14
 
 
 ```

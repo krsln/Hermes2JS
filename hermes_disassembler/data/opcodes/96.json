@@ -778,7 +778,10 @@
         "Reg8",
         "UInt8",
         "UInt8"
-      ]
+      ],
+      "semantics": {
+        "1": "builtin_id"
+      }
     },
     {
       "name": "CallBuiltinLong",
@@ -786,14 +789,20 @@
         "Reg8",
         "UInt8",
         "UInt32"
-      ]
+      ],
+      "semantics": {
+        "1": "builtin_id"
+      }
     },
     {
       "name": "GetBuiltinClosure",
       "operands": [
         "Reg8",
         "UInt8"
-      ]
+      ],
+      "semantics": {
+        "1": "builtin_id"
+      }
     },
     {
       "name": "Ret",

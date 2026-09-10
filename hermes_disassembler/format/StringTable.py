@@ -143,6 +143,7 @@ class StringTable:
     entries: tuple[StringTableEntry, ...]
     storage: bytes
     string_kinds: tuple[StringKindRun, ...]
+    literal_value_buffer_offset: int  # absolute file offset of segment 7 (visitLiteralValueBuffer) - see LiteralBuffer.py
 
     def is_identifier(self, index: int) -> bool:
         """
@@ -232,12 +233,16 @@ class StringTable:
         storage_end = offset + header.string_storage_size
         _require(data, storage_end, "string storage")
         storage = data[offset:storage_end]
+        offset = _align_up(storage_end)
 
         entries = tuple(
             _resolve_entry(raw, overflow_entries) for raw in raw_small_entries
         )
 
-        return cls(entries=entries, storage=storage, string_kinds=string_kinds)
+        return cls(
+            entries=entries, storage=storage, string_kinds=string_kinds,
+            literal_value_buffer_offset=offset,
+        )
 
 
 def _require(data: bytes, needed_end: int, what: str) -> None:
