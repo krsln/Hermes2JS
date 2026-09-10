@@ -118,6 +118,8 @@ class FunctionHeaderEntry:
     is_overflowed: bool
     was_large_header: bool = False
     offset: Optional[int] = None  # byte offset of this function's bytecode
+    # byte offset of this function's "info section" (exception handlers / debug offsets) - see ExceptionHandlerTable.py; None if the function has neither
+    info_offset: Optional[int] = None
     bytecode_size_in_bytes: Optional[int] = None
     param_count: Optional[int] = None
     frame_size: Optional[int] = None

@@ -81,3 +81,12 @@ python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./ap
 python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py apps/testy/98/index.android.bundle apps/testy/98/output/output.hasm
 
 ```
+
+==> 00000009: <GetBuiltinClosure>: <Reg8: 3, UInt8: 57>  # Built-in function: [#57 spawnAsync]
+==> 00000009: <GetBuiltinClosure>: <Reg8: 3, UInt8: 57>
+
+==> 00000024: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 2, UInt16: 2, UInt16: 12808, UInt16: 23461>  # Object: {'id': 1, 'name': 'Ada'}
+==> 00000024: <NewObjectWithBuffer>: <Reg8: 3, UInt16: 2, UInt16: 2, UInt16: 12808, UInt16: 23461>
+
+==> 00000018: <NewArrayWithBuffer>: <Reg8: 4, UInt16: 5, UInt16: 5, UInt16: 17493>  # Array: [5, 3, 8, 1, 9]
+==> 00000018: <NewArrayWithBuffer>: <Reg8: 4, UInt16: 5, UInt16: 5, UInt16: 17493>

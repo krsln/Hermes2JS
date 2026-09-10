@@ -100,14 +100,26 @@ def format_instruction(
         function_offset: int,
         table: StringTable,
         version: int,
+        all_functions: tuple[FunctionHeaderEntry, ...] | None = None,
 ) -> str:
     """
     Format one instruction as a `==> <rel_offset>: <Name>: <operands>`
-    line, with a trailing `  # ...` comment for string references and
-    jump targets where applicable. `function_offset` is the owning
-    function's `FunctionHeaderEntry.offset` (needed to print the
-    instruction's offset relative to its function, matching hermes-dec's
-    `==> 00000000:`-from-zero convention - see module docstring).
+    line, with a trailing `  # ...` comment (one per commented operand,
+    each with its own `  # ` prefix - see module docstring) for string
+    references, function references, and jump targets where applicable.
+    `function_offset` is the owning function's `FunctionHeaderEntry.offset`
+    (needed to print the instruction's offset relative to its function,
+    matching hermes-dec's `==> 00000000:`-from-zero convention - see
+    module docstring).
+
+    `all_functions` - the full, overflow-resolved function list for this
+    bundle (e.g. from `format_bundle`, or
+    `FunctionHeaderOverflow.resolve_overflowed_headers`'s return value) -
+    is needed to resolve `function_id` operands (e.g. `CreateGenerator`,
+    `CreateClosure`) to their target function's own signature. Omit it
+    (the default) to format a single function in isolation - `function_id`
+    operands are then left without a comment rather than raising, since
+    the target function's info genuinely isn't available.
     """
     _name, operand_types, semantics = load_opcode_table(version)[instruction.opcode]
 
@@ -118,11 +130,14 @@ def format_instruction(
 
     comment_parts: list[str] = []
     for i, value in enumerate(instruction.operands):
-        if semantics.get(i) == "string_id":
+        tag = semantics.get(i)
+        if tag == "string_id":
             string_value = table.resolve(value)
             kind = "Identifier" if table.is_identifier(value) else "String"
             comment_parts.append(f"String: {string_value!r} ({kind})")
-        # function_id / bigint_id comments: not yet implemented, see module docstring
+        elif tag == "function_id" and all_functions is not None:
+            comment_parts.append(_format_function_reference(all_functions[value], table))
+        # function_id with all_functions=None, and bigint_id always: no comment yet, see module docstring
 
     if is_jump_instruction(instruction, version):
         absolute_target = resolve_jump_target(instruction, version)
@@ -131,9 +146,31 @@ def format_instruction(
 
     rel_offset = instruction.offset - function_offset
     line = f"==> {rel_offset:08x}: <{instruction.name}>: <{', '.join(operand_strs)}>"
-    if comment_parts:
-        line += f"  # {'; '.join(comment_parts)}"
+    for part in comment_parts:
+        line += f"  # {part}"
     return line
+
+
+def _format_function_reference(target: FunctionHeaderEntry, table: StringTable) -> str:
+    """
+    `# Function: [#N name of B bytes]: P params @ offset 0xHEX` for a
+    `function_id` operand's comment.
+
+    Known gap: hermes-dec shows a synthesized `?anon_<n>_<description>`
+    name for functions it considers anonymous (observed in real output,
+    e.g. `?anon_0_generatorWithLoopTest`), not the plain string-table
+    name this uses - that heuristic isn't reverse-engineered here (it
+    likely depends on debug info this package doesn't parse yet - see
+    `hermes_disassembler`'s package docstring). Index, byte size, param
+    count, and offset are the real, structurally-verified fields here;
+    only the cosmetic name may not match hermes-dec byte-for-byte for
+    an anonymous function.
+    """
+    name = table.resolve(target.function_name)
+    return (
+        f"Function: [#{target.index} {name} of {target.bytecode_size_in_bytes} bytes]: "
+        f"{target.param_count} params @ offset 0x{target.offset:08x}"
+    )
 
 
 def format_function(
@@ -141,13 +178,17 @@ def format_function(
         instructions: tuple[Instruction, ...],
         table: StringTable,
         version: int,
+        all_functions: tuple[FunctionHeaderEntry, ...] | None = None,
 ) -> str:
     """
     Format a complete function block matching hermes-dec's shape:
-    the `=> [Function #N "name" of B bytes]: ...` header line, a
-    `Bytecode listing:` label, then one `format_instruction()` line per
-    instruction - see module docstring for the exact fixture this
-    reproduces.
+    the `=> [Function #N "name" of B bytes]: ...` header line (plus an
+    `  [Exception handlers: ...]` line when `header.has_exception_handler`
+    - see module docstring's "Known gap" note on this, not yet
+    implemented), a `Bytecode listing:` label, then one
+    `format_instruction()` line per instruction - see module docstring
+    for the exact fixture this reproduces. `all_functions` is passed
+    through to `format_instruction` for `function_id` resolution.
     """
     name = table.resolve(header.function_name)
     header_line = (
@@ -158,7 +199,9 @@ def format_function(
     )
 
     lines = [header_line, "", "Bytecode listing:", ""]
-    lines.extend(format_instruction(i, header.offset, table, version) for i in instructions)
+    lines.extend(
+        format_instruction(i, header.offset, table, version, all_functions) for i in instructions
+    )
 
     return "\n".join(lines)
 
@@ -184,6 +227,6 @@ def format_bundle(data: bytes, bc_header: BytecodeFileHeader, table: StringTable
     blocks = []
     for entry in resolved:
         instructions = decode_function(data, entry.offset, entry.bytecode_size_in_bytes, version)
-        blocks.append(format_function(entry, instructions, table, version))
+        blocks.append(format_function(entry, instructions, table, version, resolved))
 
     return f"\n\n\n{SECTION_SEPARATOR}\n\n".join(blocks)

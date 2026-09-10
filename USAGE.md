@@ -22,8 +22,8 @@ file apps/testy/98/index.android.bundle
 # index.android.bundle: Hermes JavaScript bytecode, version 98
 ./vendor/run-hermes-dec.sh apps/testy/98/index.android.bundle
 
-python scripts/run-hermes-disassembler.py apps/testy/96/index.android.bundle apps/testy/96/output/custom.hasm
-python scripts/run-hermes-disassembler.py apps/testy/98/index.android.bundle apps/testy/98/output/custom.hasm
+python scripts/run-hermes-disassembler.py apps/testy/96/index.android.bundle apps/testy/96/output/disassembler-output.hasm
+python scripts/run-hermes-disassembler.py apps/testy/98/index.android.bundle apps/testy/98/output/disassembler-output.hasm
 ```
 
 ## Step—2 Split
@@ -36,10 +36,10 @@ python scripts/split_output_file.py -i <input.hasm> -o <output_dir> [options]
 
 # Basic split
 python scripts/split_output_file.py -i apps/testy/96/output/output.hasm -o apps/testy/96/output/sections
-python scripts/split_output_file.py -i apps/testy/96/output/custom.hasm -o apps/testy/96/output/sections
+python scripts/split_output_file.py -i apps/testy/96/output/disassembler-output.hasm -o apps/testy/96/output/sections
 # Total sections: 15248
 python scripts/split_output_file.py -i apps/testy/98/output/output.hasm -o apps/testy/98/output/sections
-python scripts/split_output_file.py -i apps/testy/98/output/custom.hasm -o apps/testy/98/output/sections
+python scripts/split_output_file.py -i apps/testy/98/output/disassembler-output.hasm -o apps/testy/98/output/sections
 # Total sections: 14268
 
 # With manifest + INFO logging
