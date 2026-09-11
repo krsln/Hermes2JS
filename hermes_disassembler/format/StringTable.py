@@ -144,6 +144,8 @@ class StringTable:
     storage: bytes
     string_kinds: tuple[StringKindRun, ...]
     literal_value_buffer_offset: int  # absolute file offset of segment 7 (visitLiteralValueBuffer) - see LiteralBuffer.py
+    object_key_buffer_offset: int  # absolute file offset of segment 8 (visitObjectKeyBuffer) - see ObjectLiteral.py
+    object_value_or_shape_table_offset: int  # absolute file offset of segment 9 - v96: object value buffer; v98: object shape table (see ObjectLiteral.py for which)
 
     def is_identifier(self, index: int) -> bool:
         """
@@ -234,6 +236,23 @@ class StringTable:
         _require(data, storage_end, "string storage")
         storage = data[offset:storage_end]
         offset = _align_up(storage_end)
+        literal_value_buffer_offset = offset
+
+        # 7. literal value buffer (array_buffer_size on LAYOUT_V96,
+        # literal_value_buffer_size on LAYOUT_V98 - same segment, renamed
+        # field, see BytecodeFileHeader.py)
+        literal_value_buffer_size = (
+            header.array_buffer_size
+            if header.array_buffer_size is not None
+            else header.literal_value_buffer_size
+        )
+        offset = _align_up(offset + literal_value_buffer_size)
+        object_key_buffer_offset = offset
+
+        # 8. object key buffer (obj_key_buffer_size - present, same field
+        # name, on both layouts)
+        offset = _align_up(offset + header.obj_key_buffer_size)
+        object_value_or_shape_table_offset = offset
 
         entries = tuple(
             _resolve_entry(raw, overflow_entries) for raw in raw_small_entries
@@ -241,7 +260,9 @@ class StringTable:
 
         return cls(
             entries=entries, storage=storage, string_kinds=string_kinds,
-            literal_value_buffer_offset=offset,
+            literal_value_buffer_offset=literal_value_buffer_offset,
+            object_key_buffer_offset=object_key_buffer_offset,
+            object_value_or_shape_table_offset=object_value_or_shape_table_offset,
         )
 
 

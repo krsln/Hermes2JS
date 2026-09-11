@@ -21,16 +21,18 @@ from pathlib import Path
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-FIXTURE = REPO_ROOT / "apps" / "demo" / "fixtures" / "96" / "sections" / "section_15042.hasm"
+FIXTURE = REPO_ROOT / "apps" / "demo" / "fixtures" / "96" / "sections" / "function_15042_runAllTests.hasm"
 
 
 @pytest.fixture(scope="module")
 def split_output_file():
-    scripts_dir = str(REPO_ROOT / "scripts")
-    if scripts_dir not in sys.path:
-        sys.path.insert(0, scripts_dir)
-    import split_output_file as module  # noqa: PLC0415
-    return module
+    # scripts_dir = str(REPO_ROOT / "scripts")
+    # if scripts_dir not in sys.path:
+    #     sys.path.insert(0, scripts_dir)
+    # import split_output_file as split_output_file  # noqa: PLC0415
+    import scripts.split_output_file as split_output_file
+
+    return split_output_file
 
 
 def test_matches_real_hermes_dec_prefixed_line(split_output_file):

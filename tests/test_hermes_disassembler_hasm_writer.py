@@ -59,7 +59,7 @@ def test_function_header_line_format_96():
 
 def test_string_id_operand_shows_semantic_label_and_comment_96():
     data, clear_fn, instructions, table = _load_clear("96", 9)
-    line = format_instruction(instructions[1], clear_fn.offset, table, 96)  # TryGetById ... "Map"
+    line = format_instruction(data, instructions[1], clear_fn.offset, table, 96)  # TryGetById ... "Map"
     assert line == (
         "==> 00000002: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 20>"
         "  # String: 'Map' (Identifier)"
@@ -68,7 +68,7 @@ def test_string_id_operand_shows_semantic_label_and_comment_96():
 
 def test_plain_instruction_has_no_comment_96():
     data, clear_fn, instructions, table = _load_clear("96", 9)
-    line = format_instruction(instructions[0], clear_fn.offset, table, 96)  # GetGlobalObject
+    line = format_instruction(data, instructions[0], clear_fn.offset, table, 96)  # GetGlobalObject
     assert line == "==> 00000000: <GetGlobalObject>: <Reg8: 0>"
     assert "#" not in line
 
@@ -86,7 +86,7 @@ def test_emitted_text_parses_with_real_hermes_decompiler(version: str, expected_
 
     parsed_count = 0
     for instruction in instructions:
-        line = format_instruction(instruction, clear_fn.offset, table, int(version))
+        line = format_instruction(data, instruction, clear_fn.offset, table, int(version))
         entry = OpcodeParser.parse(line)
         assert entry is not None, f"real OpcodeParser rejected our emitted line: {line!r}"
         assert entry.opcode == instruction.name
@@ -99,7 +99,7 @@ def test_string_comment_content_matches_resolved_string():
     """The comment's resolved string content must match StringTable.resolve() exactly - not just be present."""
     data, clear_fn, instructions, table = _load_clear("96", 9)
     get_by_id_short = instructions[2]  # GetByIdShort ... "prototype"
-    line = format_instruction(get_by_id_short, clear_fn.offset, table, 96)
+    line = format_instruction(data, get_by_id_short, clear_fn.offset, table, 96)
     entry = OpcodeParser.parse(line)
     assert "'prototype'" in entry.comment
     assert table.resolve(206) == "prototype"
@@ -114,7 +114,7 @@ def test_multiple_comments_each_get_their_own_prefix_not_joined():
     it end-to-end.
     """
     data, clear_fn, instructions, table = _load_clear("96", 9)
-    single_comment_line = format_instruction(instructions[1], clear_fn.offset, table, 96)  # TryGetById
+    single_comment_line = format_instruction(data, instructions[1], clear_fn.offset, table, 96)  # TryGetById
     assert single_comment_line.count("  # ") == 1
 
     comment_parts = ["String: 'a' (String)", "String: 'b' (Identifier)"]
@@ -144,10 +144,10 @@ def test_function_id_operand_resolves_target_signature():
             break
     assert target_instruction is not None, "no CreateClosure-family instruction found in first 2000 functions"
 
-    without_functions = format_instruction(target_instruction, owner_offset, table, 96)
+    without_functions = format_instruction(data, target_instruction, owner_offset, table, 96)
     assert "# Function:" not in without_functions
 
-    with_functions = format_instruction(target_instruction, owner_offset, table, 96, resolved)
+    with_functions = format_instruction(data, target_instruction, owner_offset, table, 96, resolved)
     assert "# Function: [#" in with_functions
     target_index = target_instruction.operands[-1]
     target_entry = resolved[target_index]
@@ -180,12 +180,13 @@ def test_function_without_exception_handler_has_no_extra_line():
 
 def _split_output_file_module():
     """Import the real scripts/split_output_file.py (not part of any package - script directory added to sys.path)."""
-    import sys as _sys
+    import scripts.split_output_file as split_output_file
+    # import sys as _sys
 
-    scripts_dir = str(Path(__file__).resolve().parent.parent / "scripts")
-    if scripts_dir not in _sys.path:
-        _sys.path.insert(0, scripts_dir)
-    import split_output_file  # noqa: PLC0415
+    # scripts_dir = str(Path(__file__).resolve().parent.parent / "scripts")
+    # if scripts_dir not in _sys.path:
+    #     _sys.path.insert(0, scripts_dir)
+    # import split_output_file  # noqa: PLC0415
     return split_output_file
 
 
