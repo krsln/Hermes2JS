@@ -34,3 +34,4 @@ decompile:
 	PYTHONPATH=. python scripts/decompile_sections.py \
 		-i apps/demo/fixtures/$(VERSION)/sections \
 		-o apps/demo/fixtures/$(VERSION)/results
+

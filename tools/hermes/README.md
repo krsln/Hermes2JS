@@ -52,6 +52,7 @@ chmod +x tools/hermes/dump_bytecode.sh
     apps/testy/98/index.android.bundle \
     apps/testy/98/output/hermesc-output.hdump \
     --pretty
+
 ```
 
 `dump_bytecode.sh` validates the requested version against `versions.json` and checks the compiler is installed before running —
@@ -92,6 +93,8 @@ tools/hermes/
     ├── 96/node_modules/hermes-compiler/...
     └── 98/node_modules/hermes-compiler/...
 ```
+
+# Generate Disassembler Data
 
 ```shell
 open "/Applications/Python 3.13/Install Certificates.command"
