@@ -29,9 +29,25 @@ own "number of static elements" operand) is consumed - this module
 takes that count as a parameter rather than reading a terminator, since
 the buffer has none.
 
-Validated against a real NewArrayWithBuffer instruction: decoding
-apps/testy/.../... TODO fill in once cross-checked against a real
-bundle - see tests/test_hermes_disassembler_literal_buffer.py.
+Validated against apps/testy/96 and apps/testy/98: cross-checked
+byte-for-byte against `tools/hermes/dump_bytecode.sh`'s own
+"Array Buffer:" section (which prints the WHOLE buffer's decoded
+values as one continuous sequential walk, not per-array) - decoding
+from byte 0 with this module's tag logic reproduces that exact value
+sequence in order (String(1914), Integer(1), Integer(2), Integer(578),
+Integer(1478), ... - confirmed by hand against the raw hex too). At
+scale: every `NewArrayWithBuffer`/`NewArrayWithBufferLong` instruction
+in both bundles (1815 + 1776 = 3591 total), decoded via its own
+`buf_idx` operand: 100% succeed in bytecode 98; bytecode 96 has 18
+(~1%) that resolve a `ShortString`/`LongString` tag to an out-of-range
+string index - not yet root-caused (a guess: possible interaction with
+buffer deduplication across arrays sharing encoded suffixes, per a
+"ConsecutiveStringStorage" dedup mechanism mentioned in facebook/hermes's
+own commit history, landing a `buf_idx` a few bytes off from a true tag
+boundary in these specific cases - unconfirmed). `decode_literal_buffer`
+raises for these rather than returning wrong data; see `HasmWriter.py`,
+which catches that and falls back to an `<unresolved: ...>` comment
+instead of aborting the whole bundle.
 
 Known gap: object literal buffers (`NewObjectWithBuffer`'s key/value
 buffers) are NOT handled here - v98 uses a different, not yet

@@ -85,6 +85,7 @@ from hermes_disassembler.format.ExceptionHandlerTable import resolve_exception_h
 from hermes_disassembler.format.FunctionHeader import FunctionHeaderEntry
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
 from hermes_disassembler.format.JumpTarget import is_jump_instruction, resolve_jump_target
+from hermes_disassembler.format.LiteralBuffer import decode_literal_buffer
 from hermes_disassembler.format.Opcode import Instruction, decode_function, load_opcode_table
 from hermes_disassembler.format.StringTable import StringTable
 
@@ -115,7 +116,17 @@ def _format_operand(operand_type: str, value: int | float, semantic: str | None)
     return f"{label}: {value}"
 
 
+#: opcode name -> 0-based operand index of (count, buf_idx) for array
+#: literal instructions - not a BytecodeList.def-tagged semantic (no
+#: OPERAND_*_ID macro covers this), so hand-maintained like builtin_id.
+_ARRAY_BUFFER_OPCODES = {
+    "NewArrayWithBuffer": (2, 3),
+    "NewArrayWithBufferLong": (2, 3),
+}
+
+
 def format_instruction(
+        data: bytes,
         instruction: Instruction,
         function_offset: int,
         table: StringTable,
@@ -126,7 +137,9 @@ def format_instruction(
     Format one instruction as a `==> <rel_offset>: <Name>: <operands>`
     line, with a trailing `  # ...` comment (one per commented operand,
     each with its own `  # ` prefix - see module docstring) for string
-    references, function references, and jump targets where applicable.
+    references, function references, builtin references, array literal
+    contents, and jump targets where applicable. `data` is the full
+    bundle bytes (needed to resolve array literal contents).
     `function_offset` is the owning function's `FunctionHeaderEntry.offset`
     (needed to print the instruction's offset relative to its function,
     matching hermes-dec's `==> 00000000:`-from-zero convention - see
@@ -161,6 +174,9 @@ def format_instruction(
             comment_parts.append(f"Built-in function: [#{value} {resolve_builtin(version, value)}]")
         # function_id with all_functions=None, and bigint_id always: no comment yet, see module docstring
 
+    if instruction.name in _ARRAY_BUFFER_OPCODES:
+        comment_parts.append(_format_array_buffer_comment(data, table, instruction))
+
     if is_jump_instruction(instruction, version):
         absolute_target = resolve_jump_target(instruction, version)
         relative_target = absolute_target - function_offset
@@ -171,6 +187,26 @@ def format_instruction(
     for part in comment_parts:
         line += f"  # {part}"
     return line
+
+
+def _format_array_buffer_comment(data: bytes, table: StringTable, instruction: Instruction) -> str:
+    """
+    `# Array: [1, 0, 2]` for a `NewArrayWithBuffer`/`NewArrayWithBufferLong`
+    instruction - decodes its literal buffer contents (see
+    `LiteralBuffer.decode_literal_buffer`). Falls back to a
+    `<unresolved: ...>` placeholder instead of raising for the small
+    known-bad slice of bytecode-96 array instructions (see
+    `LiteralBuffer.py`'s module docstring), so one bad array doesn't
+    abort formatting the rest of the bundle.
+    """
+    count_index, buf_idx_index = _ARRAY_BUFFER_OPCODES[instruction.name]
+    count = instruction.operands[count_index]
+    buf_idx = instruction.operands[buf_idx_index]
+    try:
+        values = decode_literal_buffer(data, table.literal_value_buffer_offset + buf_idx, count, table)
+    except (HermesBytecodeError, ValueError, IndexError) as exc:
+        return f"Array: <unresolved: {exc}>"
+    return f"Array: {list(values)!r}"
 
 
 def _format_function_reference(target: FunctionHeaderEntry, table: StringTable) -> str:
@@ -227,7 +263,7 @@ def format_function(
         lines.append(_format_exception_handlers_line(data, header))
     lines += ["", "Bytecode listing:", ""]
     lines.extend(
-        format_instruction(i, header.offset, table, version, all_functions) for i in instructions
+        format_instruction(data, i, header.offset, table, version, all_functions) for i in instructions
     )
 
     return "\n".join(lines)
