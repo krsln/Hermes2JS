@@ -1,5 +1,6 @@
 
-=> [Function #9521 "callGeneratorTests" of 218 bytes]: 1 params, frame size=17, strict=0, exc handler=0, debug info=0  @ offset 0x00200a57
+=> [Function #9521 "callGeneratorTests" of 218 bytes]: 1 params, frame size=17, strict=1, exc handler=1, debug info=0  @ offset 0x00200a57
+  [Exception handlers: [start=0x37, end=0x49, target=0x49] [start=0x70, end=0x82, target=0x82] ]
 
 Bytecode listing:
 

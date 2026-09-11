@@ -1,5 +1,5 @@
 
-=> [Function #9448 "doWhileTest" of 78 bytes]: 1 params, frame size=18, strict=0, exc handler=0, debug info=0  @ offset 0x001fdca9
+=> [Function #9448 "doWhileTest" of 78 bytes]: 1 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x001fdca9
 
 Bytecode listing:
 

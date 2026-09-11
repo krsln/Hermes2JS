@@ -1,5 +1,5 @@
 
-=> [Function #9500 "nestedTemplateTest" of 159 bytes]: 3 params, frame size=19, strict=0, exc handler=0, debug info=0  @ offset 0x001fffe2
+=> [Function #9500 "nestedTemplateTest" of 159 bytes]: 3 params, frame size=19, strict=1, exc handler=0, debug info=0  @ offset 0x001fffe2
 
 Bytecode listing:
 

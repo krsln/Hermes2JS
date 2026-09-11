@@ -1,5 +1,5 @@
 
-=> [Function #9460 "ternaryTest" of 137 bytes]: 2 params, frame size=16, strict=0, exc handler=0, debug info=0  @ offset 0x001fe3df
+=> [Function #9460 "ternaryTest" of 137 bytes]: 2 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x001fe3df
 
 Bytecode listing:
 

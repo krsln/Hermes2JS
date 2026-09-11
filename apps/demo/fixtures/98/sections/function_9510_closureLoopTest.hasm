@@ -1,5 +1,6 @@
 
-=> [Function #9510 "closureLoopTest" of 134 bytes]: 1 params, frame size=17, strict=0, exc handler=0, debug info=0  @ offset 0x002006b2
+=> [Function #9510 "closureLoopTest" of 134 bytes]: 1 params, frame size=17, strict=1, exc handler=1, debug info=0  @ offset 0x002006b2
+  [Exception handlers: [start=0x53, end=0x69, target=0x69] ]
 
 Bytecode listing:
 

@@ -1,5 +1,6 @@
 
-=> [Function #9487 "nestedArrayDestructureTest" of 552 bytes]: 1 params, frame size=31, strict=0, exc handler=0, debug info=0  @ offset 0x001ff367
+=> [Function #9487 "nestedArrayDestructureTest" of 552 bytes]: 1 params, frame size=31, strict=1, exc handler=1, debug info=0  @ offset 0x001ff367
+  [Exception handlers: [start=0x62, end=0xa8, target=0x215] [start=0xdd, end=0x11b, target=0x20a] [start=0x15b, end=0x15d, target=0x1f6] [start=0x18f, end=0x196, target=0x196] [start=0x1bd, end=0x1c1, target=0x1c7] [start=0x203, end=0x20a, target=0x20a] ]
 
 Bytecode listing:
 

@@ -1,5 +1,5 @@
 
-=> [Function #9447 "whileTest" of 122 bytes]: 1 params, frame size=22, strict=0, exc handler=0, debug info=0  @ offset 0x001fdc2f
+=> [Function #9447 "whileTest" of 122 bytes]: 1 params, frame size=22, strict=1, exc handler=0, debug info=0  @ offset 0x001fdc2f
 
 Bytecode listing:
 

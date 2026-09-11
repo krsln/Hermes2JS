@@ -1,5 +1,6 @@
 
-=> [Function #9496 "setTest" of 215 bytes]: 1 params, frame size=19, strict=0, exc handler=0, debug info=0  @ offset 0x001ffd4d
+=> [Function #9496 "setTest" of 215 bytes]: 1 params, frame size=19, strict=1, exc handler=1, debug info=0  @ offset 0x001ffd4d
+  [Exception handlers: [start=0x88, end=0x9a, target=0x9a] ]
 
 Bytecode listing:
 
@@ -45,7 +46,7 @@ Bytecode listing:
 ==> 000000a5: <LoadConstZero>: <Reg8: 8>
 ==> 000000a7: <Mov>: <Reg8: 10, Reg8: 4>
 ==> 000000aa: <Mov>: <Reg8: 9, Reg8: 3>
-==> 000000ad: <CallBuiltin>: <Reg8: 2, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+==> 000000ad: <CallBuiltin>: <Reg8: 2, UInt8: 48, UInt8: 4>  # Built-in function: [#48 HermesBuiltin_arraySpread]
 ==> 000000b1: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
 ==> 000000b7: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
 ==> 000000bc: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>

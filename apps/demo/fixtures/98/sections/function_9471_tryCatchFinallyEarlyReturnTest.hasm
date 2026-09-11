@@ -1,5 +1,6 @@
 
-=> [Function #9471 "tryCatchFinallyEarlyReturnTest" of 103 bytes]: 1 params, frame size=13, strict=0, exc handler=0, debug info=0  @ offset 0x001feaeb
+=> [Function #9471 "tryCatchFinallyEarlyReturnTest" of 103 bytes]: 1 params, frame size=13, strict=1, exc handler=1, debug info=0  @ offset 0x001feaeb
+  [Exception handlers: [start=0x0, end=0x31, target=0x31] [start=0x0, end=0x33, target=0x4d] ]
 
 Bytecode listing:
 

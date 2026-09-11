@@ -1,5 +1,5 @@
 
-=> [Function #9454 "ifTest" of 241 bytes]: 2 params, frame size=16, strict=0, exc handler=0, debug info=0  @ offset 0x001fdffc
+=> [Function #9454 "ifTest" of 241 bytes]: 2 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x001fdffc
 
 Bytecode listing:
 

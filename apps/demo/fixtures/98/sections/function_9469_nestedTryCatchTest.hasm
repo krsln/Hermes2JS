@@ -1,5 +1,6 @@
 
-=> [Function #9469 "nestedTryCatchTest" of 204 bytes]: 1 params, frame size=14, strict=0, exc handler=0, debug info=0  @ offset 0x001fe928
+=> [Function #9469 "nestedTryCatchTest" of 204 bytes]: 1 params, frame size=14, strict=1, exc handler=1, debug info=0  @ offset 0x001fe928
+  [Exception handlers: [start=0x2a, end=0x59, target=0x59] [start=0x16, end=0x8e, target=0x8e] ]
 
 Bytecode listing:
 

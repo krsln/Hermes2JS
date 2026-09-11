@@ -1,5 +1,6 @@
 
-=> [Function #9463 "tryCatchTest" of 215 bytes]: 1 params, frame size=14, strict=0, exc handler=0, debug info=0  @ offset 0x001fe5e5
+=> [Function #9463 "tryCatchTest" of 215 bytes]: 1 params, frame size=14, strict=1, exc handler=1, debug info=0  @ offset 0x001fe5e5
+  [Exception handlers: [start=0x16, end=0x45, target=0x45] [start=0x16, end=0x6b, target=0xab] ]
 
 Bytecode listing:
 

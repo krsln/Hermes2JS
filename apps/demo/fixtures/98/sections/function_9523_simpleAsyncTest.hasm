@@ -1,5 +1,5 @@
 
-=> [Function #9523 "simpleAsyncTest" of 32 bytes]: 1 params, frame size=16, strict=0, exc handler=0, debug info=0  @ offset 0x00200b49
+=> [Function #9523 "simpleAsyncTest" of 32 bytes]: 1 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x00200b49
 
 Bytecode listing:
 

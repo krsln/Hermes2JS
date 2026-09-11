@@ -1,5 +1,6 @@
 
-=> [Function #9468 "tryLoopMultiReturnTest" of 140 bytes]: 2 params, frame size=19, strict=0, exc handler=0, debug info=0  @ offset 0x001fe89c
+=> [Function #9468 "tryLoopMultiReturnTest" of 140 bytes]: 2 params, frame size=19, strict=1, exc handler=1, debug info=0  @ offset 0x001fe89c
+  [Exception handlers: [start=0x1b, end=0x6a, target=0x72] ]
 
 Bytecode listing:
 

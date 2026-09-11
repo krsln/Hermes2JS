@@ -1,5 +1,5 @@
 
-=> [Function #9529 "Animal" of 52 bytes]: 3 params, frame size=13, strict=0, exc handler=0, debug info=0  @ offset 0x00200d08
+=> [Function #9529 "Animal" of 52 bytes]: 3 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x00200d08
 
 Bytecode listing:
 

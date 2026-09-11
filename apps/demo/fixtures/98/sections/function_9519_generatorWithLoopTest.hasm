@@ -1,5 +1,5 @@
 
-=> [Function #9519 "generatorWithLoopTest" of 27 bytes]: 2 params, frame size=3, strict=0, exc handler=0, debug info=0  @ offset 0x00200a24
+=> [Function #9519 "generatorWithLoopTest" of 27 bytes]: 2 params, frame size=3, strict=1, exc handler=0, debug info=0  @ offset 0x00200a24
 
 Bytecode listing:
 

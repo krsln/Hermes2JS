@@ -1,5 +1,5 @@
 
-=> [Function #9513 "callDefaultParameterTests" of 190 bytes]: 1 params, frame size=21, strict=0, exc handler=0, debug info=0  @ offset 0x002007ca
+=> [Function #9513 "callDefaultParameterTests" of 190 bytes]: 1 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x002007ca
 
 Bytecode listing:
 

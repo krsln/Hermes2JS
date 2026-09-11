@@ -1,5 +1,6 @@
 
-=> [Function #9472 "tryFinallyLoopBreakTest" of 162 bytes]: 2 params, frame size=20, strict=0, exc handler=0, debug info=0  @ offset 0x001feb52
+=> [Function #9472 "tryFinallyLoopBreakTest" of 162 bytes]: 2 params, frame size=20, strict=1, exc handler=1, debug info=0  @ offset 0x001feb52
+  [Exception handlers: [start=0x1a, end=0x60, target=0x8a] ]
 
 Bytecode listing:
 

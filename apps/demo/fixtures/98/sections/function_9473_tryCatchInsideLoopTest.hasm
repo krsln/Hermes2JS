@@ -1,5 +1,6 @@
 
-=> [Function #9473 "tryCatchInsideLoopTest" of 190 bytes]: 2 params, frame size=26, strict=0, exc handler=0, debug info=0  @ offset 0x001febf4
+=> [Function #9473 "tryCatchInsideLoopTest" of 190 bytes]: 2 params, frame size=26, strict=1, exc handler=1, debug info=0  @ offset 0x001febf4
+  [Exception handlers: [start=0x42, end=0x7e, target=0x7e] ]
 
 Bytecode listing:
 

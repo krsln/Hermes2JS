@@ -1,5 +1,5 @@
 
-=> [Function #9498 "callMapSetTests" of 195 bytes]: 1 params, frame size=18, strict=0, exc handler=0, debug info=0  @ offset 0x001ffeac
+=> [Function #9498 "callMapSetTests" of 195 bytes]: 1 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x001ffeac
 
 Bytecode listing:
 

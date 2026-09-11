@@ -1,5 +1,6 @@
 
-=> [Function #9478 "switchInsideTryTest" of 199 bytes]: 2 params, frame size=13, strict=0, exc handler=0, debug info=0  @ offset 0x001fef0b
+=> [Function #9478 "switchInsideTryTest" of 199 bytes]: 2 params, frame size=13, strict=1, exc handler=1, debug info=0  @ offset 0x001fef0b
+  [Exception handlers: [start=0x16, end=0x6d, target=0x6d] [start=0x16, end=0x83, target=0xaf] ]
 
 Bytecode listing:
 

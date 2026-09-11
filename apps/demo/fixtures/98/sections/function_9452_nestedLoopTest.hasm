@@ -1,5 +1,5 @@
 
-=> [Function #9452 "nestedLoopTest" of 132 bytes]: 1 params, frame size=24, strict=0, exc handler=0, debug info=0  @ offset 0x001fde87
+=> [Function #9452 "nestedLoopTest" of 132 bytes]: 1 params, frame size=24, strict=1, exc handler=0, debug info=0  @ offset 0x001fde87
 
 Bytecode listing:
 

@@ -1,5 +1,5 @@
 
-=> [Function #9458 "labeledBlockBreakTest" of 109 bytes]: 1 params, frame size=15, strict=0, exc handler=0, debug info=0  @ offset 0x001fe2de
+=> [Function #9458 "labeledBlockBreakTest" of 109 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x001fe2de
 
 Bytecode listing:
 

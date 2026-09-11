@@ -1,5 +1,5 @@
 
-=> [Function #9518 "simpleGeneratorTest" of 20 bytes]: 1 params, frame size=2, strict=0, exc handler=0, debug info=0  @ offset 0x00200a10
+=> [Function #9518 "simpleGeneratorTest" of 20 bytes]: 1 params, frame size=2, strict=1, exc handler=0, debug info=0  @ offset 0x00200a10
 
 Bytecode listing:
 

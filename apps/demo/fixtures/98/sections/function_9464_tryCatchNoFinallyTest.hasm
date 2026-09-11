@@ -1,5 +1,6 @@
 
-=> [Function #9464 "tryCatchNoFinallyTest" of 131 bytes]: 1 params, frame size=14, strict=0, exc handler=0, debug info=0  @ offset 0x001fe6bc
+=> [Function #9464 "tryCatchNoFinallyTest" of 131 bytes]: 1 params, frame size=14, strict=1, exc handler=1, debug info=0  @ offset 0x001fe6bc
+  [Exception handlers: [start=0x16, end=0x45, target=0x45] ]
 
 Bytecode listing:
 

@@ -1,5 +1,5 @@
 
-=> [Function #9541 "instanceCount" of 40 bytes]: 1 params, frame size=13, strict=0, exc handler=0, debug info=0  @ offset 0x002011a2
+=> [Function #9541 "instanceCount" of 40 bytes]: 1 params, frame size=13, strict=1, exc handler=0, debug info=0  @ offset 0x002011a2
 
 Bytecode listing:
 

@@ -1,5 +1,6 @@
 
-=> [Function #9477 "loopBreakCrossesTryBoundaryTest" of 244 bytes]: 2 params, frame size=22, strict=0, exc handler=0, debug info=0  @ offset 0x001fee17
+=> [Function #9477 "loopBreakCrossesTryBoundaryTest" of 244 bytes]: 2 params, frame size=22, strict=1, exc handler=1, debug info=0  @ offset 0x001fee17
+  [Exception handlers: [start=0x3e, end=0x63, target=0xe0] [start=0x75, end=0x85, target=0xe0] [start=0xa4, end=0xb8, target=0xe0] ]
 
 Bytecode listing:
 

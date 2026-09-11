@@ -1,5 +1,5 @@
 
-=> [Function #9524 "asyncTryCatchTest" of 32 bytes]: 1 params, frame size=16, strict=0, exc handler=0, debug info=0  @ offset 0x00200b69
+=> [Function #9524 "asyncTryCatchTest" of 32 bytes]: 1 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x00200b69
 
 Bytecode listing:
 

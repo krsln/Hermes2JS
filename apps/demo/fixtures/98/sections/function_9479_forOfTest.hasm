@@ -1,5 +1,6 @@
 
-=> [Function #9479 "forOfTest" of 96 bytes]: 1 params, frame size=16, strict=0, exc handler=0, debug info=0  @ offset 0x001fefd2
+=> [Function #9479 "forOfTest" of 96 bytes]: 1 params, frame size=16, strict=1, exc handler=1, debug info=0  @ offset 0x001fefd2
+  [Exception handlers: [start=0x31, end=0x43, target=0x43] ]
 
 Bytecode listing:
 

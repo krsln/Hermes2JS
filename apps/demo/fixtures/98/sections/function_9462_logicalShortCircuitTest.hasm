@@ -1,5 +1,5 @@
 
-=> [Function #9462 "logicalShortCircuitTest" of 215 bytes]: 3 params, frame size=21, strict=0, exc handler=0, debug info=0  @ offset 0x001fe50e
+=> [Function #9462 "logicalShortCircuitTest" of 215 bytes]: 3 params, frame size=21, strict=1, exc handler=0, debug info=0  @ offset 0x001fe50e
 
 Bytecode listing:
 

@@ -1,5 +1,5 @@
 
-=> [Function #9457 "labeledContinueTest" of 141 bytes]: 1 params, frame size=23, strict=0, exc handler=0, debug info=0  @ offset 0x001fe251
+=> [Function #9457 "labeledContinueTest" of 141 bytes]: 1 params, frame size=23, strict=1, exc handler=0, debug info=0  @ offset 0x001fe251
 
 Bytecode listing:
 

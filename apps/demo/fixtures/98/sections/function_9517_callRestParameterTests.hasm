@@ -1,5 +1,5 @@
 
-=> [Function #9517 "callRestParameterTests" of 119 bytes]: 1 params, frame size=24, strict=0, exc handler=0, debug info=0  @ offset 0x00200999
+=> [Function #9517 "callRestParameterTests" of 119 bytes]: 1 params, frame size=24, strict=1, exc handler=0, debug info=0  @ offset 0x00200999
 
 Bytecode listing:
 

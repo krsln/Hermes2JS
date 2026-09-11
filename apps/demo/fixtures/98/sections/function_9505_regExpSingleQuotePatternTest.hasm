@@ -1,5 +1,5 @@
 
-=> [Function #9505 "regExpSingleQuotePatternTest" of 139 bytes]: 2 params, frame size=18, strict=0, exc handler=0, debug info=0  @ offset 0x0020024b
+=> [Function #9505 "regExpSingleQuotePatternTest" of 139 bytes]: 2 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x0020024b
 
 Bytecode listing:
 

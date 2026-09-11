@@ -1,5 +1,6 @@
 
-=> [Function #9495 "mapTest" of 355 bytes]: 1 params, frame size=23, strict=0, exc handler=0, debug info=0  @ offset 0x001ffbea
+=> [Function #9495 "mapTest" of 355 bytes]: 1 params, frame size=23, strict=1, exc handler=1, debug info=0  @ offset 0x001ffbea
+  [Exception handlers: [start=0xc8, end=0x127, target=0x127] ]
 
 Bytecode listing:
 

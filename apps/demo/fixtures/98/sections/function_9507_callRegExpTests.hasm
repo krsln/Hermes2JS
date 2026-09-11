@@ -1,5 +1,5 @@
 
-=> [Function #9507 "callRegExpTests" of 583 bytes]: 1 params, frame size=18, strict=0, exc handler=0, debug info=0  @ offset 0x0020034e
+=> [Function #9507 "callRegExpTests" of 583 bytes]: 1 params, frame size=18, strict=1, exc handler=0, debug info=0  @ offset 0x0020034e
 
 Bytecode listing:
 

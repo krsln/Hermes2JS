@@ -1,5 +1,5 @@
 
-=> [Function #9459 "tripleNestedLabeledTest" of 148 bytes]: 1 params, frame size=29, strict=0, exc handler=0, debug info=0  @ offset 0x001fe34b
+=> [Function #9459 "tripleNestedLabeledTest" of 148 bytes]: 1 params, frame size=29, strict=1, exc handler=0, debug info=0  @ offset 0x001fe34b
 
 Bytecode listing:
 

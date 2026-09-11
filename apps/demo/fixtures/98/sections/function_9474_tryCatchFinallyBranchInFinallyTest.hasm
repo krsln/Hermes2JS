@@ -1,5 +1,6 @@
 
-=> [Function #9474 "tryCatchFinallyBranchInFinallyTest" of 154 bytes]: 2 params, frame size=14, strict=0, exc handler=0, debug info=0  @ offset 0x001fecb2
+=> [Function #9474 "tryCatchFinallyBranchInFinallyTest" of 154 bytes]: 2 params, frame size=14, strict=1, exc handler=1, debug info=0  @ offset 0x001fecb2
+  [Exception handlers: [start=0x3, end=0x34, target=0x34] [start=0x3, end=0x4c, target=0x72] ]
 
 Bytecode listing:
 

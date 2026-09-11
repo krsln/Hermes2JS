@@ -1,5 +1,5 @@
 
-=> [Function #9533 "makeSound" of 85 bytes]: 1 params, frame size=17, strict=0, exc handler=0, debug info=0  @ offset 0x00200dfc
+=> [Function #9533 "makeSound" of 85 bytes]: 1 params, frame size=17, strict=1, exc handler=0, debug info=0  @ offset 0x00200dfc
 
 Bytecode listing:
 

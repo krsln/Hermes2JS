@@ -46,7 +46,7 @@ Bytecode listing:
 ==> 000000a7: <LoadConstZero>: <Reg8: 8>
 ==> 000000a9: <Mov>: <Reg8: 10, Reg8: 4>
 ==> 000000ac: <Mov>: <Reg8: 9, Reg8: 3>
-==> 000000af: <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
+==> 000000af: <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 HermesBuiltin_arraySpread]
 ==> 000000b3: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
 ==> 000000b9: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
 ==> 000000be: <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>

@@ -1,5 +1,6 @@
 
-=> [Function #9466 "tryFinallyNormalCompletionTest" of 110 bytes]: 1 params, frame size=13, strict=0, exc handler=0, debug info=0  @ offset 0x001fe79c
+=> [Function #9466 "tryFinallyNormalCompletionTest" of 110 bytes]: 1 params, frame size=13, strict=1, exc handler=1, debug info=0  @ offset 0x001fe79c
+  [Exception handlers: [start=0x16, end=0x2a, target=0x56] ]
 
 Bytecode listing:
 

@@ -1,5 +1,5 @@
 
-=> [Function #9508 "arrowFunctionTest" of 142 bytes]: 1 params, frame size=15, strict=0, exc handler=0, debug info=0  @ offset 0x00200595
+=> [Function #9508 "arrowFunctionTest" of 142 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x00200595
 
 Bytecode listing:
 

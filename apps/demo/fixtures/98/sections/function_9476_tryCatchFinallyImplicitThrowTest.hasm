@@ -1,5 +1,6 @@
 
-=> [Function #9476 "tryCatchFinallyImplicitThrowTest" of 156 bytes]: 2 params, frame size=15, strict=0, exc handler=0, debug info=0  @ offset 0x001fed7b
+=> [Function #9476 "tryCatchFinallyImplicitThrowTest" of 156 bytes]: 2 params, frame size=15, strict=1, exc handler=1, debug info=0  @ offset 0x001fed7b
+  [Exception handlers: [start=0x16, end=0x3c, target=0x52] [start=0x16, end=0x3c, target=0x84] [start=0x52, end=0x68, target=0x84] ]
 
 Bytecode listing:
 

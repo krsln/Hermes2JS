@@ -24,7 +24,7 @@ Bytecode listing:
 ==> 00000051: <Mov>: <Reg8: 9, Reg8: 6>
 ==> 00000054: <Mov>: <Reg8: 8, Reg8: 4>
 ==> 00000057: <LoadConstZero>: <Reg8: 7>
-==> 00000059: <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
+==> 00000059: <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 HermesBuiltin_arraySpread]
 ==> 0000005d: <GetById>: <Reg8: 3, Reg8: 6, UInt8: 6, string_id: 7576>  # String: 'sort' (Identifier)
 ==> 00000063: <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15111>  # Function: [#15111  of 12 bytes]: 3 params @ offset 0x001f6a9c
 ==> 00000068: <Call2>: <Reg8: 6, Reg8: 3, Reg8: 6, Reg8: 2>

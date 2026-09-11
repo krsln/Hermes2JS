@@ -14,13 +14,13 @@ Bytecode listing:
 ==> 00000025: <NewArrayWithBuffer>: <Reg8: 7, UInt16: 3, UInt16: 3, UInt16: 23374>  # Array: [1, 2, 3]
 ==> 0000002d: <LoadConstZero>: <Reg8: 6>
 ==> 0000002f: <Mov>: <Reg8: 8, Reg8: 5>
-==> 00000032: <CallBuiltin>: <Reg8: 0, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
+==> 00000032: <CallBuiltin>: <Reg8: 0, UInt8: 46, UInt8: 4>  # Built-in function: [#46 HermesBuiltin_arraySpread]
 ==> 00000036: <CreateEnvironment>: <Reg8: 0>
 ==> 00000038: <CreateClosure>: <Reg8: 8, Reg8: 0, function_id: 15121>  # Function: [#15121 sum of 19 bytes]: 4 params @ offset 0x00269ebf
 ==> 0000003d: <LoadConstUndefined>: <Reg8: 0>
 ==> 0000003f: <Mov>: <Reg8: 7, Reg8: 5>
 ==> 00000042: <LoadConstUndefined>: <Reg8: 6>
-==> 00000044: <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 4>  # Built-in function: [#47 apply]
+==> 00000044: <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 4>  # Built-in function: [#47 HermesBuiltin_apply]
 ==> 00000048: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
 ==> 0000004d: <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
 ==> 00000053: <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

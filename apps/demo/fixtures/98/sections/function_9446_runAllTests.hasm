@@ -1,5 +1,5 @@
 
-=> [Function #9446 "runAllTests" of 32 bytes]: 1 params, frame size=16, strict=0, exc handler=0, debug info=0  @ offset 0x001fdc0f
+=> [Function #9446 "runAllTests" of 32 bytes]: 1 params, frame size=16, strict=1, exc handler=0, debug info=0  @ offset 0x001fdc0f
 
 Bytecode listing:
 

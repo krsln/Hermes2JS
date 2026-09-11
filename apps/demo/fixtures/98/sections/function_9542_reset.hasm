@@ -1,5 +1,5 @@
 
-=> [Function #9542 "reset" of 44 bytes]: 1 params, frame size=15, strict=0, exc handler=0, debug info=0  @ offset 0x002011ca
+=> [Function #9542 "reset" of 44 bytes]: 1 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x002011ca
 
 Bytecode listing:
 
