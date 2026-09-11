@@ -18,11 +18,13 @@ file apps/testy/98/index.android.bundle
 #python vendor/hermes-dec/src/hermes_dec/parsers/hbc_file_parser.py apps/testy/96/index.android.bundle 
 #python vendor/hermes-dec/src/hermes_dec/decompilation/hbc_decompiler.py apps/testy/96/index.android.bundle apps/testy/96/output/output.js
 python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py apps/testy/96/index.android.bundle apps/testy/96/output/output.hasm
+
 python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py apps/testy/98/index.android.bundle apps/testy/98/output/output.hasm
 
 # hermes-disassembler
 # 96 & 98
 python scripts/run-hermes-disassembler.py apps/testy/96/index.android.bundle apps/testy/96/output/disassembler-output.hasm
+
 python scripts/run-hermes-disassembler.py apps/testy/98/index.android.bundle apps/testy/98/output/disassembler-output.hasm
 ```
 
@@ -33,24 +35,22 @@ Splits `output.hasm` into one file per function, using the
 
 ```shell
 python scripts/split_output_file.py -i <input.hasm> -o <output_dir> [options]
-
-# Basic split
-python scripts/split_output_file.py -i apps/testy/96/output/output.hasm -o apps/testy/96/output/sections
-python scripts/split_output_file.py -i apps/testy/96/output/disassembler-output.hasm -o apps/testy/96/output/sections
-# Total sections: 15248
-python scripts/split_output_file.py -i apps/testy/98/output/output.hasm -o apps/testy/98/output/sections
-python scripts/split_output_file.py -i apps/testy/98/output/disassembler-output.hasm -o apps/testy/98/output/sections
-# Total sections: 14268
-
 # With manifest + INFO logging
 python scripts/split_output_file.py -i apps/testy/output/output.hasm -o sections --manifest sections/manifest.json -v
-
 # Dry run first, to check section count/naming before writing anything
 python scripts/split_output_file.py -i apps/testy/output/output.hasm -o sections --dry-run -v
 
+# Basic split
+#python scripts/split_output_file.py -i apps/testy/96/output/output.hasm -o apps/testy/96/output/sections
+python scripts/split_output_file.py -i apps/testy/96/output/disassembler-output.hasm -o apps/testy/96/output/sections
+# Total sections: 15247
+#python scripts/split_output_file.py -i apps/testy/98/output/output.hasm -o apps/testy/98/output/sections
+python scripts/split_output_file.py -i apps/testy/98/output/disassembler-output.hasm -o apps/testy/98/output/sections
+# Total sections: 14267
+
 #--------------------------
 ## copy files to fixtures
- 
+
 # section_15042-15216
 cp apps/testy/96/output/sections/function_{15042..15216}_*.hasm apps/demo/fixtures/96/sections/
 
