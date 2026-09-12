@@ -22,7 +22,30 @@ have none - the run length alone says how many):
   Number:      8 bytes (double)
   ShortString: 2 bytes (uint16 string-table index, "smaller than 2^16")
   LongString:  4 bytes (uint32 string-table index)
+  ByteString:  1 byte (uint8 string-table index) - version < 98 only, see below
   Integer:     4 bytes (int32)
+
+VERSION-DEPENDENT TAG 6 - the bug this module originally had: tag value
+6 (0x60) means two DIFFERENT things depending on bytecode version, and
+`SerializedLiteralGenerator.h` (fetched from the bytecode-98 commit the
+first time this module was written) only documents the NEWER meaning.
+Cross-checked against P1sec/hermes-dec's own independent implementation
+(`src/hermes_dec/parsers/serialized_literal_parser.py`, which explicitly
+branches on `bytecode_version >= 98`):
+  version < 98:  tag 6 = ByteStringTag - a 1-BYTE payload (uint8 string
+    index, 0-255). This is the ORIGINAL meaning (a third, more compact
+    string-index width alongside Short/Long).
+  version >= 98: tag 6 = UndefinedTag - NO payload at all (repurposed;
+    ByteStringTag was dropped in favor of always using ShortString for
+    small indices).
+Getting this wrong doesn't just mis-decode the tag-6 elements themselves:
+since a ByteStringTag's payload is 1 byte and UndefinedTag's is 0 bytes,
+treating a version<98 ByteStringTag run as UndefinedTag skips one fewer
+byte than it should, desynchronizing every subsequent tag read in the
+buffer - this was the root cause of a ~1% NewArrayWithBuffer failure
+rate and a much larger (~58% of keys) NewObjectWithBuffer failure rate
+in bytecode 96, both now fixed; see this module's and
+`ObjectLiteral.py`'s test suites for the before/after.
 
 Runs continue until the requested element count (`NewArrayWithBuffer`'s
 own "number of static elements" operand) is consumed - this module
@@ -36,26 +59,12 @@ values as one continuous sequential walk, not per-array) - decoding
 from byte 0 with this module's tag logic reproduces that exact value
 sequence in order (String(1914), Integer(1), Integer(2), Integer(578),
 Integer(1478), ... - confirmed by hand against the raw hex too). At
-scale: every `NewArrayWithBuffer`/`NewArrayWithBufferLong` instruction
-in both bundles (1815 + 1776 = 3591 total), decoded via its own
-`buf_idx` operand: 100% succeed in bytecode 98; bytecode 96 has 18
-(~1%) that resolve a `ShortString`/`LongString` tag to an out-of-range
-string index - not yet root-caused (a guess: possible interaction with
-buffer deduplication across arrays sharing encoded suffixes, per a
-"ConsecutiveStringStorage" dedup mechanism mentioned in facebook/hermes's
-own commit history, landing a `buf_idx` a few bytes off from a true tag
-boundary in these specific cases - unconfirmed). `decode_literal_buffer`
-raises for these rather than returning wrong data; see `HasmWriter.py`,
-which catches that and falls back to an `<unresolved: ...>` comment
-instead of aborting the whole bundle.
-
-Known gap: object literal buffers (`NewObjectWithBuffer`'s key/value
-buffers) are NOT handled here - v98 uses a different, not yet
-investigated "object shape table" indirection distinct from v96's
-direct key+value buffer pair (see
-`hermes_disassembler.format.BytecodeFileHeader`'s LAYOUT_V98 docstring:
-`obj_shape_table_count` replaces v96's `obj_value_buffer_size`), so
-this needs separate, version-specific work.
+scale, with the tag-6 fix: every `NewArrayWithBuffer`/
+`NewArrayWithBufferLong` instruction in both bundles decodes cleanly
+(100% - the tag-6 bug was the entire cause of the small failure rate
+noted in earlier versions of this docstring), and `NewObjectWithBuffer`
+key decoding in bytecode 96 (via `ObjectLiteral.py`) went from 42%
+strings to effectively 100% - see `tests/test_hermes_disassembler_object_literal.py`.
 """
 from __future__ import annotations
 
@@ -68,29 +77,37 @@ from hermes_disassembler.format.StringTable import StringTable
 
 __all__ = ["LiteralValue", "decode_literal_buffer"]
 
-# hermes/include/hermes/BCGen/SerializedLiteralGenerator.h: TagType constants
+# hermes/include/hermes/BCGen/SerializedLiteralGenerator.h TagType constants,
+# with tag 6 handled specially per version - see module docstring.
 _NULL_TAG = 0 << 4
 _TRUE_TAG = 1 << 4
 _FALSE_TAG = 2 << 4
 _NUMBER_TAG = 3 << 4
 _LONG_STRING_TAG = 4 << 4
 _SHORT_STRING_TAG = 5 << 4
-_UNDEFINED_TAG = 6 << 4
+_TAG6 = 6 << 4  # ByteStringTag (version < 98) or UndefinedTag (version >= 98)
 _INTEGER_TAG = 7 << 4
 _TAG_MASK = 0x70
+
+_TAG6_IS_UNDEFINED_FROM_VERSION = 98
 
 LiteralValue = Union[None, bool, float, int, str]  # str only for a resolved string_id
 
 
 def decode_literal_buffer(
-        data: bytes, offset: int, count: int, table: StringTable | None = None
+        data: bytes, offset: int, count: int, bytecode_version: int, table: StringTable | None = None
 ) -> tuple[LiteralValue, ...]:
     """
     Decode `count` literal values starting at absolute byte `offset`.
 
-    String elements (ShortString/LongString tags) are resolved through
-    `table` if given (raising if `table` is `None` and a string element
-    is encountered); every other tag needs no table.
+    `bytecode_version` determines tag 6's meaning (ByteStringTag below
+    98, UndefinedTag from 98 onward - see module docstring); getting
+    this wrong desynchronizes every element after the first tag-6 run.
+
+    String elements (ShortString/LongString/ByteString tags) are
+    resolved through `table` if given (raising if `table` is `None`
+    and a string element is encountered); every other tag needs no
+    table.
 
     Raises `TruncatedFileError` if a tag or its payload would read past
     `len(data)`, and `ValueError` for an unrecognized tag byte or if the
@@ -98,6 +115,7 @@ def decode_literal_buffer(
     signal the offset, count, or tag table is wrong - never silently
     truncated or padded).
     """
+    tag6_is_undefined = bytecode_version >= _TAG6_IS_UNDEFINED_FROM_VERSION
     values: list[LiteralValue] = []
     pos = offset
 
@@ -125,8 +143,6 @@ def decode_literal_buffer(
                 values.append(True)
             elif tag == _FALSE_TAG:
                 values.append(False)
-            elif tag == _UNDEFINED_TAG:
-                values.append(_Undefined)
             elif tag == _NUMBER_TAG:
                 if pos + 8 > len(data):
                     raise TruncatedFileError("literal buffer Number", pos + 8, len(data))
@@ -151,6 +167,15 @@ def decode_literal_buffer(
                 (string_id,) = struct.unpack_from("<I", data, pos)
                 values.append(table.resolve(string_id) if table is not None else string_id)
                 pos += 4
+            elif tag == _TAG6:
+                if tag6_is_undefined:
+                    values.append(_Undefined)
+                else:
+                    if pos + 1 > len(data):
+                        raise TruncatedFileError("literal buffer ByteString", pos + 1, len(data))
+                    string_id = data[pos]
+                    values.append(table.resolve(string_id) if table is not None else string_id)
+                    pos += 1
             else:
                 raise ValueError(f"unrecognized literal buffer tag {tag:#x} at offset {pos}")
 

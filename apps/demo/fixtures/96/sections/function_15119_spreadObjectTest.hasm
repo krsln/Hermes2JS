@@ -11,7 +11,7 @@ Bytecode listing:
 ==> 00000016: <NewObject>: <Reg8: 4>
 ==> 00000018: <NewObjectWithBuffer>: <Reg8: 6, UInt16: 2, UInt16: 2, UInt16: 317, UInt16: 19852>  # Object: {'x': 1, 'y': 2}
 ==> 00000022: <Mov>: <Reg8: 7, Reg8: 4>
-==> 00000025: <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 3>  # Built-in function: [#44 copyDataProperties]
+==> 00000025: <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 3>  # Built-in function: [#44 HermesBuiltin_copyDataProperties]
 ==> 00000029: <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
 ==> 0000002c: <LoadConstString>: <Reg8: 0, string_id: 7612>  # String: 'z' (Identifier)
 ==> 00000030: <PutOwnByVal>: <Reg8: 4, Reg8: 2, Reg8: 0, UInt8: 1>

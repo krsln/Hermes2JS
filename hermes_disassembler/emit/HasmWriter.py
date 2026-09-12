@@ -85,7 +85,7 @@ from hermes_disassembler.format.ExceptionHandlerTable import resolve_exception_h
 from hermes_disassembler.format.FunctionHeader import FunctionHeaderEntry
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
 from hermes_disassembler.format.JumpTarget import is_jump_instruction, resolve_jump_target
-from hermes_disassembler.format.LiteralBuffer import decode_literal_buffer
+from hermes_disassembler.format.LiteralBuffer import _Undefined, decode_literal_buffer
 from hermes_disassembler.format.ObjectLiteral import resolve_object_literal
 from hermes_disassembler.format.Opcode import Instruction, decode_function, load_opcode_table
 from hermes_disassembler.format.StringTable import StringTable
@@ -125,14 +125,10 @@ _ARRAY_BUFFER_OPCODES = {
     "NewArrayWithBufferLong": (2, 3),
 }
 
-#: opcode name -> 0-based operand index of (shape_or_key_idx, val_idx)
-#: for object literal instructions. Same operand positions for v96
-#: (keyBufIdx) and v98/99 (shapeTableIdx) despite meaning different
-#: things - see ObjectLiteral.py (v96 is rejected there, not here).
-_OBJECT_BUFFER_OPCODES = {
-    "NewObjectWithBuffer": (1, 2),
-    "NewObjectWithBufferLong": (1, 2),
-}
+#: opcode names for object literal instructions - operand positions
+#: differ by version (see ObjectLiteral.py), so extraction happens
+#: inside _format_object_buffer_comment rather than a fixed lookup here.
+_OBJECT_BUFFER_OPCODES = frozenset({"NewObjectWithBuffer", "NewObjectWithBufferLong"})
 
 
 def format_instruction(
@@ -185,7 +181,7 @@ def format_instruction(
         # function_id with all_functions=None, and bigint_id always: no comment yet, see module docstring
 
     if instruction.name in _ARRAY_BUFFER_OPCODES:
-        comment_parts.append(_format_array_buffer_comment(data, table, instruction))
+        comment_parts.append(_format_array_buffer_comment(data, table, version, instruction))
 
     if instruction.name in _OBJECT_BUFFER_OPCODES:
         comment_parts.append(_format_object_buffer_comment(data, table, version, instruction))
@@ -205,38 +201,61 @@ def format_instruction(
 def _format_object_buffer_comment(data: bytes, table: StringTable, version: int, instruction: Instruction) -> str:
     """
     `# Object: {'a': 1, 'b': 2, 'c': 3}` for a `NewObjectWithBuffer`/
-    `NewObjectWithBufferLong` instruction (see `ObjectLiteral.py` - v98
-    only, v96 falls back to `<unresolved: ...>`, see that module's
-    docstring for why).
+    `NewObjectWithBufferLong` instruction (see `ObjectLiteral.py` for
+    the two different operand layouts this dispatches between).
     """
-    shape_or_key_idx_index, val_idx_index = _OBJECT_BUFFER_OPCODES[instruction.name]
-    shape_or_key_idx = instruction.operands[shape_or_key_idx_index]
-    val_idx = instruction.operands[val_idx_index]
     try:
-        literal = resolve_object_literal(data, table, version, shape_or_key_idx, val_idx)
+        if version in (98, 99):
+            shape_idx, val_idx = instruction.operands[1], instruction.operands[2]
+            literal = resolve_object_literal(data, table, version, shape_idx, val_idx)
+        elif version == 96:
+            count, key_idx, val_idx = instruction.operands[2], instruction.operands[3], instruction.operands[4]
+            literal = resolve_object_literal(data, table, version, count, key_idx, val_idx)
+        else:
+            raise HermesBytecodeError(f"no object literal layout known for bytecode {version}")
     except (HermesBytecodeError, ValueError, IndexError) as exc:
         return f"Object: <unresolved: {exc}>"
-    return f"Object: {dict(zip(literal.keys, literal.values))!r}"
+    pairs = ", ".join(f"{_js_repr(k)}: {_js_repr(v)}" for k, v in zip(literal.keys, literal.values))
+    return f"Object: {{{pairs}}}"
 
 
-def _format_array_buffer_comment(data: bytes, table: StringTable, instruction: Instruction) -> str:
+def _js_repr(value) -> str:
+    """
+    Render one decoded literal value the way hermes-dec's own
+    `SLPArray.to_strings()` does: `null`/`true`/`false`/`undefined`
+    (JS spelling, not Python's `None`/`True`/`False`) for those tags,
+    `repr()` for strings (matches hermes-dec's own `repr(string_table[...])`),
+    and plain `str()` for numbers.
+    """
+    if value is None:
+        return "null"
+    if value is True:
+        return "true"
+    if value is False:
+        return "false"
+    if value is _Undefined:
+        return "undefined"
+    if isinstance(value, str):
+        return repr(value)
+    return str(value)
+
+
+def _format_array_buffer_comment(data: bytes, table: StringTable, version: int, instruction: Instruction) -> str:
     """
     `# Array: [1, 0, 2]` for a `NewArrayWithBuffer`/`NewArrayWithBufferLong`
     instruction - decodes its literal buffer contents (see
     `LiteralBuffer.decode_literal_buffer`). Falls back to a
-    `<unresolved: ...>` placeholder instead of raising for the small
-    known-bad slice of bytecode-96 array instructions (see
-    `LiteralBuffer.py`'s module docstring), so one bad array doesn't
-    abort formatting the rest of the bundle.
+    `<unresolved: ...>` placeholder instead of raising, so one bad
+    array doesn't abort formatting the rest of the bundle.
     """
     count_index, buf_idx_index = _ARRAY_BUFFER_OPCODES[instruction.name]
     count = instruction.operands[count_index]
     buf_idx = instruction.operands[buf_idx_index]
     try:
-        values = decode_literal_buffer(data, table.literal_value_buffer_offset + buf_idx, count, table)
+        values = decode_literal_buffer(data, table.literal_value_buffer_offset + buf_idx, count, version, table)
     except (HermesBytecodeError, ValueError, IndexError) as exc:
         return f"Array: <unresolved: {exc}>"
-    return f"Array: {list(values)!r}"
+    return f"Array: [{', '.join(_js_repr(v) for v in values)}]"
 
 
 def _format_function_reference(target: FunctionHeaderEntry, table: StringTable) -> str:
