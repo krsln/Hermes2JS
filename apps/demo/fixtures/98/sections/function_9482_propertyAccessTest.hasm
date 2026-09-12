@@ -1,5 +1,6 @@
 
-=> [Function #9482 "propertyAccessTest" of 190 bytes]: 1 params, frame size=20, strict=0, exc handler=0, debug info=0  @ offset 0x001ff12f
+=> [Function #9482 "propertyAccessTest" of 190 bytes]: 1 params, frame size=20, strict=1, exc handler=1, debug info=0  @ offset 0x001ff12f
+  [Exception handlers: [start=0x8a, end=0xa1, target=0xa1] ]
 
 Bytecode listing:
 

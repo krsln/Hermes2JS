@@ -1,5 +1,5 @@
 
-=> [Function #9480 "forInTest" of 98 bytes]: 1 params, frame size=22, strict=0, exc handler=0, debug info=0  @ offset 0x001ff032
+=> [Function #9480 "forInTest" of 98 bytes]: 1 params, frame size=22, strict=1, exc handler=0, debug info=0  @ offset 0x001ff032
 
 Bytecode listing:
 

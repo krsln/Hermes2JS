@@ -86,6 +86,7 @@ from hermes_disassembler.format.FunctionHeader import FunctionHeaderEntry
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
 from hermes_disassembler.format.JumpTarget import is_jump_instruction, resolve_jump_target
 from hermes_disassembler.format.LiteralBuffer import decode_literal_buffer
+from hermes_disassembler.format.ObjectLiteral import resolve_object_literal
 from hermes_disassembler.format.Opcode import Instruction, decode_function, load_opcode_table
 from hermes_disassembler.format.StringTable import StringTable
 
@@ -122,6 +123,15 @@ def _format_operand(operand_type: str, value: int | float, semantic: str | None)
 _ARRAY_BUFFER_OPCODES = {
     "NewArrayWithBuffer": (2, 3),
     "NewArrayWithBufferLong": (2, 3),
+}
+
+#: opcode name -> 0-based operand index of (shape_or_key_idx, val_idx)
+#: for object literal instructions. Same operand positions for v96
+#: (keyBufIdx) and v98/99 (shapeTableIdx) despite meaning different
+#: things - see ObjectLiteral.py (v96 is rejected there, not here).
+_OBJECT_BUFFER_OPCODES = {
+    "NewObjectWithBuffer": (1, 2),
+    "NewObjectWithBufferLong": (1, 2),
 }
 
 
@@ -177,6 +187,9 @@ def format_instruction(
     if instruction.name in _ARRAY_BUFFER_OPCODES:
         comment_parts.append(_format_array_buffer_comment(data, table, instruction))
 
+    if instruction.name in _OBJECT_BUFFER_OPCODES:
+        comment_parts.append(_format_object_buffer_comment(data, table, version, instruction))
+
     if is_jump_instruction(instruction, version):
         absolute_target = resolve_jump_target(instruction, version)
         relative_target = absolute_target - function_offset
@@ -187,6 +200,23 @@ def format_instruction(
     for part in comment_parts:
         line += f"  # {part}"
     return line
+
+
+def _format_object_buffer_comment(data: bytes, table: StringTable, version: int, instruction: Instruction) -> str:
+    """
+    `# Object: {'a': 1, 'b': 2, 'c': 3}` for a `NewObjectWithBuffer`/
+    `NewObjectWithBufferLong` instruction (see `ObjectLiteral.py` - v98
+    only, v96 falls back to `<unresolved: ...>`, see that module's
+    docstring for why).
+    """
+    shape_or_key_idx_index, val_idx_index = _OBJECT_BUFFER_OPCODES[instruction.name]
+    shape_or_key_idx = instruction.operands[shape_or_key_idx_index]
+    val_idx = instruction.operands[val_idx_index]
+    try:
+        literal = resolve_object_literal(data, table, version, shape_or_key_idx, val_idx)
+    except (HermesBytecodeError, ValueError, IndexError) as exc:
+        return f"Object: <unresolved: {exc}>"
+    return f"Object: {dict(zip(literal.keys, literal.values))!r}"
 
 
 def _format_array_buffer_comment(data: bytes, table: StringTable, instruction: Instruction) -> str:

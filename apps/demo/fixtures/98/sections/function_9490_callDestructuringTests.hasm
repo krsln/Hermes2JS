@@ -1,5 +1,5 @@
 
-=> [Function #9490 "callDestructuringTests" of 545 bytes]: 1 params, frame size=24, strict=0, exc handler=0, debug info=0  @ offset 0x001ff6c1
+=> [Function #9490 "callDestructuringTests" of 545 bytes]: 1 params, frame size=24, strict=1, exc handler=0, debug info=0  @ offset 0x001ff6c1
 
 Bytecode listing:
 
