@@ -152,7 +152,7 @@ class FileOperations:
 
         os.makedirs(output_dir, exist_ok=True)
         output_path = os.path.join(output_dir, f"{filename}.js")
-        output_path_raw = os.path.join(output_dir, f"function_{section_index}_raw.js")
+        output_path_raw = os.path.join(output_dir, f"function_{section_index}.raw.js")
         try:
             with open(output_path, 'w', encoding='utf-8') as f:
                 f.write(js_code)
