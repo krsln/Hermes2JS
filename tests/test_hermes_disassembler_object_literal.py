@@ -1,8 +1,9 @@
 """
 Tests `hermes_disassembler.format.ObjectLiteral` against the real
-`apps/testy/98` bundle fixture. bytecode 96 is intentionally
-unsupported here (see the module's own docstring) - tested as an
-explicit rejection, not skipped.
+`apps/testy/96` and `apps/testy/98` bundle fixtures. Both layouts are
+supported (v96's direct key/value buffers, v98's shape-table
+indirection) - see the module's own docstring for the tag-6 bug that
+initially made v96 look unsupportable, and its fix.
 """
 from __future__ import annotations
 
@@ -34,6 +35,15 @@ def _load(version: str):
     return data, header, table, resolved
 
 
+def _resolve(data, table, version: str, instruction):
+    """Dispatch operand extraction per version's layout - see ObjectLiteral.py."""
+    if version == "98":
+        shape_idx, val_idx = instruction.operands[1], instruction.operands[2]
+        return resolve_object_literal(data, table, 98, shape_idx, val_idx)
+    count, key_idx, val_idx = instruction.operands[2], instruction.operands[3], instruction.operands[4]
+    return resolve_object_literal(data, table, 96, count, key_idx, val_idx)
+
+
 def test_shape_table_entry_25_matches_oracle_byte_for_byte():
     """
     tools/hermes/dump_bytecode.sh 98 ...'s own "Object Shape Table:"
@@ -46,7 +56,7 @@ def test_shape_table_entry_25_matches_oracle_byte_for_byte():
     assert (key_buffer_offset, num_props) == (254, 1)
 
 
-def test_resolves_plausible_object_literal_96_style_names():
+def test_resolves_plausible_object_literal_98():
     """A real NewObjectWithBuffer's operands resolve to {'value': True} - matches shape 25 above (single prop, key 'value')."""
     data, header, table, resolved = _load("98")
     literal = resolve_object_literal(data, table, 98, 25, 17297)
@@ -54,22 +64,62 @@ def test_resolves_plausible_object_literal_96_style_names():
     assert literal.values == (True,)
 
 
-def test_bytecode_96_is_rejected_not_guessed():
+def test_bytecode_96_direct_layout_resolves_console_levels():
+    """
+    apps/testy/96's console-level object ({trace:0, info:1, warn:2,
+    error:3}) - the same source, and the identical decoded result, as
+    apps/testy/98's own shape-table-based instance of it (see
+    test_v96_and_v98_agree_on_the_same_source_object below) - proof v96's
+    direct keyBufIdx/valBufIdx layout is genuinely fixed, not just
+    "less wrong".
+    """
     data, header, table, resolved = _load("96")
+    for e in resolved:
+        instructions = decode_function(data, e.offset, e.bytecode_size_in_bytes, 96)
+        for instruction in instructions:
+            if instruction.name != "NewObjectWithBuffer":
+                continue
+            literal = _resolve(data, table, "96", instruction)
+            if literal.keys == ("trace", "info", "warn", "error"):
+                assert literal.values == (0, 1, 2, 3)
+                return
+    pytest.fail("console-level object not found in apps/testy/96")
+
+
+def test_v96_and_v98_agree_on_the_same_source_object():
+    """The exact same {trace,info,warn,error} object, compiled to both bytecode versions, decodes identically."""
+    values_by_version = {}
+    for version in ("96", "98"):
+        data, header, table, resolved = _load(version)
+        for e in resolved:
+            instructions = decode_function(data, e.offset, e.bytecode_size_in_bytes, int(version))
+            for instruction in instructions:
+                if instruction.name != "NewObjectWithBuffer":
+                    continue
+                literal = _resolve(data, table, version, instruction)
+                if literal.keys == ("trace", "info", "warn", "error"):
+                    values_by_version[version] = literal.values
+                    break
+            if version in values_by_version:
+                break
+    assert values_by_version["96"] == values_by_version["98"] == (0, 1, 2, 3)
+
+
+def test_unconfirmed_version_raises_not_guessed():
+    data, header, table, resolved = _load("98")
     with pytest.raises(HermesBytecodeError):
-        resolve_object_literal(data, table, 96, 0, 0)
+        resolve_object_literal(data, table, 97, 0, 0, 0)
 
 
-@pytest.mark.parametrize("version,expected_min_string_key_ratio", [("98", 0.95)])
+@pytest.mark.parametrize("version,expected_min_string_key_ratio", [("96", 0.95), ("98", 0.95)])
 def test_most_keys_are_strings_at_scale(version: str, expected_min_string_key_ratio: float):
     """
     Every NewObjectWithBuffer in the bundle: the overwhelming majority
     of decoded keys should be strings (property names) - a numeric key
     is legal JS but rare; anything else (undefined/bool/None) would
-    indicate a decoding bug, which is exactly the signal that ruled out
-    bytecode 96's direct keyBufIdx approach (only 42% strings there -
-    see ObjectLiteral.py's module docstring) in favor of bytecode 98's
-    shape-table indirection (99.3% strings).
+    indicate a decoding bug. Before the LiteralBuffer tag-6 fix, v96
+    scored only 42% here; now both versions are effectively clean
+    (99.8%/99.3%).
     """
     data, header, table, resolved = _load(version)
 
@@ -81,9 +131,8 @@ def test_most_keys_are_strings_at_scale(version: str, expected_min_string_key_ra
         for instruction in instructions:
             if instruction.name not in ("NewObjectWithBuffer", "NewObjectWithBufferLong"):
                 continue
-            shape_idx, val_idx = instruction.operands[1], instruction.operands[2]
             try:
-                literal = resolve_object_literal(data, table, int(version), shape_idx, val_idx)
+                literal = _resolve(data, table, version, instruction)
             except Exception:
                 errors += 1
                 continue

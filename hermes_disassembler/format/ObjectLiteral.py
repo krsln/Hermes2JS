@@ -66,8 +66,13 @@ _SHAPE_TABLE_ENTRY_SIZE = 8  # ShapeTableEntry: uint32_t keyBufferOffset, numPro
 #: versions using the direct keyBufIdx/valBufIdx layout (arg2=count,
 #: arg3=keyBufIdx, arg4=valBufIdx) vs. the shape-table layout
 #: (arg2=shapeTableIdx, arg3=valBufIdx). See module docstring.
+#: 99 is deliberately excluded from the shape-table set even though it
+#: shares LAYOUT_V98's header/SmallFuncHeader - there is no
+#: apps/testy/99 bundle to confirm ShapeTableEntry decoding against,
+#: matching this package's don't-guess-an-unvalidated-version discipline
+#: (see e.g. FunctionHeaderOverflow.VERSION_TO_LARGE_HEADER_LAYOUT).
 _DIRECT_KEY_BUFFER_VERSIONS = {96}
-_SHAPE_TABLE_VERSIONS = {98, 99}
+_SHAPE_TABLE_VERSIONS = {98}
 
 
 @dataclass(frozen=True, slots=True)
