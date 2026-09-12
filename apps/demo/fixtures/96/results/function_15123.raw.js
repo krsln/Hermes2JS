@@ -96,7 +96,6 @@ function mapTest() {
     // CODE → addr:202 | <Mov>: <Reg8: 10, Reg8: 5>
     r10 = r5
     // CODE → addr:205 | <JStrictEqual>: <Addr8: 53, Reg8: 10, Reg8: 0>  # Address: 00000102
-    // → r10 = r5
     if (r10 === undefined) goto label_258;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:209 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>

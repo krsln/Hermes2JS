@@ -23,7 +23,6 @@ function forTest() {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 37 | <Mov>: <Reg8: 6, Reg8: 5>
         r6 = r5
-        // → r6 = r5
         if (r6 === 3) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr: 88 | <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

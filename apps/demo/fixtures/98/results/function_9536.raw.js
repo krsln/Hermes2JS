@@ -13,7 +13,6 @@ function Counter() {
     // CODE → addr: 17 | <PrivateIsIn>: <Reg8: 1, Reg8: 4, Reg8: 2, Reg8: 0>
     // USED → r1 = r3[5] in r2;
     // CODE → addr: 22 | <JmpTrue>: <Addr8: 64, Reg8: 1>  # Address: 00000056
-    // → r2 = Object.create(r2.prototype); r3 = getParentEnvironment(0)
     if (r3[5] in r2) goto label_86;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 25 | <LoadConstUndefined>: <Reg8: 1>

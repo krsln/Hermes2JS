@@ -25,7 +25,6 @@ function defaultParameterTest(param1) {
     // USED → r6 = "result";
     // CODE → addr: 52 | <Mov>: <Reg8: 4, Reg8: 6>
     r4 = "result"
-    // → r3 = arguments.length > 2
     if (arguments.length > 2 && r3 !== undefined) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr: 58 | <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>

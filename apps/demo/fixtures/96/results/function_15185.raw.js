@@ -37,7 +37,6 @@ async function* anon_15185(param1) {
     // CODE → addr: 51 | <Mov>: <Reg8: 3, Reg8: 4>
     r3 = r4
     // CODE → addr: 54 | <JStrictEqual>: <Addr8: 45, Reg8: 3, Reg8: 7>  # Address: 00000063
-    // → r3 = r4
     if (r3 === undefined) goto label_99;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 58 | <Mov>: <Reg8: 8, Reg8: 1>

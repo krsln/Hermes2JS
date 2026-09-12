@@ -32,7 +32,6 @@ function swapViaDestructureTest() {
     // USED → r1 = r5 === undefined;
     // CODE → addr: 62 | <LoadConstUndefined>: <Reg8: 8>
     r8 = undefined
-    // → r5 = GetIterator(r6)
     if (r5 !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 67 | <Mov>: <Reg8: 8, Reg8: 7>

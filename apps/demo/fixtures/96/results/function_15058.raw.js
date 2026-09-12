@@ -54,13 +54,11 @@ function nestedLoopTest() {
     // CODE → addr: 92 | <Inc>: <Reg8: 10, Reg8: 11>
     r10 = r11 + 1
     // CODE → addr: 95 | <JLess>: <Addr8: -46, Reg8: 10, Reg8: 6>  # Address: 00000031
-    // → r10 = r11 + 1
     if (r10 < 4) goto label_49;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 99 | <Inc>: <Reg8: 1, Reg8: 9>
     r1 = r9 + 1
     // CODE → addr:102 | <JLess>: <Addr8: -58, Reg8: 1, Reg8: 7>  # Address: 0000002c
-    // → r1 = r9 + 1
     if (r1 < 3) goto label_44;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:106 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

@@ -42,7 +42,6 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr: 66 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
     r12 = param1[r2]
     // CODE → addr: 70 | <JLess>: <Addr8: 30, Reg8: 12, Reg8: 9>  # Address: 00000064
-    // → r12 = param1[r2]
     if (r12 < 0) goto label_100;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 74 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -93,7 +92,6 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:161 | <Mov>: <Reg8: 0, Reg8: 3>
     r0 = r3
     // CODE → addr:164 | <JLess>: <Addr8: -104, Reg8: 4, Reg8: 2>  # Address: 0000003c
-    // → r2 = param1.length; r4 = r2 + 1
     if (r4 < r2) goto label_60;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:168 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

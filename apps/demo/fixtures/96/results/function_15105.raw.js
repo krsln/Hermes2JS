@@ -69,7 +69,6 @@ function nestedArrayDestructureTest() {
     // CODE → addr:155 | <LoadConstZero>: <Reg8: 5>
     r5 = 0
     // CODE → addr:157 | <JStrictEqual>: <Addr8: 7, Reg8: 8, Reg8: 0>  # Address: 000000a4
-    // → r8 = r3[r6]
     if (r8 === undefined) goto label_164;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr:161 | <Mov>: <Reg8: 5, Reg8: 8>
@@ -80,7 +79,6 @@ function nestedArrayDestructureTest() {
     // CODE → addr:168 | <LoadConstZero>: <Reg8: 6>
     r6 = 0
     // CODE → addr:170 | <JStrictEqual>: <Addr8: 7, Reg8: 7, Reg8: 0>  # Address: 000000b1
-    // → r7 = r3[r7]
     if (r7 === undefined) goto label_177;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:174 | <Mov>: <Reg8: 6, Reg8: 7>

@@ -58,7 +58,6 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr: 96 | <Inc>: <Reg8: 2, Reg8: 2>
     r2 = r2 + 1
     // CODE → addr: 99 | <JLess>: <Addr8: -15, Reg8: 2, Reg8: 4>  # Address: 00000054
-    // → r2 = r2 + 1
     if (r2 < r4) goto label_84;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:103 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

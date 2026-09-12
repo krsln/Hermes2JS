@@ -22,7 +22,6 @@ function defaultWithRestTest() {
     // CODE → addr: 26 | <Mov>: <Reg8: 5, Reg8: 6>
     r5 = 1
     // CODE → addr: 29 | <JStrictEqual>: <Addr8: 8, Reg8: 1, Reg8: 0>  # Address: 00000025
-    // → r1 = arguments[0]
     if (r1 === undefined) goto label_37;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 33 | <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 8, Reg8: 7>
@@ -80,7 +79,6 @@ function defaultWithRestTest() {
     // CODE → addr:126 | <Inc>: <Reg8: 2, Reg8: 2>
     r2 = r2 + 1
     // CODE → addr:129 | <JLess>: <Addr8: -15, Reg8: 2, Reg8: 3>  # Address: 00000072
-    // → r2 = r2 + 1
     if (r2 < r3) goto label_114;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:133 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)

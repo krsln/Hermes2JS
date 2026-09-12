@@ -17,13 +17,11 @@ function forInTest() {
     // CODE → addr: 31 | <GetPNameList>: <Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
     r6 = HermesPropertyIterator(r5)
     // CODE → addr: 36 | <JmpUndefined>: <Addr8: 38, Reg8: 6>  # Address: 0000004a
-    // → r6 = HermesPropertyIterator(r5)
     if (r6 === undefined) goto label_74;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 39 | <GetNextPName>: <Reg8: 4, Reg8: 6, Reg8: 5, Reg8: 0, Reg8: 1>
     r4 = r6.next()
     // CODE → addr: 45 | <JmpUndefined>: <Addr8: 29, Reg8: 4>  # Address: 0000004a
-    // → r4 = r6.next()
     if (r4 === undefined) goto label_74;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 48 | <Mov>: <Reg8: 11, Reg8: 4>

@@ -31,7 +31,6 @@ function whileTest() {
         console.log("while", r1)
         // CODE → addr: 58 | <Mov>: <Reg8: 2, Reg8: 1>
         r2 = r1
-        // → r2 = r1
         if (r2 === 2) {
             // ──────────────── Block 3 ──────────────── 
             // CODE → addr: 71 | <TryGetById>: <Reg8: 11, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

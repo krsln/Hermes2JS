@@ -68,7 +68,6 @@ function spreadArrayTest() {
     // USED → r6 = r3 === undefined;
     // CODE → addr:147 | <LoadConstUndefined>: <Reg8: 5>
     r5 = undefined
-    // → r3 = GetIterator(r7)
     if (r3 !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr:152 | <Mov>: <Reg8: 5, Reg8: 4>
@@ -82,7 +81,6 @@ function spreadArrayTest() {
     if (r3 !== undefined) {
         try {
             // LOOP → START (while)
-            // → r6 = r6 === undefined
             while (!r6) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr:167 | <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>

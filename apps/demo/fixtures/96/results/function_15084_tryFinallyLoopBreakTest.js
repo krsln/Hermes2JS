@@ -28,10 +28,8 @@ function tryFinallyLoopBreakTest(param1) {
         r2 = r2.length
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 4, string_id: 4735>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
         // USED → r4 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item";
-        // → r2 = r2.length
         if (0 < r2) {
             // LOOP → START (for)
-            // → r2 = param1[r2]; r3 = param1
             for (; r3 < r2; r3 = r3 + 1) {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → addr: 49 | <Mov>: <Reg8: 3, Reg8: 6>
@@ -40,7 +38,6 @@ function tryFinallyLoopBreakTest(param1) {
                 r2 = r7
                 // CODE → addr: 55 | <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
                 r2 = param1[r2]
-                // → r2 = param1[r2]
                 if (r2 !== 0) {
                     // ──────────────── Block 2 ──────────────── 
                     // CODE → addr: 63 | <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

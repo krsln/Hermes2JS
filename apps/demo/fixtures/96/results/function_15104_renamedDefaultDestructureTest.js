@@ -22,7 +22,6 @@ function renamedDefaultDestructureTest() {
     r5 = 1000
     // CODE → addr: 47 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // → r3 = r2.timeout
     if (r3 !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 53 | <Mov>: <Reg8: 5, Reg8: 3>
@@ -33,7 +32,6 @@ function renamedDefaultDestructureTest() {
     r2 = r2.retries
     // CODE → addr: 62 | <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
     r4 = 3
-    // → r2 = r2.retries
     if (r2 !== undefined) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 69 | <Mov>: <Reg8: 4, Reg8: 2>

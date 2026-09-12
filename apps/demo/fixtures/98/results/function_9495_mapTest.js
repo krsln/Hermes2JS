@@ -86,7 +86,6 @@ function mapTest() {
     r5 = GetIterator(r3)
     try {
         // LOOP → START (while)
-        // → r8 = new Map()
         while (!(r8 === undefined)) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr:186 | <Mov>: <Reg8: 8, Reg8: 3>
@@ -106,7 +105,6 @@ function mapTest() {
             r9 = r9 === undefined
             // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 10>
             r10 = undefined
-            // → r9 = r9 === undefined
             if (!r9) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr:225 | <Mov>: <Reg8: 10, Reg8: 12>

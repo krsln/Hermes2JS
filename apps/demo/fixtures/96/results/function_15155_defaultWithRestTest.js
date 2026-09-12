@@ -14,7 +14,6 @@ function defaultWithRestTest() {
     // USED → r6 = 1;
     // CODE → addr: 16 | <Mov>: <Reg8: 5, Reg8: 6>
     r5 = 1
-    // → r1 = arguments.length > 0
     if (arguments.length > 0 && r1 !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 22 | <GetArgumentsPropByVal>: <Reg8: 1, Reg8: 8, Reg8: 7>
@@ -73,7 +72,6 @@ function defaultWithRestTest() {
             new Array((arguments.length <= 1) ? 0 : arguments.length - 1)[r9] = arguments[r2]
             // CODE → addr:126 | <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
-        // → r2 = r2 + 1
         } while (r2 < r3);
         // LOOP → END
     }

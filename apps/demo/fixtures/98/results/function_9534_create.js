@@ -16,7 +16,6 @@ function create(param1) {
     // USED → r5 = r0[2];
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 2, Reg8: 5, UInt8: 2>
     r2 = CreateThisForNew(r5)
-    // → r0 = getParentEnvironment(0)
     if (typeof r0[2] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 7, string_id: 4299>  # String: 'Trying to call a non-function' (String)

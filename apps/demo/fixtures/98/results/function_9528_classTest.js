@@ -16,7 +16,6 @@ function classTest() {
     // USED → r3 = r2[0];
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 2>
     r4 = CreateThisForNew(r3)
-    // → r2 = getParentEnvironment(0)
     if (typeof r2[0] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)

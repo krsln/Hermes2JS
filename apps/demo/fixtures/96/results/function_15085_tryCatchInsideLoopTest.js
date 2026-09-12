@@ -30,10 +30,8 @@ function tryCatchInsideLoopTest(param1) {
     // USED → r5 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught";
     // CODE → addr: 47 | <LoadConstString>: <Reg8: 4, string_id: 4701>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok";
-    // → r2 = param1.length
     if (0 < r2) {
         // LOOP → START (for)
-        // → r2 = param1[r2]; r3 = param1
         for (; r3 < r2; r3 = r2 + 1) {
             try {
                 // ──────────────── Block 1 ──────────────── 
@@ -43,7 +41,6 @@ function tryCatchInsideLoopTest(param1) {
                 r2 = r8
                 // CODE → addr: 64 | <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
                 r2 = param1[r2]
-                // → r2 = param1[r2]
                 if (r2 < 0) {
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → addr:101 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 4, string_id: 12>  # String: 'Error' (Identifier)

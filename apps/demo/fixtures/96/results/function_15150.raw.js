@@ -30,7 +30,6 @@ function closureLoopTest() {
     // CODE → addr: 49 | <Inc>: <Reg8: 3, Reg8: 3>
     r3 = r3 + 1
     // CODE → addr: 52 | <JLess>: <Addr8: -8, Reg8: 3, Reg8: 2>  # Address: 0000002c
-    // → r3 = r3 + 1
     if (r3 < 3) goto label_44;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 56 | <Mov>: <Reg8: 2, Reg8: 4>
@@ -43,7 +42,6 @@ function closureLoopTest() {
     // CODE → addr: 66 | <Mov>: <Reg8: 5, Reg8: 3>
     r5 = r3
     // CODE → addr: 69 | <JStrictEqual>: <Addr8: 33, Reg8: 5, Reg8: 0>  # Address: 00000066
-    // → r5 = r3
     if (r5 === undefined) goto label_102;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 73 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

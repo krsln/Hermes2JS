@@ -37,7 +37,6 @@ function complexTest() {
     // CODE → addr: 71 | <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
     // USED → r4 = 2;
     // CODE → addr: 74 | <JmpFalseLong>: <Addr32: 143, Reg8: 5>  # Address: 000000d9
-    // → r14 = [1, 2, 3, 4, 5]
     if (!(0 < r14.length)) goto label_217;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 80 | <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
@@ -45,7 +44,6 @@ function complexTest() {
     // CODE → addr: 84 | <Mov>: <Reg8: 1, Reg8: 0>
     r1 = r0
     // CODE → addr: 87 | <JStrictEqual>: <Addr8: 98, Reg8: 2, Reg8: 7>  # Address: 000000b9
-    // → r7 = r14[r0]
     if (1 === r7) goto label_185;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 91 | <JStrictEqual>: <Addr8: 76, Reg8: 4, Reg8: 7>  # Address: 000000a7
@@ -105,7 +103,6 @@ function complexTest() {
     // CODE → addr:205 | <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     r7 = r14.length
     // CODE → addr:210 | <JLessLong>: <Addr32: -130, Reg8: 0, Reg8: 7>  # Address: 00000050
-    // → r0 = r1 + 1; r7 = r14.length
     if (r0 < r7) goto label_80;
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr:217 | <TryGetById>: <Reg8: 8, Reg8: 6, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

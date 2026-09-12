@@ -53,7 +53,6 @@ function restAfterRequiredTest(param1, param2) {
             new Array((arguments.length <= 2) ? 0 : arguments.length - 2)[r8] = arguments[r2]
             // CODE → addr: 96 | <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
-        // → r2 = r2 + 1
         } while (r2 < r4);
         // LOOP → END
     }

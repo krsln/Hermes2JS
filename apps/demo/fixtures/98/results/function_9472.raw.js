@@ -25,7 +25,6 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr: 38 | <LoadConstString>: <Reg8: 4, string_id: 4894>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item";
     // CODE → addr: 42 | <JNotLess>: <Addr8: 54, Reg8: 5, Reg8: 2>  # Address: 00000060
-    // → r2 = param1.length
     if (!(0 < r2)) goto label_96;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 46 | <Mov>: <Reg8: 2, Reg8: 7>
@@ -33,7 +32,6 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr: 49 | <GetByVal>: <Reg8: 2, Reg8: 6, Reg8: 2>
     r2 = param1[r2]
     // CODE → addr: 53 | <JStrictEqual>: <Addr8: 43, Reg8: 2, Reg8: 5>  # Address: 00000060
-    // → r2 = param1[r2]
     if (r2 === 0) goto label_96;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 57 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -53,7 +51,6 @@ function tryFinallyLoopBreakTest(param1) {
     // CODE → addr: 87 | <GetByIdShort>: <Reg8: 2, Reg8: 6, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
     r2 = param1.length
     // CODE → addr: 92 | <JLess>: <Addr8: -46, Reg8: 3, Reg8: 2>  # Address: 0000002e
-    // → r2 = param1.length; r3 = r2 + 1
     if (r3 < r2) goto label_46;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 96 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

@@ -21,7 +21,6 @@ function nestedObjectDestructureTest() {
     // CODE → addr: 45 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr: 47 | <JStrictNotEqual>: <Addr8: 7, Reg8: 5, Reg8: 1>  # Address: 00000036
-    // → r5 = r3.page
     if (r5 !== undefined) goto label_54;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 51 | <LoadConstUInt8>: <Reg8: 5, UInt8: 1>

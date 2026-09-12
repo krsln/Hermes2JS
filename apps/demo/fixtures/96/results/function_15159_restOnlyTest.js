@@ -44,7 +44,6 @@ function restOnlyTest() {
             new Array(arguments.length)[r2] = arguments[r2]
             // CODE → addr: 75 | <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
-        // → r2 = r2 + 1
         } while (r2 < r3);
         // LOOP → END
     }

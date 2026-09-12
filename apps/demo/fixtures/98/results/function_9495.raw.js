@@ -92,7 +92,6 @@ function mapTest() {
     // CODE → addr:193 | <Mov>: <Reg8: 8, Reg8: 5>
     r8 = r5
     // CODE → addr:196 | <JStrictEqual>: <Addr8: 106, Reg8: 8, Reg8: 0>  # Address: 0000012e
-    // → r8 = r5
     if (r8 === undefined) goto label_302;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:200 | <Mov>: <Reg8: 11, Reg8: 9>
@@ -110,7 +109,6 @@ function mapTest() {
     // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 10>
     r10 = undefined
     // CODE → addr:222 | <JmpTrue>: <Addr8: 6, Reg8: 9>  # Address: 000000e4
-    // → r9 = r9 === undefined
     if (r9) goto label_228;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:225 | <Mov>: <Reg8: 10, Reg8: 12>
@@ -134,7 +132,6 @@ function mapTest() {
     // CODE → addr:249 | <Mov>: <Reg8: 9, Reg8: 11>
     r9 = r11
     // CODE → addr:252 | <JmpTrue>: <Addr8: 9, Reg8: 11>  # Address: 00000105
-    // → r11 = r11 === undefined
     if (r11) goto label_261;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:255 | <Mov>: <Reg8: 10, Reg8: 12>

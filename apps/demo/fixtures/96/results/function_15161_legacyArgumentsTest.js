@@ -44,7 +44,6 @@ function legacyArgumentsTest() {
             r3 = r3 + 1
             // CODE → addr: 80 | <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
             r2 = arguments.length
-        // → r2 = arguments.length; r3 = r3 + 1
         } while (r3 < r2);
         // LOOP → END
     }

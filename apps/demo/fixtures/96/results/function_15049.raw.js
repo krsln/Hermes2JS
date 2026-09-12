@@ -24,7 +24,6 @@ function doWhileTest() {
     // CODE → addr: 43 | <Inc>: <Reg8: 2, Reg8: 2>
     r2 = r2 + 1
     // CODE → addr: 46 | <JLess>: <Addr8: -19, Reg8: 2, Reg8: 1>  # Address: 0000001b
-    // → r2 = r2 + 1
     if (r2 < 5) goto label_27;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 50 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

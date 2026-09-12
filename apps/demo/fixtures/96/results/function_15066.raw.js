@@ -29,7 +29,6 @@ function labeledContinueTest() {
     // CODE → addr: 43 | <Mov>: <Reg8: 9, Reg8: 8>
     r9 = r8
     // CODE → addr: 46 | <JStrictEqual>: <Addr8: 46, Reg8: 9, Reg8: 2>  # Address: 0000005c
-    // → r9 = r8
     if (r9 === 1) goto label_92;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 50 | <TryGetById>: <Reg8: 11, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -41,7 +40,6 @@ function labeledContinueTest() {
     // CODE → addr: 67 | <Inc>: <Reg8: 8, Reg8: 9>
     r8 = r9 + 1
     // CODE → addr: 70 | <JLess>: <Addr8: -27, Reg8: 8, Reg8: 5>  # Address: 0000002b
-    // → r8 = r9 + 1
     if (r8 < 3) goto label_43;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 74 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -63,7 +61,6 @@ function labeledContinueTest() {
     // CODE → addr:108 | <Inc>: <Reg8: 1, Reg8: 7>
     r1 = r7 + 1
     // CODE → addr:111 | <JLess>: <Addr8: -73, Reg8: 1, Reg8: 5>  # Address: 00000026
-    // → r1 = r7 + 1
     if (r1 < 3) goto label_38;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:115 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

@@ -23,7 +23,6 @@ function tryLoopMultiReturnTest(param1) {
         // CODE → addr: 31 | <LoadConstString>: <Reg8: 1, string_id: 4747>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive";
         // LOOP → START (while)
-        // → r5 = r5.length
         while (!(r6 >= r5)) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 38 | <Mov>: <Reg8: 5, Reg8: 3>
@@ -37,7 +36,6 @@ function tryLoopMultiReturnTest(param1) {
             r5 = r4
             // CODE → addr: 56 | <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
             r5 = param1[r5]
-            // → r5 = param1[r5]
             if (r5 < 0) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → addr:118 | <LoadConstTrue>: <Reg8: 1>
@@ -52,7 +50,6 @@ function tryLoopMultiReturnTest(param1) {
             r5 = r4
             // CODE → addr: 70 | <GetByVal>: <Reg8: 5, Reg8: 6, Reg8: 5>
             r5 = param1[r5]
-            // → r5 = param1[r5]
             if (r5 === 0) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → addr:110 | <Mov>: <Reg8: 5, Reg8: 4>

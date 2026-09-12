@@ -41,7 +41,6 @@ function tripleNestedLabeledTest() {
                 r3 = r0 + 1
                 // CODE → addr: 55 | <Mov>: <Reg8: 4, Reg8: 1>
                 r4 = r1
-                // → r4 = r1
                 if (r4 === 1) {
                     // ──────────────── Block 10 ──────────────── 
                     // CODE → addr:  0 | ContinueStatement

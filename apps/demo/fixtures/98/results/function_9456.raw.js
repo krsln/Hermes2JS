@@ -39,13 +39,11 @@ function labeledBreakTest() {
     // CODE → addr: 63 | <AddN>: <Reg8: 0, Reg8: 1, Reg8: 3>
     r0 = r1 + 1
     // CODE → addr: 67 | <JLessN>: <Addr8: -32, Reg8: 0, Reg8: 6>  # Address: 00000023
-    // → r0 = r1 + 1
     if (r0 < 3) goto label_35;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 71 | <AddN>: <Reg8: 4, Reg8: 2, Reg8: 3>
     r4 = r2 + 1
     // CODE → addr: 75 | <JLessN>: <Addr8: -45, Reg8: 4, Reg8: 6>  # Address: 0000001e
-    // → r4 = r2 + 1
     if (r4 < 3) goto label_30;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 79 | <Jmp>: <Addr8: 22>  # Address: 00000065

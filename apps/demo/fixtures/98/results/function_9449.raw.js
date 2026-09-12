@@ -26,7 +26,6 @@ function forTest() {
     // CODE → addr: 40 | <Mov>: <Reg8: 1, Reg8: 0>
     r1 = r0
     // CODE → addr: 43 | <JStrictEqual>: <Addr8: 48, Reg8: 1, Reg8: 5>  # Address: 0000005b
-    // → r1 = r0
     if (r1 === 3) goto label_91;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 47 | <JStrictEqual>: <Addr8: 22, Reg8: 1, Reg8: 4>  # Address: 00000045
@@ -62,7 +61,6 @@ function forTest() {
     // CODE → addr:107 | <AddN>: <Reg8: 0, Reg8: 1, Reg8: 2>
     r0 = r1 + 1
     // CODE → addr:111 | <JLessN>: <Addr8: -71, Reg8: 0, Reg8: 3>  # Address: 00000028
-    // → r0 = r1 + 1
     if (r0 < 10) goto label_40;
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:115 | <TryGetById>: <Reg8: 9, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

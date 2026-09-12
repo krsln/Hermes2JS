@@ -9,7 +9,6 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr: 13 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr: 15 | <JStrictNotEqual>: <Addr8: 8, Reg8: 8, Reg8: 1>  # Address: 00000017
-    // → r8 = param1.name
     if (r8 !== undefined) goto label_23;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 19 | <LoadConstString>: <Reg8: 8, string_id: 514>  # String: 'anon' (String)
@@ -30,7 +29,6 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr: 43 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → addr: 45 | <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000033
-    // → r3 = GetIterator(param2)
     if (r3 === undefined) goto label_51;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 48 | <Mov>: <Reg8: 7, Reg8: 5>

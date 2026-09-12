@@ -32,7 +32,6 @@ function nestedLoopTest() {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 49 | <Mov>: <Reg8: 11, Reg8: 10>
             r11 = r10
-            // → r11 = r10
             if (r9 === 1 && r11 === 2) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 60 | <TryGetById>: <Reg8: 13, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

@@ -22,7 +22,6 @@ function forOfTest() {
     // CODE → addr: 39 | <Mov>: <Reg8: 4, Reg8: 3>
     r4 = r3
     // CODE → addr: 42 | <JStrictEqual>: <Addr8: 29, Reg8: 4, Reg8: 0>  # Address: 00000047
-    // → r4 = r3
     if (r4 === undefined) goto label_71;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 46 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

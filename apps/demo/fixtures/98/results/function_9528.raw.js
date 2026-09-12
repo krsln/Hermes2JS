@@ -17,7 +17,6 @@ function classTest() {
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 2>
     r4 = CreateThisForNew(r3)
     // CODE → addr: 33 | <JmpTypeOfIs>: <Addr32: 16, Reg8: 3, UInt16: 128>  # Address: 00000031
-    // → r2 = getParentEnvironment(0)
     if (typeof r2[0] === "function") goto label_49;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 41 | <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)

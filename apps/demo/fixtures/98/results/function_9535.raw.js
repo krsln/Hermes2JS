@@ -17,7 +17,6 @@ function privateStaticTest() {
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
     r6 = CreateThisForNew(r4)
     // CODE → addr: 33 | <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000031
-    // → r5 = getParentEnvironment(0)
     if (typeof r5[0] === "function") goto label_49;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 41 | <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
@@ -34,7 +33,6 @@ function privateStaticTest() {
     // CODE → addr: 61 | <PrivateIsIn>: <Reg8: 1, Reg8: 12, Reg8: 9, Reg8: 0>
     // USED → r1 = r5[5] in r9;
     // CODE → addr: 66 | <JmpTrueLong>: <Addr32: 329, Reg8: 1>  # Address: 0000018b
-    // → r9 = Object.create(r4.prototype)
     if (r5[5] in r9) goto label_395;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 72 | <LoadConstUndefined>: <Reg8: 1>
@@ -82,7 +80,6 @@ function privateStaticTest() {
     // CODE → addr:157 | <PrivateIsIn>: <Reg8: 2, Reg8: 12, Reg8: 6, Reg8: 2>
     // USED → r2 = r5[5] in r6;
     // CODE → addr:162 | <JmpTrueLong>: <Addr32: 225, Reg8: 2>  # Address: 00000183
-    // → r6 = Object.create(r4.prototype)
     if (r5[5] in r6) goto label_387;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:168 | <AddOwnPrivateBySym>: <Reg8: 6, Reg8: 1, Reg8: 12>

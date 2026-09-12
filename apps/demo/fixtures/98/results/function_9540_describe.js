@@ -18,7 +18,6 @@ function describe() {
     // USED → r4 = r2[5];
     // CODE → addr: 32 | <PrivateIsIn>: <Reg8: 0, Reg8: 4, Reg8: 3, Reg8: 0>
     // USED → r0 = r2[5] in this;
-    // → r2 = getParentEnvironment(0)
     if (!(r2[5] in this)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 40 | <LoadConstString>: <Reg8: 7, string_id: 3847>  # String: 'Private element not found' (String)

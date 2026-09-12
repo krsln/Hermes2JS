@@ -31,7 +31,6 @@ function closureLoopTest() {
         r6 = _loop(param1).call(undefined, r3)
         // CODE → addr: 49 | <Inc>: <Reg8: 3, Reg8: 3>
         r3 = r3 + 1
-    // → r3 = r3 + 1
     } while (r3 < 3);
     // LOOP → END
     // ──────────────── Block 2 ──────────────── 

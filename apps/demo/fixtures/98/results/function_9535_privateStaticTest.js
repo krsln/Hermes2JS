@@ -16,7 +16,6 @@ function privateStaticTest() {
     // USED → r4 = r5[0];
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
     r6 = CreateThisForNew(r4)
-    // → r5 = getParentEnvironment(0)
     if (typeof r5[0] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
@@ -33,7 +32,6 @@ function privateStaticTest() {
     // USED → r12 = r5[5];
     // CODE → addr: 61 | <PrivateIsIn>: <Reg8: 1, Reg8: 12, Reg8: 9, Reg8: 0>
     // USED → r1 = r5[5] in r9;
-    // → r9 = Object.create(r4.prototype)
     if (r5[5] in r9) {
         // ──────────────── Block 8 ──────────────── 
         // CODE → addr:395 | <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
@@ -86,7 +84,6 @@ function privateStaticTest() {
         r6 = Object.create(r4.prototype)
         // CODE → addr:157 | <PrivateIsIn>: <Reg8: 2, Reg8: 12, Reg8: 6, Reg8: 2>
         // USED → r2 = r5[5] in r6;
-        // → r6 = Object.create(r4.prototype)
         if (r5[5] in r6) {
             // ──────────────── Block 7 ──────────────── 
             // CODE → addr:387 | <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)

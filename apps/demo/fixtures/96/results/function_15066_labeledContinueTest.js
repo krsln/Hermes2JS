@@ -29,7 +29,6 @@ function labeledContinueTest() {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 43 | <Mov>: <Reg8: 9, Reg8: 8>
             r9 = r8
-            // → r9 = r8
             if (r9 === 1) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → addr: 92 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

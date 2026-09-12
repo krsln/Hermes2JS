@@ -36,10 +36,8 @@ function complexTest() {
     // USED → r3 = 3;
     // CODE → addr: 71 | <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
     // USED → r4 = 2;
-    // → r14 = [1, 2, 3, 4, 5]
     if (0 < r14.length) {
         // LOOP → START (for)
-        // → r7 = r14[r0]
         for (; r0 < r7; r0 = r1 + 1) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 80 | <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>

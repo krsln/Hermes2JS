@@ -17,7 +17,6 @@ function renamedDefaultDestructureTest() {
     // CODE → addr: 34 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr: 36 | <JStrictNotEqual>: <Addr8: 10, Reg8: 6, Reg8: 1>  # Address: 0000002e
-    // → r6 = r3.timeout
     if (r6 !== undefined) goto label_46;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 40 | <LoadConstInt>: <Reg8: 6, Imm32: 1000>
@@ -26,7 +25,6 @@ function renamedDefaultDestructureTest() {
     // CODE → addr: 46 | <GetById>: <Reg8: 5, Reg8: 3, UInt8: 3, string_id: 9071>  # String: 'retries' (Identifier)
     r5 = r3.retries
     // CODE → addr: 52 | <JStrictNotEqual>: <Addr8: 7, Reg8: 5, Reg8: 1>  # Address: 0000003b
-    // → r5 = r3.retries
     if (r5 !== undefined) goto label_59;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 56 | <LoadConstUInt8>: <Reg8: 5, UInt8: 3>

@@ -62,7 +62,6 @@ function propertyAccessTest() {
     // CODE → addr:137 | <Mov>: <Reg8: 5, Reg8: 3>
     r5 = r3
     // CODE → addr:140 | <JStrictEqual>: <Addr8: 37, Reg8: 5, Reg8: 0>  # Address: 000000b1
-    // → r5 = r3
     if (r5 === undefined) goto label_177;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:144 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

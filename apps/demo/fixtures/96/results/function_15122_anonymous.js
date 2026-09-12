@@ -54,7 +54,6 @@ function function_15122(param1, param2, param3, param4, param5, param6, param7) 
     // USED → r0 = undefined;
     // CODE → addr:107 | <Call2>: <Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 3>
     r4 = param2.call(undefined, r3)
-    // → r4 = param2.call(undefined, r3)
     if (!r4) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:126 | <NewObject>: <Reg8: 3>

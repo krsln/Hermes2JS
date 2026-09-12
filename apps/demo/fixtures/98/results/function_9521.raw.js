@@ -30,7 +30,6 @@ function callGeneratorTests() {
     // CODE → addr: 48 | <Mov>: <Reg8: 5, Reg8: 4>
     r5 = r4
     // CODE → addr: 51 | <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000050
-    // → r5 = r4
     if (r5 === undefined) goto label_80;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 55 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -67,7 +66,6 @@ function callGeneratorTests() {
     // CODE → addr:105 | <Mov>: <Reg8: 5, Reg8: 4>
     r5 = r4
     // CODE → addr:108 | <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 00000089
-    // → r5 = r4
     if (r5 === undefined) goto label_137;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:112 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

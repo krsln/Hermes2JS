@@ -55,7 +55,6 @@ function function_15122(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:107 | <Call2>: <Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 3>
     r4 = param2.call(undefined, r3)
     // CODE → addr:112 | <JmpFalse>: <Addr8: 14, Reg8: 4>  # Address: 0000007e
-    // → r4 = param2.call(undefined, r3)
     if (!r4) goto label_126;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr:115 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 48>  # String: '__esModule' (Identifier)

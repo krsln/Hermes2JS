@@ -20,7 +20,6 @@ from hermes_decompiler.ir.expressions import (
 )
 from .ExpressionPrinter import ExpressionPrinter
 from .StatementPrinter import StatementPrinter
-from ._ConditionComment import ConditionCommentPrinter
 from ._PrinterContext import PrinterContext
 
 __all__ = [
@@ -41,12 +40,10 @@ class RegionPrinter:
             context: PrinterContext,
             expressions: ExpressionPrinter,
             statements: StatementPrinter,
-            condition_comments: ConditionCommentPrinter,
     ) -> None:
         self.ctx = context
         self.expressions = expressions
         self.statements = statements
-        self.condition_comments = condition_comments
 
     def print(self, region) -> list[str]:
         """Render one structured region tree."""
@@ -121,13 +118,6 @@ class RegionPrinter:
                 continue
 
             if instruction.terminator is not None:
-                self.condition_comments.emit(
-                    getattr(instruction.terminator, "condition", None),
-                    lines,
-                    source_block=block,
-                    before_index=index,
-                )
-
                 self.ctx.write(lines, self.statements.print(instruction.terminator))
                 continue
 
@@ -178,11 +168,6 @@ class RegionPrinter:
         nested braces – matching the original source style.
         """
         condition = self.expressions.print(region.condition)
-
-        self.condition_comments.emit(
-            region.condition, lines,
-            source_block=self._nearest_preceding_block(region),
-        )
 
         if _chain:
             self.ctx.write(lines, f"}} else if ({condition}) {{")
@@ -419,11 +404,6 @@ class RegionPrinter:
 
         update = self._render_for_component(region.update)
 
-        self.condition_comments.emit(
-            region.condition, lines,
-            source_block=self._condition_source_block(region, is_do_while=False),
-        )
-
         self.ctx.write(lines, f"for ({initializer}; {condition}; {update}) {{")
 
         with self.ctx.indented():
@@ -465,11 +445,6 @@ class RegionPrinter:
             else "true"
         )
 
-        self.condition_comments.emit(
-            region.condition, lines,
-            source_block=self._condition_source_block(region, is_do_while=False),
-        )
-
         self.ctx.write(lines, f"while ({condition}) {{")
 
         with self.ctx.indented():
@@ -491,11 +466,6 @@ class RegionPrinter:
                 region.body,
                 lines,
             )
-
-        self.condition_comments.emit(
-            region.condition, lines,
-            source_block=self._condition_source_block(region, is_do_while=True),
-        )
 
         self.ctx.write(lines, f"}} while ({condition});", )
 

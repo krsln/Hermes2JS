@@ -44,7 +44,6 @@ function tryCatchInsideLoopTest(param1) {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → addr: 66 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 2>
                 r12 = param1[r2]
-                // → r12 = param1[r2]
                 if (r12 < 0) {
                     // ──────────────── Block 3 ──────────────── 
                     // CODE → addr:100 | <TryGetById>: <Reg8: 13, Reg8: 1, UInt8: 3, string_id: 9>  # String: 'Error' (Identifier)

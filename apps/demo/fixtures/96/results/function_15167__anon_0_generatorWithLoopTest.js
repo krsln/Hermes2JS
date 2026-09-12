@@ -22,7 +22,6 @@ function* anon_15167(param1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 48 | <Mov>: <Reg8: 6, Reg8: 4>
             r6 = r4
-            // → r6 = r4
             if (r6 === 2) {
                 // ──────────────── Block 7 ──────────────── 
                 // CODE → addr: 72 | <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

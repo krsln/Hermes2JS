@@ -28,7 +28,6 @@ function optionalChainingTest() {
     // USED → r0 = undefined;
     // CODE → addr: 45 | <LoadConstUndefined>: <Reg8: 4>
     r4 = undefined
-    // → r3 = {  }
     if (r3 != null) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 50 | <GetById>: <Reg8: 3, Reg8: 3, UInt8: 3, string_id: 7189>  # String: 'a' (Identifier)
@@ -37,7 +36,6 @@ function optionalChainingTest() {
         // USED → r5 = r3.a == null;
         // CODE → addr: 60 | <LoadConstUndefined>: <Reg8: 4>
         r4 = undefined
-        // → r3 = r3.a
         if (r3.a != null) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 65 | <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 38>  # String: 'b' (Identifier)
@@ -46,7 +44,6 @@ function optionalChainingTest() {
             // USED → r5 = r3.b == null;
             // CODE → addr: 74 | <LoadConstUndefined>: <Reg8: 4>
             r4 = undefined
-            // → r3 = r3.b
             if (r3.b != null) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr: 79 | <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 7241>  # String: 'c' (Identifier)

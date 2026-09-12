@@ -45,7 +45,6 @@ function nestedObjectDestructureTest() {
     // CODE → addr: 96 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 98 | <JStrictNotEqual>: <Addr8: 6, Reg8: 2, Reg8: 0>  # Address: 00000068
-    // → r2 = r0.meta
     if (r2 !== undefined) goto label_104;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr:102 | <NewObject>: <Reg8: 2>
@@ -54,7 +53,6 @@ function nestedObjectDestructureTest() {
     // CODE → addr:104 | <GetById>: <Reg8: 2, Reg8: 2, UInt8: 8, string_id: 12920>  # String: 'page' (Identifier)
     r2 = r2.page
     // CODE → addr:110 | <JStrictEqual>: <Addr8: 7, Reg8: 2, Reg8: 0>  # Address: 00000075
-    // → r2 = r2.page
     if (r2 === undefined) goto label_117;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:114 | <Mov>: <Reg8: 6, Reg8: 2>

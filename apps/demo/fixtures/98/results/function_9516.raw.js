@@ -52,7 +52,6 @@ function legacyArgumentsTest() {
     // CODE → addr: 93 | <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
     r6 = arguments.length
     // CODE → addr: 96 | <JLess>: <Addr8: -30, Reg8: 0, Reg8: 6>  # Address: 00000042
-    // → r0 = r0 + 1; r6 = arguments.length
     if (r0 < r6) goto label_66;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:100 | <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

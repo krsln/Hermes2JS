@@ -33,7 +33,6 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     try {
         if (0 < r2) {
             // LOOP → START (for)
-            // → r2 = param1[r2]; r4 = param1
             for (; r4 < r2; r4 = r2 + 1) {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → addr: 60 | <Mov>: <Reg8: 4, Reg8: 8>
@@ -42,7 +41,6 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                 r2 = r9
                 // CODE → addr: 66 | <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
                 r2 = param1[r2]
-                // → r2 = param1[r2]
                 if (r2 < 0) {
                     // ──────────────── Block 7 ──────────────── 
                     // CODE → addr:188 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -63,7 +61,6 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                 r2 = r9
                 // CODE → addr: 80 | <GetByVal>: <Reg8: 2, Reg8: 4, Reg8: 2>
                 r2 = param1[r2]
-                // → r2 = param1[r2]
                 if (r2 === 0) {
                     // ──────────────── Block 4 ──────────────── 
                     // CODE → addr:133 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

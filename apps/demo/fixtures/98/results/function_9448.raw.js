@@ -26,7 +26,6 @@ function doWhileTest() {
     // CODE → addr: 46 | <AddN>: <Reg8: 0, Reg8: 0, Reg8: 1>
     r0 = r0 + 1
     // CODE → addr: 50 | <JLessN>: <Addr8: -20, Reg8: 0, Reg8: 2>  # Address: 0000001e
-    // → r0 = r0 + 1
     if (r0 < 5) goto label_30;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 54 | <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

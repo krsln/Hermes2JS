@@ -16,7 +16,6 @@ function renamedDefaultDestructureTest() {
     r6 = r3.timeout
     // CODE → addr: 34 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
-    // → r6 = r3.timeout
     if (r6 === undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 40 | <LoadConstInt>: <Reg8: 6, Imm32: 1000>

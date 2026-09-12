@@ -49,7 +49,6 @@ function tag(param1) {
             new Array((arguments.length <= 1) ? 0 : arguments.length - 1)[r9] = arguments[r2]
             // CODE → addr: 83 | <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
-        // → r2 = r2 + 1
         } while (r2 < r6);
         // LOOP → END
     }

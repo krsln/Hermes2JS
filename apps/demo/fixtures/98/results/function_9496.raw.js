@@ -62,7 +62,6 @@ function setTest() {
     // CODE → addr:129 | <Mov>: <Reg8: 5, Reg8: 4>
     r5 = r4
     // CODE → addr:132 | <JStrictEqual>: <Addr8: 29, Reg8: 5, Reg8: 0>  # Address: 000000a1
-    // → r5 = r4
     if (r5 === undefined) goto label_161;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:136 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

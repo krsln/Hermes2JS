@@ -47,7 +47,6 @@ function nestedArrayDestructureTest() {
     // CODE → addr: 90 | <LoadConstUndefined>: <Reg8: 5>
     r5 = undefined
     // CODE → addr: 92 | <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000062
-    // → r1 = GetIterator(r6)
     if (r1 === undefined) goto label_98;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 95 | <Mov>: <Reg8: 5, Reg8: 2>
@@ -68,7 +67,6 @@ function nestedArrayDestructureTest() {
     // CODE → addr:118 | <LoadConstUndefined>: <Reg8: 9>
     r9 = undefined
     // CODE → addr:120 | <JmpTrue>: <Addr8: 6, Reg8: 5>  # Address: 0000007e
-    // → r2 = GetIterator(r11)
     if (r2 === undefined) goto label_126;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:123 | <Mov>: <Reg8: 9, Reg8: 12>
@@ -161,7 +159,6 @@ function nestedArrayDestructureTest() {
     // CODE → addr:241 | <LoadConstUndefined>: <Reg8: 11>
     r11 = undefined
     // CODE → addr:243 | <JmpTrue>: <Addr8: 28, Reg8: 9>  # Address: 0000010f
-    // → r6 = GetIterator(r12)
     if (r6 === undefined) goto label_271;
     // ──────────────── Block 15 ──────────────── 
     // CODE → addr:246 | <IteratorNext>: <Reg8: 13, Reg8: 6, Reg8: 12>
@@ -221,7 +218,6 @@ function nestedArrayDestructureTest() {
     // CODE → addr:333 | <StrictEq>: <Reg8: 9, Reg8: 8, Reg8: 3>
     // USED → r9 = r7 === undefined;
     // CODE → addr:337 | <JmpTrue>: <Addr8: 10, Reg8: 9>  # Address: 0000015b
-    // → r7 = GetIterator(r17)
     if (r7 === undefined) goto label_347;
     // ──────────────── Block 22 ──────────────── 
     // CODE → addr:340 | <Mov>: <Reg8: 12, Reg8: 0>
@@ -266,7 +262,6 @@ function nestedArrayDestructureTest() {
     // CODE → addr:392 | <Mov>: <Reg8: 11, Reg8: 8>
     r11 = r7 === undefined
     // CODE → addr:395 | <JStrictNotEqual>: <Addr8: 15, Reg8: 0, Reg8: 3>  # Address: 0000019a
-    // → r0 = r13
     if (r0 !== undefined) goto label_410;
     // ──────────────── Block 28 ──────────────── 
     // CODE → addr:399 | <LoadConstZero>: <Reg8: 12>
@@ -303,7 +298,6 @@ function nestedArrayDestructureTest() {
     // CODE → addr:439 | <Mov>: <Reg8: 18, Reg8: 16>
     r18 = r16
     // CODE → addr:442 | <JmpTrue>: <Addr8: 20, Reg8: 11>  # Address: 000001ce
-    // → r11 = r11 === undefined
     if (r11) goto label_462;
     // ──────────────── Block 32 ──────────────── 
     // CODE → addr:445 | <PutByValStrict>: <Reg8: 13, Reg8: 18, Reg8: 19>

@@ -56,7 +56,6 @@ function setTest() {
     // USED → r0 = undefined;
     try {
         // LOOP → START (while)
-        // → r5 = new Set([1, 2, 2, 3, 3, 3])
         while (!(r5 === undefined)) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr:122 | <Mov>: <Reg8: 5, Reg8: 2>

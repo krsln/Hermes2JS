@@ -57,7 +57,6 @@ function callDestructuringTests() {
     r5 = { "timeout": 500 }
     // CODE → addr:141 | <GetById>: <Reg8: 9, Reg8: 5, UInt8: 4, string_id: 8581>  # String: 'timeout' (Identifier)
     r9 = r5.timeout
-    // → r9 = r5.timeout
     if (r9 === undefined) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:151 | <LoadConstInt>: <Reg8: 9, Imm32: 1000>
@@ -188,7 +187,6 @@ function callDestructuringTests() {
     // USED → r1 = r5 === undefined || r5 === undefined;
     // CODE → addr:442 | <LoadConstUndefined>: <Reg8: 8>
     r8 = undefined
-    // → r5 = GetIterator(r6)
     if (r5 !== undefined) {
         // ──────────────── Block 16 ──────────────── 
         // CODE → addr:447 | <Mov>: <Reg8: 8, Reg8: 7>

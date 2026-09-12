@@ -54,7 +54,6 @@ function tag(param1) {
     // CODE → addr: 83 | <Inc>: <Reg8: 2, Reg8: 2>
     r2 = r2 + 1
     // CODE → addr: 86 | <JLess>: <Addr8: -15, Reg8: 2, Reg8: 6>  # Address: 00000047
-    // → r2 = r2 + 1
     if (r2 < r6) goto label_71;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 90 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 3, string_id: 99>  # String: 'console' (Identifier)

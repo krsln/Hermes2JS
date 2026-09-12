@@ -22,7 +22,6 @@ function defaultParameterTest(param1) {
     // CODE → addr: 27 | <Mov>: <Reg8: 5, Reg8: 4>
     r5 = 10
     // CODE → addr: 30 | <JStrictEqual>: <Addr8: 8, Reg8: 3, Reg8: 0>  # Address: 00000026
-    // → r3 = arguments[1]
     if (r3 === undefined) goto label_38;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 34 | <GetArgumentsPropByVal>: <Reg8: 5, Reg8: 1, Reg8: 2>
@@ -46,7 +45,6 @@ function defaultParameterTest(param1) {
     // CODE → addr: 62 | <Mov>: <Reg8: 4, Reg8: 6>
     r4 = "result"
     // CODE → addr: 65 | <JStrictEqual>: <Addr8: 8, Reg8: 3, Reg8: 0>  # Address: 00000049
-    // → r3 = arguments[2]
     if (r3 === undefined) goto label_73;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 69 | <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 1, Reg8: 2>

@@ -18,7 +18,6 @@ function function_15131(param1, param2, param3) {
     r0 = ""
     // CODE → addr: 28 | <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;
-    // → r3 = r2[0][param3]
     if (r3 !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 34 | <GetGlobalObject>: <Reg8: 3>

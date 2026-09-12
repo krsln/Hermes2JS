@@ -12,7 +12,6 @@ function Counter() {
     // USED → r4 = r3[5];
     // CODE → addr: 17 | <PrivateIsIn>: <Reg8: 1, Reg8: 4, Reg8: 2, Reg8: 0>
     // USED → r1 = r3[5] in r2;
-    // → r2 = Object.create(r2.prototype); r3 = getParentEnvironment(0)
     if (r3[5] in r2) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 86 | <LoadConstString>: <Reg8: 7, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)

@@ -128,7 +128,6 @@ function nestedArrayDestructureTest() {
         // USED → r9 = r6 === undefined;
         // CODE → addr:241 | <LoadConstUndefined>: <Reg8: 11>
         r11 = undefined
-        // → r6 = GetIterator(r12)
         if (r6 !== undefined) {
             // ──────────────── Block 15 ──────────────── 
             // CODE → addr:246 | <IteratorNext>: <Reg8: 13, Reg8: 6, Reg8: 12>
@@ -265,7 +264,6 @@ function nestedArrayDestructureTest() {
         if (r7 !== undefined) {
             try {
                 // LOOP → START (while)
-                // → r11 = r11 === undefined
                 while (!r11) {
                     // ──────────────── Block 31 ──────────────── 
                     // CODE → addr:428 | <IteratorNext>: <Reg8: 19, Reg8: 7, Reg8: 11>
