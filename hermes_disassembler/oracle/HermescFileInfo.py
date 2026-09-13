@@ -13,7 +13,11 @@ facts it does print in full - which is exactly what this module extracts.
 Only the fields hermesc's dump actually prints are exposed here (a subset
 of `BytecodeFileHeader`'s fields - e.g. `fileLength` and
 `debugInfoOffset` are never printed by hermesc and so can't be
-cross-checked this way).
+cross-checked this way). Comparing an instance of this class against a
+`BytecodeFileHeader` is the caller's job, field by field (skipping
+anything in `ORACLE_NOT_PRINTED`) - see
+`tests/test_hermes_disassembler_oracle.py::test_header_matches_hermesc_oracle`
+for the actual comparison.
 
 Example input (see `tools/hermes/dump_bytecode.sh` output):
 
@@ -41,7 +45,8 @@ from dataclasses import dataclass
 __all__ = ["HermescFileInfo", "ORACLE_NOT_PRINTED"]
 
 #: Sentinel: fields BytecodeFileHeader has but hermesc's dump never prints,
-#: so HermescFileInfo.diff() must skip them rather than report a false mismatch.
+#: so a field-by-field comparison against this class must skip them rather
+#: than report a false mismatch (see test_hermes_disassembler_oracle.py).
 ORACLE_NOT_PRINTED = frozenset({
     "file_length", "global_code_index", "identifier_count",
     "overflow_string_count", "string_storage_size", "bigint_storage_size",
