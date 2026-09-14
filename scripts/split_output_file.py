@@ -25,7 +25,7 @@ DEFAULT_SEPARATOR = "==============="
 # fixtures, or a future disassembler backend that omits the arrow)
 # still matches too.
 FUNCTION_HEADER_RE = re.compile(
-    r'^(?:=>\s+)?\[Function #(?P<number>\d+)\s+"(?P<name>[^"]*)"\s+of\s+\d+\s+bytes]'
+    r'^(?:=>\s+)?\[(?:Async |Generator )?[Ff]unction #(?P<number>\d+)\s+"(?P<name>[^"]*)"(?:\s+of\s+\d+\s+bytes)?]'
 )
 # Anything outside this set is replaced with '_' when building filenames.
 SAFE_CHARS_RE = re.compile(r"[^A-Za-z0-9_\-.]")
@@ -52,7 +52,7 @@ class Section:
             name = self.function_name or "anonymous"
             raw = f"function_{self.function_number}_{name}"
         else:
-            raw = f"function_{self.index}"
+            raw = f"function_{self.index}_nameless"
         return sanitize_filename(raw)
 
 
