@@ -52,7 +52,7 @@ class Section:
             name = self.function_name or "anonymous"
             raw = f"function_{self.function_number}_{name}"
         else:
-            raw = f"section_{self.index}"
+            raw = f"function_{self.index}"
         return sanitize_filename(raw)
 
 
