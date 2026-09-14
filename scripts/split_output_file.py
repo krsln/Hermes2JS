@@ -24,6 +24,7 @@ DEFAULT_SEPARATOR = "==============="
 # optional here so a bare "[Function ..." line (e.g. hand-written test
 # fixtures, or a future disassembler backend that omits the arrow)
 # still matches too.
+# FUNCTION_HEADER_RE = re.compile(r'^(?:=>\s+)?\[Function #(?P<number>\d+)\s+"(?P<name>[^"]*)"\s+of\s+\d+\s+bytes]')
 FUNCTION_HEADER_RE = re.compile(
     r'^(?:=>\s+)?\[(?:Async |Generator )?[Ff]unction #(?P<number>\d+)\s+"(?P<name>[^"]*)"(?:\s+of\s+\d+\s+bytes)?]'
 )
