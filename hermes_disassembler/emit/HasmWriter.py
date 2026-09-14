@@ -172,6 +172,8 @@ def format_instruction(
 
     comment_parts: list[str] = []
     for i, value in enumerate(instruction.operands):
+        if type(value) is not int:
+            continue
         tag = semantics.get(i)
         if tag == "string_id":
             string_value = table.resolve(value)
