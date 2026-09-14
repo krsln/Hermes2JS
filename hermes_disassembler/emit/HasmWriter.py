@@ -54,19 +54,21 @@ Known gaps, not yet implemented:
   the literal value buffer / object key-value buffers needed to
   reconstruct them. Confirmed missing by direct comparison against real
   hermes-dec output, not just inferred.
-- Exception handler resolution (`format_function`'s
-  `  [Exception handlers: ...]` line) has one known-bad case: a
-  function that is BOTH overflowed (`was_large_header=True`) AND has
-  `has_exception_handler=True` in bytecode 96 specifically. Validated
-  at scale otherwise - 1082/1082 in bytecode 98 (where every
-  exception-handler function overflows) and 660/660 non-overflowed
-  bytecode-96 cases - but apps/testy/96's own "global" function (the
-  huge bundle-init function, index 0) is exactly this combination and
-  its handler offsets don't land on real instruction boundaries with
-  the same formula that works everywhere else. See
-  `hermes_disassembler.format.ExceptionHandlerTable`'s module docstring
-  for the full validation story and this gap's details. Functions with
-  `has_debug_info=True` are also unvalidated (see that same module).
+- `SwitchImm`/`UIntSwitchImm`/`StringSwitchImm` jump-table comments (no
+  parser for the jump table itself yet - see `JumpTarget.py`). Real,
+  not theoretical: apps/testy/96 has 26 and apps/testy/98 has 20
+  instructions in this opcode family.
+
+Exception handler resolution (`format_function`'s
+`  [Exception handlers: ...]` line) and debug offsets resolution
+(the `  [Debug offsets: ...]` line, for `has_debug_info=True`
+functions) both build on `ExceptionHandlerTable.VERSION_TO_LARGE_HEADER_SIZE`
+- see that module's docstring for the full validation story (a real,
+previously-undetected bug there, now fixed and validated at scale:
+660/660 in bytecode 96, 1082/1082 in bytecode 98, both 100%). Debug
+offsets specifically remain UNTESTED against a real `has_debug_info=True`
+function in either test fixture - both currently have zero such
+functions - see `DebugOffsets.py`'s module docstring.
 
 Pre-existing, separate gap worth knowing about here:
 `scripts/split_output_file.py`'s `FUNCTION_HEADER_RE` required a
@@ -81,8 +83,9 @@ from __future__ import annotations
 from hermes_disassembler.core.Exceptions import HermesBytecodeError
 from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
 from hermes_disassembler.format.Builtins import resolve_builtin
+from hermes_disassembler.format.DebugOffsets import resolve_debug_offsets
 from hermes_disassembler.format.ExceptionHandlerTable import resolve_exception_handlers
-from hermes_disassembler.format.FunctionHeader import FunctionHeaderEntry
+from hermes_disassembler.format.FunctionHeader import FuncKind, FunctionHeaderEntry
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
 from hermes_disassembler.format.JumpTarget import is_jump_instruction, resolve_jump_target
 from hermes_disassembler.format.LiteralBuffer import _Undefined, decode_literal_buffer
@@ -280,6 +283,14 @@ def _format_function_reference(target: FunctionHeaderEntry, table: StringTable) 
     )
 
 
+#: hermes-dec's own header-line label per FuncKind - see FunctionHeader.py.
+_FUNC_KIND_LABEL = {
+    FuncKind.NORMAL: "Function",
+    FuncKind.GENERATOR: "Generator function",
+    FuncKind.ASYNC: "Async function",
+}
+
+
 def format_function(
         data: bytes,
         header: FunctionHeaderEntry,
@@ -290,18 +301,25 @@ def format_function(
 ) -> str:
     """
     Format a complete function block matching hermes-dec's shape:
-    the `=> [Function #N "name" of B bytes]: ...` header line (plus a
-    `  [Exception handlers: ...]` line when `header.has_exception_handler`
-    - see `ExceptionHandlerTable`'s module docstring for the one known-bad
-    case), a `Bytecode listing:` label, then one `format_instruction()`
-    line per instruction - see module docstring for the exact fixture
-    this reproduces. `data` is the full bundle bytes (needed to resolve
-    the exception handler table). `all_functions` is passed through to
-    `format_instruction` for `function_id` resolution.
+    the `=> [Function #N "name" of B bytes]: ...` header line (using
+    "Generator function"/"Async function" instead of "Function" per
+    `header.kind` - previously hardcoded to "Function" regardless of
+    kind, an unnoticed bug affecting 192 of apps/testy/98's functions;
+    see `_FUNC_KIND_LABEL` above), plus a `  [Exception handlers: ...]`
+    line when `header.has_exception_handler` and a
+    `  [Debug offsets: ...]` line when `header.has_debug_info` (neither
+    fixture has a real example of the latter - see `DebugOffsets.py`'s
+    module docstring), a `Bytecode listing:` label, then one
+    `format_instruction()` line per instruction - see module docstring
+    for the exact fixture this reproduces. `data` is the full bundle
+    bytes (needed to resolve the exception handler table and debug
+    offsets). `all_functions` is passed through to `format_instruction`
+    for `function_id` resolution.
     """
     name = table.resolve(header.function_name)
+    kind_label = _FUNC_KIND_LABEL[header.kind]
     header_line = (
-        f'=> [Function #{header.index} "{name}" of {header.bytecode_size_in_bytes} bytes]: '
+        f'=> [{kind_label} #{header.index} "{name}" of {header.bytecode_size_in_bytes} bytes]: '
         f"{header.param_count} params, frame size={header.frame_size}, "
         f"strict={int(header.strict_mode)}, exc handler={int(header.has_exception_handler)}, "
         f"debug info={int(header.has_debug_info)}  @ offset 0x{header.offset:08x}"
@@ -310,6 +328,8 @@ def format_function(
     lines = [header_line]
     if header.has_exception_handler:
         lines.append(_format_exception_handlers_line(data, header, version))
+    if header.has_debug_info:
+        lines.append(_format_debug_offsets_line(data, header, version))
     lines += ["", "Bytecode listing:", ""]
     lines.extend(
         format_instruction(data, i, header.offset, table, version, all_functions) for i in instructions
@@ -327,11 +347,11 @@ def _format_exception_handlers_line(data: bytes, header: FunctionHeaderEntry, ve
     reasonable guess.
 
     Falls back to a clearly-marked `<unresolved: ...>` placeholder
-    instead of raising when resolution fails - see module docstring's
-    "Known gaps" for the specific cases this covers (bytecode 96,
-    overflowed AND has_exception_handler; any has_debug_info=True
-    function) - so that one function's unresolved edge case doesn't
-    abort `format_bundle()` for an entire otherwise-healthy bundle.
+    instead of raising when resolution fails, so that one function's
+    unresolved edge case doesn't abort `format_bundle()` for an entire
+    otherwise-healthy bundle - though as of `ExceptionHandlerTable.py`'s
+    `VERSION_TO_LARGE_HEADER_SIZE` fix, no such case is currently known
+    in either test fixture (both resolve 100% cleanly at scale).
     """
     try:
         handlers = resolve_exception_handlers(data, header, version)
@@ -342,6 +362,27 @@ def _format_exception_handlers_line(data: bytes, header: FunctionHeaderEntry, ve
         f"[start=0x{h.start:x}, end=0x{h.end:x}, target=0x{h.target:x}]" for h in handlers
     )
     return f"  [Exception handlers: {entries} ]"
+
+
+def _format_debug_offsets_line(data: bytes, header: FunctionHeaderEntry, version: int) -> str:
+    """
+    `  [Debug offsets: source_locs=0xHEX, scope_desc_data=0xHEX]` -
+    matches real hermes-dec's own disassembler print exactly (it reads
+    a third field, `textifiedCallees`, but never prints it - see
+    `DebugOffsets.py`'s module docstring - so neither do we).
+
+    Falls back to a clearly-marked `<unresolved: ...>` placeholder on
+    the same class of error `_format_exception_handlers_line` does,
+    for the same reason. Untested against a real `has_debug_info=True`
+    function in either test fixture - see `DebugOffsets.py`'s module
+    docstring for why neither currently has one.
+    """
+    try:
+        offsets = resolve_debug_offsets(data, header, version)
+    except HermesBytecodeError as exc:
+        return f"  [Debug offsets: <unresolved: {exc}>]"
+
+    return f"  [Debug offsets: source_locs=0x{offsets.source_locations:x}, scope_desc_data=0x{offsets.scope_desc_data:x}]"
 
 
 def format_bundle(data: bytes, bc_header: BytecodeFileHeader, table: StringTable, version: int) -> str:

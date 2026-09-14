@@ -20,7 +20,7 @@ import pytest
 
 from hermes_decompiler.frontend.parsing.OpcodeParser import OpcodeParser
 from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
-from hermes_disassembler.format.FunctionHeader import parse_function_headers
+from hermes_disassembler.format.FunctionHeader import FuncKind, parse_function_headers
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
 from hermes_disassembler.format.Opcode import decode_function
 from hermes_disassembler.format.StringTable import StringTable
@@ -176,6 +176,56 @@ def test_function_without_exception_handler_has_no_extra_line():
     text = format_function(data, clear_fn, instructions, table, 96)
     lines = text.splitlines()
     assert lines[1] == ""  # blank line straight after the header, no exception handlers line
+
+
+@pytest.mark.parametrize(
+    "kind,expected_label",
+    [(FuncKind.GENERATOR, "Generator function"), (FuncKind.ASYNC, "Async function")],
+)
+def test_header_line_uses_kind_specific_label(kind: FuncKind, expected_label: str):
+    """
+    Regression test for a previously-hardcoded "Function" label
+    (header.kind was ignored entirely) - apps/testy/98 has 102 real
+    generator and 90 real async functions this affected. hermes-dec's
+    own format uses "Generator function"/"Async function" instead of
+    "Function" for these - see HasmWriter.py's `_FUNC_KIND_LABEL`.
+    """
+    data = (APPS_TESTY / "98" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+    fn = next(e for e in resolved if e.kind == kind)
+    instructions = decode_function(data, fn.offset, fn.bytecode_size_in_bytes, 98)
+
+    text = format_function(data, fn, instructions, table, 98)
+    assert text.splitlines()[0].startswith(f'=> [{expected_label} #{fn.index} "')
+
+
+def test_debug_offsets_line_present_and_formatted():
+    """
+    A function with has_debug_info=True gets a '  [Debug offsets: ...]'
+    line matching real hermes-dec's format - synthetic, since neither
+    test fixture currently has a real has_debug_info=True function (see
+    DebugOffsets.py's module docstring). Exercises format_function's
+    actual line placement/ordering (after the header line, before the
+    blank line and "Bytecode listing:"), not just DebugOffsets.py's own
+    resolution logic (already covered in
+    test_hermes_disassembler_debug_offsets.py).
+    """
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    import struct as _struct
+    import dataclasses
+    debug_data = bytearray(data)
+    debug_offset = clear_fn.info_offset
+    if len(debug_data) < debug_offset + 12:
+        debug_data.extend(b"\x00" * (debug_offset + 12 - len(debug_data)))
+    _struct.pack_into("<III", debug_data, debug_offset, 0x111, 0x222, 0x333)
+    fn_with_debug = dataclasses.replace(clear_fn, has_debug_info=True)
+
+    text = format_function(bytes(debug_data), fn_with_debug, instructions, table, 96)
+    lines = text.splitlines()
+    assert lines[1] == f"  [Debug offsets: source_locs=0x{0x111:x}, scope_desc_data=0x{0x222:x}]"
 
 
 def _split_output_file_module():

@@ -39,12 +39,8 @@ def test_non_overflowed_handler_matches_instruction_boundaries_exactly():
     guarded_load_module = next(e for e in resolved if e.index == 7)
     assert not guarded_load_module.was_large_header
 
-    handlers = resolve_exception_handlers(data, guarded_load_module)
-    assert handlers == (
-        __import__("hermes_disassembler.format.ExceptionHandlerTable", fromlist=["ExceptionHandler"]).ExceptionHandler(
-            start=42, end=62, target=64
-        ),
-    )
+    handlers = resolve_exception_handlers(data, guarded_load_module, 96)
+    assert handlers == (ExceptionHandler(start=42, end=62, target=64),)
 
     instructions = decode_function(
         data, guarded_load_module.offset, guarded_load_module.bytecode_size_in_bytes, 96
@@ -59,13 +55,14 @@ def test_overflowed_handler_matches_instruction_boundaries_exactly():
     apps/testy/98 function index 1: the exact hand-verified case that
     established the overflowed formula (table follows the 37-byte large
     header, aligned to 4 bytes) - see ExceptionHandlerTable.py's module
-    docstring.
+    docstring and FunctionHeaderOverflow.py's for why 37, not
+    hermes-dec's own (buggy, one byte short) 36, is correct for v98.
     """
     data, resolved = _load("98")
     fn = next(e for e in resolved if e.index == 1)
     assert fn.was_large_header
 
-    handlers = resolve_exception_handlers(data, fn)
+    handlers = resolve_exception_handlers(data, fn, 98)
     assert len(handlers) == 1
     assert handlers[0].start == 3
     assert handlers[0].end == 42
@@ -81,23 +78,42 @@ def test_no_exception_handler_returns_empty_tuple():
     data, resolved = _load("96")
     clear_fn = next(e for e in resolved if e.index == 2)
     assert not clear_fn.has_exception_handler
-    assert resolve_exception_handlers(data, clear_fn) == ()
+    assert resolve_exception_handlers(data, clear_fn, 96) == ()
 
 
-@pytest.mark.parametrize("version,expected_min_plausible_ratio", [("96", 0.9), ("98", 1.0)])
+def test_overflowed_global_function_has_no_exception_handler():
+    """
+    Regression test for the bug FunctionHeaderOverflow.py's module
+    docstring describes at length: apps/testy/96 function index 0
+    ("global") was previously misdetected as `has_exception_handler=True`
+    (from misreading its flags byte 6 bytes past its real position,
+    under the old flat `LARGE_HEADER_SIZE=37`), with a handler table
+    that never landed on real instruction boundaries. With the corrected
+    31-byte v96 large-header size, it correctly decodes to
+    `has_exception_handler=False` - matching
+    `tools/hermes/dump_bytecode.sh`'s own real hermesc oracle output,
+    which has no "Exception Handlers:" block anywhere in that
+    function's ~7500-line listing (not re-run here; this only checks
+    this package's own decoding, not the oracle itself).
+    """
+    data, resolved = _load("96")
+    global_fn = next(e for e in resolved if e.index == 0)
+    assert global_fn.was_large_header
+    assert not global_fn.has_exception_handler
+    assert resolve_exception_handlers(data, global_fn, 96) == ()
+
+
+@pytest.mark.parametrize("version,expected_min_plausible_ratio", [("96", 1.0), ("98", 1.0)])
 def test_most_handlers_land_on_instruction_boundaries_at_scale(version: str, expected_min_plausible_ratio: float):
     """
     Every has_exception_handler function's resolved table, across the
     whole bundle: each handler's start/target should land exactly on
-    another instruction's offset within the same function. bytecode 98
-    (every exception-handler function overflows, per
-    FunctionHeaderOverflow's own docstring) hits 100%. bytecode 96 has
-    one known-bad function (the huge "global" bundle-init function,
-    which is both overflowed and has an exception handler - see
-    ExceptionHandlerTable.py's module docstring) plus one
-    has_debug_info=True function (a separately unvalidated case) that
-    pull the ratio down slightly - both are accepted as known gaps
-    rather than causing this test to fail, via the ratio threshold.
+    another instruction's offset within the same function. Both
+    versions now hit 100% (660/660 in bytecode 96, 1082/1082 in
+    bytecode 98) - bytecode 96 previously needed a 0.9 tolerance for
+    one misdetected function (see
+    test_overflowed_global_function_has_no_exception_handler above for
+    what that was and why it no longer applies).
     """
     data, resolved = _load(version)
     eh_functions = [e for e in resolved if e.has_exception_handler]
@@ -106,15 +122,9 @@ def test_most_handlers_land_on_instruction_boundaries_at_scale(version: str, exp
     total = 0
     plausible = 0
     for e in eh_functions:
-        try:
-            instructions = decode_function(data, e.offset, e.bytecode_size_in_bytes, int(version))
-        except Exception:
-            continue
+        instructions = decode_function(data, e.offset, e.bytecode_size_in_bytes, int(version))
         starts = {i.offset - e.offset for i in instructions}
-        try:
-            handlers = resolve_exception_handlers(data, e)
-        except Exception:
-            continue
+        handlers = resolve_exception_handlers(data, e, int(version))
         for h in handlers:
             total += 1
             if h.start in starts and h.target in starts:

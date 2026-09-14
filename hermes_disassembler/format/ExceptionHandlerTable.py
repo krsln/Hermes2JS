@@ -27,12 +27,13 @@ below):
   (see `FunctionHeaderOverflow.py`, which sets `info_offset` to the
   same `large_offset` it resolves the header from) - the table follows
   immediately after that struct (`VERSION_TO_LARGE_HEADER_SIZE[version]`
-  bytes - 31 for v96, 36 for v98; NOT a flat 37 for both, see that
+  bytes - 31 for v96, 37 for v98; NOT the same size for both, and NOT
+  derivable from P1sec/hermes-dec's own source for v98 - see that
   module's docstring for why), padded up to the next 4-byte boundary.
-  Confirmed against apps/testy/98 function index 1: `info_offset + 36`
-  landed 2 bytes before a valid table (36+2=38, a multiple of 4 - the
-  missing alignment step), whose single entry `(start=3, end=42,
-  target=42)` again lines up exactly: `start=3` is that function's
+  Confirmed against apps/testy/98 function index 1: `info_offset + 37`
+  landed exactly on a valid table (large_offset was already a multiple
+  of 4, so no further padding needed), whose single entry `(start=3,
+  end=42, target=42)` lines up exactly: `start=3` is that function's
   `GetGlobalObject`, `target=42` is its `Catch`.
 
 Why this needed empirical confirmation rather than reading
