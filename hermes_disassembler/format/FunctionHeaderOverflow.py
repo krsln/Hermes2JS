@@ -3,49 +3,98 @@ Resolves an overflowed `SmallFuncHeader` (see `FunctionHeader.py`'s
 "Known gap" section) to the full-size `FunctionHeader` struct its
 `getLargeHeaderOffset()` points to.
 
-`getLargeHeaderOffset()`'s encoding and the large struct's own field
-layout, both confirmed from facebook/hermes's MIT-licensed
-`include/hermes/BCGen/HBC/BytecodeFileFormat.h` at the same two commits
-used throughout this package:
+`getLargeHeaderOffset()`'s encoding, confirmed from facebook/hermes's
+MIT-licensed `include/hermes/BCGen/HBC/BytecodeFileFormat.h` at the same
+two commits used throughout this package:
 
   LAYOUT_V96 (v0.12.0): `getLargeHeaderOffset() = (infoOffset << 16) |
   offset` (both taken from the *small* header's own 25-bit fields, which
   is why they're all that's meaningful once overflowed - see
-  `SmallFuncHeader::setLargeHeaderOffset`). The struct at that offset:
-  9 full-width uint32_t fields (offset, paramCount, bytecodeSizeInBytes,
-  functionName, infoOffset, frameSize, environmentSize,
-  highestReadCacheIndex, highestWriteCacheIndex) + 1-byte
-  `FunctionHeaderFlag` = 37 bytes, confirmed an ABSOLUTE file offset by
-  decoding it for a real overflowed function (index 0, "global", in
-  apps/testy/96) and getting back paramCount=1 (already known) and a
-  functionName that resolves through StringTable to literally "global".
+  `SmallFuncHeader::setLargeHeaderOffset`).
   https://github.com/facebook/hermes/blob/v0.12.0/include/hermes/BCGen/HBC/BytecodeFileFormat.h
 
   LAYOUT_V98 (cb5bb334...): `getLargeHeaderOffset() = (functionName <<
   24) | (offset & 0xffffff)` - a different encoding than v96's (uses
   FunctionName's 8 bits as the high byte, not a dedicated infoOffset
   field - v98's SmallFuncHeader has no infoOffset at all, see
-  `FunctionHeader.py`). The struct at that offset: 8 full-width
-  uint32_t fields (Offset, ParamCount, LoopDepth, BytecodeSizeInBytes,
-  FunctionName, NumberRegCount, NonPtrRegCount, FrameSize) + 4
-  full-width uint8_t fields (ReadCacheSize, WriteCacheSize,
-  NumCacheNewObject, PrivateNameCacheSize) + 1-byte
-  `FunctionHeaderFlag` = 37 bytes.
+  `FunctionHeader.py`).
   https://github.com/facebook/hermes/blob/cb5bb3342f43d378cc2653e2ac9077a282b97637/include/hermes/BCGen/HBC/BytecodeFileFormat.h
 
+The large struct's own BYTE SIZE, `VERSION_TO_LARGE_HEADER_SIZE` below,
+was originally guessed at a flat 37 bytes for BOTH versions (every
+sub-field read as full-width, 4 bytes each, regardless of its real
+width). That guess turned out to be wrong for v96 and - despite
+looking wrong by the same reasoning - actually RIGHT for v98, for two
+unrelated reasons uncovered separately:
+
+  LAYOUT_V96: confirmed WRONG. offset, paramCount, bytecodeSizeInBytes,
+  functionName, infoOffset, frameSize, environmentSize (7 x uint32_t =
+  28 bytes) + highestReadCacheIndex, highestWriteCacheIndex (2 x
+  uint8_t, NOT uint32_t = 2 bytes) + 1-byte `FunctionHeaderFlag` = 31
+  bytes, not 37 - confirmed two independent ways: (1) diffing against
+  P1sec/hermes-dec's own `hbc_file_parser.py`
+  (`HBCReader.get_large_func_header_reader()`, fetched via
+  `vendor/fetch-hermes-dec.sh`, not shipped in this repo - its ctypes
+  struct definition is unambiguous that these trailing fields are
+  `c_uint8`, not `c_uint32`), and (2) independently, by brute-force
+  testing every candidate struct size from 24 to 41 bytes against every
+  overflowed, `has_exception_handler=True` function in apps/testy/96
+  and keeping the one whose resulting exception handler table entries
+  land on real instruction boundaries - only 31 does (2/2 functions,
+  the only two that exist in this fixture; every other candidate size
+  gives 0/2).
+
+  LAYOUT_V98: confirmed RIGHT, but not for the reason originally
+  assumed (matching v96's byte-width mistake) - 37 genuinely is this
+  struct's real size. hermes-dec's OWN size for this layout (36 bytes -
+  Offset, ParamCount, LoopDepth, BytecodeSizeInBytes, FunctionName,
+  NumberRegCount, NonPtrRegCount, FrameSize as 8 x uint32_t, +
+  ReadCacheSize, WriteCacheSize, PrivateNameCacheSize as 3 x uint8_t, +
+  1-byte flags) is ITSELF WRONG - one byte short, most likely a field
+  hermes-dec's reader omits entirely between PrivateNameCacheSize and
+  the flags byte. This was NOT caught by diffing against hermes-dec (its
+  own output looked internally consistent) but by the same brute-force
+  method used for v96 above, applied across the first 3000 overflowed
+  functions in apps/testy/98: hermes-dec's own 36-byte size resolves
+  a `has_exception_handler=True` table that lands cleanly on real
+  instruction boundaries for 0 of the functions it flags as having one;
+  37 bytes resolves 109/109 cleanly. This matches what's already been
+  independently reported about hermes-dec's own disassembler output for
+  bytecode 98: it fails to surface exception handlers there at all -
+  consistent with its large-header reader silently misreading every
+  v98 overflowed function's flags byte (from one byte before its real
+  position), including `hasExceptionHandler` itself.
+
+Consequences of the old, wrong FLAT 37-for-both guess: for v96 only,
+the flags byte was read 6 bytes past its real position, corrupting
+every flag the large header carries (`has_exception_handler`,
+`has_debug_info`, `strict_mode`, `kind`, `prohibit_invoke`) for every
+`was_large_header=True` entry in that version - not just downstream
+consumers that use `LARGE_HEADER_SIZE` to locate data *after* the
+struct (see `ExceptionHandlerTable.py`). Concretely, in apps/testy/96:
+the "global" function (index 0) - previously documented here and in
+`ExceptionHandlerTable.py` as a confirmed `has_exception_handler=True`
+"known-bad" case whose handler table formula mysteriously didn't line
+up - was a MISDETECTION: with the corrected 31-byte size its flags
+byte decodes to `has_exception_handler=False`, matching
+`tools/hermes/dump_bytecode.sh`'s own real hermesc oracle dump exactly
+(no "Exception Handlers:" block anywhere in its ~7500-line listing).
+At scale, every `has_exception_handler=True` function in apps/testy/96
+now resolves cleanly (398 functions, 660 handler entries, 660/660
+landing on real instruction boundaries - up from the 0.9-ratio
+tolerance the "known-bad" case previously required). v98 was already
+correct at this same flat value by coincidence, so it was already at
+660/660-equivalent 1082/1082 before this fix and remains so after -
+see `tests/test_hermes_disassembler_exception_handler_table.py`.
+
   bytecode 99: intentionally UNSUPPORTED here (see
-  `VERSION_TO_LARGE_HEADER_LAYOUT` below), even though it shares
-  LAYOUT_V98's *compact* SmallFuncHeader size (confirmed in
-  StringTable.py). Its FUNC_HEADER_FIELDS macro drops the
-  NumCacheNewObject sub-field entirely (WriteCacheSize grows from 6 to
-  7 bits to absorb the freed bit - see diff noted in
-  BytecodeFileHeader.py's history). Because DECLARE_FIELD gives each
-  named sub-field its own full-width member in the *large* struct
-  (unlike the compact one, where bit-packing absorbs such changes for
-  free), removing NumCacheNewObject shrinks the large FunctionHeader by
-  a whole byte (36, not 37) for 99 - and there's no apps/testy/99
-  bundle fixture to confirm that against, so guessing here would repeat
-  the exact mistake BytecodeFileHeader.py's module docstring describes.
+  `VERSION_TO_LARGE_HEADER_LAYOUT` below). Given how easy both
+  known-version sizes above turned out to be to get wrong even with a
+  real bundle to test against, guessing 99's size from its shared
+  *compact* SmallFuncHeader layout (see StringTable.py) without an
+  apps/testy/99 fixture to brute-force against would be exactly the
+  mistake this module's own history warns against - so it still
+  doesn't.
 
 Validated against every overflowed function in apps/testy/96 and
 apps/testy/98: `function_name` resolves to a non-empty, plausible
@@ -68,19 +117,24 @@ from hermes_disassembler.format.FunctionHeader import (
     ProhibitInvoke,
 )
 
-__all__ = ["resolve_overflowed_headers", "VERSION_TO_LARGE_HEADER_LAYOUT", "LARGE_HEADER_SIZE"]
+__all__ = [
+    "resolve_overflowed_headers", "VERSION_TO_LARGE_HEADER_LAYOUT",
+    "VERSION_TO_LARGE_HEADER_SIZE",
+]
 
 # Small-header limits each version's large-header path exists to work
 # around - the field width in SmallFuncHeader that most commonly
 # overflows in practice. Exposed for tests/diagnostics, not load-bearing.
 _SMALL_BYTECODE_SIZE_LIMIT = {96: (1 << 15) - 1, 98: (1 << 14) - 1, 99: (1 << 14) - 1}
 
-#: Size in bytes of the "large" FunctionHeader struct (both v96 and v98/99
-#: layouts happen to be 37 bytes, though their field composition differs -
-#: see the per-layout _decode_large_* functions). Exported for
-#: ExceptionHandlerTable.py, which reads the exception handler table
-#: immediately after this struct for an overflowed function.
-LARGE_HEADER_SIZE = 37
+#: Size in bytes of the "large" FunctionHeader struct, per version - the
+#: two layouts are NOT the same size (31 vs 37 bytes; see module
+#: docstring for the field-by-field breakdown and the bug this corrects).
+#: Exported for ExceptionHandlerTable.py, which reads the exception
+#: handler table (and DebugOffsets.py, which reads the debug offsets
+#: struct) immediately after this struct for an overflowed function. 99
+#: is intentionally absent - see module docstring.
+VERSION_TO_LARGE_HEADER_SIZE: dict[int, int] = {96: 31, 98: 37}
 
 
 def _large_offset_v96(small: bytes) -> int:
@@ -98,12 +152,15 @@ def _large_offset_v98(small: bytes) -> int:
 
 
 def _decode_large_v96(data: bytes, large_offset: int, index: int) -> FunctionHeaderEntry:
-    size = LARGE_HEADER_SIZE
+    size = VERSION_TO_LARGE_HEADER_SIZE[96]
     if large_offset + size > len(data):
         raise TruncatedFileError(f"large FunctionHeader for function {index}", large_offset + size, len(data))
     (offset, param_count, bytecode_size, function_name, _info_offset, frame_size,
-     _env_size, _hi_rd, _hi_wr) = struct.unpack_from("<9I", data, large_offset)
-    flags = data[large_offset + 36]
+     _env_size) = struct.unpack_from("<7I", data, large_offset)
+    # highestReadCacheIndex/highestWriteCacheIndex: 1 byte each (not 4 -
+    # see module docstring), at offsets 28/29; unused here, so skipped
+    # rather than unpacked.
+    flags = data[large_offset + 30]
     return FunctionHeaderEntry(
         index=index, is_overflowed=False, was_large_header=True,
         offset=offset, info_offset=large_offset, param_count=param_count,
@@ -113,16 +170,26 @@ def _decode_large_v96(data: bytes, large_offset: int, index: int) -> FunctionHea
         strict_mode=bool((flags >> 2) & 1),
         has_exception_handler=bool((flags >> 3) & 1),
         has_debug_info=bool((flags >> 4) & 1),
-        kind=FuncKind.NORMAL,  # LAYOUT_V96 FunctionHeaderFlag has no Kind bits
+        kind=FuncKind.NORMAL,  # v96's kind bits are always 0 in practice - see FunctionHeader.py
     )
 
 
 def _decode_large_v98(data: bytes, large_offset: int, index: int) -> FunctionHeaderEntry:
-    size = LARGE_HEADER_SIZE
+    size = VERSION_TO_LARGE_HEADER_SIZE[98]
     if large_offset + size > len(data):
         raise TruncatedFileError(f"large FunctionHeader for function {index}", large_offset + size, len(data))
     (offset, param_count, _loop_depth, bytecode_size, function_name,
      _number_reg, _non_ptr_reg, frame_size) = struct.unpack_from("<8I", data, large_offset)
+    # readCacheSize, writeCacheSize, privateNameCacheSize: 3 separate
+    # FULL bytes at offsets 32/33/34, none used here, so skipped rather
+    # than unpacked. A 4th byte (offset 35, also unused/unnamed here)
+    # precedes the flags byte - P1sec/hermes-dec's own reader omits it
+    # entirely (see module docstring: this is a confirmed bug in
+    # hermes-dec's v98 large-header reader, independently determined by
+    # brute-force testing every plausible struct size against apps/testy/98's
+    # exception handler tables, NOT by trusting hermes-dec's source - it
+    # empirically decodes 0 functions correctly at hermes-dec's own
+    # 36-byte size vs. 109/109 at 37).
     flags = data[large_offset + 36]
     return FunctionHeaderEntry(
         index=index, is_overflowed=False, was_large_header=True,

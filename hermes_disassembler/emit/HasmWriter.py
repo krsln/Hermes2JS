@@ -309,7 +309,7 @@ def format_function(
 
     lines = [header_line]
     if header.has_exception_handler:
-        lines.append(_format_exception_handlers_line(data, header))
+        lines.append(_format_exception_handlers_line(data, header, version))
     lines += ["", "Bytecode listing:", ""]
     lines.extend(
         format_instruction(data, i, header.offset, table, version, all_functions) for i in instructions
@@ -318,7 +318,7 @@ def format_function(
     return "\n".join(lines)
 
 
-def _format_exception_handlers_line(data: bytes, header: FunctionHeaderEntry) -> str:
+def _format_exception_handlers_line(data: bytes, header: FunctionHeaderEntry, version: int) -> str:
     """
     `  [Exception handlers: [start=0xHEX, end=0xHEX, target=0xHEX] ...]`
     - confirmed format for a single handler against real hermes-dec
@@ -334,7 +334,7 @@ def _format_exception_handlers_line(data: bytes, header: FunctionHeaderEntry) ->
     abort `format_bundle()` for an entire otherwise-healthy bundle.
     """
     try:
-        handlers = resolve_exception_handlers(data, header)
+        handlers = resolve_exception_handlers(data, header, version)
     except HermesBytecodeError as exc:
         return f"  [Exception handlers: <unresolved: {exc}>]"
 

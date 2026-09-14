@@ -86,11 +86,24 @@ __all__ = [
 
 
 class ProhibitInvoke(IntEnum):
-    """hermes/include/hermes/BCGen/FunctionInfo.h (LAYOUT_V96 used the same values under ProhibitCall/ProhibitConstruct/ProhibitNone)."""
+    """hermes/include/hermes/BCGen/FunctionInfo.h (LAYOUT_V96 used the same values under ProhibitCall/ProhibitConstruct/ProhibitNone).
+
+    The field is 2 bits wide, so all 4 values are representable; only 3
+    were documented anywhere this package's authors could find. The
+    4th, UNCONFIRMED = 3, is real (not a decoding bug) - confirmed
+    present, via the correct large-header struct offset (see
+    FunctionHeaderOverflow.py's module docstring), on 3 real functions
+    in apps/testy/98 (indices 2616 "updateSuspenseComponent", 9774
+    "createChild", 9777 "reconcileChildFibersImpl"). What it actually
+    means is unconfirmed - don't guess a name for it. This field isn't
+    surfaced anywhere in HasmWriter.py's emitted output, so the
+    uncertainty has no effect on this package's actual deliverable.
+    """
 
     CALL = 0
     CONSTRUCT = 1
     NONE = 2
+    UNCONFIRMED = 3
 
 
 class FuncKind(IntEnum):
