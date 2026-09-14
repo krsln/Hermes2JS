@@ -21,11 +21,13 @@ prepare:
 		apps/testy/$(VERSION)/output/disassembler-output.hasm
 
 	## Step 2 — Split
+	rm -rf apps/testy/$(VERSION)/output/sections
 	python scripts/split_output_file.py \
 		-i apps/testy/$(VERSION)/output/disassembler-output.hasm \
 		-o apps/testy/$(VERSION)/output/sections
 
 	## Step 3 — Copy sections to fixtures
+	rm -f apps/demo/fixtures/$(VERSION)/sections/*
 	cp apps/testy/$(VERSION)/output/sections/function_{$(FUNCTION_RANGE)}_*.hasm \
 		apps/demo/fixtures/$(VERSION)/sections/
 
