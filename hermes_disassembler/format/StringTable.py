@@ -146,6 +146,7 @@ class StringTable:
     literal_value_buffer_offset: int  # absolute file offset of segment 7 (visitLiteralValueBuffer) - see LiteralBuffer.py
     object_key_buffer_offset: int  # absolute file offset of segment 8 (visitObjectKeyBuffer) - see ObjectLiteral.py
     object_value_or_shape_table_offset: int  # absolute file offset of segment 9 - v96: object value buffer; v98: object shape table (see ObjectLiteral.py for which)
+    bigint_table_offset: int  # absolute file offset of segment 10 (visitBigIntBuffer) - see BigIntTable.py. Meaningless (don't read) if header.bigint_count == 0.
 
     def is_identifier(self, index: int) -> bool:
         """
@@ -254,6 +255,20 @@ class StringTable:
         offset = _align_up(offset + header.obj_key_buffer_size)
         object_value_or_shape_table_offset = offset
 
+        # 9. object value buffer (v96: header.obj_value_buffer_size bytes)
+        # or object shape table (v98/99: header.obj_shape_table_count * 8
+        # bytes - ObjectShapeTableEntry is {keyBufferOffset: uint32,
+        # numProps: uint32}, see ObjectLiteral.py's _SHAPE_TABLE_ENTRY_SIZE,
+        # duplicated here as a literal rather than imported to avoid a
+        # circular import - ObjectLiteral.py already imports StringTable).
+        object_section_size = (
+            header.obj_value_buffer_size
+            if header.obj_value_buffer_size is not None
+            else header.obj_shape_table_count * 8
+        )
+        offset = _align_up(offset + object_section_size)
+        bigint_table_offset = offset
+
         entries = tuple(
             _resolve_entry(raw, overflow_entries) for raw in raw_small_entries
         )
@@ -263,6 +278,7 @@ class StringTable:
             literal_value_buffer_offset=literal_value_buffer_offset,
             object_key_buffer_offset=object_key_buffer_offset,
             object_value_or_shape_table_offset=object_value_or_shape_table_offset,
+            bigint_table_offset=bigint_table_offset,
         )
 
 
