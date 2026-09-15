@@ -33,6 +33,7 @@ chmod +x tools/hermes/dump_bytecode.sh
 
 ./tools/hermes/compilers/96/node_modules/hermes-compiler/hermesc/osx-bin/hermesc hermesc -version
 ./tools/hermes/compilers/98/node_modules/hermes-compiler/hermesc/osx-bin/hermesc hermesc -version
+./tools/hermes/compilers/99/node_modules/hermes-compiler/hermesc/osx-bin/hermesc hermesc -version
 
 ## 96
 ./tools/hermes/dump_bytecode.sh \
