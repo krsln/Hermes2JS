@@ -63,15 +63,15 @@ Converts each discovered `section_<n>.hasm` into a corresponding `section_<n>.js
 ```shell
 python scripts/decompile_sections.py -i <sections_dir> -o <results_dir> [options]
 
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --log-level WARNING
-# WARNING 1032
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --no-verbose
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/
 
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --strict
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --start 100 --end 1000
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --log-level DEBUG
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --log-level WARNING --no-verbose
-
+## options
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --log-level WARNING
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --no-verbose
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --strict
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --start 100 --end 1000
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --log-level WARNING --no-verbose
 python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```
