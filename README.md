@@ -88,7 +88,7 @@ Hermes2JS uses [hermes-dec](https://github.com/P1sec/hermes-dec) as an **externa
 separately by:
 
 ```bash
-./scripts/fetch-hermes-dec.sh
+./vendor/fetch-hermes-dec.sh
 ```
 
 The fetched `hermes-dec` source remains subject to its own license terms.
