@@ -427,10 +427,18 @@ def format_bundle(data: bytes, bc_header: BytecodeFileHeader, table: StringTable
     """
     Decode and format every function in `data` into one hermes-dec-style
     multi-function `.hasm` text: each function's `format_function()`
-    block, separated by `SECTION_SEPARATOR` on its own line - the exact
-    boundary `scripts/split_output_file.py`'s `iter_sections()` scans
-    for (see module docstring's "Pre-existing, separate gap" note re:
-    function-name extraction specifically, which is unaffected here).
+    block, each followed by `SECTION_SEPARATOR` on its own line - the
+    exact boundary `scripts/split_output_file.py`'s `iter_sections()`
+    scans for (see module docstring's "Pre-existing, separate gap" note
+    re: function-name extraction specifically, which is unaffected
+    here). The separator follows EVERY function, including the last one
+    - confirmed against real hermes-dec's own `hbc_disassembler.py`
+    source (`disassemble_function`'s trailing `print(); print();
+    print('='*15); print()` calls run unconditionally after every
+    function, not specially skipped for the final one) and against a
+    full-file diff of its actual output for apps/testy/96: without a
+    trailing separator, this function's own output was missing exactly
+    that one occurrence at the very end of the file.
 
     This resolves overflowed function headers itself (via
     `FunctionHeaderOverflow.resolve_overflowed_headers`) - callers don't
@@ -446,4 +454,4 @@ def format_bundle(data: bytes, bc_header: BytecodeFileHeader, table: StringTable
         instructions = decode_function(data, entry.offset, entry.bytecode_size_in_bytes, version)
         blocks.append(format_function(data, entry, instructions, table, version, resolved, bc_header))
 
-    return f"\n\n\n{SECTION_SEPARATOR}\n\n".join(blocks)
+    return f"\n\n\n{SECTION_SEPARATOR}\n\n".join(blocks) + f"\n\n\n{SECTION_SEPARATOR}\n\n"

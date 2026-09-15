@@ -82,6 +82,18 @@ def iter_sections(input_path: Path, separator: str):
     """
     Lazily yield Section objects by scanning the input file line by line.
     Keeps memory bounded to a single section's worth of lines at a time.
+
+    A trailing buffer containing only blank/whitespace lines is NOT
+    yielded as its own section - real hermes-dec's own disassembler
+    output (`hbc_disassembler.py`'s `disassemble_function`) prints the
+    separator block after EVERY function, including the last one,
+    leaving one blank line after that final separator before the file
+    ends; without this check, that one blank line would otherwise
+    become its own spurious near-empty trailing section (confirmed:
+    running this function against real hermes-dec's own output for
+    apps/testy/96, before this check, produced 15248 sections for a
+    15247-function bundle - one extra, containing nothing but that
+    trailing blank line).
     """
     index = 0
     start_line = 1
@@ -119,7 +131,7 @@ def iter_sections(input_path: Path, separator: str):
                     current_number = match.group("number")
                     current_name = match.group("name") or None
 
-    if buffer:
+    if buffer and any(line.strip() for line in buffer):
         yield Section(
             index=index,
             start_line=start_line,

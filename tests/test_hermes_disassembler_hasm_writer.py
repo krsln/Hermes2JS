@@ -268,7 +268,15 @@ def test_bundle_splits_with_real_split_output_file(version: str, tmp_path):
     sections = list(split_output_file.iter_sections(hasm_path, split_output_file.DEFAULT_SEPARATOR))
     assert len(sections) == bc_header.function_count
     assert sections[0].lines[0].startswith('=> [Function #0 ')
-    assert sections[-1].lines[-1].rstrip("\n") != ""  # no trailing empty section
+    # Every section (including the last) ends with two blank lines
+    # before its separator - matching real hermes-dec's own output
+    # exactly (see format_bundle's docstring) - so the LAST section is
+    # still a genuine, non-empty function block, not an empty phantom
+    # section (which the trailing separator could otherwise produce -
+    # see iter_sections' own docstring for that confirmed real
+    # hermes-dec-output edge case).
+    assert sections[-1].is_function
+    assert any(line.strip() for line in sections[-1].lines)
 
 
 def test_switch_imm_gets_jump_table_comment_matching_real_hermes_dec():
@@ -358,8 +366,9 @@ def test_bigint_id_comment_requires_bc_header():
 
     opcode_table = load_opcode_table(96)
     bigint_opcode = next(i for i, (name, _ops, _sem) in enumerate(opcode_table) if name == "LoadConstBigInt")
-    load_bigint = Instruction(offset=clear_fn.offset, opcode=bigint_opcode, name="LoadConstBigInt", operands=(0, 0),
-                              size=4)
+    load_bigint = Instruction(
+        offset=clear_fn.offset, opcode=bigint_opcode, name="LoadConstBigInt", operands=(0, 0), size=4
+    )
 
     line_without_header = format_instruction(bytes(debug_data), load_bigint, clear_fn.offset, table, 96)
     assert "# BigInt:" not in line_without_header
