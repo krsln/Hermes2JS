@@ -1,5 +1,8 @@
 .PHONY: prepare-96 prepare-98 decompile-96 decompile-98
 
+# hermes-disassembler | hermes-dec
+DISASSEMBLER ?= hermes-disassembler
+
 prepare-96: VERSION=96
 prepare-96: FUNCTION_RANGE=15042..15216
 prepare-96: prepare
@@ -16,9 +19,20 @@ decompile-98: decompile
 
 prepare:
 	## Step 1 — Disassemble
+#	python scripts/run-hermes-disassembler.py \
+#		apps/testy/$(VERSION)/index.android.bundle \
+#		apps/testy/$(VERSION)/output/disassembler-output.hasm
+ifeq ($(DISASSEMBLER),hermes-dec)
+	python vendor/hermes-dec/src/hermes_dec/disassembly/hbc_disassembler.py \
+		apps/testy/$(VERSION)/index.android.bundle \
+		apps/testy/$(VERSION)/output/disassembler-output.hasm
+else ifeq ($(DISASSEMBLER),hermes-disassembler)
 	python scripts/run-hermes-disassembler.py \
 		apps/testy/$(VERSION)/index.android.bundle \
 		apps/testy/$(VERSION)/output/disassembler-output.hasm
+else
+	$(error Unknown DISASSEMBLER: $(DISASSEMBLER). Use 'hermes-disassembler' or 'hermes-dec')
+endif
 
 	## Step 2 — Split
 	rm -rf apps/testy/$(VERSION)/output/sections
