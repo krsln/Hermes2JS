@@ -31,9 +31,9 @@ disassembles it, splits it into one file per function, and reconstructs each fun
 
 ## Sources
 
-* [hermes_rs documentation](https://docs.rs/hermes_rs/latest/hermes_rs/all.html)
-* [Hermes `BytecodeList.def`](https://github.com/facebook/hermes/blob/main/include/hermes/BCGen/HBC/BytecodeList.def)
 * [hermes-dec](https://github.com/P1sec/hermes-dec) — external Hermes bytecode disassembly tool
+* https://p1sec.github.io/hermes-dec/opcodes_table.html
+* https://github.com/facebook/hermes/tree/main/include/hermes/BCGen
 
 ## Hermes Bytecode Pipeline
 
