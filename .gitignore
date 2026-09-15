@@ -13,7 +13,7 @@ dist/
 *.egg-info/
 
 # Third-party source fetched by scripts/fetch-hermes-dec.sh
-/vendor/
+/vendor/hermes-dec/
 
 # Generated Hermes bytecode-disassembly output
 /apps/testy/96/output

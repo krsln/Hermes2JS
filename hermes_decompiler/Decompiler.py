@@ -1,6 +1,7 @@
-from hermes_decompiler.core.Pipeline import Pipeline
-from hermes_decompiler.core.PipelineContext import PipelineContext
-from hermes_decompiler.core.stages import (
+from hermes_decompiler.core.Exceptions import CodeGenerationError, MetadataParseError, StructurerInvariantError
+from hermes_decompiler.pipeline.Pipeline import Pipeline
+from hermes_decompiler.pipeline.PipelineContext import PipelineContext
+from hermes_decompiler.pipeline.stages import (
     MetadataStage,
     SignatureStage,
     BytecodeExtractionStage,
@@ -42,7 +43,7 @@ class Decompiler:
 
         Args:
             assembly_content:
-                Hermes assembly (.hbc) text.
+                Hermes assembly (.hasm) text.
 
             section_index:
                 Section identifier used for naming generated artifacts and
@@ -57,7 +58,16 @@ class Decompiler:
 
         Raises:
             ValueError:
-                If the input is empty or metadata cannot be parsed.
+                If the input is empty, or the .hasm metadata header line
+                could not be parsed.
+            NoHandlerError, OpcodeDispatchError:
+                Only when `strict=True`: no opcode handler is registered
+                for an opcode encountered during dispatch, or a
+                registered handler raised while processing one. Both are
+                `HasmDecompilerError` subclasses (see `core.Exceptions`).
+                When `strict=False` (the default), these are instead
+                logged and recovered from inline and never reach the
+                caller - see `OpcodeDispatcher._run_pass`.
         """
 
         if not assembly_content.strip():
@@ -80,13 +90,12 @@ class Decompiler:
         except Exception as e:
             # Preserve the original public contract: callers of convert()
             # historically only needed to catch ValueError for bad input.
-            from hermes_decompiler.core.Exceptions import MetadataParseError
             if isinstance(e, MetadataParseError):
                 raise ValueError(str(e)) from e
             raise
 
     @staticmethod
-    def render(context: PipelineContext, *, verbose: bool = True, raw: bool = True) -> str:
+    def render(context: PipelineContext, *, verbose: bool = True, raw: bool = False) -> str:
         """
         Render JavaScript from an existing PipelineContext.
 
@@ -106,14 +115,34 @@ class Decompiler:
 
         Returns:
             Generated JavaScript source code.
+
+        Raises:
+            StructurerInvariantError: A structurer pass hit a state its own
+                logic assumes can never happen - i.e. a bug in the decompiler
+                itself, not a failure caused by this section's input. Left
+                unwrapped and unrecovered (regardless of any `strict` setting
+                upstream) so it can never be mistaken for, or silently
+                absorbed as, an ordinary per-section CodeGenerationError -
+                see that exception's own docstring in `core.Exceptions`.
+            CodeGenerationError: The code-generation stage failed for this
+                section for any other reason (wraps the underlying cause).
         """
 
-        result = CodeGenerationStage(verbose=verbose, raw=raw).run(context)
+        try:
+            result = CodeGenerationStage(verbose=verbose, raw=raw).run(context)
+        except StructurerInvariantError:
+            # A decompiler bug, not an expected input-driven failure - never
+            # wrap this into CodeGenerationError, or callers like
+            # FileOperations.process_section would log-and-continue past it
+            # exactly like any other recoverable per-section error.
+            raise
+        except Exception as e:
+            raise CodeGenerationError(context.section_index, e) from e
 
         return '\n'.join(result.js_lines)
 
     @staticmethod
-    def convert(assembly_content, section_index, *, strict=False, verbose=True, raw=True) -> str:
+    def convert(assembly_content, section_index, *, strict=False, verbose=True, raw=False) -> str:
         """
         Convenience wrapper combining build_context() and render().
 

@@ -1,0 +1,439 @@
+"""
+Tests `hermes_disassembler.emit.HasmWriter` against the real
+`apps/testy/96` and `apps/testy/98` bundle fixtures.
+
+The most important test here (`test_emitted_text_parses_with_real_hermes_decompiler`)
+doesn't just check our own output against a hardcoded string - it feeds
+every emitted line through `hermes_decompiler.frontend.parsing.OpcodeParser`,
+the REAL parser `hermes_decompiler`'s pipeline uses today (fed by
+vendor/hermes-dec's AGPL output). If that parser accepts our lines and
+extracts the expected opcode/args/comment, that's direct evidence
+`hermes_disassembler`'s output is usable as a drop-in replacement for
+that AGPL dependency - the actual stated purpose of this package (see
+its `__init__.py`).
+"""
+from __future__ import annotations
+
+from pathlib import Path
+
+import pytest
+
+from hermes_decompiler.frontend.parsing.OpcodeParser import OpcodeParser
+from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
+from hermes_disassembler.format.FunctionHeader import FuncKind, parse_function_headers
+from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
+from hermes_disassembler.format.Opcode import decode_function
+from hermes_disassembler.format.StringTable import StringTable
+from hermes_disassembler.emit import HasmWriter
+from hermes_disassembler.emit.HasmWriter import format_bundle, format_function, format_instruction
+
+APPS_TESTY = Path(__file__).resolve().parent.parent / "apps" / "testy"
+
+
+def _load_clear(version: str, expected_frame_size: int):
+    path = APPS_TESTY / version / "index.android.bundle"
+    if not path.is_file():
+        pytest.skip(f"fixture not found: {path}")
+    data = path.read_bytes()
+    header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, header)
+    entries = parse_function_headers(data, header)
+    resolved = resolve_overflowed_headers(data, header, entries)
+    clear_fn = next(
+        e for e in resolved
+        if table.resolve(e.function_name) == "clear" and e.param_count == 1 and e.frame_size == expected_frame_size
+    )
+    instructions = decode_function(data, clear_fn.offset, clear_fn.bytecode_size_in_bytes, int(version))
+    return data, clear_fn, instructions, table
+
+
+def test_function_header_line_format_96():
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    text = format_function(data, clear_fn, instructions, table, 96)
+    header_line = text.splitlines()[0]
+    assert header_line == (
+        '=> [Function #2 "clear" of 37 bytes]: 1 params, frame size=9, '
+        'strict=1, exc handler=0, debug info=0  @ offset 0x000f7241'
+    )
+
+
+def test_string_id_operand_shows_semantic_label_and_comment_96():
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    line = format_instruction(data, instructions[1], clear_fn.offset, table, 96)  # TryGetById ... "Map"
+    assert line == (
+        "==> 00000002: <TryGetById>: <Reg8: 0, Reg8: 0, UInt8: 1, string_id: 20>"
+        "  # String: 'Map' (Identifier)"
+    )
+
+
+def test_plain_instruction_has_no_comment_96():
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    line = format_instruction(data, instructions[0], clear_fn.offset, table, 96)  # GetGlobalObject
+    assert line == "==> 00000000: <GetGlobalObject>: <Reg8: 0>"
+    assert "#" not in line
+
+
+@pytest.mark.parametrize("version,expected_frame_size", [("96", 9), ("98", 10)])
+def test_emitted_text_parses_with_real_hermes_decompiler(version: str, expected_frame_size: int):
+    """
+    The end-to-end check: every instruction line this module emits for
+    clear() is fed through hermes_decompiler's REAL OpcodeParser (not a
+    reimplementation or a mock) and must parse successfully, extracting
+    the same opcode name and a non-None args string for every
+    instruction - see module docstring.
+    """
+    data, clear_fn, instructions, table = _load_clear(version, expected_frame_size)
+
+    parsed_count = 0
+    for instruction in instructions:
+        line = format_instruction(data, instruction, clear_fn.offset, table, int(version))
+        entry = OpcodeParser.parse(line)
+        assert entry is not None, f"real OpcodeParser rejected our emitted line: {line!r}"
+        assert entry.opcode == instruction.name
+        parsed_count += 1
+
+    assert parsed_count == len(instructions)
+
+
+def test_string_comment_content_matches_resolved_string():
+    """The comment's resolved string content must match StringTable.resolve() exactly - not just be present."""
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    get_by_id_short = instructions[2]  # GetByIdShort ... "prototype"
+    line = format_instruction(data, get_by_id_short, clear_fn.offset, table, 96)
+    entry = OpcodeParser.parse(line)
+    assert "'prototype'" in entry.comment
+    assert table.resolve(206) == "prototype"
+
+
+def test_multiple_comments_each_get_their_own_prefix_not_joined():
+    """
+    Real hermes-dec output for CreateRegExp (two string_id operands)
+    repeats the '  # ' prefix per comment rather than joining them with
+    '; ' - locks in that join behavior directly, since none of our
+    fixtures happens to contain a CreateRegExp instruction to exercise
+    it end-to-end.
+    """
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    single_comment_line = format_instruction(data, instructions[1], clear_fn.offset, table, 96)  # TryGetById
+    assert single_comment_line.count("  # ") == 1
+
+    comment_parts = ["String: 'a' (String)", "String: 'b' (Identifier)"]
+    rendered = "==> 00000000: <Fake>: <>"
+    for part in comment_parts:
+        rendered += f"  # {part}"
+    assert rendered == "==> 00000000: <Fake>: <>  # String: 'a' (String)  # String: 'b' (Identifier)"
+
+
+def test_function_id_operand_resolves_target_signature():
+    """CreateClosure/CreateGenerator's function_id operand resolves to the target function's own signature when all_functions is supplied."""
+    data = (APPS_TESTY / "96" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+
+    target_instruction = None
+    owner_offset = None
+    for e in resolved[:2000]:
+        instrs = decode_function(data, e.offset, e.bytecode_size_in_bytes, 96)
+        for i in instrs:
+            if i.name in ("CreateClosure", "CreateGenerator", "CreateAsyncClosure"):
+                target_instruction, owner_offset = i, e.offset
+                break
+        if target_instruction:
+            break
+    assert target_instruction is not None, "no CreateClosure-family instruction found in first 2000 functions"
+
+    without_functions = format_instruction(data, target_instruction, owner_offset, table, 96)
+    assert "# Function:" not in without_functions
+
+    with_functions = format_instruction(data, target_instruction, owner_offset, table, 96, resolved)
+    assert "# Function: [#" in with_functions
+    target_index = target_instruction.operands[-1]
+    target_entry = resolved[target_index]
+    assert f"of {target_entry.bytecode_size_in_bytes} bytes" in with_functions
+    assert f"{target_entry.param_count} params" in with_functions
+    assert f"offset 0x{target_entry.offset:08x}" in with_functions
+
+
+def test_exception_handlers_line_present_and_formatted():
+    """A function with has_exception_handler=True gets a '  [Exception handlers: ...]' line matching real hermes-dec's format."""
+    data = (APPS_TESTY / "96" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+    guarded_load_module = next(e for e in resolved if e.index == 7)
+    instructions = decode_function(data, guarded_load_module.offset, guarded_load_module.bytecode_size_in_bytes, 96)
+
+    text = format_function(data, guarded_load_module, instructions, table, 96)
+    lines = text.splitlines()
+    assert lines[1] == "  [Exception handlers: [start=0x2a, end=0x3e, target=0x40] ]"
+
+
+def test_function_without_exception_handler_has_no_extra_line():
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    text = format_function(data, clear_fn, instructions, table, 96)
+    lines = text.splitlines()
+    assert lines[1] == ""  # blank line straight after the header, no exception handlers line
+
+
+@pytest.mark.parametrize(
+    "kind,expected_label",
+    [(FuncKind.GENERATOR, "Generator function"), (FuncKind.ASYNC, "Async function")],
+)
+def test_header_line_uses_kind_specific_label(kind: FuncKind, expected_label: str):
+    """
+    Regression test for a previously-hardcoded "Function" label
+    (header.kind was ignored entirely) - apps/testy/98 has 102 real
+    generator and 90 real async functions this affected. hermes-dec's
+    own format uses "Generator function"/"Async function" instead of
+    "Function" for these - see HasmWriter.py's `_FUNC_KIND_LABEL`.
+    """
+    data = (APPS_TESTY / "98" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+    fn = next(e for e in resolved if e.kind == kind)
+    instructions = decode_function(data, fn.offset, fn.bytecode_size_in_bytes, 98)
+
+    text = format_function(data, fn, instructions, table, 98)
+    assert text.splitlines()[0].startswith(f'=> [{expected_label} #{fn.index} "')
+
+
+@pytest.mark.parametrize("kind", [FuncKind.GENERATOR, FuncKind.ASYNC])
+def test_header_line_still_parses_with_real_function_metadata_parser(kind: FuncKind):
+    """
+    Downstream regression check for the same fix as
+    test_header_line_uses_kind_specific_label above: real
+    hermes_decompiler code has TWO separate consumers of this header
+    line, not just OpcodeParser (see this file's own module docstring) -
+    hermes_decompiler.frontend.parsing.FunctionMetadataParser has its
+    own, separate regex for it. That regex originally only matched a
+    literal "Function #..." prefix - the "Generator function"/"Async
+    function" labels this fix introduces would have made
+    FunctionMetadataParser silently fail to parse any generator/async
+    function's metadata (function_id/function_name/byte_size all
+    missing, only a logged warning) without FunctionMetadataParser's
+    own matching update.
+    """
+    from hermes_decompiler.frontend.parsing.FunctionMetadataParser import FunctionMetadataParser
+
+    data = (APPS_TESTY / "98" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+    fn = next(e for e in resolved if e.kind == kind)
+    instructions = decode_function(data, fn.offset, fn.bytecode_size_in_bytes, 98)
+
+    header_line = format_function(data, fn, instructions, table, 98).splitlines()[0]
+    metadata = FunctionMetadataParser.parse(header_line)
+
+    assert metadata["function_id"] == fn.index
+    assert metadata["byte_size"] == fn.bytecode_size_in_bytes
+    assert metadata["param_count"] == fn.param_count
+
+
+def test_debug_offsets_line_present_and_formatted():
+    """
+    A function with has_debug_info=True gets a '  [Debug offsets: ...]'
+    line matching real hermes-dec's format - synthetic, since neither
+    test fixture currently has a real has_debug_info=True function (see
+    DebugOffsets.py's module docstring). Exercises format_function's
+    actual line placement/ordering (after the header line, before the
+    blank line and "Bytecode listing:"), not just DebugOffsets.py's own
+    resolution logic (already covered in
+    test_hermes_disassembler_debug_offsets.py).
+    """
+    data, clear_fn, instructions, table = _load_clear("96", 9)
+    import struct as _struct
+    import dataclasses
+    debug_data = bytearray(data)
+    debug_offset = clear_fn.info_offset
+    if len(debug_data) < debug_offset + 12:
+        debug_data.extend(b"\x00" * (debug_offset + 12 - len(debug_data)))
+    _struct.pack_into("<III", debug_data, debug_offset, 0x111, 0x222, 0x333)
+    fn_with_debug = dataclasses.replace(clear_fn, has_debug_info=True)
+
+    text = format_function(bytes(debug_data), fn_with_debug, instructions, table, 96)
+    lines = text.splitlines()
+    assert lines[1] == f"  [Debug offsets: source_locs=0x{0x111:x}, scope_desc_data=0x{0x222:x}]"
+
+
+def _split_output_file_module():
+    """Import the real scripts/split_output_file.py (not part of any package - script directory added to sys.path)."""
+    import scripts.split_output_file as split_output_file
+    # import sys as _sys
+
+    # scripts_dir = str(Path(__file__).resolve().parent.parent / "scripts")
+    # if scripts_dir not in _sys.path:
+    #     _sys.path.insert(0, scripts_dir)
+    # import split_output_file  # noqa: PLC0415
+    return split_output_file
+
+
+@pytest.mark.parametrize("version", ["96", "98"])
+def test_bundle_splits_with_real_split_output_file(version: str, tmp_path):
+    """
+    format_bundle()'s output, written to disk and split with the REAL
+    scripts/split_output_file.py (not a reimplementation), produces
+    exactly one section per function - the closed-loop check that
+    SECTION_SEPARATOR matches that script's DEFAULT_SEPARATOR and that
+    every format_function() block is self-contained (no stray
+    separator-looking lines inside a function's own instructions).
+    """
+    split_output_file = _split_output_file_module()
+
+    path = APPS_TESTY / version / "index.android.bundle"
+    if not path.is_file():
+        pytest.skip(f"fixture not found: {path}")
+    data = path.read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+
+    assert HasmWriter.SECTION_SEPARATOR == split_output_file.DEFAULT_SEPARATOR
+
+    text = format_bundle(data, bc_header, table, int(version))
+    hasm_path = tmp_path / "output.hasm"
+    hasm_path.write_text(text)
+
+    sections = list(split_output_file.iter_sections(hasm_path, split_output_file.DEFAULT_SEPARATOR))
+    assert len(sections) == bc_header.function_count
+    assert sections[0].lines[0].startswith('=> [Function #0 ')
+    # Every section (including the last) ends with two blank lines
+    # before its separator - matching real hermes-dec's own output
+    # exactly (see format_bundle's docstring) - so the LAST section is
+    # still a genuine, non-empty function block, not an empty phantom
+    # section (which the trailing separator could otherwise produce -
+    # see iter_sections' own docstring for that confirmed real
+    # hermes-dec-output edge case).
+    assert sections[-1].is_function
+    assert any(line.strip() for line in sections[-1].lines)
+
+
+def test_switch_imm_gets_jump_table_comment_matching_real_hermes_dec():
+    """
+    apps/testy/96's SwitchImm at function-relative offset 0x0000000b -
+    the exact instruction/values confirmed against real hermes-dec
+    output in test_hermes_disassembler_switch_table.py - gets both its
+    default-case `# Address:` comment (from the generalized per-operand
+    Addr32 handling - see JumpTarget.py) and a `# Jump table: [...]`
+    comment, in that order, matching real hermes-dec's own output
+    exactly (confirmed by directly running hbc-disassembler against
+    this fixture - see SwitchTable.py's module docstring).
+    """
+    data = (APPS_TESTY / "96" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+
+    switch_fn, switch_instr = next(
+        (e, i)
+        for e in resolved
+        for i in decode_function(data, e.offset, e.bytecode_size_in_bytes, 96)
+        if i.name == "SwitchImm" and (i.offset - e.offset) == 0xB and i.operands == (1, 238, 232, 0, 31)
+    )
+
+    line = format_instruction(data, switch_instr, switch_fn.offset, table, 96)
+    assert "  # Address: 000000f3  # Jump table: [00000067, 00000031, " in line
+    assert line.rstrip().endswith("0000001d]")
+
+
+def test_uint_switch_imm_gets_jump_table_comment_even_though_hermes_dec_doesnt():
+    """
+    UNLIKE most of this package's hermes-dec-quirk-matching choices,
+    `UIntSwitchImm` deliberately does NOT match real hermes-dec's own
+    output here (confirmed via hbc-disassembler run directly against
+    apps/testy/98: it never prints a `# Jump table:` comment for this
+    opcode). hermes_decompiler's `UIntSwitchImm` handler is the exact
+    same class as `SwitchImm`'s and depends on this comment (parsed
+    into `ctx.entry.jump_table`) to reconstruct a v98 switch statement's
+    cases at all - see SwitchTable.py's module docstring.
+    """
+    data = (APPS_TESTY / "98" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+
+    fn, instr = next(
+        (e, i)
+        for e in resolved
+        for i in decode_function(data, e.offset, e.bytecode_size_in_bytes, 98)
+        if i.name == "UIntSwitchImm"
+    )
+
+    line = format_instruction(data, instr, fn.offset, table, 98)
+    assert "# Address:" in line
+    assert "# Jump table: [" in line
+
+
+def test_string_switch_imm_gets_address_but_no_jump_table_comment():
+    """
+    `StringSwitchImm` genuinely has no jump-table comment here, unlike
+    `UIntSwitchImm` above - hermes_decompiler's own `StringSwitchImm`
+    handler doesn't read one at all (its cases come from a separate
+    string-keyed table this package doesn't parse), so there's no
+    consumer for it either way - see SwitchTable.py's module docstring.
+    """
+    data = (APPS_TESTY / "98" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+
+    fn, instr = next(
+        (e, i)
+        for e in resolved
+        for i in decode_function(data, e.offset, e.bytecode_size_in_bytes, 98)
+        if i.name == "StringSwitchImm"
+    )
+
+    line = format_instruction(data, instr, fn.offset, table, 98)
+    assert "# Address:" in line
+    assert "Jump table" not in line
+
+
+def test_bigint_id_comment_requires_bc_header():
+    """
+    A LoadConstBigInt/LoadConstBigIntLongIndex instruction's bigint_id
+    operand gets a `# BigInt: <value>` comment (matching real
+    hermes-dec's format exactly - see BigIntTable.py's module
+    docstring) when bc_header is passed, and none when it's omitted -
+    same graceful-degradation pattern as function_id/all_functions.
+    Synthetic, since neither fixture has a real BigInt (bigint_count=0
+    in both - see BigIntTable.py's module docstring).
+    """
+    from hermes_disassembler.format.Opcode import Instruction, load_opcode_table
+
+    data, clear_fn, _instructions, table = _load_clear("96", 9)
+    bc_header = BytecodeFileHeader.parse(data)
+
+    debug_data = bytearray(data)
+    table_start = table.bigint_table_offset
+    needed = table_start + 8 + 4  # one entry (offset,length) + its 4-byte value
+    if len(debug_data) < needed:
+        debug_data.extend(b"\x00" * (needed - len(debug_data)))
+    debug_data[table_start:table_start + 4] = (0).to_bytes(4, "little")
+    debug_data[table_start + 4:table_start + 8] = (4).to_bytes(4, "little")
+    debug_data[table_start + 8:table_start + 12] = (12345).to_bytes(4, "little")
+
+    import dataclasses
+    header_with_one_bigint = dataclasses.replace(bc_header, bigint_count=1)
+
+    opcode_table = load_opcode_table(96)
+    bigint_opcode = next(i for i, (name, _ops, _sem) in enumerate(opcode_table) if name == "LoadConstBigInt")
+    load_bigint = Instruction(
+        offset=clear_fn.offset, opcode=bigint_opcode, name="LoadConstBigInt", operands=(0, 0), size=4
+    )
+
+    line_without_header = format_instruction(bytes(debug_data), load_bigint, clear_fn.offset, table, 96)
+    assert "# BigInt:" not in line_without_header
+
+    line_with_header = format_instruction(
+        bytes(debug_data), load_bigint, clear_fn.offset, table, 96, bc_header=header_with_one_bigint
+    )
+    assert line_with_header.rstrip().endswith("# BigInt: 12345")

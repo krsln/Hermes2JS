@@ -3,7 +3,8 @@ import argparse
 import logging
 from pathlib import Path
 
-from hermes_decompiler.core.io import FileOperations
+from hermes_decompiler.core.Exceptions import OpcodeDispatchError, NoHandlerError
+from hermes_decompiler.io import FileOperations
 from hermes_decompiler.core.logging import configure_logging, get_logger
 
 logger = get_logger(__name__)
@@ -11,7 +12,7 @@ logger = get_logger(__name__)
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Convert Hermes .hbc sections to JavaScript."
+        description="Convert Hermes .hasm sections to JavaScript."
     )
 
     LOG_LEVELS = {
@@ -22,7 +23,7 @@ def main() -> None:
         "CRITICAL": logging.CRITICAL,
     }
 
-    DESC_INPUT = "Directory containing .hbc section files."
+    DESC_INPUT = "Directory containing .hasm section files."
     DESC_OUTPUT = "Directory where JavaScript files will be written."
     DESC_START = "First section number to process."
     DESC_END = "Last section number to process."
@@ -52,7 +53,7 @@ def main() -> None:
     configure_logging(level=LOG_LEVELS[args.log_level], use_color=True)
     # logging_test()
 
-    logger.info("Starting .hbc to JavaScript conversion. Verbose: %s | Strict: %s", args.verbose, args.strict)
+    logger.info("Starting .hasm to JavaScript conversion. Verbose: %s | Strict: %s", args.verbose, args.strict)
 
     if not input_dir.exists():
         logger.error("Input directory does not exist: %s", input_dir)
@@ -68,21 +69,38 @@ def main() -> None:
     )
 
     if not files:
-        logger.info("No .hbc files found.")
+        logger.info("No .hasm files found.")
         return
 
-    logger.info("Found %d .hbc files", len(files))
+    logger.info("Found %d .hasm files", len(files))
     logger.info("input \t%s", input_dir)
     logger.info("output \t%s", output_dir)
 
+    successful = 0
+    failed = 0
+
     for filename, section_index in files:
         file_path = input_dir / filename
-        FileOperations.process_section(
-            section_index, str(file_path), str(output_dir),
-            args.verbose, args.raw, args.strict
-        )
 
-    logger.info("Conversion completed successfully")
+        try:
+            result = FileOperations.process_section(
+                section_index, str(file_path), str(output_dir), file_path.stem,
+                args.verbose, args.raw, args.strict,
+            )
+        except (OpcodeDispatchError, NoHandlerError) as e:
+            logger.error("Batch stopped in strict mode at section #%s: %s", section_index, e)
+            raise SystemExit(1)
+
+        if result:
+            successful += 1
+        else:
+            failed += 1
+
+    logger.info("Conversion finished: %d succeeded, %d failed, %d total", successful, failed, len(files))
+
+    if failed:
+        logger.error("%d/%d sections failed - see errors above.", failed, len(files))
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

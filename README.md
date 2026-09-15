@@ -6,14 +6,15 @@ Hermes2JS takes an already-built Hermes bytecode bundle from a React Native app 
 disassembles it, splits it into one file per function, and reconstructs each function as readable JavaScript.
 
 ```text
-┌────────────────────────┐      scripts/run-hermes-dec.sh        ┌────────────┐
-│  index.android.bundle  │ ────────────────────────────────────► │ output.hbc │
-│                        │    (external hermes-dec tool)         └─────┬──────┘
-│ (Prebuilt Hermes BC)   │                                             │
-└────────────────────────┘                                             │
-                                                                       ▼
-┌────────────────────────┐      scripts/decompile_sections.py   scripts/split_output_file.py
-│     results/*.js       │ ◄───────────────────────────────        sections/*.hbc
+┌────────────────────────┐      vendor/run-hermes-dec.sh               
+│       assets/          │   scripts/run-hermes-disassembler.py        ┌──────────────────────────┐
+│  index.android.bundle  │ ──────────────────────────────────────────► │ disassembler-output.hasm │
+│ (Prebuilt Hermes BC)   │       (external hermes-dec tool)            └───────────┬──────────────┘
+│                        │                                                         │
+└────────────────────────┘                                                         │
+                                                                                   ▼
+┌────────────────────────┐      scripts/decompile_sections.py         scripts/split_output_file.py
+│     results/*.js       │ ◄───────────────────────────────────          function_<id>_*.hasm
 │                        │       (one file per function)
 │ (Decompiled JS source) │
 └────────────────────────┘

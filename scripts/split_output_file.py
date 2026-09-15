@@ -13,14 +13,20 @@ import json
 import logging
 import re
 from dataclasses import dataclass, field
-from typing import Optional
 from hermes_decompiler.core.logging import configure_logging, get_logger
 
 log = get_logger(__name__)
 
 DEFAULT_SEPARATOR = "==============="
+# hermes-dec's actual output prefixes this line with "=> " (confirmed
+# against apps/demo/fixtures/96/sections/section_15042.hasm, a real
+# hermes-dec fixture already committed in this repo) - the prefix is
+# optional here so a bare "[Function ..." line (e.g. hand-written test
+# fixtures, or a future disassembler backend that omits the arrow)
+# still matches too.
+# FUNCTION_HEADER_RE = re.compile(r'^(?:=>\s+)?\[Function #(?P<number>\d+)\s+"(?P<name>[^"]*)"\s+of\s+\d+\s+bytes]')
 FUNCTION_HEADER_RE = re.compile(
-    r'^\[Function #(?P<number>\d+)\s+"(?P<name>[^"]*)"\s+of\s+\d+\s+bytes]'
+    r'^(?:=>\s+)?\[(?:Async |Generator )?[Ff]unction #(?P<number>\d+)\s+"(?P<name>[^"]*)"(?:\s+of\s+\d+\s+bytes)?]'
 )
 # Anything outside this set is replaced with '_' when building filenames.
 SAFE_CHARS_RE = re.compile(r"[^A-Za-z0-9_\-.]")
@@ -34,8 +40,8 @@ class Section:
     index: int
     start_line: int
     end_line: int
-    function_number: Optional[str] = None
-    function_name: Optional[str] = None
+    function_number: str | None = None
+    function_name: str | None = None
     lines: list[str] = field(default_factory=list)
 
     @property
@@ -47,7 +53,7 @@ class Section:
             name = self.function_name or "anonymous"
             raw = f"function_{self.function_number}_{name}"
         else:
-            raw = f"section_{self.index}"
+            raw = f"function_{self.index}_nameless"
         return sanitize_filename(raw)
 
 
@@ -76,11 +82,23 @@ def iter_sections(input_path: Path, separator: str):
     """
     Lazily yield Section objects by scanning the input file line by line.
     Keeps memory bounded to a single section's worth of lines at a time.
+
+    A trailing buffer containing only blank/whitespace lines is NOT
+    yielded as its own section - real hermes-dec's own disassembler
+    output (`hbc_disassembler.py`'s `disassemble_function`) prints the
+    separator block after EVERY function, including the last one,
+    leaving one blank line after that final separator before the file
+    ends; without this check, that one blank line would otherwise
+    become its own spurious near-empty trailing section (confirmed:
+    running this function against real hermes-dec's own output for
+    apps/testy/96, before this check, produced 15248 sections for a
+    15247-function bundle - one extra, containing nothing but that
+    trailing blank line).
     """
     index = 0
     start_line = 1
-    current_number: Optional[str] = None
-    current_name: Optional[str] = None
+    current_number: str | None = None
+    current_name: str | None = None
     buffer: list[str] = []
     line_no = 0
 
@@ -113,7 +131,7 @@ def iter_sections(input_path: Path, separator: str):
                     current_number = match.group("number")
                     current_name = match.group("name") or None
 
-    if buffer:
+    if buffer and any(line.strip() for line in buffer):
         yield Section(
             index=index,
             start_line=start_line,
@@ -128,8 +146,8 @@ def split_file(
         input_file: str,
         output_dir: str,
         separator: str = DEFAULT_SEPARATOR,
-        extension: str = ".hbc",
-        manifest_path: Optional[str] = None,
+        extension: str = ".hasm",
+        manifest_path: str | None = None,
         dry_run: bool = False,
 ) -> int:
     """
@@ -212,9 +230,9 @@ def split_file(
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="split_output_file.py",
-        description="Split a Hermes bytecode disassembly (.hbc) into one file per function.",
+        description="Split a Hermes bytecode disassembly (.hasm) into one file per function.",
     )
-    parser.add_argument("-i", "--input", required=True, help="Path to the input .hbc file")
+    parser.add_argument("-i", "--input", required=True, help="Path to the input .hasm file")
     parser.add_argument("-o", "--output", required=True, help="Output directory for split sections")
     parser.add_argument(
         "--separator",
@@ -223,8 +241,8 @@ def build_arg_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--extension",
-        default=".hbc",
-        help="File extension for output sections (default: .hbc)",
+        default=".hasm",
+        help="File extension for output sections (default: .hasm)",
     )
     parser.add_argument(
         "--manifest",
@@ -250,7 +268,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: Optional[list[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = build_arg_parser()
     args = parser.parse_args(argv)
 

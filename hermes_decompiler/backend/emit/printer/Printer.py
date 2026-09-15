@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from ._PrinterContext import PrinterContext
-from ._ConditionComment import ConditionCommentPrinter
 from .ExpressionPrinter import ExpressionPrinter
 from .StatementPrinter import StatementPrinter
 from .RegionPrinter import RegionPrinter
@@ -35,14 +34,12 @@ class Printer:
 
         expressions = ExpressionPrinter()
         statements = StatementPrinter(expressions)
-        condition_comments = ConditionCommentPrinter(ctx, expressions)
 
-        regions = RegionPrinter(ctx, expressions, statements, condition_comments)
+        regions = RegionPrinter(ctx, expressions, statements)
 
         self._context = ctx
         self._expressions = expressions
         self._statements = statements
-        self._condition_comments = condition_comments
         self._regions = regions
 
     @property

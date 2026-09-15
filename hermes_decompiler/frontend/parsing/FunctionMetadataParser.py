@@ -2,11 +2,14 @@ import re
 
 from hermes_decompiler.core.logging import get_logger
 
+__all__ = ["FunctionMetadataParser"]
+
 logger = get_logger(__name__)
 
 
 class FunctionMetadataParser:
-    _NAME_RE = re.compile(r'\[Function #(\d+) "([^"]*)" of (\d+) bytes]')
+    # _NAME_RE = re.compile(r'\[Function #(\d+) "([^"]*)" of (\d+) bytes]')
+    _NAME_RE = re.compile(r'^(?:=>\s+)?\[(?:Async |Generator )?[Ff]unction #(\d+) "([^"]*)" of (\d+) bytes]')
     _PARAMS_RE = re.compile(r'(\d+) params')
     _OFFSET_RE = re.compile(r'@ offset (0x[0-9a-fA-F]+)')
     _KV_RE = re.compile(r'(.+)=(\d+)')
@@ -17,7 +20,7 @@ class FunctionMetadataParser:
     @classmethod
     def parse(cls, line: str) -> dict:
         """
-        Parse the metadata line of a .hbc file.
+        Parse the metadata line of a .hasm file.
 
         Args:
             line: e.g. '[Function #9594 "?anon_0_" of 105 bytes] ...'
@@ -25,7 +28,7 @@ class FunctionMetadataParser:
         Returns:
             Dictionary containing parsed metadata. Missing/unrecognized fields
             are logged as warnings rather than raising, matching prior
-            behavior where the caller (JSConverter) applies sensible defaults
+            behavior where the caller (`Decompiler`) applies sensible defaults
             via `.get(key, default)`.
         """
         metadata = {}

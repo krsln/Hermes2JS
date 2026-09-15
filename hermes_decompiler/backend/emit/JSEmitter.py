@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hermes_decompiler.analysis.models.RegionGraph import SequenceRegion
+from hermes_decompiler.backend.regions import SequenceRegion
 from .printer import Printer
 
 

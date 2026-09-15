@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from hermes_decompiler.ir.Node import Node
 from hermes_decompiler.ir.Operators import VariableKind
 from hermes_decompiler.ir.expressions import Expression, Identifier
-from ._Base import Statement
+from ._base import Statement
 from .Block import BlockStatement
 
 __all__ = [

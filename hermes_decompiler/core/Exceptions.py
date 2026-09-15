@@ -7,26 +7,27 @@ from an expected parsing failure (e.g., hermes-dis emitted an unfamiliar
 line format). These types let callers decide, per-exception-type, whether
 to log-and-continue or fail fast.
 """
+from typing import Any
 
 
-class HbcDecompilerError(Exception):
+class HasmDecompilerError(Exception):
     """Base class for all recoverable decompiler errors."""
 
 
-class MetadataParseError(HbcDecompilerError):
-    """The .hbc metadata header line could not be parsed."""
+class MetadataParseError(HasmDecompilerError):
+    """The .hasm metadata header line could not be parsed."""
 
 
-# class LineParseError(HbcDecompilerError):
-#     """A single bytecode listing line did not match the expected grammar."""
-#
-#     def __init__(self, line: str, reason: str = ""):
-#         self.line = line
-#         self.reason = reason
-#         super().__init__(f"Could not parse line: {line!r} ({reason})" if reason else f"Could not parse line: {line!r}")
+class OpcodeConstructionError(HasmDecompilerError):
+    """The opcode grammar matched but building the OpcodeEntry from it failed."""
+
+    def __init__(self, line: str, cause: BaseException):
+        self.line = line
+        self.cause = cause
+        super().__init__(f"Failed to construct OpcodeEntry from line {line!r}: {cause}")
 
 
-class OpcodeDispatchError(HbcDecompilerError):
+class OpcodeDispatchError(HasmDecompilerError):
     """A registered handler raised while processing an opcode."""
 
     def __init__(self, opcode: str, entry_bytecode: str, cause: BaseException):
@@ -36,7 +37,7 @@ class OpcodeDispatchError(HbcDecompilerError):
         super().__init__(f"Opcode '{opcode}' handler failed on {entry_bytecode!r}: {cause}")
 
 
-class NoHandlerError(HbcDecompilerError):
+class NoHandlerError(HasmDecompilerError):
     """No OpcodeHandler is registered for the given opcode."""
 
     def __init__(self, opcode: str):
@@ -44,8 +45,38 @@ class NoHandlerError(HbcDecompilerError):
         super().__init__(f"No handler registered for opcode '{opcode}'")
 
 
-class AnalysisContextError(HbcDecompilerError):
+class AnalysisContextError(HasmDecompilerError):
     """Dispatch was attempted without a valid HermesAnalysis context."""
 
-# class CodeGenerationError(HbcDecompilerError):
-#     """JS code generation (HermesAnalysis.GenerateJS) failed unexpectedly."""
+
+class CodeGenerationError(HasmDecompilerError):
+    """The code-generation stage (CodeGenerationStage) failed for this section."""
+
+    def __init__(self, section_index: int, cause: BaseException):
+        self.section_index = section_index
+        self.cause = cause
+        super().__init__(f"Code generation failed for section {section_index}: {cause}")
+
+
+class StructurerInvariantError(HasmDecompilerError):
+    """
+    A structurer pass found the IR/CFG in a state its own logic assumes
+    can never happen (e.g., a block it just confirmed carries a
+    conditional branch no longer does).
+
+    Distinct from the other errors in this module: those cover *expected*
+    failure modes of external input (an unfamiliar hermes-dis line, an
+    unregistered opcode); this one means a structurer's own precondition
+    was violated - a bug in the decompiler itself, not the input. Using a
+    real exception here (rather than a bare `assert`) means the check
+    still runs under `python -O`, where `assert` is stripped entirely and
+    the violation would otherwise pass through silently.
+    """
+
+
+class HandlerLoadError(HasmDecompilerError):
+    """Raised when one or more opcode handler modules fail to import."""
+
+    def __init__(self, message: str, report: Any):
+        self.report = report
+        super().__init__(message)
