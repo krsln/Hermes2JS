@@ -47,36 +47,10 @@ disassembles it, splits it into one file per function, and reconstructs each fun
 
 ## Workflow
 
-```text
-Bytecode
-    │
-    ▼
-Parsing
-    │
-    ▼
-Dispatch
-    │
-    ▼
-Opcode Handlers
-    │
-    ▼
-Analysis
-    ├── CFG
-    ├── Dominance
-    ├── Loops
-    └── Regions
-    │
-    ▼
-Transforms
-    │
-    ▼
-IR
-    │
-    ▼
-Emit
-    │
-    ▼
-JavaScript
+```text 
+Bytecode → Parsing → Dispatch → Opcode Handlers → Analysis → Transforms → IR → Emit → JavaScript
+                                                      │
+                                                      └── CFG, Dominance, Loops, Regions
 ```
 
 ## Third-Party Tools
