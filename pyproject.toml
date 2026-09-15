@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "hermes2js"
 version = "0.1.0"
-description = "Best-effort decompiler from Hermes assembly to JavaScript"
+description = "Best-effort Hermes bytecode disassembler and decompiler"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -26,10 +26,16 @@ classifiers = [
 dependencies = []
 
 [tool.setuptools.packages.find]
-include = ["hermes_decompiler*", "hermes_disassembler*"]
+include = [
+    "hermes_decompiler*",
+    "hermes_disassembler*",
+]
 
 [tool.setuptools.package-data]
-hermes_disassembler = ["data/builtins/*.json", "data/opcodes/*.json"]
+hermes_disassembler = [
+    "data/builtins/*.json",
+    "data/opcodes/*.json",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
