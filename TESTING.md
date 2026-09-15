@@ -10,7 +10,7 @@ https://github.com/facebook/hermes/tree/main/include/hermes/BCGen
 tree -I '__pycache__|__init__.py' hermes_decompiler
 
 # diff 
-git diff main...feature/from-26-09-15 > ~/Downloads/hermes2js.diff
+git diff main...feature/from-2026-09-15 > ~/Downloads/hermes2js.diff
 ```
 
 ## Testy
