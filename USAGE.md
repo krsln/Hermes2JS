@@ -58,6 +58,8 @@ cp apps/testy/96/output/sections/function_{15042..15216}_*.hasm apps/demo/fixtur
 
 # section_9446-9542
 cp apps/testy/98/output/sections/function_{9446..9542}_*.hasm apps/demo/fixtures/98/sections/
+cp apps/testy/98/output/sections/function_{12469..12489}_*.hasm apps/demo/fixtures/98/sections/
+cp apps/testy/98/output/sections/function_{13737..13746}_*.hasm apps/demo/fixtures/98/sections/
 ```
 
 ## Step—4 Decompile

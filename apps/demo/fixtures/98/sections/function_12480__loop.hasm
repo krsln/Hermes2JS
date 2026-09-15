@@ -1,0 +1,17 @@
+
+=> [Function #12480 "_loop" of 39 bytes]: 2 params, frame size=14, strict=1, exc handler=0, debug info=0  @ offset 0x00243e88
+
+Bytecode listing:
+
+==> 00000000: <CreateTopLevelEnvironment>: <Reg8: 2, UInt32: 1>
+==> 00000006: <LoadParam>: <Reg8: 0, UInt8: 1>
+==> 00000009: <StoreNPToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
+==> 0000000d: <GetParentEnvironment>: <Reg8: 3, UInt8: 0>
+==> 00000010: <LoadFromEnvironment>: <Reg8: 4, Reg8: 3, UInt8: 0>
+==> 00000014: <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 0, string_id: 88>  # String: 'push' (Identifier)
+==> 00000019: <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 13741>  # Function: [#13741  of 9 bytes]: 1 params @ offset 0x00193d54
+==> 0000001e: <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
+==> 00000023: <LoadConstUndefined>: <Reg8: 1>
+==> 00000025: <Ret>: <Reg8: 1>
+
+
