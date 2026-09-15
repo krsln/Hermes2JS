@@ -9,7 +9,7 @@ disassembles it, splits it into one file per function, and reconstructs each fun
 ┌────────────────────────┐              
 │       assets/          │      scripts/run-hermes-disassembler.py     ┌──────────────────────────┐
 │  index.android.bundle  │ ────────────────────or────────────────────► │ disassembler-output.hasm │
-│ (Prebuilt Hermes BC)   │          vendor/run-hermes-dec.sh           └───────────┬──────────────┘
+│ (Prebuilt Hermes BC)   │  vendor/hermes-dec/.../hbc_disassembler.py  └───────────┬──────────────┘
 │                        │          (external hermes-dec tool)                     │
 └────────────────────────┘                                                         │
                                                                                    ▼
