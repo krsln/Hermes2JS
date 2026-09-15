@@ -8,9 +8,17 @@ decompilation logic - CFG construction, dominance, loop/if/switch
 structuring, region passes, or JS emission - so a regression in any of
 that could land silently.
 
-`apps/demo/fixtures/<set>/sections/section_<n>.hasm` and the matching
-`apps/demo/fixtures/<set>/results/section_<n>[_raw].js` already exist in
-the repo (captured via `scripts/decompile_sections.py`, see TESTING.md).
+`apps/demo/fixtures/<set>/sections/function_<n>_<name>.hasm` and the
+matching committed JavaScript outputs under
+`apps/demo/fixtures/<set>/results/` already exist. Normal output keeps
+the function name:
+
+    function_<n>_<name>.js
+
+while raw output uses:
+
+    function_<n>.raw.js
+
 This file turns that existing, already-reviewed data into an automated
 regression net: every fixture section must keep decompiling to exactly
 the JavaScript already committed alongside it.
@@ -23,6 +31,7 @@ regenerate the affected golden file(s) as part of the same change (e.g.
 via `scripts/decompile_sections.py`) and review the diff like any other
 code change, rather than deleting or skipping the test.
 """
+
 from __future__ import annotations
 
 import re
@@ -35,25 +44,28 @@ from hermes_decompiler.Decompiler import Decompiler
 
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 _FIXTURES_ROOT = _REPO_ROOT / "apps" / "demo" / "fixtures"
-_SECTION_RE = re.compile(r"^section_(\d+)\.hasm$")
+_FUNCTION_RE = re.compile(r"^function_(?P<number>\d+)_(?P<name>.+)\.hasm$")
 
 
 class _GoldenCase(NamedTuple):
     fixture_name: str
     sections_dir: Path
     results_dir: Path
-    section_index: int
+    function_name: str
+    function_index: int
 
 
 def _discover_golden_cases() -> list[_GoldenCase]:
     """
-    Find every fixture section that has both a `section_<n>.hasm` input
-    and a committed `section_<n>.js` golden output.
+    Find every fixture function that has both a
+    `function_<n>_<name>.hasm` input and a matching
+    `function_<n>_<name>.js` golden output.
+
+    Raw output, when present, is expected to use the
+    `function_<n>.raw.js` naming convention.
 
     Returns an empty list (rather than raising at collection time) when
-    the fixtures directory isn't present, so this file degrades to "no
-    tests collected" instead of a hard collection error on any checkout
-    that doesn't carry the (fairly large) fixture data.
+    the fixtures directory isn't present.
     """
     cases: list[_GoldenCase] = []
 
@@ -63,23 +75,41 @@ def _discover_golden_cases() -> list[_GoldenCase]:
     for fixture_dir in sorted(_FIXTURES_ROOT.iterdir()):
         sections_dir = fixture_dir / "sections"
         results_dir = fixture_dir / "results"
+
         if not (sections_dir.is_dir() and results_dir.is_dir()):
             continue
 
-        for hasm_path in sorted(sections_dir.glob("section_*.hasm")):
-            match = _SECTION_RE.match(hasm_path.name)
+        for hasm_path in sorted(sections_dir.glob("function_*.hasm")):
+            match = _FUNCTION_RE.match(hasm_path.name)
             if not match:
                 continue
 
-            section_index = int(match.group(1))
-            if (results_dir / f"section_{section_index}.js").exists():
-                cases.append(_GoldenCase(fixture_dir.name, sections_dir, results_dir, section_index))
+            function_index = int(match.group("number"))
+            function_name = match.group("name")
+
+            golden_path = results_dir / (f"function_{function_index}_{function_name}.js")
+
+            if not golden_path.exists():
+                continue
+
+            cases.append(
+                _GoldenCase(
+                    fixture_name=fixture_dir.name,
+                    sections_dir=sections_dir,
+                    results_dir=results_dir,
+                    function_name=function_name,
+                    function_index=function_index,
+                )
+            )
 
     return cases
 
 
 _CASES = _discover_golden_cases()
-_CASE_IDS = [f"{case.fixture_name}/section_{case.section_index}" for case in _CASES]
+_CASE_IDS = [
+    f"{case.fixture_name}/function_{case.function_index}_{case.function_name}"
+    for case in _CASES
+]
 
 
 @pytest.mark.skipif(
@@ -89,7 +119,7 @@ _CASE_IDS = [f"{case.fixture_name}/section_{case.section_index}" for case in _CA
 @pytest.mark.parametrize("case", _CASES, ids=_CASE_IDS)
 def test_matches_golden_output(case: _GoldenCase) -> None:
     """
-    Decompiling a fixture section must keep producing byte-for-byte the
+    Decompiling a fixture function must keep producing byte-for-byte the
     same JavaScript already committed under `results/`.
 
     Mirrors `FileOperations.process_section`'s call shape (one
@@ -98,15 +128,19 @@ def test_matches_golden_output(case: _GoldenCase) -> None:
     `Decompiler` documents - a bug that leaks state between two renders
     of the same context would show up here.
     """
-    hasm_content = (case.sections_dir / f"section_{case.section_index}.hasm").read_text(encoding="utf-8")
+    hasm_path = (case.sections_dir / f"function_{case.function_index}_{case.function_name}.hasm")
 
-    context = Decompiler.build_context(hasm_content, case.section_index, strict=False)
+    hasm_content = hasm_path.read_text(encoding="utf-8")
+
+    context = Decompiler.build_context(hasm_content, case.function_index, strict=False)
 
     actual_js = Decompiler.render(context, verbose=True, raw=False)
-    expected_js = (case.results_dir / f"section_{case.section_index}.js").read_text(encoding="utf-8")
+    expected_js_path = (case.results_dir / f"function_{case.function_index}_{case.function_name}.js")
+    expected_js = expected_js_path.read_text(encoding="utf-8")
     assert actual_js == expected_js
 
-    golden_raw_path = case.results_dir / f"section_{case.section_index}_raw.js"
+    golden_raw_path = (case.results_dir / f"function_{case.function_index}.raw.js")
+
     if golden_raw_path.exists():
         actual_raw_js = Decompiler.render(context, verbose=True, raw=True)
         expected_raw_js = golden_raw_path.read_text(encoding="utf-8")
@@ -138,17 +172,19 @@ def test_render_is_order_independent(case: _GoldenCase) -> None:
     This test renders both orders from two otherwise-identical fresh
     contexts and requires them to agree, independent of any golden file.
     """
-    hasm_content = (case.sections_dir / f"section_{case.section_index}.hasm").read_text(encoding="utf-8")
+    golden_raw_path = (case.results_dir / f"function_{case.function_index}.raw.js")
 
-    golden_raw_path = case.results_dir / f"section_{case.section_index}_raw.js"
     if not golden_raw_path.exists():
-        pytest.skip("No raw output recorded for this section - nothing to compare orders against.")
+        pytest.skip("No raw output recorded for this function - nothing to compare orders against.")
 
-    ctx_a = Decompiler.build_context(hasm_content, case.section_index, strict=False)
+    hasm_path = (case.sections_dir / f"function_{case.function_index}_{case.function_name}.hasm")
+    hasm_content = hasm_path.read_text(encoding="utf-8")
+
+    ctx_a = Decompiler.build_context(hasm_content, case.function_index, strict=False)
     js_first = Decompiler.render(ctx_a, verbose=True, raw=False)
     raw_second = Decompiler.render(ctx_a, verbose=True, raw=True)
 
-    ctx_b = Decompiler.build_context(hasm_content, case.section_index, strict=False)
+    ctx_b = Decompiler.build_context(hasm_content, case.function_index, strict=False)
     raw_first = Decompiler.render(ctx_b, verbose=True, raw=True)
     js_second = Decompiler.render(ctx_b, verbose=True, raw=False)
 
