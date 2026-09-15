@@ -7,14 +7,14 @@ disassembles it, splits it into one file per function, and reconstructs each fun
 
 ```text
 ┌────────────────────────┐      vendor/run-hermes-dec.sh               
-│       assets/          │   scripts/run-hermes-disassembler.py        ┌─────────────┐
-│  index.android.bundle  │ ──────────────────────────────────────────► │ output.hasm │
-│ (Prebuilt Hermes BC)   │       (external hermes-dec tool)            └──────┬──────┘
-│                        │                                                    │
-└────────────────────────┘                                                    │
-                                                                              ▼
-┌────────────────────────┐      scripts/decompile_sections.py      scripts/split_output_file.py
-│     results/*.js       │ ◄───────────────────────────────────       sections/*.hasm
+│       assets/          │   scripts/run-hermes-disassembler.py        ┌──────────────────────────┐
+│  index.android.bundle  │ ──────────────────────────────────────────► │ disassembler-output.hasm │
+│ (Prebuilt Hermes BC)   │       (external hermes-dec tool)            └───────────┬──────────────┘
+│                        │                                                         │
+└────────────────────────┘                                                         │
+                                                                                   ▼
+┌────────────────────────┐      scripts/decompile_sections.py         scripts/split_output_file.py
+│     results/*.js       │ ◄───────────────────────────────────          function_<id>_*.hasm
 │                        │       (one file per function)
 │ (Decompiled JS source) │
 └────────────────────────┘
