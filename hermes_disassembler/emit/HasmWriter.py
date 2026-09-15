@@ -43,21 +43,30 @@ addressing as `==>` lines, per `JumpTarget.py`'s absolute-offset
 convention converted back to relative here.
 
 Known gaps, not yet implemented:
-- `bigint_id` operand comments (no BigInt table parser in this package yet).
 - Multiple string_id operands on one instruction (e.g. `CreateRegExp`
   has two) - each gets its own `  # ` segment, per hermes-dec's real
   output for that exact case (confirmed, not guessed).
 - Exact `Double` operand text formatting (no fixture example with one).
-- `NewArrayWithBuffer`/`NewObjectWithBuffer`/`NewArrayWithBufferLong`/etc.
-  literal-content comments (e.g. `# Array: [1, 0, 2]`, `# Object: {'a': 1}`) -
-  real hermes-dec output includes these; this module doesn't yet parse
-  the literal value buffer / object key-value buffers needed to
-  reconstruct them. Confirmed missing by direct comparison against real
-  hermes-dec output, not just inferred.
-- `SwitchImm`/`UIntSwitchImm`/`StringSwitchImm` jump-table comments (no
-  parser for the jump table itself yet - see `JumpTarget.py`). Real,
-  not theoretical: apps/testy/96 has 26 and apps/testy/98 has 20
-  instructions in this opcode family.
+- RegExp table (`CreateRegExp`'s `# RegExp: ...`-style comment, if any -
+  unconfirmed) and the debug tables (`Debug offsets:`'s three raw
+  offsets are resolved - see `DebugOffsets.py` - but the source
+  location / scope descriptor / textified-callees tables they point
+  into aren't parsed).
+
+`bigint_id` operand comments (`BigIntTable.py`) and
+`SwitchImm`/`UIntSwitchImm`/`StringSwitchImm` jump-table and
+default-target comments (`SwitchTable.py`, `JumpTarget.py`'s
+`resolve_operand_jump_target`) are both implemented and validated
+directly against real hermes-dec output (`hbc-disassembler`, run
+against apps/testy/96 and apps/testy/98 directly, not just read from
+source - see those two modules' docstrings) - `UIntSwitchImm`/
+`StringSwitchImm` deliberately never get the jump-table comment,
+matching a confirmed quirk in real hermes-dec's own output (its
+name-matching code only ever checks for the literal string
+`"SwitchImm"`). `NewArrayWithBuffer`/`NewObjectWithBuffer`/etc. literal
+content comments (`# Array: [...]`, `# Object: {...}`) are also
+already implemented (`LiteralBuffer.py`/`ObjectLiteral.py`) - this
+bullet used to (wrongly) list them as missing.
 
 Exception handler resolution (`format_function`'s
 `  [Exception handlers: ...]` line) and debug offsets resolution
@@ -81,17 +90,19 @@ filenames, not anonymous `section_N` ones.
 from __future__ import annotations
 
 from hermes_disassembler.core.Exceptions import HermesBytecodeError
+from hermes_disassembler.format.BigIntTable import resolve_bigint
 from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
 from hermes_disassembler.format.Builtins import resolve_builtin
 from hermes_disassembler.format.DebugOffsets import resolve_debug_offsets
 from hermes_disassembler.format.ExceptionHandlerTable import resolve_exception_handlers
 from hermes_disassembler.format.FunctionHeader import FuncKind, FunctionHeaderEntry
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
-from hermes_disassembler.format.JumpTarget import is_jump_instruction, resolve_jump_target
+from hermes_disassembler.format.JumpTarget import _JUMP_OPERAND_TYPES, resolve_operand_jump_target
 from hermes_disassembler.format.LiteralBuffer import _Undefined, decode_literal_buffer
 from hermes_disassembler.format.ObjectLiteral import resolve_object_literal
 from hermes_disassembler.format.Opcode import Instruction, decode_function, load_opcode_table
 from hermes_disassembler.format.StringTable import StringTable
+from hermes_disassembler.format.SwitchTable import resolve_switch_table_entries
 
 #: scripts/split_output_file.py's own separator constant, duplicated
 #: here rather than imported (that script isn't part of this package
@@ -141,18 +152,22 @@ def format_instruction(
         table: StringTable,
         version: int,
         all_functions: tuple[FunctionHeaderEntry, ...] | None = None,
+        bc_header: BytecodeFileHeader | None = None,
 ) -> str:
     """
     Format one instruction as a `==> <rel_offset>: <Name>: <operands>`
     line, with a trailing `  # ...` comment (one per commented operand,
     each with its own `  # ` prefix - see module docstring) for string
-    references, function references, builtin references, array literal
-    contents, and jump targets where applicable. `data` is the full
-    bundle bytes (needed to resolve array literal contents).
-    `function_offset` is the owning function's `FunctionHeaderEntry.offset`
-    (needed to print the instruction's offset relative to its function,
-    matching hermes-dec's `==> 00000000:`-from-zero convention - see
-    module docstring).
+    references, function references, builtin references, bigint values,
+    array/object literal contents, jump targets, and (`SwitchImm` only -
+    see `SwitchTable.py`'s module docstring for why not `UIntSwitchImm`/
+    `StringSwitchImm` too) jump tables, where applicable. `data` is the
+    full bundle bytes (needed to resolve array literal contents, jump
+    tables, and bigint values). `function_offset` is the owning
+    function's `FunctionHeaderEntry.offset` (needed to print the
+    instruction's offset relative to its function, matching
+    hermes-dec's `==> 00000000:`-from-zero convention - see module
+    docstring).
 
     `all_functions` - the full, overflow-resolved function list for this
     bundle (e.g. from `format_bundle`, or
@@ -162,6 +177,12 @@ def format_instruction(
     (the default) to format a single function in isolation - `function_id`
     operands are then left without a comment rather than raising, since
     the target function's info genuinely isn't available.
+
+    `bc_header` - the bundle's `BytecodeFileHeader` - is needed to
+    resolve `bigint_id` operands (for `header.bigint_count` bounds
+    checking - see `BigIntTable.resolve_bigint`). Omit it (the default)
+    to leave `bigint_id` operands without a comment, same reasoning as
+    `all_functions` above.
     """
     _name, operand_types, semantics = load_opcode_table(version)[instruction.opcode]
 
@@ -172,8 +193,6 @@ def format_instruction(
 
     comment_parts: list[str] = []
     for i, value in enumerate(instruction.operands):
-        if type(value) is not int:
-            continue
         tag = semantics.get(i)
         if tag == "string_id":
             string_value = table.resolve(value)
@@ -183,7 +202,19 @@ def format_instruction(
             comment_parts.append(_format_function_reference(all_functions[value], table))
         elif tag == "builtin_id":
             comment_parts.append(f"Built-in function: [#{value} {resolve_builtin(version, value)}]")
-        # function_id with all_functions=None, and bigint_id always: no comment yet, see module docstring
+        elif tag == "bigint_id" and bc_header is not None:
+            comment_parts.append(f"BigInt: {resolve_bigint(data, table, bc_header, value)}")
+        elif operand_types[i] in _JUMP_OPERAND_TYPES:
+            # Not just DEFINE_JUMP_N's operand-0 case - SwitchImm's/
+            # UIntSwitchImm's/StringSwitchImm's default-case Addr32
+            # lands here too, at whatever operand index it's at (2 or
+            # 3 - see JumpTarget.py's module docstring). Matches real
+            # hermes-dec's own per-operand loop exactly: it checks
+            # operand TYPE, not instruction identity or operand
+            # position, for this specific comment.
+            relative_target = resolve_operand_jump_target(instruction, i) - function_offset
+            comment_parts.append(f"Address: {relative_target:08x}")
+        # function_id with all_functions=None: no comment.
 
     if instruction.name in _ARRAY_BUFFER_OPCODES:
         comment_parts.append(_format_array_buffer_comment(data, table, version, instruction))
@@ -191,10 +222,13 @@ def format_instruction(
     if instruction.name in _OBJECT_BUFFER_OPCODES:
         comment_parts.append(_format_object_buffer_comment(data, table, version, instruction))
 
-    if is_jump_instruction(instruction, version):
-        absolute_target = resolve_jump_target(instruction, version)
-        relative_target = absolute_target - function_offset
-        comment_parts.append(f"Address: {relative_target:08x}")
+    if instruction.name == "SwitchImm":
+        # UIntSwitchImm/StringSwitchImm deliberately excluded - see
+        # SwitchTable.py's module docstring for the confirmed real
+        # hermes-dec quirk this matches.
+        targets = resolve_switch_table_entries(data, instruction, 1, 3, 4)
+        entries = ", ".join(f"{t - function_offset:08x}" for t in targets)
+        comment_parts.append(f"Jump table: [{entries}]")
 
     rel_offset = instruction.offset - function_offset
     line = f"==> {rel_offset:08x}: <{instruction.name}>: <{', '.join(operand_strs)}>"
@@ -300,6 +334,7 @@ def format_function(
         table: StringTable,
         version: int,
         all_functions: tuple[FunctionHeaderEntry, ...] | None = None,
+        bc_header: BytecodeFileHeader | None = None,
 ) -> str:
     """
     Format a complete function block matching hermes-dec's shape:
@@ -315,8 +350,9 @@ def format_function(
     `format_instruction()` line per instruction - see module docstring
     for the exact fixture this reproduces. `data` is the full bundle
     bytes (needed to resolve the exception handler table and debug
-    offsets). `all_functions` is passed through to `format_instruction`
-    for `function_id` resolution.
+    offsets). `all_functions` and `bc_header` are passed through to
+    `format_instruction` for `function_id`/`bigint_id` resolution
+    respectively.
     """
     name = table.resolve(header.function_name)
     kind_label = _FUNC_KIND_LABEL[header.kind]
@@ -334,7 +370,7 @@ def format_function(
         lines.append(_format_debug_offsets_line(data, header, version))
     lines += ["", "Bytecode listing:", ""]
     lines.extend(
-        format_instruction(data, i, header.offset, table, version, all_functions) for i in instructions
+        format_instruction(data, i, header.offset, table, version, all_functions, bc_header) for i in instructions
     )
 
     return "\n".join(lines)
@@ -408,6 +444,6 @@ def format_bundle(data: bytes, bc_header: BytecodeFileHeader, table: StringTable
     blocks = []
     for entry in resolved:
         instructions = decode_function(data, entry.offset, entry.bytecode_size_in_bytes, version)
-        blocks.append(format_function(data, entry, instructions, table, version, resolved))
+        blocks.append(format_function(data, entry, instructions, table, version, resolved, bc_header))
 
     return f"\n\n\n{SECTION_SEPARATOR}\n\n".join(blocks)

@@ -269,3 +269,102 @@ def test_bundle_splits_with_real_split_output_file(version: str, tmp_path):
     assert len(sections) == bc_header.function_count
     assert sections[0].lines[0].startswith('=> [Function #0 ')
     assert sections[-1].lines[-1].rstrip("\n") != ""  # no trailing empty section
+
+
+def test_switch_imm_gets_jump_table_comment_matching_real_hermes_dec():
+    """
+    apps/testy/96's SwitchImm at function-relative offset 0x0000000b -
+    the exact instruction/values confirmed against real hermes-dec
+    output in test_hermes_disassembler_switch_table.py - gets both its
+    default-case `# Address:` comment (from the generalized per-operand
+    Addr32 handling - see JumpTarget.py) and a `# Jump table: [...]`
+    comment, in that order, matching real hermes-dec's own output
+    exactly (confirmed by directly running hbc-disassembler against
+    this fixture - see SwitchTable.py's module docstring).
+    """
+    data = (APPS_TESTY / "96" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+
+    switch_fn, switch_instr = next(
+        (e, i)
+        for e in resolved
+        for i in decode_function(data, e.offset, e.bytecode_size_in_bytes, 96)
+        if i.name == "SwitchImm" and (i.offset - e.offset) == 0xB and i.operands == (1, 238, 232, 0, 31)
+    )
+
+    line = format_instruction(data, switch_instr, switch_fn.offset, table, 96)
+    assert "  # Address: 000000f3  # Jump table: [00000067, 00000031, " in line
+    assert line.rstrip().endswith("0000001d]")
+
+
+def test_uint_switch_imm_gets_address_but_no_jump_table_comment():
+    """
+    Regression test for the confirmed real hermes-dec quirk
+    SwitchTable.py's module docstring describes: bytecode 98's
+    UIntSwitchImm/StringSwitchImm (the exact same opcode as bytecode
+    96's SwitchImm, just renamed) get their `# Address:` comment (from
+    the generalized per-operand handling) but NEVER a `# Jump table:`
+    comment, matching real hermes-dec's own output exactly (confirmed
+    by running hbc-disassembler against apps/testy/98 directly, not
+    just read from source).
+    """
+    data = (APPS_TESTY / "98" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+
+    fn, instr = next(
+        (e, i)
+        for e in resolved
+        for i in decode_function(data, e.offset, e.bytecode_size_in_bytes, 98)
+        if i.name in ("UIntSwitchImm", "StringSwitchImm")
+    )
+
+    line = format_instruction(data, instr, fn.offset, table, 98)
+    assert "# Address:" in line
+    assert "Jump table" not in line
+
+
+def test_bigint_id_comment_requires_bc_header():
+    """
+    A LoadConstBigInt/LoadConstBigIntLongIndex instruction's bigint_id
+    operand gets a `# BigInt: <value>` comment (matching real
+    hermes-dec's format exactly - see BigIntTable.py's module
+    docstring) when bc_header is passed, and none when it's omitted -
+    same graceful-degradation pattern as function_id/all_functions.
+    Synthetic, since neither fixture has a real BigInt (bigint_count=0
+    in both - see BigIntTable.py's module docstring).
+    """
+    from hermes_disassembler.format.Opcode import Instruction, load_opcode_table
+
+    data, clear_fn, _instructions, table = _load_clear("96", 9)
+    bc_header = BytecodeFileHeader.parse(data)
+
+    debug_data = bytearray(data)
+    table_start = table.bigint_table_offset
+    needed = table_start + 8 + 4  # one entry (offset,length) + its 4-byte value
+    if len(debug_data) < needed:
+        debug_data.extend(b"\x00" * (needed - len(debug_data)))
+    debug_data[table_start:table_start + 4] = (0).to_bytes(4, "little")
+    debug_data[table_start + 4:table_start + 8] = (4).to_bytes(4, "little")
+    debug_data[table_start + 8:table_start + 12] = (12345).to_bytes(4, "little")
+
+    import dataclasses
+    header_with_one_bigint = dataclasses.replace(bc_header, bigint_count=1)
+
+    opcode_table = load_opcode_table(96)
+    bigint_opcode = next(i for i, (name, _ops, _sem) in enumerate(opcode_table) if name == "LoadConstBigInt")
+    load_bigint = Instruction(offset=clear_fn.offset, opcode=bigint_opcode, name="LoadConstBigInt", operands=(0, 0),
+                              size=4)
+
+    line_without_header = format_instruction(bytes(debug_data), load_bigint, clear_fn.offset, table, 96)
+    assert "# BigInt:" not in line_without_header
+
+    line_with_header = format_instruction(
+        bytes(debug_data), load_bigint, clear_fn.offset, table, 96, bc_header=header_with_one_bigint
+    )
+    assert line_with_header.rstrip().endswith("# BigInt: 12345")

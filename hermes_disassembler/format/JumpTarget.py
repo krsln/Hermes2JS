@@ -21,23 +21,26 @@ equally plausible and further confirms the formula rather than being
 a coincidence of one lucky number. See
 `tests/test_hermes_disassembler_jump_target.py`.
 
-Since `Addr8`/`Addr32` never appears as a non-jump-target operand
-anywhere in BytecodeList.def (only DEFINE_JUMP_N introduces them, and
-only ever as the first operand), detecting "is this a jump
-instruction" from the operand *type* list is exact - no hardcoded
-opcode name list to keep in sync with the opcode table.
-
-Known gap: `SwitchImm` (a jump *table*, not a single relative target)
-isn't handled here - it has its own multi-target encoding referencing
-a separate jump-table blob, not covered by the "first operand is
-Addr8/Addr32" pattern this module relies on, and needs separate,
-dedicated support later; see `hermes_disassembler`'s package docstring.
+`is_jump_instruction`/`resolve_jump_target` below only ever look at
+operand INDEX 0 - accurate for every DEFINE_JUMP_N opcode, but NOT a
+complete inventory of where `Addr8`/`Addr32` can appear: the
+`SwitchImm`/`UIntSwitchImm`/`StringSwitchImm` family also carries one,
+at a LATER operand index, as its "value out of range" default-case
+target (confirmed against real hermes-dec output - `hbc-disassembler`
+run directly against apps/testy/96 and apps/testy/98, not just its
+source read - see `SwitchTable.py`, which uses
+`resolve_operand_jump_target` below for that operand specifically,
+rather than this module's own `is_jump_instruction`/
+`resolve_jump_target`, since those two are intentionally scoped to the
+"single jump target as operand 0" case their own callers (and
+`tests/test_hermes_disassembler_jump_target.py`'s pinned counts) rely
+on.
 """
 from __future__ import annotations
 
 from hermes_disassembler.format.Opcode import Instruction, load_opcode_table
 
-__all__ = ["is_jump_instruction", "resolve_jump_target"]
+__all__ = ["is_jump_instruction", "resolve_jump_target", "resolve_operand_jump_target"]
 
 _JUMP_OPERAND_TYPES = frozenset({"Addr8", "Addr32"})
 
@@ -45,8 +48,10 @@ _JUMP_OPERAND_TYPES = frozenset({"Addr8", "Addr32"})
 def is_jump_instruction(instruction: Instruction, version: int) -> bool:
     """
     True if `instruction`'s opcode takes a relative jump target as its
-    first operand (see module docstring). `SwitchImm` is deliberately
-    NOT considered a jump instruction here - see "Known gap" above.
+    first operand (see module docstring). `SwitchImm`/`UIntSwitchImm`/
+    `StringSwitchImm` are deliberately NOT considered jump instructions
+    here (their Addr8/Addr32 operand isn't at index 0) - see
+    `resolve_operand_jump_target` below for those.
     """
     _name, operand_types, _semantics = load_opcode_table(version)[instruction.opcode]
     return bool(operand_types) and operand_types[0] in _JUMP_OPERAND_TYPES
@@ -68,3 +73,15 @@ def resolve_jump_target(instruction: Instruction, version: int) -> int | None:
     if not is_jump_instruction(instruction, version):
         return None
     return instruction.offset + instruction.operands[0]
+
+
+def resolve_operand_jump_target(instruction: Instruction, operand_index: int) -> int:
+    """
+    Return the absolute byte offset `instruction.operands[operand_index]`
+    resolves to, treating it as a relative `Addr8`/`Addr32` jump target
+    (same `instruction.offset + value` convention as `resolve_jump_target`,
+    generalized to any operand index rather than only index 0). Callers
+    are responsible for confirming the operand at that index is actually
+    an `Addr8`/`Addr32` type - this function doesn't check.
+    """
+    return instruction.offset + instruction.operands[operand_index]
