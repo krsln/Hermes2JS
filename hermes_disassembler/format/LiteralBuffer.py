@@ -23,7 +23,12 @@ have none - the run length alone says how many):
   ShortString: 2 bytes (uint16 string-table index, "smaller than 2^16")
   LongString:  4 bytes (uint32 string-table index)
   ByteString:  1 byte (uint8 string-table index) - version < 98 only, see below
-  Integer:     4 bytes (int32)
+  Integer:     4 bytes - despite the name, read and displayed as
+               uint32 (unsigned), not int32 (signed) - a small negative
+               JS number IS still stored here (as its two's complement
+               bit pattern), but real hermes-dec's own output never
+               sign-corrects it back; see `decode_literal_buffer`
+               below for the confirmed real example.
 
 VERSION-DEPENDENT TAG 6 - the bug this module originally had: tag value
 6 (0x60) means two DIFFERENT things depending on bytecode version, and
@@ -152,7 +157,20 @@ def decode_literal_buffer(
             elif tag == _INTEGER_TAG:
                 if pos + 4 > len(data):
                     raise TruncatedFileError("literal buffer Integer", pos + 4, len(data))
-                (v,) = struct.unpack_from("<i", data, pos)
+                # Unsigned, NOT the signed int32 this looks like it should
+                # be (an IntegerTag can genuinely hold a small negative
+                # number, stored as its 32-bit two's complement bit
+                # pattern) - confirmed against real hermes-dec output
+                # (P1sec/hermes-dec's own `serialized_literal_parser.py`,
+                # `unpack_slp_array`, reads it via plain
+                # `int.from_bytes(..., 'little')`, unsigned by default -
+                # not source alone: apps/testy/96 has several real
+                # `NewObjectWithBuffer` instructions with a -1/-3/-4/-7
+                # value in this position, and real hermes-dec's own
+                # disassembly comment for every one of them prints
+                # 4294967295/4294967293/4294967292/4294967289, not the
+                # negative number - see module docstring).
+                (v,) = struct.unpack_from("<I", data, pos)
                 values.append(v)
                 pos += 4
             elif tag == _SHORT_STRING_TAG:

@@ -22,8 +22,8 @@ function describe() {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 40 | <LoadConstString>: <Reg8: 7, string_id: 3847>  # String: 'Private element not found' (String)
         r7 = "Private element not found"
-        // CODE → addr: 44 | <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 HermesBuiltin_throwTypeError]
-        r4 = HermesBuiltin_throwTypeError(r7, r6)
+        // CODE → addr: 44 | <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+        r4 = throwTypeError(r7, r6)
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 48 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 6>

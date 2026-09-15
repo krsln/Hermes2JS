@@ -11,6 +11,24 @@ operand 57 resolves here to "spawnAsync" - matching real hermes-dec
 output's own `# Built-in function: [#57 spawnAsync]` comment for the
 exact same instruction (see
 `tests/test_hermes_disassembler_builtins.py`).
+
+Also confirmed - and corrected - by a full-bundle diff against real
+hermes-dec's own output (`hbc-disassembler`, installed from
+`vendor/hermes-dec` via `pip install -e .`, run directly against
+apps/testy/96 and apps/testy/98): the 15 "private" builtins in each
+table (`PRIVATE_BUILTIN(...)` entries in Builtins.def - e.g.
+`copyDataProperties`, `arraySpread`, `apply`) were previously generated
+with a `HermesBuiltin_` prefix that real hermes-dec's own name table
+doesn't have - e.g. `# Built-in function: [#44
+HermesBuiltin_copyDataProperties]` where real hermes-dec prints
+`# Built-in function: [#44 copyDataProperties]`. This wasn't visible
+from the earlier spot-check above (index 57's "spawnAsync" is a
+`JS_BUILTIN` entry, a different macro, unaffected) or from the
+generator script's own logic looking internally consistent - only a
+literal, full-file diff against real hermes-dec output surfaced it.
+Fixed in both the data files and
+`tools/hermes/generate_builtins_table.py` (see that script's own
+comment on its `PRIVATE_BUILTIN` pattern).
 """
 from __future__ import annotations
 
@@ -50,7 +68,7 @@ def load_builtins_table(version: int) -> tuple[str, ...]:
 def resolve_builtin(version: int, index: int) -> str:
     """
     Resolve `builtin_id` value `index` to its name (e.g. "spawnAsync",
-    "Math.abs", "HermesBuiltin_copyDataProperties").
+    "Math.abs", "copyDataProperties").
 
     Raises `IndexError` for an out-of-range index.
     """

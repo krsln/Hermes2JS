@@ -42,7 +42,16 @@ OUTPUT_DIR = REPO_ROOT / "hermes_disassembler" / "data" / "builtins"
 _ENTRY_PATTERNS = [
     (re.compile(r"^NORMAL_METHOD\((\w+),\s*(\w+)\)$"), lambda m: f"{m.group(1)}.{m.group(2)}"),
     (re.compile(r"^BUILTIN_METHOD\((\w+),\s*(\w+)\)$"), lambda m: f"{m.group(1)}.{m.group(2)}"),
-    (re.compile(r"^PRIVATE_BUILTIN\((\w+)\)$"), lambda m: f"HermesBuiltin_{m.group(1)}"),
+    # Bare macro argument, no "HermesBuiltin_" prefix - confirmed against
+    # real hermes-dec output (`hbc-disassembler` run directly against a
+    # real bundle, not read from source alone): apps/testy/96's CallBuiltin
+    # instructions referencing indices 44/46/47 print "copyDataProperties"/
+    # "arraySpread"/"apply", not "HermesBuiltin_copyDataProperties"/etc.
+    # An earlier version of this pattern added that prefix, producing a
+    # table that matched no visible symptom (still resolved something
+    # plausible-looking) until diffed line-for-line against real
+    # hermes-dec's own disassembly output.
+    (re.compile(r"^PRIVATE_BUILTIN\((\w+)\)$"), lambda m: m.group(1)),
     (re.compile(r"^JS_BUILTIN\((\w+)\)$"), lambda m: m.group(1)),
 ]
 

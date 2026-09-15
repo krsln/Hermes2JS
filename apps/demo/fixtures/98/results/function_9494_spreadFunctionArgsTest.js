@@ -22,8 +22,8 @@ function spreadFunctionArgsTest() {
     r8 = [1, 2, 3]
     // CODE → addr: 47 | <Mov>: <Reg8: 9, Reg8: 6>
     r9 = r6
-    // CODE → addr: 50 | <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 HermesBuiltin_arraySpread]
-    r0 = HermesBuiltin_arraySpread(r9, r8, r7, r6)
+    // CODE → addr: 50 | <CallBuiltin>: <Reg8: 0, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+    r0 = arraySpread(r9, r8, r7, r6)
     // CODE → addr: 54 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr: 56 | <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 12477>  # Function: [#12477 sum of 19 bytes]: 4 params @ offset 0x00243e3c
@@ -32,8 +32,8 @@ function spreadFunctionArgsTest() {
     r8 = r6
     // CODE → addr: 64 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
-    // CODE → addr: 66 | <CallBuiltin>: <Reg8: 3, UInt8: 49, UInt8: 4>  # Built-in function: [#49 HermesBuiltin_apply]
-    r3 = HermesBuiltin_apply(r9, r8, r7, r6)
+    // CODE → addr: 66 | <CallBuiltin>: <Reg8: 3, UInt8: 49, UInt8: 4>  # Built-in function: [#49 apply]
+    r3 = apply(r9, r8, r7, r6)
     // CODE → addr: 70 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log(r3)
     // CODE → addr: 75 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

@@ -21,8 +21,8 @@ function classTest() {
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 41 | <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
     r8 = "Trying to call a non-function"
-    // CODE → addr: 45 | <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 HermesBuiltin_throwTypeError]
-    r4 = HermesBuiltin_throwTypeError(r8, r7)
+    // CODE → addr: 45 | <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+    r4 = throwTypeError(r8, r7)
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 49 | <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
     // USED → r3 = r3.prototype;
@@ -65,8 +65,8 @@ function classTest() {
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:145 | <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
     r8 = "Trying to call a non-function"
-    // CODE → addr:149 | <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 HermesBuiltin_throwTypeError]
-    r3 = HermesBuiltin_throwTypeError(r8, r7)
+    // CODE → addr:149 | <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
+    r3 = throwTypeError(r8, r7)
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:153 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 4>
     // USED → r2 = r2[4];

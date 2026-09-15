@@ -40,8 +40,8 @@ function arrayTest() {
     r9 = r5
     // CODE → addr: 85 | <LoadConstZero>: <Reg8: 8>
     r8 = 0
-    // CODE → addr: 87 | <CallBuiltin>: <Reg8: 1, UInt8: 48, UInt8: 4>  # Built-in function: [#48 HermesBuiltin_arraySpread]
-    r1 = HermesBuiltin_arraySpread(r10, r9, r8, r7)
+    // CODE → addr: 87 | <CallBuiltin>: <Reg8: 1, UInt8: 48, UInt8: 4>  # Built-in function: [#48 arraySpread]
+    r1 = arraySpread(r10, r9, r8, r7)
     // CODE → addr: 91 | <GetById>: <Reg8: 6, Reg8: 7, UInt8: 5, string_id: 7762>  # String: 'sort' (Identifier)
     // USED → r6 = r7.sort;
     // CODE → addr: 97 | <LoadConstUndefined>: <Reg8: 2>
