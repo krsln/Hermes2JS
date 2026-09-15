@@ -23,3 +23,13 @@ class PipelineContext:
     # combines it with a separate async signal derived from the dispatched
     # IR to decide the actual printed header.
     is_generator: bool = False
+    # 'generator' | 'async' | 'normal' - the disassembler's own FuncKind for
+    # *this* Function-table entry (absent/always 'normal' under LAYOUT_V96,
+    # which has no Kind bits - see FunctionMetadataParser). Deliberately
+    # NOT used to override `is_generator` above: FuncKind is a *source-level*
+    # tag (e.g. an outer `function*` stub that only calls CreateGenerator
+    # and returns still carries header_kind='generator', even though that
+    # stub's own bytecode has no <StartGenerator> and must print as a plain
+    # `function`, not `function*` - see SignatureStage.run()). Used there
+    # only as a cross-check that logs a warning on disagreement.
+    header_kind: str = "normal"

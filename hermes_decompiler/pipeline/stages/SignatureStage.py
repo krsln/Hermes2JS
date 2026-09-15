@@ -51,4 +51,22 @@ class SignatureStage(PipelineStage):
         joined = '\n'.join(context.lines)
         context.is_generator = '<StartGenerator>' in joined
 
+        # Cross-check against the disassembler's own FuncKind (see
+        # PipelineContext.header_kind's docstring for why this only logs,
+        # rather than overrides is_generator above). Only the
+        # kind-says-generator/async-but-body-never-suspends direction is
+        # checked: header_kind is only ever non-'normal' when Kind bits
+        # actually exist (LAYOUT_V96 always reports 'normal' regardless of
+        # the real function), so a 'normal' header can't be compared against
+        # is_generator without knowing which layout produced it - see the
+        # docstring - and would otherwise fire on every legitimate
+        # LAYOUT_V96 generator/async body.
+        context.header_kind = metadata.get('header_kind', 'normal')
+        if context.header_kind != 'normal' and not context.is_generator:
+            logger.warning(
+                "Function #%s (%s): header_kind=%r but body has no suspend/resume opcode "
+                "- treating as a non-generator/async outer stub.",
+                metadata.get('function_id', context.section_index), function_name, context.header_kind,
+            )
+
         return context
