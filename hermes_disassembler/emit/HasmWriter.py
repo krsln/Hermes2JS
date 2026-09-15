@@ -222,10 +222,23 @@ def format_instruction(
     if instruction.name in _OBJECT_BUFFER_OPCODES:
         comment_parts.append(_format_object_buffer_comment(data, table, version, instruction))
 
-    if instruction.name == "SwitchImm":
-        # UIntSwitchImm/StringSwitchImm deliberately excluded - see
-        # SwitchTable.py's module docstring for the confirmed real
-        # hermes-dec quirk this matches.
+    if instruction.name in ("SwitchImm", "UIntSwitchImm"):
+        # StringSwitchImm deliberately excluded - hermes_decompiler's own
+        # StringSwitchImm handler doesn't use a jump table at all (its
+        # cases come from a separate string-keyed table this package
+        # doesn't parse - see SwitchTable.py's module docstring), so
+        # there's no consumer for this comment there. UIntSwitchImm IS
+        # included here even though real hermes-dec's own disassembly
+        # output never prints this comment for it (see SwitchTable.py's
+        # module docstring for that confirmed quirk) - unlike that
+        # quirk, this isn't just a cosmetic text difference:
+        # hermes_decompiler's UIntSwitchImm handler is the SAME class as
+        # SwitchImm's (`class UIntSwitchImm(SwitchImm): pass`) and reads
+        # `ctx.entry.jump_table`, itself populated by parsing this exact
+        # comment (OpcodeEntry.py's `_JUMP_TABLE_RE`) - omitting it here
+        # to match hermes-dec's text would silently break every v98
+        # switch statement's case reconstruction (empty case_map), not
+        # just look different.
         targets = resolve_switch_table_entries(data, instruction, 1, 3, 4)
         entries = ", ".join(f"{t - function_offset:08x}" for t in targets)
         comment_parts.append(f"Jump table: [{entries}]")

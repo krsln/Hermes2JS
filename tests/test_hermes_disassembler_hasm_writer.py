@@ -202,6 +202,40 @@ def test_header_line_uses_kind_specific_label(kind: FuncKind, expected_label: st
     assert text.splitlines()[0].startswith(f'=> [{expected_label} #{fn.index} "')
 
 
+@pytest.mark.parametrize("kind", [FuncKind.GENERATOR, FuncKind.ASYNC])
+def test_header_line_still_parses_with_real_function_metadata_parser(kind: FuncKind):
+    """
+    Downstream regression check for the same fix as
+    test_header_line_uses_kind_specific_label above: real
+    hermes_decompiler code has TWO separate consumers of this header
+    line, not just OpcodeParser (see this file's own module docstring) -
+    hermes_decompiler.frontend.parsing.FunctionMetadataParser has its
+    own, separate regex for it. That regex originally only matched a
+    literal "Function #..." prefix - the "Generator function"/"Async
+    function" labels this fix introduces would have made
+    FunctionMetadataParser silently fail to parse any generator/async
+    function's metadata (function_id/function_name/byte_size all
+    missing, only a logged warning) without FunctionMetadataParser's
+    own matching update.
+    """
+    from hermes_decompiler.frontend.parsing.FunctionMetadataParser import FunctionMetadataParser
+
+    data = (APPS_TESTY / "98" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+    fn = next(e for e in resolved if e.kind == kind)
+    instructions = decode_function(data, fn.offset, fn.bytecode_size_in_bytes, 98)
+
+    header_line = format_function(data, fn, instructions, table, 98).splitlines()[0]
+    metadata = FunctionMetadataParser.parse(header_line)
+
+    assert metadata["function_id"] == fn.index
+    assert metadata["byte_size"] == fn.bytecode_size_in_bytes
+    assert metadata["param_count"] == fn.param_count
+
+
 def test_debug_offsets_line_present_and_formatted():
     """
     A function with has_debug_info=True gets a '  [Debug offsets: ...]'
@@ -308,16 +342,16 @@ def test_switch_imm_gets_jump_table_comment_matching_real_hermes_dec():
     assert line.rstrip().endswith("0000001d]")
 
 
-def test_uint_switch_imm_gets_address_but_no_jump_table_comment():
+def test_uint_switch_imm_gets_jump_table_comment_even_though_hermes_dec_doesnt():
     """
-    Regression test for the confirmed real hermes-dec quirk
-    SwitchTable.py's module docstring describes: bytecode 98's
-    UIntSwitchImm/StringSwitchImm (the exact same opcode as bytecode
-    96's SwitchImm, just renamed) get their `# Address:` comment (from
-    the generalized per-operand handling) but NEVER a `# Jump table:`
-    comment, matching real hermes-dec's own output exactly (confirmed
-    by running hbc-disassembler against apps/testy/98 directly, not
-    just read from source).
+    UNLIKE most of this package's hermes-dec-quirk-matching choices,
+    `UIntSwitchImm` deliberately does NOT match real hermes-dec's own
+    output here (confirmed via hbc-disassembler run directly against
+    apps/testy/98: it never prints a `# Jump table:` comment for this
+    opcode). hermes_decompiler's `UIntSwitchImm` handler is the exact
+    same class as `SwitchImm`'s and depends on this comment (parsed
+    into `ctx.entry.jump_table`) to reconstruct a v98 switch statement's
+    cases at all - see SwitchTable.py's module docstring.
     """
     data = (APPS_TESTY / "98" / "index.android.bundle").read_bytes()
     bc_header = BytecodeFileHeader.parse(data)
@@ -329,7 +363,33 @@ def test_uint_switch_imm_gets_address_but_no_jump_table_comment():
         (e, i)
         for e in resolved
         for i in decode_function(data, e.offset, e.bytecode_size_in_bytes, 98)
-        if i.name in ("UIntSwitchImm", "StringSwitchImm")
+        if i.name == "UIntSwitchImm"
+    )
+
+    line = format_instruction(data, instr, fn.offset, table, 98)
+    assert "# Address:" in line
+    assert "# Jump table: [" in line
+
+
+def test_string_switch_imm_gets_address_but_no_jump_table_comment():
+    """
+    `StringSwitchImm` genuinely has no jump-table comment here, unlike
+    `UIntSwitchImm` above - hermes_decompiler's own `StringSwitchImm`
+    handler doesn't read one at all (its cases come from a separate
+    string-keyed table this package doesn't parse), so there's no
+    consumer for it either way - see SwitchTable.py's module docstring.
+    """
+    data = (APPS_TESTY / "98" / "index.android.bundle").read_bytes()
+    bc_header = BytecodeFileHeader.parse(data)
+    table = StringTable.parse(data, bc_header)
+    entries = parse_function_headers(data, bc_header)
+    resolved = resolve_overflowed_headers(data, bc_header, entries)
+
+    fn, instr = next(
+        (e, i)
+        for e in resolved
+        for i in decode_function(data, e.offset, e.bytecode_size_in_bytes, 98)
+        if i.name == "StringSwitchImm"
     )
 
     line = format_instruction(data, instr, fn.offset, table, 98)

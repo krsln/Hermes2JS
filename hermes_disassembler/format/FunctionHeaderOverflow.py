@@ -65,6 +65,24 @@ unrelated reasons uncovered separately:
   v98 overflowed function's flags byte (from one byte before its real
   position), including `hasExceptionHandler` itself.
 
+  Further confirmed since, by a full-file diff of real hermes-dec's own
+  disassembly output against this package's (`hbc-disassembler`, run
+  directly against apps/testy/98): every affected field traces back to
+  exactly this one bug, and ONLY this one - the two tools' disassembly
+  text disagrees on `strict=`/`exc handler=`/`debug info=`/`kind` for
+  roughly 77% of apps/testy/98's 14267 functions, matching (not
+  coincidentally) almost exactly the 11155/14267 (78%) that are
+  actually overflowed; the other ~22% (non-overflowed functions, whose
+  flags never went through this buggy large-header read at all) show
+  no disagreement. Instruction-level content (offsets, opcodes,
+  operands - all resolved via the CORRECTLY-shared `offset`/
+  `bytecodeSizeInBytes` fields, which come from earlier in the same
+  struct, before the one-byte-short mistake) matches essentially
+  perfectly regardless - confirming the bug is precisely scoped to the
+  flags byte, not a broader misalignment. `HasmWriter.py` does not
+  attempt to match hermes-dec's own wrong v98 overflowed-function flags
+  where the two disagree.
+
 Consequences of the old, wrong FLAT 37-for-both guess: for v96 only,
 the flags byte was read 6 bytes past its real position, corrupting
 every flag the large header carries (`has_exception_handler`,

@@ -9,7 +9,7 @@ logger = get_logger(__name__)
 
 class FunctionMetadataParser:
     # _NAME_RE = re.compile(r'\[Function #(\d+) "([^"]*)" of (\d+) bytes]')
-    _NAME_RE = re.compile( r'^(?:=>\s+)?\[(?:Async |Generator )?[Ff]unction #(\d+) "([^"]*)" of (\d+) bytes]')
+    _NAME_RE = re.compile(r'^(?:=>\s+)?\[(?:Async |Generator )?[Ff]unction #(\d+) "([^"]*)" of (\d+) bytes]')
     _PARAMS_RE = re.compile(r'(\d+) params')
     _OFFSET_RE = re.compile(r'@ offset (0x[0-9a-fA-F]+)')
     _KV_RE = re.compile(r'(.+)=(\d+)')

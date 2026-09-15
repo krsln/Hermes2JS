@@ -38,22 +38,38 @@ literal here).
 
 `StringSwitchImm` (bytecode 98/99 only - a distinct opcode from
 `UIntSwitchImm`, switching on interned string identity rather than an
-integer range) is a DELIBERATE non-feature here, matching a confirmed
-quirk of real hermes-dec's own output: its jump-table-comment code
-path (`elif self.inst.name == 'SwitchImm':`) checks for the LITERAL
-name `"SwitchImm"` only - never `"UIntSwitchImm"` (bytecode 98's own
-name for the very same opcode this module handles) and never
-`"StringSwitchImm"` - so real hermes-dec's own disassembly NEVER prints
-a `# Jump table:` comment for either bytecode 98 opcode, confirmed by
-running hermes-dec against apps/testy/98 directly (both
-`UIntSwitchImm` and `StringSwitchImm` instances there get only their
-`# Address:` comment, nothing else). `resolve_switch_table_entries`
-below replicates this exactly: it raises for `StringSwitchImm` rather
-than attempting a (currently unconfirmed) decode, and
-`HasmWriter.py` only ever calls it for an instruction literally named
-`SwitchImm` - so `UIntSwitchImm` is capable of being decoded here
-(its binary layout is identical to `SwitchImm`'s) but, matching real
-hermes-dec's own output byte-for-byte, never actually is.
+integer range) is a DELIBERATE non-feature here. Two separate reasons,
+worth keeping distinct:
+
+  Real hermes-dec's own output never prints a `# Jump table:` comment
+  for `UIntSwitchImm` OR `StringSwitchImm` - its jump-table-comment code
+  path (`elif self.inst.name == 'SwitchImm':`) checks for the LITERAL
+  name `"SwitchImm"` only, confirmed by running real hermes-dec
+  (`hbc-disassembler`) against apps/testy/98 directly (both get only
+  their `# Address:` comment, nothing else). This package deliberately
+  does NOT replicate that specific quirk for `UIntSwitchImm` (unlike
+  most of this package's other hermes-dec-quirk-matching choices) -
+  `HasmWriter.py` emits the comment for both `SwitchImm` and
+  `UIntSwitchImm`, because hermes_decompiler's actual `UIntSwitchImm`
+  handler is the exact same class as `SwitchImm`'s
+  (`class UIntSwitchImm(SwitchImm): pass`, in
+  `hermes_decompiler/frontend/handlers/controlflow/SwitchImm.py`) and
+  depends on this comment being present to reconstruct a v98 switch
+  statement's cases at all (`OpcodeEntry.py`'s `_JUMP_TABLE_RE` parses
+  it into `ctx.entry.jump_table`, which that handler reads directly) -
+  omitting it to match hermes-dec's text byte-for-byte would silently
+  produce an empty `case_map` for every v98 switch statement, not just
+  a cosmetic difference.
+
+  `StringSwitchImm` genuinely IS excluded here, for a different,
+  unrelated reason: hermes_decompiler's own `StringSwitchImm` handler
+  doesn't read a jump table at all (its own module comment: "Case
+  targets live in an out-of-line string-switch table... that this
+  handler does not resolve") - there's no consumer for this comment for
+  that opcode either way, so this module doesn't pretend to resolve
+  one. `resolve_switch_table_entries` below raises for
+  `StringSwitchImm` rather than attempting a (currently unconfirmed)
+  decode.
 """
 from __future__ import annotations
 
