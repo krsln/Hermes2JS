@@ -1,4 +1,5 @@
 from hermes_decompiler.core.Exceptions import CodeGenerationError, MetadataParseError, StructurerInvariantError
+from hermes_decompiler.frontend.parsing.FunctionKindResolver import FunctionKindIndex
 from hermes_decompiler.pipeline.Pipeline import Pipeline
 from hermes_decompiler.pipeline.PipelineContext import PipelineContext
 from hermes_decompiler.pipeline.stages import (
@@ -32,7 +33,13 @@ class Decompiler:
     """
 
     @staticmethod
-    def build_context(assembly_content: str, section_index: int, *, strict: bool = False) -> PipelineContext:
+    def build_context(
+            assembly_content: str,
+            section_index: int,
+            *,
+            strict: bool = False,
+            kind_index: FunctionKindIndex | None = None,
+    ) -> PipelineContext:
         """
         Execute the decompilation pipeline and return the resulting
         PipelineContext.
@@ -52,6 +59,15 @@ class Decompiler:
             strict:
                 If True, abort immediately on the first opcode dispatch error.
                 Otherwise, recover where possible and continue generating output.
+
+            kind_index:
+                Optional batch-level index identifying which functions are
+                generator/async bodies. Whether a function holds a
+                suspend/resume state machine is not decidable from its own
+                section - the deciding CreateGenerator edge lives in a
+                *different* section - so without an index the pipeline
+                falls back to per-section heuristics that are correct only
+                on LAYOUT_V96. See FunctionKindIndex for the full rationale.
 
         Returns:
             A fully populated PipelineContext.
@@ -75,6 +91,10 @@ class Decompiler:
 
         lines = assembly_content.strip().split('\n')
         state = PipelineContext(section_index=section_index, lines=lines)
+        # SignatureStage resolves this against the function id parsed by
+        # MetadataStage, which is authoritative - section_index is only a
+        # filename-derived fallback and the two can disagree.
+        state.kind_index = kind_index
 
         pipeline = Pipeline([
             MetadataStage(),

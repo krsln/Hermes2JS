@@ -6,6 +6,7 @@ import re
 from hermes_decompiler.Decompiler import Decompiler
 from hermes_decompiler.core.Exceptions import CodeGenerationError
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.frontend.parsing import FunctionKindIndex
 
 logger = get_logger(__name__)
 
@@ -65,6 +66,59 @@ class FileOperations:
         return files
 
     @classmethod
+    def build_kind_index(
+            cls,
+            input_dir: str,
+            files: list[tuple[str, int]],
+    ) -> FunctionKindIndex:
+        """
+        Scan every section once up front and resolve which functions are
+        generator/async bodies.
+
+        This has to happen before any section is decompiled, and has to
+        see all of them: the edge that identifies a body (CreateGenerator)
+        is emitted by a *different* function than the body it points at,
+        so no per-section pass can reach it. See FunctionKindIndex.
+
+        A section that cannot be read is skipped with a warning rather
+        than aborting - the index is an enrichment, and a batch missing
+        one file should still decompile the rest.
+
+        Note the index only knows about functions inside `files`. Running
+        with --start/--end, or on a hand-picked subset, can therefore cut
+        a chain in half and leave a body unresolved; that degrades
+        detection back to the per-section fallback for that function, and
+        is reported below.
+        """
+        sections: list[tuple[int, str]] = []
+
+        for filename, function_index in files:
+            path = os.path.join(input_dir, filename)
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    sections.append((function_index, f.read()))
+            except OSError as e:
+                logger.warning("Could not read %s while building the kind index: %s", path, e)
+
+        index = FunctionKindIndex.from_sections(sections)
+
+        bodies = index.bodies()
+        unresolved = [b.function_id for b in bodies if b.source_kind == 'unknown']
+        logger.info(
+            "Function kind index: %d sections, %d generator/async bodies resolved.",
+            len(index), len(bodies),
+        )
+        if unresolved:
+            # Expected on LAYOUT_V96 (no Kind bits anywhere), suspicious
+            # on anything newer - hence info, with the ids to check.
+            logger.info(
+                "  %d body/bodies carry no source-kind evidence (normal for LAYOUT_V96): %s",
+                len(unresolved), unresolved,
+            )
+
+        return index
+
+    @classmethod
     def process_section(
             cls,
             section_index: int,
@@ -74,6 +128,7 @@ class FileOperations:
             verbose: bool,
             raw: bool,
             strict: bool,
+            kind_index: FunctionKindIndex | None = None,
     ) -> bool:
         """
         Process a *.hasm file by reading its content, converting it to
@@ -89,6 +144,10 @@ class FileOperations:
             raw: If True, also generates function_{section_index}_raw.js.
             strict: If True, raise immediately on the first opcode
                     dispatch failure.
+            kind_index: Batch index resolving generator/async bodies,
+                    from build_kind_index(). Optional; without it,
+                    detection falls back to a per-section check that
+                    only holds on LAYOUT_V96 - see FunctionKindIndex.
 
         Returns:
             bool: True if the file was processed and written successfully,
@@ -124,7 +183,9 @@ class FileOperations:
             return False
 
         try:
-            context = Decompiler.build_context(hasm_content, section_index, strict=strict)
+            context = Decompiler.build_context(
+                hasm_content, section_index, strict=strict, kind_index=kind_index,
+            )
 
             # Render the raw representation first, as it preserves the complete
             # low-level output before any presentation-oriented formatting.

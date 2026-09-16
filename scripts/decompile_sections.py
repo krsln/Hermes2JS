@@ -72,6 +72,11 @@ def main() -> None:
         logger.info("No .hasm files found.")
         return
 
+    # Built once, before any section is decompiled: identifying a
+    # generator/async body requires an edge that lives in a *different*
+    # section, so this cannot be folded into the per-section pipeline.
+    kind_index = FileOperations.build_kind_index(str(input_dir), files)
+
     logger.info("Found %d .hasm files", len(files))
     logger.info("input \t%s", input_dir)
     logger.info("output \t%s", output_dir)
@@ -86,6 +91,7 @@ def main() -> None:
             result = FileOperations.process_section(
                 section_index, str(file_path), str(output_dir), file_path.stem,
                 args.verbose, args.raw, args.strict,
+                kind_index=kind_index,
             )
         except (OpcodeDispatchError, NoHandlerError) as e:
             logger.error("Batch stopped in strict mode at section #%s: %s", section_index, e)
