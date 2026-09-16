@@ -51,4 +51,6 @@ class SignatureStage(PipelineStage):
         joined = '\n'.join(context.lines)
         context.is_generator = '<StartGenerator>' in joined
 
+        context.header_kind = metadata.get('header_kind', 'normal')
+
         return context

@@ -55,6 +55,8 @@ class CodeGenerationStage(PipelineStage):
             for result in context.analysis.results
         )
 
+        # print(context.section_index, context.header_kind, context.is_generator)
+
         if context.is_generator:
             return "async function* " if is_async else "function* "
 
