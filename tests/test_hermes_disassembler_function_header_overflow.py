@@ -71,13 +71,13 @@ def test_v98_previously_unreachable_signatures_now_resolve():
 
 def test_pass_through_when_nothing_overflowed():
     """resolve_overflowed_headers on an all-non-overflowed tuple should be a no-op."""
-    from hermes_disassembler.format.FunctionHeader import FuncKind, FunctionHeaderEntry, ProhibitInvoke
+    from hermes_disassembler.format.FunctionHeader import FunctionKind, FunctionHeaderEntry, ProhibitInvoke
 
     entry = FunctionHeaderEntry(
         index=0, is_overflowed=False, offset=1, param_count=1,
         bytecode_size_in_bytes=1, function_name=1, frame_size=1,
         prohibit_invoke=ProhibitInvoke.NONE, strict_mode=False,
-        has_exception_handler=False, has_debug_info=False, kind=FuncKind.NORMAL,
+        has_exception_handler=False, has_debug_info=False, kind=FunctionKind.NORMAL,
     )
     data, header, _, _ = _load("96")
     result = resolve_overflowed_headers(data, header, (entry,))

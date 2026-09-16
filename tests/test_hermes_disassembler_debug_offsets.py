@@ -18,7 +18,7 @@ from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
 from hermes_disassembler.format.DebugOffsets import DebugOffsets, resolve_debug_offsets
 from hermes_disassembler.format.ExceptionHandlerTable import resolve_exception_handlers
 from hermes_disassembler.format.FunctionHeader import (
-    FuncKind,
+    FunctionKind,
     FunctionHeaderEntry,
     ProhibitInvoke,
     parse_function_headers,
@@ -34,7 +34,7 @@ def _entry(**overrides) -> FunctionHeaderEntry:
         offset=0, info_offset=100, param_count=0, bytecode_size_in_bytes=0,
         function_name=0, frame_size=0, prohibit_invoke=ProhibitInvoke.NONE,
         strict_mode=False, has_exception_handler=False, has_debug_info=True,
-        kind=FuncKind.NORMAL,
+        kind=FunctionKind.NORMAL,
     )
     base.update(overrides)
     return FunctionHeaderEntry(**base)

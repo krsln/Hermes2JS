@@ -20,7 +20,7 @@ import pytest
 
 from hermes_decompiler.frontend.parsing.OpcodeParser import OpcodeParser
 from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
-from hermes_disassembler.format.FunctionHeader import FuncKind, parse_function_headers
+from hermes_disassembler.format.FunctionHeader import FunctionKind, parse_function_headers
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
 from hermes_disassembler.format.Opcode import decode_function
 from hermes_disassembler.format.StringTable import StringTable
@@ -180,9 +180,9 @@ def test_function_without_exception_handler_has_no_extra_line():
 
 @pytest.mark.parametrize(
     "kind,expected_label",
-    [(FuncKind.GENERATOR, "Generator function"), (FuncKind.ASYNC, "Async function")],
+    [(FunctionKind.GENERATOR, "Generator function"), (FunctionKind.ASYNC, "Async function")],
 )
-def test_header_line_uses_kind_specific_label(kind: FuncKind, expected_label: str):
+def test_header_line_uses_kind_specific_label(kind: FunctionKind, expected_label: str):
     """
     Regression test for a previously-hardcoded "Function" label
     (header.kind was ignored entirely) - apps/testy/98 has 102 real
@@ -202,8 +202,8 @@ def test_header_line_uses_kind_specific_label(kind: FuncKind, expected_label: st
     assert text.splitlines()[0].startswith(f'=> [{expected_label} #{fn.index} "')
 
 
-@pytest.mark.parametrize("kind", [FuncKind.GENERATOR, FuncKind.ASYNC])
-def test_header_line_still_parses_with_real_function_metadata_parser(kind: FuncKind):
+@pytest.mark.parametrize("kind", [FunctionKind.GENERATOR, FunctionKind.ASYNC])
+def test_header_line_still_parses_with_real_function_metadata_parser(kind: FunctionKind):
     """
     Downstream regression check for the same fix as
     test_header_line_uses_kind_specific_label above: real

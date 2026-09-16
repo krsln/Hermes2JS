@@ -95,7 +95,7 @@ from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
 from hermes_disassembler.format.Builtins import resolve_builtin
 from hermes_disassembler.format.DebugOffsets import resolve_debug_offsets
 from hermes_disassembler.format.ExceptionHandlerTable import resolve_exception_handlers
-from hermes_disassembler.format.FunctionHeader import FuncKind, FunctionHeaderEntry
+from hermes_disassembler.format.FunctionHeader import FunctionKind, FunctionHeaderEntry
 from hermes_disassembler.format.FunctionHeaderOverflow import resolve_overflowed_headers
 from hermes_disassembler.format.JumpTarget import _JUMP_OPERAND_TYPES, resolve_operand_jump_target
 from hermes_disassembler.format.LiteralBuffer import _Undefined, decode_literal_buffer
@@ -332,14 +332,6 @@ def _format_function_reference(target: FunctionHeaderEntry, table: StringTable) 
     )
 
 
-#: hermes-dec's own header-line label per FuncKind - see FunctionHeader.py.
-_FUNC_KIND_LABEL = {
-    FuncKind.NORMAL: "Function",
-    FuncKind.GENERATOR: "Generator function",
-    FuncKind.ASYNC: "Async function",
-}
-
-
 def format_function(
         data: bytes,
         header: FunctionHeaderEntry,
@@ -368,9 +360,15 @@ def format_function(
     respectively.
     """
     name = table.resolve(header.function_name)
-    kind_label = _FUNC_KIND_LABEL[header.kind]
+    #: hermes-dec's own header-line label per FunctionKind - see FunctionHeader.py.
+    function_kind_label = {
+        None: 'Function',
+        FunctionKind.NORMAL: 'Function',
+        FunctionKind.GENERATOR: 'Generator function',
+        FunctionKind.ASYNC: 'Async function',
+    }[header.kind]
     header_line = (
-        f'=> [{kind_label} #{header.index} "{name}" of {header.bytecode_size_in_bytes} bytes]: '
+        f'=> [{function_kind_label} #{header.index} "{name}" of {header.bytecode_size_in_bytes} bytes]: '
         f"{header.param_count} params, frame size={header.frame_size}, "
         f"strict={int(header.strict_mode)}, exc handler={int(header.has_exception_handler)}, "
         f"debug info={int(header.has_debug_info)}  @ offset 0x{header.offset:08x}"
