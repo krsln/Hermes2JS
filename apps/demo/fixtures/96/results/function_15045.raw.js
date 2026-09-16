@@ -1,4 +1,4 @@
-async function* anon_15045() {
+async function ?anon_0_() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator

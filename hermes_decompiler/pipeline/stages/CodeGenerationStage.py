@@ -49,15 +49,23 @@ class CodeGenerationStage(PipelineStage):
         "yield" vs "await" at each individual suspend point; this just reuses
         it once more here so the header agrees with the body it introduces.
         """
+
+        prefix = 'function '
+
         is_async = any(
             isinstance(result.value, AwaitExpression)
             and not isinstance(result.value.argument, YieldExpression)
             for result in context.analysis.results
         )
 
-        # print(context.section_index, context.header_kind, context.is_generator)
+        if context.header_kind == 'async':
+            prefix = "async function "
 
-        if context.is_generator:
-            return "async function* " if is_async else "function* "
+        elif context.header_kind == 'generator':
+            prefix = "function* "
 
-        return "async function " if is_async else "function "
+        elif context.header_kind == 'normal':
+            prefix = "async function " if is_async else "function "
+
+        # `function`/`function*`/`async function`/`async function*`
+        return prefix

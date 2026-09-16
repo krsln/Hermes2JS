@@ -1,4 +1,4 @@
-function anon_12487(param1) {
+function* ?anon_0_asyncLoopTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 10>
     // USED → r1 = __environment__;

@@ -1,4 +1,4 @@
-function anon_13746() {
+function ?anon_0_callAsyncTests() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getParentEnvironment(0)

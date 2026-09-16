@@ -1,4 +1,4 @@
-function callAsyncTests() {
+async function callAsyncTests() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;

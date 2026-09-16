@@ -1,4 +1,4 @@
-function anon_12485() {
+function* ?anon_0_simpleAsyncTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 3>
     // USED → r1 = __environment__;
