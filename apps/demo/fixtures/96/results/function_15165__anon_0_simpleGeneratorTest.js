@@ -1,4 +1,4 @@
-function ?anon_0_simpleGeneratorTest() {
+function* ?anon_0_simpleGeneratorTest() {
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr:  7 | <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis;

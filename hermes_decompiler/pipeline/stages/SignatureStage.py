@@ -23,4 +23,8 @@ class SignatureStage(PipelineStage):
 
         context.header_kind = metadata.get('header_kind', 'normal')
 
+        is_generator = '<StartGenerator>' in '\n'.join(context.lines)
+        if is_generator and context.header_kind == 'normal':
+            context.header_kind = 'generator'
+
         return context

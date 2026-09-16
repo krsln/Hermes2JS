@@ -50,21 +50,23 @@ class CodeGenerationStage(PipelineStage):
         it once more here so the header agrees with the body it introduces.
         """
 
-        prefix = 'function '
-
         is_async = any(
             isinstance(result.value, AwaitExpression)
             and not isinstance(result.value.argument, YieldExpression)
             for result in context.analysis.results
         )
 
+        prefix = "function "
+
         if context.header_kind == 'async':
             prefix = "async function "
 
         elif context.header_kind == 'generator':
-            prefix = "function* "
+            # prefix = "function* "
+            prefix = "async function* " if is_async else "function* "
 
         elif context.header_kind == 'normal':
+            # prefix = "function "
             prefix = "async function " if is_async else "function "
 
         # `function`/`function*`/`async function`/`async function*`

@@ -1,4 +1,4 @@
-function ?anon_0_generatorTryFinallyTest() {
+function* ?anon_0_generatorTryFinallyTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
