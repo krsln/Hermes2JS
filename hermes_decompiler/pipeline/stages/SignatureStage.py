@@ -50,54 +50,5 @@ class SignatureStage(PipelineStage):
         # each other instead of the header unconditionally claiming "async".
         joined = '\n'.join(context.lines)
         context.is_generator = '<StartGenerator>' in joined
-        context.header_kind = metadata.get('header_kind', 'normal')
-
-        function_id = metadata.get('function_id', context.section_index)
-        context.kind_facts = (
-            context.kind_index.facts_for(function_id) if context.kind_index else None
-        )
-
-        if context.kind_facts is None:
-            # No batch index. `is_generator` above is then the only signal
-            # available, and it is a LAYOUT_V96-only one: v97+ emits no
-            # suspend/resume opcodes at all, so this silently reports
-            # "not a generator" for every generator in such a bundle. The
-            # header Kind is the giveaway that we are on such a layout -
-            # it can only be non-'normal' where Kind bits exist.
-            if context.header_kind != 'normal':
-                logger.warning(
-                    "Function #%s (%s): header_kind=%r, but no batch index was supplied - "
-                    "generator/async detection falls back to a LAYOUT_V96-only opcode check "
-                    "and cannot be trusted on this bytecode version.",
-                    function_id, function_name, context.header_kind,
-                )
-            return context
-
-        # With an index, generator-ness is resolved rather than guessed.
-        # Note this deliberately does NOT feed `context.is_generator` - see
-        # PipelineContext.kind_facts for why the fact layer and the
-        # render-affecting flag are kept apart until state-dispatch
-        # structuring can act on it.
-        facts = context.kind_facts
-
-        if facts.is_generator_body and not context.is_generator:
-            # The expected v97+ shape, not a problem: the batch proved this
-            # is a body via its CreateGenerator edge, while the body itself
-            # carries a hand-rolled state-dispatch machine instead of
-            # suspend/resume opcodes.
-            logger.debug(
-                "Function #%s (%s): resolved as a %s body with no suspend/resume opcodes "
-                "(hand-rolled state dispatch); stubs above it: %s.",
-                function_id, function_name, facts.source_kind, facts.stub_ids or '-',
-            )
-        elif context.is_generator and not facts.is_generator_body:
-            # The index and the bytecode disagree about this function being
-            # a body at all. Unlike the case above this has no benign
-            # explanation, so it is worth surfacing.
-            logger.warning(
-                "Function #%s (%s): bytecode contains <StartGenerator> but the batch index "
-                "resolved role=%r - the creation graph may be incomplete for this batch.",
-                function_id, function_name, facts.role,
-            )
 
         return context

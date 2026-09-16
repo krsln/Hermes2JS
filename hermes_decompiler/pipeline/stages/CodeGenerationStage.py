@@ -19,9 +19,7 @@ class CodeGenerationStage(PipelineStage):
         context.js_lines = [header]
 
         if context.bytecode_lines:
-            context.js_lines.extend(
-                context.analysis.generate_js(self._verbose, self._raw, kind_facts=context.kind_facts)
-            )
+            context.js_lines.extend(context.analysis.generate_js(self._verbose, self._raw))
         else:
             context.js_lines.append('    // No bytecode provided')
 

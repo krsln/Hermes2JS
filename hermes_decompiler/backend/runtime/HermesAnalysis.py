@@ -91,12 +91,7 @@ class HermesAnalysis:
 
         return False
 
-    def generate_js(
-            self,
-            verbose: bool = False,
-            raw: bool = False,
-            kind_facts=None,
-    ) -> list[str]:
+    def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
         # Clone every result before handing it to the CFG/structuring
         # passes below: those passes routinely reassign an OpcodeResult's
         # `.value`/`.statement`/`.terminator`/`.definition_used` in place
@@ -128,6 +123,6 @@ class HermesAnalysis:
         if raw:
             root = SequenceStructurer(cfg).run()
         else:
-            root = StructuralAnalyzer(cfg, kind_facts=kind_facts).build()
+            root = StructuralAnalyzer(cfg).build()
 
         return JSEmitter(verbose).emit(root)

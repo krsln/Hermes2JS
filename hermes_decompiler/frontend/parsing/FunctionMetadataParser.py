@@ -8,14 +8,8 @@ logger = get_logger(__name__)
 
 
 class FunctionMetadataParser:
-    # Group 1 now *captures* the "Async "/"Generator " kind prefix (was a
-    # non-capturing group that matched-and-discarded it) so callers can read
-    # off the header's own FuncKind - see `header_kind` below. Absent under
-    # LAYOUT_V96 (hermes_disassembler has no Kind bits there, so this group
-    # never matches and header_kind normalizes to "normal", same as a
-    # genuinely-normal function - the two are indistinguishable from the
-    # header alone on that layout).
-    _NAME_RE = re.compile(r'^(?:=>\s+)?\[(Async |Generator )?[Ff]unction #(\d+) "([^"]*)" of (\d+) bytes]')
+    # _NAME_RE = re.compile(r'\[Function #(\d+) "([^"]*)" of (\d+) bytes]')
+    _NAME_RE = re.compile(r'^(?:=>\s+)?\[(?:Async |Generator )?[Ff]unction #(\d+) "([^"]*)" of (\d+) bytes]')
     _PARAMS_RE = re.compile(r'(\d+) params')
     _OFFSET_RE = re.compile(r'@ offset (0x[0-9a-fA-F]+)')
     _KV_RE = re.compile(r'(.+)=(\d+)')
@@ -44,11 +38,9 @@ class FunctionMetadataParser:
 
         name_match = cls._NAME_RE.match(metadata_line)
         if name_match:
-            kind_prefix = (name_match.group(1) or '').strip().lower()
-            metadata['header_kind'] = kind_prefix or 'normal'  # 'generator' | 'async' | 'normal'
-            metadata['function_id'] = int(name_match.group(2))
-            metadata['function_name'] = name_match.group(3) or f"function_{metadata['function_id']}"
-            metadata['byte_size'] = int(name_match.group(4))
+            metadata['function_id'] = int(name_match.group(1))
+            metadata['function_name'] = name_match.group(2) or f"function_{metadata['function_id']}"
+            metadata['byte_size'] = int(name_match.group(3))
         else:
             logger.warning('Could not parse metadata header line: %r', metadata_line)
 

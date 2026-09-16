@@ -66,15 +66,8 @@ class StructuralAnalyzer:
     rather than at the end of its stage by default.
     """
 
-    def __init__(self, cfg, kind_facts=None):
+    def __init__(self, cfg):
         self.cfg = cfg
-        # Batch-resolved FunctionKindFacts for this function, or None when
-        # decompiling without a batch index. Only consulted by passes that
-        # genuinely cannot decide from the CFG alone - notably
-        # GeneratorStateDispatchCfgPass, since on hbc97+ a generator body
-        # carries no suspend/resume opcodes to recognize it by (see
-        # FunctionKindIndex).
-        self.kind_facts = kind_facts
 
     def build(self):
         # ---- 1. cfg_passes --------------------------------------------
