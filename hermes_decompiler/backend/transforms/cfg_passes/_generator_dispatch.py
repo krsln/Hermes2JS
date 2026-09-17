@@ -152,10 +152,22 @@ def detect(cfg: CFG) -> GeneratorDispatch | None:
         return None
 
     # The resume slot is whichever candidate the entry dispatch actually
-    # reads. Picking by "most suspend sites" instead would break on a
-    # single-yield generator, where the real slot and an unrelated
-    # bookkeeping store tie at one site each.
-    for resume_slot, sites in sorted(sites_by_slot.items()):
+    # reads, and among candidates that parse as a complete dispatch, the
+    # one whose chain starts earliest - the real dispatch always sits
+    # immediately after the reentrancy/exhausted guards, at the very top
+    # of the function. This tiebreak matters: a function can easily
+    # contain *unrelated* code shaped just like a small dispatch (e.g. an
+    # exception-cleanup block comparing some other slot against a couple
+    # of small constants), which parses as "complete" too when it
+    # happens to only need as many arms as that slot has suspend sites -
+    # picking by lowest slot number alone was observed to prefer exactly
+    # such a false match (asyncLoopTest's slot 6, matching cleanup code
+    # near a rethrow) over the real one (slot 8, whose chain starts right
+    # after the prologue).
+    best: GeneratorDispatch | None = None
+    best_start: int | None = None
+
+    for resume_slot, sites in sites_by_slot.items():
         targets, blocks = _entry_dispatch(cfg, resume_slot)
 
         if not targets:
@@ -168,17 +180,21 @@ def detect(cfg: CFG) -> GeneratorDispatch | None:
             suspend_sites=sorted(sites, key=lambda s: s.block.address),
         )
 
-        if dispatch.is_complete:
-            return dispatch
+        if not dispatch.is_complete:
+            logger.debug(
+                "Generator dispatch on env[%d] recognized only partially: "
+                "resume points %s have no dispatch target; leaving the raw form in place.",
+                resume_slot,
+                sorted({s.resume_point for s in sites} - set(targets)),
+            )
+            continue
 
-        logger.debug(
-            "Generator dispatch on env[%d] recognized only partially: "
-            "resume points %s have no dispatch target; leaving the raw form in place.",
-            resume_slot,
-            sorted({s.resume_point for s in sites} - set(targets)),
-        )
+        start = blocks[0].address
 
-    return None
+        if best_start is None or start < best_start:
+            best, best_start = dispatch, start
+
+    return best
 
 
 def _suspend_sites_by_slot(cfg: CFG) -> dict[int, list[SuspendSite]]:

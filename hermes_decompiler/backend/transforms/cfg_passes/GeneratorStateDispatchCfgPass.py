@@ -143,14 +143,87 @@ class GeneratorStateDispatchCfgPass:
             cut_index, result = folded
             foldable.append((site, continuation, cut_index, result))
 
-        # Every site parsed - now actually mutate. Nothing above this
-        # point touched `cfg`.
+        # Every site parsed - simulate the rewiring's effect on
+        # reachability *before* touching `cfg` at all, and bail if the
+        # dispatch chain would still be reachable afterward. This is not
+        # hypothetical: a catch handler cleaning up after an exception
+        # mid-suspend can jump straight back into the entry dispatch to
+        # re-derive where to resume/re-throw - real generator semantics
+        # the JS engine would provide natively once real `yield`s exist,
+        # but Hermes still has to hand-implement here, exactly like the
+        # reentrancy guard. When that happens, the dispatch chain is not
+        # actually dead, and folding the sites anyway would remove the
+        # only route back to it while leaving it looking abandoned -
+        # confusing at best. See `_dispatch_survives`.
+        site_continuations = {site.block.id: continuation for site, continuation, _, _ in foldable}
+        dispatch_ids = {block.id for block in self.dispatch.dispatch_blocks}
+
+        if self._dispatch_survives(entry_block, site_continuations, dispatch_ids):
+            logger.debug(
+                "Generator dispatch on env[%d]: the entry dispatch chain is still reachable "
+                "after simulating the rewrite (likely a catch handler re-entering it to "
+                "resume/re-throw) - leaving the raw form in place rather than folding the "
+                "sites while stranding it.",
+                self.dispatch.resume_slot,
+            )
+            return False
+
+        # Nothing above this point touched `cfg`.
         for site, continuation, cut_index, result in foldable:
             self._apply_fold(site, continuation, cut_index, result)
 
         self._prune_unreachable(entry_block)
 
         return True
+
+    def _dispatch_survives(
+            self,
+            entry_block: BasicBlock,
+            site_continuations: dict[int, BasicBlock],
+            dispatch_ids: set[int],
+    ) -> bool:
+        """
+        True if any of `dispatch_ids` would still be reachable from
+        `entry_block` after rewiring - computed by walking the *current*
+        graph's real `.successors`, except at a site block, where the walk
+        follows its future continuation instead (the rewire this class is
+        about to apply, simulated rather than performed). Reads only;
+        nothing here is mutated.
+
+        Mirrors `_prune_unreachable`'s own traversal, including the
+        exception-handler fixed point - a handler whose `try_blocks`
+        happens to include a site block needs that same substitution
+        applied before deciding whether the handler itself, and the rest
+        of its protected range, are reachable.
+        """
+        reachable: set[int] = set()
+        frontier = [entry_block]
+
+        while frontier:
+            new_frontier: list[BasicBlock] = []
+
+            for block in frontier:
+                if block.id in reachable:
+                    continue
+                reachable.add(block.id)
+
+                if block.id in site_continuations:
+                    new_frontier.append(site_continuations[block.id])
+                else:
+                    new_frontier.extend(block.successors)
+
+            for handler in self.cfg.exception_handlers:
+                handler_block = handler["handler_block"]
+
+                if handler_block.id in reachable:
+                    continue
+
+                if any(b.id in reachable for b in handler["try_blocks"]):
+                    new_frontier.append(handler_block)
+
+            frontier = new_frontier
+
+        return bool(reachable & dispatch_ids)
 
     # ------------------------------------------------------------------
     # Per-site folding
