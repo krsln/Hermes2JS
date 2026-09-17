@@ -106,7 +106,7 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./app
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./apps/demo/fixtures/98/results --log-level DEBUG
 
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results
-# WARNING 7
+# WARNING 6
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results --no-verbose
 
 # ———— whole sections ———————————————————————————————————————————————————
@@ -117,6 +117,6 @@ python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./ap
 ## 98
 python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/
 python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --log-level WARNING
-# WARNING 1032
+# WARNING 1003
 ```
 
