@@ -1,45 +1,4 @@
 async function* ?anon_0_runAllTests() {
-    // ──────────────── Block 0 ──────────────── 
-    // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
-    r1 = getParentEnvironment(0)
-    // CODE → addr:  3 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 2>
-    // USED → r0 = r1[2];
-    // CODE → addr:  7 | <Mov>: <Reg8: 2, Reg8: 0>
-    // USED → r2 = r1[2];
-    // CODE → addr: 10 | <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
-    // USED → r4 = 2;
-    // CODE → addr: 13 | <JStrictEqualLong>: <Addr32: 1039, Reg8: 0, Reg8: 4>  # Address: 0000041c
-    if (r0 === 2) goto label_1052;
-    // ──────────────── Block 1 ──────────────── 
-    // CODE → addr: 20 | <LoadParam>: <Reg8: 0, UInt8: 2>
-    // USED → r0 = param2;
-    // CODE → addr: 23 | <LoadParam>: <Reg8: 3, UInt8: 1>
-    // USED → r3 = param1;
-    // CODE → addr: 26 | <Mov>: <Reg8: 5, Reg8: 2>
-    r5 = r1[2]
-    // CODE → addr: 29 | <LoadConstUInt8>: <Reg8: 6, UInt8: 3>
-    // USED → r6 = 3;
-    // CODE → addr: 32 | <JStrictEqualLong>: <Addr32: 987, Reg8: 5, Reg8: 6>  # Address: 000003fb
-    if (r5 === 3) goto label_1019;
-    // ──────────────── Block 2 ──────────────── 
-    // CODE → addr: 39 | <Mov>: <Reg8: 2, Reg8: 4>
-    r2 = 2
-    // CODE → addr: 42 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 4>
-    r1[2] = 2
-    // CODE → addr: 46 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 1, UInt8: 1>
-    r7 = r1[1]
-    // CODE → addr: 50 | <LoadConstZero>: <Reg8: 5>
-    // USED → r5 = 0;
-    // CODE → addr: 52 | <JStrictEqual>: <Addr8: 114, Reg8: 5, Reg8: 7>  # Address: 000000a6
-    if (0 === r7) goto label_166;
-    // ──────────────── Block 3 ──────────────── 
-    // CODE → addr: 56 | <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
-    // USED → r5 = 1;
-    // CODE → addr: 59 | <JStrictEqual>: <Addr8: 98, Reg8: 3, Reg8: 5>  # Address: 0000009d
-    if (param1 === 1) goto label_157;
-    // ──────────────── Block 4 ──────────────── 
-    // CODE → addr: 63 | <JStrictEqual>: <Addr8: 75, Reg8: 3, Reg8: 4>  # Address: 0000008a
-    if (param1 === 2) goto label_138;
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 67 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 0>
     // USED → r5 = r1[0];
@@ -75,32 +34,6 @@ async function* ?anon_0_runAllTests() {
     r5 = { "value": null, "done": true }
     // CODE → addr:136 | <Ret>: <Reg8: 5>
     return r5;
-    // ──────────────── Block 6 ──────────────── 
-    // CODE → addr:138 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:141 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
-    r1[2] = 3
-    // CODE → addr:145 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r5 = { "value": null, "done": true }
-    // CODE → addr:151 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 0, UInt8: 0>
-    r5.slot_0 = param2
-    // CODE → addr:155 | <Ret>: <Reg8: 5>
-    return r5;
-    // ──────────────── Block 7 ──────────────── 
-    // CODE → addr:157 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:160 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
-    r1[2] = 3
-    // CODE → addr:164 | <Throw>: <Reg8: 0>
-    throw param2;
-    // ──────────────── Block 8 ──────────────── 
-    // CODE → addr:166 | <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
-    // USED → r5 = 1;
-    // CODE → addr:169 | <JStrictEqualLong>: <Addr32: 830, Reg8: 3, Reg8: 5>  # Address: 000003e7
-    if (param1 === 1) goto label_999;
-    // ──────────────── Block 9 ──────────────── 
-    // CODE → addr:176 | <JStrictEqualLong>: <Addr32: 804, Reg8: 3, Reg8: 4>  # Address: 000003d4
-    if (param1 === 2) goto label_980;
     // ──────────────── Block 10 ──────────────── 
     // CODE → addr:183 | <GetParentEnvironment>: <Reg8: 7, UInt8: 1>
     r7 = getParentEnvironment(1)
@@ -419,37 +352,7 @@ async function* ?anon_0_runAllTests() {
     // CODE → addr:947 | <GetById>: <Reg8: 7, Reg8: 7, UInt8: 57, string_id: 8316>  # String: 'callAsyncTests' (Identifier)
     // USED → r7 = r7.callAsyncTests;
     // CODE → addr:953 | <Call1>: <Reg8: 7, Reg8: 7, Reg8: 8>
-    r7 = r7.callAsyncTests.call(r8)
-    // CODE → addr:957 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 5>
-    r1[1] = 1
-    // CODE → addr:961 | <Mov>: <Reg8: 2, Reg8: 5>
-    r2 = 1
-    // CODE → addr:964 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 5>
-    r1[2] = 1
-    // CODE → addr:968 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18061>  # Object: {'value': null, 'done': false}
-    r5 = { "value": null, "done": false }
-    // CODE → addr:974 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 7, UInt8: 0>
-    r5.slot_0 = r7
-    // CODE → addr:978 | <Ret>: <Reg8: 5>
-    return r5;
-    // ──────────────── Block 11 ──────────────── 
-    // CODE → addr:980 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:983 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
-    r1[2] = 3
-    // CODE → addr:987 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r5 = { "value": null, "done": true }
-    // CODE → addr:993 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 0, UInt8: 0>
-    r5.slot_0 = param2
-    // CODE → addr:997 | <Ret>: <Reg8: 5>
-    return r5;
-    // ──────────────── Block 12 ──────────────── 
-    // CODE → addr:999 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:1002 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
-    r1[2] = 3
-    // CODE → addr:1006 | <Throw>: <Reg8: 0>
-    throw param2;
+    await r7.callAsyncTests.call(r8)
     // ──────────────── Block 13 ──────────────── 
     // CODE → addr:1008 | <Catch>: <Reg8: 5>
     r5 = caughtException
@@ -459,38 +362,4 @@ async function* ?anon_0_runAllTests() {
     r1[2] = 3
     // CODE → addr:1017 | <Throw>: <Reg8: 5>
     throw r5;
-    // ──────────────── Block 14 ──────────────── 
-    // CODE → addr:1019 | <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
-    // USED → r5 = 1;
-    // CODE → addr:1022 | <JStrictEqual>: <Addr8: 28, Reg8: 3, Reg8: 5>  # Address: 0000041a
-    if (param1 === 1) goto label_1050;
-    // ──────────────── Block 15 ──────────────── 
-    // CODE → addr:1026 | <JStrictEqual>: <Addr8: 12, Reg8: 3, Reg8: 4>  # Address: 0000040e
-    if (param1 === 2) goto label_1038;
-    // ──────────────── Block 16 ──────────────── 
-    // CODE → addr:1030 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r3 = { "value": null, "done": true }
-    // CODE → addr:1036 | <Ret>: <Reg8: 3>
-    return r3;
-    // ──────────────── Block 17 ──────────────── 
-    // CODE → addr:1038 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r3 = { "value": null, "done": true }
-    // CODE → addr:1044 | <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 0, UInt8: 0>
-    r3.slot_0 = param2
-    // CODE → addr:1048 | <Ret>: <Reg8: 3>
-    return r3;
-    // ──────────────── Block 18 ──────────────── 
-    // CODE → addr:1050 | <Throw>: <Reg8: 0>
-    throw param2;
-    // ──────────────── Block 19 ──────────────── 
-    // CODE → addr:1052 | <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
-    // USED → r0 = 3;
-    // CODE → addr:1055 | <Mov>: <Reg8: 2, Reg8: 0>
-    r2 = 3
-    // CODE → addr:1058 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 0>
-    r1[2] = 3
-    // CODE → addr:1062 | <LoadConstString>: <Reg8: 16, string_id: 3340>  # String: 'Generator functions may not be called on executing generators' (String)
-    r16 = "Generator functions may not be called on executing generators"
-    // CODE → addr:1066 | <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-    r0 = throwTypeError(r16, r15)
 }

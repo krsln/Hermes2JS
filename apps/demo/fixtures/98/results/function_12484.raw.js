@@ -1,36 +1,4 @@
 function* generatorTryFinallyTest() {
-    // ──────────────── Block 0 ──────────────── 
-    // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
-    r1 = getParentEnvironment(0)
-    // CODE → addr:  3 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 0>
-    // USED → r0 = r1[0];
-    // CODE → addr:  7 | <Mov>: <Reg8: 2, Reg8: 0>
-    // USED → r2 = r1[0];
-    // CODE → addr: 10 | <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
-    // USED → r4 = 2;
-    // CODE → addr: 13 | <JStrictEqualLong>: <Addr32: 405, Reg8: 0, Reg8: 4>  # Address: 000001a2
-    if (r0 === 2) goto label_418;
-    // ──────────────── Block 1 ──────────────── 
-    // CODE → addr: 20 | <LoadParam>: <Reg8: 0, UInt8: 2>
-    // USED → r0 = param2;
-    // CODE → addr: 23 | <LoadParam>: <Reg8: 3, UInt8: 1>
-    // USED → r3 = param1;
-    // CODE → addr: 26 | <Mov>: <Reg8: 12, Reg8: 2>
-    r12 = r1[0]
-    // CODE → addr: 29 | <LoadConstUInt8>: <Reg8: 7, UInt8: 3>
-    // USED → r7 = 3;
-    // CODE → addr: 32 | <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
-    // USED → r5 = 1;
-    // CODE → addr: 35 | <LoadConstZero>: <Reg8: 11>
-    // USED → r11 = 0;
-    // CODE → addr: 37 | <GetGlobalObject>: <Reg8: 10>
-    // USED → r10 = globalThis;
-    // CODE → addr: 39 | <LoadConstString>: <Reg8: 9, string_id: 4942>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/start' (String)
-    // USED → r9 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/start";
-    // CODE → addr: 43 | <LoadConstString>: <Reg8: 8, string_id: 4940>  # String: '__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup' (String)
-    // USED → r8 = "__BC:Functions/GeneratorTests/generatorTryFinallyTest/cleanup";
-    // CODE → addr: 47 | <JStrictEqualLong>: <Addr32: 341, Reg8: 12, Reg8: 7>  # Address: 00000184
-    if (r12 === 3) goto label_388;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 54 | <Mov>: <Reg8: 2, Reg8: 4>
     r2 = 2
@@ -109,9 +77,7 @@ function* generatorTryFinallyTest() {
     // CODE → addr:189 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 5>
     r1[0] = 1
     // CODE → addr:193 | <NewObjectWithBuffer>: <Reg8: 12, UInt16: 1047, UInt16: 48826>  # Object: {'value': 'b', 'done': false}
-    r12 = { "value": "b", "done": false }
-    // CODE → addr:199 | <Ret>: <Reg8: 12>
-    return r12;
+    yield "b"
     // ──────────────── Block 13 ──────────────── 
     // CODE → addr:201 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 11>
     r1[3] = 0
@@ -175,9 +141,7 @@ function* generatorTryFinallyTest() {
     // CODE → addr:313 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 5>
     r1[0] = 1
     // CODE → addr:317 | <NewObjectWithBuffer>: <Reg8: 12, UInt16: 1047, UInt16: 48822>  # Object: {'value': 'a', 'done': false}
-    r12 = { "value": "a", "done": false }
-    // CODE → addr:323 | <Ret>: <Reg8: 12>
-    return r12;
+    yield "a"
     // ──────────────── Block 19 ──────────────── 
     // CODE → addr:325 | <Mov>: <Reg8: 2, Reg8: 7>
     r2 = 3
@@ -219,36 +183,4 @@ function* generatorTryFinallyTest() {
     r1[0] = 3
     // CODE → addr:386 | <Throw>: <Reg8: 6>
     throw r6;
-    // ──────────────── Block 24 ──────────────── 
-    // CODE → addr:388 | <JStrictEqual>: <Addr8: 28, Reg8: 3, Reg8: 5>  # Address: 000001a0
-    if (param1 === 1) goto label_416;
-    // ──────────────── Block 25 ──────────────── 
-    // CODE → addr:392 | <JStrictEqual>: <Addr8: 12, Reg8: 3, Reg8: 4>  # Address: 00000194
-    if (param1 === 2) goto label_404;
-    // ──────────────── Block 26 ──────────────── 
-    // CODE → addr:396 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r3 = { "value": null, "done": true }
-    // CODE → addr:402 | <Ret>: <Reg8: 3>
-    return r3;
-    // ──────────────── Block 27 ──────────────── 
-    // CODE → addr:404 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r3 = { "value": null, "done": true }
-    // CODE → addr:410 | <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 0, UInt8: 0>
-    r3.slot_0 = param2
-    // CODE → addr:414 | <Ret>: <Reg8: 3>
-    return r3;
-    // ──────────────── Block 28 ──────────────── 
-    // CODE → addr:416 | <Throw>: <Reg8: 0>
-    throw param2;
-    // ──────────────── Block 29 ──────────────── 
-    // CODE → addr:418 | <LoadConstUInt8>: <Reg8: 0, UInt8: 3>
-    // USED → r0 = 3;
-    // CODE → addr:421 | <Mov>: <Reg8: 2, Reg8: 0>
-    r2 = 3
-    // CODE → addr:424 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
-    r1[0] = 3
-    // CODE → addr:428 | <LoadConstString>: <Reg8: 15, string_id: 3340>  # String: 'Generator functions may not be called on executing generators' (String)
-    r15 = "Generator functions may not be called on executing generators"
-    // CODE → addr:432 | <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-    r0 = throwTypeError(r15, r14)
 }

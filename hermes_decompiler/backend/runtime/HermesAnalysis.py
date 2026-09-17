@@ -3,9 +3,14 @@ from typing import Any
 from hermes_decompiler.backend.analysis.cfg import CFG
 from hermes_decompiler.backend.emit import JSEmitter
 from hermes_decompiler.backend.transforms import StructuralAnalyzer
+from hermes_decompiler.backend.transforms.cfg_passes import GeneratorStateDispatchCfgPass, generator_dispatch
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.frontend.parsing import CreatorFacts
 from .RegisterState import RegisterState
+
+logger = get_logger(__name__)
 
 
 class HermesAnalysis:
@@ -91,7 +96,12 @@ class HermesAnalysis:
 
         return False
 
-    def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
+    def generate_js(
+            self,
+            verbose: bool = False,
+            raw: bool = False,
+            creator_facts: CreatorFacts | None = None,
+    ) -> list[str]:
         # Clone every result before handing it to the CFG/structuring
         # passes below: those passes routinely reassign an OpcodeResult's
         # `.value`/`.statement`/`.terminator`/`.definition_used` in place
@@ -104,6 +114,40 @@ class HermesAnalysis:
         results = [result.clone() for result in self.results]
 
         cfg = CFG.from_results(results, self.metadata.get("exception_handlers", []))
+
+        if creator_facts is not None and creator_facts.is_generator:
+            # Must run before verify()/compute_dominators()/compute_loops()
+            # below: it can replace cfg.entry and cfg.blocks outright, and
+            # every one of those would otherwise be computed against a CFG
+            # shape this rewrite is about to discard. See
+            # GeneratorStateDispatchCfgPass's module docstring for why this
+            # has to happen at the CFG level at all, rather than as an
+            # ordinary StructuralAnalyzer pass - the short version is that
+            # unlike every other pass there, this one is gated on a fact
+            # (`creator_facts`) no single CFG can determine about itself on
+            # hbc97+ (see CreatorTable).
+            dispatch = generator_dispatch.detect(cfg)
+
+            if dispatch is not None:
+                applied = GeneratorStateDispatchCfgPass(
+                    cfg, dispatch, is_async=creator_facts.is_async,
+                ).run()
+
+                if applied:
+                    logger.debug(
+                        "Generator dispatch on env[%d] rewritten: %d suspend site(s).",
+                        dispatch.resume_slot, len(dispatch.suspend_sites),
+                    )
+            else:
+                # A resolved generator/async body with no recognized
+                # dispatch - most likely a shape `generator_dispatch`
+                # doesn't cover yet (`yield*`, an async generator, or
+                # something else entirely). Left as the raw goto form;
+                # worth knowing about rather than silently accepting.
+                logger.debug(
+                    "Function is a resolved generator/async body but no state-dispatch "
+                    "machine was recognized in it; rendering the raw goto form.",
+                )
 
         cfg.verify()
         cfg.compute_dominators()
