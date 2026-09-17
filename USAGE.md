@@ -90,16 +90,7 @@ tree -I '__pycache__|__init__.py' hermes_decompiler
 # diff | working branch
 git diff main...feature/from-2026-09-15 > ~/Downloads/hermes2js.diff
 
-# ———— fixtures —————————————————————————————————————————————————————————
-# 98
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./apps/demo/fixtures/98/results
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./apps/demo/fixtures/98/results --log-level DEBUG
-
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results
-# WARNING 7
-python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results --no-verbose
-
-# 96
+# ———— fixtures 96—————————————————————————————————————————————————————————
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results --log-level DEBUG
 
@@ -109,6 +100,14 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./ap
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level WARNING
 
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
+
+# ———— fixtures 98—————————————————————————————————————————————————————————
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./apps/demo/fixtures/98/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./apps/demo/fixtures/98/results --log-level DEBUG
+
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results
+# WARNING 7
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results --no-verbose
 
 # ———— whole sections ———————————————————————————————————————————————————
 ## 96
