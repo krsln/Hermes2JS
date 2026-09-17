@@ -13,6 +13,7 @@ class SignatureStage(PipelineStage):
 
         function_name = metadata.get('function_name', f'func_{context.section_index}')
 
+        # commented: func ref must be same
         # if function_name == '?anon_0_':
         #     function_name = f'anon_{metadata.get("function_id", context.section_index)}'
 
