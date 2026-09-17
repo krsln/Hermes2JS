@@ -96,7 +96,7 @@ python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./app
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./apps/demo/fixtures/98/results --log-level DEBUG
 
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results
-# WARNING 9
+# WARNING 7
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results --no-verbose
 
 # 96

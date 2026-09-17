@@ -199,13 +199,24 @@ class CFGBuilder:
         for i, result in enumerate(self.results):
             terminator = result.terminator
 
-            if terminator is None:
-                continue
+            if terminator is not None:
+                leaders.update(terminator.targets)
 
-            leaders.update(terminator.targets)
+                if terminator.targets and i + 1 < len(self.results):
+                    leaders.add(self.results[i + 1].address)
 
-            if terminator.targets and i + 1 < len(self.results):
-                leaders.add(self.results[i + 1].address)
+            if result.handler == "Catch":
+                # Always a fresh entry point, regardless of whether this
+                # address happens to be a declared exception handler
+                # target (see `build()`'s separate seeding of those) - a
+                # `<Catch>` reached only through such an untracked address
+                # would otherwise merge into whatever preceded it, and
+                # since Throw/Return (unlike Jump/Branch/Switch) have no
+                # `.targets` to force the split above, nothing else here
+                # would catch that. Observed in real hbc98 output: two
+                # consecutive Throw-then-Catch pairs at 0x201/0x203 where
+                # only 0x20a (not 0x203) is a registered handler target.
+                leaders.add(result.address)
 
         return leaders
 

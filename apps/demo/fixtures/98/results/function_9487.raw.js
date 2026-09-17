@@ -344,43 +344,44 @@ function nestedArrayDestructureTest() {
     // ──────────────── Block 38 ──────────────── 
     // CODE → addr:513 | <Throw>: <Reg8: 0>
     throw r0;
+    // ──────────────── Block 39 ──────────────── 
     // CODE → addr:515 | <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → addr:517 | <IteratorClose>: <Reg8: 6, UInt8: 1>
     r6.return()
     // CODE → addr:520 | <Throw>: <Reg8: 0>
     throw r0;
-    // ──────────────── Block 39 ──────────────── 
+    // ──────────────── Block 40 ──────────────── 
     // CODE → addr:522 | <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → addr:524 | <Jmp>: <Addr8: 20>  # Address: 00000220
     goto label_544;
-    // ──────────────── Block 40 ──────────────── 
+    // ──────────────── Block 41 ──────────────── 
     // CODE → addr:526 | <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → addr:528 | <Mov>: <Reg8: 2, Reg8: 5>
     r2 = r1 === undefined
     // CODE → addr:531 | <Jmp>: <Addr8: 13>  # Address: 00000220
     goto label_544;
-    // ──────────────── Block 41 ──────────────── 
+    // ──────────────── Block 42 ──────────────── 
     // CODE → addr:533 | <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → addr:535 | <Mov>: <Reg8: 2, Reg8: 4>
     r2 = r1 === undefined
     // CODE → addr:538 | <Jmp>: <Addr8: 6>  # Address: 00000220
     goto label_544;
-    // ──────────────── Block 42 ──────────────── 
+    // ──────────────── Block 43 ──────────────── 
     // CODE → addr:540 | <Catch>: <Reg8: 0>
     r0 = caughtException
     // CODE → addr:542 | <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
-    // ──────────────── Block 43 ──────────────── 
+    // ──────────────── Block 44 ──────────────── 
     // CODE → addr:544 | <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 00000226
     if (undefined) goto label_550;
-    // ──────────────── Block 44 ──────────────── 
+    // ──────────────── Block 45 ──────────────── 
     // CODE → addr:547 | <IteratorClose>: <Reg8: 1, UInt8: 1>
     r1.return()
-    // ──────────────── Block 45 ──────────────── 
+    // ──────────────── Block 46 ──────────────── 
     // CODE → addr:550 | <Throw>: <Reg8: 0>
     throw r0;
 }
