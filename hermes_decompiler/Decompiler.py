@@ -1,4 +1,5 @@
 from hermes_decompiler.core.Exceptions import CodeGenerationError, MetadataParseError, StructurerInvariantError
+from hermes_decompiler.frontend.parsing.CreatorTable import CreatorTable
 from hermes_decompiler.pipeline.Pipeline import Pipeline
 from hermes_decompiler.pipeline.PipelineContext import PipelineContext
 from hermes_decompiler.pipeline.stages import (
@@ -32,7 +33,13 @@ class Decompiler:
     """
 
     @staticmethod
-    def build_context(assembly_content: str, section_index: int, *, strict: bool = False) -> PipelineContext:
+    def build_context(
+            assembly_content: str,
+            section_index: int,
+            *,
+            strict: bool = False,
+            creator_table: CreatorTable | None = None,
+    ) -> PipelineContext:
         """
         Execute the decompilation pipeline and return the resulting
         PipelineContext.
@@ -52,6 +59,14 @@ class Decompiler:
             strict:
                 If True, abort immediately on the first opcode dispatch error.
                 Otherwise, recover where possible and continue generating output.
+
+            creator_table:
+                Optional batch-level table identifying which functions are
+                generator/async bodies, from CreatorTable.from_sections().
+                Whether a function is one is not decidable from its own
+                section alone on hbc97+ - see CreatorTable - so without a
+                table, generator/async detection falls back to per-section
+                opcode heuristics that only hold on hbc96.
 
         Returns:
             A fully populated PipelineContext.
@@ -75,6 +90,10 @@ class Decompiler:
 
         lines = assembly_content.strip().split('\n')
         state = PipelineContext(section_index=section_index, lines=lines)
+        # SignatureStage resolves this against the function id parsed by
+        # MetadataStage, which is authoritative - section_index is only a
+        # filename-derived fallback and the two can disagree.
+        state.creator_table = creator_table
 
         pipeline = Pipeline([
             MetadataStage(),

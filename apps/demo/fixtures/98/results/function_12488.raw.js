@@ -1,4 +1,4 @@
-function* ?anon_0_parallelAwaitTest() {
+async function* ?anon_0_parallelAwaitTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 5>
     // USED → r1 = __environment__;

@@ -6,6 +6,7 @@ import re
 from hermes_decompiler.Decompiler import Decompiler
 from hermes_decompiler.core.Exceptions import CodeGenerationError
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.frontend.parsing import CreatorTable
 
 logger = get_logger(__name__)
 
@@ -65,6 +66,46 @@ class FileOperations:
         return files
 
     @classmethod
+    def build_creator_table(
+            cls,
+            input_dir: str,
+            files: list[tuple[str, int]],
+    ) -> CreatorTable:
+        """
+        Scan every section once up front and resolve which functions are
+        generator/async bodies.
+
+        Has to happen before any section is decompiled, and has to see
+        all of them: the CreateGenerator edge that identifies a body is
+        emitted by a *different* function than the body it points at, so
+        no per-section pass can reach it. See CreatorTable.
+
+        A section that cannot be read is skipped with a warning rather
+        than aborting - the table is an enrichment, and a batch missing
+        one file should still decompile the rest. Running with
+        --start/--end, or on a hand-picked subset, can similarly cut a
+        chain in half and leave a body unresolved; that degrades
+        detection back to the per-section fallback for that function.
+        """
+        sections: list[tuple[int, str]] = []
+
+        for filename, function_index in files:
+            path = os.path.join(input_dir, filename)
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    sections.append((function_index, f.read()))
+            except OSError as e:
+                logger.warning("Could not read %s while building the creator table: %s", path, e)
+
+        table = CreatorTable.from_sections(sections)
+        logger.info(
+            "Creator table: %d section(s) scanned, %d generator body/bodies resolved.",
+            len(sections), table.generator_body_count,
+        )
+
+        return table
+
+    @classmethod
     def process_section(
             cls,
             section_index: int,
@@ -74,6 +115,7 @@ class FileOperations:
             verbose: bool,
             raw: bool,
             strict: bool,
+            creator_table: CreatorTable | None = None,
     ) -> bool:
         """
         Process a *.hasm file by reading its content, converting it to
@@ -89,6 +131,10 @@ class FileOperations:
             raw: If True, also generates function_{section_index}_raw.js.
             strict: If True, raise immediately on the first opcode
                     dispatch failure.
+            creator_table: Batch table resolving generator/async bodies,
+                    from build_creator_table(). Optional; without it,
+                    detection falls back to a per-section check that
+                    only holds on hbc96 - see CreatorTable.
 
         Returns:
             bool: True if the file was processed and written successfully,
@@ -124,7 +170,9 @@ class FileOperations:
             return False
 
         try:
-            context = Decompiler.build_context(hasm_content, section_index, strict=strict)
+            context = Decompiler.build_context(
+                hasm_content, section_index, strict=strict, creator_table=creator_table,
+            )
 
             # Render the raw representation first, as it preserves the complete
             # low-level output before any presentation-oriented formatting.
