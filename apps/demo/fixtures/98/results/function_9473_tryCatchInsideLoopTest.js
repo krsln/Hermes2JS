@@ -72,8 +72,6 @@ function tryCatchInsideLoopTest(param1) {
                 console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok", r12)
                 // CODE → addr: 95 | <Mov>: <Reg8: 12, Reg8: 11>
                 r12 = r11
-                // CODE → addr: 98 | <Jmp>: <Addr8: 51>  # Address: 00000095
-                goto label_149;
             } catch (caughtException) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr:128 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

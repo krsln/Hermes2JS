@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
-from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion, SequenceRegion
+from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion, SequenceRegion, TryRegion
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.terminators import TerminatorJump
 from ._base import RegionPass
@@ -73,6 +73,34 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
     `LoopConditionRegionPass` (leaving `latch.terminator` as `None` by
     the time this pass runs), so this never fires for that shape.
 
+    A third shape, the TryRegion analogue of the sibling-trampoline
+    case: `try_body`'s (or `catch.body`'s) own trailing jump past
+    whatever else the TryRegion prints (the catch handler, the finally
+    block) straight to the address that already follows the whole
+    `try {} catch {} finally {}` statement in its parent SequenceRegion
+    - Hermes bytecode needs this Jmp to physically skip over the catch
+    handler's own bytecode range on the normal-completion path, but the
+    printed JS's own try/catch/finally semantics already imply exactly
+    that "fall through to what comes after" once try (or catch)
+    completes normally, so it's exactly as redundant as the sibling
+    case above; see ExceptionTests/tryCatchInsideLoopTest, whose try
+    block used to end with a redundant `goto label_158;` right past its
+    own catch handler.
+
+    Matched the same way as the loop back-edge case - by comparing the
+    jump's target against a BasicBlock's `.address`, not the address of
+    whatever instruction happens to still be first in it. The two can
+    differ: `_FinallyAttacher` (see try_structurer/) already recognizes
+    a finally block Hermes duplicated inline for the normal-completion
+    path as equivalent to the one canonical `finally_.body` printed
+    once, and drops the now-redundant duplicate's instructions from
+    the block that follows the TryRegion - but that block's `.address`
+    stays what it was before the duplicate was stripped from it (the
+    original bytecode offset the duplicate itself started at, which is
+    exactly what the try_body's own Jmp still targets). Comparing
+    against `.address` rather than the surviving first instruction's
+    own address is what makes the match succeed regardless.
+
     Pipeline placement
     -------------------
     Safe to run any time after all structurers have finished producing
@@ -82,7 +110,15 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
     LoopInductionAliasPass / ForEachRegionPass, though it DOES rely on
     LoopConditionRegionPass having already run (see the previous
     paragraph on why a bottom-tested loop's latch is naturally exempt
-    only once its own terminator has already been consumed). Grouped
+    only once its own terminator has already been consumed) and, for
+    the third shape above, on TryStructurer's `_FinallyAttacher` having
+    already stripped any duplicated-inline-finally instructions from
+    the block a try_body/catch_body Jmp targets (see that shape's own
+    paragraph on why `.address` rather than the first surviving
+    instruction's address is what this pass compares against - that
+    only holds once the duplicate has actually been stripped).
+    TryStructurer already runs well before this pass in
+    StructuralAnalyzer.build(), so this is naturally satisfied. Grouped
     alongside LoopContinueRegionPass in StructuralAnalyzer.build()
     since both clean up residual TerminatorJump-only blocks, though
     neither depends on the other's output - ordering between the two
@@ -101,6 +137,17 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         self.visit(node.body)
         self._strip_back_edge_jumps(node)
 
+    def visit_TryRegion(self, node: TryRegion) -> None:
+        self.visit(node.try_body)
+
+        if node.catch is not None:
+            self.visit(node.catch.body)
+
+        if node.finally_ is not None:
+            self.visit(node.finally_.body)
+
+        self._strip_try_exit_jumps(node)
+
     def _strip_redundant_jumps(self, region: SequenceRegion) -> None:
         children = region.children
 
@@ -113,19 +160,7 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                     isinstance(block, BasicBlock) and isinstance(next_sibling, BasicBlock)
                     and self._is_redundant_jump(block, next_sibling)
             ):
-                last = block.instructions[-1]
-
-                if last.value is not None or last.statement is not None:
-                    # This instruction does more than just carry the
-                    # jump (e.g. it also computes a value that's read
-                    # later) - only clear the terminator, keep the
-                    # instruction itself (same treatment as
-                    # `_strip_back_edge_jumps` below).
-                    last.terminator = None
-                else:
-                    block.instructions.pop()
-
-                block.terminator = None
+                self._clear_trailing_jump(block, block.terminator)
 
                 if block.instructions:
                     # Real statements remain ahead of the jump - keep
@@ -187,27 +222,106 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                 # doesn't recognize - leave it as an explicit goto.
                 continue
 
-            if not latch.instructions or latch.instructions[-1].terminator is not terminator:
-                # Invariant violated: the terminator isn't owned by
-                # the last instruction where expected. Bail rather
-                # than remove the wrong thing.
+            if self._clear_trailing_jump(latch, terminator):
+                logger.debug(
+                    "RedundantJumpRegionPass: dropped loop %d's own "
+                    "back-edge jump in latch block %d (0x%x) - implied "
+                    "by the loop construct itself.",
+                    header.id, latch.id, latch.address,
+                )
+
+    def _strip_try_exit_jumps(self, node: TryRegion) -> None:
+        exit_address = self._try_exit_address(node)
+
+        if exit_address is None:
+            # No next sibling to fall through into (the TryRegion is
+            # the last thing in its parent) - nothing this pass can
+            # confirm a bare Jmp here is redundant against.
+            return
+
+        candidates = [node.try_body]
+
+        if node.catch is not None:
+            candidates.append(node.catch.body)
+
+        for body in candidates:
+            if not body.children or not isinstance(body.children[-1], BasicBlock):
                 continue
 
-            last = latch.instructions[-1]
+            block = body.children[-1]
+            terminator = block.terminator
 
-            if last.value is not None or last.statement is not None:
-                # This instruction does more than just carry the jump
-                # (unusual for a bare Jmp, but don't guess) - only
-                # clear the terminator, keep the instruction itself.
-                last.terminator = None
-            else:
-                latch.instructions.pop()
+            if not isinstance(terminator, TerminatorJump):
+                continue
 
-            latch.terminator = None
+            if terminator.target != exit_address:
+                # Some other jump this pass doesn't recognize (an
+                # early return/break out of an enclosing construct,
+                # for instance) - leave it as an explicit goto.
+                continue
 
-            logger.debug(
-                "RedundantJumpRegionPass: dropped loop %d's own "
-                "back-edge jump in latch block %d (0x%x) - implied by "
-                "the loop construct itself.",
-                header.id, latch.id, latch.address,
-            )
+            if self._clear_trailing_jump(block, terminator):
+                logger.debug(
+                    "RedundantJumpRegionPass: dropped a try/catch's own "
+                    "trailing jump in block %d (0x%x) past its handler - "
+                    "implied by falling through to what already follows "
+                    "the whole try/catch/finally statement.",
+                    block.id, block.address,
+                )
+
+    @staticmethod
+    def _try_exit_address(node: TryRegion) -> int | None:
+        parent = node.parent
+
+        if not isinstance(parent, SequenceRegion):
+            # Every TryRegion observed in practice sits inside a
+            # SequenceRegion (every compound region's body/then_body/
+            # etc. slot is one, even for a single child) - bail rather
+            # than guess at some other parent kind's notion of "next".
+            return None
+
+        try:
+            index = parent.children.index(node)
+        except ValueError:
+            return None
+
+        if index + 1 >= len(parent.children):
+            return None
+
+        next_sibling = parent.children[index + 1]
+
+        if not isinstance(next_sibling, BasicBlock):
+            # Same narrow-scope reasoning as _is_redundant_jump above:
+            # resolving "the first address a compound sibling region
+            # would execute" needs region-kind-specific internals this
+            # pass has no need to become coupled to for the one shape
+            # actually observed.
+            return None
+
+        return next_sibling.address
+
+    @staticmethod
+    def _clear_trailing_jump(block: BasicBlock, terminator: TerminatorJump) -> bool:
+        """Drops `terminator` from `block`, keeping any real statements
+        ahead of it intact. Returns False (and changes nothing) if the
+        invariant every caller relies on - `terminator` is owned by
+        `block`'s own last instruction - doesn't hold, since that
+        means this isn't the plain trailing-Jmp shape either caller
+        expects and guessing which instruction to touch would be
+        unsafe.
+        """
+        if not block.instructions or block.instructions[-1].terminator is not terminator:
+            return False
+
+        last = block.instructions[-1]
+
+        if last.value is not None or last.statement is not None:
+            # This instruction does more than just carry the jump
+            # (unusual for a bare Jmp, but don't guess) - only clear
+            # the terminator, keep the instruction itself.
+            last.terminator = None
+        else:
+            block.instructions.pop()
+
+        block.terminator = None
+        return True

@@ -60,9 +60,6 @@ function switchInsideTryTest(param1) {
                 break;
         }
         // Switch → END
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → addr:107 | <Jmp>: <Addr8: 24>  # Address: 00000083
-        goto label_131;
     } catch (caughtException) {
         // ──────────────── Block 6 ──────────────── 
         // CODE → addr:111 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

@@ -65,8 +65,6 @@ function nestedTryCatchFinallyTest() {
         // USED → r0 = "__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/after-inner";
         // CODE → addr:126 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
         console.log("__BC:Exceptions/ExceptionTests/nestedTryCatchFinallyTest/after-inner")
-        // CODE → addr:131 | <Jmp>: <Addr8: 48>  # Address: 000000b3
-        goto label_179;
     } catch (caughtException) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:159 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
