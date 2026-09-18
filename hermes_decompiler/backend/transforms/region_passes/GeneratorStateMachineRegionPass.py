@@ -4,7 +4,7 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import Identifier, YieldExpression
+from hermes_decompiler.ir.expressions import AwaitExpression, Identifier, YieldExpression
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -81,15 +81,23 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
       sync generator (`function*`) or an `async function` compiled
       through the exact same machinery (see SignatureStage.is_generator's
       own note on why that distinction can't be made from this
-      function's bytecode alone) - either way, the fold is the same;
-      only the keyword a *later* pass ultimately prints ("yield" vs
-      "await") would differ, and this pass always leaves a
-      `YieldExpression` for that later step to relabel if needed.
-      CodeGenerationStage._function_prefix is that later step: it
-      resolves the ambiguity per-function using the same "Call directly
-      before a suspend point" signal this file's own sibling,
-      `OpcodeDispatcher._handle_generator_await`, already uses to decide
-      "yield" vs "await" at each individual suspend point.
+      function's bytecode alone) - either way, the fold is structurally
+      the same. What *does* differ per suspend point is decided right
+      here, using the same "Call directly before a suspend point"
+      signal this file's own sibling,
+      `OpcodeDispatcher._handle_generator_await`, already used to wrap
+      that Call's value in an `AwaitExpression`: if the value being
+      folded is already such an `AwaitExpression` (a real await, not
+      the unconditional `AwaitExpression(YieldExpression())` placeholder
+      every *resume* produces - see ResumeGenerator.py), it's used
+      as-is rather than wrapped in another `YieldExpression` - printing
+      "yield await X" for what is, at the source level, only ever
+      "await X" would show a keyword that was never actually written.
+      Every other suspend point (no preceding Call, or a bare value)
+      folds to a genuine `YieldExpression` as before.
+      CodeGenerationStage._function_prefix reuses this same per-suspend
+      signal once more, to decide whether the *function* itself prints
+      with a `*` at all.
     """
 
     def run(self) -> None:
@@ -268,10 +276,24 @@ class GeneratorStateMachineRegionPass(RegionPass, RegionVisitor):
             # own separate `rX = ...;` line.
             value_instruction.definition_used = True
 
+            value = value_instruction.value
+
+            if isinstance(value, AwaitExpression) and not isinstance(value.argument, YieldExpression):
+                # A real, Call-derived await (see the class docstring
+                # above and OpcodeDispatcher._handle_generator_await) -
+                # this suspend point is the await-desugaring's own
+                # internal suspend, not a source-level `yield`. Use it
+                # as-is instead of wrapping it in another
+                # YieldExpression, which would print "yield await X"
+                # for something that was only ever written as "await X".
+                folded_value = value
+            else:
+                folded_value = YieldExpression(argument=value)
+
             yield_block.instructions = yield_block.instructions[:-2] + [
                 OpcodeResult(
                     save_instruction.entry,
-                    value=YieldExpression(argument=value_instruction.value),
+                    value=folded_value,
                     # Bind the resumed value to its own register only
                     # when something downstream actually reads it -
                     # otherwise a bare `yield value;` statement, same

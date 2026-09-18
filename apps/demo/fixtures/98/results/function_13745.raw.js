@@ -1,4 +1,4 @@
-async function* ?anon_0_parallelAwaitTest() {
+async function _anon_0_parallelAwaitTest() {
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 76 | <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
     r1[0] = param2

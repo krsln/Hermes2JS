@@ -1,4 +1,4 @@
-async function* ?anon_0_() {
+async function _anon_0_() {
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis;
@@ -35,7 +35,7 @@ async function* ?anon_0_() {
     // CODE → addr: 77 | <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
     r1 = (r1[0] = r6)[1] = r9
     // CODE → addr: 86 | <SaveGenerator>: <Addr8: 4>  # Address: 0000005a
-    r1 = yield await Promise.all(r1)
+    r1 = await Promise.all(r1)
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 96 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 4, UInt8: 0>
     r4 = r4[0]

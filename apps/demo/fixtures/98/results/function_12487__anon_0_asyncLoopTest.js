@@ -1,4 +1,4 @@
-async function* ?anon_0_asyncLoopTest(param1) {
+async function _anon_0_asyncLoopTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 10>
     // USED → r1 = __environment__;
@@ -15,7 +15,7 @@ async function* ?anon_0_asyncLoopTest(param1) {
     // CODE → addr: 20 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 6, Reg8: 0>
     __environment__[6] = 0
     // CODE → addr: 24 | <CreateGenerator>: <Reg8: 1, Reg8: 1, function_id: 13744>  # Function: [#13744 ?anon_0_asyncLoopTest of 502 bytes]: 2 params @ offset 0x002613be
-    r1 = createGenerator(__environment__, ?anon_0_asyncLoopTest)
+    r1 = createGenerator(__environment__, _anon_0_asyncLoopTest)
     // CODE → addr: 29 | <Ret>: <Reg8: 1>
     return r1;
 }

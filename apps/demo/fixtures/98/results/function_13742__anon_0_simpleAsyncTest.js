@@ -1,4 +1,4 @@
-async function* ?anon_0_simpleAsyncTest() {
+async function _anon_0_simpleAsyncTest() {
     try {
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr: 67 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 0>

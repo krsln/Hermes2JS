@@ -1,3 +1,4 @@
+from hermes_decompiler.core.Naming import to_js_identifier
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, FUNCTION_ID
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import Identifier
@@ -30,6 +31,14 @@ class CreateClosure(OpcodeHandler):
             )
 
             name = function_info.name or f"function_{func_id}"
+            # name comes straight from the function table and isn't
+            # guaranteed to be a valid JS identifier - e.g. an
+            # anonymous generator/async body is named "?anon_0_..."
+            # (see hermes_decompiler.core.Naming for why). Only the
+            # name portion is sanitized; the trailing "(params)" is
+            # this handler's own arity annotation, not part of the
+            # identifier.
+            name = to_js_identifier(name)
             function = f"{name}({params})"
         else:
             function = f"function_{func_id}"

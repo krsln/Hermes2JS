@@ -1,4 +1,4 @@
-async function* ?anon_0_(param1) {
+async function _anon_0_(param1) {
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 10 | <LoadConstUndefined>: <Reg8: 7>
     // USED → r7 = undefined;

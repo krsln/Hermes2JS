@@ -1,4 +1,5 @@
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.core.Naming import to_js_identifier
 from hermes_decompiler.pipeline.PipelineContext import PipelineContext
 from hermes_decompiler.pipeline.PipelineStage import PipelineStage
 
@@ -13,11 +14,15 @@ class SignatureStage(PipelineStage):
 
         function_name = metadata.get('function_name', f'func_{context.section_index}')
 
-        # commented: func ref must be same
-        # if function_name == '?anon_0_':
-        #     function_name = f'anon_{metadata.get("function_id", context.section_index)}'
-
-        context.function_name = function_name
+        # function_name comes straight from this function's own header
+        # metadata and isn't guaranteed to be a valid JS identifier -
+        # e.g. an anonymous generator/async body is named "?anon_0_..."
+        # (see hermes_decompiler.core.Naming for why). This is what
+        # CodeGenerationStage prints as the declared function's own
+        # name, so it needs the same sanitizing every *reference* to
+        # another function's name already gets (see CreateGenerator.py/
+        # CreateGeneratorClosure.py/CreateClosure.py).
+        context.function_name = to_js_identifier(function_name)
 
         param_count = metadata.get('param_count', 0)
         context.params = [

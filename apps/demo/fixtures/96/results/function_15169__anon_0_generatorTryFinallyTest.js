@@ -1,4 +1,4 @@
-function* ?anon_0_generatorTryFinallyTest() {
+function* _anon_0_generatorTryFinallyTest() {
     // ──────────────── Block 12 ──────────────── 
     // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;

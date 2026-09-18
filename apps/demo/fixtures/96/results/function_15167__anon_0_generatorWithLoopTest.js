@@ -1,4 +1,4 @@
-function* ?anon_0_generatorWithLoopTest(param1) {
+function* _anon_0_generatorWithLoopTest(param1) {
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;

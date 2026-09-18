@@ -1,4 +1,4 @@
-function* ?anon_0_generatorWithLoopTest(param1) {
+function* _anon_0_generatorWithLoopTest(param1) {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator

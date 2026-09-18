@@ -1,4 +1,4 @@
-function* ?anon_0_simpleGeneratorTest() {
+function* _anon_0_simpleGeneratorTest() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator

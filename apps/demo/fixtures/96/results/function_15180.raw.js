@@ -3,7 +3,7 @@ function function_15180() {
     // CODE → addr:  0 | <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → addr:  2 | <CreateGenerator>: <Reg8: 0, Reg8: 0, function_id: 15181>  # Function: [#15181 ?anon_0_ of 235 bytes]: 1 params @ offset 0x0026b324
-    r0 = createGenerator(r0, ?anon_0_)
+    r0 = createGenerator(r0, _anon_0_)
     // CODE → addr:  7 | <Ret>: <Reg8: 0>
     return r0;
 }

@@ -5,6 +5,8 @@ from hermes_decompiler.pipeline.PipelineStage import PipelineStage
 
 logger = get_logger(__name__)
 
+_SAVE_GENERATOR_HANDLERS = ("SaveGenerator", "SaveGeneratorLong")
+
 
 class CodeGenerationStage(PipelineStage):
     """Assembles the final JS function source from analysis.results."""
@@ -56,6 +58,21 @@ class CodeGenerationStage(PipelineStage):
         emits neither, so it is OR'd with `creator_facts.is_async` (see
         CreatorTable), the batch-resolved signal that covers that version
         instead.
+
+        `is_generator` alone still isn't enough to decide the `*`, though:
+        a *plain* `async function` (no real `yield` anywhere in source) is
+        lowered through this exact same suspend/resume protocol, so
+        `is_generator` comes back True for it too - printing `async
+        function*` in that case would show a keyword the source never had
+        (and GeneratorStateMachineRegionPass would have nothing but
+        Call-derived `AwaitExpression`s to fold, never a genuine
+        `YieldExpression`; see its own docstring). `has_bare_yield` below
+        re-derives, per suspend point, the same "was the value immediately
+        before this SaveGenerator a real await?" signal
+        `OpcodeDispatcher._handle_generator_await` already computed once -
+        if not one single suspend point in this function turns out to be a
+        genuine (non-await) yield, this is really just a plain `async
+        function`, star and all dropped.
         """
         is_async = any(
             isinstance(result.value, AwaitExpression)
@@ -74,7 +91,26 @@ class CodeGenerationStage(PipelineStage):
             # factory call.
             is_async = True
 
+        results = context.analysis.results
+        has_bare_yield = any(
+            not (
+                    idx > 0
+                    and isinstance(results[idx - 1].value, AwaitExpression)
+                    and not isinstance(results[idx - 1].value.argument, YieldExpression)
+            )
+            for idx, result in enumerate(results)
+            if result.handler in _SAVE_GENERATOR_HANDLERS
+        )
+
         if context.is_generator:
+            if is_async and not has_bare_yield:
+                # Every suspend point in this function was await-derived
+                # and none was a genuine yield - a plain async function
+                # (or an async stub with no suspend points of its own at
+                # all; see SignatureStage's header_kind == 'generator'
+                # note), not a real generator.
+                return "async function "
+
             return "async function* " if is_async else "function* "
 
         return "async function " if is_async else "function "

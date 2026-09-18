@@ -1,4 +1,4 @@
-async function* ?anon_0_() {
+async function _anon_0_() {
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis;
@@ -393,7 +393,7 @@ async function* ?anon_0_() {
     // CODE → addr:927 | <GetById>: <Reg8: 1, Reg8: 1, UInt8: 56, string_id: 9338>  # String: 'callAsyncTests' (Identifier)
     // USED → r1 = r1.callAsyncTests;
     // CODE → addr:937 | <SaveGenerator>: <Addr8: 4>  # Address: 000003ad
-    yield await r1.callAsyncTests.call(r2)
+    await r1.callAsyncTests.call(r2)
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:947 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 4, UInt8: 27>
     r5 = r4[27]
