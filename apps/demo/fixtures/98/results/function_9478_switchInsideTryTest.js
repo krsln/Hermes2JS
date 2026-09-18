@@ -55,8 +55,6 @@ function switchInsideTryTest(param1) {
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default";
                 // CODE → addr: 53 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
                 console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default")
-                // CODE → addr: 58 | <Jmp>: <Addr8: 49>  # Address: 0000006b
-                goto label_107;
                 break;
         }
         // Switch → END

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
-from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion, SequenceRegion, TryRegion
+from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion, SequenceRegion, SwitchRegion, TryRegion
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.terminators import TerminatorJump
 from ._base import RegionPass
@@ -101,6 +101,41 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
     against `.address` rather than the surviving first instruction's
     own address is what makes the match succeed regardless.
 
+    A fourth shape, the SwitchRegion analogue of the third: a case's
+    (or `default:`'s) own trailing `break`-equivalent jump straight to
+    wherever control resumes once the whole switch statement finishes
+    - implied by the switch construct itself exactly the way a loop's
+    back edge is implied by `for`/`while`, so it's dropped the same
+    way. Unlike the loop and TryRegion cases, though, a SwitchRegion
+    built from a comparison chain (see _comparison_chain_builder.py -
+    the shape Hermes emits for a small/sparse set of case values,
+    where IfStructurer's own `else`-chain folding already got there
+    first) has no `header`/`latches` of its own to inspect: whichever
+    case IfStructurer's chain happened to fold most directly already
+    lost its trailing jump as an ordinary same-SequenceRegion sibling
+    match (the first, sibling-trampoline shape above) purely as a side
+    effect of chain-folding order - not because it's structurally any
+    different from a case IfStructurer's folding left an explicit jump
+    in, most often whichever case ends up as `default:`, the chain's
+    innermost/last alternative with no further sibling of its own to
+    match against (see ExceptionTests/switchInsideTryTest, whose
+    `default:` case used to end with a redundant `goto label_115;`).
+
+    Resolving that target takes one more step than the third shape:
+    `default:`'s own body sits inside a SwitchRegion that itself has no
+    next sibling of its own (it's the last - often only - statement in
+    whatever contains it, e.g. a TryRegion's try_body in
+    switchInsideTryTest), so there's no sibling BasicBlock to compare
+    against at the SwitchRegion's own level at all. `_strip_switch_exit_jumps`
+    doesn't special-case that - it calls the same walk-up-through-
+    parents-with-no-sibling-of-their-own helper `_strip_try_exit_jumps`
+    above already uses (`_next_fallthrough_address`), which keeps
+    climbing past a childless SequenceRegion into whatever wraps it
+    (the switch's own enclosing TryRegion, here) until it finds an
+    actual sibling BasicBlock to compare against - exactly the address
+    `_strip_try_exit_jumps` would independently compute for that same
+    enclosing TryRegion.
+
     Pipeline placement
     -------------------
     Safe to run any time after all structurers have finished producing
@@ -147,6 +182,15 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
             self.visit(node.finally_.body)
 
         self._strip_try_exit_jumps(node)
+
+    def visit_SwitchRegion(self, node: SwitchRegion) -> None:
+        for case in node.cases:
+            self.visit(case.body)
+
+        if node.default_body is not None:
+            self.visit(node.default_body)
+
+        self._strip_switch_exit_jumps(node)
 
     def _strip_redundant_jumps(self, region: SequenceRegion) -> None:
         children = region.children
@@ -231,12 +275,12 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                 )
 
     def _strip_try_exit_jumps(self, node: TryRegion) -> None:
-        exit_address = self._try_exit_address(node)
+        exit_address = self._next_fallthrough_address(node)
 
         if exit_address is None:
-            # No next sibling to fall through into (the TryRegion is
-            # the last thing in its parent) - nothing this pass can
-            # confirm a bare Jmp here is redundant against.
+            # No next sibling to fall through into anywhere up the
+            # parent chain - nothing this pass can confirm a bare Jmp
+            # here is redundant against.
             return
 
         candidates = [node.try_body]
@@ -269,36 +313,85 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                     block.id, block.address,
                 )
 
+    def _strip_switch_exit_jumps(self, node: SwitchRegion) -> None:
+        exit_address = self._next_fallthrough_address(node)
+
+        if exit_address is None:
+            return
+
+        candidates = [case.body for case in node.cases]
+
+        if node.default_body is not None:
+            candidates.append(node.default_body)
+
+        for body in candidates:
+            if not body.children or not isinstance(body.children[-1], BasicBlock):
+                continue
+
+            block = body.children[-1]
+            terminator = block.terminator
+
+            if not isinstance(terminator, TerminatorJump):
+                continue
+
+            if terminator.target != exit_address:
+                # An early return/break out of an enclosing construct,
+                # or (fallthrough to the NEXT case, no `break` in the
+                # source) a jump this pass doesn't try to recognize -
+                # leave it as an explicit goto either way.
+                continue
+
+            if self._clear_trailing_jump(block, terminator):
+                logger.debug(
+                    "RedundantJumpRegionPass: dropped a switch case's own "
+                    "trailing break-jump in block %d (0x%x) - implied by "
+                    "falling through to what already follows the whole "
+                    "switch statement.",
+                    block.id, block.address,
+                )
+
     @staticmethod
-    def _try_exit_address(node: TryRegion) -> int | None:
-        parent = node.parent
+    def _next_fallthrough_address(region) -> int | None:
+        """Address where control resumes once `region` (a TryRegion or
+        SwitchRegion, currently the only callers) finishes running
+        normally.
 
-        if not isinstance(parent, SequenceRegion):
-            # Every TryRegion observed in practice sits inside a
-            # SequenceRegion (every compound region's body/then_body/
-            # etc. slot is one, even for a single child) - bail rather
-            # than guess at some other parent kind's notion of "next".
-            return None
+        Walks up through parents with nothing of their own to fall
+        into - a `default:` body that's the last thing in its
+        SwitchRegion, itself the last thing in a TryRegion's try_body,
+        for instance - until an actual next-sibling BasicBlock turns
+        up. Bails (returns None) the moment a step can't be resolved
+        cleanly rather than guess: an unrecognized parent kind, or a
+        next sibling that isn't a bare BasicBlock (a compound region,
+        whose own first address this pass has no need to become
+        coupled to resolving - see the class docstring's stated
+        reasoning for staying deliberately narrow).
+        """
+        node = region
 
-        try:
-            index = parent.children.index(node)
-        except ValueError:
-            return None
+        while node is not None:
+            parent = node.parent
 
-        if index + 1 >= len(parent.children):
-            return None
+            if not isinstance(parent, SequenceRegion):
+                return None
 
-        next_sibling = parent.children[index + 1]
+            try:
+                index = parent.children.index(node)
+            except ValueError:
+                return None
 
-        if not isinstance(next_sibling, BasicBlock):
-            # Same narrow-scope reasoning as _is_redundant_jump above:
-            # resolving "the first address a compound sibling region
-            # would execute" needs region-kind-specific internals this
-            # pass has no need to become coupled to for the one shape
-            # actually observed.
-            return None
+            if index + 1 < len(parent.children):
+                next_sibling = parent.children[index + 1]
+                return next_sibling.address if isinstance(next_sibling, BasicBlock) else None
 
-        return next_sibling.address
+            # `node` is the last child of its own SequenceRegion - that
+            # SequenceRegion has no address of its own to fall into,
+            # so keep climbing from whatever wraps it (the compound
+            # region `parent` is itself a try_body/case-body/etc. slot
+            # of).
+            node = parent.parent
+
+        return None
 
     @staticmethod
     def _clear_trailing_jump(block: BasicBlock, terminator: TerminatorJump) -> bool:
