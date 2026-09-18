@@ -32,8 +32,6 @@ async function _anon_0_(param1) {
         // USED → r3 = r5[2];
         // CODE → addr: 65 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
         r3 = await r5[2].call(r7, r9)
-        // CODE → addr: 70 | <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
-        goto label_74;
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
         r3 = await yield

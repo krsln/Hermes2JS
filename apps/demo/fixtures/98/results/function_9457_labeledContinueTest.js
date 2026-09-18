@@ -57,8 +57,6 @@ function labeledContinueTest() {
         // USED → r11 = console.log;
         // CODE → addr: 86 | <Call2>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 9>
         console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
-        // CODE → addr: 91 | <Jmp>: <Addr8: 18>  # Address: 0000006d
-        goto label_109;
     }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 

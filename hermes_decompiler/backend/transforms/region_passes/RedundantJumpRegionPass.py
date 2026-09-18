@@ -42,6 +42,20 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
     to become coupled to for the one narrow shape actually observed in
     practice.
 
+    That "removing the jump changes nothing" reasoning holds
+    regardless of what else is in `block` - a block that runs real
+    statements and only then falls into a redundant jump to its own
+    next sibling (e.g. a labeled `continue`'s target loop iteration
+    falling through past dead code into the loop's own back edge; see
+    LabeledTests/labeledContinueTest) is exactly as redundant as the
+    pure single-instruction trampoline case above, just with real
+    code ahead of the jump instead of nothing. Only the jump
+    *instruction itself* is dropped in that case (same
+    terminator-only-vs-whole-instruction treatment as
+    `_strip_back_edge_jumps` below); the block is only removed
+    entirely when nothing besides that jump instruction is left in it
+    - the original pure-trampoline shape.
+
     A second, related shape this pass also drops: a LOOP's own trailing
     back-edge jump (from one of `loop.latches`) straight to
     `loop.header_block`. Unlike the sibling-trampoline case above, this
@@ -99,6 +113,37 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
                     isinstance(block, BasicBlock) and isinstance(next_sibling, BasicBlock)
                     and self._is_redundant_jump(block, next_sibling)
             ):
+                last = block.instructions[-1]
+
+                if last.value is not None or last.statement is not None:
+                    # This instruction does more than just carry the
+                    # jump (e.g. it also computes a value that's read
+                    # later) - only clear the terminator, keep the
+                    # instruction itself (same treatment as
+                    # `_strip_back_edge_jumps` below).
+                    last.terminator = None
+                else:
+                    block.instructions.pop()
+
+                block.terminator = None
+
+                if block.instructions:
+                    # Real statements remain ahead of the jump - keep
+                    # the block, just without its now-redundant
+                    # terminator; falling off its end already reaches
+                    # next_sibling.
+                    logger.debug(
+                        "RedundantJumpRegionPass: dropped trailing "
+                        "jump in block %d (0x%x) - target was already "
+                        "the next statement.",
+                        block.id, block.address,
+                    )
+                    index += 1
+                    continue
+
+                # Nothing left at all (the original pure
+                # single-instruction trampoline shape) - drop the now
+                # empty block from the region entirely.
                 del children[index]
                 logger.debug(
                     "RedundantJumpRegionPass: dropped bare jump block %d "
@@ -114,13 +159,10 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
         if not isinstance(block.terminator, TerminatorJump):
             return False
 
-        if len(block.instructions) > 1:
-            return False
-
-        if block.instructions and block.instructions[0].terminator is not block.terminator:
-            # The one instruction here does more than just carry the
-            # jump (e.g., also computes a value) - not a pure
-            # trampoline, leave it alone.
+        if not block.instructions or block.instructions[-1].terminator is not block.terminator:
+            # The terminator isn't owned by this block's own last
+            # instruction (unusual - bail rather than guess which
+            # instruction actually carries it).
             return False
 
         return block.terminator.target == next_sibling.address
