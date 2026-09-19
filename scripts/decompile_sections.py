@@ -72,10 +72,11 @@ def main() -> None:
         logger.info("No .hasm files found.")
         return
 
-    # Built once, before any section is decompiled: identifying a
-    # generator/async body requires an edge that lives in a *different*
-    # section, so this cannot be folded into the per-section pipeline.
-    creator_table = FileOperations.build_creator_table(str(input_dir), files)
+    # Built once, before any section is decompiled: every batch-resolved
+    # table (generator/async body identification, private field/class
+    # names) requires an edge that lives in a *different* section, so
+    # none of this can be folded into the per-section pipeline.
+    batch_tables = FileOperations.build_batch_tables(str(input_dir), files)
 
     logger.info("Found %d .hasm files", len(files))
     logger.info("input \t%s", input_dir)
@@ -91,7 +92,7 @@ def main() -> None:
             result = FileOperations.process_section(
                 section_index, str(file_path), str(output_dir), file_path.stem,
                 args.verbose, args.raw, args.strict,
-                creator_table=creator_table,
+                batch_tables=batch_tables,
             )
         except (OpcodeDispatchError, NoHandlerError) as e:
             logger.error("Batch stopped in strict mode at section #%s: %s", section_index, e)

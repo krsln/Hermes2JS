@@ -60,8 +60,9 @@ class SignatureStage(PipelineStage):
         context.header_kind = metadata.get('header_kind', 'normal')
 
         function_id = metadata.get('function_id', context.section_index)
+        context.function_id = function_id
         context.creator_facts = (
-            context.creator_table.facts_for(function_id) if context.creator_table else None
+            context.batch_tables.creator_table.facts_for(function_id) if context.batch_tables else None
         )
 
         if context.creator_facts is not None and context.creator_facts.is_generator:

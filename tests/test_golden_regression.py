@@ -41,7 +41,10 @@ from typing import NamedTuple
 import pytest
 
 from hermes_decompiler.Decompiler import Decompiler
-from hermes_decompiler.frontend.parsing.CreatorTable import CreatorTable
+from hermes_decompiler.frontend.parsing import BatchContext, BatchPipeline, BatchTables
+from hermes_decompiler.frontend.parsing.batch_stages import (
+    ClassEnvironmentTableStage, CreatorTableStage, EnvironmentOriginTableStage, PrivateNameTableStage,
+)
 
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 _FIXTURES_ROOT = _REPO_ROOT / "apps" / "demo" / "fixtures"
@@ -112,16 +115,17 @@ _CASE_IDS = [
     for case in _CASES
 ]
 
-#: One CreatorTable per fixture set (96, 98, ...), built once from that
-#: set's complete `sections/` directory - the same input
-#: `FileOperations.build_creator_table` scans for a real batch run via
+#: One BatchTables bundle per fixture set (96, 98, ...), built once from
+#: that set's complete `sections/` directory - the same input
+#: `FileOperations.build_batch_tables` scans for a real batch run via
 #: `scripts/decompile_sections.py`. Built here, not per-case, because
-#: identifying a generator/async body needs an edge that lives in a
-#: *different* section than the one being tested - see CreatorTable - so
-#: a table built from a single case's own `.hasm` file would never
-#: resolve anything and every generator/async fixture would silently fall
-#: back to whatever a lone section can determine on its own.
-_CREATOR_TABLES: dict[str, CreatorTable] = {}
+#: every table this bundles needs an edge that lives in a *different*
+#: section than the one being tested (see CreatorTable/
+#: EnvironmentOriginTable/PrivateNameTable/ClassEnvironmentTable) - so a
+#: table built from a single case's own `.hasm` file would never resolve
+#: anything and every fixture depending on one would silently fall back
+#: to whatever a lone section can determine on its own.
+_BATCH_TABLES: dict[str, BatchTables] = {}
 
 for _sections_dir in {case.sections_dir for case in _CASES}:
     _fixture_name = _sections_dir.parent.name
@@ -132,7 +136,14 @@ for _sections_dir in {case.sections_dir for case in _CASES}:
         if _match:
             _sections.append((int(_match.group("number")), _hasm_path.read_text(encoding="utf-8")))
 
-    _CREATOR_TABLES[_fixture_name] = CreatorTable.from_sections(_sections)
+    _batch_context = BatchPipeline([
+        CreatorTableStage(),
+        EnvironmentOriginTableStage(),
+        PrivateNameTableStage(),
+        ClassEnvironmentTableStage(),
+    ]).run(BatchContext(sections=_sections))
+
+    _BATCH_TABLES[_fixture_name] = _batch_context.to_batch_tables()
 
 
 @pytest.mark.skipif(
@@ -146,7 +157,7 @@ def test_matches_golden_output(case: _GoldenCase) -> None:
     same JavaScript already committed under `results/`.
 
     Mirrors `FileOperations.process_section`'s call shape (one
-    `build_context()` against the fixture set's `CreatorTable`, rendered
+    `build_context()` against the fixture set's `BatchTables`, rendered
     once normally and, if present, once raw) so this also guards the
     "build once, render multiple times" contract `Decompiler` documents -
     a bug that leaks state between two renders of the same context would
@@ -158,7 +169,7 @@ def test_matches_golden_output(case: _GoldenCase) -> None:
 
     context = Decompiler.build_context(
         hasm_content, case.function_index, strict=False,
-        creator_table=_CREATOR_TABLES.get(case.fixture_name),
+        batch_tables=_BATCH_TABLES.get(case.fixture_name),
     )
 
     actual_js = Decompiler.render(context, verbose=True, raw=False)

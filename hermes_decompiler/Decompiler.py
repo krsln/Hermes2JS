@@ -1,5 +1,5 @@
 from hermes_decompiler.core.Exceptions import CodeGenerationError, MetadataParseError, StructurerInvariantError
-from hermes_decompiler.frontend.parsing.CreatorTable import CreatorTable
+from hermes_decompiler.frontend.parsing.BatchTables import BatchTables
 from hermes_decompiler.pipeline.Pipeline import Pipeline
 from hermes_decompiler.pipeline.PipelineContext import PipelineContext
 from hermes_decompiler.pipeline.stages import (
@@ -38,7 +38,7 @@ class Decompiler:
             section_index: int,
             *,
             strict: bool = False,
-            creator_table: CreatorTable | None = None,
+            batch_tables: BatchTables | None = None,
     ) -> PipelineContext:
         """
         Execute the decompilation pipeline and return the resulting
@@ -60,13 +60,19 @@ class Decompiler:
                 If True, abort immediately on the first opcode dispatch error.
                 Otherwise, recover where possible and continue generating output.
 
-            creator_table:
-                Optional batch-level table identifying which functions are
-                generator/async bodies, from CreatorTable.from_sections().
-                Whether a function is one is not decidable from its own
-                section alone on hbc97+ - see CreatorTable - so without a
-                table, generator/async detection falls back to per-section
-                opcode heuristics that only hold on hbc96.
+            batch_tables:
+                Every optional batch-level (cross-section) table this
+                function's own decompilation can consult - which
+                functions are generator/async bodies, real private field
+                and class names resolved across function boundaries, and
+                so on - from FileOperations.build_batch_tables(). A
+                single bundle (BatchTables) rather than one parameter per
+                table; see that class's own docstring for why. Without
+                one, each table's consumer falls back to whatever
+                per-section behavior it has for "no batch table" - most
+                fall back to nothing resolved at all, generator/async
+                detection is the one exception, with a per-section
+                heuristic that only holds on hbc96 - see CreatorTable.
 
         Returns:
             A fully populated PipelineContext.
@@ -90,10 +96,10 @@ class Decompiler:
 
         lines = assembly_content.strip().split('\n')
         state = PipelineContext(section_index=section_index, lines=lines)
-        # SignatureStage resolves this against the function id parsed by
-        # MetadataStage, which is authoritative - section_index is only a
-        # filename-derived fallback and the two can disagree.
-        state.creator_table = creator_table
+        # SignatureStage resolves creator_facts against the function id
+        # parsed by MetadataStage, which is authoritative - section_index
+        # is only a filename-derived fallback and the two can disagree.
+        state.batch_tables = batch_tables
 
         pipeline = Pipeline([
             MetadataStage(),
