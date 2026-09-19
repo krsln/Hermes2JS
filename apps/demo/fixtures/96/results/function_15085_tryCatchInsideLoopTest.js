@@ -52,13 +52,13 @@ function tryCatchInsideLoopTest(param1) {
                     // CODE → addr:116 | <LoadConstString>: <Reg8: 12, string_id: 839>  # String: 'negative value' (String)
                     // USED → r12 = "negative value";
                     // CODE → addr:120 | <Mov>: <Reg8: 13, Reg8: 3>
-                    // USED → r13 = r3;
+                    r13 = r3
                     // CODE → addr:123 | <Construct>: <Reg8: 2, Reg8: 9, UInt8: 2>
-                    // USED → r2 = new Error("negative value", r3);
+                    // USED → r2 = new Error("negative value");
                     // CODE → addr:127 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-                    // USED → r2 = new Error("negative value", r3);
+                    // USED → r2 = new Error("negative value");
                     // CODE → addr:131 | <Throw>: <Reg8: 2>
-                    throw new Error("negative value", r3);
+                    throw new Error("negative value");
                 }
                 // ──────────────── Block 2 ──────────────── 
                 // CODE → addr: 72 | <TryGetById>: <Reg8: 9, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

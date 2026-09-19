@@ -25,11 +25,11 @@ function restOnlyTest() {
     // CODE → addr: 44 | <Mov>: <Reg8: 9, Reg8: 5>
     // USED → r9 = CreateThis(r5);
     // CODE → addr: 47 | <Mov>: <Reg8: 8, Reg8: 3>
-    // USED → r8 = arguments.length;
+    r8 = arguments.length
     // CODE → addr: 50 | <Construct>: <Reg8: 2, Reg8: 2, UInt8: 2>
-    // USED → r2 = new Array(arguments.length);
+    // USED → r2 = new Array(r8);
     // CODE → addr: 54 | <SelectObject>: <Reg8: 5, Reg8: 5, Reg8: 2>
-    // USED → r5 = new Array(arguments.length);
+    // USED → r5 = new Array(r8);
     // CODE → addr: 58 | <LoadConstZero>: <Reg8: 2>
     // USED → r2 = 0;
     // CODE → addr: 60 | <Less>: <Reg8: 6, Reg8: 2, Reg8: 3>
@@ -40,7 +40,7 @@ function restOnlyTest() {
     // CODE → addr: 67 | <GetArgumentsPropByVal>: <Reg8: 6, Reg8: 2, Reg8: 4>
     // USED → r6 = arguments[r2];
     // CODE → addr: 71 | <PutByVal>: <Reg8: 5, Reg8: 2, Reg8: 6>
-    new Array(arguments.length)[r2] = arguments[r2]
+    new Array(r8)[r2] = arguments[r2]
     // CODE → addr: 75 | <Inc>: <Reg8: 2, Reg8: 2>
     r2 = r2 + 1
     // CODE → addr: 78 | <JLess>: <Addr8: -11, Reg8: 2, Reg8: 3>  # Address: 00000043

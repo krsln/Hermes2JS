@@ -48,15 +48,15 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr: 97 | <LoadConstString>: <Reg8: 0, string_id: 6428>  # String: 'wrapped: ' (String)
     // USED → r0 = "wrapped: ";
     // CODE → addr:101 | <Add>: <Reg8: 5, Reg8: 0, Reg8: 2>
-    // USED → r5 = "wrapped: " + caughtException;
+    r5 = "wrapped: " + caughtException
     // CODE → addr:105 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
     // USED → r2 = CreateThisForNew(r3);
     // CODE → addr:109 | <Mov>: <Reg8: 6, Reg8: 2>
     // USED → r6 = CreateThisForNew(r3);
     // CODE → addr:112 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = new Error("wrapped: " + caughtException);
+    // USED → r0 = new Error(r5);
     // CODE → addr:116 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    r0 = new Error("wrapped: " + caughtException)
+    r0 = new Error(r5)
     // CODE → addr:120 | <Throw>: <Reg8: 0>
     throw r0;
     // ──────────────── Block 2 ──────────────── 

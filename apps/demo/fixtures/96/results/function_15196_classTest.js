@@ -25,9 +25,9 @@ function classTest() {
     // CODE → addr: 46 | <Mov>: <Reg8: 8, Reg8: 3>
     // USED → r8 = CreateThis(r2);
     // CODE → addr: 49 | <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
-    // USED → r2 = new r1[5]("...", "Generic");
+    // USED → r2 = new r1[5]("Generic", "...");
     // CODE → addr: 53 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    r2 = new r1[5]("...", "Generic")
+    r2 = new r1[5]("Generic", "...")
     // CODE → addr: 57 | <GetById>: <Reg8: 3, Reg8: 2, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
     // USED → r3 = r2.makeSound;
     // CODE → addr: 63 | <Call1>: <Reg8: 3, Reg8: 3, Reg8: 2>
@@ -53,9 +53,9 @@ function classTest() {
     // CODE → addr:110 | <Mov>: <Reg8: 8, Reg8: 3>
     // USED → r8 = CreateThis(r2);
     // CODE → addr:113 | <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
-    // USED → r2 = new r1[6]("Labrador", "Rex");
+    // USED → r2 = new r1[6]("Rex", "Labrador");
     // CODE → addr:117 | <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    r3 = new r1[6]("Labrador", "Rex")
+    r3 = new r1[6]("Rex", "Labrador")
     // CODE → addr:121 | <GetById>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
     // USED → r2 = r3.makeSound;
     // CODE → addr:127 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>

@@ -25,9 +25,9 @@ function create(param1) {
     // CODE → addr: 45 | <Mov>: <Reg8: 6, Reg8: 1>
     // USED → r6 = CreateThis(r0);
     // CODE → addr: 48 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 3>
-    // USED → r0 = new r0[0]("Mixed", param1);
+    // USED → r0 = new r0[0](param1, "Mixed");
     // CODE → addr: 52 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    r0 = new r0[0]("Mixed", param1)
+    r0 = new r0[0](param1, "Mixed")
     // CODE → addr: 56 | <Ret>: <Reg8: 0>
     return r0;
 }

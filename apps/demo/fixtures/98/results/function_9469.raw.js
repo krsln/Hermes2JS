@@ -56,15 +56,15 @@ function nestedTryCatchTest() {
     // CODE → addr:117 | <LoadConstString>: <Reg8: 1, string_id: 3368>  # String: 'rethrown from inner: ' (String)
     // USED → r1 = "rethrown from inner: ";
     // CODE → addr:121 | <Add>: <Reg8: 5, Reg8: 1, Reg8: 2>
-    // USED → r5 = "rethrown from inner: " + caughtException;
+    r5 = "rethrown from inner: " + caughtException
     // CODE → addr:125 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
     // USED → r2 = CreateThisForNew(r3);
     // CODE → addr:129 | <Mov>: <Reg8: 6, Reg8: 2>
     // USED → r6 = CreateThisForNew(r3);
     // CODE → addr:132 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
-    // USED → r1 = new Error("rethrown from inner: " + caughtException);
+    // USED → r1 = new Error(r5);
     // CODE → addr:136 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    r1 = new Error("rethrown from inner: " + caughtException)
+    r1 = new Error(r5)
     // CODE → addr:140 | <Throw>: <Reg8: 1>
     throw r1;
     // ──────────────── Block 2 ──────────────── 

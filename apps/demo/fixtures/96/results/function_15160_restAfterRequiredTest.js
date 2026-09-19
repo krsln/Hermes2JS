@@ -32,11 +32,11 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr: 60 | <Mov>: <Reg8: 12, Reg8: 6>
     // USED → r12 = CreateThis(r6);
     // CODE → addr: 63 | <Mov>: <Reg8: 11, Reg8: 2>
-    // USED → r11 = (arguments.length <= 2) ? 0 : arguments.length - 2;
+    r11 = (arguments.length <= 2) ? 0 : arguments.length - 2
     // CODE → addr: 66 | <Construct>: <Reg8: 2, Reg8: 7, UInt8: 2>
-    // USED → r2 = new Array((arguments.length <= 2) ? 0 : arguments.length - 2);
+    // USED → r2 = new Array(r11);
     // CODE → addr: 70 | <SelectObject>: <Reg8: 6, Reg8: 6, Reg8: 2>
-    // USED → r6 = new Array((arguments.length <= 2) ? 0 : arguments.length - 2);
+    // USED → r6 = new Array(r11);
     // CODE → addr: 74 | <Less>: <Reg8: 7, Reg8: 3, Reg8: 4>
     // USED → r7 = 2 < arguments.length;
     // CODE → addr: 78 | <Mov>: <Reg8: 2, Reg8: 3>
@@ -50,7 +50,7 @@ function restAfterRequiredTest(param1, param2) {
             // CODE → addr: 88 | <GetArgumentsPropByVal>: <Reg8: 7, Reg8: 2, Reg8: 5>
             // USED → r7 = arguments[r2];
             // CODE → addr: 92 | <PutByVal>: <Reg8: 6, Reg8: 8, Reg8: 7>
-            new Array((arguments.length <= 2) ? 0 : arguments.length - 2)[r8] = arguments[r2]
+            new Array(r11)[r8] = arguments[r2]
             // CODE → addr: 96 | <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
         } while (r2 < r4);

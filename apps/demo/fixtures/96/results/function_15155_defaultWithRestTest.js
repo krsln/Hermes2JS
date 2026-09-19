@@ -51,11 +51,11 @@ function defaultWithRestTest() {
     // CODE → addr: 90 | <Mov>: <Reg8: 12, Reg8: 4>
     // USED → r12 = CreateThis(r4);
     // CODE → addr: 93 | <Mov>: <Reg8: 11, Reg8: 8>
-    // USED → r11 = (arguments.length <= 1) ? 0 : arguments.length - 1;
+    r11 = (arguments.length <= 1) ? 0 : arguments.length - 1
     // CODE → addr: 96 | <Construct>: <Reg8: 2, Reg8: 2, UInt8: 2>
-    // USED → r2 = new Array((arguments.length <= 1) ? 0 : arguments.length - 1);
+    // USED → r2 = new Array(r11);
     // CODE → addr:100 | <SelectObject>: <Reg8: 4, Reg8: 4, Reg8: 2>
-    // USED → r4 = new Array((arguments.length <= 1) ? 0 : arguments.length - 1);
+    // USED → r4 = new Array(r11);
     // CODE → addr:104 | <Less>: <Reg8: 8, Reg8: 6, Reg8: 3>
     // USED → r8 = 1 < arguments.length;
     // CODE → addr:108 | <Mov>: <Reg8: 2, Reg8: 6>
@@ -69,7 +69,7 @@ function defaultWithRestTest() {
             // CODE → addr:118 | <GetArgumentsPropByVal>: <Reg8: 8, Reg8: 2, Reg8: 7>
             // USED → r8 = arguments[r2];
             // CODE → addr:122 | <PutByVal>: <Reg8: 4, Reg8: 9, Reg8: 8>
-            new Array((arguments.length <= 1) ? 0 : arguments.length - 1)[r9] = arguments[r2]
+            new Array(r11)[r9] = arguments[r2]
             // CODE → addr:126 | <Inc>: <Reg8: 2, Reg8: 2>
             r2 = r2 + 1
         } while (r2 < r3);

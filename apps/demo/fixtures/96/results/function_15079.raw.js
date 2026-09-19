@@ -50,7 +50,7 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr:102 | <LoadConstString>: <Reg8: 0, string_id: 3427>  # String: 'wrapped: ' (String)
     // USED → r0 = "wrapped: ";
     // CODE → addr:106 | <Add>: <Reg8: 5, Reg8: 0, Reg8: 2>
-    // USED → r5 = "wrapped: " + caughtException;
+    r5 = "wrapped: " + caughtException
     // CODE → addr:110 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = Error.prototype;
     // CODE → addr:115 | <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 3>
@@ -58,9 +58,9 @@ function tryCatchRethrowDifferentTest() {
     // CODE → addr:119 | <Mov>: <Reg8: 6, Reg8: 2>
     // USED → r6 = CreateThis(r2);
     // CODE → addr:122 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = new Error("wrapped: " + caughtException);
+    // USED → r0 = new Error(r5);
     // CODE → addr:126 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    r0 = new Error("wrapped: " + caughtException)
+    r0 = new Error(r5)
     // CODE → addr:130 | <Throw>: <Reg8: 0>
     throw r0;
     // ──────────────── Block 2 ──────────────── 

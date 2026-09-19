@@ -17,13 +17,13 @@ function setTest() {
     // CODE → addr: 33 | <CreateThis>: <Reg8: 2, Reg8: 0, Reg8: 3>
     // USED → r2 = CreateThis(r0);
     // CODE → addr: 37 | <NewArrayWithBuffer>: <Reg8: 10, UInt16: 6, UInt16: 6, UInt16: 23684>  # Array: [1, 2, 2, 3, 3, 3]
-    // USED → r10 = [1, 2, 2, 3, 3, 3];
+    r10 = [1, 2, 2, 3, 3, 3]
     // CODE → addr: 45 | <Mov>: <Reg8: 11, Reg8: 2>
     // USED → r11 = CreateThis(r0);
     // CODE → addr: 48 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
-    // USED → r0 = new Set([1, 2, 2, 3, 3, 3]);
+    // USED → r0 = new Set(r10);
     // CODE → addr: 52 | <SelectObject>: <Reg8: 3, Reg8: 2, Reg8: 0>
-    r3 = new Set([1, 2, 2, 3, 3, 3])
+    r3 = new Set(r10)
     // CODE → addr: 56 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 62 | <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -51,7 +51,7 @@ function setTest() {
     // CODE → addr:114 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 4, Reg8: 0>
     console.log(r0)
     // CODE → addr:119 | <Mov>: <Reg8: 2, Reg8: 3>
-    r2 = new Set([1, 2, 2, 3, 3, 3])
+    r2 = new Set(r10)
     // CODE → addr:122 | <IteratorBegin>: <Reg8: 4, Reg8: 2>
     r4 = GetIterator(r2)
     // CODE → addr:125 | <LoadConstUndefined>: <Reg8: 0>
@@ -76,7 +76,7 @@ function setTest() {
     // CODE → addr:169 | <Mov>: <Reg8: 10, Reg8: 4>
     r10 = r4
     // CODE → addr:172 | <Mov>: <Reg8: 9, Reg8: 3>
-    r9 = new Set([1, 2, 2, 3, 3, 3])
+    r9 = new Set(r10)
     // CODE → addr:175 | <CallBuiltin>: <Reg8: 2, UInt8: 46, UInt8: 4>  # Built-in function: [#46 arraySpread]
     r2 = arraySpread(r11, r10, r9, r8)
     // CODE → addr:179 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

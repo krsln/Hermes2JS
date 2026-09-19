@@ -92,13 +92,13 @@ async function _anon_0_asyncTryCatchTest() {
     // CODE → addr:164 | <CreateThisForNew>: <Reg8: 19, Reg8: 18, UInt8: 3>
     r19 = CreateThisForNew(r18)
     // CODE → addr:168 | <Mov>: <Reg8: 24, Reg8: 19>
-    // USED → r24 = r19;
+    r24 = r19
     // CODE → addr:171 | <Mov>: <Reg8: 23, Reg8: 9>
-    // USED → r23 = "post-await failure";
+    r23 = "post-await failure"
     // CODE → addr:174 | <Construct>: <Reg8: 18, Reg8: 18, UInt8: 2>
-    // USED → r18 = new Error("post-await failure", r19);
+    // USED → r18 = new Error(r23);
     // CODE → addr:178 | <SelectObject>: <Reg8: 18, Reg8: 19, Reg8: 18>
-    r18 = new Error("post-await failure", r19)
+    r18 = new Error(r23)
     // CODE → addr:182 | <Throw>: <Reg8: 18>
     throw r18;
     // ──────────────── Block 10 ──────────────── 
