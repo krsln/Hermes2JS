@@ -4,7 +4,7 @@ import re
 from typing import Iterable
 
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.frontend.parsing.EnvironmentOriginTable import EnvironmentOriginTable
+from hermes_decompiler.frontend.batch_pipeline.tables.EnvironmentOriginTable import EnvironmentOriginTable
 
 logger = get_logger(__name__)
 

@@ -41,8 +41,8 @@ from typing import NamedTuple
 import pytest
 
 from hermes_decompiler.Decompiler import Decompiler
-from hermes_decompiler.frontend.parsing import BatchContext, BatchPipeline, BatchTables
-from hermes_decompiler.frontend.parsing.batch_stages import (
+from hermes_decompiler.frontend.batch_pipeline import BatchContext, BatchPipeline, BatchTables
+from hermes_decompiler.frontend.batch_pipeline.stages import (
     ClassEnvironmentTableStage, CreatorTableStage, EnvironmentOriginTableStage, PrivateNameTableStage,
 )
 

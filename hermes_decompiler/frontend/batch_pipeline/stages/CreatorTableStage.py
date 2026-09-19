@@ -1,6 +1,6 @@
-from hermes_decompiler.frontend.parsing.BatchContext import BatchContext
-from hermes_decompiler.frontend.parsing.BatchStage import BatchStage
-from hermes_decompiler.frontend.parsing.CreatorTable import CreatorTable
+from hermes_decompiler.frontend.batch_pipeline.BatchContext import BatchContext
+from hermes_decompiler.frontend.batch_pipeline.BatchStage import BatchStage
+from hermes_decompiler.frontend.batch_pipeline.tables import CreatorTable
 
 
 class CreatorTableStage(BatchStage):

@@ -1,9 +1,12 @@
 from dataclasses import dataclass
 
-from hermes_decompiler.frontend.parsing.ClassEnvironmentTable import ClassEnvironmentTable
-from hermes_decompiler.frontend.parsing.CreatorTable import CreatorTable
-from hermes_decompiler.frontend.parsing.EnvironmentOriginTable import EnvironmentOriginTable
-from hermes_decompiler.frontend.parsing.PrivateNameTable import PrivateNameTable
+from hermes_decompiler.frontend.batch_pipeline.tables import (
+    BatchTables,
+    ClassEnvironmentTable,
+    CreatorTable,
+    EnvironmentOriginTable,
+    PrivateNameTable,
+)
 
 
 @dataclass(frozen=True)

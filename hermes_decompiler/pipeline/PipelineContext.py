@@ -1,8 +1,9 @@
 from dataclasses import dataclass, field
 
 from hermes_decompiler.backend.runtime import HermesAnalysis
+from hermes_decompiler.frontend.batch_pipeline.tables import CreatorFacts
+from hermes_decompiler.frontend.batch_pipeline.tables.BatchTables import BatchTables
 from hermes_decompiler.frontend.opcode import OpcodeEntry
-from hermes_decompiler.frontend.parsing import BatchTables, CreatorFacts
 
 
 @dataclass

@@ -1,5 +1,5 @@
 from hermes_decompiler.core.Exceptions import CodeGenerationError, MetadataParseError, StructurerInvariantError
-from hermes_decompiler.frontend.parsing.BatchTables import BatchTables
+from hermes_decompiler.frontend.batch_pipeline.tables import BatchTables
 from hermes_decompiler.pipeline.Pipeline import Pipeline
 from hermes_decompiler.pipeline.PipelineContext import PipelineContext
 from hermes_decompiler.pipeline.stages import (

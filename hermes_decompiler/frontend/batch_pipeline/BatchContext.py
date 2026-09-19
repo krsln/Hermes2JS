@@ -1,9 +1,12 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
-from hermes_decompiler.frontend.parsing.ClassEnvironmentTable import ClassEnvironmentTable
-from hermes_decompiler.frontend.parsing.CreatorTable import CreatorTable
-from hermes_decompiler.frontend.parsing.EnvironmentOriginTable import EnvironmentOriginTable
-from hermes_decompiler.frontend.parsing.PrivateNameTable import PrivateNameTable
+from hermes_decompiler.frontend.batch_pipeline.tables import (
+    BatchTables,
+    ClassEnvironmentTable,
+    CreatorTable,
+    EnvironmentOriginTable,
+    PrivateNameTable,
+)
 
 
 @dataclass
@@ -32,7 +35,7 @@ class BatchContext:
     class_environment_table: ClassEnvironmentTable | None = None
 
     def to_batch_tables(self) -> "BatchTables":
-        from hermes_decompiler.frontend.parsing.BatchTables import BatchTables
+        from hermes_decompiler.frontend.batch_pipeline.tables.BatchTables import BatchTables
 
         return BatchTables(
             creator_table=self.creator_table or CreatorTable.empty(),

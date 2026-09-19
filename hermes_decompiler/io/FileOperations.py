@@ -6,10 +6,11 @@ import re
 from hermes_decompiler.Decompiler import Decompiler
 from hermes_decompiler.core.Exceptions import CodeGenerationError
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.frontend.parsing import BatchContext, BatchPipeline, BatchTables
-from hermes_decompiler.frontend.parsing.batch_stages import (
+from hermes_decompiler.frontend.batch_pipeline import BatchContext, BatchPipeline
+from hermes_decompiler.frontend.batch_pipeline.stages import (
     ClassEnvironmentTableStage, CreatorTableStage, EnvironmentOriginTableStage, PrivateNameTableStage,
 )
+from hermes_decompiler.frontend.batch_pipeline.tables import BatchTables
 
 logger = get_logger(__name__)
 

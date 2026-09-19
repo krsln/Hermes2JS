@@ -7,7 +7,7 @@ from hermes_decompiler.backend.transforms.cfg_passes import GeneratorStateDispat
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.frontend.parsing import CreatorFacts
+from hermes_decompiler.frontend.batch_pipeline.tables import CreatorFacts
 from .RegisterState import RegisterState
 
 logger = get_logger(__name__)

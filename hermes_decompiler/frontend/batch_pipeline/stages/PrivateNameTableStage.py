@@ -1,7 +1,6 @@
-from hermes_decompiler.frontend.parsing.BatchContext import BatchContext
-from hermes_decompiler.frontend.parsing.BatchStage import BatchStage
-from hermes_decompiler.frontend.parsing.EnvironmentOriginTable import EnvironmentOriginTable
-from hermes_decompiler.frontend.parsing.PrivateNameTable import PrivateNameTable
+from hermes_decompiler.frontend.batch_pipeline.BatchContext import BatchContext
+from hermes_decompiler.frontend.batch_pipeline.BatchStage import BatchStage
+from hermes_decompiler.frontend.batch_pipeline.tables import EnvironmentOriginTable, PrivateNameTable
 
 
 class PrivateNameTableStage(BatchStage):
