@@ -57,7 +57,10 @@ class GetEnvironment(OpcodeHandler):
             arguments=(NumericLiteral(level),),
         )
 
-        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        # level is already "effective depth" as EnvironmentOriginTable
+        # defines it (0 = current environment) - no adjustment needed,
+        # unlike GetParentEnvironment (see that handler's own note).
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg, env_source=(level, None))
         ctx.analysis.add_result(result)
 
         return result

@@ -13,7 +13,7 @@ function classTest() {
     // CODE → addr: 22 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 5>
-    r5 = r1[5]
+    r5 = Animal
     // CODE → addr: 29 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = r5.prototype;
     // CODE → addr: 34 | <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
@@ -25,9 +25,9 @@ function classTest() {
     // CODE → addr: 46 | <Mov>: <Reg8: 8, Reg8: 3>
     // USED → r8 = CreateThis(r2);
     // CODE → addr: 49 | <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
-    // USED → r2 = new r1[5]("Generic", "...");
+    // USED → r2 = new Animal("Generic", "...");
     // CODE → addr: 53 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    r2 = new r1[5]("Generic", "...")
+    r2 = new Animal("Generic", "...")
     // CODE → addr: 57 | <GetById>: <Reg8: 3, Reg8: 2, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
     // USED → r3 = r2.makeSound;
     // CODE → addr: 63 | <Call1>: <Reg8: 3, Reg8: 3, Reg8: 2>
@@ -41,7 +41,7 @@ function classTest() {
     // CODE → addr: 84 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2.description)
     // CODE → addr: 89 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 6>
-    r5 = r1[6]
+    r5 = Dog
     // CODE → addr: 93 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = r5.prototype;
     // CODE → addr: 98 | <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
@@ -53,9 +53,9 @@ function classTest() {
     // CODE → addr:110 | <Mov>: <Reg8: 8, Reg8: 3>
     // USED → r8 = CreateThis(r2);
     // CODE → addr:113 | <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
-    // USED → r2 = new r1[6]("Rex", "Labrador");
+    // USED → r2 = new Dog("Rex", "Labrador");
     // CODE → addr:117 | <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    r3 = new r1[6]("Rex", "Labrador")
+    r3 = new Dog("Rex", "Labrador")
     // CODE → addr:121 | <GetById>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 10340>  # String: 'makeSound' (Identifier)
     // USED → r2 = r3.makeSound;
     // CODE → addr:127 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
@@ -65,7 +65,7 @@ function classTest() {
     // CODE → addr:137 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>
     r2 = r3.makeSound()
     // CODE → addr:141 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 6>
-    r3 = r1[6]
+    r3 = Dog
     // CODE → addr:145 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 6, string_id: 103>  # String: 'create' (Identifier)
     // USED → r2 = r3.create;
     // CODE → addr:150 | <LoadConstString>: <Reg8: 1, string_id: 709>  # String: 'Buddy' (String)

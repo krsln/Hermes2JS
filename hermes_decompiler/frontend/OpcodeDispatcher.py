@@ -21,7 +21,7 @@ class OpcodeDispatcher:
         OpcodeHandler implementations.
     """
 
-    def __init__(self, analysis: HermesAnalysis):
+    def __init__(self, analysis: HermesAnalysis, *, function_id: int | None = None, batch_tables=None):
         # Loading handlers here - on first actual use - rather than as a
         # module-level call is deliberate: `HandlerLoader.load()` defaults
         # to `strict=True`, so a single broken handler module raises
@@ -41,6 +41,11 @@ class OpcodeDispatcher:
         if not analysis:
             raise AnalysisContextError("Analysis context cannot be None")
         self.analysis = analysis
+        # Both simply threaded through into every OpcodeContext this
+        # dispatcher builds - see PipelineContext.function_id/batch_tables
+        # for what they are and OpcodeContext for why handlers need them.
+        self.function_id = function_id
+        self.batch_tables = batch_tables
 
     def dispatch(self, entry: OpcodeEntry, entries: list[OpcodeEntry], index: int) -> OpcodeResult:
         """
@@ -60,13 +65,23 @@ class OpcodeDispatcher:
             raise NoHandlerError(entry.opcode)
 
         try:
-            context = OpcodeContext(self.analysis, entry, entries, index)
+            context = OpcodeContext(
+                self.analysis, entry, entries, index,
+                function_id=self.function_id, batch_tables=self.batch_tables,
+            )
             return handler_cls.handle(context)
         except Exception as e:
             raise OpcodeDispatchError(entry.opcode, entry.bytecode, e) from e
 
     @staticmethod
-    def dispatch_all(entries: list[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool = False):
+    def dispatch_all(
+            entries: list[OpcodeEntry],
+            analysis: HermesAnalysis,
+            *,
+            strict: bool = False,
+            function_id: int | None = None,
+            batch_tables=None,
+    ):
         # Static, one-time backward-jump scan - see `compute_loop_ranges`.
         # Shared by both passes below.
         loop_ranges = OpcodeDispatcher.compute_loop_ranges(entries)
@@ -83,7 +98,9 @@ class OpcodeDispatcher:
         # still reported/raised by pass 2 below.
         scratch = HermesAnalysis(metadata=analysis.metadata)
         scratch.loop_ranges = loop_ranges
-        OpcodeDispatcher._run_pass(entries, scratch, strict=False)
+        OpcodeDispatcher._run_pass(
+            entries, scratch, strict=False, function_id=function_id, batch_tables=batch_tables,
+        )
 
         loop_carried_writes: dict[str, list[int]] = {}
         for result in scratch.results:
@@ -99,11 +116,20 @@ class OpcodeDispatcher:
         # harvested above - see `HermesAnalysis.defined_and_used_in_same_loop`.
         analysis.loop_ranges = loop_ranges
         analysis.loop_carried_writes = loop_carried_writes
-        OpcodeDispatcher._run_pass(entries, analysis, strict=strict)
+        OpcodeDispatcher._run_pass(
+            entries, analysis, strict=strict, function_id=function_id, batch_tables=batch_tables,
+        )
 
     @staticmethod
-    def _run_pass(entries: list[OpcodeEntry], analysis: HermesAnalysis, *, strict: bool) -> None:
-        dispatcher = OpcodeDispatcher(analysis)
+    def _run_pass(
+            entries: list[OpcodeEntry],
+            analysis: HermesAnalysis,
+            *,
+            strict: bool,
+            function_id: int | None = None,
+            batch_tables=None,
+    ) -> None:
+        dispatcher = OpcodeDispatcher(analysis, function_id=function_id, batch_tables=batch_tables)
 
         for i, entry in enumerate(entries):
 

@@ -4,6 +4,50 @@ from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpression, Identifier
 
 
+def _resolve_private_field_name(ctx: OpcodeContext, private_name_reg: int) -> str:
+    """
+    The real `#fieldName` for `private_name_reg`, if PrivateNameTable can
+    resolve it - the `__private_N__` numeric placeholder otherwise.
+
+    `ctx.entry.identifier_name` (checked first, matching every other
+    handler that falls back to it) never actually fires for any of the
+    three opcodes that call this: none of AddOwnPrivateBySym/
+    GetOwnPrivateBySym/PutOwnPrivateBySym encodes a string_id operand at
+    all (see each one's own ARGUMENTS - all plain registers), so there is
+    never a disassembler identifier-comment to read here in the first
+    place. Kept as the first check anyway for the same reason every other
+    `field_name`-style fallback in this codebase does: cheap, and correct
+    if a future Hermes version ever changes that encoding.
+
+    The real recovery path is PrivateNameTable, keyed by the (depth,
+    slot) `private_name_reg` was loaded from - see
+    OpcodeResult.env_source and LoadFromEnvironment.py/Mov.py for how
+    that's carried forward from whichever LoadFromEnvironment actually
+    produced this register's value, possibly several instructions (and
+    Movs) earlier.
+    """
+    if ctx.entry.identifier_name:
+        return ctx.entry.identifier_name
+
+    state = ctx.analysis.get_register_state(private_name_reg)
+    env_source = state.definition.env_source if state else None
+
+    if env_source is not None and ctx.function_id is not None and ctx.batch_tables is not None:
+        depth, slot = env_source
+        name = ctx.batch_tables.private_name_table.name_for(ctx.function_id, depth, slot)
+
+        if name is not None:
+            # PrivateNameTable's own names already carry the leading
+            # "#" (see CreatePrivateName.py's identifier_name comment) -
+            # every call site below adds its own "#" prefix, so strip it
+            # back off here rather than have two different `field_name`
+            # conventions (one with the "#", one without) depending on
+            # which fallback fired.
+            return name[1:] if name.startswith("#") else name
+
+    return f"__private_{private_name_reg}__"
+
+
 # Reg8, Reg8, Reg8 (total size 3)
 # DEFINE_OPCODE_3(AddOwnPrivateBySym, Reg8, Reg8, Reg8)
 # Example: <AddOwnPrivateBySym>: <Reg8: 4, Reg8: 3, Reg8: 7>
@@ -19,7 +63,7 @@ class AddOwnPrivateBySym(OpcodeHandler):
 
         obj_reg, private_name_reg, value_reg = map(int, match.groups())
 
-        field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
+        field_name = _resolve_private_field_name(ctx, private_name_reg)
 
         left = MemberExpression(
             obj=self.get_register_expression(ctx.analysis, obj_reg),
@@ -51,7 +95,7 @@ class GetOwnPrivateBySym(OpcodeHandler):
 
         dest_reg, obj_reg, _cache, private_name_reg = map(int, match.groups())
 
-        field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
+        field_name = _resolve_private_field_name(ctx, private_name_reg)
 
         expression = MemberExpression(
             obj=self.get_register_expression(ctx.analysis, obj_reg),
@@ -80,7 +124,7 @@ class PutOwnPrivateBySym(OpcodeHandler):
 
         obj_reg, value_reg, _cache, private_name_reg = map(int, match.groups())
 
-        field_name = ctx.entry.identifier_name or f"__private_{private_name_reg}__"
+        field_name = _resolve_private_field_name(ctx, private_name_reg)
 
         left = MemberExpression(
             obj=self.get_register_expression(ctx.analysis, obj_reg),

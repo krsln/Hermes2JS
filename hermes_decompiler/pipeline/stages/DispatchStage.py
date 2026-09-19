@@ -16,6 +16,9 @@ class DispatchStage(PipelineStage):
         if not context.bytecode_lines:
             return context
 
-        OpcodeDispatcher.dispatch_all(context.entries, context.analysis, strict=self._strict)
+        OpcodeDispatcher.dispatch_all(
+            context.entries, context.analysis, strict=self._strict,
+            function_id=context.function_id, batch_tables=context.batch_tables,
+        )
 
         return context

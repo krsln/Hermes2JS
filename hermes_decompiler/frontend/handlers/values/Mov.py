@@ -19,7 +19,16 @@ class Mov(OpcodeHandler):
 
         expression = self.get_register_expression(ctx.analysis, src_reg)
 
-        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        # Carry env_source forward (see OpcodeResult's own docstring) -
+        # a private-field/class-reference opcode several Movs downstream
+        # from the GetEnvironment/GetParentEnvironment/LoadFromEnvironment
+        # that actually set it still needs to trace back to it (see
+        # CreateThis.py's own Mov of a placeholder for the same reasoning
+        # applied to a different kind of value).
+        src_state = ctx.analysis.get_register_state(src_reg)
+        env_source = src_state.definition.env_source if src_state is not None else None
+
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg, env_source=env_source)
         ctx.analysis.add_result(result)
 
         return result

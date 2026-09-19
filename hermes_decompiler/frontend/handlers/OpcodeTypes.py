@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from enum import Enum, auto
 
 from hermes_decompiler.backend.runtime import HermesAnalysis
+from hermes_decompiler.frontend.batch_pipeline.tables import BatchTables
 from hermes_decompiler.frontend.opcode import OpcodeEntry
 
 
@@ -12,6 +13,15 @@ class OpcodeContext:
     entry: OpcodeEntry
     entries: list[OpcodeEntry]
     index: int
+    # The function id MetadataStage parsed for the section currently
+    # being decompiled (PipelineContext.function_id) and every
+    # batch-resolved table it can consult (PipelineContext.batch_tables) -
+    # both None when decompiling a lone section with no batch at all, or
+    # threaded through from a section whose own MetadataStage hasn't run
+    # yet (shouldn't happen in practice: DispatchStage always runs after
+    # SignatureStage - see Pipeline's own stage order in Decompiler.py).
+    function_id: int | None = None
+    batch_tables: "BatchTables | None" = None
 
 
 @dataclass(frozen=True, slots=True)
