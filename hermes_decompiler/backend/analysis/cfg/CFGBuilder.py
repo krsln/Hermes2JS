@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from bisect import bisect_right
+
 from hermes_decompiler.backend.analysis.cfg.BasicBlock import BasicBlock
 from hermes_decompiler.backend.analysis.cfg.CFG import CFG
 from hermes_decompiler.core.logging import get_logger
@@ -127,65 +129,133 @@ class CFGBuilder:
     @staticmethod
     def _merge_fragmented_handlers(raw_handlers: list[dict]) -> list[dict]:
         """Merge exception-handler ranges that are really one try body
-        split into contiguous fragments, rather than one [start, end)
-        entry covering the whole protected region.
+        split into fragments, rather than one [start, end) entry covering
+        the whole protected region.
 
         This happens whenever the try body's own linear instruction
-        stream is interrupted by a jump - most commonly the success
-        path's unconditional `Jmp` skipping over a conditional `throw`
-        (see e.g. tryCatchInsideLoopTest: `if (items[i] < 0) throw ...`
-        followed by `console.log(...)`, where the success path jumps
-        past the throw-construction code straight to the loop
-        increment). Hermes records this as two separate table entries -
-        [start1, end1) for the code before the Jmp, [start2, end2) for
-        the code after it - both targeting the same catch/finally
-        block, with a small gap between end1 and start2 covering only
-        the (unprotected, can't-itself-throw) Jmp instruction.
+        stream is interrupted by something the handler must not cover -
+        most commonly the success path's unconditional `Jmp` skipping over
+        a conditional `throw` (see e.g. tryCatchInsideLoopTest), a
+        `continue` inside a for-of loop, or a generator/async suspend
+        point (`SaveGenerator` + `Ret`, see asyncTryCatchTest). Hermes
+        records this as several table entries, [start1, end1),
+        [start2, end2), ... all targeting the same catch/finally block,
+        with small gaps between them.
 
         Left unmerged, `TryStructurer` processes each fragment as an
         independent handler. By the time the second one is built, its
         `handler_block` has already been spliced into the TryRegion the
-        first one built, and structuring it as a second, separate
-        try/catch against an already-relocated target block produces
-        scrambled output (catch content ordered before the try body,
-        orphaned/dead tail code, stray gotos).
+        first one built, and structuring it again against an
+        already-relocated target block produces scrambled output (catch
+        content ordered before the try body, orphaned/dead tail code,
+        stray gotos).
 
-        Two entries are merged when they target the same handler block,
-        are adjacent or overlapping in address order, and nothing else
-        in the exception table has a start or end address strictly
-        inside the gap between them - i.e. nothing else considers that
-        gap a boundary of its own. That last condition is what keeps
-        this from merging two genuinely distinct protected regions that
-        simply happen to share a handler.
+        Two rules make the merge robust:
+
+        1. Fragments are grouped by TARGET, never by their position in the
+           sorted table. A wider handler with a different target (e.g. the
+           finally-wrapper of a try/catch/finally, which has to cover the
+           suspend/`Jmp` gap the catch fragments leave open) routinely
+           sorts BETWEEN two fragments of the same catch; an
+           adjacency-based merge would never see them as neighbours.
+
+        2. A fragment is absorbed into the latest same-target range when it
+           overlaps it, or when the gap between them is "clear": no entry
+           in the table - of any target - starts or ends strictly inside
+           the gap, and no other-target entry lies wholly inside it.
+           Coverage by every other handler is then constant across the
+           gap, i.e. nothing else considers it a boundary of its own.
+           That is what keeps this from merging two genuinely distinct
+           protected regions that merely share a handler (see
+           nestedArrayDestructureTest, where nested handlers sit inside
+           the gap and nothing is merged).
+
+        Because rule 2 looks at the OTHER handlers' boundaries, and those
+        handlers may themselves be fragmented (a fragmented catch inside a
+        fragmented finally-wrapper, see parseBoxShadowString), one pass is
+        not enough: the wrapper's own fragment edges would keep blocking
+        the catch's merge. Passes therefore repeat, recomputing boundaries
+        from the already-merged entries, until nothing more merges. Every
+        pass strictly reduces the entry count or ends the loop.
+
+        Deterministic: the result depends only on the SET of entries; ties
+        in `(start, end)` keep table order (Hermes matches entries in
+        listed order, so the first-listed of two identical ranges is the
+        one that ever fires). The input list and its dicts are never
+        mutated.
         """
         if not raw_handlers:
             return raw_handlers
 
-        ordered = sorted(raw_handlers, key=lambda h: (h["start"], h["end"]))
+        # (table_index, entry). The index only breaks (start, end) ties.
+        entries = [(i, dict(h)) for i, h in enumerate(raw_handlers)]
 
-        boundaries = {h["start"] for h in ordered} | {h["end"] for h in ordered}
+        while True:
+            merged = CFGBuilder._merge_pass(entries)
+            if len(merged) == len(entries):
+                return [entry for _, entry in merged]
+            entries = merged
 
-        merged: list[dict] = [dict(ordered[0])]
+    @staticmethod
+    def _merge_pass(entries: list[tuple[int, dict]]) -> list[tuple[int, dict]]:
+        """One left-to-right merge pass. See `_merge_fragmented_handlers`."""
+        ordered = sorted(entries, key=lambda t: (t[1]["start"], t[1]["end"], t[0]))
+        all_handlers = [entry for _, entry in ordered]
 
-        for handler in ordered[1:]:
-            last = merged[-1]
+        boundaries = sorted(
+            {h["start"] for h in all_handlers} | {h["end"] for h in all_handlers}
+        )
 
-            gap_is_clear = not any(
-                last["end"] < addr < handler["start"]
-                for addr in boundaries
-            )
+        merged: list[tuple[int, dict]] = []
+        latest_by_target: dict[int, tuple[int, dict]] = {}
 
-            if (
-                    handler["target"] == last["target"]
-                    and handler["start"] >= last["end"]
-                    and gap_is_clear
+        for index, handler in ordered:
+            slot = latest_by_target.get(handler["target"])
+
+            if slot is not None and CFGBuilder._can_absorb(
+                    slot[1], handler, all_handlers, boundaries
             ):
-                last["end"] = max(last["end"], handler["end"])
+                slot[1]["end"] = max(slot[1]["end"], handler["end"])
                 continue
 
-            merged.append(dict(handler))
+            # A fresh copy: `handler["end"]` may still grow if a later
+            # fragment is absorbed, and pass inputs must stay untouched.
+            slot = (index, dict(handler))
+            merged.append(slot)
+            latest_by_target[handler["target"]] = slot
 
         return merged
+
+    @staticmethod
+    def _can_absorb(
+            candidate: dict,
+            handler: dict,
+            all_handlers: list[dict],
+            boundaries: list[int],
+    ) -> bool:
+        """True if `handler` (same target as `candidate`, and starting at or
+        after `candidate["start"]`) is another fragment of `candidate`'s
+        protected range. See `_merge_fragmented_handlers`.
+        """
+        gap_start, gap_end = candidate["end"], handler["start"]
+
+        if gap_end <= gap_start:
+            # Adjacent or overlapping: nothing between them to inspect.
+            return True
+
+        # Any table boundary strictly inside the gap?
+        i = bisect_right(boundaries, gap_start)
+        if i < len(boundaries) and boundaries[i] < gap_end:
+            return False
+
+        # A different handler occupying exactly the gap has both of its
+        # boundaries ON the gap's edges, so the check above can't see it.
+        return not any(
+            other["target"] != handler["target"]
+            and other["start"] >= gap_start
+            and other["end"] <= gap_end
+            for other in all_handlers
+        )
 
     def _find_leaders(self) -> set[int]:
 
