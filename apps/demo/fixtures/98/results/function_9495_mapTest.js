@@ -152,10 +152,12 @@ function mapTest() {
             console.log(r9, r8)
         }
         // LOOP → END
-    } finally {
+    } catch (caughtException) {
         // ──────────────── Block 10 ──────────────── 
         // CODE → addr:297 | <IteratorClose>: <Reg8: 5, UInt8: 1>
         r5.return()
+        // CODE → addr:300 | <Throw>: <Reg8: 3>
+        throw r3;
     }
     // ──────────────── Block 11 ──────────────── 
     // CODE → addr:302 | <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 8, string_id: 118>  # String: 'delete' (Identifier)

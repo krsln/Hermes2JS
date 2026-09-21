@@ -69,10 +69,12 @@ function propertyAccessTest() {
             console.log(r8, r5)
         }
         // LOOP → END
-    } finally {
+    } catch (caughtException) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:163 | <IteratorClose>: <Reg8: 3, UInt8: 1>
         r3.return()
+        // CODE → addr:166 | <Throw>: <Reg8: 2>
+        throw r2;
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:168 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

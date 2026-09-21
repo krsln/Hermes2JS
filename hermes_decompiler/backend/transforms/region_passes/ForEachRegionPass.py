@@ -14,6 +14,7 @@ from hermes_decompiler.backend.transforms.shared import structural_key
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Expression
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
+from hermes_decompiler.ir.terminators import TerminatorThrow
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -29,7 +30,11 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         for-of:  IteratorBegin (before the loop) -> IteratorNext
                  (loop header's first instruction) -> optional
                  IteratorClose, folded by TryStructurer into an
-                 enclosing TryRegion.finally_
+                 enclosing TryRegion - as `.finally_` when the try
+                 body has an inlined copy of it on some exit (a
+                 `break`/`return` inside the loop), otherwise left as
+                 the faithful `catch (e) { it.return(); throw e }` it
+                 is on the wire (see `_close_scaffold`)
         for-in:  GetPNameList (before the loop) -> GetNextPName
                  (loop header's first instruction), no try/finally
 
@@ -37,7 +42,8 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
     LoopConditionRegionPass:
       - LoopStructurer:          loop.header_block must exist
       - TryStructurer:           for-of's IteratorClose must already be
-                                  folded into a real FinallyRegion, or
+                                  folded into a real FinallyRegion or a
+                                  close-and-rethrow CatchRegion, or
                                   there is nothing here to match against
       - LoopConditionRegionPass: header.terminator has already been
                                   consumed into loop.condition, so the
@@ -108,12 +114,20 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         if iterable is None:
             return
 
-        if try_region.finally_ is not None:
-            if not self._finally_matches_iterator_close(try_region, raw_iterator_ref, iterator_expr):
-                # Something else lives in this finally (or the
-                # iterator identity doesn't line up) - don't touch it,
-                # the cleanup code is real and must stay visible.
-                return
+        scaffold = self._close_scaffold(try_region)
+
+        if scaffold is not None:
+            if not self._close_body_matches(scaffold, raw_iterator_ref, iterator_expr):
+                if try_region.finally_ is not None:
+                    # Something else lives in this finally (or the
+                    # iterator identity doesn't line up) - don't touch
+                    # it, the cleanup code is real and must stay visible.
+                    return
+
+                # A catch that merely LOOKS like close-and-rethrow but
+                # closes something else is the user's own catch: the
+                # loop is still a for-of, the try stays.
+                scaffold = None
 
         loop.loop_kind = LoopKind.FOR_OF
         loop.iterable = iterable
@@ -121,7 +135,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         self._strip_instruction(header_block, next_instr)
 
-        if try_region.finally_ is not None:
+        if scaffold is not None:
             self._unwrap_try(try_region, loop)
 
     # -----------------------------------------------------------------
@@ -339,10 +353,57 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
             return expr.arguments[0]
         return None
 
-    def _finally_matches_iterator_close(
-            self, try_region: TryRegion, raw_iterator_ref, iterator_expr
+    @staticmethod
+    def _close_scaffold(try_region: TryRegion):
+        """The body that carries this try's iterator-close, or None.
+
+        Hermes lowers a for-of's IteratorClose as an exception handler
+        whose body is the `.return()` call followed by a rethrow of the
+        caught exception. TryStructurer presents that handler as:
+
+        - `try_region.finally_` when it found the handler's body inlined
+          in the try body (Hermes does that at a `break`/`return`), or
+        - `try_region.catch`, exactly as compiled, when it found no such
+          copy: `catch (e) { it.return(); throw e }`. TryStructurer does
+          not turn that into a `finally` - the shape alone cannot tell it
+          from a user `catch` that rethrows, and doing so on the success
+          path would run the close code that was only ever meant for a
+          throw.
+
+        Only a catch of that exact shape - a single block ending in a
+        rethrow of its own bound exception - is offered as a scaffold; the
+        body itself is then checked by `_close_body_matches`.
+        """
+        if try_region.finally_ is not None:
+            return try_region.finally_.body
+
+        catch = try_region.catch
+
+        if catch is None or len(catch.body.children) != 1:
+            return None
+
+        block = catch.body.children[0]
+
+        if not isinstance(block, BasicBlock) or not isinstance(block.terminator, TerminatorThrow):
+            return None
+
+        thrown = block.terminator.value
+
+        if not isinstance(thrown, Identifier):
+            return None
+
+        expected = f"r{catch.exception_reg}" if catch.exception_reg is not None else catch.exception
+
+        return catch.body if thrown.name == expected else None
+
+    def _close_body_matches(
+            self, scaffold_body: SequenceRegion, raw_iterator_ref, iterator_expr
     ) -> bool:
-        """Return True if the `finally` body is a single matching .return() call.
+        """Return True if the body is a single matching .return() call.
+
+        (`scaffold_body` is a `finally` body, or a close-and-rethrow
+        `catch` body - see `_close_scaffold`. A catch's trailing rethrow
+        carries no value of interest and is not counted.)
 
         The `finally`/Catch block here is reached ONLY through Hermes'
         implicit exception dispatch (see CFGBuilder._connect_edges,
@@ -373,18 +434,11 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         identity is compared structurally, not with `==`, whenever the
         fallback path is used.
         """
-        node_finally = try_region.finally_
-
-        if node_finally is None:
-            return False
-
-        finally_body = node_finally.body
-
         candidates = [
             (block, instr)
-            for block in finally_body.covered_blocks
+            for block in scaffold_body.covered_blocks
             for instr in block.instructions
-            if instr.value is not None
+            if instr.value is not None and not isinstance(instr.terminator, TerminatorThrow)
         ]
 
         if len(candidates) != 1:

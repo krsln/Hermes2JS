@@ -71,10 +71,12 @@ function setTest() {
             console.log(r7)
         }
         // LOOP → END
-    } finally {
+    } catch (caughtException) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:156 | <IteratorClose>: <Reg8: 4, UInt8: 1>
         r4.return()
+        // CODE → addr:159 | <Throw>: <Reg8: 2>
+        throw r2;
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:161 | <NewArray>: <Reg8: 4, UInt16: 0>

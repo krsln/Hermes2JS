@@ -4,8 +4,8 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.regions import FinallyRegion, SequenceRegion, TryRegion
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import Identifier
-from hermes_decompiler.ir.terminators import TerminatorThrow
-from ._predicates import strip_duplicate_run, strip_duplicate_span
+from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
+from ._predicates import strip_duplicate_run, strip_duplicate_span, structural_key
 
 logger = get_logger(__name__)
 
@@ -425,6 +425,138 @@ class _FinallyAttacher:
 
     # -----------------------------------------------------------------
 
+    # -----------------------------------------------------------------
+    # Evidence for `maybe_reinterpret_as_finally`
+    # -----------------------------------------------------------------
+
+    @staticmethod
+    def _count_duplicate_blocks(region: SequenceRegion, values: list) -> int:
+        """Number of blocks in `region` that contain `values` as a
+        contiguous run - the exact matching (`structural_key`, one match
+        per block, every covered block scanned) `_extract_tail` and
+        `strip_duplicate_run` use to strip a copy, so a non-zero count
+        here means the strip that follows will really remove something.
+
+        Read-only. Zero for an empty `values`: there is nothing to match.
+        A copy that lives in the block AFTER the try body is not counted
+        here - see `_find_trailing_copy`.
+        """
+        if not values:
+            return 0
+
+        keys = [structural_key(v) for v in values]
+        n = len(keys)
+        count = 0
+
+        for block in region.covered_blocks:
+            block_keys = [
+                structural_key(i.value) for i in block.instructions if i.value is not None
+            ]
+
+            if any(block_keys[s:s + n] == keys for s in range(len(block_keys) - n + 1)):
+                count += 1
+
+        return count
+
+    @staticmethod
+    def _has_normal_exit(region: SequenceRegion) -> bool:
+        """True if some path through `region` leaves it without throwing:
+        a `return`, or any CFG edge to a block outside the region
+        (fall-through past the end, `break`, `continue`, a jump to code
+        after the try). Hermes inlines a `finally` copy on each of those.
+        """
+        covered = region.covered_blocks
+
+        return any(
+            isinstance(block.terminator, TerminatorReturn)
+            or any(successor not in covered for successor in block.successors)
+            for block in covered
+        )
+
+    def _find_trailing_copy(self, try_region: TryRegion, values: list) -> BasicBlock | None:
+        """The block right after the try that carries the inlined `finally`
+        copy for EVERY normal exit, or None.
+
+        When a try body's exits converge - a loop's `break` and the loop's
+        own end both jump to the code after the loop - Hermes emits the
+        `finally` body once, at the start of that shared block, instead of
+        once per exit inside the try. Returning that block means:
+
+        - all exits leave the try through this ONE block (so stripping the
+          copy from it strips it from every exit), and
+        - nothing outside the try body can reach it (a block that some
+          other path also enters must keep its first statements: they are
+          not the `finally`'s), and
+        - it is the try's next sibling, so after `finally` runs, control
+          falls into it exactly as the jumps did, and
+        - it begins with the handler's body (`_starts_with_run`).
+
+        Deliberately narrow: a try body containing a `return` is declined,
+        because each `return` carries its own inlined copy inside the try
+        and this does not model those; so is any exit set other than one
+        block. Declining leaves the faithful `catch` + rethrow in place,
+        never a `finally` with a copy still running next to it.
+        """
+        if not values:
+            return None
+
+        covered = try_region.try_body.covered_blocks
+
+        if any(isinstance(block.terminator, TerminatorReturn) for block in covered):
+            return None
+
+        exits = {
+            successor
+            for block in covered
+            for successor in block.successors
+            if successor not in covered
+        }
+
+        if len(exits) != 1:
+            return None
+
+        (block,) = exits
+
+        if any(predecessor not in covered for predecessor in block.predecessors):
+            return None
+
+        parent = try_region.parent
+
+        if not isinstance(parent, SequenceRegion):
+            return None
+
+        try_index = parent.children.index(try_region)
+
+        if try_index + 1 >= len(parent.children) or parent.children[try_index + 1] is not block:
+            return None
+
+        return block if self._starts_with_run(block, values) else None
+
+    @staticmethod
+    def _starts_with_run(block: BasicBlock, values: list) -> bool:
+        keys = [structural_key(v) for v in values]
+        n = len(keys)
+
+        block_keys = [
+            structural_key(i.value) for i in block.instructions if i.value is not None
+        ]
+
+        return n > 0 and block_keys[:n] == keys
+
+    @staticmethod
+    def _strip_leading_run(block: BasicBlock, values: list) -> None:
+        """Remove the first `len(values)` value-bearing instructions of
+        `block` (which `_starts_with_run` established are the copy).
+        Removes by identity: instruction equality must not be allowed to
+        pick a look-alike elsewhere in the block.
+        """
+        doomed = {
+            id(instr)
+            for instr in [i for i in block.instructions if i.value is not None][:len(values)]
+        }
+
+        block.instructions[:] = [i for i in block.instructions if id(i) not in doomed]
+
     def maybe_reinterpret_as_finally(self, try_region: TryRegion, cfg: CFG | None = None) -> None:
         """Reinterpret a lone catch as finally when it's really one.
 
@@ -435,7 +567,42 @@ class _FinallyAttacher:
         bare rethrow of its own bound exception - and there's at least
         one other statement before it (an empty `catch (e) { throw e; }`
         is a legitimate, if pointless, source and shouldn't be rewritten)
-        - It's really a `finally` that had nowhere to attach to.
+        - It's a candidate for a `finally` that had nowhere to attach to.
+
+        That SHAPE alone cannot tell the two sources apart:
+
+            try { A } catch (e) { B; throw e; }      // B runs only on throw
+            try { A } finally  { B }                 // B runs on every exit
+
+        compile to the same handler table and the same handler block. What
+        differs is the try body: Hermes inlines a copy of a `finally` body
+        at every NORMAL exit of the try (fall-through, `return`, `break`,
+        `continue`), whereas a catch that rethrows leaves no copy anywhere.
+        Rewriting the former as `finally` and the latter as `finally` too
+        would run B on the success path of code that never asked for it
+        (see Metro's loadModuleImplementation: a `catch` that marks the
+        module as failed, rewritten into a `finally` that marks EVERY
+        module as failed).
+
+        So the rewrite is committed only with evidence, decided BEFORE
+        anything is mutated:
+
+        - a copy of the handler's body exists in the try body and can be
+          stripped (the rewrite is then exactly what the source said), or
+        - the try body has no normal exit at all (every path throws), where
+          `catch { B; throw e }` and `finally { B }` are equivalent anyway,
+          or
+        - every normal exit leads to ONE block right after the try that
+          starts with a copy of the handler's body, and nothing else can
+          reach that block (see `_find_trailing_copy` - a loop's `break`
+          and its normal end both jump to the same code after the try, so
+          Hermes puts the single inlined copy there, not inside the try).
+
+        Otherwise the region is left as the faithful `try/catch` + rethrow
+        `_HandlerBuilder` already built. That is what the bytecode does, at
+        the cost of not recovering a `finally` whose inlined copy this pass
+        cannot see (e.g. a copy under different register names - see
+        `_count_duplicate_blocks`).
 
         Only handles a single straight-line block for now; a `finally`
         body with its own branching needs the fuller multi-block
@@ -483,6 +650,25 @@ class _FinallyAttacher:
         if len(block.instructions) < 2:
             return
 
+        # Evidence gate - see the docstring. Must run before the first
+        # mutation below (popping the rethrow, clearing the terminator).
+        handler_values = [
+            instr.value
+            for instr in block.instructions
+            if instr.value is not None and instr.terminator is not block.terminator
+        ]
+
+        trailing_copy = None
+
+        if (
+                self._count_duplicate_blocks(try_region.try_body, handler_values) == 0
+                and self._has_normal_exit(try_region.try_body)
+        ):
+            trailing_copy = self._find_trailing_copy(try_region, handler_values)
+
+            if trailing_copy is None:
+                return
+
         # Only pop the trailing instruction once confirmed to be the
         # actual carrier of the throw terminator (see `attach` for why);
         # the terminator itself is always cleared, since the rethrow is
@@ -509,6 +695,9 @@ class _FinallyAttacher:
         # separately first would consume the match before
         # `_extract_tail` ever got to look for it.
         tail = self._extract_tail(try_region.try_body, finally_values, cfg)
+
+        if trailing_copy is not None:
+            self._strip_leading_run(trailing_copy, finally_values)
 
         try_region.catch = None
 

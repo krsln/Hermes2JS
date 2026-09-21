@@ -37,10 +37,12 @@ function callGeneratorTests() {
             console.log(r7)
         }
         // LOOP → END
-    } finally {
+    } catch (caughtException) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 75 | <IteratorClose>: <Reg8: 4, UInt8: 1>
         r4.return()
+        // CODE → addr: 78 | <Throw>: <Reg8: 3>
+        throw r3;
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 80 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
@@ -68,10 +70,12 @@ function callGeneratorTests() {
             console.log(r7)
         }
         // LOOP → END
-    } finally {
+    } catch (caughtException) {
         // ──────────────── Block 7 ──────────────── 
         // CODE → addr:132 | <IteratorClose>: <Reg8: 4, UInt8: 1>
         r4.return()
+        // CODE → addr:135 | <Throw>: <Reg8: 3>
+        throw r3;
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:137 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 2>

@@ -66,14 +66,6 @@ function tryFinallyLoopBreakTest(param1) {
         console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
     }
     // ──────────────── Block 3 ──────────────── 
-    // CODE → addr: 96 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r4 = console;
-    // CODE → addr:102 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r3 = console.log;
-    // CODE → addr:107 | <LoadConstString>: <Reg8: 2, string_id: 4893>  # String: '__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block' (String)
-    // USED → r2 = "__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block";
-    // CODE → addr:111 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/finally-block")
     // CODE → addr:116 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:122 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
