@@ -104,4 +104,11 @@ class TryStructurer(RegionStructurer):
             if try_region.finally_ is None:
                 self._attacher.maybe_reinterpret_as_finally(try_region, self.cfg)
 
+        # Only now: finally-recognition above looks for the inlined
+        # `finally` copy inside the try body's last block, exactly the
+        # block whose unprotected tail this splits off. See the method's
+        # docstring.
+        for handler, try_region in processed:
+            self._handler_builder.split_trailing_unprotected_content(handler, try_region)
+
         self.dump_region_tree_if_debug(type(self).__name__)

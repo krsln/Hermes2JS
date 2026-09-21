@@ -5,7 +5,7 @@ import dataclasses
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
 from hermes_decompiler.backend.transforms.region_passes._base import RegionPass
-from hermes_decompiler.backend.transforms.shared import negate_condition, is_pure, TRIVIAL_NODE_TYPES
+from hermes_decompiler.backend.transforms.shared import negate_condition, is_pure, has_side_effects, TRIVIAL_NODE_TYPES
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
@@ -145,6 +145,17 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             if not is_pure(earlier):
                 return False
 
+            # The fold below keeps ONLY `then_result.value` and deletes the
+            # whole IfRegion, so an earlier instruction survives only if
+            # its value is part of that expression (`a || f(g(x))` keeps
+            # `g(x)` as an operand of `f`). One that isn't - e.g. a
+            # `r7 = it.next()` whose result a LATER block reads - would be
+            # dropped along with its side effect.
+            if has_side_effects(earlier.value) and not self._is_operand_of(
+                    earlier.value, then_result.value
+            ):
+                return False
+
         condition = if_region.condition
 
         if condition is None:
@@ -172,6 +183,35 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
         )
 
         return True
+
+    @staticmethod
+    def _is_operand_of(target: Node, root: Node) -> bool:
+        """True if `target` occurs inside `root`'s expression tree: by
+        identity, or - for a non-trivial `target` - by structural
+        equality (see `_repoint_node` for why trivial nodes never match
+        structurally).
+        """
+        if root is target:
+            return True
+
+        if (not isinstance(target, TRIVIAL_NODE_TYPES)
+                and isinstance(root, type(target))
+                and root.structurally_equal(target)):
+            return True
+
+        if not dataclasses.is_dataclass(root) or not isinstance(root, Node):
+            return False
+
+        for field in dataclasses.fields(root):
+            value = getattr(root, field.name)
+
+            children = value if isinstance(value, tuple) else (value,)
+
+            for child in children:
+                if isinstance(child, Node) and BooleanChainRegionPass._is_operand_of(target, child):
+                    return True
+
+        return False
 
     def _repoint_references(self, old_expr, new_expr, min_block_id: int, exclude: set) -> None:
 

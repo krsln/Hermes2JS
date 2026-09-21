@@ -3,6 +3,7 @@ from __future__ import annotations
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import CatchRegion, SequenceRegion, TryRegion
 from hermes_decompiler.ir.expressions import Expression, Identifier
+from hermes_decompiler.ir.expressions.Literals import Literal, TemplateLiteral
 from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
 
 TERMINATING_TERMINATORS = (TerminatorReturn, TerminatorThrow)
@@ -312,6 +313,116 @@ class _HandlerBuilder:
         self.cfg.blocks.append(leading_block)
 
         self.graph.insert_at(lca_seq, start_idx, leading_block)
+
+    # -------------------------------------------------------------
+
+    def split_trailing_unprotected_content(self, handler: dict, try_region: TryRegion) -> None:
+        """Move code that runs AFTER the protected range out of the try
+        body, into a sibling block right after the TryRegion.
+
+        The mirror of `_split_leading_unprotected_content`, and it exists
+        for the same reason: `CFGBuilder` picks a handler's blocks by
+        address-range OVERLAP and only ever splits blocks at handler
+        TARGET addresses, so the last protected block can also hold
+        instructions at or beyond `handler["end"]` that the handler does
+        NOT cover. `try { x = f() } catch (e) { return g(e) } return h(x)`
+        compiles to one block holding both `f()` and `h(x)`, protected only
+        up to the end of `f()`; left in `try_body`, `h(x)` would be caught
+        by the very catch that never covered it.
+
+        Run once, AFTER every handler has been built and after
+        finally-recognition (`TryStructurer.run`). Earlier would hide the
+        inlined `finally` copy that lives in exactly this tail from
+        `_finally_matcher` and `_FinallyAttacher`, which look for it in the
+        try body and strip/relocate it themselves; whatever they leave
+        behind is what this moves.
+
+        Handlers are processed in ascending `end`, so when an inner and an
+        outer try share a last block, the inner's tail lands in the outer's
+        try body and is then split again at the outer's own end.
+
+        Only splits when the tail contains something that can actually
+        run code (`_is_effectful`). A bare `Jmp`/`Ret` carrier or a plain
+        register/literal load changes nothing about which handler covers
+        what, so those stay put rather than churning every output.
+        """
+        try_body = try_region.try_body
+
+        if not try_body.children:
+            return
+
+        block = try_body.children[-1]
+
+        if not isinstance(block, BasicBlock):
+            return
+
+        instructions = block.instructions
+
+        split_pos = next(
+            (i for i, instr in enumerate(instructions) if instr.address >= handler["end"]),
+            None,
+        )
+
+        # None: the block ends inside the protected range. 0: nothing in
+        # it is protected - `CFGBuilder` selected it through a stale
+        # block address; not a shape this knows how to repair.
+        if not split_pos:
+            return
+
+        tail_instructions = instructions[split_pos:]
+
+        if not any(self._is_effectful(instr, block) for instr in tail_instructions):
+            return
+
+        parent = try_region.parent
+
+        if not isinstance(parent, SequenceRegion):
+            return
+
+        new_id = max((b.id for b in self.cfg.blocks), default=0) + 1
+
+        tail = BasicBlock(new_id, address=tail_instructions[0].address)
+        tail.instructions = tail_instructions
+        tail.terminator = block.terminator
+        tail.successors = list(block.successors)
+        tail.predecessors = [block]
+
+        for successor in tail.successors:
+            successor.predecessors = [tail if p is block else p for p in successor.predecessors]
+
+        block.instructions = instructions[:split_pos]
+        block.terminator = None
+        block.successors = [tail]
+
+        self.cfg.blocks.append(tail)
+
+        try_body.invalidate_coverage()
+
+        self.graph.insert_at(parent, parent.children.index(try_region) + 1, tail)
+
+    @staticmethod
+    def _is_effectful(instr, block: BasicBlock) -> bool:
+        """True if `instr` can run code or observably change state.
+
+        Not effectful: no value at all, the block's own terminator carrier
+        (`Jmp`/`Ret`/`Throw`), a bare register read, a literal (template
+        literals excepted: they stringify their parts).
+        """
+        value = instr.value
+
+        if value is None:
+            return False
+
+        if instr.terminator is not None and instr.terminator is block.terminator:
+            return False
+
+        if isinstance(value, Identifier):
+            return False
+
+        if isinstance(value, Literal) and not isinstance(value, TemplateLiteral):
+            return False
+
+        return True
 
     # -------------------------------------------------------------
 

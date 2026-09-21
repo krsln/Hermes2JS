@@ -81,7 +81,7 @@ function nestedArrayDestructureTest() {
     } catch (caughtException) {
         // ──────────────── Block 42 ──────────────── 
         // CODE → addr:535 | <Mov>: <Reg8: 2, Reg8: 4>
-        r2 = r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined))
+        r2 = r1 === undefined || r1 === undefined
         // CODE → addr:538 | <Jmp>: <Addr8: 6>  # Address: 00000220
         goto label_544;
         // LOOP → START (while)
@@ -96,7 +96,7 @@ function nestedArrayDestructureTest() {
             // CODE → addr:526 | <Catch>: <Reg8: 0>
             r0 = caughtException
             // CODE → addr:528 | <Mov>: <Reg8: 2, Reg8: 5>
-            r2 = r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined))
+            r2 = r1 === undefined || r1 === undefined
             // ──────────────── Block 43 ──────────────── 
             // CODE → addr:540 | <Catch>: <Reg8: 0>
             r0 = caughtException
@@ -113,12 +113,32 @@ function nestedArrayDestructureTest() {
     }
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr:168 | <Mov>: <Reg8: 5, Reg8: 4>
-    r5 = r1 === undefined || r1 === undefined
+    r5 = r1 === undefined
+    if (r1 !== undefined) {
+        // ──────────────── Block 10 ──────────────── 
+        // CODE → addr:177 | <IteratorNext>: <Reg8: 2, Reg8: 1, Reg8: 2>
+        r2 = r1.next()
+        // CODE → addr:181 | <Mov>: <Reg8: 2, Reg8: 1>
+        // USED → r2 = r1;
+        // CODE → addr:184 | <StrictEq>: <Reg8: 5, Reg8: 2, Reg8: 3>
+        // USED → r5 = r1 === undefined;
+    }
     // ──────────────── Block 11 ──────────────── 
     // CODE → addr:188 | <LoadConstUndefined>: <Reg8: 9>
     r9 = undefined
     // CODE → addr:190 | <Mov>: <Reg8: 2, Reg8: 5>
-    r2 = r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined))
+    r2 = r1 === undefined
+    if (r1 !== undefined) {
+        // ──────────────── Block 12 ──────────────── 
+        // CODE → addr:196 | <IteratorNext>: <Reg8: 11, Reg8: 1, Reg8: 6>
+        r11 = r1.next()
+        // CODE → addr:203 | <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 3>
+        // USED → r6 = r1 === undefined;
+        // CODE → addr:207 | <LoadConstUndefined>: <Reg8: 9>
+        r9 = undefined
+        // CODE → addr:209 | <Mov>: <Reg8: 2, Reg8: 6>
+        r2 = r1 === undefined || r1 === undefined
+    }
     // ──────────────── Block 14 ──────────────── 
     // CODE → addr:221 | <Mov>: <Reg8: 12, Reg8: 9>
     r12 = r11

@@ -5,7 +5,7 @@ import dataclasses
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
 from hermes_decompiler.backend.transforms.shared import (
-    negate_condition, TRIVIAL_NODE_TYPES, IMPURE_EXPRESSION_TYPES
+    negate_condition, TRIVIAL_NODE_TYPES, has_side_effects
 )
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
@@ -91,15 +91,35 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
         # dest_reg-bearing instruction from last to first, using the
         # first one whose register also has a matching arm - not
         # positional order.
+        #
+        # A register's default is its LAST write in the block. Once that
+        # write has been considered (and, below, possibly rejected), an
+        # earlier write to the same register is dead code and must not be
+        # promoted to "the default" in its place.
+        considered: set[int] = set()
+
         for last in reversed(block.instructions):
             if last.dest_reg is None or not isinstance(last.value, Expression):
                 continue
+            if last.dest_reg in considered:
+                continue
+            considered.add(last.dest_reg)
             then_arm = self._single_result(if_region.then_body, last.dest_reg)
             if then_arm is None:
                 continue
             arm_block, arm_result = then_arm
             default_expr = last.value
             arm_expr = arm_result.value
+
+            # `dest = default; if (cond) dest = arm` runs `default`
+            # unconditionally and BEFORE `cond`. As `cond ? arm : default`
+            # it would run only when `cond` is false, and after `cond`: a
+            # call in `default` (`r1 = f(x); if (!r1) ...`) would become
+            # conditional. Only a `default` that cannot have an effect may
+            # move.
+            if has_side_effects(default_expr):
+                continue
+
             new_expr = ConditionalExpression(
                 test=negate_condition(condition),
                 consequent=default_expr,
@@ -152,7 +172,7 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                     continue
                 if instr.statement is not None:
                     return None
-                if isinstance(instr.value, IMPURE_EXPRESSION_TYPES):
+                if has_side_effects(instr.value):
                     return None
 
         return last_block, result
