@@ -19,10 +19,27 @@ class _IterativeSetAnalysis(ABC):
         blocks = self.cfg.blocks
         roots = self.roots()
 
-        handler_by_target: dict[BasicBlock, dict] = {
-            h["handler_block"]: h
-            for h in getattr(self.cfg, "exception_handlers", [])
-        }
+        # Approximated virtual predecessors for a handler_block, keyed by
+        # the block itself. Hermes may point MULTIPLE distinct handler
+        # entries (different [start, end) protected ranges) at the exact
+        # same physical handler_block - `_merge_fragmented_handlers`
+        # deliberately leaves them separate whenever another handler's
+        # range sits in the gap between them (see its own docstring,
+        # nestedArrayDestructureTest). A plain `{handler_block: handler}`
+        # dict here would keep only the LAST such handler and silently
+        # drop every other one's try_blocks, starving this block of most
+        # of its real virtual predecessors - which, if every OTHER
+        # contributor also happens to be unreachable/dead code, can leave
+        # it (and blocks that in turn depend on it) stuck at the initial
+        # universal set below and never converge. Collect every
+        # contributing handler's try_blocks instead of just one.
+        virtual_predecessors_by_target: dict[BasicBlock, list[BasicBlock]] = {}
+
+        for h in getattr(self.cfg, "exception_handlers", []):
+            existing = virtual_predecessors_by_target.setdefault(h["handler_block"], [])
+            for block in h["try_blocks"]:
+                if block not in existing:
+                    existing.append(block)
 
         for block in blocks:
             self.result[block] = {block} if block in roots else set(blocks)
@@ -47,8 +64,7 @@ class _IterativeSetAnalysis(ABC):
                     # a handler is treated as if it had a "virtual"
                     # predecessor edge from every block it guards - because
                     # an exception can genuinely be thrown from there.
-                    handler = handler_by_target.get(block)
-                    neighbors = handler["try_blocks"] if handler else []
+                    neighbors = virtual_predecessors_by_target.get(block, [])
 
                 if not neighbors:
                     continue
