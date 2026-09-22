@@ -5,7 +5,10 @@ import dataclasses
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
 from hermes_decompiler.backend.transforms.region_passes._base import RegionPass
-from hermes_decompiler.backend.transforms.shared import negate_condition, is_pure, has_side_effects, TRIVIAL_NODE_TYPES
+from hermes_decompiler.backend.transforms.shared import (
+    negate_condition, is_pure, has_side_effects, repoint_references, reclaim_definition,
+    reclaim_unfolded_definition, TRIVIAL_NODE_TYPES
+)
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.Operators import LogicalOperator
@@ -143,7 +146,7 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
 
         for earlier in then_block.instructions[:-1]:
             if not is_pure(earlier):
-                return False
+                return self._decline(last, then_result, then_block, if_region)
 
             # The fold below keeps ONLY `then_result.value` and deletes the
             # whole IfRegion, so an earlier instruction survives only if
@@ -154,28 +157,52 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
             if has_side_effects(earlier.value) and not self._is_operand_of(
                     earlier.value, then_result.value
             ):
-                return False
+                return self._decline(last, then_result, then_block, if_region)
 
         condition = if_region.condition
 
         if condition is None:
             return False
 
+        # What does the `if` test? The value built so far: `r = a && b; if (!r)`
+        # tests `a && b` as a whole, and once the earlier fold has been
+        # repointed into the condition that is exactly what it holds.
+        #
+        # A condition read that no fold has repointed still carries the
+        # arm's own value - the chain's RIGHT operand `b` - so that is
+        # accepted too. (It is the weaker match: `!b` alone is not `!(a && b)`
+        # when `a` is falsy, which is why the whole value is tried first.)
+        tested = [last.value]
         tail = self._chain_tail(last.value)
 
-        if negate_condition(tail).structurally_equal(condition):
-            operator = LogicalOperator.OR
+        if tail is not last.value:
+            tested.append(tail)
 
-        elif tail.structurally_equal(condition):
-            operator = LogicalOperator.AND
+        for candidate in tested:
+            if negate_condition(candidate).structurally_equal(condition):
+                operator = LogicalOperator.OR
+                break
+
+            if candidate.structurally_equal(condition):
+                operator = LogicalOperator.AND
+                break
 
         else:
-            return False
+            return self._decline(last, then_result, then_block, if_region)
 
         old_tail_expr = then_result.value
-        last.value = BinaryExpression(left=last.value, operator=operator, right=old_tail_expr)
+        old_last_value = last.value
+        last.value = BinaryExpression(left=old_last_value, operator=operator, right=old_tail_expr)
 
-        self._repoint_references(
+        # The fold result must be printed as `rN = ...`: see `reclaim_definition`.
+        reclaim_definition(
+            self.cfg, self.graph.root, last, old_last_value, then_result,
+            ignore_blocks={then_block}, ignore_regions={if_region},
+        )
+
+        repoint_references(
+            self.cfg,
+            self.graph.root,
             old_tail_expr,
             last.value,
             min_block_id=then_block.id,
@@ -184,11 +211,21 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
 
         return True
 
+    def _decline(self, last, then_result, then_block, if_region) -> bool:
+        """The shape matched but the fold is refused: the merge stays an
+        `if`. Make sure its head definition is still printed."""
+        reclaim_unfolded_definition(
+            self.cfg, self.graph.root, last, then_result,
+            ignore_blocks={then_block}, ignore_regions={if_region},
+        )
+
+        return False
+
     @staticmethod
     def _is_operand_of(target: Node, root: Node) -> bool:
         """True if `target` occurs inside `root`'s expression tree: by
         identity, or - for a non-trivial `target` - by structural
-        equality (see `_repoint_node` for why trivial nodes never match
+        equality (see `shared._repoint.repoint_node` for why trivial nodes never match
         structurally).
         """
         if root is target:
@@ -212,111 +249,6 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
                     return True
 
         return False
-
-    def _repoint_references(self, old_expr, new_expr, min_block_id: int, exclude: set) -> None:
-
-        for blk in self.cfg.blocks:
-
-            if blk.id < min_block_id:
-                continue
-
-            for instr in blk.instructions:
-
-                if instr in exclude:
-                    continue
-
-                new_value, value_changed = self._repoint_node(
-                    instr.value,
-                    old_expr,
-                    new_expr,
-                )
-
-                if value_changed:
-                    instr.value = new_value
-
-                if instr.statement is not None:
-                    new_stmt, stmt_changed = self._repoint_node(
-                        instr.statement,
-                        old_expr,
-                        new_expr,
-                    )
-
-                    if stmt_changed:
-                        instr.statement = new_stmt
-
-    def _repoint_node(self, node, old_expr, new_expr):
-        """Generic, type-agnostic deep replace of old_expr (by identity) with new_expr.
-
-        Every IR node (Expression and Statement, e.g., ReturnStatement)
-        is a frozen, slotted dataclass whose fields are either a Node
-        (or Node | None), or a tuple[Node, ...]. Rather than
-        hand-listing every wrapper shape (AssignmentExpression.right,
-        MemberExpression.receiver, ReturnStatement.argument, ...) -
-        which is exactly what broke last time, silently, for
-        StoreNPToEnvironment - this walks dataclasses.fields(node)
-        generically and rebuilds via dataclasses.replace wherever a
-        field (or a tuple element) is old_expr by identity, or
-        recursively contains it.
-
-        Returns (possibly rebuilt node, changed?). Non-dataclass /
-        non-Node leaves (str, bool, enums, int, None) are returned
-        unchanged - only Node identity/recursion is inspected.
-        """
-
-        if node is old_expr:
-            return new_expr, True
-
-        # Structural-equality fallback only for non-trivial expressions
-        # (BinaryExpression, ConditionalExpression, CallExpression, etc.) -
-        # a bare Identifier or Literal is structurally equal to every OTHER
-        # unrelated read of the same name/value throughout the function, so
-        # matching those by structural equality corrupts every downstream
-        # occurrence, not just the intended Mov-copy target. Only apply this
-        # fallback when old_expr's shape is specific enough that a match is
-        # actually likely to BE the same logical value, not a coincidence.
-        if (not isinstance(old_expr, TRIVIAL_NODE_TYPES)
-                and isinstance(node, type(old_expr))
-                and node.structurally_equal(old_expr)):
-            return new_expr, True
-
-        if not dataclasses.is_dataclass(node) or not isinstance(node, Node):
-            return node, False
-
-        updates = {}
-        any_changed = False
-
-        for field in dataclasses.fields(node):
-            value = getattr(node, field.name)
-
-            if isinstance(value, Node):
-                new_value, changed = self._repoint_node(value, old_expr, new_expr)
-                if changed:
-                    updates[field.name] = new_value
-                    any_changed = True
-
-            elif isinstance(value, tuple):
-                new_items = []
-                tuple_changed = False
-
-                for item in value:
-                    if isinstance(item, Node):
-                        new_item, changed = self._repoint_node(item, old_expr, new_expr)
-                        if changed:
-                            tuple_changed = True
-                        new_items.append(new_item)
-                    else:
-                        new_items.append(item)
-
-                if tuple_changed:
-                    updates[field.name] = tuple(new_items)
-                    any_changed = True
-
-            # else: plain value (str/bool/enum/int/None) - nothing to do
-
-        if not any_changed:
-            return node, False
-
-        return dataclasses.replace(node, **updates), True
 
     def _chain_tail(self, value: Expression) -> Expression:
 

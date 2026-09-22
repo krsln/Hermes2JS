@@ -15,7 +15,11 @@ from hermes_decompiler.ir.expressions import (
     Identifier,
     StringLiteral,
     NumericLiteral,
-    BooleanLiteral
+    BooleanLiteral,
+    NullLiteral,
+    UndefinedLiteral,
+    BigIntLiteral,
+    RegExpLiteral,
 )
 
 # Same set BooleanChainFolder guards against in `_is_pure` - an
@@ -52,12 +56,20 @@ PURE_CALLEES = frozenset({
     "exponentiationOperator",
 })
 
-# adjust to actual literal type names
+# Nodes that are structurally equal to every OTHER unrelated occurrence of
+# the same name/value, so they may only ever be matched by identity (see
+# `_repoint.repoint_node`). Every literal kind belongs here - `null` and
+# `undefined` were once missing, which let a fold rewrite each unrelated
+# `null` in the function.
 TRIVIAL_NODE_TYPES = (
     Identifier,
     StringLiteral,
     NumericLiteral,
-    BooleanLiteral
+    BooleanLiteral,
+    NullLiteral,
+    UndefinedLiteral,
+    BigIntLiteral,
+    RegExpLiteral,
 )
 
 

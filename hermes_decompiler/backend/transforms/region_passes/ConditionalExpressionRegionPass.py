@@ -1,14 +1,11 @@
 from __future__ import annotations
 
-import dataclasses
-
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
 from hermes_decompiler.backend.transforms.shared import (
-    negate_condition, TRIVIAL_NODE_TYPES, has_side_effects
+    negate_condition, has_side_effects, repoint_references, reclaim_definition
 )
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import ConditionalExpression, Expression
 from ._base import RegionPass
 
@@ -126,7 +123,15 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 alternate=arm_expr,
             )
             last.value = new_expr
-            self._repoint_references(
+
+            reclaim_definition(
+                self.cfg, self.graph.root, last, default_expr, arm_result,
+                ignore_blocks={arm_block}, ignore_regions={if_region},
+            )
+
+            repoint_references(
+                self.cfg,
+                self.graph.root,
                 arm_expr,
                 new_expr,
                 min_block_id=arm_block.id,
@@ -176,76 +181,3 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                     return None
 
         return last_block, result
-
-    def _repoint_references(self, old_expr, new_expr, min_block_id: int, exclude: set) -> None:
-
-        for blk in self.cfg.blocks:
-            if blk.id < min_block_id:
-                continue
-
-            for instr in blk.instructions:
-                if instr in exclude:
-                    continue
-
-                new_value, value_changed = self._repoint_node(instr.value, old_expr, new_expr)
-                if value_changed:
-                    instr.value = new_value
-
-                if instr.statement is not None:
-                    new_stmt, stmt_changed = self._repoint_node(
-                        instr.statement, old_expr, new_expr
-                    )
-                    if stmt_changed:
-                        instr.statement = new_stmt
-
-    def _repoint_node(self, node, old_expr, new_expr):
-        """Same generic identity/structural-equality deep-replace as
-        BooleanChainRegionPass._repoint_node - see that class for the
-        full rationale, including why the structural-equality branch
-        is needed for Mov-introduced copies. Kept duplicated here
-        rather than shared, per earlier decision to avoid guessing at
-        an extraction target.
-        """
-
-        if node is old_expr:
-            return new_expr, True
-
-        if (not isinstance(old_expr, TRIVIAL_NODE_TYPES)
-                and isinstance(node, type(old_expr))
-                and node.structurally_equal(old_expr)):
-            return new_expr, True
-
-        if not dataclasses.is_dataclass(node) or not isinstance(node, Node):
-            return node, False
-
-        updates = {}
-        any_changed = False
-
-        for field in dataclasses.fields(node):
-            value = getattr(node, field.name)
-
-            if isinstance(value, Node):
-                new_value, changed = self._repoint_node(value, old_expr, new_expr)
-                if changed:
-                    updates[field.name] = new_value
-                    any_changed = True
-
-            elif isinstance(value, tuple):
-                new_items = []
-                tuple_changed = False
-                for item in value:
-                    if isinstance(item, Node):
-                        new_item, changed = self._repoint_node(item, old_expr, new_expr)
-                        if changed:
-                            tuple_changed = True
-                        new_items.append(new_item)
-                    else:
-                        new_items.append(item)
-                if tuple_changed:
-                    updates[field.name] = tuple(new_items)
-                    any_changed = True
-
-        if not any_changed:
-            return node, False
-
-        return dataclasses.replace(node, **updates), True

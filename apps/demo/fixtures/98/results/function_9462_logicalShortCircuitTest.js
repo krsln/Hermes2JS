@@ -49,7 +49,7 @@ function logicalShortCircuitTest(param1, param2) {
     // CODE → addr: 98 | <Call3>: <Reg8: 4, Reg8: 5, Reg8: 7, Reg8: 9, Reg8: 4>
     console.log("__BC:ControlFlow/TernaryTests/logicalShortCircuitTest/side-effect", "or-left")
     // CODE → addr:104 | <Mov>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = param1;
+    r5 = param1
     if (!param1) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:110 | <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
@@ -68,8 +68,8 @@ function logicalShortCircuitTest(param1, param2) {
     r4 = !param1 ? "left" : null
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:143 | <LoadConstNull>: <Reg8: 0>
-    // USED → r0 = !param1 ? "left" : null;
-    if (null == null) {
+    // USED → r0 = null;
+    if ((!param1 ? "left" : null) == null) {
         // ──────────────── Block 7 ──────────────── 
         // CODE → addr:149 | <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
         // USED → r8 = console;
