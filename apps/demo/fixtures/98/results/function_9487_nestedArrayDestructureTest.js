@@ -277,13 +277,9 @@ function nestedArrayDestructureTest() {
         r16 = 0
         if (r7 !== undefined) {
             try {
-                // LOOP → START (while)
-                while (!r11) {
+                // LOOP → START (for_of)
+                for (const r19 of r17) {
                     // ──────────────── Block 31 ──────────────── 
-                    // CODE → addr:428 | <IteratorNext>: <Reg8: 19, Reg8: 7, Reg8: 11>
-                    r19 = r7.next()
-                    // CODE → addr:432 | <Mov>: <Reg8: 11, Reg8: 7>
-                    r11 = r7
                     // CODE → addr:435 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
                     r11 = r11 === undefined
                     // CODE → addr:439 | <Mov>: <Reg8: 18, Reg8: 16>

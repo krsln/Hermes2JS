@@ -80,13 +80,9 @@ function spreadArrayTest() {
     r2 = 0
     if (r3 !== undefined) {
         try {
-            // LOOP → START (while)
-            while (!r6) {
+            // LOOP → START (for_of)
+            for (const r10 of r7) {
                 // ──────────────── Block 3 ──────────────── 
-                // CODE → addr:167 | <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>
-                r10 = r3.next()
-                // CODE → addr:171 | <Mov>: <Reg8: 6, Reg8: 3>
-                r6 = r3
                 // CODE → addr:174 | <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 0>
                 r6 = r6 === undefined
                 // CODE → addr:178 | <Mov>: <Reg8: 9, Reg8: 2>

@@ -10,6 +10,7 @@ from hermes_decompiler.backend.regions import (
 )
 from hermes_decompiler.backend.transforms.shared import structural_key
 from hermes_decompiler.backend.transforms.shared import resolve_identifier as _shared_resolve_identifier
+from hermes_decompiler.backend.transforms.shared import is_bare_register
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Expression
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
@@ -17,6 +18,18 @@ from hermes_decompiler.ir.terminators import TerminatorThrow
 from ._base import RegionPass
 
 logger = get_logger(__name__)
+
+
+def _is_plain_register_copy(instr) -> bool:
+    """True for a `Mov`-shaped instruction: `dst = rN` with no other effect.
+
+    Used only to recognize Hermes' own for-of/for-in register
+    bookkeeping around the `.next()` call (see `_match_header_call`,
+    `_strip_next_call_scaffold`) - never to justify removing a Mov
+    anywhere else, where it could easily carry real meaning (e.g.
+    aliasing a parameter for later use).
+    """
+    return instr.value is not None and is_bare_register(instr.value)
 
 
 class ForEachRegionPass(RegionPass, RegionVisitor):
@@ -132,7 +145,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         loop.iterable = iterable
         loop.loop_binding = next_instr.dest_reg
 
-        self._strip_instruction(header_block, next_instr)
+        self._strip_next_call_scaffold(header_block, next_instr)
 
         if scaffold is not None:
             self._unwrap_try(try_region, loop)
@@ -162,7 +175,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         loop.iterable = obj
         loop.loop_binding = next_instr.dest_reg
 
-        self._strip_instruction(header_block, next_instr)
+        self._strip_next_call_scaffold(header_block, next_instr)
 
     def _resolve_identifier(self, expr: Expression, before_instr, before_block: BasicBlock):
         """Resolve a possibly-still-bare register reference to its defining expression.
@@ -188,34 +201,71 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
     @staticmethod
     def _match_header_call(loop: LoopRegion, method_name: str):
-        """Match the header's first instruction against `<x>.method_name()`.
+        """Match the header against `<x>.method_name()`, tolerating one
+        priming `Mov` immediately before it.
 
-        That shape is what IteratorNext/GetNextPName always lower to
-        (see Iterator.py / GetNextPName.py handlers). Returns
-        (CallExpression, OpcodeResult, BasicBlock), or
-        (None, None, None) if it doesn't match.
+        `<x>.method_name()` (IteratorNext/GetNextPName's lowering - see
+        Iterator.py / GetNextPName.py's own handlers) is the header's
+        literal first instruction as far back as hbc96. From hbc98
+        onward, Hermes instead re-primes a scratch register from the
+        iterable/iterator with a plain `Mov` immediately before every
+        `IteratorNext`/`GetNextPName` call (feeding that call's own
+        third operand - internal bookkeeping for the VM's fast-path
+        check, with no JS-visible meaning: the loop's actual iterator
+        identity is still `<x>` itself, read directly off the call's
+        own callee, entirely unaffected by this extra Mov). Skipping
+        past it here - rather than requiring the call at position 0 -
+        is what recognizes hbc98's for-of/for-in at all; see
+        `_strip_next_call_scaffold` for removing it once recognized.
+
+        Deliberately tolerates AT MOST one such leading instruction,
+        and only when it's a plain register-to-register copy: scanning
+        further, or accepting anything else there, risks matching a
+        `.next()` call that isn't this scaffold at all - e.g. one that
+        genuinely runs after real loop-body content on a prior
+        iteration due to how the blocks happened to merge, which is
+        not a shape this pass should claim.
+
+        Returns (CallExpression, OpcodeResult, BasicBlock), or
+        (None, None, None) if neither position matches.
         """
         header = loop.header_block
+        instructions = header.instructions
 
-        first = header.first_instruction
-        if first is None:
+        if not instructions:
             return None, None, None
 
-        value = first.value
+        call = ForEachRegionPass._match_next_call_instr(instructions[0], method_name)
+        if call is not None:
+            return call, instructions[0], header
+
+        if (
+                len(instructions) > 1
+                and _is_plain_register_copy(instructions[0])
+        ):
+            call = ForEachRegionPass._match_next_call_instr(instructions[1], method_name)
+            if call is not None:
+                return call, instructions[1], header
+
+        return None, None, None
+
+    @staticmethod
+    def _match_next_call_instr(instr, method_name: str):
+        value = instr.value
         if not isinstance(value, CallExpression):
-            return None, None, None
+            return None
 
         callee = value.callee
 
         if not isinstance(callee, MemberExpression):
-            return None, None, None
+            return None
 
         prop = callee.prop
 
         if not isinstance(prop, Identifier) or prop.name != method_name:
-            return None, None, None
+            return None
 
-        return value, first, header
+        return value
 
     @staticmethod
     def _match_call(expr: Expression, callee_name: str):
@@ -362,6 +412,46 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
     def _strip_instruction(block: BasicBlock, instr) -> None:
         if instr in block.instructions:
             block.instructions.remove(instr)
+
+    @staticmethod
+    def _strip_next_call_scaffold(header_block: BasicBlock, next_instr) -> None:
+        """Remove `next_instr` plus its Mov-priming neighbor(s), if any.
+
+        See `_match_header_call`'s own docstring for why a plain
+        register-copy immediately BEFORE the matched call is safe to
+        remove. The same reasoning applies to one immediately AFTER
+        it: Hermes copies the call's own iterator-identity operand
+        into another scratch register right after the call, purely to
+        feed the loop's own done-check - and that check itself is
+        never rendered once `loop_kind` is FOR_OF/FOR_IN (compare
+        `forOfTest`'s hbc96 vs hbc98 golden fixtures: neither prints a
+        condition), so the register that would-be copy fed is already
+        dead the moment recognition succeeds, independent of whether
+        the copy instruction itself stays or goes.
+
+        Matches only immediately-adjacent instructions, by position at
+        call time - never a wider scan - for the same reason
+        `_match_header_call` only looks one instruction ahead: this
+        must stay tied to the specific position Hermes' own lowering
+        puts it in, not "some Mov somewhere nearby".
+        """
+        instructions = header_block.instructions
+
+        if next_instr not in instructions:
+            return
+
+        idx = instructions.index(next_instr)
+
+        doomed = [next_instr]
+
+        if idx > 0 and _is_plain_register_copy(instructions[idx - 1]):
+            doomed.append(instructions[idx - 1])
+
+        if idx + 1 < len(instructions) and _is_plain_register_copy(instructions[idx + 1]):
+            doomed.append(instructions[idx + 1])
+
+        for instr in doomed:
+            header_block.instructions.remove(instr)
 
     @staticmethod
     def _unwrap_try(try_region: TryRegion, loop: LoopRegion) -> None:

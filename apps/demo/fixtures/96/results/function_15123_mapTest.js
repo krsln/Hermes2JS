@@ -92,7 +92,6 @@ function mapTest() {
     r3 = 1
     // LOOP → START (for_of)
     for (const r11 of r9) {
-        // ──────────────── Block 1 ──────────────── 
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:209 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>
         r10 = r8[0]

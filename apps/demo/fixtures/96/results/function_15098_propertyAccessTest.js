@@ -58,9 +58,6 @@ function propertyAccessTest() {
     r3 = GetIterator(r2)
     // LOOP → START (for_of)
     for (const r8 of r2) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → addr:137 | <Mov>: <Reg8: 5, Reg8: 3>
-        r5 = r3
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:144 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r7 = console;

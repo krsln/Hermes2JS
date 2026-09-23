@@ -42,30 +42,19 @@ function closureLoopTest() {
     r3 = GetIterator(r2)
     // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    try {
-        // LOOP → START (while)
-        while (!(r5 === undefined)) {
-            // ──────────────── Block 3 ──────────────── 
-            // CODE → addr: 72 | <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
-            r4 = r3.next()
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → addr: 83 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r6 = console;
-            // CODE → addr: 89 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r5 = console.log;
-            // CODE → addr: 94 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-            r4 = r4.call(undefined)
-            // CODE → addr: 98 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
-            console.log(r4)
-        }
-        // LOOP → END
-    } catch (caughtException) {
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → addr:107 | <IteratorClose>: <Reg8: 3, UInt8: 1>
-        r3.return()
-        // CODE → addr:110 | <Throw>: <Reg8: 2>
-        throw r2;
+    // LOOP → START (for_of)
+    for (const r4 of r2) {
+        // ──────────────── Block 4 ──────────────── 
+        // CODE → addr: 83 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r6 = console;
+        // CODE → addr: 89 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r5 = console.log;
+        // CODE → addr: 94 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
+        r4 = r4.call(undefined)
+        // CODE → addr: 98 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
+        console.log(r4)
     }
+    // LOOP → END
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:112 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;

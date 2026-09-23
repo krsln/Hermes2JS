@@ -40,7 +40,6 @@ function closureLoopTest() {
     r3 = GetIterator(r2)
     // LOOP → START (for_of)
     for (const r4 of r2) {
-        // ──────────────── Block 3 ──────────────── 
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr: 73 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r6 = console;

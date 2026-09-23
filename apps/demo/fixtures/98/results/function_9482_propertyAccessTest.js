@@ -52,30 +52,19 @@ function propertyAccessTest() {
     r3 = GetIterator(r2)
     // CODE → addr:122 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    try {
-        // LOOP → START (while)
-        while (!(r5 === undefined)) {
-            // ──────────────── Block 1 ──────────────── 
-            // CODE → addr:127 | <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 5>
-            r8 = r3.next()
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr:138 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r7 = console;
-            // CODE → addr:144 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r6 = console.log;
-            // CODE → addr:149 | <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 8>
-            r5 = r4[r8]
-            // CODE → addr:153 | <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
-            console.log(r8, r5)
-        }
-        // LOOP → END
-    } catch (caughtException) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → addr:163 | <IteratorClose>: <Reg8: 3, UInt8: 1>
-        r3.return()
-        // CODE → addr:166 | <Throw>: <Reg8: 2>
-        throw r2;
+    // LOOP → START (for_of)
+    for (const r8 of r2) {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → addr:138 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r7 = console;
+        // CODE → addr:144 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r6 = console.log;
+        // CODE → addr:149 | <GetByVal>: <Reg8: 5, Reg8: 4, Reg8: 8>
+        r5 = r4[r8]
+        // CODE → addr:153 | <Call3>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5>
+        console.log(r8, r5)
     }
+    // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:168 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;

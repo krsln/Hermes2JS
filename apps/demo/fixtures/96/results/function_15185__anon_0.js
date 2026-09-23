@@ -24,7 +24,6 @@ async function _anon_0_(param1) {
     r5 = getEnvironment(2)
     // LOOP → START (for_of)
     for (const r9 of param1) {
-        // ──────────────── Block 2 ──────────────── 
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 58 | <Mov>: <Reg8: 8, Reg8: 1>
         r8 = r1

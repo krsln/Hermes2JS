@@ -16,28 +16,17 @@ function forOfTest() {
     r3 = GetIterator(r2)
     // CODE → addr: 33 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    try {
-        // LOOP → START (while)
-        while (!(r4 === undefined)) {
-            // ──────────────── Block 1 ──────────────── 
-            // CODE → addr: 38 | <IteratorNext>: <Reg8: 6, Reg8: 3, Reg8: 4>
-            r6 = r3.next()
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 49 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r5 = console;
-            // CODE → addr: 55 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r4 = console.log;
-            // CODE → addr: 60 | <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
-            console.log(r6)
-        }
-        // LOOP → END
-    } catch (caughtException) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → addr: 69 | <IteratorClose>: <Reg8: 3, UInt8: 1>
-        r3.return()
-        // CODE → addr: 72 | <Throw>: <Reg8: 2>
-        throw r2;
+    // LOOP → START (for_of)
+    for (const r6 of r2) {
+        // ──────────────── Block 2 ──────────────── 
+        // CODE → addr: 49 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r5 = console;
+        // CODE → addr: 55 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r4 = console.log;
+        // CODE → addr: 60 | <Call2>: <Reg8: 4, Reg8: 4, Reg8: 5, Reg8: 6>
+        console.log(r6)
     }
+    // LOOP → END
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 74 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;

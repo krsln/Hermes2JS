@@ -24,7 +24,6 @@ function callGeneratorTests() {
     r4 = GetIterator(r3)
     // LOOP → START (for_of)
     for (const r7 of r3) {
-        // ──────────────── Block 1 ──────────────── 
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 52 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r6 = console;
@@ -47,7 +46,6 @@ function callGeneratorTests() {
     r4 = GetIterator(r3)
     // LOOP → START (for_of)
     for (const r7 of r3) {
-        // ──────────────── Block 5 ──────────────── 
         // ──────────────── Block 6 ──────────────── 
         // CODE → addr:106 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r6 = console;

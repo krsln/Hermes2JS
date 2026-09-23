@@ -18,7 +18,6 @@ function forOfTest() {
     // USED → r0 = undefined;
     // LOOP → START (for_of)
     for (const r6 of r2) {
-        // ──────────────── Block 1 ──────────────── 
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 46 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r5 = console;
