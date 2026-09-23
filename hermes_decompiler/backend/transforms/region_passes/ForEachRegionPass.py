@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from collections import deque
-
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import (
     RegionVisitor,
@@ -11,6 +9,7 @@ from hermes_decompiler.backend.regions import (
     TryRegion,
 )
 from hermes_decompiler.backend.transforms.shared import structural_key
+from hermes_decompiler.backend.transforms.shared import resolve_identifier as _shared_resolve_identifier
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Expression
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
@@ -168,132 +167,13 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
     def _resolve_identifier(self, expr: Expression, before_instr, before_block: BasicBlock):
         """Resolve a possibly-still-bare register reference to its defining expression.
 
-        Some handlers inline a register's defining expression directly
-        (get_register_expression - e.g., IteratorNext's iterator,
-        IteratorClose's .return() receiver), others deliberately keep
-        a bare register reference (get_register_reference - e.g.,
-        GetNextPName's list_val, to avoid re-embedding a large or
-        side-effecting expression at every .next() call site).
-
-        This pass needs the actual defining expression either way to
-        recognize GetIterator(...) / HermesPropertyIterator(...), so
-        when expr is still a bare r{N} reference, resolve it to the
-        register's REACHING definition at the point of use
-        (before_block/before_instr) - not just any definition found
-        anywhere in the function.
-
-        A prior version of this method picked either the first
-        definition found by a flat scan of every block (wrong when the
-        register was reused earlier for an unrelated value - e.g. a
-        `console` lookup temporary later repurposed as the iterator
-        register), or the definition with the highest
-        cfg.reg_definitions address below before_instr.address (wrong
-        because nothing else in this codebase relies on that address
-        field being globally comparable across blocks -
-        LoopConditionRegionPass._infer_induction_register only ever
-        uses it for block identity, `block is update_block`, never for
-        cross-instruction ordering - so trusting it as a sortable
-        offset was an unverified assumption that silently broke the
-        single-definition for-in case).
-
-        This version instead walks the actual CFG, which is the one
-        source of ordering this pass can trust:
-
-          1. Scan before_block's own instructions strictly before
-             before_instr, in reverse, for a write to `reg`.
-          2. If not found, do a backward BFS over EVERY predecessor
-             path from before_block (not just a unique-predecessor
-             chain - before_block is very often a loop header or a
-             `finally` block, both of which always have more than one
-             predecessor: an outside entry edge plus one or more
-             in-loop back/exceptional edges - requiring a single
-             predecessor would bail out immediately on exactly the
-             shapes this pass targets). Each path stops exploring
-             further back as soon as it finds ANY write to `reg`,
-             collecting that value.
-
-        The register is only resolved if every path that found a
-        definition agrees, via structural_key, on the same value. The
-        single-assignment assumption above means genuine matches
-        always agree here regardless of how many paths were walked
-        (a loop's back edge never redefines the pre-loop setup
-        register, so exploring through it just contributes nothing,
-        not a conflicting value); a real structural disagreement means
-        this isn't the simple shape this pass targets after all, so it
-        bails rather than guessing which path is "the" reaching
-        definition. Returns expr unchanged in that case, or if no path
-        finds a definition at all.
+        Thin wrapper around `transforms.shared.resolve_identifier` - the
+        actual CFG-walk logic now lives there (extracted so
+        `_finally_matcher`/`_predicates` can reuse it for
+        register-aware finally-copy matching). See that function's own
+        docstring for the full rationale and algorithm.
         """
-        if not (
-                isinstance(expr, Identifier)
-                and expr.name.startswith("r")
-                and expr.name[1:].isdigit()
-        ):
-            return expr
-
-        reg = int(expr.name[1:])
-
-        # 1. Same block, strictly before before_instr.
-        found = self._find_definition_in_instructions(
-            before_block.instructions, reg, stop_before=before_instr
-        )
-        if found is not None:
-            return found
-
-        # 2. Backward BFS over every predecessor path.
-        visited = {before_block}
-        queue = deque(before_block.predecessors)
-        found_values = []
-
-        while queue:
-            block = queue.popleft()
-
-            if block in visited:
-                continue
-            visited.add(block)
-
-            value = self._find_definition_in_instructions(block.instructions, reg)
-
-            if value is not None:
-                found_values.append(value)
-                # Don't look further back past a definition on this path.
-                continue
-
-            queue.extend(block.predecessors)
-
-        if not found_values:
-            return expr
-
-        first = found_values[0]
-
-        for other in found_values[1:]:
-            if structural_key(other) != structural_key(first):
-                # Different paths reach different definitions - not
-                # the clean single-assignment shape this pass targets.
-                return expr
-
-        return first
-
-    @staticmethod
-    def _find_definition_in_instructions(instructions, reg: int, stop_before=None):
-        """Scan `instructions` in reverse for the most recent write to `reg`.
-
-        If `stop_before` is given, only instructions strictly before it
-        (in list order) are considered - used to search "everything
-        before the use site" within before_block itself.
-        """
-        if stop_before is not None:
-            try:
-                cutoff = instructions.index(stop_before)
-            except ValueError:
-                cutoff = len(instructions)
-            instructions = instructions[:cutoff]
-
-        for instr in reversed(instructions):
-            if instr.dest_reg == reg and instr.value is not None:
-                return instr.value
-
-        return None
+        return _shared_resolve_identifier(expr, before_instr, before_block)
 
     # -----------------------------------------------------------------
     # Shared matching helpers

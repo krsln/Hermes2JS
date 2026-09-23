@@ -5,7 +5,7 @@ from hermes_decompiler.backend.regions import FinallyRegion, SequenceRegion, Try
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.ir.terminators import TerminatorReturn, TerminatorThrow
-from ._predicates import strip_duplicate_run, strip_duplicate_span, structural_key
+from ._predicates import find_run_match, strip_duplicate_run, strip_duplicate_span, triples_for_block
 
 logger = get_logger(__name__)
 
@@ -88,11 +88,10 @@ class _FinallyAttacher:
             if catch_region is not None:
                 strip_duplicate_span(catch_region.body, finally_items)
         else:
-            finally_values = [
-                instr.value
+            finally_item_triples = [
+                triple
                 for item in finally_items
-                for instr in item.instructions
-                if instr.value is not None
+                for triple in triples_for_block(item)
             ]
 
             # Each call independently finds-and-strips its own match
@@ -105,11 +104,11 @@ class _FinallyAttacher:
             # relocated below, since both would represent the same
             # shared continuation).
             tail_from_catch = (
-                self._extract_tail(catch_region.body, finally_values, cfg)
+                self._extract_tail(catch_region.body, finally_item_triples, cfg)
                 if catch_region is not None
                 else None
             )
-            tail_from_try = self._extract_tail(try_region.try_body, finally_values, cfg)
+            tail_from_try = self._extract_tail(try_region.try_body, finally_item_triples, cfg)
 
             tail = tail_from_catch or tail_from_try
 
@@ -136,13 +135,12 @@ class _FinallyAttacher:
                     if any(not isinstance(item, BasicBlock) for item in finally_items):
                         strip_duplicate_span(owner, finally_items)
                     else:
-                        finally_values = [
-                            instr.value
+                        finally_item_triples = [
+                            triple
                             for item in finally_items
-                            for instr in item.instructions
-                            if instr.value is not None
+                            for triple in triples_for_block(item)
                         ]
-                        strip_duplicate_run(owner, finally_values)
+                        strip_duplicate_run(owner, finally_item_triples)
 
         finally_body = SequenceRegion()
         self.graph.transfer(finally_items, finally_body)
@@ -296,9 +294,9 @@ class _FinallyAttacher:
     # Tail relocation (see class docstring, point 3)
     # -----------------------------------------------------------------
 
-    def _extract_tail(self, region: SequenceRegion, finally_values: list, cfg: CFG):
+    def _extract_tail(self, region: SequenceRegion, finally_item_triples: list, cfg: CFG):
         """Find-and-strip EVERY run in `region.covered_blocks` matching
-        `finally_values` (same matching, and same "one match per
+        `finally_item_triples` (same matching, and same "one match per
         block, scan every block" contract, as `strip_duplicate_run` -
         Hermes may duplicate the same finally sequence independently
         across multiple exit paths, e.g. a loop's own break/continue/
@@ -322,54 +320,47 @@ class _FinallyAttacher:
         followed it (the common, already-correctly-handled case) -
         regardless of how many nested matches were stripped.
         """
-        if not finally_values:
+        if not finally_item_triples:
             return None
-
-        from hermes_decompiler.backend.transforms.shared import structural_key
-
-        finally_keys = [structural_key(v) for v in finally_values]
-        n = len(finally_keys)
 
         tail = None
 
         for block in list(region.covered_blocks):
 
             candidates = [i for i in block.instructions if i.value is not None]
-            candidate_keys = [structural_key(c.value) for c in candidates]
+            match = find_run_match(candidates, block, finally_item_triples)
 
-            for start in range(len(candidates) - n + 1):
+            if match is None:
+                continue
 
-                if candidate_keys[start:start + n] != finally_keys:
-                    continue
+            start, end = match
+            matched = candidates[start:end]
 
-                matched = candidates[start:start + n]
+            # Capture whatever ORIGINALLY followed the matched run
+            # BEFORE removing anything - `block.instructions.remove`
+            # below only removes the matched instructions
+            # themselves, by identity, leaving everything else
+            # (both before AND after the match) untouched in place.
+            # Without this, `_split_off_tail` would treat the
+            # genuine catch/try content that came BEFORE the match
+            # (e.g. "catch-block", the caught error) as part of the
+            # tail too, incorrectly relocating it out of the
+            # try/catch entirely.
+            last_matched_pos = block.instructions.index(matched[-1])
+            after_match = block.instructions[last_matched_pos + 1:]
 
-                # Capture whatever ORIGINALLY followed the matched run
-                # BEFORE removing anything - `block.instructions.remove`
-                # below only removes the matched instructions
-                # themselves, by identity, leaving everything else
-                # (both before AND after the match) untouched in place.
-                # Without this, `_split_off_tail` would treat the
-                # genuine catch/try content that came BEFORE the match
-                # (e.g. "catch-block", the caught error) as part of the
-                # tail too, incorrectly relocating it out of the
-                # try/catch entirely.
-                last_matched_pos = block.instructions.index(matched[-1])
-                after_match = block.instructions[last_matched_pos + 1:]
+            for instr in matched:
+                block.instructions.remove(instr)
 
-                for instr in matched:
+            is_top_level = tail is None and self.graph.owner(block) is region
+
+            if is_top_level:
+                for instr in after_match:
                     block.instructions.remove(instr)
+                tail = self._split_off_tail(block, region, cfg, after_match)
 
-                is_top_level = tail is None and self.graph.owner(block) is region
-
-                if is_top_level:
-                    for instr in after_match:
-                        block.instructions.remove(instr)
-                    tail = self._split_off_tail(block, region, cfg, after_match)
-
-                # Whether or not this was the top-level match, keep
-                # scanning the REMAINING blocks - see docstring.
-                break
+            # Whether or not this was the top-level match, keep
+            # scanning the REMAINING blocks - see docstring.
 
         return tail
 
@@ -430,30 +421,27 @@ class _FinallyAttacher:
     # -----------------------------------------------------------------
 
     @staticmethod
-    def _count_duplicate_blocks(region: SequenceRegion, values: list) -> int:
-        """Number of blocks in `region` that contain `values` as a
-        contiguous run - the exact matching (`structural_key`, one match
-        per block, every covered block scanned) `_extract_tail` and
-        `strip_duplicate_run` use to strip a copy, so a non-zero count
-        here means the strip that follows will really remove something.
+    def _count_duplicate_blocks(region: SequenceRegion, item_triples: list) -> int:
+        """Number of blocks in `region` that contain `item_triples` as a
+        register-aware contiguous run (`find_run_match`, one match per
+        block, every covered block scanned) - the same matching
+        `_extract_tail` and `strip_duplicate_run` use to strip a copy,
+        so a non-zero count here means the strip that follows will
+        really remove something.
 
-        Read-only. Zero for an empty `values`: there is nothing to match.
-        A copy that lives in the block AFTER the try body is not counted
-        here - see `_find_trailing_copy`.
+        Read-only. Zero for an empty `item_triples`: there is nothing
+        to match. A copy that lives in the block AFTER the try body is
+        not counted here - see `_find_trailing_copy`.
         """
-        if not values:
+        if not item_triples:
             return 0
 
-        keys = [structural_key(v) for v in values]
-        n = len(keys)
         count = 0
 
         for block in region.covered_blocks:
-            block_keys = [
-                structural_key(i.value) for i in block.instructions if i.value is not None
-            ]
+            candidates = [i for i in block.instructions if i.value is not None]
 
-            if any(block_keys[s:s + n] == keys for s in range(len(block_keys) - n + 1)):
+            if find_run_match(candidates, block, item_triples) is not None:
                 count += 1
 
         return count
@@ -473,7 +461,7 @@ class _FinallyAttacher:
             for block in covered
         )
 
-    def _find_trailing_copy(self, try_region: TryRegion, values: list) -> BasicBlock | None:
+    def _find_trailing_copy(self, try_region: TryRegion, item_triples: list) -> BasicBlock | None:
         """The block right after the try that carries the inlined `finally`
         copy for EVERY normal exit, or None.
 
@@ -497,7 +485,7 @@ class _FinallyAttacher:
         block. Declining leaves the faithful `catch` + rethrow in place,
         never a `finally` with a copy still running next to it.
         """
-        if not values:
+        if not item_triples:
             return None
 
         covered = try_region.try_body.covered_blocks
@@ -530,29 +518,30 @@ class _FinallyAttacher:
         if try_index + 1 >= len(parent.children) or parent.children[try_index + 1] is not block:
             return None
 
-        return block if self._starts_with_run(block, values) else None
+        return block if self._starts_with_run(block, item_triples) else None
 
     @staticmethod
-    def _starts_with_run(block: BasicBlock, values: list) -> bool:
-        keys = [structural_key(v) for v in values]
-        n = len(keys)
+    def _starts_with_run(block: BasicBlock, item_triples: list) -> bool:
+        n = len(item_triples)
 
-        block_keys = [
-            structural_key(i.value) for i in block.instructions if i.value is not None
-        ]
+        if n == 0:
+            return False
 
-        return n > 0 and block_keys[:n] == keys
+        candidates = [i for i in block.instructions if i.value is not None]
+        match = find_run_match(candidates, block, item_triples)
+
+        return match is not None and match[0] == 0
 
     @staticmethod
-    def _strip_leading_run(block: BasicBlock, values: list) -> None:
-        """Remove the first `len(values)` value-bearing instructions of
-        `block` (which `_starts_with_run` established are the copy).
-        Removes by identity: instruction equality must not be allowed to
-        pick a look-alike elsewhere in the block.
+    def _strip_leading_run(block: BasicBlock, item_triples: list) -> None:
+        """Remove the first `len(item_triples)` value-bearing
+        instructions of `block` (which `_starts_with_run` established
+        are the copy). Removes by identity: instruction equality must
+        not be allowed to pick a look-alike elsewhere in the block.
         """
         doomed = {
             id(instr)
-            for instr in [i for i in block.instructions if i.value is not None][:len(values)]
+            for instr in [i for i in block.instructions if i.value is not None][:len(item_triples)]
         }
 
         block.instructions[:] = [i for i in block.instructions if id(i) not in doomed]
@@ -600,9 +589,11 @@ class _FinallyAttacher:
 
         Otherwise the region is left as the faithful `try/catch` + rethrow
         `_HandlerBuilder` already built. That is what the bytecode does, at
-        the cost of not recovering a `finally` whose inlined copy this pass
-        cannot see (e.g. a copy under different register names - see
-        `_count_duplicate_blocks`).
+        the cost of not recovering a `finally` whose inlined copy uses a
+        register-aliasing chain longer than `resolve_identifier` follows,
+        or reaches a different definition down different CFG paths (see
+        `_count_duplicate_blocks`, `find_run_match`) - a copy merely under
+        different register NAMES is matched.
 
         Only handles a single straight-line block for now; a `finally`
         body with its own branching needs the fuller multi-block
@@ -652,8 +643,8 @@ class _FinallyAttacher:
 
         # Evidence gate - see the docstring. Must run before the first
         # mutation below (popping the rethrow, clearing the terminator).
-        handler_values = [
-            instr.value
+        handler_item_triples = [
+            (instr.value, instr, block)
             for instr in block.instructions
             if instr.value is not None and instr.terminator is not block.terminator
         ]
@@ -661,10 +652,10 @@ class _FinallyAttacher:
         trailing_copy = None
 
         if (
-                self._count_duplicate_blocks(try_region.try_body, handler_values) == 0
+                self._count_duplicate_blocks(try_region.try_body, handler_item_triples) == 0
                 and self._has_normal_exit(try_region.try_body)
         ):
-            trailing_copy = self._find_trailing_copy(try_region, handler_values)
+            trailing_copy = self._find_trailing_copy(try_region, handler_item_triples)
 
             if trailing_copy is None:
                 return
@@ -681,8 +672,8 @@ class _FinallyAttacher:
         # `finally` code inline at the try body's own normal-completion
         # exit, not just at the handler. Missing this step leaves the
         # cleanup code printed - and actually running - twice.
-        finally_values = [
-            instr.value
+        finally_item_triples = [
+            (instr.value, instr, block)
             for instr in block.instructions
             if instr.value is not None
         ]
@@ -694,10 +685,10 @@ class _FinallyAttacher:
         # `strip_duplicate_run`) - calling `strip_duplicate_run`
         # separately first would consume the match before
         # `_extract_tail` ever got to look for it.
-        tail = self._extract_tail(try_region.try_body, finally_values, cfg)
+        tail = self._extract_tail(try_region.try_body, finally_item_triples, cfg)
 
         if trailing_copy is not None:
-            self._strip_leading_run(trailing_copy, finally_values)
+            self._strip_leading_run(trailing_copy, finally_item_triples)
 
         try_region.catch = None
 

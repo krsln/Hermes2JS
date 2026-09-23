@@ -11,6 +11,18 @@ instead.
 module's docstring; it used to be defined locally here (and, a third
 time, independently in `region_passes.ForEachRegionPass`) before being
 consolidated.
+
+Matching is register-aware via `transforms.shared.resolved_structural_equal`
+(built on the same `resolve_identifier` reaching-definition walk
+`ForEachRegionPass` uses) rather than plain `structural_key` equality:
+Hermes' finally-duplication routinely re-derives the same logical
+value through a different physical register at each copy (see
+`resolved_structural_equal`'s own docstring), so an exact-value match
+alone misses those and leaves a genuine `finally` mis-recognized as an
+ordinary handler. This needs each instruction's own (instruction,
+block) - its point of use - alongside its `.value`, not just the bare
+value, which is why the run-matching helpers below take `(value,
+instr, block)` triples rather than flat value lists.
 """
 
 from __future__ import annotations
@@ -18,41 +30,71 @@ from __future__ import annotations
 from hermes_decompiler.backend.regions import IfRegion, SequenceRegion
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.transforms.shared import structural_key as structural_key
+from hermes_decompiler.backend.transforms.shared import resolved_structural_equal
 
-__all__ = ["structural_key", "strip_duplicate_run", "strip_duplicate_span"]
+__all__ = ["structural_key", "strip_duplicate_run", "strip_duplicate_span", "find_run_match", "triples_for_block"]
 
 
-def strip_duplicate_run(region: SequenceRegion, finally_values: list) -> None:
-    """Remove the first run in each block matching finally_values, if any.
+def triples_for_block(block: BasicBlock) -> list:
+    """Build the `(value, instr, block)` triples `find_run_match` /
+    `strip_duplicate_run` need, for every value-bearing instruction of
+    a single BasicBlock.
+    """
+    return [(i.value, i, block) for i in block.instructions if i.value is not None]
 
-    Matches the first contiguous run of instructions whose `.value`s
-    exactly equal finally_values. Hermes may duplicate the same
-    finally sequence independently across MULTIPLE blocks (e.g. both
-    branches of a resume-check, each with their own inlined cleanup
-    copy) - so this scans and strips per-block across the whole
-    region, not just the first occurrence found anywhere.
+
+def find_run_match(candidates: list, candidate_block: BasicBlock, item_triples: list):
+    """Does any contiguous run of `candidates` (instructions of
+    `candidate_block`) register-aware-match `item_triples`? Returns
+    the matching `(start, end)` exclusive index range within
+    `candidates`, or None.
+    """
+    n = len(item_triples)
+
+    if n == 0:
+        return 0, 0
+
+    for start in range(len(candidates) - n + 1):
+        if all(
+                resolved_structural_equal(
+                    c.value, c, candidate_block,
+                    v, i, item_block,
+                )
+                for c, (v, i, item_block) in zip(candidates[start:start + n], item_triples)
+        ):
+            return start, start + n
+
+    return None
+
+
+def strip_duplicate_run(region: SequenceRegion, item_triples: list) -> None:
+    """Remove the first run in each block register-aware-matching
+    `item_triples`, if any.
+
+    Hermes may duplicate the same finally sequence independently
+    across MULTIPLE blocks (e.g. both branches of a resume-check, each
+    with their own inlined cleanup copy) - so this scans and strips
+    per-block across the whole region, not just the first occurrence
+    found anywhere.
     """
 
-    if not finally_values:
+    if not item_triples:
         return
 
-    finally_keys = [structural_key(v) for v in finally_values]
-    n = len(finally_keys)
+    n = len(item_triples)
 
     for block in list(region.covered_blocks):
 
         candidates = [i for i in block.instructions if i.value is not None]
-        candidate_keys = [structural_key(c.value) for c in candidates]
+        match = find_run_match(candidates, block, item_triples)
 
-        for start in range(len(candidates) - n + 1):
+        if match is None:
+            continue
 
-            if candidate_keys[start:start + n] != finally_keys:
-                continue
+        start, end = match
 
-            for instr in candidates[start:start + n]:
-                block.instructions.remove(instr)
-
-            break
+        for instr in candidates[start:end]:
+            block.instructions.remove(instr)
 
 
 def _items_structurally_equal(a, b) -> bool:
@@ -79,15 +121,15 @@ def _items_structurally_equal(a, b) -> bool:
     """
 
     if isinstance(a, BasicBlock) and isinstance(b, BasicBlock):
-        a_values = [i.value for i in a.instructions if i.value is not None]
-        b_values = [i.value for i in b.instructions if i.value is not None]
+        a_pairs = [(i.value, i) for i in a.instructions if i.value is not None]
+        b_pairs = [(i.value, i) for i in b.instructions if i.value is not None]
 
-        if len(a_values) != len(b_values):
+        if len(a_pairs) != len(b_pairs):
             return False
 
         return all(
-            structural_key(x) == structural_key(y)
-            for x, y in zip(a_values, b_values)
+            resolved_structural_equal(x, xi, a, y, yi, b)
+            for (x, xi), (y, yi) in zip(a_pairs, b_pairs)
         )
 
     if isinstance(a, IfRegion) and isinstance(b, IfRegion):
@@ -100,20 +142,30 @@ def _items_structurally_equal(a, b) -> bool:
         # (see tryCatchFinallyBranchInFinallyTest's raw disassembly:
         # the catch-side copy branches on a register freshly `Mov`-ed
         # from `param1`, the finally-wrapper's own copy branches on
-        # `param1`'s original register directly) - neither this module
-        # nor `_FinallyAttacher` has the register-definition
-        # infrastructure (`cfg.reg_definitions`) needed to resolve
-        # that aliasing at this level, unlike e.g.
-        # `ForEachRegionPass._resolve_identifier`. Requiring exact
-        # condition equality would then simply never match a
-        # genuinely duplicated branching finally, which is worse than
-        # the narrow false-positive risk accepted by skipping it: a
-        # wrong match would require an unrelated `if/else` elsewhere
-        # in the try/catch printing the exact same literal content in
-        # the same order, which - given every `__BC:...` marker string
-        # in this codebase's own fixtures is unique per call site - is
-        # a non-issue in practice, and the body comparison below still
-        # requires full structural equality of both branches.
+        # `param1`'s original register directly). This module now has
+        # the register-definition infrastructure
+        # (`transforms.shared.resolve_identifier`/
+        # `resolved_structural_equal`, the same `ForEachRegionPass`
+        # uses) to resolve exactly that aliasing - and the BasicBlock
+        # branch above, and `find_run_match` used elsewhere in this
+        # module, both do. It's deliberately still not applied to a
+        # condition specifically: `resolve_identifier` needs a single
+        # concrete (instruction, block) point of use to walk backward
+        # from, but a condition here is compared without reference to
+        # either side's own containing handler block (this function
+        # only ever receives the two IfRegions themselves) - reusing
+        # it would need threading that context through every caller
+        # for a comparison this function can already make reliably
+        # without it: requiring exact condition equality would simply
+        # never match a genuinely duplicated branching finally, which
+        # is worse than the narrow false-positive risk accepted by
+        # skipping it: a wrong match would require an unrelated
+        # `if/else` elsewhere in the try/catch printing the exact same
+        # literal content in the same order, which - given every
+        # `__BC:...` marker string in this codebase's own fixtures is
+        # unique per call site - is a non-issue in practice, and the
+        # body comparison below still requires full structural
+        # equality of both branches.
         if not _sequence_structurally_equal(a.then_body, b.then_body):
             return False
 
@@ -199,24 +251,6 @@ def _block_value_instr_pairs(block: BasicBlock) -> list:
     return [(instr.value, instr) for instr in block.instructions if instr.value is not None]
 
 
-def _find_subrun(candidate_keys: list, target_keys: list):
-    """Return the (start, end) exclusive-end index range within
-    `candidate_keys` where `target_keys` appears as a contiguous
-    subrun, or None if it doesn't appear at all. An empty
-    `target_keys` trivially matches at position (0, 0).
-    """
-    n = len(target_keys)
-
-    if n == 0:
-        return 0, 0
-
-    for start in range(len(candidate_keys) - n + 1):
-        if candidate_keys[start:start + n] == target_keys:
-            return start, start + n
-
-    return None
-
-
 def _match_span_window(window: list, span: list):
     """Try to match `window` (a same-length slice of some region's
     children) against `span`. Returns a per-item removal plan (a list
@@ -245,16 +279,10 @@ def _match_span_window(window: list, span: list):
         is_edge = i == 0 or i == n - 1
 
         if is_edge and isinstance(candidate, BasicBlock) and isinstance(target, BasicBlock):
-            target_keys = [
-                structural_key(value)
-                for value, _ in _block_value_instr_pairs(target)
-            ]
-            candidate_keys = [
-                structural_key(value)
-                for value, _ in _block_value_instr_pairs(candidate)
-            ]
+            target_triples = [(value, instr, target) for value, instr in _block_value_instr_pairs(target)]
+            candidates = [instr for _, instr in _block_value_instr_pairs(candidate)]
 
-            match_range = _find_subrun(candidate_keys, target_keys)
+            match_range = find_run_match(candidates, candidate, target_triples)
 
             if match_range is None:
                 return None

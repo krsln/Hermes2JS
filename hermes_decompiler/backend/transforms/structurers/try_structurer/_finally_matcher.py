@@ -15,7 +15,7 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.regions import TryRegion
 from hermes_decompiler.ir.expressions import Identifier
 from hermes_decompiler.ir.terminators import TerminatorThrow
-from ._predicates import structural_key
+from ._predicates import find_run_match
 
 
 def find_finally_wrapper_target(handler: dict, processed: list, cfg: CFG):
@@ -77,13 +77,11 @@ def find_finally_wrapper_target(handler: dict, processed: list, cfg: CFG):
 
 
 def _finally_content_matches(handler: dict, inner_region: TryRegion, inner_handler: dict, cfg: CFG) -> bool:
-    values = _candidate_finally_values(handler["handler_block"])
+    handler_block = handler["handler_block"]
+    item_triples = _candidate_finally_items(handler_block)
 
-    if not values:
+    if not item_triples:
         return False
-
-    keys = [structural_key(v) for v in values]
-    n = len(keys)
 
     regions = [inner_region.try_body]
 
@@ -102,26 +100,37 @@ def _finally_content_matches(handler: dict, inner_region: TryRegion, inner_handl
         )
         if merge_block is not None:
             candidates = [i for i in merge_block.instructions if i.value is not None]
-            candidate_keys = [structural_key(c.value) for c in candidates]
-            for start in range(len(candidate_keys) - n + 1):
-                if candidate_keys[start:start + n] == keys:
-                    return True
+            if find_run_match(candidates, merge_block, item_triples) is not None:
+                return True
 
     for region in regions:
 
         for block in region.covered_blocks:
 
             candidates = [i for i in block.instructions if i.value is not None]
-            candidate_keys = [structural_key(c.value) for c in candidates]
-
-            for start in range(len(candidate_keys) - n + 1):
-                if candidate_keys[start:start + n] == keys:
-                    return True
+            if find_run_match(candidates, block, item_triples) is not None:
+                return True
 
     return False
 
 
-def _candidate_finally_values(handler_block: BasicBlock) -> list:
+def _candidate_finally_items(handler_block: BasicBlock) -> list:
+    """`(value, instr, block)` triples (see `_predicates.triples_for_block`)
+    for the value-bearing instructions that would form a `finally`
+    body (see `_candidate_finally_instructions`) - needed so a
+    register-aware comparison (`find_run_match`) can resolve a
+    still-bare `rN` reference back to its reaching definition at
+    exactly that instruction's point of use.
+    """
+
+    return [
+        (i.value, i, handler_block)
+        for i in _candidate_finally_instructions(handler_block)
+        if i.value is not None
+    ]
+
+
+def _candidate_finally_instructions(handler_block: BasicBlock) -> list:
     """Return the value-bearing instructions that would form a `finally` body.
 
     Excludes the leading Catch exception-binding and a trailing bare
@@ -155,4 +164,4 @@ def _candidate_finally_values(handler_block: BasicBlock) -> list:
     ):
         instructions = instructions[:-1]
 
-    return [i.value for i in instructions if i.value is not None]
+    return instructions
