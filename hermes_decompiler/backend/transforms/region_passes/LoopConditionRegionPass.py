@@ -447,6 +447,25 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         instruction isn't in this block, loop.update simply stays None
         (Printer already renders an empty update slot) rather than a
         wrong one.
+
+        One more shape the backward scan has to see through: Hermes
+        sometimes persists the induction register to its backing
+        environment slot (e.g. because the loop variable is captured -
+        see `generatorWithLoopTest`, where suspending at a `yield`
+        forces every live register out to the environment first) and
+        then, in the very next instruction, reloads that exact same
+        slot straight back into the exact same register - a `x = R;
+        ...; R = x` round trip with no other write of `R` in between.
+        That reload is real bytecode but is not itself the update - the
+        genuine mutation (the `Inc`/`Add`/etc.) sits one instruction
+        earlier, writing the very value the reload just reads back
+        unchanged. Naively taking the LAST dest_reg match would grab
+        the reload (`for (...; ...; r7 = r1[1][1])` - a plain re-read,
+        not an increment) and leave the real `Inc` behind as an
+        ordinary statement inside the loop body instead of the header.
+        `_is_environment_roundtrip_reload` recognizes exactly this
+        adjacent store-then-reload pair and skips it, so the scan
+        continues backward onto the genuine update.
         """
         update_block = loop.update_block
 
@@ -458,7 +477,9 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         if induction_reg is None:
             return
 
-        for instruction in reversed(update_block.instructions):
+        for index in range(len(update_block.instructions) - 1, -1, -1):
+            instruction = update_block.instructions[index]
+
             if instruction.terminator is not None:
                 continue
 
@@ -472,6 +493,13 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 # accepting the first/last thing found.
                 continue
 
+            if self._is_environment_roundtrip_reload(update_block, index, induction_reg):
+                # A no-op reload of the value the previous instruction
+                # just stored - not the update itself. Keep scanning
+                # backward onto whatever wrote that value in the first
+                # place (see docstring above).
+                continue
+
             loop.update = AssignmentExpression(
                 left=Identifier(name=f"r{instruction.dest_reg}"),
                 operator=AssignmentOperator.ASSIGN,
@@ -480,6 +508,40 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
 
             update_block.instructions.remove(instruction)
             return
+
+    @staticmethod
+    def _is_environment_roundtrip_reload(update_block: BasicBlock, index: int, reg: int) -> bool:
+        """True when `update_block.instructions[index]` is `r{reg} = <loc>`
+        and the instruction immediately before it is `<loc> = r{reg}` for
+        that exact same location - i.e. a value gets stored out and then
+        read straight back into the same register with nothing in
+        between, a pure round trip with no observable effect. Only the
+        immediately adjacent case is recognized; anything less direct
+        (an intervening instruction, a different register, a different
+        location) is left to the caller's existing fallback rather than
+        guessed at.
+        """
+        if index == 0:
+            return False
+
+        reload = update_block.instructions[index]
+        store = update_block.instructions[index - 1]
+
+        if store.terminator is not None:
+            return False
+
+        if not isinstance(store.value, AssignmentExpression):
+            return False
+
+        stored_from = store.value.right
+
+        if not isinstance(stored_from, Identifier) or stored_from.name != f"r{reg}":
+            return False
+
+        # Same location on both sides (what got stored is exactly what
+        # gets read back) - compared structurally, since these `Expression`
+        # nodes don't define `__eq__`.
+        return repr(store.value.left) == repr(reload.value)
 
     def _extract_initializer(self, loop: LoopRegion) -> None:
         """Pull the induction register's initial value into loop.initializer.
