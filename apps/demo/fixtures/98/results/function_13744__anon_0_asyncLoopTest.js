@@ -1,4 +1,11 @@
 async function _anon_0_asyncLoopTest(param1) {
+// ⚠ WARNING: this output is NOT valid JavaScript.
+// Cause: a generator/async dispatch chain was recognized but this pass declined to fold it (see GeneratorStateDispatchCfgPass.run's own all-or-nothing contract - logged above at DEBUG).
+// It contains raw `goto label_N;` / `if (...) goto label_N;` statements -
+// `goto` is not a JavaScript keyword, so this will fail to parse as-is.
+// If this is a generator/async function, re-run decompilation with batch_tables
+// built from the full section directory (FileOperations.build_batch_tables) so
+// its suspend/resume dispatch can be recognized before structuring runs.
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getParentEnvironment(0)

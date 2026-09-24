@@ -1,4 +1,11 @@
 async function _anon_0_() {
+// ⚠ WARNING: this output is NOT valid JavaScript.
+// Cause: this is a resolved generator/async body whose suspend-resume dispatch shape isn't one generator_dispatch.detect recognizes yet (e.g. `yield*`, an async generator).
+// It contains raw `goto label_N;` / `if (...) goto label_N;` statements -
+// `goto` is not a JavaScript keyword, so this will fail to parse as-is.
+// If this is a generator/async function, re-run decompilation with batch_tables
+// built from the full section directory (FileOperations.build_batch_tables) so
+// its suspend/resume dispatch can be recognized before structuring runs.
     // ──────────────── Block 12 ──────────────── 
     // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;

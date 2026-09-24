@@ -1,4 +1,11 @@
 function nestedArrayDestructureTest() {
+// ⚠ WARNING: this output is NOT valid JavaScript.
+// Cause: this function's control flow could not be fully structured by any recognized loop/if/switch/try shape.
+// It contains raw `goto label_N;` / `if (...) goto label_N;` statements -
+// `goto` is not a JavaScript keyword, so this will fail to parse as-is.
+// If this is a generator/async function, re-run decompilation with batch_tables
+// built from the full section directory (FileOperations.build_batch_tables) so
+// its suspend/resume dispatch can be recognized before structuring runs.
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 3>
     // USED → r3 = undefined;
