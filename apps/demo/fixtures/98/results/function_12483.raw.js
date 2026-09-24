@@ -92,7 +92,7 @@ function* generatorWithLoopTest(param1) {
     // CODE → addr:297 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 6>
     r1[3] = 3
     // CODE → addr:301 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r5 = { "value": null, "done": true }
+    r5 = { "value": undefined, "done": true }
     // CODE → addr:307 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 17 ──────────────── 

@@ -62,7 +62,7 @@ async function _anon_0_asyncLoopTest(param1) {
                 default:
                     // ──────────────── Block 23 ──────────────── 
                     // CODE → addr:462 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-                    r3 = { "value": null, "done": true }
+                    r3 = { "value": undefined, "done": true }
                     // CODE → addr:468 | <Ret>: <Reg8: 3>
                     return r3;
             }

@@ -1,5 +1,5 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16, UINT32
-from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.frontend.opcode import OpcodeResult, JS_UNDEFINED
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
     CallExpression,
@@ -9,6 +9,7 @@ from hermes_decompiler.ir.expressions import (
     ObjectExpression,
     ObjectProperty,
     StringLiteral,
+    UndefinedLiteral,
     python_literal,
 )
 
@@ -28,6 +29,14 @@ def _json_to_expression(value: object) -> Expression:
 
     if isinstance(value, list):
         return ArrayExpression(elements=tuple(_json_to_expression(v) for v in value))
+
+    # Must be checked before `python_literal`: a genuine JS `undefined`
+    # in the source buffer literal (kept distinct from `null`/`None` by
+    # `OpcodeEntry`'s parsing - see `JS_UNDEFINED`'s own docstring)
+    # would otherwise be indistinguishable from `null` and silently
+    # emitted as `NullLiteral()`.
+    if value is JS_UNDEFINED:
+        return UndefinedLiteral()
 
     return python_literal(value)
 

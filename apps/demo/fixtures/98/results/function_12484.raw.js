@@ -66,7 +66,7 @@ function* generatorTryFinallyTest() {
     // CODE → addr:114 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 7>
     r1[0] = 3
     // CODE → addr:118 | <NewObjectWithBuffer>: <Reg8: 12, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r12 = { "value": null, "done": true }
+    r12 = { "value": undefined, "done": true }
     // CODE → addr:124 | <Ret>: <Reg8: 12>
     return r12;
     // ──────────────── Block 8 ──────────────── 
@@ -227,7 +227,7 @@ function* generatorTryFinallyTest() {
     if (param1 === 2) goto label_404;
     // ──────────────── Block 26 ──────────────── 
     // CODE → addr:396 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r3 = { "value": null, "done": true }
+    r3 = { "value": undefined, "done": true }
     // CODE → addr:402 | <Ret>: <Reg8: 3>
     return r3;
     // ──────────────── Block 27 ──────────────── 

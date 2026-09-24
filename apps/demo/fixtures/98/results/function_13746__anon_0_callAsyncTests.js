@@ -41,7 +41,7 @@ async function _anon_0_callAsyncTests() {
             default:
                 // ──────────────── Block 34 ──────────────── 
                 // CODE → addr:507 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-                r3 = { "value": null, "done": true }
+                r3 = { "value": undefined, "done": true }
                 // CODE → addr:513 | <Ret>: <Reg8: 3>
                 return r3;
         }
@@ -266,7 +266,7 @@ async function _anon_0_callAsyncTests() {
                             // CODE → addr:105 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
                             console.log("__BC:Functions/AsyncTests/callAsyncTests/end")
                             // CODE → addr:117 | <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-                            r7 = { "value": null, "done": true }
+                            r7 = { "value": undefined, "done": true }
                             // CODE → addr:123 | <Ret>: <Reg8: 7>
                             return r7;
                     }

@@ -31,7 +31,7 @@ async function _anon_0_runAllTests() {
     // CODE → addr:126 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
     r1[2] = 3
     // CODE → addr:130 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r5 = { "value": null, "done": true }
+    r5 = { "value": undefined, "done": true }
     // CODE → addr:136 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 10 ──────────────── 

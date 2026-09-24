@@ -260,7 +260,7 @@ async function _anon_0_asyncLoopTest(param1) {
     if (param1 === 2) goto label_470;
     // ──────────────── Block 23 ──────────────── 
     // CODE → addr:462 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r3 = { "value": null, "done": true }
+    r3 = { "value": undefined, "done": true }
     // CODE → addr:468 | <Ret>: <Reg8: 3>
     return r3;
     // ──────────────── Block 24 ──────────────── 

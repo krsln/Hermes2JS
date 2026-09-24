@@ -15,7 +15,7 @@ function* simpleGeneratorTest() {
     // CODE → addr:106 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 6>
     r1[0] = 3
     // CODE → addr:110 | <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r7 = { "value": null, "done": true }
+    r7 = { "value": undefined, "done": true }
     // CODE → addr:116 | <Ret>: <Reg8: 7>
     return r7;
     // ──────────────── Block 12 ──────────────── 

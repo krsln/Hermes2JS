@@ -65,7 +65,7 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:113 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
     r1[2] = 3
     // CODE → addr:117 | <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r7 = { "value": null, "done": true }
+    r7 = { "value": undefined, "done": true }
     // CODE → addr:123 | <Ret>: <Reg8: 7>
     return r7;
     // ──────────────── Block 9 ──────────────── 
@@ -303,7 +303,7 @@ async function _anon_0_callAsyncTests() {
     if (param1 === 2) goto label_515;
     // ──────────────── Block 34 ──────────────── 
     // CODE → addr:507 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r3 = { "value": null, "done": true }
+    r3 = { "value": undefined, "done": true }
     // CODE → addr:513 | <Ret>: <Reg8: 3>
     return r3;
     // ──────────────── Block 35 ──────────────── 

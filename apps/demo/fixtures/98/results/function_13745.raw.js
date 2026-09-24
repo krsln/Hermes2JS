@@ -100,7 +100,7 @@ async function _anon_0_parallelAwaitTest() {
     // CODE → addr:245 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 6>
     r1[4] = 3
     // CODE → addr:249 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r5 = { "value": null, "done": true }
+    r5 = { "value": undefined, "done": true }
     // CODE → addr:255 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 17 ──────────────── 
