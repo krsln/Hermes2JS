@@ -32,7 +32,7 @@ function tryCatchInsideLoopTest(param1) {
     // USED → r4 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok";
     if (0 < r2) {
         // LOOP → START (for)
-        for (; r3 < r2; r3 = r2 + 1) {
+        for (; r3 < r2; ) {
             try {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → addr: 58 | <Mov>: <Reg8: 3, Reg8: 7>
@@ -87,6 +87,10 @@ function tryCatchInsideLoopTest(param1) {
                 r0 = r2 + 1
             }
             // ──────────────── Block 5 ──────────────── 
+            // CODE → addr:158 | <Mov>: <Reg8: 2, Reg8: 8>
+            r2 = r8
+            // CODE → addr:161 | <Inc>: <Reg8: 3, Reg8: 2>
+            r3 = r2 + 1
             // CODE → addr:164 | <Mov>: <Reg8: 8, Reg8: 3>
             r8 = r3
             // CODE → addr:167 | <Mov>: <Reg8: 2, Reg8: 7>

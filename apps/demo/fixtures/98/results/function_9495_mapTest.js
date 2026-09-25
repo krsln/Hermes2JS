@@ -84,14 +84,16 @@ function mapTest() {
     r3 = new Map()
     // CODE → addr:183 | <IteratorBegin>: <Reg8: 5, Reg8: 3>
     r5 = GetIterator(r3)
-    try {
-        // LOOP → START (while)
-        while (!(r8 === undefined)) {
-            // ──────────────── Block 1 ──────────────── 
-            // CODE → addr:186 | <Mov>: <Reg8: 8, Reg8: 3>
-            r8 = new Map()
-            // CODE → addr:189 | <IteratorNext>: <Reg8: 9, Reg8: 5, Reg8: 8>
-            r9 = r5.next()
+    // LOOP → START (while)
+    while (!(r8 === undefined)) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr:186 | <Mov>: <Reg8: 8, Reg8: 3>
+        r8 = new Map()
+        // CODE → addr:189 | <IteratorNext>: <Reg8: 9, Reg8: 5, Reg8: 8>
+        r9 = r5.next()
+        // CODE → addr:193 | <Mov>: <Reg8: 8, Reg8: 5>
+        r8 = r5
+        try {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr:200 | <Mov>: <Reg8: 11, Reg8: 9>
             r11 = r9
@@ -139,26 +141,26 @@ function mapTest() {
                 // CODE → addr:267 | <IteratorClose>: <Reg8: 8, UInt8: 0>
                 r8.return()
             }
-            // ──────────────── Block 9 ──────────────── 
-            // CODE → addr:270 | <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-            // USED → r11 = console;
-            // CODE → addr:276 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-            // USED → r10 = console.log;
-            // CODE → addr:281 | <Mov>: <Reg8: 9, Reg8: 7>
-            r9 = r7
-            // CODE → addr:284 | <Mov>: <Reg8: 8, Reg8: 6>
-            r8 = r6
-            // CODE → addr:287 | <Call3>: <Reg8: 8, Reg8: 10, Reg8: 11, Reg8: 9, Reg8: 8>
-            console.log(r9, r8)
+        } catch (caughtException) {
+            // ──────────────── Block 10 ──────────────── 
+            // CODE → addr:297 | <IteratorClose>: <Reg8: 5, UInt8: 1>
+            r5.return()
+            // CODE → addr:300 | <Throw>: <Reg8: 3>
+            throw r3;
         }
-        // LOOP → END
-    } catch (caughtException) {
-        // ──────────────── Block 10 ──────────────── 
-        // CODE → addr:297 | <IteratorClose>: <Reg8: 5, UInt8: 1>
-        r5.return()
-        // CODE → addr:300 | <Throw>: <Reg8: 3>
-        throw r3;
+        // ──────────────── Block 9 ──────────────── 
+        // CODE → addr:270 | <TryGetById>: <Reg8: 11, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+        // USED → r11 = console;
+        // CODE → addr:276 | <GetByIdShort>: <Reg8: 10, Reg8: 11, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+        // USED → r10 = console.log;
+        // CODE → addr:281 | <Mov>: <Reg8: 9, Reg8: 7>
+        r9 = r7
+        // CODE → addr:284 | <Mov>: <Reg8: 8, Reg8: 6>
+        r8 = r6
+        // CODE → addr:287 | <Call3>: <Reg8: 8, Reg8: 10, Reg8: 11, Reg8: 9, Reg8: 8>
+        console.log(r9, r8)
     }
+    // LOOP → END
     // ──────────────── Block 11 ──────────────── 
     // CODE → addr:302 | <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 8, string_id: 118>  # String: 'delete' (Identifier)
     // USED → r3 = r2.delete;

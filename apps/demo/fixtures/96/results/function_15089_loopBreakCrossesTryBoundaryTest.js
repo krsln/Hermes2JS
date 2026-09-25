@@ -30,10 +30,10 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // USED → r6 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/continue";
     // CODE → addr: 49 | <LoadConstString>: <Reg8: 5, string_id: 4655>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item' (String)
     // USED → r5 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item";
-    try {
-        if (0 < r2) {
-            // LOOP → START (for)
-            for (; r4 < r2; r4 = r2 + 1) {
+    if (0 < r2) {
+        // LOOP → START (for)
+        for (; r4 < r2; ) {
+            try {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → addr: 60 | <Mov>: <Reg8: 4, Reg8: 8>
                 // USED → r4 = param1;
@@ -84,24 +84,28 @@ function loopBreakCrossesTryBoundaryTest(param1) {
                     // CODE → addr:109 | <Call3>: <Reg8: 2, Reg8: 4, Reg8: 10, Reg8: 5, Reg8: 2>
                     console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item", r2)
                 }
-                // ──────────────── Block 5 ──────────────── 
-                // CODE → addr:171 | <Mov>: <Reg8: 9, Reg8: 4>
-                r9 = r4
-                // CODE → addr:174 | <Mov>: <Reg8: 2, Reg8: 8>
-                r2 = param1
-                // CODE → addr:177 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-                r2 = r2.length
+            } finally {
+                // ──────────────── Block 9 ──────────────── 
+                // CODE → addr:248 | <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r2 = console;
+                // CODE → addr:254 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r1 = console.log;
+                // CODE → addr:259 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
+                console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
             }
-            // LOOP → END
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → addr:165 | <Mov>: <Reg8: 2, Reg8: 9>
+            r2 = r9
+            // CODE → addr:168 | <Inc>: <Reg8: 4, Reg8: 2>
+            r4 = r2 + 1
+            // CODE → addr:171 | <Mov>: <Reg8: 9, Reg8: 4>
+            r9 = r4
+            // CODE → addr:174 | <Mov>: <Reg8: 2, Reg8: 8>
+            r2 = param1
+            // CODE → addr:177 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+            r2 = r2.length
         }
-    } finally {
-        // ──────────────── Block 9 ──────────────── 
-        // CODE → addr:248 | <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-        // USED → r2 = console;
-        // CODE → addr:254 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-        // USED → r1 = console.log;
-        // CODE → addr:259 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-        console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/finally")
+        // LOOP → END
     }
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:224 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

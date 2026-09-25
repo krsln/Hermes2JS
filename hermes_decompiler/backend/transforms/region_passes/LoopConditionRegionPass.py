@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+import dataclasses
 from collections import deque
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, LoopKind, LoopRegion
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir import AssignmentOperator
+from hermes_decompiler.ir import AssignmentOperator, Node
 from hermes_decompiler.ir.Operators import UnaryOperator
 from hermes_decompiler.ir.expressions import (
     Expression,
@@ -500,6 +501,35 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                 # place (see docstring above).
                 continue
 
+            if self._is_unsafe_to_reorder(update_block, index, instruction.value):
+                # Extracting this instruction into the header's update
+                # slot moves it to run AFTER everything else still left
+                # in `update_block` (the Printer renders `for`'s update
+                # clause as executing once per iteration, following the
+                # body - see class docstring's `for` shape). That's only
+                # sound if nothing still left behind in this block
+                # overwrites a register this instruction's own
+                # right-hand side reads; otherwise the update ends up
+                # reading a value some LATER statement already clobbered,
+                # instead of the one actually live at this point in the
+                # real bytecode. See `_is_unsafe_to_reorder`'s own
+                # docstring - this produced a real, confirmed bug in
+                # `loopBreakCrossesTryBoundaryTest`: the real increment
+                # (`r2 = r0 + 1`) reads the OLD index out of r0, but a
+                # later instruction in the very same block reloads r0
+                # with `param1.length` for the next condition check -
+                # extracting the increment into the header let that
+                # reload run first every iteration, so the loop compared
+                # the freshly-incremented counter against `length + 1`-
+                # ish garbage instead of the real length, and exited (or
+                # never entered) immediately. Bail out exactly the way
+                # every other unrecoverable shape in this method does -
+                # leave `loop.update` empty and the instruction in place
+                # as an ordinary body statement, where its original
+                # position keeps it correctly ordered relative to
+                # whatever it shares the block with.
+                return
+
             loop.update = AssignmentExpression(
                 left=Identifier(name=f"r{instruction.dest_reg}"),
                 operator=AssignmentOperator.ASSIGN,
@@ -508,6 +538,68 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
 
             update_block.instructions.remove(instruction)
             return
+
+    @staticmethod
+    def _is_unsafe_to_reorder(update_block: BasicBlock, index: int, value) -> bool:
+        """True when some instruction AFTER `update_block.instructions[index]`
+        (up to, but not including, the block's terminator) writes a
+        register that `value` - the candidate update instruction's own
+        right-hand side - reads.
+
+        Only registers `value` actually reads are checked - a later
+        write to some unrelated register is fine, since nothing about
+        moving the update instruction changes when THAT write runs
+        relative to anything that reads it. `dest_reg is None` (no
+        assignment, can't clobber anything) and a terminator-carrier
+        instruction (about to become the loop's own condition, not
+        ordinary body content) are both skipped, matching how the rest
+        of this method treats them.
+        """
+        read_registers = LoopConditionRegionPass._registers_read(value)
+
+        if not read_registers:
+            return False
+
+        for later in update_block.instructions[index + 1:]:
+            if later.terminator is not None:
+                continue
+
+            if later.dest_reg is not None and later.dest_reg in read_registers:
+                return True
+
+        return False
+
+    @staticmethod
+    def _registers_read(node) -> set[int]:
+        """Collect every register number read by `node` (an `Expression`
+        subtree). Generic `dataclasses.fields` walk, same technique
+        `LoopInductionAliasPass._repoint_node` uses to traverse an
+        arbitrary IR node without hardcoding each `Expression` subclass's
+        own shape.
+        """
+        registers: set[int] = set()
+
+        def visit(n) -> None:
+            if isinstance(n, Identifier):
+                if n.name.startswith("r") and n.name[1:].isdigit():
+                    registers.add(int(n.name[1:]))
+                return
+
+            if not dataclasses.is_dataclass(n) or not isinstance(n, Node):
+                return
+
+            for field in dataclasses.fields(n):
+                value = getattr(n, field.name)
+
+                if isinstance(value, Node):
+                    visit(value)
+                elif isinstance(value, tuple):
+                    for item in value:
+                        if isinstance(item, Node):
+                            visit(item)
+
+        visit(node)
+        return registers
 
     @staticmethod
     def _is_environment_roundtrip_reload(update_block: BasicBlock, index: int, reg: int) -> bool:

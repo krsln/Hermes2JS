@@ -29,7 +29,7 @@ function* generatorWithLoopTest(param1) {
         r5 = __environment__[1]
         if (r5 < r7) {
             // LOOP → START (for)
-            for (; r7 < r5; r7 = r7 + 1) {
+            for (; r7 < r5; ) {
                 // ──────────────── Block 10 ──────────────── 
                 // CODE → addr:173 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 1>
                 // USED → r5 = r1[1];
@@ -69,6 +69,8 @@ function* generatorWithLoopTest(param1) {
                 // USED → r5 = r1[1];
                 // CODE → addr:249 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 1>
                 r7 = r1[1][1]
+                // CODE → addr:253 | <Inc>: <Reg8: 7, Reg8: 7>
+                r7 = r7 + 1
                 // CODE → addr:256 | <StoreNPToEnvironment>: <Reg8: 5, UInt8: 1, Reg8: 7>
                 r1[1][1] = r7
                 // CODE → addr:260 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 1>
