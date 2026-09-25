@@ -36,7 +36,7 @@ function tryCatchTest() {
     throw r0;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 74 | <Catch>: <Reg8: 3>
-    r3 = caughtException
+    // USED → r3 = caughtException;
     // CODE → addr: 76 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr: 82 | <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -50,7 +50,7 @@ function tryCatchTest() {
     // CODE → addr:102 | <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r0 = console.log;
     // CODE → addr:107 | <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 3>
-    console.log(r3)
+    console.log(caughtException)
     // CODE → addr:112 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:118 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

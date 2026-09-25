@@ -49,7 +49,7 @@ function tryCatchTest() {
         // CODE → addr: 97 | <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
         // USED → r0 = console.log;
         // CODE → addr:102 | <Call2>: <Reg8: 0, Reg8: 0, Reg8: 2, Reg8: 3>
-        console.log(r3)
+        console.log(caughtException)
     } finally {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:173 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

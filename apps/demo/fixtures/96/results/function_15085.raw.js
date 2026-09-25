@@ -75,13 +75,13 @@ function tryCatchInsideLoopTest(param1) {
     throw r2;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:133 | <Catch>: <Reg8: 9>
-    r9 = caughtException
+    // USED → r9 = caughtException;
     // CODE → addr:135 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:141 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
     // CODE → addr:146 | <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 9>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", r9)
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
     // CODE → addr:152 | <Mov>: <Reg8: 2, Reg8: 0>
     r2 = r0
     // CODE → addr:155 | <Inc>: <Reg8: 0, Reg8: 2>

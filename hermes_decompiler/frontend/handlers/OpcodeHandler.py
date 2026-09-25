@@ -247,6 +247,7 @@ class OpcodeHandler(ABC):
             "TryGetById",
             "LoadParam",
             "LoadParamLong",
+            "Catch",
         }):
             if isinstance(state.value, MemberExpression):
                 state.mark_read()
@@ -283,6 +284,7 @@ class OpcodeHandler(ABC):
             "LoadConstUInt8",
             "LoadConstString",
             "LoadParam",
+            "Catch",
         }):
             if isinstance(value, Literal):
                 state.mark_read()
@@ -351,6 +353,7 @@ class OpcodeHandler(ABC):
             "LoadConstTrue",
             "LoadConstFalse",
             "LoadConstBigInt",
+            "Catch",
         }):
             if isinstance(value, Literal):
                 state.mark_read()

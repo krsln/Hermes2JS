@@ -89,7 +89,7 @@ function nestedTryCatchTest() {
         // CODE → addr:180 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
         // USED → r1 = console.log;
         // CODE → addr:185 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-        console.log(r3)
+        console.log(caughtException)
         // CODE → addr:190 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r2 = console;
         // CODE → addr:196 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
