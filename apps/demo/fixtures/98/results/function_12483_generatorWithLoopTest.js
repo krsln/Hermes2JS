@@ -28,8 +28,8 @@ function* generatorWithLoopTest(param1) {
         // CODE → addr:165 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 1>
         r5 = __environment__[1]
         if (r5 < r7) {
-            // LOOP → START (for)
-            for (; r7 < r5; ) {
+            // LOOP → START (do_while)
+            do {
                 // ──────────────── Block 10 ──────────────── 
                 // CODE → addr:173 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 1>
                 // USED → r5 = r1[1];
@@ -77,7 +77,7 @@ function* generatorWithLoopTest(param1) {
                 r7 = r1[1][1]
                 // CODE → addr:264 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
                 r5 = r1[1][0]
-            }
+            } while (r7 < r5);
             // LOOP → END
         }
         // ──────────────── Block 14 ──────────────── 

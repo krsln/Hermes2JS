@@ -31,8 +31,8 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr: 47 | <LoadConstString>: <Reg8: 4, string_id: 4701>  # String: '__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok' (String)
     // USED → r4 = "__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/ok";
     if (0 < r2) {
-        // LOOP → START (for)
-        for (; r3 < r2; ) {
+        // LOOP → START (do_while)
+        do {
             try {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → addr: 58 | <Mov>: <Reg8: 3, Reg8: 7>
@@ -97,7 +97,7 @@ function tryCatchInsideLoopTest(param1) {
             r2 = param1
             // CODE → addr:170 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
             r2 = r2.length
-        }
+        } while (r3 < r2);
         // LOOP → END
     }
     // ──────────────── Block 6 ──────────────── 

@@ -31,8 +31,8 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr: 49 | <LoadConstString>: <Reg8: 5, string_id: 4655>  # String: '__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item' (String)
     // USED → r5 = "__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/item";
     if (0 < r2) {
-        // LOOP → START (for)
-        for (; r4 < r2; ) {
+        // LOOP → START (do_while)
+        do {
             try {
                 // ──────────────── Block 1 ──────────────── 
                 // CODE → addr: 60 | <Mov>: <Reg8: 4, Reg8: 8>
@@ -104,7 +104,7 @@ function loopBreakCrossesTryBoundaryTest(param1) {
             r2 = param1
             // CODE → addr:177 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
             r2 = r2.length
-        }
+        } while (r4 < r2);
         // LOOP → END
     }
     // ──────────────── Block 8 ──────────────── 
