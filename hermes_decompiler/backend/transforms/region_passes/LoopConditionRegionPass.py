@@ -154,15 +154,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
 
             update_block = self._find_for_update_block(loop, latch)
 
-            if update_block is not None:
-                if self._consume_guard(latch, loop, LoopKind.FOR, update_block=update_block):
-                    loop.update_block = update_block
-                    loop.continue_target = update_block
-                    self._extract_for_components(loop)
-                    return
-
-            if self._consume_guard(latch, loop, LoopKind.DO_WHILE, update_block=None):
-                loop.continue_target = latch
+            if self._classify_bottom_tested(loop, latch, update_block):
                 return
 
             # Latch had a conditional branch but didn't parse as a valid
@@ -219,21 +211,7 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         # First determine whether this is the canonical `for` shape.
         update_block = self._find_for_update_block(loop, latch)
 
-        if update_block is not None:
-            if self._consume_guard(latch, loop, LoopKind.FOR, update_block=update_block):
-                loop.update_block = update_block
-                loop.continue_target = update_block
-
-                # Best-effort recovery of `initializer` / `update` so the
-                # Printer can render a real `for (init; cond; update)`
-                # header instead of leaving those slots blank. This is
-                # purely cosmetic metadata extraction - it never changes
-                # the loop's classification or its condition.
-                self._extract_for_components(loop)
-                return
-
-        if self._consume_guard(latch, loop, LoopKind.DO_WHILE, update_block=None):
-            loop.continue_target = latch
+        if self._classify_bottom_tested(loop, latch, update_block):
             return
 
         logger.warning(
@@ -242,8 +220,211 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         )
 
     # ------------------------------------------------------------------
-    # Guard extraction
+    # Bottom-tested classification (shared by both call sites above)
     # ------------------------------------------------------------------
+
+    def _classify_bottom_tested(
+            self,
+            loop: LoopRegion,
+            latch: BasicBlock,
+            update_block: BasicBlock | None,
+    ) -> bool:
+        """Try `for` classification first (when `update_block` was
+        found), falling back to `do-while` - either because
+        `update_block` is `None` to begin with, because
+        `_consume_guard` itself doesn't accept `latch` as a valid
+        guard, or because the new soundness check below rejects a
+        `for` reading that `_consume_guard` DID accept. Shared by both
+        call sites in `_extract` (the bottom-tested-tried-first path
+        and the generic bottom-tested fallback), which differ only in
+        WHEN they attempt this, never in the classification logic
+        itself.
+
+        Returns True if EITHER classification succeeded (`loop.loop_kind`
+        is now `FOR` or `DO_WHILE`) - the caller should return
+        immediately in that case. False means `latch`'s own branch
+        didn't parse as a valid guard for EITHER kind at all - genuinely
+        unrelated to this method's own soundness check, so the caller
+        should keep trying whatever fallback comes next.
+
+        The soundness check: printing a `for (init; cond; update)`
+        header claims `cond` is ALSO safe to check once before the very
+        first iteration, using whatever value each register `cond`
+        reads happens to hold at that point. For the induction register
+        itself, `_extract_initializer`'s own most-recent-write check
+        already guards this. Nothing was previously checking it for
+        `cond`'s OTHER operand (the loop's boundary/limit, e.g. an
+        `arr.length` re-read every iteration) - and Hermes' own
+        `for`-loop lowering routinely reuses that same register for
+        something else entirely (typically the ONE-TIME "is the array
+        even non-empty" guard's own boolean result) in the code that
+        runs right before falling into the loop, specifically BECAUSE
+        that register's pre-loop value is never actually read by the
+        real bytecode before the loop recomputes it in `update_block`
+        on the first iteration - only this pass's OWN `for`-header
+        rendering invents a new, non-existent read of it. Left
+        unchecked, that reuse gets misread as the boundary's "initial"
+        value, corrupting the very first condition check (confirmed bug
+        in `loopBreakCrossesTryBoundaryTest`/9477: the guard's boolean
+        got misread as the array length, so the printed `for` compared
+        the counter against `true`/`false` instead, exiting after one
+        iteration - or, when the induction register itself has no
+        pre-loop write to find AT ALL - `_handler_builder.py`'s own
+        `loopBreakCrossesTryBoundaryTest`/15089 case - left it
+        `undefined`, so the loop never ran even once).
+
+        `do-while` sidesteps all of this outright: its condition is
+        only ever evaluated AFTER the first iteration already ran, by
+        which point `update_block` has freshly (re)established every
+        register it touches - which is exactly why falling back to it
+        is always safe, never just "less bad".
+        """
+        if update_block is not None:
+            if self._consume_guard(latch, loop, LoopKind.FOR, update_block=update_block):
+                loop.update_block = update_block
+                loop.continue_target = update_block
+
+                induction_reg = self._infer_induction_register(
+                    loop.condition, loop.update_block, loop.condition_block,
+                )
+
+                if self._condition_boundary_registers_safe(loop, induction_reg):
+                    self._extract_for_components(loop)
+                    return True
+
+                # `loop.condition`/`loop.condition_block` (already set by
+                # `_consume_guard` above) stay exactly as they are - a
+                # `do-while`'s condition is the same expression, just
+                # checked at a different point - so nothing about them
+                # needs undoing here, only the `for`-specific metadata.
+                loop.loop_kind = LoopKind.DO_WHILE
+                loop.update_block = None
+                loop.continue_target = latch
+                return True
+
+        if self._consume_guard(latch, loop, LoopKind.DO_WHILE, update_block=None):
+            loop.continue_target = latch
+            return True
+
+        return False
+
+    def _condition_boundary_registers_safe(self, loop: LoopRegion, induction_reg: int | None) -> bool:
+        """True unless some register `loop.condition` reads - OTHER than
+        `induction_reg`, already covered separately by
+        `_extract_initializer` - is redefined inside `loop.update_block`
+        with a value that DOESN'T match what that same register holds
+        on the path INTO the loop from outside. See
+        `_classify_bottom_tested`'s own docstring for why a mismatch
+        here specifically means "unsafe to print as `for`", not just
+        "unsafe to fill in a cosmetic slot".
+
+        A register `loop.condition` reads that ISN'T touched anywhere
+        in `update_block` at all needs no check: nothing about entering
+        the loop changes its value between the first iteration's
+        condition check and any later one, so wherever it originally
+        came from is equally valid at both points.
+        """
+        if loop.condition is None or loop.update_block is None:
+            return True
+
+        other_registers = self._registers_read(loop.condition)
+
+        if induction_reg is not None:
+            other_registers = other_registers - {induction_reg}
+
+        if not other_registers:
+            return True
+
+        inside_values = {
+            instruction.dest_reg: instruction.value
+            for instruction in loop.update_block.instructions
+            if (
+                    instruction.terminator is None
+                    and instruction.dest_reg is not None
+                    and instruction.value is not None
+            )
+        }
+
+        for reg in other_registers:
+            inside_value = inside_values.get(reg)
+
+            if inside_value is None:
+                continue
+
+            outside_instruction = self._find_pre_loop_definition(loop, reg)
+
+            if (
+                    outside_instruction is None
+                    or repr(outside_instruction.value) != repr(inside_value)
+            ):
+                return False
+
+        return True
+
+    @staticmethod
+    def _find_pre_loop_definition(loop: LoopRegion, reg: int):
+        """Backward BFS for `reg`'s reaching definition, confined
+        entirely to blocks OUTSIDE the loop body.
+
+        Deliberately NOT `_reaching_definition_block`: that method
+        walks through ALL of `before_block`'s predecessors, including -
+        for a block inside a loop - the back-edge from the loop's own
+        latch. For a register redefined every iteration (exactly the
+        shape this is checking), that back-edge path "finds" a second,
+        different definition purely because the search wasn't confined
+        to outside the loop in the first place, so the ambiguity check
+        (`len(found_blocks) == 1`) trips and returns `None` even when
+        there's a perfectly good, unambiguous OUTSIDE definition. This
+        walk instead never crosses into `loop.body.covered_blocks` at
+        all, so the loop's own per-iteration redefinition is never a
+        candidate to begin with.
+
+        Returns the single reaching-definition instruction (so the
+        caller can inspect its VALUE, not just its location), or
+        `None` when zero or more than one such instruction exists.
+        """
+        covered = loop.body.covered_blocks
+        header = loop.header_block
+
+        visited: set = set()
+        queue = deque(
+            predecessor
+            for predecessor in header.predecessors
+            if predecessor not in covered
+        )
+
+        found = []
+
+        while queue:
+            block = queue.popleft()
+
+            if block in visited:
+                continue
+            visited.add(block)
+
+            instruction = next(
+                (
+                    instr
+                    for instr in reversed(block.instructions)
+                    if instr.dest_reg == reg and instr.value is not None
+                ),
+                None,
+            )
+
+            if instruction is not None:
+                found.append(instruction)
+                continue
+
+            queue.extend(
+                predecessor
+                for predecessor in block.predecessors
+                if predecessor not in covered
+            )
+
+        if len(found) != 1:
+            return None
+
+        return found[0]
 
     @staticmethod
     def _consume_guard(block: BasicBlock, loop: LoopRegion, kind: LoopKind, update_block: BasicBlock | None) -> bool:
