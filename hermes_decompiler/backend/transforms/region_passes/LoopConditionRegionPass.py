@@ -247,31 +247,58 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         unrelated to this method's own soundness check, so the caller
         should keep trying whatever fallback comes next.
 
-        The soundness check: printing a `for (init; cond; update)`
-        header claims `cond` is ALSO safe to check once before the very
-        first iteration, using whatever value each register `cond`
-        reads happens to hold at that point. For the induction register
-        itself, `_extract_initializer`'s own most-recent-write check
-        already guards this. Nothing was previously checking it for
-        `cond`'s OTHER operand (the loop's boundary/limit, e.g. an
-        `arr.length` re-read every iteration) - and Hermes' own
-        `for`-loop lowering routinely reuses that same register for
-        something else entirely (typically the ONE-TIME "is the array
-        even non-empty" guard's own boolean result) in the code that
-        runs right before falling into the loop, specifically BECAUSE
-        that register's pre-loop value is never actually read by the
-        real bytecode before the loop recomputes it in `update_block`
-        on the first iteration - only this pass's OWN `for`-header
-        rendering invents a new, non-existent read of it. Left
-        unchecked, that reuse gets misread as the boundary's "initial"
-        value, corrupting the very first condition check (confirmed bug
-        in `loopBreakCrossesTryBoundaryTest`/9477: the guard's boolean
-        got misread as the array length, so the printed `for` compared
-        the counter against `true`/`false` instead, exiting after one
-        iteration - or, when the induction register itself has no
-        pre-loop write to find AT ALL - `_handler_builder.py`'s own
-        `loopBreakCrossesTryBoundaryTest`/15089 case - left it
-        `undefined`, so the loop never ran even once).
+        The soundness check runs in two parts, both guarding the exact
+        same claim from two different angles - that `cond` is ALSO
+        safe to check once before the very first iteration, using
+        whatever value each register it reads happens to hold at that
+        point:
+
+        1. `_condition_boundary_registers_safe` - `cond`'s OTHER
+           operand (the loop's boundary/limit, e.g. an `arr.length`
+           re-read every iteration). Hermes' own `for`-loop lowering
+           routinely reuses that same register for something else
+           entirely (typically the ONE-TIME "is the array even
+           non-empty" guard's own boolean result) in the code that
+           runs right before falling into the loop, specifically
+           BECAUSE that register's pre-loop value is never actually
+           read by the real bytecode before the loop recomputes it in
+           `update_block` on the first iteration - only this pass's
+           OWN `for`-header rendering invents a new, non-existent read
+           of it. Left unchecked, that reuse gets misread as the
+           boundary's "initial" value, corrupting the very first
+           condition check (confirmed bug in
+           `loopBreakCrossesTryBoundaryTest`/9477: the guard's boolean
+           got misread as the array length, so the printed `for`
+           compared the counter against `true`/`false` instead,
+           exiting after one iteration).
+
+        2. The induction register itself, right below. Unlike the
+           boundary register, this one's own pre-loop write (if any)
+           is already found and inspected by `_extract_initializer` -
+           but that method's own docstring is explicit that finding
+           NOTHING is treated as "nothing to extract", leaving
+           `loop.initializer` empty as a "strictly worse but still
+           correct fallback". It isn't always correct: when the
+           induction register genuinely has no reaching write outside
+           the loop at all (confirmed bug in
+           `loopBreakCrossesTryBoundaryTest`/15089, and independently
+           in `tryFinallyLoopBreakTest`/15084 - a DIFFERENT register
+           playing the induction role, so not something (1) above
+           already catches there), an empty initializer slot leaves it
+           JS `undefined`, so `undefined < boundary` is simply always
+           `false` and the loop never runs even once - not "worse",
+           wrong. The distinguishing case this still has to let through
+           unmodified: the induction register IS a `LoadParam` (or
+           anything else) whose value was already established well
+           before `update_block`'s own single immediate predecessor -
+           `_extract_initializer` deliberately never looks that far
+           back (see its own docstring), so its blank result there
+           does NOT mean "undefined", only "out of this method's own,
+           narrower, reach". `_find_pre_loop_definition`'s wider
+           backward search (used here, but not reused BY
+           `_extract_initializer` itself, to keep that method's own
+           narrow, already-proven-safe scope untouched) is what tells
+           these two "blank" cases apart.
 
         `do-while` sidesteps all of this outright: its condition is
         only ever evaluated AFTER the first iteration already ran, by
@@ -288,15 +315,45 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                     loop.condition, loop.update_block, loop.condition_block,
                 )
 
-                if self._condition_boundary_registers_safe(loop, induction_reg):
-                    self._extract_for_components(loop)
+                safe = (
+                        induction_reg is not None
+                        and self._condition_boundary_registers_safe(loop, induction_reg)
+                )
+
+                if safe:
+                    # `_extract_initializer` BEFORE `_extract_update`,
+                    # reversing `_extract_for_components`'s own order:
+                    # `_extract_update` REMOVES the induction register's
+                    # update instruction from `update_block` the moment
+                    # it finds it, with nothing that would put it back
+                    # were this to revert to `do-while` afterward - so
+                    # the initializer check below has to happen, and
+                    # potentially trigger that revert, BEFORE
+                    # `_extract_update` ever touches `update_block`. The
+                    # two are otherwise independent (different blocks),
+                    # so swapping them is not a behavior change on its
+                    # own for the case that stays `for`.
+                    self._extract_initializer(loop)
+
+                    if (
+                            loop.initializer is None
+                            and self._find_pre_loop_definition(loop, induction_reg) is None
+                    ):
+                        safe = False
+
+                if safe:
+                    self._extract_update(loop)
                     return True
 
                 # `loop.condition`/`loop.condition_block` (already set by
                 # `_consume_guard` above) stay exactly as they are - a
                 # `do-while`'s condition is the same expression, just
                 # checked at a different point - so nothing about them
-                # needs undoing here, only the `for`-specific metadata.
+                # needs undoing here. `loop.initializer` (if the
+                # induction-register check above is what failed) is left
+                # as whatever `_extract_initializer` produced - `None` in
+                # the failing case, since a `do-while` has no header slot
+                # for it anyway.
                 loop.loop_kind = LoopKind.DO_WHILE
                 loop.update_block = None
                 loop.continue_target = latch
