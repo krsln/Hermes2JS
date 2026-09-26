@@ -78,17 +78,55 @@ class LoopBreakStructurer(RegionStructurer):
     against, since the exit body never rejoins the loop's normal
     completion path at all.
 
+    Shape D - the exit target IS the loop's own natural merge block,
+    not just code that eventually jumps there:
+
+        <loop body block>:
+            if (cond) goto MERGE; # MERGE is the loop's OWN merge address
+            ...
+
+        MERGE: # loop's own back-edge exit ALSO lands here
+            <shared post-loop code>
+
+    Rewritten to:
+
+        <loop body block>:
+            if (cond) {
+                break;
+            }
+            ...
+
+        MERGE: # untouched, still reached identically by normal completion
+            <shared post-loop code>
+
+    A `break` in JS already jumps to exactly this same point that
+    falling out of the loop normally does - so unlike Shapes A-C,
+    nothing needs relocating at all: MERGE stays exactly where it is,
+    in the tree, still reached by the loop's own latch edge exactly as
+    before conversion. This is what actually makes Shape D safe
+    despite MERGE having more than one predecessor (`block`, plus at
+    least one of `loop.latches`) - the single-predecessor requirement
+    the other shapes need exists specifically because THEY relocate
+    exit_block into the break's own `then` branch, which would strand
+    any other predecessor; Shape D never relocates anything, so that
+    requirement doesn't apply to it. Most commonly seen when the loop
+    sits inside a `try`/`finally` whose `finally` covers the loop's
+    exit as a whole (see `tryFinallyLoopBreakTest`): the natural
+    completion path and the break path are BOTH, entirely legitimately,
+    routed through that same shared merge point.
+
     Must run after LoopStructurer (needs loop.body.covered_blocks) and
     before IfStructurer, which would otherwise consume the branch as
     an ordinary conditional and strand it - see StructuralAnalyzer's
     unstructured-block audit.
 
     Deliberately narrow: only a single-block exit body is matched, and
-    only when its own terminator is one of the two recognized shapes
-    above (trailing unconditional jump to the loop's natural merge, or
-    a direct Return/Throw). Anything else (a Switch, another
-    ConditionalBranch, a jump elsewhere) is left as an unstructured
-    conditional branch rather than guessed at.
+    only when its own terminator is one of the recognized shapes
+    above (trailing unconditional jump to the loop's natural merge, a
+    direct Return/Throw, or - Shape D - the exit target coinciding
+    with the loop's own merge block outright). Anything else (a
+    Switch, another ConditionalBranch, a jump elsewhere) is left as an
+    unstructured conditional branch rather than guessed at.
     """
 
     def run(self) -> None:
@@ -236,8 +274,17 @@ class LoopBreakStructurer(RegionStructurer):
             exit_block, _stay_block, condition = target_block, fallthrough_block, branch.condition
 
         if list(exit_block.predecessors) != [block]:
-            # Reached some other way too - not a clean single-purpose
-            # exit body, don't risk duplicating/misplacing it.
+            # Reached some other way too - ordinarily not a clean
+            # single-purpose exit body, so not safe to relocate. But
+            # when that "some other way" is specifically the loop's
+            # OWN natural completion edge landing on this exact same
+            # block - i.e. exit_block doesn't just eventually rejoin
+            # the loop's post-loop code, it IS that code, already
+            # sitting exactly where it needs to stay - nothing needs
+            # relocating at all. See Shape D below.
+            if self._is_loops_own_merge_block(loop, block, exit_block):
+                return self._convert_bare_break(loop, block, branch, condition)
+
             logger.debug(
                 "LoopBreakStructurer: block %d's exit target %d has other "
                 "predecessors; skipping.", block.id, exit_block.id,
@@ -378,6 +425,133 @@ class LoopBreakStructurer(RegionStructurer):
             return False
 
         self._splice_exit_block_as_then(loop, block, exit_block, condition)
+        return True
+
+    # -------------------------------------------------------------
+    # Shape D: exit target IS the loop's own merge block - bare `break`
+    # -------------------------------------------------------------
+
+    def _is_loops_own_merge_block(self, loop: LoopRegion, block: BasicBlock, exit_block: BasicBlock) -> bool:
+        """True when every predecessor of `exit_block` OTHER than
+        `block` itself is either one of `loop.latches` DIRECTLY, or a
+        block that DOMINATES `loop.header_block` - i.e. `exit_block`
+        isn't just some code that happens to sit at the same address
+        the loop's own completion would also land on (address
+        collisions do happen - see below), it is, itself, actually
+        reached by the loop's own machinery: its back-edge exit (a
+        latch), or a pre-header guard mandatorily passed through
+        before the loop is ever entered at all (`tryFinallyLoopBreakTest`'s
+        own shape: an empty-array check that skips the loop, and the
+        loop's own natural completion, BOTH land on the same
+        try/finally cleanup exit_block also sits at).
+
+        A predecessor that merely DOESN'T belong to `loop.body` is not
+        enough on its own to qualify as that pre-header guard: an
+        OUTER loop's own latch is equally outside THIS (inner) loop's
+        `covered_blocks`, yet reaches this exact address purely by
+        coincidence when a labeled `continue` on that outer loop
+        happens to target it (confirmed regression in
+        `tripleNestedLabeledTest`: turned a real `continue loop_2;`
+        into a bare `break;`, silently dropping the label along with
+        the entire outer iteration it was supposed to complete).
+        Dominance is what tells these two apart where a plain
+        "outside `covered`" check can't: a genuine pre-header guard is
+        passed through on EVERY path into the loop, so it dominates
+        `loop.header_block` by definition; an outer loop's latch does
+        NOT (the outer loop's very first iteration reaches the inner
+        loop's header without ever passing through the outer latch at
+        all).
+
+        A SECOND, independent hazard applies specifically when the
+        match comes through `loop.latches` (not the dominance branch):
+        this loop's own latch reaching `exit_block` is only trustworthy
+        when `exit_block` is genuinely post-loop code, not another
+        loop's own back-edge machinery that this loop's latch happens
+        to fall straight into on natural completion (confirmed, a
+        second time, in `tripleNestedLabeledTest`: the INNERMOST loop's
+        own natural completion falls directly into the MIDDLE loop's
+        own latch/recheck block - exactly where a labeled `continue
+        loop_2;`, from deeper inside the innermost loop, ALSO lands, so
+        the two coincide purely from nested-loop code layout, not
+        because it's this loop's own exit). A back-edge - any
+        terminator target address at or before `exit_block`'s own
+        address - is what marks a block as being itself some OTHER
+        loop's latch, so that's refused outright rather than trying to
+        identify whose loop it actually belongs to.
+        """
+        others = set(exit_block.predecessors) - {block}
+
+        if not others:
+            return False
+
+        latches = set(loop.latches)
+
+        if latches & others and exit_block.terminator is not None:
+            if any(
+                    target <= exit_block.address
+                    for target in exit_block.terminator.targets
+            ):
+                return False
+
+        dominator_tree = self.cfg.dominator_tree
+
+        for predecessor in others:
+            if predecessor in latches:
+                continue
+
+            if (
+                    dominator_tree is not None
+                    and dominator_tree.dominates(predecessor, loop.header_block)
+            ):
+                continue
+
+            return False
+
+        return True
+
+    def _convert_bare_break(
+            self,
+            loop: LoopRegion,
+            block: BasicBlock,
+            branch: TerminatorConditionalBranch,
+            condition,
+    ) -> bool:
+        """Shape D: splice in a bare `if (cond) { break; }`, touching
+        nothing but `block` itself - unlike every other shape, there is
+        no exit body to move: `exit_block` (the loop's own merge block)
+        stays exactly where it already is, in the tree, still reached
+        by the loop's own latch edge precisely as before. The `then`
+        body is a brand new single-instruction block holding nothing
+        but the synthetic `break`, matching how `_convert_break_shape_
+        fallthrough` fabricates one where Hermes left no real
+        instruction to repurpose.
+        """
+
+        if not self._strip_block_branch(block, branch):
+            return False
+
+        from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+
+        new_id = max((b.id for b in self.cfg.blocks), default=0) + 1
+
+        break_block = BasicBlock(new_id, address=block.address)
+
+        entry = OpcodeEntry(bytecode="<synthetic>: BreakStatement", hex_address="")
+        break_block.instructions.append(OpcodeResult(entry, statement=BreakStatement(label=None)))
+
+        self.cfg.blocks.append(break_block)
+
+        then_body = SequenceRegion()
+        self.graph.transfer([break_block], then_body)
+
+        if_region = IfRegion()
+        if_region.condition = condition
+        if_region.then_body = then_body
+        if_region.else_body = None
+
+        insert_at = loop.body.children.index(block) + 1
+        self.graph.insert_at(loop.body, insert_at, if_region)
+
         return True
 
     # -------------------------------------------------------------

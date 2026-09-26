@@ -1,5 +1,5 @@
 function tryFinallyLoopBreakTest(param1) {
-    // ──────────────── Block 5 ──────────────── 
+    // ──────────────── Block 6 ──────────────── 
     // CODE → addr:  0 | <LoadParam>: <Reg8: 6, UInt8: 1>
     // USED → r6 = param1;
     // CODE → addr:  3 | <LoadConstUndefined>: <Reg8: 0>
@@ -38,27 +38,30 @@ function tryFinallyLoopBreakTest(param1) {
                 r2 = r7
                 // CODE → addr: 55 | <GetByVal>: <Reg8: 2, Reg8: 3, Reg8: 2>
                 r2 = param1[r2]
-                if (r2 !== 0) {
-                    // ──────────────── Block 2 ──────────────── 
-                    // CODE → addr: 63 | <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
-                    // USED → r10 = console;
-                    // CODE → addr: 69 | <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
-                    // USED → r9 = console.log;
-                    // CODE → addr: 74 | <Mov>: <Reg8: 2, Reg8: 6>
-                    // USED → r2 = param1;
-                    // CODE → addr: 77 | <Mov>: <Reg8: 3, Reg8: 7>
-                    r3 = r7
-                    // CODE → addr: 80 | <GetByVal>: <Reg8: 8, Reg8: 2, Reg8: 3>
-                    r8 = param1[r3]
-                    // CODE → addr: 84 | <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 4, Reg8: 8>
-                    console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", r8)
-                    // CODE → addr: 90 | <Inc>: <Reg8: 3, Reg8: 3>
-                    r3 = r3 + 1
-                    // CODE → addr: 93 | <Mov>: <Reg8: 7, Reg8: 3>
-                    r7 = r3
-                    // CODE → addr: 96 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
-                    r2 = r2.length
+                if (r2 === 0) {
+                    // ──────────────── Block 5 ──────────────── 
+                    // CODE → addr:  0 | BreakStatement
+                    break;
                 }
+                // ──────────────── Block 2 ──────────────── 
+                // CODE → addr: 63 | <TryGetById>: <Reg8: 10, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
+                // USED → r10 = console;
+                // CODE → addr: 69 | <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
+                // USED → r9 = console.log;
+                // CODE → addr: 74 | <Mov>: <Reg8: 2, Reg8: 6>
+                // USED → r2 = param1;
+                // CODE → addr: 77 | <Mov>: <Reg8: 3, Reg8: 7>
+                r3 = r7
+                // CODE → addr: 80 | <GetByVal>: <Reg8: 8, Reg8: 2, Reg8: 3>
+                r8 = param1[r3]
+                // CODE → addr: 84 | <Call3>: <Reg8: 8, Reg8: 9, Reg8: 10, Reg8: 4, Reg8: 8>
+                console.log("__BC:Exceptions/ExceptionTests/tryFinallyLoopBreakTest/item", r8)
+                // CODE → addr: 90 | <Inc>: <Reg8: 3, Reg8: 3>
+                r3 = r3 + 1
+                // CODE → addr: 93 | <Mov>: <Reg8: 7, Reg8: 3>
+                r7 = r3
+                // CODE → addr: 96 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)
+                r2 = r2.length
             } while (r3 < r2);
             // LOOP → END
         }
