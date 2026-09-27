@@ -11,6 +11,7 @@ from hermes_decompiler.backend.transforms.region_passes import (
     DeadMovEliminationPass,
     ForEachRegionPass,
     GeneratorStateMachineRegionPass,
+    IfTailMergeRegionPass,
     LoopConditionRegionPass,
     LoopContinueRegionPass,
     LoopInductionAliasPass,
@@ -122,6 +123,16 @@ class StructuralAnalyzer:
         SwitchStructurer(graph, self.cfg).run()
 
         # ---- 3. region_passes -------------------------------------------
+
+        # Must run before BooleanChainRegionPass/ConditionalExpressionRegionPass/
+        # NullishAssignmentRegionPass: those look for specific
+        # then/else body SHAPES, so a duplicated tail Hermes copied
+        # into both branches should already be hoisted out (leaving
+        # each branch with just its OWN distinct content) before any
+        # of them tries to interpret what's left. Must ALSO run before
+        # LoopConditionRegionPass - see that pass's own ordering
+        # comment below.
+        IfTailMergeRegionPass(graph, self.cfg).run()
 
         BooleanChainRegionPass(graph, self.cfg).run()  # `&&`/`||` (e.g. a bare-if (a || b) { ... }
 

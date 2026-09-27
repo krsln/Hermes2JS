@@ -39,13 +39,10 @@ function whileTest() {
             // USED → r10 = console.log;
             // CODE → addr: 82 | <Call2>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 9>
             console.log("__BC:ControlFlow/WhileTests/whileTest/if-continue")
-            // CODE → addr: 87 | <AddN>: <Reg8: 0, Reg8: 2, Reg8: 3>
-            r0 = r2 + 1
-        } else {
-            // ──────────────── Block 2 ──────────────── 
-            // CODE → addr: 65 | <AddN>: <Reg8: 0, Reg8: 2, Reg8: 3>
-            r0 = r2 + 1
         }
+        // ──────────────── Block 6 ──────────────── 
+        // CODE → addr: 87 | <AddN>: <Reg8: 0, Reg8: 2, Reg8: 3>
+        r0 = r2 + 1
     }
     // LOOP → END
     // ──────────────── Block 5 ──────────────── 

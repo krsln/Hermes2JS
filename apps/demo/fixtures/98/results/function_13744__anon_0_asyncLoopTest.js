@@ -245,8 +245,6 @@ async function _anon_0_asyncLoopTest(param1) {
                 r14 = { "value": null, "done": true }
                 // CODE → addr:385 | <PutOwnBySlotIdx>: <Reg8: 14, Reg8: 15, UInt8: 0>
                 r14.slot_0 = r1[4][0]
-                // CODE → addr:389 | <Ret>: <Reg8: 14>
-                return r14;
             } else {
                 // ──────────────── Block 14 ──────────────── 
                 // CODE → addr:268 | <LoadFromEnvironment>: <Reg8: 14, Reg8: 1, UInt8: 4>
@@ -277,9 +275,10 @@ async function _anon_0_asyncLoopTest(param1) {
                 r14 = { "value": null, "done": false }
                 // CODE → addr:322 | <PutOwnBySlotIdx>: <Reg8: 14, Reg8: 15, UInt8: 0>
                 r14.slot_0 = r15
-                // CODE → addr:326 | <Ret>: <Reg8: 14>
-                return r14;
             }
+            // ──────────────── Block 27 ──────────────── 
+            // CODE → addr:389 | <Ret>: <Reg8: 14>
+            return r14;
             // ──────────────── Block 16 ──────────────── 
             // CODE → addr:391 | <Mov>: <Reg8: 2, Reg8: 7>
             r2 = 3
