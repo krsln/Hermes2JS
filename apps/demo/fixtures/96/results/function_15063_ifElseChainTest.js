@@ -100,5 +100,4 @@ function ifElseChainTest(param1, param2) {
     // CODE → addr:227 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:229 | <Ret>: <Reg8: 0>
-    return undefined;
 }

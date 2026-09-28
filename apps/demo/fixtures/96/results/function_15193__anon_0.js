@@ -45,5 +45,4 @@ async function _anon_0_() {
     // CODE → addr:133 | <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
     console.log("__BC:Functions/AsyncTests/callAsyncTests/end")
     // CODE → addr:139 | <Ret>: <Reg8: 5>
-    return undefined;
 }

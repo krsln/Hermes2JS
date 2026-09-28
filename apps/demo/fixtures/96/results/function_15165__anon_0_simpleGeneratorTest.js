@@ -30,5 +30,4 @@ function* _anon_0_simpleGeneratorTest() {
     // CODE → addr: 88 | <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;
     // CODE → addr: 91 | <Ret>: <Reg8: 4>
-    return undefined;
 }

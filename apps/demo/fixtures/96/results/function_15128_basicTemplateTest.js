@@ -51,5 +51,4 @@ function basicTemplateTest(param1, param2) {
     // CODE → addr:111 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:113 | <Ret>: <Reg8: 0>
-    return undefined;
 }

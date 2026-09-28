@@ -95,5 +95,4 @@ function switchInsideTryTest(param1) {
     // CODE → addr:179 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:181 | <Ret>: <Reg8: 0>
-    return undefined;
 }

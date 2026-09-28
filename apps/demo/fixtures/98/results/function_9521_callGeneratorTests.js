@@ -89,5 +89,4 @@ function callGeneratorTests() {
     // CODE → addr:211 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/GeneratorTests/callGeneratorTests/end")
     // CODE → addr:216 | <Ret>: <Reg8: 0>
-    return undefined;
 }

@@ -93,5 +93,4 @@ function setTest() {
     // CODE → addr:210 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Collections/MapSetTests/setTest/end")
     // CODE → addr:215 | <Ret>: <Reg8: 0>
-    return undefined;
 }

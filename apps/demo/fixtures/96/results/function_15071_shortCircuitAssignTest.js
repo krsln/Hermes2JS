@@ -73,5 +73,4 @@ function shortCircuitAssignTest() {
     // CODE → addr:162 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:164 | <Ret>: <Reg8: 0>
-    return undefined;
 }

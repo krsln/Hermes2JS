@@ -205,5 +205,4 @@ function callRegExpTests() {
     // CODE → addr:579 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:581 | <Ret>: <Reg8: 0>
-    return undefined;
 }

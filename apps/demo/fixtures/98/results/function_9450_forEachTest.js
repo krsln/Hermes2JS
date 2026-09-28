@@ -29,5 +29,4 @@ function forEachTest() {
     // CODE → addr: 62 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:ControlFlow/ForEachTests/forEachTest/end")
     // CODE → addr: 67 | <Ret>: <Reg8: 0>
-    return undefined;
 }

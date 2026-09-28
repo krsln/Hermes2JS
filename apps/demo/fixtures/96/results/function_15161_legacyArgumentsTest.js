@@ -57,5 +57,4 @@ function legacyArgumentsTest() {
     // CODE → addr:102 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/RestParameterTests/legacyArgumentsTest/end")
     // CODE → addr:107 | <Ret>: <Reg8: 0>
-    return undefined;
 }

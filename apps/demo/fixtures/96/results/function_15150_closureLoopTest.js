@@ -61,5 +61,4 @@ function closureLoopTest() {
     // CODE → addr:117 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/ClosureTests/closureLoopTest/end")
     // CODE → addr:122 | <Ret>: <Reg8: 0>
-    return undefined;
 }

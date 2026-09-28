@@ -69,5 +69,4 @@ function forTest() {
     // CODE → addr:131 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:133 | <Ret>: <Reg8: 0>
-    return undefined;
 }

@@ -47,5 +47,4 @@ function basicRegExpTest(param1) {
     // CODE → addr:125 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:127 | <Ret>: <Reg8: 0>
-    return undefined;
 }

@@ -59,5 +59,4 @@ function arrowFunctionTest() {
     // CODE → addr:135 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Functions/ArrowTests/arrowFunctionTest/end")
     // CODE → addr:140 | <Ret>: <Reg8: 1>
-    return undefined;
 }

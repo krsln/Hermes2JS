@@ -18,6 +18,7 @@ from hermes_decompiler.backend.transforms.region_passes import (
     NullishAssignmentRegionPass,
     RedundantJumpRegionPass,
     ReturnValueResolutionPass,
+    TrailingReturnRegionPass,
 )
 from hermes_decompiler.backend.transforms.structurers import (
     SequenceStructurer,
@@ -239,6 +240,13 @@ class StructuralAnalyzer:
         # rather than risking a copy some earlier pass still expected
         # to find in place.
         DeadMovEliminationPass(graph, self.cfg).run()
+
+        # Drops the function's own final `return undefined;` (falling off
+        # the end of a JS function already IS that). Needs
+        # ReturnValueResolutionPass above to have turned `return r0;` into
+        # `return undefined;` first; placed after DeadMovEliminationPass so
+        # that pass still sees the return as a read of its register.
+        TrailingReturnRegionPass(graph, self.cfg).run()
 
         # ---- Diagnostics ------------------------------------------------
 

@@ -51,5 +51,4 @@ function regExpSingleQuotePatternTest(param1) {
     // CODE → addr:135 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:137 | <Ret>: <Reg8: 0>
-    return undefined;
 }

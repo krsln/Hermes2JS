@@ -64,5 +64,4 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
     // CODE → addr:110 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:112 | <Ret>: <Reg8: 0>
-    return undefined;
 }

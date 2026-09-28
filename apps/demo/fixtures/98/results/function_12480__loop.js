@@ -19,5 +19,4 @@ function _loop(param1) {
     // CODE → addr: 35 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr: 37 | <Ret>: <Reg8: 1>
-    return undefined;
 }

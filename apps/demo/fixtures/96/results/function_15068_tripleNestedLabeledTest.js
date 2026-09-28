@@ -88,5 +88,4 @@ function tripleNestedLabeledTest() {
     // CODE → addr:140 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:142 | <Ret>: <Reg8: 0>
-    return undefined;
 }

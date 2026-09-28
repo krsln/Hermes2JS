@@ -63,5 +63,4 @@ function nestedLoopTest() {
     // CODE → addr:128 | <LoadConstUndefined>: <Reg8: 9>
     // USED → r9 = undefined;
     // CODE → addr:130 | <Ret>: <Reg8: 9>
-    return undefined;
 }

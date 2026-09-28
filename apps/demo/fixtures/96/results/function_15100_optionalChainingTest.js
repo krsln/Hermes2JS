@@ -72,5 +72,4 @@ function optionalChainingTest() {
     // CODE → addr:126 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/PropertyTests/optionalChainingTest/end")
     // CODE → addr:131 | <Ret>: <Reg8: 0>
-    return undefined;
 }

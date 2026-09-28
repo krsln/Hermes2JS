@@ -117,5 +117,4 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr:239 | <Call2>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 2>
     console.log("__BC:Exceptions/ExceptionTests/loopBreakCrossesTryBoundaryTest/end")
     // CODE → addr:244 | <Ret>: <Reg8: 0>
-    return undefined;
 }

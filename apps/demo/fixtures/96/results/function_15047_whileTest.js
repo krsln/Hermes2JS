@@ -55,5 +55,4 @@ function whileTest() {
     // CODE → addr:113 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:115 | <Ret>: <Reg8: 0>
-    return undefined;
 }

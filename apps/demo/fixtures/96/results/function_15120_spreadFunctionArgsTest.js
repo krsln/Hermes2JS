@@ -47,5 +47,4 @@ function spreadFunctionArgsTest() {
     // CODE → addr: 92 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Arrays/SpreadTests/spreadFunctionArgsTest/end")
     // CODE → addr: 97 | <Ret>: <Reg8: 0>
-    return undefined;
 }

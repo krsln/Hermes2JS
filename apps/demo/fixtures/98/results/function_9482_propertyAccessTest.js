@@ -75,5 +75,4 @@ function propertyAccessTest() {
     // CODE → addr:183 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/PropertyTests/propertyAccessTest/end")
     // CODE → addr:188 | <Ret>: <Reg8: 0>
-    return undefined;
 }

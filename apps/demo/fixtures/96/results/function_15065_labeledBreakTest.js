@@ -63,5 +63,4 @@ function labeledBreakTest() {
     // CODE → addr:119 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:121 | <Ret>: <Reg8: 0>
-    return undefined;
 }

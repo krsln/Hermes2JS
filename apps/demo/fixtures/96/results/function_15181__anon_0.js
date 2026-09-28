@@ -94,5 +94,4 @@ async function _anon_0_() {
     // CODE → addr:203 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr:206 | <Ret>: <Reg8: 1>
-    return undefined;
 }

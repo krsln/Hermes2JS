@@ -76,5 +76,4 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr:142 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/RestParameterTests/restAfterRequiredTest/end")
     // CODE → addr:147 | <Ret>: <Reg8: 0>
-    return undefined;
 }

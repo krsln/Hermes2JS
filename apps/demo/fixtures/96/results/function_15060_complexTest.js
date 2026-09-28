@@ -116,5 +116,4 @@ function complexTest() {
     // CODE → addr:236 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:238 | <Ret>: <Reg8: 0>
-    return undefined;
 }

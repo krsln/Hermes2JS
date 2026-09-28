@@ -53,5 +53,4 @@ function* _anon_0_generatorWithLoopTest(param1) {
     // CODE → addr:115 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr:118 | <Ret>: <Reg8: 1>
-    return undefined;
 }

@@ -87,5 +87,4 @@ function objectLiteralTest() {
     // CODE → addr:202 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:204 | <Ret>: <Reg8: 0>
-    return undefined;
 }

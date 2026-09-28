@@ -73,5 +73,4 @@ function nestedTemplateTest(param1, param2) {
     // CODE → addr:155 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr:157 | <Ret>: <Reg8: 1>
-    return undefined;
 }

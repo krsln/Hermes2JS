@@ -23,5 +23,4 @@ function reset() {
     // CODE → addr: 40 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr: 42 | <Ret>: <Reg8: 1>
-    return undefined;
 }

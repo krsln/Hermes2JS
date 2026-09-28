@@ -416,5 +416,4 @@ async function _anon_0_() {
     // CODE → addr:990 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:index/runAllTests/end")
     // CODE → addr:996 | <Ret>: <Reg8: 2>
-    return undefined;
 }

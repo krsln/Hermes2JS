@@ -100,5 +100,4 @@ function nestedTryCatchFinallyTest() {
     // CODE → addr:224 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:226 | <Ret>: <Reg8: 0>
-    return undefined;
 }

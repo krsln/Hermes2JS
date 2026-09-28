@@ -31,5 +31,4 @@ function function_15091(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 59 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 61 | <Ret>: <Reg8: 0>
-    return undefined;
 }

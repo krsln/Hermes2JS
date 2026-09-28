@@ -111,5 +111,4 @@ function privateStaticTest() {
     // CODE → addr:258 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:260 | <Ret>: <Reg8: 0>
-    return undefined;
 }

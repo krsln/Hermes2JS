@@ -71,5 +71,4 @@ function labeledContinueTest() {
     // CODE → addr:137 | <LoadConstUndefined>: <Reg8: 7>
     // USED → r7 = undefined;
     // CODE → addr:139 | <Ret>: <Reg8: 7>
-    return undefined;
 }

@@ -45,5 +45,4 @@ function forInTest() {
     // CODE → addr: 94 | <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → addr: 96 | <Ret>: <Reg8: 2>
-    return undefined;
 }

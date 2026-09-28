@@ -87,5 +87,4 @@ function function_15074(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:211 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:213 | <Ret>: <Reg8: 0>
-    return undefined;
 }

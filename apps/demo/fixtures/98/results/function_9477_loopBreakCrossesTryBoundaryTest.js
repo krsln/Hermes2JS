@@ -101,5 +101,4 @@ function loopBreakCrossesTryBoundaryTest(param1) {
     // CODE → addr:220 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:222 | <Ret>: <Reg8: 0>
-    return undefined;
 }

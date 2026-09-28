@@ -33,5 +33,4 @@ function restOnlyTest() {
     // CODE → addr: 70 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr: 72 | <Ret>: <Reg8: 1>
-    return undefined;
 }
