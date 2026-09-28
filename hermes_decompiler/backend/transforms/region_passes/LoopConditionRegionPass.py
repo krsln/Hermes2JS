@@ -4,7 +4,13 @@ import dataclasses
 from collections import deque
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
-from hermes_decompiler.backend.regions import RegionVisitor, LoopKind, LoopRegion
+from hermes_decompiler.backend.regions import (
+    IfRegion,
+    LoopKind,
+    LoopRegion,
+    RegionVisitor,
+    SequenceRegion,
+)
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import AssignmentOperator, Node
 from hermes_decompiler.ir.Operators import UnaryOperator
@@ -17,6 +23,8 @@ from hermes_decompiler.ir.expressions import (
     NumericLiteral, NullLiteral,
     UndefinedLiteral, StringLiteral, BooleanLiteral,
 )
+from hermes_decompiler.backend.transforms.shared import has_side_effects
+from hermes_decompiler.ir.statements import BreakStatement
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
 from ._base import RegionPass
 
@@ -167,6 +175,16 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         # 3. Top-tested loop: while (...)
         # ------------------------------------------------------------------
 
+        if self._header_has_pre_condition_work(header):
+            # The header still carries printable instructions that run
+            # BEFORE its own conditional branch (see
+            # `_header_has_pre_condition_work`) - a plain
+            # `while (cond) { ... }` would evaluate `cond` ahead of them,
+            # so express it as `while (true) { <header>; if (!cond) break; ... }`
+            # instead, which keeps the original execution order exactly.
+            if self._guard_as_leading_break(header, loop):
+                return
+
         if self._consume_guard(header, loop, LoopKind.WHILE, update_block=None):
             loop.continue_target = header
             return
@@ -218,6 +236,97 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
             "Loop header block %d (0x%x): no valid loop guard found.",
             header.id, header.address,
         )
+
+    # ------------------------------------------------------------------
+    # Top-tested loops whose header does work before its own condition
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _header_has_pre_condition_work(header: BasicBlock) -> bool:
+        """True when `header` still holds PRINTED (not inlined-away)
+        instructions other than its own terminator carrier, and every
+        one of them is a plain side-effect-free value computation.
+
+        A `while (cond) { body }` evaluates `cond` before anything in
+        `body`, but every such instruction executes BEFORE the header's
+        conditional branch in the real bytecode - typically the
+        per-iteration alias copy and length reload a bytecode-level
+        `while (i < arr.length)` needs so its comparison has fresh
+        operands (`r6 = r4; r5 = param1.length; if (r6 >= r5) exit`).
+        Printed inside a `while (...)` body they run AFTER the check
+        instead: the first check reads registers nothing has set yet,
+        and every later one reads whatever the previous iteration left
+        behind (confirmed bug, `tryLoopMultiReturnTest`: the loop exited
+        after a single iteration).
+
+        Deliberately limited to side-effect-free header work. A header
+        that calls something before its branch is the iterator-protocol
+        shape (`r = it.next(); if (r.done) exit`) that `ForEachRegionPass`
+        - which runs later and expects the ordinary `while (cond)` form
+        - recognizes on its own, so those are left exactly as before.
+        """
+        printed = [
+            instruction
+            for instruction in header.instructions
+            if (
+                    instruction.terminator is None
+                    and not instruction.definition_used
+                    and (instruction.value is not None or instruction.statement is not None)
+            )
+        ]
+
+        if not printed:
+            return False
+
+        return all(
+            instruction.statement is None
+            and not has_side_effects(instruction.value)
+            for instruction in printed
+        )
+
+    def _guard_as_leading_break(self, header: BasicBlock, loop: LoopRegion) -> bool:
+        """Turn the header's guard into `if (<exit condition>) break;`
+        placed right after the header's own instructions, leaving the
+        loop itself unconditional (`while (true)`).
+        """
+        if not self._consume_guard(header, loop, LoopKind.WHILE, update_block=None):
+            return False
+
+        continue_condition = loop.condition
+
+        loop.condition = None
+        loop.condition_block = None
+        loop.loop_kind = LoopKind.ENDLESS
+        loop.continue_target = header
+
+        if (
+                isinstance(continue_condition, UnaryExpression)
+                and continue_condition.operator == UnaryOperator.LOGICAL_NOT
+        ):
+            exit_condition = continue_condition.operand
+        else:
+            exit_condition = UnaryExpression(UnaryOperator.LOGICAL_NOT, continue_condition)
+
+        from hermes_decompiler.frontend.opcode import OpcodeEntry, OpcodeResult
+
+        new_id = max((block.id for block in self.cfg.blocks), default=0) + 1
+        break_block = BasicBlock(new_id, address=header.address)
+        entry = OpcodeEntry(bytecode="<synthetic>: BreakStatement", hex_address="")
+        break_block.instructions.append(OpcodeResult(entry, statement=BreakStatement(label=None)))
+        self.cfg.blocks.append(break_block)
+
+        then_body = SequenceRegion()
+        self.graph.transfer([break_block], then_body)
+
+        if_region = IfRegion()
+        if_region.condition = exit_condition
+        if_region.then_body = then_body
+        if_region.else_body = None
+
+        owner = self.graph.owner(header)
+        self.graph.insert_at(owner, owner.children.index(header) + 1, if_region)
+
+        return True
 
     # ------------------------------------------------------------------
     # Bottom-tested classification (shared by both call sites above)

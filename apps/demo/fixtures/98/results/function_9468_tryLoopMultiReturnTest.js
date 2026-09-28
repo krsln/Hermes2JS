@@ -22,13 +22,18 @@ function tryLoopMultiReturnTest(param1) {
         r4 = 0
         // CODE → addr: 31 | <LoadConstString>: <Reg8: 1, string_id: 4272>  # String: '__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive' (String)
         // USED → r1 = "__BC:Exceptions/ExceptionTests/tryLoopMultiReturnTest/positive";
-        // LOOP → START (while)
-        while (!(r6 >= r5)) {
+        // LOOP → START (endless)
+        while (true) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 35 | <Mov>: <Reg8: 6, Reg8: 4>
             r6 = r4
             // CODE → addr: 38 | <GetByIdShort>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
             r5 = param1.length
+            if (r6 >= r5) {
+                // ──────────────── Block 11 ──────────────── 
+                // CODE → addr:  0 | BreakStatement
+                break;
+            }
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 47 | <Mov>: <Reg8: 5, Reg8: 4>
             r5 = r4
