@@ -25,6 +25,8 @@ function tryLoopMultiReturnTest(param1) {
         // LOOP → START (while)
         while (!(r6 >= r5)) {
             // ──────────────── Block 1 ──────────────── 
+            // CODE → addr: 35 | <Mov>: <Reg8: 6, Reg8: 4>
+            r6 = r4
             // CODE → addr: 38 | <Mov>: <Reg8: 5, Reg8: 3>
             r5 = param1
             // CODE → addr: 41 | <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 169>  # String: 'length' (Identifier)

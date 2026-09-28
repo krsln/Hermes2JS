@@ -1,8 +1,83 @@
 from __future__ import annotations
 
+import dataclasses
+
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
+from hermes_decompiler.backend.regions import LoopKind, LoopRegion, RegionVisitor
+from hermes_decompiler.ir import Node
 from hermes_decompiler.ir.expressions import Identifier
 from ._base import RegionPass
+
+
+class _LoopConditionRegisterCollector(RegionVisitor):
+    """One-time walk collecting, for every `LoopRegion` with a
+    `condition_block`/`update_block`, the set of registers its
+    `condition`/`update` expressions reference - keyed by whichever of
+    those two blocks the expression came from.
+
+    Exists purely to feed `DeadMovEliminationPass`'s liveness check -
+    see that class's own docstring ("condition/update-block blind
+    spot") for what this protects against.
+    """
+
+    def __init__(self) -> None:
+        self.by_block: dict[BasicBlock, set[int]] = {}
+
+    def visit_LoopRegion(self, node: LoopRegion) -> None:
+        # `for...of` / `for...in` never PRINT `condition`/`update`
+        # (`ForEachRegionPass` replaces them with the iterable/binding),
+        # so whatever stale expression it left behind is not a real
+        # read and must not keep otherwise-dead copies alive.
+        if node.loop_kind in (LoopKind.FOR_OF, LoopKind.FOR_IN):
+            self.visit(node.body)
+            return
+
+        for block, expr in (
+                (node.condition_block, node.condition),
+                (node.update_block, node.update),
+        ):
+            if block is None or expr is None:
+                continue
+
+            registers = self._registers_read(expr)
+
+            if registers:
+                self.by_block.setdefault(block, set()).update(registers)
+
+        self.visit(node.body)
+
+    @staticmethod
+    def _registers_read(node) -> set[int]:
+        """Same generic dataclass-tree walk `LoopConditionRegionPass.
+        _registers_read` already uses to collect every register an
+        `Expression` subtree reads - duplicated here rather than
+        imported, matching this codebase's own precedent (see e.g.
+        `LoopInductionAliasPass._repoint_node`'s docstring) of not
+        reaching across pass modules for a few-line generic tree walk.
+        """
+        registers: set[int] = set()
+
+        def visit(n) -> None:
+            if isinstance(n, Identifier):
+                if n.name.startswith("r") and n.name[1:].isdigit():
+                    registers.add(int(n.name[1:]))
+                return
+
+            if not dataclasses.is_dataclass(n) or not isinstance(n, Node):
+                return
+
+            for field in dataclasses.fields(n):
+                value = getattr(n, field.name)
+
+                if isinstance(value, Node):
+                    visit(value)
+                elif isinstance(value, tuple):
+                    for item in value:
+                        if isinstance(item, Node):
+                            visit(item)
+
+        visit(node)
+        return registers
 
 
 class DeadMovEliminationPass(RegionPass):
@@ -19,6 +94,46 @@ class DeadMovEliminationPass(RegionPass):
     body used to start with a dead `r4 = r3` immediately preceding the
     real `console.log(item)` call - `r4` gets overwritten two
     instructions later without ever being read).
+
+    condition/update-block blind spot
+    ----------------------------------
+    `_is_dead_after`'s forward scan only ever looks at `block.
+    instructions` - but `LoopConditionRegionPass` (much earlier in
+    `StructuralAnalyzer`'s own pass order) already POPPED the
+    conditional-branch instruction that USED to read the induction/
+    boundary register out of `loop.condition_block.instructions`
+    entirely, moving that read into `loop.condition` (a `LoopRegion`
+    attribute, not any block's own instruction list) - likewise for
+    `loop.update_block`/`loop.update`. A register whose ONLY read left
+    behind was that one becomes invisible to a scan that never looks
+    past `block.instructions`, and if the SAME register number happens
+    to be reused for something else entirely later in the same
+    function (an everyday occurrence - Hermes' allocator reuses
+    registers aggressively once a value's original meaning is done
+    with), that LATER, unrelated write reads as "redefined before
+    ever read" - textbook dead-store shape, but wrong, since the
+    read the scan can't see already happened, once every iteration.
+
+    Confirmed bug (`tryLoopMultiReturnTest`): the loop's own header
+    copies the induction register into a second one purely so the
+    `while (...)` condition has a stable per-iteration alias to read
+    (`r6 = r4;`, then `while (!(r6 >= r5))`) - by the time this pass
+    ran, that read was already gone from the header block's own
+    instructions (extracted into `loop.condition`), `r6` got reused a
+    few blocks later for plain array indexing, and the alias copy
+    silently vanished as "dead" - leaving `r6` referenced by the
+    printed `while` condition with NO assignment anywhere in the
+    function to give it a value. Not just noisier output: `r6` reads
+    as `undefined` every time, so the loop's own top-of-loop check
+    runs at most once correctly before misbehaving.
+
+    `_LoopConditionRegisterCollector` (above) closes this blind spot:
+    a one-time walk, before the main elimination loop starts, records
+    which registers each loop's `condition_block`/`update_block`
+    needs to treat as unconditionally live - checked FIRST in
+    `_is_dead_after`, before the forward scan even begins, so a
+    protected register is never removed regardless of what the scan
+    would otherwise conclude.
 
     Deliberately narrow, for safety:
 
@@ -49,6 +164,10 @@ class DeadMovEliminationPass(RegionPass):
     """
 
     def run(self) -> None:
+        collector = _LoopConditionRegisterCollector()
+        collector.visit(self.graph.root)
+        self._protected_registers = collector.by_block
+
         for block in list(self.graph.blocks()):
             for instr in list(block.instructions):
 
@@ -77,7 +196,12 @@ class DeadMovEliminationPass(RegionPass):
         forward from immediately after `after_instr` - same block
         first, then following the STRUCTURED (region-tree) "what runs
         next" chain. See class docstring for the full safety
-        rationale.
+        rationale, including the `_protected_registers` check below -
+        without it, this method has no way to see a read that a
+        loop's own extracted `condition`/`update` still makes of `reg`
+        once `LoopConditionRegionPass` has already removed the
+        instruction that used to carry it out of `block`'s own
+        instruction list.
 
         Deliberately follows region-tree sibling position
         (`self.graph.owner(block)` + its position in
@@ -90,6 +214,9 @@ class DeadMovEliminationPass(RegionPass):
         header as an unresolvable branch and never confirm anything
         dead inside one.
         """
+        if reg in self._protected_registers.get(block, ()):
+            return False
+
         visited = set()
 
         start_index = block.instructions.index(after_instr) + 1

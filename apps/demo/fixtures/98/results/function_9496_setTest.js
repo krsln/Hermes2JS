@@ -62,6 +62,8 @@ function setTest() {
             r5 = new Set(r10)
             // CODE → addr:125 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
             r7 = r4.next()
+            // CODE → addr:129 | <Mov>: <Reg8: 5, Reg8: 4>
+            r5 = r4
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr:136 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
             // USED → r6 = console;
