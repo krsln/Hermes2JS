@@ -21,10 +21,10 @@ function forTest() {
     // CODE → addr: 35 | <LoadConstUInt8>: <Reg8: 5, UInt8: 3>
     // USED → r5 = 3;
     // LOOP → START (for)
-    for (r0 = 0; r0 < 10; r0 = r1 + 1) {
+    for (i = 0; i < 10; i = r1 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 40 | <Mov>: <Reg8: 1, Reg8: 0>
-        r1 = r0
+        r1 = i
         if (r1 === 3) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr: 91 | <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

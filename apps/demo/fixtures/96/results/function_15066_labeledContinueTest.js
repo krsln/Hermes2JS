@@ -20,15 +20,15 @@ function labeledContinueTest() {
     // USED → r2 = 1;
     loop_1:
     // LOOP → START (for)
-    for (r1 = 0; r1 < 3; r1 = r7 + 1) {
+    for (i = 0; i < 3; i = r7 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 38 | <Mov>: <Reg8: 7, Reg8: 1>
-        r7 = r1
+        r7 = i
         // LOOP → START (for)
-        for (r8 = 0; r8 < 3; r8 = r9 + 1) {
+        for (j = 0; j < 3; j = r9 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 43 | <Mov>: <Reg8: 9, Reg8: 8>
-            r9 = r8
+            r9 = j
             if (r9 === 1) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → addr: 92 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)

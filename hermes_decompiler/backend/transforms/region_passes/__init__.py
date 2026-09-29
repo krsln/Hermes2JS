@@ -7,6 +7,7 @@ from .DeadMovEliminationPass import DeadMovEliminationPass
 from .ForEachRegionPass import ForEachRegionPass
 from .GeneratorStateMachineRegionPass import GeneratorStateMachineRegionPass
 from .IfTailMergeRegionPass import IfTailMergeRegionPass
+from .InductionVariableNamingPass import InductionVariableNamingPass
 from .LoopConditionRegionPass import LoopConditionRegionPass
 from .LoopInductionAliasPass import LoopInductionAliasPass
 from .LoopContinueRegionPass import LoopContinueRegionPass
@@ -23,6 +24,7 @@ __all__ = [
     "ForEachRegionPass",
     "GeneratorStateMachineRegionPass",
     "IfTailMergeRegionPass",
+    "InductionVariableNamingPass",
     "LoopConditionRegionPass",
     "LoopInductionAliasPass",
     "LoopContinueRegionPass",

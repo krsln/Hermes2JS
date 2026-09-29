@@ -11,6 +11,7 @@ from hermes_decompiler.backend.transforms.region_passes import (
     DeadMovEliminationPass,
     ForEachRegionPass,
     GeneratorStateMachineRegionPass,
+    InductionVariableNamingPass,
     IfTailMergeRegionPass,
     LoopConditionRegionPass,
     LoopContinueRegionPass,
@@ -247,6 +248,13 @@ class StructuralAnalyzer:
         # `return undefined;` first; placed after DeadMovEliminationPass so
         # that pass still sees the return as a read of its register.
         TrailingReturnRegionPass(graph, self.cfg).run()
+
+        # Purely cosmetic, purely presentational - must be the very LAST
+        # transform pass. It rewrites a for-loop's induction register into
+        # an explicit `i`/`j`/`k` AssignmentExpression with dest_reg cleared
+        # (see its own docstring), so anything running after it that keys
+        # off a register NUMBER would silently stop matching.
+        InductionVariableNamingPass(graph, self.cfg).run()
 
         # ---- Diagnostics ------------------------------------------------
 
