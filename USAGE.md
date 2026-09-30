@@ -88,7 +88,7 @@ python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/
 tree -I '__pycache__|__init__.py' hermes_decompiler
 
 # diff | working branch
-git diff main...feature/from-2026-09-15 > ~/Downloads/hermes2js.diff
+git diff main...feature/from-2026-10-01 > ~/Downloads/hermes2js.diff
 
 # ———— fixtures 96—————————————————————————————————————————————————————————
 python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results

@@ -2,6 +2,75 @@
 
 ## [Unreleased]
 
+## [2026-10-01]
+
+### Added
+
+* Added generator state-machine reconstruction for newer Hermes bytecode versions.
+* Added cross-section batch metadata processing for:
+
+    * generator and async function identification
+    * creator relationships
+    * class environment information
+    * private-name resolution
+    * environment origin tracking
+* Added shared expression/reference analysis utilities for:
+
+    * reference repointing
+    * reaching definitions
+    * structural equality
+    * side-effect detection
+* Added JavaScript identifier sanitization for Hermes-generated anonymous function names.
+* Added regression coverage for:
+
+    * fragmented exception-handler ranges
+    * generator and async state machines
+    * loop reconstruction across `try` / `finally` boundaries
+    * expression reference repointing
+    * side-effect and purity analysis
+    * `try` / `finally` reinterpretation
+
+### Changed
+
+* Reworked generator and async reconstruction to distinguish Hermes generator implementations across bytecode versions.
+* Reworked loop-condition reconstruction to preserve bytecode evaluation order when loop headers contain pre-condition
+  computations.
+* Improved `for` / `while` / `do...while` classification and loop initializer validation.
+* Improved `for...of` reconstruction and iterator `.next()` scaffolding removal.
+* Reworked `try` / `catch` / `finally` analysis and `finally` attachment.
+* Improved handling of fragmented and overlapping exception-handler ranges in the CFG.
+* Improved register definition tracking by preserving operand-definition versions.
+* Introduced shared reference-repointing and reaching-definition analysis for safer expression transformations.
+* Improved expression folding to account for side effects and reference identity.
+* Updated call reconstruction to correctly handle explicit `this` values and ordinary function calls.
+* Added support for resolving cross-function metadata through a shared `BatchTables` context.
+* Improved function-name generation for anonymous Hermes generator and async functions.
+* Updated the project metadata and development configuration for Python 3.14 and pytest.
+* Refined documentation and usage instructions around the current Hermes bytecode/disassembly workflow.
+
+### Fixed
+
+* Fixed incorrect reconstruction of generator and async functions.
+* Fixed anonymous generator and async function names producing invalid JavaScript identifiers.
+* Fixed ordinary function calls being emitted with an incorrect `.call(...)` receiver.
+* Fixed register definitions being incorrectly retained or discarded during expression folding.
+* Fixed loop conditions being evaluated in the wrong order when the loop header contains prerequisite computations.
+* Fixed `for` loops whose initial condition depended on registers without a valid pre-loop definition.
+* Fixed loop reconstruction across `try` / `finally` boundaries.
+* Fixed incorrect merging of fragmented exception-handler ranges.
+* Fixed incorrect reinterpretation of `catch` / rethrow patterns as `finally` blocks.
+* Fixed expression transformations that could discard side-effecting computations.
+* Fixed reference updates after expression folding so all affected consumers see the rewritten value.
+
+### Testing
+
+* Added extensive regression coverage for Hermes 96 and 98 generator, async, loop, and exception-control-flow cases.
+* Added dedicated tests for CFG exception-handler range merging.
+* Added tests for expression reference repointing and reaching-definition behavior.
+* Added tests for side-effect and purity analysis.
+* Added tests protecting `try` / `finally` reconstruction from incorrect catch-to-finally reinterpretation.
+* Expanded golden-output regression coverage for the updated reconstruction behavior.
+
 ## [2026-09-15]
 
 ### Added
