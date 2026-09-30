@@ -22,7 +22,7 @@ function* _anon_0_generatorWithLoopTest(param1) {
     // CODE → addr: 27 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/start")
     // CODE → addr: 32 | <LoadConstZero>: <Reg8: 4>
-    // USED → r4 = 0;
+    r4 = 0
     // CODE → addr: 34 | <Less>: <Reg8: 6, Reg8: 4, Reg8: 5>
     // USED → r6 = 0 < param1;
     // CODE → addr: 38 | <LoadConstString>: <Reg8: 3, string_id: 4783>  # String: '__BC:Functions/GeneratorTests/generatorWithLoopTest/skip' (String)

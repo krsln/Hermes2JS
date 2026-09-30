@@ -17,11 +17,11 @@ function callMapSetTests() {
     // CODE → addr: 29 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 31 | <Call1>: <Reg8: 1, Reg8: 4, Reg8: 0>
-    r1 = r3[0].call(r0)
+    r1 = r3[0].call(undefined)
     // CODE → addr: 35 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 1>
-    // USED → r3 = r3[1];
+    r3 = r3[1]
     // CODE → addr: 39 | <Call1>: <Reg8: 1, Reg8: 3, Reg8: 0>
-    r1 = r3[1].call(r0)
+    r1 = r3()
     // CODE → addr: 43 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → addr: 49 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

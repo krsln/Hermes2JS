@@ -83,9 +83,9 @@ function callDestructuringTests() {
     // CODE → addr:205 | <Call2>: <Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 6>
     console.log("__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/end")
     // CODE → addr:210 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 0>
-    // USED → r5 = r5[0];
+    r5 = r5[0]
     // CODE → addr:214 | <Call1>: <Reg8: 1, Reg8: 5, Reg8: 2>
-    r1 = r5[0].call(r2)
+    r1 = r5()
     // CODE → addr:218 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1920, UInt16: 48495>  # Object: {'id': 7}
     r5 = { "id": 7 }
     // CODE → addr:224 | <GetByIdShort>: <Reg8: 10, Reg8: 5, UInt8: 6, string_id: 28>  # String: 'id' (Identifier)
@@ -104,7 +104,12 @@ function callDestructuringTests() {
     // CODE → addr:266 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
     // USED → r1 = r5 === undefined;
     // CODE → addr:270 | <LoadConstUndefined>: <Reg8: 8>
-    r8 = (r5 === undefined) ? undefined : r7
+    r8 = undefined
+    if (r5 !== undefined) {
+        // ──────────────── Block 9 ──────────────── 
+        // CODE → addr:275 | <Mov>: <Reg8: 8, Reg8: 7>
+        r8 = r7
+    }
     // ──────────────── Block 10 ──────────────── 
     // CODE → addr:278 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
@@ -146,9 +151,9 @@ function callDestructuringTests() {
     // CODE → addr:351 | <Mov>: <Reg8: 14, Reg8: 9>
     r14 = (r9 !== undefined) ? r5.name : "anon"
     // CODE → addr:354 | <Mov>: <Reg8: 13, Reg8: 8>
-    r13 = (r5 === undefined) ? undefined : r7
+    r13 = r8
     // CODE → addr:357 | <Mov>: <Reg8: 12, Reg8: 7>
-    r12 = r6
+    r12 = r7
     // CODE → addr:360 | <Call>: <Reg8: 5, Reg8: 5, UInt8: 5>
     console.log(r16, r15, r14, r13, r12)
     // CODE → addr:364 | <TryGetById>: <Reg8: 7, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)

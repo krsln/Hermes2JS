@@ -30,7 +30,7 @@ async function _anon_0_() {
     // CODE → addr: 51 | <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → addr: 53 | <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
-    // USED → r5 = 1;
+    r5 = 1
     // CODE → addr: 56 | <Call2>: <Reg8: 6, Reg8: 9, Reg8: 2, Reg8: 5>
     r6 = delay(1)
     // CODE → addr: 61 | <NewArray>: <Reg8: 1, UInt16: 2>
@@ -63,7 +63,7 @@ async function _anon_0_() {
     // CODE → addr:100 | <GetByIdShort>: <Reg8: 4, Reg8: 4, UInt8: 5, string_id: 107>  # String: 'default' (Identifier)
     // USED → r4 = r4.default;
     // CODE → addr:105 | <Call3>: <Reg8: 4, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 6>
-    r4 = r4.default.call(r2, r1, 2)
+    r4 = r4.default.call(undefined, r1, 2)
     // CODE → addr:111 | <LoadConstZero>: <Reg8: 6>
     r6 = 0
     // CODE → addr:113 | <GetByVal>: <Reg8: 7, Reg8: 4, Reg8: 6>

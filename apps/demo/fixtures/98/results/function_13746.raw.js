@@ -3,7 +3,7 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getParentEnvironment(0)
     // CODE → addr:  3 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 2>
-    // USED → r0 = r1[2];
+    r0 = r1[2]
     // CODE → addr:  7 | <Mov>: <Reg8: 2, Reg8: 0>
     // USED → r2 = r1[2];
     // CODE → addr: 10 | <LoadConstUInt8>: <Reg8: 4, UInt8: 2>

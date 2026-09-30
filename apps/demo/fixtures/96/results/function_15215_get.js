@@ -25,7 +25,7 @@ function get() {
     // CODE → addr: 45 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → addr: 47 | <Call3>: <Reg8: 0, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
-    r0 = r1.default.call(r0, r2, r1)
+    r0 = r1.default.call(undefined, r2, r1)
     // CODE → addr: 53 | <GetByVal>: <Reg8: 0, Reg8: 0, Reg8: 1>
     // USED → r0 = r0[r1];
     // CODE → addr: 57 | <Ret>: <Reg8: 0>

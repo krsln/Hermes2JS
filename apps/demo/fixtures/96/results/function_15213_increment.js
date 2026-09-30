@@ -23,15 +23,15 @@ function increment() {
     // CODE → addr: 40 | <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → addr: 43 | <Call3>: <Reg8: 2, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 3>
-    r2 = r1.default.call(r2, this, r3)
+    r2 = r1.default.call(undefined, this, r3)
     // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 5>
     r1 = r0[5]
     // CODE → addr: 53 | <GetByVal>: <Reg8: 0, Reg8: 2, Reg8: 1>
     r0 = r2[r1]
     // CODE → addr: 57 | <Inc>: <Reg8: 0, Reg8: 0>
-    // USED → r0 = r0 + 1;
+    r0 = r0 + 1
     // CODE → addr: 60 | <PutByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>
-    r2[r0[5]] = r0 + 1
+    r2[r1] = r0
     // CODE → addr: 64 | <Ret>: <Reg8: 0>
-    return r0 + 1;
+    return r0;
 }

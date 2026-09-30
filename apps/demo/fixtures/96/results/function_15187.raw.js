@@ -15,7 +15,7 @@ function _parallelAwaitTest() {
     // CODE → addr: 18 | <CreateGeneratorClosure>: <Reg8: 2, Reg8: 2, function_id: 15188>  # Function: [#15188  of 9 bytes]: 1 params @ offset 0x0026b50f
     r2 = function_15188
     // CODE → addr: 23 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2>
-    r3 = r2.default.call(r4, r2)
+    r3 = r2.default.call(undefined, r2)
     // CODE → addr: 28 | <StoreToEnvironment>: <Reg8: 1, UInt8: 10, Reg8: 3>
     r1[10] = r3
     // CODE → addr: 32 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 65>  # String: 'apply' (Identifier)

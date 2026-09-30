@@ -38,7 +38,7 @@ function defaultWithRestTest() {
     // CODE → addr: 54 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Functions/DefaultParameterTests/defaultWithRestTest/start")
     // CODE → addr: 59 | <GetArgumentsLength>: <Reg8: 3, Reg8: 7>
-    // USED → r3 = arguments.length;
+    r3 = arguments.length
     // CODE → addr: 62 | <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 3, string_id: 6>  # String: 'Array' (Identifier)
     // USED → r2 = Array;
     // CODE → addr: 68 | <Greater>: <Reg8: 4, Reg8: 3, Reg8: 6>
@@ -62,7 +62,7 @@ function defaultWithRestTest() {
     // CODE → addr: 96 | <Construct>: <Reg8: 2, Reg8: 2, UInt8: 2>
     // USED → r2 = new Array(r11);
     // CODE → addr:100 | <SelectObject>: <Reg8: 4, Reg8: 4, Reg8: 2>
-    // USED → r4 = new Array(r11);
+    r4 = new Array(r11)
     // CODE → addr:104 | <Less>: <Reg8: 8, Reg8: 6, Reg8: 3>
     // USED → r8 = 1 < arguments.length;
     // CODE → addr:108 | <Mov>: <Reg8: 2, Reg8: 6>
@@ -86,9 +86,9 @@ function defaultWithRestTest() {
     // CODE → addr:138 | <CreateEnvironment>: <Reg8: 2>
     r2 = createEnvironment()
     // CODE → addr:140 | <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 15156>  # Function: [#15156  of 12 bytes]: 3 params @ offset 0x00269c66
-    // USED → r2 = function_15156(param1, param2);
+    // USED → r2 = function_15156;
     // CODE → addr:145 | <Call3>: <Reg8: 3, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
-    r3 = r4.reduce(function_15156(param1, param2), r5)
+    r3 = r4.reduce(function_15156, r5)
     // CODE → addr:151 | <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr:157 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

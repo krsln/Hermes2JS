@@ -17,10 +17,17 @@ function parameterDestructureTest(param1, param2) {
     r5 = param2
     // CODE → addr: 32 | <IteratorNext>: <Reg8: 5, Reg8: 3, Reg8: 5>
     r5 = r3.next()
+    // CODE → addr: 36 | <Mov>: <Reg8: 6, Reg8: 3>
+    // USED → r6 = r3;
     // CODE → addr: 39 | <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 1>
     // USED → r0 = r3 === undefined;
     // CODE → addr: 43 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = (r3 === undefined) ? undefined : r5
+    r7 = undefined
+    if (r3 !== undefined) {
+        // ──────────────── Block 3 ──────────────── 
+        // CODE → addr: 48 | <Mov>: <Reg8: 7, Reg8: 5>
+        r7 = r5
+    }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 51 | <LoadConstUndefined>: <Reg8: 6>
     r6 = undefined
@@ -64,9 +71,9 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr:126 | <Mov>: <Reg8: 13, Reg8: 8>
     r13 = (r8 !== undefined) ? param1.name : "anon"
     // CODE → addr:129 | <Mov>: <Reg8: 12, Reg8: 7>
-    r12 = (r3 === undefined) ? undefined : r5
+    r12 = r7
     // CODE → addr:132 | <Mov>: <Reg8: 11, Reg8: 6>
-    r11 = r4
+    r11 = r6
     // CODE → addr:135 | <Call>: <Reg8: 4, Reg8: 4, UInt8: 5>
     console.log(r15, r14, r13, r12, r11)
     // CODE → addr:139 | <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)

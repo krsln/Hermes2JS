@@ -43,7 +43,7 @@ function spreadObjectTest() {
     // CODE → addr: 90 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 92 | <Call3>: <Reg8: 4, Reg8: 3, Reg8: 0, Reg8: 4, Reg8: 2>
-    r4 = r2.default.call(r0, r4, r2)
+    r4 = r2.default.call(undefined, r4, r2)
     // CODE → addr: 98 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:104 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

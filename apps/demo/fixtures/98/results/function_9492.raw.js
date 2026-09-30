@@ -86,7 +86,7 @@ function spreadArrayTest() {
     if (r3 === undefined) goto label_204;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:164 | <Mov>: <Reg8: 6, Reg8: 7>
-    r6 = r0
+    r6 = r7
     // CODE → addr:167 | <IteratorNext>: <Reg8: 10, Reg8: 3, Reg8: 6>
     r10 = r3.next()
     // CODE → addr:171 | <Mov>: <Reg8: 6, Reg8: 3>
@@ -108,7 +108,7 @@ function spreadArrayTest() {
     // CODE → addr:194 | <Catch>: <Reg8: 2>
     r2 = caughtException
     // CODE → addr:196 | <JmpTrue>: <Addr8: 6, Reg8: 6>  # Address: 000000ca
-    if (r6 === undefined) goto label_202;
+    if (r6) goto label_202;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr:199 | <IteratorClose>: <Reg8: 3, UInt8: 1>
     r3.return()

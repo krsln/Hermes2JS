@@ -13,9 +13,9 @@ function _loop(param1) {
     // CODE → addr: 20 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 0, string_id: 88>  # String: 'push' (Identifier)
     // USED → r3 = r4.push;
     // CODE → addr: 25 | <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 13741>  # Function: [#13741  of 9 bytes]: 1 params @ offset 0x00193d54
-    // USED → r2 = function_13741();
+    // USED → r2 = function_13741;
     // CODE → addr: 30 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = r4.push(function_13741())
+    r2 = r4.push(function_13741)
     // CODE → addr: 35 | <LoadConstUndefined>: <Reg8: 1>
     r1 = undefined
     // CODE → addr: 37 | <Ret>: <Reg8: 1>

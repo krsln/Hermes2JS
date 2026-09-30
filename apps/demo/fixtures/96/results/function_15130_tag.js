@@ -7,7 +7,7 @@ function tag(param1) {
     // CODE → addr:  5 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → addr:  7 | <GetArgumentsLength>: <Reg8: 6, Reg8: 7>
-    // USED → r6 = arguments.length;
+    r6 = arguments.length
     // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 1>
     // USED → r1 = globalThis;
     // CODE → addr: 12 | <TryGetById>: <Reg8: 8, Reg8: 1, UInt8: 1, string_id: 6>  # String: 'Array' (Identifier)
@@ -64,11 +64,11 @@ function tag(param1) {
     // CODE → addr:110 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 5, string_id: 210>  # String: 'reduce' (Identifier)
     // USED → r2 = param1.reduce;
     // CODE → addr:115 | <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 15131>  # Function: [#15131  of 61 bytes]: 4 params @ offset 0x0026a42e
-    // USED → r1 = function_15131(param1, param2, param3);
+    // USED → r1 = function_15131;
     // CODE → addr:120 | <LoadConstString>: <Reg8: 0, string_id: 7163>  # String: '' (Identifier)
     // USED → r0 = "";
     // CODE → addr:124 | <Call3>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 1, Reg8: 0>
-    r0 = param1.reduce(function_15131(param1, param2, param3), "")
+    r0 = param1.reduce(function_15131, "")
     // CODE → addr:130 | <Ret>: <Reg8: 0>
     return r0;
 }

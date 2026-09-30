@@ -59,11 +59,11 @@ function callDefaultParameterTests() {
     // CODE → addr:139 | <GetParentEnvironment>: <Reg8: 6, UInt8: 0>
     r6 = getParentEnvironment(0)
     // CODE → addr:142 | <LoadFromEnvironment>: <Reg8: 6, Reg8: 6, UInt8: 0>
-    // USED → r6 = r6[0];
+    r6 = r6[0]
     // CODE → addr:146 | <LoadConstUndefined>: <Reg8: 3>
     // USED → r3 = undefined;
     // CODE → addr:148 | <Call1>: <Reg8: 4, Reg8: 6, Reg8: 3>
-    r4 = r6[0].call(r3)
+    r4 = r6()
     // CODE → addr:152 | <LoadConstUInt8>: <Reg8: 1, UInt8: 4>
     // USED → r1 = 4;
     // CODE → addr:155 | <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
@@ -71,7 +71,7 @@ function callDefaultParameterTests() {
     // CODE → addr:158 | <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → addr:161 | <Call4>: <Reg8: 4, Reg8: 6, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
-    r4 = r6[0].call(r3, 2, 3, 4)
+    r4 = r6(2, 3, 4)
     // CODE → addr:168 | <TryGetById>: <Reg8: 7, Reg8: 5, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r7 = console;
     // CODE → addr:174 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

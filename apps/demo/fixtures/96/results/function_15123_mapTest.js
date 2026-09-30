@@ -98,7 +98,7 @@ function mapTest() {
         // CODE → addr:213 | <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 9, string_id: 107>  # String: 'default' (Identifier)
         // USED → r10 = r10.default;
         // CODE → addr:218 | <Call3>: <Reg8: 10, Reg8: 10, Reg8: 0, Reg8: 11, Reg8: 7>
-        r10 = r10.default.call(r0, r11, 2)
+        r10 = r10.default.call(undefined, r11, 2)
         // CODE → addr:224 | <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 6>
         r13 = r10[r6]
         // CODE → addr:228 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 3>

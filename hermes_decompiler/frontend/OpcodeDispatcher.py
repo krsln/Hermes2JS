@@ -139,6 +139,7 @@ class OpcodeDispatcher:
                 continue
 
             analysis.current_address = entry.address
+            analysis.current_entry = entry
 
             try:
                 result = dispatcher.dispatch(entry, entries, i)

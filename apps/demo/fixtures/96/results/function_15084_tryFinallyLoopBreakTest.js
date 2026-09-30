@@ -49,7 +49,7 @@ function tryFinallyLoopBreakTest(param1) {
                 // CODE → addr: 69 | <GetByIdShort>: <Reg8: 9, Reg8: 10, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
                 // USED → r9 = console.log;
                 // CODE → addr: 74 | <Mov>: <Reg8: 2, Reg8: 6>
-                // USED → r2 = param1;
+                r2 = param1
                 // CODE → addr: 77 | <Mov>: <Reg8: 3, Reg8: 7>
                 r3 = r7
                 // CODE → addr: 80 | <GetByVal>: <Reg8: 8, Reg8: 2, Reg8: 3>

@@ -28,7 +28,7 @@ function function_12478(param1, param2, param3) {
     // CODE → addr: 42 | <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 5>
     r3 = r1[0][param3]
     // CODE → addr: 46 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 3>
-    r1 = String.call(r0, r3)
+    r1 = String.call(undefined, r3)
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 51 | <Add>: <Reg8: 1, Reg8: 2, Reg8: 1>
     r1 = param1 + param2 + r1

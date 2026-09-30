@@ -53,17 +53,17 @@ function Counter() {
     // CODE → addr:116 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 3, UInt8: 4>
     r1 = r3[4]
     // CODE → addr:120 | <GetByIdShort>: <Reg8: 1, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r1 = r1.default;
+    r1 = r1.default
     // CODE → addr:125 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 3, UInt8: 6>
     r3 = r3[6]
     // CODE → addr:129 | <Call3>: <Reg8: 2, Reg8: 1, Reg8: 0, Reg8: 2, Reg8: 3>
-    r2 = r1.default.call(r0, r2, r3)
+    r2 = r1(r2, r3)
     // CODE → addr:135 | <GetByVal>: <Reg8: 1, Reg8: 2, Reg8: 3>
     r1 = r2[r3]
     // CODE → addr:139 | <Inc>: <Reg8: 1, Reg8: 1>
-    // USED → r1 = r1 + 1;
+    r1 = r1 + 1
     // CODE → addr:142 | <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>
-    r2[r3[6]] = r1 + 1
+    r2[r3] = r1
     // CODE → addr:146 | <Ret>: <Reg8: 0>
     return r0;
 }

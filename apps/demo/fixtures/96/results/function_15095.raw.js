@@ -15,9 +15,9 @@ function objectLiteralTest() {
     // CODE → addr: 32 | <CreateEnvironment>: <Reg8: 2>
     r2 = createEnvironment()
     // CODE → addr: 34 | <CreateClosure>: <Reg8: 2, Reg8: 2, function_id: 15096>  # Function: [#15096 greet of 35 bytes]: 1 params @ offset 0x002694da
-    // USED → r2 = greet();
+    // USED → r2 = greet;
     // CODE → addr: 39 | <PutNewOwnById>: <Reg8: 1, Reg8: 2, string_id: 17737>  # String: 'greet' (Identifier)
-    r1.greet = greet()
+    r1.greet = greet
     // CODE → addr: 44 | <TryGetById>: <Reg8: 5, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → addr: 50 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

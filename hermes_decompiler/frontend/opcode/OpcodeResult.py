@@ -29,6 +29,7 @@ class OpcodeResult:
         "statement",
         "dest_reg",
         "definition_used",
+        "definition_pinned",
         "env_source",
     )
 
@@ -87,6 +88,12 @@ class OpcodeResult:
         # inlined into another expression and no longer needs to be
         # emitted on its own.
         self.definition_used = False
+
+        # Shows: a bare symbolic `rN` reference to this definition was
+        # emitted somewhere in the output, so the defining statement MUST
+        # be printed. Once set, `RegisterState.mark_used()` no longer
+        # suppresses the statement, whatever order the reads arrive in.
+        self.definition_pinned = False
 
     # ------------------------------------------------------------------
     # Derived from `entry` - no longer separately stored/duplicated.
@@ -172,4 +179,5 @@ class OpcodeResult:
             env_source=self.env_source,
         )
         clone.definition_used = self.definition_used
+        clone.definition_pinned = self.definition_pinned
         return clone

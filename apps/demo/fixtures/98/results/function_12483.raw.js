@@ -5,7 +5,7 @@ function* generatorWithLoopTest(param1) {
     // CODE → addr:121 | <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 5>
     r1[1] = __environment__
     // CODE → addr:125 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 1, UInt8: 0>
-    // USED → r7 = r1[0];
+    r7 = r1[0]
     // CODE → addr:129 | <StoreToEnvironment>: <Reg8: 5, UInt8: 0, Reg8: 7>
     __environment__[0] = r1[0]
     // CODE → addr:133 | <LoadConstUndefined>: <Reg8: 9>

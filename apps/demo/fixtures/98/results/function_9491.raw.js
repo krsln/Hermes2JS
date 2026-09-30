@@ -47,9 +47,9 @@ function arrayTest() {
     // CODE → addr: 97 | <LoadConstUndefined>: <Reg8: 2>
     r2 = undefined
     // CODE → addr: 99 | <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 12472>  # Function: [#12472  of 12 bytes]: 3 params @ offset 0x00239ae7
-    // USED → r4 = function_12472(param1, param2);
+    // USED → r4 = function_12472;
     // CODE → addr:104 | <Call2>: <Reg8: 7, Reg8: 6, Reg8: 7, Reg8: 4>
-    r7 = r7.sort(function_12472(param1, param2))
+    r7 = r7.sort(function_12472)
     // CODE → addr:109 | <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
     // CODE → addr:115 | <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -59,9 +59,9 @@ function arrayTest() {
     // CODE → addr:125 | <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 6, string_id: 126>  # String: 'map' (Identifier)
     // USED → r6 = r5.map;
     // CODE → addr:130 | <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 12473>  # Function: [#12473  of 12 bytes]: 2 params @ offset 0x00243e0c
-    // USED → r4 = function_12473(param1);
+    // USED → r4 = function_12473;
     // CODE → addr:135 | <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4>
-    r7 = r5.map(function_12473(param1))
+    r7 = r5.map(function_12473)
     // CODE → addr:140 | <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
     // CODE → addr:146 | <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -71,9 +71,9 @@ function arrayTest() {
     // CODE → addr:156 | <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 7, string_id: 142>  # String: 'filter' (Identifier)
     // USED → r6 = r5.filter;
     // CODE → addr:161 | <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 12474>  # Function: [#12474  of 12 bytes]: 2 params @ offset 0x00243e18
-    // USED → r4 = function_12474(param1);
+    // USED → r4 = function_12474;
     // CODE → addr:166 | <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4>
-    r7 = r5.filter(function_12474(param1))
+    r7 = r5.filter(function_12474)
     // CODE → addr:171 | <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
     // CODE → addr:177 | <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -83,9 +83,9 @@ function arrayTest() {
     // CODE → addr:187 | <GetByIdShort>: <Reg8: 6, Reg8: 5, UInt8: 8, string_id: 213>  # String: 'reduce' (Identifier)
     // USED → r6 = r5.reduce;
     // CODE → addr:192 | <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 12475>  # Function: [#12475  of 12 bytes]: 3 params @ offset 0x00243e24
-    // USED → r4 = function_12475(param1, param2);
+    // USED → r4 = function_12475;
     // CODE → addr:197 | <Call3>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4, Reg8: 0>
-    r7 = r5.reduce(function_12475(param1, param2), r0)
+    r7 = r5.reduce(function_12475, r0)
     // CODE → addr:203 | <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
     // CODE → addr:209 | <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -95,9 +95,9 @@ function arrayTest() {
     // CODE → addr:219 | <GetById>: <Reg8: 6, Reg8: 5, UInt8: 9, string_id: 8919>  # String: 'find' (Identifier)
     // USED → r6 = r5.find;
     // CODE → addr:225 | <CreateClosure>: <Reg8: 4, Reg8: 2, function_id: 12476>  # Function: [#12476  of 12 bytes]: 2 params @ offset 0x00243e30
-    // USED → r4 = function_12476(param1);
+    // USED → r4 = function_12476;
     // CODE → addr:230 | <Call2>: <Reg8: 7, Reg8: 6, Reg8: 5, Reg8: 4>
-    r7 = r5.find(function_12476(param1))
+    r7 = r5.find(function_12476)
     // CODE → addr:235 | <TryGetById>: <Reg8: 6, Reg8: 3, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
     // CODE → addr:241 | <GetByIdShort>: <Reg8: 4, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

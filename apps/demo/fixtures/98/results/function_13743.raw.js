@@ -3,7 +3,7 @@ async function _anon_0_asyncTryCatchTest() {
     // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getParentEnvironment(0)
     // CODE → addr:  3 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 4>
-    // USED → r0 = r1[4];
+    r0 = r1[4]
     // CODE → addr:  7 | <Mov>: <Reg8: 2, Reg8: 0>
     // USED → r2 = r1[4];
     // CODE → addr: 10 | <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
@@ -200,7 +200,7 @@ async function _anon_0_asyncTryCatchTest() {
     // CODE → addr:378 | <LoadFromEnvironment>: <Reg8: 18, Reg8: 13, UInt8: 0>
     // USED → r18 = r13[0];
     // CODE → addr:382 | <Call2>: <Reg8: 19, Reg8: 18, Reg8: 17, Reg8: 5>
-    r19 = r13[0].call(r17, 1)
+    r19 = r13[0].call(0, 1)
     // CODE → addr:387 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 7>
     r1[1] = 3
     // CODE → addr:391 | <Mov>: <Reg8: 2, Reg8: 5>

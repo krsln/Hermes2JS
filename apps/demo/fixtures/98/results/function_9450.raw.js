@@ -17,9 +17,9 @@ function forEachTest() {
     // CODE → addr: 35 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → addr: 37 | <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 12470>  # Function: [#12470  of 78 bytes]: 3 params @ offset 0x00243d9b
-    // USED → r2 = function_12470(param1, param2);
+    // USED → r2 = function_12470;
     // CODE → addr: 42 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
-    r2 = r4.forEach(function_12470(param1, param2))
+    r2 = r4.forEach(function_12470)
     // CODE → addr: 47 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 53 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

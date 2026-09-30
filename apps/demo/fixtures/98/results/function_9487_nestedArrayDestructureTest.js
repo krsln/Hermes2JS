@@ -301,7 +301,7 @@ function nestedArrayDestructureTest() {
             } catch (caughtException) {
                 // ──────────────── Block 33 ──────────────── 
                 // CODE → addr:457 | <Mov>: <Reg8: 8, Reg8: 11>
-                r8 = r11 === undefined
+                r8 = r11
                 // CODE → addr:460 | <Jmp>: <Addr8: 47>  # Address: 000001fb
                 goto label_507;
             }

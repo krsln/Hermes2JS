@@ -65,5 +65,5 @@ async function _anon_0_simpleAsyncTest() {
     // CODE → addr:224 | <LoadConstUInt8>: <Reg8: 7, UInt8: 42>
     // USED → r7 = 42;
     // CODE → addr:227 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
-    await r7[0].call(r9, 42)
+    await r7[0].call(0, 42)
 }

@@ -49,7 +49,7 @@ class Ret(OpcodeHandler):
         # available, and only then folds this back into an inlined
         # expression when it can positively confirm every reaching
         # definition agrees.
-        expression = self.get_register_reference(ctx.analysis, value_reg)
+        expression = self.get_register_reference(ctx.analysis, value_reg, materialize=False)
         terminator = TerminatorReturn(value=expression)
 
         # NOTE (fix): a `Return` terminator is never "consumed" by any

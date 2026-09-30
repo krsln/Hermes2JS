@@ -5,9 +5,9 @@ function decrement() {
     // CODE → addr:  3 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 0>
     r0 = r1[0]
     // CODE → addr:  7 | <Dec>: <Reg8: 0, Reg8: 0>
-    // USED → r0 = r0 - 1;
+    r0 = r0 - 1
     // CODE → addr: 10 | <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
-    r1[0] = r0 - 1
+    r1[0] = r0
     // CODE → addr: 14 | <Ret>: <Reg8: 0>
     return r0;
 }

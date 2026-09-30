@@ -27,7 +27,7 @@ function spreadFunctionArgsTest() {
     // CODE → addr: 54 | <LoadConstUndefined>: <Reg8: 1>
     r1 = undefined
     // CODE → addr: 56 | <CreateClosure>: <Reg8: 9, Reg8: 1, function_id: 12477>  # Function: [#12477 sum of 19 bytes]: 4 params @ offset 0x00243e3c
-    r9 = sum(param1, param2, param3)
+    r9 = sum
     // CODE → addr: 61 | <Mov>: <Reg8: 8, Reg8: 6>
     r8 = r6
     // CODE → addr: 64 | <LoadConstUndefined>: <Reg8: 7>

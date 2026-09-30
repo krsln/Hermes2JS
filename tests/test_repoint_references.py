@@ -9,13 +9,14 @@ output. See `hermes_decompiler/backend/transforms/shared/_repoint.py`.
 from __future__ import annotations
 
 import dataclasses
+import re
 
 from hermes_decompiler.Decompiler import Decompiler
 from hermes_decompiler.backend.transforms.shared._repoint import (
-    MAX_INLINED_CONDITION_NODES,
     _node_count,
     repoint_node,
 )
+from hermes_decompiler.ir.Operators import LogicalOperator
 from hermes_decompiler.ir.expressions import (
     BinaryExpression,
     CallExpression,
@@ -25,7 +26,6 @@ from hermes_decompiler.ir.expressions import (
     NumericLiteral,
     UndefinedLiteral,
 )
-from hermes_decompiler.ir.Operators import LogicalOperator
 
 
 def call(name: str) -> CallExpression:
@@ -847,4 +847,9 @@ Bytecode listing:
 def test_chained_or_fold_does_not_drop_the_inner_call():
     out = render(HEADER, 13033)
 
-    assert out.count("function_13037(param1)") == 3
+    # Three references to the inner closure survive the chained-OR fold: two
+    # bare references (the folded ternary in the assignment and in the `if`
+    # condition) and the call `function_13037(r0)`. (The closure used to be
+    # named `function_13037(param1)` - its arity baked into the name - which
+    # made a plain reference read like a call.)
+    assert len(re.findall(r"\bfunction_13037\b", out)) == 3

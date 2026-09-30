@@ -3,7 +3,7 @@ async function _anon_0_asyncLoopTest(param1) {
     // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getParentEnvironment(0)
     // CODE → addr:  3 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 1, UInt8: 9>
-    // USED → r0 = r1[9];
+    r0 = r1[9]
     // CODE → addr:  7 | <Mov>: <Reg8: 2, Reg8: 0>
     // USED → r2 = r1[9];
     // CODE → addr: 10 | <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
@@ -137,14 +137,14 @@ async function _anon_0_asyncLoopTest(param1) {
     // CODE → addr:237 | <IteratorBegin>: <Reg8: 14, Reg8: 15>
     r14 = GetIterator(r15)
     // CODE → addr:240 | <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 15>
-    r1[2] = r1[0]
+    r1[2] = r15
     // CODE → addr:244 | <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 14>
     r1[1] = r14
     // ──────────────── Block 13 ──────────────── 
     // CODE → addr:248 | <LoadFromEnvironment>: <Reg8: 15, Reg8: 1, UInt8: 2>
     r15 = r1[2]
     // CODE → addr:252 | <LoadFromEnvironment>: <Reg8: 14, Reg8: 1, UInt8: 1>
-    // USED → r14 = r1[1];
+    r14 = r1[1]
     // CODE → addr:256 | <IteratorNext>: <Reg8: 16, Reg8: 14, Reg8: 15>
     r16 = r1[1].next()
     // CODE → addr:260 | <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 14>

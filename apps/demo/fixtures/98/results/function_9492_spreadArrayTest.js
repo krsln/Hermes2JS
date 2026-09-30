@@ -95,7 +95,7 @@ function spreadArrayTest() {
             }
             // LOOP → END
         } catch (caughtException) {
-            if (r6 !== undefined) {
+            if (!r6) {
                 // ──────────────── Block 6 ──────────────── 
                 // CODE → addr:199 | <IteratorClose>: <Reg8: 3, UInt8: 1>
                 r3.return()

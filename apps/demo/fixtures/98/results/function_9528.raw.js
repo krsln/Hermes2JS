@@ -13,7 +13,7 @@ function classTest() {
     // CODE → addr: 20 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log("__BC:Classes/ClassTests/classTest/start")
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
-    // USED → r3 = r2[0];
+    r3 = r2[0]
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 2>
     r4 = CreateThisForNew(r3)
     // CODE → addr: 33 | <JmpTypeOfIs>: <Addr32: 16, Reg8: 3, UInt16: 128>  # Address: 00000031
@@ -57,7 +57,7 @@ function classTest() {
     // CODE → addr:124 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 3>
     console.log(r3.description)
     // CODE → addr:129 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
-    // USED → r4 = r2[1];
+    r4 = r2[1]
     // CODE → addr:133 | <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 2>
     r3 = CreateThisForNew(r4)
     // CODE → addr:137 | <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000099
@@ -69,9 +69,9 @@ function classTest() {
     r3 = throwTypeError(r8, r7)
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:153 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 4>
-    // USED → r2 = r2[4];
+    r2 = r2[4]
     // CODE → addr:157 | <LoadParentNoTraps>: <Reg8: 6, Reg8: 2>
-    r6 = __getPrototypeOfNoTraps__(r2[4])
+    r6 = __getPrototypeOfNoTraps__(r2)
     // CODE → addr:160 | <CreateThisForSuper>: <Reg8: 3, Reg8: 6, Reg8: 4, UInt8: 2>
     // USED → r3 = CreateThisForSuper(r6);
     // CODE → addr:165 | <LoadConstString>: <Reg8: 7, string_id: 4424>  # String: 'Woof' (String)
@@ -83,7 +83,7 @@ function classTest() {
     // CODE → addr:176 | <CallWithNewTarget>: <Reg8: 2, Reg8: 6, Reg8: 4, UInt8: 3>
     r2 = Reflect.construct(r6, [r3, r4, r5], r2[1])
     // CODE → addr:181 | <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    // USED → r3 = CreateThisForSuper(r6)[r2];
+    r3 = CreateThisForSuper(r6)[r2]
     // CODE → addr:185 | <LoadConstEmpty>: <Reg8: 2>
     // USED → r2 = /* empty */;
     // CODE → addr:187 | <ThrowIfThisInitialized>: <Reg8: 2>

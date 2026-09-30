@@ -54,7 +54,7 @@ function propertyAccessTest() {
     // USED → r0 = undefined;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr:124 | <Mov>: <Reg8: 5, Reg8: 2>
-    r5 = r0
+    r5 = r2
     // CODE → addr:127 | <IteratorNext>: <Reg8: 8, Reg8: 3, Reg8: 5>
     r8 = r3.next()
     // CODE → addr:131 | <Mov>: <Reg8: 5, Reg8: 3>

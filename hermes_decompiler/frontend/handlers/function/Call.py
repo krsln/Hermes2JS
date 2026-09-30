@@ -105,8 +105,13 @@ class Call1(OpcodeHandler):
 
         callee = self.get_register_expression(ctx.analysis, func_reg)
 
-        if isinstance(callee, MemberExpression) and isinstance(callee.obj, Identifier):
-            this_value = self.get_register_reference(ctx.analysis, this_reg)
+        # For a member callee `this` is only COMPARED against the receiver
+        # (via a bare reference, which must not pin the register's
+        # definition - nothing of it reaches the output on a match).
+        this_is_reference = isinstance(callee, MemberExpression) and isinstance(callee.obj, Identifier)
+
+        if this_is_reference:
+            this_value = self.get_register_reference(ctx.analysis, this_reg, materialize=False)
         else:
             this_value = self.get_register_expression(ctx.analysis, this_reg)
 
@@ -128,7 +133,14 @@ class Call1(OpcodeHandler):
             expression = CallExpression(callee=callee, arguments=real_arguments)
         else:
             # `this` doesn't match the callee's own receiver (or callee
-            # isn't a member access at all) - preserve it explicitly.
+            # isn't a member access at all) - preserve it explicitly. The
+            # register now DOES reach the output, so resolve it properly
+            # instead of printing the comparison-only bare `rN` (whose
+            # defining statement - e.g. `r2 = undefined` - may already have
+            # been folded away by another read, leaving `.call(r2)` dangling).
+            if this_is_reference:
+                this_value = self.get_register_expression(ctx.analysis, this_reg)
+
             call_callee = MemberExpression(obj=callee, prop=Identifier(name="call"), computed=False)
             expression = CallExpression(callee=call_callee, arguments=(this_value, *real_arguments))
 

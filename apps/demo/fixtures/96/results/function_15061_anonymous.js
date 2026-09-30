@@ -21,13 +21,13 @@ function function_15061(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 30 | <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
     r2 = Object.defineProperty(param6, "__esModule", r3)
     // CODE → addr: 37 | <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15062>  # Function: [#15062 ifTest of 241 bytes]: 2 params @ offset 0x0026812c
-    // USED → r2 = ifTest(param1);
+    // USED → r2 = ifTest;
     // CODE → addr: 42 | <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 8596>  # String: 'ifTest' (Identifier)
-    param6.ifTest = ifTest(param1)
+    param6.ifTest = ifTest
     // CODE → addr: 48 | <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15063>  # Function: [#15063 ifElseChainTest of 231 bytes]: 3 params @ offset 0x0026821d
-    // USED → r0 = ifElseChainTest(param1, param2);
+    // USED → r0 = ifElseChainTest;
     // CODE → addr: 53 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 10899>  # String: 'ifElseChainTest' (Identifier)
-    param6.ifElseChainTest = ifElseChainTest(param1, param2)
+    param6.ifElseChainTest = ifElseChainTest
     // CODE → addr: 59 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 61 | <Ret>: <Reg8: 0>

@@ -14,7 +14,7 @@ function parameterDestructureTest(param1, param2) {
     if (r1 === undefined) goto label_26;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 23 | <Mov>: <Reg8: 6, Reg8: 1>
-    // USED → r6 = param1.name;
+    r6 = r1
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 26 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
@@ -27,7 +27,7 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr: 41 | <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     // USED → r1 = 2;
     // CODE → addr: 44 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1>
-    r2 = r1.default.call(r0, param2, 2)
+    r2 = r1.default.call(undefined, param2, 2)
     // CODE → addr: 50 | <LoadConstZero>: <Reg8: 1>
     r1 = 0
     // CODE → addr: 52 | <GetByVal>: <Reg8: 10, Reg8: 2, Reg8: 1>
@@ -55,7 +55,7 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr: 99 | <Mov>: <Reg8: 12, Reg8: 7>
     r12 = param1.id
     // CODE → addr:102 | <Mov>: <Reg8: 11, Reg8: 6>
-    r11 = param1.name
+    r11 = r6
     // CODE → addr:105 | <Call>: <Reg8: 2, Reg8: 2, UInt8: 5>
     console.log(r13, r12, r11, r10, r9)
     // CODE → addr:109 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 4, string_id: 99>  # String: 'console' (Identifier)
