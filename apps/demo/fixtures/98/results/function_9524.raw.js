@@ -17,7 +17,7 @@ async function asyncTryCatchTest() {
     // CODE → addr: 20 | <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → addr: 23 | <Call4>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 2, Reg8: 1, Reg8: 4>
-    r1 = spawnAsync.call(undefined, _anon_0_asyncTryCatchTest(), this, r4)
+    r1 = spawnAsync(_anon_0_asyncTryCatchTest(), this, r4)
     // CODE → addr: 30 | <Ret>: <Reg8: 1>
     return r1;
 }

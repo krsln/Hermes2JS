@@ -49,9 +49,9 @@ function function_15116(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 99 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:101 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    r1 = param2.call(undefined, r1)
+    r1 = param2(r1)
     // CODE → addr:106 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    r1 = _interopDefault(param1).call(undefined, r1)
+    r1 = _interopDefault(param1)(r1)
     // CODE → addr:111 | <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
     r2[1] = r1
     // CODE → addr:115 | <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
@@ -59,9 +59,9 @@ function function_15116(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:118 | <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
     r1 = param7[r1]
     // CODE → addr:122 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    r1 = param2.call(undefined, r1)
+    r1 = param2(r1)
     // CODE → addr:127 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    r1 = _interopDefault(param1).call(undefined, r1)
+    r1 = _interopDefault(param1)(r1)
     // CODE → addr:132 | <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 1>
     r2[2] = r1
     // CODE → addr:136 | <Ret>: <Reg8: 0>

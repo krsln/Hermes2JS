@@ -1,8 +1,6 @@
-
-
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
+from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression, UndefinedLiteral
 
 
 # Reg8, Reg8, UInt8 (total size 3)
@@ -119,6 +117,14 @@ class Call1(OpcodeHandler):
 
         if isinstance(callee, MemberExpression) and callee.obj.structurally_equal(this_value):
             # Plain `obj.method(...)` - `this` is already implicit.
+            expression = CallExpression(callee=callee, arguments=real_arguments)
+        elif isinstance(this_value, UndefinedLiteral) and isinstance(callee, Identifier):
+            # Bare function call `f(...)`: Hermes passes an explicit
+            # `undefined` thisArg, which is exactly what a plain call
+            # means - no `.call(undefined, ...)` needed. Limited to a plain
+            # Identifier callee on purpose: other callee shapes (a call
+            # result, ...) keep the explicit form so a mis-resolved callee
+            # stays visibly suspicious instead of looking clean.
             expression = CallExpression(callee=callee, arguments=real_arguments)
         else:
             # `this` doesn't match the callee's own receiver (or callee

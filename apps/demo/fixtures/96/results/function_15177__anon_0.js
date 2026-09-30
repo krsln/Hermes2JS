@@ -13,13 +13,13 @@ async function _anon_0_() {
     // CODE → addr: 29 | <GetEnvironment>: <Reg8: 1, UInt8: 2>
     r1 = getEnvironment(2)
     // CODE → addr: 32 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
-    // USED → r4 = r1[2];
+    // USED → r4 = delay;
     // CODE → addr: 36 | <LoadConstUndefined>: <Reg8: 3>
-    r3 = undefined
+    // USED → r3 = undefined;
     // CODE → addr: 38 | <LoadConstUInt8>: <Reg8: 1, UInt8: 42>
     // USED → r1 = 42;
     // CODE → addr: 46 | <SaveGenerator>: <Addr8: 4>  # Address: 00000032
-    r1 = await r1[2].call(r3, 42)
+    r1 = await delay(42)
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 56 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;

@@ -19,7 +19,7 @@ function reset() {
     // CODE → addr: 34 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → addr: 37 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
-    r1 = r1[0]
+    r1 = Counter
     // CODE → addr: 41 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 6>
     r3 = r0[6]
     // CODE → addr: 45 | <LoadConstUndefined>: <Reg8: 0>

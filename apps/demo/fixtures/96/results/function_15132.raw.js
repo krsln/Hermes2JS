@@ -27,11 +27,11 @@ function taggedTemplateTest(param1) {
     // CODE → addr: 46 | <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0)
     // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
-    // USED → r2 = r0[0];
+    // USED → r2 = tag;
     // CODE → addr: 53 | <LoadConstUndefined>: <Reg8: 0>
-    r0 = undefined
+    // USED → r0 = undefined;
     // CODE → addr: 55 | <Call3>: <Reg8: 4, Reg8: 2, Reg8: 0, Reg8: 4, Reg8: 3>
-    r4 = r0[0](r4, r3)
+    r4 = tag(r4, r3)
     // CODE → addr: 61 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 67 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

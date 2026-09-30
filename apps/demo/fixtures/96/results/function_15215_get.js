@@ -19,7 +19,7 @@ function get() {
     // CODE → addr: 34 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → addr: 37 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 1, UInt8: 0>
-    r2 = r1[0]
+    r2 = Counter
     // CODE → addr: 41 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 0, UInt8: 6>
     r1 = r0[6]
     // CODE → addr: 45 | <LoadConstUndefined>: <Reg8: 0>

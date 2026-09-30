@@ -33,8 +33,14 @@ _GET_PARENT_ENV_RE = re.compile(r"<GetParentEnvironment>:\s*<Reg8:\s*(\d+),\s*UI
 
 # ==> 00000002: <CreateClosure>: <Reg8: 3, Reg8: 4, function_id: 15198>
 # ==> 00000002: <CreateClosureLongIndex>: <Reg8: 3, Reg8: 4, function_id: 15198>
+# ==> 00000012: <CreateGeneratorClosure>: <Reg8: 2, Reg8: 2, function_id: 15180>
+# ==> 00000002: <CreateGenerator>: <Reg8: 0, Reg8: 0, function_id: 15181>   (generator/async body)
+# Generator/async closures are closures over the creator's environment just
+# like a plain CreateClosure - the async/generator wrapper chain (e.g.
+# _asyncTryCatchTest -> anonymous -> body) must be followed for owner() to
+# reach the module-level frame.
 _CREATE_CLOSURE_RE = re.compile(
-    r"<CreateClosure(?:LongIndex)?>:\s*<Reg8:\s*\d+,\s*Reg8:\s*(\d+),\s*function_id:\s*(\d+)>"
+    r"<Create(?:Generator(?:Closure)?|AsyncClosure|Closure)(?:LongIndex)?>:\s*<Reg8:\s*\d+,\s*Reg8:\s*(\d+),\s*function_id:\s*(\d+)>"
 )
 
 _MAX_HOPS = 32

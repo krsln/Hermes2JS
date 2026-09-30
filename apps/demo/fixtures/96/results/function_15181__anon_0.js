@@ -1,11 +1,4 @@
 async function _anon_0_() {
-// ⚠ WARNING: this output is NOT valid JavaScript.
-// Cause: this is a resolved generator/async body whose suspend-resume dispatch shape isn't one generator_dispatch.detect recognizes yet (e.g. `yield*`, an async generator).
-// It contains raw `goto label_N;` / `if (...) goto label_N;` statements -
-// `goto` is not a JavaScript keyword, so this will fail to parse as-is.
-// If this is a generator/async function, re-run decompilation with batch_tables
-// built from the full section directory (FileOperations.build_batch_tables) so
-// its suspend/resume dispatch can be recognized before structuring runs.
     // ──────────────── Block 12 ──────────────── 
     // CODE → addr: 10 | <GetGlobalObject>: <Reg8: 2>
     // USED → r2 = globalThis;
@@ -22,13 +15,13 @@ async function _anon_0_() {
         // CODE → addr: 32 | <GetEnvironment>: <Reg8: 1, UInt8: 2>
         r1 = getEnvironment(2)
         // CODE → addr: 35 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
-        // USED → r4 = r1[2];
+        // USED → r4 = delay;
         // CODE → addr: 39 | <LoadConstUndefined>: <Reg8: 1>
-        r1 = undefined
+        // USED → r1 = undefined;
         // CODE → addr: 41 | <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
         // USED → r3 = 1;
         // CODE → addr: 49 | <SaveGenerator>: <Addr8: 4>  # Address: 00000035
-        r1 = await r1[2](1)
+        r1 = await delay(1)
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr: 59 | <TryGetById>: <Reg8: 6, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r6 = console;
@@ -56,10 +49,6 @@ async function _anon_0_() {
             // USED → r3 = new Error("post-await failure");
             // CODE → addr:116 | <Throw>: <Reg8: 3>
             throw new Error("post-await failure");
-        } else {
-            // ──────────────── Block 5 ──────────────── 
-            // CODE → addr: 84 | <Jmp>: <Addr8: 79>  # Address: 000000a3
-            goto label_163;
         }
     } catch (caughtException) {
         // ──────────────── Block 8 ──────────────── 

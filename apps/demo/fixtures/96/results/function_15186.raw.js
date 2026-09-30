@@ -5,7 +5,7 @@ function parallelAwaitTest() {
     // CODE → addr:  2 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → addr:  5 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 10>
-    r3 = r1[10]
+    r3 = _parallelAwaitTest
     // CODE → addr:  9 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 1, string_id: 65>  # String: 'apply' (Identifier)
     // USED → r2 = r3.apply;
     // CODE → addr: 14 | <ReifyArguments>: <Reg8: 0>

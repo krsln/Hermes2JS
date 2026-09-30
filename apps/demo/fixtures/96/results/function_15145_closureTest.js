@@ -17,7 +17,7 @@ function closureTest() {
     // CODE → addr: 29 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 31 | <Call1>: <Reg8: 5, Reg8: 2, Reg8: 0>
-    r5 = makeCounter().call(undefined)
+    r5 = makeCounter()()
     // CODE → addr: 35 | <GetById>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 10830>  # String: 'increment' (Identifier)
     // USED → r2 = r5.increment;
     // CODE → addr: 41 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>

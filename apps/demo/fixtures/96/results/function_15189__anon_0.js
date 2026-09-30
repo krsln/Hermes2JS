@@ -17,13 +17,13 @@ async function _anon_0_() {
     // CODE → addr: 44 | <GetEnvironment>: <Reg8: 4, UInt8: 2>
     r4 = getEnvironment(2)
     // CODE → addr: 47 | <LoadFromEnvironment>: <Reg8: 9, Reg8: 4, UInt8: 2>
-    // USED → r9 = r4[2];
+    // USED → r9 = delay;
     // CODE → addr: 51 | <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → addr: 53 | <LoadConstUInt8>: <Reg8: 5, UInt8: 1>
     // USED → r5 = 1;
     // CODE → addr: 56 | <Call2>: <Reg8: 6, Reg8: 9, Reg8: 2, Reg8: 5>
-    r6 = r4[2].call(r2, 1)
+    r6 = delay(1)
     // CODE → addr: 61 | <NewArray>: <Reg8: 1, UInt16: 2>
     r1 = []
     // CODE → addr: 65 | <PutOwnByIndex>: <Reg8: 1, Reg8: 6, UInt8: 0>
@@ -31,7 +31,7 @@ async function _anon_0_() {
     // CODE → addr: 69 | <LoadConstUInt8>: <Reg8: 6, UInt8: 2>
     // USED → r6 = 2;
     // CODE → addr: 72 | <Call2>: <Reg8: 9, Reg8: 9, Reg8: 2, Reg8: 6>
-    r9 = r4[2].call(r2, 2)
+    r9 = delay(2)
     // CODE → addr: 77 | <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
     r1 = (r1[0] = r6)[1] = r9
     // CODE → addr: 86 | <SaveGenerator>: <Addr8: 4>  # Address: 0000005a

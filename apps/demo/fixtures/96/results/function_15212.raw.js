@@ -33,7 +33,7 @@ function set(param1) {
     // CODE → addr: 64 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → addr: 67 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
-    r1 = r1[0]
+    r1 = Counter
     // CODE → addr: 71 | <GetById>: <Reg8: 4, Reg8: 1, UInt8: 6, string_id: 11547>  # String: 'MAX' (Identifier)
     // USED → r4 = r1.MAX;
     // CODE → addr: 77 | <LoadParam>: <Reg8: 1, UInt8: 1>

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
-from hermes_decompiler.backend.regions import RegionVisitor, LoopRegion, SequenceRegion, SwitchRegion, TryRegion
+from hermes_decompiler.backend.regions import IfRegion, RegionVisitor, LoopRegion, SequenceRegion, SwitchRegion, \
+    TryRegion
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.terminators import TerminatorJump
 from ._base import RegionPass
@@ -289,29 +290,85 @@ class RedundantJumpRegionPass(RegionPass, RegionVisitor):
             candidates.append(node.catch.body)
 
         for body in candidates:
-            if not body.children or not isinstance(body.children[-1], BasicBlock):
-                continue
+            # Tail position: the body's own last block, AND - when the last
+            # child is an if/else - the last block of each branch (falling
+            # off the end of either branch falls off the end of the body).
+            # See `_tail_blocks`.
+            for block, owning_if in self._tail_blocks(body):
+                terminator = block.terminator
 
-            block = body.children[-1]
-            terminator = block.terminator
+                if not isinstance(terminator, TerminatorJump):
+                    continue
 
-            if not isinstance(terminator, TerminatorJump):
-                continue
+                if terminator.target != exit_address:
+                    # Some other jump this pass doesn't recognize (an
+                    # early return/break out of an enclosing construct,
+                    # for instance) - leave it as an explicit goto.
+                    continue
 
-            if terminator.target != exit_address:
-                # Some other jump this pass doesn't recognize (an
-                # early return/break out of an enclosing construct,
-                # for instance) - leave it as an explicit goto.
-                continue
+                if self._clear_trailing_jump(block, terminator):
+                    logger.debug(
+                        "RedundantJumpRegionPass: dropped a try/catch's own "
+                        "trailing jump in block %d (0x%x) past its handler - "
+                        "implied by falling through to what already follows "
+                        "the whole try/catch/finally statement.",
+                        block.id, block.address,
+                    )
 
-            if self._clear_trailing_jump(block, terminator):
-                logger.debug(
-                    "RedundantJumpRegionPass: dropped a try/catch's own "
-                    "trailing jump in block %d (0x%x) past its handler - "
-                    "implied by falling through to what already follows "
-                    "the whole try/catch/finally statement.",
-                    block.id, block.address,
-                )
+                    if owning_if is not None:
+                        self._prune_empty_else(owning_if)
+
+    @classmethod
+    def _tail_blocks(cls, body: SequenceRegion) -> list[tuple[BasicBlock, IfRegion | None]]:
+        """BasicBlocks sitting in tail position of `body`, each paired with
+        the IfRegion whose branch directly holds it (None when the block is
+        `body`'s own last child).
+
+        A block is in tail position when nothing runs after it inside
+        `body`: `body`'s last child if it is a BasicBlock, or - when the
+        last child is an IfRegion - recursively the tail blocks of its
+        then/else branches (a jump-to-after-the-try at the end of an
+        `else { ... }` is redundant for the very same reason as one at the
+        end of the body itself - e.g. asyncTryCatchTest, where
+        `if (v === 1) throw ...;` is the last statement of the try body and
+        its implicit else-branch carries the exit Jmp).
+        """
+        if not body.children:
+            return []
+
+        last = body.children[-1]
+
+        if isinstance(last, BasicBlock):
+            return [(last, None)]
+
+        if isinstance(last, IfRegion):
+            result: list[tuple[BasicBlock, IfRegion | None]] = []
+
+            for branch in (last.then_body, last.else_body):
+                if branch is None:
+                    continue
+
+                for block, owner in cls._tail_blocks(branch):
+                    result.append((block, owner if owner is not None else last))
+
+            return result
+
+        return []
+
+    @staticmethod
+    def _prune_empty_else(region: IfRegion) -> None:
+        """Drops `region.else_body` once its jump was stripped and nothing
+        else is left in it, so it doesn't print as an empty `else {}`."""
+        else_body = region.else_body
+
+        if else_body is None:
+            return
+
+        for child in else_body.children:
+            if not isinstance(child, BasicBlock) or child.instructions or child.terminator is not None:
+                return
+
+        region.else_body = None
 
     def _strip_switch_exit_jumps(self, node: SwitchRegion) -> None:
         exit_address = self._next_fallthrough_address(node)

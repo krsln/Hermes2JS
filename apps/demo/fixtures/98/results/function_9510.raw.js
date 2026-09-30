@@ -55,7 +55,7 @@ function closureLoopTest() {
     // CODE → addr: 89 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r5 = console.log;
     // CODE → addr: 94 | <Call1>: <Reg8: 4, Reg8: 4, Reg8: 0>
-    r4 = r4.call(undefined)
+    r4 = r4()
     // CODE → addr: 98 | <Call2>: <Reg8: 4, Reg8: 5, Reg8: 6, Reg8: 4>
     console.log(r4)
     // CODE → addr:103 | <Jmp>: <Addr8: -34>  # Address: 00000045

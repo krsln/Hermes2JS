@@ -71,9 +71,18 @@ class ClassEnvironmentTable:
     built from simply has no entry.
     """
 
-    def __init__(self, slot_names: dict[int, dict[int, str]], environment_origins: EnvironmentOriginTable):
+    def __init__(
+            self,
+            slot_names: dict[int, dict[int, str]],
+            environment_origins: EnvironmentOriginTable,
+            function_slot_names: dict[int, dict[int, str]] | None = None,
+    ):
         #: owning_function_id -> {slot: 'Animal'}
         self._slot_names = slot_names
+        #: owning_function_id -> {slot: 'delay'} - plain named function
+        #: declarations (CreateClosure + StoreToEnvironment, slot written
+        #: exactly once). Class names above take priority.
+        self._function_slot_names = function_slot_names or {}
         self._environment_origins = environment_origins
 
     def name_for(self, function_id: int, depth: int, slot: int) -> str | None:
@@ -86,7 +95,10 @@ class ClassEnvironmentTable:
         if owner_id is None:
             return None
 
-        return self._slot_names.get(owner_id, {}).get(slot)
+        return (
+                self._slot_names.get(owner_id, {}).get(slot)
+                or self._function_slot_names.get(owner_id, {}).get(slot)
+        )
 
     @classmethod
     def empty(cls) -> "ClassEnvironmentTable":
@@ -111,10 +123,24 @@ class ClassEnvironmentTable:
                 named_result_of[function_id] = match.group(3)
 
         slot_names: dict[int, dict[int, str]] = {}
+        fn_slot_candidates: dict[int, dict[int, list[str]]] = {}
+        store_counts: dict[int, dict[int, int]] = {}
         for function_id, text in sections:
-            cls._scan_function(function_id, text, named_result_of, slot_names)
+            cls._scan_function(function_id, text, named_result_of, slot_names, fn_slot_candidates, store_counts)
 
-        return cls(slot_names, environment_origins)
+        # A slot only resolves to a function name when it is written exactly
+        # once in its owning function (a re-assigned binding has no single
+        # stable name).
+        function_slot_names = {
+            fid: {
+                slot: names[0]
+                for slot, names in slots.items()
+                if len(names) == 1 and store_counts.get(fid, {}).get(slot) == 1
+            }
+            for fid, slots in fn_slot_candidates.items()
+        }
+
+        return cls(slot_names, environment_origins, function_slot_names)
 
     @staticmethod
     def _scan_function(
@@ -122,6 +148,8 @@ class ClassEnvironmentTable:
             text: str,
             named_result_of: dict[int, str],
             slot_names: dict[int, dict[int, str]],
+            fn_slot_names: dict[int, dict[int, list[str]]],
+            store_counts: dict[int, dict[int, int]],
     ) -> None:
         """
         Walks one function's `.hasm` text top-to-bottom, tracking:
@@ -142,11 +170,25 @@ class ClassEnvironmentTable:
         """
         pending_helper: dict[int, int] = {}  # register -> helper function id
         pending_names: dict[int, str] = {}  # register -> resolved name
+        # (register, name) of a named CreateClosure that is the IMMEDIATELY
+        # preceding instruction - a plain function declaration compiles to
+        # `CreateClosure rN; StoreToEnvironment env, slot, rN` back to
+        # back. Adjacency is required (rather than tracking the register
+        # across the function body) because register numbers get reused:
+        # a stale `r3 = <closure>` would otherwise be mistaken for a later
+        # unrelated write of r3 (e.g. a private-field symbol).
+        prev_closure: tuple[int, str] | None = None
 
         for line in text.splitlines():
+            previous_closure, prev_closure = prev_closure, None
+
             match = _CREATE_CLOSURE_RE.search(line)
             if match:
                 dest_reg, target_id = int(match.group(1)), int(match.group(2))
+
+                named = _CREATE_CLOSURE_NAMED_RE.search(line)
+                if named and named.group(3):
+                    prev_closure = (dest_reg, named.group(3))
 
                 if target_id in named_result_of:
                     pending_helper[dest_reg] = target_id
@@ -168,10 +210,16 @@ class ClassEnvironmentTable:
             match = _STORE_TO_ENV_RE.search(line)
             if match:
                 _env_reg, slot, value_reg = (int(match.group(1)), int(match.group(2)), int(match.group(3)))
+                counts = store_counts.setdefault(function_id, {})
+                counts[slot] = counts.get(slot, 0) + 1
                 name = pending_names.get(value_reg)
 
                 if name is not None:
                     slot_names.setdefault(function_id, {})[slot] = name
                     del pending_names[value_reg]
+                    continue
+
+                if previous_closure is not None and previous_closure[0] == value_reg:
+                    fn_slot_names.setdefault(function_id, {}).setdefault(slot, []).append(previous_closure[1])
 
                 continue

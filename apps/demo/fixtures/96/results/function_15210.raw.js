@@ -11,7 +11,7 @@ function Counter() {
     // CODE → addr: 15 | <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0)
     // CODE → addr: 18 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 0, UInt8: 0>
-    r2 = r0[0]
+    r2 = Counter
     // CODE → addr: 22 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → addr: 24 | <Call3>: <Reg8: 1, Reg8: 1, Reg8: 0, Reg8: 8, Reg8: 2>
@@ -27,9 +27,9 @@ function Counter() {
     // CODE → addr: 47 | <NewObject>: <Reg8: 4>
     r4 = {  }
     // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 9, Reg8: 3, UInt8: 11>
-    // USED → r9 = r3[11];
+    // USED → r9 = _privateHelper2;
     // CODE → addr: 53 | <PutNewOwnByIdShort>: <Reg8: 4, Reg8: 9, string_id: 205>  # String: 'value' (Identifier)
-    r4.value = r3[11]
+    r4.value = _privateHelper2
     // CODE → addr: 57 | <Call4>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5, Reg8: 4>
     r4 = Object.defineProperty(this, r5, r4)
     // CODE → addr: 64 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 2, string_id: 24>  # String: 'Object' (Identifier)

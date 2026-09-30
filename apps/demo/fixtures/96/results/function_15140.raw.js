@@ -49,13 +49,13 @@ function arrowFunctionTest() {
     // CODE → addr:108 | <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
     // USED → r2 = 3;
     // CODE → addr:111 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 2>
-    r2 = makeMultiplier(param1).call(undefined, 3)
+    r2 = makeMultiplier(param1)(3)
     // CODE → addr:116 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:122 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → addr:127 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 5>
-    r2 = r2.call(undefined, 5)
+    r2 = r2(5)
     // CODE → addr:132 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:137 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
