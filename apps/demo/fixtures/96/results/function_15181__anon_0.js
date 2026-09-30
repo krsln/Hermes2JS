@@ -47,15 +47,15 @@ async function _anon_0_() {
             // CODE → addr: 97 | <CreateThis>: <Reg8: 4, Reg8: 3, Reg8: 5>
             // USED → r4 = CreateThis(r3);
             // CODE → addr:101 | <LoadConstString>: <Reg8: 8, string_id: 6849>  # String: 'post-await failure' (String)
-            r8 = "post-await failure"
+            // USED → r8 = "post-await failure";
             // CODE → addr:105 | <Mov>: <Reg8: 9, Reg8: 4>
-            r9 = CreateThis(r3)
+            // USED → r9 = CreateThis(r3);
             // CODE → addr:108 | <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
-            // USED → r3 = new Error(r52_undefined);
+            // USED → r3 = new Error("post-await failure");
             // CODE → addr:112 | <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>
-            // USED → r3 = new Error(r52_undefined);
+            // USED → r3 = new Error("post-await failure");
             // CODE → addr:116 | <Throw>: <Reg8: 3>
-            throw new Error(r52_undefined);
+            throw new Error("post-await failure");
         } else {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr: 84 | <Jmp>: <Addr8: 79>  # Address: 000000a3

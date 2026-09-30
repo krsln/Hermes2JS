@@ -35,7 +35,7 @@ class SaveGenerator(OpcodeHandler):
         terminator = TerminatorJump(target=target)
 
         # pure control flow: no operand value of its own
-        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=target)
+        result = OpcodeResult(ctx.entry, value=None, terminator=terminator, dest_reg=None)
         ctx.analysis.add_result(result)
 
         return result
