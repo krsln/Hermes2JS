@@ -24,9 +24,9 @@ async function _anon_0_asyncLoopTest(param1) {
         // CODE → addr:490 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 0>
         r1[9] = 3
         // CODE → addr:494 | <LoadConstString>: <Reg8: 18, string_id: 3340>  # String: 'Generator functions may not be called on executing generators' (String)
-        r18 = "Generator functions may not be called on executing generators"
+        // USED → r18 = "Generator functions may not be called on executing generators";
         // CODE → addr:498 | <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r0 = throwTypeError(r18, r17)
+        r0 = throwTypeError("Generator functions may not be called on executing generators")
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 20 | <LoadParam>: <Reg8: 0, UInt8: 2>

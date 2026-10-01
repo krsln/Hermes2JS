@@ -19,9 +19,9 @@ function classTest() {
     if (typeof r2[0] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
-        r8 = "Trying to call a non-function"
+        // USED → r8 = "Trying to call a non-function";
         // CODE → addr: 45 | <CallBuiltin>: <Reg8: 4, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r4 = throwTypeError(r8, r7)
+        r4 = throwTypeError("Trying to call a non-function")
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 49 | <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
@@ -63,9 +63,9 @@ function classTest() {
     if (typeof r2[1] !== "function") {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:145 | <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
-        r8 = "Trying to call a non-function"
+        // USED → r8 = "Trying to call a non-function";
         // CODE → addr:149 | <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r3 = throwTypeError(r8, r7)
+        r3 = throwTypeError("Trying to call a non-function")
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:153 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 4>

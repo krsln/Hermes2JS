@@ -24,9 +24,9 @@ async function _anon_0_asyncTryCatchTest() {
         // CODE → addr:522 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 0>
         r1[4] = 3
         // CODE → addr:526 | <LoadConstString>: <Reg8: 23, string_id: 3340>  # String: 'Generator functions may not be called on executing generators' (String)
-        r23 = "Generator functions may not be called on executing generators"
+        // USED → r23 = "Generator functions may not be called on executing generators";
         // CODE → addr:530 | <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r0 = throwTypeError(r24, r23)
+        r0 = throwTypeError("Generator functions may not be called on executing generators")
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 20 | <LoadParam>: <Reg8: 0, UInt8: 2>

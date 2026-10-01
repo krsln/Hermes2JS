@@ -248,12 +248,14 @@ class OpcodeHandler(ABC):
             state.mark_read()
 
             # The defining statement is printed (an earlier read used the
-            # bare `rN`), so `rN` already holds the value: re-inlining a
-            # property read here would fetch it a SECOND time - different
-            # if it is a getter or the object changed in between
-            # (`if (r3 !== undefined) { r5 = r2.timeout }` for `Mov r5, r3`).
-            # Literals / plain identifiers stay duplicated: free and safe.
-            if state.definition.definition_pinned and isinstance(value, MemberExpression):
+            # bare `rN`), so `rN` already holds the value: re-inlining the
+            # expression here would evaluate it a SECOND time - a second
+            # `new Set(...)` (a different object), a second property fetch
+            # (different if it is a getter or the object changed in
+            # between: `if (r3 !== undefined) { r5 = r2.timeout }` for
+            # `Mov r5, r3`). Only literals / plain identifiers stay
+            # duplicated: free and safe.
+            if state.definition.definition_pinned and not isinstance(value, (Literal, Identifier)):
                 return Identifier(name=f"r{reg}")
 
             return dataclasses.replace(value)

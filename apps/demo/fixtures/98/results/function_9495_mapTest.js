@@ -81,14 +81,14 @@ function mapTest() {
     // CODE → addr:175 | <Call2>: <Reg8: 3, Reg8: 5, Reg8: 8, Reg8: 3>
     console.log(r2.size)
     // CODE → addr:180 | <Mov>: <Reg8: 3, Reg8: 2>
-    r3 = new Map()
+    r3 = r2
     // CODE → addr:183 | <IteratorBegin>: <Reg8: 5, Reg8: 3>
     r5 = GetIterator(r3)
     // LOOP → START (while)
     while (!(r8 === undefined)) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr:186 | <Mov>: <Reg8: 8, Reg8: 3>
-        r8 = new Map()
+        r8 = r2
         // CODE → addr:189 | <IteratorNext>: <Reg8: 9, Reg8: 5, Reg8: 8>
         r9 = r5.next()
         // CODE → addr:193 | <Mov>: <Reg8: 8, Reg8: 5>

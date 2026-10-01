@@ -13,15 +13,15 @@ function taggedTemplateTest(param1) {
     // CODE → addr: 20 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log("__BC:Strings/TemplateLiteralTests/taggedTemplateTest/start")
     // CODE → addr: 25 | <LoadConstUInt8>: <Reg8: 9, UInt8: 1>
-    r9 = 1
+    // USED → r9 = 1;
     // CODE → addr: 28 | <LoadConstTrue>: <Reg8: 8>
     r8 = true
     // CODE → addr: 30 | <LoadConstString>: <Reg8: 7, string_id: 1327>  # String: 'x squared is ' (String)
-    r7 = "x squared is "
+    // USED → r7 = "x squared is ";
     // CODE → addr: 34 | <LoadConstString>: <Reg8: 6, string_id: 7163>  # String: '' (Identifier)
-    r6 = ""
+    // USED → r6 = "";
     // CODE → addr: 38 | <CallBuiltin>: <Reg8: 4, UInt8: 39, UInt8: 5>  # Built-in function: [#39 getTemplateObject]
-    r4 = getTemplateObject(r9, r8, r7, r6, r5)
+    r4 = getTemplateObject(1, r8, "x squared is ", "")
     // CODE → addr: 42 | <Mul>: <Reg8: 3, Reg8: 0, Reg8: 0>
     r3 = param1 * param1
     // CODE → addr: 46 | <GetEnvironment>: <Reg8: 0, UInt8: 0>

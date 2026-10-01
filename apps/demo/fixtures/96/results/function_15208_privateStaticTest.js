@@ -43,7 +43,7 @@ function privateStaticTest() {
     // CODE → addr: 86 | <LoadConstUInt8>: <Reg8: 2, UInt8: 200>
     // USED → r2 = 200;
     // CODE → addr: 89 | <PutById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 205>  # String: 'value' (Identifier)
-    new Counter().value = 200
+    r5.value = 200
     // CODE → addr: 95 | <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:101 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

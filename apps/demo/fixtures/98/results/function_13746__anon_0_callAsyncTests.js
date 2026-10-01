@@ -17,9 +17,9 @@ async function _anon_0_callAsyncTests() {
         // CODE → addr:535 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 0>
         r1[2] = 3
         // CODE → addr:539 | <LoadConstString>: <Reg8: 11, string_id: 3340>  # String: 'Generator functions may not be called on executing generators' (String)
-        r11 = "Generator functions may not be called on executing generators"
+        // USED → r11 = "Generator functions may not be called on executing generators";
         // CODE → addr:543 | <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r0 = throwTypeError(r11, r10)
+        r0 = throwTypeError("Generator functions may not be called on executing generators")
     } else if (r5 === 3) {
         // ──────────────── Block 32 ──────────────── 
         // CODE → addr:496 | <LoadConstUInt8>: <Reg8: 5, UInt8: 1>

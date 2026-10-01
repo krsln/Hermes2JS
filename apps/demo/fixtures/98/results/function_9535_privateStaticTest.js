@@ -19,9 +19,9 @@ function privateStaticTest() {
     if (typeof r5[0] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
-        r13 = "Trying to call a non-function"
+        // USED → r13 = "Trying to call a non-function";
         // CODE → addr: 45 | <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r6 = throwTypeError(r13, r12)
+        r6 = throwTypeError("Trying to call a non-function")
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 49 | <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
@@ -35,9 +35,9 @@ function privateStaticTest() {
     if (r5[5] in r9) {
         // ──────────────── Block 8 ──────────────── 
         // CODE → addr:395 | <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
-        r13 = "Cannot initialize private field twice."
+        // USED → r13 = "Cannot initialize private field twice.";
         // CODE → addr:399 | <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r3 = throwTypeError(r13, r12)
+        r3 = throwTypeError("Cannot initialize private field twice.")
     } else {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr: 72 | <LoadConstUndefined>: <Reg8: 1>
@@ -73,9 +73,9 @@ function privateStaticTest() {
         if (typeof r4 !== "function") {
             // ──────────────── Block 4 ──────────────── 
             // CODE → addr:141 | <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
-            r13 = "Trying to call a non-function"
+            // USED → r13 = "Trying to call a non-function";
             // CODE → addr:145 | <CallBuiltin>: <Reg8: 6, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-            r6 = throwTypeError(r13, r12)
+            r6 = throwTypeError("Trying to call a non-function")
         }
         // ──────────────── Block 5 ──────────────── 
         // CODE → addr:149 | <GetByIdShort>: <Reg8: 6, Reg8: 4, UInt8: 2, string_id: 212>  # String: 'prototype' (Identifier)
@@ -87,9 +87,9 @@ function privateStaticTest() {
         if (r5[5] in r6) {
             // ──────────────── Block 7 ──────────────── 
             // CODE → addr:387 | <LoadConstString>: <Reg8: 13, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
-            r13 = "Cannot initialize private field twice."
+            // USED → r13 = "Cannot initialize private field twice.";
             // CODE → addr:391 | <CallBuiltin>: <Reg8: 3, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-            r3 = throwTypeError(r13, r12)
+            r3 = throwTypeError("Cannot initialize private field twice.")
         } else {
             // ──────────────── Block 6 ──────────────── 
             // CODE → addr:168 | <AddOwnPrivateBySym>: <Reg8: 6, Reg8: 1, Reg8: 12>

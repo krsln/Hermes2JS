@@ -19,9 +19,9 @@ function create(param1) {
     if (typeof r0[2] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 7, string_id: 4299>  # String: 'Trying to call a non-function' (String)
-        r7 = "Trying to call a non-function"
+        // USED → r7 = "Trying to call a non-function";
         // CODE → addr: 45 | <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r2 = throwTypeError(r7, r6)
+        r2 = throwTypeError("Trying to call a non-function")
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 49 | <LoadParam>: <Reg8: 7, UInt8: 1>

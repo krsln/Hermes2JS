@@ -5,9 +5,9 @@ function tag(param1) {
     // CODE → addr:  3 | <LoadParam>: <Reg8: 4, UInt8: 1>
     // USED → r4 = param1;
     // CODE → addr:  6 | <LoadConstUInt8>: <Reg8: 7, UInt8: 1>
-    r7 = 1
+    // USED → r7 = 1;
     // CODE → addr:  9 | <CallBuiltin>: <Reg8: 2, UInt8: 47, UInt8: 2>  # Built-in function: [#47 copyRestArgs]
-    r2 = copyRestArgs(r7, r6)
+    r2 = copyRestArgs(1)
     // CODE → addr: 13 | <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 2>
     __environment__[0] = r2
     // CODE → addr: 17 | <GetGlobalObject>: <Reg8: 2>

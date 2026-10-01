@@ -24,9 +24,9 @@ function* generatorTryFinallyTest() {
         // CODE → addr:424 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 0>
         r1[0] = 3
         // CODE → addr:428 | <LoadConstString>: <Reg8: 15, string_id: 3340>  # String: 'Generator functions may not be called on executing generators' (String)
-        r15 = "Generator functions may not be called on executing generators"
+        // USED → r15 = "Generator functions may not be called on executing generators";
         // CODE → addr:432 | <CallBuiltin>: <Reg8: 0, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r0 = throwTypeError(r15, r14)
+        r0 = throwTypeError("Generator functions may not be called on executing generators")
     } else if (r12 === 3) {
         // Switch → START
         switch (param1) {

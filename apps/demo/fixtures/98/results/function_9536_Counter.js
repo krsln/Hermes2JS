@@ -15,9 +15,9 @@ function Counter() {
     if (r3[5] in r2) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 86 | <LoadConstString>: <Reg8: 7, string_id: 2847>  # String: 'Cannot initialize private field twice.' (String)
-        r7 = "Cannot initialize private field twice."
+        // USED → r7 = "Cannot initialize private field twice.";
         // CODE → addr: 90 | <CallBuiltin>: <Reg8: 2, UInt8: 44, UInt8: 2>  # Built-in function: [#44 throwTypeError]
-        r2 = throwTypeError(r7, r6)
+        r2 = throwTypeError("Cannot initialize private field twice.")
     } else {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 25 | <LoadConstUndefined>: <Reg8: 1>
