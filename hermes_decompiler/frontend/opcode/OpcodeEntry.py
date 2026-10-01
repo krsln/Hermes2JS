@@ -98,6 +98,63 @@ def _restore_undefined_markers(value):
     return value
 
 
+# JS keyword -> what `ast.literal_eval` should see instead. `undefined` gets
+# the marker (see `_UNDEFINED_MARKER`) so it stays distinct from `null`.
+_JS_KEYWORDS = {
+    "null": "None",
+    "true": "True",
+    "false": "False",
+    "undefined": f'"{_UNDEFINED_MARKER}"',
+}
+
+_BARE_WORD_RE = re.compile(r"[A-Za-z_$][\w$]*")
+
+
+def _normalize_js_literals(text: str) -> str:
+    """Rewrites JS `null`/`true`/`false`/`undefined` to what
+    `ast.literal_eval` understands - but ONLY outside string literals.
+
+    The comment text is a Python-repr-like literal whose string values can
+    themselves be JavaScript source (a Reanimated worklet's `code` field:
+    `{'code': "function f(m){if(m[6]!==undefined){return null;}}"}`). A
+    plain `re.sub(r"\bnull\b", ...)` over the whole text:
+
+    - corrupts such a value silently (`return null;` -> `return None;`,
+      `true` -> `True`), and
+    - for `undefined` splices a quoted marker into the middle of an
+      already-quoted string, which breaks the quoting and makes the whole
+      literal unparseable (`SyntaxError`) - the NewObjectWithBuffer
+      "No valid object parsed from comment" failures.
+
+    So walk the text, copy string literals through untouched (honouring
+    `\\`-escapes, so an escaped quote doesn't end the string), and replace
+    only bare words.
+    """
+    out: list[str] = []
+    i, n = 0, len(text)
+
+    while i < n:
+        ch = text[i]
+
+        if ch in "'\"":
+            j = i + 1
+
+            while j < n and text[j] != ch:
+                j += 2 if text[j] == "\\" else 1
+
+            out.append(text[i:j + 1])
+            i = j + 1
+        elif ch.isalpha() or ch in "_$":
+            word = _BARE_WORD_RE.match(text, i).group(0)
+            out.append(_JS_KEYWORDS.get(word, word))
+            i += len(word)
+        else:
+            out.append(ch)
+            i += 1
+
+    return "".join(out)
+
+
 @dataclass(slots=True)
 class FunctionReference:
     id: int
@@ -232,17 +289,10 @@ class OpcodeEntry:
 
     @classmethod
     def _parse_array_literal(cls, text: str):
-        _NULL_RE = re.compile(r"\bnull\b")
-        _TRUE_RE = re.compile(r"\btrue\b")
-        _FALSE_RE = re.compile(r"\bfalse\b")
-        _UNDEFINED_RE = re.compile(r"\bundefined\b")
-
-        text = _NULL_RE.sub("None", text)
-        text = _TRUE_RE.sub("True", text)
-        text = _FALSE_RE.sub("False", text)
-        # Kept distinct from `null`/`None` (see `JS_UNDEFINED`'s own
-        # docstring) rather than also collapsed to `None` here.
-        text = _UNDEFINED_RE.sub(f'"{_UNDEFINED_MARKER}"', text)
+        # `undefined` is kept distinct from `null`/`None` (see
+        # `JS_UNDEFINED`'s own docstring) rather than collapsed to `None`;
+        # string contents are never touched (see `_normalize_js_literals`).
+        text = _normalize_js_literals(text)
 
         return _restore_undefined_markers(ast.literal_eval(text))
 
@@ -254,17 +304,10 @@ class OpcodeEntry:
         `null` to their Python equivalents first (same convention as
         `_parse_array_literal`).
         """
-        _NULL_RE = re.compile(r"\bnull\b")
-        _TRUE_RE = re.compile(r"\btrue\b")
-        _FALSE_RE = re.compile(r"\bfalse\b")
-        _UNDEFINED_RE = re.compile(r"\bundefined\b")
-
-        text = _NULL_RE.sub("None", text)
-        text = _TRUE_RE.sub("True", text)
-        text = _FALSE_RE.sub("False", text)
-        # Kept distinct from `null`/`None` (see `JS_UNDEFINED`'s own
-        # docstring) rather than also collapsed to `None` here.
-        text = _UNDEFINED_RE.sub(f'"{_UNDEFINED_MARKER}"', text)
+        # `undefined` is kept distinct from `null`/`None` (see
+        # `JS_UNDEFINED`'s own docstring) rather than collapsed to `None`;
+        # string contents are never touched (see `_normalize_js_literals`).
+        text = _normalize_js_literals(text)
 
         parsed = ast.literal_eval(text)
         if not isinstance(parsed, dict):
