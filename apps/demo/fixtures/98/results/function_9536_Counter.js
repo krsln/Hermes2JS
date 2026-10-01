@@ -47,9 +47,9 @@ function Counter() {
         // CODE → addr: 71 | <GetOwnPrivateBySym>: <Reg8: 3, Reg8: 5, UInt8: 1, Reg8: 4>
         r3 = r3[2].#__private_4__
         // CODE → addr: 76 | <Inc>: <Reg8: 3, Reg8: 3>
-        // USED → r3 = r3 + 1;
+        r3 = r3 + 1
         // CODE → addr: 79 | <PutOwnPrivateBySym>: <Reg8: 5, Reg8: 3, UInt8: 1, Reg8: 4>
-        r3[2].#__private_4__ = r3 + 1
+        r3[2].#__private_4__ = r3
         // CODE → addr: 84 | <Ret>: <Reg8: 2>
         return r2;
     }

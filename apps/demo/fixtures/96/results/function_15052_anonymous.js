@@ -21,11 +21,10 @@ function function_15052(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 35 | <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → addr: 37 | <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15053>  # Function: [#15053 forEachTest of 71 bytes]: 1 params @ offset 0x00267d8a
-    // USED → r0 = forEachTest();
+    // USED → r0 = forEachTest;
     // CODE → addr: 42 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10885>  # String: 'forEachTest' (Identifier)
-    param6.forEachTest = forEachTest()
+    param6.forEachTest = forEachTest
     // CODE → addr: 48 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 50 | <Ret>: <Reg8: 0>
-    return undefined;
 }

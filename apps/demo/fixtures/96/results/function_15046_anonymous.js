@@ -21,11 +21,10 @@ function function_15046(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 35 | <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → addr: 37 | <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15047>  # Function: [#15047 whileTest of 117 bytes]: 1 params @ offset 0x00267ba8
-    // USED → r0 = whileTest();
+    // USED → r0 = whileTest;
     // CODE → addr: 42 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10971>  # String: 'whileTest' (Identifier)
-    param6.whileTest = whileTest()
+    param6.whileTest = whileTest
     // CODE → addr: 48 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 50 | <Ret>: <Reg8: 0>
-    return undefined;
 }

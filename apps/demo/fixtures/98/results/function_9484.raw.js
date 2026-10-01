@@ -28,13 +28,13 @@ function optionalChainingTest() {
     if (r5 == null) goto label_67;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 47 | <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 2, string_id: 36>  # String: 'b' (Identifier)
-    // USED → r5 = r5.b;
+    r5 = r5.b
     // CODE → addr: 52 | <Eq>: <Reg8: 3, Reg8: 5, Reg8: 1>
-    // USED → r3 = r5.b == null;
+    // USED → r3 = r5 == null;
     // CODE → addr: 56 | <LoadConstUndefined>: <Reg8: 7>
     r7 = undefined
     // CODE → addr: 58 | <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000043
-    if (r5.b == null) goto label_67;
+    if (r5 == null) goto label_67;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 61 | <GetById>: <Reg8: 7, Reg8: 5, UInt8: 3, string_id: 6562>  # String: 'c' (Identifier)
     r7 = r5.c

@@ -29,7 +29,11 @@ class CreateEnvironment(OpcodeHandler):
 
         expression = CallExpression(callee=Identifier(name="createEnvironment"), arguments=())
 
-        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        # Always depth 0 by definition - this call IS what establishes
+        # this function's own frame. See EnvironmentOriginTable's own
+        # docstring for what "effective depth" means and why
+        # GetParentEnvironment needs to know this happened at all.
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg, env_source=(0, None))
         ctx.analysis.add_result(result)
 
         return result

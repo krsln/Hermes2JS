@@ -1,4 +1,4 @@
-async function* anon_15185(param1) {
+async function _anon_0_(param1) {
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 10 | <LoadConstUndefined>: <Reg8: 7>
     // USED → r7 = undefined;
@@ -22,25 +22,37 @@ async function* anon_15185(param1) {
     r4 = GetIterator(param1)
     // CODE → addr: 44 | <GetEnvironment>: <Reg8: 5, UInt8: 2>
     r5 = getEnvironment(2)
-    // LOOP → START (for_of)
-    for (const r9 of param1) {
+    // LOOP → START (while)
+    while (!(r3 === undefined)) {
         // ──────────────── Block 2 ──────────────── 
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → addr: 58 | <Mov>: <Reg8: 8, Reg8: 1>
-        r8 = r1
-        // CODE → addr: 61 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
-        // USED → r3 = r5[2];
-        // CODE → addr: 65 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
-        r3 = await r5[2].call(r7, r9)
-        // CODE → addr: 70 | <SaveGenerator>: <Addr8: 4>  # Address: 0000004a
-        goto label_74;
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-        r3 = await yield
-        // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
-        // USED → r9 = __resumeIsReturn;
+        // CODE → addr: 47 | <IteratorNext>: <Reg8: 9, Reg8: 4, Reg8: 6>
+        r9 = r4.next()
+        // CODE → addr: 51 | <Mov>: <Reg8: 3, Reg8: 4>
+        r3 = r4
+        try {
+            // ──────────────── Block 3 ──────────────── 
+            // CODE → addr: 58 | <Mov>: <Reg8: 8, Reg8: 1>
+            r8 = r1
+            // CODE → addr: 61 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 5, UInt8: 2>
+            // USED → r3 = delay;
+            // CODE → addr: 65 | <Call2>: <Reg8: 3, Reg8: 3, Reg8: 7, Reg8: 9>
+            r3 = await delay(r9)
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
+            r3 = await yield
+            // CODE → addr: 74 | <ResumeGenerator>: <Reg8: 3, Reg8: 9>
+            // USED → r9 = __resumeIsReturn;
+        } catch (caughtException) {
+            // ──────────────── Block 8 ──────────────── 
+            // CODE → addr: 94 | <IteratorClose>: <Reg8: 4, UInt8: 1>
+            r4.return()
+            // CODE → addr: 97 | <Throw>: <Reg8: 3>
+            throw r3;
+        }
         if (__resumeIsReturn) {
             // ──────────────── Block 7 ──────────────── 
+            // CODE → addr: 86 | <IteratorClose>: <Reg8: 4, UInt8: 0>
+            r4.return()
             // CODE → addr: 90 | <Ret>: <Reg8: 3>
             return r3;
         }
@@ -49,6 +61,9 @@ async function* anon_15185(param1) {
         r1 = r8 + r3
     }
     // LOOP → END
+    // ──────────────── Block 4 ──────────────── 
+    // CODE → addr: 72 | <Ret>: <Reg8: 3>
+    return r3;
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr: 99 | <TryGetById>: <Reg8: 4, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;

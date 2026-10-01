@@ -21,17 +21,17 @@ function function_15069(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 30 | <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
     r2 = Object.defineProperty(param6, "__esModule", r3)
     // CODE → addr: 37 | <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15070>  # Function: [#15070 ternaryTest of 137 bytes]: 2 params @ offset 0x002685a6
-    // USED → r2 = ternaryTest(param1);
+    // USED → r2 = ternaryTest;
     // CODE → addr: 42 | <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 9849>  # String: 'ternaryTest' (Identifier)
-    param6.ternaryTest = ternaryTest(param1)
+    param6.ternaryTest = ternaryTest
     // CODE → addr: 48 | <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15071>  # Function: [#15071 shortCircuitAssignTest of 166 bytes]: 1 params @ offset 0x0026862f
-    // USED → r2 = shortCircuitAssignTest();
+    // USED → r2 = shortCircuitAssignTest;
     // CODE → addr: 53 | <PutById>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 10963>  # String: 'shortCircuitAssignTest' (Identifier)
-    param6.shortCircuitAssignTest = shortCircuitAssignTest()
+    param6.shortCircuitAssignTest = shortCircuitAssignTest
     // CODE → addr: 59 | <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15072>  # Function: [#15072 logicalShortCircuitTest of 163 bytes]: 3 params @ offset 0x002686d5
-    // USED → r0 = logicalShortCircuitTest(param1, param2);
+    // USED → r0 = logicalShortCircuitTest;
     // CODE → addr: 64 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 10952>  # String: 'logicalShortCircuitTest' (Identifier)
-    param6.logicalShortCircuitTest = logicalShortCircuitTest(param1, param2)
+    param6.logicalShortCircuitTest = logicalShortCircuitTest
     // CODE → addr: 70 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → addr: 72 | <Ret>: <Reg8: 0>

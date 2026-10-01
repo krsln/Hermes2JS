@@ -1,4 +1,5 @@
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.core.Naming import to_js_identifier
 from hermes_decompiler.pipeline.PipelineContext import PipelineContext
 from hermes_decompiler.pipeline.PipelineStage import PipelineStage
 
@@ -13,10 +14,15 @@ class SignatureStage(PipelineStage):
 
         function_name = metadata.get('function_name', f'func_{context.section_index}')
 
-        if function_name.startswith('?anon_'):
-            function_name = f'anon_{metadata.get("function_id", context.section_index)}'
-
-        context.function_name = function_name
+        # function_name comes straight from this function's own header
+        # metadata and isn't guaranteed to be a valid JS identifier -
+        # e.g. an anonymous generator/async body is named "?anon_0_..."
+        # (see hermes_decompiler.core.Naming for why). This is what
+        # CodeGenerationStage prints as the declared function's own
+        # name, so it needs the same sanitizing every *reference* to
+        # another function's name already gets (see CreateGenerator.py/
+        # CreateGeneratorClosure.py/CreateClosure.py).
+        context.function_name = to_js_identifier(function_name)
 
         param_count = metadata.get('param_count', 0)
         context.params = [
@@ -50,5 +56,37 @@ class SignatureStage(PipelineStage):
         # each other instead of the header unconditionally claiming "async".
         joined = '\n'.join(context.lines)
         context.is_generator = '<StartGenerator>' in joined
+
+        context.header_kind = metadata.get('header_kind', 'normal')
+
+        function_id = metadata.get('function_id', context.section_index)
+        context.function_id = function_id
+        context.creator_facts = (
+            context.batch_tables.creator_table.facts_for(function_id) if context.batch_tables else None
+        )
+
+        if context.creator_facts is not None and context.creator_facts.is_generator:
+            # The one signal that survives on hbc97+: nothing in this
+            # function's own bytecode says so (see the docstring above and
+            # CreatorTable's), but some other function's CreateGenerator
+            # names this one as its target, which is true on every
+            # version and is exactly what "is a generator body" means.
+            context.is_generator = True
+
+        if context.header_kind == 'generator':
+            # This function's *own* header, independent of any batch
+            # table: on hbc97+, an outer stub that only calls
+            # CreateGenerator and returns still carries this - see
+            # PipelineContext.header_kind. That stub's own bytecode has
+            # no suspend/resume machinery either, exactly like the
+            # CreateGenerator-target case above, so it gets the same
+            # treatment for the same reason: printing it as `function*`
+            # matches the keyword actually written in the source, even
+            # though the body shown here is just the factory call - the
+            # real `yield`s live in the separate CreateGenerator target.
+            # This is also what covers a standalone section processed
+            # without a creator_table at all, where this function's own
+            # header is the only signal available.
+            context.is_generator = True
 
         return context

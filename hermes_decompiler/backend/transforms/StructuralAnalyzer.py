@@ -11,12 +11,15 @@ from hermes_decompiler.backend.transforms.region_passes import (
     DeadMovEliminationPass,
     ForEachRegionPass,
     GeneratorStateMachineRegionPass,
+    InductionVariableNamingPass,
+    IfTailMergeRegionPass,
     LoopConditionRegionPass,
     LoopContinueRegionPass,
     LoopInductionAliasPass,
     NullishAssignmentRegionPass,
     RedundantJumpRegionPass,
     ReturnValueResolutionPass,
+    TrailingReturnRegionPass,
 )
 from hermes_decompiler.backend.transforms.structurers import (
     SequenceStructurer,
@@ -123,6 +126,16 @@ class StructuralAnalyzer:
 
         # ---- 3. region_passes -------------------------------------------
 
+        # Must run before BooleanChainRegionPass/ConditionalExpressionRegionPass/
+        # NullishAssignmentRegionPass: those look for specific
+        # then/else body SHAPES, so a duplicated tail Hermes copied
+        # into both branches should already be hoisted out (leaving
+        # each branch with just its OWN distinct content) before any
+        # of them tries to interpret what's left. Must ALSO run before
+        # LoopConditionRegionPass - see that pass's own ordering
+        # comment below.
+        IfTailMergeRegionPass(graph, self.cfg).run()
+
         BooleanChainRegionPass(graph, self.cfg).run()  # `&&`/`||` (e.g. a bare-if (a || b) { ... }
 
         # Must run after BooleanChainRegionPass: a then/else arm's own
@@ -228,6 +241,20 @@ class StructuralAnalyzer:
         # rather than risking a copy some earlier pass still expected
         # to find in place.
         DeadMovEliminationPass(graph, self.cfg).run()
+
+        # Drops the function's own final `return undefined;` (falling off
+        # the end of a JS function already IS that). Needs
+        # ReturnValueResolutionPass above to have turned `return r0;` into
+        # `return undefined;` first; placed after DeadMovEliminationPass so
+        # that pass still sees the return as a read of its register.
+        TrailingReturnRegionPass(graph, self.cfg).run()
+
+        # Purely cosmetic, purely presentational - must be the very LAST
+        # transform pass. It rewrites a for-loop's induction register into
+        # an explicit `i`/`j`/`k` AssignmentExpression with dest_reg cleared
+        # (see its own docstring), so anything running after it that keys
+        # off a register NUMBER would silently stop matching.
+        InductionVariableNamingPass(graph, self.cfg).run()
 
         # ---- Diagnostics ------------------------------------------------
 

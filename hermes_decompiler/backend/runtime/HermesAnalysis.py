@@ -1,11 +1,18 @@
+import re
 from typing import Any
 
 from hermes_decompiler.backend.analysis.cfg import CFG
 from hermes_decompiler.backend.emit import JSEmitter
 from hermes_decompiler.backend.transforms import StructuralAnalyzer
+from hermes_decompiler.backend.transforms.cfg_passes import GeneratorStateDispatchCfgPass, generator_dispatch
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
+from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
+from hermes_decompiler.frontend.batch_pipeline.tables import CreatorFacts
+from hermes_decompiler.ir.expressions import Identifier
 from .RegisterState import RegisterState
+
+logger = get_logger(__name__)
 
 
 class HermesAnalysis:
@@ -37,6 +44,8 @@ class HermesAnalysis:
         self.loop_ranges: list[tuple[int, int]] = []
         # Address of the instruction currently being handled.
         self.current_address: int | None = None
+        # Instruction currently being handled (see `current_instruction_overwrites`).
+        self.current_entry = None
         # Addresses where each register is written inside a loop.
         self.loop_carried_writes: dict[str, list[int]] = {}
 
@@ -49,7 +58,107 @@ class HermesAnalysis:
         prev = self.registers.get(result.name)
         version = prev.version + 1 if prev else 0
 
-        self.registers[result.name] = RegisterState(definition=result, version=version)
+        # Snapshot BEFORE the register table is updated: a self-referencing
+        # value (`r3 = r3.a`) must record the OLD version of r3 so that it
+        # reads as stale as soon as this very definition replaces it.
+        operand_versions = self._capture_operand_versions(result)
+
+        self.registers[result.name] = RegisterState(
+            definition=result, version=version, operand_versions=operand_versions,
+        )
+
+    _REGISTER_NAME_RE = re.compile(r"r\d+")
+
+    def _capture_operand_versions(self, result: OpcodeResult) -> tuple[tuple[str, int], ...]:
+        value = result.value
+        if value is None:
+            return ()
+
+        captured: dict[str, int] = {}
+        for node in value.walk():
+            if isinstance(node, Identifier) and self._REGISTER_NAME_RE.fullmatch(node.name):
+                state = self.registers.get(node.name)
+                if state is not None:
+                    captured[node.name] = state.version
+
+        return tuple(captured.items())
+
+    # Opcodes whose first register operand is a READ (or that have no
+    # destination), so they never overwrite it.
+    _NON_WRITING_OPCODE_RE = re.compile(
+        r"(J|Put|Store|Switch|Throw$|Ret$|SaveGenerator|ResumeGenerator|CompleteGenerator"
+        r"|StartGenerator|SelectObject|Debugger)"
+    )
+    _FIRST_REGISTER_RE = re.compile(r"\s*Reg(?:8|32):\s*(\d+)")
+
+    def current_instruction_overwrites(self, register_name: str) -> bool:
+        """True if the instruction being handled writes `register_name`
+        (first register operand of a value-producing opcode)."""
+        entry = self.current_entry
+        if entry is None or self._NON_WRITING_OPCODE_RE.match(entry.opcode):
+            return False
+
+        match = self._FIRST_REGISTER_RE.match(entry.args)
+        return match is not None and f"r{match.group(1)}" == register_name
+
+    def stale_kind(self, state: RegisterState) -> str | None:
+        """How `state.value` has gone stale, if at all.
+
+        - "self": its only stale operand is its own destination
+          (`r3 = r3.a`). The `rN` inside then means the value BEFORE this
+          definition, which stays true only while the definition's
+          statement is folded away and the consumer overwrites `rN` itself
+          (`r1 = r1.f; r1 = r1(x)` -> `r1 = r1.f(x)`).
+        - "other": the value is a bare register alias (`Mov r5, r4` ->
+          `r4`) and r4 was redefined since. Inlining would read the NEW r4.
+        - None: still valid.
+
+        A computed expression that mentions some OTHER redefined register
+        is deliberately NOT reported: the redefinition is usually a
+        constant/argument load that is itself folded away (so the register
+        never changes in the output), and blocking those inlines turned
+        `r1.ifTest.call(r2, 7)` into `r5 = r1.ifTest; r1 = r5(7)` without
+        catching a confirmed bug. See the residual list in the notes.
+        """
+        # Put*: pseudo-definition - `obj[k] = v` re-published as a definition
+        # of `obj` so the printer can chain `(o[0] = a)[1] = b`. Its value
+        # mentions `obj` by design; it does not compute a new `obj`.
+        if state.handler.startswith("Put"):
+            return None
+
+        kind = None
+        own = state.definition.name
+
+        for name, version in state.operand_versions:
+            current = self.registers.get(name)
+            if current is not None and current.version == version:
+                continue
+
+            if name == own and current is state:
+                kind = "self"
+            elif isinstance(state.value, Identifier) and self._REGISTER_NAME_RE.fullmatch(state.value.name):
+                # A bare register alias (`Mov r5, r4` -> value `r4`): the
+                # alias only means anything while r4 still holds what it
+                # held at the Mov. Any later write to r4 makes inlining the
+                # alias wrong (it would read the NEW r4), and unlike a
+                # computed expression there is no folded-away consumer
+                # that could still make it right.
+                return "other"
+
+        return kind
+
+    def may_inline(self, state: RegisterState) -> bool:
+        """Whether `state.value` can be substituted at the read being handled."""
+        kind = self.stale_kind(state)
+
+        if kind is None:
+            return True
+
+        return (
+                kind == "self"
+                and not state.definition.definition_pinned
+                and self.current_instruction_overwrites(state.definition.name)
+        )
 
     def get_register_state(self, reg: int) -> RegisterState | None:
         return self.registers.get(f"r{reg}")
@@ -91,7 +200,12 @@ class HermesAnalysis:
 
         return False
 
-    def generate_js(self, verbose: bool = False, raw: bool = False) -> list[str]:
+    def generate_js(
+            self,
+            verbose: bool = False,
+            raw: bool = False,
+            creator_facts: CreatorFacts | None = None,
+    ) -> list[str]:
         # Clone every result before handing it to the CFG/structuring
         # passes below: those passes routinely reassign an OpcodeResult's
         # `.value`/`.statement`/`.terminator`/`.definition_used` in place
@@ -104,6 +218,72 @@ class HermesAnalysis:
         results = [result.clone() for result in self.results]
 
         cfg = CFG.from_results(results, self.metadata.get("exception_handlers", []))
+
+        # Why this function's own suspend/resume dispatch might still be
+        # left in its raw, unstructured `goto`/`if (...) goto` form by the
+        # time `JSEmitter` runs below - tracked here (reason, confirmed)
+        # so the invalid-JS check after `JSEmitter.emit` can explain
+        # *why*, not just *that*. `confirmed=False` means this is only a
+        # plausible explanation (batch_tables being absent also means we
+        # don't even know whether this body is a generator/async at
+        # all), not a definite diagnosis - the warning below has to word
+        # those two cases differently rather than asserting a cause this
+        # function was never actually able to verify.
+        unresolved_dispatch_reason: tuple[str, bool] | None = None
+
+        if creator_facts is None:
+            unresolved_dispatch_reason = (
+                "no batch_tables were provided (see FileOperations.build_batch_tables), "
+                "so if this body is a generator/async function its suspend-resume dispatch "
+                "could not be detected or resolved",
+                False,
+            )
+        elif creator_facts.is_generator:
+            # Must run before verify()/compute_dominators()/compute_loops()
+            # below: it can replace cfg.entry and cfg.blocks outright, and
+            # every one of those would otherwise be computed against a CFG
+            # shape this rewrite is about to discard. See
+            # GeneratorStateDispatchCfgPass's module docstring for why this
+            # has to happen at the CFG level at all, rather than as an
+            # ordinary StructuralAnalyzer pass - the short version is that
+            # unlike every other pass there, this one is gated on a fact
+            # (`creator_facts`) no single CFG can determine about itself on
+            # hbc97+ (see CreatorTable).
+            dispatch = generator_dispatch.detect(cfg)
+
+            if dispatch is not None:
+                applied = GeneratorStateDispatchCfgPass(
+                    cfg, dispatch, is_async=creator_facts.is_async,
+                ).run()
+
+                if applied:
+                    logger.debug(
+                        "Generator dispatch on env[%d] rewritten: %d suspend site(s).",
+                        dispatch.resume_slot, len(dispatch.suspend_sites),
+                    )
+                else:
+                    unresolved_dispatch_reason = (
+                        "a generator/async dispatch chain was recognized but this "
+                        "pass declined to fold it (see GeneratorStateDispatchCfgPass.run's "
+                        "own all-or-nothing contract - logged above at DEBUG)",
+                        True,
+                    )
+            else:
+                # A resolved generator/async body with no recognized
+                # dispatch - most likely a shape `generator_dispatch`
+                # doesn't cover yet (`yield*`, an async generator, or
+                # something else entirely). Left as the raw goto form;
+                # worth knowing about rather than silently accepting.
+                logger.debug(
+                    "Function is a resolved generator/async body but no state-dispatch "
+                    "machine was recognized in it; rendering the raw goto form.",
+                )
+                unresolved_dispatch_reason = (
+                    "this is a resolved generator/async body whose suspend-resume dispatch "
+                    "shape isn't one generator_dispatch.detect recognizes yet "
+                    "(e.g. `yield*`, an async generator)",
+                    True,
+                )
 
         cfg.verify()
         cfg.compute_dominators()
@@ -125,4 +305,67 @@ class HermesAnalysis:
         else:
             root = StructuralAnalyzer(cfg).build()
 
-        return JSEmitter(verbose).emit(root)
+        lines = JSEmitter(verbose).emit(root)
+
+        if raw:
+            # The raw renderer's whole point is the unstructured form -
+            # `goto`/`if (...) goto` here is expected output, not a defect
+            # to flag.
+            return lines
+
+        return self._warn_if_invalid_js(lines, unresolved_dispatch_reason)
+
+    @staticmethod
+    def _warn_if_invalid_js(
+            lines: list[str],
+            unresolved_dispatch_reason: tuple[str, bool] | None,
+    ) -> list[str]:
+        """
+        `StatementPrinter.visit_TerminatorJump`/`visit_TerminatorConditionalBranch`
+        are the Printer's own fallback for a terminator no structurer
+        pass claimed - `goto label_N;` / `if (...) goto label_N;`. Both
+        are real Python-side output but neither is valid JavaScript
+        syntax at all (`goto` isn't a JS keyword), so a caller that
+        writes this straight to a `.js` file or feeds it to a JS parser
+        gets a hard syntax error with no hint why.
+
+        This is checked here, on the final emitted lines, rather than by
+        asking every individual structurer pass whether it fully
+        succeeded: `goto`/`label_` never appear in genuine output (no
+        real JS construct this printer emits contains either token), so
+        a plain substring scan is exact, and it catches every route to
+        this shape in one place - not just the generator/async
+        no-batch-context case this method's own caller already tracks a
+        reason for (`unresolved_dispatch_reason`), but any other
+        genuinely irreducible control flow a structurer pass simply
+        doesn't cover yet.
+        """
+        if not any("goto label_" in line for line in lines):
+            return lines
+
+        if unresolved_dispatch_reason is not None:
+            reason, confirmed = unresolved_dispatch_reason
+            cause = reason if confirmed else f"possibly because {reason}"
+        else:
+            cause = (
+                "this function's control flow could not be fully structured "
+                "by any recognized loop/if/switch/try shape"
+            )
+
+        warning = [
+            "// ⚠ WARNING: this output is NOT valid JavaScript.",
+            f"// Cause: {cause}.",
+            "// It contains raw `goto label_N;` / `if (...) goto label_N;` statements -",
+            "// `goto` is not a JavaScript keyword, so this will fail to parse as-is.",
+            "// If this is a generator/async function, re-run decompilation with batch_tables",
+            "// built from the full section directory (FileOperations.build_batch_tables) so",
+            "// its suspend/resume dispatch can be recognized before structuring runs.",
+        ]
+
+        logger.warning(
+            "Emitted output contains unstructured `goto` statements and is not valid "
+            "JavaScript (cause: %s).",
+            cause,
+        )
+
+        return warning + lines

@@ -99,5 +99,4 @@ function ifTest(param1) {
     // CODE → addr:237 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr:239 | <Ret>: <Reg8: 1>
-    return undefined;
 }

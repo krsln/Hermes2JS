@@ -19,10 +19,10 @@ function forTest() {
     // CODE → addr: 32 | <LoadConstUInt8>: <Reg8: 1, UInt8: 3>
     // USED → r1 = 3;
     // LOOP → START (for)
-    for (r5 = 0; r5 < 10; r5 = r6 + 1) {
+    for (i = 0; i < 10; i = r6 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 37 | <Mov>: <Reg8: 6, Reg8: 5>
-        r6 = r5
+        r6 = i
         if (r6 === 3) {
             // ──────────────── Block 5 ──────────────── 
             // CODE → addr: 88 | <TryGetById>: <Reg8: 8, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -69,5 +69,4 @@ function forTest() {
     // CODE → addr:131 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:133 | <Ret>: <Reg8: 0>
-    return undefined;
 }

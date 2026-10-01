@@ -37,5 +37,4 @@ function makeSound() {
     // CODE → addr: 81 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 83 | <Ret>: <Reg8: 0>
-    return undefined;
 }

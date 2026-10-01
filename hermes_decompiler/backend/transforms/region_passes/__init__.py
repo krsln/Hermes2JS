@@ -6,12 +6,15 @@ from .ConditionalExpressionRegionPass import ConditionalExpressionRegionPass
 from .DeadMovEliminationPass import DeadMovEliminationPass
 from .ForEachRegionPass import ForEachRegionPass
 from .GeneratorStateMachineRegionPass import GeneratorStateMachineRegionPass
+from .IfTailMergeRegionPass import IfTailMergeRegionPass
+from .InductionVariableNamingPass import InductionVariableNamingPass
 from .LoopConditionRegionPass import LoopConditionRegionPass
 from .LoopInductionAliasPass import LoopInductionAliasPass
 from .LoopContinueRegionPass import LoopContinueRegionPass
 from .NullishAssignmentRegionPass import NullishAssignmentRegionPass
 from .RedundantJumpRegionPass import RedundantJumpRegionPass
 from .ReturnValueResolutionPass import ReturnValueResolutionPass
+from .TrailingReturnRegionPass import TrailingReturnRegionPass
 
 __all__ = [
     "RegionPass",
@@ -20,10 +23,13 @@ __all__ = [
     "DeadMovEliminationPass",
     "ForEachRegionPass",
     "GeneratorStateMachineRegionPass",
+    "IfTailMergeRegionPass",
+    "InductionVariableNamingPass",
     "LoopConditionRegionPass",
     "LoopInductionAliasPass",
     "LoopContinueRegionPass",
     "NullishAssignmentRegionPass",
     "RedundantJumpRegionPass",
     "ReturnValueResolutionPass",
+    "TrailingReturnRegionPass",
 ]

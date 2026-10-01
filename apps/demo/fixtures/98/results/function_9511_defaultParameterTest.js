@@ -29,5 +29,4 @@ function defaultParameterTest(param1) {
     // CODE → addr: 63 | <Call3>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 5, Reg8: 2>
     console.log((param3 !== undefined) ? param3 : "result", r2)
     // CODE → addr: 69 | <Ret>: <Reg8: 1>
-    return undefined;
 }

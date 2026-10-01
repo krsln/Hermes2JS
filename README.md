@@ -6,16 +6,16 @@ Hermes2JS takes an already-built Hermes bytecode bundle from a React Native app 
 disassembles it, splits it into one file per function, and reconstructs each function as readable JavaScript.
 
 ```text
-┌────────────────────────┐      vendor/run-hermes-dec.sh               
-│       assets/          │   scripts/run-hermes-disassembler.py        ┌──────────────────────────┐
-│  index.android.bundle  │ ──────────────────────────────────────────► │ disassembler-output.hasm │
-│ (Prebuilt Hermes BC)   │       (external hermes-dec tool)            └───────────┬──────────────┘
-│                        │                                                         │
+┌────────────────────────┐              
+│       assets/          │      scripts/run-hermes-disassembler.py     ┌──────────────────────────┐
+│  index.android.bundle  │ ────────────────────or────────────────────► │ disassembler-output.hasm │
+│ (Prebuilt Hermes BC)   │  vendor/hermes-dec/.../hbc_disassembler.py  └───────────┬──────────────┘
+│                        │          (external hermes-dec tool)                     │
 └────────────────────────┘                                                         │
                                                                                    ▼
-┌────────────────────────┐      scripts/decompile_sections.py         scripts/split_output_file.py
-│     results/*.js       │ ◄───────────────────────────────────          function_<id>_*.hasm
-│                        │       (one file per function)
+┌────────────────────────┐       scripts/decompile_sections.py          scripts/split_output_file.py
+│     results/*.js       │ ◄─────────────────────────────────────────        function_<id>_*.hasm
+│                        │           (one file per function)
 │ (Decompiled JS source) │
 └────────────────────────┘
 ```
@@ -31,9 +31,9 @@ disassembles it, splits it into one file per function, and reconstructs each fun
 
 ## Sources
 
-* [hermes_rs documentation](https://docs.rs/hermes_rs/latest/hermes_rs/all.html)
-* [Hermes `BytecodeList.def`](https://github.com/facebook/hermes/blob/main/include/hermes/BCGen/HBC/BytecodeList.def)
 * [hermes-dec](https://github.com/P1sec/hermes-dec) — external Hermes bytecode disassembly tool
+* https://p1sec.github.io/hermes-dec/opcodes_table.html
+* https://github.com/facebook/hermes/tree/main/include/hermes/BCGen
 
 ## Hermes Bytecode Pipeline
 
@@ -47,36 +47,10 @@ disassembles it, splits it into one file per function, and reconstructs each fun
 
 ## Workflow
 
-```text
-Bytecode
-    │
-    ▼
-Parsing
-    │
-    ▼
-Dispatch
-    │
-    ▼
-Opcode Handlers
-    │
-    ▼
-Analysis
-    ├── CFG
-    ├── Dominance
-    ├── Loops
-    └── Regions
-    │
-    ▼
-Transforms
-    │
-    ▼
-IR
-    │
-    ▼
-Emit
-    │
-    ▼
-JavaScript
+```text 
+Bytecode → Parsing → Dispatch → Opcode Handlers → Analysis → Transforms → IR → Emit → JavaScript
+                                                      │
+                                                      └── CFG, Dominance, Loops, Regions
 ```
 
 ## Third-Party Tools
@@ -88,7 +62,7 @@ Hermes2JS uses [hermes-dec](https://github.com/P1sec/hermes-dec) as an **externa
 separately by:
 
 ```bash
-./scripts/fetch-hermes-dec.sh
+./vendor/fetch-hermes-dec.sh
 ```
 
 The fetched `hermes-dec` source remains subject to its own license terms.

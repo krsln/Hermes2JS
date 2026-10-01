@@ -6,7 +6,7 @@ from collections import deque
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.transforms.shared import structural_key
 from hermes_decompiler.ir.expressions import (
-    ArrayExpression, AwaitExpression, CallExpression, Identifier, ObjectExpression, YieldExpression,
+    ArrayExpression, AwaitExpression, CallExpression, Identifier, Literal, ObjectExpression, YieldExpression,
 )
 from hermes_decompiler.ir.statements import ReturnStatement, ThrowStatement
 from ._base import RegionPass
@@ -66,6 +66,24 @@ class ReturnValueResolutionPass(RegionPass):
                 if resolved is None:
                     continue
 
+                # A pinned definition has a bare `rN` reference elsewhere
+                # in the output, so its own statement is printed and `rN`
+                # already names its value. Substituting the definition's
+                # expression here as well would evaluate it a second time
+                # (`r0 = r0 + 1; return r0 + 1` instead of `return r0`).
+                #
+                # Constants are exempt: re-evaluating `undefined`/`3`/`"x"`
+                # is free, and folding them is what lets a trailing
+                # `return undefined` be dropped (otherwise every function
+                # whose `undefined` register also appeared as a call
+                # argument would end in a stray `return rN;`).
+                if (
+                        definition_instr is not None
+                        and definition_instr.definition_pinned
+                        and not isinstance(resolved, Literal)
+                ):
+                    continue
+
                 new_statement = statement.__class__(argument=resolved)
                 instr.statement = new_statement
                 instr.value = resolved
@@ -100,7 +118,13 @@ class ReturnValueResolutionPass(RegionPass):
                 # entirely. Marking only HERE, exactly when (and only
                 # when) a fold genuinely happens, keeps the two in
                 # lockstep.
-                if definition_instr is not None:
+                #
+                # ...except for a PINNED definition (a bare `rN` reference to
+                # it exists elsewhere in the output - only a constant can get
+                # this far, see above): its statement must keep printing, or
+                # that other reference dangles (`r5.return(r0)` with no
+                # `r0 = undefined`).
+                if definition_instr is not None and not definition_instr.definition_pinned:
                     definition_instr.definition_used = True
 
     # -----------------------------------------------------------------

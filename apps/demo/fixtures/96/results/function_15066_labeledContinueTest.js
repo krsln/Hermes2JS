@@ -20,15 +20,15 @@ function labeledContinueTest() {
     // USED → r2 = 1;
     loop_1:
     // LOOP → START (for)
-    for (r1 = 0; r1 < 3; r1 = r7 + 1) {
+    for (i = 0; i < 3; i = r7 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 38 | <Mov>: <Reg8: 7, Reg8: 1>
-        r7 = r1
+        r7 = i
         // LOOP → START (for)
-        for (r8 = 0; r8 < 3; r8 = r9 + 1) {
+        for (j = 0; j < 3; j = r9 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 43 | <Mov>: <Reg8: 9, Reg8: 8>
-            r9 = r8
+            r9 = j
             if (r9 === 1) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → addr: 92 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -57,8 +57,6 @@ function labeledContinueTest() {
         // USED → r8 = console.log;
         // CODE → addr: 85 | <Call2>: <Reg8: 8, Reg8: 8, Reg8: 9, Reg8: 3>
         console.log("__BC:ControlFlow/LabeledTests/labeledContinueTest/unreachable-with-j1")
-        // CODE → addr: 90 | <Jmp>: <Addr8: 18>  # Address: 0000006c
-        goto label_108;
     }
     // LOOP → END
     // ──────────────── Block 7 ──────────────── 
@@ -73,5 +71,4 @@ function labeledContinueTest() {
     // CODE → addr:135 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:137 | <Ret>: <Reg8: 0>
-    return undefined;
 }

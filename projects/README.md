@@ -2,17 +2,25 @@
 
 https://docs.expo.dev/tutorial/create-your-first-app/
 
+## React Native (stable)
+
 | React Native Version     | Hermes Bytecode Version (HBC) | Notes / Status                   |
 |--------------------------|-------------------------------|----------------------------------|
-| React Native 0.84+       | Version 98 / 99+              | next-generation Hermes V1 engine |
+| React Native 0.87        | Version ~99                   | Hermes V1                        |
+| React Native 0.84 - 0.86 | Version 98                    | next-generation Hermes V1 engine |
 | React Native 0.74 – 0.83 | Version 96                    | Common                           |
 | React Native 0.71 – 0.73 | Version 93                    |                                  |
 
+## Expo SDK (stable)
+
 | React Native | Expo SDK | Komut                                                            |
 |--------------|----------|------------------------------------------------------------------|
-| **0.83**     | **55**   | `npx create-expo-app@latest MyTestApp --template default@sdk-55` |
+| 0.87         | ~        | preview                                                          |
+| 0.86         | 57       | `npx create-expo-app@latest MyTestApp --template default@sdk-57` |
 | 0.85         | 56       | `npx create-expo-app@latest MyTestApp --template default@sdk-56` |
-| 0.86         | 57       | `npx create-expo-app@latest MyTestApp` (veya `@sdk-57`)          |
+| 0.83         | 55       | `npx create-expo-app@latest MyTestApp --template default@sdk-55` |
+
+## Create
 
 ```shell
 # Version 98

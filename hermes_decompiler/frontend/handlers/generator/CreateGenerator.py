@@ -1,3 +1,4 @@
+from hermes_decompiler.core.Naming import to_js_identifier
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, FUNCTION_ID
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import CallExpression, Identifier
@@ -20,6 +21,12 @@ class CreateGenerator(OpcodeHandler):
         env = self.get_register_expression(ctx.analysis, env_reg)
         func_name = (
             ctx.entry.function.name if ctx.entry.function and ctx.entry.function.name else f"function_{function_id}")
+
+        # func_name comes straight from the function table and isn't
+        # guaranteed to be a valid JS identifier - e.g. an anonymous
+        # generator/async body is named "?anon_0_..." (see
+        # hermes_decompiler.core.Naming for why).
+        func_name = to_js_identifier(func_name)
 
         # Same named pseudo-call convention as createThis()/getEnvironment():
         # actually instantiating a generator object isn't plain JS syntax.
@@ -62,6 +69,10 @@ class CreateGeneratorClosure(OpcodeHandler):
             if ctx.entry.function and ctx.entry.function.name
             else f"function_{function_id}"
         )
+
+        # See the matching note in CreateGenerator.handle() above -
+        # func_name isn't guaranteed to be a valid JS identifier.
+        func_name = to_js_identifier(func_name)
 
         # Same treatment as CreateClosure: a closure over a generator
         # function is still just a name reference in real JS; the

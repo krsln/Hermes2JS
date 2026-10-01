@@ -13,7 +13,7 @@ import pytest
 
 from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
 from hermes_disassembler.format.FunctionHeader import (
-    FuncKind,
+    FunctionKind,
     ProhibitInvoke,
     parse_function_headers,
 )
@@ -101,5 +101,5 @@ def test_flags_decode_as_enums():
         if e.is_overflowed:
             continue
         assert isinstance(e.prohibit_invoke, ProhibitInvoke)
-        assert isinstance(e.kind, FuncKind)
-        assert e.kind == FuncKind.NORMAL  # LAYOUT_V96 has no Kind bits
+        assert isinstance(e.kind, FunctionKind)
+        assert e.kind == FunctionKind.NORMAL  # LAYOUT_V96 has no Kind bits

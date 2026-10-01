@@ -1,5 +1,8 @@
 # Usage
 
+> CFG – Control Flow Graph  
+> IR – Intermediate Representation
+
 ## Prep | get index.android.bundle
 
 - get apk & decompile → use https://www.decompiler.com/
@@ -45,32 +48,75 @@ python scripts/split_output_file.py -i apps/testy/96/output/disassembler-output.
 python scripts/split_output_file.py -i apps/testy/98/output/output.hasm -o apps/testy/98/output/sections
 python scripts/split_output_file.py -i apps/testy/98/output/disassembler-output.hasm -o apps/testy/98/output/sections
 # Total sections: 14267
+```
 
-#--------------------------
-### copy files to fixtures
+## Step—3 Copy sections to fixtures
 
+```shell
 # section_15042-15216
 cp apps/testy/96/output/sections/function_{15042..15216}_*.hasm apps/demo/fixtures/96/sections/
 
 # section_9446-9542
 cp apps/testy/98/output/sections/function_{9446..9542}_*.hasm apps/demo/fixtures/98/sections/
+cp apps/testy/98/output/sections/function_{12469..12489}_*.hasm apps/demo/fixtures/98/sections/
+cp apps/testy/98/output/sections/function_{13737..13746}_*.hasm apps/demo/fixtures/98/sections/
 ```
 
-## Step—3 Decompile
+## Step—4 Decompile
 
 Converts each discovered `section_<n>.hasm` into a corresponding `section_<n>.js`.
 
 ```shell
 python scripts/decompile_sections.py -i <sections_dir> -o <results_dir> [options]
 
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --log-level WARNING
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --no-verbose
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/
 
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --strict
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --start 100 --end 1000
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --log-level DEBUG
-python scripts/decompile_sections.py -i ./apps/testy/98/output/sections -o ./apps/testy/98/output/results --log-level WARNING --no-verbose
-
+## options
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --log-level WARNING
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --no-verbose
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --strict
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --start 100 --end 1000
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --log-level WARNING --no-verbose
 python scripts/decompile_sections.py -i ./apps/testy/output/sections/ -o ./apps/testy/output/results/ --start 1 --end 9 --report ./apps/testy/output/run_report.json -v
 ```
+
+# Testy
+
+```shell
+tree -I '__pycache__|__init__.py' hermes_decompiler
+
+# diff | working branch
+git diff main...feature/from-2026-10-01 > ~/Downloads/hermes2js.diff
+
+# ———— fixtures 96—————————————————————————————————————————————————————————
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/focused -o ./apps/demo/fixtures/96/results --log-level DEBUG
+
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results
+
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level DEBUG
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --log-level WARNING
+
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/96/sections -o ./apps/demo/fixtures/96/results --no-verbose
+
+# ———— fixtures 98—————————————————————————————————————————————————————————
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./apps/demo/fixtures/98/results
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/focused -o ./apps/demo/fixtures/98/results --log-level DEBUG
+
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results
+# WARNING 6
+python scripts/decompile_sections.py -i ./apps/demo/fixtures/98/sections -o ./apps/demo/fixtures/98/results --no-verbose
+
+# ———— whole sections ———————————————————————————————————————————————————
+## 96
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/
+python scripts/decompile_sections.py -i ./apps/testy/96/output/sections/ -o ./apps/testy/96/output/results/ --log-level WARNING
+# WARNING 1071
+## 98
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/
+python scripts/decompile_sections.py -i ./apps/testy/98/output/sections/ -o ./apps/testy/98/output/results/ --log-level WARNING
+# WARNING 1003
+```
+

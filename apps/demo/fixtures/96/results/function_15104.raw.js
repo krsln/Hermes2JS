@@ -26,7 +26,7 @@ function renamedDefaultDestructureTest() {
     if (r3 === undefined) goto label_56;
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 53 | <Mov>: <Reg8: 5, Reg8: 3>
-    r5 = r2.timeout
+    r5 = r3
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 56 | <GetById>: <Reg8: 2, Reg8: 2, UInt8: 4, string_id: 17670>  # String: 'retries' (Identifier)
     r2 = r2.retries
@@ -36,7 +36,7 @@ function renamedDefaultDestructureTest() {
     if (r2 === undefined) goto label_72;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 69 | <Mov>: <Reg8: 4, Reg8: 2>
-    r4 = r2.retries
+    r4 = r2
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 72 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;

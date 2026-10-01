@@ -59,5 +59,4 @@ function weakMapTest() {
     // CODE → addr:132 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:134 | <Ret>: <Reg8: 0>
-    return undefined;
 }

@@ -59,8 +59,6 @@ function switchInsideTryTest(param1) {
                 // USED → r0 = "__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default";
                 // CODE → addr: 56 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
                 console.log("__BC:Exceptions/ExceptionTests/switchInsideTryTest/case-default")
-                // CODE → addr: 61 | <Jmp>: <Addr8: 54>  # Address: 00000073
-                goto label_115;
                 break;
         }
         // Switch → END
@@ -97,5 +95,4 @@ function switchInsideTryTest(param1) {
     // CODE → addr:179 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:181 | <Ret>: <Reg8: 0>
-    return undefined;
 }

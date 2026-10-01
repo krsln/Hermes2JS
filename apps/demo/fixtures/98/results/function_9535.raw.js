@@ -13,7 +13,7 @@ function privateStaticTest() {
     // CODE → addr: 20 | <Call2>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 4>
     console.log("__BC:Classes/PrivateStaticTests/privateStaticTest/start")
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 5, UInt8: 0>
-    // USED → r4 = r5[0];
+    r4 = r5[0]
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
     r6 = CreateThisForNew(r4)
     // CODE → addr: 33 | <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000031
@@ -60,13 +60,13 @@ function privateStaticTest() {
     // CODE → addr:116 | <GetOwnPrivateBySym>: <Reg8: 6, Reg8: 8, UInt8: 1, Reg8: 7>
     r6 = r5[2].#__private_7__
     // CODE → addr:121 | <Inc>: <Reg8: 6, Reg8: 6>
-    // USED → r6 = r6 + 1;
+    r6 = r6 + 1
     // CODE → addr:124 | <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
-    r5[2].#__private_7__ = r6 + 1
+    r5[2].#__private_7__ = r6
     // CODE → addr:129 | <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
     r6 = CreateThisForNew(r4)
     // CODE → addr:133 | <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000095
-    if (typeof r5[0] === "function") goto label_149;
+    if (typeof r4 === "function") goto label_149;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:141 | <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
     r13 = "Trying to call a non-function"
@@ -95,9 +95,9 @@ function privateStaticTest() {
     // CODE → addr:192 | <GetOwnPrivateBySym>: <Reg8: 6, Reg8: 8, UInt8: 1, Reg8: 7>
     r6 = r5[2].#__private_7__
     // CODE → addr:197 | <Inc>: <Reg8: 6, Reg8: 6>
-    // USED → r6 = r6 + 1;
+    r6 = r6 + 1
     // CODE → addr:200 | <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
-    r5[2].#__private_7__ = r6 + 1
+    r5[2].#__private_7__ = r6
     // CODE → addr:205 | <GetById>: <Reg8: 6, Reg8: 9, UInt8: 3, string_id: 11123>  # String: 'increment' (Identifier)
     // USED → r6 = r9.increment;
     // CODE → addr:211 | <Call1>: <Reg8: 6, Reg8: 6, Reg8: 9>

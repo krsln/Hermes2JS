@@ -4,11 +4,11 @@
 DISASSEMBLER ?= hermes-disassembler
 
 prepare-96: VERSION=96
-prepare-96: FUNCTION_RANGE=15042..15216
+prepare-96: FUNCTION_RANGES=15042..15216
 prepare-96: prepare
 
 prepare-98: VERSION=98
-prepare-98: FUNCTION_RANGE=9446..9542
+prepare-98: FUNCTION_RANGES=9446..9542 12469..12489 13737..13746
 prepare-98: prepare
 
 decompile-96: VERSION=96
@@ -42,8 +42,9 @@ endif
 
 	## Step 3 — Copy sections to fixtures
 	rm -f apps/demo/fixtures/$(VERSION)/sections/*
-	cp apps/testy/$(VERSION)/output/sections/function_{$(FUNCTION_RANGE)}_*.hasm \
-		apps/demo/fixtures/$(VERSION)/sections/
+	$(foreach range,$(FUNCTION_RANGES),\
+		cp apps/testy/$(VERSION)/output/sections/function_{$(range)}_*.hasm \
+		   apps/demo/fixtures/$(VERSION)/sections/;)
 
 decompile:
 	## Decompile sections

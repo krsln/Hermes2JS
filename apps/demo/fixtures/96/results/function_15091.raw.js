@@ -21,13 +21,13 @@ function function_15091(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 30 | <Call4>: <Reg8: 2, Reg8: 4, Reg8: 5, Reg8: 1, Reg8: 2, Reg8: 3>
     r2 = Object.defineProperty(param6, "__esModule", r3)
     // CODE → addr: 37 | <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15092>  # Function: [#15092 forOfTest of 93 bytes]: 1 params @ offset 0x00269315
-    // USED → r2 = forOfTest();
+    // USED → r2 = forOfTest;
     // CODE → addr: 42 | <PutById>: <Reg8: 1, Reg8: 2, UInt8: 1, string_id: 11254>  # String: 'forOfTest' (Identifier)
-    param6.forOfTest = forOfTest()
+    param6.forOfTest = forOfTest
     // CODE → addr: 48 | <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15093>  # Function: [#15093 forInTest of 102 bytes]: 1 params @ offset 0x00269372
-    // USED → r0 = forInTest();
+    // USED → r0 = forInTest;
     // CODE → addr: 53 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 11239>  # String: 'forInTest' (Identifier)
-    param6.forInTest = forInTest()
+    param6.forInTest = forInTest
     // CODE → addr: 59 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → addr: 61 | <Ret>: <Reg8: 0>

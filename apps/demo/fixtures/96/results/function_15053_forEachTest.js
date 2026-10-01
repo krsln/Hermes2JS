@@ -17,9 +17,9 @@ function forEachTest() {
     // CODE → addr: 35 | <CreateEnvironment>: <Reg8: 1>
     r1 = createEnvironment()
     // CODE → addr: 37 | <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 15054>  # Function: [#15054  of 78 bytes]: 3 params @ offset 0x00267dd1
-    // USED → r1 = function_15054(param1, param2);
+    // USED → r1 = function_15054;
     // CODE → addr: 42 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
-    r1 = r3.forEach(function_15054(param1, param2))
+    r1 = r3.forEach(function_15054)
     // CODE → addr: 47 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr: 53 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -31,5 +31,4 @@ function forEachTest() {
     // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 69 | <Ret>: <Reg8: 0>
-    return undefined;
 }

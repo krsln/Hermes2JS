@@ -31,20 +31,20 @@ function optionalChainingTest() {
     if (r3 != null) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 50 | <GetById>: <Reg8: 3, Reg8: 3, UInt8: 3, string_id: 7189>  # String: 'a' (Identifier)
-        // USED → r3 = r3.a;
+        r3 = r3.a
         // CODE → addr: 56 | <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
-        // USED → r5 = r3.a == null;
+        // USED → r5 = r3 == null;
         // CODE → addr: 60 | <LoadConstUndefined>: <Reg8: 4>
         r4 = undefined
-        if (r3.a != null) {
+        if (r3 != null) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 65 | <GetByIdShort>: <Reg8: 3, Reg8: 3, UInt8: 4, string_id: 38>  # String: 'b' (Identifier)
-            // USED → r3 = r3.b;
+            r3 = r3.b
             // CODE → addr: 70 | <Eq>: <Reg8: 5, Reg8: 3, Reg8: 2>
-            // USED → r5 = r3.b == null;
+            // USED → r5 = r3 == null;
             // CODE → addr: 74 | <LoadConstUndefined>: <Reg8: 4>
             r4 = undefined
-            if (r3.b != null) {
+            if (r3 != null) {
                 // ──────────────── Block 3 ──────────────── 
                 // CODE → addr: 79 | <GetById>: <Reg8: 4, Reg8: 3, UInt8: 5, string_id: 7241>  # String: 'c' (Identifier)
                 r4 = r3.c
@@ -72,5 +72,4 @@ function optionalChainingTest() {
     // CODE → addr:126 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/PropertyTests/optionalChainingTest/end")
     // CODE → addr:131 | <Ret>: <Reg8: 0>
-    return undefined;
 }

@@ -25,7 +25,7 @@ function legacyArgumentsTest() {
     // CODE → addr: 45 | <GetArgumentsLength>: <Reg8: 2, Reg8: 4>
     // USED → r2 = arguments.length;
     // CODE → addr: 48 | <LoadConstZero>: <Reg8: 3>
-    // USED → r3 = 0;
+    r3 = 0
     // CODE → addr: 50 | <Less>: <Reg8: 2, Reg8: 3, Reg8: 2>
     // USED → r2 = 0 < arguments.length;
     // CODE → addr: 54 | <JmpFalse>: <Addr8: 33, Reg8: 2>  # Address: 00000057

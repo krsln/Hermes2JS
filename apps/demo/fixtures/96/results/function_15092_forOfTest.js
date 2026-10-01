@@ -18,7 +18,6 @@ function forOfTest() {
     // USED → r0 = undefined;
     // LOOP → START (for_of)
     for (const r6 of r2) {
-        // ──────────────── Block 1 ──────────────── 
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 46 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
         // USED → r5 = console;
@@ -38,5 +37,4 @@ function forOfTest() {
     // CODE → addr: 86 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Iterators/IteratorTests/forOfTest/end")
     // CODE → addr: 91 | <Ret>: <Reg8: 0>
-    return undefined;
 }

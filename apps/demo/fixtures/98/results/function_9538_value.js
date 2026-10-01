@@ -33,5 +33,4 @@ function value(param1) {
     // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 69 | <Ret>: <Reg8: 0>
-    return undefined;
 }

@@ -1,6 +1,16 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT16, UINT32
-from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import ArrayExpression, python_literal
+from hermes_decompiler.frontend.opcode import OpcodeResult, JS_UNDEFINED
+from hermes_decompiler.ir.expressions import ArrayExpression, UndefinedLiteral, python_literal
+
+
+def _element_literal(value: object):
+    # See `NewObjectWithBuffer._json_to_expression`'s own comment: a
+    # genuine JS `undefined` array element must be checked before
+    # `python_literal`, or it's indistinguishable from `null` and
+    # silently emitted as one.
+    if value is JS_UNDEFINED:
+        return UndefinedLiteral()
+    return python_literal(value)
 
 
 # Reg8, UInt16 (total size 3)
@@ -49,7 +59,7 @@ class NewArrayWithBuffer(OpcodeHandler):
             return self.build_exception_result(ctx.analysis, ctx.entry, "// Warning: No array data in comment")
 
         elements = tuple(
-            python_literal(v)
+            _element_literal(v)
             for v in ctx.entry.array_literal
         )
 

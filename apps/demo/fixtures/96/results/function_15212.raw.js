@@ -25,7 +25,7 @@ function set(param1) {
     // CODE → addr: 43 | <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
     r3 = r0.default(this, r4)
     // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 5>
-    // USED → r2 = r2[5];
+    r2 = r2[5]
     // CODE → addr: 53 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 4, string_id: 21>  # String: 'Math' (Identifier)
     // USED → r6 = Math;
     // CODE → addr: 59 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 5, string_id: 113>  # String: 'min' (Identifier)
@@ -33,7 +33,7 @@ function set(param1) {
     // CODE → addr: 64 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → addr: 67 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
-    r1 = r1[0]
+    r1 = Counter
     // CODE → addr: 71 | <GetById>: <Reg8: 4, Reg8: 1, UInt8: 6, string_id: 11547>  # String: 'MAX' (Identifier)
     // USED → r4 = r1.MAX;
     // CODE → addr: 77 | <LoadParam>: <Reg8: 1, UInt8: 1>
@@ -41,7 +41,7 @@ function set(param1) {
     // CODE → addr: 80 | <Call3>: <Reg8: 1, Reg8: 5, Reg8: 6, Reg8: 1, Reg8: 4>
     r1 = Math.min(param1, r1.MAX)
     // CODE → addr: 86 | <PutByVal>: <Reg8: 3, Reg8: 2, Reg8: 1>
-    r3[r2[5]] = r1
+    r3[r2] = r1
     // CODE → addr: 90 | <Ret>: <Reg8: 0>
     return r0;
 }

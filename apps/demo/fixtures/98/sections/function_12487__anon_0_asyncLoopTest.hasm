@@ -1,0 +1,16 @@
+
+=> [Generator function #12487 "?anon_0_asyncLoopTest" of 31 bytes]: 2 params, frame size=3, strict=1, exc handler=0, debug info=0  @ offset 0x002443ac
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 10>
+==> 00000003: <LoadParam>: <Reg8: 2, UInt8: 1>
+==> 00000006: <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 2>
+==> 0000000a: <LoadConstZero>: <Reg8: 0>
+==> 0000000c: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 8, Reg8: 0>
+==> 00000010: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 9, Reg8: 0>
+==> 00000014: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 6, Reg8: 0>
+==> 00000018: <CreateGenerator>: <Reg8: 1, Reg8: 1, function_id: 13744>  # Function: [#13744 ?anon_0_asyncLoopTest of 502 bytes]: 2 params @ offset 0x002613be
+==> 0000001d: <Ret>: <Reg8: 1>
+
+

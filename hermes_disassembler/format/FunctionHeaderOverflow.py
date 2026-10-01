@@ -130,7 +130,7 @@ import struct
 from hermes_disassembler.core.Exceptions import HermesBytecodeError, TruncatedFileError
 from hermes_disassembler.format.BytecodeFileHeader import BytecodeFileHeader
 from hermes_disassembler.format.FunctionHeader import (
-    FuncKind,
+    FunctionKind,
     FunctionHeaderEntry,
     ProhibitInvoke,
 )
@@ -188,7 +188,7 @@ def _decode_large_v96(data: bytes, large_offset: int, index: int) -> FunctionHea
         strict_mode=bool((flags >> 2) & 1),
         has_exception_handler=bool((flags >> 3) & 1),
         has_debug_info=bool((flags >> 4) & 1),
-        kind=FuncKind.NORMAL,  # v96's kind bits are always 0 in practice - see FunctionHeader.py
+        kind=FunctionKind.NORMAL,  # v96's kind bits are always 0 in practice - see FunctionHeader.py
     )
 
 
@@ -218,7 +218,7 @@ def _decode_large_v98(data: bytes, large_offset: int, index: int) -> FunctionHea
         strict_mode=bool((flags >> 2) & 1),
         has_exception_handler=bool((flags >> 3) & 1),
         has_debug_info=bool((flags >> 4) & 1),
-        kind=FuncKind((flags >> 6) & 0b11),
+        kind=FunctionKind((flags >> 6) & 0b11),
     )
 
 

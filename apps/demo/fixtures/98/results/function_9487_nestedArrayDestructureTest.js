@@ -1,4 +1,11 @@
 function nestedArrayDestructureTest() {
+// ⚠ WARNING: this output is NOT valid JavaScript.
+// Cause: this function's control flow could not be fully structured by any recognized loop/if/switch/try shape.
+// It contains raw `goto label_N;` / `if (...) goto label_N;` statements -
+// `goto` is not a JavaScript keyword, so this will fail to parse as-is.
+// If this is a generator/async function, re-run decompilation with batch_tables
+// built from the full section directory (FileOperations.build_batch_tables) so
+// its suspend/resume dispatch can be recognized before structuring runs.
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 3>
     // USED → r3 = undefined;
@@ -79,43 +86,63 @@ function nestedArrayDestructureTest() {
             r2.return()
         }
     } catch (caughtException) {
-        // ──────────────── Block 41 ──────────────── 
+        // ──────────────── Block 42 ──────────────── 
         // CODE → addr:535 | <Mov>: <Reg8: 2, Reg8: 4>
-        r2 = r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined))
+        r2 = r1 === undefined || r1 === undefined
         // CODE → addr:538 | <Jmp>: <Addr8: 6>  # Address: 00000220
         goto label_544;
         // LOOP → START (while)
         while (true) {
-            // ──────────────── Block 43 ──────────────── 
+            // ──────────────── Block 44 ──────────────── 
             // CODE → addr:544 | <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 00000226
             if (undefined) goto label_550;
-            // ──────────────── Block 40 ──────────────── 
+            // ──────────────── Block 41 ──────────────── 
             // CODE → addr:526 | <Catch>: <Reg8: 0>
             // USED → r0 = caughtException;
             // CODE → addr:528 | <Mov>: <Reg8: 2, Reg8: 5>
-            r2 = r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined))
-            // ──────────────── Block 42 ──────────────── 
+            r2 = r1 === undefined || r1 === undefined
+            // ──────────────── Block 43 ──────────────── 
             // CODE → addr:540 | <Catch>: <Reg8: 0>
             r0 = caughtException
             // CODE → addr:542 | <LoadConstUndefined>: <Reg8: 2>
             // USED → r2 = undefined;
         }
         // LOOP → END
-        // ──────────────── Block 44 ──────────────── 
+        // ──────────────── Block 45 ──────────────── 
         // CODE → addr:547 | <IteratorClose>: <Reg8: 1, UInt8: 1>
         r1.return()
-        // ──────────────── Block 45 ──────────────── 
+        // ──────────────── Block 46 ──────────────── 
         // CODE → addr:550 | <Throw>: <Reg8: 0>
         throw caughtException;
     }
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr:168 | <Mov>: <Reg8: 5, Reg8: 4>
-    r5 = r1 === undefined || r1 === undefined
+    r5 = r1 === undefined
+    if (r1 !== undefined) {
+        // ──────────────── Block 10 ──────────────── 
+        // CODE → addr:177 | <IteratorNext>: <Reg8: 2, Reg8: 1, Reg8: 2>
+        r2 = r1.next()
+        // CODE → addr:181 | <Mov>: <Reg8: 2, Reg8: 1>
+        // USED → r2 = r1;
+        // CODE → addr:184 | <StrictEq>: <Reg8: 5, Reg8: 2, Reg8: 3>
+        // USED → r5 = r1 === undefined;
+    }
     // ──────────────── Block 11 ──────────────── 
     // CODE → addr:188 | <LoadConstUndefined>: <Reg8: 9>
     r9 = undefined
     // CODE → addr:190 | <Mov>: <Reg8: 2, Reg8: 5>
-    r2 = r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined || (r1 === undefined || r1 === undefined))
+    r2 = r1 === undefined
+    if (r1 !== undefined) {
+        // ──────────────── Block 12 ──────────────── 
+        // CODE → addr:196 | <IteratorNext>: <Reg8: 11, Reg8: 1, Reg8: 6>
+        r11 = r1.next()
+        // CODE → addr:203 | <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 3>
+        // USED → r6 = r1 === undefined;
+        // CODE → addr:207 | <LoadConstUndefined>: <Reg8: 9>
+        r9 = undefined
+        // CODE → addr:209 | <Mov>: <Reg8: 2, Reg8: 6>
+        r2 = r1 === undefined || r1 === undefined
+    }
     try {
         // ──────────────── Block 14 ──────────────── 
         // CODE → addr:221 | <Mov>: <Reg8: 12, Reg8: 9>
@@ -150,7 +177,7 @@ function nestedArrayDestructureTest() {
             r6.return()
         }
     } catch (caughtException) {
-        // ──────────────── Block 39 ──────────────── 
+        // ──────────────── Block 40 ──────────────── 
         // CODE → addr:524 | <Jmp>: <Addr8: 20>  # Address: 00000220
         goto label_544;
     }
@@ -202,12 +229,6 @@ function nestedArrayDestructureTest() {
         // ──────────────── Block 38 ──────────────── 
         // CODE → addr:513 | <Throw>: <Reg8: 0>
         throw r0;
-        // CODE → addr:515 | <Catch>: <Reg8: 0>
-        // USED → r0 = caughtException;
-        // CODE → addr:517 | <IteratorClose>: <Reg8: 6, UInt8: 1>
-        r6.return()
-        // CODE → addr:520 | <Throw>: <Reg8: 0>
-        throw caughtException;
     }
     // ──────────────── Block 24 ──────────────── 
     // CODE → addr:349 | <Mov>: <Reg8: 15, Reg8: 12>
@@ -263,13 +284,9 @@ function nestedArrayDestructureTest() {
         r16 = 0
         if (r7 !== undefined) {
             try {
-                // LOOP → START (while)
-                while (!r11) {
+                // LOOP → START (for_of)
+                for (const r19 of r17) {
                     // ──────────────── Block 31 ──────────────── 
-                    // CODE → addr:428 | <IteratorNext>: <Reg8: 19, Reg8: 7, Reg8: 11>
-                    r19 = r7.next()
-                    // CODE → addr:432 | <Mov>: <Reg8: 11, Reg8: 7>
-                    r11 = r7
                     // CODE → addr:435 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
                     r11 = r11 === undefined
                     // CODE → addr:439 | <Mov>: <Reg8: 18, Reg8: 16>
@@ -284,7 +301,7 @@ function nestedArrayDestructureTest() {
             } catch (caughtException) {
                 // ──────────────── Block 33 ──────────────── 
                 // CODE → addr:457 | <Mov>: <Reg8: 8, Reg8: 11>
-                r8 = r11 === undefined
+                r8 = r11
                 // CODE → addr:460 | <Jmp>: <Addr8: 47>  # Address: 000001fb
                 goto label_507;
             }
@@ -307,4 +324,11 @@ function nestedArrayDestructureTest() {
         // CODE → addr:500 | <Ret>: <Reg8: 3>
         return undefined;
     }
+    // ──────────────── Block 39 ──────────────── 
+    // CODE → addr:515 | <Catch>: <Reg8: 0>
+    // USED → r0 = caughtException;
+    // CODE → addr:517 | <IteratorClose>: <Reg8: 6, UInt8: 1>
+    r6.return()
+    // CODE → addr:520 | <Throw>: <Reg8: 0>
+    throw caughtException;
 }

@@ -1,0 +1,23 @@
+
+=> [Function #12478 "" of 57 bytes]: 4 params, frame size=15, strict=1, exc handler=0, debug info=0  @ offset 0x00243e4f
+
+Bytecode listing:
+
+==> 00000000: <LoadParam>: <Reg8: 5, UInt8: 3>
+==> 00000003: <LoadParam>: <Reg8: 2, UInt8: 2>
+==> 00000006: <LoadParam>: <Reg8: 1, UInt8: 1>
+==> 00000009: <Add>: <Reg8: 2, Reg8: 1, Reg8: 2>
+==> 0000000d: <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+==> 00000010: <LoadFromEnvironment>: <Reg8: 3, Reg8: 1, UInt8: 0>
+==> 00000014: <GetByVal>: <Reg8: 4, Reg8: 3, Reg8: 5>
+==> 00000018: <LoadConstString>: <Reg8: 1, string_id: 6457>  # String: '' (Identifier)
+==> 0000001c: <LoadConstUndefined>: <Reg8: 0>
+==> 0000001e: <JStrictEqual>: <Addr8: 21, Reg8: 4, Reg8: 0>  # Address: 00000033
+==> 00000022: <GetGlobalObject>: <Reg8: 4>
+==> 00000024: <TryGetById>: <Reg8: 4, Reg8: 4, UInt8: 0, string_id: 33>  # String: 'String' (Identifier)
+==> 0000002a: <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 5>
+==> 0000002e: <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 3>
+==> 00000033: <Add>: <Reg8: 1, Reg8: 2, Reg8: 1>
+==> 00000037: <Ret>: <Reg8: 1>
+
+

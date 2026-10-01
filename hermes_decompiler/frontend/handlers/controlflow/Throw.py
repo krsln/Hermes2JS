@@ -27,7 +27,7 @@ class Throw(OpcodeHandler):
         # conditionally-written value as if it always executes. A
         # later region pass (`ReturnValueResolutionPass`) folds it
         # back in only once real dominance information is available.
-        expression = self.get_register_reference(ctx.analysis, value_reg)
+        expression = self.get_register_reference(ctx.analysis, value_reg, materialize=False)
         terminator = TerminatorThrow(value=expression)
 
         # NOTE (fix): same reasoning as Ret.py - `Throw` terminators are

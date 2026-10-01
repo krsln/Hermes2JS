@@ -17,7 +17,7 @@ function swapViaDestructureTest() {
     // CODE → addr: 29 | <PutOwnByIndex>: <Reg8: 2, Reg8: 1, UInt8: 0>
     // USED → r2 = r2[0] = 2;
     // CODE → addr: 33 | <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
-    // USED → r1 = 1;
+    r1 = 1
     // CODE → addr: 36 | <PutOwnByIndex>: <Reg8: 2, Reg8: 1, UInt8: 1>
     // USED → r2 = (r2[0] = 2)[1] = 1;
     // CODE → addr: 40 | <LoadConstZero>: <Reg8: 3>
@@ -43,5 +43,4 @@ function swapViaDestructureTest() {
     // CODE → addr: 87 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 89 | <Ret>: <Reg8: 0>
-    return undefined;
 }

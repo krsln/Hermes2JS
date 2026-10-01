@@ -27,7 +27,7 @@ function callRegExpTests() {
     // CODE → addr: 67 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 2, string_id: 47>  # String: 'test' (Identifier)
     // USED → r2 = r5.test;
     // CODE → addr: 72 | <LoadConstString>: <Reg8: 6, string_id: 4772>  # String: 'abc123' (String)
-    // USED → r6 = "abc123";
+    r6 = "abc123"
     // CODE → addr: 76 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 5, Reg8: 6>
     r2 = r5.test("abc123")
     // CODE → addr: 81 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
@@ -71,7 +71,7 @@ function callRegExpTests() {
     // CODE → addr:205 | <GetByIdShort>: <Reg8: 2, Reg8: 7, UInt8: 2, string_id: 47>  # String: 'test' (Identifier)
     // USED → r2 = r7.test;
     // CODE → addr:210 | <LoadConstString>: <Reg8: 6, string_id: 3377>  # String: 'Hello\nline two' (String)
-    // USED → r6 = "Hello\\nline two";
+    r6 = "Hello\\nline two"
     // CODE → addr:214 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 7, Reg8: 6>
     r2 = r7.test("Hello\\nline two")
     // CODE → addr:219 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
@@ -205,5 +205,4 @@ function callRegExpTests() {
     // CODE → addr:579 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:581 | <Ret>: <Reg8: 0>
-    return undefined;
 }

@@ -29,7 +29,7 @@ function legacyArgumentsTest() {
     // CODE → addr: 51 | <GetArgumentsLength>: <Reg8: 6, Reg8: 6>
     // USED → r6 = arguments.length;
     // CODE → addr: 54 | <LoadConstZero>: <Reg8: 0>
-    // USED → r0 = 0;
+    r0 = 0
     // CODE → addr: 56 | <Less>: <Reg8: 3, Reg8: 0, Reg8: 6>
     // USED → r3 = 0 < arguments.length;
     // CODE → addr: 60 | <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
@@ -65,5 +65,4 @@ function legacyArgumentsTest() {
     // CODE → addr:115 | <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     console.log("__BC:Functions/RestParameterTests/legacyArgumentsTest/end")
     // CODE → addr:120 | <Ret>: <Reg8: 4>
-    return undefined;
 }

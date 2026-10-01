@@ -16,15 +16,15 @@ function labeledBreakTest() {
     // USED → r2 = 1;
     loop_1:
     // LOOP → START (for)
-    for (r1 = 0; r1 < 3; r1 = r5 + 1) {
+    for (i = 0; i < 3; i = r5 + 1) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 30 | <Mov>: <Reg8: 5, Reg8: 1>
-        r5 = r1
+        r5 = i
         // LOOP → START (for)
-        for (r6 = 0; r6 < 3; r6 = r7 + 1) {
+        for (j = 0; j < 3; j = r7 + 1) {
             // ──────────────── Block 2 ──────────────── 
             // CODE → addr: 35 | <Mov>: <Reg8: 7, Reg8: 6>
-            r7 = r6
+            r7 = j
             if (r5 !== 1) {
                 // ──────────────── Block 4 ──────────────── 
                 // CODE → addr: 46 | <TryGetById>: <Reg8: 9, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -63,5 +63,4 @@ function labeledBreakTest() {
     // CODE → addr:119 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:121 | <Ret>: <Reg8: 0>
-    return undefined;
 }

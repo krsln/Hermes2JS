@@ -6,6 +6,11 @@ import re
 from hermes_decompiler.Decompiler import Decompiler
 from hermes_decompiler.core.Exceptions import CodeGenerationError
 from hermes_decompiler.core.logging import get_logger
+from hermes_decompiler.frontend.batch_pipeline import BatchContext, BatchPipeline
+from hermes_decompiler.frontend.batch_pipeline.stages import (
+    ClassEnvironmentTableStage, CreatorTableStage, EnvironmentOriginTableStage, PrivateNameTableStage,
+)
+from hermes_decompiler.frontend.batch_pipeline.tables import BatchTables
 
 logger = get_logger(__name__)
 
@@ -65,6 +70,62 @@ class FileOperations:
         return files
 
     @classmethod
+    def build_batch_tables(
+            cls,
+            input_dir: str,
+            files: list[tuple[str, int]],
+    ) -> BatchTables:
+        """
+        Scan every section once up front and build every batch-resolved
+        (cross-section) table a single BatchPipeline run produces -
+        CreatorTable, EnvironmentOriginTable, PrivateNameTable,
+        ClassEnvironmentTable (see BatchTables). Adding a new table means
+        adding its own BatchStage to the list below, not a new method
+        here alongside this one.
+
+        Has to happen before any section is decompiled, and has to see
+        all of them: every one of these tables resolves something a
+        *different* function's bytecode established (a CreateGenerator
+        edge, a CreatePrivateName, a class-factory Call) than the
+        function that reads it, so no per-section pass can reach any of
+        them alone. See each table's own docstring.
+
+        A section that cannot be read is skipped with a warning rather
+        than aborting - every table here is an enrichment, and a batch
+        missing one file should still decompile the rest. Running with
+        --start/--end, or on a hand-picked subset, can similarly cut a
+        chain in half and leave something unresolved; that degrades
+        detection back to whichever per-section fallback each table's
+        own consumer has for that case.
+        """
+        sections: list[tuple[int, str]] = []
+
+        for filename, function_index in files:
+            path = os.path.join(input_dir, filename)
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    sections.append((function_index, f.read()))
+            except OSError as e:
+                logger.warning("Could not read %s while building batch tables: %s", path, e)
+
+        context = BatchPipeline([
+            CreatorTableStage(),
+            # Both of these depend on EnvironmentOriginTableStage having
+            # already run - see BatchPipeline's own docstring.
+            EnvironmentOriginTableStage(),
+            PrivateNameTableStage(),
+            ClassEnvironmentTableStage(),
+        ]).run(BatchContext(sections=sections))
+
+        tables = context.to_batch_tables()
+        logger.info(
+            "Batch tables: %d section(s) scanned, %d generator body/bodies resolved.",
+            len(sections), tables.creator_table.generator_body_count,
+        )
+
+        return tables
+
+    @classmethod
     def process_section(
             cls,
             section_index: int,
@@ -74,6 +135,7 @@ class FileOperations:
             verbose: bool,
             raw: bool,
             strict: bool,
+            batch_tables: BatchTables | None = None,
     ) -> bool:
         """
         Process a *.hasm file by reading its content, converting it to
@@ -89,6 +151,11 @@ class FileOperations:
             raw: If True, also generates function_{section_index}_raw.js.
             strict: If True, raise immediately on the first opcode
                     dispatch failure.
+            batch_tables: Every batch-resolved table, from
+                    build_batch_tables(). Optional; without it, each
+                    table's consumer falls back to whatever per-section
+                    behavior it has for "no batch table" - see
+                    BatchTables and the individual tables it bundles.
 
         Returns:
             bool: True if the file was processed and written successfully,
@@ -124,7 +191,9 @@ class FileOperations:
             return False
 
         try:
-            context = Decompiler.build_context(hasm_content, section_index, strict=strict)
+            context = Decompiler.build_context(
+                hasm_content, section_index, strict=strict, batch_tables=batch_tables,
+            )
 
             # Render the raw representation first, as it preserves the complete
             # low-level output before any presentation-oriented formatting.

@@ -133,7 +133,7 @@ class OpcodeHandler(ABC):
         return cls.get_register_expression(analysis, reg)
 
     @classmethod
-    def get_register_reference(cls, analysis: HermesAnalysis, reg: int) -> Identifier:
+    def get_register_reference(cls, analysis: HermesAnalysis, reg: int, materialize: bool = True) -> Identifier:
         """Always symbolic - never inlines the defining expression.
 
         Exception: a register whose only definition so far is a
@@ -158,6 +158,13 @@ class OpcodeHandler(ABC):
         value = state.value
         if state.handler in ("LoadParam", "LoadParamLong") and isinstance(value, Identifier):
             return value
+
+        # `materialize=False` is for callers that only *compare* against the
+        # reference, or whose own pass decides how the register is folded
+        # (Call's `this` check, Ret) - pinning there would resurrect
+        # definitions that were folded on purpose.
+        if materialize:
+            state.materialize()
 
         return Identifier(name=f"r{reg}")
 
@@ -194,6 +201,16 @@ class OpcodeHandler(ABC):
 
         if isinstance(value, (ObjectExpression, ArrayExpression, CallExpression)):
             state.mark_read()
+            state.materialize()
+            return Identifier(name=f"r{reg}")
+
+        # Stale-value guard: the value refers to a register that was
+        # redefined after it was built (or to its own destination, as in
+        # `r3 = r3.a`), so inlining it here would silently rebind that
+        # `rN` to the NEW definition. Keep this read symbolic instead.
+        if not analysis.may_inline(state):
+            state.mark_read()
+            state.materialize()
             return Identifier(name=f"r{reg}")
 
         # Loop-safety guard excludes MemberExpression (property-lookup
@@ -223,11 +240,22 @@ class OpcodeHandler(ABC):
                 not (isinstance(value, Identifier) and not cls._is_register_alias(value)) and \
                 analysis.is_unsafe_loop_register(reg, state.definition.address):
             state.mark_read()
+            state.materialize()
             return Identifier(name=f"r{reg}")
 
         # if it has been read at least once before
         if state.reads > 0:
             state.mark_read()
+
+            # The defining statement is printed (an earlier read used the
+            # bare `rN`), so `rN` already holds the value: re-inlining a
+            # property read here would fetch it a SECOND time - different
+            # if it is a getter or the object changed in between
+            # (`if (r3 !== undefined) { r5 = r2.timeout }` for `Mov r5, r3`).
+            # Literals / plain identifiers stay duplicated: free and safe.
+            if state.definition.definition_pinned and isinstance(value, MemberExpression):
+                return Identifier(name=f"r{reg}")
+
             return dataclasses.replace(value)
 
         state.mark_read()
@@ -242,11 +270,12 @@ class OpcodeHandler(ABC):
             return Identifier(name=f"r{reg}_undefined")
 
         # _GET_BY_ARGUMENT_INLINE_OPCODES
-        if state.handler in frozenset({
+        if analysis.may_inline(state) and state.handler in frozenset({
             "GetGlobalObject",
             "TryGetById",
             "LoadParam",
             "LoadParamLong",
+            "Catch",
         }):
             if isinstance(state.value, MemberExpression):
                 state.mark_read()
@@ -265,6 +294,7 @@ class OpcodeHandler(ABC):
             )
 
         state.mark_read()
+        state.materialize()
         return Identifier(name=f"r{reg}")
 
     @classmethod
@@ -276,13 +306,14 @@ class OpcodeHandler(ABC):
 
         value = state.value
         # _CALL_ARGUMENT_INLINE_OPCODES
-        if state.handler in frozenset({
+        if analysis.may_inline(state) and state.handler in frozenset({
             "CreateClosure",
             "GetById",
             "GetByIdShort",
             "LoadConstUInt8",
             "LoadConstString",
             "LoadParam",
+            "Catch",
         }):
             if isinstance(value, Literal):
                 state.mark_read()
@@ -323,6 +354,7 @@ class OpcodeHandler(ABC):
         # ObjectExpression/ArrayExpression values (kept symbolic,
         # never marked used).
         state.mark_read()
+        state.materialize()
         return Identifier(name=f"r{reg}")
 
     @classmethod
@@ -339,7 +371,7 @@ class OpcodeHandler(ABC):
         # definition being read).
         value = state.value
         # _CONDITION_ARGUMENT_INLINE_OPCODES
-        if state.handler in frozenset({
+        if analysis.may_inline(state) and state.handler in frozenset({
             "LoadParam",
             "LoadConstZero",
             "LoadConstUInt8",
@@ -351,6 +383,7 @@ class OpcodeHandler(ABC):
             "LoadConstTrue",
             "LoadConstFalse",
             "LoadConstBigInt",
+            "Catch",
         }):
             if isinstance(value, Literal):
                 state.mark_read()
@@ -369,6 +402,7 @@ class OpcodeHandler(ABC):
             )
 
         state.mark_read()
+        state.materialize()
         return Identifier(name=f"r{reg}")
 
     @classmethod

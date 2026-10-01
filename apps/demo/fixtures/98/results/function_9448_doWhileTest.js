@@ -41,5 +41,4 @@ function doWhileTest() {
     // CODE → addr: 74 | <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;
     // CODE → addr: 76 | <Ret>: <Reg8: 4>
-    return undefined;
 }

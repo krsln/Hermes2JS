@@ -41,5 +41,4 @@ function computedPropertyTest() {
     // CODE → addr: 85 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 87 | <Ret>: <Reg8: 0>
-    return undefined;
 }

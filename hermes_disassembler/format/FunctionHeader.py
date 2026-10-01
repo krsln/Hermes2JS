@@ -32,7 +32,7 @@ Both confirmed LSB-first bit packing (bit 0 = first-declared field), the
 same convention already empirically validated for `BytecodeOptions` in
 BytecodeFileHeader.py and `SmallStringTableEntry` in StringTable.py.
 
-`ProhibitInvoke`/`FuncKind` enum values: facebook/hermes's
+`ProhibitInvoke`/`FunctionKind` enum values: facebook/hermes's
 `include/hermes/BCGen/FunctionInfo.h` (Call=0/Construct=1/None=2 and
 Normal=0/Generator=1/Async=2 respectively - LAYOUT_V96 predates this
 file and its `ProhibitInvoke` enum has the same values under different
@@ -80,7 +80,7 @@ from hermes_disassembler.format.BytecodeFileHeader import HEADER_SIZE, BytecodeF
 from hermes_disassembler.format.StringTable import VERSION_TO_SMALL_FUNC_HEADER_SIZE
 
 __all__ = [
-    "FunctionHeaderEntry", "ProhibitInvoke", "FuncKind",
+    "FunctionHeaderEntry", "ProhibitInvoke", "FunctionKind",
     "parse_function_headers",
 ]
 
@@ -106,7 +106,7 @@ class ProhibitInvoke(IntEnum):
     UNCONFIRMED = 3
 
 
-class FuncKind(IntEnum):
+class FunctionKind(IntEnum):
     """hermes/include/hermes/BCGen/FunctionInfo.h. Not representable under LAYOUT_V96 (no Kind bits) - always NORMAL there."""
 
     NORMAL = 0
@@ -141,7 +141,7 @@ class FunctionHeaderEntry:
     strict_mode: Optional[bool] = None
     has_exception_handler: Optional[bool] = None
     has_debug_info: Optional[bool] = None
-    kind: Optional[FuncKind] = None  # always NORMAL under LAYOUT_V96 (no Kind bits there)
+    kind: Optional[FunctionKind] = None  # always NORMAL under LAYOUT_V96 (no Kind bits there)
 
 
 def parse_function_headers(
@@ -191,7 +191,7 @@ def _decode_v96(index: int, raw: bytes) -> FunctionHeaderEntry:
         strict_mode=bool((flags >> 2) & 1),
         has_exception_handler=bool((flags >> 3) & 1),
         has_debug_info=bool((flags >> 4) & 1),
-        kind=FuncKind.NORMAL,  # LAYOUT_V96 has no Kind bits
+        kind=FunctionKind.NORMAL,  # LAYOUT_V96 has no Kind bits
     )
 
 
@@ -215,7 +215,7 @@ def _decode_v98(index: int, raw: bytes) -> FunctionHeaderEntry:
         strict_mode=bool((flags >> 2) & 1),
         has_exception_handler=bool((flags >> 3) & 1),
         has_debug_info=bool((flags >> 4) & 1),
-        kind=FuncKind((flags >> 6) & 0b11),
+        kind=FunctionKind((flags >> 6) & 0b11),
     )
 
 

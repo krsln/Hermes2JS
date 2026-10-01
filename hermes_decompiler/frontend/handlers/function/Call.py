@@ -1,8 +1,6 @@
-
-
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
+from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression, UndefinedLiteral
 
 
 # Reg8, Reg8, UInt8 (total size 3)
@@ -107,8 +105,13 @@ class Call1(OpcodeHandler):
 
         callee = self.get_register_expression(ctx.analysis, func_reg)
 
-        if isinstance(callee, MemberExpression) and isinstance(callee.obj, Identifier):
-            this_value = self.get_register_reference(ctx.analysis, this_reg)
+        # For a member callee `this` is only COMPARED against the receiver
+        # (via a bare reference, which must not pin the register's
+        # definition - nothing of it reaches the output on a match).
+        this_is_reference = isinstance(callee, MemberExpression) and isinstance(callee.obj, Identifier)
+
+        if this_is_reference:
+            this_value = self.get_register_reference(ctx.analysis, this_reg, materialize=False)
         else:
             this_value = self.get_register_expression(ctx.analysis, this_reg)
 
@@ -120,9 +123,24 @@ class Call1(OpcodeHandler):
         if isinstance(callee, MemberExpression) and callee.obj.structurally_equal(this_value):
             # Plain `obj.method(...)` - `this` is already implicit.
             expression = CallExpression(callee=callee, arguments=real_arguments)
+        elif isinstance(this_value, UndefinedLiteral) and isinstance(callee, Identifier):
+            # Bare function call `f(...)`: Hermes passes an explicit
+            # `undefined` thisArg, which is exactly what a plain call
+            # means - no `.call(undefined, ...)` needed. Limited to a plain
+            # Identifier callee on purpose: other callee shapes (a call
+            # result, ...) keep the explicit form so a mis-resolved callee
+            # stays visibly suspicious instead of looking clean.
+            expression = CallExpression(callee=callee, arguments=real_arguments)
         else:
             # `this` doesn't match the callee's own receiver (or callee
-            # isn't a member access at all) - preserve it explicitly.
+            # isn't a member access at all) - preserve it explicitly. The
+            # register now DOES reach the output, so resolve it properly
+            # instead of printing the comparison-only bare `rN` (whose
+            # defining statement - e.g. `r2 = undefined` - may already have
+            # been folded away by another read, leaving `.call(r2)` dangling).
+            if this_is_reference:
+                this_value = self.get_register_expression(ctx.analysis, this_reg)
+
             call_callee = MemberExpression(obj=callee, prop=Identifier(name="call"), computed=False)
             expression = CallExpression(callee=call_callee, arguments=(this_value, *real_arguments))
 

@@ -32,7 +32,7 @@ function parameterDestructureTest(param1, param2) {
     if (r3 === undefined) goto label_51;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 48 | <Mov>: <Reg8: 7, Reg8: 5>
-    // USED → r7 = r5;
+    r7 = r5
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 51 | <LoadConstUndefined>: <Reg8: 6>
     r6 = undefined
@@ -53,7 +53,7 @@ function parameterDestructureTest(param1, param2) {
     if (r3 === undefined) goto label_81;
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 75 | <Mov>: <Reg8: 6, Reg8: 4>
-    // USED → r6 = r4;
+    r6 = r4
     // CODE → addr: 78 | <Mov>: <Reg8: 0, Reg8: 2>
     // USED → r0 = r3 === undefined;
     // ──────────────── Block 7 ──────────────── 
@@ -84,9 +84,9 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr:126 | <Mov>: <Reg8: 13, Reg8: 8>
     r13 = "anon"
     // CODE → addr:129 | <Mov>: <Reg8: 12, Reg8: 7>
-    r12 = r5
+    r12 = r7
     // CODE → addr:132 | <Mov>: <Reg8: 11, Reg8: 6>
-    r11 = r4
+    r11 = r6
     // CODE → addr:135 | <Call>: <Reg8: 4, Reg8: 4, UInt8: 5>
     console.log(r15, r14, r13, r12, r11)
     // CODE → addr:139 | <TryGetById>: <Reg8: 5, Reg8: 3, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)

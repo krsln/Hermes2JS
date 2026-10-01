@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from collections import deque
-
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import (
     RegionVisitor,
@@ -11,12 +9,27 @@ from hermes_decompiler.backend.regions import (
     TryRegion,
 )
 from hermes_decompiler.backend.transforms.shared import structural_key
+from hermes_decompiler.backend.transforms.shared import resolve_identifier as _shared_resolve_identifier
+from hermes_decompiler.backend.transforms.shared import is_bare_register
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Expression
 from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
+from hermes_decompiler.ir.terminators import TerminatorThrow
 from ._base import RegionPass
 
 logger = get_logger(__name__)
+
+
+def _is_plain_register_copy(instr) -> bool:
+    """True for a `Mov`-shaped instruction: `dst = rN` with no other effect.
+
+    Used only to recognize Hermes' own for-of/for-in register
+    bookkeeping around the `.next()` call (see `_match_header_call`,
+    `_strip_next_call_scaffold`) - never to justify removing a Mov
+    anywhere else, where it could easily carry real meaning (e.g.
+    aliasing a parameter for later use).
+    """
+    return instr.value is not None and is_bare_register(instr.value)
 
 
 class ForEachRegionPass(RegionPass, RegionVisitor):
@@ -29,7 +42,11 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         for-of:  IteratorBegin (before the loop) -> IteratorNext
                  (loop header's first instruction) -> optional
                  IteratorClose, folded by TryStructurer into an
-                 enclosing TryRegion.finally_
+                 enclosing TryRegion - as `.finally_` when the try
+                 body has an inlined copy of it on some exit (a
+                 `break`/`return` inside the loop), otherwise left as
+                 the faithful `catch (e) { it.return(); throw e }` it
+                 is on the wire (see `_close_scaffold`)
         for-in:  GetPNameList (before the loop) -> GetNextPName
                  (loop header's first instruction), no try/finally
 
@@ -37,7 +54,8 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
     LoopConditionRegionPass:
       - LoopStructurer:          loop.header_block must exist
       - TryStructurer:           for-of's IteratorClose must already be
-                                  folded into a real FinallyRegion, or
+                                  folded into a real FinallyRegion or a
+                                  close-and-rethrow CatchRegion, or
                                   there is nothing here to match against
       - LoopConditionRegionPass: header.terminator has already been
                                   consumed into loop.condition, so the
@@ -108,20 +126,28 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         if iterable is None:
             return
 
-        if try_region.finally_ is not None:
-            if not self._finally_matches_iterator_close(try_region, raw_iterator_ref, iterator_expr):
-                # Something else lives in this finally (or the
-                # iterator identity doesn't line up) - don't touch it,
-                # the cleanup code is real and must stay visible.
-                return
+        scaffold = self._close_scaffold(try_region)
+
+        if scaffold is not None:
+            if not self._close_body_matches(scaffold, raw_iterator_ref, iterator_expr):
+                if try_region.finally_ is not None:
+                    # Something else lives in this finally (or the
+                    # iterator identity doesn't line up) - don't touch
+                    # it, the cleanup code is real and must stay visible.
+                    return
+
+                # A catch that merely LOOKS like close-and-rethrow but
+                # closes something else is the user's own catch: the
+                # loop is still a for-of, the try stays.
+                scaffold = None
 
         loop.loop_kind = LoopKind.FOR_OF
         loop.iterable = iterable
         loop.loop_binding = next_instr.dest_reg
 
-        self._strip_instruction(header_block, next_instr)
+        self._strip_next_call_scaffold(header_block, next_instr)
 
-        if try_region.finally_ is not None:
+        if scaffold is not None:
             self._unwrap_try(try_region, loop)
 
     # -----------------------------------------------------------------
@@ -149,137 +175,18 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         loop.iterable = obj
         loop.loop_binding = next_instr.dest_reg
 
-        self._strip_instruction(header_block, next_instr)
+        self._strip_next_call_scaffold(header_block, next_instr)
 
     def _resolve_identifier(self, expr: Expression, before_instr, before_block: BasicBlock):
         """Resolve a possibly-still-bare register reference to its defining expression.
 
-        Some handlers inline a register's defining expression directly
-        (get_register_expression - e.g., IteratorNext's iterator,
-        IteratorClose's .return() receiver), others deliberately keep
-        a bare register reference (get_register_reference - e.g.,
-        GetNextPName's list_val, to avoid re-embedding a large or
-        side-effecting expression at every .next() call site).
-
-        This pass needs the actual defining expression either way to
-        recognize GetIterator(...) / HermesPropertyIterator(...), so
-        when expr is still a bare r{N} reference, resolve it to the
-        register's REACHING definition at the point of use
-        (before_block/before_instr) - not just any definition found
-        anywhere in the function.
-
-        A prior version of this method picked either the first
-        definition found by a flat scan of every block (wrong when the
-        register was reused earlier for an unrelated value - e.g. a
-        `console` lookup temporary later repurposed as the iterator
-        register), or the definition with the highest
-        cfg.reg_definitions address below before_instr.address (wrong
-        because nothing else in this codebase relies on that address
-        field being globally comparable across blocks -
-        LoopConditionRegionPass._infer_induction_register only ever
-        uses it for block identity, `block is update_block`, never for
-        cross-instruction ordering - so trusting it as a sortable
-        offset was an unverified assumption that silently broke the
-        single-definition for-in case).
-
-        This version instead walks the actual CFG, which is the one
-        source of ordering this pass can trust:
-
-          1. Scan before_block's own instructions strictly before
-             before_instr, in reverse, for a write to `reg`.
-          2. If not found, do a backward BFS over EVERY predecessor
-             path from before_block (not just a unique-predecessor
-             chain - before_block is very often a loop header or a
-             `finally` block, both of which always have more than one
-             predecessor: an outside entry edge plus one or more
-             in-loop back/exceptional edges - requiring a single
-             predecessor would bail out immediately on exactly the
-             shapes this pass targets). Each path stops exploring
-             further back as soon as it finds ANY write to `reg`,
-             collecting that value.
-
-        The register is only resolved if every path that found a
-        definition agrees, via structural_key, on the same value. The
-        single-assignment assumption above means genuine matches
-        always agree here regardless of how many paths were walked
-        (a loop's back edge never redefines the pre-loop setup
-        register, so exploring through it just contributes nothing,
-        not a conflicting value); a real structural disagreement means
-        this isn't the simple shape this pass targets after all, so it
-        bails rather than guessing which path is "the" reaching
-        definition. Returns expr unchanged in that case, or if no path
-        finds a definition at all.
+        Thin wrapper around `transforms.shared.resolve_identifier` - the
+        actual CFG-walk logic now lives there (extracted so
+        `_finally_matcher`/`_predicates` can reuse it for
+        register-aware finally-copy matching). See that function's own
+        docstring for the full rationale and algorithm.
         """
-        if not (
-                isinstance(expr, Identifier)
-                and expr.name.startswith("r")
-                and expr.name[1:].isdigit()
-        ):
-            return expr
-
-        reg = int(expr.name[1:])
-
-        # 1. Same block, strictly before before_instr.
-        found = self._find_definition_in_instructions(
-            before_block.instructions, reg, stop_before=before_instr
-        )
-        if found is not None:
-            return found
-
-        # 2. Backward BFS over every predecessor path.
-        visited = {before_block}
-        queue = deque(before_block.predecessors)
-        found_values = []
-
-        while queue:
-            block = queue.popleft()
-
-            if block in visited:
-                continue
-            visited.add(block)
-
-            value = self._find_definition_in_instructions(block.instructions, reg)
-
-            if value is not None:
-                found_values.append(value)
-                # Don't look further back past a definition on this path.
-                continue
-
-            queue.extend(block.predecessors)
-
-        if not found_values:
-            return expr
-
-        first = found_values[0]
-
-        for other in found_values[1:]:
-            if structural_key(other) != structural_key(first):
-                # Different paths reach different definitions - not
-                # the clean single-assignment shape this pass targets.
-                return expr
-
-        return first
-
-    @staticmethod
-    def _find_definition_in_instructions(instructions, reg: int, stop_before=None):
-        """Scan `instructions` in reverse for the most recent write to `reg`.
-
-        If `stop_before` is given, only instructions strictly before it
-        (in list order) are considered - used to search "everything
-        before the use site" within before_block itself.
-        """
-        if stop_before is not None:
-            try:
-                cutoff = instructions.index(stop_before)
-            except ValueError:
-                cutoff = len(instructions)
-            instructions = instructions[:cutoff]
-
-        for instr in reversed(instructions):
-            if instr.dest_reg == reg and instr.value is not None:
-                return instr.value
-
-        return None
+        return _shared_resolve_identifier(expr, before_instr, before_block)
 
     # -----------------------------------------------------------------
     # Shared matching helpers
@@ -294,34 +201,71 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
     @staticmethod
     def _match_header_call(loop: LoopRegion, method_name: str):
-        """Match the header's first instruction against `<x>.method_name()`.
+        """Match the header against `<x>.method_name()`, tolerating one
+        priming `Mov` immediately before it.
 
-        That shape is what IteratorNext/GetNextPName always lower to
-        (see Iterator.py / GetNextPName.py handlers). Returns
-        (CallExpression, OpcodeResult, BasicBlock), or
-        (None, None, None) if it doesn't match.
+        `<x>.method_name()` (IteratorNext/GetNextPName's lowering - see
+        Iterator.py / GetNextPName.py's own handlers) is the header's
+        literal first instruction as far back as hbc96. From hbc98
+        onward, Hermes instead re-primes a scratch register from the
+        iterable/iterator with a plain `Mov` immediately before every
+        `IteratorNext`/`GetNextPName` call (feeding that call's own
+        third operand - internal bookkeeping for the VM's fast-path
+        check, with no JS-visible meaning: the loop's actual iterator
+        identity is still `<x>` itself, read directly off the call's
+        own callee, entirely unaffected by this extra Mov). Skipping
+        past it here - rather than requiring the call at position 0 -
+        is what recognizes hbc98's for-of/for-in at all; see
+        `_strip_next_call_scaffold` for removing it once recognized.
+
+        Deliberately tolerates AT MOST one such leading instruction,
+        and only when it's a plain register-to-register copy: scanning
+        further, or accepting anything else there, risks matching a
+        `.next()` call that isn't this scaffold at all - e.g. one that
+        genuinely runs after real loop-body content on a prior
+        iteration due to how the blocks happened to merge, which is
+        not a shape this pass should claim.
+
+        Returns (CallExpression, OpcodeResult, BasicBlock), or
+        (None, None, None) if neither position matches.
         """
         header = loop.header_block
+        instructions = header.instructions
 
-        first = header.first_instruction
-        if first is None:
+        if not instructions:
             return None, None, None
 
-        value = first.value
+        call = ForEachRegionPass._match_next_call_instr(instructions[0], method_name)
+        if call is not None:
+            return call, instructions[0], header
+
+        if (
+                len(instructions) > 1
+                and _is_plain_register_copy(instructions[0])
+        ):
+            call = ForEachRegionPass._match_next_call_instr(instructions[1], method_name)
+            if call is not None:
+                return call, instructions[1], header
+
+        return None, None, None
+
+    @staticmethod
+    def _match_next_call_instr(instr, method_name: str):
+        value = instr.value
         if not isinstance(value, CallExpression):
-            return None, None, None
+            return None
 
         callee = value.callee
 
         if not isinstance(callee, MemberExpression):
-            return None, None, None
+            return None
 
         prop = callee.prop
 
         if not isinstance(prop, Identifier) or prop.name != method_name:
-            return None, None, None
+            return None
 
-        return value, first, header
+        return value
 
     @staticmethod
     def _match_call(expr: Expression, callee_name: str):
@@ -339,10 +283,57 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
             return expr.arguments[0]
         return None
 
-    def _finally_matches_iterator_close(
-            self, try_region: TryRegion, raw_iterator_ref, iterator_expr
+    @staticmethod
+    def _close_scaffold(try_region: TryRegion):
+        """The body that carries this try's iterator-close, or None.
+
+        Hermes lowers a for-of's IteratorClose as an exception handler
+        whose body is the `.return()` call followed by a rethrow of the
+        caught exception. TryStructurer presents that handler as:
+
+        - `try_region.finally_` when it found the handler's body inlined
+          in the try body (Hermes does that at a `break`/`return`), or
+        - `try_region.catch`, exactly as compiled, when it found no such
+          copy: `catch (e) { it.return(); throw e }`. TryStructurer does
+          not turn that into a `finally` - the shape alone cannot tell it
+          from a user `catch` that rethrows, and doing so on the success
+          path would run the close code that was only ever meant for a
+          throw.
+
+        Only a catch of that exact shape - a single block ending in a
+        rethrow of its own bound exception - is offered as a scaffold; the
+        body itself is then checked by `_close_body_matches`.
+        """
+        if try_region.finally_ is not None:
+            return try_region.finally_.body
+
+        catch = try_region.catch
+
+        if catch is None or len(catch.body.children) != 1:
+            return None
+
+        block = catch.body.children[0]
+
+        if not isinstance(block, BasicBlock) or not isinstance(block.terminator, TerminatorThrow):
+            return None
+
+        thrown = block.terminator.value
+
+        if not isinstance(thrown, Identifier):
+            return None
+
+        expected = f"r{catch.exception_reg}" if catch.exception_reg is not None else catch.exception
+
+        return catch.body if thrown.name == expected else None
+
+    def _close_body_matches(
+            self, scaffold_body: SequenceRegion, raw_iterator_ref, iterator_expr
     ) -> bool:
-        """Return True if the `finally` body is a single matching .return() call.
+        """Return True if the body is a single matching .return() call.
+
+        (`scaffold_body` is a `finally` body, or a close-and-rethrow
+        `catch` body - see `_close_scaffold`. A catch's trailing rethrow
+        carries no value of interest and is not counted.)
 
         The `finally`/Catch block here is reached ONLY through Hermes'
         implicit exception dispatch (see CFGBuilder._connect_edges,
@@ -373,18 +364,11 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         identity is compared structurally, not with `==`, whenever the
         fallback path is used.
         """
-        node_finally = try_region.finally_
-
-        if node_finally is None:
-            return False
-
-        finally_body = node_finally.body
-
         candidates = [
             (block, instr)
-            for block in finally_body.covered_blocks
+            for block in scaffold_body.covered_blocks
             for instr in block.instructions
-            if instr.value is not None
+            if instr.value is not None and not isinstance(instr.terminator, TerminatorThrow)
         ]
 
         if len(candidates) != 1:
@@ -428,6 +412,46 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
     def _strip_instruction(block: BasicBlock, instr) -> None:
         if instr in block.instructions:
             block.instructions.remove(instr)
+
+    @staticmethod
+    def _strip_next_call_scaffold(header_block: BasicBlock, next_instr) -> None:
+        """Remove `next_instr` plus its Mov-priming neighbor(s), if any.
+
+        See `_match_header_call`'s own docstring for why a plain
+        register-copy immediately BEFORE the matched call is safe to
+        remove. The same reasoning applies to one immediately AFTER
+        it: Hermes copies the call's own iterator-identity operand
+        into another scratch register right after the call, purely to
+        feed the loop's own done-check - and that check itself is
+        never rendered once `loop_kind` is FOR_OF/FOR_IN (compare
+        `forOfTest`'s hbc96 vs hbc98 golden fixtures: neither prints a
+        condition), so the register that would-be copy fed is already
+        dead the moment recognition succeeds, independent of whether
+        the copy instruction itself stays or goes.
+
+        Matches only immediately-adjacent instructions, by position at
+        call time - never a wider scan - for the same reason
+        `_match_header_call` only looks one instruction ahead: this
+        must stay tied to the specific position Hermes' own lowering
+        puts it in, not "some Mov somewhere nearby".
+        """
+        instructions = header_block.instructions
+
+        if next_instr not in instructions:
+            return
+
+        idx = instructions.index(next_instr)
+
+        doomed = [next_instr]
+
+        if idx > 0 and _is_plain_register_copy(instructions[idx - 1]):
+            doomed.append(instructions[idx - 1])
+
+        if idx + 1 < len(instructions) and _is_plain_register_copy(instructions[idx + 1]):
+            doomed.append(instructions[idx + 1])
+
+        for instr in doomed:
+            header_block.instructions.remove(instr)
 
     @staticmethod
     def _unwrap_try(try_region: TryRegion, loop: LoopRegion) -> None:

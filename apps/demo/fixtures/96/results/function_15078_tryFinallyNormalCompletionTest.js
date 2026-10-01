@@ -43,5 +43,4 @@ function tryFinallyNormalCompletionTest() {
     // CODE → addr: 82 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 84 | <Ret>: <Reg8: 0>
-    return undefined;
 }

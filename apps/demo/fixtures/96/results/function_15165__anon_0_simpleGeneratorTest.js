@@ -1,4 +1,4 @@
-function* anon_15165() {
+function* _anon_0_simpleGeneratorTest() {
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr:  7 | <GetGlobalObject>: <Reg8: 4>
     // USED → r4 = globalThis;
@@ -30,5 +30,4 @@ function* anon_15165() {
     // CODE → addr: 88 | <LoadConstUndefined>: <Reg8: 4>
     // USED → r4 = undefined;
     // CODE → addr: 91 | <Ret>: <Reg8: 4>
-    return undefined;
 }

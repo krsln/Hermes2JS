@@ -51,6 +51,53 @@ _BUILTIN_RE = re.compile(r"Built-in function:\s*\[#(\d+)\s+([^]]+)]")
 _OBJECT_RE = re.compile(r"Object:\s*(\{)")
 
 
+class _JSUndefinedType:
+    """
+    Sentinel for a JS `undefined` value recovered from an `Object:`/
+    `Array:` bytecode comment - distinct from Python `None` (which is
+    what a JS `null` in the same comment normalizes to).
+
+    `_parse_array_literal`/`_parse_object_literal` used to normalize
+    both `null` and `undefined` in the comment text to `None` before
+    `ast.literal_eval`, so a `NewObjectWithBuffer`/`NewArrayWithBuffer`
+    literal containing `undefined` was silently reproduced as `null`
+    in the decompiled JS - an observable behavior change (e.g.
+    `{value: undefined, done: true}` from a generator's own iterator
+    result becoming `{value: null, done: true}`), since `python_literal`
+    has no way to tell "really null" apart from "was undefined" once
+    both have collapsed to the same Python `None`. Consumers of
+    `array_literal`/`object_literal` (`NewArrayWithBuffer`,
+    `NewObjectWithBuffer`) check for this sentinel and emit
+    `UndefinedLiteral()` instead of routing it through `python_literal`.
+    """
+    __slots__ = ()
+
+    def __repr__(self) -> str:
+        return "undefined"
+
+
+JS_UNDEFINED = _JSUndefinedType()
+
+# Placed into the comment text (quoted, so it round-trips through
+# `ast.literal_eval` as an ordinary string) wherever the original text
+# had a bare `undefined` token; replaced with `JS_UNDEFINED` after
+# parsing. Control characters make an accidental collision with a
+# genuine string value in real bytecode data effectively impossible.
+_UNDEFINED_MARKER = "\x01__hermes_decompiler_js_undefined__\x01"
+
+
+def _restore_undefined_markers(value):
+    """Recursively replace `_UNDEFINED_MARKER` strings (however deeply
+    nested in a parsed array/object literal) with `JS_UNDEFINED`."""
+    if value == _UNDEFINED_MARKER:
+        return JS_UNDEFINED
+    if isinstance(value, dict):
+        return {k: _restore_undefined_markers(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_restore_undefined_markers(v) for v in value]
+    return value
+
+
 @dataclass(slots=True)
 class FunctionReference:
     id: int
@@ -193,9 +240,11 @@ class OpcodeEntry:
         text = _NULL_RE.sub("None", text)
         text = _TRUE_RE.sub("True", text)
         text = _FALSE_RE.sub("False", text)
-        text = _UNDEFINED_RE.sub("None", text)
+        # Kept distinct from `null`/`None` (see `JS_UNDEFINED`'s own
+        # docstring) rather than also collapsed to `None` here.
+        text = _UNDEFINED_RE.sub(f'"{_UNDEFINED_MARKER}"', text)
 
-        return ast.literal_eval(text)
+        return _restore_undefined_markers(ast.literal_eval(text))
 
     @classmethod
     def _parse_object_literal(cls, text: str) -> dict:
@@ -213,13 +262,15 @@ class OpcodeEntry:
         text = _NULL_RE.sub("None", text)
         text = _TRUE_RE.sub("True", text)
         text = _FALSE_RE.sub("False", text)
-        text = _UNDEFINED_RE.sub("None", text)
+        # Kept distinct from `null`/`None` (see `JS_UNDEFINED`'s own
+        # docstring) rather than also collapsed to `None` here.
+        text = _UNDEFINED_RE.sub(f'"{_UNDEFINED_MARKER}"', text)
 
         parsed = ast.literal_eval(text)
         if not isinstance(parsed, dict):
             raise ValueError(f"Expected a dict literal, got {type(parsed).__name__}: {text!r}")
 
-        return parsed
+        return _restore_undefined_markers(parsed)
 
     @staticmethod
     def _extract_balanced_braces(text: str, start: int) -> str | None:

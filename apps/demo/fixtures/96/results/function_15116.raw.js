@@ -9,7 +9,7 @@ function function_15116(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:  8 | <LoadParam>: <Reg8: 5, UInt8: 7>
     // USED → r5 = param7;
     // CODE → addr: 11 | <CreateClosure>: <Reg8: 3, Reg8: 2, function_id: 15117>  # Function: [#15117 _interopDefault of 28 bytes]: 2 params @ offset 0x00104cff
-    // USED → r3 = _interopDefault(param1);
+    // USED → r3 = _interopDefault;
     // CODE → addr: 16 | <NewArrayWithBuffer>: <Reg8: 0, UInt16: 1, UInt16: 1, UInt16: 23669>  # Array: ['x']
     r0 = ["x"]
     // CODE → addr: 24 | <StoreToEnvironment>: <Reg8: 2, UInt8: 0, Reg8: 0>
@@ -31,17 +31,17 @@ function function_15116(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 53 | <Call4>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 0, Reg8: 6>
     r0 = Object.defineProperty(param6, "__esModule", r6)
     // CODE → addr: 60 | <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15118>  # Function: [#15118 spreadArrayTest of 203 bytes]: 1 params @ offset 0x00269d08
-    // USED → r0 = spreadArrayTest();
+    // USED → r0 = spreadArrayTest;
     // CODE → addr: 65 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 10787>  # String: 'spreadArrayTest' (Identifier)
-    param6.spreadArrayTest = spreadArrayTest()
+    param6.spreadArrayTest = spreadArrayTest
     // CODE → addr: 71 | <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15119>  # Function: [#15119 spreadObjectTest of 137 bytes]: 1 params @ offset 0x00269dd3
-    // USED → r0 = spreadObjectTest();
+    // USED → r0 = spreadObjectTest;
     // CODE → addr: 76 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 2, string_id: 10795>  # String: 'spreadObjectTest' (Identifier)
-    param6.spreadObjectTest = spreadObjectTest()
+    param6.spreadObjectTest = spreadObjectTest
     // CODE → addr: 82 | <CreateClosure>: <Reg8: 0, Reg8: 2, function_id: 15120>  # Function: [#15120 spreadFunctionArgsTest of 99 bytes]: 1 params @ offset 0x00269e5c
-    // USED → r0 = spreadFunctionArgsTest();
+    // USED → r0 = spreadFunctionArgsTest;
     // CODE → addr: 87 | <PutById>: <Reg8: 1, Reg8: 0, UInt8: 3, string_id: 10792>  # String: 'spreadFunctionArgsTest' (Identifier)
-    param6.spreadFunctionArgsTest = spreadFunctionArgsTest()
+    param6.spreadFunctionArgsTest = spreadFunctionArgsTest
     // CODE → addr: 93 | <LoadConstZero>: <Reg8: 0>
     r0 = 0
     // CODE → addr: 95 | <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 0>
@@ -49,9 +49,9 @@ function function_15116(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 99 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:101 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    r1 = param2.call(undefined, r1)
+    r1 = param2(r1)
     // CODE → addr:106 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    r1 = _interopDefault(param1).call(undefined, r1)
+    r1 = _interopDefault(r1)
     // CODE → addr:111 | <StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>
     r2[1] = r1
     // CODE → addr:115 | <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
@@ -59,9 +59,9 @@ function function_15116(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr:118 | <GetByVal>: <Reg8: 1, Reg8: 5, Reg8: 1>
     r1 = param7[r1]
     // CODE → addr:122 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 0, Reg8: 1>
-    r1 = param2.call(undefined, r1)
+    r1 = param2(r1)
     // CODE → addr:127 | <Call2>: <Reg8: 1, Reg8: 3, Reg8: 0, Reg8: 1>
-    r1 = _interopDefault(param1).call(undefined, r1)
+    r1 = _interopDefault(r1)
     // CODE → addr:132 | <StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 1>
     r2[2] = r1
     // CODE → addr:136 | <Ret>: <Reg8: 0>

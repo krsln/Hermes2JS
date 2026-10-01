@@ -1,0 +1,13 @@
+
+=> [Generator function #12488 "?anon_0_parallelAwaitTest" of 20 bytes]: 1 params, frame size=2, strict=1, exc handler=0, debug info=0  @ offset 0x002443cb
+
+Bytecode listing:
+
+==> 00000000: <CreateFunctionEnvironment>: <Reg8: 1, UInt8: 5>
+==> 00000003: <LoadConstZero>: <Reg8: 0>
+==> 00000005: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 0>
+==> 00000009: <StoreNPToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 0>
+==> 0000000d: <CreateGenerator>: <Reg8: 1, Reg8: 1, function_id: 13745>  # Function: [#13745 ?anon_0_parallelAwaitTest of 500 bytes]: 1 params @ offset 0x002615b4
+==> 00000012: <Ret>: <Reg8: 1>
+
+

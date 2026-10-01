@@ -13,11 +13,11 @@ function closureTest() {
     // CODE → addr: 22 | <CreateEnvironment>: <Reg8: 0>
     r0 = createEnvironment()
     // CODE → addr: 24 | <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15146>  # Function: [#15146 makeCounter of 41 bytes]: 1 params @ offset 0x0026a962
-    // USED → r2 = makeCounter();
+    // USED → r2 = makeCounter;
     // CODE → addr: 29 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 31 | <Call1>: <Reg8: 5, Reg8: 2, Reg8: 0>
-    r5 = makeCounter().call(undefined)
+    r5 = makeCounter()
     // CODE → addr: 35 | <GetById>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 10830>  # String: 'increment' (Identifier)
     // USED → r2 = r5.increment;
     // CODE → addr: 41 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 5>
@@ -49,5 +49,4 @@ function closureTest() {
     // CODE → addr:105 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/ClosureTests/closureTest/end")
     // CODE → addr:110 | <Ret>: <Reg8: 0>
-    return undefined;
 }

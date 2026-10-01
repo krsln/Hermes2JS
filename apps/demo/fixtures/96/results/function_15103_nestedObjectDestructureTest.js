@@ -55,7 +55,7 @@ function nestedObjectDestructureTest() {
     if (r2 !== undefined) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:114 | <Mov>: <Reg8: 6, Reg8: 2>
-        r6 = r2.page
+        r6 = r2
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:117 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -73,5 +73,4 @@ function nestedObjectDestructureTest() {
     // CODE → addr:150 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/DestructuringTests/nestedObjectDestructureTest/end")
     // CODE → addr:155 | <Ret>: <Reg8: 0>
-    return undefined;
 }

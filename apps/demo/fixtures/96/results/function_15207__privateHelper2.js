@@ -13,7 +13,7 @@ function _privateHelper2() {
     // CODE → addr: 18 | <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → addr: 21 | <Call3>: <Reg8: 1, Reg8: 4, Reg8: 2, Reg8: 1, Reg8: 3>
-    r1 = r1.default.call(r2, this, r3)
+    r1 = r1.default.call(undefined, this, r3)
     // CODE → addr: 27 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 5>
     r0 = r0[5]
     // CODE → addr: 31 | <GetByVal>: <Reg8: 2, Reg8: 1, Reg8: 0>

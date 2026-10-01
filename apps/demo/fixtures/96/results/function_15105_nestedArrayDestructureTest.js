@@ -37,7 +37,7 @@ function nestedArrayDestructureTest() {
     // CODE → addr: 80 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 82 | <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
-    // USED → r4 = 2;
+    r4 = 2
     // CODE → addr: 85 | <Call3>: <Reg8: 5, Reg8: 7, Reg8: 0, Reg8: 5, Reg8: 4>
     r5 = r0.default(r5, 2)
     // CODE → addr: 91 | <GetByVal>: <Reg8: 10, Reg8: 5, Reg8: 6>
@@ -49,11 +49,11 @@ function nestedArrayDestructureTest() {
     // CODE → addr:102 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 2, UInt8: 1>
     r5 = r2[1]
     // CODE → addr:106 | <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r5 = r5.default;
+    r5 = r5.default
     // CODE → addr:111 | <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 4>
     r3 = (((r3[0] = r0)[1] = r0)[2] = r0)[r4]
     // CODE → addr:115 | <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
-    r3 = r5.default.call(r0, r3, 2)
+    r3 = r5(r3, 2)
     // CODE → addr:121 | <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 7>
     r8 = r3[r7]
     // CODE → addr:125 | <TryGetById>: <Reg8: 5, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -71,7 +71,7 @@ function nestedArrayDestructureTest() {
     if (r8 !== undefined) {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr:161 | <Mov>: <Reg8: 5, Reg8: 8>
-        r5 = r3[r6]
+        r5 = r8
     }
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:164 | <GetByVal>: <Reg8: 7, Reg8: 3, Reg8: 7>
@@ -81,15 +81,15 @@ function nestedArrayDestructureTest() {
     if (r7 !== undefined) {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:174 | <Mov>: <Reg8: 6, Reg8: 7>
-        r6 = r3[r7]
+        r6 = r7
     }
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:177 | <LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 0>
     r2 = r2[0]
     // CODE → addr:181 | <GetByIdShort>: <Reg8: 2, Reg8: 2, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
-    // USED → r2 = r2.default;
+    r2 = r2.default
     // CODE → addr:186 | <Call2>: <Reg8: 3, Reg8: 2, Reg8: 0, Reg8: 3>
-    r3 = r2.default.call(r0, r3)
+    r3 = r2(r3)
     // CODE → addr:191 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 227>  # String: 'slice' (Identifier)
     // USED → r2 = r3.slice;
     // CODE → addr:196 | <Call2>: <Reg8: 4, Reg8: 2, Reg8: 3, Reg8: 4>
@@ -109,5 +109,4 @@ function nestedArrayDestructureTest() {
     // CODE → addr:234 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end")
     // CODE → addr:239 | <Ret>: <Reg8: 0>
-    return undefined;
 }

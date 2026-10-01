@@ -1,4 +1,4 @@
-async function* anon_15181() {
+async function _anon_0_() {
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <StartGenerator>: <>
     // StartGenerator
@@ -22,13 +22,13 @@ async function* anon_15181() {
     // CODE → addr: 32 | <GetEnvironment>: <Reg8: 1, UInt8: 2>
     r1 = getEnvironment(2)
     // CODE → addr: 35 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 1, UInt8: 2>
-    // USED → r4 = r1[2];
+    // USED → r4 = delay;
     // CODE → addr: 39 | <LoadConstUndefined>: <Reg8: 1>
-    r1 = undefined
+    // USED → r1 = undefined;
     // CODE → addr: 41 | <LoadConstUInt8>: <Reg8: 3, UInt8: 1>
     // USED → r3 = 1;
     // CODE → addr: 44 | <Call2>: <Reg8: 1, Reg8: 4, Reg8: 1, Reg8: 3>
-    r1 = await r1[2](1)
+    r1 = await delay(1)
     // CODE → addr: 49 | <SaveGenerator>: <Addr8: 4>  # Address: 00000035
     goto label_53;
     // ──────────────── Block 2 ──────────────── 

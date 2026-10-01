@@ -1,3 +1,4 @@
+from hermes_decompiler.core.Naming import to_js_identifier
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, FUNCTION_ID
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.expressions import Identifier
@@ -23,14 +24,19 @@ class CreateClosure(OpcodeHandler):
         function_info = ctx.entry.function
 
         if function_info is not None:
-            params = (
-                ", ".join(f"param{i}" for i in range(1, function_info.param_count))
-                if function_info.param_count is not None
-                else ""
-            )
-
             name = function_info.name or f"function_{func_id}"
-            function = f"{name}({params})"
+            # name comes straight from the function table and isn't
+            # guaranteed to be a valid JS identifier - e.g. an
+            # anonymous generator/async body is named "?anon_0_..."
+            # (see hermes_decompiler.core.Naming for why).
+            #
+            # The value is the BARE function name - a reference, not a
+            # call. It used to carry an arity annotation baked into the
+            # name (`sideEffect(param1, param2)`), which made every closure
+            # read as a call: `param6.ifTest = ifTest(param1)` (a
+            # reference assignment), and `sideEffect(param1, param2)(
+            # "and-left", param1)` once the closure was actually called.
+            function = to_js_identifier(name)
         else:
             function = f"function_{func_id}"
 

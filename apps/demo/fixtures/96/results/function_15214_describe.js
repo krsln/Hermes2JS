@@ -23,7 +23,7 @@ function describe() {
     // CODE → addr: 40 | <LoadParam>: <Reg8: 1, UInt8: 0>
     // USED → r1 = this;
     // CODE → addr: 43 | <Call3>: <Reg8: 1, Reg8: 3, Reg8: 2, Reg8: 1, Reg8: 0>
-    r1 = r1.default.call(r2, this, r0)
+    r1 = r1.default.call(undefined, this, r0)
     // CODE → addr: 49 | <GetByVal>: <Reg8: 0, Reg8: 1, Reg8: 0>
     // USED → r0 = r1[r0];
     // CODE → addr: 53 | <Call1>: <Reg8: 0, Reg8: 0, Reg8: 1>

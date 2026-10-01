@@ -35,5 +35,4 @@ function restAfterRequiredTest(param1, param2) {
     // CODE → addr: 73 | <LoadConstUndefined>: <Reg8: 1>
     // USED → r1 = undefined;
     // CODE → addr: 75 | <Ret>: <Reg8: 1>
-    return undefined;
 }

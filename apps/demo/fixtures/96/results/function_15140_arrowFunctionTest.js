@@ -33,9 +33,9 @@ function arrowFunctionTest() {
     // CODE → addr: 70 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 3, string_id: 170>  # String: 'map' (Identifier)
     // USED → r3 = r4.map;
     // CODE → addr: 75 | <CreateClosure>: <Reg8: 2, Reg8: 0, function_id: 15141>  # Function: [#15141  of 12 bytes]: 2 params @ offset 0x00269c4e
-    // USED → r2 = function_15141(param1);
+    // USED → r2 = function_15141;
     // CODE → addr: 80 | <Call2>: <Reg8: 4, Reg8: 3, Reg8: 4, Reg8: 2>
-    r4 = r4.map(function_15141(param1))
+    r4 = r4.map(function_15141)
     // CODE → addr: 85 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr: 91 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -43,19 +43,19 @@ function arrowFunctionTest() {
     // CODE → addr: 96 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 4>
     console.log(r4)
     // CODE → addr:101 | <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 15142>  # Function: [#15142 makeMultiplier of 16 bytes]: 2 params @ offset 0x0026a8a3
-    // USED → r3 = makeMultiplier(param1);
+    // USED → r3 = makeMultiplier;
     // CODE → addr:106 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:108 | <LoadConstUInt8>: <Reg8: 2, UInt8: 3>
     // USED → r2 = 3;
     // CODE → addr:111 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 0, Reg8: 2>
-    r2 = makeMultiplier(param1).call(undefined, 3)
+    r2 = makeMultiplier(3)
     // CODE → addr:116 | <TryGetById>: <Reg8: 4, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:122 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r3 = console.log;
     // CODE → addr:127 | <Call2>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 5>
-    r2 = r2.call(undefined, 5)
+    r2 = r2(5)
     // CODE → addr:132 | <Call2>: <Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 2>
     console.log(r2)
     // CODE → addr:137 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
@@ -67,5 +67,4 @@ function arrowFunctionTest() {
     // CODE → addr:152 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Functions/ArrowTests/arrowFunctionTest/end")
     // CODE → addr:157 | <Ret>: <Reg8: 0>
-    return undefined;
 }

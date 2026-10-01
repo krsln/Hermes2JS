@@ -20,7 +20,8 @@ class CreateFunctionEnvironment(OpcodeHandler):
 
         expression = Identifier(name="__environment__")
 
-        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
+        # See the matching note in CreateEnv.py.
+        result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg, env_source=(0, None))
         ctx.analysis.add_result(result)
 
         return result

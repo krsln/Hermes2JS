@@ -21,7 +21,7 @@ function makeSound() {
     // CODE → addr: 37 | <GetEnvironment>: <Reg8: 0, UInt8: 0>
     r0 = getEnvironment(0)
     // CODE → addr: 40 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 0, UInt8: 0>
-    r10 = r0[0]
+    r10 = Dog
     // CODE → addr: 44 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 46 | <LoadConstString>: <Reg8: 9, string_id: 10340>  # String: 'makeSound' (Identifier)
@@ -37,7 +37,7 @@ function makeSound() {
     // CODE → addr: 62 | <NewArray>: <Reg8: 3, UInt16: 0>
     r3 = []
     // CODE → addr: 66 | <Call2>: <Reg8: 3, Reg8: 4, Reg8: 0, Reg8: 3>
-    r3 = r4.call(undefined, r3)
+    r3 = r4(r3)
     // CODE → addr: 71 | <TryGetById>: <Reg8: 5, Reg8: 2, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r5 = console;
     // CODE → addr: 77 | <GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -51,5 +51,4 @@ function makeSound() {
     // CODE → addr: 97 | <Call4>: <Reg8: 1, Reg8: 4, Reg8: 5, Reg8: 3, Reg8: 1, Reg8: 2>
     console.log(this.name, "is a", this.breed)
     // CODE → addr:104 | <Ret>: <Reg8: 0>
-    return undefined;
 }

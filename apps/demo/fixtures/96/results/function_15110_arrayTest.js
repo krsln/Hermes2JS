@@ -47,9 +47,9 @@ function arrayTest() {
     // CODE → addr: 93 | <GetById>: <Reg8: 3, Reg8: 6, UInt8: 6, string_id: 7576>  # String: 'sort' (Identifier)
     // USED → r3 = r6.sort;
     // CODE → addr: 99 | <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15111>  # Function: [#15111  of 12 bytes]: 3 params @ offset 0x001f6a9c
-    // USED → r2 = function_15111(param1, param2);
+    // USED → r2 = function_15111;
     // CODE → addr:104 | <Call2>: <Reg8: 6, Reg8: 3, Reg8: 6, Reg8: 2>
-    r6 = r6.sort(function_15111(param1, param2))
+    r6 = r6.sort(function_15111)
     // CODE → addr:109 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:115 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -59,9 +59,9 @@ function arrayTest() {
     // CODE → addr:125 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 7, string_id: 170>  # String: 'map' (Identifier)
     // USED → r3 = r4.map;
     // CODE → addr:130 | <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15112>  # Function: [#15112  of 12 bytes]: 2 params @ offset 0x00269c4e
-    // USED → r2 = function_15112(param1);
+    // USED → r2 = function_15112;
     // CODE → addr:135 | <Call2>: <Reg8: 6, Reg8: 3, Reg8: 4, Reg8: 2>
-    r6 = r4.map(function_15112(param1))
+    r6 = r4.map(function_15112)
     // CODE → addr:140 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:146 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -71,9 +71,9 @@ function arrayTest() {
     // CODE → addr:156 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 8, string_id: 137>  # String: 'filter' (Identifier)
     // USED → r3 = r4.filter;
     // CODE → addr:161 | <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15113>  # Function: [#15113  of 12 bytes]: 2 params @ offset 0x00269c5a
-    // USED → r2 = function_15113(param1);
+    // USED → r2 = function_15113;
     // CODE → addr:166 | <Call2>: <Reg8: 6, Reg8: 3, Reg8: 4, Reg8: 2>
-    r6 = r4.filter(function_15113(param1))
+    r6 = r4.filter(function_15113)
     // CODE → addr:171 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:177 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -83,9 +83,9 @@ function arrayTest() {
     // CODE → addr:187 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 9, string_id: 210>  # String: 'reduce' (Identifier)
     // USED → r3 = r4.reduce;
     // CODE → addr:192 | <CreateClosure>: <Reg8: 2, Reg8: 1, function_id: 15114>  # Function: [#15114  of 12 bytes]: 3 params @ offset 0x00269c66
-    // USED → r2 = function_15114(param1, param2);
+    // USED → r2 = function_15114;
     // CODE → addr:197 | <Call3>: <Reg8: 5, Reg8: 3, Reg8: 4, Reg8: 2, Reg8: 5>
-    r5 = r4.reduce(function_15114(param1, param2), r5)
+    r5 = r4.reduce(function_15114, r5)
     // CODE → addr:203 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:209 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -95,9 +95,9 @@ function arrayTest() {
     // CODE → addr:219 | <GetById>: <Reg8: 2, Reg8: 4, UInt8: 10, string_id: 8819>  # String: 'find' (Identifier)
     // USED → r2 = r4.find;
     // CODE → addr:225 | <CreateClosure>: <Reg8: 1, Reg8: 1, function_id: 15115>  # Function: [#15115  of 12 bytes]: 2 params @ offset 0x00269c72
-    // USED → r1 = function_15115(param1);
+    // USED → r1 = function_15115;
     // CODE → addr:230 | <Call2>: <Reg8: 3, Reg8: 2, Reg8: 4, Reg8: 1>
-    r3 = r4.find(function_15115(param1))
+    r3 = r4.find(function_15115)
     // CODE → addr:235 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr:241 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -129,5 +129,4 @@ function arrayTest() {
     // CODE → addr:304 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr:306 | <Ret>: <Reg8: 0>
-    return undefined;
 }

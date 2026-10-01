@@ -58,7 +58,7 @@ function nestedTryCatchTest() {
     // CODE → addr:122 | <LoadConstString>: <Reg8: 1, string_id: 6991>  # String: 'rethrown from inner: ' (String)
     // USED → r1 = "rethrown from inner: ";
     // CODE → addr:126 | <Add>: <Reg8: 5, Reg8: 1, Reg8: 2>
-    // USED → r5 = "rethrown from inner: " + caughtException;
+    r5 = "rethrown from inner: " + caughtException
     // CODE → addr:130 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = Error.prototype;
     // CODE → addr:135 | <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 3>
@@ -66,14 +66,14 @@ function nestedTryCatchTest() {
     // CODE → addr:139 | <Mov>: <Reg8: 6, Reg8: 2>
     // USED → r6 = CreateThis(r2);
     // CODE → addr:142 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
-    // USED → r1 = new Error("rethrown from inner: " + caughtException);
+    // USED → r1 = new Error(r5);
     // CODE → addr:146 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
-    r1 = new Error("rethrown from inner: " + caughtException)
+    r1 = new Error(r5)
     // CODE → addr:150 | <Throw>: <Reg8: 1>
     throw r1;
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr:152 | <Catch>: <Reg8: 3>
-    r3 = caughtException
+    // USED → r3 = caughtException;
     // CODE → addr:154 | <TryGetById>: <Reg8: 4, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r4 = console;
     // CODE → addr:160 | <GetByIdShort>: <Reg8: 2, Reg8: 4, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
@@ -87,7 +87,7 @@ function nestedTryCatchTest() {
     // CODE → addr:180 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r1 = console.log;
     // CODE → addr:185 | <Call2>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 3>
-    console.log(r3)
+    console.log(caughtException)
     // CODE → addr:190 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr:196 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

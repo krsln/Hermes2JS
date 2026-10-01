@@ -62,24 +62,24 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:106 | <CreateThisForNew>: <Reg8: 14, Reg8: 13, UInt8: 4>
     r14 = CreateThisForNew(r13)
     // CODE → addr:110 | <Mov>: <Reg8: 18, Reg8: 14>
-    // USED → r18 = r14;
+    r18 = r14
     // CODE → addr:113 | <Mov>: <Reg8: 17, Reg8: 6>
-    // USED → r17 = "negative value";
+    r17 = "negative value"
     // CODE → addr:116 | <Construct>: <Reg8: 13, Reg8: 13, UInt8: 2>
-    // USED → r13 = new Error("negative value", r14);
+    // USED → r13 = new Error(r17);
     // CODE → addr:120 | <SelectObject>: <Reg8: 13, Reg8: 14, Reg8: 13>
-    r13 = new Error("negative value", r14)
+    r13 = new Error(r17)
     // CODE → addr:124 | <Throw>: <Reg8: 13>
     throw r13;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:126 | <Catch>: <Reg8: 15>
-    r15 = caughtException
+    // USED → r15 = caughtException;
     // CODE → addr:128 | <TryGetById>: <Reg8: 14, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r14 = console;
     // CODE → addr:134 | <GetByIdShort>: <Reg8: 13, Reg8: 14, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
     // USED → r13 = console.log;
     // CODE → addr:139 | <Call3>: <Reg8: 13, Reg8: 13, Reg8: 14, Reg8: 7, Reg8: 15>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", r15)
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
     // CODE → addr:145 | <AddN>: <Reg8: 12, Reg8: 11, Reg8: 8>
     r12 = r11 + 1
     // ──────────────── Block 5 ──────────────── 

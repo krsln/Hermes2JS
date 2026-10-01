@@ -1,6 +1,6 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import Expression, NewExpression, ThisPlaceholder
+from hermes_decompiler.ir.expressions import NewExpression
 
 
 # Reg8, Reg8, UInt8 (total size 3)
@@ -9,6 +9,32 @@ from hermes_decompiler.ir.expressions import Expression, NewExpression, ThisPlac
 class Construct(OpcodeHandler):
     """
     Construct using UInt8 argument count.
+
+    Same register-frame convention as the plain `Call` opcode (see
+    Call.py's own docstring) - `arg_count` CONSECUTIVE registers ending
+    at `highest` (the top of the currently live register range),
+    highest-to-lowest: `[this, arg1, arg2, ..., argN]`. Unlike Call1-4,
+    neither `Construct` nor `ConstructLong` encodes individual argument
+    register numbers in the instruction itself (only `argCount`), so
+    there's no explicit operand to read them from - `highest` is the
+    only anchor available, exactly like plain `Call`.
+
+    A previous version of this handler instead walked `analysis.results`
+    backwards collecting the last `arg_count` not-yet-consumed
+    definitions, then sorted THOSE by `dest_reg` ascending to recover
+    frame order. That's a different, weaker signal than the register
+    range itself: it breaks the moment something between the argument
+    loads and the Construct isn't itself a fresh, still-unconsumed
+    definition with a `dest_reg` - e.g. the `Mov` that copies
+    CreateThis's placeholder into its OWN frame slot right before the
+    call (see CreateThis.py/CreateThisForNew.py) sits at whatever
+    register `Mov` targets, which doesn't have to be (and here, isn't)
+    the highest of the group, so sorting by `dest_reg` silently put
+    `this` in the wrong frame position and reversed the two real
+    arguments with it - confirmed against ClassTests.ts's
+    `new Animal("Generic", "...")` and `new Dog("Rex", "Labrador")`,
+    both of which came out with their arguments swapped end-to-end
+    before this fix.
     """
 
     ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8), "Reg8, Reg8, UInt8")
@@ -21,47 +47,39 @@ class Construct(OpcodeHandler):
         dest_reg, ctor_reg, arg_count = map(int, match.groups())
 
         constructor = self.get_register_expression(ctx.analysis, ctor_reg)
-        arguments: list[OpcodeResult] = []
 
-        for result in reversed(ctx.analysis.results):
-            if result.definition_used:
-                continue
-            if result.dest_reg is None:
-                continue
-            if result.entry.address >= ctx.entry.address:
-                continue
+        highest = max(
+            int(r[1:])
+            for r in ctx.analysis.registers
+        )
 
-            arguments.append(result)
-            if len(arguments) == arg_count:
-                break
+        if highest + 1 < arg_count:
+            return self.build_invalid_args_result(ctx.analysis, ctx.entry)
 
-        # Register frame order
-        arguments.sort(key=lambda r: r.dest_reg)
+        # [this, arg1, arg2, ..., argN], highest register first.
+        this_reg, *arg_regs = range(highest, highest - arg_count, -1)
 
-        this_slots = [i for i, arg in enumerate(arguments) if self._is_this_value(arg.value)]
-        if len(this_slots) > 1:
-            raise AssertionError(
-                f"Construct@{ctx.entry.address}: expected at most one this-placeholder, "
-                f"found {len(this_slots)}"
-            )
+        # Consumed for its side effect (marks the CreateThis/
+        # CreateThisForNew placeholder's defining Mov as folded away
+        # rather than left to print as its own `rN = ...;` statement -
+        # see ThisPlaceholder's own docstring: it must never survive
+        # into rendered output). The value itself is discarded; a
+        # `new` expression has no separate `this` slot to print,
+        # that's exactly what `constructor` and `arguments` together
+        # already express.
+        self.get_register_expression(ctx.analysis, this_reg)
 
-        for arg in arguments:
-            arg.definition_used = True
+        arguments = tuple(
+            self.resolve_call_argument(ctx.analysis, reg)
+            for reg in arg_regs
+        )
 
-        for i in reversed(this_slots):
-            arguments.pop(i)
-
-        values = tuple(arg.value for arg in arguments)
-        expression = NewExpression(callee=constructor, arguments=values)
+        expression = NewExpression(callee=constructor, arguments=arguments)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
 
         return result
-
-    @staticmethod
-    def _is_this_value(expr: Expression) -> bool:
-        return isinstance(expr, ThisPlaceholder)
 
 
 # Reg8, Reg8, UInt32 (total size 6)

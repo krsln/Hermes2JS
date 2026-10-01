@@ -15,9 +15,9 @@ function objectLiteralTest() {
     // CODE → addr: 28 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 30 | <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 12471>  # Function: [#12471 greet of 35 bytes]: 1 params @ offset 0x00243de9
-    // USED → r3 = greet();
+    // USED → r3 = greet;
     // CODE → addr: 35 | <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 3, UInt8: 2>
-    r2.slot_2 = greet()
+    r2.slot_2 = greet
     // CODE → addr: 39 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
     // CODE → addr: 45 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
@@ -61,5 +61,4 @@ function objectLiteralTest() {
     // CODE → addr:148 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/ObjectLiteralTests/objectLiteralTest/end")
     // CODE → addr:153 | <Ret>: <Reg8: 0>
-    return undefined;
 }

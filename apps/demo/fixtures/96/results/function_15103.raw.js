@@ -56,7 +56,7 @@ function nestedObjectDestructureTest() {
     if (r2 === undefined) goto label_117;
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr:114 | <Mov>: <Reg8: 6, Reg8: 2>
-    r6 = r2.page
+    r6 = r2
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:117 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;

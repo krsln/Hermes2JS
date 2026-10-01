@@ -19,17 +19,17 @@ function reset() {
     // CODE → addr: 34 | <GetEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getEnvironment(0)
     // CODE → addr: 37 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 0>
-    r1 = r1[0]
+    r1 = Counter
     // CODE → addr: 41 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 0, UInt8: 6>
     r3 = r0[6]
     // CODE → addr: 45 | <LoadConstUndefined>: <Reg8: 0>
     r0 = undefined
     // CODE → addr: 47 | <Call3>: <Reg8: 2, Reg8: 2, Reg8: 0, Reg8: 1, Reg8: 3>
-    r2 = r1.default.call(r0, r1, r3)
+    r2 = r1.default.call(undefined, r1, r3)
     // CODE → addr: 53 | <LoadConstZero>: <Reg8: 1>
     // USED → r1 = 0;
     // CODE → addr: 55 | <PutByVal>: <Reg8: 2, Reg8: 3, Reg8: 1>
-    r2[r0[6]] = 0
+    r2[r3] = 0
     // CODE → addr: 59 | <Ret>: <Reg8: 0>
     return r0;
 }

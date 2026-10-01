@@ -66,22 +66,22 @@ function tryCatchInsideLoopTest(param1) {
     // CODE → addr:116 | <LoadConstString>: <Reg8: 12, string_id: 839>  # String: 'negative value' (String)
     // USED → r12 = "negative value";
     // CODE → addr:120 | <Mov>: <Reg8: 13, Reg8: 3>
-    // USED → r13 = r3;
+    r13 = r3
     // CODE → addr:123 | <Construct>: <Reg8: 2, Reg8: 9, UInt8: 2>
-    // USED → r2 = new Error("negative value", r3);
+    // USED → r2 = new Error("negative value");
     // CODE → addr:127 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
-    r2 = new Error("negative value", r3)
+    r2 = new Error("negative value")
     // CODE → addr:131 | <Throw>: <Reg8: 2>
     throw r2;
     // ──────────────── Block 4 ──────────────── 
     // CODE → addr:133 | <Catch>: <Reg8: 9>
-    r9 = caughtException
+    // USED → r9 = caughtException;
     // CODE → addr:135 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r3 = console;
     // CODE → addr:141 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)
     // USED → r2 = console.log;
     // CODE → addr:146 | <Call3>: <Reg8: 2, Reg8: 2, Reg8: 3, Reg8: 5, Reg8: 9>
-    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", r9)
+    console.log("__BC:Exceptions/ExceptionTests/tryCatchInsideLoopTest/caught", caughtException)
     // CODE → addr:152 | <Mov>: <Reg8: 2, Reg8: 0>
     r2 = r0
     // CODE → addr:155 | <Inc>: <Reg8: 0, Reg8: 2>

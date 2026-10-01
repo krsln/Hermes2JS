@@ -92,14 +92,13 @@ function mapTest() {
     r3 = 1
     // LOOP → START (for_of)
     for (const r11 of r9) {
-        // ──────────────── Block 1 ──────────────── 
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:209 | <LoadFromEnvironment>: <Reg8: 10, Reg8: 8, UInt8: 0>
         r10 = r8[0]
         // CODE → addr:213 | <GetByIdShort>: <Reg8: 10, Reg8: 10, UInt8: 9, string_id: 107>  # String: 'default' (Identifier)
         // USED → r10 = r10.default;
         // CODE → addr:218 | <Call3>: <Reg8: 10, Reg8: 10, Reg8: 0, Reg8: 11, Reg8: 7>
-        r10 = r10.default.call(r0, r11, 2)
+        r10 = r10.default.call(undefined, r11, 2)
         // CODE → addr:224 | <GetByVal>: <Reg8: 13, Reg8: 10, Reg8: 6>
         r13 = r10[r6]
         // CODE → addr:228 | <GetByVal>: <Reg8: 12, Reg8: 10, Reg8: 3>
@@ -134,5 +133,4 @@ function mapTest() {
     // CODE → addr:304 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Collections/MapSetTests/mapTest/end")
     // CODE → addr:309 | <Ret>: <Reg8: 0>
-    return undefined;
 }
