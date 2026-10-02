@@ -21,15 +21,15 @@ function Dog(param1, param2) {
     // CODE → addr: 34 | <GetByIdShort>: <Reg8: 1, Reg8: 0, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
     // USED → r1 = r0.default;
     // CODE → addr: 39 | <NewArray>: <Reg8: 0, UInt16: 2>
-    r0 = []
+    // USED → r0 = [];
     // CODE → addr: 43 | <LoadParam>: <Reg8: 5, UInt8: 1>
     // USED → r5 = param1;
     // CODE → addr: 46 | <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 0>
-    // USED → r0 = r0[0] = param1;
+    // USED → r0 = [param1];
     // CODE → addr: 50 | <LoadConstString>: <Reg8: 5, string_id: 4300>  # String: 'Woof' (String)
     // USED → r5 = "Woof";
     // CODE → addr: 54 | <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 1>
-    r0 = (r0[0] = param1)[1] = "Woof"
+    r0 = [param1, "Woof"]
     // CODE → addr: 58 | <Call4>: <Reg8: 0, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3, Reg8: 0>
     r0 = r0.default.call(undefined, this, r3, r0)
     // CODE → addr: 65 | <GetGlobalObject>: <Reg8: 1>

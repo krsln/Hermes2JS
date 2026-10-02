@@ -170,15 +170,15 @@ async function _anon_0_() {
     // CODE → addr:374 | <GetById>: <Reg8: 7, Reg8: 1, UInt8: 24, string_id: 10295>  # String: 'tryLoopMultiReturnTest' (Identifier)
     // USED → r7 = r1.tryLoopMultiReturnTest;
     // CODE → addr:380 | <NewArrayWithBuffer>: <Reg8: 1, UInt16: 4, UInt16: 2, UInt16: 23560>  # Array: [1, 0]
-    r1 = [1, 0]
+    // USED → r1 = [1, 0];
     // CODE → addr:388 | <LoadConstInt>: <Reg8: 8, Imm32: -1>
     // USED → r8 = -1;
     // CODE → addr:394 | <PutOwnByIndex>: <Reg8: 1, Reg8: 8, UInt8: 2>
-    // USED → r1 = r1[2] = -1;
+    // USED → r1 = [1, 0, -1];
     // CODE → addr:398 | <LoadConstUInt8>: <Reg8: 9, UInt8: 2>
     // USED → r9 = 2;
     // CODE → addr:401 | <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 3>
-    r1 = (r1[2] = -1)[3] = 2
+    r1 = [1, 0, -1, 2]
     // CODE → addr:405 | <Call2>: <Reg8: 1, Reg8: 7, Reg8: 2, Reg8: 1>
     r1 = r1.tryLoopMultiReturnTest.call(undefined, r1)
     // CODE → addr:410 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
@@ -212,15 +212,15 @@ async function _anon_0_() {
     // CODE → addr:479 | <GetById>: <Reg8: 9, Reg8: 1, UInt8: 29, string_id: 8691>  # String: 'tryCatchInsideLoopTest' (Identifier)
     // USED → r9 = r1.tryCatchInsideLoopTest;
     // CODE → addr:485 | <NewArrayWithBuffer>: <Reg8: 1, UInt16: 3, UInt16: 1, UInt16: 3>  # Array: [1]
-    r1 = [1]
+    // USED → r1 = [1];
     // CODE → addr:493 | <LoadConstInt>: <Reg8: 7, Imm32: -2>
     // USED → r7 = -2;
     // CODE → addr:499 | <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 1>
-    // USED → r1 = r1[1] = -2;
+    // USED → r1 = [1, -2];
     // CODE → addr:503 | <LoadConstUInt8>: <Reg8: 7, UInt8: 3>
     // USED → r7 = 3;
     // CODE → addr:506 | <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 2>
-    r1 = (r1[1] = -2)[2] = 3
+    r1 = [1, -2, 3]
     // CODE → addr:510 | <Call2>: <Reg8: 1, Reg8: 9, Reg8: 2, Reg8: 1>
     r1 = r1.tryCatchInsideLoopTest.call(undefined, r1)
     // CODE → addr:515 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>
@@ -242,11 +242,11 @@ async function _anon_0_() {
     // CODE → addr:552 | <GetById>: <Reg8: 5, Reg8: 1, UInt8: 32, string_id: 10975>  # String: 'loopBreakCrossesTryBoundaryTest' (Identifier)
     // USED → r5 = r1.loopBreakCrossesTryBoundaryTest;
     // CODE → addr:558 | <NewArrayWithBuffer>: <Reg8: 1, UInt16: 5, UInt16: 3, UInt16: 23586>  # Array: [1, 0, 2]
-    r1 = [1, 0, 2]
+    // USED → r1 = [1, 0, 2];
     // CODE → addr:566 | <PutOwnByIndex>: <Reg8: 1, Reg8: 8, UInt8: 3>
-    // USED → r1 = r1[3] = -1;
+    // USED → r1 = [1, 0, 2, -1];
     // CODE → addr:570 | <PutOwnByIndex>: <Reg8: 1, Reg8: 7, UInt8: 4>
-    r1 = (r1[3] = -1)[4] = 3
+    r1 = [1, 0, 2, -1, 3]
     // CODE → addr:574 | <Call2>: <Reg8: 1, Reg8: 5, Reg8: 2, Reg8: 1>
     r1 = r1.loopBreakCrossesTryBoundaryTest.call(undefined, r1)
     // CODE → addr:579 | <LoadFromEnvironment>: <Reg8: 1, Reg8: 4, UInt8: 11>

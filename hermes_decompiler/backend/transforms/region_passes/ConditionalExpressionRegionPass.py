@@ -6,7 +6,7 @@ from hermes_decompiler.backend.transforms.shared import (
     negate_condition, has_side_effects, repoint_references, reclaim_definition
 )
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import ConditionalExpression, Expression
+from hermes_decompiler.ir.expressions import ArrayExpression, ConditionalExpression, Expression
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -178,6 +178,19 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 if instr.statement is not None:
                     return None
                 if has_side_effects(instr.value):
+                    return None
+                # A built array literal (`r7 = [-x, -y, -z]`, from NewArray +
+                # PutOwnByIndex) is pure, but it is a printed DEFINITION the
+                # merge write usually reads (`r7[r2]`): dropping the arm into
+                # a ConditionalExpression would delete the only statement
+                # that creates the array. (Before PutOwnByIndex folded into
+                # literals, the element stores were impure statements, which
+                # kept such arms out of this pass.)
+                if (
+                        instr.dest_reg is not None
+                        and not instr.definition_used
+                        and isinstance(instr.value, ArrayExpression)
+                ):
                     return None
 
         return last_block, result

@@ -15,15 +15,15 @@ function nestedArrayDestructureTest() {
     // CODE → addr: 26 | <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23637>  # Array: [1, 2]
     r0 = [1, 2]
     // CODE → addr: 34 | <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 0>
-    // USED → r3 = r3[0] = r0;
+    r3[0] = r0
     // CODE → addr: 38 | <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 12324>  # Array: [3, 4]
     r0 = [3, 4]
     // CODE → addr: 46 | <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 1>
-    // USED → r3 = (r3[0] = r0)[1] = r0;
+    r3[1] = r0
     // CODE → addr: 50 | <NewArrayWithBuffer>: <Reg8: 0, UInt16: 2, UInt16: 2, UInt16: 23646>  # Array: [5, 6]
     r0 = [5, 6]
     // CODE → addr: 58 | <PutOwnByIndex>: <Reg8: 3, Reg8: 0, UInt8: 2>
-    // USED → r3 = ((r3[0] = r0)[1] = r0)[2] = r0;
+    r3[2] = r0
     // CODE → addr: 62 | <GetEnvironment>: <Reg8: 2, UInt8: 0>
     r2 = getEnvironment(0)
     // CODE → addr: 65 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 2, UInt8: 1>
@@ -33,7 +33,7 @@ function nestedArrayDestructureTest() {
     // CODE → addr: 74 | <LoadConstZero>: <Reg8: 6>
     r6 = 0
     // CODE → addr: 76 | <GetByVal>: <Reg8: 5, Reg8: 3, Reg8: 6>
-    r5 = (((r3[0] = r0)[1] = r0)[2] = r0)[r6]
+    r5 = r3[r6]
     // CODE → addr: 80 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // CODE → addr: 82 | <LoadConstUInt8>: <Reg8: 4, UInt8: 2>
@@ -51,7 +51,7 @@ function nestedArrayDestructureTest() {
     // CODE → addr:106 | <GetByIdShort>: <Reg8: 5, Reg8: 5, UInt8: 3, string_id: 107>  # String: 'default' (Identifier)
     r5 = r5.default
     // CODE → addr:111 | <GetByVal>: <Reg8: 3, Reg8: 3, Reg8: 4>
-    r3 = (((r3[0] = r0)[1] = r0)[2] = r0)[r4]
+    r3 = r3[r4]
     // CODE → addr:115 | <Call3>: <Reg8: 3, Reg8: 5, Reg8: 0, Reg8: 3, Reg8: 4>
     r3 = r5(r3, 2)
     // CODE → addr:121 | <GetByVal>: <Reg8: 8, Reg8: 3, Reg8: 7>

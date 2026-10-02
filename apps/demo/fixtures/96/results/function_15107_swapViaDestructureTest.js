@@ -11,21 +11,21 @@ function swapViaDestructureTest() {
     // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/start")
     // CODE → addr: 22 | <NewArray>: <Reg8: 2, UInt16: 2>
-    r2 = []
+    // USED → r2 = [];
     // CODE → addr: 26 | <LoadConstUInt8>: <Reg8: 1, UInt8: 2>
     // USED → r1 = 2;
     // CODE → addr: 29 | <PutOwnByIndex>: <Reg8: 2, Reg8: 1, UInt8: 0>
-    // USED → r2 = r2[0] = 2;
+    // USED → r2 = [2];
     // CODE → addr: 33 | <LoadConstUInt8>: <Reg8: 1, UInt8: 1>
     r1 = 1
     // CODE → addr: 36 | <PutOwnByIndex>: <Reg8: 2, Reg8: 1, UInt8: 1>
-    // USED → r2 = (r2[0] = 2)[1] = 1;
+    r2 = [2, 1]
     // CODE → addr: 40 | <LoadConstZero>: <Reg8: 3>
     r3 = 0
     // CODE → addr: 42 | <GetByVal>: <Reg8: 4, Reg8: 2, Reg8: 3>
-    r4 = ((r2[0] = 2)[1] = 1)[r3]
+    r4 = r2[r3]
     // CODE → addr: 46 | <GetByVal>: <Reg8: 3, Reg8: 2, Reg8: 1>
-    r3 = ((r2[0] = 2)[1] = 1)[r1]
+    r3 = r2[r1]
     // CODE → addr: 50 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr: 56 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

@@ -25,15 +25,15 @@ async function _anon_0_() {
     // CODE → addr: 56 | <Call2>: <Reg8: 6, Reg8: 9, Reg8: 2, Reg8: 5>
     r6 = delay(1)
     // CODE → addr: 61 | <NewArray>: <Reg8: 1, UInt16: 2>
-    r1 = []
+    // USED → r1 = [];
     // CODE → addr: 65 | <PutOwnByIndex>: <Reg8: 1, Reg8: 6, UInt8: 0>
-    // USED → r1 = r1[0] = r6;
+    r1 = [r6]
     // CODE → addr: 69 | <LoadConstUInt8>: <Reg8: 6, UInt8: 2>
     // USED → r6 = 2;
     // CODE → addr: 72 | <Call2>: <Reg8: 9, Reg8: 9, Reg8: 2, Reg8: 6>
     r9 = delay(2)
     // CODE → addr: 77 | <PutOwnByIndex>: <Reg8: 1, Reg8: 9, UInt8: 1>
-    r1 = (r1[0] = r6)[1] = r9
+    r1[1] = r9
     // CODE → addr: 86 | <SaveGenerator>: <Addr8: 4>  # Address: 0000005a
     r1 = await Promise.all(r1)
     // ──────────────── Block 4 ──────────────── 
