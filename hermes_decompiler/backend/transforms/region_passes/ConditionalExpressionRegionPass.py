@@ -3,10 +3,10 @@ from __future__ import annotations
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
 from hermes_decompiler.backend.transforms.shared import (
-    negate_condition, has_side_effects, repoint_references, reclaim_definition
+    negate_condition, has_side_effects, repoint_references, reclaim_definition, is_unfolded_literal_definition,
 )
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import ArrayExpression, ConditionalExpression, Expression
+from hermes_decompiler.ir.expressions import ConditionalExpression, Expression
 from ._base import RegionPass
 
 logger = get_logger(__name__)
@@ -179,18 +179,11 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                     return None
                 if has_side_effects(instr.value):
                     return None
-                # A built array literal (`r7 = [-x, -y, -z]`, from NewArray +
-                # PutOwnByIndex) is pure, but it is a printed DEFINITION the
-                # merge write usually reads (`r7[r2]`): dropping the arm into
-                # a ConditionalExpression would delete the only statement
-                # that creates the array. (Before PutOwnByIndex folded into
-                # literals, the element stores were impure statements, which
-                # kept such arms out of this pass.)
-                if (
-                        instr.dest_reg is not None
-                        and not instr.definition_used
-                        and isinstance(instr.value, ArrayExpression)
-                ):
+                # A printed array/object literal definition is pure, but the
+                # merge write usually reads it by name (`r7[r2]`): absorbing
+                # the arm would delete the only statement that builds it
+                # (see `is_unfolded_literal_definition`).
+                if is_unfolded_literal_definition(instr):
                     return None
 
         return last_block, result

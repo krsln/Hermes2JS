@@ -19,11 +19,11 @@ function function_15153(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 31 | <GetByIdShort>: <Reg8: 6, Reg8: 7, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r6 = Object.defineProperty;
     // CODE → addr: 36 | <NewObject>: <Reg8: 5>
-    r5 = {  }
+    // USED → r5 = {  };
     // CODE → addr: 38 | <LoadConstTrue>: <Reg8: 4>
     // USED → r4 = true;
     // CODE → addr: 40 | <PutNewOwnByIdShort>: <Reg8: 5, Reg8: 4, string_id: 205>  # String: 'value' (Identifier)
-    r5.value = true
+    r5 = { "value": true }
     // CODE → addr: 44 | <LoadConstString>: <Reg8: 4, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r4 = "__esModule";
     // CODE → addr: 48 | <Call4>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 1, Reg8: 4, Reg8: 5>

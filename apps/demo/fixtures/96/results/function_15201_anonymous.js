@@ -23,29 +23,29 @@ function function_15201(param1) {
     // CODE → addr: 38 | <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 1, string_id: 107>  # String: 'default' (Identifier)
     // USED → r2 = r1.default;
     // CODE → addr: 43 | <NewObject>: <Reg8: 5>
-    r5 = {  }
+    // USED → r5 = {  };
     // CODE → addr: 45 | <LoadConstString>: <Reg8: 1, string_id: 10340>  # String: 'makeSound' (Identifier)
     // USED → r1 = "makeSound";
     // CODE → addr: 49 | <PutNewOwnByIdShort>: <Reg8: 5, Reg8: 1, string_id: 117>  # String: 'key' (Identifier)
-    r5.key = "makeSound"
+    // USED → r5 = { "key": "makeSound" };
     // CODE → addr: 53 | <CreateClosure>: <Reg8: 1, Reg8: 0, function_id: 15203>  # Function: [#15203 makeSound of 106 bytes]: 1 params @ offset 0x0026b9fa
     // USED → r1 = makeSound;
     // CODE → addr: 58 | <PutNewOwnByIdShort>: <Reg8: 5, Reg8: 1, string_id: 205>  # String: 'value' (Identifier)
-    r5.value = makeSound
+    r5 = { "key": "makeSound", "value": makeSound }
     // CODE → addr: 62 | <NewArray>: <Reg8: 1, UInt16: 1>
     // USED → r1 = [];
     // CODE → addr: 66 | <PutOwnByIndex>: <Reg8: 1, Reg8: 5, UInt8: 0>
     r1 = [r5]
     // CODE → addr: 70 | <NewObject>: <Reg8: 5>
-    r5 = {  }
+    // USED → r5 = {  };
     // CODE → addr: 72 | <LoadConstString>: <Reg8: 6, string_id: 103>  # String: 'create' (Identifier)
     // USED → r6 = "create";
     // CODE → addr: 76 | <PutNewOwnByIdShort>: <Reg8: 5, Reg8: 6, string_id: 117>  # String: 'key' (Identifier)
-    r5.key = "create"
+    // USED → r5 = { "key": "create" };
     // CODE → addr: 80 | <CreateClosure>: <Reg8: 0, Reg8: 0, function_id: 15204>  # Function: [#15204 create of 58 bytes]: 2 params @ offset 0x0026ba64
     // USED → r0 = create;
     // CODE → addr: 85 | <PutNewOwnByIdShort>: <Reg8: 5, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
-    r5.value = create
+    r5 = { "key": "create", "value": create }
     // CODE → addr: 89 | <NewArray>: <Reg8: 0, UInt16: 1>
     // USED → r0 = [];
     // CODE → addr: 93 | <PutOwnByIndex>: <Reg8: 0, Reg8: 5, UInt8: 0>

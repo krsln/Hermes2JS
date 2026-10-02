@@ -43,23 +43,23 @@ function objectLiteralTest() {
     // CODE → addr:104 | <Call3>: <Reg8: 1, Reg8: 1, Reg8: 2, Reg8: 4, Reg8: 3>
     console.log(r1.name, r1.age)
     // CODE → addr:110 | <NewObject>: <Reg8: 1>
-    r1 = {  }
+    // USED → r1 = {  };
     // CODE → addr:112 | <LoadConstUInt8>: <Reg8: 2, UInt8: 1>
     // USED → r2 = 1;
     // CODE → addr:115 | <PutNewOwnById>: <Reg8: 1, Reg8: 2, string_id: 7189>  # String: 'a' (Identifier)
-    r1.a = 1
+    r1 = { "a": 1 }
     // CODE → addr:120 | <NewObject>: <Reg8: 2>
-    r2 = {  }
+    // USED → r2 = {  };
     // CODE → addr:122 | <LoadConstUInt8>: <Reg8: 3, UInt8: 2>
     // USED → r3 = 2;
     // CODE → addr:125 | <PutNewOwnById>: <Reg8: 2, Reg8: 3, string_id: 7241>  # String: 'c' (Identifier)
-    r2.c = 2
+    r2 = { "c": 2 }
     // CODE → addr:130 | <NewObject>: <Reg8: 3>
-    r3 = {  }
+    // USED → r3 = {  };
     // CODE → addr:132 | <LoadConstUInt8>: <Reg8: 4, UInt8: 3>
     // USED → r4 = 3;
     // CODE → addr:135 | <PutNewOwnById>: <Reg8: 3, Reg8: 4, string_id: 7180>  # String: 'e' (Identifier)
-    r3.e = 3
+    r3 = { "e": 3 }
     // CODE → addr:140 | <PutNewOwnById>: <Reg8: 2, Reg8: 3, string_id: 7181>  # String: 'd' (Identifier)
     r2.d = r3
     // CODE → addr:145 | <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 2, string_id: 38>  # String: 'b' (Identifier)

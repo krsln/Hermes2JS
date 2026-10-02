@@ -23,11 +23,11 @@ function function_15122(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 40 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r7 = Object.defineProperty;
     // CODE → addr: 45 | <NewObject>: <Reg8: 6>
-    r6 = {  }
+    // USED → r6 = {  };
     // CODE → addr: 47 | <LoadConstTrue>: <Reg8: 5>
     // USED → r5 = true;
     // CODE → addr: 49 | <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 5, string_id: 205>  # String: 'value' (Identifier)
-    r6.value = true
+    r6 = { "value": true }
     // CODE → addr: 53 | <LoadConstString>: <Reg8: 5, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r5 = "__esModule";
     // CODE → addr: 57 | <Call4>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 5, Reg8: 6>
@@ -57,9 +57,9 @@ function function_15122(param1, param2, param3, param4, param5, param6, param7) 
     if (!r4) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr:126 | <NewObject>: <Reg8: 3>
-        r3 = {  }
+        // USED → r3 = {  };
         // CODE → addr:128 | <PutNewOwnByIdShort>: <Reg8: 3, Reg8: 4, string_id: 107>  # String: 'default' (Identifier)
-        r3.default = r4
+        r3 = { "default": r4 }
         // CODE → addr:132 | <Mov>: <Reg8: 1, Reg8: 3>
         // USED → r1 = r3;
     } else {

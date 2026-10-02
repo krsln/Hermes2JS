@@ -9,11 +9,11 @@ function function_15057(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 11 | <GetByIdShort>: <Reg8: 3, Reg8: 4, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r3 = Object.defineProperty;
     // CODE → addr: 16 | <NewObject>: <Reg8: 2>
-    r2 = {  }
+    // USED → r2 = {  };
     // CODE → addr: 18 | <LoadConstTrue>: <Reg8: 0>
     // USED → r0 = true;
     // CODE → addr: 20 | <PutNewOwnByIdShort>: <Reg8: 2, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
-    r2.value = true
+    r2 = { "value": true }
     // CODE → addr: 24 | <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → addr: 28 | <Call4>: <Reg8: 0, Reg8: 3, Reg8: 4, Reg8: 1, Reg8: 0, Reg8: 2>

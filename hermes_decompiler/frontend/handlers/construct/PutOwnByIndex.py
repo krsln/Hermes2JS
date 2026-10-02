@@ -1,4 +1,5 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
+from hermes_decompiler.frontend.handlers.shared import fold_into_literal
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
@@ -28,7 +29,16 @@ class PutOwnByIndex(OpcodeHandler):
         # folded, which the "nothing else happened since" check below relies on.
         value = self.get_register_expression(ctx.analysis, value_reg)
 
-        folded = self._fold_into_array_literal(ctx, dest_reg, index, value)
+        # `NewArray` + element stores -> one literal. A gap (index past the
+        # end) would be a hole, not `undefined`, so only the next free index
+        # extends it.
+        folded = fold_into_literal(
+            ctx, dest_reg, ArrayExpression,
+            lambda array: (
+                ArrayExpression(elements=array.elements + (value,))
+                if index == len(array.elements) else None
+            ),
+        )
 
         if folded is not None:
             return folded
@@ -46,58 +56,6 @@ class PutOwnByIndex(OpcodeHandler):
         )
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)
-        ctx.analysis.add_result(result)
-
-        return result
-
-    @staticmethod
-    def _fold_into_array_literal(ctx: OpcodeContext, dest_reg: int, index: int, value) -> OpcodeResult | None:
-        """`NewArray rN` + `PutOwnByIndex rN, v, i` ... -> `rN = [v0, v1, ...]`.
-
-        Only when that is exactly equivalent:
-
-        - the register still holds the array literal being built, which no
-          one has read, pinned or folded away yet (so nothing observed the
-          intermediate array);
-        - the element goes at the next free index (a gap would be a hole,
-          not `undefined`);
-        - since the literal was created nothing else happened - no
-          control flow and no printed statement - so evaluating the element
-          here instead of at the original `Put` position reorders nothing.
-
-        The previous definition's statement is suppressed; the new one
-        (printed where this `Put` is) carries the longer literal.
-        """
-        state = ctx.analysis.get_register_state(dest_reg)
-
-        if state is None or not isinstance(state.value, ArrayExpression):
-            return None
-
-        previous = state.definition
-
-        if state.reads != 0 or previous.definition_pinned or previous.definition_used:
-            return None
-
-        if index != len(state.value.elements):
-            return None
-
-        results = ctx.analysis.results
-        start = next((i for i in range(len(results) - 1, -1, -1) if results[i] is previous), None)
-
-        if start is None:
-            return None
-
-        for later in results[start + 1:]:
-            if later.terminator is not None or not later.definition_used:
-                return None
-
-        previous.definition_used = True
-
-        result = OpcodeResult(
-            ctx.entry,
-            value=ArrayExpression(elements=state.value.elements + (value,)),
-            dest_reg=dest_reg,
-        )
         ctx.analysis.add_result(result)
 
         return result

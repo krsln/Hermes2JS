@@ -1,8 +1,9 @@
 from hermes_decompiler.frontend.handlers import OpcodeContext, ArgsPattern, sequence, REG, STRING_ID
+from hermes_decompiler.frontend.handlers.shared import fold_into_literal
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
-    AssignmentExpression, Identifier, MemberExpression, ObjectExpression, ObjectProperty, PropertyKind,
+    AssignmentExpression, Identifier, MemberExpression, ObjectExpression, ObjectProperty, StringLiteral,
 )
 from .PutById import PutById
 
@@ -22,6 +23,17 @@ class PutNewOwnById(PutById):
 
     ARGUMENTS = ArgsPattern(sequence(REG, REG, STRING_ID), "Reg8, Reg8, UInt16 (string_id)")
 
+    @staticmethod
+    def _key_name(key) -> str | None:
+        """Static name of an object-literal key, if it has one."""
+        if isinstance(key, StringLiteral):
+            return key.value
+
+        if isinstance(key, Identifier):
+            return key.name
+
+        return None
+
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = self.match_arguments(ctx)
         if isinstance(match, OpcodeResult):
@@ -31,24 +43,37 @@ class PutNewOwnById(PutById):
 
         property_name = ctx.entry.identifier_name or f"string_{string_id}"
 
-        obj_value = self.get_register_expression(ctx.analysis, obj_reg)
+        # Resolve the value first: inlining it marks its own definition as
+        # folded, which the fold's "nothing printed since" check relies on.
         right = self.get_register_expression(ctx.analysis, value_reg)
 
-        # Special Case
-        if isinstance(obj_value, ObjectExpression):
-            new_prop = ObjectProperty(
-                key=Identifier(name=property_name), value=right, kind=PropertyKind.INIT,
-                computed=False, method=False, shorthand=False
+        # `NewObject` + property stores -> one literal: `{ "x": a, "y": b }`
+        # (string keys, like the literals `NewObjectWithBuffer` builds).
+        #
+        # Not for `__proto__`: in a literal that key SETS THE PROTOTYPE,
+        # while PutNewOwnById defines an own data property of that name.
+        # Not for a repeated key either - keep the second store as a
+        # statement rather than reason about literal duplicate-key rules.
+        folded = None
+
+        if property_name != "__proto__":
+            new_property = ObjectProperty(key=StringLiteral(property_name), value=right)
+
+            folded = fold_into_literal(
+                ctx, obj_reg, ObjectExpression,
+                lambda obj: (
+                    None if any(self._key_name(p.key) == property_name for p in obj.properties)
+                    else ObjectExpression(properties=obj.properties + (new_property,))
+                ),
             )
 
-            updated_obj = ObjectExpression(properties=obj_value.properties + (new_prop,))
+        if folded is not None:
+            return folded
 
-            result = OpcodeResult(ctx.entry, value=updated_obj, dest_reg=obj_reg)
-            ctx.analysis.add_result(result)
+        # Plain statement: `obj.name = value`. It defines nothing, so it
+        # never changes what the object register holds.
+        obj_value = self.get_register_expression(ctx.analysis, obj_reg)
 
-            return result
-
-        # Normal Case
         left = MemberExpression(obj=obj_value, prop=Identifier(name=property_name), computed=False)
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 

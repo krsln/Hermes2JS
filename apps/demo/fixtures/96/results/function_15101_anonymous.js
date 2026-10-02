@@ -37,11 +37,11 @@ function function_15101(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 69 | <GetByIdShort>: <Reg8: 12, Reg8: 13, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r12 = Object.defineProperty;
     // CODE → addr: 74 | <NewObject>: <Reg8: 11>
-    r11 = {  }
+    // USED → r11 = {  };
     // CODE → addr: 76 | <LoadConstTrue>: <Reg8: 10>
     // USED → r10 = true;
     // CODE → addr: 78 | <PutNewOwnByIdShort>: <Reg8: 11, Reg8: 10, string_id: 205>  # String: 'value' (Identifier)
-    r11.value = true
+    r11 = { "value": true }
     // CODE → addr: 82 | <LoadConstString>: <Reg8: 10, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r10 = "__esModule";
     // CODE → addr: 86 | <Call4>: <Reg8: 10, Reg8: 12, Reg8: 13, Reg8: 1, Reg8: 10, Reg8: 11>

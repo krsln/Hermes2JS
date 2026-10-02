@@ -11,11 +11,11 @@ function renamedDefaultDestructureTest() {
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Objects/DestructuringTests/renamedDefaultDestructureTest/start")
     // CODE → addr: 22 | <NewObject>: <Reg8: 2>
-    r2 = {  }
+    // USED → r2 = {  };
     // CODE → addr: 24 | <LoadConstInt>: <Reg8: 0, Imm32: 500>
     // USED → r0 = 500;
     // CODE → addr: 30 | <PutNewOwnById>: <Reg8: 2, Reg8: 0, string_id: 13118>  # String: 'timeout' (Identifier)
-    r2.timeout = 500
+    r2 = { "timeout": 500 }
     // CODE → addr: 35 | <GetById>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 13118>  # String: 'timeout' (Identifier)
     r3 = r2.timeout
     // CODE → addr: 41 | <LoadConstInt>: <Reg8: 5, Imm32: 1000>

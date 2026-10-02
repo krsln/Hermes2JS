@@ -25,11 +25,11 @@ function Counter() {
     // CODE → addr: 43 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 3, UInt8: 7>
     r5 = r3[7]
     // CODE → addr: 47 | <NewObject>: <Reg8: 4>
-    r4 = {  }
+    // USED → r4 = {  };
     // CODE → addr: 49 | <LoadFromEnvironment>: <Reg8: 9, Reg8: 3, UInt8: 11>
     // USED → r9 = _privateHelper2;
     // CODE → addr: 53 | <PutNewOwnByIdShort>: <Reg8: 4, Reg8: 9, string_id: 205>  # String: 'value' (Identifier)
-    r4.value = _privateHelper2
+    r4 = { "value": _privateHelper2 }
     // CODE → addr: 57 | <Call4>: <Reg8: 4, Reg8: 6, Reg8: 7, Reg8: 8, Reg8: 5, Reg8: 4>
     r4 = Object.defineProperty(this, r5, r4)
     // CODE → addr: 64 | <TryGetById>: <Reg8: 7, Reg8: 1, UInt8: 2, string_id: 24>  # String: 'Object' (Identifier)

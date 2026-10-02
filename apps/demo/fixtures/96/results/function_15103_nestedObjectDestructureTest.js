@@ -11,11 +11,11 @@ function nestedObjectDestructureTest() {
     // CODE → addr: 17 | <Call2>: <Reg8: 0, Reg8: 2, Reg8: 3, Reg8: 0>
     console.log("__BC:Objects/DestructuringTests/nestedObjectDestructureTest/start")
     // CODE → addr: 22 | <NewObject>: <Reg8: 0>
-    r0 = {  }
+    // USED → r0 = {  };
     // CODE → addr: 24 | <LoadConstUInt8>: <Reg8: 2, UInt8: 200>
     // USED → r2 = 200;
     // CODE → addr: 27 | <PutNewOwnByIdShort>: <Reg8: 0, Reg8: 2, string_id: 235>  # String: 'status' (Identifier)
-    r0.status = 200
+    r0 = { "status": 200 }
     // CODE → addr: 31 | <NewObject>: <Reg8: 2>
     r2 = {  }
     // CODE → addr: 33 | <LoadConstUInt8>: <Reg8: 6, UInt8: 1>
@@ -25,9 +25,9 @@ function nestedObjectDestructureTest() {
     // CODE → addr: 46 | <PutNewOwnById>: <Reg8: 2, Reg8: 3, string_id: 7459>  # String: 'user' (Identifier)
     r2.user = r3
     // CODE → addr: 51 | <NewObject>: <Reg8: 3>
-    r3 = {  }
+    // USED → r3 = {  };
     // CODE → addr: 53 | <PutNewOwnById>: <Reg8: 3, Reg8: 6, string_id: 12920>  # String: 'page' (Identifier)
-    r3.page = 1
+    r3 = { "page": 1 }
     // CODE → addr: 58 | <PutNewOwnById>: <Reg8: 2, Reg8: 3, string_id: 10786>  # String: 'meta' (Identifier)
     r2.meta = r3
     // CODE → addr: 63 | <PutNewOwnById>: <Reg8: 0, Reg8: 2, string_id: 7222>  # String: 'body' (Identifier)

@@ -5,9 +5,9 @@ function _interopDefault(param1) {
     if (!param1) {
         // ──────────────── Block 2 ──────────────── 
         // CODE → addr: 17 | <NewObject>: <Reg8: 1>
-        r1 = {  }
+        // USED → r1 = {  };
         // CODE → addr: 19 | <PutNewOwnByIdShort>: <Reg8: 1, Reg8: 2, string_id: 107>  # String: 'default' (Identifier)
-        r1.default = param1
+        r1 = { "default": param1 }
         // CODE → addr: 23 | <Mov>: <Reg8: 0, Reg8: 1>
         r0 = r1
     } else {

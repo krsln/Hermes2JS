@@ -21,11 +21,11 @@ function function_15116(param1, param2, param3, param4, param5, param6, param7) 
     // CODE → addr: 36 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 2, string_id: 108>  # String: 'defineProperty' (Identifier)
     // USED → r7 = Object.defineProperty;
     // CODE → addr: 41 | <NewObject>: <Reg8: 6>
-    r6 = {  }
+    // USED → r6 = {  };
     // CODE → addr: 43 | <LoadConstTrue>: <Reg8: 0>
     // USED → r0 = true;
     // CODE → addr: 45 | <PutNewOwnByIdShort>: <Reg8: 6, Reg8: 0, string_id: 205>  # String: 'value' (Identifier)
-    r6.value = true
+    r6 = { "value": true }
     // CODE → addr: 49 | <LoadConstString>: <Reg8: 0, string_id: 48>  # String: '__esModule' (Identifier)
     // USED → r0 = "__esModule";
     // CODE → addr: 53 | <Call4>: <Reg8: 0, Reg8: 7, Reg8: 8, Reg8: 1, Reg8: 0, Reg8: 6>
