@@ -173,15 +173,15 @@ function callDestructuringTests() {
     // CODE → addr:399 | <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/start")
     // CODE → addr:404 | <NewArray>: <Reg8: 7, UInt16: 2>
-    r7 = []
+    // USED → r7 = [];
     // CODE → addr:408 | <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → addr:411 | <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 0>
-    r7[0] = 2
+    // USED → r7 = [2];
     // CODE → addr:415 | <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1;
     // CODE → addr:418 | <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 1>
-    r7[1] = 1
+    r7 = [2, 1]
     // CODE → addr:422 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr:425 | <IteratorBegin>: <Reg8: 5, Reg8: 6>

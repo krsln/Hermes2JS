@@ -17,7 +17,7 @@ function objectLiteralTest() {
     // CODE → addr: 30 | <CreateClosure>: <Reg8: 3, Reg8: 0, function_id: 12471>  # Function: [#12471 greet of 35 bytes]: 1 params @ offset 0x00243de9
     // USED → r3 = greet;
     // CODE → addr: 35 | <PutOwnBySlotIdx>: <Reg8: 2, Reg8: 3, UInt8: 2>
-    r2.slot_2 = greet
+    r2.greet = greet
     // CODE → addr: 39 | <TryGetById>: <Reg8: 6, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
     // CODE → addr: 45 | <GetByIdShort>: <Reg8: 5, Reg8: 6, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)

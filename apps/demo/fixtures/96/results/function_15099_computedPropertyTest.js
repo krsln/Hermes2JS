@@ -11,19 +11,19 @@ function computedPropertyTest() {
     // CODE → addr: 17 | <Call2>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 1>
     console.log("__BC:Objects/PropertyTests/computedPropertyTest/start")
     // CODE → addr: 22 | <NewObject>: <Reg8: 3>
-    r3 = {  }
+    // USED → r3 = {  };
     // CODE → addr: 24 | <LoadConstUInt8>: <Reg8: 2, UInt8: 42>
     // USED → r2 = 42;
     // CODE → addr: 27 | <LoadConstString>: <Reg8: 1, string_id: 8980>  # String: 'dynamic' (Identifier)
     // USED → r1 = "dynamic";
     // CODE → addr: 31 | <PutOwnByVal>: <Reg8: 3, Reg8: 2, Reg8: 1, UInt8: 1>
-    r3["dynamic"] = 42
+    // USED → r3 = { "dynamic": 42 };
     // CODE → addr: 36 | <LoadConstString>: <Reg8: 2, string_id: 205>  # String: 'value' (Identifier)
     // USED → r2 = "value";
     // CODE → addr: 40 | <LoadConstString>: <Reg8: 1, string_id: 2363>  # String: 'staticKey' (String)
     // USED → r1 = "staticKey";
     // CODE → addr: 44 | <PutOwnByVal>: <Reg8: 3, Reg8: 2, Reg8: 1, UInt8: 1>
-    r3["staticKey"] = "value"
+    r3 = { "dynamic": 42, "staticKey": "value" }
     // CODE → addr: 49 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 1, string_id: 99>  # String: 'console' (Identifier)
     // USED → r2 = console;
     // CODE → addr: 55 | <GetByIdShort>: <Reg8: 1, Reg8: 2, UInt8: 2, string_id: 90>  # String: 'log' (Identifier)

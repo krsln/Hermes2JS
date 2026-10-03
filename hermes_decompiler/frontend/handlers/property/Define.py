@@ -1,4 +1,6 @@
-from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT16, UINT32
+from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT16, \
+    UINT32
+from hermes_decompiler.frontend.handlers.shared import fold_array_element, fold_object_property, property_access
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
@@ -9,6 +11,7 @@ from hermes_decompiler.ir.expressions import (
     MemberExpression,
     NumericLiteral,
     ObjectExpression, ObjectProperty,
+    StringLiteral,
 )
 
 
@@ -29,12 +32,16 @@ class DefineOwnById(OpcodeHandler):
 
         property_name = ctx.entry.identifier_name or f"string_{string_id}"
 
-        left = MemberExpression(
-            obj=self.get_register_expression(ctx.analysis, obj_reg),
-            prop=Identifier(name=property_name),
-            computed=False,
-        )
+        # Resolve the value first (see `fold_into_literal`), then try to fold
+        # the define into the object literal being built in `obj_reg`.
         right = self.get_register_expression(ctx.analysis, value_reg)
+
+        folded = fold_object_property(ctx, obj_reg, StringLiteral(property_name), right)
+
+        if folded is not None:
+            return folded
+
+        left = property_access(self.get_register_expression(ctx.analysis, obj_reg), property_name)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
@@ -64,14 +71,26 @@ class DefineOwnByVal(OpcodeHandler):
         if isinstance(match, OpcodeResult):
             return match
 
-        obj_reg, value_reg, key_reg, _enumerable = map(int, match.groups())
+        obj_reg, value_reg, key_reg, enumerable = map(int, match.groups())
+
+        key = self.get_register_expression(ctx.analysis, key_reg)
+        right = self.get_register_expression(ctx.analysis, value_reg)
+
+        # Only an ENUMERABLE define is what an object-literal property is. A
+        # non-enumerable one (`enumerable == 0`: class methods - 1,136 of the
+        # 1,278 in the hermes-98 bundle) would turn enumerable if folded
+        # into a literal, so it stays a statement.
+        if enumerable == 1:
+            folded = fold_object_property(ctx, obj_reg, key, right)
+
+            if folded is not None:
+                return folded
 
         left = MemberExpression(
             obj=self.get_register_expression(ctx.analysis, obj_reg),
-            prop=self.get_register_expression(ctx.analysis, key_reg),
+            prop=key,
             computed=True,
         )
-        right = self.get_register_expression(ctx.analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
@@ -155,12 +174,23 @@ class DefineOwnByIndex(OpcodeHandler):
 
         obj_reg, value_reg, index = map(int, match.groups())
 
+        right = self.get_register_expression(ctx.analysis, value_reg)
+
+        # An array literal's next element, or - on an object literal - an
+        # index-like key (`{ 0: x }`).
+        folded = fold_array_element(ctx, obj_reg, index, right)
+
+        if folded is None:
+            folded = fold_object_property(ctx, obj_reg, NumericLiteral(value=index), right)
+
+        if folded is not None:
+            return folded
+
         left = MemberExpression(
             obj=self.get_register_expression(ctx.analysis, obj_reg),
             prop=NumericLiteral(value=index),
             computed=True,
         )
-        right = self.get_register_expression(ctx.analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
@@ -191,12 +221,18 @@ class DefineOwnInDenseArray(OpcodeHandler):
 
         obj_reg, value_reg, index = map(int, match.groups())
 
+        right = self.get_register_expression(ctx.analysis, value_reg)
+
+        folded = fold_array_element(ctx, obj_reg, index, right)
+
+        if folded is not None:
+            return folded
+
         left = MemberExpression(
             obj=self.get_register_expression(ctx.analysis, obj_reg),
             prop=NumericLiteral(value=index),
             computed=True,
         )
-        right = self.get_register_expression(ctx.analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 

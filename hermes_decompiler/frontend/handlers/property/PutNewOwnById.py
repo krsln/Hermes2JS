@@ -1,10 +1,8 @@
 from hermes_decompiler.frontend.handlers import OpcodeContext, ArgsPattern, sequence, REG, STRING_ID
-from hermes_decompiler.frontend.handlers.shared import fold_into_literal
+from hermes_decompiler.frontend.handlers.shared import fold_object_property, property_access
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
-from hermes_decompiler.ir.expressions import (
-    AssignmentExpression, Identifier, MemberExpression, ObjectExpression, ObjectProperty, StringLiteral,
-)
+from hermes_decompiler.ir.expressions import AssignmentExpression, StringLiteral
 from .PutById import PutById
 
 
@@ -23,17 +21,6 @@ class PutNewOwnById(PutById):
 
     ARGUMENTS = ArgsPattern(sequence(REG, REG, STRING_ID), "Reg8, Reg8, UInt16 (string_id)")
 
-    @staticmethod
-    def _key_name(key) -> str | None:
-        """Static name of an object-literal key, if it has one."""
-        if isinstance(key, StringLiteral):
-            return key.value
-
-        if isinstance(key, Identifier):
-            return key.name
-
-        return None
-
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = self.match_arguments(ctx)
         if isinstance(match, OpcodeResult):
@@ -49,23 +36,7 @@ class PutNewOwnById(PutById):
 
         # `NewObject` + property stores -> one literal: `{ "x": a, "y": b }`
         # (string keys, like the literals `NewObjectWithBuffer` builds).
-        #
-        # Not for `__proto__`: in a literal that key SETS THE PROTOTYPE,
-        # while PutNewOwnById defines an own data property of that name.
-        # Not for a repeated key either - keep the second store as a
-        # statement rather than reason about literal duplicate-key rules.
-        folded = None
-
-        if property_name != "__proto__":
-            new_property = ObjectProperty(key=StringLiteral(property_name), value=right)
-
-            folded = fold_into_literal(
-                ctx, obj_reg, ObjectExpression,
-                lambda obj: (
-                    None if any(self._key_name(p.key) == property_name for p in obj.properties)
-                    else ObjectExpression(properties=obj.properties + (new_property,))
-                ),
-            )
+        folded = fold_object_property(ctx, obj_reg, StringLiteral(property_name), right)
 
         if folded is not None:
             return folded
@@ -74,7 +45,7 @@ class PutNewOwnById(PutById):
         # never changes what the object register holds.
         obj_value = self.get_register_expression(ctx.analysis, obj_reg)
 
-        left = MemberExpression(obj=obj_value, prop=Identifier(name=property_name), computed=False)
+        left = property_access(obj_value, property_name)
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=None)

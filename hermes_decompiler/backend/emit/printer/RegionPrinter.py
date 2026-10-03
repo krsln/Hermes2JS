@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
+from hermes_decompiler.backend.transforms.shared import is_unfolded_literal_definition
 from hermes_decompiler.backend.regions import (
     SequenceRegion,
     LoopKind,
@@ -270,6 +271,14 @@ class RegionPrinter:
                 return False
 
             if instruction.terminator is not None:
+                return False
+
+            # A printed array/object literal definition is NOT just a value
+            # being prepared: later code reads it by name, so skipping the
+            # block would delete the only statement that builds it. (Before
+            # element stores folded into literals, the stores - assignments -
+            # kept such blocks out of this predicate by accident.)
+            if is_unfolded_literal_definition(instruction):
                 return False
 
             tuple_expressions = (

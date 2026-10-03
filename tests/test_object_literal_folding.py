@@ -56,14 +56,15 @@ def test_a_property_whose_value_is_a_printed_definition_stays_a_statement():
     assert dangling_registers(out) == []
 
 
-def test_proto_key_is_never_folded():
-    # In a literal `{ "__proto__": v }` SETS THE PROTOTYPE; the opcode
-    # defines an own data property of that name. Keep it a statement.
+def test_proto_key_folds_only_as_a_computed_key():
+    # In a literal `{ "__proto__": v }` SETS THE PROTOTYPE, but the opcode
+    # defines an own data property of that name - and only the computed form
+    # `{ ["__proto__"]: v }` does that. (Never the plain-key form.)
     hasm = _section(15102).replace("'default'", "'__proto__'")
     out = _decompile_text(hasm, 15102)
 
-    assert "r1.__proto__ = param1" in out
-    assert '"__proto__"' not in out
+    assert 'r1 = { ["__proto__"]: param1 }' in out
+    assert '{ "__proto__"' not in out
 
 
 def test_repeated_key_keeps_the_later_store_as_a_statement():

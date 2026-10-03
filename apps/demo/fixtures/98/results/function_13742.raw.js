@@ -29,9 +29,9 @@ async function _anon_0_simpleAsyncTest() {
     // CODE → addr:124 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
     r1[2] = 3
     // CODE → addr:128 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r5 = { "value": null, "done": true }
+    // USED → r5 = { "value": null, "done": true };
     // CODE → addr:134 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 7, UInt8: 0>
-    r5.slot_0 = r1[0][0]
+    r5 = { "value": r1[0][0], "done": true }
     // CODE → addr:138 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 10 ──────────────── 

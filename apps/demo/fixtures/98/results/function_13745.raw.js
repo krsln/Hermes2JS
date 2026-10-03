@@ -135,9 +135,9 @@ async function _anon_0_parallelAwaitTest() {
     // CODE → addr:360 | <Call2>: <Reg8: 12, Reg8: 10, Reg8: 11, Reg8: 5>
     r12 = r7[0].call(0, 1)
     // CODE → addr:365 | <NewArray>: <Reg8: 7, UInt16: 2>
-    r7 = []
+    // USED → r7 = [];
     // CODE → addr:369 | <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 12, UInt8: 0>
-    r7[0] = r12
+    r7 = [r12]
     // CODE → addr:373 | <Call2>: <Reg8: 10, Reg8: 10, Reg8: 11, Reg8: 4>
     r10 = r7[0].call(0, 2)
     // CODE → addr:378 | <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 10, UInt8: 1>

@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import IfRegion, SequenceRegion
+from hermes_decompiler.backend.transforms.shared import is_unfolded_literal_definition
 from hermes_decompiler.ir.Operators import LogicalOperator, UnaryOperator
 from hermes_decompiler.ir.expressions import BinaryExpression, UnaryExpression
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
@@ -35,6 +36,10 @@ def is_inert_block(item) -> bool:
         if instr.statement is not None or instr.terminator is not None:
             return False
         if instr.dest_reg is not None and instr.definition_used:
+            return False
+        # A printed array/object literal definition prints a statement that
+        # later code reads by name: not inert (see `is_unfolded_literal_definition`).
+        if is_unfolded_literal_definition(instr):
             return False
     return True
 

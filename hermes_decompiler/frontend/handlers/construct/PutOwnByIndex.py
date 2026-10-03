@@ -1,9 +1,8 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
-from hermes_decompiler.frontend.handlers.shared import fold_into_literal
+from hermes_decompiler.frontend.handlers.shared import fold_array_element
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import (
-    ArrayExpression,
     AssignmentExpression,
     MemberExpression,
     NumericLiteral,
@@ -29,16 +28,8 @@ class PutOwnByIndex(OpcodeHandler):
         # folded, which the "nothing else happened since" check below relies on.
         value = self.get_register_expression(ctx.analysis, value_reg)
 
-        # `NewArray` + element stores -> one literal. A gap (index past the
-        # end) would be a hole, not `undefined`, so only the next free index
-        # extends it.
-        folded = fold_into_literal(
-            ctx, dest_reg, ArrayExpression,
-            lambda array: (
-                ArrayExpression(elements=array.elements + (value,))
-                if index == len(array.elements) else None
-            ),
-        )
+        # `NewArray` + element stores -> one literal.
+        folded = fold_array_element(ctx, dest_reg, index, value)
 
         if folded is not None:
             return folded

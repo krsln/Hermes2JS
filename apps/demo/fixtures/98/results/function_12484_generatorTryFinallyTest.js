@@ -37,9 +37,9 @@ function* generatorTryFinallyTest() {
             case 2:
                 // ──────────────── Block 27 ──────────────── 
                 // CODE → addr:404 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-                r3 = { "value": null, "done": true }
+                // USED → r3 = { "value": null, "done": true };
                 // CODE → addr:410 | <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 0, UInt8: 0>
-                r3.slot_0 = param2
+                r3 = { "value": param2, "done": true }
                 // CODE → addr:414 | <Ret>: <Reg8: 3>
                 return r3;
             default:
@@ -130,9 +130,9 @@ function* generatorTryFinallyTest() {
                         // CODE → addr:224 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 7>
                         r1[0] = 3
                         // CODE → addr:228 | <NewObjectWithBuffer>: <Reg8: 12, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-                        r12 = { "value": null, "done": true }
+                        // USED → r12 = { "value": null, "done": true };
                         // CODE → addr:234 | <PutOwnBySlotIdx>: <Reg8: 12, Reg8: 0, UInt8: 0>
-                        r12.slot_0 = param2
+                        r12 = { "value": param2, "done": true }
                         // CODE → addr:238 | <Ret>: <Reg8: 12>
                         return r12;
                     default:
@@ -176,9 +176,9 @@ function* generatorTryFinallyTest() {
                         // CODE → addr:149 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 7>
                         r1[0] = 3
                         // CODE → addr:153 | <NewObjectWithBuffer>: <Reg8: 12, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-                        r12 = { "value": null, "done": true }
+                        // USED → r12 = { "value": null, "done": true };
                         // CODE → addr:159 | <PutOwnBySlotIdx>: <Reg8: 12, Reg8: 0, UInt8: 0>
-                        r12.slot_0 = param2
+                        r12 = { "value": param2, "done": true }
                         // CODE → addr:163 | <Ret>: <Reg8: 12>
                         return r12;
                     default:
@@ -221,9 +221,9 @@ function* generatorTryFinallyTest() {
                 // CODE → addr:328 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 7>
                 r1[0] = 3
                 // CODE → addr:332 | <NewObjectWithBuffer>: <Reg8: 12, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-                r12 = { "value": null, "done": true }
+                // USED → r12 = { "value": null, "done": true };
                 // CODE → addr:338 | <PutOwnBySlotIdx>: <Reg8: 12, Reg8: 0, UInt8: 0>
-                r12.slot_0 = param2
+                r12 = { "value": param2, "done": true }
                 // CODE → addr:342 | <Ret>: <Reg8: 12>
                 return r12;
             default:

@@ -1,4 +1,5 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
+from hermes_decompiler.frontend.handlers.shared import fold_object_property
 from hermes_decompiler.frontend.opcode import OpcodeResult
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.expressions import AssignmentExpression, MemberExpression
@@ -116,15 +117,24 @@ class PutOwnByVal(OpcodeHandler):
         if isinstance(match, OpcodeResult):
             return match
 
-        obj_reg, value_reg, key_reg, _flags = map(int, match.groups())
+        obj_reg, value_reg, key_reg, enumerable = map(int, match.groups())
+
+        key = self.get_register_expression(ctx.analysis, key_reg)
+        right = self.get_register_expression(ctx.analysis, value_reg)
+
+        # An enumerable define is an object-literal property (`{ [k]: v }`);
+        # see `DefineOwnByVal` for why a non-enumerable one is not folded.
+        if enumerable == 1:
+            folded = fold_object_property(ctx, obj_reg, key, right)
+
+            if folded is not None:
+                return folded
 
         left = MemberExpression(
             obj=self.get_register_reference(ctx.analysis, obj_reg),
-            prop=self.get_register_expression(ctx.analysis, key_reg),
+            prop=key,
             computed=True,
         )
-
-        right = self.get_register_expression(ctx.analysis, value_reg)
 
         expression = AssignmentExpression(left=left, operator=AssignmentOperator.ASSIGN, right=right)
 

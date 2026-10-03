@@ -15,7 +15,7 @@ function optionalChainingTest() {
     // CODE → addr: 28 | <NewObject>: <Reg8: 6>
     r6 = {  }
     // CODE → addr: 30 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 6, UInt8: 0>
-    r5.slot_0 = r6
+    r5.b = r6
     // CODE → addr: 34 | <LoadConstNull>: <Reg8: 1>
     // USED → r1 = null;
     // CODE → addr: 36 | <Eq>: <Reg8: 3, Reg8: 5, Reg8: 1>

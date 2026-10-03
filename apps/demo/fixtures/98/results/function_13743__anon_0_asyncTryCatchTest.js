@@ -69,9 +69,9 @@ async function _anon_0_asyncTryCatchTest() {
                 case 2:
                     // ──────────────── Block 28 ──────────────── 
                     // CODE → addr:502 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-                    r3 = { "value": null, "done": true }
+                    // USED → r3 = { "value": null, "done": true };
                     // CODE → addr:508 | <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 0, UInt8: 0>
-                    r3.slot_0 = param2
+                    r3 = { "value": param2, "done": true }
                     // CODE → addr:512 | <Ret>: <Reg8: 3>
                     return r3;
                 default:
@@ -179,9 +179,9 @@ async function _anon_0_asyncTryCatchTest() {
                             // CODE → addr:207 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 7>
                             r1[4] = 3
                             // CODE → addr:211 | <NewObjectWithBuffer>: <Reg8: 18, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-                            r18 = { "value": null, "done": true }
+                            // USED → r18 = { "value": null, "done": true };
                             // CODE → addr:217 | <PutOwnBySlotIdx>: <Reg8: 18, Reg8: 0, UInt8: 0>
-                            r18.slot_0 = param2
+                            r18 = { "value": param2, "done": true }
                             // CODE → addr:221 | <Ret>: <Reg8: 18>
                             return r18;
                         default:
@@ -268,9 +268,9 @@ async function _anon_0_asyncTryCatchTest() {
                     // CODE → addr:413 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 7>
                     r1[4] = 3
                     // CODE → addr:417 | <NewObjectWithBuffer>: <Reg8: 18, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-                    r18 = { "value": null, "done": true }
+                    // USED → r18 = { "value": null, "done": true };
                     // CODE → addr:423 | <PutOwnBySlotIdx>: <Reg8: 18, Reg8: 0, UInt8: 0>
-                    r18.slot_0 = param2
+                    r18 = { "value": param2, "done": true }
                     // CODE → addr:427 | <Ret>: <Reg8: 18>
                     return r18;
                 default:
@@ -300,9 +300,9 @@ async function _anon_0_asyncTryCatchTest() {
                     // CODE → addr:394 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 5>
                     r1[4] = 1
                     // CODE → addr:398 | <NewObjectWithBuffer>: <Reg8: 18, UInt16: 1047, UInt16: 18061>  # Object: {'value': null, 'done': false}
-                    r18 = { "value": null, "done": false }
+                    // USED → r18 = { "value": null, "done": false };
                     // CODE → addr:404 | <PutOwnBySlotIdx>: <Reg8: 18, Reg8: 19, UInt8: 0>
-                    r18.slot_0 = r19
+                    r18 = { "value": r19, "done": false }
                     // CODE → addr:408 | <Ret>: <Reg8: 18>
                     return r18;
             }

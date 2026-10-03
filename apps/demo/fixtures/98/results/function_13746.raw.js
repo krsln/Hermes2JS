@@ -74,9 +74,9 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:128 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
     r1[2] = 3
     // CODE → addr:132 | <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r7 = { "value": null, "done": true }
+    // USED → r7 = { "value": null, "done": true };
     // CODE → addr:138 | <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 0, UInt8: 0>
-    r7.slot_0 = param2
+    r7 = { "value": param2, "done": true }
     // CODE → addr:142 | <Ret>: <Reg8: 7>
     return r7;
     // ──────────────── Block 10 ──────────────── 
@@ -110,9 +110,9 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:185 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 5>
     r1[2] = 1
     // CODE → addr:189 | <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1047, UInt16: 18061>  # Object: {'value': null, 'done': false}
-    r7 = { "value": null, "done": false }
+    // USED → r7 = { "value": null, "done": false };
     // CODE → addr:195 | <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 8, UInt8: 0>
-    r7.slot_0 = r8
+    r7 = { "value": r8, "done": false }
     // CODE → addr:199 | <Ret>: <Reg8: 7>
     return r7;
     // ──────────────── Block 14 ──────────────── 
@@ -121,9 +121,9 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:204 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
     r1[2] = 3
     // CODE → addr:208 | <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r7 = { "value": null, "done": true }
+    // USED → r7 = { "value": null, "done": true };
     // CODE → addr:214 | <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 0, UInt8: 0>
-    r7.slot_0 = param2
+    r7 = { "value": param2, "done": true }
     // CODE → addr:218 | <Ret>: <Reg8: 7>
     return r7;
     // ──────────────── Block 15 ──────────────── 
@@ -157,9 +157,9 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:267 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 5>
     r1[2] = 1
     // CODE → addr:271 | <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1047, UInt16: 18061>  # Object: {'value': null, 'done': false}
-    r7 = { "value": null, "done": false }
+    // USED → r7 = { "value": null, "done": false };
     // CODE → addr:277 | <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 8, UInt8: 0>
-    r7.slot_0 = r8
+    r7 = { "value": r8, "done": false }
     // CODE → addr:281 | <Ret>: <Reg8: 7>
     return r7;
     // ──────────────── Block 19 ──────────────── 
@@ -168,9 +168,9 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:286 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
     r1[2] = 3
     // CODE → addr:290 | <NewObjectWithBuffer>: <Reg8: 7, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r7 = { "value": null, "done": true }
+    // USED → r7 = { "value": null, "done": true };
     // CODE → addr:296 | <PutOwnBySlotIdx>: <Reg8: 7, Reg8: 0, UInt8: 0>
-    r7.slot_0 = param2
+    r7 = { "value": param2, "done": true }
     // CODE → addr:300 | <Ret>: <Reg8: 7>
     return r7;
     // ──────────────── Block 20 ──────────────── 
@@ -202,9 +202,9 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:340 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 5>
     r1[2] = 1
     // CODE → addr:344 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18061>  # Object: {'value': null, 'done': false}
-    r5 = { "value": null, "done": false }
+    // USED → r5 = { "value": null, "done": false };
     // CODE → addr:350 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 7, UInt8: 0>
-    r5.slot_0 = r7
+    r5 = { "value": r7, "done": false }
     // CODE → addr:354 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 24 ──────────────── 
@@ -213,9 +213,9 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:359 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
     r1[2] = 3
     // CODE → addr:363 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r5 = { "value": null, "done": true }
+    // USED → r5 = { "value": null, "done": true };
     // CODE → addr:369 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 0, UInt8: 0>
-    r5.slot_0 = param2
+    r5 = { "value": param2, "done": true }
     // CODE → addr:373 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 25 ──────────────── 
@@ -261,9 +261,9 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:441 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 5>
     r1[2] = 1
     // CODE → addr:445 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18061>  # Object: {'value': null, 'done': false}
-    r5 = { "value": null, "done": false }
+    // USED → r5 = { "value": null, "done": false };
     // CODE → addr:451 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 7, UInt8: 0>
-    r5.slot_0 = r7
+    r5 = { "value": r7, "done": false }
     // CODE → addr:455 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 29 ──────────────── 
@@ -272,9 +272,9 @@ async function _anon_0_callAsyncTests() {
     // CODE → addr:460 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
     r1[2] = 3
     // CODE → addr:464 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r5 = { "value": null, "done": true }
+    // USED → r5 = { "value": null, "done": true };
     // CODE → addr:470 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 0, UInt8: 0>
-    r5.slot_0 = param2
+    r5 = { "value": param2, "done": true }
     // CODE → addr:474 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 30 ──────────────── 
@@ -308,9 +308,9 @@ async function _anon_0_callAsyncTests() {
     return r3;
     // ──────────────── Block 35 ──────────────── 
     // CODE → addr:515 | <NewObjectWithBuffer>: <Reg8: 3, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
-    r3 = { "value": null, "done": true }
+    // USED → r3 = { "value": null, "done": true };
     // CODE → addr:521 | <PutOwnBySlotIdx>: <Reg8: 3, Reg8: 0, UInt8: 0>
-    r3.slot_0 = param2
+    r3 = { "value": param2, "done": true }
     // CODE → addr:525 | <Ret>: <Reg8: 3>
     return r3;
     // ──────────────── Block 36 ──────────────── 

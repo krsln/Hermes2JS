@@ -11,15 +11,15 @@ function swapViaDestructureTest() {
     // CODE → addr: 17 | <Call2>: <Reg8: 5, Reg8: 6, Reg8: 7, Reg8: 5>
     console.log("__BC:Objects/DestructuringTests/swapViaDestructureTest/start")
     // CODE → addr: 22 | <NewArray>: <Reg8: 7, UInt16: 2>
-    r7 = []
+    // USED → r7 = [];
     // CODE → addr: 26 | <LoadConstUInt8>: <Reg8: 0, UInt8: 2>
     // USED → r0 = 2;
     // CODE → addr: 29 | <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 0>
-    r7[0] = 2
+    // USED → r7 = [2];
     // CODE → addr: 33 | <LoadConstUInt8>: <Reg8: 0, UInt8: 1>
     // USED → r0 = 1;
     // CODE → addr: 36 | <DefineOwnInDenseArray>: <Reg8: 7, Reg8: 0, UInt8: 1>
-    r7[1] = 1
+    r7 = [2, 1]
     // CODE → addr: 40 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr: 43 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
