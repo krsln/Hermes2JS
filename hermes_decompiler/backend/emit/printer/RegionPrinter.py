@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
-from hermes_decompiler.backend.transforms.shared import is_unfolded_literal_definition
+from hermes_decompiler.backend.transforms.shared import prints_non_constant_statement
 from hermes_decompiler.backend.regions import (
     SequenceRegion,
     LoopKind,
@@ -273,12 +273,11 @@ class RegionPrinter:
             if instruction.terminator is not None:
                 return False
 
-            # A printed array/object literal definition is NOT just a value
-            # being prepared: later code reads it by name, so skipping the
-            # block would delete the only statement that builds it. (Before
-            # element stores folded into literals, the stores - assignments -
-            # kept such blocks out of this predicate by accident.)
-            if is_unfolded_literal_definition(instruction):
+            # Only constant loads are "values being prepared". Any other
+            # printed instruction defines a register that later code reads
+            # by name, so skipping the block would delete its only
+            # definition (see `prints_non_constant_statement`).
+            if prints_non_constant_statement(instruction):
                 return False
 
             tuple_expressions = (

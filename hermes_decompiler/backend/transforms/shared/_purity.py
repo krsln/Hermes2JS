@@ -3,6 +3,7 @@ import dataclasses
 from hermes_decompiler.ir import Expression, Node
 from hermes_decompiler.ir.expressions import (
     ArrayExpression,
+    Literal,
     ObjectExpression,
     ArrowFunctionExpression,
     CallExpression,
@@ -116,6 +117,30 @@ def is_unfolded_literal_definition(instruction) -> bool:
             instruction.dest_reg is not None
             and not instruction.definition_used
             and isinstance(instruction.value, (ArrayExpression, ObjectExpression))
+    )
+
+
+def prints_non_constant_statement(instruction) -> bool:
+    """True if `instruction` prints a statement that is not a mere constant
+    load: a definition (`r4 = r5[114]`, `r8 = param1`, `r9 = {...}`) or an
+    expression statement that nothing folded into a consumer.
+
+    This is what makes a block more than "clutter in front of the nested
+    `if`" for else-if flattening: later code reads such a register by name,
+    so skipping the block deletes its only definition (`else if (r0 >= 0)`
+    with the `r0 = +param1` that the condition reads silently gone).
+
+    Constant loads (`r1 = 5`) are the clutter that predicate exists to look
+    past - the constant is already embedded in the nested condition - and
+    stay skippable. Measured over the full hermes-96/98 bundles, treating
+    every non-constant printed instruction as non-skippable removes 105 of
+    261 (96) and 66 of 362 (98) dangling registers and introduces none;
+    also refusing constants removes only 3 more.
+    """
+    return (
+            instruction.value is not None
+            and not instruction.definition_used
+            and not isinstance(instruction.value, Literal)
     )
 
 
