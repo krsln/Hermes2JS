@@ -15,6 +15,7 @@ from .NullishAssignmentRegionPass import NullishAssignmentRegionPass
 from .RedundantJumpRegionPass import RedundantJumpRegionPass
 from .ReturnValueResolutionPass import ReturnValueResolutionPass
 from .TrailingReturnRegionPass import TrailingReturnRegionPass
+from .UnfoldedMergeRepairPass import UnfoldedMergeRepairPass
 
 __all__ = [
     "RegionPass",
@@ -32,4 +33,5 @@ __all__ = [
     "RedundantJumpRegionPass",
     "ReturnValueResolutionPass",
     "TrailingReturnRegionPass",
+    "UnfoldedMergeRepairPass",
 ]

@@ -8,6 +8,7 @@ from hermes_decompiler.backend.transforms.cfg_passes import (
 from hermes_decompiler.backend.transforms.region_passes import (
     BooleanChainRegionPass,
     ConditionalExpressionRegionPass,
+    UnfoldedMergeRepairPass,
     DeadMovEliminationPass,
     ForEachRegionPass,
     GeneratorStateMachineRegionPass,
@@ -149,6 +150,9 @@ class StructuralAnalyzer:
         # a narrow, self-contained `if (x == null) { x = v; }` shape
         # and only ever touches the one IfRegion it folds.
         NullishAssignmentRegionPass(graph, self.cfg).run()
+
+        # After EVERY fold pass: it repairs only the merges they left as an `if`.
+        UnfoldedMergeRepairPass(graph, self.cfg).run()
 
         # Must run after IfStructurer/SwitchStructurer, not just after
         # the loop structurers above: for a `for` loop, the body's own

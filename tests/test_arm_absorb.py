@@ -61,3 +61,60 @@ def test_flattening_does_not_look_past_a_printed_definition():
 
     assert "arguments.length > 0 && r1 !== undefined" not in out
     assert "r1 = arguments[0]" in out
+
+
+# hermes-98 `getDevServer`: `if (r3 == null) r3 = env[3]` merges with the
+# earlier `r3`; the object literal below it reads r3 after the merge.
+_GET_DEV_SERVER = (
+    "00000000|<GetParentEnvironment>: <Reg8: 2, UInt8: 0>",
+    "00000003|<LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 1>",
+    "00000007|<LoadConstUndefined>: <Reg8: 0>",
+    "00000009|<JStrictNotEqual>: <Addr8: 80, Reg8: 3, Reg8: 0>",
+    "0000000d|<LoadFromEnvironment>: <Reg8: 1, Reg8: 2, UInt8: 0>",
+    "00000011|<GetByIdShort>: <Reg8: 4, Reg8: 1, UInt8: 0, string_id: 115>",
+    "00000016|<GetByIdShort>: <Reg8: 1, Reg8: 4, UInt8: 1, string_id: 150>",
+    "0000001b|<Call1>: <Reg8: 1, Reg8: 1, Reg8: 4>",
+    "0000001f|<GetById>: <Reg8: 5, Reg8: 1, UInt8: 2, string_id: 13447>",
+    "00000025|<GetByIdShort>: <Reg8: 4, Reg8: 5, UInt8: 3, string_id: 180>",
+    "0000002a|<CreateRegExp>: <Reg8: 1, string_id: 2089, string_id: 6457, UInt32: 52>",
+    "00000038|<Call2>: <Reg8: 6, Reg8: 4, Reg8: 5, Reg8: 1>",
+    "0000003d|<LoadConstNull>: <Reg8: 1>",
+    "0000003f|<JmpFalse>: <Addr8: 7, Reg8: 6>",
+    "00000042|<GetByIndex>: <Reg8: 1, Reg8: 6, UInt8: 0>",
+    "00000046|<StoreToEnvironment>: <Reg8: 2, UInt8: 1, Reg8: 1>",
+    "0000004a|<LoadConstNull>: <Reg8: 4>",
+    "0000004c|<JmpFalse>: <Addr8: 6, Reg8: 6>",
+    "0000004f|<Mov>: <Reg8: 4, Reg8: 5>",
+    "00000052|<StoreToEnvironment>: <Reg8: 2, UInt8: 2, Reg8: 4>",
+    "00000056|<Mov>: <Reg8: 3, Reg8: 1>",
+    "00000059|<LoadConstNull>: <Reg8: 0>",
+    "0000005b|<JNotEqual>: <Addr8: 8, Reg8: 3, Reg8: 0>",
+    "0000005f|<LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 3>",
+    "00000063|<NewObjectWithBuffer>: <Reg8: 1, UInt16: 1241, UInt16: 17424>",
+    "00000069|<PutOwnBySlotIdx>: <Reg8: 1, Reg8: 3, UInt8: 0>",
+    "0000006d|<LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 2>",
+    "00000071|<PutOwnBySlotIdx>: <Reg8: 1, Reg8: 3, UInt8: 1>",
+    "00000075|<LoadFromEnvironment>: <Reg8: 2, Reg8: 2, UInt8: 1>",
+    "00000079|<StrictNeq>: <Reg8: 0, Reg8: 2, Reg8: 0>",
+    "0000007d|<PutOwnBySlotIdx>: <Reg8: 1, Reg8: 0, UInt8: 2>",
+    "00000081|<Ret>: <Reg8: 1>",
+)
+
+
+def _render_listing(entries) -> str:
+    body = "\n".join(f"==> {addr}: {text}" for addr, text in (e.split("|", 1) for e in entries))
+
+    return (
+            '\n=> [Function #1 "f" of 131 bytes]: 1 params, frame size=17, strict=1, exc handler=0, '
+            "debug info=0  @ offset 0x00000000\n\nBytecode listing:\n\n" + body + "\n\n"
+    )
+
+
+def test_a_write_in_one_arm_is_not_inlined_into_a_read_after_the_merge():
+    out = Decompiler.render(Decompiler.build_context(_render_listing(_GET_DEV_SERVER), 1), verbose=False)
+
+    # Before: `if (r3 == null) { }` and `"url": r2[3]` - the arm printed
+    # nothing and the object claimed the arm's value unconditionally.
+    assert "if (r3 == null) {\n        r3 = r2[3]\n    }" in out
+    assert "= r3\n" in out  # the object slot reads r3, not the arm's `r2[3]`
+    assert "slot_0 = r2[3]" not in out

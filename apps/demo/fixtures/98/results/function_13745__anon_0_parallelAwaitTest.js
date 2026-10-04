@@ -56,7 +56,7 @@ async function _anon_0_parallelAwaitTest() {
                 // CODE → addr:167 | <Mov>: <Reg8: 7, Reg8: 9>
                 // USED → r7 = r12 === undefined;
                 // CODE → addr:170 | <Mov>: <Reg8: 5, Reg8: 8>
-                // USED → r5 = r12;
+                r5 = r12
             }
         }
         // ──────────────── Block 10 ──────────────── 
@@ -69,7 +69,7 @@ async function _anon_0_parallelAwaitTest() {
         if (r12 !== undefined) {
             // ──────────────── Block 11 ──────────────── 
             // CODE → addr:188 | <IteratorClose>: <Reg8: 5, UInt8: 0>
-            r12.return()
+            r5.return()
         }
         // ──────────────── Block 12 ──────────────── 
         // CODE → addr:191 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 1, UInt8: 2>
