@@ -328,7 +328,7 @@ def reclaim_definition(cfg, root, last, old_value, arm_result, *, ignore_blocks,
     return True
 
 
-def _reads_register_by_name(cfg, register: int, after_address: int) -> bool:
+def _reads_register_by_name(cfg, register: int, after_address: int, ignore_node=None) -> bool:
     """True if, going forward in bytecode order from `after_address`, some
     consumer refers to register `rN` BY NAME before `rN` is written again.
 
@@ -340,6 +340,11 @@ def _reads_register_by_name(cfg, register: int, after_address: int) -> bool:
     name = f"r{register}"
 
     def holds_name(node) -> bool:
+        # An inlined copy of the arm's own value reads the register too, but
+        # the fold repoints those copies to the folded expression.
+        if ignore_node is not None and node is ignore_node:
+            return False
+
         if isinstance(node, Identifier):
             return node.name == name
 

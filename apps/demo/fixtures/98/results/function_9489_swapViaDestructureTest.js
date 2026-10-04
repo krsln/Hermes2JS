@@ -51,7 +51,14 @@ function swapViaDestructureTest() {
         // CODE → addr: 86 | <LoadConstUndefined>: <Reg8: 7>
         r7 = undefined
         // CODE → addr: 88 | <Mov>: <Reg8: 1, Reg8: 3>
-        r1 = r5 === undefined || r5 === undefined
+        r1 = r5 === undefined
+        if (r5 !== undefined) {
+            // ──────────────── Block 4 ──────────────── 
+            // CODE → addr: 94 | <Mov>: <Reg8: 7, Reg8: 6>
+            r7 = r6
+            // CODE → addr: 97 | <Mov>: <Reg8: 1, Reg8: 3>
+            // USED → r1 = r5 === undefined;
+        }
     }
     if (r5 !== undefined) {
         // ──────────────── Block 6 ──────────────── 

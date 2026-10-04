@@ -144,6 +144,12 @@ def prints_non_constant_statement(instruction) -> bool:
     )
 
 
+def prints_definition(instruction) -> bool:
+    """True if `instruction` prints as a statement of its own: it has a value
+    and nothing folded it into a reader (`definition_used`)."""
+    return instruction.value is not None and not instruction.definition_used
+
+
 def has_side_effects(node) -> bool:
     """True if evaluating `node` can run a call, construction, assignment,
     update, await or yield.

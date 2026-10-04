@@ -4,6 +4,7 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, has_side_effects, repoint_references, reclaim_definition, is_unfolded_literal_definition,
+    absorb_arm_definitions,
 )
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import ConditionalExpression, Expression
@@ -104,7 +105,7 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             then_arm = self._single_result(if_region.then_body, last.dest_reg)
             if then_arm is None:
                 continue
-            arm_block, arm_result = then_arm
+            arm_block, arm_result, arm_value = then_arm
             default_expr = last.value
             arm_expr = arm_result.value
 
@@ -120,7 +121,7 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             new_expr = ConditionalExpression(
                 test=negate_condition(condition),
                 consequent=default_expr,
-                alternate=arm_expr,
+                alternate=arm_value,
             )
             last.value = new_expr
 
@@ -186,4 +187,14 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
                 if is_unfolded_literal_definition(instr):
                     return None
 
-        return last_block, result
+        # Any other PRINTED definition is deleted with the arm too, and
+        # whatever read its register by name would be left dangling: fold it
+        # into the arm's value (`(r7 - 0.1379) / 7.787`) or refuse.
+        absorbed = absorb_arm_definitions(
+            self.cfg, [i for blk in children for i in blk.instructions], result,
+        )
+
+        if absorbed is None:
+            return None
+
+        return last_block, result, absorbed

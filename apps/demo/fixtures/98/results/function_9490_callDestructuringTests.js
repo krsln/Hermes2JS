@@ -124,7 +124,14 @@ function callDestructuringTests() {
         // CODE → addr:294 | <LoadConstUndefined>: <Reg8: 7>
         r7 = undefined
         // CODE → addr:296 | <Mov>: <Reg8: 1, Reg8: 3>
-        r1 = r5 === undefined || r5 === undefined
+        r1 = r5 === undefined
+        if (r5 !== undefined) {
+            // ──────────────── Block 12 ──────────────── 
+            // CODE → addr:302 | <Mov>: <Reg8: 7, Reg8: 6>
+            r7 = r6
+            // CODE → addr:305 | <Mov>: <Reg8: 1, Reg8: 3>
+            // USED → r1 = r5 === undefined;
+        }
     }
     if (r5 !== undefined) {
         // ──────────────── Block 14 ──────────────── 
@@ -189,7 +196,7 @@ function callDestructuringTests() {
     // CODE → addr:431 | <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
     r7 = r5.next()
     // CODE → addr:438 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
-    // USED → r1 = r5 === undefined || r5 === undefined;
+    // USED → r1 = r5 === undefined;
     // CODE → addr:442 | <LoadConstUndefined>: <Reg8: 8>
     r8 = undefined
     if (r5 !== undefined) {
@@ -207,11 +214,18 @@ function callDestructuringTests() {
         // CODE → addr:459 | <Mov>: <Reg8: 9, Reg8: 5>
         // USED → r9 = r5;
         // CODE → addr:462 | <StrictEq>: <Reg8: 3, Reg8: 9, Reg8: 2>
-        // USED → r3 = r5 === undefined || r5 === undefined;
+        // USED → r3 = r5 === undefined;
         // CODE → addr:466 | <LoadConstUndefined>: <Reg8: 7>
         r7 = undefined
         // CODE → addr:468 | <Mov>: <Reg8: 1, Reg8: 3>
-        r1 = r5 === undefined || r5 === undefined || (r5 === undefined || r5 === undefined)
+        r1 = r5 === undefined
+        if (r5 !== undefined) {
+            // ──────────────── Block 19 ──────────────── 
+            // CODE → addr:474 | <Mov>: <Reg8: 7, Reg8: 6>
+            r7 = r6
+            // CODE → addr:477 | <Mov>: <Reg8: 1, Reg8: 3>
+            // USED → r1 = r5 === undefined;
+        }
     }
     if (r5 !== undefined) {
         // ──────────────── Block 21 ──────────────── 

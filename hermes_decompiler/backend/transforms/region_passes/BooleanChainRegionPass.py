@@ -7,7 +7,7 @@ from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceR
 from hermes_decompiler.backend.transforms.region_passes._base import RegionPass
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, is_pure, has_side_effects, repoint_references, reclaim_definition,
-    reclaim_unfolded_definition, TRIVIAL_NODE_TYPES
+    reclaim_unfolded_definition, absorb_arm_definitions, TRIVIAL_NODE_TYPES
 )
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Node
@@ -144,6 +144,15 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
         if not isinstance(then_result.value, Expression):
             return False
 
+        # A definition that is PRINTED (nothing folded it into a reader) is
+        # deleted with the IfRegion; `then_result` names its register as `rN`
+        # (`assert`: `r1 = "Assertion failed: " + param2; ... r0[10](r1)`).
+        # Absorb it into the tail, or refuse the fold.
+        tail_value = absorb_arm_definitions(self.cfg, then_block.instructions, then_result)
+
+        if tail_value is None:
+            return self._decline(last, then_result, then_block, if_region)
+
         for earlier in then_block.instructions[:-1]:
             if not is_pure(earlier):
                 return self._decline(last, then_result, then_block, if_region)
@@ -192,7 +201,7 @@ class BooleanChainRegionPass(RegionPass, RegionVisitor):
 
         old_tail_expr = then_result.value
         old_last_value = last.value
-        last.value = BinaryExpression(left=old_last_value, operator=operator, right=old_tail_expr)
+        last.value = BinaryExpression(left=old_last_value, operator=operator, right=tail_value)
 
         # The fold result must be printed as `rN = ...`: see `reclaim_definition`.
         reclaim_definition(

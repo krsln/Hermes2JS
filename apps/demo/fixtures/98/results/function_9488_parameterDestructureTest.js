@@ -42,7 +42,14 @@ function parameterDestructureTest(param1, param2) {
         // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 6>
         r6 = undefined
         // CODE → addr: 69 | <Mov>: <Reg8: 0, Reg8: 2>
-        r0 = r3 === undefined || r3 === undefined
+        r0 = r3 === undefined
+        if (r3 !== undefined) {
+            // ──────────────── Block 6 ──────────────── 
+            // CODE → addr: 75 | <Mov>: <Reg8: 6, Reg8: 4>
+            r6 = r4
+            // CODE → addr: 78 | <Mov>: <Reg8: 0, Reg8: 2>
+            // USED → r0 = r3 === undefined;
+        }
     }
     if (r3 !== undefined) {
         // ──────────────── Block 8 ──────────────── 
