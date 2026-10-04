@@ -1,6 +1,6 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import NewExpression
+from hermes_decompiler.ir.expressions import NewExpression, ThisPlaceholder
 
 
 # Reg8, Reg8, UInt8 (total size 3)
@@ -68,6 +68,7 @@ class Construct(OpcodeHandler):
         # that's exactly what `constructor` and `arguments` together
         # already express.
         self.get_register_expression(ctx.analysis, this_reg)
+        self._consume_unused_this_placeholder(ctx, ctor_reg)
 
         arguments = tuple(
             self.resolve_call_argument(ctx.analysis, reg)
@@ -80,6 +81,37 @@ class Construct(OpcodeHandler):
         ctx.analysis.add_result(result)
 
         return result
+
+    @staticmethod
+    def _consume_unused_this_placeholder(ctx: OpcodeContext, ctor_reg: int) -> None:
+        """
+        hermes-98 allocates `this` in a register of its own
+        (`CreateThisForNew rA, rCtor`) and passes an unrelated, never-written
+        `this` slot to `Construct`, so the placeholder in `rA` is never read
+        by the window above and used to print as a dead
+        `rA = CreateThisForNew(rCtor)` right before every `new`
+        (`createInstance`: 8 identical lines in a row). It belongs to this
+        `new`: the latest, still-unread placeholder made from the same
+        constructor register.
+        """
+        latest = None
+
+        for state in ctx.analysis.registers.values():
+            value = state.value
+
+            if (
+                    isinstance(value, ThisPlaceholder)
+                    and value.origin == "CreateThisForNew"
+                    and value.source_reg == ctor_reg
+                    and state.reads == 0
+                    and not state.definition.definition_used
+                    and (latest is None or state.definition.address > latest.definition.address)
+            ):
+                latest = state
+
+        if latest is not None:
+            latest.mark_read()
+            latest.mark_used()
 
 
 # Reg8, Reg8, UInt32 (total size 6)

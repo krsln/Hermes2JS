@@ -24,7 +24,6 @@ function callGeneratorTests() {
     r4 = GetIterator(r3)
     // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 41 | <Mov>: <Reg8: 5, Reg8: 3>
-    r5 = r5
     // CODE → addr: 44 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
     r7 = r4.next()
     // CODE → addr: 48 | <Mov>: <Reg8: 5, Reg8: 4>
@@ -60,7 +59,6 @@ function callGeneratorTests() {
     r4 = GetIterator(r3)
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 98 | <Mov>: <Reg8: 5, Reg8: 3>
-    r5 = r5
     // CODE → addr:101 | <IteratorNext>: <Reg8: 7, Reg8: 4, Reg8: 5>
     r7 = r4.next()
     // CODE → addr:105 | <Mov>: <Reg8: 5, Reg8: 4>

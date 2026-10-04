@@ -25,7 +25,7 @@ function create(param1) {
     r2 = throwTypeError("Trying to call a non-function")
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 49 | <LoadParam>: <Reg8: 7, UInt8: 1>
-    r7 = param1
+    // USED → r7 = param1;
     // CODE → addr: 52 | <LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 4>
     r0 = r0[4]
     // CODE → addr: 56 | <LoadParentNoTraps>: <Reg8: 3, Reg8: 0>
@@ -33,13 +33,12 @@ function create(param1) {
     // CODE → addr: 59 | <CreateThisForSuper>: <Reg8: 2, Reg8: 3, Reg8: 5, UInt8: 2>
     // USED → r2 = CreateThisForSuper(r3);
     // CODE → addr: 64 | <LoadConstString>: <Reg8: 6, string_id: 4424>  # String: 'Woof' (String)
-    r6 = "Woof"
+    // USED → r6 = "Woof";
     // CODE → addr: 68 | <Mov>: <Reg8: 8, Reg8: 2>
-    r8 = CreateThisForSuper(r3)
+    // USED → r8 = CreateThisForSuper(r3);
     // CODE → addr: 71 | <CallWithNewTarget>: <Reg8: 0, Reg8: 3, Reg8: 5, UInt8: 3>
-    r0 = Reflect.construct(r3, [r0, r1, r2], r0[2])
+    r0 = Reflect.construct(r3, [param1, "Woof"], r0[2])
     // CODE → addr: 76 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
-    r0 = CreateThisForSuper(r3)[r0]
     // CODE → addr: 80 | <LoadConstEmpty>: <Reg8: 2>
     // USED → r2 = /* empty */;
     // CODE → addr: 82 | <ThrowIfThisInitialized>: <Reg8: 2>

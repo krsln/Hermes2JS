@@ -13,6 +13,7 @@ from hermes_decompiler.backend.regions import (
 )
 from hermes_decompiler.ir.expressions import (
     CallExpression,
+    Identifier,
     NewExpression,
     AssignmentExpression,
     UpdateExpression,
@@ -126,6 +127,16 @@ class RegionPrinter:
                 continue
 
             rendered = self.expressions.print(instruction.value)
+
+            # `rN = rN` changes nothing (e.g. the SelectObject that follows a
+            # `super(...)` call, whose destination is the call's own result
+            # register) - never worth a line of output.
+            if (
+                    instruction.dest_reg is not None
+                    and isinstance(instruction.value, Identifier)
+                    and instruction.value.name == f"r{instruction.dest_reg}"
+            ):
+                continue
 
             if instruction.dest_reg is not None:
                 # # A CallExpression whose result is never read is a discarded

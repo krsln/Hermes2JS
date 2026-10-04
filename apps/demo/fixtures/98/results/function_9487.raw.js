@@ -37,7 +37,6 @@ function nestedArrayDestructureTest() {
     // CODE → addr: 73 | <IteratorBegin>: <Reg8: 1, Reg8: 6>
     r1 = GetIterator(r6)
     // CODE → addr: 76 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = r2
     // CODE → addr: 79 | <IteratorNext>: <Reg8: 2, Reg8: 1, Reg8: 2>
     r2 = r1.next()
     // CODE → addr: 83 | <Mov>: <Reg8: 4, Reg8: 1>

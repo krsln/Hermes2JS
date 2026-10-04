@@ -1,6 +1,12 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import MemberExpression, NewExpression
+from hermes_decompiler.ir.expressions import (
+    CallExpression,
+    Identifier,
+    MemberExpression,
+    NewExpression,
+    ThisPlaceholder,
+)
 
 
 # Reg8, Reg8, Reg8 (total size 3)
@@ -36,6 +42,25 @@ class SelectObject(OpcodeHandler):
             expression = selector_value
             state_selector.mark_read()
             state_selector.mark_used()
+        elif (
+                state_selector
+                and isinstance(obj_value, ThisPlaceholder)
+                and self._is_reflect_construct(selector_value)
+        ):
+            # `super(...)` (hermes 98): the freshly allocated `this` placeholder
+            # versus what `Reflect.construct` returned - the latter is the
+            # derived constructor's `this` from here on. Without this the pair
+            # fell through to the computed-member fallback and printed
+            # `CreateThisForSuper(r2)[r1]`.
+            #
+            # The call is NOT inlined here: statements run between the super
+            # call and this SelectObject (`ThrowIfThisInitialized`, reads of
+            # the constructor's own arguments, ...), so folding it would move
+            # the call past them. It keeps its own statement (referencing the
+            # register pins it) and this opcode becomes a plain alias of it.
+            expression = self.get_register_reference(ctx.analysis, selector_reg)
+            state_obj.mark_read()
+            state_obj.mark_used()
         elif state_obj and isinstance(obj_value, NewExpression):
             expression = obj_value
             state_obj.mark_read()
@@ -50,3 +75,16 @@ class SelectObject(OpcodeHandler):
         ctx.analysis.add_result(result)
 
         return result
+
+    @staticmethod
+    def _is_reflect_construct(value) -> bool:
+        """`Reflect.construct(...)`, the shape CallWithNewTarget produces."""
+        callee = getattr(value, "callee", None)
+
+        return (
+                isinstance(value, CallExpression)
+                and isinstance(callee, MemberExpression)
+                and not callee.computed
+                and isinstance(callee.obj, Identifier) and callee.obj.name == "Reflect"
+                and isinstance(callee.prop, Identifier) and callee.prop.name == "construct"
+        )

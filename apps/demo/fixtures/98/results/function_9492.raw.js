@@ -61,7 +61,6 @@ function spreadArrayTest() {
     // CODE → addr:128 | <IteratorBegin>: <Reg8: 3, Reg8: 7>
     r3 = GetIterator(r7)
     // CODE → addr:131 | <Mov>: <Reg8: 0, Reg8: 7>
-    r0 = r0
     // CODE → addr:134 | <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 0>
     r4 = r3.next()
     // CODE → addr:138 | <Mov>: <Reg8: 5, Reg8: 3>

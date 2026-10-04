@@ -75,15 +75,15 @@ function classTest() {
     // CODE → addr:160 | <CreateThisForSuper>: <Reg8: 3, Reg8: 6, Reg8: 4, UInt8: 2>
     // USED → r3 = CreateThisForSuper(r6);
     // CODE → addr:165 | <LoadConstString>: <Reg8: 7, string_id: 4424>  # String: 'Woof' (String)
-    r7 = "Woof"
+    // USED → r7 = "Woof";
     // CODE → addr:169 | <LoadConstString>: <Reg8: 8, string_id: 3592>  # String: 'Rex' (String)
-    r8 = "Rex"
+    // USED → r8 = "Rex";
     // CODE → addr:173 | <Mov>: <Reg8: 9, Reg8: 3>
-    r9 = CreateThisForSuper(r6)
+    // USED → r9 = CreateThisForSuper(r6);
     // CODE → addr:176 | <CallWithNewTarget>: <Reg8: 2, Reg8: 6, Reg8: 4, UInt8: 3>
-    r2 = Reflect.construct(r6, [r3, r4, r5], r2[1])
+    r2 = Reflect.construct(r6, ["Rex", "Woof"], r2[1])
     // CODE → addr:181 | <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    r3 = CreateThisForSuper(r6)[r2]
+    r3 = r2
     // CODE → addr:185 | <LoadConstEmpty>: <Reg8: 2>
     // USED → r2 = /* empty */;
     // CODE → addr:187 | <ThrowIfThisInitialized>: <Reg8: 2>
@@ -99,7 +99,7 @@ function classTest() {
     // CODE → addr:209 | <LoadConstString>: <Reg8: 2, string_id: 2387>  # String: 'Labrador' (String)
     // USED → r2 = "Labrador";
     // CODE → addr:213 | <PutByIdStrict>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 16255>  # String: 'breed' (Identifier)
-    CreateThisForSuper(r6)[r2].breed = "Labrador"
+    r3.breed = "Labrador"
     // CODE → addr:219 | <GetById>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 10532>  # String: 'makeSound' (Identifier)
     // USED → r2 = r3.makeSound;
     // CODE → addr:225 | <Call1>: <Reg8: 2, Reg8: 2, Reg8: 3>

@@ -11,15 +11,14 @@ function Dog(param1, param2) {
     // CODE → addr: 12 | <CreateThisForSuper>: <Reg8: 1, Reg8: 3, Reg8: 4, UInt8: 0>
     // USED → r1 = CreateThisForSuper(r3);
     // CODE → addr: 17 | <LoadConstString>: <Reg8: 5, string_id: 4424>  # String: 'Woof' (String)
-    r5 = "Woof"
+    // USED → r5 = "Woof";
     // CODE → addr: 21 | <LoadParam>: <Reg8: 6, UInt8: 1>
-    r6 = param1
+    // USED → r6 = param1;
     // CODE → addr: 24 | <Mov>: <Reg8: 7, Reg8: 1>
-    r7 = CreateThisForSuper(r3)
+    // USED → r7 = CreateThisForSuper(r3);
     // CODE → addr: 27 | <CallWithNewTarget>: <Reg8: 0, Reg8: 3, Reg8: 4, UInt8: 3>
-    r0 = Reflect.construct(r3, [r0, r1, r2], new.target)
+    r0 = Reflect.construct(r3, [param1, "Woof"], new.target)
     // CODE → addr: 32 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>
-    r0 = CreateThisForSuper(r3)[r0]
     // CODE → addr: 36 | <LoadConstEmpty>: <Reg8: 1>
     // USED → r1 = /* empty */;
     // CODE → addr: 38 | <ThrowIfThisInitialized>: <Reg8: 1>
