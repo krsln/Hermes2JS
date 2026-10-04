@@ -79,6 +79,33 @@ def test_v98_opcode_count():
     assert len(load_opcode_table(98)) == 219
 
 
+def test_v98_define_own_by_id_name_operand_is_tagged_string_id():
+    # Upstream's BytecodeList.def tags only DefineOwnByIdLong
+    # (`OPERAND_STRING_ID(DefineOwnByIdLong, 4)`) and forgets the short form,
+    # so the generated table alone left DefineOwnById's name operand untagged
+    # (1,814 call sites in the 98 test bundle printed no `# String:` comment,
+    # and the decompiler emitted `obj.string_140 = ...`). It is restored by
+    # `_MANUAL_SEMANTICS` in tools/hermes/generate_opcode_tables.py.
+    semantics = {name: sem for name, _operands, sem in load_opcode_table(98)}
+
+    assert semantics["DefineOwnById"] == {3: "string_id"}
+    assert semantics["DefineOwnByIdLong"] == {3: "string_id"}
+
+
+@pytest.mark.parametrize("version", [96, 98])
+def test_short_and_long_forms_carry_the_same_semantics(version: int):
+    # Guards against the same upstream omission for any other opcode pair:
+    # a `...Long` opcode only widens an operand, it never changes its meaning.
+    table = {name: (operands, sem) for name, operands, sem in load_opcode_table(version)}
+    mismatches = [
+        (name, table[name[:-4]][1], sem)
+        for name, (_operands, sem) in table.items()
+        if name.endswith("Long") and name[:-4] in table and table[name[:-4]][1] != sem
+    ]
+
+    assert mismatches == []
+
+
 def test_v99_raises_not_generated():
     with pytest.raises(HermesBytecodeError):
         load_opcode_table(99)

@@ -15,13 +15,23 @@ from hermes_decompiler.ir.expressions import (
 )
 
 
-# Reg8, Reg8, UInt8, UInt16 (total size 5)
+# Reg8, Reg8, UInt8, UInt16 (string_id) (total size 5)
 # DEFINE_OPCODE_4(DefineOwnById, Reg8, Reg8, UInt8, UInt16)
-# Example: <DefineOwnById>: <Reg8: 2, Reg8: 5, UInt8: 1, UInt16: 160>
+# Example: <DefineOwnById>: <Reg8: 5, Reg8: 0, UInt8: 0, string_id: 140>  # String: 'error' (Identifier)
+#
+# The last operand is accepted both as `string_id: N` (hermes_disassembler,
+# which tags it - see tools/hermes/generate_opcode_tables.py for why upstream's
+# own table misses it) and as a bare `UInt16: N` (hermes-dec output, which
+# never tagged this opcode). Only the tagged form carries the `# String: ...`
+# comment `identifier_name` is read from; the bare form falls back to
+# `string_<id>`.
 class DefineOwnById(OpcodeHandler):
     """Define an own object property by string ID: obj.foo = value (fresh property)."""
 
-    ARGUMENTS = ArgsPattern(sequence(REG, REG, UINT8, UINT16), "Reg8, Reg8, UInt8, UInt16")
+    ARGUMENTS = ArgsPattern(
+        sequence(REG, REG, UINT8, r"(?:string_id|UInt16):\s*(\d+)"),
+        "Reg8, Reg8, UInt8, UInt16 (string_id)",
+    )
 
     def handle(self, ctx: OpcodeContext) -> OpcodeResult:
         match = self.match_arguments(ctx)
@@ -53,9 +63,13 @@ class DefineOwnById(OpcodeHandler):
 
 # Reg8, Reg8, UInt8, UInt32 (string_id) (total size 7)
 # DEFINE_OPCODE_4(DefineOwnByIdLong, Reg8, Reg8, UInt8, UInt32)
-# Example:
+# Example: <DefineOwnByIdLong>: <Reg8: 5, Reg8: 0, UInt8: 0, string_id: 70000>  # String: 'x' (Identifier)
 class DefineOwnByIdLong(DefineOwnById):
-    pass
+    # Inherited pattern is UInt16-only; the Long form's operand is UInt32.
+    ARGUMENTS = ArgsPattern(
+        sequence(REG, REG, UINT8, r"(?:string_id|UInt32):\s*(\d+)"),
+        "Reg8, Reg8, UInt8, UInt32 (string_id)",
+    )
 
 
 # Reg8, Reg8, Reg8, UInt8 (total size 4)

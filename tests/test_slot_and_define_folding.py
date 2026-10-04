@@ -76,6 +76,42 @@ def test_define_own_by_id_folds():
     assert 'r0 = { "name": param1 }' in out
 
 
+def test_define_own_by_id_resolves_the_name_from_a_string_id_operand():
+    # hermes_disassembler tags the name operand `string_id` (hermes-dec leaves
+    # it as a bare `UInt16`). The handler must accept the tagged form, or the
+    # property degrades to `string_<id>`.
+    out = _out(
+        _PARAM, "<NewObject>: <Reg8: 0>",
+        "<DefineOwnById>: <Reg8: 0, Reg8: 1, UInt8: 0, string_id: 140>  # String: 'error' (Identifier)", _RET,
+    )
+
+    assert 'r0 = { "error": param1 }' in out
+    assert "string_" not in out
+
+
+def test_define_own_by_id_long_resolves_the_name_from_a_string_id_operand():
+    # DefineOwnByIdLong used to inherit the short form's UInt16-only pattern,
+    # so it matched neither `UInt32` nor `string_id`.
+    for operand in ("string_id: 70000", "UInt32: 70000"):
+        out = _out(
+            _PARAM, "<NewObject>: <Reg8: 0>",
+            f"<DefineOwnByIdLong>: <Reg8: 0, Reg8: 1, UInt8: 0, {operand}>  # String: 'error' (Identifier)", _RET,
+        )
+
+        assert 'r0 = { "error": param1 }' in out, operand
+        assert "string_" not in out, operand
+
+
+def test_define_own_by_id_without_a_comment_falls_back_to_the_string_id():
+    # Bare hermes-dec form, no `# String:` comment: still accepted, named by id.
+    out = _out(
+        _PARAM, "<NewObject>: <Reg8: 0>",
+        "<DefineOwnById>: <Reg8: 0, Reg8: 1, UInt8: 0, UInt16: 140>", _RET,
+    )
+
+    assert 'r0 = { "string_140": param1 }' in out
+
+
 def test_non_identifier_property_name_is_written_as_a_string_key():
     # `obj.aria-hidden = v` is not valid JavaScript.
     out = _out(

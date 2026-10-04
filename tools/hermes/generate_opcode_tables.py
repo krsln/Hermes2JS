@@ -66,6 +66,16 @@ _MANUAL_SEMANTICS: dict[str, dict[int, str]] = {
     "GetBuiltinClosure": {1: "builtin_id"},
     "CallBuiltin": {1: "builtin_id"},
     "CallBuiltinLong": {1: "builtin_id"},
+    # Upstream omission, not a parsing bug: at bytecode 98's pinned commit
+    # (cb5bb33...) BytecodeList.def tags only the Long form
+    # (`OPERAND_STRING_ID(DefineOwnByIdLong, 4)`) and has no such line for
+    # the short `DefineOwnById`, even though its own doc comment says
+    # "Arg1[stringtable[Arg4]] = Arg2". Every other *ById opcode is tagged.
+    # Without this, the decompiler never sees the property name for 1,814
+    # call sites in the 98 test bundle. Harmless where upstream already
+    # tags it (the same value is simply set again), and bytecode 96 has no
+    # such opcode (it uses PutNewOwnById).
+    "DefineOwnById": {3: "string_id"},
 }
 
 # DEFINE_JUMP_N(name) macro-expands (see BytecodeList.def itself) to a
