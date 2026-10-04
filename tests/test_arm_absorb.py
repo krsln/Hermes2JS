@@ -39,7 +39,25 @@ def test_destructuring_guard_keeps_the_assignment_in_the_arm():
     # with the folded `r3 === undefined || r3 === undefined`.
     root = Path(__file__).resolve().parent.parent / "apps/demo/fixtures/98/sections"
     path = root / "function_9488_parameterDestructureTest.hasm"
-    out = Decompiler.render(Decompiler.build_context(path.read_text(encoding="utf-8"), 9488, strict=False), verbose=False)
+    out = Decompiler.render(Decompiler.build_context(path.read_text(encoding="utf-8"), 9488, strict=False),
+                            verbose=False)
 
     assert "r6 = r4" in out
     assert "r3 === undefined || r3 === undefined" not in out
+
+
+def _render_fixture(version: str, index: int, name: str) -> str:
+    root = Path(__file__).resolve().parent.parent / "apps/demo/fixtures" / version / "sections"
+    text = (root / f"function_{index}_{name}.hasm").read_text(encoding="utf-8")
+
+    return Decompiler.render(Decompiler.build_context(text, index, strict=False), verbose=False)
+
+
+def test_flattening_does_not_look_past_a_printed_definition():
+    # hermes-96 `defaultWithRestTest`: `r1 = arguments[0]` sits in front of the
+    # nested `if (r1 !== undefined)`. Flattening to `length > 0 && r1 !== undefined`
+    # read r1 before the only statement that sets it.
+    out = _render_fixture("96", 15155, "defaultWithRestTest")
+
+    assert "arguments.length > 0 && r1 !== undefined" not in out
+    assert "r1 = arguments[0]" in out

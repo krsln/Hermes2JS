@@ -117,7 +117,7 @@ function mapTest() {
             r7 = r10
             // CODE → addr:231 | <LoadConstUndefined>: <Reg8: 10>
             r10 = undefined
-            if (!r9 && !r11) {
+            if (!r9) {
                 // ──────────────── Block 5 ──────────────── 
                 // CODE → addr:236 | <IteratorNext>: <Reg8: 12, Reg8: 8, Reg8: 11>
                 r12 = r8.next()
@@ -127,11 +127,15 @@ function mapTest() {
                 r11 = r11 === undefined
                 // CODE → addr:247 | <LoadConstUndefined>: <Reg8: 10>
                 r10 = undefined
-                // ──────────────── Block 6 ──────────────── 
-                // CODE → addr:255 | <Mov>: <Reg8: 10, Reg8: 12>
-                r10 = r12
-                // CODE → addr:258 | <Mov>: <Reg8: 9, Reg8: 11>
+                // CODE → addr:249 | <Mov>: <Reg8: 9, Reg8: 11>
                 r9 = r11
+                if (!r11) {
+                    // ──────────────── Block 6 ──────────────── 
+                    // CODE → addr:255 | <Mov>: <Reg8: 10, Reg8: 12>
+                    r10 = r12
+                    // CODE → addr:258 | <Mov>: <Reg8: 9, Reg8: 11>
+                    r9 = r11
+                }
             }
             // ──────────────── Block 7 ──────────────── 
             // CODE → addr:261 | <Mov>: <Reg8: 6, Reg8: 10>

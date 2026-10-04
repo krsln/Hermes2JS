@@ -13,7 +13,14 @@ function defaultParameterTest(param1) {
     // CODE → addr: 14 | <LoadConstUInt8>: <Reg8: 4, UInt8: 10>
     // USED → r4 = 10;
     // CODE → addr: 17 | <Mov>: <Reg8: 5, Reg8: 4>
-    r5 = !(arguments.length > 1 && r3 !== undefined) ? 10 : arguments[1]
+    r5 = 10
+    if (arguments.length > 1) {
+        // ──────────────── Block 1 ──────────────── 
+        // CODE → addr: 23 | <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
+        r3 = arguments[1]
+        // CODE → addr: 27 | <Mov>: <Reg8: 5, Reg8: 4>
+        r5 = (r3 === undefined) ? 10 : arguments[1]
+    }
     // ──────────────── Block 3 ──────────────── 
     // CODE → addr: 38 | <GetArgumentsLength>: <Reg8: 3, Reg8: 2>
     // USED → r3 = arguments.length;
@@ -25,15 +32,17 @@ function defaultParameterTest(param1) {
     // USED → r6 = "result";
     // CODE → addr: 52 | <Mov>: <Reg8: 4, Reg8: 6>
     r4 = "result"
-    if (arguments.length > 2 && r3 !== undefined) {
+    if (arguments.length > 2) {
         // ──────────────── Block 4 ──────────────── 
         // CODE → addr: 58 | <GetArgumentsPropByVal>: <Reg8: 3, Reg8: 1, Reg8: 2>
         r3 = arguments[2]
         // CODE → addr: 62 | <Mov>: <Reg8: 4, Reg8: 6>
         r4 = "result"
-        // ──────────────── Block 5 ──────────────── 
-        // CODE → addr: 69 | <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 1, Reg8: 2>
-        r4 = arguments[2]
+        if (r3 !== undefined) {
+            // ──────────────── Block 5 ──────────────── 
+            // CODE → addr: 69 | <GetArgumentsPropByVal>: <Reg8: 4, Reg8: 1, Reg8: 2>
+            r4 = arguments[2]
+        }
     }
     // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 73 | <GetGlobalObject>: <Reg8: 1>
@@ -53,7 +62,7 @@ function defaultParameterTest(param1) {
     // CODE → addr:106 | <LoadParam>: <Reg8: 1, UInt8: 1>
     // USED → r1 = param1;
     // CODE → addr:109 | <Add>: <Reg8: 1, Reg8: 1, Reg8: 5>
-    r1 = param1 + (!(arguments.length > 1 && r3 !== undefined) ? 10 : arguments[1])
+    r1 = param1 + ((r3 === undefined) ? 10 : arguments[1])
     // CODE → addr:113 | <Call3>: <Reg8: 1, Reg8: 2, Reg8: 3, Reg8: 4, Reg8: 1>
     console.log(r4, r1)
     // CODE → addr:119 | <Ret>: <Reg8: 0>
