@@ -24,10 +24,6 @@ async function _anon_0_simpleAsyncTest() {
     console.log("__BC:Functions/AsyncTests/simpleAsyncTest/end")
     // CODE → addr:117 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 0>
     // USED → r7 = r1[0][0];
-    // CODE → addr:121 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:124 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
-    r1[2] = 3
     // CODE → addr:128 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 18047>  # Object: {'value': null, 'done': true}
     // USED → r5 = { "value": null, "done": true };
     // CODE → addr:134 | <PutOwnBySlotIdx>: <Reg8: 5, Reg8: 7, UInt8: 0>
@@ -35,6 +31,8 @@ async function _anon_0_simpleAsyncTest() {
     // CODE → addr:138 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 10 ──────────────── 
+    // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+    r1 = getParentEnvironment(0)
     // CODE → addr:179 | <CreateTopLevelEnvironment>: <Reg8: 8, UInt32: 1>
     // USED → r8 = __environment__;
     // CODE → addr:185 | <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 8>
@@ -61,13 +59,4 @@ async function _anon_0_simpleAsyncTest() {
     // USED → r7 = 42;
     // CODE → addr:227 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
     await r7[0].call(0, 42)
-    // ──────────────── Block 13 ──────────────── 
-    // CODE → addr:283 | <Catch>: <Reg8: 5>
-    r5 = caughtException
-    // CODE → addr:285 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:288 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
-    r1[2] = 3
-    // CODE → addr:292 | <Throw>: <Reg8: 5>
-    throw r5;
 }

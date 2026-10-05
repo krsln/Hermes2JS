@@ -95,15 +95,13 @@ async function _anon_0_parallelAwaitTest() {
     // USED → r5 = "__BC:Functions/AsyncTests/parallelAwaitTest/end";
     // CODE → addr:237 | <Call2>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 5>
     console.log("__BC:Functions/AsyncTests/parallelAwaitTest/end")
-    // CODE → addr:242 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:245 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 6>
-    r1[4] = 3
     // CODE → addr:249 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
     r5 = { "value": undefined, "done": true }
     // CODE → addr:255 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 17 ──────────────── 
+    // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+    r1 = getParentEnvironment(0)
     // CODE → addr:299 | <CreateTopLevelEnvironment>: <Reg8: 8, UInt32: 2>
     // USED → r8 = __environment__;
     // CODE → addr:305 | <StoreToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 8>
@@ -144,13 +142,4 @@ async function _anon_0_parallelAwaitTest() {
     r7[1] = r10
     // CODE → addr:382 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
     await Promise.all(r7)
-    // ──────────────── Block 20 ──────────────── 
-    // CODE → addr:438 | <Catch>: <Reg8: 5>
-    r5 = caughtException
-    // CODE → addr:440 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:443 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 4, Reg8: 6>
-    r1[4] = 3
-    // CODE → addr:447 | <Throw>: <Reg8: 5>
-    throw r5;
 }

@@ -1,5 +1,7 @@
 function* generatorWithLoopTest(param1) {
     // ──────────────── Block 9 ──────────────── 
+    // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+    r1 = getParentEnvironment(0)
     // CODE → addr:115 | <CreateTopLevelEnvironment>: <Reg8: 5, UInt32: 2>
     // USED → r5 = __environment__;
     // CODE → addr:121 | <StoreToEnvironment>: <Reg8: 1, UInt8: 1, Reg8: 5>
@@ -40,14 +42,6 @@ function* generatorWithLoopTest(param1) {
     // USED → r7 = r1[1][1];
     // CODE → addr:189 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 1>
     // USED → r5 = r1[1][1];
-    // CODE → addr:193 | <LoadConstUInt8>: <Reg8: 8, UInt8: 1>
-    r8 = 1
-    // CODE → addr:196 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 8>
-    r1[2] = r8
-    // CODE → addr:200 | <Mov>: <Reg8: 2, Reg8: 8>
-    r2 = r8
-    // CODE → addr:203 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 8>
-    r1[3] = r8
     // CODE → addr:207 | <Mul>: <Reg8: 7, Reg8: 7, Reg8: 5>
     yield r1[1][1] * r1[1][1]
     // ──────────────── Block 12 ──────────────── 
@@ -87,21 +81,8 @@ function* generatorWithLoopTest(param1) {
     // USED → r5 = "__BC:Functions/GeneratorTests/generatorWithLoopTest/end";
     // CODE → addr:289 | <Call2>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 5>
     console.log("__BC:Functions/GeneratorTests/generatorWithLoopTest/end")
-    // CODE → addr:294 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:297 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 6>
-    r1[3] = 3
     // CODE → addr:301 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
     r5 = { "value": undefined, "done": true }
     // CODE → addr:307 | <Ret>: <Reg8: 5>
     return r5;
-    // ──────────────── Block 17 ──────────────── 
-    // CODE → addr:337 | <Catch>: <Reg8: 5>
-    r5 = caughtException
-    // CODE → addr:339 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:342 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 3, Reg8: 6>
-    r1[3] = 3
-    // CODE → addr:346 | <Throw>: <Reg8: 5>
-    throw r5;
 }

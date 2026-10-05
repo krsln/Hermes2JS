@@ -118,3 +118,35 @@ def test_a_write_in_one_arm_is_not_inlined_into_a_read_after_the_merge():
     assert "if (r3 == null) {\n        r3 = r2[3]\n    }" in out
     assert "= r3\n" in out  # the object slot reads r3, not the arm's `r2[3]`
     assert "slot_0 = r2[3]" not in out
+
+
+def _render_98(index: int, name: str) -> str:
+    # With the set's batch tables: without them the generator dispatch is not detected.
+    from tests.test_register_semantics import decompile
+
+    return decompile("98", index)
+
+
+def test_generator_keeps_the_environment_register_its_body_reads():
+    # hermes-98 `generatorWithLoopTest`: the dispatch prologue that defined
+    # `r1 = getParentEnvironment(0)` is deleted, the body still reads `r1[0]`.
+    out = _render_98(12483, "generatorWithLoopTest")
+
+    assert "r1 = getParentEnvironment(0)" in out
+    assert out.index("r1 = getParentEnvironment(0)") < out.index("r1[0]")
+
+
+def test_generator_state_machine_bookkeeping_is_not_printed():
+    out = _render_98(12483, "generatorWithLoopTest")
+
+    # `env[resume_slot] = k; env[state_slot] = SUSPENDED` before every yield,
+    # the register mirror of the state, and the COMPLETED write in `finally`.
+    assert "r1[2] = r8" not in out and "r1[3] = r8" not in out
+    assert "r2 = 3" not in out and "finally" not in out
+
+
+def test_a_catch_that_only_rethrows_is_not_printed():
+    out = _render_98(12482, "simpleGeneratorTest")
+
+    assert "catch" not in out and "r1[0]" not in out and "r1[1]" not in out
+    assert out.count("yield") == 3

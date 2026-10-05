@@ -26,15 +26,13 @@ async function _anon_0_runAllTests() {
     // USED → r5 = "__BC:index/runAllTests/end";
     // CODE → addr:118 | <Call2>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 5>
     console.log("__BC:index/runAllTests/end")
-    // CODE → addr:123 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:126 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
-    r1[2] = 3
     // CODE → addr:130 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
     r5 = { "value": undefined, "done": true }
     // CODE → addr:136 | <Ret>: <Reg8: 5>
     return r5;
     // ──────────────── Block 10 ──────────────── 
+    // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+    r1 = getParentEnvironment(0)
     // CODE → addr:183 | <GetParentEnvironment>: <Reg8: 7, UInt8: 1>
     r7 = getParentEnvironment(1)
     // CODE → addr:186 | <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 7>
@@ -353,13 +351,4 @@ async function _anon_0_runAllTests() {
     // USED → r7 = r7.callAsyncTests;
     // CODE → addr:953 | <Call1>: <Reg8: 7, Reg8: 7, Reg8: 8>
     await r7.callAsyncTests.call(undefined)
-    // ──────────────── Block 13 ──────────────── 
-    // CODE → addr:1008 | <Catch>: <Reg8: 5>
-    r5 = caughtException
-    // CODE → addr:1010 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = 3
-    // CODE → addr:1013 | <StoreNPToEnvironment>: <Reg8: 1, UInt8: 2, Reg8: 6>
-    r1[2] = 3
-    // CODE → addr:1017 | <Throw>: <Reg8: 5>
-    throw r5;
 }
