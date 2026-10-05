@@ -15,7 +15,7 @@ function classTest() {
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 3, Reg8: 2, UInt8: 0>
     r3 = r2[0]
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 2>
-    r4 = CreateThisForNew(r3)
+    r4 = CreateThisForNew(r2[0])
     if (typeof r2[0] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)
@@ -59,7 +59,7 @@ function classTest() {
     // CODE → addr:129 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 2, UInt8: 1>
     r4 = r2[1]
     // CODE → addr:133 | <CreateThisForNew>: <Reg8: 3, Reg8: 4, UInt8: 2>
-    r3 = CreateThisForNew(r4)
+    r3 = CreateThisForNew(r2[1])
     if (typeof r2[1] !== "function") {
         // ──────────────── Block 3 ──────────────── 
         // CODE → addr:145 | <LoadConstString>: <Reg8: 8, string_id: 4299>  # String: 'Trying to call a non-function' (String)

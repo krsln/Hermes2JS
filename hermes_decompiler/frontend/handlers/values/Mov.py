@@ -17,7 +17,7 @@ class Mov(OpcodeHandler):
 
         dest_reg, src_reg = map(int, match.groups())
 
-        expression = self.get_register_expression(ctx.analysis, src_reg)
+        expression = self.get_register_expression(ctx.analysis, src_reg, keep_placeholder=True)
 
         # Carry env_source forward (see OpcodeResult's own docstring) -
         # a private-field/class-reference opcode several Movs downstream

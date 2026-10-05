@@ -54,9 +54,9 @@ function defaultWithRestTest() {
     // CODE → addr: 81 | <GetByIdShort>: <Reg8: 4, Reg8: 2, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r4 = Array.prototype;
     // CODE → addr: 86 | <CreateThis>: <Reg8: 4, Reg8: 4, Reg8: 2>
-    // USED → r4 = CreateThis(r4);
+    // USED → r4 = CreateThis(Array.prototype);
     // CODE → addr: 90 | <Mov>: <Reg8: 12, Reg8: 4>
-    // USED → r12 = CreateThis(r4);
+    // USED → r12 = CreateThis(Array.prototype);
     // CODE → addr: 93 | <Mov>: <Reg8: 11, Reg8: 8>
     r11 = arguments.length - 1
     // CODE → addr: 96 | <Construct>: <Reg8: 2, Reg8: 2, UInt8: 2>

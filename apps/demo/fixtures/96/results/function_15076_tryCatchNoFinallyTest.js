@@ -25,11 +25,11 @@ function tryCatchNoFinallyTest() {
         // CODE → addr: 48 | <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
         // USED → r1 = Error.prototype;
         // CODE → addr: 53 | <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
-        // USED → r2 = CreateThis(r1);
+        // USED → r2 = CreateThis(Error.prototype);
         // CODE → addr: 57 | <LoadConstString>: <Reg8: 5, string_id: 6728>  # String: 'no finally here' (String)
         // USED → r5 = "no finally here";
         // CODE → addr: 61 | <Mov>: <Reg8: 6, Reg8: 2>
-        // USED → r6 = CreateThis(r1);
+        // USED → r6 = CreateThis(Error.prototype);
         // CODE → addr: 64 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
         // USED → r1 = new Error("no finally here");
         // CODE → addr: 68 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>

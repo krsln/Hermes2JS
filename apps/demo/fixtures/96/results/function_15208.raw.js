@@ -17,9 +17,9 @@ function privateStaticTest() {
     // CODE → addr: 29 | <GetByIdShort>: <Reg8: 3, Reg8: 2, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r3 = r2.prototype;
     // CODE → addr: 34 | <CreateThis>: <Reg8: 3, Reg8: 3, Reg8: 2>
-    // USED → r3 = CreateThis(r3);
+    // USED → r3 = CreateThis(r2.prototype);
     // CODE → addr: 38 | <Mov>: <Reg8: 7, Reg8: 3>
-    // USED → r7 = CreateThis(r3);
+    // USED → r7 = CreateThis(r2.prototype);
     // CODE → addr: 41 | <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
     // USED → r2 = new Counter();
     // CODE → addr: 45 | <SelectObject>: <Reg8: 5, Reg8: 3, Reg8: 2>
@@ -29,7 +29,7 @@ function privateStaticTest() {
     // CODE → addr: 53 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = r3.prototype;
     // CODE → addr: 58 | <CreateThis>: <Reg8: 7, Reg8: 2, Reg8: 3>
-    // USED → r7 = CreateThis(r2);
+    // USED → r7 = CreateThis(r3.prototype);
     // CODE → addr: 62 | <Construct>: <Reg8: 2, Reg8: 3, UInt8: 1>
     r2 = new Counter()
     // CODE → addr: 66 | <GetById>: <Reg8: 2, Reg8: 5, UInt8: 4, string_id: 10830>  # String: 'increment' (Identifier)

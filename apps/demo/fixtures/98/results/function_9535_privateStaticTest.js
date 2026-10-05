@@ -15,7 +15,7 @@ function privateStaticTest() {
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 5, UInt8: 0>
     r4 = r5[0]
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
-    r6 = CreateThisForNew(r4)
+    r6 = CreateThisForNew(r5[0])
     if (typeof r5[0] !== "function") {
         // ──────────────── Block 1 ──────────────── 
         // CODE → addr: 41 | <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)
@@ -69,7 +69,7 @@ function privateStaticTest() {
         // CODE → addr:124 | <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
         r5[2].#__private_7__ = r6
         // CODE → addr:129 | <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
-        r6 = CreateThisForNew(r4)
+        r6 = CreateThisForNew(r5[0])
         if (typeof r4 !== "function") {
             // ──────────────── Block 4 ──────────────── 
             // CODE → addr:141 | <LoadConstString>: <Reg8: 13, string_id: 4299>  # String: 'Trying to call a non-function' (String)

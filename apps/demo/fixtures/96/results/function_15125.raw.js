@@ -15,9 +15,9 @@ function weakMapTest() {
     // CODE → addr: 28 | <GetByIdShort>: <Reg8: 2, Reg8: 1, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = WeakMap.prototype;
     // CODE → addr: 33 | <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 1>
-    // USED → r2 = CreateThis(r2);
+    // USED → r2 = CreateThis(WeakMap.prototype);
     // CODE → addr: 37 | <Mov>: <Reg8: 8, Reg8: 2>
-    // USED → r8 = CreateThis(r2);
+    // USED → r8 = CreateThis(WeakMap.prototype);
     // CODE → addr: 40 | <Construct>: <Reg8: 1, Reg8: 1, UInt8: 1>
     // USED → r1 = new WeakMap();
     // CODE → addr: 44 | <SelectObject>: <Reg8: 5, Reg8: 2, Reg8: 1>

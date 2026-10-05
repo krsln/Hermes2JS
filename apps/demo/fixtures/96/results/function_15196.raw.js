@@ -17,13 +17,13 @@ function classTest() {
     // CODE → addr: 29 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = r5.prototype;
     // CODE → addr: 34 | <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
-    // USED → r3 = CreateThis(r2);
+    // USED → r3 = CreateThis(r5.prototype);
     // CODE → addr: 38 | <LoadConstString>: <Reg8: 7, string_id: 3213>  # String: 'Generic' (String)
     // USED → r7 = "Generic";
     // CODE → addr: 42 | <LoadConstString>: <Reg8: 6, string_id: 597>  # String: '...' (String)
     // USED → r6 = "...";
     // CODE → addr: 46 | <Mov>: <Reg8: 8, Reg8: 3>
-    // USED → r8 = CreateThis(r2);
+    // USED → r8 = CreateThis(r5.prototype);
     // CODE → addr: 49 | <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
     // USED → r2 = new Animal("Generic", "...");
     // CODE → addr: 53 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>
@@ -45,13 +45,13 @@ function classTest() {
     // CODE → addr: 93 | <GetByIdShort>: <Reg8: 2, Reg8: 5, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = r5.prototype;
     // CODE → addr: 98 | <CreateThis>: <Reg8: 3, Reg8: 2, Reg8: 5>
-    // USED → r3 = CreateThis(r2);
+    // USED → r3 = CreateThis(r5.prototype);
     // CODE → addr:102 | <LoadConstString>: <Reg8: 7, string_id: 3886>  # String: 'Rex' (String)
     // USED → r7 = "Rex";
     // CODE → addr:106 | <LoadConstString>: <Reg8: 6, string_id: 3434>  # String: 'Labrador' (String)
     // USED → r6 = "Labrador";
     // CODE → addr:110 | <Mov>: <Reg8: 8, Reg8: 3>
-    // USED → r8 = CreateThis(r2);
+    // USED → r8 = CreateThis(r5.prototype);
     // CODE → addr:113 | <Construct>: <Reg8: 2, Reg8: 5, UInt8: 3>
     // USED → r2 = new Dog("Rex", "Labrador");
     // CODE → addr:117 | <SelectObject>: <Reg8: 3, Reg8: 3, Reg8: 2>

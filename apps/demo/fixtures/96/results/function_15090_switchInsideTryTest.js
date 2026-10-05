@@ -38,11 +38,11 @@ function switchInsideTryTest(param1) {
                 // CODE → addr: 69 | <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
                 // USED → r0 = Error.prototype;
                 // CODE → addr: 74 | <CreateThis>: <Reg8: 2, Reg8: 0, Reg8: 3>
-                // USED → r2 = CreateThis(r0);
+                // USED → r2 = CreateThis(Error.prototype);
                 // CODE → addr: 78 | <LoadConstString>: <Reg8: 5, string_id: 5270>  # String: 'case 1 throws' (String)
                 // USED → r5 = "case 1 throws";
                 // CODE → addr: 82 | <Mov>: <Reg8: 6, Reg8: 2>
-                // USED → r6 = CreateThis(r0);
+                // USED → r6 = CreateThis(Error.prototype);
                 // CODE → addr: 85 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
                 // USED → r0 = new Error("case 1 throws");
                 // CODE → addr: 89 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>

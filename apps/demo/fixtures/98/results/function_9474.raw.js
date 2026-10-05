@@ -15,11 +15,11 @@ function tryCatchFinallyBranchInFinallyTest(param1) {
     // CODE → addr: 25 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
     // USED → r3 = Error;
     // CODE → addr: 31 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
-    // USED → r2 = CreateThisForNew(r3);
+    // USED → r2 = CreateThisForNew(Error);
     // CODE → addr: 35 | <LoadConstString>: <Reg8: 5, string_id: 47>  # String: 'test' (Identifier)
     // USED → r5 = "test";
     // CODE → addr: 39 | <Mov>: <Reg8: 6, Reg8: 2>
-    // USED → r6 = CreateThisForNew(r3);
+    // USED → r6 = CreateThisForNew(Error);
     // CODE → addr: 42 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Error("test");
     // CODE → addr: 46 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>

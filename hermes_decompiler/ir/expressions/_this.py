@@ -32,7 +32,13 @@ class ThisPlaceholder(Expression):
 
     origin: str
     source_reg: int
+    # The constructor expression as it was when the placeholder was made. A
+    # placeholder that survives into the output (an object with its own
+    # identity, see `OpcodeHandler.get_register_expression`) prints it
+    # instead of naming `source_reg`, whose own definition may have been
+    # folded into some other reader and would be left dangling.
+    source: Expression | None = None
 
     @property
     def children(self) -> tuple[Node, ...]:
-        return ()
+        return (self.source,) if self.source is not None else ()

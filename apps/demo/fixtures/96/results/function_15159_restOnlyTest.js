@@ -21,9 +21,9 @@ function restOnlyTest() {
     // CODE → addr: 35 | <GetByIdShort>: <Reg8: 5, Reg8: 2, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r5 = Array.prototype;
     // CODE → addr: 40 | <CreateThis>: <Reg8: 5, Reg8: 5, Reg8: 2>
-    // USED → r5 = CreateThis(r5);
+    // USED → r5 = CreateThis(Array.prototype);
     // CODE → addr: 44 | <Mov>: <Reg8: 9, Reg8: 5>
-    // USED → r9 = CreateThis(r5);
+    // USED → r9 = CreateThis(Array.prototype);
     // CODE → addr: 47 | <Mov>: <Reg8: 8, Reg8: 3>
     r8 = arguments.length
     // CODE → addr: 50 | <Construct>: <Reg8: 2, Reg8: 2, UInt8: 2>

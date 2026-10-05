@@ -31,11 +31,11 @@ function nestedTryCatchTest() {
     // CODE → addr: 68 | <GetByIdShort>: <Reg8: 1, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r1 = Error.prototype;
     // CODE → addr: 73 | <CreateThis>: <Reg8: 2, Reg8: 1, Reg8: 3>
-    // USED → r2 = CreateThis(r1);
+    // USED → r2 = CreateThis(Error.prototype);
     // CODE → addr: 77 | <LoadConstString>: <Reg8: 5, string_id: 7723>  # String: 'inner' (Identifier)
     // USED → r5 = "inner";
     // CODE → addr: 81 | <Mov>: <Reg8: 6, Reg8: 2>
-    // USED → r6 = CreateThis(r1);
+    // USED → r6 = CreateThis(Error.prototype);
     // CODE → addr: 84 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
     // USED → r1 = new Error("inner");
     // CODE → addr: 88 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
@@ -62,9 +62,9 @@ function nestedTryCatchTest() {
     // CODE → addr:130 | <GetByIdShort>: <Reg8: 2, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = Error.prototype;
     // CODE → addr:135 | <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 3>
-    // USED → r2 = CreateThis(r2);
+    // USED → r2 = CreateThis(Error.prototype);
     // CODE → addr:139 | <Mov>: <Reg8: 6, Reg8: 2>
-    // USED → r6 = CreateThis(r2);
+    // USED → r6 = CreateThis(Error.prototype);
     // CODE → addr:142 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
     // USED → r1 = new Error(r5);
     // CODE → addr:146 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>

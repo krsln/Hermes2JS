@@ -17,13 +17,13 @@ function create(param1) {
     // CODE → addr: 29 | <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 3, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r0 = r3.prototype;
     // CODE → addr: 34 | <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 3>
-    // USED → r1 = CreateThis(r0);
+    // USED → r1 = CreateThis(r3.prototype);
     // CODE → addr: 38 | <LoadParam>: <Reg8: 5, UInt8: 1>
     // USED → r5 = param1;
     // CODE → addr: 41 | <LoadConstString>: <Reg8: 4, string_id: 3527>  # String: 'Mixed' (String)
     // USED → r4 = "Mixed";
     // CODE → addr: 45 | <Mov>: <Reg8: 6, Reg8: 1>
-    // USED → r6 = CreateThis(r0);
+    // USED → r6 = CreateThis(r3.prototype);
     // CODE → addr: 48 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 3>
     // USED → r0 = new Dog(param1, "Mixed");
     // CODE → addr: 52 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>

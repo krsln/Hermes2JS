@@ -13,11 +13,11 @@ function setTest() {
     // CODE → addr: 22 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 31>  # String: 'Set' (Identifier)
     // USED → r3 = Set;
     // CODE → addr: 28 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
-    // USED → r2 = CreateThisForNew(r3);
+    // USED → r2 = CreateThisForNew(Set);
     // CODE → addr: 32 | <NewArrayWithBuffer>: <Reg8: 10, UInt16: 6, UInt16: 6, UInt16: 48500>  # Array: [1, 2, 2, 3, 3, 3]
     r10 = [1, 2, 2, 3, 3, 3]
     // CODE → addr: 40 | <Mov>: <Reg8: 11, Reg8: 2>
-    // USED → r11 = CreateThisForNew(r3);
+    // USED → r11 = CreateThisForNew(Set);
     // CODE → addr: 43 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Set(r10);
     // CODE → addr: 47 | <SelectObject>: <Reg8: 3, Reg8: 2, Reg8: 0>

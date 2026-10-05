@@ -26,11 +26,11 @@ function nestedTryCatchFinallyTest() {
             // CODE → addr: 48 | <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
             // USED → r0 = Error.prototype;
             // CODE → addr: 53 | <CreateThis>: <Reg8: 2, Reg8: 0, Reg8: 3>
-            // USED → r2 = CreateThis(r0);
+            // USED → r2 = CreateThis(Error.prototype);
             // CODE → addr: 57 | <LoadConstString>: <Reg8: 5, string_id: 7723>  # String: 'inner' (Identifier)
             // USED → r5 = "inner";
             // CODE → addr: 61 | <Mov>: <Reg8: 6, Reg8: 2>
-            // USED → r6 = CreateThis(r0);
+            // USED → r6 = CreateThis(Error.prototype);
             // CODE → addr: 64 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
             // USED → r0 = new Error("inner");
             // CODE → addr: 68 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>

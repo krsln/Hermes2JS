@@ -15,7 +15,7 @@ function create(param1) {
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 0, UInt8: 2>
     // USED → r5 = r0[2];
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 2, Reg8: 5, UInt8: 2>
-    r2 = CreateThisForNew(r5)
+    r2 = CreateThisForNew(r0[2])
     // CODE → addr: 33 | <JmpTypeOfIs>: <Addr32: 16, Reg8: 5, UInt16: 128>  # Address: 00000031
     if (typeof r0[2] === "function") goto label_49;
     // ──────────────── Block 1 ──────────────── 

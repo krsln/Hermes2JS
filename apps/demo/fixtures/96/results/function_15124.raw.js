@@ -15,11 +15,11 @@ function setTest() {
     // CODE → addr: 28 | <GetByIdShort>: <Reg8: 0, Reg8: 3, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r0 = Set.prototype;
     // CODE → addr: 33 | <CreateThis>: <Reg8: 2, Reg8: 0, Reg8: 3>
-    // USED → r2 = CreateThis(r0);
+    // USED → r2 = CreateThis(Set.prototype);
     // CODE → addr: 37 | <NewArrayWithBuffer>: <Reg8: 10, UInt16: 6, UInt16: 6, UInt16: 23684>  # Array: [1, 2, 2, 3, 3, 3]
     r10 = [1, 2, 2, 3, 3, 3]
     // CODE → addr: 45 | <Mov>: <Reg8: 11, Reg8: 2>
-    // USED → r11 = CreateThis(r0);
+    // USED → r11 = CreateThis(Set.prototype);
     // CODE → addr: 48 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
     // USED → r0 = new Set(r10);
     // CODE → addr: 52 | <SelectObject>: <Reg8: 3, Reg8: 2, Reg8: 0>

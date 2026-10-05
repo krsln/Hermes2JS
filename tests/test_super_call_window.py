@@ -134,8 +134,11 @@ def test_a_create_this_for_new_from_another_constructor_is_left_alone():
         "<Ret>: <Reg8: 1>",
     )
 
-    # r5 is read afterwards, so it is not a dead placeholder.
-    assert "CreateThisForNew(r4)" in out
+    # r5 is read afterwards, so it is not a dead placeholder: it keeps its
+    # definition (naming the constructor it came from, r4 = r1[4]) and the
+    # reader names the register.
+    assert "r5 = CreateThisForNew(r1[4])" in out
+    assert "r1.p = r5" in out
     assert out.count("CreateThisForNew") == 1
 
 
@@ -149,3 +152,40 @@ def test_a_placeholder_nothing_reads_is_dropped():
     )
 
     assert "CreateThisForNew" not in out
+
+
+def test_a_placeholder_with_several_readers_is_one_object_not_one_per_use():
+    # An inlined `_classCallCheck`-style constructor body: the fresh object is
+    # written to twice. Inlining the placeholder at each use printed
+    # `CreateThisForNew(r1[3])._a = 0; CreateThisForNew(r1[3])._b = 0`.
+    out = _out(
+        "<GetParentEnvironment>: <Reg8: 1, UInt8: 0>",
+        "<LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 3>",
+        "<CreateThisForNew>: <Reg8: 7, Reg8: 1, UInt8: 0>",
+        "<LoadConstZero>: <Reg8: 0>",
+        "<PutByIdStrict>: <Reg8: 7, Reg8: 0, UInt8: 0, string_id: 6>  # String: '_a' (Identifier)",
+        "<PutByIdStrict>: <Reg8: 7, Reg8: 0, UInt8: 1, string_id: 7>  # String: '_b' (Identifier)",
+        "<Ret>: <Reg8: 7>",
+    )
+
+    assert out.count("CreateThisForNew") == 1
+    assert "r7._a = 0" in out and "r7._b = 0" in out
+
+
+def test_default_derived_constructor_forwards_arguments():
+    # hermes-98 implicit `constructor(...args) { super(...args) }`.
+    out = _out(
+        "<GetParentEnvironment>: <Reg8: 0, UInt8: 0>",
+        "<LoadFromEnvironment>: <Reg8: 0, Reg8: 0, UInt8: 2>",
+        "<LoadParentNoTraps>: <Reg8: 2, Reg8: 0>",
+        "<GetNewTarget>: <Reg8: 1>",
+        "<CreateThisForSuper>: <Reg8: 4, Reg8: 2, Reg8: 1, UInt8: 0>",
+        "<Mov>: <Reg8: 5, Reg8: 2>",
+        "<Mov>: <Reg8: 3, Reg8: 1>",
+        "<CallBuiltin>: <Reg8: 0, UInt8: 50, UInt8: 4>  # Built-in function: [#50 applyArguments]",
+        "<Ret>: <Reg8: 0>",
+    )
+
+    assert "Reflect.construct(r2, arguments, new.target)" in out
+    assert "CreateThisForSuper" not in out
+    assert "applyArguments" not in out

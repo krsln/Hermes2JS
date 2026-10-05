@@ -16,11 +16,11 @@ function tryCatchFinallyEarlyReturnTest() {
         // CODE → addr: 28 | <GetByIdShort>: <Reg8: 0, Reg8: 2, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
         // USED → r0 = Error.prototype;
         // CODE → addr: 33 | <CreateThis>: <Reg8: 1, Reg8: 0, Reg8: 2>
-        // USED → r1 = CreateThis(r0);
+        // USED → r1 = CreateThis(Error.prototype);
         // CODE → addr: 37 | <LoadConstString>: <Reg8: 4, string_id: 238>  # String: 'test' (Identifier)
         // USED → r4 = "test";
         // CODE → addr: 41 | <Mov>: <Reg8: 5, Reg8: 1>
-        // USED → r5 = CreateThis(r0);
+        // USED → r5 = CreateThis(Error.prototype);
         // CODE → addr: 44 | <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
         // USED → r0 = new Error("test");
         // CODE → addr: 48 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>

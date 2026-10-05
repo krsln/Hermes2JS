@@ -49,7 +49,7 @@ function tryCatchInsideLoopTest(param1) {
                     // CODE → addr:100 | <TryGetById>: <Reg8: 13, Reg8: 1, UInt8: 3, string_id: 9>  # String: 'Error' (Identifier)
                     // USED → r13 = Error;
                     // CODE → addr:106 | <CreateThisForNew>: <Reg8: 14, Reg8: 13, UInt8: 4>
-                    r14 = CreateThisForNew(r13)
+                    r14 = CreateThisForNew(Error)
                     // CODE → addr:110 | <Mov>: <Reg8: 18, Reg8: 14>
                     r18 = r14
                     // CODE → addr:113 | <Mov>: <Reg8: 17, Reg8: 6>

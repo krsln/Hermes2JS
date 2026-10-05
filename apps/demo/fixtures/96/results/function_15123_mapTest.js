@@ -15,9 +15,9 @@ function mapTest() {
     // CODE → addr: 28 | <GetByIdShort>: <Reg8: 2, Reg8: 0, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
     // USED → r2 = Map.prototype;
     // CODE → addr: 33 | <CreateThis>: <Reg8: 2, Reg8: 2, Reg8: 0>
-    // USED → r2 = CreateThis(r2);
+    // USED → r2 = CreateThis(Map.prototype);
     // CODE → addr: 37 | <Mov>: <Reg8: 16, Reg8: 2>
-    // USED → r16 = CreateThis(r2);
+    // USED → r16 = CreateThis(Map.prototype);
     // CODE → addr: 40 | <Construct>: <Reg8: 0, Reg8: 0, UInt8: 1>
     // USED → r0 = new Map();
     // CODE → addr: 44 | <SelectObject>: <Reg8: 2, Reg8: 2, Reg8: 0>

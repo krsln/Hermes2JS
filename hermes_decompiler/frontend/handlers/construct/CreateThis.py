@@ -1,6 +1,28 @@
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import ThisPlaceholder
+from hermes_decompiler.ir.expressions import (
+    ArrayExpression, CallExpression, Identifier, ObjectExpression, ThisPlaceholder,
+)
+
+
+def _peek_source(analysis, reg: int):
+    """The register's current expression WITHOUT reading it.
+
+    Reading would flag its definition as consumed and hide the statement that
+    defines it; the placeholder only needs a copy to print if it survives.
+    Anything that is not safely copyable stays a bare register.
+    """
+    state = analysis.get_register_state(reg)
+    value = state.value if state is not None else None
+
+    if (
+            value is None
+            or isinstance(value, (ObjectExpression, ArrayExpression, CallExpression, ThisPlaceholder))
+            or not analysis.may_inline(state)
+    ):
+        return Identifier(name=f"r{reg}")
+
+    return value
 
 
 # Reg8, Reg8, Reg8 (total size 3)
@@ -18,8 +40,9 @@ class CreateThis(OpcodeHandler):
 
         dest_reg, func, new_target = (int(x) for x in match.groups())
 
-        self.get_register_expression(ctx.analysis, func) # consume it!
-        this_expr = ThisPlaceholder(origin="CreateThis", source_reg=func)
+        source = _peek_source(ctx.analysis, func)
+        self.get_register_expression(ctx.analysis, func)  # consume it!
+        this_expr = ThisPlaceholder(origin="CreateThis", source_reg=func, source=source)
 
         result = OpcodeResult(ctx.entry, value=this_expr, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
@@ -42,7 +65,8 @@ class CreateThisForNew(OpcodeHandler):
 
         dest_reg, constructor_reg, _cache = map(int, match.groups())
 
-        this_expr = ThisPlaceholder(origin="CreateThisForNew", source_reg=constructor_reg)
+        source = _peek_source(ctx.analysis, constructor_reg)
+        this_expr = ThisPlaceholder(origin="CreateThisForNew", source_reg=constructor_reg, source=source)
 
         result = OpcodeResult(ctx.entry, value=this_expr, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
@@ -65,7 +89,8 @@ class CreateThisForSuper(OpcodeHandler):
 
         dest_reg, constructor_reg, new_target_reg, _cache = map(int, match.groups())
 
-        this_expr = ThisPlaceholder(origin="CreateThisForSuper", source_reg=constructor_reg)
+        source = _peek_source(ctx.analysis, constructor_reg)
+        this_expr = ThisPlaceholder(origin="CreateThisForSuper", source_reg=constructor_reg, source=source)
 
         result = OpcodeResult(ctx.entry, value=this_expr, dest_reg=dest_reg)
         ctx.analysis.add_result(result)

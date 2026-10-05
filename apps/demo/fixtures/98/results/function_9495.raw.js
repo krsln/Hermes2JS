@@ -19,9 +19,9 @@ function mapTest() {
     // CODE → addr: 28 | <TryGetById>: <Reg8: 2, Reg8: 1, UInt8: 2, string_id: 18>  # String: 'Map' (Identifier)
     // USED → r2 = Map;
     // CODE → addr: 34 | <CreateThisForNew>: <Reg8: 3, Reg8: 2, UInt8: 3>
-    // USED → r3 = CreateThisForNew(r2);
+    // USED → r3 = CreateThisForNew(Map);
     // CODE → addr: 38 | <Mov>: <Reg8: 15, Reg8: 3>
-    // USED → r15 = CreateThisForNew(r2);
+    // USED → r15 = CreateThisForNew(Map);
     // CODE → addr: 41 | <Construct>: <Reg8: 2, Reg8: 2, UInt8: 1>
     // USED → r2 = new Map();
     // CODE → addr: 45 | <SelectObject>: <Reg8: 2, Reg8: 3, Reg8: 2>

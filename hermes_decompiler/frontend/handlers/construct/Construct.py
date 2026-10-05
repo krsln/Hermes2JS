@@ -67,7 +67,7 @@ class Construct(OpcodeHandler):
         # `new` expression has no separate `this` slot to print,
         # that's exactly what `constructor` and `arguments` together
         # already express.
-        self.get_register_expression(ctx.analysis, this_reg)
+        self.get_register_expression(ctx.analysis, this_reg, keep_placeholder=True)
         self._consume_unused_this_placeholder(ctx, ctor_reg)
 
         arguments = tuple(

@@ -15,7 +15,7 @@ function privateStaticTest() {
     // CODE → addr: 25 | <LoadFromEnvironment>: <Reg8: 4, Reg8: 5, UInt8: 0>
     r4 = r5[0]
     // CODE → addr: 29 | <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
-    r6 = CreateThisForNew(r4)
+    r6 = CreateThisForNew(r5[0])
     // CODE → addr: 33 | <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000031
     if (typeof r5[0] === "function") goto label_49;
     // ──────────────── Block 1 ──────────────── 
@@ -64,7 +64,7 @@ function privateStaticTest() {
     // CODE → addr:124 | <PutOwnPrivateBySym>: <Reg8: 8, Reg8: 6, UInt8: 1, Reg8: 7>
     r5[2].#__private_7__ = r6
     // CODE → addr:129 | <CreateThisForNew>: <Reg8: 6, Reg8: 4, UInt8: 2>
-    r6 = CreateThisForNew(r4)
+    r6 = CreateThisForNew(r5[0])
     // CODE → addr:133 | <JmpTypeOfIs>: <Addr32: 16, Reg8: 4, UInt16: 128>  # Address: 00000095
     if (typeof r4 === "function") goto label_149;
     // ──────────────── Block 4 ──────────────── 

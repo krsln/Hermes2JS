@@ -51,7 +51,7 @@ class CallWithNewTarget(OpcodeHandler):
 
         # Consumed for its side effect only (marks the placeholder's defining
         # `Mov` as folded away); `this` has no surface syntax of its own.
-        self.get_register_expression(ctx.analysis, this_reg)
+        self.get_register_expression(ctx.analysis, this_reg, keep_placeholder=True)
 
         arguments = ArrayExpression(elements=tuple(
             self.resolve_call_argument(ctx.analysis, reg)

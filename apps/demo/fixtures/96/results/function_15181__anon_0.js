@@ -38,11 +38,11 @@ async function _anon_0_() {
             // CODE → addr: 92 | <GetByIdShort>: <Reg8: 3, Reg8: 5, UInt8: 4, string_id: 206>  # String: 'prototype' (Identifier)
             // USED → r3 = Error.prototype;
             // CODE → addr: 97 | <CreateThis>: <Reg8: 4, Reg8: 3, Reg8: 5>
-            // USED → r4 = CreateThis(r3);
+            // USED → r4 = CreateThis(Error.prototype);
             // CODE → addr:101 | <LoadConstString>: <Reg8: 8, string_id: 6849>  # String: 'post-await failure' (String)
             // USED → r8 = "post-await failure";
             // CODE → addr:105 | <Mov>: <Reg8: 9, Reg8: 4>
-            // USED → r9 = CreateThis(r3);
+            // USED → r9 = CreateThis(Error.prototype);
             // CODE → addr:108 | <Construct>: <Reg8: 3, Reg8: 5, UInt8: 2>
             // USED → r3 = new Error("post-await failure");
             // CODE → addr:112 | <SelectObject>: <Reg8: 3, Reg8: 4, Reg8: 3>

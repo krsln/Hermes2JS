@@ -14,11 +14,11 @@ function tryCatchFinallyEarlyReturnTest() {
         // CODE → addr: 22 | <TryGetById>: <Reg8: 2, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
         // USED → r2 = Error;
         // CODE → addr: 28 | <CreateThisForNew>: <Reg8: 1, Reg8: 2, UInt8: 3>
-        // USED → r1 = CreateThisForNew(r2);
+        // USED → r1 = CreateThisForNew(Error);
         // CODE → addr: 32 | <LoadConstString>: <Reg8: 4, string_id: 47>  # String: 'test' (Identifier)
         // USED → r4 = "test";
         // CODE → addr: 36 | <Mov>: <Reg8: 5, Reg8: 1>
-        // USED → r5 = CreateThisForNew(r2);
+        // USED → r5 = CreateThisForNew(Error);
         // CODE → addr: 39 | <Construct>: <Reg8: 0, Reg8: 2, UInt8: 2>
         // USED → r0 = new Error("test");
         // CODE → addr: 43 | <SelectObject>: <Reg8: 0, Reg8: 1, Reg8: 0>

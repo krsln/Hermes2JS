@@ -2,7 +2,9 @@ import re
 
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import CallExpression, Identifier, ThisPlaceholder
+from hermes_decompiler.ir.expressions import (
+    ArrayExpression, CallExpression, Identifier, MemberExpression, ThisPlaceholder,
+)
 
 
 # /// Call a builtin function.
@@ -42,17 +44,62 @@ class CallBuiltin(OpcodeHandler):
         real_arg_count = max(arg_count - 1, 0)
         this_reg = self._window_top(ctx, real_arg_count)
 
-        arguments = tuple(
-            self.resolve_call_argument(ctx.analysis, reg)
-            for reg in range(this_reg - 1, this_reg - 1 - real_arg_count, -1)
-        )
+        window = list(range(this_reg - 1, this_reg - 1 - real_arg_count, -1))
 
-        expression = CallExpression(callee=callee, arguments=arguments, )
+        expression = self._default_super_call(ctx, callee, window)
+
+        if expression is None:
+            arguments = tuple(self.resolve_call_argument(ctx.analysis, reg) for reg in window)
+
+            expression = CallExpression(callee=callee, arguments=arguments, )
 
         result = OpcodeResult(ctx.entry, value=expression, dest_reg=dest_reg)
         ctx.analysis.add_result(result)
 
         return result
+
+    @classmethod
+    def _default_super_call(cls, ctx: OpcodeContext, callee: Identifier, window: list[int]):
+        """`applyArguments(parent, this, new.target)` -> `Reflect.construct(
+        parent, arguments, new.target)`.
+
+        The implicit constructor of a derived class (`constructor(...args) {
+        super(...args); }`) is the one place hermes-98 emits it. Measured over
+        the hermes-98 bundle: all 115 uses have the same shape (the second
+        argument is the `CreateThisForSuper` placeholder, the third is
+        `new.target`), none of those functions declares a parameter, and
+        class-field initialisers follow the call.
+
+        INFERRED, not taken from the Hermes sources: that the builtin forwards
+        the caller's `arguments`. The operands are those of an explicit
+        `super(...)` (`CallWithNewTarget`), and the name says it.
+        """
+        if callee.name != "applyArguments" or len(window) != 3:
+            return None
+
+        parent_reg, this_arg_reg, new_target_reg = window
+        this_state = ctx.analysis.get_register_state(this_arg_reg)
+
+        if not (
+                this_state is not None
+                and isinstance(this_state.value, ThisPlaceholder)
+                and this_state.value.origin == "CreateThisForSuper"
+        ):
+            return None
+
+        # The placeholder is the `this` of the call: consumed, not printed.
+        cls.get_register_expression(ctx.analysis, this_arg_reg, keep_placeholder=True)
+
+        return CallExpression(
+            callee=MemberExpression(
+                obj=Identifier(name="Reflect"), prop=Identifier(name="construct"), computed=False,
+            ),
+            arguments=(
+                cls.get_register_expression(ctx.analysis, parent_reg),
+                Identifier(name="arguments"),
+                cls.get_register_expression(ctx.analysis, new_target_reg),
+            ),
+        )
 
     # How many instructions back a write still counts as "setting up THIS
     # call's arguments" when telling window candidates apart.

@@ -24,11 +24,11 @@ function tryCatchRethrowDifferentTest() {
             // CODE → addr: 42 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
             // USED → r3 = Error;
             // CODE → addr: 48 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
-            // USED → r2 = CreateThisForNew(r3);
+            // USED → r2 = CreateThisForNew(Error);
             // CODE → addr: 52 | <LoadConstString>: <Reg8: 5, string_id: 2554>  # String: 'original' (String)
             // USED → r5 = "original";
             // CODE → addr: 56 | <Mov>: <Reg8: 6, Reg8: 2>
-            // USED → r6 = CreateThisForNew(r3);
+            // USED → r6 = CreateThisForNew(Error);
             // CODE → addr: 59 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
             // USED → r0 = new Error("original");
             // CODE → addr: 63 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>
@@ -52,9 +52,9 @@ function tryCatchRethrowDifferentTest() {
             // CODE → addr:101 | <Add>: <Reg8: 5, Reg8: 0, Reg8: 2>
             r5 = "wrapped: " + caughtException
             // CODE → addr:105 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
-            // USED → r2 = CreateThisForNew(r3);
+            // USED → r2 = CreateThisForNew(Error);
             // CODE → addr:109 | <Mov>: <Reg8: 6, Reg8: 2>
-            // USED → r6 = CreateThisForNew(r3);
+            // USED → r6 = CreateThisForNew(Error);
             // CODE → addr:112 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
             // USED → r0 = new Error(r5);
             // CODE → addr:116 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>

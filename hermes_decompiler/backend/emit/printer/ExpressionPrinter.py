@@ -72,6 +72,9 @@ class ExpressionPrinter(PrinterVisitor):
         return node.source
 
     def visit_ThisPlaceholder(self, node: ThisPlaceholder) -> str:
+        if node.source is not None:
+            return f"{node.origin}({self.visit(node.source)})"
+
         return f"{node.origin}(r{node.source_reg})"
 
     # ------------------------------------------------------------------

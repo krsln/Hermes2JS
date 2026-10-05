@@ -33,9 +33,9 @@ function callMapSetTests() {
     // CODE → addr: 63 | <TryGetById>: <Reg8: 3, Reg8: 2, UInt8: 2, string_id: 6821>  # String: 'WeakMap' (Identifier)
     // USED → r3 = WeakMap;
     // CODE → addr: 69 | <CreateThisForNew>: <Reg8: 4, Reg8: 3, UInt8: 3>
-    // USED → r4 = CreateThisForNew(r3);
+    // USED → r4 = CreateThisForNew(WeakMap);
     // CODE → addr: 73 | <Mov>: <Reg8: 10, Reg8: 4>
-    // USED → r10 = CreateThisForNew(r3);
+    // USED → r10 = CreateThisForNew(WeakMap);
     // CODE → addr: 76 | <Construct>: <Reg8: 3, Reg8: 3, UInt8: 1>
     // USED → r3 = new WeakMap();
     // CODE → addr: 80 | <SelectObject>: <Reg8: 7, Reg8: 4, Reg8: 3>

@@ -23,11 +23,11 @@ function tryFinallyNoCatchTest() {
         // CODE → addr: 42 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
         // USED → r3 = Error;
         // CODE → addr: 48 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
-        // USED → r2 = CreateThisForNew(r3);
+        // USED → r2 = CreateThisForNew(Error);
         // CODE → addr: 52 | <LoadConstString>: <Reg8: 4, string_id: 3960>  # String: 'no catch here' (String)
         // USED → r4 = "no catch here";
         // CODE → addr: 56 | <Mov>: <Reg8: 5, Reg8: 2>
-        // USED → r5 = CreateThisForNew(r3);
+        // USED → r5 = CreateThisForNew(Error);
         // CODE → addr: 59 | <Construct>: <Reg8: 0, Reg8: 3, UInt8: 2>
         // USED → r0 = new Error("no catch here");
         // CODE → addr: 63 | <SelectObject>: <Reg8: 0, Reg8: 2, Reg8: 0>

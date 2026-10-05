@@ -29,11 +29,11 @@ function nestedTryCatchTest() {
     // CODE → addr: 62 | <TryGetById>: <Reg8: 3, Reg8: 0, UInt8: 2, string_id: 9>  # String: 'Error' (Identifier)
     // USED → r3 = Error;
     // CODE → addr: 68 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
-    // USED → r2 = CreateThisForNew(r3);
+    // USED → r2 = CreateThisForNew(Error);
     // CODE → addr: 72 | <LoadConstString>: <Reg8: 5, string_id: 9220>  # String: 'inner' (Identifier)
     // USED → r5 = "inner";
     // CODE → addr: 76 | <Mov>: <Reg8: 6, Reg8: 2>
-    // USED → r6 = CreateThisForNew(r3);
+    // USED → r6 = CreateThisForNew(Error);
     // CODE → addr: 79 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
     // USED → r1 = new Error("inner");
     // CODE → addr: 83 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
@@ -58,9 +58,9 @@ function nestedTryCatchTest() {
     // CODE → addr:121 | <Add>: <Reg8: 5, Reg8: 1, Reg8: 2>
     r5 = "rethrown from inner: " + caughtException
     // CODE → addr:125 | <CreateThisForNew>: <Reg8: 2, Reg8: 3, UInt8: 3>
-    // USED → r2 = CreateThisForNew(r3);
+    // USED → r2 = CreateThisForNew(Error);
     // CODE → addr:129 | <Mov>: <Reg8: 6, Reg8: 2>
-    // USED → r6 = CreateThisForNew(r3);
+    // USED → r6 = CreateThisForNew(Error);
     // CODE → addr:132 | <Construct>: <Reg8: 1, Reg8: 3, UInt8: 2>
     // USED → r1 = new Error(r5);
     // CODE → addr:136 | <SelectObject>: <Reg8: 1, Reg8: 2, Reg8: 1>
