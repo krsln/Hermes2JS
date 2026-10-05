@@ -23,48 +23,11 @@ function swapViaDestructureTest() {
     // CODE → addr: 40 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr: 43 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    r5 = GetIterator(r6)
-    // CODE → addr: 49 | <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
-    r7 = r5.next()
+    ;[r8, r7] = r6
     // CODE → addr: 56 | <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
-    // CODE → addr: 58 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
-    // USED → r1 = r5 === undefined;
-    // CODE → addr: 62 | <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined
-    if (r5 !== undefined) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → addr: 67 | <Mov>: <Reg8: 8, Reg8: 7>
-        r8 = r7
-    }
-    // ──────────────── Block 2 ──────────────── 
-    // CODE → addr: 70 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    if (r5 !== undefined) {
-        // ──────────────── Block 3 ──────────────── 
-        // CODE → addr: 75 | <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
-        r6 = r5.next()
-        // CODE → addr: 79 | <Mov>: <Reg8: 9, Reg8: 5>
-        // USED → r9 = r5;
-        // CODE → addr: 82 | <StrictEq>: <Reg8: 3, Reg8: 9, Reg8: 2>
-        // USED → r3 = r5 === undefined;
-        // CODE → addr: 86 | <LoadConstUndefined>: <Reg8: 7>
-        r7 = undefined
-        // CODE → addr: 88 | <Mov>: <Reg8: 1, Reg8: 3>
-        r1 = r5 === undefined
-        if (r5 !== undefined) {
-            // ──────────────── Block 4 ──────────────── 
-            // CODE → addr: 94 | <Mov>: <Reg8: 7, Reg8: 6>
-            r7 = r6
-            // CODE → addr: 97 | <Mov>: <Reg8: 1, Reg8: 3>
-            // USED → r1 = r5 === undefined;
-        }
-    }
-    if (r5 !== undefined) {
-        // ──────────────── Block 6 ──────────────── 
-        // CODE → addr:103 | <IteratorClose>: <Reg8: 5, UInt8: 0>
-        r5.return()
-    }
+    // CODE → addr: 67 | <Mov>: <Reg8: 8, Reg8: 7>
+    // CODE → addr: 94 | <Mov>: <Reg8: 7, Reg8: 6>
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:106 | <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;

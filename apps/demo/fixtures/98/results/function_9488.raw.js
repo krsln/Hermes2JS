@@ -17,51 +17,9 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr: 23 | <LoadParam>: <Reg8: 4, UInt8: 2>
     r4 = param2
     // CODE → addr: 26 | <IteratorBegin>: <Reg8: 3, Reg8: 4>
-    r3 = GetIterator(param2)
-    // CODE → addr: 29 | <Mov>: <Reg8: 5, Reg8: 4>
-    r5 = param2
-    // CODE → addr: 32 | <IteratorNext>: <Reg8: 5, Reg8: 3, Reg8: 5>
-    r5 = r3.next()
-    // CODE → addr: 36 | <Mov>: <Reg8: 6, Reg8: 3>
-    // USED → r6 = r3;
-    // CODE → addr: 39 | <StrictEq>: <Reg8: 0, Reg8: 6, Reg8: 1>
-    // USED → r0 = r3 === undefined;
-    // CODE → addr: 43 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    // CODE → addr: 45 | <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000033
-    if (r3 === undefined) goto label_51;
-    // ──────────────── Block 3 ──────────────── 
+    ;[r7, r6] = param2
     // CODE → addr: 48 | <Mov>: <Reg8: 7, Reg8: 5>
-    r7 = r5
-    // ──────────────── Block 4 ──────────────── 
-    // CODE → addr: 51 | <LoadConstUndefined>: <Reg8: 6>
-    r6 = undefined
-    // CODE → addr: 53 | <JmpTrue>: <Addr8: 28, Reg8: 0>  # Address: 00000051
-    if (r3 === undefined) goto label_81;
-    // ──────────────── Block 5 ──────────────── 
-    // CODE → addr: 56 | <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 4>
-    r4 = r3.next()
-    // CODE → addr: 60 | <Mov>: <Reg8: 5, Reg8: 3>
-    // USED → r5 = r3;
-    // CODE → addr: 63 | <StrictEq>: <Reg8: 2, Reg8: 5, Reg8: 1>
-    // USED → r2 = r3 === undefined;
-    // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 6>
-    r6 = undefined
-    // CODE → addr: 69 | <Mov>: <Reg8: 0, Reg8: 2>
-    r0 = r3 === undefined
-    // CODE → addr: 72 | <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 00000051
-    if (r3 === undefined) goto label_81;
-    // ──────────────── Block 6 ──────────────── 
     // CODE → addr: 75 | <Mov>: <Reg8: 6, Reg8: 4>
-    r6 = r4
-    // CODE → addr: 78 | <Mov>: <Reg8: 0, Reg8: 2>
-    // USED → r0 = r3 === undefined;
-    // ──────────────── Block 7 ──────────────── 
-    // CODE → addr: 81 | <JmpTrue>: <Addr8: 6, Reg8: 0>  # Address: 00000057
-    if (r3 === undefined) goto label_87;
-    // ──────────────── Block 8 ──────────────── 
-    // CODE → addr: 84 | <IteratorClose>: <Reg8: 3, UInt8: 0>
-    r3.return()
     // ──────────────── Block 9 ──────────────── 
     // CODE → addr: 87 | <GetGlobalObject>: <Reg8: 3>
     // USED → r3 = globalThis;

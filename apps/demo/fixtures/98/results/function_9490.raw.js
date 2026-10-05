@@ -113,50 +113,9 @@ function callDestructuringTests() {
     // CODE → addr:250 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr:253 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    r5 = GetIterator(r6)
-    // CODE → addr:256 | <Mov>: <Reg8: 7, Reg8: 6>
-    // CODE → addr:259 | <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
-    r7 = r5.next()
-    // CODE → addr:263 | <Mov>: <Reg8: 8, Reg8: 5>
-    // USED → r8 = r5;
-    // CODE → addr:266 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
-    // USED → r1 = r5 === undefined;
-    // CODE → addr:270 | <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined
-    // CODE → addr:272 | <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 00000116
-    if (r5 === undefined) goto label_278;
-    // ──────────────── Block 9 ──────────────── 
+    ;[r8, r7] = r6
     // CODE → addr:275 | <Mov>: <Reg8: 8, Reg8: 7>
-    r8 = r7
-    // ──────────────── Block 10 ──────────────── 
-    // CODE → addr:278 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    // CODE → addr:280 | <JmpTrue>: <Addr8: 28, Reg8: 1>  # Address: 00000134
-    if (r5 === undefined) goto label_308;
-    // ──────────────── Block 11 ──────────────── 
-    // CODE → addr:283 | <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
-    r6 = r5.next()
-    // CODE → addr:287 | <Mov>: <Reg8: 11, Reg8: 5>
-    // USED → r11 = r5;
-    // CODE → addr:290 | <StrictEq>: <Reg8: 3, Reg8: 11, Reg8: 2>
-    // USED → r3 = r5 === undefined;
-    // CODE → addr:294 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    // CODE → addr:296 | <Mov>: <Reg8: 1, Reg8: 3>
-    r1 = r5 === undefined
-    // CODE → addr:299 | <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000134
-    if (r5 === undefined) goto label_308;
-    // ──────────────── Block 12 ──────────────── 
     // CODE → addr:302 | <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = r6
-    // CODE → addr:305 | <Mov>: <Reg8: 1, Reg8: 3>
-    // USED → r1 = r5 === undefined;
-    // ──────────────── Block 13 ──────────────── 
-    // CODE → addr:308 | <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 0000013a
-    if (r5 === undefined) goto label_314;
-    // ──────────────── Block 14 ──────────────── 
-    // CODE → addr:311 | <IteratorClose>: <Reg8: 5, UInt8: 0>
-    r5.return()
     // ──────────────── Block 15 ──────────────── 
     // CODE → addr:314 | <TryGetById>: <Reg8: 11, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r11 = console;
@@ -211,50 +170,9 @@ function callDestructuringTests() {
     // CODE → addr:422 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr:425 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    r5 = GetIterator(r6)
-    // CODE → addr:428 | <Mov>: <Reg8: 7, Reg8: 6>
-    // CODE → addr:431 | <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
-    r7 = r5.next()
-    // CODE → addr:435 | <Mov>: <Reg8: 8, Reg8: 5>
-    // USED → r8 = r5;
-    // CODE → addr:438 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
-    // USED → r1 = r5 === undefined;
-    // CODE → addr:442 | <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined
-    // CODE → addr:444 | <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 000001c2
-    if (r5 === undefined) goto label_450;
-    // ──────────────── Block 16 ──────────────── 
+    ;[r8, r7] = r6
     // CODE → addr:447 | <Mov>: <Reg8: 8, Reg8: 7>
-    r8 = r7
-    // ──────────────── Block 17 ──────────────── 
-    // CODE → addr:450 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    // CODE → addr:452 | <JmpTrue>: <Addr8: 28, Reg8: 1>  # Address: 000001e0
-    if (r5 === undefined) goto label_480;
-    // ──────────────── Block 18 ──────────────── 
-    // CODE → addr:455 | <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
-    r6 = r5.next()
-    // CODE → addr:459 | <Mov>: <Reg8: 9, Reg8: 5>
-    // USED → r9 = r5;
-    // CODE → addr:462 | <StrictEq>: <Reg8: 3, Reg8: 9, Reg8: 2>
-    // USED → r3 = r5 === undefined;
-    // CODE → addr:466 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    // CODE → addr:468 | <Mov>: <Reg8: 1, Reg8: 3>
-    r1 = r5 === undefined
-    // CODE → addr:471 | <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 000001e0
-    if (r5 === undefined) goto label_480;
-    // ──────────────── Block 19 ──────────────── 
     // CODE → addr:474 | <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = r6
-    // CODE → addr:477 | <Mov>: <Reg8: 1, Reg8: 3>
-    // USED → r1 = r5 === undefined;
-    // ──────────────── Block 20 ──────────────── 
-    // CODE → addr:480 | <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 000001e6
-    if (r5 === undefined) goto label_486;
-    // ──────────────── Block 21 ──────────────── 
-    // CODE → addr:483 | <IteratorClose>: <Reg8: 5, UInt8: 0>
-    r5.return()
     // ──────────────── Block 22 ──────────────── 
     // CODE → addr:486 | <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;

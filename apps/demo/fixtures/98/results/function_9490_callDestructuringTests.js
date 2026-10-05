@@ -98,46 +98,9 @@ function callDestructuringTests() {
     // CODE → addr:250 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr:253 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    r5 = GetIterator(r6)
-    // CODE → addr:259 | <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
-    r7 = r5.next()
-    // CODE → addr:266 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
-    // USED → r1 = r5 === undefined;
-    // CODE → addr:270 | <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined
-    if (r5 !== undefined) {
-        // ──────────────── Block 9 ──────────────── 
-        // CODE → addr:275 | <Mov>: <Reg8: 8, Reg8: 7>
-        r8 = r7
-    }
-    // ──────────────── Block 10 ──────────────── 
-    // CODE → addr:278 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    if (r5 !== undefined) {
-        // ──────────────── Block 11 ──────────────── 
-        // CODE → addr:283 | <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
-        r6 = r5.next()
-        // CODE → addr:287 | <Mov>: <Reg8: 11, Reg8: 5>
-        // USED → r11 = r5;
-        // CODE → addr:290 | <StrictEq>: <Reg8: 3, Reg8: 11, Reg8: 2>
-        // USED → r3 = r5 === undefined;
-        // CODE → addr:294 | <LoadConstUndefined>: <Reg8: 7>
-        r7 = undefined
-        // CODE → addr:296 | <Mov>: <Reg8: 1, Reg8: 3>
-        r1 = r5 === undefined
-        if (r5 !== undefined) {
-            // ──────────────── Block 12 ──────────────── 
-            // CODE → addr:302 | <Mov>: <Reg8: 7, Reg8: 6>
-            r7 = r6
-            // CODE → addr:305 | <Mov>: <Reg8: 1, Reg8: 3>
-            // USED → r1 = r5 === undefined;
-        }
-    }
-    if (r5 !== undefined) {
-        // ──────────────── Block 14 ──────────────── 
-        // CODE → addr:311 | <IteratorClose>: <Reg8: 5, UInt8: 0>
-        r5.return()
-    }
+    ;[r8, r7] = r6
+    // CODE → addr:275 | <Mov>: <Reg8: 8, Reg8: 7>
+    // CODE → addr:302 | <Mov>: <Reg8: 7, Reg8: 6>
     // ──────────────── Block 15 ──────────────── 
     // CODE → addr:314 | <TryGetById>: <Reg8: 11, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r11 = console;
@@ -192,46 +155,9 @@ function callDestructuringTests() {
     // CODE → addr:422 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr:425 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    r5 = GetIterator(r6)
-    // CODE → addr:431 | <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
-    r7 = r5.next()
-    // CODE → addr:438 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
-    // USED → r1 = r5 === undefined;
-    // CODE → addr:442 | <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined
-    if (r5 !== undefined) {
-        // ──────────────── Block 16 ──────────────── 
-        // CODE → addr:447 | <Mov>: <Reg8: 8, Reg8: 7>
-        r8 = r7
-    }
-    // ──────────────── Block 17 ──────────────── 
-    // CODE → addr:450 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    if (r5 !== undefined) {
-        // ──────────────── Block 18 ──────────────── 
-        // CODE → addr:455 | <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
-        r6 = r5.next()
-        // CODE → addr:459 | <Mov>: <Reg8: 9, Reg8: 5>
-        // USED → r9 = r5;
-        // CODE → addr:462 | <StrictEq>: <Reg8: 3, Reg8: 9, Reg8: 2>
-        // USED → r3 = r5 === undefined;
-        // CODE → addr:466 | <LoadConstUndefined>: <Reg8: 7>
-        r7 = undefined
-        // CODE → addr:468 | <Mov>: <Reg8: 1, Reg8: 3>
-        r1 = r5 === undefined
-        if (r5 !== undefined) {
-            // ──────────────── Block 19 ──────────────── 
-            // CODE → addr:474 | <Mov>: <Reg8: 7, Reg8: 6>
-            r7 = r6
-            // CODE → addr:477 | <Mov>: <Reg8: 1, Reg8: 3>
-            // USED → r1 = r5 === undefined;
-        }
-    }
-    if (r5 !== undefined) {
-        // ──────────────── Block 21 ──────────────── 
-        // CODE → addr:483 | <IteratorClose>: <Reg8: 5, UInt8: 0>
-        r5.return()
-    }
+    ;[r8, r7] = r6
+    // CODE → addr:447 | <Mov>: <Reg8: 8, Reg8: 7>
+    // CODE → addr:474 | <Mov>: <Reg8: 7, Reg8: 6>
     // ──────────────── Block 22 ──────────────── 
     // CODE → addr:486 | <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;

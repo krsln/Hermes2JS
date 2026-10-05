@@ -23,52 +23,11 @@ function swapViaDestructureTest() {
     // CODE → addr: 40 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr: 43 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    r5 = GetIterator(r6)
-    // CODE → addr: 46 | <Mov>: <Reg8: 7, Reg8: 6>
-    // CODE → addr: 49 | <IteratorNext>: <Reg8: 7, Reg8: 5, Reg8: 7>
-    r7 = r5.next()
-    // CODE → addr: 53 | <Mov>: <Reg8: 8, Reg8: 5>
-    // USED → r8 = r5;
+    ;[r8, r7] = r6
     // CODE → addr: 56 | <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
-    // CODE → addr: 58 | <StrictEq>: <Reg8: 1, Reg8: 8, Reg8: 2>
-    // USED → r1 = r5 === undefined;
-    // CODE → addr: 62 | <LoadConstUndefined>: <Reg8: 8>
-    r8 = undefined
-    // CODE → addr: 64 | <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 00000046
-    if (r5 === undefined) goto label_70;
-    // ──────────────── Block 1 ──────────────── 
     // CODE → addr: 67 | <Mov>: <Reg8: 8, Reg8: 7>
-    r8 = r7
-    // ──────────────── Block 2 ──────────────── 
-    // CODE → addr: 70 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    // CODE → addr: 72 | <JmpTrue>: <Addr8: 28, Reg8: 1>  # Address: 00000064
-    if (r5 === undefined) goto label_100;
-    // ──────────────── Block 3 ──────────────── 
-    // CODE → addr: 75 | <IteratorNext>: <Reg8: 6, Reg8: 5, Reg8: 6>
-    r6 = r5.next()
-    // CODE → addr: 79 | <Mov>: <Reg8: 9, Reg8: 5>
-    // USED → r9 = r5;
-    // CODE → addr: 82 | <StrictEq>: <Reg8: 3, Reg8: 9, Reg8: 2>
-    // USED → r3 = r5 === undefined;
-    // CODE → addr: 86 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    // CODE → addr: 88 | <Mov>: <Reg8: 1, Reg8: 3>
-    r1 = r5 === undefined
-    // CODE → addr: 91 | <JmpTrue>: <Addr8: 9, Reg8: 3>  # Address: 00000064
-    if (r5 === undefined) goto label_100;
-    // ──────────────── Block 4 ──────────────── 
     // CODE → addr: 94 | <Mov>: <Reg8: 7, Reg8: 6>
-    r7 = r6
-    // CODE → addr: 97 | <Mov>: <Reg8: 1, Reg8: 3>
-    // USED → r1 = r5 === undefined;
-    // ──────────────── Block 5 ──────────────── 
-    // CODE → addr:100 | <JmpTrue>: <Addr8: 6, Reg8: 1>  # Address: 0000006a
-    if (r5 === undefined) goto label_106;
-    // ──────────────── Block 6 ──────────────── 
-    // CODE → addr:103 | <IteratorClose>: <Reg8: 5, UInt8: 0>
-    r5.return()
     // ──────────────── Block 7 ──────────────── 
     // CODE → addr:106 | <TryGetById>: <Reg8: 6, Reg8: 4, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r6 = console;
