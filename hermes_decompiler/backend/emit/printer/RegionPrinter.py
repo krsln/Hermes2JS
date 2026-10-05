@@ -159,7 +159,7 @@ class RegionPrinter:
                 if self.ctx.verbose:
                     self.ctx.write(lines, f"// USED → {rendered};")
             else:
-                self.ctx.write(lines, rendered)
+                self.ctx.write(lines, f"{rendered}" if rendered.startswith("[") else rendered)
 
     # ------------------------------------------------------------------
     # sequence

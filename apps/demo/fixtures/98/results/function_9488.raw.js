@@ -17,7 +17,7 @@ function parameterDestructureTest(param1, param2) {
     // CODE → addr: 23 | <LoadParam>: <Reg8: 4, UInt8: 2>
     r4 = param2
     // CODE → addr: 26 | <IteratorBegin>: <Reg8: 3, Reg8: 4>
-    ;[r7, r6] = param2
+    [r7, r6] = param2
     // CODE → addr: 48 | <Mov>: <Reg8: 7, Reg8: 5>
     // CODE → addr: 75 | <Mov>: <Reg8: 6, Reg8: 4>
     // ──────────────── Block 9 ──────────────── 

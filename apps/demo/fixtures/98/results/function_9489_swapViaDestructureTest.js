@@ -23,7 +23,7 @@ function swapViaDestructureTest() {
     // CODE → addr: 40 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr: 43 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    ;[r8, r7] = r6
+    [r8, r7] = r6
     // CODE → addr: 56 | <LoadConstUndefined>: <Reg8: 2>
     // USED → r2 = undefined;
     // CODE → addr: 67 | <Mov>: <Reg8: 8, Reg8: 7>

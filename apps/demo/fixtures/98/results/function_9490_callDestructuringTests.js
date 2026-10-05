@@ -98,7 +98,7 @@ function callDestructuringTests() {
     // CODE → addr:250 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr:253 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    ;[r8, r7] = r6
+    [r8, r7] = r6
     // CODE → addr:275 | <Mov>: <Reg8: 8, Reg8: 7>
     // CODE → addr:302 | <Mov>: <Reg8: 7, Reg8: 6>
     // ──────────────── Block 15 ──────────────── 
@@ -155,7 +155,7 @@ function callDestructuringTests() {
     // CODE → addr:422 | <Mov>: <Reg8: 6, Reg8: 7>
     r6 = r7
     // CODE → addr:425 | <IteratorBegin>: <Reg8: 5, Reg8: 6>
-    ;[r8, r7] = r6
+    [r8, r7] = r6
     // CODE → addr:447 | <Mov>: <Reg8: 8, Reg8: 7>
     // CODE → addr:474 | <Mov>: <Reg8: 7, Reg8: 6>
     // ──────────────── Block 22 ──────────────── 

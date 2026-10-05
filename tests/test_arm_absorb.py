@@ -42,8 +42,11 @@ def test_destructuring_guard_keeps_the_assignment_in_the_arm():
     out = Decompiler.render(Decompiler.build_context(path.read_text(encoding="utf-8"), 9488, strict=False),
                             verbose=False)
 
-    assert "r6 = r4" in out
+    # The element writes (`r6 = r4` used to vanish with the folded guard) are
+    # now part of the destructuring pattern itself.
+    assert "[r7, r6] = param2" in out
     assert "r3 === undefined || r3 === undefined" not in out
+    assert "GetIterator" not in out and ".next()" not in out
 
 
 def _render_fixture(version: str, index: int, name: str) -> str:
@@ -170,3 +173,21 @@ def test_async_environment_prologue_precedes_the_code_that_reads_it():
 
     assert out.index("r1 = getParentEnvironment(0)") < out.index("await") < out.index("r1[0][0] = param2")
     assert out.index("r1[0][0] = param2") < out.index("return r5")
+
+
+def test_flat_array_destructuring_is_one_statement():
+    # hermes-98 `swapViaDestructureTest`: `[a, b] = [2, 1]` compiled to
+    # IteratorBegin/Next/Close diamonds; every guard was printed.
+    out = _render_98(9489, "swapViaDestructureTest")
+
+    assert "[r8, r7] = r6" in out
+    assert "GetIterator" not in out and ".next()" not in out and ".return()" not in out
+    assert "console.log(r8, r7)" in out
+
+
+def test_destructuring_statement_cannot_glue_onto_the_previous_line():
+    # No statement terminators are printed, so `r6 = r7\n[r8, r7] = r6` would
+    # parse as `r6 = r7[r8, r7] = r6`.
+    out = _render_98(9489, "swapViaDestructureTest")
+
+    assert "\n[" not in out

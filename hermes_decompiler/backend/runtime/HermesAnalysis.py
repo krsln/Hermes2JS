@@ -4,7 +4,9 @@ from typing import Any
 from hermes_decompiler.backend.analysis.cfg import CFG
 from hermes_decompiler.backend.emit import JSEmitter
 from hermes_decompiler.backend.transforms import StructuralAnalyzer
-from hermes_decompiler.backend.transforms.cfg_passes import GeneratorStateDispatchCfgPass, generator_dispatch
+from hermes_decompiler.backend.transforms.cfg_passes import (
+    ArrayDestructuringCfgPass, GeneratorStateDispatchCfgPass, generator_dispatch,
+)
 from hermes_decompiler.backend.transforms.structurers import SequenceStructurer
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.frontend.opcode import OpcodeResult
@@ -284,6 +286,11 @@ class HermesAnalysis:
                     "(e.g. `yield*`, an async generator)",
                     True,
                 )
+
+        # `[a, b] = src` as one statement instead of the iterator-protocol
+        # diamonds. Needs to see the final block order, after the generator
+        # rewrite above, and before any analysis is computed.
+        ArrayDestructuringCfgPass(cfg).run()
 
         cfg.verify()
         cfg.compute_dominators()
