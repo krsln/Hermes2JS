@@ -191,3 +191,22 @@ def test_destructuring_statement_cannot_glue_onto_the_previous_line():
     out = _render_98(9489, "swapViaDestructureTest")
 
     assert "\n[" not in out
+
+
+def test_default_value_ternary_does_not_read_its_own_target_before_it_is_set():
+    # hermes-98 `parameterDestructureTest`: `{ name = "anon" } = param1` folded to
+    # `r8 = (r8 !== undefined) ? param1.name : "anon"`. The default (`r8 =
+    # param1.name`) moved inside the ternary, so the test read `r8` before
+    # anything defined it.
+    out = _render_98(9488, "parameterDestructureTest")
+
+    assert 'r8 = (param1.name !== undefined) ? param1.name : "anon"' in out
+    assert "(r8 !== undefined)" not in out
+
+
+def test_default_value_ternary_test_names_the_default_in_every_destructuring_form():
+    for index, name in ((9485, "nestedObjectDestructureTest"), (9486, "renamedDefaultDestructureTest")):
+        out = _render_98(index, name)
+
+        assert "(r5 !== undefined) ?" not in out
+        assert ".page !== undefined) ?" in out or ".retries !== undefined) ?" in out

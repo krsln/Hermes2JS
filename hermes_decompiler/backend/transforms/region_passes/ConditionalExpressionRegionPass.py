@@ -4,13 +4,21 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import RegionVisitor, IfRegion, SequenceRegion
 from hermes_decompiler.backend.transforms.shared import (
     negate_condition, has_side_effects, repoint_references, reclaim_definition, is_unfolded_literal_definition,
-    absorb_arm_definitions,
+    absorb_arm_definitions, substitute_register,
 )
 from hermes_decompiler.core.logging import get_logger
-from hermes_decompiler.ir.expressions import ConditionalExpression, Expression
+from hermes_decompiler.ir import Node
+from hermes_decompiler.ir.expressions import ConditionalExpression, Expression, Identifier
 from ._base import RegionPass
 
 logger = get_logger(__name__)
+
+
+def _mentions_register(node, register: int) -> bool:
+    if isinstance(node, Identifier) and node.name == f"r{register}":
+        return True
+
+    return any(_mentions_register(child, register) for child in node.children if isinstance(child, Node))
 
 
 class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
@@ -118,8 +126,18 @@ class ConditionalExpressionRegionPass(RegionPass, RegionVisitor):
             if has_side_effects(default_expr):
                 continue
 
+            # `if (r8 === undefined) r8 = "anon"` tests the very register it
+            # defaults, and that read means the default's value. Folded as-is
+            # the test would still name `r8` while its defining statement
+            # moved inside the ternary, so `r8` would be read before anything
+            # sets it. The default is pure (checked above): name it directly.
+            test = negate_condition(condition)
+
+            if _mentions_register(test, last.dest_reg):
+                test = substitute_register(test, f"r{last.dest_reg}", default_expr)
+
             new_expr = ConditionalExpression(
-                test=negate_condition(condition),
+                test=test,
                 consequent=default_expr,
                 alternate=arm_value,
             )
