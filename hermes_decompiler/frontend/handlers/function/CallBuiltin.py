@@ -2,7 +2,7 @@ import re
 
 from hermes_decompiler.frontend.handlers import OpcodeHandler, OpcodeContext, ArgsPattern, sequence, REG, UINT8, UINT32
 from hermes_decompiler.frontend.opcode import OpcodeResult
-from hermes_decompiler.ir.expressions import CallExpression, Identifier
+from hermes_decompiler.ir.expressions import CallExpression, Identifier, ThisPlaceholder
 
 
 # /// Call a builtin function.
@@ -95,6 +95,13 @@ class CallBuiltin(OpcodeHandler):
         recent: set[int] = set()
 
         for name, state in ctx.analysis.registers.items():
+            # A `this` placeholder parked in a window slot by an earlier
+            # `new`/`super` call is not an argument of THIS call; counting it
+            # as a recent write moved the window one register up
+            # (`arraySpread(r25, r24, r23)` with r25 a stale `this` slot).
+            if isinstance(state.value, ThisPlaceholder):
+                continue
+
             defined_at = index_of.get(state.definition.address)
 
             if defined_at is not None and 0 < ctx.index - defined_at <= cls._RECENT_WRITE_RANGE:

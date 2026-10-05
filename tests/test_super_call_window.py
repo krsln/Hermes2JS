@@ -130,8 +130,22 @@ def test_a_create_this_for_new_from_another_constructor_is_left_alone():
         "<CreateThisForNew>: <Reg8: 2, Reg8: 1, UInt8: 0>",
         "<LoadConstUndefined>: <Reg8: 6>",
         "<Construct>: <Reg8: 1, Reg8: 1, UInt8: 1>",
+        "<PutByIdStrict>: <Reg8: 1, Reg8: 5, UInt8: 0, string_id: 7>  # String: 'p' (Identifier)",
         "<Ret>: <Reg8: 1>",
     )
 
-    assert "r5 = CreateThisForNew(r4)" in out
+    # r5 is read afterwards, so it is not a dead placeholder.
+    assert "CreateThisForNew(r4)" in out
     assert out.count("CreateThisForNew") == 1
+
+
+def test_a_placeholder_nothing_reads_is_dropped():
+    # `r3 = CreateThisForNew(r1)` in front of a `typeof` guard, never read.
+    out = _out(
+        "<GetParentEnvironment>: <Reg8: 1, UInt8: 0>",
+        "<LoadFromEnvironment>: <Reg8: 1, Reg8: 1, UInt8: 3>",
+        "<CreateThisForNew>: <Reg8: 3, Reg8: 1, UInt8: 0>",
+        "<Ret>: <Reg8: 1>",
+    )
+
+    assert "CreateThisForNew" not in out
