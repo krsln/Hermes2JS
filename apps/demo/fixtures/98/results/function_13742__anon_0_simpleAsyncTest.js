@@ -1,4 +1,33 @@
 async function _anon_0_simpleAsyncTest() {
+    // ──────────────── Block 10 ──────────────── 
+    // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
+    r1 = getParentEnvironment(0)
+    // CODE → addr:179 | <CreateTopLevelEnvironment>: <Reg8: 8, UInt32: 1>
+    // USED → r8 = __environment__;
+    // CODE → addr:185 | <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 8>
+    r1[0] = __environment__
+    // CODE → addr:189 | <LoadConstUndefined>: <Reg8: 7>
+    // USED → r7 = undefined;
+    // CODE → addr:191 | <StoreNPToEnvironment>: <Reg8: 8, UInt8: 0, Reg8: 7>
+    __environment__[0] = undefined
+    // CODE → addr:195 | <GetGlobalObject>: <Reg8: 7>
+    // USED → r7 = globalThis;
+    // CODE → addr:197 | <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // USED → r10 = console;
+    // CODE → addr:203 | <GetByIdShort>: <Reg8: 8, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // USED → r8 = console.log;
+    // CODE → addr:208 | <LoadConstString>: <Reg8: 7, string_id: 568>  # String: '__BC:Functions/AsyncTests/simpleAsyncTest/start' (String)
+    // USED → r7 = "__BC:Functions/AsyncTests/simpleAsyncTest/start";
+    // CODE → addr:212 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 10, Reg8: 7>
+    console.log("__BC:Functions/AsyncTests/simpleAsyncTest/start")
+    // CODE → addr:217 | <GetParentEnvironment>: <Reg8: 7, UInt8: 1>
+    r7 = getParentEnvironment(1)
+    // CODE → addr:220 | <LoadFromEnvironment>: <Reg8: 8, Reg8: 7, UInt8: 0>
+    // USED → r8 = r7[0];
+    // CODE → addr:224 | <LoadConstUInt8>: <Reg8: 7, UInt8: 42>
+    // USED → r7 = 42;
+    // CODE → addr:227 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
+    await r7[0].call(0, 42)
     // ──────────────── Block 5 ──────────────── 
     // CODE → addr: 67 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 0>
     // USED → r5 = r1[0];
@@ -30,33 +59,4 @@ async function _anon_0_simpleAsyncTest() {
     r5 = { "value": r1[0][0], "done": true }
     // CODE → addr:138 | <Ret>: <Reg8: 5>
     return r5;
-    // ──────────────── Block 10 ──────────────── 
-    // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
-    r1 = getParentEnvironment(0)
-    // CODE → addr:179 | <CreateTopLevelEnvironment>: <Reg8: 8, UInt32: 1>
-    // USED → r8 = __environment__;
-    // CODE → addr:185 | <StoreToEnvironment>: <Reg8: 1, UInt8: 0, Reg8: 8>
-    r1[0] = __environment__
-    // CODE → addr:189 | <LoadConstUndefined>: <Reg8: 7>
-    // USED → r7 = undefined;
-    // CODE → addr:191 | <StoreNPToEnvironment>: <Reg8: 8, UInt8: 0, Reg8: 7>
-    __environment__[0] = undefined
-    // CODE → addr:195 | <GetGlobalObject>: <Reg8: 7>
-    // USED → r7 = globalThis;
-    // CODE → addr:197 | <TryGetById>: <Reg8: 10, Reg8: 7, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r10 = console;
-    // CODE → addr:203 | <GetByIdShort>: <Reg8: 8, Reg8: 10, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r8 = console.log;
-    // CODE → addr:208 | <LoadConstString>: <Reg8: 7, string_id: 568>  # String: '__BC:Functions/AsyncTests/simpleAsyncTest/start' (String)
-    // USED → r7 = "__BC:Functions/AsyncTests/simpleAsyncTest/start";
-    // CODE → addr:212 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 10, Reg8: 7>
-    console.log("__BC:Functions/AsyncTests/simpleAsyncTest/start")
-    // CODE → addr:217 | <GetParentEnvironment>: <Reg8: 7, UInt8: 1>
-    r7 = getParentEnvironment(1)
-    // CODE → addr:220 | <LoadFromEnvironment>: <Reg8: 8, Reg8: 7, UInt8: 0>
-    // USED → r8 = r7[0];
-    // CODE → addr:224 | <LoadConstUInt8>: <Reg8: 7, UInt8: 42>
-    // USED → r7 = 42;
-    // CODE → addr:227 | <Call2>: <Reg8: 7, Reg8: 8, Reg8: 9, Reg8: 7>
-    await r7[0].call(0, 42)
 }

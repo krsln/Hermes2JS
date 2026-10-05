@@ -150,3 +150,23 @@ def test_a_catch_that_only_rethrows_is_not_printed():
 
     assert "catch" not in out and "r1[0]" not in out and "r1[1]" not in out
     assert out.count("yield") == 3
+
+
+def test_generator_body_is_printed_in_control_flow_order():
+    # hermes-98 `simpleGeneratorTest`: the resume continuations sit at LOWER
+    # addresses than the code that reaches them, so address order printed
+    # `end` + `return` first and the `start` log last.
+    out = _render_98(12482, "simpleGeneratorTest")
+
+    order = [out.index(marker) for marker in ("/start", "yield 1", "yield 2", "yield 3", "/end", "return r7")]
+
+    assert order == sorted(order)
+
+
+def test_async_environment_prologue_precedes_the_code_that_reads_it():
+    # hermes-98 `simpleAsyncTest`: `r1 = getParentEnvironment(0)` was printed
+    # below the post-await body that reads `r1[0][0]`.
+    out = _render_98(13742, "simpleAsyncTest")
+
+    assert out.index("r1 = getParentEnvironment(0)") < out.index("await") < out.index("r1[0][0] = param2")
+    assert out.index("r1[0][0] = param2") < out.index("return r5")

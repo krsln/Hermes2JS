@@ -1,35 +1,4 @@
 async function _anon_0_runAllTests() {
-    // ──────────────── Block 5 ──────────────── 
-    // CODE → addr: 67 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 0>
-    // USED → r5 = r1[0];
-    // CODE → addr: 71 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 26>
-    r7 = r1[0][26]
-    // CODE → addr: 75 | <GetById>: <Reg8: 8, Reg8: 7, UInt8: 0, string_id: 10699>  # String: 'classTest' (Identifier)
-    // USED → r8 = r7.classTest;
-    // CODE → addr: 81 | <LoadConstUndefined>: <Reg8: 7>
-    r7 = undefined
-    // CODE → addr: 83 | <Call1>: <Reg8: 8, Reg8: 8, Reg8: 7>
-    r8 = r7.classTest()
-    // CODE → addr: 87 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 27>
-    r5 = r1[0][27]
-    // CODE → addr: 91 | <GetById>: <Reg8: 5, Reg8: 5, UInt8: 1, string_id: 11131>  # String: 'privateStaticTest' (Identifier)
-    // USED → r5 = r5.privateStaticTest;
-    // CODE → addr: 97 | <Call1>: <Reg8: 5, Reg8: 5, Reg8: 7>
-    r5 = r5.privateStaticTest.call(undefined)
-    // CODE → addr:101 | <GetGlobalObject>: <Reg8: 5>
-    // USED → r5 = globalThis;
-    // CODE → addr:103 | <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)
-    // USED → r8 = console;
-    // CODE → addr:109 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 178>  # String: 'log' (Identifier)
-    // USED → r7 = console.log;
-    // CODE → addr:114 | <LoadConstString>: <Reg8: 5, string_id: 5016>  # String: '__BC:index/runAllTests/end' (String)
-    // USED → r5 = "__BC:index/runAllTests/end";
-    // CODE → addr:118 | <Call2>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 5>
-    console.log("__BC:index/runAllTests/end")
-    // CODE → addr:130 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
-    r5 = { "value": undefined, "done": true }
-    // CODE → addr:136 | <Ret>: <Reg8: 5>
-    return r5;
     // ──────────────── Block 10 ──────────────── 
     // CODE → addr:  0 | <GetParentEnvironment>: <Reg8: 1, UInt8: 0>
     r1 = getParentEnvironment(0)
@@ -351,4 +320,35 @@ async function _anon_0_runAllTests() {
     // USED → r7 = r7.callAsyncTests;
     // CODE → addr:953 | <Call1>: <Reg8: 7, Reg8: 7, Reg8: 8>
     await r7.callAsyncTests.call(undefined)
+    // ──────────────── Block 5 ──────────────── 
+    // CODE → addr: 67 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 1, UInt8: 0>
+    // USED → r5 = r1[0];
+    // CODE → addr: 71 | <LoadFromEnvironment>: <Reg8: 7, Reg8: 5, UInt8: 26>
+    r7 = r1[0][26]
+    // CODE → addr: 75 | <GetById>: <Reg8: 8, Reg8: 7, UInt8: 0, string_id: 10699>  # String: 'classTest' (Identifier)
+    // USED → r8 = r7.classTest;
+    // CODE → addr: 81 | <LoadConstUndefined>: <Reg8: 7>
+    r7 = undefined
+    // CODE → addr: 83 | <Call1>: <Reg8: 8, Reg8: 8, Reg8: 7>
+    r8 = r7.classTest()
+    // CODE → addr: 87 | <LoadFromEnvironment>: <Reg8: 5, Reg8: 5, UInt8: 27>
+    r5 = r1[0][27]
+    // CODE → addr: 91 | <GetById>: <Reg8: 5, Reg8: 5, UInt8: 1, string_id: 11131>  # String: 'privateStaticTest' (Identifier)
+    // USED → r5 = r5.privateStaticTest;
+    // CODE → addr: 97 | <Call1>: <Reg8: 5, Reg8: 5, Reg8: 7>
+    r5 = r5.privateStaticTest.call(undefined)
+    // CODE → addr:101 | <GetGlobalObject>: <Reg8: 5>
+    // USED → r5 = globalThis;
+    // CODE → addr:103 | <TryGetById>: <Reg8: 8, Reg8: 5, UInt8: 2, string_id: 108>  # String: 'console' (Identifier)
+    // USED → r8 = console;
+    // CODE → addr:109 | <GetByIdShort>: <Reg8: 7, Reg8: 8, UInt8: 3, string_id: 178>  # String: 'log' (Identifier)
+    // USED → r7 = console.log;
+    // CODE → addr:114 | <LoadConstString>: <Reg8: 5, string_id: 5016>  # String: '__BC:index/runAllTests/end' (String)
+    // USED → r5 = "__BC:index/runAllTests/end";
+    // CODE → addr:118 | <Call2>: <Reg8: 5, Reg8: 7, Reg8: 8, Reg8: 5>
+    console.log("__BC:index/runAllTests/end")
+    // CODE → addr:130 | <NewObjectWithBuffer>: <Reg8: 5, UInt16: 1047, UInt16: 39753>  # Object: {'value': undefined, 'done': true}
+    r5 = { "value": undefined, "done": true }
+    // CODE → addr:136 | <Ret>: <Reg8: 5>
+    return r5;
 }

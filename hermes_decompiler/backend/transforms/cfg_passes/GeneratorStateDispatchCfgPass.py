@@ -180,8 +180,102 @@ class GeneratorStateDispatchCfgPass:
 
         self._prune_unreachable(entry_block)
         self._strip_protocol_writes(prelude, entry_block)
+        self._order_by_control_flow(entry_block)
 
         return True
+
+    # ------------------------------------------------------------------
+    # Block order
+    # ------------------------------------------------------------------
+
+    def _order_by_control_flow(self, entry_block: BasicBlock) -> None:
+        """
+        Put `cfg.blocks` in an order every forward edge respects.
+
+        `SequenceStructurer` takes `cfg.blocks` as the top-level statement
+        order, which for ordinary code is address order. Folding the
+        suspend sites breaks that: the compiler lays the resume
+        continuations out *before* the code that reaches them (`yield 1`
+        at 0x12c resumes at 0xdc, which `yield 2` resumes at 0xa5, ...),
+        so address order printed the post-resume body above the code
+        that runs first, and the environment prologue below the reads.
+
+        Kahn's algorithm over the forward edges (successors plus
+        try-block -> handler), always taking the lowest-address ready
+        block, keeps address order wherever it is already valid - so
+        functions the fold did not reorder print exactly as before.
+        Back edges (found by a DFS from the entry) are left out, or a
+        loop header would wait on its own latch.
+        """
+        blocks = self.cfg.blocks
+        ids = {block.id for block in blocks}
+        edges: dict[int, list[BasicBlock]] = {block.id: [] for block in blocks}
+
+        for block in blocks:
+            edges[block.id].extend(s for s in block.successors if s.id in ids)
+
+        for handler in self.cfg.exception_handlers:
+            handler_block = handler["handler_block"]
+
+            if handler_block.id not in ids:
+                continue
+
+            for try_block in handler["try_blocks"]:
+                if try_block.id in ids and try_block is not handler_block:
+                    edges[try_block.id].append(handler_block)
+
+        # Back edges: an edge into a block still on the DFS stack.
+        back: set[tuple[int, int]] = set()
+        state: dict[int, int] = {}  # 1 = on stack, 2 = done
+
+        for root in [entry_block, *sorted(blocks, key=lambda b: b.address)]:
+            if root.id in state:
+                continue
+
+            state[root.id] = 1
+            stack = [(root, iter(edges[root.id]))]
+
+            while stack:
+                node, children = stack[-1]
+
+                for child in children:
+                    if state.get(child.id) == 1:
+                        back.add((node.id, child.id))
+                    elif child.id not in state:
+                        state[child.id] = 1
+                        stack.append((child, iter(edges[child.id])))
+                        break
+                else:
+                    state[node.id] = 2
+                    stack.pop()
+
+        import heapq
+
+        indegree = {block.id: 0 for block in blocks}
+        for block in blocks:
+            for target in edges[block.id]:
+                if (block.id, target.id) not in back:
+                    indegree[target.id] += 1
+
+        heap = [(b.address, b.id, b) for b in blocks if indegree[b.id] == 0]
+        heapq.heapify(heap)
+        ordered: list[BasicBlock] = []
+
+        while heap:
+            _, _, block = heapq.heappop(heap)
+            ordered.append(block)
+
+            for target in edges[block.id]:
+                if (block.id, target.id) in back:
+                    continue
+
+                indegree[target.id] -= 1
+
+                if indegree[target.id] == 0:
+                    heapq.heappush(heap, (target.address, target.id, target))
+
+        if len(ordered) == len(blocks):
+            self.cfg.blocks = ordered
 
     # ------------------------------------------------------------------
     # Protocol bookkeeping that outlives the dispatch
