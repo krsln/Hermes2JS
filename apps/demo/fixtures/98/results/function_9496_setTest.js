@@ -50,8 +50,6 @@ function setTest() {
     console.log(r0)
     // CODE → addr:114 | <Mov>: <Reg8: 2, Reg8: 3>
     r2 = r3
-    // CODE → addr:117 | <IteratorBegin>: <Reg8: 4, Reg8: 2>
-    r4 = GetIterator(r2)
     // CODE → addr:120 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (for_of)

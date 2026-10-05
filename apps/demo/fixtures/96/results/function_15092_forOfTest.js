@@ -12,8 +12,6 @@ function forOfTest() {
     console.log("__BC:Iterators/IteratorTests/forOfTest/start")
     // CODE → addr: 22 | <NewArrayWithBuffer>: <Reg8: 2, UInt16: 4, UInt16: 4, UInt16: 20817>  # Array: [1, 2, 3, 4]
     r2 = [1, 2, 3, 4]
-    // CODE → addr: 30 | <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    r3 = GetIterator(r2)
     // CODE → addr: 33 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (for_of)

@@ -38,8 +38,6 @@ function closureLoopTest() {
     // ──────────────── Block 2 ──────────────── 
     // CODE → addr: 61 | <Mov>: <Reg8: 2, Reg8: 0>
     r2 = r0
-    // CODE → addr: 64 | <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    r3 = GetIterator(r2)
     // CODE → addr: 67 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (for_of)

@@ -20,8 +20,6 @@ function callGeneratorTests() {
     r5 = r2[0].call(undefined)
     // CODE → addr: 35 | <Mov>: <Reg8: 3, Reg8: 5>
     r3 = r5
-    // CODE → addr: 38 | <IteratorBegin>: <Reg8: 4, Reg8: 3>
-    r4 = GetIterator(r3)
     // LOOP → START (for_of)
     for (const r7 of r3) {
         // ──────────────── Block 2 ──────────────── 
@@ -42,8 +40,6 @@ function callGeneratorTests() {
     r5 = r2[1].call(undefined, 5)
     // CODE → addr: 92 | <Mov>: <Reg8: 3, Reg8: 5>
     r3 = r5
-    // CODE → addr: 95 | <IteratorBegin>: <Reg8: 4, Reg8: 3>
-    r4 = GetIterator(r3)
     // LOOP → START (for_of)
     for (const r7 of r3) {
         // ──────────────── Block 6 ──────────────── 

@@ -210,3 +210,20 @@ def test_default_value_ternary_test_names_the_default_in_every_destructuring_for
 
         assert "(r5 !== undefined) ?" not in out
         assert ".page !== undefined) ?" in out or ".retries !== undefined) ?" in out
+
+
+def test_for_of_does_not_leave_its_iterator_setup_behind():
+    # hermes-98 `forOfTest`: `for (const r6 of r2)` stands for the iterator, but
+    # `r3 = GetIterator(r2)` was still printed in front of it.
+    out = _render_98(9479, "forOfTest")
+
+    assert "for (const r6 of r2)" in out
+    assert "GetIterator" not in out
+
+
+def test_iterator_setup_is_kept_when_the_register_is_still_read():
+    # Destructuring inside a for-of (`mapTest`) is not a plain for-of: nothing
+    # folds, so the iterator the loop body reads must stay defined.
+    out = _render_98(9495, "mapTest")
+
+    assert "GetIterator" in out

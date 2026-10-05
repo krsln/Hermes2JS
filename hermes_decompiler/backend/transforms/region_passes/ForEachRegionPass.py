@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 from hermes_decompiler.backend.analysis.cfg import BasicBlock
 from hermes_decompiler.backend.regions import (
     RegionVisitor,
@@ -8,6 +10,7 @@ from hermes_decompiler.backend.regions import (
     SequenceRegion,
     TryRegion,
 )
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.backend.transforms.shared import structural_key
 from hermes_decompiler.backend.transforms.shared import resolve_identifier as _shared_resolve_identifier
 from hermes_decompiler.backend.transforms.shared import is_bare_register
@@ -149,6 +152,32 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
 
         if scaffold is not None:
             self._unwrap_try(try_region, loop)
+
+        self._drop_iterator_setup(iterator_expr)
+
+    def _drop_iterator_setup(self, iterator_expr) -> None:
+        """Remove the `rN = GetIterator(src)` the for-of now stands for.
+
+        `for (const x of src)` creates and advances the iterator itself;
+        the IteratorBegin statement in front of the loop is left over, and
+        printing it (`r3 = GetIterator(r2)`) shows an iterator nothing uses.
+        Only when no later code still names that register.
+        """
+        # The unwrapped try's close/rethrow blocks still sit in `cfg.blocks`
+        # (and still say `rN.return()`), but nothing prints them any more:
+        # only blocks the region tree still covers can read the register.
+        live = SimpleNamespace(blocks=[b for b in self.cfg.blocks if b in self.graph.root.covered_blocks])
+
+        for block in self.cfg.blocks:
+            for instr in block.instructions:
+                if instr.value is not iterator_expr or instr.handler != "IteratorBegin" or instr.dest_reg is None:
+                    continue
+
+                if _reads_register_by_name(live, instr.dest_reg, instr.address):
+                    return
+
+                block.instructions.remove(instr)
+                return
 
     # -----------------------------------------------------------------
     # for-in

@@ -54,8 +54,6 @@ function propertyAccessTest() {
     r5 = Object.keys(r5)
     // CODE → addr:127 | <Mov>: <Reg8: 2, Reg8: 5>
     r2 = r5
-    // CODE → addr:130 | <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    r3 = GetIterator(r2)
     // LOOP → START (for_of)
     for (const r8 of r2) {
         // ──────────────── Block 2 ──────────────── 

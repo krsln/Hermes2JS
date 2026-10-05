@@ -48,8 +48,6 @@ function propertyAccessTest() {
     r0 = Object.keys(r4)
     // CODE → addr:116 | <Mov>: <Reg8: 2, Reg8: 0>
     r2 = r0
-    // CODE → addr:119 | <IteratorBegin>: <Reg8: 3, Reg8: 2>
-    r3 = GetIterator(r2)
     // CODE → addr:122 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
     // LOOP → START (for_of)

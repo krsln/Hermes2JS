@@ -78,8 +78,6 @@ function mapTest() {
     console.log(r2.size)
     // CODE → addr:179 | <Mov>: <Reg8: 9, Reg8: 2>
     r9 = r2
-    // CODE → addr:182 | <IteratorBegin>: <Reg8: 5, Reg8: 9>
-    r5 = GetIterator(r9)
     // CODE → addr:185 | <GetEnvironment>: <Reg8: 8, UInt8: 0>
     r8 = getEnvironment(0)
     // CODE → addr:188 | <LoadConstUndefined>: <Reg8: 0>
