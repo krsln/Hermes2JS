@@ -147,13 +147,12 @@ class ArrayDestructuringCfgPass:
         Returns (removed_handlers, cleanup_blocks) or None when a handler
         cuts through the pattern.
 
-        Three kinds go: the rest loop's own cleanup handler; the iterator
-        cleanup handlers (`Catch; ...; IteratorClose it, 1; Throw`) that
-        guard an element which can throw (a nested pattern); and, like
-        before, a surrounding try merely loses the dropped blocks from its
-        range - but only if it covers the whole pattern.
+        The iterator cleanup handlers (`Catch; ...; IteratorClose it, 1;
+        Throw`) go: they guard whatever can throw between two `next()` calls
+        (a nested pattern, a default value, the rest loop). A surrounding try
+        merely loses the dropped blocks from its range - but only if it
+        covers the whole pattern.
         """
-        rest_ids = {b.id for b in ctx.rest_handler_blocks}
         removed: list = []
         remaining: list = []
         chain: dict[int, BasicBlock] = {}
@@ -163,13 +162,7 @@ class ArrayDestructuringCfgPass:
             covered = {b.id for b in handler["try_blocks"]}
 
             if hb.id in dropped_ids:
-                # The rest loop's own cleanup handler: only fine if all it
-                # protects goes with it.
-                if hb.id not in rest_ids or not covered <= dropped_ids:
-                    return None
-
-                removed.append(handler)
-                continue
+                return None
 
             if covered and covered <= dropped_ids:
                 blocks = _cleanup_chain(hb, ctx.iterators)
@@ -269,6 +262,9 @@ class ArrayDestructuringCfgPass:
         if top and shapes == ["Mov", "IteratorNext", "Mov", "LoadConstUndefined", *expected[3:]]:
             kept_undefined = tail[3]
             tail = tail[:3] + tail[4:]
+        elif shapes == ["LoadConstUndefined", "Mov", "IteratorNext", "Mov", "StrictEq", "JmpTrue"]:
+            # An element with a default loads its `undefined` first.
+            tail = [*tail[1:5], tail[0], tail[5]]
         elif shapes != expected:
             return None
 
@@ -300,7 +296,30 @@ class ArrayDestructuringCfgPass:
         aliases = {flag}
         items: list[_Elem] = []
 
-        if _handlers(fall) == ["Mov"] and _operands(fall.instructions[0]) == [e1, v1]:
+        if _handlers(fall) == ["Mov", "JStrictNotEqual"]:
+            # Element 1 with a default: the done path goes straight to the
+            # default; otherwise `Mov e1 <- v1; if (v1 !== undefined) skip`.
+            mov_ops, cmp_ops = _operands(fall.instructions[0]), _operands(fall.instructions[1])
+            cmp_branch = _taken_fall(fall)
+
+            if mov_ops != [e1, v1] or len(cmp_ops) != 3 or cmp_ops[1:] != [v1, undef_reg] or cmp_branch is None:
+                return None
+
+            after, default_block = cmp_branch
+
+            if default_block is not taken:
+                return None
+
+            default = self._default_value(default_block, e1, after, aliases)
+
+            if default is None:
+                return None
+
+            items.append(_Elem("reg", e1, fall.instructions[0], default=default))
+            ctx.drop.extend([fall, default_block])
+            prev_tmp = e1
+            cur_block, cur_insts = after, list(after.instructions)
+        elif _handlers(fall) == ["Mov"] and _operands(fall.instructions[0]) == [e1, v1]:
             # A1: Mov e1 <- v1
             if _only_successor(fall) is not taken:
                 return None
@@ -350,8 +369,6 @@ class ArrayDestructuringCfgPass:
 
                     ctx.peeled_form = True
 
-                sub_start = len(ctx.drop)
-                iterators_before = set(ctx.iterators)
                 ctx.drop.append(cur_block)
                 sub = self._parse(cur_block, len(cur_block.instructions) - len(insts), ctx, top=False)
 
@@ -360,13 +377,6 @@ class ArrayDestructuringCfgPass:
 
                 sub_items, sub_join, _ = sub
 
-                # Whatever the nested pattern wrote is no longer the flag.
-                for block in ctx.drop[sub_start:]:
-                    for instruction in block.instructions:
-                        if instruction.dest_reg is not None:
-                            aliases.discard(instruction.dest_reg)
-
-                aliases -= ctx.iterators - iterators_before
                 items[-1] = _Elem("nested", items=sub_items)
                 prev_tmp = None
                 cur_block, cur_insts = sub_join, list(sub_join.instructions)
@@ -415,8 +425,15 @@ class ArrayDestructuringCfgPass:
             own = [] if cur_block is ctx.top else [cur_block]
 
             if others:
-                # `...rest`
-                if undef_inst is not None or [i.handler for i in others] != ["NewArray", "LoadConstZero"]:
+                # `...rest`; the loop's `+ 1` may be hoisted into a register here.
+                shape = [i.handler for i in others]
+
+                if shape == ["NewArray", "LoadConstUInt8", "LoadConstZero"] and _operands(others[1])[1:] == [1]:
+                    others = [others[0], others[2]]
+                elif shape != ["NewArray", "LoadConstZero"]:
+                    return None
+
+                if undef_inst is not None:
                     return None
 
                 rest = self._match_rest(cur_block, [*others, jmp_k], it, jump_ops[1], undef_reg)
@@ -424,9 +441,8 @@ class ArrayDestructuringCfgPass:
                 if rest is None:
                     return None
 
-                join, rest_drop, rest_reg, rest_result, handler_blocks = rest
+                join, rest_drop, rest_reg, rest_result = rest
                 ctx.drop.extend(rest_drop)
-                ctx.rest_handler_blocks |= handler_blocks
                 items.append(_Elem("rest", rest_reg, rest_result))
                 return items, join, kept_undefined
 
@@ -479,7 +495,7 @@ class ArrayDestructuringCfgPass:
 
                 items.append(_Elem("hole"))
                 ctx.drop.extend([*own, fall])
-                aliases = {eh_ops[0]}
+                aliases.add(eh_ops[0])
                 prev_tmp = None
                 cur_block, cur_insts = taken, list(taken.instructions)
                 continue
@@ -487,10 +503,23 @@ class ArrayDestructuringCfgPass:
             # Element k >= 2.
             ek = _operands(undef_inst)[0]
 
-            if fall_handlers != ["IteratorNext", "Mov", "StrictEq", "LoadConstUndefined", "Mov", "JmpTrue"]:
+            # Fetch: [Mov t <- src] Next vk; Mov y <- it; StrictEq f2 <- y === undefined;
+            #        [LoadConstUndefined ek]; Mov f <- f2; JmpTrue f -> X
+            core = list(fall.instructions)
+
+            if core and core[0].handler == "Mov" and _operands(core[0])[1:] == [src]:
+                core = core[1:]
+
+            if [i.handler for i in core] == ["IteratorNext", "Mov", "StrictEq", "LoadConstUndefined", "Mov", "JmpTrue"]:
+                if _operands(core[3]) != [ek]:
+                    return None
+
+                core = core[:3] + core[4:]
+
+            if [i.handler for i in core] != ["IteratorNext", "Mov", "StrictEq", "Mov", "JmpTrue"]:
                 return None
 
-            nk, my, eqk, undef_k, mov_f, jmp_n = fall.instructions
+            nk, my, eqk, mov_f, jmp_n = core
             nk_ops, my_ops, eqk_ops = _operands(nk), _operands(my), _operands(eqk)
             f_ops, jn_ops = _operands(mov_f), _operands(jmp_n)
 
@@ -501,33 +530,132 @@ class ArrayDestructuringCfgPass:
             y_reg, y_it = my_ops
             flag2, eq_y, eq_u = eqk_ops
 
-            if (
-                    nk_it != it or y_it != it or eq_y != y_reg or eq_u != undef_reg
-                    or _operands(undef_k) != [ek] or f_ops[0] not in aliases or f_ops[1] != flag2
-                    or jn_ops[1] != flag2
-            ):
+            if nk_it != it or y_it != it or eq_y != y_reg or eq_u != undef_reg or f_ops[1] != flag2:
+                return None
+
+            aliases.update((flag2, f_ops[0]))
+
+            if jn_ops[1] not in aliases:
                 return None
 
             inner = _taken_fall(fall)
-            if inner is None or inner[0] is not taken:
+            if inner is None:
                 return None
 
-            assign = inner[1]
+            done_target, assign = inner
 
             if _handlers(assign) != ["Mov", "Mov"]:
                 return None
 
-            if _operands(assign.instructions[0]) != [ek, vk] or _operands(assign.instructions[1]) != [f_ops[0], flag2]:
+            assign_ops = _operands(assign.instructions[1])
+
+            if _operands(assign.instructions[0]) != [ek, vk] or len(assign_ops) != 2 or assign_ops[1] != flag2:
                 return None
 
-            if _only_successor(assign) is not taken:
-                return None
+            aliases.add(assign_ops[0])
+            default = None
+            extra: list[BasicBlock] = []
+            after = taken
 
-            items.append(_Elem("reg", ek, assign.instructions[0]))
-            ctx.drop.extend([*own, fall, assign])
-            aliases = {f_ops[0], flag2}
+            if done_target is taken:
+                # No default: every path meets at the next boundary.
+                if _only_successor(assign) is not taken:
+                    return None
+            else:
+                # With a default the done path goes straight to it, the others
+                # compare the value first:  Cmp: Mov tmp <- ek; JStrictNotEqual tmp, undefined -> A
+                compare = taken
+
+                if _only_successor(assign) is not compare:
+                    return None
+
+                after_default = self._compare_block(compare, ek, undef_reg, aliases)
+
+                if after_default is None:
+                    return None
+
+                after, default_block = after_default
+
+                if default_block is not done_target:
+                    return None
+
+                default = self._default_value(default_block, ek, after, aliases)
+
+                if default is None:
+                    return None
+
+                extra = [compare, default_block]
+
+            items.append(_Elem("reg", ek, assign.instructions[0], default=default))
+            ctx.drop.extend([*own, fall, assign, *extra])
             prev_tmp = ek
-            cur_block, cur_insts = taken, list(taken.instructions)
+            cur_block, cur_insts = after, list(after.instructions)
+
+    def _compare_block(self, block: BasicBlock, ek: int, undef_reg: int, flags: set[int]):
+        """
+        `Mov tmp <- ek; [flag copies]; JStrictNotEqual tmp, undefined -> A`:
+        returns (A, default_block) or None.
+        """
+        if not block.instructions or block.instructions[-1].handler != "JStrictNotEqual":
+            return None
+
+        tmp = None
+
+        for instruction in block.instructions[:-1]:
+            ops = _operands(instruction)
+
+            if instruction.handler != "Mov" or len(ops) != 2:
+                return None
+
+            if ops[1] in flags:
+                flags.add(ops[0])
+            elif ops[1] == ek and tmp is None:
+                tmp = ops[0]
+            else:
+                return None
+
+        cmp_ops = _operands(block.instructions[-1])
+        branch = _taken_fall(block)
+
+        if tmp is None or len(cmp_ops) != 3 or cmp_ops[1:] != [tmp, undef_reg] or branch is None:
+            return None
+
+        return branch
+
+    def _default_value(self, block: BasicBlock, ek: int, after: BasicBlock, flags: set[int]):
+        """
+        The default expression computed by `block` into `ek` (flag copies
+        and the closing `Jmp` aside), or None when the block does anything
+        else than compute that value.
+        """
+        if _only_successor(block) is not after:
+            return None
+
+        computed = []
+
+        for instruction in block.instructions:
+            ops = _operands(instruction)
+
+            if instruction.handler == "Jmp":
+                continue
+
+            if instruction.handler == "Mov" and len(ops) == 2 and ops[1] in flags:
+                flags.add(ops[0])
+                continue
+
+            computed.append(instruction)
+
+        if not computed or computed[-1].dest_reg != ek or computed[-1].value is None:
+            return None
+
+        for instruction in computed[:-1]:
+            if not instruction.definition_used or instruction.statement is not None:
+                return None
+
+        if computed[-1].statement is not None:
+            return None
+
+        return computed[-1].value
 
     def _match_rest(self, start: BasicBlock, insts, it: int, flag: int, undef_reg: int):
         """`...rest` after the last element.
@@ -536,10 +664,8 @@ class ArrayDestructuringCfgPass:
             LH:    Mov t <- src; IteratorNext v, it, t; Mov y <- it
                    StrictEq f2 <- (y === undefined); Mov j <- idx; JmpTrue f2 -> X
             LB:    PutByValStrict rest[j] = v; AddN idx = j + 1; Jmp LH
-            handler (protects LB): Catch ex; JmpTrue f2 -> T
-                   IteratorClose it; T: Throw ex
 
-        Returns (join, blocks_to_drop, rest_reg, rest_result, handler_blocks).
+        Returns (join, blocks_to_drop, rest_reg, rest_result).
         """
         new_array, load_zero, jump = insts
         rest_reg = _operands(new_array)[0]
@@ -592,44 +718,9 @@ class ArrayDestructuringCfgPass:
         if len(add_ops) < 2 or add_ops[0] != idx or add_ops[1] != j[0] or _only_successor(body) is not header:
             return None
 
-        # The cleanup handler that protects the loop body.
-        handler = next(
-            (h for h in self.cfg.exception_handlers if [b.id for b in h["try_blocks"]] == [body.id]),
-            None,
-        )
-
-        if handler is None:
-            return None
-
-        hb = handler["handler_block"]
-
-        if handlers_of(hb) != ["Catch", "JmpTrue"]:
-            return None
-
-        catch_reg = hb.instructions[0].dest_reg
-        hb_branch = _taken_fall(hb)
-
-        if hb_branch is None or _operands(hb.instructions[1])[1:] != [f2]:
-            return None
-
-        throw_block, close_block = hb_branch
-
-        if handlers_of(close_block) != ["IteratorClose"] or _operands(close_block.instructions[0])[:1] != [it]:
-            return None
-
-        if _only_successor(close_block) is not throw_block or handlers_of(throw_block) != ["Throw"]:
-            return None
-
-        if _operands(throw_block.instructions[0]) != [catch_reg]:
-            return None
-
-        return (
-            exit_block,
-            [start, header, body, hb, close_block, throw_block],
-            rest_reg,
-            new_array,
-            {hb, close_block, throw_block},
-        )
+        # The handler that protects the loop body (`Catch; ...; IteratorClose it, 1;
+        # Throw`) is iterator cleanup like any other: `_plan_handlers` removes it.
+        return exit_block, [start, header, body], rest_reg, new_array
 
     # ------------------------------------------------------------------
     # Rewrite
@@ -711,6 +802,7 @@ class _Elem:
     reg: int | None = None
     result: object = None
     items: list | None = None
+    default: object = None  # `[a = 0]`: the default value expression
 
 
 class _Ctx:
@@ -721,7 +813,6 @@ class _Ctx:
         self.drop: list[BasicBlock] = []
         self.iterators: set[int] = set()
         self.peeled_form: bool | None = None
-        self.rest_handler_blocks: set[BasicBlock] = set()
 
 
 def _leaves(items):
@@ -742,6 +833,10 @@ def _pattern_expression(items) -> ArrayExpression:
             elements.append(_pattern_expression(item.items))
         elif item.kind == "rest":
             elements.append(SpreadElement(argument=Identifier(name=f"r{item.reg}")))
+        elif item.default is not None:
+            elements.append(AssignmentExpression(
+                left=Identifier(name=f"r{item.reg}"), operator=AssignmentOperator.ASSIGN, right=item.default,
+            ))
         else:
             elements.append(Identifier(name=f"r{item.reg}"))
 

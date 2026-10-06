@@ -1,11 +1,4 @@
 function nestedArrayDestructureTest() {
-// ⚠ WARNING: this output is NOT valid JavaScript.
-// Cause: this function's control flow could not be fully structured by any recognized loop/if/switch/try shape.
-// It contains raw `goto label_N;` / `if (...) goto label_N;` statements -
-// `goto` is not a JavaScript keyword, so this will fail to parse as-is.
-// If this is a generator/async function, re-run decompilation with batch_tables
-// built from the full section directory (FileOperations.build_batch_tables) so
-// its suspend/resume dispatch can be recognized before structuring runs.
     // ──────────────── Block 0 ──────────────── 
     // CODE → addr:  0 | <LoadConstUndefined>: <Reg8: 3>
     // USED → r3 = undefined;
@@ -56,130 +49,24 @@ function nestedArrayDestructureTest() {
     // CODE → addr:310 | <NewArrayWithBuffer>: <Reg8: 17, UInt16: 1, UInt16: 1, UInt16: 20024>  # Array: [10]
     r17 = [10]
     // CODE → addr:318 | <IteratorBegin>: <Reg8: 7, Reg8: 17>
-    r7 = GetIterator(r17)
-    // CODE → addr:321 | <LoadConstUndefined>: <Reg8: 12>
-    r12 = undefined
-    // CODE → addr:326 | <IteratorNext>: <Reg8: 0, Reg8: 7, Reg8: 0>
-    r0 = r7.next()
-    // CODE → addr:330 | <Mov>: <Reg8: 8, Reg8: 7>
-    // USED → r8 = r7;
-    // CODE → addr:333 | <StrictEq>: <Reg8: 9, Reg8: 8, Reg8: 3>
-    // USED → r9 = r7 === undefined;
-    try {
-        if (r7 === undefined) {
-            // ──────────────── Block 23 ──────────────── 
-            // CODE → addr:347 | <LoadConstZero>: <Reg8: 12>
-            // USED → r12 = 0;
-        } else {
-            // ──────────────── Block 22 ──────────────── 
-            // CODE → addr:340 | <Mov>: <Reg8: 12, Reg8: 0>
-            r12 = r0
-        }
-    } catch (caughtException) {
-        // ──────────────── Block 35 ──────────────── 
-        // CODE → addr:504 | <Mov>: <Reg8: 8, Reg8: 9>
-        // USED → r8 = r7 === undefined;
-        if (r7 !== undefined) {
-            // ──────────────── Block 37 ──────────────── 
-            // CODE → addr:510 | <IteratorClose>: <Reg8: 7, UInt8: 1>
-            r7.return()
-        }
-        // ──────────────── Block 38 ──────────────── 
-        // CODE → addr:513 | <Throw>: <Reg8: 0>
-        throw caughtException;
-    }
-    // ──────────────── Block 24 ──────────────── 
+    [r15 = 0, r14 = 0, ...r13] = r17
     // CODE → addr:349 | <Mov>: <Reg8: 15, Reg8: 12>
-    r15 = 0
-    // CODE → addr:352 | <LoadConstUndefined>: <Reg8: 12>
-    r12 = undefined
-    // CODE → addr:354 | <Mov>: <Reg8: 11, Reg8: 9>
-    r11 = r7 === undefined
-    if (r7 === undefined) {
-        // ──────────────── Block 27 ──────────────── 
-        // CODE → addr:386 | <Mov>: <Reg8: 0, Reg8: 12>
-        r0 = r13
-        // CODE → addr:389 | <Mov>: <Reg8: 8, Reg8: 11>
-        // USED → r8 = r0 === undefined;
-        // CODE → addr:392 | <Mov>: <Reg8: 11, Reg8: 8>
-        r11 = r0 === undefined
-    } else {
-        // ──────────────── Block 25 ──────────────── 
-        // CODE → addr:363 | <IteratorNext>: <Reg8: 13, Reg8: 7, Reg8: 0>
-        r13 = r7.next()
-        // CODE → addr:370 | <StrictEq>: <Reg8: 0, Reg8: 0, Reg8: 3>
-        // USED → r0 = r7 === undefined;
-        // CODE → addr:374 | <Mov>: <Reg8: 8, Reg8: 0>
-        // USED → r8 = r7 === undefined;
-        if (r0 !== undefined) {
-            // ──────────────── Block 26 ──────────────── 
-            // CODE → addr:380 | <Mov>: <Reg8: 12, Reg8: 13>
-            // USED → r12 = r13;
-            // CODE → addr:383 | <Mov>: <Reg8: 11, Reg8: 0>
-            // USED → r11 = r7 === undefined;
-        }
-    }
-    try {
-        // ──────────────── Block 28 ──────────────── 
-        // CODE → addr:399 | <LoadConstZero>: <Reg8: 12>
-        // USED → r12 = 0;
-        // CODE → addr:401 | <Mov>: <Reg8: 11, Reg8: 8>
-        // USED → r11 = r0 === undefined;
-        // CODE → addr:404 | <Jmp>: <Addr8: 6>  # Address: 0000019a
-        goto label_410;
-    } catch (caughtException) {
-        // ──────────────── Block 29 ──────────────── 
-        // CODE → addr:408 | <Jmp>: <Addr8: 99>  # Address: 000001fb
-        goto label_507;
-        // ──────────────── Block 30 ──────────────── 
-        // CODE → addr:410 | <Mov>: <Reg8: 14, Reg8: 12>
-        r14 = 0
-        // CODE → addr:413 | <NewArray>: <Reg8: 13, UInt16: 0>
-        r13 = []
-        // CODE → addr:417 | <LoadConstUInt8>: <Reg8: 12, UInt8: 1>
-        // USED → r12 = 1;
-        // CODE → addr:420 | <LoadConstZero>: <Reg8: 16>
-        r16 = 0
-        if (r0 !== undefined) {
-            try {
-                // LOOP → START (for_of)
-                for (const r19 of r17) {
-                    // ──────────────── Block 31 ──────────────── 
-                    // CODE → addr:435 | <StrictEq>: <Reg8: 11, Reg8: 11, Reg8: 3>
-                    r11 = r11 === undefined
-                    // CODE → addr:439 | <Mov>: <Reg8: 18, Reg8: 16>
-                    r18 = r16
-                    // ──────────────── Block 32 ──────────────── 
-                    // CODE → addr:445 | <PutByValStrict>: <Reg8: 13, Reg8: 18, Reg8: 19>
-                    r13[r18] = r19
-                    // CODE → addr:449 | <AddN>: <Reg8: 16, Reg8: 18, Reg8: 12>
-                    r16 = r18 + 1
-                }
-                // LOOP → END
-            } catch (caughtException) {
-                // ──────────────── Block 33 ──────────────── 
-                // CODE → addr:457 | <Mov>: <Reg8: 8, Reg8: 11>
-                r8 = r11
-                // CODE → addr:460 | <Jmp>: <Addr8: 47>  # Address: 000001fb
-                goto label_507;
-            }
-        }
-        // ──────────────── Block 34 ──────────────── 
-        // CODE → addr:462 | <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r12 = console;
-        // CODE → addr:468 | <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r11 = console.log;
-        // CODE → addr:473 | <Call4>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 15, Reg8: 14, Reg8: 13>
-        console.log(r15, r14, r13)
-        // CODE → addr:480 | <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
-        // USED → r12 = console;
-        // CODE → addr:486 | <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
-        // USED → r11 = console.log;
-        // CODE → addr:491 | <LoadConstString>: <Reg8: 10, string_id: 4966>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end' (String)
-        // USED → r10 = "__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end";
-        // CODE → addr:495 | <Call2>: <Reg8: 10, Reg8: 11, Reg8: 12, Reg8: 10>
-        console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end")
-        // CODE → addr:500 | <Ret>: <Reg8: 3>
-        return undefined;
-    }
+    // CODE → addr:410 | <Mov>: <Reg8: 14, Reg8: 12>
+    // CODE → addr:413 | <NewArray>: <Reg8: 13, UInt16: 0>
+    // ──────────────── Block 34 ──────────────── 
+    // CODE → addr:462 | <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // USED → r12 = console;
+    // CODE → addr:468 | <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // USED → r11 = console.log;
+    // CODE → addr:473 | <Call4>: <Reg8: 11, Reg8: 11, Reg8: 12, Reg8: 15, Reg8: 14, Reg8: 13>
+    console.log(r15, r14, r13)
+    // CODE → addr:480 | <TryGetById>: <Reg8: 12, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
+    // USED → r12 = console;
+    // CODE → addr:486 | <GetByIdShort>: <Reg8: 11, Reg8: 12, UInt8: 1, string_id: 178>  # String: 'log' (Identifier)
+    // USED → r11 = console.log;
+    // CODE → addr:491 | <LoadConstString>: <Reg8: 10, string_id: 4966>  # String: '__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end' (String)
+    // USED → r10 = "__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end";
+    // CODE → addr:495 | <Call2>: <Reg8: 10, Reg8: 11, Reg8: 12, Reg8: 10>
+    console.log("__BC:Objects/DestructuringTests/nestedArrayDestructureTest/end")
+    // CODE → addr:500 | <Ret>: <Reg8: 3>
 }

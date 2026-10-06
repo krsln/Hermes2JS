@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 from hermes_decompiler.Decompiler import Decompiler
@@ -222,12 +223,14 @@ def test_for_of_does_not_leave_its_iterator_setup_behind():
 
 
 def test_iterator_setup_is_kept_when_the_register_is_still_read():
-    # The second statement of `nestedArrayDestructureTest` (defaults + rest) is not
-    # (yet) folded into a pattern: its `r7.next()` / `r7.return()` still read the
-    # iterator, which must stay defined. (Switch to another fixture once it folds.)
-    out = _render_98(9487, "nestedArrayDestructureTest")
+    # hermes-96 `asyncLoopTest`: the for-of body still calls `r4.return()` (the
+    # generator-return path), so the iterator register must stay defined.
+    from tests.test_register_semantics import decompile
 
-    assert "r7 = GetIterator(r17)" in out
+    out = decompile("96", 15185)
+
+    assert "r4 = GetIterator(param1)" in out
+    assert "r4.return()" in out
 
 
 def test_nested_pattern_with_holes_is_one_statement():
@@ -240,6 +243,17 @@ def test_nested_pattern_with_holes_is_one_statement():
     assert "GetIterator(r6)" not in out
     assert "r1.next()" not in out and "r1.return()" not in out
     assert "label_544" not in out
+
+
+def test_array_pattern_defaults_and_rest_are_one_statement():
+    # `const [first = 0, second = 0, ...remaining] = [10]`: each default is a
+    # compare-and-assign diamond (the done path jumps straight to the default),
+    # the default evaluation and the rest loop sit under iterator cleanup handlers.
+    out = _render_98(9487, "nestedArrayDestructureTest")
+
+    assert "[r15 = 0, r14 = 0, ...r13] = r17" in out
+    assert "GetIterator" not in out and ".return()" not in out and "goto" not in out
+    assert "console.log(r15, r14, r13)" in out
 
 
 def test_array_hole_prints_its_comma():
@@ -268,13 +282,24 @@ def test_for_of_with_destructured_element_is_recognized():
     assert "while" not in out and "caughtException" not in out and ".return()" not in out and "GetIterator" not in out
 
 
-def test_catch_keeps_the_rethrow_that_closes_it():
-    # hermes-98 `nestedArrayDestructureTest`: `catch (e) { if (it) it.return(); throw e }`.
+def _render_98_unfolded(monkeypatch, index: int, name: str) -> str:
+    # The destructuring pass folds the iterator protocol away; switch it off to
+    # keep exercising the try/catch structuring it used to leave behind.
+    from hermes_decompiler.backend.transforms.cfg_passes import ArrayDestructuringCfgPass
+
+    monkeypatch.setattr(sys.modules[ArrayDestructuringCfgPass.__module__].ArrayDestructuringCfgPass, "run",
+                        lambda self: 0)
+
+    return _render_98(index, name)
+
+
+def test_catch_keeps_the_rethrow_that_closes_it(monkeypatch):
+    # hermes-98 `nestedArrayDestructureTest` (unfolded): `catch (e) { if (it) it.return(); throw e }`.
     # The catch body stopped at the post-dominator, which is the catch's OWN
     # `throw` block, so the rethrow used to be printed after the try.
     import re
 
-    out = _render_98(9487, "nestedArrayDestructureTest")
+    out = _render_98_unfolded(monkeypatch, 9487, "nestedArrayDestructureTest")
 
     catch = re.search(r"catch \(caughtException\) \{\n        if \(r7 !== undefined\) \{(.*?)\n    \}\n", out, re.S)
 
@@ -282,10 +307,10 @@ def test_catch_keeps_the_rethrow_that_closes_it():
     assert "throw caughtException;" in catch.group(1)
 
 
-def test_rethrow_names_the_catch_parameter():
+def test_rethrow_names_the_catch_parameter(monkeypatch):
     # `Catch` is folded into the catch parameter, so nothing in the CFG defined
     # `r0` any more and `throw r0` stayed bare.
-    out = _render_98(9487, "nestedArrayDestructureTest")
+    out = _render_98_unfolded(monkeypatch, 9487, "nestedArrayDestructureTest")
 
     assert "throw r0" not in out
 
