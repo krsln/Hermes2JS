@@ -38,6 +38,7 @@ from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.cfg_passes._generator_dispatch import _operands
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import ArrayExpression, AssignmentExpression, Identifier
+from hermes_decompiler.ir.expressions.Collections import SpreadElement
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.terminators import TerminatorJump
 
@@ -168,6 +169,7 @@ class ArrayDestructuringCfgPass:
         # All elements must agree on which of the two forms is used.
         peeled_form: bool | None = None
         previous_tmp = e1
+        rest = None
 
         while True:
             insts = list(current.instructions)
@@ -258,6 +260,14 @@ class ArrayDestructuringCfgPass:
 
                 continue
 
+            if handlers == ["NewArray", "LoadConstZero", "JmpTrue"]:
+                rest = self._match_rest(current, insts, it, flag, undef_reg)
+
+                if rest is None:
+                    return None
+
+                break
+
             if handlers == ["JmpTrue"]:
                 close_check = current
                 close_insts = insts
@@ -265,22 +275,29 @@ class ArrayDestructuringCfgPass:
 
             return None
 
-        # Close check: JmpTrue f -> J ; fall -> IteratorClose it -> J.
-        jump_ops = _operands(close_insts[0])
-        branch = _taken_fall(close_check)
+        if rest is not None:
+            join, rest_drop, rest_reg, rest_result, handler_blocks = rest
+            drop.extend(rest_drop)
+            targets.append(rest_reg)
+            element_results.append(rest_result)
+        else:
+            # Close check: JmpTrue f -> J ; fall -> IteratorClose it -> J.
+            jump_ops = _operands(close_insts[0])
+            branch = _taken_fall(close_check)
 
-        if len(jump_ops) != 2 or jump_ops[1] != flag or branch is None:
-            return None
+            if len(jump_ops) != 2 or jump_ops[1] != flag or branch is None:
+                return None
 
-        join, close_block = branch
+            join, close_block = branch
 
-        if handlers_of(close_block) != ["IteratorClose"]:
-            return None
+            if handlers_of(close_block) != ["IteratorClose"]:
+                return None
 
-        if _operands(close_block.instructions[0])[:1] != [it] or _only_successor(close_block) is not join:
-            return None
+            if _operands(close_block.instructions[0])[:1] != [it] or _only_successor(close_block) is not join:
+                return None
 
-        drop.extend([close_check, close_block])
+            drop.extend([close_check, close_block])
+            handler_blocks = set()
 
         # The chain must be single-entry: nothing outside it jumps in, and
         # nothing in it is covered by an exception handler.
@@ -298,7 +315,12 @@ class ArrayDestructuringCfgPass:
             covered = {b.id for b in handler["try_blocks"]}
 
             if handler["handler_block"].id in dropped_ids:
-                return None
+                # The rest loop's own cleanup handler: only fine if all it
+                # protects goes with it.
+                if handler["handler_block"].id not in {b.id for b in handler_blocks} or not covered <= dropped_ids:
+                    return None
+
+                continue
 
             inside = dropped_ids & covered
 
@@ -311,20 +333,127 @@ class ArrayDestructuringCfgPass:
         if len(set(targets)) != len(targets):
             return None
 
-        return targets, drop, join, element_results, kept_undefined
+        return targets, drop, join, element_results, kept_undefined, rest is not None
+
+    def _match_rest(self, start: BasicBlock, insts, it: int, flag: int, undef_reg: int):
+        """`...rest` after the last element.
+
+            start: NewArray rest; LoadConstZero idx; JmpTrue f -> X
+            LH:    Mov t <- src; IteratorNext v, it, t; Mov y <- it
+                   StrictEq f2 <- (y === undefined); Mov j <- idx; JmpTrue f2 -> X
+            LB:    PutByValStrict rest[j] = v; AddN idx = j + 1; Jmp LH
+            handler (protects LB): Catch ex; JmpTrue f2 -> T
+                   IteratorClose it; T: Throw ex
+
+        Returns (join, blocks_to_drop, rest_reg, rest_result, handler_blocks).
+        """
+        new_array, load_zero, jump = insts
+        rest_reg = _operands(new_array)[0]
+        idx = _operands(load_zero)[0]
+        jump_ops = _operands(jump)
+
+        if len(jump_ops) != 2 or jump_ops[1] != flag:
+            return None
+
+        branch = _taken_fall(start)
+        if branch is None:
+            return None
+
+        exit_block, header = branch
+
+        if handlers_of(header) != ["Mov", "IteratorNext", "Mov", "StrictEq", "Mov", "JmpTrue"]:
+            return None
+
+        mov_t, nxt, mov_y, eq, mov_j, jmp = header.instructions
+        t, n, y, e, j, jm = (_operands(i) for i in (mov_t, nxt, mov_y, eq, mov_j, jmp))
+
+        if any(len(ops) != want for ops, want in ((t, 2), (n, 3), (y, 2), (e, 3), (j, 2), (jm, 2))):
+            return None
+
+        value, n_it, n_t = n
+        f2 = e[0]
+
+        if n_it != it or n_t != t[0] or y[1] != it or e[1] != y[0] or e[2] != undef_reg:
+            return None
+
+        if j[1] != idx or jm[1] != f2:
+            return None
+
+        header_branch = _taken_fall(header)
+        if header_branch is None or header_branch[0] is not exit_block:
+            return None
+
+        body = header_branch[1]
+
+        if handlers_of(body) != ["PutByValStrict", "AddN", "Jmp"]:
+            return None
+
+        put, add, _jump = body.instructions
+
+        if _operands(put) != [rest_reg, j[0], value]:
+            return None
+
+        add_ops = _operands(add)
+
+        if len(add_ops) < 2 or add_ops[0] != idx or add_ops[1] != j[0] or _only_successor(body) is not header:
+            return None
+
+        # The cleanup handler that protects the loop body.
+        handler = next(
+            (h for h in self.cfg.exception_handlers if [b.id for b in h["try_blocks"]] == [body.id]),
+            None,
+        )
+
+        if handler is None:
+            return None
+
+        hb = handler["handler_block"]
+
+        if handlers_of(hb) != ["Catch", "JmpTrue"]:
+            return None
+
+        catch_reg = hb.instructions[0].dest_reg
+        hb_branch = _taken_fall(hb)
+
+        if hb_branch is None or _operands(hb.instructions[1])[1:] != [f2]:
+            return None
+
+        throw_block, close_block = hb_branch
+
+        if handlers_of(close_block) != ["IteratorClose"] or _operands(close_block.instructions[0])[:1] != [it]:
+            return None
+
+        if _only_successor(close_block) is not throw_block or handlers_of(throw_block) != ["Throw"]:
+            return None
+
+        if _operands(throw_block.instructions[0]) != [catch_reg]:
+            return None
+
+        return (
+            exit_block,
+            [start, header, body, hb, close_block, throw_block],
+            rest_reg,
+            new_array,
+            {hb, close_block, throw_block},
+        )
 
     # ------------------------------------------------------------------
     # Rewrite
     # ------------------------------------------------------------------
 
     def _apply(self, head: BasicBlock, begin_index: int, match) -> None:
-        targets, drop, join, element_results, kept_undefined = match
+        targets, drop, join, element_results, kept_undefined, has_rest = match
 
         begin = head.instructions[begin_index]
         source = begin.value.arguments[0]
 
+        elements = [Identifier(name=f"r{reg}") for reg in targets]
+
+        if has_rest:
+            elements[-1] = SpreadElement(argument=elements[-1])
+
         pattern = AssignmentExpression(
-            left=ArrayExpression(elements=tuple(Identifier(name=f"r{reg}") for reg in targets)),
+            left=ArrayExpression(elements=tuple(elements)),
             operator=AssignmentOperator.ASSIGN,
             right=source,
         )
@@ -365,6 +494,12 @@ class ArrayDestructuringCfgPass:
 
         dropped_ids = {block.id for block in drop}
         self.cfg.blocks = [block for block in self.cfg.blocks if block.id not in dropped_ids]
+
+        # A handler whose own block was dropped (the rest loop's cleanup) goes
+        # with it; any other just loses the dropped blocks from its range.
+        self.cfg.exception_handlers = [
+            handler for handler in self.cfg.exception_handlers if handler["handler_block"].id not in dropped_ids
+        ]
 
         for handler in self.cfg.exception_handlers:
             handler["try_blocks"] = [b for b in handler["try_blocks"] if b.id not in dropped_ids]

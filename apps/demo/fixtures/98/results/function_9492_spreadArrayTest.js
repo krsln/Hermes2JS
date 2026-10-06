@@ -59,52 +59,11 @@ function spreadArrayTest() {
     // CODE → addr:125 | <Mov>: <Reg8: 7, Reg8: 0>
     r7 = r0
     // CODE → addr:128 | <IteratorBegin>: <Reg8: 3, Reg8: 7>
-    r3 = GetIterator(r7)
-    // CODE → addr:134 | <IteratorNext>: <Reg8: 4, Reg8: 3, Reg8: 0>
-    r4 = r3.next()
+    [r5, ...r4] = r7
     // CODE → addr:141 | <LoadConstUndefined>: <Reg8: 0>
     // USED → r0 = undefined;
-    // CODE → addr:143 | <StrictEq>: <Reg8: 6, Reg8: 5, Reg8: 0>
-    // USED → r6 = r3 === undefined;
-    // CODE → addr:147 | <LoadConstUndefined>: <Reg8: 5>
-    r5 = undefined
-    if (r3 !== undefined) {
-        // ──────────────── Block 1 ──────────────── 
-        // CODE → addr:152 | <Mov>: <Reg8: 5, Reg8: 4>
-        r5 = r4
-    }
-    // ──────────────── Block 2 ──────────────── 
+    // CODE → addr:152 | <Mov>: <Reg8: 5, Reg8: 4>
     // CODE → addr:155 | <NewArray>: <Reg8: 4, UInt16: 0>
-    r4 = []
-    // CODE → addr:159 | <LoadConstZero>: <Reg8: 2>
-    r2 = 0
-    if (r3 !== undefined) {
-        try {
-            // LOOP → START (for_of)
-            for (const r10 of r7) {
-                // ──────────────── Block 3 ──────────────── 
-                // CODE → addr:174 | <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 0>
-                r6 = r6 === undefined
-                // CODE → addr:178 | <Mov>: <Reg8: 9, Reg8: 2>
-                r9 = r2
-                // ──────────────── Block 4 ──────────────── 
-                // CODE → addr:184 | <PutByValStrict>: <Reg8: 4, Reg8: 9, Reg8: 10>
-                r4[r9] = r10
-                // CODE → addr:188 | <AddN>: <Reg8: 2, Reg8: 9, Reg8: 8>
-                r2 = r9 + 1
-            }
-            // LOOP → END
-        } catch (caughtException) {
-            if (!r6) {
-                // ──────────────── Block 6 ──────────────── 
-                // CODE → addr:199 | <IteratorClose>: <Reg8: 3, UInt8: 1>
-                r3.return()
-            }
-            // ──────────────── Block 7 ──────────────── 
-            // CODE → addr:202 | <Throw>: <Reg8: 2>
-            throw caughtException;
-        }
-    }
     // ──────────────── Block 8 ──────────────── 
     // CODE → addr:204 | <TryGetById>: <Reg8: 3, Reg8: 1, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r3 = console;

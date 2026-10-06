@@ -241,18 +241,17 @@ def test_for_of_with_destructured_element_is_recognized():
 
 
 def test_catch_keeps_the_rethrow_that_closes_it():
-    # hermes-98 `spreadArrayTest`: `catch (e) { if (!done) it.return(); throw e }`.
+    # hermes-98 `nestedArrayDestructureTest`: `catch (e) { if (it) it.return(); throw e }`.
     # The catch body stopped at the post-dominator, which is the catch's OWN
-    # `throw` block, so the rethrow was printed after the try as `throw r2;`.
+    # `throw` block, so the rethrow used to be printed after the try.
     import re
 
-    out = _render_98(9492, "spreadArrayTest")
+    out = _render_98(9487, "nestedArrayDestructureTest")
 
-    catch = re.search(r"catch \(caughtException\) \{(.*?)\n        \}\n", out, re.S)
+    catch = re.search(r"catch \(caughtException\) \{\n        if \(r7 !== undefined\) \{(.*?)\n    \}\n", out, re.S)
 
     assert catch is not None, out
     assert "throw caughtException;" in catch.group(1)
-    assert "throw r2" not in out
 
 
 def test_rethrow_names_the_catch_parameter():
@@ -261,3 +260,13 @@ def test_rethrow_names_the_catch_parameter():
     out = _render_98(9487, "nestedArrayDestructureTest")
 
     assert "throw r0" not in out
+
+
+def test_rest_element_is_part_of_the_destructuring_pattern():
+    # hermes-98 `spreadArrayTest`: `const [first, ...rest] = arr` compiled to
+    # IteratorNext for `first`, then a NewArray + for-of-like loop for `rest`
+    # with a cleanup handler. The loop was even misread as a for-of over `arr`.
+    out = _render_98(9492, "spreadArrayTest")
+
+    assert "[r5, ...r4] = r7" in out
+    assert "GetIterator" not in out and "for (const" not in out and "caughtException" not in out
