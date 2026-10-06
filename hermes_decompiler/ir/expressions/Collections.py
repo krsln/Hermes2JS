@@ -10,6 +10,7 @@ __all__ = [
     "PropertyKind",
     "SpreadElement",
     "ObjectProperty",
+    "ArrayHole",
     "ArrayExpression",
     "ObjectExpression",
 ]
@@ -68,6 +69,21 @@ class ObjectProperty(Node):
 
 
 @dataclass(frozen=True, slots=True, eq=False)
+class ArrayHole(Expression):
+    """
+    Skipped slot in an array literal or destructuring pattern.
+
+    Examples:
+        [a, , c]
+        [, second] = pair
+    """
+
+    @property
+    def children(self) -> tuple[Node, ...]:
+        return ()
+
+
+@dataclass(frozen=True, slots=True, eq=False)
 class ArrayExpression(Expression):
     """
     Array literal.
@@ -78,7 +94,7 @@ class ArrayExpression(Expression):
         [foo, ...bar]
     """
 
-    elements: tuple[Expression | SpreadElement, ...] = ()
+    elements: tuple[Expression | SpreadElement | ArrayHole, ...] = ()
 
     @property
     def children(self) -> tuple[Node, ...]:

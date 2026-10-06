@@ -34,11 +34,13 @@ around the chain and are left alone.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 from hermes_decompiler.backend.analysis.cfg import BasicBlock, CFG
 from hermes_decompiler.backend.transforms.cfg_passes._generator_dispatch import _operands
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir.expressions import ArrayExpression, AssignmentExpression, Identifier
-from hermes_decompiler.ir.expressions.Collections import SpreadElement
+from hermes_decompiler.ir.expressions.Collections import ArrayHole, SpreadElement
 from hermes_decompiler.ir.Operators import AssignmentOperator
 from hermes_decompiler.ir.terminators import TerminatorJump
 
@@ -94,10 +96,156 @@ class ArrayDestructuringCfgPass:
 
     def _match(self, head: BasicBlock, begin_index: int):
         """
-        Returns (targets, drop_blocks, join, element_results) or None.
+        Returns (items, drop_blocks, join, kept_undefined, removed_handlers,
+        cleanup_blocks) or None.
 
-        `targets` are the element registers in order; `element_results` the
-        `Mov e_k <- v_k` results (kept as silent definitions of e_k).
+        `items` is the pattern tree: plain targets, holes, nested patterns
+        and a trailing rest element (see `_Elem`).
+        """
+        ctx = _Ctx(head)
+        parsed = self._parse(head, begin_index, ctx, top=True)
+
+        if parsed is None:
+            return None
+
+        items, join, kept_undefined = parsed
+
+        drop: list[BasicBlock] = []
+        seen_ids: set[int] = set()
+
+        for block in ctx.drop:
+            if block is not head and block.id not in seen_ids:
+                seen_ids.add(block.id)
+                drop.append(block)
+
+        dropped_ids = set(seen_ids)
+
+        # The chain must be single-entry: nothing outside it jumps in.
+        for block in drop:
+            for predecessor in block.predecessors:
+                if predecessor is not head and predecessor.id not in dropped_ids:
+                    return None
+
+        handlers = self._plan_handlers(head, ctx, dropped_ids)
+
+        if handlers is None:
+            return None
+
+        removed_handlers, cleanup = handlers
+
+        leaves = [leaf.reg for leaf in _leaves(items)]
+
+        if len(set(leaves)) != len(leaves):
+            return None
+
+        return items, drop, join, kept_undefined, removed_handlers, cleanup
+
+    def _plan_handlers(self, head: BasicBlock, ctx: "_Ctx", dropped_ids: set[int]):
+        """
+        Decides which exception handlers go away with the collapsed pattern.
+
+        Returns (removed_handlers, cleanup_blocks) or None when a handler
+        cuts through the pattern.
+
+        Three kinds go: the rest loop's own cleanup handler; the iterator
+        cleanup handlers (`Catch; ...; IteratorClose it, 1; Throw`) that
+        guard an element which can throw (a nested pattern); and, like
+        before, a surrounding try merely loses the dropped blocks from its
+        range - but only if it covers the whole pattern.
+        """
+        rest_ids = {b.id for b in ctx.rest_handler_blocks}
+        removed: list = []
+        remaining: list = []
+        chain: dict[int, BasicBlock] = {}
+
+        for handler in self.cfg.exception_handlers:
+            hb = handler["handler_block"]
+            covered = {b.id for b in handler["try_blocks"]}
+
+            if hb.id in dropped_ids:
+                # The rest loop's own cleanup handler: only fine if all it
+                # protects goes with it.
+                if hb.id not in rest_ids or not covered <= dropped_ids:
+                    return None
+
+                removed.append(handler)
+                continue
+
+            if covered and covered <= dropped_ids:
+                blocks = _cleanup_chain(hb, ctx.iterators)
+
+                if blocks is not None:
+                    removed.append(handler)
+                    chain.update({b.id: b for b in blocks})
+                    continue
+
+            remaining.append(handler)
+
+        if chain:
+            remaining_handler_blocks = {h["handler_block"].id for h in remaining}
+            entry = self.cfg.blocks[0] if self.cfg.blocks else None
+
+            # Dead catch blocks that only feed the cleanup (no handler entry
+            # points at them any more) go with it.
+            for block in self.cfg.blocks:
+                if (
+                        block.id in dropped_ids or block.id in chain or block is entry
+                        or block.id in remaining_handler_blocks or block.predecessors
+                        or not block.instructions or block.instructions[0].handler != "Catch"
+                        or not _cleanup_vocabulary(block, ctx.iterators)
+                ):
+                    continue
+
+                if all(s.id in chain for s in block.successors):
+                    chain[block.id] = block
+
+            for block in chain.values():
+                if any(p.id not in chain for p in block.predecessors):
+                    return None
+
+            still: list = []
+
+            for handler in remaining:
+                covered = {b.id for b in handler["try_blocks"]}
+
+                if handler["handler_block"].id in chain and covered <= dropped_ids | set(chain):
+                    removed.append(handler)
+                else:
+                    still.append(handler)
+
+            remaining = still
+
+        # A chain inside a try (a for-of body, say) is fine as long as the
+        # try covers all of it: the dropped blocks just leave the handler's
+        # list. A try that starts or ends inside the chain is not.
+        for handler in remaining:
+            covered = {b.id for b in handler["try_blocks"]}
+            inside = dropped_ids & covered
+
+            if inside and (inside != dropped_ids or head.id not in covered):
+                return None
+
+            if not inside and head.id in covered:
+                return None
+
+        return removed, list(chain.values())
+
+    def _parse(self, head: BasicBlock, begin_index: int, ctx: "_Ctx", top: bool):
+        """
+        Parses one pattern whose `IteratorBegin` sits at `head.instructions[begin_index]`.
+
+        Returns (items, join, kept_undefined) or None. Every block that is
+        part of the pattern is appended to `ctx.drop` (the top head stays).
+
+        Element k >= 2 starts at a boundary block::
+
+            [Mov target <- previous]          # peeled binding of element k-1
+            [LoadConstUndefined ek]           # absent for a hole
+            [Mov copy <- done]*; JmpTrue done -> next boundary
+
+        and is followed by either the fetch-and-assign diamond, or (hole)
+        just the fetch. The running "done" flag changes register between
+        elements, so it is tracked as a set of aliases.
         """
         begin = head.instructions[begin_index]
         begin_ops = _operands(begin)
@@ -106,6 +254,7 @@ class ArrayDestructuringCfgPass:
             return None
 
         it, src = begin_ops
+        ctx.iterators.add(it)
         tail = head.instructions[begin_index + 1:]
 
         # [Mov t <- src], IteratorNext, Mov x <- it, StrictEq, LoadConstUndefined, JmpTrue
@@ -117,7 +266,7 @@ class ArrayDestructuringCfgPass:
         # chain (the function's own `return undefined` often reads it).
         kept_undefined = None
 
-        if shapes == ["Mov", "IteratorNext", "Mov", "LoadConstUndefined", *expected[3:]]:
+        if top and shapes == ["Mov", "IteratorNext", "Mov", "LoadConstUndefined", *expected[3:]]:
             kept_undefined = tail[3]
             tail = tail[:3] + tail[4:]
         elif shapes != expected:
@@ -147,193 +296,238 @@ class ArrayDestructuringCfgPass:
         if branch is None:
             return None
 
-        taken, assign_block = branch
+        taken, fall = branch
+        aliases = {flag}
+        items: list[_Elem] = []
 
-        # A1: Mov e1 <- v1
-        if _handlers(assign_block) != ["Mov"] or _operands(assign_block.instructions[0]) != [e1, v1]:
-            return None
+        if _handlers(fall) == ["Mov"] and _operands(fall.instructions[0]) == [e1, v1]:
+            # A1: Mov e1 <- v1
+            if _only_successor(fall) is not taken:
+                return None
 
-        if _only_successor(assign_block) is not taken:
-            return None
+            items.append(_Elem("reg", e1, fall.instructions[0]))
+            ctx.drop.append(fall)
+            prev_tmp = e1
+            cur_block, cur_insts = taken, list(taken.instructions)
+        else:
+            # Element 1 is a hole: this block's tail is element 2's head.
+            items.append(_Elem("hole"))
+            prev_tmp = None
+            cur_block, cur_insts = head, [undef_e, jmp]
 
-        targets = [e1]
-        element_results = [assign_block.instructions[0]]
-        drop = [assign_block]
-        undef_defs: list = []
-        flags = {flag}
-        current = taken
-
-        # Binding patterns (`for (const [k, v] of m)`) fill temporaries and
-        # copy each into its target at the next element boundary:
-        # `Mov target <- tmp` leads the following head / close-check block.
-        # All elements must agree on which of the two forms is used.
-        peeled_form: bool | None = None
-        previous_tmp = e1
-        rest = None
+        seen: set[int] = set()
 
         while True:
-            insts = list(current.instructions)
+            if id(cur_block) in seen:
+                return None
+
+            seen.add(id(cur_block))
+            insts = list(cur_insts)
             peeled = None
 
-            if insts and insts[0].handler == "Mov":
+            # Binding patterns (`const [a, b] = x`, `for (const [k, v] of m)`)
+            # fill temporaries and copy each into its target at the next
+            # element boundary: `Mov target <- tmp` leads that block. All
+            # elements must agree on which of the two forms is used.
+            if prev_tmp is not None and insts and insts[0].handler == "Mov":
                 ops = _operands(insts[0])
 
-                if len(ops) == 2 and ops[1] == previous_tmp and ops[0] != previous_tmp:
+                if len(ops) == 2 and ops[1] == prev_tmp and ops[0] != prev_tmp:
                     peeled = insts[0]
                     insts = insts[1:]
 
-            if peeled_form is None:
-                peeled_form = peeled is not None
-            elif peeled_form != (peeled is not None):
-                return None
+            # A nested pattern: the element's value is the new source.
+            if prev_tmp is not None and insts and insts[0].handler == "IteratorBegin":
+                ops = _operands(insts[0])
+                wanted = _operands(peeled)[0] if peeled is not None else prev_tmp
 
-            if peeled is not None:
-                targets[-1] = _operands(peeled)[0]
-                element_results[-1] = peeled
-
-            handlers = [i.handler for i in insts]
-
-            if handlers == ["LoadConstUndefined", "JmpTrue"]:
-                # Element k >= 2.
-                ek = _operands(insts[0])[0]
-                jump_ops = _operands(insts[1])
-
-                if len(jump_ops) != 2 or jump_ops[1] != flag:
+                if len(ops) != 2 or ops[1] != wanted or cur_block is ctx.top:
                     return None
 
-                branch = _taken_fall(current)
-                if branch is None:
+                if peeled is not None:
+                    if ctx.peeled_form is False:
+                        return None
+
+                    ctx.peeled_form = True
+
+                sub_start = len(ctx.drop)
+                iterators_before = set(ctx.iterators)
+                ctx.drop.append(cur_block)
+                sub = self._parse(cur_block, len(cur_block.instructions) - len(insts), ctx, top=False)
+
+                if sub is None:
                     return None
 
-                close_check, next_block = branch
+                sub_items, sub_join, _ = sub
 
-                if handlers_of(next_block) != [
-                    "IteratorNext", "Mov", "StrictEq", "LoadConstUndefined", "Mov", "JmpTrue",
-                ]:
-                    return None
+                # Whatever the nested pattern wrote is no longer the flag.
+                for block in ctx.drop[sub_start:]:
+                    for instruction in block.instructions:
+                        if instruction.dest_reg is not None:
+                            aliases.discard(instruction.dest_reg)
 
-                nk, my, eqk, undef_k, mov_f, jmp_k = next_block.instructions
-                nk_ops, my_ops, eqk_ops = _operands(nk), _operands(my), _operands(eqk)
-                f_ops, jk_ops = _operands(mov_f), _operands(jmp_k)
-
-                if len(nk_ops) != 3 or len(my_ops) != 2 or len(eqk_ops) != 3 or len(f_ops) != 2 or len(jk_ops) != 2:
-                    return None
-
-                vk, nk_it, _ = nk_ops
-                y_reg, y_it = my_ops
-                flag2, eq_y, eq_u = eqk_ops
-
-                if (
-                        nk_it != it or y_it != it or eq_y != y_reg or eq_u != undef_reg
-                        or _operands(undef_k) != [ek] or f_ops != [flag, flag2] or jk_ops[1] != flag2
-                ):
-                    return None
-
-                branch = _taken_fall(next_block)
-                if branch is None or branch[0] is not close_check:
-                    return None
-
-                assign = branch[1]
-
-                if handlers_of(assign) != ["Mov", "Mov"]:
-                    return None
-
-                if _operands(assign.instructions[0]) != [ek, vk] or _operands(assign.instructions[1]) != [flag, flag2]:
-                    return None
-
-                targets.append(ek)
-                element_results.append(assign.instructions[0])
-                previous_tmp = ek
-                drop.extend([current, next_block, assign])
-                flags.add(flag2)
-                following = _only_successor(assign)
-
-                if following is None:
-                    return None
-
-                # Every head's early-out must agree with the chain's own exit.
-                current = following
-                chain_exit = close_check
-
-                if current is not chain_exit and handlers_of(current)[-2:] != ["LoadConstUndefined", "JmpTrue"]:
-                    return None
-
+                aliases -= ctx.iterators - iterators_before
+                items[-1] = _Elem("nested", items=sub_items)
+                prev_tmp = None
+                cur_block, cur_insts = sub_join, list(sub_join.instructions)
                 continue
 
-            if handlers == ["NewArray", "LoadConstZero", "JmpTrue"]:
-                rest = self._match_rest(current, insts, it, flag, undef_reg)
+            if prev_tmp is not None:
+                if ctx.peeled_form is None:
+                    ctx.peeled_form = peeled is not None
+                elif ctx.peeled_form != (peeled is not None):
+                    return None
+
+                if peeled is not None:
+                    items[-1].reg = _operands(peeled)[0]
+                    items[-1].result = peeled
+
+            if not insts or insts[-1].handler not in _JMP_TRUE:
+                return None
+
+            jmp_k = insts[-1]
+            jump_ops = _operands(jmp_k)
+
+            if len(jump_ops) != 2:
+                return None
+
+            undef_inst = None
+            others = []
+
+            for instruction in insts[:-1]:
+                ops = _operands(instruction)
+
+                if instruction.handler == "Mov" and len(ops) == 2 and ops[1] in aliases:
+                    aliases.add(ops[0])
+                elif instruction.handler == "LoadConstUndefined" and undef_inst is None:
+                    undef_inst = instruction
+                else:
+                    others.append(instruction)
+
+            if jump_ops[1] not in aliases:
+                return None
+
+            branch = _taken_fall(cur_block)
+            if branch is None:
+                return None
+
+            taken, fall = branch
+            own = [] if cur_block is ctx.top else [cur_block]
+
+            if others:
+                # `...rest`
+                if undef_inst is not None or [i.handler for i in others] != ["NewArray", "LoadConstZero"]:
+                    return None
+
+                rest = self._match_rest(cur_block, [*others, jmp_k], it, jump_ops[1], undef_reg)
 
                 if rest is None:
                     return None
 
-                break
+                join, rest_drop, rest_reg, rest_result, handler_blocks = rest
+                ctx.drop.extend(rest_drop)
+                ctx.rest_handler_blocks |= handler_blocks
+                items.append(_Elem("rest", rest_reg, rest_result))
+                return items, join, kept_undefined
 
-            if handlers == ["JmpTrue"]:
-                close_check = current
-                close_insts = insts
-                break
+            fall_handlers = _handlers(fall)
 
-            return None
+            if undef_inst is None and fall_handlers in (["IteratorClose"], ["Mov", "IteratorClose"]):
+                # Close check: JmpTrue f -> J ; fall -> [Mov tmp <- it] IteratorClose -> J.
+                close = fall.instructions[-1]
+                close_ops = _operands(close)
 
-        if rest is not None:
-            join, rest_drop, rest_reg, rest_result, handler_blocks = rest
-            drop.extend(rest_drop)
-            targets.append(rest_reg)
-            element_results.append(rest_result)
-        else:
-            # Close check: JmpTrue f -> J ; fall -> IteratorClose it -> J.
-            jump_ops = _operands(close_insts[0])
-            branch = _taken_fall(close_check)
+                if fall_handlers == ["Mov"] + ["IteratorClose"]:
+                    mov_ops = _operands(fall.instructions[0])
 
-            if len(jump_ops) != 2 or jump_ops[1] != flag or branch is None:
-                return None
-
-            join, close_block = branch
-
-            if handlers_of(close_block) != ["IteratorClose"]:
-                return None
-
-            if _operands(close_block.instructions[0])[:1] != [it] or _only_successor(close_block) is not join:
-                return None
-
-            drop.extend([close_check, close_block])
-            handler_blocks = set()
-
-        # The chain must be single-entry: nothing outside it jumps in, and
-        # nothing in it is covered by an exception handler.
-        dropped_ids = {block.id for block in drop}
-
-        for block in drop:
-            for predecessor in block.predecessors:
-                if predecessor is not head and predecessor.id not in dropped_ids:
+                    if len(mov_ops) != 2 or mov_ops[1] != it or close_ops[:1] != [mov_ops[0]]:
+                        return None
+                elif close_ops[:1] != [it]:
                     return None
 
-        # A chain inside a try (a for-of body, say) is fine as long as the
-        # try covers all of it: the dropped blocks just leave the handler's
-        # list. A try that starts or ends inside the chain is not.
-        for handler in self.cfg.exception_handlers:
-            covered = {b.id for b in handler["try_blocks"]}
-
-            if handler["handler_block"].id in dropped_ids:
-                # The rest loop's own cleanup handler: only fine if all it
-                # protects goes with it.
-                if handler["handler_block"].id not in {b.id for b in handler_blocks} or not covered <= dropped_ids:
+                if _only_successor(fall) is not taken:
                     return None
 
+                ctx.drop.extend([*own, fall])
+                return items, taken, kept_undefined
+
+            if undef_inst is None:
+                # Hole: just the fetch, falling into the next boundary.
+                if fall_handlers not in (["IteratorNext", "Mov", "StrictEq"],
+                                         ["Mov", "IteratorNext", "Mov", "StrictEq"]):
+                    return None
+
+                fetch = list(fall.instructions)
+
+                if fall_handlers[0] == "Mov":
+                    if len(_operands(fetch[0])) != 2:
+                        return None
+
+                    fetch = fetch[1:]
+
+                nh_ops, mh_ops, eh_ops = (_operands(i) for i in fetch)
+
+                if len(nh_ops) != 3 or len(mh_ops) != 2 or len(eh_ops) != 3:
+                    return None
+
+                if nh_ops[1] != it or mh_ops[1] != it or eh_ops[1] != mh_ops[0] or eh_ops[2] != undef_reg:
+                    return None
+
+                # The skipped path must leave the new flag register set.
+                if eh_ops[0] not in aliases or _only_successor(fall) is not taken:
+                    return None
+
+                items.append(_Elem("hole"))
+                ctx.drop.extend([*own, fall])
+                aliases = {eh_ops[0]}
+                prev_tmp = None
+                cur_block, cur_insts = taken, list(taken.instructions)
                 continue
 
-            inside = dropped_ids & covered
+            # Element k >= 2.
+            ek = _operands(undef_inst)[0]
 
-            if inside and (inside != dropped_ids or head.id not in covered):
+            if fall_handlers != ["IteratorNext", "Mov", "StrictEq", "LoadConstUndefined", "Mov", "JmpTrue"]:
                 return None
 
-            if not inside and head.id in covered:
+            nk, my, eqk, undef_k, mov_f, jmp_n = fall.instructions
+            nk_ops, my_ops, eqk_ops = _operands(nk), _operands(my), _operands(eqk)
+            f_ops, jn_ops = _operands(mov_f), _operands(jmp_n)
+
+            if len(nk_ops) != 3 or len(my_ops) != 2 or len(eqk_ops) != 3 or len(f_ops) != 2 or len(jn_ops) != 2:
                 return None
 
-        if len(set(targets)) != len(targets):
-            return None
+            vk, nk_it, _ = nk_ops
+            y_reg, y_it = my_ops
+            flag2, eq_y, eq_u = eqk_ops
 
-        return targets, drop, join, element_results, kept_undefined, rest is not None
+            if (
+                    nk_it != it or y_it != it or eq_y != y_reg or eq_u != undef_reg
+                    or _operands(undef_k) != [ek] or f_ops[0] not in aliases or f_ops[1] != flag2
+                    or jn_ops[1] != flag2
+            ):
+                return None
+
+            inner = _taken_fall(fall)
+            if inner is None or inner[0] is not taken:
+                return None
+
+            assign = inner[1]
+
+            if _handlers(assign) != ["Mov", "Mov"]:
+                return None
+
+            if _operands(assign.instructions[0]) != [ek, vk] or _operands(assign.instructions[1]) != [f_ops[0], flag2]:
+                return None
+
+            if _only_successor(assign) is not taken:
+                return None
+
+            items.append(_Elem("reg", ek, assign.instructions[0]))
+            ctx.drop.extend([*own, fall, assign])
+            aliases = {f_ops[0], flag2}
+            prev_tmp = ek
+            cur_block, cur_insts = taken, list(taken.instructions)
 
     def _match_rest(self, start: BasicBlock, insts, it: int, flag: int, undef_reg: int):
         """`...rest` after the last element.
@@ -442,18 +636,13 @@ class ArrayDestructuringCfgPass:
     # ------------------------------------------------------------------
 
     def _apply(self, head: BasicBlock, begin_index: int, match) -> None:
-        targets, drop, join, element_results, kept_undefined, has_rest = match
+        items, drop, join, kept_undefined, removed_handlers, cleanup = match
 
         begin = head.instructions[begin_index]
         source = begin.value.arguments[0]
 
-        elements = [Identifier(name=f"r{reg}") for reg in targets]
-
-        if has_rest:
-            elements[-1] = SpreadElement(argument=elements[-1])
-
         pattern = AssignmentExpression(
-            left=ArrayExpression(elements=tuple(elements)),
+            left=_pattern_expression(items),
             operator=AssignmentOperator.ASSIGN,
             right=source,
         )
@@ -466,13 +655,15 @@ class ArrayDestructuringCfgPass:
         # Each element keeps a silent definition (`rN = rN` prints nothing)
         # so reaching-definition lookups still see the register written here.
         silent = []
-        for reg, result in zip(targets, element_results):
-            result.dest_reg = reg
-            result.value = Identifier(name=f"r{reg}")
+        for leaf in _leaves(items):
+            result = leaf.result
+            result.dest_reg = leaf.reg
+            result.value = Identifier(name=f"r{leaf.reg}")
             result.definition_used = False
             silent.append(result)
 
-        removed = {id(instruction) for block in drop for instruction in block.instructions}
+        gone = [*drop, *cleanup]
+        removed = {id(instruction) for block in gone for instruction in block.instructions}
         removed.update(id(i) for i in head.instructions[begin_index + 1:])
         removed -= {id(result) for result in silent}
 
@@ -492,13 +683,17 @@ class ArrayDestructuringCfgPass:
         if head not in join.predecessors:
             join.predecessors.append(head)
 
+        gone_ids = {block.id for block in gone}
         dropped_ids = {block.id for block in drop}
-        self.cfg.blocks = [block for block in self.cfg.blocks if block.id not in dropped_ids]
+        self.cfg.blocks = [block for block in self.cfg.blocks if block.id not in gone_ids]
 
-        # A handler whose own block was dropped (the rest loop's cleanup) goes
-        # with it; any other just loses the dropped blocks from its range.
+        # Handlers that guarded only the pattern (the rest loop's cleanup,
+        # the iterator-close cleanup of a nested pattern) go with it; any
+        # other just loses the dropped blocks from its range.
+        removed_ids = {id(handler) for handler in removed_handlers}
         self.cfg.exception_handlers = [
-            handler for handler in self.cfg.exception_handlers if handler["handler_block"].id not in dropped_ids
+            handler for handler in self.cfg.exception_handlers
+            if id(handler) not in removed_ids and handler["handler_block"].id not in gone_ids
         ]
 
         for handler in self.cfg.exception_handlers:
@@ -506,6 +701,93 @@ class ArrayDestructuringCfgPass:
 
         for register, definitions in list(self.cfg.reg_definitions.items()):
             self.cfg.reg_definitions[register] = [d for d in definitions if id(d[2]) not in removed]
+
+
+@dataclass(slots=True)
+class _Elem:
+    """One slot of a destructuring pattern."""
+
+    kind: str  # "reg" | "hole" | "nested" | "rest"
+    reg: int | None = None
+    result: object = None
+    items: list | None = None
+
+
+class _Ctx:
+    """State shared by a pattern and the patterns nested in it."""
+
+    def __init__(self, head: BasicBlock):
+        self.top = head
+        self.drop: list[BasicBlock] = []
+        self.iterators: set[int] = set()
+        self.peeled_form: bool | None = None
+        self.rest_handler_blocks: set[BasicBlock] = set()
+
+
+def _leaves(items):
+    for item in items:
+        if item.kind == "nested":
+            yield from _leaves(item.items)
+        elif item.kind in ("reg", "rest"):
+            yield item
+
+
+def _pattern_expression(items) -> ArrayExpression:
+    elements = []
+
+    for item in items:
+        if item.kind == "hole":
+            elements.append(ArrayHole())
+        elif item.kind == "nested":
+            elements.append(_pattern_expression(item.items))
+        elif item.kind == "rest":
+            elements.append(SpreadElement(argument=Identifier(name=f"r{item.reg}")))
+        else:
+            elements.append(Identifier(name=f"r{item.reg}"))
+
+    return ArrayExpression(elements=tuple(elements))
+
+
+_CLEANUP_HANDLERS = {"Catch", "Mov", "Jmp", "JmpTrue", "JmpTrueLong", "LoadConstUndefined", "IteratorClose", "Throw"}
+
+
+def _cleanup_vocabulary(block: BasicBlock, iterators: set[int]) -> bool:
+    for instruction in block.instructions:
+        if instruction.handler not in _CLEANUP_HANDLERS:
+            return False
+
+        if instruction.handler == "IteratorClose" and _operands(instruction)[:1] and _operands(instruction)[
+            0] not in iterators:
+            return False
+
+    return True
+
+
+def _cleanup_chain(handler_block: BasicBlock, iterators: set[int]):
+    """
+    The blocks of an iterator-cleanup handler (`Catch ex; [flag copy]; ...
+    JmpTrue done -> T; IteratorClose it, 1; T: Throw ex`), or None when the
+    handler does anything else (a real `catch` block).
+    """
+    chain: dict[int, BasicBlock] = {}
+    stack = [handler_block]
+
+    while stack:
+        block = stack.pop()
+
+        if block.id in chain:
+            continue
+
+        if not _cleanup_vocabulary(block, iterators):
+            return None
+
+        chain[block.id] = block
+        stack.extend(block.successors)
+
+    closes = any(i.handler == "IteratorClose" for b in chain.values() for i in b.instructions)
+    throws = any(i.handler == "Throw" for b in chain.values() for i in b.instructions)
+
+    return list(chain.values()) if closes and throws else None
 
 
 def handlers_of(block: BasicBlock) -> list[str]:

@@ -222,11 +222,37 @@ def test_for_of_does_not_leave_its_iterator_setup_behind():
 
 
 def test_iterator_setup_is_kept_when_the_register_is_still_read():
-    # `nestedArrayDestructureTest` is not (yet) folded into patterns: its
-    # `r1.next()` / `r1.return()` still read the iterator, which must stay defined.
+    # The second statement of `nestedArrayDestructureTest` (defaults + rest) is not
+    # (yet) folded into a pattern: its `r7.next()` / `r7.return()` still read the
+    # iterator, which must stay defined. (Switch to another fixture once it folds.)
     out = _render_98(9487, "nestedArrayDestructureTest")
 
-    assert "r1 = GetIterator(r6)" in out
+    assert "r7 = GetIterator(r17)" in out
+
+
+def test_nested_pattern_with_holes_is_one_statement():
+    # `const [[a, b], , [, d]] = matrix` is three iterators (outer + one per nested
+    # pattern), a hole each, and an iterator-close cleanup handler around each
+    # nested pattern. It is ONE destructuring statement.
+    out = _render_98(9487, "nestedArrayDestructureTest")
+
+    assert "[[r8, r7], , [, r0]] = r6" in out
+    assert "GetIterator(r6)" not in out
+    assert "r1.next()" not in out and "r1.return()" not in out
+    assert "label_544" not in out
+
+
+def test_array_hole_prints_its_comma():
+    from hermes_decompiler.backend.emit.printer.ExpressionPrinter import ExpressionPrinter
+    from hermes_decompiler.ir.expressions import ArrayExpression, ArrayHole, Identifier
+
+    printer = ExpressionPrinter()
+    a, b = Identifier(name="a"), Identifier(name="b")
+
+    assert printer.visit(ArrayExpression(elements=(a, ArrayHole(), b))) == "[a, , b]"
+    assert printer.visit(ArrayExpression(elements=(ArrayHole(), b))) == "[, b]"
+    # `[a, ]` would be a single element.
+    assert printer.visit(ArrayExpression(elements=(a, ArrayHole()))) == "[a, ,]"
 
 
 def test_for_of_with_destructured_element_is_recognized():

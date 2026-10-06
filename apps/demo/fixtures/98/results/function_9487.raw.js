@@ -35,120 +35,10 @@ function nestedArrayDestructureTest() {
     // CODE → addr: 70 | <Mov>: <Reg8: 6, Reg8: 2>
     r6 = r2
     // CODE → addr: 73 | <IteratorBegin>: <Reg8: 1, Reg8: 6>
-    r1 = GetIterator(r6)
-    // CODE → addr: 76 | <Mov>: <Reg8: 2, Reg8: 6>
-    // CODE → addr: 79 | <IteratorNext>: <Reg8: 2, Reg8: 1, Reg8: 2>
-    r2 = r1.next()
-    // CODE → addr: 83 | <Mov>: <Reg8: 4, Reg8: 1>
-    // USED → r4 = r1;
-    // CODE → addr: 86 | <StrictEq>: <Reg8: 4, Reg8: 4, Reg8: 3>
-    // USED → r4 = r1 === undefined;
-    // CODE → addr: 90 | <LoadConstUndefined>: <Reg8: 5>
-    r5 = undefined
-    // CODE → addr: 92 | <JmpTrue>: <Addr8: 6, Reg8: 4>  # Address: 00000062
-    if (r1 === undefined) goto label_98;
-    // ──────────────── Block 1 ──────────────── 
-    // CODE → addr: 95 | <Mov>: <Reg8: 5, Reg8: 2>
-    // USED → r5 = r2;
-    // ──────────────── Block 2 ──────────────── 
-    // CODE → addr: 98 | <Mov>: <Reg8: 11, Reg8: 5>
-    r11 = r2
-    // CODE → addr:101 | <IteratorBegin>: <Reg8: 2, Reg8: 11>
-    [r8, r7] = r11
+    [[r8, r7], , [, r0]] = r6
     // CODE → addr:126 | <Mov>: <Reg8: 8, Reg8: 9>
     // CODE → addr:159 | <Mov>: <Reg8: 7, Reg8: 9>
-    // ──────────────── Block 9 ──────────────── 
-    // CODE → addr:168 | <Mov>: <Reg8: 5, Reg8: 4>
-    r5 = r1 === undefined
-    // CODE → addr:171 | <JmpTrue>: <Addr8: 17, Reg8: 4>  # Address: 000000bc
-    if (r1 === undefined) goto label_188;
-    // ──────────────── Block 10 ──────────────── 
-    // CODE → addr:174 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = r6
-    // CODE → addr:177 | <IteratorNext>: <Reg8: 2, Reg8: 1, Reg8: 2>
-    r2 = r1.next()
-    // CODE → addr:181 | <Mov>: <Reg8: 2, Reg8: 1>
-    // USED → r2 = r1;
-    // CODE → addr:184 | <StrictEq>: <Reg8: 5, Reg8: 2, Reg8: 3>
-    // USED → r5 = r1 === undefined;
-    // ──────────────── Block 11 ──────────────── 
-    // CODE → addr:188 | <LoadConstUndefined>: <Reg8: 9>
-    r9 = undefined
-    // CODE → addr:190 | <Mov>: <Reg8: 2, Reg8: 5>
-    r2 = r1 === undefined
-    // CODE → addr:193 | <JmpTrue>: <Addr8: 28, Reg8: 5>  # Address: 000000dd
-    if (r1 === undefined) goto label_221;
-    // ──────────────── Block 12 ──────────────── 
-    // CODE → addr:196 | <IteratorNext>: <Reg8: 11, Reg8: 1, Reg8: 6>
-    r11 = r1.next()
-    // CODE → addr:200 | <Mov>: <Reg8: 6, Reg8: 1>
-    // USED → r6 = r1;
-    // CODE → addr:203 | <StrictEq>: <Reg8: 6, Reg8: 6, Reg8: 3>
-    // USED → r6 = r1 === undefined;
-    // CODE → addr:207 | <LoadConstUndefined>: <Reg8: 9>
-    r9 = undefined
-    // CODE → addr:209 | <Mov>: <Reg8: 2, Reg8: 6>
-    r2 = r1 === undefined
-    // CODE → addr:212 | <JmpTrue>: <Addr8: 9, Reg8: 6>  # Address: 000000dd
-    if (r1 === undefined) goto label_221;
-    // ──────────────── Block 13 ──────────────── 
-    // CODE → addr:215 | <Mov>: <Reg8: 9, Reg8: 11>
-    // USED → r9 = r11;
-    // CODE → addr:218 | <Mov>: <Reg8: 2, Reg8: 6>
-    // USED → r2 = r1 === undefined;
-    // ──────────────── Block 14 ──────────────── 
-    // CODE → addr:221 | <Mov>: <Reg8: 12, Reg8: 9>
-    r12 = r11
-    // CODE → addr:224 | <IteratorBegin>: <Reg8: 6, Reg8: 12>
-    r6 = GetIterator(r12)
-    // CODE → addr:227 | <Mov>: <Reg8: 9, Reg8: 12>
-    r9 = r11
-    // CODE → addr:230 | <IteratorNext>: <Reg8: 9, Reg8: 6, Reg8: 9>
-    r9 = r6.next()
-    // CODE → addr:234 | <Mov>: <Reg8: 9, Reg8: 6>
-    // USED → r9 = r6;
-    // CODE → addr:237 | <StrictEq>: <Reg8: 9, Reg8: 9, Reg8: 3>
-    // USED → r9 = r6 === undefined;
-    // CODE → addr:241 | <LoadConstUndefined>: <Reg8: 11>
-    r11 = undefined
-    // CODE → addr:243 | <JmpTrue>: <Addr8: 28, Reg8: 9>  # Address: 0000010f
-    if (r6 === undefined) goto label_271;
-    // ──────────────── Block 15 ──────────────── 
-    // CODE → addr:246 | <IteratorNext>: <Reg8: 13, Reg8: 6, Reg8: 12>
-    r13 = r6.next()
-    // CODE → addr:250 | <Mov>: <Reg8: 12, Reg8: 6>
-    // USED → r12 = r6;
-    // CODE → addr:253 | <StrictEq>: <Reg8: 12, Reg8: 12, Reg8: 3>
-    // USED → r12 = r6 === undefined;
-    // CODE → addr:257 | <LoadConstUndefined>: <Reg8: 11>
-    r11 = undefined
-    // CODE → addr:259 | <Mov>: <Reg8: 9, Reg8: 12>
-    r9 = r6 === undefined
-    // CODE → addr:262 | <JmpTrue>: <Addr8: 9, Reg8: 12>  # Address: 0000010f
-    if (r6 === undefined) goto label_271;
-    // ──────────────── Block 16 ──────────────── 
-    // CODE → addr:265 | <Mov>: <Reg8: 11, Reg8: 13>
-    // USED → r11 = r13;
-    // CODE → addr:268 | <Mov>: <Reg8: 9, Reg8: 12>
-    // USED → r9 = r6 === undefined;
-    // ──────────────── Block 17 ──────────────── 
     // CODE → addr:271 | <Mov>: <Reg8: 0, Reg8: 11>
-    r0 = r13
-    // CODE → addr:274 | <JmpTrue>: <Addr8: 9, Reg8: 9>  # Address: 0000011b
-    if (r6 === undefined) goto label_283;
-    // ──────────────── Block 18 ──────────────── 
-    // CODE → addr:277 | <Mov>: <Reg8: 9, Reg8: 6>
-    // USED → r9 = r6;
-    // CODE → addr:280 | <IteratorClose>: <Reg8: 9, UInt8: 0>
-    r6.return()
-    // ──────────────── Block 19 ──────────────── 
-    // CODE → addr:283 | <JmpTrue>: <Addr8: 9, Reg8: 2>  # Address: 00000124
-    if (r1 === undefined) goto label_292;
-    // ──────────────── Block 20 ──────────────── 
-    // CODE → addr:286 | <Mov>: <Reg8: 9, Reg8: 1>
-    // USED → r9 = r1;
-    // CODE → addr:289 | <IteratorClose>: <Reg8: 9, UInt8: 0>
-    r1.return()
     // ──────────────── Block 21 ──────────────── 
     // CODE → addr:292 | <TryGetById>: <Reg8: 11, Reg8: 10, UInt8: 0, string_id: 108>  # String: 'console' (Identifier)
     // USED → r11 = console;
@@ -296,45 +186,5 @@ function nestedArrayDestructureTest() {
     r7.return()
     // ──────────────── Block 38 ──────────────── 
     // CODE → addr:513 | <Throw>: <Reg8: 0>
-    throw r0;
-    // ──────────────── Block 39 ──────────────── 
-    // CODE → addr:515 | <Catch>: <Reg8: 0>
-    r0 = caughtException
-    // CODE → addr:517 | <IteratorClose>: <Reg8: 6, UInt8: 1>
-    r6.return()
-    // CODE → addr:520 | <Throw>: <Reg8: 0>
-    throw r0;
-    // ──────────────── Block 40 ──────────────── 
-    // CODE → addr:522 | <Catch>: <Reg8: 0>
-    r0 = caughtException
-    // CODE → addr:524 | <Jmp>: <Addr8: 20>  # Address: 00000220
-    goto label_544;
-    // ──────────────── Block 41 ──────────────── 
-    // CODE → addr:526 | <Catch>: <Reg8: 0>
-    r0 = caughtException
-    // CODE → addr:528 | <Mov>: <Reg8: 2, Reg8: 5>
-    r2 = r1 === undefined
-    // CODE → addr:531 | <Jmp>: <Addr8: 13>  # Address: 00000220
-    goto label_544;
-    // ──────────────── Block 42 ──────────────── 
-    // CODE → addr:533 | <Catch>: <Reg8: 0>
-    r0 = caughtException
-    // CODE → addr:535 | <Mov>: <Reg8: 2, Reg8: 4>
-    r2 = r1 === undefined
-    // CODE → addr:538 | <Jmp>: <Addr8: 6>  # Address: 00000220
-    goto label_544;
-    // ──────────────── Block 43 ──────────────── 
-    // CODE → addr:540 | <Catch>: <Reg8: 0>
-    r0 = caughtException
-    // CODE → addr:542 | <LoadConstUndefined>: <Reg8: 2>
-    // USED → r2 = undefined;
-    // ──────────────── Block 44 ──────────────── 
-    // CODE → addr:544 | <JmpTrue>: <Addr8: 6, Reg8: 2>  # Address: 00000226
-    if (undefined) goto label_550;
-    // ──────────────── Block 45 ──────────────── 
-    // CODE → addr:547 | <IteratorClose>: <Reg8: 1, UInt8: 1>
-    r1.return()
-    // ──────────────── Block 46 ──────────────── 
-    // CODE → addr:550 | <Throw>: <Reg8: 0>
     throw r0;
 }
