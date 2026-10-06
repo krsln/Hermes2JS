@@ -235,8 +235,10 @@ def test_for_of_with_destructured_element_is_recognized():
     # `while (!(r8 === undefined)) { ...; try { ... } catch { r5.return(); throw } }`.
     out = _render_98(9495, "mapTest")
 
-    assert "for (const r9 of r3) {" in out
-    assert "[r7, r6] = r11" in out
+    # The element is destructured by the loop head itself, not by a first
+    # statement through two registers (`r11 = r9; [r7, r6] = r11`).
+    assert "for (const [r7, r6] of r3) {" in out
+    assert "r11" not in out and "[r7, r6] =" not in out
     assert "while" not in out and "caughtException" not in out and ".return()" not in out and "GetIterator" not in out
 
 

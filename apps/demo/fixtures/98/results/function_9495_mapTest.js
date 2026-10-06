@@ -83,12 +83,8 @@ function mapTest() {
     // CODE → addr:180 | <Mov>: <Reg8: 3, Reg8: 2>
     r3 = r2
     // LOOP → START (for_of)
-    for (const r9 of r3) {
+    for (const [r7, r6] of r3) {
         // ──────────────── Block 2 ──────────────── 
-        // CODE → addr:200 | <Mov>: <Reg8: 11, Reg8: 9>
-        r11 = r9
-        // CODE → addr:203 | <IteratorBegin>: <Reg8: 8, Reg8: 11>
-        [r7, r6] = r11
         // CODE → addr:228 | <Mov>: <Reg8: 7, Reg8: 10>
         // CODE → addr:261 | <Mov>: <Reg8: 6, Reg8: 10>
         // ──────────────── Block 9 ──────────────── 

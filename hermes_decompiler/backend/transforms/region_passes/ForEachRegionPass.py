@@ -16,7 +16,10 @@ from hermes_decompiler.backend.transforms.shared import resolve_identifier as _s
 from hermes_decompiler.backend.transforms.shared import is_bare_register
 from hermes_decompiler.core.logging import get_logger
 from hermes_decompiler.ir import Expression
-from hermes_decompiler.ir.expressions import CallExpression, Identifier, MemberExpression
+from hermes_decompiler.ir.expressions import (
+    ArrayExpression, AssignmentExpression, CallExpression, Identifier, MemberExpression,
+)
+from hermes_decompiler.ir.expressions.Collections import SpreadElement
 from hermes_decompiler.ir.terminators import TerminatorThrow
 from ._base import RegionPass
 
@@ -155,6 +158,7 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
             self._unwrap_try(try_region, loop)
 
         self._drop_iterator_setup(iterator_expr)
+        self._fold_binding_pattern(loop)
 
     def _try_recognize_for_of_with_inner_try(self, loop: LoopRegion) -> None:
         """for-of whose close scaffold sits INSIDE the loop body.
@@ -210,6 +214,84 @@ class ForEachRegionPass(RegionPass, RegionVisitor):
         body.invalidate_coverage()
 
         self._drop_iterator_setup(iterator_expr)
+        self._fold_binding_pattern(loop)
+
+    def _fold_binding_pattern(self, loop: LoopRegion) -> None:
+        """`for (const x of xs) { [a, b] = x; ... }` -> `for (const [a, b] of xs)`.
+
+        Hermes binds the element to a register and destructures it as the
+        body's first statement (through one more copy, `Mov t <- x`). Folded
+        only when nothing afterwards still names the element register or the
+        copy.
+        """
+        element = loop.loop_binding
+
+        if not isinstance(element, int) or not isinstance(loop.body, SequenceRegion):
+            return
+
+        found = []
+
+        for child in loop.body.children:
+            if not isinstance(child, BasicBlock):
+                break
+
+            found.extend((child, instr) for instr in child.instructions)
+
+            if len(found) >= 2:
+                break
+
+        def is_pattern(instr, source: int) -> bool:
+            value = instr.value
+
+            return (
+                    instr.dest_reg is None
+                    and isinstance(value, AssignmentExpression)
+                    and isinstance(value.left, ArrayExpression)
+                    and isinstance(value.right, Identifier)
+                    and value.right.name == f"r{source}"
+            )
+
+        doomed = []
+        copy_reg = None
+
+        if found and is_pattern(found[0][1], element):
+            doomed = [found[0]]
+            pattern_instr = found[0][1]
+        elif (
+                len(found) >= 2
+                and found[0][1].dest_reg is not None
+                and isinstance(found[0][1].value, Identifier)
+                and found[0][1].value.name == f"r{element}"
+                and is_pattern(found[1][1], found[0][1].dest_reg)
+        ):
+            copy_reg = found[0][1].dest_reg
+            doomed = [found[0], found[1]]
+            pattern_instr = found[1][1]
+        else:
+            return
+
+        live = SimpleNamespace(blocks=[b for b in self.cfg.blocks if b in self.graph.root.covered_blocks])
+        pattern = pattern_instr.value.left
+
+        # Nothing after the two statements may still name either register.
+        for register in (element, copy_reg):
+            if register is not None and _reads_register_by_name(live, register, pattern_instr.address):
+                return
+
+        names = []
+
+        for item in pattern.elements:
+            if isinstance(item, SpreadElement):
+                names.append(f"...{item.argument.name}")
+            elif isinstance(item, Identifier):
+                names.append(item.name)
+            else:
+                return
+
+        for block, instr in doomed:
+            block.instructions.remove(instr)
+
+        loop.loop_binding = f"[{', '.join(names)}]"
 
     def _drop_iterator_setup(self, iterator_expr) -> None:
         """Remove the `rN = GetIterator(src)` the for-of now stands for.
