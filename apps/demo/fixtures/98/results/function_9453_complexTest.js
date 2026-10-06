@@ -36,7 +36,7 @@ function complexTest() {
     // USED → r4 = 2;
     if (0 < r14.length) {
         // LOOP → START (for)
-        for (i = 0; i < r7; i = r1 + 1) {
+        for (i = 0; i < r14.length; i = r1 + 1) {
             // ──────────────── Block 1 ──────────────── 
             // CODE → addr: 80 | <GetByVal>: <Reg8: 7, Reg8: 14, Reg8: 0>
             r7 = r14[i]
@@ -94,9 +94,6 @@ function complexTest() {
                     break;
             }
             // Switch → END
-            // ──────────────── Block 8 ──────────────── 
-            // CODE → addr:205 | <GetByIdShort>: <Reg8: 7, Reg8: 14, UInt8: 2, string_id: 177>  # String: 'length' (Identifier)
-            r7 = r14.length
         }
         // LOOP → END
     }

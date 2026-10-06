@@ -256,6 +256,28 @@ def test_array_pattern_defaults_and_rest_are_one_statement():
     assert "console.log(r15, r14, r13)" in out
 
 
+def test_for_condition_reads_the_bound_the_latch_recomputes():
+    # hermes-98 `complexTest`: `for (let i = 0; i < numbers.length; i++)` reloads
+    # the bound right before the compare (`r7 = r14.length; if (r0 < r7) goto body`).
+    # The header used to read `r7` before the first iteration - where nothing
+    # printed defines it (the entry guard inlined the value) - and the reload
+    # stayed behind as the last statement of the body.
+    out = _render_98(9453, "complexTest")
+
+    assert "for (i = 0; i < r14.length; i = r1 + 1) {" in out
+    assert "r7 = r14.length" not in out
+
+
+def test_bound_stays_in_the_body_when_the_loop_is_not_a_for():
+    # hermes-98 `generatorWithLoopTest`: the entry value of the register the
+    # condition reads is NOT the loop variable (the guard compares the other
+    # way round), so a `for` header would test the wrong thing first. It stays a
+    # `do { } while` and keeps the bound reload.
+    out = _render_98(12483, "generatorWithLoopTest")
+
+    assert "do {" in out and "r5 = r1[1][0]" in out and "} while (r7 < r5);" in out
+
+
 def test_array_hole_prints_its_comma():
     from hermes_decompiler.backend.emit.printer.ExpressionPrinter import ExpressionPrinter
     from hermes_decompiler.ir.expressions import ArrayExpression, ArrayHole, Identifier

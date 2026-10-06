@@ -23,7 +23,8 @@ from hermes_decompiler.ir.expressions import (
     NumericLiteral, NullLiteral,
     UndefinedLiteral, StringLiteral, BooleanLiteral,
 )
-from hermes_decompiler.backend.transforms.shared import has_side_effects
+from hermes_decompiler.backend.transforms.shared import has_side_effects, substitute_register
+from hermes_decompiler.backend.transforms.shared._repoint import _reads_register_by_name
 from hermes_decompiler.ir.statements import BreakStatement
 from hermes_decompiler.ir.terminators import TerminatorConditionalBranch
 from ._base import RegionPass
@@ -451,6 +452,10 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
                         safe = False
 
                 if safe:
+                    # Only a loop that stays a `for`: its header is checked
+                    # before the first iteration, which is what the safety
+                    # checks above vouch for.
+                    self._inline_condition_operands(loop, induction_reg)
                     self._extract_update(loop)
                     return True
 
@@ -471,6 +476,84 @@ class LoopConditionRegionPass(RegionPass, RegionVisitor):
         if self._consume_guard(latch, loop, LoopKind.DO_WHILE, update_block=None):
             loop.continue_target = latch
             return True
+
+        return False
+
+    def _inline_condition_operands(self, loop: LoopRegion, induction_reg: int) -> None:
+        """Fold the bound the latch recomputes into the loop condition.
+
+        A bottom-tested loop reloads its bound right before the compare
+        (`r0 = r1 + 1; r7 = r14.length; if (r0 < r7) goto body`). Printed as
+        a `for`, the header would read `r7` BEFORE the first iteration -
+        where the only definition is the entry guard's, inlined into the
+        guard and never printed - while `r7 = r14.length` stays behind as
+        the last statement of the body. Putting the value into the condition
+        (`i < r14.length`) is what the bytecode computes at that very point.
+
+        Only for a plain value (no calls/assignments), read by nothing but
+        the condition: not later in the function, and not by the next
+        iteration before it writes the register again.
+        """
+        block = loop.update_block
+
+        if loop.condition is None or block is None:
+            return
+
+        for reg in sorted(self._registers_read(loop.condition) - {induction_reg}):
+            index = next(
+                (
+                    i for i in range(len(block.instructions) - 1, -1, -1)
+                    if block.instructions[i].terminator is None and block.instructions[i].dest_reg == reg
+                ),
+                None,
+            )
+
+            if index is None:
+                continue
+
+            instruction = block.instructions[index]
+            value = instruction.value
+
+            if (
+                    value is None
+                    or instruction.statement is not None
+                    or instruction.definition_used
+                    or has_side_effects(value)
+                    or induction_reg in self._registers_read(value)
+                    or self._is_unsafe_to_reorder(block, index, value)
+                    or self._definition_is_read_elsewhere(loop, reg, instruction)
+            ):
+                continue
+
+            loop.condition = substitute_register(loop.condition, f"r{reg}", value)
+            block.instructions.pop(index)
+
+    def _definition_is_read_elsewhere(self, loop: LoopRegion, reg: int, definition) -> bool:
+        """True when something other than the (already extracted) loop
+        condition may read what `definition` writes to `r{reg}`: code after it
+        in bytecode order, or the loop's own code before it - reached through
+        the back edge - up to the next write of the register."""
+        if _reads_register_by_name(self.cfg, reg, definition.address):
+            return True
+
+        loop_instructions = sorted(
+            (
+                instruction
+                for block in loop.covered_blocks
+                for instruction in block.instructions
+                if instruction.address < definition.address
+            ),
+            key=lambda instruction: instruction.address,
+        )
+
+        for instruction in loop_instructions:
+            carried = [instruction.value, instruction.statement, getattr(instruction.terminator, "condition", None)]
+
+            if any(node is not None and reg in self._registers_read(node) for node in carried):
+                return True
+
+            if instruction.dest_reg == reg:
+                break
 
         return False
 
